@@ -209,6 +209,28 @@ macro(add_gcc_compiler_flags FLAGS)
     add_gcc_compiler_cflags("${FLAGS}")
 endmacro(add_gcc_compiler_flags)
 
+# Copies of above macros that first ensure the compiler understands a given flag
+# Because check_*_compiler_flag() sets -D with name, need to provide "safe" FLAGNAME
+macro(check_add_gcc_compiler_cxxflag FLAG FLAGNAME)
+    check_cxx_compiler_flag("${FLAG}" CXX_HAS${FLAGNAME})
+    if(CXX_HAS${FLAGNAME})
+        add_gcc_compiler_cxxflags("${FLAG}")
+    endif()
+endmacro(check_add_gcc_compiler_cxxflag)
+
+macro(check_add_gcc_compiler_cflag FLAG FLAGNAME)
+    check_c_compiler_flag("${FLAG}" CC_HAS${FLAGNAME})
+    if(CC_HAS${FLAGNAME})
+        add_gcc_compiler_cflags("${FLAG}")
+    endif()
+endmacro(check_add_gcc_compiler_cflag)
+
+macro(check_add_gcc_compiler_flag FLAG)
+    string(REGEX REPLACE "[-=]" "_" FLAGNAME "${FLAG}")
+    check_add_gcc_compiler_cxxflag("${FLAG}" "${FLAGNAME}")
+    check_add_gcc_compiler_cflag("${FLAG}" "${FLAGNAME}")
+endmacro(check_add_gcc_compiler_flag)
+
 add_definitions(-DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
 
 if(WITH_APP_BUNDLE)
@@ -222,6 +244,8 @@ add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
 
 if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+    check_add_gcc_compiler_flag("-Wshadow-compatible-local")
+    check_add_gcc_compiler_flag("-Wshadow-local")
     add_gcc_compiler_flags("-Werror")
 endif()
 
@@ -256,16 +280,9 @@ if(CMAKE_BUILD_TYPE_LOWER MATCHES "(release|relwithdebinfo|minsizerel)")
     add_gcc_compiler_flags("-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2")
 endif()
 
-check_c_compiler_flag("-Werror=format-security -Werror=implicit-function-declaration" WERROR_C_AVAILABLE)
-check_cxx_compiler_flag("-Werror=format-security" WERROR_CXX_AVAILABLE)
-if(WERROR_C_AVAILABLE AND WERROR_CXX_AVAILABLE)
-    add_gcc_compiler_flags("-Werror=format-security")
-    add_gcc_compiler_cflags("-Werror=implicit-function-declaration")
-endif()
-
-if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wcast-align")
-endif()
+check_add_gcc_compiler_flag("-Werror=format-security")
+check_add_gcc_compiler_flag("-Werror=implicit-function-declaration")
+check_add_gcc_compiler_flag("-Wcast-align")
 
 if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
@@ -276,14 +293,8 @@ if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
   #      `find src -iname '*.h' -or -iname '*.cpp'`
 endif()
 
-if(CMAKE_COMPILER_IS_GNUCC)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wcast-align")
-endif()
-
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    if(CMAKE_COMPILER_IS_CLANGXX)
-        add_gcc_compiler_flags("-Qunused-arguments")
-    endif()
+    check_add_gcc_compiler_flag("-Qunused-arguments")
     add_gcc_compiler_flags("-pie -fPIE")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro,-z,now")
@@ -294,10 +305,7 @@ endif()
 add_gcc_compiler_cflags("-std=c99")
 add_gcc_compiler_cxxflags("-std=c++11")
 
-if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9.99) OR
-    (CMAKE_COMPILER_IS_CLANGXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.6.99))
-    add_gcc_compiler_cxxflags("-fsized-deallocation")
-endif()
+check_add_gcc_compiler_flag("-fsized-deallocation")
 
 if(APPLE AND CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_cxxflags("-stdlib=libc++")
