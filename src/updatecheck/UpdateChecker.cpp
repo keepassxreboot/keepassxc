@@ -42,6 +42,11 @@ UpdateChecker::~UpdateChecker()
 
 void UpdateChecker::checkForUpdates(bool manuallyRequested)
 {
+    // Skip update if we are already performing one
+    if (m_reply) {
+        return;
+    }
+
     auto nextCheck = config()->get(Config::GUI_CheckForUpdatesNextCheck).toULongLong();
     m_isManuallyRequested = manuallyRequested;
 
