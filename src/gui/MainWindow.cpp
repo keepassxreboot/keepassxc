@@ -489,7 +489,11 @@ MainWindow::MainWindow()
     connect(UpdateChecker::instance(),
             SIGNAL(updateCheckFinished(bool, QString, bool)),
             SLOT(hasUpdateAvailable(bool, QString, bool)));
-    QTimer::singleShot(500, this, SLOT(showUpdateCheckStartup()));
+    // Setup an update check every hour (checked only occur every 7 days)
+    connect(&m_updateCheckTimer, &QTimer::timeout, this, &MainWindow::performUpdateCheck);
+    m_updateCheckTimer.start(3.6e6);
+    // Perform the startup update check after 500 ms
+    QTimer::singleShot(500, this, SLOT(performUpdateCheck()));
 #else
     m_ui->actionCheckForUpdates->setVisible(false);
 #endif
@@ -892,7 +896,7 @@ void MainWindow::showAboutDialog()
     aboutDialog->open();
 }
 
-void MainWindow::showUpdateCheckStartup()
+void MainWindow::performUpdateCheck()
 {
 #ifdef WITH_XC_UPDATECHECK
     if (!config()->get(Config::UpdateCheckMessageShown).toBool()) {

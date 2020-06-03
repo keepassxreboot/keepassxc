@@ -92,7 +92,7 @@ private slots:
     void updateToolbarSeparatorVisibility();
     void updateWindowTitle();
     void showAboutDialog();
-    void showUpdateCheckStartup();
+    void performUpdateCheck();
     void showUpdateCheckDialog();
     void focusWindowChanged(QWindow* focusWindow);
     void hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested);
@@ -175,6 +175,7 @@ private:
     bool m_showToolbarSeparator = false;
     qint64 m_lastFocusOutTime = 0;
     qint64 m_lastShowTime = 0;
+    QTimer m_updateCheckTimer;
     QTimer m_trayIconTriggerTimer;
     QSystemTrayIcon::ActivationReason m_trayIconTriggerReason;
 };
