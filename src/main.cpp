@@ -57,6 +57,7 @@ int main(int argc, char** argv)
     Application::setApplicationName("KeePassXC");
     Application::setApplicationVersion(KEEPASSXC_VERSION);
     app.setProperty("KPXC_QUALIFIED_APPNAME", "org.keepassxc.KeePassXC");
+    app.applyTheme();
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
 #endif

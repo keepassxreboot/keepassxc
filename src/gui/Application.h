@@ -39,6 +39,8 @@ public:
     Application(int& argc, char** argv);
     ~Application() override;
 
+    void applyTheme();
+
     bool event(QEvent* event) override;
     bool isAlreadyRunning() const;
     bool isDarkTheme() const;

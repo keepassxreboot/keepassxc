@@ -68,26 +68,6 @@ Application::Application(int& argc, char** argv)
     registerUnixSignals();
 #endif
 
-    QString appTheme = config()->get(Config::GUI_ApplicationTheme).toString();
-    if (appTheme == "auto") {
-        if (osUtils->isDarkMode()) {
-            setStyle(new DarkStyle);
-            m_darkTheme = true;
-        } else {
-            setStyle(new LightStyle);
-        }
-    } else if (appTheme == "light") {
-        setStyle(new LightStyle);
-    } else if (appTheme == "dark") {
-        setStyle(new DarkStyle);
-        m_darkTheme = true;
-    } else {
-        // Classic mode, only check for dark theme when not on Windows
-#ifndef Q_OS_WIN
-        m_darkTheme = osUtils->isDarkMode();
-#endif
-    }
-
     QString userName = qgetenv("USER");
     if (userName.isEmpty()) {
         userName = qgetenv("USERNAME");
@@ -160,6 +140,32 @@ Application::~Application()
         m_lockFile->unlock();
         delete m_lockFile;
     }
+}
+
+void Application::applyTheme()
+{
+    QString appTheme = config()->get(Config::GUI_ApplicationTheme).toString();
+    if (appTheme == "auto") {
+        if (osUtils->isDarkMode()) {
+            setStyle(new DarkStyle);
+            m_darkTheme = true;
+        } else {
+            setStyle(new LightStyle);
+        }
+    } else if (appTheme == "light") {
+        setStyle(new LightStyle);
+    } else if (appTheme == "dark") {
+        setStyle(new DarkStyle);
+        m_darkTheme = true;
+    } else {
+        // Classic mode, don't check for dark theme on Windows
+        // because Qt 5.x does not support it
+#ifndef Q_OS_WIN
+        m_darkTheme = osUtils->isDarkMode();
+#endif
+    }
+
+    setPalette(style()->standardPalette());
 }
 
 bool Application::event(QEvent* event)

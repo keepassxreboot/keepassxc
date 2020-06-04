@@ -26,8 +26,9 @@ class LightStyle : public BaseStyle
     Q_OBJECT
 
 public:
+    QPalette standardPalette() const override;
+
     using BaseStyle::polish;
-    void polish(QPalette& palette) override;
     void polish(QWidget* widget) override;
 
 protected:

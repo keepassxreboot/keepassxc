@@ -397,7 +397,6 @@ namespace Phantom
                 colors[S_button] = Dc::adjustLightness(colors[S_button], 0.01);
             colors[S_base] = pal.color(QPalette::Base);
             colors[S_text] = pal.color(QPalette::Text);
-            colors[S_text] = pal.color(QPalette::WindowText);
             colors[S_windowText] = pal.color(QPalette::WindowText);
             colors[S_highlight] = pal.color(QPalette::Highlight);
             colors[S_highlightedText] = pal.color(QPalette::HighlightedText);
@@ -4622,11 +4621,13 @@ int BaseStyle::styleHint(StyleHint hint,
     case SH_Table_GridLineColor: {
         using namespace Phantom::SwatchColors;
         namespace Ph = Phantom;
+        if (!option)
+            return 0;
         auto ph_swatchPtr = Ph::getCachedSwatchOfQPalette(&d->swatchCache, &d->headSwatchFastKey, option->palette);
         const Ph::PhSwatch& swatch = *ph_swatchPtr.data();
         // Qt code in table views for drawing grid lines is broken. See case for
         // CE_ItemViewItem painting for more information.
-        return option ? static_cast<int>(swatch.color(S_base_divider).rgb()) : 0;
+        return static_cast<int>(swatch.color(S_base_divider).rgb());
     }
     case SH_MessageBox_TextInteractionFlags:
         return Qt::TextSelectableByMouse | Qt::LinksAccessibleByMouse;
