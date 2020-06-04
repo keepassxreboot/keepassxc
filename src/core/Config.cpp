@@ -427,10 +427,10 @@ Config::Config(const QString& fileName, QObject* parent)
 Config::Config(QObject* parent)
     : QObject(parent)
 {
-    // Check if portable config is present (use it also to store local config)
-    QString portablePath = QDir::fromNativeSeparators(QCoreApplication::applicationDirPath()) + "/keepassxc.ini";
-    if (QFile::exists(portablePath)) {
-        init(portablePath);
+    // Check if we are running in portable mode, if so store the config files local to the app
+    auto portablePath = QCoreApplication::applicationDirPath().append("/%1");
+    if (QFile::exists(portablePath.arg(".portable"))) {
+        init(portablePath.arg("config/keepassxc.ini"), portablePath.arg("config/keepassxc_local.ini"));
         return;
     }
 
