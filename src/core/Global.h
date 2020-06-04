@@ -48,7 +48,7 @@ static const auto FALSE_STR = QStringLiteral("false");
 
 enum IconSize
 {
-    Default = 24,
+    Default = 22,
     Medium = 30,
     Large = 36
 };
