@@ -42,7 +42,7 @@ public:
 private:
     QString getTrayIconAppearance() const;
     Resources();
-    bool testResourceDir(const QString& dir);
+    bool trySetResourceDir(const QString& path);
 
     static Resources* m_instance;
 
