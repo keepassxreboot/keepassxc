@@ -23,67 +23,70 @@
 #include <QMenuBar>
 #include <QToolBar>
 
-void DarkStyle::polish(QPalette& palette)
+QPalette DarkStyle::standardPalette() const
 {
-    palette.setColor(QPalette::Active, QPalette::Window, QStringLiteral("#3B3B3D"));
-    palette.setColor(QPalette::Inactive, QPalette::Window, QStringLiteral("#404042"));
-    palette.setColor(QPalette::Disabled, QPalette::Window, QStringLiteral("#424242"));
+    auto palette = BaseStyle::standardPalette();
+    palette.setColor(QPalette::Active, QPalette::Window, QRgb(0x3B3B3D));
+    palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0x404042));
+    palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0x424242));
 
-    palette.setColor(QPalette::Active, QPalette::WindowText, QStringLiteral("#CACBCE"));
-    palette.setColor(QPalette::Inactive, QPalette::WindowText, QStringLiteral("#C8C8C6"));
-    palette.setColor(QPalette::Disabled, QPalette::WindowText, QStringLiteral("#707070"));
+    palette.setColor(QPalette::Active, QPalette::WindowText, QRgb(0xCACBCE));
+    palette.setColor(QPalette::Inactive, QPalette::WindowText, QRgb(0xC8C8C6));
+    palette.setColor(QPalette::Disabled, QPalette::WindowText, QRgb(0x707070));
 
-    palette.setColor(QPalette::Active, QPalette::Text, QStringLiteral("#CACBCE"));
-    palette.setColor(QPalette::Inactive, QPalette::Text, QStringLiteral("#C8C8C6"));
-    palette.setColor(QPalette::Disabled, QPalette::Text, QStringLiteral("#707070"));
+    palette.setColor(QPalette::Active, QPalette::Text, QRgb(0xCACBCE));
+    palette.setColor(QPalette::Inactive, QPalette::Text, QRgb(0xC8C8C6));
+    palette.setColor(QPalette::Disabled, QPalette::Text, QRgb(0x707070));
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
-    palette.setColor(QPalette::Active, QPalette::PlaceholderText, QStringLiteral("#7D7D82"));
-    palette.setColor(QPalette::Inactive, QPalette::PlaceholderText, QStringLiteral("#87888C"));
-    palette.setColor(QPalette::Disabled, QPalette::PlaceholderText, QStringLiteral("#737373"));
+    palette.setColor(QPalette::Active, QPalette::PlaceholderText, QRgb(0x7D7D82));
+    palette.setColor(QPalette::Inactive, QPalette::PlaceholderText, QRgb(0x87888C));
+    palette.setColor(QPalette::Disabled, QPalette::PlaceholderText, QRgb(0x737373));
 #endif
 
-    palette.setColor(QPalette::Active, QPalette::BrightText, QStringLiteral("#252627"));
-    palette.setColor(QPalette::Inactive, QPalette::BrightText, QStringLiteral("#2D2D2F"));
-    palette.setColor(QPalette::Disabled, QPalette::BrightText, QStringLiteral("#333333"));
+    palette.setColor(QPalette::Active, QPalette::BrightText, QRgb(0x252627));
+    palette.setColor(QPalette::Inactive, QPalette::BrightText, QRgb(0x2D2D2F));
+    palette.setColor(QPalette::Disabled, QPalette::BrightText, QRgb(0x333333));
 
-    palette.setColor(QPalette::Active, QPalette::Base, QStringLiteral("#27272A"));
-    palette.setColor(QPalette::Inactive, QPalette::Base, QStringLiteral("#2A2A2D"));
-    palette.setColor(QPalette::Disabled, QPalette::Base, QStringLiteral("#343437"));
+    palette.setColor(QPalette::Active, QPalette::Base, QRgb(0x27272A));
+    palette.setColor(QPalette::Inactive, QPalette::Base, QRgb(0x2A2A2D));
+    palette.setColor(QPalette::Disabled, QPalette::Base, QRgb(0x343437));
 
-    palette.setColor(QPalette::Active, QPalette::AlternateBase, QStringLiteral("#2C2C30"));
-    palette.setColor(QPalette::Inactive, QPalette::AlternateBase, QStringLiteral("#2B2B2F"));
-    palette.setColor(QPalette::Disabled, QPalette::AlternateBase, QStringLiteral("#36363A"));
+    palette.setColor(QPalette::Active, QPalette::AlternateBase, QRgb(0x2C2C30));
+    palette.setColor(QPalette::Inactive, QPalette::AlternateBase, QRgb(0x2B2B2F));
+    palette.setColor(QPalette::Disabled, QPalette::AlternateBase, QRgb(0x36363A));
 
-    palette.setColor(QPalette::All, QPalette::ToolTipBase, QStringLiteral("#2D532D"));
-    palette.setColor(QPalette::All, QPalette::ToolTipText, QStringLiteral("#BFBFBF"));
+    palette.setColor(QPalette::All, QPalette::ToolTipBase, QRgb(0x2D532D));
+    palette.setColor(QPalette::All, QPalette::ToolTipText, QRgb(0xBFBFBF));
 
-    palette.setColor(QPalette::Active, QPalette::Button, QStringLiteral("#28282B"));
-    palette.setColor(QPalette::Inactive, QPalette::Button, QStringLiteral("#28282B"));
-    palette.setColor(QPalette::Disabled, QPalette::Button, QStringLiteral("#2B2A2A"));
+    palette.setColor(QPalette::Active, QPalette::Button, QRgb(0x28282B));
+    palette.setColor(QPalette::Inactive, QPalette::Button, QRgb(0x28282B));
+    palette.setColor(QPalette::Disabled, QPalette::Button, QRgb(0x2B2A2A));
 
-    palette.setColor(QPalette::Active, QPalette::ButtonText, QStringLiteral("#B9B9BE"));
-    palette.setColor(QPalette::Inactive, QPalette::ButtonText, QStringLiteral("#9E9FA5"));
-    palette.setColor(QPalette::Disabled, QPalette::ButtonText, QStringLiteral("#73747E"));
+    palette.setColor(QPalette::Active, QPalette::ButtonText, QRgb(0xB9B9BE));
+    palette.setColor(QPalette::Inactive, QPalette::ButtonText, QRgb(0x9E9FA5));
+    palette.setColor(QPalette::Disabled, QPalette::ButtonText, QRgb(0x73747E));
 
-    palette.setColor(QPalette::Active, QPalette::Highlight, QStringLiteral("#2D532D"));
-    palette.setColor(QPalette::Inactive, QPalette::Highlight, QStringLiteral("#354637"));
-    palette.setColor(QPalette::Disabled, QPalette::Highlight, QStringLiteral("#293D29"));
+    palette.setColor(QPalette::Active, QPalette::Highlight, QRgb(0x2D532D));
+    palette.setColor(QPalette::Inactive, QPalette::Highlight, QRgb(0x354637));
+    palette.setColor(QPalette::Disabled, QPalette::Highlight, QRgb(0x293D29));
 
-    palette.setColor(QPalette::Active, QPalette::HighlightedText, QStringLiteral("#CCCCCC"));
-    palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QStringLiteral("#CECECE"));
-    palette.setColor(QPalette::Disabled, QPalette::HighlightedText, QStringLiteral("#707070"));
+    palette.setColor(QPalette::Active, QPalette::HighlightedText, QRgb(0xCCCCCC));
+    palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QRgb(0xCECECE));
+    palette.setColor(QPalette::Disabled, QPalette::HighlightedText, QRgb(0x707070));
 
-    palette.setColor(QPalette::All, QPalette::Light, QStringLiteral("#414145"));
-    palette.setColor(QPalette::All, QPalette::Midlight, QStringLiteral("#39393C"));
-    palette.setColor(QPalette::All, QPalette::Mid, QStringLiteral("#2F2F32"));
-    palette.setColor(QPalette::All, QPalette::Dark, QStringLiteral("#202022"));
-    palette.setColor(QPalette::All, QPalette::Shadow, QStringLiteral("#19191A"));
+    palette.setColor(QPalette::All, QPalette::Light, QRgb(0x414145));
+    palette.setColor(QPalette::All, QPalette::Midlight, QRgb(0x39393C));
+    palette.setColor(QPalette::All, QPalette::Mid, QRgb(0x2F2F32));
+    palette.setColor(QPalette::All, QPalette::Dark, QRgb(0x202022));
+    palette.setColor(QPalette::All, QPalette::Shadow, QRgb(0x19191A));
 
-    palette.setColor(QPalette::All, QPalette::Link, QStringLiteral("#68B668"));
-    palette.setColor(QPalette::Disabled, QPalette::Link, QStringLiteral("#74A474"));
-    palette.setColor(QPalette::All, QPalette::LinkVisited, QStringLiteral("#75B875"));
-    palette.setColor(QPalette::Disabled, QPalette::LinkVisited, QStringLiteral("#77A677"));
+    palette.setColor(QPalette::All, QPalette::Link, QRgb(0x68B668));
+    palette.setColor(QPalette::Disabled, QPalette::Link, QRgb(0x74A474));
+    palette.setColor(QPalette::All, QPalette::LinkVisited, QRgb(0x75B875));
+    palette.setColor(QPalette::Disabled, QPalette::LinkVisited, QRgb(0x77A677));
+
+    return palette;
 }
 
 QString DarkStyle::getAppStyleSheet() const
@@ -106,18 +109,18 @@ void DarkStyle::polish(QWidget* widget)
             // Let the Cocoa platform plugin draw its own background
             palette.setColor(QPalette::All, QPalette::Window, Qt::transparent);
         } else {
-            palette.setColor(QPalette::Active, QPalette::Window, QStringLiteral("#2A2A2A"));
-            palette.setColor(QPalette::Inactive, QPalette::Window, QStringLiteral("#2D2D2D"));
-            palette.setColor(QPalette::Disabled, QPalette::Window, QStringLiteral("#2A2A2A"));
+            palette.setColor(QPalette::Active, QPalette::Window, QRgb(0x2A2A2A));
+            palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0x2D2D2D));
+            palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0x2A2A2A));
         }
 #elif defined(Q_OS_WIN)
         // Register event filter for better dark mode support
         WinUtils::registerEventFilters();
-        palette.setColor(QPalette::All, QPalette::Window, QStringLiteral("#2F2F30"));
+        palette.setColor(QPalette::All, QPalette::Window, QRgb(0x2F2F30));
 #else
-        palette.setColor(QPalette::Active, QPalette::Window, QStringLiteral("#2F2F30"));
-        palette.setColor(QPalette::Inactive, QPalette::Window, QStringLiteral("#313133"));
-        palette.setColor(QPalette::Disabled, QPalette::Window, QStringLiteral("#3A3A3B"));
+        palette.setColor(QPalette::Active, QPalette::Window, QRgb(0x2F2F30));
+        palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0x313133));
+        palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0x3A3A3B));
 #endif
 
         widget->setPalette(palette);
