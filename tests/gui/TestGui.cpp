@@ -770,6 +770,9 @@ void TestGui::testDicewareEntryEntropy()
                auto* spinBoxWordCount = dicewareWidget->findChild<QSpinBox*>("spinBoxWordCount");
                spinBoxWordCount->setValue(6);
 
+               // Confirm a password was generated
+               QVERIFY(!pwGeneratorWidget->getGeneratedPassword().isEmpty());
+
                // Verify entropy and strength
                auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
                auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
