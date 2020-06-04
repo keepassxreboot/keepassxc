@@ -56,6 +56,7 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     m_ui->hibpTableView->setModel(m_referencesModel.data());
     m_ui->hibpTableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->hibpTableView->setSortingEnabled(true);
 
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_ui->hibpTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));

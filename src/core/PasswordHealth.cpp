@@ -142,7 +142,7 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
         for (int i = 0; i < used.size(); ++i) {
             health->addScoreDetails(used[i]);
             if (i == 19) {
-                health->addScoreDetails(QStringLiteral("..."));
+                health->addScoreDetails("…");
                 break;
             }
         }

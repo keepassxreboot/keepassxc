@@ -104,14 +104,13 @@ private slots:
     void openKeyboardShortcuts();
     void switchToDatabases();
     void switchToSettings(bool enabled);
-    void switchToPasswordGen(bool enabled);
+    void togglePasswordGenerator(bool enabled);
     void switchToNewDatabase();
     void switchToOpenDatabase();
     void switchToDatabaseFile(const QString& file);
     void switchToKeePass1Database();
     void switchToOpVaultDatabase();
     void switchToCsvImport();
-    void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget* dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);

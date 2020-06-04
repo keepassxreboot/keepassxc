@@ -387,7 +387,7 @@ bool SSHAgent::checkIdentity(const OpenSSHKey& key, bool& loaded)
 
     loaded = false;
 
-    for (const auto it : list) {
+    for (const auto& it : list) {
         if (*it == key) {
             loaded = true;
             break;

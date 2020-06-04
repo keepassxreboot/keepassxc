@@ -75,7 +75,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GlobalAutoTypeModifiers,{QS("GlobalAutoTypeModifiers"), Roaming, 0}},
     {Config::TrackNonDataChanges,{QS("TrackNonDataChanges"), Roaming, false}},
     {Config::FaviconDownloadTimeout,{QS("FaviconDownloadTimeout"), Roaming, 10}},
-    {Config::UpdateCheckMessageShown,{QS("UpdateCheckMessageShown"), Roaming, true}},
+    {Config::UpdateCheckMessageShown,{QS("UpdateCheckMessageShown"), Roaming, false}},
     {Config::UseTouchID,{QS("UseTouchID"), Roaming, false}},
 
     {Config::LastDatabases, {QS("LastDatabases"), Local, {}}},
@@ -102,6 +102,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_MonospaceNotes, {QS("GUI/MonospaceNotes"), Roaming, false}},
     {Config::GUI_ApplicationTheme, {QS("GUI/ApplicationTheme"), Roaming, QS("auto")}},
     {Config::GUI_CheckForUpdates, {QS("GUI/CheckForUpdates"), Roaming, true}},
+    {Config::GUI_CheckForUpdatesNextCheck, {QS("GUI/CheckForUpdatesNextCheck"), Local, 0}},
     {Config::GUI_CheckForUpdatesIncludeBetas, {QS("GUI/CheckForUpdatesIncludeBetas"), Roaming, false}},
 
     {Config::GUI_MainWindowGeometry, {QS("GUI/MainWindowGeometry"), Local, {}}},
@@ -111,7 +112,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_SplitterState, {QS("GUI/SplitterState"), Local, {}}},
     {Config::GUI_PreviewSplitterState, {QS("GUI/PreviewSplitterState"), Local, {}}},
     {Config::GUI_AutoTypeSelectDialogSize, {QS("GUI/AutoTypeSelectDialogSize"), Local, QSize(600, 250)}},
-    {Config::GUI_CheckForUpdatesNextCheck, {QS("GUI/AutoTypeSelectDialogSize"), Local, 0}},
 
     // Security
     {Config::Security_ClearClipboard, {QS("Security/ClearClipboard"), Roaming, true}},
@@ -185,13 +185,13 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::PasswordGenerator_EASCII, {QS("PasswordGenerator/EASCII"), Roaming, false}},
     {Config::PasswordGenerator_AdvancedMode, {QS("PasswordGenerator/AdvancedMode"), Roaming, false}},
     {Config::PasswordGenerator_SpecialChars, {QS("PasswordGenerator/SpecialChars"), Roaming, true}},
-    {Config::PasswordGenerator_AdditionalChars, {QS("PasswordGenerator/AdditionalChars"), Roaming, true}},
     {Config::PasswordGenerator_Braces, {QS("PasswordGenerator/Braces"), Roaming, false}},
     {Config::PasswordGenerator_Punctuation, {QS("PasswordGenerator/Punctuation"), Roaming, false}},
     {Config::PasswordGenerator_Quotes, {QS("PasswordGenerator/Quotes"), Roaming, false}},
     {Config::PasswordGenerator_Dashes, {QS("PasswordGenerator/Dashes"), Roaming, false}},
     {Config::PasswordGenerator_Math, {QS("PasswordGenerator/Math"), Roaming, false}},
     {Config::PasswordGenerator_Logograms, {QS("PasswordGenerator/Logograms"), Roaming, false}},
+    {Config::PasswordGenerator_AdditionalChars, {QS("PasswordGenerator/AdditionalChars"), Roaming, {}}},
     {Config::PasswordGenerator_ExcludedChars, {QS("PasswordGenerator/ExcludedChars"), Roaming, {}}},
     {Config::PasswordGenerator_ExcludeAlike, {QS("PasswordGenerator/ExcludeAlike"), Roaming, true}},
     {Config::PasswordGenerator_EnsureEvery, {QS("PasswordGenerator/EnsureEvery"), Roaming, true}},
