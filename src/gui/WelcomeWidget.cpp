@@ -68,6 +68,20 @@ void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
     emit openDatabaseFile(item->text());
 }
 
+void WelcomeWidget::removeFromLastDatabases(QListWidgetItem* item)
+{
+    if (item->text().isEmpty()) {
+        return;
+    }
+
+    if (config()->get(Config::RememberLastDatabases).toBool()) {
+        QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
+        lastDatabases.removeOne(item->text());
+        config()->set(Config::LastDatabases, lastDatabases);
+    }
+    refreshLastDatabases();
+}
+
 void WelcomeWidget::refreshLastDatabases()
 {
     m_ui->recentListWidget->clear();
@@ -81,8 +95,12 @@ void WelcomeWidget::refreshLastDatabases()
 
 void WelcomeWidget::keyPressEvent(QKeyEvent* event)
 {
-    if (m_ui->recentListWidget->hasFocus() && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
-        openDatabaseFromFile(m_ui->recentListWidget->currentItem());
+    if (m_ui->recentListWidget->hasFocus()) {
+        if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+            openDatabaseFromFile(m_ui->recentListWidget->currentItem());
+        } else if (event->key() == Qt::Key_Delete) {
+            removeFromLastDatabases(m_ui->recentListWidget->currentItem());
+        }
     }
 
     QWidget::keyPressEvent(event);

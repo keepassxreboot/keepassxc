@@ -52,6 +52,7 @@ private slots:
 
 private:
     const QScopedPointer<Ui::WelcomeWidget> m_ui;
+    void removeFromLastDatabases(QListWidgetItem* item);
 };
 
 #endif // KEEPASSX_WELCOMEWIDGET_H
