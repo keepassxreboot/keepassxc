@@ -333,7 +333,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseSaveBackup->setIcon(resources()->icon("document-save-copy"));
     m_ui->actionDatabaseClose->setIcon(resources()->icon("document-close"));
     m_ui->actionReports->setIcon(resources()->icon("reports"));
-    m_ui->actionChangeDatabaseSettings->setIcon(resources()->icon("document-edit"));
+    m_ui->actionDatabaseSettings->setIcon(resources()->icon("document-edit"));
     m_ui->actionChangeMasterKey->setIcon(resources()->icon("database-change-key"));
     m_ui->actionLockDatabases->setIcon(resources()->icon("database-lock"));
     m_ui->actionQuit->setIcon(resources()->icon("application-exit"));
@@ -413,7 +413,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
     connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
     connect(m_ui->actionReports, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeReports()));
-    connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
+    connect(m_ui->actionDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
     connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
     connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
@@ -456,8 +456,11 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionGroupDownloadFavicons, SIGNAL(triggered()), SLOT(downloadAllFavicons()));
 
     connect(m_ui->actionSettings, SIGNAL(toggled(bool)), SLOT(switchToSettings(bool)));
-    connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
-    connect(m_ui->passwordGeneratorWidget, SIGNAL(closePasswordGenerator()), SLOT(closePasswordGen()));
+    connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(togglePasswordGenerator(bool)));
+    connect(m_ui->passwordGeneratorWidget, &PasswordGeneratorWidget::closed, this, [this] {
+        togglePasswordGenerator(false);
+    });
+    m_ui->passwordGeneratorWidget->setStandaloneMode(true);
 
     connect(m_ui->welcomeWidget, SIGNAL(newDatabase()), SLOT(switchToNewDatabase()));
     connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
@@ -719,7 +722,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                                                           && !recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionReports->setEnabled(true);
-            m_ui->actionChangeDatabaseSettings->setEnabled(true);
+            m_ui->actionDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
             m_ui->actionDatabaseSaveAs->setEnabled(true);
             m_ui->actionDatabaseSaveBackup->setEnabled(true);
@@ -775,7 +778,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionReports->setEnabled(false);
-            m_ui->actionChangeDatabaseSettings->setEnabled(false);
+            m_ui->actionDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
             m_ui->actionDatabaseSaveAs->setEnabled(false);
             m_ui->actionDatabaseSaveBackup->setEnabled(false);
@@ -804,7 +807,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionReports->setEnabled(false);
-        m_ui->actionChangeDatabaseSettings->setEnabled(false);
+        m_ui->actionDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);
         m_ui->actionDatabaseSaveAs->setEnabled(false);
         m_ui->actionDatabaseSaveBackup->setEnabled(false);
@@ -990,22 +993,16 @@ void MainWindow::switchToSettings(bool enabled)
     }
 }
 
-void MainWindow::switchToPasswordGen(bool enabled)
+void MainWindow::togglePasswordGenerator(bool enabled)
 {
     if (enabled) {
         m_ui->passwordGeneratorWidget->loadSettings();
         m_ui->passwordGeneratorWidget->regeneratePassword();
         m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
-        m_ui->passwordGeneratorWidget->setStandaloneMode(true);
     } else {
         m_ui->passwordGeneratorWidget->saveSettings();
         switchToDatabases();
     }
-}
-
-void MainWindow::closePasswordGen()
-{
-    switchToPasswordGen(false);
 }
 
 void MainWindow::switchToNewDatabase()

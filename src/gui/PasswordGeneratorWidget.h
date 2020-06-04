@@ -64,7 +64,7 @@ public slots:
 
 signals:
     void appliedPassword(const QString& password);
-    void closePasswordGenerator();
+    void closed();
 
 private slots:
     void updateButtonsEnabled(const QString& password);
@@ -87,9 +87,6 @@ private:
     const QScopedPointer<PasswordGenerator> m_passwordGenerator;
     const QScopedPointer<PassphraseGenerator> m_dicewareGenerator;
     const QScopedPointer<Ui::PasswordGeneratorWidget> m_ui;
-
-protected:
-    void keyPressEvent(QKeyEvent* e) override;
 };
 
 #endif // KEEPASSX_PASSWORDGENERATORWIDGET_H

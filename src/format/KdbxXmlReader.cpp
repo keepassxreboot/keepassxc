@@ -875,11 +875,13 @@ QPair<QString, QString> KdbxXmlReader::parseEntryBinary(Entry* entry)
     }
 
     if (keySet && valueSet) {
-        if (entry->attachments()->hasKey(key)) {
-            raiseError(tr("Duplicate attachment found"));
-        } else {
-            entry->attachments()->set(key, value);
+        if (entry->attachments()->hasKey(key) && entry->attachments()->value(key) != value) {
+            // NOTE: This only impacts KDBX 3.x databases
+            // Prepend a random string to the key to make it unique and prevent data loss
+            key = key.prepend(QUuid::createUuid().toString().mid(1, 8) + "_");
+            qWarning("Duplicate attachment name found, renamed to: %s", qPrintable(key));
         }
+        entry->attachments()->set(key, value);
     } else {
         raiseError(tr("Entry binary key or value missing"));
     }

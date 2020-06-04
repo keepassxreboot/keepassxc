@@ -189,7 +189,7 @@ void TestGui::testSettingsDefaultTabOrder()
     QTest::keyClick(settingsWidget, Qt::Key::Key_Escape);
 
     // check database settings default tab order
-    triggerAction("actionChangeDatabaseSettings");
+    triggerAction("actionDatabaseSettings");
     auto* dbSettingsWidget = m_mainWindow->findChild<DatabaseSettingsDialog*>();
     QVERIFY(dbSettingsWidget->isVisible());
     QCOMPARE(dbSettingsWidget->findChild<CategoryListWidget*>("categoryList")->currentCategory(), 0);
@@ -1257,7 +1257,7 @@ void TestGui::testSave()
 void TestGui::testDatabaseSettings()
 {
     m_db->metadata()->setName("testDatabaseSettings");
-    triggerAction("actionChangeDatabaseSettings");
+    triggerAction("actionDatabaseSettings");
     auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
     auto* transformRoundsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("transformRoundsSpinBox");
     auto advancedToggle = dbSettingsDialog->findChild<QCheckBox*>("advancedSettingsToggle");

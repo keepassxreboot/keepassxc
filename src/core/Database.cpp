@@ -251,12 +251,13 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
     setReadOnly(false);
     m_fileWatcher->stop();
 
-    auto& canonicalFilePath = QFileInfo::exists(filePath) ? QFileInfo(filePath).canonicalFilePath() : filePath;
-    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(canonicalFilePath, error, atomic, backup); });
+    QFileInfo fileInfo(filePath);
+    auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
+    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, error, atomic, backup); });
     if (ok) {
         markAsClean();
         setFilePath(filePath);
-        m_fileWatcher->start(canonicalFilePath, 30, 1);
+        m_fileWatcher->start(realFilePath, 30, 1);
     } else {
         // Saving failed, don't rewatch file since it does not represent our database
         markAsModified();
