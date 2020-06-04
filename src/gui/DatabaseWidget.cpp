@@ -25,6 +25,7 @@
 #include <QFile>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QHostInfo>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QLineEdit>
@@ -891,6 +892,8 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                 getMainWindow()->minimizeOrHide();
             }
         }
+    } else if (cmdString.startsWith("kdbx://")) {
+        openDatabaseFromEntry(entry, false);
     } else {
         QUrl url = QUrl::fromUserInput(entry->resolveMultiplePlaceholders(entry->url()));
         if (!url.isEmpty()) {
@@ -2021,39 +2024,73 @@ void DatabaseWidget::processAutoOpen()
         if (entry->url().isEmpty() || (entry->password().isEmpty() && entry->username().isEmpty())) {
             continue;
         }
-        QFileInfo filepath;
-        QFileInfo keyfile;
-        QString databaseUrl = entry->resolveMultiplePlaceholders(entry->url());
 
-        if (databaseUrl.startsWith("file://")) {
-            QUrl url(databaseUrl);
-            filepath.setFile(url.toLocalFile());
-        } else {
-            filepath.setFile(databaseUrl);
-            if (filepath.isRelative()) {
-                QFileInfo currentpath(m_db->filePath());
-                filepath.setFile(currentpath.absoluteDir(), databaseUrl);
-            }
-        }
-
-        if (!filepath.isFile()) {
-            continue;
-        }
-
-        if (!entry->username().isEmpty()) {
-            if (entry->username().startsWith("file://")) {
-                QUrl keyfileUrl(entry->username());
-                keyfile.setFile(keyfileUrl.toLocalFile());
-            } else {
-                keyfile.setFile(entry->username());
-                if (keyfile.isRelative()) {
-                    QFileInfo currentpath(m_db->filePath());
-                    keyfile.setFile(currentpath.absoluteDir(), entry->username());
+        // Support ifDevice advanced entry, a comma separated list of computer names
+        // that control whether to perform AutoOpen on this entry or not. Can be
+        // negated using '!'
+        auto ifDevice = entry->attribute("ifDevice");
+        if (!ifDevice.isEmpty()) {
+            bool loadDb = false;
+            auto hostName = QHostInfo::localHostName();
+            for (auto& dev : ifDevice.split(",")) {
+                dev = dev.trimmed();
+                if (dev.startsWith("!") && dev.mid(1).compare(hostName, Qt::CaseInsensitive) == 0) {
+                    // Machine name matched an exclusion, don't load this database
+                    loadDb = false;
+                    break;
+                } else if (dev.compare(hostName, Qt::CaseInsensitive) == 0) {
+                    loadDb = true;
                 }
             }
+            if (!loadDb) {
+                continue;
+            }
         }
 
-        // Request to open the database file in the background with a password and keyfile
-        emit requestOpenDatabase(filepath.canonicalFilePath(), true, entry->password(), keyfile.canonicalFilePath());
+        openDatabaseFromEntry(entry);
     }
+}
+
+void DatabaseWidget::openDatabaseFromEntry(const Entry* entry, bool inBackground)
+{
+    auto keyFile = entry->resolveMultiplePlaceholders(entry->username());
+    auto password = entry->resolveMultiplePlaceholders(entry->password());
+    auto databaseUrl = entry->resolveMultiplePlaceholders(entry->url());
+    if (databaseUrl.startsWith("kdbx://")) {
+        databaseUrl = databaseUrl.mid(7);
+    }
+
+    QFileInfo dbFileInfo;
+    if (databaseUrl.startsWith("file://")) {
+        QUrl url(databaseUrl);
+        dbFileInfo.setFile(url.toLocalFile());
+    } else {
+        dbFileInfo.setFile(databaseUrl);
+        if (dbFileInfo.isRelative()) {
+            QFileInfo currentpath(m_db->filePath());
+            dbFileInfo.setFile(currentpath.absoluteDir(), databaseUrl);
+        }
+    }
+
+    if (!dbFileInfo.isFile()) {
+        showErrorMessage(tr("Could not find database file: %1").arg(databaseUrl));
+        return;
+    }
+
+    QFileInfo keyFileInfo;
+    if (!keyFile.isEmpty()) {
+        if (keyFile.startsWith("file://")) {
+            QUrl keyfileUrl(keyFile);
+            keyFileInfo.setFile(keyfileUrl.toLocalFile());
+        } else {
+            keyFileInfo.setFile(keyFile);
+            if (keyFileInfo.isRelative()) {
+                QFileInfo currentpath(m_db->filePath());
+                keyFileInfo.setFile(currentpath.absoluteDir(), keyFile);
+            }
+        }
+    }
+
+    // Request to open the database file in the background with a password and keyfile
+    emit requestOpenDatabase(dbFileInfo.canonicalFilePath(), inBackground, password, keyFileInfo.canonicalFilePath());
 }
