@@ -62,7 +62,7 @@ WelcomeWidget::~WelcomeWidget()
 
 void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 {
-    if (item->text().isEmpty()) {
+    if (item == nullptr || item->text().isEmpty()) {
         return;
     }
     emit openDatabaseFile(item->text());
@@ -70,7 +70,7 @@ void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 
 void WelcomeWidget::removeFromLastDatabases(QListWidgetItem* item)
 {
-    if (item->text().isEmpty()) {
+    if (item == nullptr || item->text().isEmpty()) {
         return;
     }
 
