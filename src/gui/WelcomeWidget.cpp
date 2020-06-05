@@ -105,3 +105,9 @@ void WelcomeWidget::keyPressEvent(QKeyEvent* event)
 
     QWidget::keyPressEvent(event);
 }
+
+void WelcomeWidget::showEvent(QShowEvent* event)
+{
+    refreshLastDatabases();
+    QWidget::showEvent(event);
+}
