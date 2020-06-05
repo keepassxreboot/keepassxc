@@ -98,7 +98,7 @@ void WelcomeWidget::keyPressEvent(QKeyEvent* event)
     if (m_ui->recentListWidget->hasFocus()) {
         if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
             openDatabaseFromFile(m_ui->recentListWidget->currentItem());
-        } else if (event->key() == Qt::Key_Delete) {
+        } else if (event->key() == Qt::Key_Delete || event->key() == Qt::Key_Backspace) {
             removeFromLastDatabases(m_ui->recentListWidget->currentItem());
         }
     }
