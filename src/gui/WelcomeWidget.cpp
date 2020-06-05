@@ -40,11 +40,6 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
 
     refreshLastDatabases();
 
-    bool recent_visibility = (m_ui->recentListWidget->count() > 0);
-    m_ui->startLabel->setVisible(!recent_visibility);
-    m_ui->recentListWidget->setVisible(recent_visibility);
-    m_ui->recentLabel->setVisible(recent_visibility);
-
     connect(m_ui->buttonNewDatabase, SIGNAL(clicked()), SIGNAL(newDatabase()));
     connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
     connect(m_ui->buttonImportKeePass1, SIGNAL(clicked()), SIGNAL(importKeePass1Database()));
@@ -91,6 +86,11 @@ void WelcomeWidget::refreshLastDatabases()
         itm->setText(database);
         m_ui->recentListWidget->addItem(itm);
     }
+
+    bool recent_visibility = (m_ui->recentListWidget->count() > 0);
+    m_ui->startLabel->setVisible(!recent_visibility);
+    m_ui->recentListWidget->setVisible(recent_visibility);
+    m_ui->recentLabel->setVisible(recent_visibility);
 }
 
 void WelcomeWidget::keyPressEvent(QKeyEvent* event)
