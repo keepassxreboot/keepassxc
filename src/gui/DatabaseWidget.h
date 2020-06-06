@@ -174,6 +174,7 @@ public slots:
     void copyTitle();
     void copyUsername();
     void copyPassword();
+    void replacePassword();
     void copyURL();
     void copyNotes();
     void copyAttribute(QAction* action);
@@ -252,6 +253,7 @@ private slots:
 private:
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
+    QString getClipboardText();
     void processAutoOpen();
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false);

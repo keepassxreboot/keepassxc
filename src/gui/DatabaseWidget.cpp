@@ -21,6 +21,7 @@
 #include <QAction>
 #include <QApplication>
 #include <QCheckBox>
+#include <QClipboard>
 #include <QDesktopServices>
 #include <QFile>
 #include <QHBoxLayout>
@@ -700,6 +701,17 @@ void DatabaseWidget::copyPassword()
     }
 }
 
+void DatabaseWidget::replacePassword()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        QString thing = getClipboardText();
+        currentEntry->beginUpdate();
+        currentEntry->setPassword(thing);
+        currentEntry->endUpdate();
+    }
+}
+
 void DatabaseWidget::copyURL()
 {
     auto currentEntry = currentSelectedEntry();
@@ -744,6 +756,13 @@ void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
             window()->lower();
         }
     }
+}
+
+QString DatabaseWidget::getClipboardText()
+{
+    QClipboard* clipboard = QGuiApplication::clipboard();
+    QString originalText = clipboard->text();
+    return originalText;
 }
 
 #ifdef WITH_XC_SSHAGENT

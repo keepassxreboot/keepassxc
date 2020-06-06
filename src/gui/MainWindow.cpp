@@ -118,6 +118,7 @@ MainWindow::MainWindow()
     m_entryContextMenu = new QMenu(this);
     m_entryContextMenu->addAction(m_ui->actionEntryCopyUsername);
     m_entryContextMenu->addAction(m_ui->actionEntryCopyPassword);
+    m_entryContextMenu->addAction(m_ui->actionEntryReplacePassword);
     m_entryContextMenu->addAction(m_ui->menuEntryCopyAttribute->menuAction());
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
     m_entryContextMenu->addSeparator();
@@ -243,6 +244,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Down);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
+    m_ui->actionEntryReplacePassword->setShortcut(Qt::CTRL + Qt::Key_R);
     m_ui->actionEntryAutoType->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
@@ -263,6 +265,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryMoveDown->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyPassword->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryReplacePassword->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryAutoType->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
@@ -350,6 +353,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryMoveDown->setIcon(resources()->icon("move-down"));
     m_ui->actionEntryCopyUsername->setIcon(resources()->icon("username-copy"));
     m_ui->actionEntryCopyPassword->setIcon(resources()->icon("password-copy"));
+    m_ui->actionEntryReplacePassword->setIcon(resources()->icon("password-copy"));
     m_ui->actionEntryCopyURL->setIcon(resources()->icon("url-copy"));
     m_ui->actionEntryDownloadIcon->setIcon(resources()->icon("favicon-download"));
     m_ui->actionGroupSortAsc->setIcon(resources()->icon("sort-alphabetical-ascending"));
@@ -437,6 +441,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryMoveDown, SIGNAL(triggered()), SLOT(moveEntryDown()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()), SLOT(copyUsername()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()), SLOT(copyPassword()));
+    m_actionMultiplexer.connect(m_ui->actionEntryReplacePassword, SIGNAL(triggered()), SLOT(replacePassword()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyURL, SIGNAL(triggered()), SLOT(copyURL()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyNotes, SIGNAL(triggered()), SLOT(copyNotes()));
     m_actionMultiplexer.connect(m_ui->actionEntryAutoType, SIGNAL(triggered()), SLOT(performAutoType()));
@@ -695,6 +700,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             // NOTE: Copy password is enabled even if the selected entry's password is blank to prevent Ctrl+C
             // from copying information from the currently selected cell in the entry view table.
             m_ui->actionEntryCopyPassword->setEnabled(singleEntrySelected);
+            m_ui->actionEntryReplacePassword->setEnabled(singleEntrySelected);
             m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
@@ -747,6 +753,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             bool editEntryActive = dbWidget->isEntryEditActive();
             const auto editEntryActionsMask = QList<QAction*>({m_ui->actionEntryCopyUsername,
                                                                m_ui->actionEntryCopyPassword,
+                                                               m_ui->actionEntryReplacePassword,
                                                                m_ui->actionEntryCopyURL,
                                                                m_ui->actionEntryOpenUrl,
                                                                m_ui->actionEntryAutoType,

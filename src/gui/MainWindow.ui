@@ -314,6 +314,7 @@
     <addaction name="separator"/>
     <addaction name="actionEntryCopyUsername"/>
     <addaction name="actionEntryCopyPassword"/>
+    <addaction name="actionEntryReplacePassword"/>
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="menuEntryTotp"/>
     <addaction name="separator"/>
@@ -378,6 +379,7 @@
    <addaction name="separator"/>
    <addaction name="actionEntryCopyUsername"/>
    <addaction name="actionEntryCopyPassword"/>
+   <addaction name="actionEntryReplacePassword"/>
    <addaction name="actionEntryCopyURL"/>
    <addaction name="actionEntryAutoType"/>
    <addaction name="separator"/>
@@ -623,6 +625,17 @@
    </property>
    <property name="toolTip">
     <string>Copy password to clipboard</string>
+   </property>
+  </action>
+  <action name="actionEntryReplacePassword">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Replace &amp;Password</string>
+   </property>
+   <property name="toolTip">
+    <string>Replace password from clipboard</string>
    </property>
   </action>
   <action name="actionSettings">
