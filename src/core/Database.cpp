@@ -253,10 +253,14 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
 
     QFileInfo fileInfo(filePath);
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
+    bool isNewFile = !QFile::exists(realFilePath);
     bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, error, atomic, backup); });
     if (ok) {
         markAsClean();
         setFilePath(filePath);
+        if (isNewFile) {
+            QFile::setPermissions(realFilePath, QFile::ReadUser | QFile::WriteUser);
+        }
         m_fileWatcher->start(realFilePath, 30, 1);
     } else {
         // Saving failed, don't rewatch file since it does not represent our database
@@ -304,6 +308,7 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
             }
 
             // Delete the original db and move the temp file in place
+            auto perms = QFile::permissions(filePath);
             QFile::remove(filePath);
 
             // Note: call into the QFile rename instead of QTemporaryFile
@@ -312,6 +317,7 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
             if (tempFile.QFile::rename(filePath)) {
                 // successfully saved the database
                 tempFile.setAutoRemove(false);
+                QFile::setPermissions(filePath, perms);
                 return true;
             } else if (!backup || !restoreDatabase(filePath)) {
                 // Failed to copy new database in place, and
@@ -454,9 +460,12 @@ bool Database::backupDatabase(const QString& filePath)
 
     auto match = re.match(filePath);
     auto backupFilePath = filePath;
+    auto perms = QFile::permissions(filePath);
     backupFilePath = backupFilePath.replace(re, "") + ".old" + match.captured(1);
     QFile::remove(backupFilePath);
-    return QFile::copy(filePath, backupFilePath);
+    bool res = QFile::copy(filePath, backupFilePath);
+    QFile::setPermissions(backupFilePath, perms);
+    return res;
 }
 
 /**
@@ -472,11 +481,13 @@ bool Database::restoreDatabase(const QString& filePath)
     static auto re = QRegularExpression("^(.*?)(\\.[^.]+)?$");
 
     auto match = re.match(filePath);
+    auto perms = QFile::permissions(filePath);
     auto backupFilePath = match.captured(1) + ".old" + match.captured(2);
     // Only try to restore if the backup file actually exists
     if (QFile::exists(backupFilePath)) {
         QFile::remove(filePath);
         return QFile::copy(backupFilePath, filePath);
+        QFile::setPermissions(filePath, perms);
     }
     return false;
 }

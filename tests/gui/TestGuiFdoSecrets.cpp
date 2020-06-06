@@ -680,7 +680,7 @@ void TestGuiFdoSecrets::testCollectionCreate()
 
         QCOMPARE(spyCollectionCreated.count(), 1);
         {
-            auto args = spyCollectionCreated.takeFirst();
+            args = spyCollectionCreated.takeFirst();
             QCOMPARE(args.size(), 1);
             QCOMPARE(args.at(0).value<Collection*>(), coll);
         }
@@ -754,7 +754,7 @@ void TestGuiFdoSecrets::testCollectionDelete()
 
     QCOMPARE(spyCollectionDeleted.count(), 1);
     {
-        auto args = spyCollectionDeleted.takeFirst();
+        args = spyCollectionDeleted.takeFirst();
         QCOMPARE(args.size(), 1);
         QCOMPARE(args.at(0).value<Collection*>(), rawColl);
     }
@@ -977,7 +977,7 @@ void TestGuiFdoSecrets::testItemDelete()
 
     QCOMPARE(spyItemDeleted.count(), 1);
     {
-        auto args = spyItemDeleted.takeFirst();
+        args = spyItemDeleted.takeFirst();
         QCOMPARE(args.size(), 1);
         QCOMPARE(args.at(0).value<Item*>(), rawItem);
     }
