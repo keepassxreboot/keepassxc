@@ -38,6 +38,11 @@
 #include <QFont>
 #include <QSharedPointer>
 
+namespace
+{
+    constexpr int clearFormsDelay = 30000;
+}
+
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseOpenWidget())
@@ -47,13 +52,19 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     m_ui->messageWidget->setHidden(true);
 
+    m_hideTimer.setInterval(clearFormsDelay);
+    m_hideTimer.setSingleShot(true);
+    connect(&m_hideTimer, &QTimer::timeout, this, [this] {
+        // Reset the password field after being hidden for a set time
+        m_ui->editPassword->setText("");
+        m_ui->editPassword->setShowPassword(false);
+    });
+
     QFont font;
     font.setPointSize(font.pointSize() + 4);
     font.setBold(true);
     m_ui->labelHeadline->setFont(font);
     m_ui->labelHeadline->setText(tr("Unlock KeePassXC Database"));
-
-    m_ui->comboKeyFile->lineEdit()->addAction(m_ui->keyFileClearIcon, QLineEdit::TrailingPosition);
 
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
@@ -65,11 +76,11 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->keyFileLabelHelp->setIcon(resources()->icon("system-help").pixmap(QSize(12, 12)));
     connect(m_ui->keyFileLabelHelp, SIGNAL(clicked(bool)), SLOT(openKeyFileHelp()));
 
-    connect(m_ui->comboKeyFile->lineEdit(), SIGNAL(textChanged(QString)), SLOT(handleKeyFileComboEdited()));
-    connect(m_ui->comboKeyFile, SIGNAL(currentIndexChanged(int)), SLOT(handleKeyFileComboChanged()));
+    connect(m_ui->keyFileLineEdit, SIGNAL(textChanged(QString)), SLOT(keyFileTextChanged()));
+    m_ui->keyFileLineEdit->addAction(m_ui->keyFileClearIcon, QLineEdit::TrailingPosition);
     m_ui->keyFileClearIcon->setIcon(resources()->icon("edit-clear-locationbar-rtl"));
     m_ui->keyFileClearIcon->setVisible(false);
-    connect(m_ui->keyFileClearIcon, SIGNAL(triggered(bool)), SLOT(clearKeyFileEdit()));
+    connect(m_ui->keyFileClearIcon, SIGNAL(triggered(bool)), SLOT(clearKeyFileText()));
 
 #ifdef WITH_XC_YUBIKEY
     m_ui->hardwareKeyProgress->setVisible(false);
@@ -114,33 +125,32 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
 {
     DialogyWidget::showEvent(event);
     m_ui->editPassword->setFocus();
+    m_hideTimer.stop();
 }
 
 void DatabaseOpenWidget::hideEvent(QHideEvent* event)
 {
     DialogyWidget::hideEvent(event);
 
-    // Clear the forms if we are minimized
+    // Schedule form clearing if we are hidden
     if (!isVisible()) {
-        clearForms();
+        m_hideTimer.start();
     }
 }
 
 void DatabaseOpenWidget::load(const QString& filename)
 {
+    clearForms();
+
     m_filename = filename;
     m_ui->fileNameLabel->setRawText(m_filename);
 
-    m_ui->comboKeyFile->addItem(tr("Select key file..."), -1);
-    m_ui->comboKeyFile->setCurrentIndex(0);
     m_ui->keyFileClearIcon->setVisible(false);
-    m_keyFileComboEdited = false;
 
     if (config()->get(Config::RememberLastKeyFiles).toBool()) {
         auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();
         if (lastKeyFiles.contains(m_filename)) {
-            m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
-            m_ui->comboKeyFile->setCurrentIndex(1);
+            m_ui->keyFileLineEdit->setText(lastKeyFiles[m_filename].toString());
         }
     }
 
@@ -160,14 +170,12 @@ void DatabaseOpenWidget::load(const QString& filename)
 
 void DatabaseOpenWidget::clearForms()
 {
-    if (!m_isOpeningDatabase) {
-        m_ui->editPassword->setText("");
-        m_ui->editPassword->setShowPassword(false);
-        m_ui->comboKeyFile->clear();
-        m_ui->comboKeyFile->setEditText("");
-        m_ui->checkTouchID->setChecked(false);
-        m_db.reset();
-    }
+    m_ui->editPassword->setText("");
+    m_ui->editPassword->setShowPassword(false);
+    m_ui->keyFileLineEdit->clear();
+    m_ui->checkTouchID->setChecked(false);
+    m_ui->challengeResponseCombo->clear();
+    m_db.reset();
 }
 
 QSharedPointer<Database> DatabaseOpenWidget::database()
@@ -183,8 +191,7 @@ QString DatabaseOpenWidget::filename()
 void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
     m_ui->editPassword->setText(pw);
-    m_ui->comboKeyFile->setCurrentIndex(-1);
-    m_ui->comboKeyFile->setEditText(keyFile);
+    m_ui->keyFileLineEdit->setText(keyFile);
     openDatabase();
 }
 
@@ -200,7 +207,6 @@ void DatabaseOpenWidget::openDatabase()
     m_ui->editPassword->setShowPassword(false);
     QCoreApplication::processEvents();
 
-    m_isOpeningDatabase = true;
     m_db.reset(new Database());
     QString error;
 
@@ -230,10 +236,8 @@ void DatabaseOpenWidget::openDatabase()
         config()->set(Config::UseTouchID, useTouchID);
 #endif
         emit dialogFinished(true);
-        m_isOpeningDatabase = false;
         clearForms();
     } else {
-        m_isOpeningDatabase = false;
         if (m_ui->editPassword->text().isEmpty() && !m_retryUnlockWithEmptyPassword) {
             QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
             msgBox->setIcon(QMessageBox::Critical);
@@ -298,8 +302,8 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
     lastKeyFiles.remove(m_filename);
 
     auto key = QSharedPointer<FileKey>::create();
-    QString keyFilename = m_ui->comboKeyFile->currentText();
-    if (!m_ui->comboKeyFile->currentText().isEmpty() && m_keyFileComboEdited) {
+    QString keyFilename = m_ui->keyFileLineEdit->text();
+    if (!keyFilename.isEmpty()) {
         QString errorMsg;
         if (!key->load(keyFilename, &errorMsg)) {
             m_ui->messageWidget->showMessage(tr("Failed to open key file: %1").arg(errorMsg), MessageWidget::Error);
@@ -375,28 +379,18 @@ void DatabaseOpenWidget::browseKeyFile()
     }
 
     if (!filename.isEmpty()) {
-        m_ui->comboKeyFile->setCurrentIndex(-1);
-        m_ui->comboKeyFile->setEditText(filename);
+        m_ui->keyFileLineEdit->setText(filename);
     }
 }
 
-void DatabaseOpenWidget::clearKeyFileEdit()
+void DatabaseOpenWidget::clearKeyFileText()
 {
-    m_ui->comboKeyFile->setCurrentIndex(0);
-    // make sure that handler is called even if 0 was the current index already
-    handleKeyFileComboChanged();
+    m_ui->keyFileLineEdit->clear();
 }
 
-void DatabaseOpenWidget::handleKeyFileComboEdited()
+void DatabaseOpenWidget::keyFileTextChanged()
 {
-    m_keyFileComboEdited = true;
-    m_ui->keyFileClearIcon->setVisible(true);
-}
-
-void DatabaseOpenWidget::handleKeyFileComboChanged()
-{
-    m_keyFileComboEdited = m_ui->comboKeyFile->currentIndex() != 0;
-    m_ui->keyFileClearIcon->setVisible(m_keyFileComboEdited);
+    m_ui->keyFileClearIcon->setVisible(!m_ui->keyFileLineEdit->text().isEmpty());
 }
 
 void DatabaseOpenWidget::pollHardwareKey()

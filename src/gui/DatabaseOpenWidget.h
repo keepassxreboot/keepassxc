@@ -20,6 +20,7 @@
 #define KEEPASSX_DATABASEOPENWIDGET_H
 
 #include <QScopedPointer>
+#include <QTimer>
 
 #include "gui/DialogyWidget.h"
 #include "keys/CompositeKey.h"
@@ -53,30 +54,28 @@ protected:
     void hideEvent(QHideEvent* event) override;
     QSharedPointer<CompositeKey> databaseKey();
 
+    const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
+    QSharedPointer<Database> m_db;
+    QString m_filename;
+    bool m_retryUnlockWithEmptyPassword = false;
+
 protected slots:
     virtual void openDatabase();
     void reject();
 
 private slots:
     void browseKeyFile();
-    void clearKeyFileEdit();
-    void handleKeyFileComboEdited();
-    void handleKeyFileComboChanged();
+    void clearKeyFileText();
+    void keyFileTextChanged();
     void pollHardwareKey();
     void hardwareKeyResponse(bool found);
     void openHardwareKeyHelp();
     void openKeyFileHelp();
 
-protected:
-    const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
-    QSharedPointer<Database> m_db;
-    QString m_filename;
-    bool m_retryUnlockWithEmptyPassword = false;
-
 private:
     bool m_pollingHardwareKey = false;
-    bool m_keyFileComboEdited = false;
-    bool m_isOpeningDatabase = false;
+    QTimer m_hideTimer;
+
     Q_DISABLE_COPY(DatabaseOpenWidget)
 };
 

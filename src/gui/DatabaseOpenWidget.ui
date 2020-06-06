@@ -237,7 +237,7 @@
                        <string>Key File:</string>
                       </property>
                       <property name="buddy">
-                       <cstring>comboKeyFile</cstring>
+                       <cstring>keyFileLineEdit</cstring>
                       </property>
                      </widget>
                     </item>
@@ -406,10 +406,7 @@
                      <number>0</number>
                     </property>
                     <item row="0" column="1">
-                     <widget class="QComboBox" name="comboKeyFile">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
+                     <widget class="QLineEdit" name="keyFileLineEdit">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -417,10 +414,7 @@
                        </sizepolicy>
                       </property>
                       <property name="accessibleName">
-                       <string>Key file selection</string>
-                      </property>
-                      <property name="editable">
-                       <bool>true</bool>
+                       <string>Key file to unlock the database</string>
                       </property>
                      </widget>
                     </item>
@@ -610,7 +604,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>editPassword</tabstop>
-  <tabstop>comboKeyFile</tabstop>
+  <tabstop>keyFileLineEdit</tabstop>
   <tabstop>buttonBrowseFile</tabstop>
   <tabstop>challengeResponseCombo</tabstop>
   <tabstop>buttonRedetectYubikey</tabstop>
