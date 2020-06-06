@@ -40,11 +40,6 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
 
     refreshLastDatabases();
 
-    bool recent_visibility = (m_ui->recentListWidget->count() > 0);
-    m_ui->startLabel->setVisible(!recent_visibility);
-    m_ui->recentListWidget->setVisible(recent_visibility);
-    m_ui->recentLabel->setVisible(recent_visibility);
-
     connect(m_ui->buttonNewDatabase, SIGNAL(clicked()), SIGNAL(newDatabase()));
     connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
     connect(m_ui->buttonImportKeePass1, SIGNAL(clicked()), SIGNAL(importKeePass1Database()));
@@ -62,10 +57,24 @@ WelcomeWidget::~WelcomeWidget()
 
 void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 {
-    if (item->text().isEmpty()) {
+    if (!item || item->text().isEmpty()) {
         return;
     }
     emit openDatabaseFile(item->text());
+}
+
+void WelcomeWidget::removeFromLastDatabases(QListWidgetItem* item)
+{
+    if (!item || item->text().isEmpty()) {
+        return;
+    }
+
+    if (config()->get(Config::RememberLastDatabases).toBool()) {
+        QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
+        lastDatabases.removeOne(item->text());
+        config()->set(Config::LastDatabases, lastDatabases);
+    }
+    refreshLastDatabases();
 }
 
 void WelcomeWidget::refreshLastDatabases()
@@ -77,13 +86,28 @@ void WelcomeWidget::refreshLastDatabases()
         itm->setText(database);
         m_ui->recentListWidget->addItem(itm);
     }
+
+    bool recent_visibility = (m_ui->recentListWidget->count() > 0);
+    m_ui->startLabel->setVisible(!recent_visibility);
+    m_ui->recentListWidget->setVisible(recent_visibility);
+    m_ui->recentLabel->setVisible(recent_visibility);
 }
 
 void WelcomeWidget::keyPressEvent(QKeyEvent* event)
 {
-    if (m_ui->recentListWidget->hasFocus() && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
-        openDatabaseFromFile(m_ui->recentListWidget->currentItem());
+    if (m_ui->recentListWidget->hasFocus()) {
+        if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+            openDatabaseFromFile(m_ui->recentListWidget->currentItem());
+        } else if (event->key() == Qt::Key_Delete || event->key() == Qt::Key_Backspace) {
+            removeFromLastDatabases(m_ui->recentListWidget->currentItem());
+        }
     }
 
     QWidget::keyPressEvent(event);
+}
+
+void WelcomeWidget::showEvent(QShowEvent* event)
+{
+    refreshLastDatabases();
+    QWidget::showEvent(event);
 }
