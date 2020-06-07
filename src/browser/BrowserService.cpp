@@ -413,7 +413,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
     }
 
     // Sort results
-    pwEntries = sortEntries(pwEntries, host, submitUrl);
+    pwEntries = sortEntries(pwEntries, host, submitUrl, url);
 
     // Fill the list
     QJsonArray result;
@@ -698,7 +698,10 @@ void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> db)
     }
 }
 
-QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& entryUrl)
+QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries,
+                                          const QString& host,
+                                          const QString& entryUrl,
+                                          const QString& fullUrl)
 {
     QUrl url(entryUrl);
     if (url.scheme().isEmpty()) {
@@ -712,7 +715,7 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
     // Build map of prioritized entries
     QMultiMap<int, Entry*> priorities;
     for (auto* entry : pwEntries) {
-        priorities.insert(sortPriority(entry, host, submitUrl, baseSubmitUrl), entry);
+        priorities.insert(sortPriority(entry, host, submitUrl, baseSubmitUrl, fullUrl), entry);
     }
 
     QList<Entry*> results;
@@ -895,7 +898,8 @@ Group* BrowserService::getDefaultEntryGroup(const QSharedPointer<Database>& sele
 int BrowserService::sortPriority(const Entry* entry,
                                  const QString& host,
                                  const QString& submitUrl,
-                                 const QString& baseSubmitUrl) const
+                                 const QString& baseSubmitUrl,
+                                 const QString& fullUrl) const
 {
     QUrl url(entry->url());
     if (url.scheme().isEmpty()) {
@@ -914,8 +918,11 @@ int BrowserService::sortPriority(const Entry* entry,
     if (!url.host().contains(".") && url.host() != "localhost") {
         return 0;
     }
-    if (submitUrl == entryURL) {
+    if (fullUrl == entryURL) {
         return 100;
+    }
+    if (submitUrl == entryURL) {
+        return 95;
     }
     if (submitUrl.startsWith(entryURL) && entryURL != host && baseSubmitUrl != entryURL) {
         return 90;
@@ -1025,7 +1032,17 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& url, cons
 
     // Match the subdomains with the limited wildcard
     if (siteQUrl.host().endsWith(entryQUrl.host())) {
-        return true;
+        if (!browserSettings()->bestMatchOnly()) {
+            return true;
+        }
+
+        // Match the exact subdomain and path, or start of the path when entry's path is longer than plain "/"
+        if (siteQUrl.host() == entryQUrl.host()) {
+            if (siteQUrl.path() == entryQUrl.path()
+                || (entryQUrl.path().size() > 1 && siteQUrl.path().startsWith(entryQUrl.path()))) {
+                return true;
+            }
+        }
     }
 
     return false;
