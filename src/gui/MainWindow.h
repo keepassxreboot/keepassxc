@@ -75,6 +75,7 @@ public slots:
     void hide();
     void show();
     void hideWindow();
+    void minimizeWindow();
     void minimizeOrHide();
     void toggleWindow();
     void bringToFront();

@@ -1433,6 +1433,19 @@ void MainWindow::hide()
 #endif
 }
 
+void MainWindow::minimizeWindow()
+{
+    if (QGuiApplication::platformName() == "xcb") {
+
+        // see https://bugreports.qt.io/browse/QTBUG-25727
+        setWindowState(windowState() | Qt::WindowMinimized);
+        QApplication::processEvents();
+        setWindowState(windowState() & ~Qt::WindowMinimized);
+    } else {
+        showMinimized();
+    }
+}
+
 void MainWindow::hideWindow()
 {
     saveWindowInformation();
@@ -1446,7 +1459,7 @@ void MainWindow::hideWindow()
         }
         hide();
     } else {
-        showMinimized();
+        minimizeWindow();
     }
 
     if (config()->get(Config::Security_LockDatabaseMinimize).toBool()) {
@@ -1459,7 +1472,7 @@ void MainWindow::minimizeOrHide()
     if (config()->get(Config::GUI_MinimizeToTray).toBool()) {
         hideWindow();
     } else {
-        showMinimized();
+        minimizeWindow();
     }
 }
 
