@@ -38,6 +38,7 @@ void TestBrowser::initTestCase()
 {
     QVERIFY(Crypto::init());
     m_browserService = browserService();
+    browserSettings()->setBestMatchOnly(false);
 }
 
 void TestBrowser::init()
@@ -130,6 +131,7 @@ void TestBrowser::testSortPriority()
     QString host = "github.com";
     QString submitUrl = "https://github.com/session";
     QString baseSubmitUrl = "https://github.com";
+    QString fullUrl = "https://github.com/login";
 
     QScopedPointer<Entry> entry1(new Entry());
     QScopedPointer<Entry> entry2(new Entry());
@@ -141,6 +143,7 @@ void TestBrowser::testSortPriority()
     QScopedPointer<Entry> entry8(new Entry());
     QScopedPointer<Entry> entry9(new Entry());
     QScopedPointer<Entry> entry10(new Entry());
+    QScopedPointer<Entry> entry11(new Entry());
 
     entry1->setUrl("https://github.com/login");
     entry2->setUrl("https://github.com/login");
@@ -152,18 +155,20 @@ void TestBrowser::testSortPriority()
     entry8->setUrl("github.com/login");
     entry9->setUrl("https://github"); // Invalid URL
     entry10->setUrl("github.com");
+    entry11->setUrl("https://github.com/login"); // Exact match
 
     // The extension uses the submitUrl as default for comparison
-    auto res1 = m_browserService->sortPriority(entry1.data(), host, "https://github.com/login", baseSubmitUrl);
-    auto res2 = m_browserService->sortPriority(entry2.data(), host, submitUrl, baseSubmitUrl);
-    auto res3 = m_browserService->sortPriority(entry3.data(), host, submitUrl, baseSubmitUrl);
-    auto res4 = m_browserService->sortPriority(entry4.data(), host, submitUrl, baseSubmitUrl);
-    auto res5 = m_browserService->sortPriority(entry5.data(), host, submitUrl, baseSubmitUrl);
-    auto res6 = m_browserService->sortPriority(entry6.data(), host, submitUrl, baseSubmitUrl);
-    auto res7 = m_browserService->sortPriority(entry7.data(), host, submitUrl, baseSubmitUrl);
-    auto res8 = m_browserService->sortPriority(entry8.data(), host, submitUrl, baseSubmitUrl);
-    auto res9 = m_browserService->sortPriority(entry9.data(), host, submitUrl, baseSubmitUrl);
-    auto res10 = m_browserService->sortPriority(entry10.data(), host, submitUrl, baseSubmitUrl);
+    auto res1 = m_browserService->sortPriority(entry1.data(), host, "https://github.com/login", baseSubmitUrl, fullUrl);
+    auto res2 = m_browserService->sortPriority(entry2.data(), host, submitUrl, baseSubmitUrl, baseSubmitUrl);
+    auto res3 = m_browserService->sortPriority(entry3.data(), host, submitUrl, baseSubmitUrl, fullUrl);
+    auto res4 = m_browserService->sortPriority(entry4.data(), host, submitUrl, baseSubmitUrl, fullUrl);
+    auto res5 = m_browserService->sortPriority(entry5.data(), host, submitUrl, baseSubmitUrl, fullUrl);
+    auto res6 = m_browserService->sortPriority(entry6.data(), host, submitUrl, baseSubmitUrl, fullUrl);
+    auto res7 = m_browserService->sortPriority(entry7.data(), host, submitUrl, baseSubmitUrl, fullUrl);
+    auto res8 = m_browserService->sortPriority(entry8.data(), host, submitUrl, baseSubmitUrl, fullUrl);
+    auto res9 = m_browserService->sortPriority(entry9.data(), host, submitUrl, baseSubmitUrl, fullUrl);
+    auto res10 = m_browserService->sortPriority(entry10.data(), host, submitUrl, baseSubmitUrl, fullUrl);
+    auto res11 = m_browserService->sortPriority(entry11.data(), host, submitUrl, baseSubmitUrl, fullUrl);
 
     QCOMPARE(res1, 100);
     QCOMPARE(res2, 40);
@@ -175,6 +180,7 @@ void TestBrowser::testSortPriority()
     QCOMPARE(res8, 0);
     QCOMPARE(res9, 0);
     QCOMPARE(res10, 0);
+    QCOMPARE(res11, 100);
 }
 
 void TestBrowser::testSearchEntries()
@@ -382,8 +388,8 @@ void TestBrowser::testSortEntries()
     auto entries = createEntries(urls, root);
 
     browserSettings()->setBestMatchOnly(false);
-    auto result =
-        m_browserService->sortEntries(entries, "github.com", "https://github.com/session"); // entries, host, submitUrl
+    auto result = m_browserService->sortEntries(
+        entries, "github.com", "https://github.com/session", "https://github.com"); // entries, host, submitUrl
     QCOMPARE(result.size(), 10);
     QCOMPARE(result[0]->username(), QString("User 2"));
     QCOMPARE(result[0]->url(), QString("https://github.com/"));
@@ -393,6 +399,15 @@ void TestBrowser::testSortEntries()
     QCOMPARE(result[2]->url(), QString("https://github.com/login"));
     QCOMPARE(result[3]->username(), QString("User 3"));
     QCOMPARE(result[3]->url(), QString("github.com/login"));
+
+    // Test with a perfect match. That should be first in the list.
+    result = m_browserService->sortEntries(
+        entries, "github.com", "https://github.com/session", "https://github.com/login_page");
+    QCOMPARE(result.size(), 10);
+    QCOMPARE(result[0]->username(), QString("User 0"));
+    QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
+    QCOMPARE(result[1]->username(), QString("User 2"));
+    QCOMPARE(result[1]->url(), QString("https://github.com/"));
 }
 
 QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
@@ -428,4 +443,59 @@ void TestBrowser::testValidURLs()
         i.next();
         QCOMPARE(Tools::checkUrlValid(i.key()), i.value());
     }
+}
+
+void TestBrowser::testBestMatchingCredentials()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    // Test with simple URL entries
+    QStringList urls = {"https://github.com/loginpage", "https://github.com/justsomepage", "https://github.com/"};
+
+    auto entries = createEntries(urls, root);
+
+    browserSettings()->setBestMatchOnly(true);
+
+    auto result = m_browserService->searchEntries(db, "https://github.com/loginpage", "https://github.com/loginpage");
+    QCOMPARE(result.size(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com/loginpage"));
+
+    result = m_browserService->searchEntries(db, "https://github.com/justsomepage", "https://github.com/justsomepage");
+    QCOMPARE(result.size(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com/justsomepage"));
+
+    result = m_browserService->searchEntries(db, "https://github.com/", "https://github.com/");
+    m_browserService->sortEntries(entries, "github.com", "https://github.com/", "https://github.com/");
+    QCOMPARE(result.size(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com/"));
+
+    browserSettings()->setBestMatchOnly(false);
+    result = m_browserService->searchEntries(db, "https://github.com/loginpage", "https://github.com/loginpage");
+    QCOMPARE(result.size(), 3);
+    QCOMPARE(result[0]->url(), QString("https://github.com/loginpage"));
+
+    // Test with subdomains
+    QStringList subdomainsUrls = {"https://sub.github.com/loginpage",
+                                  "https://sub.github.com/justsomepage",
+                                  "https://bus.github.com/justsomepage"};
+
+    entries = createEntries(subdomainsUrls, root);
+
+    browserSettings()->setBestMatchOnly(true);
+
+    result = m_browserService->searchEntries(
+        db, "https://sub.github.com/justsomepage", "https://sub.github.com/justsomepage");
+    QCOMPARE(result.size(), 1);
+    QCOMPARE(result[0]->url(), QString("https://sub.github.com/justsomepage"));
+
+    result = m_browserService->searchEntries(db, "https://github.com/justsomepage", "https://github.com/justsomepage");
+    QCOMPARE(result.size(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com/justsomepage"));
+
+    result = m_browserService->searchEntries(db,
+                                             "https://sub.github.com/justsomepage?wehavesomeextra=here",
+                                             "https://sub.github.com/justsomepage?wehavesomeextra=here");
+    QCOMPARE(result.size(), 1);
+    QCOMPARE(result[0]->url(), QString("https://sub.github.com/justsomepage"));
 }
