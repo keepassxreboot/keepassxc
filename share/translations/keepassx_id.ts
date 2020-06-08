@@ -97,11 +97,11 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation type="unfinished"/>
+        <translation>Atur Ulang Pengaturan?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>Apakah anda yakin ingin mengatur ulang pengaturan umum dan keamanan ke nilai bawaan?</translation>
     </message>
 </context>
 <context>
@@ -225,63 +225,63 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation>Ingat basis data yang sebelumnya digunakan</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>Muat basis data yang sebelumnya terbuka saat memulai</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>Ingat berkas kunci dan dongle kemanan</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation type="unfinished"/>
+        <translation>Periksa pembaruan saat memulai aplikasi sekali seminggu</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Termasuk rilis beta saat memeriksa pembaruan</translation>
     </message>
     <message>
         <source>Button style:</source>
-        <translation type="unfinished"/>
+        <translation>Gaya tombol:</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>Bahasa:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation type="unfinished"/>
+        <translation>(mulai ulang program untuk mengaktifkan)</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation type="unfinished"/>
+        <translation>Minimalkan jendela setelah membuka basis data</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation type="unfinished"/>
+        <translation>Minimalkan saat membuka URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Sembunyikan jendela saat menyalin ke papan klip</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Minimalkan</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation type="unfinished"/>
+        <translation>Beralih ke latar belakang</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation type="unfinished"/>
+        <translation>Waktu habis mengunduh favicon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Waktu habis mengunduh ikon situs web dalam detik</translation>
     </message>
     <message>
         <source> sec</source>
@@ -290,15 +290,15 @@
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation type="unfinished"/>
+        <translation>Gaya tombol bilah perkakas</translation>
     </message>
     <message>
         <source>Use monospaced font for Notes</source>
-        <translation type="unfinished"/>
+        <translation>Gunakan fon monospace untuk Catatan</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan bahasa</translation>
     </message>
     <message>
         <source>Reset Settings to Default</source>
@@ -306,15 +306,15 @@
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Pintasan ketik-otomatis global</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>Tundaan pengetikan karakter ketik-otomatis dalam milidetik</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>Tundaan mulai ketik-otomatis dalam milidetik</translation>
     </message>
 </context>
 <context>
@@ -390,15 +390,15 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation>Gunakan layanan DuckDuckGo untuk mengunduh ikon situs web</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"/>
+        <translation>Waktu menghapus papan klip (detik)</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
-        <translation type="unfinished"/>
+        <translation>Atur ulang Touch ID setelah tidak aktif</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation>Hapus kueri pencarian setelah</translation>
     </message>
 </context>
 <context>
@@ -446,11 +446,11 @@
     </message>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>Membutuhkan Izin</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC membutuhkan izin Aksesibilitas untuk menjalankan Ketik-Otomatis entri. Jika anda sudah memberikan izin, anda perlu memulai ulang KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -502,11 +502,11 @@
     <name>AutoTypePlatformMac</name>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>Membutuhkan Izin</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC membutuhkan izin Aksesibilitas dan Perekaman Layar untuk menjalankan Ketik-Otomatis secara global. Perekaman Layar dibutuhkan untuk mengakses judul jendela dari entri terkait. Jika anda sudah memberikan izin, anda perlu memulai ulang KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -755,11 +755,11 @@ Silakan pilih basis data yang digunakan untuk menyimpan kredensial.</translation
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation type="unfinished"/>
+        <translation>Aktifkan integrasi peramban</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation type="unfinished"/>
+        <translation>Peramban yang dipasang sebagai snap saat ini tidak didukung.</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
@@ -767,7 +767,7 @@ Silakan pilih basis data yang digunakan untuk menyimpan kredensial.</translation
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation type="unfinished"/>
+        <translation>Jangan pernah tampilkan popup yang menyarankan migrasi pengaturan KeePassHTTP versi lama.</translation>
     </message>
     <message>
         <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
@@ -775,11 +775,11 @@ Silakan pilih basis data yang digunakan untuk menyimpan kredensial.</translation
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas lokasi proksi khusus</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation type="unfinished"/>
+        <translation>Peramban untuk berkas proksi khusus</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: %1</source>
@@ -985,23 +985,24 @@ chrome-laptop.</source>
     <message>
         <source>CSV import: writer has errors:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Impor CSV: galat penulis:
+%1</translation>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation type="unfinished"/>
+        <translation>Kualifikasi teks</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation type="unfinished"/>
+        <translation>Pemisahan ruas</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation type="unfinished"/>
+        <translation>Jumlah baris tajuk untuk dibuang</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation type="unfinished"/>
+        <translation>Pratinjau impor CSV</translation>
     </message>
 </context>
 <context>
@@ -1054,19 +1055,20 @@ chrome-laptop.</source>
     <message>
         <source>%1
 Backup database located at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1
+Lokasi cadangan basis data ada di %2</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"/>
+        <translation>Tidak bisa menyimpan, basis data tidak merujuk ke berkas yang valid.</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation type="unfinished"/>
+        <translation>Tidak bisa menyimpan, basis data memiliki atribut baca-saja.</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation type="unfinished"/>
+        <translation>Berkas basis data memiliki perubahan yang belum digabung.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1122,7 +1124,7 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Gagal untuk membuka berkas kunci: %1</translation>
     </message>
     <message>
         <source>Select slot...</source>
@@ -1130,15 +1132,15 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>Buka Kunci Basis Data KeePassXC</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>Masukkan Sandi:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas sandi</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
@@ -1146,15 +1148,15 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan berkas kunci</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan slot kunci perangkat keras</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>Temukan berkas kunci</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1162,19 +1164,19 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Segarkan token perangkat keras</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
+        <translation>Kunci Perangkat Keras:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>Bantuan kunci perangkat keras</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>TouchID untuk Buka Cepat</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1182,11 +1184,11 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>Clear Key File</source>
-        <translation type="unfinished"/>
+        <translation>Kosongkan Berkas Kunci</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation type="unfinished"/>
+        <translation>Gagal membuka dan sandi tidak tersedia</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
@@ -1197,11 +1199,11 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation type="unfinished"/>
+        <translation>Ulangi dengan sandi kosong</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation type="unfinished"/>
+        <translation>Masukkan Kredensial Tambahan (jika ada):</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
@@ -1214,24 +1216,25 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Key file help</source>
-        <translation type="unfinished"/>
+        <translation>Bantuan berkas kunci</translation>
     </message>
     <message>
         <source>?</source>
-        <translation type="unfinished"/>
+        <translation>?</translation>
     </message>
     <message>
         <source>Select key file...</source>
-        <translation type="unfinished"/>
+        <translation>Pilih berkas kunci...</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation type="unfinished"/>
+        <translation>Tidak bisa menggunakan berkas basis data sebagai berkas kunci</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation type="unfinished"/>
+        <translation>Anda tidak bisa menggunakan berkas basis data anda sebagai berkas kunci,
+Jika anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
 </context>
 <context>
@@ -1388,11 +1391,11 @@ Hal ini diperlukan untuk mempertahankan kompatibilitas dengan plugin peramban.</
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation type="unfinished"/>
+        <translation>Simpan kunci peramban</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>Buang kunci yang dipilih</translation>
     </message>
 </context>
 <context>
@@ -1538,23 +1541,23 @@ Jika anda tetap mempertahankan jumlah serendah ini, basis data anda mungkin akan
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation type="unfinished"/>
+        <translation>Ubah waktu dekripsi yang ada</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Waktu dekripsi dalam detik</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation type="unfinished"/>
+        <translation>Format basis data</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Algoritma enkripsi</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation type="unfinished"/>
+        <translation>Fungi derivasi kunci</translation>
     </message>
     <message>
         <source>Transform rounds</source>
@@ -1562,18 +1565,18 @@ Jika anda tetap mempertahankan jumlah serendah ini, basis data anda mungkin akan
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>Penggunaan memori</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation type="unfinished"/>
+        <translation>Paralelisme</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation type="unfinished"/>
+        <translation>Entri Yang Diekspos</translation>
     </message>
     <message>
         <source>Don&apos;t e&amp;xpose this database</source>
@@ -1636,36 +1639,37 @@ Jika anda tetap mempertahankan jumlah serendah ini, basis data anda mungkin akan
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas nama basis data</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas deskripsi basis data</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas nama pengguna baku</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation type="unfinished"/>
+        <translation>Jumlah maksimum item riwayat per entri</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation type="unfinished"/>
+        <translation>Ukuran maksimum riwayat per entri</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Keranjang Sampah</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation type="unfinished"/>
+        <translation>Apakah anda yakin ingin menghapus keranjang sampah dan semua isinya?
+Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation type="unfinished"/>
+        <translation>(lama)</translation>
     </message>
 </context>
 <context>
@@ -1688,7 +1692,7 @@ This action is not reversible.</source>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Penanda Tangan Terakhir</translation>
     </message>
     <message>
         <source>Certificates</source>
@@ -1736,7 +1740,7 @@ Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation type="unfinished"/>
+        <translation>Lanjutkan tanpa sandi</translation>
     </message>
 </context>
 <context>
@@ -1751,18 +1755,18 @@ Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas nama basis data</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas deskripsi basis data</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetStatistics</name>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Statistik</translation>
     </message>
     <message>
         <source>Hover over lines with error icons for further information.</source>
@@ -1950,27 +1954,27 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation type="unfinished"/>
+        <translation>Gagal untuk membuka %1. Mungkin tidak ada atau tidak bisa diakses.</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation type="unfinished"/>
+        <translation>Ekspor basis data ke berkas HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation type="unfinished"/>
+        <translation>Berkas HTML</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation type="unfinished"/>
+        <translation>Gagal menyimpan ke berkas HTML.</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation type="unfinished"/>
+        <translation>Konfirmasi Ekspor</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Anda akan mengekspor basis data anda ke berkas tanpa enkripsi. Ini akan membuat sandi dan informasi sensitif lainnya menjadi sangat rentan. Apakah anda yakin ingin melanjutkan?</translation>
     </message>
 </context>
 <context>
@@ -2151,7 +2155,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Basis data ini dibuka dalam mode baca-saja. Simpan otomatis dinonaktifkan.</translation>
     </message>
 </context>
 <context>
@@ -2278,11 +2282,11 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty URL&gt;</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation type="unfinished"/>
+        <translation>Apakah anda yakin ingin membuang URL ini?</translation>
     </message>
 </context>
 <context>
@@ -2325,39 +2329,39 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan atribut</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation type="unfinished"/>
+        <translation>Nilai atribut</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation type="unfinished"/>
+        <translation>Tambah atribut baru</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation type="unfinished"/>
+        <translation>Buang atribut yang dipilih</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation type="unfinished"/>
+        <translation>Sunting nama atribut</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation type="unfinished"/>
+        <translation>Aktif/Nonaktifkan proteksi atribut</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan atribut yang dilindungi</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan warna latar depan</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan warna latar belakang</translation>
     </message>
 </context>
 <context>
@@ -2396,46 +2400,46 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Urutan Ketik-Otomatis khusus</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation type="unfinished"/>
+        <translation>Buka laman bantuan Ketik-Otomatis</translation>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation type="unfinished"/>
+        <translation>Asosiasi jendela yang ada</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation type="unfinished"/>
+        <translation>Tambah asosiasi jendela baru</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation type="unfinished"/>
+        <translation>Buang asosiasi jendela yang dipilih</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation type="unfinished"/>
+        <translation>Anda bisa menggunakan asterik (*) untuk mencocokkan semuanya</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation type="unfinished"/>
+        <translation>Atur judul asosiasi jendela</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation type="unfinished"/>
+        <translation>Anda bisa menggunakan asterik untuk mencocokkan semuanya</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation type="unfinished"/>
+        <translation>Urutan Ketik-Otomatis khusus untuk jendela ini</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>Pengaturan ini mempengaruhi perilaku entri dengan ekstensi peramban.</translation>
     </message>
     <message>
         <source>General</source>
@@ -2443,15 +2447,15 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation type="unfinished"/>
+        <translation>Lewati Kirim-Otomatis untuk entri ini</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation type="unfinished"/>
+        <translation>Sembunyikan entri ini dari ekstensi peramban</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation type="unfinished"/>
+        <translation>URL tambahan</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2486,7 +2490,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Entry history selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan riwayat entri</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
@@ -2502,7 +2506,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation type="unfinished"/>
+        <translation>Hapus semua riwayat</translation>
     </message>
 </context>
 <context>
@@ -2545,15 +2549,15 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Url field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas url</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>Untuk favicon untuk URL</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas pengulangan sandi</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
@@ -2561,7 +2565,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas sandi</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
@@ -2569,11 +2573,11 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation type="unfinished"/>
+        <translation>Aktif/Nonaktifkan visibilitas cacatan</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas kedaluwarsa</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
@@ -2585,26 +2589,26 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas catatan</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas judul</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas nama pengguna</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>Aktif/Nonaktifkan kedaluwarsa</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulir</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
@@ -2681,15 +2685,15 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation type="unfinished"/>
+        <translation>Peramban untuk berkas kunci</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation type="unfinished"/>
+        <translation>Berkas kunci eksternal</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <translation>Pilih berkas lampiran</translation>
     </message>
 </context>
 <context>
@@ -2735,7 +2739,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     <name>EditGroupWidgetKeeShare</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulir</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -2759,11 +2763,11 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation type="unfinished"/>
+        <translation>Kontainer KeeShare tak bertanda tangan</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation type="unfinished"/>
+        <translation>Kontainer KeeShare bertanda tangan</translation>
     </message>
     <message>
         <source>Select import source</source>
@@ -2791,20 +2795,21 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation type="unfinished"/>
+        <translation>Sinkronkan</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Versi KeePassXC anda tidak mendukung fitur berbagi untuk tipe kontainer ini.
+Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 sudah diekspor oleh basis data ini.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 telah diimpor oleh basis data ini.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
@@ -2817,19 +2822,19 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Ekspor basis data saat ini dinonaktifkan oleh pengaturan aplikasi.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Impor basis data saat ini dinonaktifkan oleh pengaturan aplikasi.</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas mode berbagi</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas jalur ke berkas yang dibagikan</translation>
     </message>
     <message>
         <source>Browser for share file</source>
@@ -2837,7 +2842,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas sandi</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
@@ -2849,7 +2854,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation type="unfinished"/>
+        <translation>Kosongkan ruas</translation>
     </message>
 </context>
 <context>
@@ -2884,31 +2889,31 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Name field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas nama</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas catatan</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>Aktif/Nonaktifkan kedaluwarsa</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Aktif/Nonaktifkan Ketik-Otomatis untuk ini dan sub grup</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas kedaluwarsa</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Aktif/Nonaktifkan pencarian untuk ini dan sub grup</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas urutan ketik-otomatis baku</translation>
     </message>
 </context>
 <context>
@@ -2975,15 +2980,15 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>Anda bisa mengaktifkan layanan ikon situs web oleh DuckDuckGo di Perkakas &gt; Pengaturan &gt; Keamanan</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>Untuk favicon untuk URL</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation type="unfinished"/>
+        <translation>Terapkan ikon yang dipilih ke subgrup dan entri</translation>
     </message>
     <message>
         <source>Apply icon &amp;to ...</source>
@@ -3068,15 +3073,15 @@ Ini mungkin akan menyebabkan plugin terkait tidak berfungsi.</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>ID Unik</translation>
     </message>
     <message>
         <source>Plugin data</source>
-        <translation type="unfinished"/>
+        <translation>Data pengaya</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation type="unfinished"/>
+        <translation>Buang data pengaya yang dipilih</translation>
     </message>
 </context>
 <context>
@@ -3101,7 +3106,7 @@ Ini mungkin akan menyebabkan plugin terkait tidak berfungsi.</translation>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulir</translation>
     </message>
     <message>
         <source>Add</source>
@@ -3178,19 +3183,19 @@ Ini mungkin akan menyebabkan plugin terkait tidak berfungsi.</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation type="unfinished"/>
+        <translation>Tambah lampiran baru</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>Buang lampiran yang dipilih</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>Buka lampiran yang dipilih</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation type="unfinished"/>
+        <translation>Simpan lampiran yang dipilih ke diska</translation>
     </message>
 </context>
 <context>
@@ -3372,7 +3377,7 @@ Ini mungkin akan menyebabkan plugin terkait tidak berfungsi.</translation>
     </message>
     <message>
         <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan nilai TOTP saat ini</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3414,7 +3419,7 @@ Ini mungkin akan menyebabkan plugin terkait tidak berfungsi.</translation>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation type="unfinished"/>
+        <translation>Entri &quot;%1&quot; dari basis data &quot;%2&quot; telah digunakan oleh %3</translation>
     </message>
 </context>
 <context>
@@ -3459,7 +3464,7 @@ Ini mungkin akan menyebabkan plugin terkait tidak berfungsi.</translation>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation type="unfinished"/>
+        <translation>Unduh Favicon</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3484,11 +3489,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Please wait, processing entry list...</source>
-        <translation type="unfinished"/>
+        <translation>Silakan tunggu, sedang memproses daftar entri...</translation>
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>Mengunduh...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3496,15 +3501,15 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Already Exists</source>
-        <translation type="unfinished"/>
+        <translation>Sudah Ada</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation type="unfinished"/>
+        <translation>Gagal Mengunduh</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation type="unfinished"/>
+        <translation>Mengunduh favicon (%1/%2)...</translation>
     </message>
 </context>
 <context>
@@ -3534,7 +3539,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
-        <translation type="unfinished"/>
+        <translation>Header tidak cocok dengan hash</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
@@ -3551,7 +3556,8 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
+Jika terus berulang, maka basis data anda mungkin rusak.</translation>
     </message>
 </context>
 <context>
@@ -3686,7 +3692,8 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
+Jika terus berulang, maka basis data anda mungkin rusak.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -3919,7 +3926,7 @@ Baris %2, kolom %3</translation>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>Impor Basis Data KeePass1</translation>
     </message>
 </context>
 <context>
@@ -4076,7 +4083,8 @@ Baris %2, kolom %3</translation>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
+Jika terus berulang, maka basis data anda mungkin rusak.</translation>
     </message>
 </context>
 <context>
@@ -4095,19 +4103,19 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Exported to %1</source>
-        <translation type="unfinished"/>
+        <translation>Diekspor ke %1</translation>
     </message>
     <message>
         <source>Synchronized with %1</source>
-        <translation type="unfinished"/>
+        <translation>Disinkronkan dengan %1</translation>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>Impor dinonaktifkan di dalam pengaturan</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>Ekspor dinonaktifkan di dalam pengaturan</translation>
     </message>
     <message>
         <source>Inactive share</source>
@@ -4115,15 +4123,15 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Imported from</source>
-        <translation type="unfinished"/>
+        <translation>Diimpor ke</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation type="unfinished"/>
+        <translation>Diekspor dari</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation type="unfinished"/>
+        <translation>Disinkronkan dengan</translation>
     </message>
 </context>
 <context>
@@ -4225,11 +4233,11 @@ Pesan: %2</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan berkas kunci</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>Temukan berkas kunci</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -4237,7 +4245,7 @@ Pesan: %2</translation>
     </message>
     <message>
         <source>Generate a new key file</source>
-        <translation type="unfinished"/>
+        <translation>Buat berkas kunci baru</translation>
     </message>
     <message>
         <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
@@ -4245,7 +4253,7 @@ Pesan: %2</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation type="unfinished"/>
+        <translation>Berkas Kunci Tidak Valid</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
@@ -4253,7 +4261,7 @@ Pesan: %2</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation type="unfinished"/>
+        <translation>Berkas Kunci Mencurigakan</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
@@ -4553,7 +4561,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ekspor</translation>
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
@@ -4565,15 +4573,15 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation type="unfinished"/>
+        <translation>Urutkan &amp;A-Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation type="unfinished"/>
+        <translation>Urutkan &amp;Z-A</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Pembuat Sandi</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -4589,15 +4597,15 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Impor Brankas 1Password</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Memulai</translation>
     </message>
     <message>
         <source>Open Getting Started Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>Buka PDF Panduan Memulai</translation>
     </message>
     <message>
         <source>&amp;Online Help...</source>
@@ -4605,19 +4613,19 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Go to online documentation (opens browser)</source>
-        <translation type="unfinished"/>
+        <translation>Kunjungi dokumentasi daring (membuka peramban)</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation type="unfinished"/>
+        <translation>Pand&amp;uan Pengguna</translation>
     </message>
     <message>
         <source>Open User Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>Buka PDF Panduan Pengguna</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Pintasan &amp;Kibor</translation>
     </message>
 </context>
 <context>
@@ -4924,7 +4932,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>Sandi tidak sama</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
@@ -4959,7 +4967,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas sandi</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
@@ -4967,7 +4975,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>Ruas pengulangan sandi</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
@@ -5175,39 +5183,39 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Generated password</source>
-        <translation type="unfinished"/>
+        <translation>Sandi yang dibuat</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation type="unfinished"/>
+        <translation>Huruf besar</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation type="unfinished"/>
+        <translation>Huruf kecil</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation type="unfinished"/>
+        <translation>Karakter spesial</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation type="unfinished"/>
+        <translation>Simbol Matematika</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation type="unfinished"/>
+        <translation>Garis Tengah dan Miring</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation type="unfinished"/>
+        <translation>Karakter yang dikecualikan</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Sandi Hex</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation type="unfinished"/>
+        <translation>Panjang sandi</translation>
     </message>
     <message>
         <source>Word Case:</source>
@@ -5215,7 +5223,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation type="unfinished"/>
+        <translation>Buat ulang sandi</translation>
     </message>
     <message>
         <source>Copy password</source>
@@ -5227,11 +5235,11 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>lower case</source>
-        <translation type="unfinished"/>
+        <translation>huruf kecil</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation type="unfinished"/>
+        <translation>HURUF BESAR</translation>
     </message>
     <message>
         <source>Title Case</source>
@@ -5250,14 +5258,14 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Statistik</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Timpa</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5289,7 +5297,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Lanjutkan</translation>
     </message>
 </context>
 <context>
@@ -5304,7 +5312,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation type="unfinished"/>
+        <translation>Kunci publik klien tidak diterima</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
@@ -5668,7 +5676,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Log10 %1</source>
-        <translation type="unfinished"/>
+        <translation>Log10 %1</translation>
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
@@ -5988,7 +5996,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan informasi pengawakutuan.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
@@ -6495,7 +6503,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"/>
+        <translation>Nama Berkas</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6503,7 +6511,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation type="unfinished"/>
+        <translation>Kelola</translation>
     </message>
     <message>
         <source>Authorization</source>
@@ -6515,11 +6523,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Application</source>
-        <translation type="unfinished"/>
+        <translation>Aplikasi</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation type="unfinished"/>
+        <translation>Putuskan koneksi</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -6527,7 +6535,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation type="unfinished"/>
+        <translation>Sunting pengaturan basisdata</translation>
     </message>
     <message>
         <source>Unlock database</source>
@@ -6535,7 +6543,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation type="unfinished"/>
+        <translation>Buka kunci basisdata untuk menampilkan lebih banyak informasi</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -6543,7 +6551,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Unlock to show</source>
-        <translation type="unfinished"/>
+        <translation>Buka kunci untuk menampilkan</translation>
     </message>
     <message>
         <source>None</source>
@@ -7105,11 +7113,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Segarkan token perangkat keras</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Pemilihan slot kunci perangkat keras</translation>
     </message>
 </context>
 </TS>

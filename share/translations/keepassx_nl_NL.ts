@@ -865,7 +865,7 @@ Wil je deze groep aanmaken?
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
         <translation>De KeePassXC-Browser instellingen moeten worden verplaatst naar de instellingen-database.
-Dit is nodig om de huidige browser verbindingen te behouden.
+Dit is nodig om de huidige browserverbindingen te behouden.
 Wil je de bestaande instellingen nu migreren?</translation>
     </message>
     <message>
@@ -6570,7 +6570,7 @@ Kernelversie: %3 %4</translation>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation>Actieve</translation>
+        <translation>Activering</translation>
     </message>
     <message>
         <source>Allow export</source>

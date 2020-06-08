@@ -619,7 +619,7 @@ Veuillez sélectionner la base de donnée souhaitée pour enregistrer les identi
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Demander de déverrouiller la base de données lorsque celle-ci est verrouillée</translation>
+        <translation>Demander de &amp;déverrouiller la base de données si elle est verrouillée</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
@@ -735,7 +735,7 @@ Veuillez sélectionner la base de donnée souhaitée pour enregistrer les identi
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation>Veuillez regarder les instructions spéciales pour l&apos;extension pour navigateur web utilisé ci-dessous</translation>
+        <translation>Veuillez consulter ci-dessous les instructions spéciales de l’extension pour navigateurs</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
@@ -2194,7 +2194,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>n/a</translation>
+        <translation>s.o.</translation>
     </message>
     <message>
         <source>(encrypted)</source>
@@ -2270,7 +2270,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>[PROTECTED] Press reveal to view or edit</source>
-        <translation>[PROTÉGÉ] Appuyez pour voir ou modifier</translation>
+        <translation>[PROTÉGÉ] Appuyer sur Révéler pour visualiser ou modifier</translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
@@ -2321,7 +2321,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Pièces jointes</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
@@ -2644,11 +2644,11 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>Déchiffré</translation>
+        <translation>Déchiffrer</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>n/a</translation>
+        <translation>s.o.</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -2669,7 +2669,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation>Pièce jointe</translation>
+        <translation>Fichier joint</translation>
     </message>
     <message>
         <source>Add to agent</source>
@@ -3124,7 +3124,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>Enregistrer le fichier</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <source>Select files</source>
@@ -3183,7 +3183,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Pièces jointes</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Add new attachment</source>
@@ -3281,7 +3281,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Pièces jointes</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -3324,7 +3324,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Pièces jointes</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -3548,7 +3548,7 @@ Vous pouvez activer le service d&apos;icônes de sites Web de DuckDuckGo dans la
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Taille de l’identifiant d’en-tête invalide</translation>
+        <translation>La taille de l’ID d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
@@ -3556,7 +3556,7 @@ Vous pouvez activer le service d&apos;icônes de sites Web de DuckDuckGo dans la
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>Longueur des données d’en-tête invalide</translation>
+        <translation>La longueur des données d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
@@ -3569,7 +3569,7 @@ Si le problème persiste, le fichier de la base de données peut être corrompu.
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation>Impossible de lancer une question-réponse.</translation>
+        <translation>Impossible de générer une question-réponse.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -3580,7 +3580,7 @@ Si le problème persiste, le fichier de la base de données peut être corrompu.
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>en-têtes de la base de données manquantes</translation>
+        <translation>il manque des en-têtes de base de données</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -3588,11 +3588,11 @@ Si le problème persiste, le fichier de la base de données peut être corrompu.
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>Taille de la somme de contrôle de d’en-tête invalide</translation>
+        <translation>La taille de la somme de contrôle de l’en-tête est invalide</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation>En-tête SHA256 incohérent</translation>
+        <translation>Le SHA256 de l’en-tête ne correspond pas</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
@@ -3600,7 +3600,7 @@ Si le problème persiste, le fichier de la base de données peut être corrompu.
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Taille de l’identifiant d’en-tête invalide</translation>
+        <translation>La taille de l’ID d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
@@ -3608,11 +3608,11 @@ Si le problème persiste, le fichier de la base de données peut être corrompu.
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>Longueur des données d’en-tête invalide</translation>
+        <translation>La longueur des données d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Échec lors de l’ouverture d’une mémoire tampon pour les paramètres KDF dans l’en-tête</translation>
+        <translation>Échec d’ouverture d’un tampon pour les paramètres KDF dans l’en-tête</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
@@ -3624,7 +3624,7 @@ Si le problème persiste, le fichier de la base de données peut être corrompu.
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Taille de identifiant d’en-tête interne invalide</translation>
+        <translation>La taille de l’ID d’en-tête interne est invalide</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
@@ -3746,7 +3746,7 @@ Si le problème persiste, le fichier de la base de données peut être corrompu.
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Taille du salage transformé invalide</translation>
+        <translation>La taille de la semence de transformation est invalide</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
@@ -3780,7 +3780,7 @@ Il s’agit d’une migration à sens unique. Vous ne pourrez pas ouvrir la base
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>Version de la base de données KeePass 2 non prise en charge.</translation>
+        <translation>Version de base de données KeePass 2 non pris en charge.</translation>
     </message>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
@@ -3950,7 +3950,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Version de base de données KeePass non prise en charge.</translation>
+        <translation>Version de base de données KeePass non prise en charge.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
@@ -3971,7 +3971,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Taille du salage transformé invalide</translation>
+        <translation>La taille de la semence de transformation est invalide</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
@@ -5582,7 +5582,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>Nombre de mots de la phrase secrète générés avec la méthode du lancer de dés.</translation>
+        <translation>Nombre de mots de la phrase de passe générée avec la méthode du lancer de dés.</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
@@ -6137,7 +6137,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation>Nombre de mots %1 invalide</translation>
+        <translation>Le nombre de mots %1 est invalide</translation>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
@@ -6321,7 +6321,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation>Afficher les attributs protégés en clair.</translation>
+        <translation>Afficher en clair les attributs protégés.</translation>
     </message>
 </context>
 <context>
@@ -6976,7 +6976,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation>Algorithme :</translation>
+        <translation>Algorithme :</translation>
     </message>
     <message>
         <source>Time step field</source>

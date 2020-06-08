@@ -6587,7 +6587,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation>Own certificate</translation>
+        <translation>Personal certificate</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
@@ -6724,7 +6724,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Export own certificate</source>
-        <translation>Export own certificate</translation>
+        <translation>Export personal certificate</translation>
     </message>
     <message>
         <source>Known shares</source>
