@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.3.0)
 
 project(KeePassXC)
 
@@ -225,10 +225,22 @@ macro(check_add_gcc_compiler_cflag FLAG FLAGNAME)
     endif()
 endmacro(check_add_gcc_compiler_cflag)
 
+# This is the "front-end" for the above macros
+# Optionally takes additional parameter(s) with language to check (currently "C" or "CXX")
 macro(check_add_gcc_compiler_flag FLAG)
     string(REGEX REPLACE "[-=]" "_" FLAGNAME "${FLAG}")
-    check_add_gcc_compiler_cxxflag("${FLAG}" "${FLAGNAME}")
-    check_add_gcc_compiler_cflag("${FLAG}" "${FLAGNAME}")
+    set(check_lang_spec ${ARGN})
+    list(LENGTH check_lang_spec num_extra_args)
+    set(langs C CXX)
+    if(num_extra_args GREATER 0)
+        set(langs "${check_lang_spec}")
+    endif()
+    if("C" IN_LIST langs)
+        check_add_gcc_compiler_cflag("${FLAG}" "${FLAGNAME}")
+    endif()
+    if("CXX" IN_LIST langs)
+        check_add_gcc_compiler_cxxflag("${FLAG}" "${FLAGNAME}")
+    endif()
 endmacro(check_add_gcc_compiler_flag)
 
 add_definitions(-DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
@@ -281,7 +293,7 @@ if(CMAKE_BUILD_TYPE_LOWER MATCHES "(release|relwithdebinfo|minsizerel)")
 endif()
 
 check_add_gcc_compiler_flag("-Werror=format-security")
-check_add_gcc_compiler_flag("-Werror=implicit-function-declaration")
+check_add_gcc_compiler_flag("-Werror=implicit-function-declaration" C)
 check_add_gcc_compiler_flag("-Wcast-align")
 
 if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
@@ -305,7 +317,7 @@ endif()
 add_gcc_compiler_cflags("-std=c99")
 add_gcc_compiler_cxxflags("-std=c++11")
 
-check_add_gcc_compiler_flag("-fsized-deallocation")
+check_add_gcc_compiler_flag("-fsized-deallocation" CXX)
 
 if(APPLE AND CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_cxxflags("-stdlib=libc++")
