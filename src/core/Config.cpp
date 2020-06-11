@@ -441,11 +441,12 @@ Config::Config(QObject* parent)
     configPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     localConfigPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #elif defined(Q_OS_MACOS)
-    configPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    configPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     localConfigPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
 #else
-    configPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
-    localConfigPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+    // On case-sensitive Operating Systems, force use of lowercase app directories
+    configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + "/keepassxc";
+    localConfigPath = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
 #endif
 
     configPath += "/keepassxc";
