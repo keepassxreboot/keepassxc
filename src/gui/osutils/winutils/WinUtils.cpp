@@ -18,6 +18,7 @@
 #include "WinUtils.h"
 #include <QAbstractNativeEventFilter>
 #include <QApplication>
+#include <QDir>
 #include <QSettings>
 
 #include <windows.h>
@@ -88,14 +89,13 @@ bool WinUtils::isLaunchAtStartupEnabled() const
 {
     return QSettings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)", QSettings::NativeFormat)
         .contains(qAppName());
-    ;
 }
 
 void WinUtils::setLaunchAtStartup(bool enable)
 {
     QSettings reg(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)", QSettings::NativeFormat);
     if (enable) {
-        reg.setValue(qAppName(), QApplication::applicationFilePath());
+        reg.setValue(qAppName(), QString("\"%1\"").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())));
     } else {
         reg.remove(qAppName());
     }

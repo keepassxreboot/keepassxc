@@ -51,7 +51,7 @@
             <RegistryValue Id="Autostart.rst" Root="HKCU" Action="write"
                     Key="Software\Microsoft\Windows\CurrentVersion\Run"
                     Name="$(var.CPACK_PACKAGE_NAME)"
-                    Value="[#CM_FP_KeePassXC.exe]"
+                    Value="&quot;[#CM_FP_KeePassXC.exe]&quot;"
                     Type="string" />
             <Condition>AUTOSTARTPROGRAM</Condition>
         </Component>
