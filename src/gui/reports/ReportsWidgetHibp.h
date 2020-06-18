@@ -33,6 +33,7 @@
 class Database;
 class Entry;
 class Group;
+class QSortFilterProxyModel;
 class QStandardItemModel;
 
 namespace Ui
@@ -69,6 +70,7 @@ private:
 
     QScopedPointer<Ui::ReportsWidgetHibp> m_ui;
     QScopedPointer<QStandardItemModel> m_referencesModel;
+    QScopedPointer<QSortFilterProxyModel> m_modelProxy;
     QSharedPointer<Database> m_db;
 
     QMap<QString, int> m_pwndPasswords; // Passwords we found to have been pwned (value is pwn count)

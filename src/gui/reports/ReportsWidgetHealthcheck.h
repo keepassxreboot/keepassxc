@@ -28,6 +28,7 @@ class Database;
 class Entry;
 class Group;
 class PasswordHealth;
+class QSortFilterProxyModel;
 class QStandardItemModel;
 
 namespace Ui
@@ -66,6 +67,7 @@ private:
     bool m_healthCalculated = false;
     QIcon m_errorIcon;
     QScopedPointer<QStandardItemModel> m_referencesModel;
+    QScopedPointer<QSortFilterProxyModel> m_modelProxy;
     QSharedPointer<Database> m_db;
     QList<QPair<const Group*, const Entry*>> m_rowToEntry;
     Entry* m_contextmenuEntry = nullptr;

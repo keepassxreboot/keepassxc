@@ -28,6 +28,7 @@
 
 #include <QMenu>
 #include <QSharedPointer>
+#include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
 namespace
@@ -119,11 +120,13 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::ReportsWidgetHealthcheck())
     , m_errorIcon(Resources::instance()->icon("dialog-error"))
+    , m_referencesModel(new QStandardItemModel(this))
+    , m_modelProxy(new QSortFilterProxyModel(this))
 {
     m_ui->setupUi(this);
 
-    m_referencesModel.reset(new QStandardItemModel());
-    m_ui->healthcheckTableView->setModel(m_referencesModel.data());
+    m_modelProxy->setSourceModel(m_referencesModel.data());
+    m_ui->healthcheckTableView->setModel(m_modelProxy.data());
     m_ui->healthcheckTableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_ui->healthcheckTableView->setSortingEnabled(true);
@@ -272,7 +275,8 @@ void ReportsWidgetHealthcheck::emitEntryActivated(const QModelIndex& index)
         return;
     }
 
-    const auto row = m_rowToEntry[index.row()];
+    auto mappedIndex = m_modelProxy->mapToSource(index);
+    const auto row = m_rowToEntry[mappedIndex.row()];
     const auto group = row.first;
     const auto entry = row.second;
     if (group && entry) {
@@ -288,7 +292,8 @@ void ReportsWidgetHealthcheck::customMenuRequested(QPoint pos)
     if (!index.isValid()) {
         return;
     }
-    m_contextmenuEntry = const_cast<Entry*>(m_rowToEntry[index.row()].second);
+    auto mappedIndex = m_modelProxy->mapToSource(index);
+    m_contextmenuEntry = const_cast<Entry*>(m_rowToEntry[mappedIndex.row()].second);
     if (!m_contextmenuEntry) {
         return;
     }
