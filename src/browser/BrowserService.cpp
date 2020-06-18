@@ -755,7 +755,6 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     BrowserAccessControlDialog accessControlDialog;
 
     connect(m_currentDatabaseWidget, SIGNAL(databaseLocked()), &accessControlDialog, SLOT(reject()));
-    connect(this, SIGNAL(activeDatabaseChanged()), &accessControlDialog, SLOT(reject()));
 
     connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
         auto entry = pwEntriesToConfirm[item->row()];
