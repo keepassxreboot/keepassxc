@@ -27,6 +27,7 @@
 #include "gui/MessageBox.h"
 
 #include <QMenu>
+#include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
 namespace
@@ -49,11 +50,13 @@ namespace
 ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::ReportsWidgetHibp())
+    , m_referencesModel(new QStandardItemModel(this))
+    , m_modelProxy(new QSortFilterProxyModel(this))
 {
     m_ui->setupUi(this);
 
-    m_referencesModel.reset(new QStandardItemModel());
-    m_ui->hibpTableView->setModel(m_referencesModel.data());
+    m_modelProxy->setSourceModel(m_referencesModel.data());
+    m_ui->hibpTableView->setModel(m_modelProxy.data());
     m_ui->hibpTableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_ui->hibpTableView->setSortingEnabled(true);
@@ -299,7 +302,8 @@ void ReportsWidgetHibp::emitEntryActivated(const QModelIndex& index)
     }
 
     // Find which database entry was double-clicked
-    const auto entry = m_rowToEntry[index.row()];
+    auto mappedIndex = m_modelProxy->mapToSource(index);
+    const auto entry = m_rowToEntry[mappedIndex.row()];
     if (entry) {
         // Found it, invoke entry editor
         m_editedEntry = entry;
@@ -350,7 +354,8 @@ void ReportsWidgetHibp::customMenuRequested(QPoint pos)
     if (!index.isValid()) {
         return;
     }
-    m_contextmenuEntry = const_cast<Entry*>(m_rowToEntry[index.row()]);
+    auto mappedIndex = m_modelProxy->mapToSource(index);
+    m_contextmenuEntry = const_cast<Entry*>(m_rowToEntry[mappedIndex.row()]);
     if (!m_contextmenuEntry) {
         return;
     }
