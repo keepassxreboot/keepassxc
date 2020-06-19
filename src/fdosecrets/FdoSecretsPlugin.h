@@ -70,6 +70,9 @@ public:
      */
     QString reportExistingService() const;
 
+    // TODO: Only used for testing. Need to split service functions away from settings page.
+    static FdoSecretsPlugin* getPlugin();
+
 public slots:
     void emitRequestSwitchToDatabases();
     void emitRequestShowNotification(const QString& msg, const QString& title = {});
