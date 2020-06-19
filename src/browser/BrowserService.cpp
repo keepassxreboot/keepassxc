@@ -847,12 +847,13 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
 BrowserService::Access
 BrowserService::checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm)
 {
+    if (entry->isExpired()) {
+        return browserSettings()->allowExpiredCredentials() ? Allowed : Denied;
+    }
+
     BrowserEntryConfig config;
     if (!config.load(entry)) {
         return Unknown;
-    }
-    if (entry->isExpired()) {
-        return browserSettings()->allowExpiredCredentials() ? Allowed : Denied;
     }
     if ((config.isAllowed(host)) && (submitHost.isEmpty() || config.isAllowed(submitHost))) {
         return Allowed;
