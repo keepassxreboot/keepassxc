@@ -30,11 +30,19 @@
 
 using FdoSecrets::Service;
 
+// TODO: Only used for testing. Need to split service functions away from settings page.
+QPointer<FdoSecretsPlugin> g_fdoSecretsPlugin;
+
 FdoSecretsPlugin::FdoSecretsPlugin(DatabaseTabWidget* tabWidget)
-    : QObject(tabWidget)
-    , m_dbTabs(tabWidget)
+    : m_dbTabs(tabWidget)
 {
+    g_fdoSecretsPlugin = this;
     FdoSecrets::registerDBusTypes();
+}
+
+FdoSecretsPlugin* FdoSecretsPlugin::getPlugin()
+{
+    return g_fdoSecretsPlugin;
 }
 
 QWidget* FdoSecretsPlugin::createWidget()

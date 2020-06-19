@@ -200,7 +200,7 @@ void TestGuiFdoSecrets::initTestCase()
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     QVERIFY(m_tabWidget);
-    m_plugin = m_mainWindow->findChild<FdoSecretsPlugin*>();
+    m_plugin = FdoSecretsPlugin::getPlugin();
     QVERIFY(m_plugin);
     m_mainWindow->show();
 
