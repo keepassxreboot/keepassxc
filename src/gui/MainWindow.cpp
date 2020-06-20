@@ -1328,14 +1328,14 @@ void MainWindow::applySettingsChanges()
     }
 
 #ifdef WITH_XC_TOUCHID
-    // forget TouchID (in minutes)
-    timeout = config()->get(Config::Security_ResetTouchIdTimeout).toInt() * 60 * 1000;
-    if (timeout <= 0) {
-        timeout = 30 * 60 * 1000;
-    }
+    if (config()->get(Config::Security_ResetTouchId).toBool()) {
+        // Calculate TouchID timeout in milliseconds
+        timeout = config()->get(Config::Security_ResetTouchIdTimeout).toInt() * 60 * 1000;
+        if (timeout <= 0) {
+            timeout = 30 * 60 * 1000;
+        }
 
-    m_touchIDinactivityTimer->setInactivityTimeout(timeout);
-    if (config()->get(Config::Security_ResetTouchIdTimeout).toBool()) {
+        m_touchIDinactivityTimer->setInactivityTimeout(timeout);
         m_touchIDinactivityTimer->activate();
     } else {
         m_touchIDinactivityTimer->deactivate();
