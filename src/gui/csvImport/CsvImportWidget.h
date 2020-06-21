@@ -49,7 +49,7 @@ signals:
 
 private slots:
     void parse();
-    void comboChanged(QComboBox* currentSender, int comboId);
+    void comboChanged(int index);
     void skippedChanged(int rows);
     void writeDatabase();
     void updatePreview();
