@@ -41,6 +41,7 @@ Edit::Edit()
     // Using some of the options from the Add command since they are the same.
     options.append(Add::UsernameOption);
     options.append(Add::UrlOption);
+    options.append(Add::NotesOption);
     options.append(Add::PasswordPromptOption);
     options.append(Edit::TitleOption);
     positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString("")});
@@ -91,9 +92,10 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     QString username = parser->value(Add::UsernameOption);
     QString url = parser->value(Add::UrlOption);
+    QString notes = parser->value(Add::NotesOption);
     QString title = parser->value(Edit::TitleOption);
     bool prompt = parser->isSet(Add::PasswordPromptOption);
-    if (username.isEmpty() && url.isEmpty() && title.isEmpty() && !prompt && !generate) {
+    if (username.isEmpty() && url.isEmpty() && notes.isEmpty() && title.isEmpty() && !prompt && !generate) {
         err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
@@ -106,6 +108,10 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     if (!username.isEmpty()) {
         entry->setUsername(username);
+    }
+
+    if (!notes.isEmpty()) {
+        entry->setNotes(notes.replace("\\n", "\n"));
     }
 
     if (!url.isEmpty()) {

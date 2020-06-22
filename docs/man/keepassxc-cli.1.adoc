@@ -176,6 +176,9 @@ The same password generation options as documented for the generate command can 
 *--url* <__url__>::
   Specifies the URL of the entry.
 
+*-n*, *--notes* <__notes__>::
+  Specifies the notes of the entry.
+
 *-p*, *--password-prompt*::
   Uses a password prompt for the entry's password.
 
