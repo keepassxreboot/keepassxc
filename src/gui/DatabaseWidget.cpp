@@ -799,6 +799,38 @@ void DatabaseWidget::performAutoType()
     }
 }
 
+void DatabaseWidget::performAutoTypeUsername()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{USERNAME}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypeUsernameEnter()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{USERNAME}{ENTER}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypePassword()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{PASSWORD}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypePasswordEnter()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{PASSWORD}{ENTER}"), window());
+    }
+}
+
 void DatabaseWidget::openUrl()
 {
     auto currentEntry = currentSelectedEntry();
