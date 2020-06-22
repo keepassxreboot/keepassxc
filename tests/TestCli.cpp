@@ -282,6 +282,8 @@ void TestCli::testAdd()
              "-g",
              "-L",
              "20",
+             "-n",
+             "some notes",
              m_dbFile->fileName(),
              "/newuser-entry"});
     m_stderr->readLine(); // Skip password prompt
@@ -294,6 +296,7 @@ void TestCli::testAdd()
     QCOMPARE(entry->username(), QString("newuser"));
     QCOMPARE(entry->url(), QString("https://example.com/"));
     QCOMPARE(entry->password().size(), 20);
+    QCOMPARE(entry->notes(), QString("some notes"));
 
     // Quiet option
     setInput("a");
@@ -353,6 +356,18 @@ void TestCli::testAdd()
     QCOMPARE(entry->username(), QString("newuser4"));
     QCOMPARE(entry->password().size(), 20);
     QVERIFY(!defaultPasswordClassesRegex.match(entry->password()).hasMatch());
+
+    setInput("a");
+    execCmd(addCmd, {"add", "-u", "newuser5", "-n", "test\\nnew line", m_dbFile->fileName(), "/newuser-entry5"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray(""));
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully added entry newuser-entry5.\n"));
+
+    db = readDatabase();
+    entry = db->rootGroup()->findEntryByPath("/newuser-entry5");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QString("newuser5"));
+    QCOMPARE(entry->notes(), QString("test\nnew line"));
 }
 
 void TestCli::testAddGroup()
@@ -734,6 +749,8 @@ void TestCli::testEdit()
              "newuser",
              "--url",
              "https://otherurl.example.com/",
+             "-n",
+             "newnotes",
              "-t",
              "newtitle",
              m_dbFile->fileName(),
@@ -746,6 +763,7 @@ void TestCli::testEdit()
     QCOMPARE(entry->username(), QString("newuser"));
     QCOMPARE(entry->url(), QString("https://otherurl.example.com/"));
     QCOMPARE(entry->password(), QString("Password"));
+    QCOMPARE(entry->notes(), QString("newnotes"));
 
     // Quiet option
     setInput("a");
@@ -803,6 +821,14 @@ void TestCli::testEdit()
     entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
     QCOMPARE(entry->password(), QString("newpassword"));
+
+    // with line break in notes
+    setInput("a");
+    execCmd(editCmd, {"edit", m_dbFile->fileName(), "-n", "testing\\nline breaks", "/evennewertitle"});
+    db = readDatabase();
+    entry = db->rootGroup()->findEntryByPath("/evennewertitle");
+    QVERIFY(entry);
+    QCOMPARE(entry->notes(), QString("testing\nline breaks"));
 }
 
 void TestCli::testEstimate_data()
