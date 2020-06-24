@@ -521,8 +521,6 @@ MainWindow::MainWindow()
     m_trayIconTriggerTimer.setSingleShot(true);
     connect(&m_trayIconTriggerTimer, SIGNAL(timeout()), SLOT(processTrayIconTrigger()));
 
-    updateTrayIcon();
-
     if (config()->hasAccessError()) {
         m_ui->globalMessageWidget->showMessage(tr("Access error for config file %1").arg(config()->getFileName()),
                                                MessageWidget::Error);
