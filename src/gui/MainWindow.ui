@@ -327,6 +327,9 @@
     <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryDownloadIcon"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryAddToAgent"/>
+    <addaction name="actionEntryRemoveFromAgent"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
