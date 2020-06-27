@@ -25,7 +25,12 @@
 
 #ifdef Q_OS_WIN
 #include <fcntl.h>
+#include <winsock2.h>
+
 #include <windows.h>
+#else
+#include <sys/socket.h>
+#include <sys/types.h>
 #endif
 
 NativeMessagingProxy::NativeMessagingProxy()
@@ -85,6 +90,11 @@ void NativeMessagingProxy::setupLocalSocket()
     m_localSocket.reset(new QLocalSocket());
     m_localSocket->connectToServer(BrowserShared::localServerPath());
     m_localSocket->setReadBufferSize(BrowserShared::NATIVEMSG_MAX_LENGTH);
+    int socketDesc = m_localSocket->socketDescriptor();
+    if (socketDesc) {
+        int max = BrowserShared::NATIVEMSG_MAX_LENGTH;
+        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
+    }
 
     connect(m_localSocket.data(), SIGNAL(readyRead()), this, SLOT(transferSocketMessage()));
     connect(m_localSocket.data(), SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
