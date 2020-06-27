@@ -53,4 +53,8 @@ if(WITH_XC_BROWSER)
                            COMMAND ${CMAKE_COMMAND} -E copy keepassxc-proxy ${PROXY_APP_DIR}/keepassxc-proxy
                            COMMENT "Copying keepassxc-proxy inside the application")
     endif()
+
+    if(MINGW)
+      target_link_libraries(keepassxc-proxy Wtsapi32.lib Ws2_32.lib)
+    endif()
 endif()

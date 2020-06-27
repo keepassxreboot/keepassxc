@@ -28,6 +28,15 @@
 #include "sodium.h"
 #include <iostream>
 
+#ifdef Q_OS_WIN
+#include <fcntl.h>
+#include <windows.h>
+#include <winsock2.h>
+#else
+#include <sys/socket.h>
+#include <sys/types.h>
+#endif
+
 BrowserHost::BrowserHost(QObject* parent)
     : QObject(parent)
 {
@@ -77,6 +86,11 @@ void BrowserHost::readProxyMessage()
     }
 
     socket->setReadBufferSize(BrowserShared::NATIVEMSG_MAX_LENGTH);
+    int socketDesc = socket->socketDescriptor();
+    if (socketDesc) {
+        int max = BrowserShared::NATIVEMSG_MAX_LENGTH;
+        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
+    }
 
     QJsonParseError error;
     auto json = QJsonDocument::fromJson(socket->readAll(), &error);
