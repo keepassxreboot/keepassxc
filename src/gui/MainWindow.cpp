@@ -37,6 +37,7 @@
 #include "core/Tools.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
@@ -50,7 +51,6 @@
 #endif
 
 #ifdef WITH_XC_UPDATECHECK
-#include "gui/MessageBox.h"
 #include "gui/UpdateCheckDialog.h"
 #include "updatecheck/UpdateChecker.h"
 #endif
@@ -166,6 +166,8 @@ MainWindow::MainWindow()
 
     m_ui->actionEntryAddToAgent->setVisible(false);
     m_ui->actionEntryRemoveFromAgent->setVisible(false);
+
+    initViewMenu();
 
 #if defined(WITH_XC_KEESHARE)
     KeeShare::init(this);
@@ -1132,11 +1134,12 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (m_appExiting) {
         saveWindowInformation();
         event->accept();
-        QApplication::quit();
+        m_restartRequested ? kpxcApp->restart() : QApplication::quit();
         return;
     }
 
     m_appExitCalled = false;
+    m_restartRequested = false;
     event->ignore();
 }
 
@@ -1638,4 +1641,57 @@ void MainWindow::displayDesktopNotification(const QString& msg, QString title, i
 #else
     m_trayIcon->showMessage(title, msg, QSystemTrayIcon::Information, msTimeoutHint);
 #endif
+}
+
+void MainWindow::restartApp(const QString& message)
+{
+    auto ans = MessageBox::question(
+        this, tr("Restart Application?"), message, MessageBox::Yes | MessageBox::No, MessageBox::Yes);
+    if (ans == MessageBox::Yes) {
+        m_appExitCalled = true;
+        m_restartRequested = true;
+        close();
+    } else {
+        m_restartRequested = false;
+    }
+}
+
+void MainWindow::initViewMenu()
+{
+    m_ui->actionThemeAuto->setData("auto");
+    m_ui->actionThemeLight->setData("light");
+    m_ui->actionThemeDark->setData("dark");
+    m_ui->actionThemeClassic->setData("classic");
+
+    auto themeActions = new QActionGroup(this);
+    themeActions->addAction(m_ui->actionThemeAuto);
+    themeActions->addAction(m_ui->actionThemeLight);
+    themeActions->addAction(m_ui->actionThemeDark);
+    themeActions->addAction(m_ui->actionThemeClassic);
+
+    auto theme = config()->get(Config::GUI_ApplicationTheme).toString();
+    for (auto action : themeActions->actions()) {
+        if (action->data() == theme) {
+            action->setChecked(true);
+            break;
+        }
+    }
+
+    connect(themeActions, &QActionGroup::triggered, this, [this](QAction* action) {
+        if (action->data() != config()->get(Config::GUI_ApplicationTheme)) {
+            config()->set(Config::GUI_ApplicationTheme, action->data());
+            restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        }
+    });
+
+    m_ui->actionShowToolbar->setChecked(!config()->get(Config::GUI_HideToolbar).toBool());
+    connect(m_ui->actionShowToolbar, &QAction::toggled, this, [this](bool checked) {
+        config()->set(Config::GUI_HideToolbar, !checked);
+        applySettingsChanges();
+    });
+
+    m_ui->actionShowPreviewPanel->setChecked(!config()->get(Config::GUI_HidePreviewPanel).toBool());
+    connect(m_ui->actionShowPreviewPanel, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HidePreviewPanel, !checked);
+    });
 }

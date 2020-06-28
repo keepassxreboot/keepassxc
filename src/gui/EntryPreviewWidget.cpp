@@ -77,6 +77,12 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
     connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpLabel()));
 
+    connect(config(), &Config::changed, this, [this](Config::ConfigKey key) {
+        if (key == Config::GUI_HidePreviewPanel) {
+            setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
+        }
+    });
+
     // Group
     m_ui->groupCloseButton->setIcon(resources()->icon("dialog-close"));
     connect(m_ui->groupCloseButton, SIGNAL(clicked()), SLOT(hide()));
