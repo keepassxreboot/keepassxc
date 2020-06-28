@@ -17,6 +17,7 @@
 
 #include "DatabaseIcons.h"
 
+#include "core/Config.h"
 #include "core/Global.h"
 #include "core/Resources.h"
 #include "gui/MainWindow.h"
@@ -44,6 +45,9 @@ DatabaseIcons::DatabaseIcons()
 
     iconList = QDir(iconDir).entryList(QDir::NoFilter, QDir::Name);
     badgeList = QDir(badgeDir).entryList(QDir::NoFilter, QDir::Name);
+
+    // Set this early and once to ensure consistent icon size until app restart
+    m_compactMode = config()->get(Config::GUI_CompactMode).toBool();
 }
 
 DatabaseIcons* DatabaseIcons::instance()
@@ -66,13 +70,13 @@ QPixmap DatabaseIcons::icon(int index, IconSize size)
     auto icon = m_iconCache.value(cacheKey);
     if (icon.isNull()) {
         icon.addFile(iconDir + iconList[index]);
-        icon.addPixmap(icon.pixmap(IconSize::Default));
-        icon.addPixmap(icon.pixmap(IconSize::Medium));
-        icon.addPixmap(icon.pixmap(IconSize::Large));
+        icon.addPixmap(icon.pixmap(iconSize(IconSize::Default)));
+        icon.addPixmap(icon.pixmap(iconSize(IconSize::Medium)));
+        icon.addPixmap(icon.pixmap(iconSize(IconSize::Large)));
         m_iconCache.insert(cacheKey, icon);
     }
 
-    return icon.pixmap(size);
+    return icon.pixmap(iconSize(size));
 }
 
 QPixmap DatabaseIcons::applyBadge(const QPixmap& basePixmap, Badges badgeIndex)
@@ -83,7 +87,8 @@ QPixmap DatabaseIcons::applyBadge(const QPixmap& basePixmap, Badges badgeIndex)
         qWarning("DatabaseIcons: Out-of-range badge index given to applyBadge: %d", badgeIndex);
     } else if (!QPixmapCache::find(cacheKey, &pixmap)) {
         int baseSize = basePixmap.width();
-        int badgeSize = baseSize <= IconSize::Default * basePixmap.devicePixelRatio() ? baseSize * 0.6 : baseSize * 0.5;
+        int badgeSize =
+            baseSize <= iconSize(IconSize::Default) * basePixmap.devicePixelRatio() ? baseSize * 0.6 : baseSize * 0.5;
         QPoint badgePos(baseSize - badgeSize, baseSize - badgeSize);
         badgePos /= basePixmap.devicePixelRatio();
 
@@ -105,4 +110,16 @@ QPixmap DatabaseIcons::applyBadge(const QPixmap& basePixmap, Badges badgeIndex)
 int DatabaseIcons::count()
 {
     return iconList.size();
+}
+
+int DatabaseIcons::iconSize(IconSize size)
+{
+    switch (size) {
+    case Medium:
+        return m_compactMode ? 26 : 30;
+    case Large:
+        return m_compactMode ? 30 : 36;
+    default:
+        return m_compactMode ? 16 : 22;
+    }
 }

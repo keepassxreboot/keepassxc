@@ -84,6 +84,7 @@ public:
         GUI_AdvancedSettings,
         GUI_MonospaceNotes,
         GUI_ApplicationTheme,
+        GUI_CompactMode,
         GUI_CheckForUpdates,
         GUI_CheckForUpdatesIncludeBetas,
 

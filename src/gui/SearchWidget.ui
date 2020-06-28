@@ -6,17 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>630</width>
+    <width>465</width>
     <height>34</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="4">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
     <number>3</number>
    </property>
@@ -32,19 +26,16 @@
    <item>
     <widget class="QLineEdit" name="searchEdit">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>150</width>
        <height>0</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">padding:3px</string>
      </property>
      <property name="placeholderText">
       <string/>
