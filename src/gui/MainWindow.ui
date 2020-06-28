@@ -367,6 +367,7 @@
      <addaction name="actionThemeClassic"/>
     </widget>
     <addaction name="menuTheme"/>
+    <addaction name="actionCompactMode"/>
     <addaction name="actionShowPreviewPanel"/>
     <addaction name="actionShowToolbar"/>
    </widget>
@@ -859,6 +860,14 @@
   <action name="actionEntryRemoveFromAgent">
    <property name="text">
     <string>Remove key from SSH Agent</string>
+   </property>
+  </action>
+  <action name="actionCompactMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Compact Mode</string>
    </property>
   </action>
   <action name="actionThemeAuto">

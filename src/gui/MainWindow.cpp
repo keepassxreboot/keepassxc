@@ -107,6 +107,10 @@ MainWindow::MainWindow()
 
     setAcceptDrops(true);
 
+    if (config()->get(Config::GUI_CompactMode).toBool()) {
+        m_ui->toolBar->setIconSize({20, 20});
+    }
+
     // Setup the search widget in the toolbar
     m_searchWidget = new SearchWidget();
     m_searchWidget->connectSignals(m_actionMultiplexer);
@@ -1682,6 +1686,12 @@ void MainWindow::initViewMenu()
             config()->set(Config::GUI_ApplicationTheme, action->data());
             restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
         }
+    });
+
+    m_ui->actionCompactMode->setChecked(config()->get(Config::GUI_CompactMode).toBool());
+    connect(m_ui->actionCompactMode, &QAction::toggled, this, [this](bool checked) {
+        config()->set(Config::GUI_CompactMode, checked);
+        restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
     });
 
     m_ui->actionShowToolbar->setChecked(!config()->get(Config::GUI_HideToolbar).toBool());
