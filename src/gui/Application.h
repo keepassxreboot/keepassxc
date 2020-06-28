@@ -31,6 +31,8 @@ class OSEventFilter;
 class QLockFile;
 class QSocketNotifier;
 
+constexpr int RESTART_EXITCODE = -1;
+
 class Application : public QApplication
 {
     Q_OBJECT
@@ -46,6 +48,8 @@ public:
     bool isDarkTheme() const;
 
     bool sendFileNamesToRunningInstance(const QStringList& fileNames);
+
+    void restart();
 
 signals:
     void openFile(const QString& filename);

@@ -315,3 +315,15 @@ bool Application::isDarkTheme() const
 {
     return m_darkTheme;
 }
+
+void Application::restart()
+{
+    // Disable single instance
+    m_lockServer.close();
+    if (m_lockFile) {
+        m_lockFile->unlock();
+        delete m_lockFile;
+    }
+
+    exit(RESTART_EXITCODE);
+}

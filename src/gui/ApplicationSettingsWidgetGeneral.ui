@@ -308,13 +308,6 @@
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="previewHideCheckBox">
-                <property name="text">
-                 <string>Hide the entry preview panel</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QCheckBox" name="minimizeOnOpenUrlCheckBox">
                 <property name="text">
                  <string>Minimize when opening a URL</string>
@@ -460,8 +453,8 @@
                 <property name="horizontalSpacing">
                  <number>10</number>
                 </property>
-                <item row="0" column="1">
-                 <widget class="QComboBox" name="appThemeSelection">
+                <item row="1" column="1">
+                 <widget class="QComboBox" name="toolButtonStyleComboBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -472,51 +465,30 @@
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
-                   <string>Application Theme Selection</string>
+                   <string>Toolbar button style</string>
                   </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <spacer name="horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>(restart program to activate)</string>
+                  <property name="sizeAdjustPolicy">
+                   <enum>QComboBox::AdjustToContents</enum>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="2">
-                 <widget class="QLabel" name="languageLabel_3">
+                 <widget class="QCheckBox" name="toolbarMovableCheckBox">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
-                   <string>(restart program to activate)</string>
+                   <string>Movable toolbar</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="appThemeLabel">
-                  <property name="text">
-                   <string>Application theme:</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="buddy">
-                   <cstring>appThemeSelection</cstring>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
+                <item row="0" column="1">
                  <widget class="QComboBox" name="languageComboBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -532,7 +504,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="0">
+                <item row="0" column="0">
                  <widget class="QLabel" name="languageLabel_2">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -551,7 +523,27 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="0">
+                <item row="0" column="2">
+                 <widget class="QLabel" name="languageLabel_3">
+                  <property name="text">
+                   <string>(restart program to activate)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="0">
                  <widget class="QLabel" name="toolButtonStyleLabel">
                   <property name="enabled">
                    <bool>true</bool>
@@ -576,65 +568,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1">
-                 <widget class="QComboBox" name="toolButtonStyleComboBox">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
-                  </property>
-                  <property name="accessibleName">
-                   <string>Toolbar button style</string>
-                  </property>
-                  <property name="sizeAdjustPolicy">
-                   <enum>QComboBox::AdjustToContents</enum>
-                  </property>
-                 </widget>
-                </item>
                </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_5">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>10</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="toolbarHideCheckBox">
-                <property name="text">
-                 <string>Hide toolbar</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="toolbarMovableCheckBox">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Movable toolbar</string>
-                </property>
-               </widget>
               </item>
               <item>
                <widget class="QCheckBox" name="monospaceNotesCheckBox">
@@ -1102,20 +1036,18 @@
   <tabstop>autoReloadOnChangeCheckBox</tabstop>
   <tabstop>useAtomicSavesCheckBox</tabstop>
   <tabstop>useGroupIconOnEntryCreationCheckBox</tabstop>
-  <tabstop>previewHideCheckBox</tabstop>
   <tabstop>minimizeOnOpenUrlCheckBox</tabstop>
   <tabstop>hideWindowOnCopyCheckBox</tabstop>
   <tabstop>minimizeOnCopyRadioButton</tabstop>
   <tabstop>dropToBackgroundOnCopyRadioButton</tabstop>
   <tabstop>faviconTimeoutSpinBox</tabstop>
-  <tabstop>appThemeSelection</tabstop>
   <tabstop>languageComboBox</tabstop>
   <tabstop>toolButtonStyleComboBox</tabstop>
-  <tabstop>toolbarHideCheckBox</tabstop>
-  <tabstop>toolbarMovableCheckBox</tabstop>
   <tabstop>monospaceNotesCheckBox</tabstop>
+  <tabstop>toolbarMovableCheckBox</tabstop>
   <tabstop>minimizeOnCloseCheckBox</tabstop>
   <tabstop>systrayShowCheckBox</tabstop>
+  <tabstop>trayIconAppearance</tabstop>
   <tabstop>systrayMinimizeToTrayCheckBox</tabstop>
   <tabstop>resetSettingsButton</tabstop>
   <tabstop>autoTypeEntryTitleMatchCheckBox</tabstop>
