@@ -323,6 +323,7 @@ void Application::restart()
     if (m_lockFile) {
         m_lockFile->unlock();
         delete m_lockFile;
+        m_lockFile = nullptr;
     }
 
     exit(RESTART_EXITCODE);
