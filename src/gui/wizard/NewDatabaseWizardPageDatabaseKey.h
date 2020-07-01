@@ -15,22 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NEWDATABASEWIZARDPAGEMASTERKEY_H
-#define KEEPASSXC_NEWDATABASEWIZARDPAGEMASTERKEY_H
+#ifndef KEEPASSXC_NEWDATABASEWIZARDPAGEDATABASEKEY_H
+#define KEEPASSXC_NEWDATABASEWIZARDPAGEDATABASEKEY_H
 
 #include "NewDatabaseWizardPage.h"
 
-class NewDatabaseWizardPageMasterKey : public NewDatabaseWizardPage
+class NewDatabaseWizardPageDatabaseKey : public NewDatabaseWizardPage
 {
     Q_OBJECT
 
 public:
-    explicit NewDatabaseWizardPageMasterKey(QWidget* parent = nullptr);
-    Q_DISABLE_COPY(NewDatabaseWizardPageMasterKey);
-    ~NewDatabaseWizardPageMasterKey() override;
+    explicit NewDatabaseWizardPageDatabaseKey(QWidget* parent = nullptr);
+    Q_DISABLE_COPY(NewDatabaseWizardPageDatabaseKey);
+    ~NewDatabaseWizardPageDatabaseKey() override;
 
 private slots:
     void updateWindowSize();
 };
 
-#endif // KEEPASSXC_NEWDATABASEWIZARDPAGEMASTERKEY_H
+#endif // KEEPASSXC_NEWDATABASEWIZARDPAGEDATABASEKEY_H

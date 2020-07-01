@@ -476,17 +476,17 @@ bool DatabaseTabWidget::warnOnExport()
     return ans == MessageBox::Yes;
 }
 
-void DatabaseTabWidget::changeMasterKey()
+void DatabaseTabWidget::showDatabaseSecurity()
 {
-    currentDatabaseWidget()->switchToMasterKeyChange();
+    currentDatabaseWidget()->switchToDatabaseSecurity();
 }
 
-void DatabaseTabWidget::changeReports()
+void DatabaseTabWidget::showDatabaseReports()
 {
-    currentDatabaseWidget()->switchToReports();
+    currentDatabaseWidget()->switchToDatabaseReports();
 }
 
-void DatabaseTabWidget::changeDatabaseSettings()
+void DatabaseTabWidget::showDatabaseSettings()
 {
     currentDatabaseWidget()->switchToDatabaseSettings();
 }

@@ -96,9 +96,9 @@ public:
     QDateTime entryTemplatesGroupChanged() const;
     const Group* lastSelectedGroup() const;
     const Group* lastTopVisibleGroup() const;
-    QDateTime masterKeyChanged() const;
-    int masterKeyChangeRec() const;
-    int masterKeyChangeForce() const;
+    QDateTime databaseKeyChanged() const;
+    int databaseKeyChangeRec() const;
+    int databaseKeyChangeForce() const;
     int historyMaxItems() const;
     int historyMaxSize() const;
     CustomData* customData();
@@ -133,7 +133,7 @@ public:
     void setEntryTemplatesGroupChanged(const QDateTime& value);
     void setLastSelectedGroup(Group* group);
     void setLastTopVisibleGroup(Group* group);
-    void setMasterKeyChanged(const QDateTime& value);
+    void setDatabaseKeyChanged(const QDateTime& value);
     void setMasterKeyChangeRec(int value);
     void setMasterKeyChangeForce(int value);
     void setHistoryMaxItems(int value);
@@ -142,7 +142,7 @@ public:
     /*
      * Copy all attributes from other except:
      * - Group pointers/uuids
-     * - Master key changed date
+     * - Database key changed date
      * - Custom icons
      * - Custom fields
      * - Settings changed date

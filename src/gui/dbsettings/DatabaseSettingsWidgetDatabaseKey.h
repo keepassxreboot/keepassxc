@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSPAGECHANGEMASTERKEY_H
-#define KEEPASSXC_DATABASESETTINGSPAGECHANGEMASTERKEY_H
+#ifndef KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
+#define KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
 
 #include "DatabaseSettingsWidget.h"
 #include "config-keepassx.h"
@@ -33,14 +33,14 @@ class KeyFileEditWidget;
 class YubiKeyEditWidget;
 class QPushButton;
 
-class DatabaseSettingsWidgetMasterKey : public DatabaseSettingsWidget
+class DatabaseSettingsWidgetDatabaseKey : public DatabaseSettingsWidget
 {
     Q_OBJECT
 
 public:
-    explicit DatabaseSettingsWidgetMasterKey(QWidget* parent = nullptr);
-    Q_DISABLE_COPY(DatabaseSettingsWidgetMasterKey);
-    ~DatabaseSettingsWidgetMasterKey() override;
+    explicit DatabaseSettingsWidgetDatabaseKey(QWidget* parent = nullptr);
+    Q_DISABLE_COPY(DatabaseSettingsWidgetDatabaseKey);
+    ~DatabaseSettingsWidgetDatabaseKey() override;
 
     void load(QSharedPointer<Database> db) override;
 
@@ -82,4 +82,4 @@ private:
 #endif
 };
 
-#endif // KEEPASSXC_DATABASESETTINGSPAGECHANGEMASTERKEY_H
+#endif // KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H

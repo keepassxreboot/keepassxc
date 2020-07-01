@@ -47,16 +47,16 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
     }
 
     if (!db->setKey(db->key(), false, true)) {
-        raiseError(tr("Unable to calculate master key"));
+        raiseError(tr("Unable to calculate database key"));
         return false;
     }
 
-    // generate transformed master key
+    // generate transformed database key
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(masterSeed);
     hash.addData(db->challengeResponseKey());
-    Q_ASSERT(!db->transformedMasterKey().isEmpty());
-    hash.addData(db->transformedMasterKey());
+    Q_ASSERT(!db->transformedDatabaseKey().isEmpty());
+    hash.addData(db->transformedDatabaseKey());
     QByteArray finalKey = hash.result();
 
     // write header

@@ -351,7 +351,7 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
 
     PasswordKey oldTransformedKey;
     if (m_data.key->isEmpty()) {
-        oldTransformedKey.setHash(m_data.transformedMasterKey->rawKey());
+        oldTransformedKey.setHash(m_data.transformedDatabaseKey->rawKey());
     }
 
     KeePass2Writer writer;
@@ -366,7 +366,7 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
         return false;
     }
 
-    QByteArray newKey = m_data.transformedMasterKey->rawKey();
+    QByteArray newKey = m_data.transformedDatabaseKey->rawKey();
     Q_ASSERT(!newKey.isEmpty());
     Q_ASSERT(newKey != oldTransformedKey.rawKey());
     if (newKey.isEmpty() || newKey == oldTransformedKey.rawKey()) {
@@ -662,9 +662,9 @@ Database::CompressionAlgorithm Database::compressionAlgorithm() const
     return m_data.compressionAlgorithm;
 }
 
-QByteArray Database::transformedMasterKey() const
+QByteArray Database::transformedDatabaseKey() const
 {
-    return m_data.transformedMasterKey->rawKey();
+    return m_data.transformedDatabaseKey->rawKey();
 }
 
 QByteArray Database::challengeResponseKey() const
@@ -723,7 +723,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
 
     if (!key) {
         m_data.key.reset();
-        m_data.transformedMasterKey.reset(new PasswordKey());
+        m_data.transformedDatabaseKey.reset(new PasswordKey());
         return true;
     }
 
@@ -732,28 +732,28 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
         Q_ASSERT(!m_data.kdf->seed().isEmpty());
     }
 
-    PasswordKey oldTransformedMasterKey;
+    PasswordKey oldTransformedDatabaseKey;
     if (m_data.key && !m_data.key->isEmpty()) {
-        oldTransformedMasterKey.setHash(m_data.transformedMasterKey->rawKey());
+        oldTransformedDatabaseKey.setHash(m_data.transformedDatabaseKey->rawKey());
     }
 
-    QByteArray transformedMasterKey;
+    QByteArray transformedDatabaseKey;
 
     if (!transformKey) {
-        transformedMasterKey = QByteArray(oldTransformedMasterKey.rawKey());
-    } else if (!key->transform(*m_data.kdf, transformedMasterKey, &m_keyError)) {
+        transformedDatabaseKey = QByteArray(oldTransformedDatabaseKey.rawKey());
+    } else if (!key->transform(*m_data.kdf, transformedDatabaseKey, &m_keyError)) {
         return false;
     }
 
     m_data.key = key;
-    if (!transformedMasterKey.isEmpty()) {
-        m_data.transformedMasterKey->setHash(transformedMasterKey);
+    if (!transformedDatabaseKey.isEmpty()) {
+        m_data.transformedDatabaseKey->setHash(transformedDatabaseKey);
     }
     if (updateChangedTime) {
-        m_metadata->setMasterKeyChanged(Clock::currentDateTimeUtc());
+        m_metadata->setDatabaseKeyChanged(Clock::currentDateTimeUtc());
     }
 
-    if (oldTransformedMasterKey.rawKey() != m_data.transformedMasterKey->rawKey()) {
+    if (oldTransformedDatabaseKey.rawKey() != m_data.transformedDatabaseKey->rawKey()) {
         markAsModified();
     }
 
@@ -908,16 +908,16 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
     Q_ASSERT(!m_data.isReadOnly);
 
     kdf->randomizeSeed();
-    QByteArray transformedMasterKey;
+    QByteArray transformedDatabaseKey;
     if (!m_data.key) {
         m_data.key = QSharedPointer<CompositeKey>::create();
     }
-    if (!m_data.key->transform(*kdf, transformedMasterKey)) {
+    if (!m_data.key->transform(*kdf, transformedDatabaseKey)) {
         return false;
     }
 
     setKdf(kdf);
-    m_data.transformedMasterKey->setHash(transformedMasterKey);
+    m_data.transformedDatabaseKey->setHash(transformedDatabaseKey);
     markAsModified();
 
     return true;

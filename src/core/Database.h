@@ -130,7 +130,7 @@ public:
     QSharedPointer<Kdf> kdf() const;
     void setKdf(QSharedPointer<Kdf> kdf);
     bool changeKdf(const QSharedPointer<Kdf>& kdf);
-    QByteArray transformedMasterKey() const;
+    QByteArray transformedDatabaseKey() const;
 
     static Database* databaseByUuid(const QUuid& uuid);
 
@@ -164,7 +164,7 @@ private:
         CompressionAlgorithm compressionAlgorithm = CompressionGZip;
 
         QScopedPointer<PasswordKey> masterSeed;
-        QScopedPointer<PasswordKey> transformedMasterKey;
+        QScopedPointer<PasswordKey> transformedDatabaseKey;
         QScopedPointer<PasswordKey> challengeResponseKey;
 
         QSharedPointer<const CompositeKey> key;
@@ -174,7 +174,7 @@ private:
 
         DatabaseData()
             : masterSeed(new PasswordKey())
-            , transformedMasterKey(new PasswordKey())
+            , transformedDatabaseKey(new PasswordKey())
             , challengeResponseKey(new PasswordKey())
         {
             kdf->randomizeSeed();
@@ -185,7 +185,7 @@ private:
             filePath.clear();
 
             masterSeed.reset();
-            transformedMasterKey.reset();
+            transformedDatabaseKey.reset();
             challengeResponseKey.reset();
 
             key.reset();

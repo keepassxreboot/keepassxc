@@ -251,17 +251,17 @@ const Group* Metadata::lastTopVisibleGroup() const
     return m_lastTopVisibleGroup;
 }
 
-QDateTime Metadata::masterKeyChanged() const
+QDateTime Metadata::databaseKeyChanged() const
 {
     return m_masterKeyChanged;
 }
 
-int Metadata::masterKeyChangeRec() const
+int Metadata::databaseKeyChangeRec() const
 {
     return m_data.masterKeyChangeRec;
 }
 
-int Metadata::masterKeyChangeForce() const
+int Metadata::databaseKeyChangeForce() const
 {
     return m_data.masterKeyChangeForce;
 }
@@ -474,7 +474,7 @@ void Metadata::setLastTopVisibleGroup(Group* group)
     set(m_lastTopVisibleGroup, group);
 }
 
-void Metadata::setMasterKeyChanged(const QDateTime& value)
+void Metadata::setDatabaseKeyChanged(const QDateTime& value)
 {
     Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_masterKeyChanged = value;
