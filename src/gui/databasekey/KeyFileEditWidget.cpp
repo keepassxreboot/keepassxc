@@ -52,7 +52,7 @@ bool KeyFileEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
                              tr("Legacy key file format"),
                              tr("You are using a legacy key file format which may become\n"
                                 "unsupported in the future.\n\n"
-                                "Please go to the master key settings and generate a new key file."),
+                                "Generate a new key file in the database security settings."),
                              QMessageBox::Ok);
     }
 

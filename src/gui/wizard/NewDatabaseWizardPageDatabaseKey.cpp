@@ -15,26 +15,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "NewDatabaseWizardPageMasterKey.h"
-#include "gui/dbsettings/DatabaseSettingsWidgetMasterKey.h"
+#include "NewDatabaseWizardPageDatabaseKey.h"
+#include "gui/dbsettings/DatabaseSettingsWidgetDatabaseKey.h"
 #include <QApplication>
 
-NewDatabaseWizardPageMasterKey::NewDatabaseWizardPageMasterKey(QWidget* parent)
+NewDatabaseWizardPageDatabaseKey::NewDatabaseWizardPageDatabaseKey(QWidget* parent)
     : NewDatabaseWizardPage(parent)
 {
-    setPageWidget(new DatabaseSettingsWidgetMasterKey());
+    setPageWidget(new DatabaseSettingsWidgetDatabaseKey());
 
-    setTitle(tr("Database Master Key"));
-    setSubTitle(tr("A master key known only to you protects your database."));
+    setTitle(tr("Database Credentials"));
+    setSubTitle(tr("A set of credentials known only to you that protects your database."));
 
     connect(pageWidget(), SIGNAL(sizeChanged()), SLOT(updateWindowSize()));
 }
 
-NewDatabaseWizardPageMasterKey::~NewDatabaseWizardPageMasterKey()
+NewDatabaseWizardPageDatabaseKey::~NewDatabaseWizardPageDatabaseKey()
 {
 }
 
-void NewDatabaseWizardPageMasterKey::updateWindowSize()
+void NewDatabaseWizardPageDatabaseKey::updateWindowSize()
 {
     // ugly workaround for QWizard not managing to react to size changes automatically
     window()->adjustSize();

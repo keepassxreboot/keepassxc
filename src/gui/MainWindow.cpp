@@ -340,7 +340,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseClose->setIcon(resources()->icon("document-close"));
     m_ui->actionReports->setIcon(resources()->icon("reports"));
     m_ui->actionDatabaseSettings->setIcon(resources()->icon("document-edit"));
-    m_ui->actionChangeMasterKey->setIcon(resources()->icon("database-change-key"));
+    m_ui->actionDatabaseSecurity->setIcon(resources()->icon("database-change-key"));
     m_ui->actionLockDatabases->setIcon(resources()->icon("database-lock"));
     m_ui->actionQuit->setIcon(resources()->icon("application-exit"));
     m_ui->actionDatabaseMerge->setIcon(resources()->icon("database-merge"));
@@ -417,9 +417,9 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseSaveBackup, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseBackup()));
     connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
-    connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
-    connect(m_ui->actionReports, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeReports()));
-    connect(m_ui->actionDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
+    connect(m_ui->actionDatabaseSecurity, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSecurity()));
+    connect(m_ui->actionReports, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseReports()));
+    connect(m_ui->actionDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSettings()));
     connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
     connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
@@ -728,7 +728,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupDownloadFavicons->setVisible(!recycleBinSelected);
             m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && currentGroupHasEntries
                                                           && !recycleBinSelected);
-            m_ui->actionChangeMasterKey->setEnabled(true);
+            m_ui->actionDatabaseSecurity->setEnabled(true);
             m_ui->actionReports->setEnabled(true);
             m_ui->actionDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
@@ -784,7 +784,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                 action->setEnabled(false);
             }
 
-            m_ui->actionChangeMasterKey->setEnabled(false);
+            m_ui->actionDatabaseSecurity->setEnabled(false);
             m_ui->actionReports->setEnabled(false);
             m_ui->actionDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
@@ -813,7 +813,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             action->setEnabled(false);
         }
 
-        m_ui->actionChangeMasterKey->setEnabled(false);
+        m_ui->actionDatabaseSecurity->setEnabled(false);
         m_ui->actionReports->setEnabled(false);
         m_ui->actionDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);

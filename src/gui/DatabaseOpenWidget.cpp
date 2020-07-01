@@ -199,8 +199,8 @@ void DatabaseOpenWidget::openDatabase()
 {
     m_ui->messageWidget->hide();
 
-    QSharedPointer<CompositeKey> masterKey = databaseKey();
-    if (!masterKey) {
+    QSharedPointer<CompositeKey> databaseKey = buildDatabaseKey();
+    if (!databaseKey) {
         return;
     }
 
@@ -213,7 +213,7 @@ void DatabaseOpenWidget::openDatabase()
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_ui->passwordFormFrame->setEnabled(false);
     QCoreApplication::processEvents();
-    bool ok = m_db->open(m_filename, masterKey, &error, false);
+    bool ok = m_db->open(m_filename, databaseKey, &error, false);
     QApplication::restoreOverrideCursor();
     m_ui->passwordFormFrame->setEnabled(true);
 
@@ -271,12 +271,12 @@ void DatabaseOpenWidget::openDatabase()
     }
 }
 
-QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
+QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 {
-    auto masterKey = QSharedPointer<CompositeKey>::create();
+    auto databaseKey = QSharedPointer<CompositeKey>::create();
 
     if (!m_ui->editPassword->text().isEmpty() || m_retryUnlockWithEmptyPassword) {
-        masterKey->addKey(QSharedPointer<PasswordKey>::create(m_ui->editPassword->text()));
+        databaseKey->addKey(QSharedPointer<PasswordKey>::create(m_ui->editPassword->text()));
     }
 
 #ifdef WITH_XC_TOUCHID
@@ -284,7 +284,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
     if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()
         && m_ui->editPassword->text().isEmpty()) {
         // clear empty password from composite key
-        masterKey->clear();
+        databaseKey->clear();
 
         // try to get, decrypt and use PasswordKey
         QSharedPointer<QByteArray> passwordKey = TouchID::getInstance().getKey(m_filename);
@@ -293,7 +293,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
             if (passwordKey.isNull())
                 return QSharedPointer<CompositeKey>();
 
-            masterKey->addKey(PasswordKey::fromRawKey(*passwordKey));
+            databaseKey->addKey(PasswordKey::fromRawKey(*passwordKey));
         }
     }
 #endif
@@ -326,7 +326,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
 
             legacyWarning.exec();
         }
-        masterKey->addKey(key);
+        databaseKey->addKey(key);
         lastKeyFiles.insert(m_filename, keyFilename);
     }
 
@@ -342,7 +342,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
     if (selectionIndex > 0) {
         auto slot = m_ui->challengeResponseCombo->itemData(selectionIndex).value<YubiKeySlot>();
         auto crKey = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot));
-        masterKey->addChallengeResponseKey(crKey);
+        databaseKey->addChallengeResponseKey(crKey);
 
         // Qt doesn't read custom types in settings so stuff into a QString
         lastChallengeResponse.insert(m_filename, QStringLiteral("%1:%2").arg(slot.first).arg(slot.second));
@@ -353,7 +353,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
     }
 #endif
 
-    return masterKey;
+    return databaseKey;
 }
 
 void DatabaseOpenWidget::reject()

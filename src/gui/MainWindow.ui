@@ -256,7 +256,7 @@
     <addaction name="separator"/>
     <addaction name="actionReports"/>
     <addaction name="actionDatabaseSettings"/>
-    <addaction name="actionChangeMasterKey"/>
+    <addaction name="actionDatabaseSecurity"/>
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
     <addaction name="menuImport"/>
@@ -565,12 +565,12 @@
     <string>Sa&amp;ve Database As…</string>
    </property>
   </action>
-  <action name="actionChangeMasterKey">
+  <action name="actionDatabaseSecurity">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Change Master &amp;Key…</string>
+    <string>Database &amp;Security…</string>
    </property>
   </action>
   <action name="actionReports">
@@ -578,7 +578,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Database Reports...</string>
+    <string>Database &amp;Reports...</string>
    </property>
    <property name="toolTip">
     <string>Statistics, health check, etc.</string>

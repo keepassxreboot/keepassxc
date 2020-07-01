@@ -52,7 +52,7 @@ signals:
 protected:
     void showEvent(QShowEvent* event) override;
     void hideEvent(QHideEvent* event) override;
-    QSharedPointer<CompositeKey> databaseKey();
+    QSharedPointer<CompositeKey> buildDatabaseKey();
 
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
     QSharedPointer<Database> m_db;

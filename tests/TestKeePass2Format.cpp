@@ -87,9 +87,9 @@ void TestKeePass2Format::testXmlMetadata()
     QCOMPARE(m_xmlDb->metadata()->defaultUserNameChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 27, 45));
     QCOMPARE(m_xmlDb->metadata()->maintenanceHistoryDays(), 127);
     QCOMPARE(m_xmlDb->metadata()->color(), QString("#FFEF00"));
-    QCOMPARE(m_xmlDb->metadata()->masterKeyChanged(), MockClock::datetimeUtc(2012, 4, 5, 17, 9, 34));
-    QCOMPARE(m_xmlDb->metadata()->masterKeyChangeRec(), 101);
-    QCOMPARE(m_xmlDb->metadata()->masterKeyChangeForce(), -1);
+    QCOMPARE(m_xmlDb->metadata()->databaseKeyChanged(), MockClock::datetimeUtc(2012, 4, 5, 17, 9, 34));
+    QCOMPARE(m_xmlDb->metadata()->databaseKeyChangeRec(), 101);
+    QCOMPARE(m_xmlDb->metadata()->databaseKeyChangeForce(), -1);
     QCOMPARE(m_xmlDb->metadata()->protectTitle(), false);
     QCOMPARE(m_xmlDb->metadata()->protectUsername(), true);
     QCOMPARE(m_xmlDb->metadata()->protectPassword(), false);

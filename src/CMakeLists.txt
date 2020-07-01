@@ -153,16 +153,16 @@ set(keepassx_SOURCES
         gui/group/EditGroupWidget.cpp
         gui/group/GroupModel.cpp
         gui/group/GroupView.cpp
-        gui/masterkey/KeyComponentWidget.cpp
-        gui/masterkey/PasswordEditWidget.cpp
-        gui/masterkey/YubiKeyEditWidget.cpp
-        gui/masterkey/KeyFileEditWidget.cpp
+        gui/databasekey/KeyComponentWidget.cpp
+        gui/databasekey/PasswordEditWidget.cpp
+        gui/databasekey/YubiKeyEditWidget.cpp
+        gui/databasekey/KeyFileEditWidget.cpp
         gui/dbsettings/DatabaseSettingsWidget.cpp
         gui/dbsettings/DatabaseSettingsDialog.cpp
         gui/dbsettings/DatabaseSettingsWidgetGeneral.cpp
         gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.cpp
         gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
-        gui/dbsettings/DatabaseSettingsWidgetMasterKey.cpp
+        gui/dbsettings/DatabaseSettingsWidgetDatabaseKey.cpp
         gui/reports/ReportsWidget.cpp
         gui/reports/ReportsDialog.cpp
         gui/reports/ReportsWidgetHealthcheck.cpp
@@ -179,7 +179,7 @@ set(keepassx_SOURCES
         gui/wizard/NewDatabaseWizardPage.cpp
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
         gui/wizard/NewDatabaseWizardPageEncryption.cpp
-        gui/wizard/NewDatabaseWizardPageMasterKey.cpp
+        gui/wizard/NewDatabaseWizardPageDatabaseKey.cpp
         keys/CompositeKey.cpp
         keys/FileKey.cpp
         keys/PasswordKey.cpp

@@ -15,13 +15,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DatabaseSettingsWidgetMasterKey.h"
+#include "DatabaseSettingsWidgetDatabaseKey.h"
 
 #include "core/Database.h"
 #include "gui/MessageBox.h"
-#include "gui/masterkey/KeyFileEditWidget.h"
-#include "gui/masterkey/PasswordEditWidget.h"
-#include "gui/masterkey/YubiKeyEditWidget.h"
+#include "gui/databasekey/KeyFileEditWidget.h"
+#include "gui/databasekey/PasswordEditWidget.h"
+#include "gui/databasekey/YubiKeyEditWidget.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "keys/YkChallengeResponseKey.h"
@@ -30,7 +30,7 @@
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-DatabaseSettingsWidgetMasterKey::DatabaseSettingsWidgetMasterKey(QWidget* parent)
+DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* parent)
     : DatabaseSettingsWidget(parent)
     , m_additionalKeyOptionsToggle(new QPushButton(tr("Add additional protection..."), this))
     , m_additionalKeyOptions(new QWidget(this))
@@ -65,11 +65,11 @@ DatabaseSettingsWidgetMasterKey::DatabaseSettingsWidgetMasterKey(QWidget* parent
     setLayout(vbox);
 }
 
-DatabaseSettingsWidgetMasterKey::~DatabaseSettingsWidgetMasterKey()
+DatabaseSettingsWidgetDatabaseKey::~DatabaseSettingsWidgetDatabaseKey()
 {
 }
 
-void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
+void DatabaseSettingsWidgetDatabaseKey::load(QSharedPointer<Database> db)
 {
     DatabaseSettingsWidget::load(db);
 
@@ -107,7 +107,7 @@ void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
 #endif
 }
 
-void DatabaseSettingsWidgetMasterKey::initialize()
+void DatabaseSettingsWidgetDatabaseKey::initialize()
 {
     bool blocked = blockSignals(true);
     m_passwordEditWidget->setComponentAdded(false);
@@ -118,11 +118,11 @@ void DatabaseSettingsWidgetMasterKey::initialize()
     blockSignals(blocked);
 }
 
-void DatabaseSettingsWidgetMasterKey::uninitialize()
+void DatabaseSettingsWidgetDatabaseKey::uninitialize()
 {
 }
 
-bool DatabaseSettingsWidgetMasterKey::save()
+bool DatabaseSettingsWidgetDatabaseKey::save()
 {
     m_isDirty |= (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
     m_isDirty |= (m_keyFileEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
@@ -202,17 +202,17 @@ bool DatabaseSettingsWidgetMasterKey::save()
     return true;
 }
 
-void DatabaseSettingsWidgetMasterKey::discard()
+void DatabaseSettingsWidgetDatabaseKey::discard()
 {
     emit editFinished(false);
 }
 
-void DatabaseSettingsWidgetMasterKey::showAdditionalKeyOptions()
+void DatabaseSettingsWidgetDatabaseKey::showAdditionalKeyOptions()
 {
     setAdditionalKeyOptionsVisible(true);
 }
 
-void DatabaseSettingsWidgetMasterKey::setAdditionalKeyOptionsVisible(bool show)
+void DatabaseSettingsWidgetDatabaseKey::setAdditionalKeyOptionsVisible(bool show)
 {
     m_additionalKeyOptionsToggle->setVisible(!show);
     m_additionalKeyOptions->setVisible(show);
@@ -220,14 +220,14 @@ void DatabaseSettingsWidgetMasterKey::setAdditionalKeyOptionsVisible(bool show)
     emit sizeChanged();
 }
 
-bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widget,
-                                                        QSharedPointer<CompositeKey>& newKey,
-                                                        QSharedPointer<Key>& oldKey)
+bool DatabaseSettingsWidgetDatabaseKey::addToCompositeKey(KeyComponentWidget* widget,
+                                                          QSharedPointer<CompositeKey>& newKey,
+                                                          QSharedPointer<Key>& oldKey)
 {
     if (widget->visiblePage() == KeyComponentWidget::Edit) {
         QString error = tr("Unknown error");
         if (!widget->validate(error) || !widget->addToCompositeKey(newKey)) {
-            MessageBox::critical(this, tr("Failed to change master key"), error, MessageBox::Ok);
+            MessageBox::critical(this, tr("Failed to change database credentials"), error, MessageBox::Ok);
             return false;
         }
     } else if (widget->visiblePage() == KeyComponentWidget::LeaveOrRemove) {
@@ -237,14 +237,14 @@ bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widg
     return true;
 }
 
-bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widget,
-                                                        QSharedPointer<CompositeKey>& newKey,
-                                                        QSharedPointer<ChallengeResponseKey>& oldKey)
+bool DatabaseSettingsWidgetDatabaseKey::addToCompositeKey(KeyComponentWidget* widget,
+                                                          QSharedPointer<CompositeKey>& newKey,
+                                                          QSharedPointer<ChallengeResponseKey>& oldKey)
 {
     if (widget->visiblePage() == KeyComponentWidget::Edit) {
         QString error = tr("Unknown error");
         if (!widget->validate(error) || !widget->addToCompositeKey(newKey)) {
-            MessageBox::critical(this, tr("Failed to change master key"), error, MessageBox::Ok);
+            MessageBox::critical(this, tr("Failed to change database credentials"), error, MessageBox::Ok);
             return false;
         }
     } else if (widget->visiblePage() == KeyComponentWidget::LeaveOrRemove) {
@@ -254,7 +254,7 @@ bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widg
     return true;
 }
 
-void DatabaseSettingsWidgetMasterKey::markDirty()
+void DatabaseSettingsWidgetDatabaseKey::markDirty()
 {
     m_isDirty = true;
 }
