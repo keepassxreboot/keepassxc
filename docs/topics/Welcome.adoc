@@ -1,0 +1,49 @@
+= KeePassXC - Welcome
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== Welcome
+KeePassXC is a modern open-source password manager. It is used to store and manage information such as URLs, usernames, passwords, and so on for various accounts on your web applications. KeePassXC stores all data in an encrypted format while still providing secure access to your information.
+
+KeePassXC is helpful for people with extremely high demands of secure personal data management. It saves many different information, such as user names, passwords, URLs, attachments, and comments in one single database. For a better management, user-defined titles and icons can be specified for different entries in KeePassXC. In addition, the entries are sorted in customizable groups. The integrated search function allows to search in a single group or the complete database.
+
+KeePassXC also provides a secure, customizable, fast, and easy-to-use password generator utility. This utility is very helpful to those who generate passwords frequently.
+
+=== Overview
+You can store an unlimited number of passwords and information in a KeePassXC database. Every piece of information you store in your database is encrypted at all times within the `kdbx` file. When you are accessing your database from within KeePassXC, your information in decrypted and stored in your computer's memory. KeePassXC places controls over the access to this data so other applications cannot read it (unless they have administrative rights). The interface is designed to let you quickly access your passwords, search for the right entry, perform Auto-Type or copy/paste
+operations, make and save changes, and then get out of your way.
+
+KeePassXC ships with light and dark themes specifically designed to meet accessibility standards. In most cases, the appropriate theme for your system will be determined automatically, but you can always set a specific theme in the application settings.
+
+.Light and Dark Themes
+image::theme_comparison.png[]
+
+=== Features
+KeePassXC has numerous features for novice and power users alike. This guide will go over the basic features to get you up and running quickly. The User Guide contains more in-depth discussions on the major features in the application.
+
+* Basic Features
+ ** Create, open, and save databases in the KDBX format (KeePass Compatible)
+ ** Store sensitive information in entries that are organized by groups
+ ** Search for entries
+ ** Password generator
+ ** Auto-Type passwords into applications
+ ** Browser integration with Google Chrome, Mozilla Firefox, Microsoft Edge, Chromium, Vivaldi, Brave, and Tor-Browser
+ ** Entry icon download
+ ** Import databases from CSV, 1Password, and KeePass1 formats
+
+* Advanced Features
+ ** Database reports (password health, HIBP, and statistics)
+ ** Database export to CSV and HTML formats
+ ** TOTP storage and generation
+ ** Field references between entries
+ ** File attachments and custom attributes
+ ** Entry history and data restoration
+ ** YubiKey/OnlyKey challenge-response support
+ ** Command line interface (keepassxc-cli)
+ ** Auto-Open databases
+ ** KeeShare shared databases (import, export, and synchronize)
+ ** SSH Agent
+ ** FreeDesktop.org Secret Service (replace Gnome keyring, etc.)
+ ** Additional encryption choices: Twofish and ChaCha20
+// end::content[]

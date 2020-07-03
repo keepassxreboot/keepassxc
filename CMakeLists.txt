@@ -58,6 +58,7 @@ endif()
 if(APPLE)
     option(WITH_XC_TOUCHID "Include TouchID support for macOS." OFF)
 endif()
+option(WITH_XC_DOCS "Enable building of documentation" ON)
 
 if(WITH_CCACHE)
     # Use the Compiler Cache (ccache) program
@@ -71,7 +72,7 @@ if(WITH_CCACHE)
 endif()
 
 if(WITH_XC_ALL)
-    # Enable all options (except update check)
+    # Enable all options (except update check and docs)
     set(WITH_XC_AUTOTYPE ON)
     set(WITH_XC_NETWORKING ON)
     set(WITH_XC_BROWSER ON)
@@ -500,6 +501,10 @@ add_subdirectory(share)
 if(WITH_TESTS)
     add_subdirectory(tests)
 endif(WITH_TESTS)
+
+if(WITH_XC_DOCS)
+    add_subdirectory(docs)
+endif()
 
 if(PRINT_SUMMARY)
     # This will print ENABLED, REQUIRED and DISABLED

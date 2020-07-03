@@ -1,0 +1,51 @@
+= KeePassXC - KeeShare
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== Database Sharing with KeeShare
+KeeShare allows you to share a subset of your credentials with others and vice versa.
+
+=== Enable Sharing
+To use sharing, you need to enable it for the application.
+
+1. Go to _Tools_ -> _Settings_. Select the KeeShare category on the left sidebar *(1)*.
+2. Check _Allow import_ if you want to import shared credentials. Check _Allow export_ if you want to share credentials. *(2)*
+3. (Optional) Click _Generate_ *(3)* to create your own certificate or _Import_ to select an existing one. The certificate allows you to sign shared databases. This ensures the integrity of the share and prevent import of untrusted information.
+
+.KeeShare Application Settings
+image::keeshare_application_settings.png[]
+
+=== Sharing Credentials
+If you checked _Allow export_ in the Sharing settings you can now share a group of passwords. Sharing is always is defined on a particular group. If you enable sharing on a group, every entry under this group, and its children, are shared. If you enable sharing on the root node, **every password** inside your database gets shared!
+
+NOTE: KeeShare does not synchronize group structure after the initial share is created. At this time, KeeShare operates at the entry level; shared entries moved outside of a shared group are still synchronized.
+
+1. Open the edit sheet on a group you want to share.
+2. Select the KeeShare category on the left toolbar.
+3. Choose a sharing type:
+  a. *Inactive* - Disable sharing this group
+  b. *Import* - Read-only import of entries, merge changes
+  c. *Export* - Write-only export of entries, no merge
+  d. *Synchronize* - Read/Write entries from the share, merge changes
+4. Choose a path to store the shared credentials to.
+5. The password to use for this share container.
+
+The export file will not be generated automatically. Instead, each time the database is saved, the file gets written. The file should be written to a location that is accessible by others. An easy setup is a network share or storing the file in cloud storage.
+
+.KeeShare Group Settings
+image::keeshare_group_settings.png[]
+
+=== Using Shared Credentials
+KeeShare watches the container for changes and merges them into your database when necessary (Import and Synchronize modes). Entries merge in time order; older data is moved to the history of the entry.
+
+A shared group shows a cloud icon badge over the group icon *(A)* and a banner is displayed showing the sharing mode and file location *(B)*. If the share is disabled or unavailable, the cloud icon will show as red with a white X.
+
+.KeeShare shared group
+image::keeshare_shared_group.png[]
+
+=== Technical Details and Limitations of Sharing
+Sharing relies on the combination of file exports and imports as well as the synchronization mechanism provided by KeePassXC. Since the merge algorithm uses the history of entries to prevent data loss, this history must be enabled and have a sufficient size. Furthermore, the merge algorithm is location independent, therefore it does not matter if entries are moved outside of an import group. These entries will be updated none the less. Moving entries outside of export groups will prevent a further export of the entry, but it will not ensure that the already shared data will be removed from any client.
+
+KeeShare uses a custom certification mechanism to ensure that the source of the data is the expected one. This ensures that the data was exported by the signer but it is not possible to detect if someone replaced the data with an older version from a valid signer. To prevent this, the container could be placed at a location which is only writeable for valid signers.
+// end::content[]

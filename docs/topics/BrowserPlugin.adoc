@@ -1,0 +1,108 @@
+= KeePassXC - Browser Plugin
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== Setup Browser Integration
+The KeePassXC-Browser extension is installed within your web browser so that you can automatically pull usernames and passwords from KeePassXC and populate them directly into website fields. It is a very useful and secure extension that enhances your productivity while using KeePassXC. With this extension, you do not need to manually copy the data from your KeePassXC database and paste it into the website fields.
+
+The KeePassXC-Browser extension is available on the following web browsers:
+
+* Google Chrome, Vivaldi, and Brave
+* Mozilla Firefox and Tor-Browser
+* Microsoft Edge
+* Chromium
+
+=== Install the Browser Extension
+You can download the KeePassXC-Browser extension from your web browser. To download the KeePassXC-Browser extension, perform the following steps:
+
+1. Click the link corresponding to your browser:
+  * https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk[Chrome, Chromium, Vivaldi, and Brave]
+  * https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser[Mozilla Firefox and Tor-Browser]
+  * https://microsoftedge.microsoft.com/addons/detail/keepassxcbrowser/pdffhmdngciaglkoonimfcmckehcpafo[Microsoft Edge]
+
+2. Click the button to install/add the extension to the browser. Accept any confirmation dialogs.
+
+=== Configure KeePassXC-Browser
+To start using KeePassXC-Browser, you must configure it so that it can communicate with the KeePassXC application on your desktop.
+
+To configure KeePassXC-Browser, perform the following steps:
+
+1. Open the KeePassXC application on your desktop and navigate to Tools > Settings.
+
+2. Click the Browser Integration option on the left-hand side *(1)*. The following screen appears:
++
+.Browser Settings
+image::browser_settings.png[]
+
+3. Click the _Enable browser integration_ checkbox *(2)*. Then select the browsers for which you have downloaded the KeePassXC-Browser extension *(3)* and click *OK*.
+
+4. Ensure your database is unlocked, then open (or restart) your browser.
+
+5. Click the KeePassXC-Browser extension icon *(A)* in your browser (see figure below). A pop-up window appears.
++
+.Connect Extension to KeePassXC
+image::browser_extension_connect.png[,80%]
+
+6. Click the _Connect_ button *(B)* in the pop-up window to complete integrating the KeePassXC-Browser extension with your KeePassXC desktop application. 
+
+7. You are now prompted to enter a unique name to identify the connection between this browser and your database. Enter a unique name in the field (e.g., firefox-laptop) and click the _Save and allow access_ button.
++
+.Extension Association Dialog
+image::browser_extension_association.png[,80%]
+
+WARNING: If you reuse a connection name in a database, the previous browser connection will be overwritten and prevent access.
+
+=== Using the Browser Extension
+The KeePassXC-Browser extension lets you automatically populate the entries from your KeePassXC database into the fields on websites you visit. To do so, perform the following steps:
+
+1. Open your KeePassXC desktop application and unlock your database.
+
+2. Open your web browser. The KeePassXC-Browser extension icon in your browser window will change based on its connection state. The figure below shows the different states. 
++
+*(A)* KeePassXC is not running or is disconnected +
+*(B)* Connected to KeePassXC, but database is locked +
+*\(C)* Connected to KeePassXC and ready to use
++
+.Extension Icon States
+image::browser_extension_icons.png[,70%]
+
+3. If the KeePassXC desktop application is not connected with the KeePassXC-Browser extension, click the extension icon in your web browser and click _Reload_ from the pop-up window as shown in the following screen.
++
+.Reload Extension Connection
+image::browser_extension_reload.png[,80%]
+
+4. Open the URL for which you want to use with your database. If you have previously created an entry in your database then the KeePassXC-Browser Confirm Access dialog may appear:
++
+.Confirm Access Dialog
+image::browser_confirm_access_dialog.png[,80%]
+
+5. Ensure the credentials you want use are checked, then click *(A)* Remember _(optional)_, then click _Allow Selected_ *(B)*.
+
+6. In your website, the KeePassXC icon will appear in the username field of the login form *(A)*. Click the icon to populate the field with your stored credentials. If you have more than one credential for this website, a dropdown will appear to choose the one to use.
++
+.Fill Credentials
+image::browser_fill_credentials.png[,80%]
+
+// tag::advanced[]
+=== Advanced Usage
+You can configure unique browser integration behavior for each entry. This allows you to add multiple URLs to an entry, hide an entry from the browser integration, and more. To access these settings, open an entry for editing then click on _Browser Integration_ option in the left-hand menu *(1)*.
+
+After opening the settings you can add any number of additional URLs by clicking the _Add_ button *(2)* and typing the URL in the list to the left *(3)*.
+
+.Entry browser settings
+image::browser_entry_settings.png[]
+
+Database-wide operations are available in the database settings. To access these use the _Database_ -> _Database settings..._ menu option. Click on _Browser Integration_ on the left-hand menu. From here you can disconnect all browsers, convert legacy KeePass-HTTP settings, reset all entry-level settings, and refresh the database root group ID (useful when making copies of your database file).
+
+.Database browser settings
+image::browser_database_settings.png[]
+
+Finally, advanced application-wide settings are available in the Browser Integration tab of the application settings.
+
+WARNING: We do not recommend changing any of these settings as they may break the browser integration plugin.
+
+.Advanced browser settings
+image::browser_advanced_settings.png[]
+// end::advanced[]
+// end::content[]

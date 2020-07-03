@@ -817,7 +817,7 @@
     <string>&amp;Getting Started</string>
    </property>
    <property name="toolTip">
-    <string>Open Getting Started Guide PDF</string>
+    <string>Open Getting Started Guide</string>
    </property>
   </action>
   <action name="actionOnlineHelp">
@@ -825,7 +825,7 @@
     <string>&amp;Online Help</string>
    </property>
    <property name="toolTip">
-    <string>Go to online documentation (opens browser)</string>
+    <string>Go to online documentation</string>
    </property>
   </action>
   <action name="actionUserGuide">
@@ -833,7 +833,7 @@
     <string>&amp;User Guide</string>
    </property>
    <property name="toolTip">
-    <string>Open User Guide PDF</string>
+    <string>Open User Guide</string>
    </property>
   </action>
   <action name="actionKeyboardShortcuts">

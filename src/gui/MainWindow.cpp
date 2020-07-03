@@ -964,12 +964,12 @@ void MainWindow::openBugReportUrl()
 
 void MainWindow::openGettingStartedGuide()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_GettingStarted.pdf")));
+    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_GettingStarted.html")));
 }
 
 void MainWindow::openUserGuide()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_UserGuide.pdf")));
+    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_UserGuide.html")));
 }
 
 void MainWindow::openOnlineHelp()
@@ -979,7 +979,7 @@ void MainWindow::openOnlineHelp()
 
 void MainWindow::openKeyboardShortcuts()
 {
-    customOpenUrl("https://github.com/keepassxreboot/keepassxc/blob/develop/docs/KEYBINDS.md");
+    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_KeyboardShortcuts.html")));
 }
 
 void MainWindow::switchToDatabases()

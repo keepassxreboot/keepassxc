@@ -1,0 +1,34 @@
+= KeePassXC: Getting Started Guide
+KeePassXC Team <team@keepassxc.org>
+v2.6.0
+:data-uri:
+:linkcss!:
+:homepage: https://keepassxc.org
+:icons: font
+:imagesdir: images
+:stylesheet: styles/dark.css
+:toc: left
+ifdef::backend-pdf[]
+:title-page:
+:title-logo-image: {imagesdir}/kpxc_logo.png
+:pdf-theme: styles/pdf_theme.yml
+:compress:
+endif::[]
+
+include::topics/Disclaimers.adoc[]
+
+<<<
+
+// Include various topics, excluding advanced sections
+
+include::topics/Welcome.adoc[tags=*;!advanced]
+
+include::topics/DownloadInstall.adoc[tags=*;!advanced]
+
+include::topics/UserInterface.adoc[tags=*;!advanced]
+
+include::topics/PasswordGenerator.adoc[tags=*;!advanced]
+
+include::topics/DatabaseOperations.adoc[tags=*;!advanced]
+
+include::topics/BrowserPlugin.adoc[tags=*;!advanced]
