@@ -1,0 +1,296 @@
+= KeePassXC - Database Operations
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== Database Operations
+=== Creating Your First Database
+To start using KeePassXC, you need to first create a database that will store the password and other details.
+
+To create a database, perform the following steps:
+
+1. Open your KeePassXC application. Click the create new database button *(A)*:
++
+.Create database - Welcome screen
+image::welcome_screen.png[]
+
+2. The database creation wizard appears. Enter the desired database name and a short description (optional):
++
+.Create database - General information
+image::new_db_wizard_1.png[,80%]
+
+3. Click Continue. The Encryption Settings screen appears, we don't recommend making any changes besides increasing or decreasing the decryption time using the slider. Setting the Decryption Time slider at a higher values means that the database will have higher level of protection but the time taken by the database to open will increase.
++
+.Create database - Encryption settings
+image::new_db_wizard_2.png[,80%]
+
+4. Click the Continue button. The Database Credentials screen appears, enter your desired database password. We recommend using a long, randomized password.
++
+.Create database - Database credentials
+image::new_db_wizard_3.png[,80%]
++
+*(A)* Open the password generator +
+*(B)* Toggle password visibility
++
+NOTE: Keep this password for your database safe. Either memorize it or note it down somewhere. Losing the database password might result in permanent locking of your database and you will not be able to retrieve information stored in the database.
+
+5. Click Done. You will be prompted to select a location to save your database file. The database file is saved on to your computer with the default `.kdbx` extension. You can store your database wherever you wish, it is fully encrypted at all times preventing unauthorized access.
+
+=== Opening an Existing Database
+To open an existing database, perform the following steps:
+
+1. Open your KeePassXC application. Click the Open existing database button *(A)* or select a recent database from the Recent Databases list *(B)*.
++
+.Open an existing database
+image::open_database.png[]
+
+2. Navigate to the location of the your database on your computer and open the database file. The database unlock screen will appear:
++
+.Database unlock screen
+image::unlock_database.png[]
+
+3. Enter the password for your database.
+
+4. _(Optional)_ Browse for the Key File if you have chosen it as an additional authentication factor while creating the database. Refer to the KeePassXC User Guide for more information on setting a Key File as an additional authentication factor.
+
+5. Click *OK*. The database opens and the following screen is displayed:
++
+.Unlocked database
+image::database_view.png[]
+
+=== Adding an Entry
+All the details such as usernames, passwords, URLs, attachments, notes, and so on are stored in database entries. You can create as many entries as you want in the database.
+
+To add an entry, perform the following step:
+
+1. Navigate to Entries > New Entry (Or, press Ctrl+N). The following screen appears:
++
+.Adding a new entry
+image::edit_entry.png[]
+
+2. Enter a desired title for the entry, username, password, URL, and notes on this screen.
+
+3. _(Optional)_ Select the Expires check-box to set the expiry date for the password. You can manually enter the date and time or click the Presets button to select a expiry date and time for your password.
+
+4. Click *OK* to add the entry to your database.
+
+=== Editing an Entry
+To edit the details in an entry, perform the following steps:
+
+1. Select the entry you want to edit.
+
+2. Press `Enter`, click the edit toolbar icon, or right-click and select Edit Entry from the menu.
+
+3. Make the desired changes.
+
+4. Click *OK*.
+
+=== Deleting an Entry
+To delete an entry, perform the following steps:
+
+1. Select the entry you want to delete and press the `Delete` button on your keyboard.
+
+2. You will be prompted to move the entry to the Recycle Bin (if enabled).
++
+NOTE: You can disable the recycle bin within the Database Settings. If the recycle bin is disabled then deleted entries will be permanently removed from the database.
+
+3. To permanently delete the entry, navigate to the Recycle Bin, select the entry you want to delete and press the `Delete` button on your keyboard.
+
+// tag::advanced[]
+=== Clone an Entry
+Creating a clone of an entry provides you a ready-to-use template for creating new entries with similar details of a master entry.
+
+To create a clone of an existing entry, perform the following steps:
+ 
+1.	Right-click on the entry for which you want to create a clone and select _Clone Entry_. Alternatively, select the desired entry and press `Ctrl+K`.
++
+.Clone entry from context menu
+image::clone_entry.png[]
+
+2. The clone dialog will appear.
++
+.Clone entry dialog
+image::clone_entry_dialog.png[,70%]
+  * Select the Append ‘ - Clone’ to title check-box to create a new entry with the word Clone as the suffix to the name of the new entry.
+  * Select the Replace username and password with references check-box to create the new entry where the username and the password fields contain the references to the username and password to the master entry.
+  * Select the Copy history checkbox to copy the history of the master entry to the clone.
+
+3. If you chose to replace username and password entries with references, then the new entry will point these fields to the original entry's values. Changing the original entry will automatically change the resolved value of the cloned entry. This is useful if you have multiple accounts for the same service that use a similar username or password combination.
++
+.References in a cloned entry
+image::clone_entry_references.png[]
+
+4. You can create your own references using the following syntax:
++
+`{REF:<ShortCode>@I:<UUID>}`
++
+Where `<UUID>` is the Unique Identifier of the entry to pull data from and `<ShortCode>` is from the following:
++
+ * T - Title
+ * U - Username  
+ * P - Password
+ * A - URL
+ * N - Notes
+ * I - UUID
+
+== Searching the Database
+KeePassXC provides an enhanced and granular search features the enables you to search for specific entries in the databases using the different modifiers, wild card characters, and logical operators.
+
+=== Modifiers and Fields
+[grid=rows, frame=none, width=70%]
+|===
+|Modifier   |Description
+
+|-	        |Exclude this term from results
+|+	        |Match this term exactly
+|*	        |Term is handled as a regular expression
+|===
+
+The following fields can be searched along with their abbreviated name in parenthesis:
+
+* Title (t)
+* Username (u)
+* Password (p, pw)
+* URL
+* Notes (n)
+* Attribute (attr)
+* Attachment (attach)
+* Group (g)
+
+=== Wild Card Characters and Logical Operators
+[grid=rows, frame=none, width=70%]
+|===
+|Wild Card Character    |Description
+
+|*	                    |Match anything
+|?	                    |Match one character
+|\|	                    |Logical OR
+|===
+
+=== Sample Search Queries
+The following tables lists a few samples search queries for your reference:
+
+|===
+|Query	        |Description
+
+|`user:johnsmith url:www.google.com`
+|Searches the Username field for johnsmith and the URL field for www.google.com.
+
+|`user:john\|smith`
+|Searches the Username field for john OR smith.
+
+|`+user:johnsmith -url:www.google.com *notes:"secret note \d"`
+|Search the username field for exactly johnsmith, the URL must not contain www.google.com, and notes contains secret note [digit].
+|===
+
+== Advanced Entry Options
+=== Additional Attributes
+A lot of applications and web sites now require to provide additional information when you create accounts. The additional information is used to block hackers if any suspicious activity is detected. In addition, the additional information you provide can be used to reset passwords if you forget them. You can also store arbitrary information here that can be copied to the clipboard or Auto-Typed using the `{S:<ATTR_NAME}` action code.
+
+To protect an attribute from being displayed by default, activate the _Protect_ checkbox *(A)*. To show the contents of the attribute while keeping it protected, press the _Reveal_ button *(B)*.
+
+.Additional attributes example
+image::edit_entry_attributes.png[]
+
+=== Attachments
+You can attach files to any entry in your database by pressing the _Add_ button *(A)*. These files are added to the database and stored as encrypted binaries. You can open, save, or delete attachments from this interface *(B)*.
+
+NOTE: When you try to open the attached file, KeePassXC extracts the attachment to a temporary file and opens it using the default application associated with the file type. After finishing viewing or editing the file, you can choose between importing or discarding the changes that you made to the temporary file. KeePassXC securely deletes the temporary file by overwriting it.
+
+.Attachments interface
+image::edit_entry_attachments.png[]
+
+=== Foreground and Background Color
+You can change the foreground *(A)* and/or background *(B)* color that this entry will use in the entry lists. Click the corresponding box to open the color picker dialog.
+
+.Color picker dialog
+image::edit_entry_colors.png[]
+
+=== Icons
+You can select an icon to be displayed with each entry for easy identification. KeePassXC comes with a set of default icons that you can use or you can use your own custom icons. If you defined a URL with an entry, you can also download the favorite icon for that particular website.
+
+NOTE: To delete a custom icon, select the item to be deleted and click the _Delete custom icon_ button.
+
+.Entry icon selection
+image::edit_entry_icons.png[]
+
+TIP: Each KeePass application has different default icons. If you use a mobile app or KeePass2, be aware that the default icons may not be exactly correspond to the KeePassXC icons.
+
+=== Properties
+KeePassXC lets you view the basic properties such as date and time of creation, modification, and when last accessed. This is also where you can retrieve an entry's UUID for use in references.
+
+.Entry properties view
+image::edit_entry_properties.png[]
+
+=== History
+KeePassXC maintains a history of changes you make to your entries. Each time you change an entry, KeePassXC automatically creates a backup copy of the current, non-modified entry before saving the new values. You can view the changes you made previously, restore, and delete the history of changes you made.
+
+ * Show: Display this history item for review, a read-only copy of the entry will be shown.
+ * Restore: Reinstate the selected history item as the active entry details.
+ * Delete: Delete the selected history item.
+ * Delete All: Delete the entire history for this entry.
+
+.Entry history view
+image::edit_entry_history.png[]
+
+NOTE: Restoring an old history item will store the current entry settings as a new history item.
+
+== Database Settings
+At any point of time, you can change the settings for your database. To make changes to the general settings, perform the following steps:
+
+1.	Navigate to _Database_ -> _Database settings_. The following screen appears:
++
+.Database settings
+image::database_settings.png[]
+
+2.	Click the General button in the left-hand menu bar to access the following settings:
+ * *Database name:* This is the default identifier for your database and is shown in the tab bar and title bar (when active). You can change this name as desired.
+ * *Database description:* Provide some meaningful description for your database.
+ * *Default username:* Provide a default username for all new entries that you create in this database.
+ * *Max history items:* This is the maximum number of history items that are stored for each entry. When you set this to 0, no history will be saved. Set this value to a low value to prevent the database from getting too large (we recommend no more than 10).
+ * *Max. history size:* When the history of an entry gets above this size, it is truncated. For example, this happens when entries have large attachments. Set this value small to prevent the database from getting too large (we recommend 6 MiB).
+ * *Use recycle bin:* Select this check-box if you want deleted entries to move to the recycle bin instead of being permanently removed. The recycle bin will be created if it does not already exist after your first deletion. To delete entries permanently, you must empty the recycle bin manually.
+ * *Enable compression:* KeePassXC databases can be compressed before being encrypted. Compression reduces the size of the database and does not have any appreciable affect on speed. It is  recommended to always save databases with compression.
+
+3. Click the Security button in the left-hand menu bar to change your database credentials and change encryption settings.
++
+.Database security
+image::database_security.png[]
+
+4. Here you can change your database password or add/remove additional credentials to protect your database. KeePassXC supports adding a randomly generated, static key file and hardware keys such as YubiKey and OnlyKey. To add a key file, click _Add Key File_ and either browse for an existing file or generate a new one *(A)*. To add a hardware key, click _Add YubiKey Challenge-Response_, plug in your hardware key, then click refresh *(B)*.
++
+.Database credentials
+image::database_security_credentials.png[]
+
+5. Encryption settings allows you to change the average time it takes to encrypt and decrypt the database. The longer time that is chosen, the harder it will be to brute force attack your database. *We recommend a setting of one second.*
++
+.Database encryption
+image::database_security_encryption.png[]
++
+WARNING: Encryption time is dependent on your computer's hardware. If sharing a database with a mobile device, be mindful that it will likely take two to four times longer to access and save your database than on your home computer.
+
+6. Advanced encryption settings can be accessed by clicking the _Advanced Settings_ checkbox in the lower left-hand corner. These settings are only meant for people who know what they mean. *We do not recommend touching these settings.*
++
+.Database encryption advanced settings
+image::database_security_encryption_advanced.png[]
++
+The following key derivation functions are supported:
+
+ * AES-KDF (KDBX 4 and KDBX 3.1): This key derivation function is based on iterating AES. Users can change the number of iterations. The more iterations, the harder are dictionary and guessing attacks, but also database loading/saving takes more time (linearly). KDBX 3.1 only supports AES-KDF; any other key derivation function, like for instance Argon2, requires KDBX 4.
+
+ * Argon2 (KDBX 4 - recommended): KDBX 4, the Argon2 key derivation function can be used for transforming the composite master key (as protection against dictionary attacks). The main advantage of Argon2 over AES-KDF is that it provides a better resistance against GPU/ASIC attacks (due to being a memory-hard function). The number of iterations scales linearly with the required time. By increasing the memory parameter, GPU/ASIC attacks become harder (and the required time increases). The parallelism parameter can be used to specify how many threads should be used.
+// end::advanced[]
+
+== Storing a Database File
+The database file that you create might contain highly sensitive data and must be stored in a very secure way. You must make sure that the database is always protected with a strong and long password. The database file that is protected with a strong and long password is secure and encrypted while stored on your computer or cloud storage service.
+
+Make sure that the database file is stored in a folder that is secure. Make sure that you or someone else does not accidentally delete the database file. Deletion of the database file will result in the total loss of your information and a lot of inconvenience to manually retrieve your logins for  various web applications. You must not share your database file with anyone unless absolutely necessary.
+
+==  Backing up a Database File
+It is a good practice to create copies of your database file and store the copies of your database on a different computer, smart phone, or cloud storage space such a Google Drive or Microsoft OneDrive. Backups can be created automatically by selecting the _Backup database file before saving_ option in the application settings. Additionally, you can create a backup on-demand using the _Database_ -> _Save Database Backup..._ menu feature.
+
+.Saving a database backup
+image::save_database_backup.png[,40%]
+
+Creating backups for your database give you a peace of mind should you lose one copy of your database. You can quickly retrieve the copy of your database and start using it.
+// end::content[]
