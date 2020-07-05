@@ -154,6 +154,7 @@ private:
     QHash<QString, QSharedPointer<BrowserAction>> m_browserClients;
 
     bool m_dialogActive;
+    bool m_bringToFrontRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
 
