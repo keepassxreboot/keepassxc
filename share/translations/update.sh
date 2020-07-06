@@ -53,12 +53,17 @@ if $UPDATE; then
 fi
 
 if $PUSH; then
-    echo "Pushing English source files to Transifex..."
+    echo "Pushing source files to Transifex..."
     tx push -s $@
     echo
 fi
 
 if $PULL; then
+    echo "Removing stale translations..."
+    mv share/translations/keepassx_en.ts share/translations/keepassx_en.ts.bak
+    rm share/translations/*.ts
+    mv share/translations/keepassx_en.ts.bak share/translations/keepassx_en.ts
+
     echo "Pulling translations from Transifex..."
     tx pull -af --minimum-perc=40 $@
     echo
