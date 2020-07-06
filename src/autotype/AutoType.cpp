@@ -35,6 +35,7 @@
 #include "core/ListDeleter.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
+#include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 
 #ifdef Q_OS_MAC
@@ -51,6 +52,7 @@ AutoType::AutoType(QObject* parent, bool test)
     , m_pluginLoader(new QPluginLoader(this))
     , m_plugin(nullptr)
     , m_executor(nullptr)
+    , m_windowState(WindowState::Normal)
     , m_windowForGlobal(0)
 {
     // prevent crash when the plugin has unresolved symbols
@@ -227,6 +229,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
                                        "KeePassXC."));
             return;
         }
+
         macUtils()->raiseLastActiveWindow();
         m_plugin->hideOwnWindow();
 #else
@@ -286,6 +289,18 @@ void AutoType::startGlobalAutoType()
 {
     m_windowForGlobal = m_plugin->activeWindow();
     m_windowTitleForGlobal = m_plugin->activeWindowTitle();
+#ifdef Q_OS_MACOS
+    m_windowState = WindowState::Normal;
+    if (getMainWindow()) {
+        if (getMainWindow()->isMinimized()) {
+            m_windowState = WindowState::Minimized;
+        }
+        if (getMainWindow()->isHidden()) {
+            m_windowState = WindowState::Hidden;
+        }
+    }
+#endif
+
     emit globalAutoTypeTriggered();
 }
 
@@ -332,9 +347,12 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
                                 .append(m_windowTitleForGlobal));
             msgBox->setIcon(QMessageBox::Information);
             msgBox->setStandardButtons(QMessageBox::Ok);
-            msgBox->show();
-            msgBox->raise();
-            msgBox->activateWindow();
+#ifdef Q_OS_MACOS
+            m_plugin->raiseOwnWindow();
+            Tools::wait(200);
+#endif
+            msgBox->exec();
+            restoreWindowState();
         }
 
         m_inGlobalAutoTypeDialog.unlock();
@@ -361,8 +379,23 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
     }
 }
 
+void AutoType::restoreWindowState()
+{
+#ifdef Q_OS_MAC
+    if (getMainWindow()) {
+        if (m_windowState == WindowState::Minimized) {
+            getMainWindow()->showMinimized();
+        } else if (m_windowState == WindowState::Hidden) {
+            getMainWindow()->hideWindow();
+        }
+    }
+#endif
+}
+
 void AutoType::performAutoTypeFromGlobal(AutoTypeMatch match)
 {
+    restoreWindowState();
+
     m_plugin->raiseWindow(m_windowForGlobal);
     executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowForGlobal);
 
@@ -380,6 +413,7 @@ void AutoType::autoTypeRejectedFromGlobal()
     m_windowForGlobal = 0;
     m_windowTitleForGlobal.clear();
 
+    restoreWindowState();
     emit autotypeRejected();
 }
 

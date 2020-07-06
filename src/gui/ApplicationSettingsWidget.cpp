@@ -106,7 +106,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), SLOT(autoSaveToggled(bool)));
     connect(m_generalUi->hideWindowOnCopyCheckBox, SIGNAL(toggled(bool)), SLOT(hideWindowOnCopyCheckBoxToggled(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), SLOT(systrayToggled(bool)));
-    connect(m_generalUi->toolbarHideCheckBox, SIGNAL(toggled(bool)), SLOT(toolbarSettingsToggled(bool)));
     connect(m_generalUi->rememberLastDatabasesCheckBox, SIGNAL(toggled(bool)), SLOT(rememberDatabasesToggled(bool)));
     connect(m_generalUi->resetSettingsButton, SIGNAL(clicked()), SLOT(resetSettings()));
 
@@ -126,7 +125,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->faviconTimeoutSpinBox->installEventFilter(mouseWheelFilter);
     m_generalUi->toolButtonStyleComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->languageComboBox->installEventFilter(mouseWheelFilter);
-    m_generalUi->appThemeSelection->installEventFilter(mouseWheelFilter);
 
 #ifdef WITH_XC_UPDATECHECK
     connect(m_generalUi->checkForUpdatesOnStartupCheckBox, SIGNAL(toggled(bool)), SLOT(checkUpdatesToggled(bool)));
@@ -210,19 +208,8 @@ void ApplicationSettingsWidget::loadSettings()
         m_generalUi->languageComboBox->setCurrentIndex(defaultIndex);
     }
 
-    m_generalUi->previewHideCheckBox->setChecked(config()->get(Config::GUI_HidePreviewPanel).toBool());
-    m_generalUi->toolbarHideCheckBox->setChecked(config()->get(Config::GUI_HideToolbar).toBool());
-    toolbarSettingsToggled(m_generalUi->toolbarHideCheckBox->isChecked());
     m_generalUi->toolbarMovableCheckBox->setChecked(config()->get(Config::GUI_MovableToolbar).toBool());
     m_generalUi->monospaceNotesCheckBox->setChecked(config()->get(Config::GUI_MonospaceNotes).toBool());
-
-    m_generalUi->appThemeSelection->clear();
-    m_generalUi->appThemeSelection->addItem(tr("Automatic"), "auto");
-    m_generalUi->appThemeSelection->addItem(tr("Light"), "light");
-    m_generalUi->appThemeSelection->addItem(tr("Dark"), "dark");
-    m_generalUi->appThemeSelection->addItem(tr("Classic (Platform-native)"), "classic");
-    m_generalUi->appThemeSelection->setCurrentIndex(
-        m_generalUi->appThemeSelection->findData(config()->get(Config::GUI_ApplicationTheme).toString()));
 
     m_generalUi->toolButtonStyleComboBox->clear();
     m_generalUi->toolButtonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
@@ -338,13 +325,8 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::FaviconDownloadTimeout, m_generalUi->faviconTimeoutSpinBox->value());
 
     config()->set(Config::GUI_Language, m_generalUi->languageComboBox->currentData().toString());
-    config()->set(Config::GUI_HidePreviewPanel, m_generalUi->previewHideCheckBox->isChecked());
-    config()->set(Config::GUI_HideToolbar, m_generalUi->toolbarHideCheckBox->isChecked());
     config()->set(Config::GUI_MovableToolbar, m_generalUi->toolbarMovableCheckBox->isChecked());
     config()->set(Config::GUI_MonospaceNotes, m_generalUi->monospaceNotesCheckBox->isChecked());
-
-    QString theme = m_generalUi->appThemeSelection->currentData().toString();
-    config()->set(Config::GUI_ApplicationTheme, theme);
 
     config()->set(Config::GUI_ToolButtonStyle, m_generalUi->toolButtonStyleComboBox->currentData().toString());
 
@@ -479,13 +461,6 @@ void ApplicationSettingsWidget::systrayToggled(bool checked)
     m_generalUi->trayIconAppearance->setEnabled(checked);
     m_generalUi->trayIconAppearanceLabel->setEnabled(checked);
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
-}
-
-void ApplicationSettingsWidget::toolbarSettingsToggled(bool checked)
-{
-    m_generalUi->toolbarMovableCheckBox->setEnabled(!checked);
-    m_generalUi->toolButtonStyleComboBox->setEnabled(!checked);
-    m_generalUi->toolButtonStyleLabel->setEnabled(!checked);
 }
 
 void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)

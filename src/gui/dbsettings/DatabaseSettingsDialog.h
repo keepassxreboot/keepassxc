@@ -28,7 +28,7 @@
 class Database;
 class DatabaseSettingsWidgetGeneral;
 class DatabaseSettingsWidgetEncryption;
-class DatabaseSettingsWidgetMasterKey;
+class DatabaseSettingsWidgetDatabaseKey;
 #ifdef WITH_XC_BROWSER
 class DatabaseSettingsWidgetBrowser;
 #endif
@@ -63,7 +63,7 @@ public:
 
     void load(const QSharedPointer<Database>& db);
     void addSettingsPage(IDatabaseSettingsPage* page);
-    void showMasterKeySettings();
+    void showDatabaseKeySettings();
 
 signals:
     void editFinished(bool accepted);
@@ -85,7 +85,7 @@ private:
     const QScopedPointer<Ui::DatabaseSettingsDialog> m_ui;
     QPointer<DatabaseSettingsWidgetGeneral> m_generalWidget;
     QPointer<QTabWidget> m_securityTabWidget;
-    QPointer<DatabaseSettingsWidgetMasterKey> m_masterKeyWidget;
+    QPointer<DatabaseSettingsWidgetDatabaseKey> m_databaseKeyWidget;
     QPointer<DatabaseSettingsWidgetEncryption> m_encryptionWidget;
 #ifdef WITH_XC_BROWSER
     QPointer<DatabaseSettingsWidgetBrowser> m_browserWidget;

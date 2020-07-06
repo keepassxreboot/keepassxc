@@ -112,9 +112,9 @@ void KdbxXmlWriter::writeMetadata()
     writeDateTime("DefaultUserNameChanged", m_meta->defaultUserNameChanged());
     writeNumber("MaintenanceHistoryDays", m_meta->maintenanceHistoryDays());
     writeString("Color", m_meta->color());
-    writeDateTime("MasterKeyChanged", m_meta->masterKeyChanged());
-    writeNumber("MasterKeyChangeRec", m_meta->masterKeyChangeRec());
-    writeNumber("MasterKeyChangeForce", m_meta->masterKeyChangeForce());
+    writeDateTime("MasterKeyChanged", m_meta->databaseKeyChanged());
+    writeNumber("MasterKeyChangeRec", m_meta->databaseKeyChangeRec());
+    writeNumber("MasterKeyChangeForce", m_meta->databaseKeyChangeForce());
     writeMemoryProtection();
     writeCustomIcons();
     writeBool("RecycleBinEnabled", m_meta->recycleBinEnabled());

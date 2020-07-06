@@ -471,14 +471,14 @@ namespace FdoSecrets
         return collection;
     }
 
-    void Service::doSwitchToChangeDatabaseSettings(DatabaseWidget* dbWidget)
+    void Service::doSwitchToDatabaseSettings(DatabaseWidget* dbWidget)
     {
         if (dbWidget->isLocked()) {
             return;
         }
         // switch selected to current
         m_databases->setCurrentWidget(dbWidget);
-        m_databases->changeDatabaseSettings();
+        m_databases->showDatabaseSettings();
 
         // open settings (switch from app settings to m_dbTabs)
         m_plugin->emitRequestSwitchToDatabases();

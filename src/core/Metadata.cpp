@@ -20,6 +20,7 @@
 #include <QtCore/QCryptographicHash>
 
 #include "core/Clock.h"
+#include "core/DatabaseIcons.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Tools.h"
@@ -186,7 +187,7 @@ QPixmap Metadata::customIconPixmap(const QUuid& uuid, IconSize size) const
     if (!hasCustomIcon(uuid)) {
         return {};
     }
-    return m_customIcons.value(uuid).pixmap(size);
+    return m_customIcons.value(uuid).pixmap(databaseIcons()->iconSize(size));
 }
 
 QHash<QUuid, QPixmap> Metadata::customIconsPixmaps(IconSize size) const
@@ -250,17 +251,17 @@ const Group* Metadata::lastTopVisibleGroup() const
     return m_lastTopVisibleGroup;
 }
 
-QDateTime Metadata::masterKeyChanged() const
+QDateTime Metadata::databaseKeyChanged() const
 {
     return m_masterKeyChanged;
 }
 
-int Metadata::masterKeyChangeRec() const
+int Metadata::databaseKeyChangeRec() const
 {
     return m_data.masterKeyChangeRec;
 }
 
-int Metadata::masterKeyChangeForce() const
+int Metadata::databaseKeyChangeForce() const
 {
     return m_data.masterKeyChangeForce;
 }
@@ -380,9 +381,9 @@ void Metadata::addCustomIcon(const QUuid& uuid, const QImage& image)
         // Generate QIcon with pre-baked resolutions
         auto basePixmap = QPixmap::fromImage(image).scaled(128, 128, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         QIcon icon(basePixmap);
-        icon.addPixmap(icon.pixmap(IconSize::Default));
-        icon.addPixmap(icon.pixmap(IconSize::Medium));
-        icon.addPixmap(icon.pixmap(IconSize::Large));
+        icon.addPixmap(icon.pixmap(databaseIcons()->iconSize(IconSize::Default)));
+        icon.addPixmap(icon.pixmap(databaseIcons()->iconSize(IconSize::Medium)));
+        icon.addPixmap(icon.pixmap(databaseIcons()->iconSize(IconSize::Large)));
         m_customIcons.insert(uuid, icon);
     } else {
         m_customIcons.insert(uuid, QIcon());
@@ -473,7 +474,7 @@ void Metadata::setLastTopVisibleGroup(Group* group)
     set(m_lastTopVisibleGroup, group);
 }
 
-void Metadata::setMasterKeyChanged(const QDateTime& value)
+void Metadata::setDatabaseKeyChanged(const QDateTime& value)
 {
     Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_masterKeyChanged = value;

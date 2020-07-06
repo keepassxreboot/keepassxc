@@ -1,0 +1,84 @@
+= KeePassXC - Auto-Type
+:imagesdir: ../images
+
+// tag::content[]
+== Auto-Type
+The Auto-Type feature acts like a virtual keyboard to populate data from your entries directly into the corresponding websites or applications that you use. You can use the Auto-Type feature on a global level or entry level. Each entry can be configured to be associated with a particular window title and multiple Auto-Type sequences can be pre-defined and selected upon use.
+
+NOTE: Auto-Type is a completely separate feature from Browser Integration. You do not need to have the KeePassXC browser extension installed in your browser to use Auto-Type.
+
+=== Configure Global Auto-Type
+You can define a global Auto-Type hotkey that starts the Auto-Type process. To configure the hotkey, perform the following steps:
+
+1. Navigate to _Tools_ -> _Settings_ -> Auto-Type tab *(1)*. Click into the _Global Auto-Type shortcut_ box and press the desired key combination that will trigger the Auto-Type process *(2)*.
++
+.Auto-Type settings
+image::autotype_settings.png[]
++
+You can configure additional Auto-Type settings in this window such as start delay, inter-key typing delay, and matching options. If Auto-Type is not working well for you, try adjusting the default delays.
+
+=== Configure Auto-Type Sequences
+Each entry in your database can have multiple Auto-Type sequences associated with various window titles. Simulated key presses can be sent to any other currently open window of your choice (web browser windows, login dialogs boxes, and so on). When the Global Auto-Type hotkey is pressed, KeePassXC will search your database for entries matching the current selected window title.
+
+NOTE: The default Auto-Type sequence is `{USERNAME}{TAB}{PASSWORD}{ENTER}`. This means that it first types the username of the selected entry, then presses the `Tab` key, then types the password of the entry and finally presses the `Enter` key.
+
+To configure Auto-Type sequences for your entries, perform the following steps:
+
+1.	Navigate to the entries list and open the desired entry for editing. Click the _Auto-Type_ item from the left-hand menu bar *(1)*. Press the `+` button *(2)* to add a new sequence entry. Select the desired window using the drop-down menu, or simply type a window title in the box *(3)*. You can use wildcard `*` to match any value (e.g., when a window title contains a filename or website name).
++
+.Auto-Type entry sequences
+image::autotype_entry_sequences.png[]
+
+2. _(Optional)_ Define a custom auto-type sequence for each window title match by selecting the _Use specific sequence for this association_ checkbox. Sequence action codes and field placeholders are detailed in the following table. A complete list of supported actions and placeholders can be found at https://keepass.info/help/base/autotype.html#autoseq[KeePass Auto-Type Action Codes] and https://keepass.info/help/base/placeholders.html[KeePass Placeholders]. Action codes and placeholders are not case sensitive.
++
+[grid=rows, frame=none, width=70%]
+|===
+|Action Code |Description
+
+|{TAB}, {ENTER}, {SPACE}, {INSERT}, {DELETE}, {HOME}, {END}, {PGUP}, {PGDN}, {BACKSPACE}, {CAPSLOCK}, {ESC}
+|Press the corresponding keyboard key
+
+|{UP}, {DOWN}, {LEFT}, {RIGHT}  |Press the corresponding arrow key
+|{F1}, {F2}, ..., {F16}         |Press F1, F2, etc.
+|{LEFTBRACE}, {RIGHTBRACE}      |Press `{` or `}`, respectively
+|{DELAY=X}     |Set key press delay to X milliseconds
+|{DELAY X}     |Delay typing start by X milliseconds
+|{CLEARFIELD}  |Clear the input field before typing
+|{TOTP}        |Insert calculated TOTP value (if configured)
+|{<ACTION> X}  |Repeat <ACTION> X times (e.g., {SPACE 5} inserts five spaces)
+|===
++
+[grid=rows, frame=none, width=70%]
+|===
+|Placeholder |Description
+
+|{TITLE}    |Entry Title
+|{USERNAME} |Username
+|{PASSWORD} |Password
+|{URL}      |URL
+|{NOTES}    |Notes
+|{TOTP}     |Current TOTP value (if configured)
+|{DT_SIMPLE} |Current date-time
+|{DB_DIR}   |Absolute directory path for database file
+|{S:<ATTRIBUTE_NAME>}   |Value for the given attribute name
+|{REF:<FIELD>@<SEARCH_IN>:<SEARCH_TEXT>} |Search for a field in another entry using the reference syntax.
+|===
+
+=== Performing Global Auto-Type
+The global Auto-Type keyboard shortcut is used when you have focus on the window you want to type into. To make use of this feature, you must have previously configured an Auto-Type hotkey.
+
+Pressing the global Auto-Type hotkey cause KeePassXC to search the database for entries that match the window title. Multiple matches may be returned and will cause the sequence selection dialog to appear. Click on a sequence line will immediately execute the Auto-Type action. A search box is also available in case numerous matches are returned.
+
+.Auto-Type sequence selection
+image::autotype_selection_dialog.png[,70%]
+
+TIP: The _Sequence_ column will only appear when there are different sequences defined by one or more entries displayed in the selection dialog.
+
+=== Performing Entry-Level Auto-Type
+You can quickly activate the default Auto-Type sequence for a particular entry using Entry-Level Auto-Type. For this operation, the KeePassXC window will be minimized and the Auto-Type sequence occurs in the previously selected window. You can perform Entry-Level Auto-Type from the toolbar icon *(A)*, entry context menu *(B)*, or by pressing `Ctrl+Shift+V`.
+
+WARNING: Be careful when using Entry-Level Auto-Type as you can inadvertently type into the wrong window. For example, a chat window or email.
+
+.Entry-Level Auto-Type
+image::autotype_entrylevel.png[]
+// end::content[]

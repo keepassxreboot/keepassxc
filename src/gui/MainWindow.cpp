@@ -37,6 +37,7 @@
 #include "core/Tools.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
@@ -50,7 +51,6 @@
 #endif
 
 #ifdef WITH_XC_UPDATECHECK
-#include "gui/MessageBox.h"
 #include "gui/UpdateCheckDialog.h"
 #include "updatecheck/UpdateChecker.h"
 #endif
@@ -106,6 +106,10 @@ MainWindow::MainWindow()
 #endif
 
     setAcceptDrops(true);
+
+    if (config()->get(Config::GUI_CompactMode).toBool()) {
+        m_ui->toolBar->setIconSize({20, 20});
+    }
 
     // Setup the search widget in the toolbar
     m_searchWidget = new SearchWidget();
@@ -166,6 +170,8 @@ MainWindow::MainWindow()
 
     m_ui->actionEntryAddToAgent->setVisible(false);
     m_ui->actionEntryRemoveFromAgent->setVisible(false);
+
+    initViewMenu();
 
 #if defined(WITH_XC_KEESHARE)
     KeeShare::init(this);
@@ -334,7 +340,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseClose->setIcon(resources()->icon("document-close"));
     m_ui->actionReports->setIcon(resources()->icon("reports"));
     m_ui->actionDatabaseSettings->setIcon(resources()->icon("document-edit"));
-    m_ui->actionChangeMasterKey->setIcon(resources()->icon("database-change-key"));
+    m_ui->actionDatabaseSecurity->setIcon(resources()->icon("database-change-key"));
     m_ui->actionLockDatabases->setIcon(resources()->icon("database-lock"));
     m_ui->actionQuit->setIcon(resources()->icon("application-exit"));
     m_ui->actionDatabaseMerge->setIcon(resources()->icon("database-merge"));
@@ -411,9 +417,9 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseSaveBackup, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseBackup()));
     connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
-    connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
-    connect(m_ui->actionReports, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeReports()));
-    connect(m_ui->actionDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
+    connect(m_ui->actionDatabaseSecurity, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSecurity()));
+    connect(m_ui->actionReports, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseReports()));
+    connect(m_ui->actionDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSettings()));
     connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
     connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
@@ -520,8 +526,6 @@ MainWindow::MainWindow()
     m_trayIconTriggerReason = QSystemTrayIcon::Unknown;
     m_trayIconTriggerTimer.setSingleShot(true);
     connect(&m_trayIconTriggerTimer, SIGNAL(timeout()), SLOT(processTrayIconTrigger()));
-
-    updateTrayIcon();
 
     if (config()->hasAccessError()) {
         m_ui->globalMessageWidget->showMessage(tr("Access error for config file %1").arg(config()->getFileName()),
@@ -724,7 +728,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupDownloadFavicons->setVisible(!recycleBinSelected);
             m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && currentGroupHasEntries
                                                           && !recycleBinSelected);
-            m_ui->actionChangeMasterKey->setEnabled(true);
+            m_ui->actionDatabaseSecurity->setEnabled(true);
             m_ui->actionReports->setEnabled(true);
             m_ui->actionDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
@@ -780,7 +784,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                 action->setEnabled(false);
             }
 
-            m_ui->actionChangeMasterKey->setEnabled(false);
+            m_ui->actionDatabaseSecurity->setEnabled(false);
             m_ui->actionReports->setEnabled(false);
             m_ui->actionDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
@@ -809,7 +813,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             action->setEnabled(false);
         }
 
-        m_ui->actionChangeMasterKey->setEnabled(false);
+        m_ui->actionDatabaseSecurity->setEnabled(false);
         m_ui->actionReports->setEnabled(false);
         m_ui->actionDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);
@@ -960,12 +964,12 @@ void MainWindow::openBugReportUrl()
 
 void MainWindow::openGettingStartedGuide()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_GettingStarted.pdf")));
+    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_GettingStarted.html")));
 }
 
 void MainWindow::openUserGuide()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_UserGuide.pdf")));
+    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_UserGuide.html")));
 }
 
 void MainWindow::openOnlineHelp()
@@ -975,7 +979,7 @@ void MainWindow::openOnlineHelp()
 
 void MainWindow::openKeyboardShortcuts()
 {
-    customOpenUrl("https://github.com/keepassxreboot/keepassxc/blob/develop/docs/KEYBINDS.md");
+    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_KeyboardShortcuts.html")));
 }
 
 void MainWindow::switchToDatabases()
@@ -1132,11 +1136,12 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (m_appExiting) {
         saveWindowInformation();
         event->accept();
-        QApplication::quit();
+        m_restartRequested ? kpxcApp->restart() : QApplication::quit();
         return;
     }
 
     m_appExitCalled = false;
+    m_restartRequested = false;
     event->ignore();
 }
 
@@ -1328,14 +1333,14 @@ void MainWindow::applySettingsChanges()
     }
 
 #ifdef WITH_XC_TOUCHID
-    // forget TouchID (in minutes)
-    timeout = config()->get(Config::Security_ResetTouchIdTimeout).toInt() * 60 * 1000;
-    if (timeout <= 0) {
-        timeout = 30 * 60 * 1000;
-    }
+    if (config()->get(Config::Security_ResetTouchId).toBool()) {
+        // Calculate TouchID timeout in milliseconds
+        timeout = config()->get(Config::Security_ResetTouchIdTimeout).toInt() * 60 * 1000;
+        if (timeout <= 0) {
+            timeout = 30 * 60 * 1000;
+        }
 
-    m_touchIDinactivityTimer->setInactivityTimeout(timeout);
-    if (config()->get(Config::Security_ResetTouchIdTimeout).toBool()) {
+        m_touchIDinactivityTimer->setInactivityTimeout(timeout);
         m_touchIDinactivityTimer->activate();
     } else {
         m_touchIDinactivityTimer->deactivate();
@@ -1638,4 +1643,63 @@ void MainWindow::displayDesktopNotification(const QString& msg, QString title, i
 #else
     m_trayIcon->showMessage(title, msg, QSystemTrayIcon::Information, msTimeoutHint);
 #endif
+}
+
+void MainWindow::restartApp(const QString& message)
+{
+    auto ans = MessageBox::question(
+        this, tr("Restart Application?"), message, MessageBox::Yes | MessageBox::No, MessageBox::Yes);
+    if (ans == MessageBox::Yes) {
+        m_appExitCalled = true;
+        m_restartRequested = true;
+        close();
+    } else {
+        m_restartRequested = false;
+    }
+}
+
+void MainWindow::initViewMenu()
+{
+    m_ui->actionThemeAuto->setData("auto");
+    m_ui->actionThemeLight->setData("light");
+    m_ui->actionThemeDark->setData("dark");
+    m_ui->actionThemeClassic->setData("classic");
+
+    auto themeActions = new QActionGroup(this);
+    themeActions->addAction(m_ui->actionThemeAuto);
+    themeActions->addAction(m_ui->actionThemeLight);
+    themeActions->addAction(m_ui->actionThemeDark);
+    themeActions->addAction(m_ui->actionThemeClassic);
+
+    auto theme = config()->get(Config::GUI_ApplicationTheme).toString();
+    for (auto action : themeActions->actions()) {
+        if (action->data() == theme) {
+            action->setChecked(true);
+            break;
+        }
+    }
+
+    connect(themeActions, &QActionGroup::triggered, this, [this](QAction* action) {
+        if (action->data() != config()->get(Config::GUI_ApplicationTheme)) {
+            config()->set(Config::GUI_ApplicationTheme, action->data());
+            restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        }
+    });
+
+    m_ui->actionCompactMode->setChecked(config()->get(Config::GUI_CompactMode).toBool());
+    connect(m_ui->actionCompactMode, &QAction::toggled, this, [this](bool checked) {
+        config()->set(Config::GUI_CompactMode, checked);
+        restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+    });
+
+    m_ui->actionShowToolbar->setChecked(!config()->get(Config::GUI_HideToolbar).toBool());
+    connect(m_ui->actionShowToolbar, &QAction::toggled, this, [this](bool checked) {
+        config()->set(Config::GUI_HideToolbar, !checked);
+        applySettingsChanges();
+    });
+
+    m_ui->actionShowPreviewPanel->setChecked(!config()->get(Config::GUI_HidePreviewPanel).toBool());
+    connect(m_ui->actionShowPreviewPanel, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HidePreviewPanel, !checked);
+    });
 }

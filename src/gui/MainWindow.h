@@ -81,6 +81,7 @@ public slots:
     void closeAllDatabases();
     void lockAllDatabases();
     void displayDesktopNotification(const QString& msg, QString title = "", int msTimeoutHint = 10000);
+    void restartApp(const QString& message);
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -152,6 +153,8 @@ private:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dropEvent(QDropEvent* event) override;
 
+    void initViewMenu();
+
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
     QPointer<QAction> m_clearHistoryAction;
@@ -171,6 +174,7 @@ private:
 
     bool m_appExitCalled = false;
     bool m_appExiting = false;
+    bool m_restartRequested = false;
     bool m_contextMenuFocusLock = false;
     bool m_showToolbarSeparator = false;
     qint64 m_lastFocusOutTime = 0;

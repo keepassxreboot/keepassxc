@@ -1219,7 +1219,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
     }
 }
 
-void DatabaseWidget::switchToReports()
+void DatabaseWidget::switchToDatabaseReports()
 {
     m_reportsDialog->load(m_db);
     setCurrentWidget(m_reportsDialog);
@@ -1307,10 +1307,10 @@ void DatabaseWidget::sortGroupsDesc()
     m_groupView->sortGroups(true);
 }
 
-void DatabaseWidget::switchToMasterKeyChange()
+void DatabaseWidget::switchToDatabaseSecurity()
 {
     switchToDatabaseSettings();
-    m_databaseSettingDialog->showMasterKeySettings();
+    m_databaseSettingDialog->showDatabaseKeySettings();
 }
 
 void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile)

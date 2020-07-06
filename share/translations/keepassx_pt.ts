@@ -225,7 +225,7 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation>Lembrar bases de dados usadas anteriormente</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>Idioma:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
@@ -269,7 +269,7 @@
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Minimizar</translation>
     </message>
     <message>
         <source>Drop to background</source>
@@ -298,7 +298,7 @@
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation>Seleção de idioma</translation>
     </message>
     <message>
         <source>Reset Settings to Default</source>
@@ -550,11 +550,11 @@ Selecione se deseja permitir o acesso.</translation>
     </message>
     <message>
         <source>Allow access</source>
-        <translation type="unfinished"/>
+        <translation>Permitir acesso</translation>
     </message>
     <message>
         <source>Deny access</source>
-        <translation type="unfinished"/>
+        <translation>Negar acesso</translation>
     </message>
 </context>
 <context>

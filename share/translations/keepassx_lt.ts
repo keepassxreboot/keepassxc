@@ -97,7 +97,7 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation type="unfinished"/>
+        <translation>Atstatyti nustatymus?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>Kalba:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>

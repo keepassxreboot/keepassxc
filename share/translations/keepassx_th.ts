@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation type="unfinished"/>
+        <translation>ล้างการตั้งค่าหรือไม่?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
@@ -230,7 +230,7 @@
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>เรียกใช้ฐานข้อมูลที่เปิดใช้ก่อนหน้าในตอนเริ่มโปรแกรม</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
@@ -246,7 +246,7 @@
     </message>
     <message>
         <source>Button style:</source>
-        <translation type="unfinished"/>
+        <translation>สไตล์ปุ่ม:</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -266,7 +266,7 @@
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>ซ่อนหน้าต่างขณะที่คัดลอกไปยังคลิปบอร์ด</translation>
     </message>
     <message>
         <source>Minimize</source>
@@ -278,7 +278,7 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation type="unfinished"/>
+        <translation>ระยะหมดเวลาดาวน์โหลด favicon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
@@ -291,31 +291,31 @@
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation type="unfinished"/>
+        <translation>รูปแบบปุ่มบนแถบเครื่องมือ</translation>
     </message>
     <message>
         <source>Use monospaced font for Notes</source>
-        <translation type="unfinished"/>
+        <translation>ใช้ฟอนต์ความกว้างเดียวสำหรับบันทึก</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation>เลือกภาษา</translation>
     </message>
     <message>
         <source>Reset Settings to Default</source>
-        <translation type="unfinished"/>
+        <translation>ล้างการตั้งค่ากลับไปเป็นค่าเริ่มต้น</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>ปุ่มลัดพิมพ์อัตโนมัติในทุกโปรแกรม</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>หน่วงเวลาพิมพ์อัตโนมัติแต่ละตัวอักษร หน่วยเป็นมิลลิวินาที</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>หน่วงเวลาเริ่มพิมพ์อัตโนมัติ หน่วยเป็นมิลลิวินาที</translation>
     </message>
 </context>
 <context>
@@ -391,11 +391,11 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation>ใช้บริการของ DuckDuckGo เพื่อดาวน์โหลดไอคอนของเว็บไซต์</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"/>
+        <translation>ล้างคลิปบอร์ดภายใน หน่วยเป็นวินาที</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
@@ -412,7 +412,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation>ล้างคำค้นหลังจาก</translation>
     </message>
 </context>
 <context>
@@ -551,11 +551,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Allow access</source>
-        <translation type="unfinished"/>
+        <translation>อนุญาตการเข้าถึง</translation>
     </message>
     <message>
         <source>Deny access</source>
-        <translation type="unfinished"/>
+        <translation>ปฏิเสธการเข้าถึง</translation>
     </message>
 </context>
 <context>
@@ -1123,7 +1123,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Select slot...</source>
-        <translation type="unfinished"/>
+        <translation>เลือกช่อง...</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
@@ -1179,7 +1179,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Clear Key File</source>
-        <translation type="unfinished"/>
+        <translation>ล้างแฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1211,15 +1211,15 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Key file help</source>
-        <translation type="unfinished"/>
+        <translation>ช่วยเหลือเรื่องแฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>?</source>
-        <translation type="unfinished"/>
+        <translation>?</translation>
     </message>
     <message>
         <source>Select key file...</source>
-        <translation type="unfinished"/>
+        <translation>เลือกแฟ้มกุญแจ...</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
@@ -1388,7 +1388,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>ลบกุญแจที่เลือก</translation>
     </message>
 </context>
 <context>
@@ -1538,15 +1538,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>เวลาถอดรหัสลับ หน่วยเป็นวินาที</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation type="unfinished"/>
+        <translation>รูปแบบฐานข้อมูล</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>อัลกอริทึมการเข้ารหัสลับ</translation>
     </message>
     <message>
         <source>Key derivation function</source>
@@ -1558,7 +1558,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>หน่วยความจำที่ใช้</translation>
     </message>
     <message>
         <source>Parallelism</source>
@@ -1632,15 +1632,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องข้อมูลชื่อฐานข้อมูล</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องข้อมูลคำอธิบายฐานข้อมูล</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องข้อมูลชื่อผู้ใช้ฐานข้อมูล</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
@@ -1652,7 +1652,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>ลบถังขยะ</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
@@ -1661,7 +1661,7 @@ This action is not reversible.</source>
     </message>
     <message>
         <source> (old)</source>
-        <translation type="unfinished"/>
+        <translation> (เก่า)</translation>
     </message>
 </context>
 <context>
@@ -1747,18 +1747,18 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องข้อมูลชื่อฐานข้อมูล</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องข้อมูลคำอธิบายฐานข้อมูล</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetStatistics</name>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>สถิติ</translation>
     </message>
     <message>
         <source>Hover over lines with error icons for further information.</source>
@@ -1774,31 +1774,31 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database name</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อฐานข้อมูล</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>คำอธิบาย</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"/>
+        <translation>ที่ตั้ง</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>บันทึกครั้งสุดท้าย</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>ความเปลี่ยนแปลงที่ยังไม่ได้บันทึก</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"/>
+        <translation>ใช่</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>ไม่</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
@@ -1806,31 +1806,31 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation type="unfinished"/>
+        <translation>จำนวนกลุ่ม</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation type="unfinished"/>
+        <translation>จำนวนรายการ</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>จำนวนรายการที่หมดอายุ</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation type="unfinished"/>
+        <translation>ฐานข้อมูลมีรายการที่หมดอายุแล้ว</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>รหัสผ่านที่ไม่ซ้ำ</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>รหัสผ่านที่ซ้ำ</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>มากกว่า 10% ของรหัสผ่านถูกใช้ซ้ำ ควรใช้รหัสผ่านที่ไม่ซ้ำถ้าทำได้</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
@@ -1862,7 +1862,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation type="unfinished"/>
+        <translation>%1 ตัวอักษร</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
@@ -1954,7 +1954,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>HTML file</source>
-        <translation type="unfinished"/>
+        <translation>แฟ้ม HTML</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
@@ -2051,7 +2051,7 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>ลบรายการหรือไม่?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
@@ -5252,7 +5252,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>สถิติ</translation>
     </message>
 </context>
 <context>
@@ -6053,7 +6053,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>ไม่มี</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -6468,7 +6468,7 @@ Kernel: %3 %4</source>
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>ตัวเลือก</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
@@ -6496,7 +6496,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อแฟ้ม</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6504,11 +6504,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Manage</source>
-        <translation type="unfinished"/>
+        <translation>จัดการ</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation type="unfinished"/>
+        <translation>ตรวจยืนยันสิทธิ์</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
@@ -6516,11 +6516,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Application</source>
-        <translation type="unfinished"/>
+        <translation>แอปพลิเคชัน</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation type="unfinished"/>
+        <translation>หยุดเชื่อมต่อ</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -6528,7 +6528,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation type="unfinished"/>
+        <translation>แก้ไขการตั้งค่าฐานข้อมูล</translation>
     </message>
     <message>
         <source>Unlock database</source>
@@ -6548,7 +6548,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>ไม่มี</translation>
     </message>
 </context>
 <context>
@@ -6676,11 +6676,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation type="unfinished"/>
+        <translation>อนุญาตการนำเข้า KeeShare</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation type="unfinished"/>
+        <translation>อนุญาตการส่งออก KeeShare</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
@@ -6952,7 +6952,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation type="unfinished"/>
+        <translation>กุญแจลับ:</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
@@ -6972,7 +6972,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source> digits</source>
-        <translation type="unfinished"/>
+        <translation>หลัก</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
@@ -7075,11 +7075,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation type="unfinished"/>
+        <translation>นำเข้าจาก 1Password</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation type="unfinished"/>
+        <translation>เปิดฐานข้อมูลล่าสุด</translation>
     </message>
 </context>
 <context>

@@ -736,11 +736,8 @@ EOF
     local appimage_name="KeePassXC-x86_64.AppImage"
     if [ "" != "$RELEASE_NAME" ]; then
         appimage_name="KeePassXC-${RELEASE_NAME}-x86_64.AppImage"
+        echo "X-AppImage-Version=${RELEASE_NAME}" >> "$desktop_file"
     fi
-
-    # Allow appimagetool to insert version information into the AppImage to allow
-    # desktop integration tools to display that in app launchers
-    export VERSION="${RELEASE_NAME}"
 
     # Run appimagetool to package (and possibly sign) AppImage
     # --no-appstream is required, since it may crash on newer systems

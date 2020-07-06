@@ -1,0 +1,40 @@
+= KeePassXC - Keyboard Shortcuts
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+[grid=rows, frame=none, width=75%]
+|===
+|Action                       | Keyboard Shortcut
+
+|Open Database                | Ctrl + O
+|Save Database                | Ctrl + S
+|Save Database As             | Ctrl + Shift + S
+|New Database                 | Ctrl + Shift + N
+|Close Database               | Ctrl + W ; Ctrl + F4
+|Lock All Databases           | Ctrl + L
+|Quit                         | Ctrl + Q
+|New Entry                    | Ctrl + N
+|Edit Entry                   | Enter ; Ctrl + E
+|Delete Entry                 | Delete
+|Clone Entry                  | Ctrl + K
+|Copy Username                | Ctrl + B
+|Copy Password                | Ctrl + C
+|Copy URL                     | Ctrl + U
+|Open URL                     | Ctrl + Shift + U
+|Copy TOTP                    | Ctrl + T
+|Show TOTP                    | Ctrl + Shift + T
+|Trigger AutoType             | Ctrl + Shift + V
+|Add key to SSH Agent         | Ctrl + H
+|Remove key from SSH Agent    | Ctrl + Shift + H
+|Minimize Window              | Ctrl + M
+|Hide Window                  | Ctrl + Shift + M
+|Select Next Database Tab     | Ctrl + Tab ; Ctrl + PageDn
+|Select Previous Database Tab | Ctrl + Shift + Tab ; Ctrl + PageUp
+|Toggle Passwords Hidden      | Ctrl + Shift + C
+|Toggle Usernames Hidden      | Ctrl + Shift + B
+|Focus Search                 | Ctrl + F
+|Clear Search                 | Escape
+|Show Keyboard Shortcuts      | Ctrl + /
+|===
+// end::content[]

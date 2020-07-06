@@ -48,9 +48,9 @@ static const auto FALSE_STR = QStringLiteral("false");
 
 enum IconSize
 {
-    Default = 22,
-    Medium = 30,
-    Large = 36
+    Default,
+    Medium,
+    Large
 };
 
 template <typename T> struct AddConst

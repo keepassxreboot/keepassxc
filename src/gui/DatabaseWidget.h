@@ -197,8 +197,8 @@ public slots:
     void switchToGroupEdit();
     void sortGroupsAsc();
     void sortGroupsDesc();
-    void switchToMasterKeyChange();
-    void switchToReports();
+    void switchToDatabaseSecurity();
+    void switchToDatabaseReports();
     void switchToDatabaseSettings();
     void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);

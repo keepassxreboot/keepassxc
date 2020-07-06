@@ -71,6 +71,7 @@ parts:
       - libargon2-0-dev
       - libqrencode-dev
       - libquazip5-dev
+      - asciidoctor
     stage-packages:
       - dbus
       - qttranslations5-l10n # common translations

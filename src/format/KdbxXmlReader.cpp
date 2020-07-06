@@ -262,7 +262,7 @@ void KdbxXmlReader::parseMeta()
         } else if (m_xml.name() == "Color") {
             m_meta->setColor(readColor());
         } else if (m_xml.name() == "MasterKeyChanged") {
-            m_meta->setMasterKeyChanged(readDateTime());
+            m_meta->setDatabaseKeyChanged(readDateTime());
         } else if (m_xml.name() == "MasterKeyChangeRec") {
             m_meta->setMasterKeyChangeRec(readNumber());
         } else if (m_xml.name() == "MasterKeyChangeForce") {

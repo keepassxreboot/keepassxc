@@ -64,6 +64,7 @@ BrowserService::BrowserService()
     : QObject()
     , m_browserHost(new BrowserHost)
     , m_dialogActive(false)
+    , m_bringToFrontRequested(false)
     , m_prevWindowState(WindowState::Normal)
     , m_keepassBrowserUUID(Tools::hexToUuid("de887cc3036343b8974b5911b8816224"))
 {
@@ -109,6 +110,8 @@ bool BrowserService::openDatabase(bool triggerUnlock)
     }
 
     if (triggerUnlock) {
+        m_bringToFrontRequested = true;
+        updateWindowState();
         emit requestUnlock();
     }
 
@@ -751,11 +754,10 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     }
 
     m_dialogActive = true;
-    bool wasAppActive = qApp->activeWindow() == getMainWindow()->window();
+    updateWindowState();
     BrowserAccessControlDialog accessControlDialog;
 
     connect(m_currentDatabaseWidget, SIGNAL(databaseLocked()), &accessControlDialog, SLOT(reject()));
-    connect(this, SIGNAL(activeDatabaseChanged()), &accessControlDialog, SLOT(reject()));
 
     connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
         auto entry = pwEntriesToConfirm[item->row()];
@@ -797,11 +799,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
 #ifdef Q_OS_MAC
     // Re-hide the application if it wasn't visible before
     // only affects macOS because dialogs force the main window to show
-    if (!wasAppActive) {
-        hideWindow();
-    }
-#else
-    Q_UNUSED(wasAppActive);
+    hideWindow();
 #endif
 
     m_dialogActive = false;
@@ -848,12 +846,13 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
 BrowserService::Access
 BrowserService::checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm)
 {
+    if (entry->isExpired()) {
+        return browserSettings()->allowExpiredCredentials() ? Allowed : Denied;
+    }
+
     BrowserEntryConfig config;
     if (!config.load(entry)) {
         return Unknown;
-    }
-    if (entry->isExpired()) {
-        return browserSettings()->allowExpiredCredentials() ? Allowed : Denied;
     }
     if ((config.isAllowed(host)) && (submitHost.isEmpty() || config.isAllowed(submitHost))) {
         return Allowed;
@@ -1247,6 +1246,13 @@ void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
+#ifdef Q_OS_MAC
+        if (m_bringToFrontRequested) {
+            m_bringToFrontRequested = false;
+            hideWindow();
+        }
+#endif
+
         QJsonObject msg;
         msg["action"] = QString("database-unlocked");
         m_browserHost->sendClientMessage(msg);

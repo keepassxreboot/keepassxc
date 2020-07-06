@@ -203,6 +203,8 @@ void YubiKey::findValidKeys()
 
                 ykds_free(st);
                 closeKey(yk_key);
+
+                Tools::wait(100);
             } else {
                 // No more keys are connected
                 break;

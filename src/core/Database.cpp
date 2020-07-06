@@ -253,10 +253,14 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
 
     QFileInfo fileInfo(filePath);
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
+    bool isNewFile = !QFile::exists(realFilePath);
     bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, error, atomic, backup); });
     if (ok) {
         markAsClean();
         setFilePath(filePath);
+        if (isNewFile) {
+            QFile::setPermissions(realFilePath, QFile::ReadUser | QFile::WriteUser);
+        }
         m_fileWatcher->start(realFilePath, 30, 1);
     } else {
         // Saving failed, don't rewatch file since it does not represent our database
@@ -304,6 +308,7 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
             }
 
             // Delete the original db and move the temp file in place
+            auto perms = QFile::permissions(filePath);
             QFile::remove(filePath);
 
             // Note: call into the QFile rename instead of QTemporaryFile
@@ -312,6 +317,7 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
             if (tempFile.QFile::rename(filePath)) {
                 // successfully saved the database
                 tempFile.setAutoRemove(false);
+                QFile::setPermissions(filePath, perms);
                 return true;
             } else if (!backup || !restoreDatabase(filePath)) {
                 // Failed to copy new database in place, and
@@ -345,7 +351,7 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
 
     PasswordKey oldTransformedKey;
     if (m_data.key->isEmpty()) {
-        oldTransformedKey.setHash(m_data.transformedMasterKey->rawKey());
+        oldTransformedKey.setHash(m_data.transformedDatabaseKey->rawKey());
     }
 
     KeePass2Writer writer;
@@ -360,7 +366,7 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
         return false;
     }
 
-    QByteArray newKey = m_data.transformedMasterKey->rawKey();
+    QByteArray newKey = m_data.transformedDatabaseKey->rawKey();
     Q_ASSERT(!newKey.isEmpty());
     Q_ASSERT(newKey != oldTransformedKey.rawKey());
     if (newKey.isEmpty() || newKey == oldTransformedKey.rawKey()) {
@@ -454,9 +460,12 @@ bool Database::backupDatabase(const QString& filePath)
 
     auto match = re.match(filePath);
     auto backupFilePath = filePath;
+    auto perms = QFile::permissions(filePath);
     backupFilePath = backupFilePath.replace(re, "") + ".old" + match.captured(1);
     QFile::remove(backupFilePath);
-    return QFile::copy(filePath, backupFilePath);
+    bool res = QFile::copy(filePath, backupFilePath);
+    QFile::setPermissions(backupFilePath, perms);
+    return res;
 }
 
 /**
@@ -472,11 +481,13 @@ bool Database::restoreDatabase(const QString& filePath)
     static auto re = QRegularExpression("^(.*?)(\\.[^.]+)?$");
 
     auto match = re.match(filePath);
+    auto perms = QFile::permissions(filePath);
     auto backupFilePath = match.captured(1) + ".old" + match.captured(2);
     // Only try to restore if the backup file actually exists
     if (QFile::exists(backupFilePath)) {
         QFile::remove(filePath);
         return QFile::copy(backupFilePath, filePath);
+        QFile::setPermissions(filePath, perms);
     }
     return false;
 }
@@ -651,9 +662,9 @@ Database::CompressionAlgorithm Database::compressionAlgorithm() const
     return m_data.compressionAlgorithm;
 }
 
-QByteArray Database::transformedMasterKey() const
+QByteArray Database::transformedDatabaseKey() const
 {
-    return m_data.transformedMasterKey->rawKey();
+    return m_data.transformedDatabaseKey->rawKey();
 }
 
 QByteArray Database::challengeResponseKey() const
@@ -712,7 +723,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
 
     if (!key) {
         m_data.key.reset();
-        m_data.transformedMasterKey.reset(new PasswordKey());
+        m_data.transformedDatabaseKey.reset(new PasswordKey());
         return true;
     }
 
@@ -721,28 +732,28 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
         Q_ASSERT(!m_data.kdf->seed().isEmpty());
     }
 
-    PasswordKey oldTransformedMasterKey;
+    PasswordKey oldTransformedDatabaseKey;
     if (m_data.key && !m_data.key->isEmpty()) {
-        oldTransformedMasterKey.setHash(m_data.transformedMasterKey->rawKey());
+        oldTransformedDatabaseKey.setHash(m_data.transformedDatabaseKey->rawKey());
     }
 
-    QByteArray transformedMasterKey;
+    QByteArray transformedDatabaseKey;
 
     if (!transformKey) {
-        transformedMasterKey = QByteArray(oldTransformedMasterKey.rawKey());
-    } else if (!key->transform(*m_data.kdf, transformedMasterKey, &m_keyError)) {
+        transformedDatabaseKey = QByteArray(oldTransformedDatabaseKey.rawKey());
+    } else if (!key->transform(*m_data.kdf, transformedDatabaseKey, &m_keyError)) {
         return false;
     }
 
     m_data.key = key;
-    if (!transformedMasterKey.isEmpty()) {
-        m_data.transformedMasterKey->setHash(transformedMasterKey);
+    if (!transformedDatabaseKey.isEmpty()) {
+        m_data.transformedDatabaseKey->setHash(transformedDatabaseKey);
     }
     if (updateChangedTime) {
-        m_metadata->setMasterKeyChanged(Clock::currentDateTimeUtc());
+        m_metadata->setDatabaseKeyChanged(Clock::currentDateTimeUtc());
     }
 
-    if (oldTransformedMasterKey.rawKey() != m_data.transformedMasterKey->rawKey()) {
+    if (oldTransformedDatabaseKey.rawKey() != m_data.transformedDatabaseKey->rawKey()) {
         markAsModified();
     }
 
@@ -897,16 +908,16 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
     Q_ASSERT(!m_data.isReadOnly);
 
     kdf->randomizeSeed();
-    QByteArray transformedMasterKey;
+    QByteArray transformedDatabaseKey;
     if (!m_data.key) {
         m_data.key = QSharedPointer<CompositeKey>::create();
     }
-    if (!m_data.key->transform(*kdf, transformedMasterKey)) {
+    if (!m_data.key->transform(*kdf, transformedDatabaseKey)) {
         return false;
     }
 
     setKdf(kdf);
-    m_data.transformedMasterKey->setHash(transformedMasterKey);
+    m_data.transformedDatabaseKey->setHash(transformedDatabaseKey);
     markAsModified();
 
     return true;

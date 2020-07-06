@@ -78,9 +78,9 @@ public slots:
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent, const QString& filePath);
     void relockPendingDatabase();
 
-    void changeMasterKey();
-    void changeReports();
-    void changeDatabaseSettings();
+    void showDatabaseSecurity();
+    void showDatabaseReports();
+    void showDatabaseSettings();
     void performGlobalAutoType();
     void performBrowserUnlock();
 

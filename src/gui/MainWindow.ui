@@ -256,7 +256,7 @@
     <addaction name="separator"/>
     <addaction name="actionReports"/>
     <addaction name="actionDatabaseSettings"/>
-    <addaction name="actionChangeMasterKey"/>
+    <addaction name="actionDatabaseSecurity"/>
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
     <addaction name="menuImport"/>
@@ -327,6 +327,9 @@
     <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryDownloadIcon"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryAddToAgent"/>
+    <addaction name="actionEntryRemoveFromAgent"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -350,10 +353,29 @@
     <addaction name="actionPasswordGenerator"/>
     <addaction name="actionSettings"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuTheme">
+     <property name="title">
+      <string>Theme</string>
+     </property>
+     <addaction name="actionThemeAuto"/>
+     <addaction name="actionThemeLight"/>
+     <addaction name="actionThemeDark"/>
+     <addaction name="actionThemeClassic"/>
+    </widget>
+    <addaction name="menuTheme"/>
+    <addaction name="actionCompactMode"/>
+    <addaction name="actionShowPreviewPanel"/>
+    <addaction name="actionShowToolbar"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEntries"/>
    <addaction name="menuGroups"/>
    <addaction name="menuTools"/>
+   <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
@@ -543,12 +565,12 @@
     <string>Sa&amp;ve Database As…</string>
    </property>
   </action>
-  <action name="actionChangeMasterKey">
+  <action name="actionDatabaseSecurity">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Change Master &amp;Key…</string>
+    <string>Database &amp;Security…</string>
    </property>
   </action>
   <action name="actionReports">
@@ -556,7 +578,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Database Reports...</string>
+    <string>Database &amp;Reports...</string>
    </property>
    <property name="toolTip">
     <string>Statistics, health check, etc.</string>
@@ -795,7 +817,7 @@
     <string>&amp;Getting Started</string>
    </property>
    <property name="toolTip">
-    <string>Open Getting Started Guide PDF</string>
+    <string>Open Getting Started Guide</string>
    </property>
   </action>
   <action name="actionOnlineHelp">
@@ -803,7 +825,7 @@
     <string>&amp;Online Help</string>
    </property>
    <property name="toolTip">
-    <string>Go to online documentation (opens browser)</string>
+    <string>Go to online documentation</string>
    </property>
   </action>
   <action name="actionUserGuide">
@@ -811,7 +833,7 @@
     <string>&amp;User Guide</string>
    </property>
    <property name="toolTip">
-    <string>Open User Guide PDF</string>
+    <string>Open User Guide</string>
    </property>
   </action>
   <action name="actionKeyboardShortcuts">
@@ -838,6 +860,71 @@
   <action name="actionEntryRemoveFromAgent">
    <property name="text">
     <string>Remove key from SSH Agent</string>
+   </property>
+  </action>
+  <action name="actionCompactMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Compact Mode</string>
+   </property>
+  </action>
+  <action name="actionThemeAuto">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Automatic</string>
+   </property>
+  </action>
+  <action name="actionThemeLight">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Light</string>
+   </property>
+  </action>
+  <action name="actionThemeDark">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Dark</string>
+   </property>
+  </action>
+  <action name="actionThemeClassic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Classic (Platform-native)</string>
+   </property>
+  </action>
+  <action name="actionShowToolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Toolbar</string>
+   </property>
+  </action>
+  <action name="actionShowPreviewPanel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Preview Panel</string>
    </property>
   </action>
  </widget>

@@ -101,6 +101,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_AdvancedSettings, {QS("GUI/AdvancedSettings"), Roaming, false}},
     {Config::GUI_MonospaceNotes, {QS("GUI/MonospaceNotes"), Roaming, false}},
     {Config::GUI_ApplicationTheme, {QS("GUI/ApplicationTheme"), Roaming, QS("auto")}},
+    {Config::GUI_CompactMode, {QS("GUI/CompactMode"), Roaming, false}},
     {Config::GUI_CheckForUpdates, {QS("GUI/CheckForUpdates"), Roaming, true}},
     {Config::GUI_CheckForUpdatesNextCheck, {QS("GUI/CheckForUpdatesNextCheck"), Local, 0}},
     {Config::GUI_CheckForUpdatesIncludeBetas, {QS("GUI/CheckForUpdatesIncludeBetas"), Roaming, false}},
@@ -441,11 +442,12 @@ Config::Config(QObject* parent)
     configPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     localConfigPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #elif defined(Q_OS_MACOS)
-    configPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    configPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     localConfigPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
 #else
-    configPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
-    localConfigPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+    // On case-sensitive Operating Systems, force use of lowercase app directories
+    configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + "/keepassxc";
+    localConfigPath = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
 #endif
 
     configPath += "/keepassxc";

@@ -242,7 +242,7 @@ KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevi
     }
 
     if (!db->setKey(key)) {
-        raiseError(tr("Unable to calculate master key"));
+        raiseError(tr("Unable to calculate database key"));
         return {};
     }
 

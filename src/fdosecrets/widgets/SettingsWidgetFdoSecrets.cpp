@@ -71,7 +71,7 @@ namespace
                     return;
                 }
                 auto db = m_dbWidget;
-                m_plugin->serviceInstance()->doSwitchToChangeDatabaseSettings(m_dbWidget);
+                m_plugin->serviceInstance()->doSwitchToDatabaseSettings(m_dbWidget);
             });
             addAction(m_dbSettingsAct);
 

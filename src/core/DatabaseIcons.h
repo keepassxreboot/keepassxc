@@ -39,11 +39,14 @@ public:
     QPixmap applyBadge(const QPixmap& basePixmap, Badges badgeIndex);
     int count();
 
+    int iconSize(IconSize size);
+
 private:
     DatabaseIcons();
 
     static DatabaseIcons* m_instance;
     QHash<QString, QIcon> m_iconCache;
+    bool m_compactMode;
 
     Q_DISABLE_COPY(DatabaseIcons)
 };
