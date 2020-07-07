@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Vezi contribuțiile pe GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Vezi contibuțiile pe GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -49,12 +49,32 @@
 <context>
     <name>AgentSettingsWidget</name>
     <message>
-        <source>Enable SSH Agent (requires restart)</source>
-        <translation>Activează Agentul SSH (necesită repornire)</translation>
-    </message>
-    <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
         <translation>Folositi OpenSSH pentru Windows in loc de Pageant</translation>
+    </message>
+    <message>
+        <source>Enable SSH Agent integration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH_AUTH_SOCK value</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH_AUTH_SOCK override</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>(empty)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH Agent connection is working!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -77,7 +97,7 @@
     </message>
     <message>
         <source>Icon only</source>
-        <translation>Numai iconita</translation>
+        <translation>Numai pictograma</translation>
     </message>
     <message>
         <source>Text only</source>
@@ -93,7 +113,7 @@
     </message>
     <message>
         <source>Follow style</source>
-        <translation>Urmareste stil</translation>
+        <translation>Urmareste stilistica</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
@@ -102,6 +122,18 @@
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
         <translation>Sigur resetați în mod implicit toate setările generale și de securitate ?</translation>
+    </message>
+    <message>
+        <source>Monochrome (light)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Monochrome (dark)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Colorful</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -127,10 +159,6 @@
         <translation>Gestionare fișiere</translation>
     </message>
     <message>
-        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
-        <translation>Salvați în condiții de siguranță fișierele bazei de date (pot fi incompatibile cu Dropbox, etc)</translation>
-    </message>
-    <message>
         <source>Backup database file before saving</source>
         <translation>Fă copie de rezervă  fișierului bazei de date înainte de salvare</translation>
     </message>
@@ -141,10 +169,6 @@
     <message>
         <source>Automatically save on exit</source>
         <translation>Salvare automată la ieșire</translation>
-    </message>
-    <message>
-        <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Nu marcați baza de date modificată pentru modificări non-date (de exemplu, grupuri în expansiune)</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -159,28 +183,12 @@
         <translation>Utilizarea pictogramei grupului la crearea inregistrarii</translation>
     </message>
     <message>
-        <source>Hide the entry preview panel</source>
-        <translation>Ascundere panou previzualizare inregistrarii</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation>General</translation>
-    </message>
-    <message>
-        <source>Hide toolbar (icons)</source>
-        <translation>Ascundere bară de instrumente (pictograme)</translation>
-    </message>
-    <message>
         <source>Minimize instead of app exit</source>
         <translation>Minimizare în locul ieșirii aplicației</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
         <translation>Afișare pictogramă tavă de sistem</translation>
-    </message>
-    <message>
-        <source>Dark system tray icon</source>
-        <translation>Pictograma umbra barei de sistem </translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
@@ -203,21 +211,9 @@
         <translation>Întrebați întotdeauna înainte de a efectua auto-tiparire</translation>
     </message>
     <message>
-        <source>Global Auto-Type shortcut</source>
-        <translation>Comandă rapidă pentru autotiparire globala</translation>
-    </message>
-    <message>
-        <source>Auto-Type typing delay</source>
-        <translation>Întârzierea tastării autotiparirei</translation>
-    </message>
-    <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
         <translation> ms</translation>
-    </message>
-    <message>
-        <source>Auto-Type start delay</source>
-        <translation>întârziere inceputuui auto-tiparii</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
@@ -242,10 +238,6 @@
     <message>
         <source>Include beta releases when checking for updates</source>
         <translation>Includere versiuni beta la verificarea actualizărilor</translation>
-    </message>
-    <message>
-        <source>Button style:</source>
-        <translation>Stilul butonului:</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -293,16 +285,8 @@
         <translation>Stil buton bară de instrumente</translation>
     </message>
     <message>
-        <source>Use monospaced font for Notes</source>
-        <translation>Utilizați fontul monospațiat pentru notițe</translation>
-    </message>
-    <message>
         <source>Language selection</source>
         <translation>Selectarea limbii</translation>
-    </message>
-    <message>
-        <source>Reset Settings to Default</source>
-        <translation>Resetare setări la implicit</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
@@ -315,6 +299,50 @@
     <message>
         <source>Auto-type start delay milliseconds</source>
         <translation>Auto-tip de pornire întârziere milisecunde</translation>
+    </message>
+    <message>
+        <source>Automatically launch KeePassXC at system startup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toolbar button style:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use monospaced font for notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tray icon type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset settings to default…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type typing delay:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type start delay:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -365,18 +393,6 @@
         <translation>Re-Lock bazei de date blocate anterior după efectuarea auto-Type</translation>
     </message>
     <message>
-        <source>Don&apos;t require password repeat when it is visible</source>
-        <translation>Nu este necesară repetarea parolei atunci când este vizibilă</translation>
-    </message>
-    <message>
-        <source>Don&apos;t hide passwords when editing them</source>
-        <translation>Nu ascundeți parolele atunci când le editați</translation>
-    </message>
-    <message>
-        <source>Don&apos;t use placeholder for empty password fields</source>
-        <translation>Nu se utilizează substituent pentru câmpurile de parolă goli</translation>
-    </message>
-    <message>
         <source>Hide passwords in the entry preview panel</source>
         <translation>Ascunderea parolelor în panoul de previzualizare inregistrarii</translation>
     </message>
@@ -413,12 +429,24 @@
         <source>Clear search query after</source>
         <translation>Stergerea interogarea de căutare după</translation>
     </message>
+    <message>
+        <source>Require password repeat when it is visible</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide passwords when editing them</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use placeholder for empty password fields</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Nu a putut fi gasită nicio intrare care să coincidă cu titlul ferestrei:</translation>
+        <translation>Nu a putut fi gasită o intrare care să coincidă cu titlul ferestrei:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -513,7 +541,7 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-tiparire-KeePassXC</translation>
+        <translation>Auto-tip-KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
@@ -527,34 +555,36 @@
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
-        <source>KeePassXC-Browser Confirm Access</source>
-        <translation>KeePassXC-browser confirmă accesul</translation>
+        <source>KeePassXC - Browser Access Request</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Remember this decision</source>
-        <translation>Ține minte această decizie</translation>
+        <source>%1 is requesting access to the following entries:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow</source>
-        <translation>Permite</translation>
+        <source>Remember access to checked entries</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Deny</source>
-        <translation>Interzice</translation>
+        <source>Remember</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>%1 has requested access to passwords for the following item(s).
-Please select whether you want to allow access.</source>
-        <translation>% 1 a solicitat accesul la parole pentru următorul articol (e).
-Vă rugăm să selectați dacă doriți să permiteți accesul.</translation>
+        <source>Allow access to entries</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow access</source>
-        <translation>Permite accesul</translation>
+        <source>Allow Selected</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Deny access</source>
-        <translation>Refuzare acces</translation>
+        <source>Deny All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Disable for this site</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -576,214 +606,6 @@ Vă rugăm să selectați dacă doriți să permiteți accesul.</translation>
 Please select the correct database for saving credentials.</source>
         <translation>Aveți mai multe baze de date deschise.
 Selectați baza de date corectă pentru salvarea acreditărilor.</translation>
-    </message>
-</context>
-<context>
-    <name>BrowserOptionDialog</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Dialog</translation>
-    </message>
-    <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Acest lucru este necesar pentru accesarea bazelor de date cu KeePassXC-browser</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation>General</translation>
-    </message>
-    <message>
-        <source>Enable integration for these browsers:</source>
-        <translation>Activați integrarea pentru aceste browsere:</translation>
-    </message>
-    <message>
-        <source>&amp;Google Chrome</source>
-        <translation>&amp;Google Chrome</translation>
-    </message>
-    <message>
-        <source>&amp;Firefox</source>
-        <translation>&amp;Firefox</translation>
-    </message>
-    <message>
-        <source>&amp;Chromium</source>
-        <translation>&amp;Chromium</translation>
-    </message>
-    <message>
-        <source>&amp;Vivaldi</source>
-        <translation>&amp;Vivaldi</translation>
-    </message>
-    <message>
-        <source>Show a &amp;notification when credentials are requested</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Afișare  &amp; notificarii atunci când sunt solicitate acreditările</translation>
-    </message>
-    <message>
-        <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Re&amp;Quest pentru a debloca baza de date în cazul în care este blocata</translation>
-    </message>
-    <message>
-        <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Sunt returnate numai intrările cu aceeași schemă (http://, https://,...) .</translation>
-    </message>
-    <message>
-        <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation>&amp;Potrivi schema URL (de exemplu, https://...)</translation>
-    </message>
-    <message>
-        <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Returnează numai cele mai bune potriviri pentru un anumit URL în loc de toate intrările pentru întregul domeniu.</translation>
-    </message>
-    <message>
-        <source>&amp;Return only best-matching credentials</source>
-        <translation>&amp;Returnează numai cele mai bune acreditări de potrivire</translation>
-    </message>
-    <message>
-        <source>Sort &amp;matching credentials by title</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Sortare &amp; potrivire acreditări  după titlu</translation>
-    </message>
-    <message>
-        <source>Sort matching credentials by &amp;username</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Sortare acreditări de potrivire de &amp;username</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avansat</translation>
-    </message>
-    <message>
-        <source>Never &amp;ask before accessing credentials</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Niciodată &amp;cere înainte de accesarea acreditărilor</translation>
-    </message>
-    <message>
-        <source>Never ask before &amp;updating credentials</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Nu mai întreba înainte &amp;actualizarea acreditărilor</translation>
-    </message>
-    <message>
-        <source>Searc&amp;h in all opened databases for matching credentials</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Caut&amp;a în toate bazele de date deschise pentru  acreditări potrivite</translation>
-    </message>
-    <message>
-        <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>Crearea sau actualizarea automată a câmpurilor șir nu este acceptată.</translation>
-    </message>
-    <message>
-        <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>&amp;Returnează câmpuri de șir avansate care încep cu &quot;KPH:&quot;</translation>
-    </message>
-    <message>
-        <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Actualizează  la pornire calea binară KeePassXC sau keepassxc-proxy  automat la script-uri de mesagerie native.</translation>
-    </message>
-    <message>
-        <source>Update &amp;native messaging manifest files at startup</source>
-        <translation>Actualizează la pornire mesaje &amp;native fișiere manifest</translation>
-    </message>
-    <message>
-        <source>Support a proxy application between KeePassXC and browser extension.</source>
-        <translation>Sustine o aplicatie proxy intreextensie browser KeePassXC și extensie browser</translation>
-    </message>
-    <message>
-        <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation>Utilizați o aplicație &amp; proxy între KeePassXC și extensia browserului</translation>
-    </message>
-    <message>
-        <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Utilizați o locație proxy particularizată dacă ați instalat manual un proxy.</translation>
-    </message>
-    <message>
-        <source>Use a &amp;custom proxy location</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Folosește o locație proxy &amp;personalizată </translation>
-    </message>
-    <message>
-        <source>Browse...</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Răsfoiește...</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Avertizare:&lt;/b&gt; Următoarele opțiuni pot fi periculoase!</translation>
-    </message>
-    <message>
-        <source>Select custom proxy location</source>
-        <translation>Selectare locație proxy particularizată</translation>
-    </message>
-    <message>
-        <source>&amp;Tor Browser</source>
-        <translation>&amp;Navigator web Tor</translation>
-    </message>
-    <message>
-        <source>Executable Files</source>
-        <translation>Fișiere executabile</translation>
-    </message>
-    <message>
-        <source>All Files</source>
-        <translation>Toate fișierele</translation>
-    </message>
-    <message>
-        <source>Do not ask permission for HTTP &amp;Basic Auth</source>
-        <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation>Nu cere permisiunea pentru HTTP &amp;Basic auth</translation>
-    </message>
-    <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Datorită snap sandboxing, trebuie să executați un script pentru a activa integrarea browser-ului.&lt;br&gt;Puteți obține acest script de la % 1</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Vă rugăm să consultați instrucțiunile speciale pentru utilizarea extensiei browserului de mai jos</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation>KeePassXC-browser-ul este necesar pentru integrarea browser-ului pentru a lucra.&lt;br&gt;Descărcați-l pentru %1 și % 2.  % 3</translation>
-    </message>
-    <message>
-        <source>&amp;Brave</source>
-        <translation>&amp;Brave</translation>
-    </message>
-    <message>
-        <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Returnează acreditările expirate. String [expirat] se adaugă la titlu.</translation>
-    </message>
-    <message>
-        <source>&amp;Allow returning expired credentials.</source>
-        <translation>Permite returnarea acreditărilor expirate.</translation>
-    </message>
-    <message>
-        <source>Enable browser integration</source>
-        <translation>Activați integrarea browserului</translation>
-    </message>
-    <message>
-        <source>Browsers installed as snaps are currently not supported.</source>
-        <translation>Browserele instalate ca snaps nu sunt acceptate momentan.</translation>
-    </message>
-    <message>
-        <source>All databases connected to the extension will return matching credentials.</source>
-        <translation>Toate bazele de date conectate la extensie vor returna acreditările corespondente.</translation>
-    </message>
-    <message>
-        <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation>Nu afișați popup-ul sugerând migrarea setărilor KeePassHTTP moștenite.</translation>
-    </message>
-    <message>
-        <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
-        <translation> Nu solicitați migrarea setărilor KeePassHTTP.</translation>
-    </message>
-    <message>
-        <source>Custom proxy location field</source>
-        <translation>Câmp de locație proxy particularizat</translation>
-    </message>
-    <message>
-        <source>Browser for custom proxy file</source>
-        <translation>Browser pentru fișier proxy personalizat</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: %1</source>
-        <translation>&lt;b&gt;Avertisment&lt;/b&gt;, aplicația keepassxc-proxy nu a fost găsită! &lt;br /&gt;Vă rugăm să verificați directorul de instalare KeePassXC sau să confirmați calea personalizată în opțiuni avansate. &lt;br /&gt;Integrarea browser-ului NU va funcționa fără aplicația proxy. &lt;br /&gt;Calea așteptată: %1</translation>
     </message>
 </context>
 <context>
@@ -834,7 +656,7 @@ S-au mutat %2 chei la date particularizate.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>S-au mutat cu succes% n chei la date particularizate.</numerusform><numerusform>S-au mutat cu succes %n chei la date particularizate.</numerusform><numerusform>S-au mutat cu succes %n chei la date particularizate.</numerusform></translation>
+        <translation><numerusform>S-au mutat cu succes% n chei la date particularizate.</numerusform><numerusform>S-au mutat cu succes% n chei la date particularizate.</numerusform><numerusform>S-au mutat cu succes %n chei la date particularizate.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
@@ -882,6 +704,250 @@ chrome-laptop.</source>
 
 Dați conexiunii un nume sau un ID unic, de exemplu:
 chrome-laptop.</translation>
+    </message>
+</context>
+<context>
+    <name>BrowserSettingsWidget</name>
+    <message>
+        <source>Dialog</source>
+        <translation>Dialog</translation>
+    </message>
+    <message>
+        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <translation>Acest lucru este necesar pentru accesarea bazelor de date cu KeePassXC-browser</translation>
+    </message>
+    <message>
+        <source>Enable browser integration</source>
+        <translation>Activați integrarea browserului</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
+        <source>Browsers installed as snaps are currently not supported.</source>
+        <translation>Browserele instalate ca snaps nu sunt acceptate momentan.</translation>
+    </message>
+    <message>
+        <source>Enable integration for these browsers:</source>
+        <translation>Activați integrarea pentru aceste browsere:</translation>
+    </message>
+    <message>
+        <source>Vivaldi</source>
+        <translation>Vivaldi</translation>
+    </message>
+    <message>
+        <source>&amp;Edge</source>
+        <translation>&amp;Edge</translation>
+    </message>
+    <message>
+        <source>Firefox</source>
+        <translation>Firefox</translation>
+    </message>
+    <message>
+        <source>Tor Browser</source>
+        <translation>Navigator web Tor</translation>
+    </message>
+    <message>
+        <source>Brave</source>
+        <translation>Brave</translation>
+    </message>
+    <message>
+        <source>Google Chrome</source>
+        <translation>Google Chrome</translation>
+    </message>
+    <message>
+        <source>Chromium</source>
+        <translation>Chromium</translation>
+    </message>
+    <message>
+        <source>Show a notification when credentials are requested</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Request to unlock the database if it is locked</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
+        <translation>Sunt returnate numai intrările cu aceeași schemă (http://, https://,...) .</translation>
+    </message>
+    <message>
+        <source>Match URL scheme (e.g., https://...)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
+        <translation>Returnează numai cele mai bune potriviri pentru un anumit URL în loc de toate intrările pentru întregul domeniu.</translation>
+    </message>
+    <message>
+        <source>Return only best-matching credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Returns expired credentials. String [expired] is added to the title.</source>
+        <translation>Returnează acreditările expirate. String [expirat] se adaugă la titlu.</translation>
+    </message>
+    <message>
+        <source>Allow returning expired credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All databases connected to the extension will return matching credentials.</source>
+        <translation>Toate bazele de date conectate la extensie vor returna acreditările corespondente.</translation>
+    </message>
+    <message>
+        <source>Search in all opened databases for matching credentials</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort matching credentials by title</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort matching credentials by username</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avansat</translation>
+    </message>
+    <message>
+        <source>Never ask before accessing credentials</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Never ask before updating credentials</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not ask permission for HTTP Basic Auth</source>
+        <extracomment>An extra HTTP Basic Auth setting</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Automatically creating or updating string fields is not supported.</source>
+        <translation>Crearea sau actualizarea automată a câmpurilor șir nu este acceptată.</translation>
+    </message>
+    <message>
+        <source>Return advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
+        <translation>Nu afișați popup-ul sugerând migrarea setărilor KeePassHTTP moștenite.</translation>
+    </message>
+    <message>
+        <source>Do not prompt for KeePassHTTP settings migration.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
+        <translation>Actualizează  la pornire calea binară KeePassXC sau keepassxc-proxy  automat la script-uri de mesagerie native.</translation>
+    </message>
+    <message>
+        <source>Update native messaging manifest files at startup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use a custom proxy location if you installed a proxy manually.</source>
+        <translation>Utilizați o locație proxy particularizată dacă ați instalat manual un proxy.</translation>
+    </message>
+    <message>
+        <source>Use a custom proxy location:</source>
+        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom proxy location field</source>
+        <translation>Câmp de locație proxy particularizat</translation>
+    </message>
+    <message>
+        <source>Browser for custom proxy file</source>
+        <translation>Browser pentru fișier proxy personalizat</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>Răsfoiește...</translation>
+    </message>
+    <message>
+        <source>Use a custom browser configuration location:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browser type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toolbar button style</source>
+        <translation>Stil buton bară de instrumente</translation>
+    </message>
+    <message>
+        <source>Config Location:</source>
+        <translation>Locație configurare:</translation>
+    </message>
+    <message>
+        <source>Custom browser location field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>~/.custom/config/Mozilla/native-messaging-hosts/</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse for custom browser path</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom extension ID:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom extension ID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation>Datorită snap sandboxing, trebuie să executați un script pentru a activa integrarea browser-ului.&lt;br&gt;Puteți obține acest script de la % 1</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation>Vă rugăm să consultați instrucțiunile speciale pentru utilizarea extensiei browserului de mai jos</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
+        <translation>&lt;b&gt;Avertizare:&lt;/b&gt; Următoarele opțiuni pot fi periculoase!</translation>
+    </message>
+    <message>
+        <source>Executable Files</source>
+        <translation>Fișiere executabile</translation>
+    </message>
+    <message>
+        <source>All Files</source>
+        <translation>Toate fișierele</translation>
+    </message>
+    <message>
+        <source>Select custom proxy location</source>
+        <translation>Selectare locație proxy particularizată</translation>
+    </message>
+    <message>
+        <source>Select native messaging host folder location</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -938,24 +1004,12 @@ chrome-laptop.</translation>
         <translation>Comentariile încep cu</translation>
     </message>
     <message>
-        <source>First record has field names</source>
-        <translation>Prima înregistrare conține denumirile de câmpuri</translation>
-    </message>
-    <message>
         <source>Consider &apos;\&apos; an escape character</source>
         <translation>Considera &quot;\&quot; un caracter Escape</translation>
     </message>
     <message>
         <source>Preview</source>
         <translation>Previzualizare</translation>
-    </message>
-    <message>
-        <source>Column layout</source>
-        <translation>Aranjare coloane</translation>
-    </message>
-    <message>
-        <source>Not present in CSV file</source>
-        <translation>Nu este prezent în fișierul CSV</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
@@ -970,20 +1024,12 @@ chrome-laptop.</translation>
         <translation>Eroare</translation>
     </message>
     <message>
-        <source>Empty fieldname %1</source>
-        <translation>Nume câmp necompletat %1</translation>
-    </message>
-    <message>
-        <source>column %1</source>
-        <translation>coloană %1</translation>
-    </message>
-    <message>
         <source>Error(s) detected in CSV file!</source>
         <translation>Eroare (i) detectată în fișierul CSV!</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[% n mai mult mesaj (e) ignorate]</numerusform><numerusform>[% n mai mult mesaj (e) ignorate]</numerusform><numerusform>[%n mai mult mesaj(e) ignorat(e)]</numerusform></translation>
+        <translation><numerusform>[% n mai mult mesaj (e) ignorate]</numerusform><numerusform>[% n mai mult mesaj (e) ignorate]</numerusform><numerusform>[%n mai mult mesaj (e) ignorate]</numerusform></translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
@@ -1007,6 +1053,58 @@ chrome-laptop.</translation>
         <source>CSV import preview</source>
         <translation>Previzualizare import CSV</translation>
     </message>
+    <message>
+        <source>Column Association</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Last Modified</source>
+        <translation>Ultima modificare</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Parola</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>Creat</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notițe</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titlu</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Grup</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Nume utilizator</translation>
+    </message>
+    <message>
+        <source>Header lines skipped</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>First line has field names</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Not Present</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Column %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1021,7 +1119,7 @@ chrome-laptop.</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>% n byte (e)</numerusform><numerusform>% n byte (e)</numerusform><numerusform>%n byte (s)</numerusform></translation>
+        <translation><numerusform>% n byte (e)</numerusform><numerusform>% n byte (e)</numerusform><numerusform>%n byte (e)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
@@ -1030,11 +1128,6 @@ chrome-laptop.</translation>
 </context>
 <context>
     <name>Database</name>
-    <message>
-        <source>Root</source>
-        <comment>Root group name</comment>
-        <translation>Rădăcină</translation>
-    </message>
     <message>
         <source>File %1 does not exist.</source>
         <translation>Fișierul %1 nu există.</translation>
@@ -1076,6 +1169,19 @@ Baza de date de rezervă localizată la %2</translation>
     <message>
         <source>Recycle Bin</source>
         <translation>Coș de gunoi</translation>
+    </message>
+    <message>
+        <source>Passwords</source>
+        <comment>Root group name</comment>
+        <translation>Parole</translation>
+    </message>
+    <message>
+        <source>Database save is already in progress.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not save, database has not been initialized!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1130,10 +1236,6 @@ Vă rugăm să luați în considerare generarea unui nou fișier cheie.</transla
         <translation>Nu a putut fi deschis fișierul cheii: %1</translation>
     </message>
     <message>
-        <source>Select slot...</source>
-        <translation>Selectați slotul ...</translation>
-    </message>
-    <message>
         <source>Unlock KeePassXC Database</source>
         <translation>Deblocați baza de date KeePassXC</translation>
     </message>
@@ -1144,14 +1246,6 @@ Vă rugăm să luați în considerare generarea unui nou fișier cheie.</transla
     <message>
         <source>Password field</source>
         <translation>Câmp parola</translation>
-    </message>
-    <message>
-        <source>Toggle password visibility</source>
-        <translation>Comutați vizibilitatea parolelor</translation>
-    </message>
-    <message>
-        <source>Key file selection</source>
-        <translation>Selectarea fișierelor cheie</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
@@ -1218,20 +1312,12 @@ Pentru a preveni apariția acestei erori, trebuie să accesați „Setări baza 
 &lt;p&gt;Faceți clic pentru mai multe informații ...&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;În plus față de parola principală, puteți utiliza un fișier secret pentru a îmbunătăți securitatea bazei de date. Un astfel de fișier poate fi generat în setările de securitate ale bazei de date&lt;/p&gt;. &lt;p&gt;Acesta &lt;strong&gt;nu&lt;/strong&gt; este fișierul dvs. de bază de date * .kdbx!&lt;br&gt; Dacă nu aveți un fișier cheie, lăsați câmpul gol.&lt;/p&gt; &lt;p&gt;Faceți clic pentru mai multe informații ...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Ajutor de fișiere cheie</translation>
     </message>
     <message>
         <source>?</source>
         <translation>?</translation>
-    </message>
-    <message>
-        <source>Select key file...</source>
-        <translation>Selectați fișierul cheie ...</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
@@ -1242,6 +1328,30 @@ Pentru a preveni apariția acestei erori, trebuie să accesați „Setări baza 
 If you do not have a key file, please leave the field empty.</source>
         <translation>Nu puteți utiliza fișierul dvs. de bază de date ca fișier cheie.
 Dacă nu aveți un fișier cheie, lăsați câmpul gol.</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key file to unlock the database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please touch the button on your YubiKey!</source>
+        <translation>Vă rugăm să atingeți butonul de pe YubiKey dvs.!</translation>
+    </message>
+    <message>
+        <source>Detecting hardware keys…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No hardware keys detected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select hardware key…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1266,10 +1376,6 @@ Dacă nu aveți un fișier cheie, lăsați câmpul gol.</translation>
         <translation>Securitate</translation>
     </message>
     <message>
-        <source>Master Key</source>
-        <translation>Cheia principală</translation>
-    </message>
-    <message>
         <source>Encryption Settings</source>
         <translation>Setări criptare</translation>
     </message>
@@ -1277,24 +1383,16 @@ Dacă nu aveți un fișier cheie, lăsați câmpul gol.</translation>
         <source>Browser Integration</source>
         <translation>Integrare cu browserul</translation>
     </message>
+    <message>
+        <source>Database Credentials</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
         <translation>Setări KeePassXC-Browser</translation>
-    </message>
-    <message>
-        <source>&amp;Disconnect all browsers</source>
-        <translation>&amp;Deconectează toate navigatoarele web</translation>
-    </message>
-    <message>
-        <source>Forg&amp;et all site-specific settings on entries</source>
-        <translation>Uit&amp;a toate setările specifice site-ului pe intrările</translation>
-    </message>
-    <message>
-        <source>Move KeePassHTTP attributes to KeePassXC-Browser &amp;custom data</source>
-        <translation>Mutați KeePassHTTP atributele in KeePassXC-browser &amp;cdate personalizate</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1376,7 +1474,7 @@ Permisiunile de accesare a intrărilor vor fi revocate.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Permisiuni eliminate cu succes de la% n intrare (e).</numerusform><numerusform>Permisiuni eliminate cu succes de la% n intrare (e).</numerusform><numerusform>Permisiuni eliminate cu succes de la %n intrare (i).</numerusform></translation>
+        <translation><numerusform>Permisiuni eliminate cu succes de la% n intrare (e).</numerusform><numerusform>Permisiuni eliminate cu succes de la% n intrare (e).</numerusform><numerusform>Permisiuni eliminate cu succes pentru %n intrare(i).</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1404,6 +1502,66 @@ Acest lucru este necesar pentru a menține compatibilitatea cu plugin-ul browser
         <source>Remove selected key</source>
         <translation>Ștergeți tasta selectată</translation>
     </message>
+    <message>
+        <source>Move KeePassHTTP attributes to KeePassXC-Browser custom data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh database root group ID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>Creat</translation>
+    </message>
+    <message>
+        <source>Refresh database ID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want refresh the database ID?
+This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>DatabaseSettingsWidgetDatabaseKey</name>
+    <message>
+        <source>Add additional protection...</source>
+        <translation>Adauga protectie suplimentara...</translation>
+    </message>
+    <message>
+        <source>No password set</source>
+        <translation>Nici o parolă setată</translation>
+    </message>
+    <message>
+        <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
+
+Are you sure you want to continue without a password?</source>
+        <translation>Avertizare! Nu ați setat o parolă. Folosind o bază de date fără o parolă este puternic descurajat!
+
+Sigur continuați fără parolă?</translation>
+    </message>
+    <message>
+        <source>Continue without password</source>
+        <translation>Continuați fără parolă</translation>
+    </message>
+    <message>
+        <source>No encryption key added</source>
+        <translation>Nu s-a adăugat cheia de criptare</translation>
+    </message>
+    <message>
+        <source>You must add at least one encryption key to secure your database!</source>
+        <translation>Trebuie să adăugați cel puțin o cheie de criptare pentru a securiza baza de date!</translation>
+    </message>
+    <message>
+        <source>Unknown error</source>
+        <translation>Eroare necunoscută</translation>
+    </message>
+    <message>
+        <source>Failed to change database credentials</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
@@ -1428,10 +1586,6 @@ Acest lucru este necesar pentru a menține compatibilitatea cu plugin-ul browser
         <translation>Runde de transformare:</translation>
     </message>
     <message>
-        <source>Benchmark 1-second delay</source>
-        <translation>Benchmark  pentru  întârziere de 1 secunda</translation>
-    </message>
-    <message>
         <source>Memory Usage:</source>
         <translation>Utilizare Memorie:</translation>
     </message>
@@ -1450,14 +1604,6 @@ Acest lucru este necesar pentru a menține compatibilitatea cu plugin-ul browser
     <message>
         <source>Change</source>
         <translation>Schimba</translation>
-    </message>
-    <message>
-        <source>100 ms</source>
-        <translation>100 ms</translation>
-    </message>
-    <message>
-        <source>5 s</source>
-        <translation>5 s</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
@@ -1529,22 +1675,12 @@ Dacă păstrați acest număr, baza de date poate fi prea ușor de spart!</trans
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform>Mib</numerusform><numerusform>Mib</numerusform><numerusform>Mib</numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>filet (e)</numerusform><numerusform>filet (e)</numerusform><numerusform>filet(e)</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 ms</source>
-        <comment>milliseconds</comment>
-        <translation><numerusform>% 1 MS</numerusform><numerusform>% 1 MS</numerusform><numerusform>%1 ms</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 s</source>
-        <comment>seconds</comment>
-        <translation><numerusform>% 1 s</numerusform><numerusform>% 1 s</numerusform><numerusform>%1 s</numerusform></translation>
+        <translation><numerusform>filet (e)</numerusform><numerusform>filet (e)</numerusform><numerusform>thread(s)</numerusform></translation>
     </message>
     <message>
         <source>Change existing decryption time</source>
@@ -1578,6 +1714,14 @@ Dacă păstrați acest număr, baza de date poate fi prea ușor de spart!</trans
         <source>Parallelism</source>
         <translation>Paralelism</translation>
     </message>
+    <message>
+        <source>?? ms</source>
+        <translation>?? ms</translation>
+    </message>
+    <message>
+        <source>? s</source>
+        <translation>? s</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
@@ -1586,16 +1730,16 @@ Dacă păstrați acest număr, baza de date poate fi prea ușor de spart!</trans
         <translation>Intrări expuse</translation>
     </message>
     <message>
-        <source>Don&apos;t e&amp;xpose this database</source>
-        <translation>Nu e&amp;xpuneti această bază de date</translation>
+        <source>Don&apos;t expose this database</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Expose entries &amp;under this group:</source>
-        <translation>Expuneti intrări și sub acest grup:</translation>
+        <source>Expose entries under this group:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enable fd.o Secret Service to access these settings.</source>
-        <translation>Activează fd.o Secret Service pentru a accesa aceste setări.</translation>
+        <source>Enable Secret Service to access these settings.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1630,7 +1774,7 @@ Dacă păstrați acest număr, baza de date poate fi prea ușor de spart!</trans
     </message>
     <message>
         <source> MiB</source>
-        <translation> MiB</translation>
+        <translation>Mib</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
@@ -1639,10 +1783,6 @@ Dacă păstrați acest număr, baza de date poate fi prea ușor de spart!</trans
     <message>
         <source>Additional Database Settings</source>
         <translation>Setări Adiționale Bază de Date</translation>
-    </message>
-    <message>
-        <source>Enable &amp;compression (recommended)</source>
-        <translation>Permite &amp;comprimare (recomandat)</translation>
     </message>
     <message>
         <source>Database name field</source>
@@ -1678,6 +1818,10 @@ Această acțiune nu este reversibilă.</translation>
         <source> (old)</source>
         <translation>(vechi)</translation>
     </message>
+    <message>
+        <source>Enable compression (recommended)</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
@@ -1712,45 +1856,6 @@ Această acțiune nu este reversibilă.</translation>
     </message>
 </context>
 <context>
-    <name>DatabaseSettingsWidgetMasterKey</name>
-    <message>
-        <source>Add additional protection...</source>
-        <translation>Adauga protectie suplimentara...</translation>
-    </message>
-    <message>
-        <source>No encryption key added</source>
-        <translation>Nu s-a adăugat cheia de criptare</translation>
-    </message>
-    <message>
-        <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Trebuie să adăugați cel puțin o cheie de criptare pentru a securiza baza de date!</translation>
-    </message>
-    <message>
-        <source>No password set</source>
-        <translation>Nici o parolă setată</translation>
-    </message>
-    <message>
-        <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
-
-Are you sure you want to continue without a password?</source>
-        <translation>Avertizare! Nu ați setat o parolă. Folosind o bază de date fără o parolă este puternic descurajat!
-
-Sigur continuați fără parolă?</translation>
-    </message>
-    <message>
-        <source>Unknown error</source>
-        <translation>Eroare necunoscută</translation>
-    </message>
-    <message>
-        <source>Failed to change master key</source>
-        <translation>Imposibil de modificat cheia master</translation>
-    </message>
-    <message>
-        <source>Continue without password</source>
-        <translation>Continuați fără parolă</translation>
-    </message>
-</context>
-<context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
@@ -1767,125 +1872,6 @@ Sigur continuați fără parolă?</translation>
     <message>
         <source>Database description field</source>
         <translation>Câmpul descrierii bazei de date</translation>
-    </message>
-</context>
-<context>
-    <name>DatabaseSettingsWidgetStatistics</name>
-    <message>
-        <source>Statistics</source>
-        <translation>Statistici</translation>
-    </message>
-    <message>
-        <source>Hover over lines with error icons for further information.</source>
-        <translation>Treceți peste linii cu pictograme de eroare pentru informații suplimentare.</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Nume</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Valoare</translation>
-    </message>
-    <message>
-        <source>Database name</source>
-        <translation>Numele bazei de date</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>Descriere</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Locație</translation>
-    </message>
-    <message>
-        <source>Last saved</source>
-        <translation>Ultima salvare</translation>
-    </message>
-    <message>
-        <source>Unsaved changes</source>
-        <translation>Modificări salvate</translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation>da</translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation>Nu</translation>
-    </message>
-    <message>
-        <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation>Baza de date a fost modificată, dar modificările nu au fost încă salvate pe disc.</translation>
-    </message>
-    <message>
-        <source>Number of groups</source>
-        <translation>Număr de grupuri</translation>
-    </message>
-    <message>
-        <source>Number of entries</source>
-        <translation>Numărul de intrări</translation>
-    </message>
-    <message>
-        <source>Number of expired entries</source>
-        <translation>Numărul de intrări expirate</translation>
-    </message>
-    <message>
-        <source>The database contains entries that have expired.</source>
-        <translation>Baza de date conține intrări care au expirat.</translation>
-    </message>
-    <message>
-        <source>Unique passwords</source>
-        <translation>Parole unice</translation>
-    </message>
-    <message>
-        <source>Non-unique passwords</source>
-        <translation>Parole non-unice</translation>
-    </message>
-    <message>
-        <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation>Mai mult de 10% din parolele sunt reutilizate. Utilizați parole unice atunci când este posibil.</translation>
-    </message>
-    <message>
-        <source>Maximum password reuse</source>
-        <translation>Reutilizarea maximă a parolei</translation>
-    </message>
-    <message>
-        <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation>Unele parole sunt folosite de mai mult de trei ori. Utilizați parole unice atunci când este posibil.</translation>
-    </message>
-    <message>
-        <source>Number of short passwords</source>
-        <translation>Număr de parole scurte</translation>
-    </message>
-    <message>
-        <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation>Lungimea minimă recomandată a parolei este de cel puțin 8 caractere.</translation>
-    </message>
-    <message>
-        <source>Number of weak passwords</source>
-        <translation>Număr de parole slabe</translation>
-    </message>
-    <message>
-        <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation>Recomandă folosirea parolelor lungi, aleatorii, cu o notă de „bun” sau „excelent”.</translation>
-    </message>
-    <message>
-        <source>Average password length</source>
-        <translation>Lungimea medie a parolei</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 caractere</translation>
-    </message>
-    <message>
-        <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation>Lungimea medie a parolei este mai mică de zece caractere. Parolele mai lungi oferă mai multă securitate.</translation>
-    </message>
-    <message>
-        <source>Please wait, database statistics are being calculated...</source>
-        <translation>Vă rugăm să așteptați, se calculează statisticile bazei de date ...</translation>
     </message>
 </context>
 <context>
@@ -1908,7 +1894,7 @@ Sigur continuați fără parolă?</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Îmbina baza de date</translation>
+        <translation>Îmbină baza de date</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
@@ -1983,6 +1969,10 @@ Acest lucru este cu siguranta un bug, vă rugăm să raporteze la dezvoltatori.<
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
         <translation>Ești pe cale să exporti baza de date într-un fișier necriptat. Acest lucru va lăsa parolele și informațiile dvs. sensibile vulnerabile! Esti sigur ca vrei sa continui?</translation>
     </message>
+    <message>
+        <source>Open OPVault</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -2000,7 +1990,7 @@ Acest lucru este cu siguranta un bug, vă rugăm să raporteze la dezvoltatori.<
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Chiar doriți să mutați% n intrare (e) în Coșul de reciclare?</numerusform><numerusform>Chiar doriți să mutați% n intrare (e) în Coșul de reciclare?</numerusform><numerusform>Chiar doriți să mutați %n intrari în Coșul de reciclare?</numerusform></translation>
+        <translation><numerusform>Chiar doriți să mutați% n intrare (e) în Coșul de reciclare?</numerusform><numerusform>Chiar doriți să mutați% n intrare (e) în Coșul de reciclare?</numerusform><numerusform>Chiar doriți să mutați %n intrare (i) în Coșul de reciclare?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -2020,7 +2010,7 @@ Acest lucru este cu siguranta un bug, vă rugăm să raporteze la dezvoltatori.<
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Nu există o bază de date curentă.</translation>
+        <translation>Nu există o baza de date curentă.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
@@ -2062,11 +2052,11 @@ Doriți să îmbinați modificările?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Chiar doriți să ștergeți% n intrare (e) pentru totdeauna?</numerusform><numerusform>Chiar doriți să ștergeți% n intrare (e) pentru totdeauna?</numerusform><numerusform>Chiar doriți să ștergeți %n intrari pentru totdeauna?</numerusform></translation>
+        <translation><numerusform>Chiar doriți să ștergeți% n intrare (e) pentru totdeauna?</numerusform><numerusform>Chiar doriți să ștergeți% n intrare (e) pentru totdeauna?</numerusform><numerusform>Chiar doriți să ștergeți %n intrare(i) pentru totdeauna?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>Ștergeți intrările?</numerusform><numerusform>Ștergeți intrările?</numerusform><numerusform>Ștergeți intrările?</numerusform></translation>
+        <translation><numerusform>Ștergeți intrările?</numerusform><numerusform>Ștergeți intrările?</numerusform><numerusform>Șterge intrările?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
@@ -2164,6 +2154,14 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
         <translation>Această bază de date este deschisă în modul numai de citire. Autosave este dezactivat.</translation>
     </message>
+    <message>
+        <source>Save database backup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not find database file: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2208,14 +2206,6 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation>Selectați cheia privată</translation>
     </message>
     <message>
-        <source>File too large to be a private key</source>
-        <translation>Fișier prea mare pentru a fi cheie privată</translation>
-    </message>
-    <message>
-        <source>Failed to open private key</source>
-        <translation>Deschiderea cheii private a eșuat</translation>
-    </message>
-    <message>
         <source>Entry history</source>
         <translation>Istoric intrare</translation>
     </message>
@@ -2228,16 +2218,12 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation>Editează intrare</translation>
     </message>
     <message>
-        <source>Different passwords supplied.</source>
-        <translation>Au fost introduse parole diferite.</translation>
-    </message>
-    <message>
         <source>New attribute</source>
         <translation>Atribut nou</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Sigur doriți să eliminați acest atribut?</translation>
+        <translation>Sunteți sigur că doriți să eliminați acest atribut?</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -2252,28 +2238,12 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation><numerusform>% n lună (i)</numerusform><numerusform>% n lună (i)</numerusform><numerusform>%n lună(i)</numerusform></translation>
     </message>
     <message>
-        <source>Apply generated password?</source>
-        <translation>Aplicați parola generată?</translation>
-    </message>
-    <message>
-        <source>Do you want to apply the generated password to this entry?</source>
-        <translation>Aplicați parola generată la această intrare?</translation>
-    </message>
-    <message>
         <source>Entry updated successfully.</source>
         <translation>Intrare actualizată cu succes.</translation>
     </message>
     <message>
-        <source>Entry has unsaved changes</source>
-        <translation>Intrarea are modificări nesalvate</translation>
-    </message>
-    <message>
         <source>New attribute %1</source>
         <translation>Atribut nou %1</translation>
-    </message>
-    <message>
-        <source>[PROTECTED] Press reveal to view or edit</source>
-        <translation>[PROTEJAT] Apăsați pe dezvăluire pentru a vizualiza sau edita</translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
@@ -2294,6 +2264,26 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
     <message>
         <source>Are you sure you want to remove this URL?</source>
         <translation>Sigur doriți să eliminați această adresă URL?</translation>
+    </message>
+    <message>
+        <source>Reveal</source>
+        <translation>Dezvăluie</translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>Ascunde</translation>
+    </message>
+    <message>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Would you like to save changes to this entry?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>[PROTECTED] Press Reveal to view or edit</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2370,20 +2360,20 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <source>Background color selection</source>
         <translation>Selectarea culorii de fundal</translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements (e. g. password entropy or re-use). You can set the check mark if the password is beyond your control (e. g. if it needs to be a four-digit PIN) to prevent it from cluttering the reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Exclude from database reports</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
         <translation>Activare tiparire automat pentru această intrare</translation>
-    </message>
-    <message>
-        <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Moștenirea secvenței implicite de tiparire auto din &amp;grupul</translation>
-    </message>
-    <message>
-        <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>&amp;Utilizați secvența de auto-tiparire personalizată:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -2441,6 +2431,14 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <source>Custom Auto-Type sequence for this window</source>
         <translation>Secvență personalizată de tip automat pentru această fereastră</translation>
     </message>
+    <message>
+        <source>Inherit default Auto-Type sequence from the group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use custom Auto-Type sequence:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetBrowser</name>
@@ -2475,6 +2473,14 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
     <message>
         <source>Edit</source>
         <translation>Editați </translation>
+    </message>
+    <message>
+        <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use this entry only with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2527,16 +2533,8 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation>Parola:</translation>
     </message>
     <message>
-        <source>Repeat:</source>
-        <translation>Repetă:</translation>
-    </message>
-    <message>
         <source>Title:</source>
         <translation>Titlu:</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Notițe</translation>
     </message>
     <message>
         <source>Presets</source>
@@ -2551,10 +2549,6 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation>Nume utilizator:</translation>
     </message>
     <message>
-        <source>Expires</source>
-        <translation>Expiră</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Câmp url</translation>
     </message>
@@ -2563,20 +2557,8 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation>Descărcați favicon pentru URL</translation>
     </message>
     <message>
-        <source>Repeat password field</source>
-        <translation>Repetați câmpul de parolă</translation>
-    </message>
-    <message>
-        <source>Toggle password generator</source>
-        <translation>Comutați generatorul de parolă</translation>
-    </message>
-    <message>
         <source>Password field</source>
         <translation>Câmp parola</translation>
-    </message>
-    <message>
-        <source>Toggle password visibility</source>
-        <translation>Comutați vizibilitatea parolelor</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
@@ -2610,12 +2592,24 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <source>Toggle expiration</source>
         <translation>Combate expirarea</translation>
     </message>
+    <message>
+        <source>Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>https://example.com</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expires:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>De la</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
@@ -2639,7 +2633,7 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Adăugare cheie la agent când baza de date este deschisă/descuiată</translation>
+        <translation>Adăugare cheie la agent când baza de date este deschisă/dezblocată</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -2684,7 +2678,7 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation>Solicitați confirmarea utilizatorului când se utilizează această tastă</translation>
+        <translation>Solicitați confirmarea utilizatorului când se utilizează această cheie</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
@@ -2745,20 +2739,12 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
 <context>
     <name>EditGroupWidgetKeeShare</name>
     <message>
-        <source>Form</source>
-        <translation>Formular</translation>
-    </message>
-    <message>
         <source>Type:</source>
         <translation>Tip:</translation>
     </message>
     <message>
         <source>Path:</source>
         <translation>Calea:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2844,56 +2830,24 @@ Extensiile acceptate sunt: %1.</translation>
         <translation>Calea de partajare a câmpului de fișiere</translation>
     </message>
     <message>
-        <source>Browser for share file</source>
-        <translation>Browser pentru partajarea fișierului</translation>
-    </message>
-    <message>
         <source>Password field</source>
         <translation>Câmp parola</translation>
-    </message>
-    <message>
-        <source>Toggle password visibility</source>
-        <translation>Comutați vizibilitatea parolelor</translation>
-    </message>
-    <message>
-        <source>Toggle password generator</source>
-        <translation>Comutați generatorul de parolă</translation>
     </message>
     <message>
         <source>Clear fields</source>
         <translation>Câmpuri clare</translation>
     </message>
+    <message>
+        <source>Browse for share file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Răsfoiește...</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
-    <message>
-        <source>Name</source>
-        <translation>Nume</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Notițe</translation>
-    </message>
-    <message>
-        <source>Expires</source>
-        <translation>Expiră</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation>Caută</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Auto tiparire</translation>
-    </message>
-    <message>
-        <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>&amp;Utilizați secvența implicită de auto-tiparire a grupului părinte</translation>
-    </message>
-    <message>
-        <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Setarea implicită auto-tiparire se&amp;quence</translation>
-    </message>
     <message>
         <source>Name field</source>
         <translation>Câmpul de nume</translation>
@@ -2922,17 +2876,37 @@ Extensiile acceptate sunt: %1.</translation>
         <source>Default auto-type sequence field</source>
         <translation>Câmpul de secvență implicit de tip automat</translation>
     </message>
+    <message>
+        <source>Expires:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use default Auto-Type sequence of parent group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set default Auto-Type sequence</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
-    <message>
-        <source>&amp;Use default icon</source>
-        <translation>&amp;Folosește icoana implicită</translation>
-    </message>
-    <message>
-        <source>Use custo&amp;m icon</source>
-        <translation>Folosește icoa&amp;nă personalizată</translation>
-    </message>
     <message>
         <source>Add custom icon</source>
         <translation>Adaugă icon personalizat</translation>
@@ -2967,7 +2941,7 @@ Extensiile acceptate sunt: %1.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>Încărcat cu succes% 1 din% n pictogramă (e)</numerusform><numerusform>Încărcat cu succes% 1 din% n pictogramă (e)</numerusform><numerusform>Încărcat cu succes %1 din %n pictogramă(e)</numerusform></translation>
+        <translation><numerusform>Încărcat cu succes% 1 din% n pictogramă (e)</numerusform><numerusform>Încărcat cu succes% 1 din% n pictogramă (e)</numerusform><numerusform>Încărcat cu succes %1 din %n pictograme</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -2975,11 +2949,11 @@ Extensiile acceptate sunt: %1.</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>% n pictograma (ele) există deja în baza de date</numerusform><numerusform>% n pictograma (ele) există deja în baza de date</numerusform><numerusform>%n pictograma(ele) există deja în baza de date</numerusform></translation>
+        <translation><numerusform>% n pictograma (ele) există deja în baza de date</numerusform><numerusform>% n pictograma (ele) există deja în baza de date</numerusform><numerusform>%n pictograma(e) există deja în baza de date</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>Pictograma (ele) următoare nu a reușit:</numerusform><numerusform>Pictograma (ele) următoare nu a reușit:</numerusform><numerusform>Pictograma(ele) următoare nu au reușit:</numerusform></translation>
+        <translation><numerusform>Pictograma (ele) următoare nu a reușit:</numerusform><numerusform>Pictograma (ele) următoare nu a reușit:</numerusform><numerusform>Pictograma(e) următoare nu au reușit:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
@@ -2998,14 +2972,6 @@ Extensiile acceptate sunt: %1.</translation>
         <translation>Aplicați pictograma selectată pe subgrupuri și intrări</translation>
     </message>
     <message>
-        <source>Apply icon &amp;to ...</source>
-        <translation>Aplicați pictograma &amp; în ...</translation>
-    </message>
-    <message>
-        <source>Apply to this only</source>
-        <translation>Aplicați numai la acest aspect</translation>
-    </message>
-    <message>
         <source>Also apply to child groups</source>
         <translation>De asemenea, aplicați pentru grupuri de copii</translation>
     </message>
@@ -3020,6 +2986,22 @@ Extensiile acceptate sunt: %1.</translation>
     <message>
         <source>Existing icon selected.</source>
         <translation>Pictograma existentă selectată.</translation>
+    </message>
+    <message>
+        <source>Use default icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use custom icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply icon to...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply to this group only</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3042,7 +3024,7 @@ Extensiile acceptate sunt: %1.</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>Plugin de date</translation>
+        <translation>Modul de date</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -3113,7 +3095,7 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>De la</translation>
     </message>
     <message>
         <source>Add</source>
@@ -3207,6 +3189,17 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
         <source>Save selected attachment to disk</source>
         <translation>Salvați atașamentul selectat pe disc</translation>
     </message>
+    <message>
+        <source>%1 is a big file (%2 MB).
+Your database may get very large and reduce performance.
+
+Are you sure to add this file?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Attachment</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
@@ -3263,7 +3256,7 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -3290,12 +3283,52 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
         <translation>Atașamente</translation>
     </message>
     <message>
-        <source>Yes</source>
-        <translation>da</translation>
+        <source>Size</source>
+        <translation>Dimensiunea</translation>
     </message>
     <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
+        <source>Group name</source>
+        <translation>Numele grupului</translation>
+    </message>
+    <message>
+        <source>Entry title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry expires at</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Creation date</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Last modification date</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Last access date</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attached files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry size</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Has attachments</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Has TOTP one-time password</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3383,7 +3416,7 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>Împărtăşi</translation>
+        <translation>Împărtăşire</translation>
     </message>
     <message>
         <source>Display current TOTP value</source>
@@ -3392,6 +3425,13 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
     <message>
         <source>Advanced</source>
         <translation>Avansat</translation>
+    </message>
+</context>
+<context>
+    <name>EntryURLModel</name>
+    <message>
+        <source>Invalid URL</source>
+        <translation>URL invalid</translation>
     </message>
 </context>
 <context>
@@ -3421,8 +3461,14 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
         <translation>Resetare la valorile implicite</translation>
     </message>
     <message>
-        <source>Attachments (icon)</source>
-        <translation>Atașamente (icon)</translation>
+        <source>Has attachments</source>
+        <comment>Entry attachment icon toggle</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Has TOTP</source>
+        <comment>Entry TOTP icon toggle</comment>
+        <translation>Are TOTP</translation>
     </message>
 </context>
 <context>
@@ -3434,21 +3480,74 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
-    <message>
-        <source>Failed to register DBus service at %1: another secret service is running.</source>
-        <translation>Nu a reușit să înregistrați serviciul DBus la %1: este executat un alt serviciu secret.</translation>
-    </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>% n Intrărea a fost utilizata de %1</numerusform><numerusform>%n Intrările au fost utilizate de %1</numerusform><numerusform>%n Intrările au fost utilizate de %1</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::SettingsDatabaseModel</name>
+    <message>
+        <source>File Name</source>
+        <translation>Nume de fișier</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Grup</translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation>Administra</translation>
+    </message>
+    <message>
+        <source>Unlock to show</source>
+        <translation>Deblocați să afișați</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nici unul</translation>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::SettingsSessionModel</name>
+    <message>
+        <source>Application</source>
+        <translation>Aplicaţie</translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation>Administra</translation>
     </message>
 </context>
 <context>
     <name>FdoSecretsPlugin</name>
     <message>
-        <source>Fdo Secret Service: %1</source>
-        <translation>Serviciu secret Fdo: %1</translation>
+        <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown PID</comment>
+        <translation>Necunoscut</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown executable path</comment>
+        <translation>Necunoscut</translation>
+    </message>
+    <message>
+        <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
+        <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3456,18 +3555,14 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation>gol</translation>
+        <translation>[gol]</translation>
     </message>
 </context>
 <context>
-    <name>HostInstaller</name>
+    <name>HibpDownloader</name>
     <message>
-        <source>KeePassXC: Cannot save file!</source>
-        <translation>KeePassXC: Imposibil de salvat fișierul!</translation>
-    </message>
-    <message>
-        <source>Cannot save the native messaging script file.</source>
-        <translation>Imposibil de salvat fișierul script de mesagerie nativ.</translation>
+        <source>Online password validation failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3537,14 +3632,6 @@ Puteți activa serviciul pictogramelor site-ului web DuckDuckGo în secțiunea d
 <context>
     <name>Kdbx3Reader</name>
     <message>
-        <source>Unable to calculate master key</source>
-        <translation>Nu a putut fi calculată cheia principală</translation>
-    </message>
-    <message>
-        <source>Unable to issue challenge-response.</source>
-        <translation>Imposibilitatea de a emite provocare-răspuns.</translation>
-    </message>
-    <message>
         <source>missing database headers</source>
         <translation>Lipsă de anteturi de baze de date </translation>
     </message>
@@ -3570,16 +3657,24 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation>Au fost furnizate datele de acreditare nevalide, încercați din nou.
 Dacă reîncepe, atunci fișierul dvs. de bază de date poate fi corupt.</translation>
     </message>
+    <message>
+        <source>Unable to calculate database key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to issue challenge-response: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Kdbx3Writer</name>
     <message>
-        <source>Unable to issue challenge-response.</source>
-        <translation>Imposibilitatea de a emite provocare-răspuns.</translation>
+        <source>Unable to issue challenge-response: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unable to calculate master key</source>
-        <translation>Nu a putut fi calculată cheia principală</translation>
+        <source>Unable to calculate database key</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3587,10 +3682,6 @@ Dacă reîncepe, atunci fișierul dvs. de bază de date poate fi corupt.</transl
     <message>
         <source>missing database headers</source>
         <translation>Lipsă de anteturi de baze de date </translation>
-    </message>
-    <message>
-        <source>Unable to calculate master key</source>
-        <translation>Nu a putut fi calculată cheia principală</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
@@ -3710,6 +3801,10 @@ Dacă reîncepe, atunci fișierul dvs. de bază de date poate fi corupt.</transl
         <source>(HMAC mismatch)</source>
         <translation>(Nepotrivire HMAC)</translation>
     </message>
+    <message>
+        <source>Unable to calculate database key: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
@@ -3723,13 +3818,13 @@ Dacă reîncepe, atunci fișierul dvs. de bază de date poate fi corupt.</transl
         <translation>Cifrul simetric nevalid dimensiune IV.</translation>
     </message>
     <message>
-        <source>Unable to calculate master key</source>
-        <translation>Nu a putut fi calculată cheia principală</translation>
-    </message>
-    <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
         <translation>Nu s-a reușit serializarea hărții variantei parametrilor KDF</translation>
+    </message>
+    <message>
+        <source>Unable to calculate database key: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3877,15 +3972,11 @@ Aceasta este o migrare într-un singur sens. Nu veți putea deschide baza de dat
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Cheie șir de intrare sau valoare lipsă</translation>
-    </message>
-    <message>
-        <source>Duplicate attachment found</source>
-        <translation>Atașare dublată găsită</translation>
+        <translation>Lipsă de cheie șir de intrare sau valoare </translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>Intrare cheie binare sau valoare lipsă</translation>
+        <translation>Lipsă cheiei binare sau valorii intrare </translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
@@ -3918,7 +4009,7 @@ Aceasta este o migrare într-un singur sens. Nu veți putea deschide baza de dat
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation>Imposibilde a decomprima binar</translation>
+        <translation>Imposibil de a decomprima binar</translation>
     </message>
     <message>
         <source>XML error:
@@ -3930,10 +4021,33 @@ Linia %2, coloana %3</translation>
     </message>
 </context>
 <context>
+    <name>KeeAgentSettings</name>
+    <message>
+        <source>Invalid KeeAgent settings file structure.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Private key is an attachment but no attachments provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Private key is empty</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File too large to be a private key</source>
+        <translation>Fișier prea mare pentru a fi cheie privată</translation>
+    </message>
+    <message>
+        <source>Failed to open private key</source>
+        <translation>Deschiderea cheii private a eșuat</translation>
+    </message>
+</context>
+<context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Baza de date nu poate fi deschisă.</translation>
+        <translation>Nu pot deschide baza de date.</translation>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
@@ -3992,10 +4106,6 @@ Linia %2, coloana %3</translation>
         <translation>Rădăcină</translation>
     </message>
     <message>
-        <source>Unable to calculate master key</source>
-        <translation>Nu a putut fi calculată cheia principală</translation>
-    </message>
-    <message>
         <source>Key transformation failed</source>
         <translation>Transformarea cheii nu a reușit</translation>
     </message>
@@ -4021,7 +4131,7 @@ Linia %2, coloana %3</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>Dimensiunea incorectă a câmpului pentru modificarea grupelor</translation>
+        <translation>Dimensiunea incorectă a câmpului timpul modificarii grupei</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
@@ -4096,6 +4206,10 @@ Linia %2, coloana %3</translation>
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Au fost furnizate datele de acreditare nevalide, încercați din nou.
 Dacă reîncepe, atunci fișierul dvs. de bază de date poate fi corupt.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate database key</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4203,16 +4317,6 @@ Dacă reîncepe, atunci fișierul dvs. de bază de date poate fi corupt.</transl
         <translation>Format moștenit de fișier cheie </translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please go to the master key settings and generate a new key file.</source>
-        <translation>Utilizați un format de fișier cheie moștenit care poate deveni
-neacceptat în viitor.
-
-Vă rugăm să mergeți la setările principale cheie și generati un nou fișier cheie.</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Eroare la încărcarea fișierului cheie &apos;%1&apos;
@@ -4280,6 +4384,13 @@ Are you sure you want to continue with this file?</source>
         <translation>Fișierul cheie ales arată ca un fișier de bază de date cu parolă. Un fișier cheie trebuie să fie un fișier static care nu se schimbă niciodată sau veți pierde accesul la baza de date pentru totdeauna.
 Sigur doriți să continuați cu acest fișier?</translation>
     </message>
+    <message>
+        <source>You are using a legacy key file format which may become
+unsupported in the future.
+
+Generate a new key file in the database security settings.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4288,16 +4399,8 @@ Sigur doriți să continuați cu acest fișier?</translation>
         <translation>&amp;Bază de date</translation>
     </message>
     <message>
-        <source>&amp;Recent databases</source>
-        <translation>&amp;Baze de date recente</translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
         <translation>&amp;Ajutor</translation>
-    </message>
-    <message>
-        <source>E&amp;ntries</source>
-        <translation>I&amp;ntrări</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -4316,44 +4419,8 @@ Sigur doriți să continuați cu acest fișier?</translation>
         <translation>&amp;Despre</translation>
     </message>
     <message>
-        <source>&amp;Open database...</source>
-        <translation>&amp;Deschide baza de date...</translation>
-    </message>
-    <message>
-        <source>&amp;Save database</source>
-        <translation>&amp;Salvează bază de date</translation>
-    </message>
-    <message>
-        <source>&amp;Close database</source>
-        <translation>&amp;Închide baza de date</translation>
-    </message>
-    <message>
-        <source>&amp;Delete entry</source>
-        <translation>&amp;Șterge intrarea</translation>
-    </message>
-    <message>
-        <source>&amp;Edit group</source>
-        <translation>&amp;Editează grupul</translation>
-    </message>
-    <message>
-        <source>&amp;Delete group</source>
-        <translation>&amp;Șterge grupul</translation>
-    </message>
-    <message>
-        <source>Sa&amp;ve database as...</source>
-        <translation>Sa&amp;lvează bază de date ca...</translation>
-    </message>
-    <message>
         <source>Database settings</source>
         <translation>Setări bază de date</translation>
-    </message>
-    <message>
-        <source>&amp;Clone entry</source>
-        <translation>&amp;Clonează intrarea</translation>
-    </message>
-    <message>
-        <source>Copy &amp;username</source>
-        <translation>Copiază &amp;numele de utilizator</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
@@ -4366,10 +4433,6 @@ Sigur doriți să continuați cu acest fișier?</translation>
     <message>
         <source>&amp;Settings</source>
         <translation>&amp;Setări</translation>
-    </message>
-    <message>
-        <source>&amp;Lock databases</source>
-        <translation>&amp;Blocare baze de date</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -4394,14 +4457,6 @@ Sigur doriți să continuați cu acest fișier?</translation>
     <message>
         <source>Copy notes to clipboard</source>
         <translation>Copierea notelor în Clipboard</translation>
-    </message>
-    <message>
-        <source>&amp;Export to CSV file...</source>
-        <translation>&amp;Exportă în fișier CSV...</translation>
-    </message>
-    <message>
-        <source>Set up TOTP...</source>
-        <translation>Configurarea TOTP...</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
@@ -4448,10 +4503,6 @@ Această versiune nu este destinată utilizării producției.</translation>
         <translation>&amp;Donează</translation>
     </message>
     <message>
-        <source>Report a &amp;bug</source>
-        <translation>Reportează un &amp;defect</translation>
-    </message>
-    <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
 We recommend you use the AppImage available on our downloads page.</source>
         <translation>Avertisment: versiunea dumneavoastră QT poate provoca KeePassXC să se blocheze cu o tastatură vizuală!
@@ -4462,64 +4513,24 @@ Vă recomandăm să utilizați AppImage disponibile pe pagina noastră de descă
         <translation>&amp;Import</translation>
     </message>
     <message>
-        <source>Copy att&amp;ribute...</source>
-        <translation>Copiază at&amp;ributul...</translation>
-    </message>
-    <message>
-        <source>TOTP...</source>
-        <translation>TOTP...</translation>
-    </message>
-    <message>
-        <source>&amp;New database...</source>
-        <translation>&amp;Bază de date nouă</translation>
-    </message>
-    <message>
         <source>Create a new database</source>
         <translation>Crearea unei baze de date noi</translation>
-    </message>
-    <message>
-        <source>&amp;Merge from database...</source>
-        <translation>&amp;Merge din baza de date...</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
         <translation>Îmbinare dintr-o altă bază de date KDBX</translation>
     </message>
     <message>
-        <source>&amp;New entry</source>
-        <translation>&amp;Intrare nouă</translation>
-    </message>
-    <message>
         <source>Add a new entry</source>
         <translation>Adăugarea unei noi intrări</translation>
-    </message>
-    <message>
-        <source>&amp;Edit entry</source>
-        <translation>&amp;Editează intrarea</translation>
     </message>
     <message>
         <source>View or edit entry</source>
         <translation>Vizualizarea sau editarea intrării</translation>
     </message>
     <message>
-        <source>&amp;New group</source>
-        <translation>&amp;Grup nou</translation>
-    </message>
-    <message>
         <source>Add a new group</source>
         <translation>Adăugarea unui grup nou</translation>
-    </message>
-    <message>
-        <source>Change master &amp;key...</source>
-        <translation>Modifică &amp;cheia principală</translation>
-    </message>
-    <message>
-        <source>&amp;Database settings...</source>
-        <translation>&amp;Setări bază de date...</translation>
-    </message>
-    <message>
-        <source>Copy &amp;password</source>
-        <translation>Copiază &amp;parola</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
@@ -4530,28 +4541,12 @@ Vă recomandăm să utilizați AppImage disponibile pe pagina noastră de descă
         <translation>Deschide &amp;URL-ul</translation>
     </message>
     <message>
-        <source>KeePass 1 database...</source>
-        <translation>KeePass 1 bază de date...</translation>
-    </message>
-    <message>
         <source>Import a KeePass 1 database</source>
         <translation>Importul unei baze de date KeePass 1</translation>
     </message>
     <message>
-        <source>CSV file...</source>
-        <translation>Fișier CSV...</translation>
-    </message>
-    <message>
         <source>Import a CSV file</source>
         <translation>Importul unui fișier CSV</translation>
-    </message>
-    <message>
-        <source>Show TOTP...</source>
-        <translation>Afișare TOTP...</translation>
-    </message>
-    <message>
-        <source>Show TOTP QR Code...</source>
-        <translation>Afișare cod QR TOTP...</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
@@ -4576,14 +4571,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>&amp;Export</translation>
     </message>
     <message>
-        <source>&amp;Check for Updates...</source>
-        <translation>Verifică pentru a&amp;ctualizări...</translation>
-    </message>
-    <message>
-        <source>Downlo&amp;ad all favicons</source>
-        <translation>Descarc&amp;a toate favicons</translation>
-    </message>
-    <message>
         <source>Sort &amp;A-Z</source>
         <translation>Sortare &amp;A-Z</translation>
     </message>
@@ -4596,18 +4583,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>Generator de &amp;parolă</translation>
     </message>
     <message>
-        <source>Download favicon</source>
-        <translation>Descarcă favicon</translation>
-    </message>
-    <message>
-        <source>&amp;Export to HTML file...</source>
-        <translation>&amp;Export în fișier HTML ...</translation>
-    </message>
-    <message>
-        <source>1Password Vault...</source>
-        <translation>1Password Vault...</translation>
-    </message>
-    <message>
         <source>Import a 1Password Vault</source>
         <translation>Import 1Password Vault</translation>
     </message>
@@ -4616,28 +4591,282 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>Noțiuni de bază</translation>
     </message>
     <message>
-        <source>Open Getting Started Guide PDF</source>
-        <translation>Deschideți Ghidul de pornire PDF</translation>
-    </message>
-    <message>
-        <source>&amp;Online Help...</source>
-        <translation>Ajutor &amp;online...</translation>
-    </message>
-    <message>
-        <source>Go to online documentation (opens browser)</source>
-        <translation>Accesați documentația online (deschide browserul)</translation>
-    </message>
-    <message>
         <source>&amp;User Guide</source>
         <translation>Manualul &amp;utilizatorului</translation>
     </message>
     <message>
-        <source>Open User Guide PDF</source>
-        <translation>Deschideți Ghidul utilizatorului PDF</translation>
-    </message>
-    <message>
         <source>&amp;Keyboard Shortcuts</source>
         <translation>comenzi rapide de la tastatură</translation>
+    </message>
+    <message>
+        <source>&amp;Recent Databases</source>
+        <translation>&amp;Baze de date recente</translation>
+    </message>
+    <message>
+        <source>&amp;Entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Att&amp;ribute</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Check for Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Open Database…</source>
+        <translation>Deschide baza de date</translation>
+    </message>
+    <message>
+        <source>&amp;Save Database</source>
+        <translation>&amp;Salvează baza de date</translation>
+    </message>
+    <message>
+        <source>&amp;Close Database</source>
+        <translation>&amp;Închide baza de date</translation>
+    </message>
+    <message>
+        <source>&amp;New Database…</source>
+        <translation>&amp;Bază de date nouă...</translation>
+    </message>
+    <message>
+        <source>&amp;Merge From Database…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;New Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Delete Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;New Group…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Edit Group…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Delete Group…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download All &amp;Favicons…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sa&amp;ve Database As…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database &amp;Security…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database &amp;Reports...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Statistics, health check, etc.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Database Settings…</source>
+        <translation>Setări bază de &amp;date...</translation>
+    </message>
+    <message>
+        <source>&amp;Clone Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move u&amp;p</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entry one step up</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move do&amp;wn</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entry one step down</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy &amp;Username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy &amp;Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download &amp;Favicon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Lock Databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;CSV File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;HTML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePass 1 Database…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Vault…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>CSV File…</source>
+        <translation>Fișier CSV...</translation>
+    </message>
+    <message>
+        <source>Show TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show QR Code</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set up TOTP…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Report a &amp;Bug</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Getting Started Guide</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Online Help</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Go to online documentation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open User Guide</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Database Backup...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add key to SSH Agent</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove key from SSH Agent</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Compact Mode</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Light</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Classic (Platform-native)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Preview Panel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Don&apos;t show again for this version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart Application?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You must restart the application to apply this setting. Would you like to restart now?</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ManageDatabase</name>
+    <message>
+        <source>Database settings</source>
+        <translation>Setări bază de date</translation>
+    </message>
+    <message>
+        <source>Edit database settings</source>
+        <translation>Editați setările bazei de date</translation>
+    </message>
+    <message>
+        <source>Unlock database</source>
+        <translation>Deblocare bază de date</translation>
+    </message>
+    <message>
+        <source>Unlock database to show more information</source>
+        <translation>Deblocați baza de date pentru a afișa mai multe informații</translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>Blocare bază de date</translation>
+    </message>
+</context>
+<context>
+    <name>ManageSession</name>
+    <message>
+        <source>Disconnect</source>
+        <translation>Deconecta</translation>
+    </message>
+    <message>
+        <source>Disconnect this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4726,10 +4955,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>Pagină de start</translation>
     </message>
     <message>
-        <source>En&amp;cryption Settings</source>
-        <translation>Setări cri&amp;ptare</translation>
-    </message>
-    <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
         <translation>Aici aveți posibilitatea să ajustați setările de criptare a bazei de date. Nu vă faceți griji, le puteți modifica mai târziu în setările bazei de date.</translation>
     </message>
@@ -4740,6 +4965,21 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     <message>
         <source>Simple Settings</source>
         <translation>Setări simple</translation>
+    </message>
+    <message>
+        <source>Encryption Settings</source>
+        <translation>Setări criptare</translation>
+    </message>
+</context>
+<context>
+    <name>NewDatabaseWizardPageDatabaseKey</name>
+    <message>
+        <source>Database Credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A set of credentials known only to you that protects your database.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4754,17 +4994,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     </message>
 </context>
 <context>
-    <name>NewDatabaseWizardPageMasterKey</name>
-    <message>
-        <source>Database Master Key</source>
-        <translation>Cheie bază de date Master</translation>
-    </message>
-    <message>
-        <source>A master key known only to you protects your database.</source>
-        <translation>O cheie principală cunoscută numai pentru tine protejează baza de date.</translation>
-    </message>
-</context>
-<context>
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
@@ -4773,6 +5002,13 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
         <translation>Vă rugăm să completați numele afișat și o descriere opțională pentru noua bază de date:</translation>
+    </message>
+</context>
+<context>
+    <name>NixUtils</name>
+    <message>
+        <source>Password Manager</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4858,7 +5094,7 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>Cheie dosar mult prea mic.</translation>
+        <translation>Cheie dosar e prea mica.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
@@ -4951,6 +5187,18 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <source>Passwords match so far</source>
         <translation>Parolele se potrivesc până acum</translation>
     </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>
@@ -4975,24 +5223,12 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>Parolele nu se potrivesc.</translation>
     </message>
     <message>
-        <source>Generate master password</source>
-        <translation>Generare parolă principală</translation>
-    </message>
-    <message>
         <source>Password field</source>
         <translation>Câmp parola</translation>
     </message>
     <message>
-        <source>Toggle password visibility</source>
-        <translation>Comutați vizibilitatea parolelor</translation>
-    </message>
-    <message>
         <source>Repeat password field</source>
         <translation>Repetați câmpul de parolă</translation>
-    </message>
-    <message>
-        <source>Toggle password generator</source>
-        <translation>Comutați generatorul de parolă</translation>
     </message>
 </context>
 <context>
@@ -5000,10 +5236,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     <message>
         <source>%p%</source>
         <translation>%p%</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Parola:</translation>
     </message>
     <message>
         <source>strength</source>
@@ -5016,7 +5248,7 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     </message>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <source>Character Types</source>
@@ -5053,14 +5285,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     <message>
         <source>Word Separator:</source>
         <translation>Separator cuvinte:</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Copiază</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <translation>Acceptă</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5144,7 +5368,7 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     </message>
     <message>
         <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=&gt;&lt;/*+!?=&gt;</translation>
+        <translation>&lt;*+!?=</translation>
     </message>
     <message>
         <source>\_|-/</source>
@@ -5157,14 +5381,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     <message>
         <source>#$%&amp;&amp;@^`~</source>
         <translation>#$%&amp;&amp;@^`~</translation>
-    </message>
-    <message>
-        <source>Switch to simple mode</source>
-        <translation>Comutarea la modul simplu</translation>
-    </message>
-    <message>
-        <source>Simple</source>
-        <translation>Simplu</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5185,14 +5401,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
         <translation>Caractere excluse: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;.&quot;</translation>
-    </message>
-    <message>
-        <source>Word Co&amp;unt:</source>
-        <translation>Număr c&amp;uvinte:</translation>
-    </message>
-    <message>
-        <source>Regenerate</source>
-        <translation>Regenera</translation>
     </message>
     <message>
         <source>Generated password</source>
@@ -5243,10 +5451,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>Copiază parola</translation>
     </message>
     <message>
-        <source>Accept password</source>
-        <translation>Acceptați parola</translation>
-    </message>
-    <message>
         <source>lower case</source>
         <translation>minuscule</translation>
     </message>
@@ -5259,8 +5463,44 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>registrul antetului</translation>
     </message>
     <message>
-        <source>Toggle password visibility</source>
-        <translation>Comutați vizibilitatea parolelor</translation>
+        <source>Generate Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Also choose from:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional characters to use for the generated password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional characters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Word Count:</source>
+        <translation>Număr cuvinte:</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Ctrl+S</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Golește</translation>
+    </message>
+    <message>
+        <source>Regenerate password (%1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5272,6 +5512,58 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     <message>
         <source>Statistics</source>
         <translation>Statistici</translation>
+    </message>
+    <message>
+        <source>Very weak password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password entropy is %1 bits</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Used in %1/%2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password is used %1 times</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password has expired</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password expiry was %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password is about to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password expires in %1 days</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password will expire soon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password expires on %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Health Check</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>HIBP</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5369,7 +5661,7 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Calea către baza de date.</translation>
+        <translation>Calea către baza de date</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
@@ -5412,17 +5704,13 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>Calea intrării de adăugat.</translation>
     </message>
     <message>
-        <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation>Copiați parola unei intrări în Clipboard.</translation>
-    </message>
-    <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
         <translation>Calea intrării în clip.</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation>Expirare în câteva secunde înainte de Golirea Clipboard.</translation>
+        <translation>Expirare în  secunde înainte de Golirea Clipboard.</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
@@ -5554,7 +5842,7 @@ Comenzi disponibile:
     </message>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -5571,14 +5859,6 @@ Comenzi disponibile:
     <message>
         <source>Browser Integration</source>
         <translation>Integrare cu browserul</translation>
-    </message>
-    <message>
-        <source>Press</source>
-        <translation>Apasă</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation>Pasiv</translation>
     </message>
     <message>
         <source>SSH Agent</source>
@@ -5612,15 +5892,11 @@ Comenzi disponibile:
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation>Scrierea bazei de date nu a reușit %1.</translation>
+        <translation>Scrierea bazei de date nu a reușit% 1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
         <translation>Intrare adăugată cu succes %1.</translation>
-    </message>
-    <message>
-        <source>Copy the current TOTP to the clipboard.</source>
-        <translation>Copiați TOTP curent în Clipboard.</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
@@ -5628,23 +5904,15 @@ Comenzi disponibile:
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation>Intrarea %1 nu a fost găsită.</translation>
+        <translation>Intrarea% 1 nu a fost găsită.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
         <translation>Intrarea cu calea %1 nu are TOTP configurat.</translation>
     </message>
-    <message>
-        <source>Entry&apos;s current TOTP copied to the clipboard!</source>
-        <translation>TOTP curent de intrare copiate în Clipboard!</translation>
-    </message>
-    <message>
-        <source>Entry&apos;s password copied to the clipboard!</source>
-        <translation>Parola de intrare copiate în Clipboard!</translation>
-    </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Golirea Clipboard-ului în% 1 second (s)...</numerusform><numerusform>Golirea Clipboard-ului în% 1 second (s)...</numerusform><numerusform>Golirea Clipboard-ului în %1 secunda (e)...</numerusform></translation>
+        <translation><numerusform>Golirea Clipboard-ului în% 1 second (s)...</numerusform><numerusform>Golirea Clipboard-ului în% 1 second (s)...</numerusform><numerusform>Golirea Clipboard-ului în %1 secund(e)...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -5862,28 +6130,12 @@ Comenzi disponibile:
         <translation>Nici un program definit pentru manipularea Clipboard</translation>
     </message>
     <message>
-        <source>Unable to start program %1</source>
-        <translation>Imposibil de pornit programul %1</translation>
-    </message>
-    <message>
         <source>file empty</source>
         <translation>fișier gol</translation>
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
         <translation>% 1: (rând, col) %2,%3</translation>
-    </message>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-biți</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-biți</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-biți</translation>
     </message>
     <message>
         <source>Argon2 (KDBX 4 – recommended)</source>
@@ -6136,10 +6388,6 @@ Nucleu (Kernel): %3 %4</translation>
         <translation>Afișați acest ajutor.</translation>
     </message>
     <message>
-        <source>Yubikey slot used to encrypt the database.</source>
-        <translation>Slot Yubikey utilizat pentru criptarea bazei de date.</translation>
-    </message>
-    <message>
         <source>slot</source>
         <translation>slot</translation>
     </message>
@@ -6154,10 +6402,6 @@ Nucleu (Kernel): %3 %4</translation>
     <message>
         <source>Exit interactive mode.</source>
         <translation>Ieșiți din modul interactiv.</translation>
-    </message>
-    <message>
-        <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
-        <translation>Formatul de utilizat la export. Opțiunile disponibile sunt xml sau csv. Valori implicite la xml.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
@@ -6198,10 +6442,6 @@ Nucleu (Kernel): %3 %4</translation>
     <message>
         <source>Path of the new database.</source>
         <translation>Calea noii baze de date.</translation>
-    </message>
-    <message>
-        <source>Unable to import XML database export %1</source>
-        <translation>Imposibil de importat baza de date XML export %1</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
@@ -6296,10 +6536,6 @@ Nucleu (Kernel): %3 %4</translation>
         <translation>Slot YubiKey %1 nevalid</translation>
     </message>
     <message>
-        <source>Please touch the button on your YubiKey to unlock %1</source>
-        <translation>Vă rugăm să atingeți butonul de pe YubiKey pentru a debloca %1</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Introduceți parola pentru criptarea bazei de date (opțional):</translation>
     </message>
@@ -6315,13 +6551,9 @@ Nucleu (Kernel): %3 %4</translation>
         <source>User name</source>
         <translation>Nume utilizator</translation>
     </message>
-    <message>
-        <source>%1[%2] Challenge Response - Slot %3 - %4</source>
-        <translation>%1[%2] Răspuns la provocare - slot %3 - %4</translation>
-    </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>Parola pentru „%1” a fost scursă de 2% ori!</numerusform><numerusform>Parola pentru „%1” a fost scursă de 2% ori!</numerusform><numerusform>Parola pentru „%1” a fost scursă de 2% ori!</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
@@ -6330,6 +6562,193 @@ Nucleu (Kernel): %3 %4</translation>
     <message>
         <source>Show the protected attributes in clear text.</source>
         <translation>Afișează atributele protejate într-un text clar.</translation>
+    </message>
+    <message>
+        <source>Browser Plugin Failure</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not save the native messaging script file for %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy an entry&apos;s attribute to the clipboard.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attribute &quot;%1&quot; not found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>slot[:serial]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Target decryption time in MS for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>time</source>
+        <translation>timp</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set a password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid decryption time %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Target decryption time must be between %1 and %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to set database password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Benchmarking key derivation function for %1ms delay.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Setting %1 rounds for key derivation function.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>error while setting database key derivation settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to import XML database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show a database&apos;s information.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UUID: </source>
+        <translation>UUID: </translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation>Nume:</translation>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation>Descriere:</translation>
+    </message>
+    <message>
+        <source>Cipher: </source>
+        <translation>Cifru:</translation>
+    </message>
+    <message>
+        <source>KDF: </source>
+        <translation>KDF:</translation>
+    </message>
+    <message>
+        <source>Recycle bin is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Recycle bin is not enabled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid command %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid YubiKey serial %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please touch the button on your YubiKey to continue…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to create a database with an empty password? [y/N]: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Repeat password: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error: Passwords do not match.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All clipping programs failed. Tried %1
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES (%1 rounds)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (%1 rounds, %2 KB)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES 256-bit</source>
+        <translation>AES 256-biți</translation>
+    </message>
+    <message>
+        <source>Twofish 256-bit</source>
+        <translation>Twofish 256-biți</translation>
+    </message>
+    <message>
+        <source>ChaCha20 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Benchmark %1 delay</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 ms</source>
+        <comment>milliseconds</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 s</source>
+        <comment>seconds</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6367,6 +6786,290 @@ Nucleu (Kernel): %3 %4</translation>
     </message>
 </context>
 <context>
+    <name>ReportsWidgetHealthcheck</name>
+    <message>
+        <source>Also show entries that have been excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hover over reason to show additional details. Double-click entries to edit.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bad</source>
+        <comment>Password quality</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bad — password must be changed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Inacceptabil</translation>
+    </message>
+    <message>
+        <source>Poor — password should be changed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Slab</translation>
+    </message>
+    <message>
+        <source>Weak — consider changing the password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Excluded)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This entry is being excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, health data is being calculated...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Congratulations, everything is healthy!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titlu</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Cale</translation>
+    </message>
+    <message>
+        <source>Score</source>
+        <translation>Scor</translation>
+    </message>
+    <message>
+        <source>Reason</source>
+        <translation>Motiv</translation>
+    </message>
+    <message>
+        <source>Edit Entry...</source>
+        <translation>Editare intrare...</translation>
+    </message>
+    <message>
+        <source>Exclude from reports</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetHibp</name>
+    <message>
+        <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Online Analysis</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Also show entries that have been excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Congratulations, no exposed passwords!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titlu</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Cale</translation>
+    </message>
+    <message>
+        <source>Password exposed…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Excluded)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This entry is being excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>once</source>
+        <translation>o dată</translation>
+    </message>
+    <message>
+        <source>up to 10 times</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>up to 100 times</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>up to 1000 times</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>up to 10,000 times</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>up to 100,000 times</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>up to a million times</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>millions of times</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry...</source>
+        <translation>Editare intrare...</translation>
+    </message>
+    <message>
+        <source>Exclude from reports</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetStatistics</name>
+    <message>
+        <source>Hover over lines with error icons for further information.</source>
+        <translation>Treceți peste linii cu pictograme de eroare pentru informații suplimentare.</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nume</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valoare</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>Vă rugăm să așteptați, se calculează statisticile bazei de date ...</translation>
+    </message>
+    <message>
+        <source>Database name</source>
+        <translation>Numele bazei de date</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descriere</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Locație</translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation>Ultima salvare</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation>Modificări salvate</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>da</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>Nu</translation>
+    </message>
+    <message>
+        <source>The database was modified, but the changes have not yet been saved to disk.</source>
+        <translation>Baza de date a fost modificată, dar modificările nu au fost încă salvate pe disc.</translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation>Număr de grupuri</translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation>Numărul de intrări</translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation>Numărul de intrări expirate</translation>
+    </message>
+    <message>
+        <source>The database contains entries that have expired.</source>
+        <translation>Baza de date conține intrări care au expirat.</translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation>Parole unice</translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation>Parole non-unice</translation>
+    </message>
+    <message>
+        <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
+        <translation>Mai mult de 10% din parolele sunt reutilizate. Utilizați parole unice atunci când este posibil.</translation>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation>Reutilizarea maximă a parolei</translation>
+    </message>
+    <message>
+        <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
+        <translation>Unele parole sunt folosite de mai mult de trei ori. Utilizați parole unice atunci când este posibil.</translation>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation>Număr de parole scurte</translation>
+    </message>
+    <message>
+        <source>Recommended minimum password length is at least 8 characters.</source>
+        <translation>Lungimea minimă recomandată a parolei este de cel puțin 8 caractere.</translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation>Număr de parole slabe</translation>
+    </message>
+    <message>
+        <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
+        <translation>Recomandă folosirea parolelor lungi, aleatorii, cu o notă de „bun” sau „excelent”.</translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation>Lungimea medie a parolei</translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation>%1 caractere</translation>
+    </message>
+    <message>
+        <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
+        <translation>Lungimea medie a parolei este mai mică de zece caractere. Parolele mai lungi oferă mai multă securitate.</translation>
+    </message>
+</context>
+<context>
     <name>SSHAgent</name>
     <message>
         <source>Agent connection failed.</source>
@@ -6399,6 +7102,14 @@ Nucleu (Kernel): %3 %4</translation>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
         <translation>O solicitare de confirmare nu este acceptată de agent (opțiuni de selectare).</translation>
+    </message>
+    <message>
+        <source>Key identity ownership conflict. Refusing to add.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No agent running, cannot list identities.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6445,7 +7156,7 @@ Nucleu (Kernel): %3 %4</translation>
     </message>
     <message>
         <source>match one</source>
-        <translation>meci unul</translation>
+        <translation>se potriveste unul</translation>
     </message>
     <message>
         <source>logical OR</source>
@@ -6507,24 +7218,8 @@ Nucleu (Kernel): %3 %4</translation>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;În cazul în care coșul de reciclare este activat pentru baza de date, intrările vor fi mutate direct la coșul de gunoi. În caz contrar, acestea vor fi șterse fără confirmare.&lt;/p&gt;&lt;p&gt; Vi se va solicita totuși dacă orice alte înregistrări sunt trimise de către alții.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Don&apos;t confirm when entries are deleted by clients.</source>
-        <translation>Nu confirmați când înregistrările sunt șterse de către clienți.</translation>
-    </message>
-    <message>
         <source>Exposed database groups:</source>
         <translation>Grupuri de baze de date expuse:</translation>
-    </message>
-    <message>
-        <source>File Name</source>
-        <translation>Nume de fișier</translation>
-    </message>
-    <message>
-        <source>Group</source>
-        <translation>Grup</translation>
-    </message>
-    <message>
-        <source>Manage</source>
-        <translation>Administra</translation>
     </message>
     <message>
         <source>Authorization</source>
@@ -6535,40 +7230,20 @@ Nucleu (Kernel): %3 %4</translation>
         <translation>Aceste aplicații sunt conectate în prezent:</translation>
     </message>
     <message>
-        <source>Application</source>
-        <translation>Aplicaţie</translation>
+        <source>Don&apos;t confirm when entries are deleted by clients</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Disconnect</source>
-        <translation>Deconecta</translation>
+        <source>&lt;b&gt;Error:&lt;/b&gt; Failed to connect to DBus. Please check your DBus setup.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Database settings</source>
-        <translation>Setări bază de date</translation>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Edit database settings</source>
-        <translation>Editați setările bazei de date</translation>
-    </message>
-    <message>
-        <source>Unlock database</source>
-        <translation>Deblocare bază de date</translation>
-    </message>
-    <message>
-        <source>Unlock database to show more information</source>
-        <translation>Deblocați baza de date pentru a afișa mai multe informații</translation>
-    </message>
-    <message>
-        <source>Lock database</source>
-        <translation>Blocare bază de date</translation>
-    </message>
-    <message>
-        <source>Unlock to show</source>
-        <translation>Deblocați să afișați</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Nici unul</translation>
+        <source>Save current changes to activate the plugin and enable editing of this section.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6659,7 +7334,7 @@ Nucleu (Kernel): %3 %4</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation>Încredere</translation>
+        <translation>Fara Încredere</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -6841,10 +7516,6 @@ Nucleu (Kernel): %3 %4</translation>
         <translation>Import semnat cu succes</translation>
     </message>
     <message>
-        <source>Unexpected error</source>
-        <translation>Eroare neașteptată</translation>
-    </message>
-    <message>
         <source>Unsigned share container are not supported - import prevented</source>
         <translation>Container de partajare nesemnate nu sunt acceptate-import prevenit</translation>
     </message>
@@ -7014,6 +7685,13 @@ Exemplu: JBSWY3DPEHPK3PXP</translation>
     </message>
 </context>
 <context>
+    <name>URLEdit</name>
+    <message>
+        <source>Invalid URL</source>
+        <translation>URL invalid</translation>
+    </message>
+</context>
+<context>
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
@@ -7104,6 +7782,53 @@ Exemplu: JBSWY3DPEHPK3PXP</translation>
     </message>
 </context>
 <context>
+    <name>YubiKey</name>
+    <message>
+        <source>%1 [%2] Configured Slot - %3</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Press</source>
+        <translation>Apasă</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation>Pasiv</translation>
+    </message>
+    <message>
+        <source>%1 Invalid slot specified - %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The YubiKey interface has not been initialized.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key is currently in use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key timed out waiting for user interaction.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A USB error ocurred when accessing the hardware key: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the specific error was: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>YubiKeyEditWidget</name>
     <message>
         <source>Refresh</source>
@@ -7118,20 +7843,28 @@ Exemplu: JBSWY3DPEHPK3PXP</translation>
         <translation>&lt;p&gt;Dacă dețineți un &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, îl puteți folosi pentru securitate suplimentară.&lt;/p&gt;&lt;p&gt;YubiKey necesită unul dintre sloturile sale să fie programat ca &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-răspuns&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>No YubiKey detected, please ensure it&apos;s plugged in.</source>
-        <translation>Nu este detectat YubiKey, asigurați-vă că este conectat.</translation>
-    </message>
-    <message>
-        <source>No YubiKey inserted.</source>
-        <translation>Nu s-a inserat YubiKey.</translation>
-    </message>
-    <message>
         <source>Refresh hardware tokens</source>
         <translation>Actualizați jetoane hardware</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
         <translation>Selectarea sloturilor pentru cheie hardware</translation>
+    </message>
+    <message>
+        <source>Could not find any hardware keys!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Selected hardware key slot does not support challenge-response!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Detecting hardware keys…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No hardware keys detected</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

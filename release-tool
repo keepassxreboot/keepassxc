@@ -520,7 +520,7 @@ merge() {
     fi
     git diff-index --quiet HEAD --
     if [ $? -ne 0 ]; then
-        git add ./share/translations/*
+        git add -A ./share/translations/
         logInfo "Committing changes..."
         if [ "" == "$GPG_GIT_KEY" ]; then
             git commit -m "Update translations"
