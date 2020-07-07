@@ -40,9 +40,7 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     m_ui->attachmentsView->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_ui->attachmentsView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-    m_ui->actionsWidget->setVisible(m_buttonsVisible);
-    connect(this, SIGNAL(buttonsVisibleChanged(bool)), m_ui->actionsWidget, SLOT(setVisible(bool)));
-
+    connect(this, SIGNAL(buttonsVisibleChanged(bool)), this, SLOT(updateButtonsVisible()));
     connect(this, SIGNAL(readOnlyChanged(bool)), SLOT(updateButtonsEnabled()));
     connect(m_attachmentsModel, SIGNAL(modelReset()), SLOT(updateButtonsEnabled()));
 
@@ -58,6 +56,7 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     connect(m_ui->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachments()));
     connect(m_ui->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeSelectedAttachments()));
 
+    updateButtonsVisible();
     updateButtonsEnabled();
 }
 
@@ -293,6 +292,12 @@ void EntryAttachmentsWidget::updateButtonsEnabled()
 
     m_ui->saveAttachmentButton->setEnabled(hasSelection);
     m_ui->openAttachmentButton->setEnabled(hasSelection);
+}
+
+void EntryAttachmentsWidget::updateButtonsVisible()
+{
+    m_ui->addAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
+    m_ui->removeAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
 }
 
 bool EntryAttachmentsWidget::insertAttachments(const QStringList& filenames, QString& errorMessage)
