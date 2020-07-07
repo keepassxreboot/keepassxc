@@ -32,12 +32,14 @@ namespace
         const QFileInfo info(database->filePath());
         return info.absoluteDir().absoluteFilePath(path);
     }
+
+    constexpr int FileWatchPeriod = 30;
+    constexpr int FileWatchSize = 5;
 } // End Namespace
 
 ShareObserver::ShareObserver(QSharedPointer<Database> db, QObject* parent)
     : QObject(parent)
     , m_db(std::move(db))
-    , m_fileWatcher(new BulkFileWatcher(this))
 {
     connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(handleDatabaseChanged()));
 
@@ -48,10 +50,6 @@ ShareObserver::ShareObserver(QSharedPointer<Database> db, QObject* parent)
     connect(m_db.data(), SIGNAL(databaseModified()), SLOT(handleDatabaseChanged()));
     connect(m_db.data(), SIGNAL(databaseSaved()), SLOT(handleDatabaseSaved()));
 
-    connect(m_fileWatcher, SIGNAL(fileCreated(QString)), SLOT(handleFileCreated(QString)));
-    connect(m_fileWatcher, SIGNAL(fileChanged(QString)), SLOT(handleFileUpdated(QString)));
-    connect(m_fileWatcher, SIGNAL(fileRemoved(QString)), SLOT(handleFileDeleted(QString)));
-
     handleDatabaseChanged();
 }
 
@@ -61,39 +59,33 @@ ShareObserver::~ShareObserver()
 
 void ShareObserver::deinitialize()
 {
-    m_fileWatcher->clear();
     m_groupToReference.clear();
-    m_referenceToGroup.clear();
+    m_shareToGroup.clear();
+    m_fileWatchers.clear();
 }
 
 void ShareObserver::reinitialize()
 {
-    struct Update
-    {
-        Group* group;
-        KeeShareSettings::Reference oldReference;
-        KeeShareSettings::Reference newReference;
-    };
-
-    QList<Update> updated;
-    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
-    for (Group* group : groups) {
-        const Update couple{group, m_groupToReference.value(group), KeeShare::referenceOf(group)};
-        if (couple.oldReference == couple.newReference) {
+    QList<QPair<Group*, KeeShareSettings::Reference>> shares;
+    for (Group* group : m_db->rootGroup()->groupsRecursive(true)) {
+        auto oldReference = m_groupToReference.value(group);
+        auto newReference = KeeShare::referenceOf(group);
+        if (oldReference == newReference) {
             continue;
         }
 
-        m_groupToReference.remove(couple.group);
-        m_referenceToGroup.remove(couple.oldReference);
-        const auto oldResolvedPath = resolvePath(couple.oldReference.path, m_db);
+        const auto oldResolvedPath = resolvePath(oldReference.path, m_db);
+        m_groupToReference.remove(group);
         m_shareToGroup.remove(oldResolvedPath);
-        if (couple.newReference.isValid()) {
-            m_groupToReference[couple.group] = couple.newReference;
-            m_referenceToGroup[couple.newReference] = couple.group;
-            const auto newResolvedPath = resolvePath(couple.newReference.path, m_db);
-            m_shareToGroup[newResolvedPath] = couple.group;
+        m_fileWatchers.remove(oldResolvedPath);
+
+        if (newReference.isValid()) {
+            m_groupToReference[group] = newReference;
+            const auto newResolvedPath = resolvePath(newReference.path, m_db);
+            m_shareToGroup[newResolvedPath] = group;
         }
-        updated << couple;
+
+        shares.append({group, newReference});
     }
 
     QStringList success;
@@ -101,25 +93,27 @@ void ShareObserver::reinitialize()
     QStringList error;
     QMap<QString, QStringList> imported;
     QMap<QString, QStringList> exported;
-    for (const auto& update : asConst(updated)) {
-        if (!update.oldReference.path.isEmpty()) {
-            const auto oldResolvedPath = resolvePath(update.oldReference.path, m_db);
-            m_fileWatcher->removePath(oldResolvedPath);
-        }
 
-        if (!update.newReference.path.isEmpty() && update.newReference.type != KeeShareSettings::Inactive) {
-            const auto newResolvedPath = resolvePath(update.newReference.path, m_db);
-            m_fileWatcher->addPath(newResolvedPath);
+    for (const auto& share : shares) {
+        auto group = share.first;
+        auto& reference = share.second;
+
+        if (!reference.path.isEmpty() && reference.type != KeeShareSettings::Inactive) {
+            const auto newResolvedPath = resolvePath(reference.path, m_db);
+            auto fileWatcher = QSharedPointer<FileWatcher>::create(this);
+            connect(fileWatcher.data(), &FileWatcher::fileChanged, this, &ShareObserver::handleFileUpdated);
+            fileWatcher->start(newResolvedPath, FileWatchPeriod, FileWatchSize);
+            m_fileWatchers.insert(newResolvedPath, fileWatcher);
         }
-        if (update.newReference.isExporting()) {
-            exported[update.newReference.path] << update.group->name();
+        if (reference.isExporting()) {
+            exported[reference.path] << group->name();
             // export is only on save
         }
 
-        if (update.newReference.isImporting()) {
-            imported[update.newReference.path] << update.group->name();
+        if (reference.isImporting()) {
+            imported[reference.path] << group->name();
             // import has to occur immediately
-            const auto result = this->importShare(update.newReference.path);
+            const auto result = this->importShare(reference.path);
             if (!result.isValid()) {
                 // tolerable result - blocked import or missing source
                 continue;
@@ -136,11 +130,13 @@ void ShareObserver::reinitialize()
             }
         }
     }
+
     for (auto it = imported.cbegin(); it != imported.cend(); ++it) {
         if (it.value().count() > 1) {
             warning << tr("Multiple import source path to %1 in %2").arg(it.key(), it.value().join(", "));
         }
     }
+
     for (auto it = exported.cbegin(); it != exported.cend(); ++it) {
         if (it.value().count() > 1) {
             error << tr("Conflicting export target path %1 in %2").arg(it.key(), it.value().join(", "));
@@ -154,7 +150,7 @@ void ShareObserver::notifyAbout(const QStringList& success, const QStringList& w
 {
     QStringList messages;
     MessageWidget::MessageType type = MessageWidget::Positive;
-    if (!(success.isEmpty() || config()->get("KeeShare/QuietSuccess", true).toBool())) {
+    if (!(success.isEmpty() || config()->get(Config::KeeShare_QuietSuccess).toBool())) {
         messages += success;
     }
     if (!warning.isEmpty()) {
@@ -184,21 +180,9 @@ void ShareObserver::handleDatabaseChanged()
     }
 }
 
-void ShareObserver::handleFileCreated(const QString& path)
-{
-    // there is currently no difference in handling an added share or updating from one
-    this->handleFileUpdated(path);
-}
-
-void ShareObserver::handleFileDeleted(const QString& path)
-{
-    Q_UNUSED(path);
-    // There is nothing we can or should do for now, ignore deletion
-}
-
 void ShareObserver::handleFileUpdated(const QString& path)
 {
-    const Result result = this->importShare(path);
+    const Result result = importShare(path);
     if (!result.isValid()) {
         return;
     }
@@ -287,9 +271,16 @@ QList<ShareObserver::Result> ShareObserver::exportShares()
     for (auto it = references.cbegin(); it != references.cend(); ++it) {
         const auto& reference = it.value().first();
         const QString resolvedPath = resolvePath(reference.config.path, m_db);
-        m_fileWatcher->ignoreFileChanges(resolvedPath);
+        auto watcher = m_fileWatchers.value(resolvedPath);
+        if (watcher) {
+            watcher->stop();
+        }
+
         results << ShareExport::intoContainer(resolvedPath, reference.config, reference.group);
-        m_fileWatcher->observeFileChanges(true);
+
+        if (watcher) {
+            watcher->start(resolvedPath, FileWatchPeriod, FileWatchSize);
+        }
     }
     return results;
 }

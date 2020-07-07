@@ -35,6 +35,7 @@
 IconStruct::IconStruct()
     : uuid(QUuid())
     , number(0)
+    , applyTo(ApplyIconToOptions::THIS_ONLY)
 {
 }
 
@@ -131,7 +132,7 @@ void EditWidgetIcons::load(const QUuid& currentUuid,
     m_currentUuid = currentUuid;
     setUrl(url);
 
-    m_customIconModel->setIcons(database->metadata()->customIconsScaledPixmaps(),
+    m_customIconModel->setIcons(database->metadata()->customIconsPixmaps(IconSize::Default),
                                 database->metadata()->customIconsOrder());
 
     QUuid iconUuid = iconStruct.uuid;
@@ -162,7 +163,7 @@ void EditWidgetIcons::setShowApplyIconToButton(bool state)
 QMenu* EditWidgetIcons::createApplyIconToMenu()
 {
     auto* applyIconToMenu = new QMenu(this);
-    QAction* defaultAction = applyIconToMenu->addAction(tr("Apply to this only"));
+    QAction* defaultAction = applyIconToMenu->addAction(tr("Apply to this group only"));
     defaultAction->setData(QVariant::fromValue(ApplyIconToOptions::THIS_ONLY));
     applyIconToMenu->setDefaultAction(defaultAction);
     applyIconToMenu->addSeparator();
@@ -202,7 +203,7 @@ void EditWidgetIcons::iconReceived(const QString& url, const QImage& icon)
     Q_UNUSED(url);
     if (icon.isNull()) {
         QString message(tr("Unable to fetch favicon."));
-        if (!config()->get("security/IconDownloadFallback", false).toBool()) {
+        if (!config()->get(Config::Security_IconDownloadFallback).toBool()) {
             message.append("\n").append(
                 tr("You can enable the DuckDuckGo website icon service under Tools -> Settings -> Security"));
         }
@@ -293,7 +294,7 @@ bool EditWidgetIcons::addCustomIcon(const QImage& icon)
         if (uuid.isNull()) {
             uuid = QUuid::createUuid();
             m_db->metadata()->addCustomIcon(uuid, scaledicon);
-            m_customIconModel->setIcons(m_db->metadata()->customIconsScaledPixmaps(),
+            m_customIconModel->setIcons(m_db->metadata()->customIconsPixmaps(IconSize::Default),
                                         m_db->metadata()->customIconsOrder());
             added = true;
         }
@@ -377,7 +378,7 @@ void EditWidgetIcons::removeCustomIcon()
 
             // Remove the icon from the database
             m_db->metadata()->removeCustomIcon(iconUuid);
-            m_customIconModel->setIcons(m_db->metadata()->customIconsScaledPixmaps(),
+            m_customIconModel->setIcons(m_db->metadata()->customIconsPixmaps(IconSize::Default),
                                         m_db->metadata()->customIconsOrder());
 
             // Reset the current icon view

@@ -200,6 +200,7 @@ bool FileKey::create(const QString& fileName, QString* errorMsg, int size)
     }
     create(&file, size);
     file.close();
+    file.setPermissions(QFile::ReadUser);
 
     if (file.error()) {
         if (errorMsg) {

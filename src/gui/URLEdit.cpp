@@ -21,7 +21,7 @@
 #include <QRegularExpression>
 
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "core/Tools.h"
 #include "gui/Font.h"
 
@@ -30,7 +30,7 @@ const QColor URLEdit::ErrorColor = QColor(255, 125, 125);
 URLEdit::URLEdit(QWidget* parent)
     : QLineEdit(parent)
 {
-    const QIcon errorIcon = filePath()->icon("status", "dialog-error");
+    const QIcon errorIcon = resources()->icon("dialog-error");
     m_errorAction = addAction(errorIcon, QLineEdit::TrailingPosition);
     m_errorAction->setVisible(false);
     m_errorAction->setToolTip(tr("Invalid URL"));

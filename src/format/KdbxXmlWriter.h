@@ -18,7 +18,6 @@
 #ifndef KEEPASSX_KDBXXMLWRITER_H
 #define KEEPASSX_KDBXXMLWRITER_H
 
-#include <QColor>
 #include <QDateTime>
 #include <QImage>
 #include <QXmlStreamWriter>
@@ -74,7 +73,6 @@ private:
     void writeUuid(const QString& qualifiedName, const Group* group);
     void writeUuid(const QString& qualifiedName, const Entry* entry);
     void writeBinary(const QString& qualifiedName, const QByteArray& ba);
-    void writeColor(const QString& qualifiedName, const QColor& color);
     void writeTriState(const QString& qualifiedName, Group::TriState triState);
     QString colorPartToString(int value);
     QString stripInvalidXml10Chars(QString str);

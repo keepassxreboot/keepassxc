@@ -79,6 +79,14 @@ namespace FdoSecrets
          */
         QString path() const;
 
+        /**
+         * If the containing db does not have recycle bin enabled,
+         * or the entry is already in the recycle bin (not possible for item, though),
+         * the delete is permanent
+         * @return true if delete is permanent
+         */
+        bool isDeletePermanent() const;
+
     public slots:
         void doDelete();
 

@@ -110,7 +110,7 @@ namespace FdoSecrets
     public slots:
         bool doCloseDatabase(DatabaseWidget* dbWidget);
         Collection* doNewDatabase();
-        void doSwitchToChangeDatabaseSettings(DatabaseWidget* dbWidget);
+        void doSwitchToDatabaseSettings(DatabaseWidget* dbWidget);
 
         /**
          * Async, connect to signal doneUnlockDatabaseInDialog for finish notification

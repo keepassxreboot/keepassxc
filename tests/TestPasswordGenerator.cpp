@@ -29,6 +29,19 @@ void TestPasswordGenerator::initTestCase()
     QVERIFY(Crypto::init());
 }
 
+void TestPasswordGenerator::testAdditionalChars()
+{
+    PasswordGenerator generator;
+    QVERIFY(!generator.isValid());
+    generator.setAdditionalChars("aql");
+    generator.setLength(2000);
+    QVERIFY(generator.isValid());
+    QString password = generator.generatePassword();
+    QCOMPARE(password.size(), 2000);
+    QRegularExpression regex(R"(^[aql]+$)");
+    QVERIFY(regex.match(password).hasMatch());
+}
+
 void TestPasswordGenerator::testCharClasses()
 {
     PasswordGenerator generator;

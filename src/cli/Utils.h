@@ -20,41 +20,40 @@
 
 #include "cli/TextStream.h"
 #include "core/Database.h"
+#include "core/EntryAttributes.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include <QtCore/qglobal.h>
 
-#ifdef WITH_XC_YUBIKEY
-#include "keys/YkChallengeResponseKey.h"
-#include "keys/YkChallengeResponseKeyCLI.h"
-#include "keys/drivers/YubiKey.h"
-#endif
-
 namespace Utils
 {
-    extern FILE* STDOUT;
-    extern FILE* STDERR;
-    extern FILE* STDIN;
-    extern FILE* DEVNULL;
+    extern QTextStream STDOUT;
+    extern QTextStream STDERR;
+    extern QTextStream STDIN;
+    extern QTextStream DEVNULL;
+
+    void setDefaultTextStreams();
 
     void setStdinEcho(bool enable);
-    QString getPassword(FILE* outputDescriptor = STDOUT);
-    QSharedPointer<PasswordKey> getPasswordFromStdin();
+    QString getPassword(bool quiet = false);
+    QSharedPointer<PasswordKey> getConfirmedPassword();
     int clipText(const QString& text);
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected = true,
                                             const QString& keyFilename = {},
                                             const QString& yubiKeySlot = {},
-                                            FILE* outputDescriptor = STDOUT,
-                                            FILE* errorDescriptor = STDERR);
+                                            bool quiet = false);
 
     QStringList splitCommandString(const QString& command);
 
-    namespace Test
-    {
-        void setNextPassword(const QString& password);
-    }
+    /**
+     * If `attributes` contains an attribute named `name` (case-sensitive),
+     * returns a list containing only `name`. Otherwise, returns the list of
+     * all attribute names in `attributes` matching the given name
+     * (case-insensitive).
+     */
+    QStringList findAttributes(const EntryAttributes& attributes, const QString& name);
 }; // namespace Utils
 
 #endif // KEEPASSXC_UTILS_H

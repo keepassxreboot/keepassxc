@@ -80,13 +80,13 @@ Generate::Generate()
  */
 QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    auto& err = Utils::STDERR;
     QSharedPointer<PasswordGenerator> passwordGenerator = QSharedPointer<PasswordGenerator>(new PasswordGenerator());
     QString passwordLength = parser->value(Generate::PasswordLengthOption);
     if (passwordLength.isEmpty()) {
         passwordGenerator->setLength(PasswordGenerator::DefaultLength);
     } else if (passwordLength.toInt() <= 0) {
-        errorTextStream << QObject::tr("Invalid password length %1").arg(passwordLength) << endl;
+        err << QObject::tr("Invalid password length %1").arg(passwordLength) << endl;
         return QSharedPointer<PasswordGenerator>(nullptr);
     } else {
         passwordGenerator->setLength(passwordLength.toInt());
@@ -126,7 +126,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
     passwordGenerator->setExcludedChars(parser->value(Generate::ExcludeCharsOption));
 
     if (!passwordGenerator->isValid()) {
-        errorTextStream << QObject::tr("Invalid password generator after applying all options") << endl;
+        err << QObject::tr("Invalid password generator after applying all options") << endl;
         return QSharedPointer<PasswordGenerator>(nullptr);
     }
 
@@ -145,9 +145,9 @@ int Generate::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    auto& out = Utils::STDOUT;
     QString password = passwordGenerator->generatePassword();
-    outputTextStream << password << endl;
+    out << password << endl;
 
     return EXIT_SUCCESS;
 }

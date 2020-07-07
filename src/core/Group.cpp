@@ -17,6 +17,7 @@
  */
 
 #include "Group.h"
+#include "config-keepassx.h"
 
 #include "core/Clock.h"
 #include "core/Config.h"
@@ -24,6 +25,10 @@
 #include "core/Global.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
+
+#ifdef WITH_XC_KEESHARE
+#include "keeshare/KeeShare.h"
+#endif
 
 #include <QtConcurrent>
 
@@ -48,6 +53,7 @@ Group::Group()
 
     connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(groupModified()));
     connect(this, SIGNAL(groupModified()), SLOT(updateTimeinfo()));
+    connect(this, SIGNAL(groupNonDataChange()), SLOT(updateTimeinfo()));
 }
 
 Group::~Group()
@@ -127,10 +133,9 @@ QString Group::notes() const
 QImage Group::icon() const
 {
     if (m_data.customIcon.isNull()) {
-        return databaseIcons()->icon(m_data.iconNumber);
+        return databaseIcons()->icon(m_data.iconNumber).toImage();
     } else {
         Q_ASSERT(m_db);
-
         if (m_db) {
             return m_db->metadata()->customIcon(m_data.customIcon);
         } else {
@@ -139,35 +144,28 @@ QImage Group::icon() const
     }
 }
 
-QPixmap Group::iconPixmap() const
+QPixmap Group::iconPixmap(IconSize size) const
 {
+    QPixmap icon(size, size);
     if (m_data.customIcon.isNull()) {
-        return databaseIcons()->iconPixmap(m_data.iconNumber);
+        icon = databaseIcons()->icon(m_data.iconNumber, size);
     } else {
         Q_ASSERT(m_db);
-
         if (m_db) {
-            return m_db->metadata()->customIconPixmap(m_data.customIcon);
-        } else {
-            return QPixmap();
+            icon = m_db->metadata()->customIconPixmap(m_data.customIcon, size);
         }
     }
-}
 
-QPixmap Group::iconScaledPixmap() const
-{
-    if (m_data.customIcon.isNull()) {
-        // built-in icons are 16x16 so don't need to be scaled
-        return databaseIcons()->iconPixmap(m_data.iconNumber);
-    } else {
-        Q_ASSERT(m_db);
-
-        if (m_db) {
-            return m_db->metadata()->customIconScaledPixmap(m_data.customIcon);
-        } else {
-            return QPixmap();
-        }
+    if (isExpired()) {
+        icon = databaseIcons()->applyBadge(icon, DatabaseIcons::Badges::Expired);
     }
+#ifdef WITH_XC_KEESHARE
+    else if (KeeShare::isShared(this)) {
+        icon = KeeShare::indicatorBadge(this, icon);
+    }
+#endif
+
+    return icon;
 }
 
 int Group::iconNumber() const
@@ -364,11 +362,11 @@ void Group::setExpanded(bool expanded)
 {
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
-        if (config()->get("IgnoreGroupExpansion").toBool()) {
-            updateTimeinfo();
-            return;
+        if (config()->get(Config::TrackNonDataChanges).toBool()) {
+            emit groupModified();
+        } else {
+            emit groupNonDataChange();
         }
-        emit groupModified();
     }
 }
 
@@ -451,8 +449,8 @@ void Group::setParent(Group* parent, int index)
             recCreateDelObjects();
 
             // copy custom icon to the new database
-            if (!iconUuid().isNull() && parent->m_db && m_db->metadata()->containsCustomIcon(iconUuid())
-                && !parent->m_db->metadata()->containsCustomIcon(iconUuid())) {
+            if (!iconUuid().isNull() && parent->m_db && m_db->metadata()->hasCustomIcon(iconUuid())
+                && !parent->m_db->metadata()->hasCustomIcon(iconUuid())) {
                 parent->m_db->metadata()->addCustomIcon(iconUuid(), icon());
             }
         }
@@ -964,17 +962,44 @@ void Group::removeEntry(Entry* entry)
     emit entryRemoved(entry);
 }
 
+void Group::moveEntryUp(Entry* entry)
+{
+    int row = m_entries.indexOf(entry);
+    if (row <= 0) {
+        return;
+    }
+
+    emit entryAboutToMoveUp(row);
+    m_entries.move(row, row - 1);
+    emit entryMovedUp();
+    if (config()->get(Config::TrackNonDataChanges).toBool()) {
+        emit groupModified();
+    } else {
+        emit groupNonDataChange();
+    }
+}
+
+void Group::moveEntryDown(Entry* entry)
+{
+    int row = m_entries.indexOf(entry);
+    if (row >= m_entries.size() - 1) {
+        return;
+    }
+
+    emit entryAboutToMoveDown(row);
+    m_entries.move(row, row + 1);
+    emit entryMovedDown();
+    if (config()->get(Config::TrackNonDataChanges).toBool()) {
+        emit groupModified();
+    } else {
+        emit groupNonDataChange();
+    }
+}
+
 void Group::connectDatabaseSignalsRecursive(Database* db)
 {
     if (m_db) {
-        disconnect(SIGNAL(groupDataChanged(Group*)), m_db);
-        disconnect(SIGNAL(groupAboutToRemove(Group*)), m_db);
-        disconnect(SIGNAL(groupRemoved()), m_db);
-        disconnect(SIGNAL(groupAboutToAdd(Group*, int)), m_db);
-        disconnect(SIGNAL(groupAdded()), m_db);
-        disconnect(SIGNAL(aboutToMove(Group*, Group*, int)), m_db);
-        disconnect(SIGNAL(groupMoved()), m_db);
-        disconnect(SIGNAL(groupModified()), m_db);
+        disconnect(m_db);
     }
 
     for (Entry* entry : asConst(m_entries)) {
@@ -996,6 +1021,7 @@ void Group::connectDatabaseSignalsRecursive(Database* db)
         connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
         connect(this, SIGNAL(groupMoved()), db, SIGNAL(groupMoved()));
         connect(this, SIGNAL(groupModified()), db, SLOT(markAsModified()));
+        connect(this, SIGNAL(groupNonDataChange()), db, SLOT(markNonDataChange()));
         // clang-format on
     }
 
@@ -1119,7 +1145,7 @@ void Group::applyGroupIconOnCreateTo(Entry* entry)
 {
     Q_ASSERT(entry);
 
-    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
+    if (!config()->get(Config::UseGroupIconOnEntryCreation).toBool()) {
         return;
     }
 

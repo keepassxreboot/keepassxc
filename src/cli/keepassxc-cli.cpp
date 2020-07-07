@@ -118,13 +118,14 @@ private:
 
 void enterInteractiveMode(const QStringList& arguments)
 {
+    auto& err = Utils::STDERR;
     // Replace command list with interactive version
     Commands::setupCommands(true);
 
-    Open o;
+    Open openCmd;
     QStringList openArgs(arguments);
     openArgs.removeFirst();
-    o.execute(openArgs);
+    openCmd.execute(openArgs);
 
     QScopedPointer<LineReader> reader;
 #if defined(USE_READLINE)
@@ -133,12 +134,10 @@ void enterInteractiveMode(const QStringList& arguments)
     reader.reset(new SimpleLineReader());
 #endif
 
-    QSharedPointer<Database> currentDatabase(o.currentDatabase);
+    QSharedPointer<Database> currentDatabase(openCmd.currentDatabase);
 
     QString command;
     while (true) {
-        TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
-
         QString prompt;
         if (currentDatabase) {
             prompt += currentDatabase->metadata()->name();
@@ -159,7 +158,7 @@ void enterInteractiveMode(const QStringList& arguments)
 
         auto cmd = Commands::getCommand(args[0]);
         if (!cmd) {
-            errorTextStream << QObject::tr("Unknown command %1").arg(args[0]) << "\n";
+            err << QObject::tr("Unknown command %1").arg(args[0]) << "\n";
             continue;
         } else if (cmd->name == "quit" || cmd->name == "exit") {
             break;
@@ -186,9 +185,12 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationVersion(KEEPASSXC_VERSION);
 
     Bootstrap::bootstrap();
+    Utils::setDefaultTextStreams();
     Commands::setupCommands(false);
 
-    TextStream out(stdout);
+    auto& out = Utils::STDOUT;
+    auto& err = Utils::STDERR;
+
     QStringList arguments;
     for (int i = 0; i < argc; ++i) {
         arguments << QString(argv[i]);
@@ -223,6 +225,7 @@ int main(int argc, char** argv)
             out << debugInfo << endl;
             return EXIT_SUCCESS;
         }
+        // showHelp exits the application immediately.
         parser.showHelp();
     }
 
@@ -234,10 +237,9 @@ int main(int argc, char** argv)
 
     auto command = Commands::getCommand(commandName);
     if (!command) {
-        qCritical("Invalid command %s.", qPrintable(commandName));
-        // showHelp exits the application immediately, so we need to set the
-        // exit code here.
-        parser.showHelp(EXIT_FAILURE);
+        err << QObject::tr("Invalid command %1.").arg(commandName) << endl;
+        err << parser.helpText();
+        return EXIT_FAILURE;
     }
 
     // Removing the first argument (keepassxc).

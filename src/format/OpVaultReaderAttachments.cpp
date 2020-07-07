@@ -125,22 +125,8 @@ bool OpVaultReader::readAttachment(const QString& filePath,
         return false;
     }
 
-    if (!metadata.contains("contentsSize")) {
-        qWarning() << "Expected attachment metadata to contain \"contentsSize\" but nope: " << metadata;
-        return false;
-    } else if (!metadata["contentsSize"].isDouble()) {
-        qWarning() << "Expected attachment metadata to contain numeric \"contentsSize\" but nope: " << metadata;
-        return false;
-    }
-    int bytesLen = metadata["contentsSize"].toInt();
-    const QByteArray encData = file.readAll();
-    if (encData.size() < bytesLen) {
-        qCritical() << "Unable to read all of the attachment payload; wanted " << bytesLen << "but got"
-                    << encData.size();
-        return false;
-    }
-
     OpData01 att01;
+    const QByteArray encData = file.readAll();
     if (!att01.decode(encData, itemKey, itemHmacKey)) {
         qCritical() << "Unable to decipher attachment payload: " << att01.errorString();
         return false;

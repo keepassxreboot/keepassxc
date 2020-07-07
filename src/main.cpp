@@ -50,18 +50,21 @@ int main(int argc, char** argv)
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#ifdef Q_OS_LINUX
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
-#endif
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-    QGuiApplication::setDesktopFileName("org.keepassxc.KeePassXC.desktop");
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
 
     Application app(argc, argv);
     Application::setApplicationName("KeePassXC");
     Application::setApplicationVersion(KEEPASSXC_VERSION);
+    app.setProperty("KPXC_QUALIFIED_APPNAME", "org.keepassxc.KeePassXC");
+    app.applyTheme();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+    QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
+#endif
+
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
     Bootstrap::bootstrapApplication();
@@ -145,6 +148,7 @@ int main(int argc, char** argv)
             // buffer for native messaging, even if the specified file does not exist
             QTextStream out(stdout, QIODevice::WriteOnly);
             out << QObject::tr("Database password: ") << flush;
+            Utils::setDefaultTextStreams();
             password = Utils::getPassword();
         }
 
@@ -154,6 +158,11 @@ int main(int argc, char** argv)
     }
 
     int exitCode = Application::exec();
+
+    // Check if restart was requested
+    if (exitCode == RESTART_EXITCODE) {
+        QProcess::startDetached(QCoreApplication::applicationFilePath(), {});
+    }
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
     // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries

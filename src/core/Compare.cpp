@@ -15,24 +15,3 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "Compare.h"
-
-#include <QColor>
-
-bool operator<(const QColor& lhs, const QColor& rhs)
-{
-    const QColor adaptedLhs = lhs.toCmyk();
-    const QColor adaptedRhs = rhs.toCmyk();
-    const int iCyan = compare(adaptedLhs.cyanF(), adaptedRhs.cyanF());
-    if (iCyan != 0) {
-        return iCyan;
-    }
-    const int iMagenta = compare(adaptedLhs.magentaF(), adaptedRhs.magentaF());
-    if (iMagenta != 0) {
-        return iMagenta;
-    }
-    const int iYellow = compare(adaptedLhs.yellowF(), adaptedRhs.yellowF());
-    if (iYellow != 0) {
-        return iYellow;
-    }
-    return compare(adaptedLhs.blackF(), adaptedRhs.blackF()) < 0;
-}

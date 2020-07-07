@@ -1,5 +1,81 @@
 # Changelog
 
+## 2.6.0 (2020-07-06)
+
+### Added
+
+- Custom Light and Dark themes [#4110, #4769, #4791, #4796, #4892, #4915]
+- Compact mode to use classic Group and Entry line height [#4910]
+- View menu to quickly switch themes, compact mode, and toggle UI elements [#4910]
+- Search for groups and scope search to matched groups [#4705]
+- Save Database Backup feature [#4550]
+- Sort entries by "natural order" and move lines up/down [#4357]
+- Option to launch KeePassXC on system startup/login [#4675]
+- Caps Lock warning on password input fields [#3646]
+- Add "Size" column to entry view [#4588]
+- Browser-like tab experience using Ctrl+[Num] (Alt+[Num] on Linux) [#4063, #4305]
+- Password Generator: Define additional characters to choose from [#3876]
+- Reports: Database password health check (offline) [#3993]
+- Reports: HIBP online service to check for breached passwords [#4438]
+- Auto-Type: DateTime placeholders [#4409]
+- Browser: Show group name in results sent to browser extension [#4111]
+- Browser: Ability to define a custom browser location (macOS and Linux only) [#4148]
+- Browser: Ability to change root group UUID and inline edit connection ID [#4315, #4591]
+- CLI: `db-info` command [#4231]
+- CLI: Use wl-clipboard if xclip is not available (Linux) [#4323]
+- CLI: Incorporate xclip into snap builds [#4697]
+- SSH Agent: Key file path env substitution, SSH_AUTH_SOCK override, and connection test [#3769, #3801, #4545]
+- SSH Agent: Context menu actions to add/remove keys [#4290]
+
+### Changed
+
+- Complete replacement of default database icons [#4699]
+- Complete replacement of application icons [#4066, #4161, #4203, #4411]
+- Complete rewrite of documentation and manpages using Asciidoctor [#4937]
+- Complete refactor of config files; separate between local and roaming [#4665]
+- Complete refactor of browser integration and proxy code [#4680]
+- Complete refactor of hardware key integration (YubiKey and OnlyKey) [#4584, #4843]
+- Significantly improve performance when saving and opening databases [#4309, #4833]
+- Remove read-only detection for database files [#4508]
+- Overhaul of password fields and password generator [#4367]
+- Replace instances of "Master Key" with "Database Credentials" [#4929]
+- Change settings checkboxes to positive phrasing for consistency [#4715]
+- Improve UX of using entry actions (focus fix) [#3893]
+- Set expiration time to Now when enabling entry expiration [#4406]
+- Always show "New Entry" in context menu [#4617]
+- Issue warning before adding large attachments [#4651]
+- Improve importing OPVault [#4630]
+- Improve AutoOpen capability [#3901, #4752]
+- Check for updates every 7 days even while still running [#4752]
+- Improve Windows installer UI/UX [#4675]
+- Improve config file handling of portable distribution [#4131, #4752]
+- macOS: Hide dock icon when application is hidden to tray [#4782]
+- Browser: Use unlock dialog to improve UX of opening a locked database [#3698]
+- Browser: Improve database and entry settings experience [#4392, #4591]
+- Browser: Improve confirm access dialog [#2143, #4660]
+- KeeShare: Improve monitoring file changes of shares [#4720]
+- CLI: Rename `create` command to `db-create` [#4231]
+- CLI: Cleanup `db-create` options (`--set-key-file` and `--set-password`) [#4313]
+- CLI: Use stderr for help text and password prompts [#4086, #4623]
+- FdoSecrets: Display existing secret service process [#4128]
+
+### Fixed
+
+- Fix changing focus around the main window using tab key [#4641]
+- Fix search field clearing while still using the application [#4368]
+- Improve search help widget displaying on macOS and Linux [#4236]
+- Return keyboard focus after editing an entry [#4287]
+- Reset database path after failed "Save As" [#4526]
+- Use SHA256 Digest for Windows code signing [#4129]
+- Improve handling of ccache when building [#4104, #4335]
+- macOS: Properly re-hide application window after browser integration and Auto-Type usage [#4909]
+- Auto-Type: Fix crash when performing on new entry [#4132]
+- Browser: Send legacy HTTP settings to recycle bin [#4589]
+- Browser: Fix merging browser keys [#4685]
+- CLI: Fix encoding when exporting database [#3921]
+- SSH Agent: Improve reliability and underlying code [#3833, #4256, #4549, #4595]
+- FdoSecrets: Fix crash when editing settings before service is enabled [#4332]
+
 ## 2.5.4 (2020-04-09)
 
 ### Fixed

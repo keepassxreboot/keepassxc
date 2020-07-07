@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
-    <height>374</height>
+    <width>669</width>
+    <height>395</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -50,53 +50,58 @@
      <property name="title">
       <string>KeePassXC-Browser settings</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QPushButton" name="removeSharedEncryptionKeys">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>&amp;Disconnect all browsers</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="removeStoredPermissions">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Forg&amp;et all site-specific settings on entries</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0">
+       <widget class="QPushButton" name="convertToCustomData">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Move KeePassHTTP attributes to KeePassXC-Browser custom data</string>
+        </property>
+       </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QPushButton" name="convertToCustomData">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Move KeePassHTTP attributes to KeePassXC-Browser &amp;custom data</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="refreshDatabaseID">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Refresh database root group ID</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="removeSharedEncryptionKeys">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Disconnect all browsers</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="removeStoredPermissions">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Forget all site-specific settings on entries</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -106,10 +111,10 @@
      <property name="title">
       <string>Stored keys</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
        <widget class="QGroupBox" name="groupBox_3">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
           <widget class="QTableView" name="customDataTable">
            <property name="accessibleName">
@@ -175,6 +180,14 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>removeSharedEncryptionKeys</tabstop>
+  <tabstop>removeStoredPermissions</tabstop>
+  <tabstop>convertToCustomData</tabstop>
+  <tabstop>refreshDatabaseID</tabstop>
+  <tabstop>customDataTable</tabstop>
+  <tabstop>removeCustomDataButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

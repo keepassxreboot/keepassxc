@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BrowserSettingsWidget</class>
+ <widget class="QWidget" name="BrowserSettingsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>584</width>
+    <height>467</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="MessageWidget" name="browserGlobalWarningWidget" native="true"/>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="enableBrowserSupport">
+     <property name="toolTip">
+      <string>This is required for accessing your databases with KeePassXC-Browser</string>
+     </property>
+     <property name="text">
+      <string>Enable browser integration</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>General</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="snapWarningLabel">
+         <property name="text">
+          <string>Browsers installed as snaps are currently not supported.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="extensionLabel"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_1">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>4</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="browsersGroupBox">
+         <property name="title">
+          <string>Enable integration for these browsers:</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="horizontalSpacing">
+           <number>40</number>
+          </property>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="vivaldiSupport">
+            <property name="text">
+             <string>Vivaldi</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QCheckBox" name="edgeSupport">
+            <property name="text">
+             <string>&amp;Edge</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="firefoxSupport">
+            <property name="text">
+             <string>Firefox</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QCheckBox" name="torBrowserSupport">
+            <property name="text">
+             <string>Tor Browser</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="braveSupport">
+            <property name="text">
+             <string>Brave</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="chromeSupport">
+            <property name="text">
+             <string>Google Chrome</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="chromiumSupport">
+            <property name="text">
+             <string>Chromium</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>4</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="showNotification">
+         <property name="text">
+          <string extracomment="Credentials mean login data requested via browser extension">Show a notification when credentials are requested</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="unlockDatabase">
+         <property name="text">
+          <string>Request to unlock the database if it is locked</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="matchUrlScheme">
+         <property name="toolTip">
+          <string>Only entries with the same scheme (http://, https://, ...) are returned.</string>
+         </property>
+         <property name="text">
+          <string>Match URL scheme (e.g., https://...)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="bestMatchOnly">
+         <property name="toolTip">
+          <string>Only returns the best matches for a specific URL instead of all entries for the whole domain.</string>
+         </property>
+         <property name="text">
+          <string>Return only best-matching credentials</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="allowExpiredCredentials">
+         <property name="toolTip">
+          <string>Returns expired credentials. String [expired] is added to the title.</string>
+         </property>
+         <property name="text">
+          <string>Allow returning expired credentials</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="searchInAllDatabases">
+         <property name="toolTip">
+          <string>All databases connected to the extension will return matching credentials.</string>
+         </property>
+         <property name="text">
+          <string extracomment="Credentials mean login data requested via browser extension">Search in all opened databases for matching credentials</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="sortByTitle">
+         <property name="text">
+          <string extracomment="Credentials mean login data requested via browser extension">Sort matching credentials by title</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="sortByUsername">
+         <property name="text">
+          <string extracomment="Credentials mean login data requested via browser extension">Sort matching credentials by username</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Advanced</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="MessageWidget" name="warningWidget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="alwaysAllowAccess">
+         <property name="text">
+          <string extracomment="Credentials mean login data requested via browser extension">Never ask before accessing credentials</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="alwaysAllowUpdate">
+         <property name="text">
+          <string extracomment="Credentials mean login data requested via browser extension">Never ask before updating credentials</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="httpAuthPermission">
+         <property name="text">
+          <string extracomment="An extra HTTP Basic Auth setting">Do not ask permission for HTTP Basic Auth</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="supportKphFields">
+         <property name="toolTip">
+          <string>Automatically creating or updating string fields is not supported.</string>
+         </property>
+         <property name="text">
+          <string>Return advanced string fields which start with &quot;KPH: &quot;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="noMigrationPrompt">
+         <property name="toolTip">
+          <string>Don't display the popup suggesting migration of legacy KeePassHTTP settings.</string>
+         </property>
+         <property name="text">
+          <string>Do not prompt for KeePassHTTP settings migration.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="updateBinaryPath">
+         <property name="toolTip">
+          <string>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</string>
+         </property>
+         <property name="text">
+          <string>Update native messaging manifest files at startup</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="useCustomProxy">
+         <property name="toolTip">
+          <string>Use a custom proxy location if you installed a proxy manually.</string>
+         </property>
+         <property name="text">
+          <string comment="Meant is the proxy for KeePassXC-Browser">Use a custom proxy location:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>15</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="customProxyLocation">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>450</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="accessibleName">
+            <string>Custom proxy location field</string>
+           </property>
+           <property name="maxLength">
+            <number>999</number>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="customProxyLocationBrowseButton">
+           <property name="accessibleName">
+            <string>Browser for custom proxy file</string>
+           </property>
+           <property name="text">
+            <string extracomment="Button for opening file dialog">Browse...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="customBrowserSupport">
+         <property name="text">
+          <string>Use a custom browser configuration location:</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="customBrowserGroupBox">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="customBrowserLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 5px</string>
+              </property>
+              <property name="text">
+               <string>Browser type:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="browserTypeComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="accessibleName">
+               <string>Toolbar button style</string>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContents</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="customBrowserLabel_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 5px</string>
+              </property>
+              <property name="text">
+               <string>Config Location:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="customBrowserLocation">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>350</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="accessibleName">
+               <string>Custom browser location field</string>
+              </property>
+              <property name="maxLength">
+               <number>999</number>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>~/.custom/config/Mozilla/native-messaging-hosts/</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="customBrowserLocationBrowseButton">
+              <property name="accessibleName">
+               <string>Browse for custom browser path</string>
+              </property>
+              <property name="text">
+               <string extracomment="Button for opening file dialog">Browse...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="customExtensionIdContainer" native="true">
+         <layout class="QHBoxLayout" name="customExtensionBox" stretch="0,0,1">
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="customExtensionLabel">
+            <property name="text">
+             <string>Custom extension ID:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="customExtensionId">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="accessibleName">
+             <string>Custom extension ID</string>
+            </property>
+            <property name="maxLength">
+             <number>999</number>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

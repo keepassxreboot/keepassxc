@@ -19,6 +19,7 @@
 #include <cstdlib>
 #include <utility>
 
+#include <QFileInfo>
 #include <QMap>
 
 #include "Command.h"
@@ -37,6 +38,7 @@
 #include "Generate.h"
 #include "Help.h"
 #include "Import.h"
+#include "Info.h"
 #include "List.h"
 #include "Locate.h"
 #include "Merge.h"
@@ -71,8 +73,8 @@ const QCommandLineOption Command::NoPasswordOption =
 const QCommandLineOption Command::YubiKeyOption =
     QCommandLineOption(QStringList() << "y"
                                      << "yubikey",
-                       QObject::tr("Yubikey slot used to encrypt the database."),
-                       QObject::tr("slot"));
+                       QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001)."),
+                       QObject::tr("slot[:serial]"));
 
 namespace
 {
@@ -120,29 +122,37 @@ QString Command::getDescriptionLine()
 
 QString Command::getHelpText()
 {
-    return buildParser(this)->helpText().replace("[options]", name + " [options]");
+    auto help = buildParser(this)->helpText();
+    // Fix spacing of options parameter
+    help.replace(QStringLiteral("[options]"), name + QStringLiteral(" [options]"));
+    // Remove application directory from command line example
+    auto appname = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
+    auto regex = QRegularExpression(QStringLiteral(" .*%1").arg(QRegularExpression::escape(appname)));
+    help.replace(regex, appname.prepend(" "));
+
+    return help;
 }
 
 QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringList& arguments)
 {
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    auto& err = Utils::STDERR;
     QSharedPointer<QCommandLineParser> parser = buildParser(this);
 
     if (!parser->parse(arguments)) {
-        errorTextStream << parser->errorText() << "\n\n";
-        errorTextStream << getHelpText();
+        err << parser->errorText() << "\n\n";
+        err << getHelpText();
         return {};
     }
     if (parser->positionalArguments().size() < positionalArguments.size()) {
-        errorTextStream << getHelpText();
+        err << getHelpText();
         return {};
     }
     if (parser->positionalArguments().size() > (positionalArguments.size() + optionalArguments.size())) {
-        errorTextStream << getHelpText();
+        err << getHelpText();
         return {};
     }
     if (parser->isSet(HelpOption)) {
-        errorTextStream << getHelpText();
+        err << getHelpText();
         return {};
     }
     return parser;
@@ -160,7 +170,8 @@ namespace Commands
         s_commands.insert(QStringLiteral("analyze"), QSharedPointer<Command>(new Analyze()));
         s_commands.insert(QStringLiteral("clip"), QSharedPointer<Command>(new Clip()));
         s_commands.insert(QStringLiteral("close"), QSharedPointer<Command>(new Close()));
-        s_commands.insert(QStringLiteral("create"), QSharedPointer<Command>(new Create()));
+        s_commands.insert(QStringLiteral("db-create"), QSharedPointer<Command>(new Create()));
+        s_commands.insert(QStringLiteral("db-info"), QSharedPointer<Command>(new Info()));
         s_commands.insert(QStringLiteral("diceware"), QSharedPointer<Command>(new Diceware()));
         s_commands.insert(QStringLiteral("edit"), QSharedPointer<Command>(new Edit()));
         s_commands.insert(QStringLiteral("estimate"), QSharedPointer<Command>(new Estimate()));

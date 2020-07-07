@@ -7,10 +7,22 @@
     <x>0</x>
     <y>0</y>
     <width>532</width>
-    <height>374</height>
+    <height>469</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="attributesBox">
      <property name="title">
@@ -175,8 +187,30 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="knownBadCheckBox">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn't match the quality requirements (e. g. password entropy or re-use). You can set the check mark if the password is beyond your control (e. g. if it needs to be a four-digit PIN) to prevent it from cluttering the reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Exclude from database reports</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="colorsBox" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QCheckBox" name="fgColorCheckBox">
         <property name="text">
@@ -293,6 +327,7 @@
   <tabstop>editAttributeButton</tabstop>
   <tabstop>protectAttributeButton</tabstop>
   <tabstop>revealAttributeButton</tabstop>
+  <tabstop>knownBadCheckBox</tabstop>
   <tabstop>fgColorCheckBox</tabstop>
   <tabstop>fgColorButton</tabstop>
   <tabstop>bgColorCheckBox</tabstop>

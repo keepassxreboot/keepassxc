@@ -21,7 +21,7 @@
 #include "config-keepassx.h"
 #include "core/Database.h"
 #include "core/Entry.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "crypto/Crypto.h"
 #include "gui/DatabaseWidget.h"
 

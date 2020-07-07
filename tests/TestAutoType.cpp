@@ -25,7 +25,7 @@
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/test/AutoTypeTestInterface.h"
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "crypto/Crypto.h"
 #include "gui/MessageBox.h"
 
@@ -35,11 +35,11 @@ void TestAutoType::initTestCase()
 {
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
-    config()->set("AutoTypeDelay", 1);
-    config()->set("security/autotypeask", false);
+    config()->set(Config::AutoTypeDelay, 1);
+    config()->set(Config::Security_AutoTypeAsk, false);
     AutoType::createTestInstance();
 
-    QPluginLoader loader(filePath()->pluginPath("keepassx-autotype-test"));
+    QPluginLoader loader(resources()->pluginPath("keepassx-autotype-test"));
     loader.setLoadHints(QLibrary::ResolveAllSymbolsHint);
     QVERIFY(loader.instance());
 
@@ -54,7 +54,7 @@ void TestAutoType::initTestCase()
 
 void TestAutoType::init()
 {
-    config()->set("AutoTypeEntryTitleMatch", false);
+    config()->set(Config::AutoTypeEntryTitleMatch, false);
     m_test->clearActions();
 
     m_db = QSharedPointer<Database>::create();
@@ -165,7 +165,7 @@ void TestAutoType::testGlobalAutoTypeWithOneMatch()
 
 void TestAutoType::testGlobalAutoTypeTitleMatch()
 {
-    config()->set("AutoTypeEntryTitleMatch", true);
+    config()->set(Config::AutoTypeEntryTitleMatch, true);
 
     m_test->setActiveWindowTitle("An Entry Title!");
     m_test->triggerGlobalAutoType();
@@ -176,7 +176,7 @@ void TestAutoType::testGlobalAutoTypeTitleMatch()
 
 void TestAutoType::testGlobalAutoTypeUrlMatch()
 {
-    config()->set("AutoTypeEntryTitleMatch", true);
+    config()->set(Config::AutoTypeEntryTitleMatch, true);
 
     m_test->setActiveWindowTitle("Dummy - http://example.org/ - <My Browser>");
     m_test->triggerGlobalAutoType();
@@ -187,7 +187,7 @@ void TestAutoType::testGlobalAutoTypeUrlMatch()
 
 void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
 {
-    config()->set("AutoTypeEntryTitleMatch", true);
+    config()->set(Config::AutoTypeEntryTitleMatch, true);
 
     m_test->setActiveWindowTitle("Dummy - http://sub.example.org/ - <My Browser>");
     m_test->triggerGlobalAutoType();

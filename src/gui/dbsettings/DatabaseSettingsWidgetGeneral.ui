@@ -183,7 +183,7 @@
       <item>
        <widget class="QCheckBox" name="compressionCheckbox">
         <property name="text">
-         <string>Enable &amp;compression (recommended)</string>
+         <string>Enable compression (recommended)</string>
         </property>
         <property name="checked">
          <bool>true</bool>

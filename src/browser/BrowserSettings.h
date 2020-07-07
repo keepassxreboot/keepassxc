@@ -20,7 +20,8 @@
 #ifndef BROWSERSETTINGS_H
 #define BROWSERSETTINGS_H
 
-#include "HostInstaller.h"
+#include "BrowserShared.h"
+#include "NativeMessageInstaller.h"
 #include "core/PassphraseGenerator.h"
 #include "core/PasswordGenerator.h"
 
@@ -58,31 +59,28 @@ public:
     bool noMigrationPrompt();
     void setNoMigrationPrompt(bool prompt);
 
-    bool supportBrowserProxy();
-    void setSupportBrowserProxy(bool enabled);
     bool useCustomProxy();
     void setUseCustomProxy(bool enabled);
     QString customProxyLocation();
     void setCustomProxyLocation(const QString& location);
+    QString proxyLocation();
+#ifdef QT_DEBUG
+    QString customExtensionId();
+    void setCustomExtensionId(const QString& id);
+#endif
     bool updateBinaryPath();
     void setUpdateBinaryPath(bool enabled);
     bool allowExpiredCredentials();
     void setAllowExpiredCredentials(bool enabled);
-    bool chromeSupport();
-    void setChromeSupport(bool enabled);
-    bool chromiumSupport();
-    void setChromiumSupport(bool enabled);
-    bool firefoxSupport();
-    void setFirefoxSupport(bool enabled);
-    bool vivaldiSupport();
-    void setVivaldiSupport(bool enabled);
-    bool braveSupport();
-    void setBraveSupport(bool enabled);
-    bool torBrowserSupport();
-    void setTorBrowserSupport(bool enabled);
-    bool edgeSupport();
-    void setEdgeSupport(bool enabled);
 
+    bool browserSupport(BrowserShared::SupportedBrowsers browser);
+    void setBrowserSupport(BrowserShared::SupportedBrowsers browser, bool enabled);
+    bool customBrowserSupport();
+    void setCustomBrowserSupport(bool enabled);
+    int customBrowserType();
+    void setCustomBrowserType(int type);
+    QString customBrowserLocation();
+    void setCustomBrowserLocation(const QString& location);
     bool passwordUseNumbers();
     void setPasswordUseNumbers(bool useNumbers);
     bool passwordUseLowercase();
@@ -107,6 +105,8 @@ public:
     void setPasswordUseEASCII(bool useEASCII);
     bool advancedMode();
     void setAdvancedMode(bool advancedMode);
+    QString passwordAdditionalChars();
+    void setPasswordAdditionalChars(const QString& chars);
     QString passwordExcludedChars();
     void setPasswordExcludedChars(const QString& chars);
     int passPhraseWordCount();
@@ -124,15 +124,14 @@ public:
     PasswordGenerator::CharClasses passwordCharClasses();
     PasswordGenerator::GeneratorFlags passwordGeneratorFlags();
     QJsonObject generatePassword();
-    void updateBinaryPaths(const QString& customProxyLocation = QString());
-    bool checkIfProxyExists(QString& path);
+    void updateBinaryPaths();
 
 private:
     static BrowserSettings* m_instance;
 
     PasswordGenerator m_passwordGenerator;
     PassphraseGenerator m_passPhraseGenerator;
-    HostInstaller m_hostInstaller;
+    NativeMessageInstaller m_nativeMessageInstaller;
 };
 
 inline BrowserSettings* browserSettings()

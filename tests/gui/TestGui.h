@@ -37,9 +37,6 @@ class TestGui : public QObject
 {
     Q_OBJECT
 
-protected slots:
-    void createDatabaseCallback();
-
 private slots:
     void initTestCase();
     void init();
@@ -64,6 +61,7 @@ private slots:
     void testDragAndDropEntry();
     void testDragAndDropGroup();
     void testSaveAs();
+    void testSaveBackup();
     void testSave();
     void testDatabaseSettings();
     void testKeePass1Import();

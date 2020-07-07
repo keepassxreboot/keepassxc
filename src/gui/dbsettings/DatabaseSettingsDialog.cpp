@@ -19,10 +19,9 @@
 #include "DatabaseSettingsDialog.h"
 #include "ui_DatabaseSettingsDialog.h"
 
-#include "DatabaseSettingsPageStatistics.h"
+#include "DatabaseSettingsWidgetDatabaseKey.h"
 #include "DatabaseSettingsWidgetEncryption.h"
 #include "DatabaseSettingsWidgetGeneral.h"
-#include "DatabaseSettingsWidgetMasterKey.h"
 #ifdef WITH_XC_BROWSER
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
@@ -35,8 +34,8 @@
 
 #include "core/Config.h"
 #include "core/Database.h"
-#include "core/FilePath.h"
 #include "core/Global.h"
+#include "core/Resources.h"
 #include "touchid/TouchID.h"
 
 class DatabaseSettingsDialog::ExtraPage
@@ -66,7 +65,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     , m_ui(new Ui::DatabaseSettingsDialog())
     , m_generalWidget(new DatabaseSettingsWidgetGeneral(this))
     , m_securityTabWidget(new QTabWidget(this))
-    , m_masterKeyWidget(new DatabaseSettingsWidgetMasterKey(this))
+    , m_databaseKeyWidget(new DatabaseSettingsWidgetDatabaseKey(this))
     , m_encryptionWidget(new DatabaseSettingsWidgetEncryption(this))
 #ifdef WITH_XC_BROWSER
     , m_browserWidget(new DatabaseSettingsWidgetBrowser(this))
@@ -77,15 +76,13 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(save()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
-    m_ui->categoryList->addCategory(tr("General"), FilePath::instance()->icon("categories", "preferences-other"));
-    m_ui->categoryList->addCategory(tr("Security"), FilePath::instance()->icon("status", "security-high"));
+    m_ui->categoryList->addCategory(tr("General"), Resources::instance()->icon("preferences-other"));
+    m_ui->categoryList->addCategory(tr("Security"), Resources::instance()->icon("security-high"));
     m_ui->stackedWidget->addWidget(m_generalWidget);
 
     m_ui->stackedWidget->addWidget(m_securityTabWidget);
-    m_securityTabWidget->addTab(m_masterKeyWidget, tr("Master Key"));
+    m_securityTabWidget->addTab(m_databaseKeyWidget, tr("Database Credentials"));
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
-
-    addSettingsPage(new DatabaseSettingsPageStatistics());
 
 #if defined(WITH_XC_KEESHARE)
     addSettingsPage(new DatabaseSettingsPageKeeShare());
@@ -103,8 +100,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     connect(m_ui->advancedSettingsToggle, SIGNAL(toggled(bool)), SLOT(toggleAdvancedMode(bool)));
 
 #ifdef WITH_XC_BROWSER
-    m_ui->categoryList->addCategory(tr("Browser Integration"),
-                                    FilePath::instance()->icon("apps", "internet-web-browser"));
+    m_ui->categoryList->addCategory(tr("Browser Integration"), Resources::instance()->icon("internet-web-browser"));
     m_ui->stackedWidget->addWidget(m_browserWidget);
 #endif
 
@@ -119,7 +115,7 @@ void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
 {
     m_ui->categoryList->setCurrentCategory(0);
     m_generalWidget->load(db);
-    m_masterKeyWidget->load(db);
+    m_databaseKeyWidget->load(db);
     m_encryptionWidget->load(db);
 #ifdef WITH_XC_BROWSER
     m_browserWidget->load(db);
@@ -127,7 +123,7 @@ void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings(db);
     }
-    m_ui->advancedSettingsToggle->setChecked(config()->get("GUI/AdvancedSettings", false).toBool());
+    m_ui->advancedSettingsToggle->setChecked(config()->get(Config::GUI_AdvancedSettings).toBool());
     m_db = db;
 }
 
@@ -143,9 +139,9 @@ void DatabaseSettingsDialog::addSettingsPage(IDatabaseSettingsPage* page)
 }
 
 /**
- * Show page and tab with database master key settings.
+ * Show page and tab with database database key settings.
  */
-void DatabaseSettingsDialog::showMasterKeySettings()
+void DatabaseSettingsDialog::showDatabaseKeySettings()
 {
     m_ui->categoryList->setCurrentCategory(1);
     m_securityTabWidget->setCurrentIndex(0);
@@ -157,7 +153,7 @@ void DatabaseSettingsDialog::save()
         return;
     }
 
-    if (!m_masterKeyWidget->save()) {
+    if (!m_databaseKeyWidget->save()) {
         return;
     }
 
@@ -189,7 +185,7 @@ void DatabaseSettingsDialog::pageChanged()
 
     if (Page::Security == pageIndex) {
         int tabIndex = m_securityTabWidget->currentIndex();
-        enabled = (tabIndex == 0 && m_masterKeyWidget->hasAdvancedMode());
+        enabled = (tabIndex == 0 && m_databaseKeyWidget->hasAdvancedMode());
         enabled |= (tabIndex == 1 && m_encryptionWidget->hasAdvancedMode());
     }
 
@@ -202,13 +198,13 @@ void DatabaseSettingsDialog::toggleAdvancedMode(bool advanced)
         m_generalWidget->setAdvancedMode(advanced);
     }
 
-    if (m_masterKeyWidget->hasAdvancedMode()) {
-        m_masterKeyWidget->setAdvancedMode(advanced);
+    if (m_databaseKeyWidget->hasAdvancedMode()) {
+        m_databaseKeyWidget->setAdvancedMode(advanced);
     }
 
     if (m_encryptionWidget->hasAdvancedMode()) {
         m_encryptionWidget->setAdvancedMode(advanced);
     }
 
-    config()->set("GUI/AdvancedSettings", advanced);
+    config()->set(Config::GUI_AdvancedSettings, advanced);
 }

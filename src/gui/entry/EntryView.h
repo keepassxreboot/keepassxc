@@ -39,7 +39,9 @@ public:
     Entry* currentEntry();
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
+    int currentEntryIndex();
     bool inSearchMode();
+    bool isSorted();
     int numberOfSelectedEntries();
     void setFirstEntryActive();
     bool isUsernamesHidden() const;
@@ -63,6 +65,7 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
     void focusInEvent(QFocusEvent* event) override;
     void focusOutEvent(QFocusEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 
 private slots:
     void emitEntryActivated(const QModelIndex& index);
@@ -73,17 +76,17 @@ private slots:
     void fitColumnsToContents();
     void resetViewToDefaults();
     void contextMenuShortcutPressed();
+    void sortIndicatorChanged(int logicalIndex, Qt::SortOrder order);
 
 private:
-    void fillRemainingWidth(bool lastColumnOnly);
     void resetFixedColumns();
 
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
+    int m_lastIndex;
+    Qt::SortOrder m_lastOrder;
     bool m_inSearchMode;
-
-    QByteArray m_defaultListViewState;
-    QByteArray m_defaultSearchViewState;
+    bool m_columnsNeedRelayout = true;
 
     QMenu* m_headerMenu;
     QAction* m_hideUsernamesAction;

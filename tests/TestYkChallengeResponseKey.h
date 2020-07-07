@@ -20,36 +20,16 @@
 #define KEEPASSX_TESTYUBIKEYCHALRESP_H
 
 #include <QObject>
-#include <QScopedPointer>
 
-#include "keys/YkChallengeResponseKey.h"
-
-class TestYubiKeyChalResp : public QObject
+class TestYubiKeyChallengeResponse : public QObject
 {
     Q_OBJECT
 
 private slots:
     void initTestCase();
 
-    void init();
-
-    /* Order is important!
-     * Need to init and detectDevices() before proceeding
-     */
-    void detectDevices();
-
-    void getSerial();
-    void keyGetName();
-    void keyIssueChallenge();
-
-    void deinit();
-
-    /* Callback for detectDevices() */
-    void ykDetected(int slot, bool blocking);
-
-private:
-    int m_detected = 0;
-    QScopedPointer<YkChallengeResponseKey> m_key;
+    void testDetectDevices();
+    void testKeyChallenge();
 };
 
 #endif // KEEPASSX_TESTYUBIKEYCHALRESP_H

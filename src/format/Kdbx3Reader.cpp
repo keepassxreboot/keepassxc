@@ -18,6 +18,7 @@
 
 #include "Kdbx3Reader.h"
 
+#include "core/AsyncTask.h"
 #include "core/Endian.h"
 #include "core/Group.h"
 #include "crypto/CryptoHash.h"
@@ -47,20 +48,21 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
         return false;
     }
 
-    if (!db->setKey(key, false)) {
-        raiseError(tr("Unable to calculate master key"));
+    bool ok = AsyncTask::runAndWaitForFuture([&] { return db->setKey(key, false); });
+    if (!ok) {
+        raiseError(tr("Unable to calculate database key"));
         return false;
     }
 
     if (!db->challengeMasterSeed(m_masterSeed)) {
-        raiseError(tr("Unable to issue challenge-response."));
+        raiseError(tr("Unable to issue challenge-response: %1").arg(db->keyError()));
         return false;
     }
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
     hash.addData(db->challengeResponseKey());
-    hash.addData(db->transformedMasterKey());
+    hash.addData(db->transformedDatabaseKey());
     QByteArray finalKey = hash.result();
 
     SymmetricCipher::Algorithm cipher = SymmetricCipher::cipherToAlgorithm(db->cipher());

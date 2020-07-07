@@ -17,6 +17,10 @@
 
 #include "Utils.h"
 
+#ifdef WITH_XC_YUBIKEY
+#include "keys/YkChallengeResponseKeyCLI.h"
+#endif
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 #else
@@ -30,29 +34,33 @@
 
 namespace Utils
 {
-    /**
-     * STDOUT file handle for the CLI.
-     */
-    FILE* STDOUT = stdout;
+    QTextStream STDOUT;
+    QTextStream STDERR;
+    QTextStream STDIN;
+    QTextStream DEVNULL;
 
-    /**
-     * STDERR file handle for the CLI.
-     */
-    FILE* STDERR = stderr;
+    void setDefaultTextStreams()
+    {
+        auto fd = new QFile();
+        fd->open(stdout, QIODevice::WriteOnly);
+        STDOUT.setDevice(fd);
 
-    /**
-     * STDIN file handle for the CLI.
-     */
-    FILE* STDIN = stdin;
+        fd = new QFile();
+        fd->open(stderr, QIODevice::WriteOnly);
+        STDERR.setDevice(fd);
 
-/**
- * DEVNULL file handle for the CLI.
- */
+        fd = new QFile();
+        fd->open(stdin, QIODevice::ReadOnly);
+        STDIN.setDevice(fd);
+
+        fd = new QFile();
 #ifdef Q_OS_WIN
-    FILE* DEVNULL = fopen("nul", "w");
+        fd->open(fopen("nul", "w"), QIODevice::WriteOnly);
 #else
-    FILE* DEVNULL = fopen("/dev/null", "w");
+        fd->open(fopen("/dev/null", "w"), QIODevice::WriteOnly);
 #endif
+        DEVNULL.setDevice(fd);
+    }
 
     void setStdinEcho(bool enable = true)
     {
@@ -82,33 +90,14 @@ namespace Utils
 #endif
     }
 
-    namespace Test
-    {
-        QStringList nextPasswords = {};
-
-        /**
-         * Set the next password returned by \link getPassword() instead of reading it from STDIN.
-         * Multiple calls to this method will fill a queue of passwords.
-         * This function is intended for testing purposes.
-         *
-         * @param password password to return next
-         */
-        void setNextPassword(const QString& password)
-        {
-            nextPasswords.append(password);
-        }
-    } // namespace Test
-
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected,
                                             const QString& keyFilename,
                                             const QString& yubiKeySlot,
-                                            FILE* outputDescriptor,
-                                            FILE* errorDescriptor)
+                                            bool quiet)
     {
+        auto& err = quiet ? DEVNULL : STDERR;
         auto compositeKey = QSharedPointer<CompositeKey>::create();
-        TextStream out(outputDescriptor);
-        TextStream err(errorDescriptor);
 
         QFileInfo dbFileInfo(databaseFilename);
         if (dbFileInfo.canonicalFilePath().isEmpty()) {
@@ -127,8 +116,8 @@ namespace Utils
         }
 
         if (isPasswordProtected) {
-            out << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
-            QString line = Utils::getPassword(outputDescriptor);
+            err << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
+            QString line = Utils::getPassword(quiet);
             auto passwordKey = QSharedPointer<PasswordKey>::create();
             passwordKey->setPassword(line);
             compositeKey->addKey(passwordKey);
@@ -156,25 +145,28 @@ namespace Utils
 
 #ifdef WITH_XC_YUBIKEY
         if (!yubiKeySlot.isEmpty()) {
+            unsigned int serial = 0;
+            int slot;
+
             bool ok = false;
-            int slot = yubiKeySlot.toInt(&ok, 10);
+            auto parts = yubiKeySlot.split(":");
+            slot = parts[0].toInt(&ok);
+
             if (!ok || (slot != 1 && slot != 2)) {
-                err << QObject::tr("Invalid YubiKey slot %1").arg(yubiKeySlot) << endl;
+                err << QObject::tr("Invalid YubiKey slot %1").arg(parts[0]) << endl;
                 return {};
             }
 
-            QString errorMessage;
-            bool blocking = YubiKey::instance()->checkSlotIsBlocking(slot, errorMessage);
-            if (!errorMessage.isEmpty()) {
-                err << errorMessage << endl;
-                return {};
+            if (parts.size() > 1) {
+                serial = parts[1].toUInt(&ok, 10);
+                if (!ok) {
+                    err << QObject::tr("Invalid YubiKey serial %1").arg(parts[1]) << endl;
+                    return {};
+                }
             }
 
             auto key = QSharedPointer<YkChallengeResponseKeyCLI>(new YkChallengeResponseKeyCLI(
-                slot,
-                blocking,
-                QObject::tr("Please touch the button on your YubiKey to unlock %1").arg(databaseFilename),
-                outputDescriptor));
+                {serial, slot}, QObject::tr("Please touch the button on your YubiKey to continue…"), err));
             compositeKey->addChallengeResponseKey(key);
         }
 #else
@@ -197,19 +189,10 @@ namespace Utils
      *
      * @return the password
      */
-    QString getPassword(FILE* outputDescriptor)
+    QString getPassword(bool quiet)
     {
-        TextStream out(outputDescriptor, QIODevice::WriteOnly);
-
-        // return preset password if one is set
-        if (!Test::nextPasswords.isEmpty()) {
-            auto password = Test::nextPasswords.takeFirst();
-            // simulate user entering newline
-            out << endl;
-            return password;
-        }
-
-        static TextStream in(STDIN, QIODevice::ReadOnly);
+        auto& in = STDIN;
+        auto& out = quiet ? DEVNULL : STDERR;
 
         setStdinEcho(false);
         QString line = in.readLine();
@@ -225,17 +208,35 @@ namespace Utils
      * @return Pointer to the PasswordKey or null if passwordkey is skipped
      *         by user
      */
-    QSharedPointer<PasswordKey> getPasswordFromStdin()
+    QSharedPointer<PasswordKey> getConfirmedPassword()
     {
+        auto& err = STDERR;
+        auto& in = STDIN;
+
         QSharedPointer<PasswordKey> passwordKey;
-        QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
-        out << QObject::tr("Enter password to encrypt database (optional): ");
-        out.flush();
-        QString password = Utils::getPassword();
+        err << QObject::tr("Enter password to encrypt database (optional): ");
+        err.flush();
+        auto password = Utils::getPassword();
 
-        if (!password.isEmpty()) {
-            passwordKey = QSharedPointer<PasswordKey>(new PasswordKey(password));
+        if (password.isEmpty()) {
+            err << QObject::tr("Do you want to create a database with an empty password? [y/N]: ");
+            err.flush();
+            auto ans = in.readLine();
+            if (ans.toLower().startsWith("y")) {
+                passwordKey = QSharedPointer<PasswordKey>::create("");
+            }
+            err << endl;
+        } else {
+            err << QObject::tr("Repeat password: ");
+            err.flush();
+            auto repeat = Utils::getPassword();
+
+            if (password == repeat) {
+                passwordKey = QSharedPointer<PasswordKey>::create(password);
+            } else {
+                err << QObject::tr("Error: Passwords do not match.") << endl;
+            }
         }
 
         return passwordKey;
@@ -247,50 +248,65 @@ namespace Utils
      */
     int clipText(const QString& text)
     {
-        TextStream err(Utils::STDERR);
+        auto& err = STDERR;
 
-        QString programName = "";
-        QStringList arguments;
+        // List of programs and their arguments
+        QList<QPair<QString, QString>> clipPrograms;
 
 #ifdef Q_OS_UNIX
-        programName = "xclip";
-        arguments << "-i"
-                  << "-selection"
-                  << "clipboard";
+        if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
+            clipPrograms << qMakePair(QStringLiteral("wl-copy"), QStringLiteral(""));
+        } else {
+            clipPrograms << qMakePair(QStringLiteral("xclip"), QStringLiteral("-selection clipboard -i"));
+        }
 #endif
 
 #ifdef Q_OS_MACOS
-        programName = "pbcopy";
+        clipPrograms << qMakePair(QStringLiteral("pbcopy"), QStringLiteral(""));
 #endif
 
 #ifdef Q_OS_WIN
-        programName = "clip";
+        clipPrograms << qMakePair(QStringLiteral("clip"), QStringLiteral(""));
 #endif
 
-        if (programName.isEmpty()) {
+        if (clipPrograms.isEmpty()) {
             err << QObject::tr("No program defined for clipboard manipulation");
             err.flush();
             return EXIT_FAILURE;
         }
 
-        QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
-        clipProcess->start(programName, arguments);
-        clipProcess->waitForStarted();
+        QStringList failedProgramNames;
 
-        if (clipProcess->state() != QProcess::Running) {
-            err << QObject::tr("Unable to start program %1").arg(programName);
-            err.flush();
-            return EXIT_FAILURE;
+        for (auto prog : clipPrograms) {
+            QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
+
+            // Skip empty parts, otherwise the program may clip the empty string
+            QStringList progArgs = prog.second.split(" ", QString::SkipEmptyParts);
+
+            clipProcess->start(prog.first, progArgs);
+            clipProcess->waitForStarted();
+
+            if (clipProcess->state() != QProcess::Running) {
+                failedProgramNames.append(prog.first);
+                continue;
+            }
+
+            if (clipProcess->write(text.toLatin1()) == -1) {
+                qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
+            }
+            clipProcess->waitForBytesWritten();
+            clipProcess->closeWriteChannel();
+            clipProcess->waitForFinished();
+
+            if (clipProcess->exitCode() == EXIT_SUCCESS) {
+                return EXIT_SUCCESS;
+            }
         }
 
-        if (clipProcess->write(text.toLatin1()) == -1) {
-            qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
-        }
-        clipProcess->waitForBytesWritten();
-        clipProcess->closeWriteChannel();
-        clipProcess->waitForFinished();
-
-        return clipProcess->exitCode();
+        // No clipping program worked
+        err << QObject::tr("All clipping programs failed. Tried %1\n").arg(failedProgramNames.join(", "));
+        err.flush();
+        return EXIT_FAILURE;
     }
 
     /**
@@ -326,6 +342,23 @@ namespace Utils
 
         if (!cur.isEmpty()) {
             result.append(cur);
+        }
+
+        return result;
+    }
+
+    QStringList findAttributes(const EntryAttributes& attributes, const QString& name)
+    {
+        QStringList result;
+        if (attributes.hasKey(name)) {
+            result.append(name);
+            return result;
+        }
+
+        for (const QString& key : attributes.keys()) {
+            if (key.compare(name, Qt::CaseSensitivity::CaseInsensitive) == 0) {
+                result.append(key);
+            }
         }
 
         return result;

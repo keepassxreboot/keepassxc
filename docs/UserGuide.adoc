@@ -1,0 +1,37 @@
+= KeePassXC: User Guide
+KeePassXC Team <team@keepassxc.org>
+v2.6.0
+:data-uri:
+:homepage: https://keepassxc.org
+:icons: font
+:imagesdir: images
+:stylesheet: styles/dark.css
+:toc: left
+ifdef::backend-pdf[]
+:title-page:
+:title-logo-image: {imagesdir}/kpxc_logo.png
+:pdf-theme: styles/pdf_theme.yml
+:compress:
+endif::[]
+
+include::topics/Disclaimers.adoc[]
+
+<<<
+
+// Include feature topics and advanced sections
+
+include::topics/UserInterface.adoc[tags=*]
+
+include::topics/DatabaseOperations.adoc[tags=*]
+
+include::topics/ImportExport.adoc[tags=*]
+
+include::topics/PasswordGenerator.adoc[tags=*]
+
+include::topics/BrowserPlugin.adoc[tags=*]
+
+include::topics/AutoType.adoc[tags=*]
+
+include::topics/KeeShare.adoc[tags=*]
+
+include::topics/SSHAgent.adoc[tags=*]

@@ -32,20 +32,35 @@ class SSHAgent : public QObject
     Q_OBJECT
 
 public:
+    ~SSHAgent() override;
     static SSHAgent* instance();
-    static void init(QObject* parent);
+
+    bool isEnabled() const;
+    void setEnabled(bool enabled);
+    QString socketPath(bool allowOverride = true) const;
+    QString authSockOverride() const;
+    void setAuthSockOverride(QString& authSockOverride);
+#ifdef Q_OS_WIN
+    bool useOpenSSH() const;
+    void setUseOpenSSH(bool useOpenSSH);
+#endif
 
     const QString errorString() const;
     bool isAgentRunning() const;
-    bool addIdentity(OpenSSHKey& key, KeeAgentSettings& settings);
+    bool addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, const QUuid& databaseUuid);
+    bool listIdentities(QList<QSharedPointer<OpenSSHKey>>& list);
+    bool checkIdentity(const OpenSSHKey& key, bool& loaded);
     bool removeIdentity(OpenSSHKey& key);
+    void removeAllIdentities();
     void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
 
 signals:
     void error(const QString& message);
+    void enabledChanged(bool enabled);
 
 public slots:
-    void databaseModeChanged();
+    void databaseLocked();
+    void databaseUnlocked();
 
 private:
     const quint8 SSH_AGENT_FAILURE = 5;
@@ -59,24 +74,21 @@ private:
     const quint8 SSH_AGENT_CONSTRAIN_LIFETIME = 1;
     const quint8 SSH_AGENT_CONSTRAIN_CONFIRM = 2;
 
-    explicit SSHAgent(QObject* parent = nullptr);
-    ~SSHAgent();
-
     bool sendMessage(const QByteArray& in, QByteArray& out);
 #ifdef Q_OS_WIN
     bool sendMessagePageant(const QByteArray& in, QByteArray& out);
-#endif
 
-    static SSHAgent* m_instance;
-
-    QString m_socketPath;
-#ifdef Q_OS_WIN
     const quint32 AGENT_MAX_MSGLEN = 8192;
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif
 
-    QHash<OpenSSHKey, bool> m_addedKeys;
+    QHash<OpenSSHKey, QPair<QUuid, bool>> m_addedKeys;
     QString m_error;
 };
+
+static inline SSHAgent* sshAgent()
+{
+    return SSHAgent::instance();
+}
 
 #endif // KEEPASSXC_SSHAGENT_H

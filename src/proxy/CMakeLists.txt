@@ -1,5 +1,4 @@
-#  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-#  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,19 +14,17 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 if(WITH_XC_BROWSER)
-    include_directories(${BROWSER_SOURCE_DIR})
-
     set(proxy_SOURCES
-        ../core/Alloc.cpp
+        ../browser/BrowserShared.cpp
         keepassxc-proxy.cpp
-        ${BROWSER_SOURCE_DIR}/NativeMessagingBase.cpp
-        NativeMessagingHost.cpp)
+        NativeMessagingProxy.cpp)
 
-    add_library(proxy STATIC ${proxy_SOURCES})
-    target_link_libraries(proxy Qt5::Core Qt5::Network ${sodium_LIBRARY_RELEASE})
-    add_executable(keepassxc-proxy keepassxc-proxy.cpp)
-    target_link_libraries(keepassxc-proxy proxy)
+    # Alloc must be defined in a static library to prevent clashing with clang ASAN definitions
+    add_library(proxy_alloc STATIC ../core/Alloc.cpp)
+    target_link_libraries(proxy_alloc PRIVATE Qt5::Core ${sodium_LIBRARY_RELEASE})
 
+    add_executable(keepassxc-proxy ${proxy_SOURCES})
+    target_link_libraries(keepassxc-proxy proxy_alloc Qt5::Core Qt5::Network)
     install(TARGETS keepassxc-proxy
             BUNDLE DESTINATION . COMPONENT Runtime
             RUNTIME DESTINATION ${PROXY_INSTALL_DIR} COMPONENT Runtime)
@@ -56,6 +53,7 @@ if(WITH_XC_BROWSER)
                            COMMAND ${CMAKE_COMMAND} -E copy keepassxc-proxy ${PROXY_APP_DIR}/keepassxc-proxy
                            COMMENT "Copying keepassxc-proxy inside the application")
     endif()
+
     if(MINGW)
       target_link_libraries(keepassxc-proxy Wtsapi32.lib Ws2_32.lib)
     endif()

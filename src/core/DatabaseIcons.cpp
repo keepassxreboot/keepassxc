@@ -17,131 +17,37 @@
 
 #include "DatabaseIcons.h"
 
-#include "core/FilePath.h"
+#include "core/Config.h"
+#include "core/Global.h"
+#include "core/Resources.h"
+#include "gui/MainWindow.h"
+
+#include <QDir>
+#include <QImageReader>
+#include <QPainter>
+#include <QPixmapCache>
 
 DatabaseIcons* DatabaseIcons::m_instance(nullptr);
-const int DatabaseIcons::IconCount(69);
-const int DatabaseIcons::ExpiredIconIndex(45);
-const int DatabaseIcons::SharedIconIndex(1);
-const int DatabaseIcons::UnsharedIconIndex(45);
 
-// clang-format off
-const char* const DatabaseIcons::m_indexToName[] = {
-    "C00_Password.png",
-    "C01_Package_Network.png",
-    "C02_MessageBox_Warning.png",
-    "C03_Server.png",
-    "C04_Klipper.png",
-    "C05_Edu_Languages.png",
-    "C06_KCMDF.png",
-    "C07_Kate.png",
-    "C08_Socket.png",
-    "C09_Identity.png",
-    "C10_Kontact.png",
-    "C11_Camera.png",
-    "C12_IRKickFlash.png",
-    "C13_KGPG_Key3.png",
-    "C14_Laptop_Power.png",
-    "C15_Scanner.png",
-    "C16_Mozilla_Firebird.png",
-    "C17_CDROM_Unmount.png",
-    "C18_Display.png",
-    "C19_Mail_Generic.png",
-    "C20_Misc.png",
-    "C21_KOrganizer.png",
-    "C22_ASCII.png",
-    "C23_Icons.png",
-    "C24_Connect_Established.png",
-    "C25_Folder_Mail.png",
-    "C26_FileSave.png",
-    "C27_NFS_Unmount.png",
-    "C28_QuickTime.png",
-    "C29_KGPG_Term.png",
-    "C30_Konsole.png",
-    "C31_FilePrint.png",
-    "C32_FSView.png",
-    "C33_Run.png",
-    "C34_Configure.png",
-    "C35_KRFB.png",
-    "C36_Ark.png",
-    "C37_KPercentage.png",
-    "C38_Samba_Unmount.png",
-    "C39_History.png",
-    "C40_Mail_Find.png",
-    "C41_VectorGfx.png",
-    "C42_KCMMemory.png",
-    "C43_EditTrash.png",
-    "C44_KNotes.png",
-    "C45_Cancel.png",
-    "C46_Help.png",
-    "C47_KPackage.png",
-    "C48_Folder.png",
-    "C49_Folder_Blue_Open.png",
-    "C50_Folder_Tar.png",
-    "C51_Decrypted.png",
-    "C52_Encrypted.png",
-    "C53_Apply.png",
-    "C54_Signature.png",
-    "C55_Thumbnail.png",
-    "C56_KAddressBook.png",
-    "C57_View_Text.png",
-    "C58_KGPG.png",
-    "C59_Package_Development.png",
-    "C60_KFM_Home.png",
-    "C61_Services.png",
-    "C62_Tux.png",
-    "C63_Feather.png",
-    "C64_Apple.png",
-    "C65_W.png",
-    "C66_Money.png",
-    "C67_Certificate.png",
-    "C68_BlackBerry.png"
-};
-// clang-format on
-
-QImage DatabaseIcons::icon(int index)
+namespace
 {
-    if (index < 0 || index >= IconCount) {
-        qWarning("DatabaseIcons::icon: invalid icon index %d", index);
-        return QImage();
-    }
+    const QString iconDir = QStringLiteral(":/icons/database/");
+    QStringList iconList;
 
-    if (!m_iconCache[index].isNull()) {
-        return m_iconCache[index];
-    } else {
-        QString iconPath = QString("icons/database/").append(m_indexToName[index]);
-        QImage icon(filePath()->dataPath(iconPath));
-
-        m_iconCache[index] = icon;
-        return icon;
-    }
-}
-
-QPixmap DatabaseIcons::iconPixmap(int index)
-{
-    if (index < 0 || index >= IconCount) {
-        qWarning("DatabaseIcons::iconPixmap: invalid icon index %d", index);
-        return QPixmap();
-    }
-
-    QPixmap pixmap;
-
-    if (!QPixmapCache::find(m_pixmapCacheKeys[index], &pixmap)) {
-        pixmap = QPixmap::fromImage(icon(index));
-        m_pixmapCacheKeys[index] = QPixmapCache::insert(pixmap);
-    }
-
-    return pixmap;
-}
+    const QString badgeDir = QStringLiteral(":/icons/badges/");
+    QStringList badgeList;
+} // namespace
 
 DatabaseIcons::DatabaseIcons()
 {
-    Q_STATIC_ASSERT(sizeof(m_indexToName) == IconCount * sizeof(m_indexToName[0]));
+    // Set the pixmap cache limit to 20 MB
+    QPixmapCache::setCacheLimit(20480);
 
-    m_iconCache.reserve(IconCount);
-    m_iconCache.resize(IconCount);
-    m_pixmapCacheKeys.reserve(IconCount);
-    m_pixmapCacheKeys.resize(IconCount);
+    iconList = QDir(iconDir).entryList(QDir::NoFilter, QDir::Name);
+    badgeList = QDir(badgeDir).entryList(QDir::NoFilter, QDir::Name);
+
+    // Set this early and once to ensure consistent icon size until app restart
+    m_compactMode = config()->get(Config::GUI_CompactMode).toBool();
 }
 
 DatabaseIcons* DatabaseIcons::instance()
@@ -151,4 +57,69 @@ DatabaseIcons* DatabaseIcons::instance()
     }
 
     return m_instance;
+}
+
+QPixmap DatabaseIcons::icon(int index, IconSize size)
+{
+    if (index < 0 || index >= count()) {
+        qWarning("DatabaseIcons::icon: invalid icon index %d", index);
+        return {};
+    }
+
+    auto cacheKey = QString::number(index);
+    auto icon = m_iconCache.value(cacheKey);
+    if (icon.isNull()) {
+        icon.addFile(iconDir + iconList[index]);
+        icon.addPixmap(icon.pixmap(iconSize(IconSize::Default)));
+        icon.addPixmap(icon.pixmap(iconSize(IconSize::Medium)));
+        icon.addPixmap(icon.pixmap(iconSize(IconSize::Large)));
+        m_iconCache.insert(cacheKey, icon);
+    }
+
+    return icon.pixmap(iconSize(size));
+}
+
+QPixmap DatabaseIcons::applyBadge(const QPixmap& basePixmap, Badges badgeIndex)
+{
+    const auto cacheKey = QStringLiteral("badgedicon-%1-%2").arg(basePixmap.cacheKey()).arg(badgeIndex);
+    QPixmap pixmap = basePixmap;
+    if (badgeIndex < 0 || badgeIndex >= badgeList.size()) {
+        qWarning("DatabaseIcons: Out-of-range badge index given to applyBadge: %d", badgeIndex);
+    } else if (!QPixmapCache::find(cacheKey, &pixmap)) {
+        int baseSize = basePixmap.width();
+        int badgeSize =
+            baseSize <= iconSize(IconSize::Default) * basePixmap.devicePixelRatio() ? baseSize * 0.6 : baseSize * 0.5;
+        QPoint badgePos(baseSize - badgeSize, baseSize - badgeSize);
+        badgePos /= basePixmap.devicePixelRatio();
+
+        QImageReader reader(badgeDir + badgeList[badgeIndex]);
+        reader.setScaledSize({badgeSize, badgeSize});
+        auto badge = QPixmap::fromImageReader(&reader);
+        badge.setDevicePixelRatio(basePixmap.devicePixelRatio());
+
+        QPainter painter(&pixmap);
+        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+        painter.drawPixmap(badgePos, badge);
+
+        QPixmapCache::insert(cacheKey, pixmap);
+    }
+
+    return pixmap;
+}
+
+int DatabaseIcons::count()
+{
+    return iconList.size();
+}
+
+int DatabaseIcons::iconSize(IconSize size)
+{
+    switch (size) {
+    case Medium:
+        return m_compactMode ? 26 : 30;
+    case Large:
+        return m_compactMode ? 30 : 36;
+    default:
+        return m_compactMode ? 16 : 22;
+    }
 }

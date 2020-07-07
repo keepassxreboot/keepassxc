@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.5.4
+version: 2.6.0
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -36,7 +36,7 @@ apps:
       DISABLE_WAYLAND: 1
   cli:
     command: keepassxc-cli
-    plugs: [gsettings, home, removable-media, raw-usb]
+    plugs: [x11, gsettings, home, removable-media, raw-usb]
   proxy:
     command: keepassxc-proxy
     plugs: [home]
@@ -59,6 +59,7 @@ parts:
       - libqt5x11extras5-dev
       - libqt5svg5-dev
       - qtbase5-dev
+      - qtbase5-private-dev
       - qttools5-dev
       - qttools5-dev-tools
       - zlib1g-dev
@@ -70,6 +71,7 @@ parts:
       - libargon2-0-dev
       - libqrencode-dev
       - libquazip5-dev
+      - asciidoctor
     stage-packages:
       - dbus
       - qttranslations5-l10n # common translations
@@ -87,6 +89,7 @@ parts:
       - qtwayland5
       - qt5-gtk-platformtheme # for theming, font settings, cursor and to use gtk3 file chooser
       - libqrencode3
+      - xclip
     override-build: |
       snapcraftctl build
       sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>566</width>
-    <height>169</height>
+    <height>247</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -46,49 +46,62 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QHBoxLayout" name="entryHorizontalLayout" stretch="0,1,0,0,0">
+        <layout class="QHBoxLayout" name="entryHorizontalLayout" stretch="0,0,0,0">
          <property name="sizeConstraint">
           <enum>QLayout::SetDefaultConstraint</enum>
          </property>
          <property name="leftMargin">
-          <number>9</number>
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
+          <number>3</number>
          </property>
          <item>
-          <widget class="QLabel" name="entryIcon">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>12</number>
            </property>
-           <property name="minimumSize">
-            <size>
-             <width>16</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="ElidedLabel" name="entryTitleLabel">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::AutoText</enum>
-           </property>
-          </widget>
+           <item>
+            <widget class="QLabel" name="entryIcon">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>16</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ElidedLabel" name="entryTitleLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::AutoText</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLabel" name="entryTotpLabel">
@@ -106,9 +119,6 @@
          </item>
          <item>
           <widget class="QToolButton" name="entryTotpButton">
-           <property name="focusPolicy">
-            <enum>Qt::TabFocus</enum>
-           </property>
            <property name="toolTip">
             <string>Display current TOTP value</string>
            </property>
@@ -122,9 +132,6 @@
          </item>
          <item>
           <widget class="QToolButton" name="entryCloseButton">
-           <property name="focusPolicy">
-            <enum>Qt::TabFocus</enum>
-           </property>
            <property name="toolTip">
             <string>Close</string>
            </property>
@@ -137,9 +144,6 @@
        </item>
        <item>
         <widget class="QTabWidget" name="entryTabWidget">
-         <property name="focusPolicy">
-          <enum>Qt::ClickFocus</enum>
-         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -766,43 +770,56 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QHBoxLayout" name="groupHorizontalLayout" stretch="0,0,0">
+        <layout class="QHBoxLayout" name="groupHorizontalLayout" stretch="0,0">
          <property name="sizeConstraint">
           <enum>QLayout::SetDefaultConstraint</enum>
          </property>
          <property name="leftMargin">
-          <number>9</number>
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
+          <number>3</number>
          </property>
          <item>
-          <widget class="QLabel" name="groupIcon">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <property name="spacing">
+            <number>12</number>
            </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="ElidedLabel" name="groupTitleLabel">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::AutoText</enum>
-           </property>
-          </widget>
+           <item>
+            <widget class="QLabel" name="groupIcon">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ElidedLabel" name="groupTitleLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::AutoText</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QToolButton" name="groupCloseButton">
@@ -1146,13 +1163,14 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>entryCloseButton</tabstop>
   <tabstop>entryTotpButton</tabstop>
+  <tabstop>entryCloseButton</tabstop>
+  <tabstop>entryTabWidget</tabstop>
   <tabstop>togglePasswordButton</tabstop>
   <tabstop>toggleEntryNotesButton</tabstop>
-  <tabstop>entryAutotypeTree</tabstop>
-  <tabstop>groupCloseButton</tabstop>
   <tabstop>groupTabWidget</tabstop>
+  <tabstop>toggleGroupNotesButton</tabstop>
+  <tabstop>groupCloseButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

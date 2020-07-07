@@ -1,0 +1,60 @@
+= KeePassXC - Download and Install
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== Downloading KeePassXC
+KeePassXC is available for download for the following operating systems and platforms:
+
+* Microsoft Windows
+** Portable and MSI Installer (64-bit and 32-bit)
+* Linux - Official Cross-Distribution Packages
+** AppImage and Snap Package
+* Linux - Distribution-Specific Packages
+** Ubuntu, Debian, Arch Linux, Gentoo, Fedora, CentOS, and OpenSUSE
+* macOS
+** DMG Installer, Homebrew Cask
+
+To download the KeePassXC installer for your desired platform, visit https://keepassxc.org/download or directly from our https://github.com/keepassxreboot/keepassxc/releases[GitHub Releases].
+
+NOTE: KeePassXC is open-source software and may be available on other websites that are unaffiliated with Team KeePassXC. *We strongly discourage downloading KeePassXC from third-party websites.*
+
+Before installing KeePassXC, it is recommended that you verify that your downloaded installer matches the signature, which is published alongside the release package. By verifying the signatures of KeePassXC releases, you can verify the authenticity and integrity of the downloaded installation file. This guarantees that the file you downloaded was originally created by the KeePassXC Team and its contents have not been tampered with.
+
+To know more about the steps to verify the authenticity and integrity of your downloaded package, visit https://keepassxc.org/verifying-signatures.
+
+=== Microsoft Windows
+The Windows MSI installer is signed by a secure certificate owned by DroidMonkey Apps, LLC. If you do not see this dialog when installing the application, click *NO* and download the installer from https://keepassxc.org.
+
+.Windows UAC Dialog
+image::uac_dialog.png[50%]
+
+Installing KeePassXC is a simple process. In the following example, installation steps for KeePassXC on Microsoft Windows are described. Installing KeePassXC on other operating systems is also a simple process, which you can accomplish by using the native installers. To know more about the installation instructions on the other operating systems, refer to the KeePassXC User Manual.
+
+To install KeePassXC on Microsoft Windows, perform the following steps:
+
+1. Double click on the KeePassXC-Y.Y.Y-WinZZ.msi file. Here, Y.Y.Y represents the version of the software and ZZ represents the 32-bit/64-bit version of the Microsoft Windows operating system.
++
+.Install wizard
+image::install_wizard_1.png[,80%]
+
+2. Click Next and follow the simple instructions on the KeepPassXC Setup Wizard to complete the installation. You will have the option to choose your install location, add a desktop shortcut, and launch on startup.
++
+.Install wizard (cont)
+image::install_wizard_2.png[,80%]
+
+=== Linux
+You can easily download the KeePassXC installer for Linux. When you search for KeePassXC, multiple options are displayed as shown in the following screen:
+
+.Ubuntu Store
+image::linux_store.png[]
+
+The Snap and Flatpak options are sandboxed applications (more secure). The Native option is installed with the operating system files. Read more about the limitations of these options here: https://keepassxc.org/docs/#faq-appsnap-yubikey[KeePassXC Snap FAQ]
+
+=== macOS
+To install the KeePassXC app on macOS, double click on the downloaded DMG file and use the click and drag option as shown:
+
+.macOS DMG Install
+image::macos_install.png[,80%]
+
+// end::content[]

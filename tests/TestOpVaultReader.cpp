@@ -24,6 +24,7 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "format/OpVaultReader.h"
+#include "totp/totp.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -36,112 +37,30 @@
 
 QTEST_GUILESS_MAIN(TestOpVaultReader)
 
-QPair<QString, QString>* split1PTextExportKV(QByteArray& line)
-{
-    const auto eq = line.indexOf('=');
-    if (-1 == eq) {
-        qWarning() << "Bogus key=value pair: <<" << line << ">>";
-        return nullptr;
-    }
-    auto k = QString::fromUtf8(line.mid(0, eq));
-    const auto start = eq + 1;
-    auto v = QString::fromUtf8(line.mid(start), (line.size() - 1) - start);
-    return new QPair<QString, QString>(k, v);
-}
-
-QSharedPointer<QJsonArray> read1PasswordTextExport(QFile& f)
-{
-    if (!f.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open your text export file for reading");
-        return {};
-    }
-
-    auto result = QSharedPointer<QJsonArray>::create();
-    QJsonObject current;
-
-    while (!f.atEnd()) {
-        auto line = f.readLine(1024);
-
-        if (line.size() == 1 and line[0] == '\n') {
-            if (!current.isEmpty()) {
-                result->append(current);
-            }
-            current = QJsonObject();
-            continue;
-        }
-        const auto kv = split1PTextExportKV(line);
-        if (kv == nullptr) {
-            break;
-        }
-        QString k = kv->first;
-
-        const auto multiLine1 = line.indexOf("=\"\"");
-        const auto multiLine2 = line.indexOf("=\"");
-        const auto isML1 = -1 != multiLine1;
-        const auto isML2 = -1 != multiLine2;
-        if (isML1 or isML2) {
-            QStringList lines;
-            const int skipEQ = isML1 ? (multiLine1 + 3) : (multiLine2 + 2);
-            lines.append(QString::fromUtf8(line.mid(skipEQ)));
-            while (!f.atEnd()) {
-                line = f.readLine(1024);
-                const auto endMarker = line.indexOf(isML1 ? "\"\"\n" : "\"\n");
-                if (-1 != endMarker) {
-                    line[endMarker] = '\n';
-                    lines.append(QString::fromUtf8(line.mid(0, endMarker)));
-                    break;
-                } else {
-                    lines.append(QString::fromUtf8(line));
-                }
-            }
-            auto v = lines.join("");
-            current[k] = v;
-        } else {
-            current[k] = kv->second;
-        }
-        delete kv;
-    }
-    if (!current.isEmpty()) {
-        result->append(current);
-    }
-    f.close();
-
-    return result;
-}
-
 void TestOpVaultReader::initTestCase()
 {
     QVERIFY(Crypto::init());
 
-    // https://cache.agilebits.com/security-kb/freddy-2013-12-04.tar.gz
-    m_opVaultPath = QString("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, "/freddy-2013-12-04.opvault");
-    m_opVaultTextExportPath = QString(m_opVaultPath).replace(".opvault", ".opvault.txt");
+    m_opVaultPath = QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/keepassxc.opvault"));
 
-    m_password = "freddy";
-
-    QFile testData(m_opVaultTextExportPath);
-    auto data = read1PasswordTextExport(testData);
-    QVERIFY(data);
-    QCOMPARE(data->size(), 27);
-
-    m_categoryMap.insert("001", "Login");
-    m_categoryMap.insert("002", "Credit Card");
-    m_categoryMap.insert("003", "Secure Note");
-    m_categoryMap.insert("004", "Identity");
-    m_categoryMap.insert("005", "Password");
-    m_categoryMap.insert("099", "Tombstone");
-    m_categoryMap.insert("100", "Software License");
-    m_categoryMap.insert("101", "Bank Account");
-    m_categoryMap.insert("102", "Database");
-    m_categoryMap.insert("103", "Driver License");
-    m_categoryMap.insert("104", "Outdoor License");
-    m_categoryMap.insert("105", "Membership");
-    m_categoryMap.insert("106", "Passport");
-    m_categoryMap.insert("107", "Rewards");
-    m_categoryMap.insert("108", "SSN");
-    m_categoryMap.insert("109", "Router");
-    m_categoryMap.insert("110", "Server");
-    m_categoryMap.insert("111", "Email");
+    m_categories = QStringList({QStringLiteral("Login"),
+                                QStringLiteral("Credit Card"),
+                                QStringLiteral("Secure Note"),
+                                QStringLiteral("Identity"),
+                                QStringLiteral("Password"),
+                                QStringLiteral("Tombstone"),
+                                QStringLiteral("Software License"),
+                                QStringLiteral("Bank Account"),
+                                QStringLiteral("Database"),
+                                QStringLiteral("Driver License"),
+                                QStringLiteral("Outdoor License"),
+                                QStringLiteral("Membership"),
+                                QStringLiteral("Passport"),
+                                QStringLiteral("Rewards"),
+                                QStringLiteral("SSN"),
+                                QStringLiteral("Router"),
+                                QStringLiteral("Server"),
+                                QStringLiteral("Email")});
 }
 
 void TestOpVaultReader::testReadIntoDatabase()
@@ -149,100 +68,69 @@ void TestOpVaultReader::testReadIntoDatabase()
     QDir opVaultDir(m_opVaultPath);
 
     OpVaultReader reader;
-    QScopedPointer<Database> db(reader.readDatabase(opVaultDir, m_password));
-    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QScopedPointer<Database> db(reader.readDatabase(opVaultDir, "a"));
     QVERIFY(db);
-    QVERIFY(!db->children().isEmpty());
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
 
-    Group* rootGroup = db->rootGroup();
-    QVERIFY(rootGroup);
+    // Confirm specific entry details are valid
+    auto entry = db->rootGroup()->findEntryByPath("/Login/KeePassXC");
+    QVERIFY(entry);
+    QCOMPARE(entry->title(), QStringLiteral("KeePassXC"));
+    QCOMPARE(entry->username(), QStringLiteral("keepassxc"));
+    QCOMPARE(entry->password(), QStringLiteral("opvault"));
+    QCOMPARE(entry->url(), QStringLiteral("https://www.keepassxc.org"));
+    QCOMPARE(entry->notes(), QStringLiteral("KeePassXC Account"));
+    // Check extra URL's
+    QCOMPARE(entry->attribute("KP2A_URL_1"), QStringLiteral("https://snapshot.keepassxc.org"));
+    // Check TOTP
+    QVERIFY(entry->hasTotp());
+    // Check attachments
+    auto attachments = entry->attachments();
+    QCOMPARE(attachments->keys().count(), 1);
+    QCOMPARE(*attachments->values().begin(), QByteArray("attachment"));
 
-    QFile testDataFile(m_opVaultTextExportPath);
-    auto testData = read1PasswordTextExport(testDataFile);
-    QVERIFY(testData);
+    // Confirm expired entries
+    entry = db->rootGroup()->findEntryByPath("/Login/Expired Login");
+    QVERIFY(entry->isExpired());
 
-    QMap<QUuid, QJsonObject> objectsByUuid;
-    QMap<QString, QList<QJsonObject>> objectsByCategory;
-    for (QJsonArray::const_iterator it = testData->constBegin(); it != testData->constEnd(); ++it) {
-        QJsonObject value = (*it).toObject();
-        auto cat = value["category"].toString();
-        QVERIFY2(m_categoryMap.contains(cat), qPrintable(QString("BOGUS, unmapped category \"%1\"").arg(cat)));
+    // Confirm advanced attributes
+    entry = db->rootGroup()->findEntryByPath("/Credit Card/My Credit Card");
+    QVERIFY(entry);
+    auto attr = entry->attributes();
+    QCOMPARE(attr->value("cardholder"), QStringLiteral("Team KeePassXC"));
+    QVERIFY(!attr->value("validFrom").isEmpty());
+    QCOMPARE(attr->value("details_pin"), QStringLiteral("1234"));
+    QVERIFY(attr->isProtected("details_pin"));
 
-        auto catName = m_categoryMap[cat];
-        if (!objectsByCategory.contains(catName)) {
-            QList<QJsonObject> theList;
-            objectsByCategory[catName] = theList;
+    // Confirm address fields
+    entry = db->rootGroup()->findEntryByPath("/Identity/Team KeePassXC");
+    QVERIFY(entry);
+    attr = entry->attributes();
+    QCOMPARE(attr->value("address_street"), QStringLiteral("123 Password Lane"));
+
+    // Confirm complex passwords
+    entry = db->rootGroup()->findEntryByPath("/Password/Complex Password");
+    QVERIFY(entry);
+    QCOMPARE(entry->password(), QStringLiteral("HfgcHjEL}iO}^3N!?*cv~O:9GJZQ0>oC"));
+    QVERIFY(entry->hasTotp());
+    auto totpSettings = entry->totpSettings();
+    QCOMPARE(totpSettings->digits, static_cast<unsigned int>(8));
+    QCOMPARE(totpSettings->step, static_cast<unsigned int>(45));
+
+    // Confirm trashed entries are sent to the recycle bin
+    auto recycleBin = db->metadata()->recycleBin();
+    QVERIFY(recycleBin);
+    QVERIFY(!recycleBin->isEmpty());
+    QVERIFY(recycleBin->findEntryByPath("Trashed Password"));
+
+    // Confirm created groups align with category names
+    for (const auto group : db->rootGroup()->children()) {
+        if (group == recycleBin) {
+            continue;
         }
-        objectsByCategory[catName].append(value);
-
-        QUuid u = Tools::hexToUuid(value["uuid"].toString());
-        objectsByUuid[u] = value;
+        QVERIFY2(m_categories.contains(group->name()),
+                 qPrintable(QStringLiteral("Invalid group name: %1").arg(group->name())));
+        // Confirm each group is not empty
+        QVERIFY2(!group->isEmpty(), qPrintable(QStringLiteral("Group %1 is empty").arg(group->name())));
     }
-    QCOMPARE(objectsByUuid.size(), 27);
-
-    for (QUuid u : objectsByUuid.keys()) {
-        QJsonObject o = objectsByUuid[u];
-        const auto e = db->rootGroup()->findEntryByUuid(u);
-        QVERIFY2(e, qPrintable(QString("Expected to find UUID %1").arg(u.toString())));
-
-        auto jsonTitle = o["title"].toString();
-        QCOMPARE(jsonTitle, e->title());
-    }
-
-    for (QString& catName : m_categoryMap.values()) {
-        const auto g = rootGroup->findChildByName(catName);
-        QVERIFY2(g, qPrintable(QString("Expected to find Group(%1)").arg(catName)));
-        for (QJsonObject testEntry : objectsByCategory[catName]) {
-            auto uuidStr = testEntry["uuid"].toString();
-            auto jsonTitle = testEntry["title"].toString();
-
-            QUuid u = Tools::hexToUuid(uuidStr);
-            const auto entry = g->findEntryByUuid(u);
-            QVERIFY2(entry, qPrintable(QString("Expected to find Group(%1).entry(%2)").arg(catName).arg(uuidStr)));
-            QCOMPARE(entry->title(), jsonTitle);
-        }
-    }
-}
-
-void TestOpVaultReader::testKeyDerivation()
-{
-    OpVaultReader reader;
-    QDir opVaultDir(m_opVaultPath);
-
-    // yes, the reader checks this too, but in our case best to fail early
-    QVERIFY(opVaultDir.exists());
-    QVERIFY(opVaultDir.isReadable());
-
-    QDir defDir = QDir(opVaultDir);
-    defDir.cd("default");
-    QFile profileJs(defDir.absoluteFilePath("profile.js"));
-    QVERIFY(profileJs.exists());
-
-    auto profileObj = reader.readAndAssertJsonFile(profileJs, "var profile=", ";");
-
-    QByteArray salt = QByteArray::fromBase64(profileObj["salt"].toString().toUtf8());
-    unsigned long iter = profileObj["iterations"].toInt();
-    const auto derived = reader.deriveKeysFromPassPhrase(salt, m_password, iter);
-    QVERIFY(derived);
-    QVERIFY(!derived->error);
-
-    QByteArray encHex = derived->encrypt.toHex();
-    QByteArray hmacHex = derived->hmac.toHex();
-    delete derived;
-
-    QCOMPARE(QString::fromUtf8(encHex),
-             QStringLiteral("63b075de858949559d4faa9d348bf10bdaa0e567ad943d7803f2291c9342aaaa"));
-    QCOMPARE(QString::fromUtf8(hmacHex),
-             QStringLiteral("ff3ab426ce55bf097b252b3f2df1c4ba4312a6960180844d7a625bc0ab40c35e"));
-}
-
-void TestOpVaultReader::testBandEntry1()
-{
-    OpVaultReader reader;
-    QByteArray json(R"({"hello": "world"})");
-    QJsonDocument doc = QJsonDocument::fromJson(json);
-    QJsonObject data;
-    QByteArray entryKey;
-    QByteArray entryHmacKey;
-    QVERIFY(!reader.decryptBandEntry(doc.object(), data, entryKey, entryHmacKey));
 }

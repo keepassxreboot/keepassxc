@@ -45,6 +45,7 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "crypto/kdf/AesKdf.h"
@@ -58,43 +59,64 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/PasswordEdit.h"
+#include "gui/PasswordGeneratorWidget.h"
 #include "gui/SearchWidget.h"
 #include "gui/TotpDialog.h"
 #include "gui/TotpSetupDialog.h"
+#include "gui/databasekey/KeyComponentWidget.h"
+#include "gui/databasekey/KeyFileEditWidget.h"
+#include "gui/databasekey/PasswordEditWidget.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
-#include "gui/masterkey/KeyComponentWidget.h"
-#include "gui/masterkey/KeyFileEditWidget.h"
-#include "gui/masterkey/PasswordEditWidget.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-QTEST_MAIN(TestGui)
+#define TEST_MODAL_NO_WAIT(TEST_CODE)                                                                                  \
+    bool dialogFinished = false;                                                                                       \
+    QTimer::singleShot(0, [&]() { TEST_CODE dialogFinished = true; })
+
+#define TEST_MODAL(TEST_CODE)                                                                                          \
+    TEST_MODAL_NO_WAIT(TEST_CODE);                                                                                     \
+    QTRY_VERIFY(dialogFinished)
+
+int main(int argc, char* argv[])
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+    Application app(argc, argv);
+    app.setApplicationName("KeePassXC");
+    app.setApplicationVersion(KEEPASSXC_VERSION);
+    app.setQuitOnLastWindowClosed(false);
+    app.setAttribute(Qt::AA_Use96Dpi, true);
+    app.applyTheme();
+    QTEST_DISABLE_KEYPAD_NAVIGATION
+    TestGui tc;
+    QTEST_SET_MAIN_SOURCE_PATH
+    return QTest::qExec(&tc, argc, argv);
+}
 
 static QString dbFileName = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx");
 
 void TestGui::initTestCase()
 {
-    Application::setApplicationName("KeePassXC");
-    Application::setApplicationVersion(KEEPASSXC_VERSION);
-    QApplication::setQuitOnLastWindowClosed(false);
-
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
     // Disable autosave so we can test the modified file indicator
-    config()->set("AutoSaveAfterEveryChange", false);
-    config()->set("AutoSaveOnExit", false);
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+    config()->set(Config::AutoSaveOnExit, false);
     // Enable the tray icon so we can test hiding/restoring the windowQByteArray
-    config()->set("GUI/ShowTrayIcon", true);
+    config()->set(Config::GUI_ShowTrayIcon, true);
     // Disable advanced settings mode (activate within individual tests to test advanced settings)
-    config()->set("GUI/AdvancedSettings", false);
+    config()->set(Config::GUI_AdvancedSettings, false);
     // Disable the update check first time alert
-    config()->set("UpdateCheckMessageShown", true);
+    config()->set(Config::UpdateCheckMessageShown, true);
 
     Bootstrap::bootstrapApplication();
 
@@ -168,7 +190,7 @@ void TestGui::testSettingsDefaultTabOrder()
     QTest::keyClick(settingsWidget, Qt::Key::Key_Escape);
 
     // check database settings default tab order
-    triggerAction("actionChangeDatabaseSettings");
+    triggerAction("actionDatabaseSettings");
     auto* dbSettingsWidget = m_mainWindow->findChild<DatabaseSettingsDialog*>();
     QVERIFY(dbSettingsWidget->isVisible());
     QCOMPARE(dbSettingsWidget->findChild<CategoryListWidget*>("categoryList")->currentCategory(), 0);
@@ -182,7 +204,91 @@ void TestGui::testSettingsDefaultTabOrder()
 
 void TestGui::testCreateDatabase()
 {
-    QTimer::singleShot(50, this, SLOT(createDatabaseCallback()));
+    TEST_MODAL_NO_WAIT(
+        NewDatabaseWizard * wizard; QTRY_VERIFY(wizard = m_tabWidget->findChild<NewDatabaseWizard*>());
+
+        QTest::keyClicks(wizard->currentPage()->findChild<QLineEdit*>("databaseName"), "Test Name");
+        QTest::keyClicks(wizard->currentPage()->findChild<QLineEdit*>("databaseDescription"), "Test Description");
+        QCOMPARE(wizard->currentId(), 0);
+
+        QTest::keyClick(wizard, Qt::Key_Enter);
+        QCOMPARE(wizard->currentId(), 1);
+
+        auto decryptionTimeSlider = wizard->currentPage()->findChild<QSlider*>("decryptionTimeSlider");
+        auto algorithmComboBox = wizard->currentPage()->findChild<QComboBox*>("algorithmComboBox");
+        QTRY_VERIFY(decryptionTimeSlider->isVisible());
+        QVERIFY(!algorithmComboBox->isVisible());
+        auto advancedToggle = wizard->currentPage()->findChild<QPushButton*>("advancedSettingsButton");
+        QTest::mouseClick(advancedToggle, Qt::MouseButton::LeftButton);
+        QTRY_VERIFY(!decryptionTimeSlider->isVisible());
+        QVERIFY(algorithmComboBox->isVisible());
+
+        auto rounds = wizard->currentPage()->findChild<QSpinBox*>("transformRoundsSpinBox");
+        QVERIFY(rounds);
+        QVERIFY(rounds->isVisible());
+        QTest::mouseClick(rounds, Qt::MouseButton::LeftButton);
+        QTest::keyClick(rounds, Qt::Key_A, Qt::ControlModifier);
+        QTest::keyClicks(rounds, "2");
+        QTest::keyClick(rounds, Qt::Key_Tab);
+        QTest::keyClick(rounds, Qt::Key_Tab);
+
+        auto memory = wizard->currentPage()->findChild<QSpinBox*>("memorySpinBox");
+        QVERIFY(memory);
+        QVERIFY(memory->isVisible());
+        QTest::mouseClick(memory, Qt::MouseButton::LeftButton);
+        QTest::keyClick(memory, Qt::Key_A, Qt::ControlModifier);
+        QTest::keyClicks(memory, "50");
+        QTest::keyClick(memory, Qt::Key_Tab);
+
+        auto parallelism = wizard->currentPage()->findChild<QSpinBox*>("parallelismSpinBox");
+        QVERIFY(parallelism);
+        QVERIFY(parallelism->isVisible());
+        QTest::mouseClick(parallelism, Qt::MouseButton::LeftButton);
+        QTest::keyClick(parallelism, Qt::Key_A, Qt::ControlModifier);
+        QTest::keyClicks(parallelism, "1");
+        QTest::keyClick(parallelism, Qt::Key_Enter);
+
+        QCOMPARE(wizard->currentId(), 2);
+
+        // enter password
+        auto* passwordWidget = wizard->currentPage()->findChild<PasswordEditWidget*>();
+        QCOMPARE(passwordWidget->visiblePage(), KeyFileEditWidget::Page::Edit);
+        auto* passwordEdit = passwordWidget->findChild<QLineEdit*>("enterPasswordEdit");
+        auto* passwordRepeatEdit = passwordWidget->findChild<QLineEdit*>("repeatPasswordEdit");
+        QTRY_VERIFY(passwordEdit->isVisible());
+        QTRY_VERIFY(passwordEdit->hasFocus());
+        QTest::keyClicks(passwordEdit, "test");
+        QTest::keyClick(passwordEdit, Qt::Key::Key_Tab);
+        QTest::keyClicks(passwordRepeatEdit, "test");
+
+        // add key file
+        auto* additionalOptionsButton = wizard->currentPage()->findChild<QPushButton*>("additionalKeyOptionsToggle");
+        auto* keyFileWidget = wizard->currentPage()->findChild<KeyFileEditWidget*>();
+        QVERIFY(additionalOptionsButton->isVisible());
+        QTest::mouseClick(additionalOptionsButton, Qt::MouseButton::LeftButton);
+        QTRY_VERIFY(keyFileWidget->isVisible());
+        QTRY_VERIFY(!additionalOptionsButton->isVisible());
+        QCOMPARE(passwordWidget->visiblePage(), KeyFileEditWidget::Page::Edit);
+        QTest::mouseClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::MouseButton::LeftButton);
+        auto* fileCombo = keyFileWidget->findChild<QComboBox*>("keyFileCombo");
+        QTRY_VERIFY(fileCombo);
+        QTRY_VERIFY(fileCombo->isVisible());
+        fileDialog()->setNextFileName(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
+        QTest::keyClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::Key::Key_Enter);
+        QVERIFY(fileCombo->hasFocus());
+        auto* browseButton = keyFileWidget->findChild<QPushButton*>("browseKeyFileButton");
+        QTest::keyClick(browseButton, Qt::Key::Key_Enter);
+        QCOMPARE(fileCombo->currentText(), QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
+
+        // save database to temporary file
+        TemporaryFile tmpFile;
+        QVERIFY(tmpFile.open());
+        tmpFile.close();
+        fileDialog()->setNextFileName(tmpFile.fileName());
+
+        QTest::keyClick(fileCombo, Qt::Key::Key_Enter);
+        tmpFile.remove(););
+
     triggerAction("actionDatabaseNew");
 
     // there is a new empty db
@@ -208,94 +314,9 @@ void TestGui::testCreateDatabase()
     // close the new database
     MessageBox::setNextAnswer(MessageBox::No);
     triggerAction("actionDatabaseClose");
-}
 
-void TestGui::createDatabaseCallback()
-{
-    auto* wizard = m_tabWidget->findChild<NewDatabaseWizard*>();
-    QVERIFY(wizard);
-
-    QTest::keyClicks(wizard->currentPage()->findChild<QLineEdit*>("databaseName"), "Test Name");
-    QTest::keyClicks(wizard->currentPage()->findChild<QLineEdit*>("databaseDescription"), "Test Description");
-    QCOMPARE(wizard->currentId(), 0);
-
-    QTest::keyClick(wizard, Qt::Key_Enter);
-    QCOMPARE(wizard->currentId(), 1);
-
-    auto decryptionTimeSlider = wizard->currentPage()->findChild<QSlider*>("decryptionTimeSlider");
-    auto algorithmComboBox = wizard->currentPage()->findChild<QComboBox*>("algorithmComboBox");
-    QTRY_VERIFY(decryptionTimeSlider->isVisible());
-    QVERIFY(!algorithmComboBox->isVisible());
-    auto advancedToggle = wizard->currentPage()->findChild<QPushButton*>("advancedSettingsButton");
-    QTest::mouseClick(advancedToggle, Qt::MouseButton::LeftButton);
-    QTRY_VERIFY(!decryptionTimeSlider->isVisible());
-    QVERIFY(algorithmComboBox->isVisible());
-
-    auto rounds = wizard->currentPage()->findChild<QSpinBox*>("transformRoundsSpinBox");
-    QVERIFY(rounds);
-    QVERIFY(rounds->isVisible());
-    QTest::mouseClick(rounds, Qt::MouseButton::LeftButton);
-    QTest::keyClick(rounds, Qt::Key_A, Qt::ControlModifier);
-    QTest::keyClicks(rounds, "2");
-    QTest::keyClick(rounds, Qt::Key_Tab);
-    QTest::keyClick(rounds, Qt::Key_Tab);
-
-    auto memory = wizard->currentPage()->findChild<QSpinBox*>("memorySpinBox");
-    QVERIFY(memory);
-    QVERIFY(memory->isVisible());
-    QTest::mouseClick(memory, Qt::MouseButton::LeftButton);
-    QTest::keyClick(memory, Qt::Key_A, Qt::ControlModifier);
-    QTest::keyClicks(memory, "50");
-    QTest::keyClick(memory, Qt::Key_Tab);
-
-    auto parallelism = wizard->currentPage()->findChild<QSpinBox*>("parallelismSpinBox");
-    QVERIFY(parallelism);
-    QVERIFY(parallelism->isVisible());
-    QTest::mouseClick(parallelism, Qt::MouseButton::LeftButton);
-    QTest::keyClick(parallelism, Qt::Key_A, Qt::ControlModifier);
-    QTest::keyClicks(parallelism, "1");
-    QTest::keyClick(parallelism, Qt::Key_Enter);
-
-    QCOMPARE(wizard->currentId(), 2);
-
-    // enter password
-    auto* passwordWidget = wizard->currentPage()->findChild<PasswordEditWidget*>();
-    QCOMPARE(passwordWidget->visiblePage(), KeyFileEditWidget::Page::Edit);
-    auto* passwordEdit = passwordWidget->findChild<QLineEdit*>("enterPasswordEdit");
-    auto* passwordRepeatEdit = passwordWidget->findChild<QLineEdit*>("repeatPasswordEdit");
-    QTRY_VERIFY(passwordEdit->isVisible());
-    QTRY_VERIFY(passwordEdit->hasFocus());
-    QTest::keyClicks(passwordEdit, "test");
-    QTest::keyClick(passwordEdit, Qt::Key::Key_Tab);
-    QTest::keyClicks(passwordRepeatEdit, "test");
-
-    // add key file
-    auto* additionalOptionsButton = wizard->currentPage()->findChild<QPushButton*>("additionalKeyOptionsToggle");
-    auto* keyFileWidget = wizard->currentPage()->findChild<KeyFileEditWidget*>();
-    QVERIFY(additionalOptionsButton->isVisible());
-    QTest::mouseClick(additionalOptionsButton, Qt::MouseButton::LeftButton);
-    QTRY_VERIFY(keyFileWidget->isVisible());
-    QTRY_VERIFY(!additionalOptionsButton->isVisible());
-    QCOMPARE(passwordWidget->visiblePage(), KeyFileEditWidget::Page::Edit);
-    QTest::mouseClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::MouseButton::LeftButton);
-    auto* fileCombo = keyFileWidget->findChild<QComboBox*>("keyFileCombo");
-    QTRY_VERIFY(fileCombo);
-    QTRY_VERIFY(fileCombo->isVisible());
-    fileDialog()->setNextFileName(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
-    QTest::keyClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::Key::Key_Enter);
-    QVERIFY(fileCombo->hasFocus());
-    auto* browseButton = keyFileWidget->findChild<QPushButton*>("browseKeyFileButton");
-    QTest::keyClick(browseButton, Qt::Key::Key_Enter);
-    QCOMPARE(fileCombo->currentText(), QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
-
-    // save database to temporary file
-    TemporaryFile tmpFile;
-    QVERIFY(tmpFile.open());
-    tmpFile.close();
-    fileDialog()->setNextFileName(tmpFile.fileName());
-
-    QTest::keyClick(fileCombo, Qt::Key::Key_Enter);
-    tmpFile.remove();
+    // Wait for dialog to terminate
+    QTRY_VERIFY(dialogFinished);
 }
 
 void TestGui::testMergeDatabase()
@@ -330,7 +351,7 @@ void TestGui::testMergeDatabase()
 
 void TestGui::testAutoreloadDatabase()
 {
-    config()->set("AutoReloadOnChange", false);
+    config()->set(Config::AutoReloadOnChange, false);
 
     // Test accepting new file in autoreload
     MessageBox::setNextAnswer(MessageBox::Yes);
@@ -363,7 +384,7 @@ void TestGui::testAutoreloadDatabase()
 
     // Test accepting a merge of edits into autoreload
     // Turn on autoload so we only get one messagebox (for the merge)
-    config()->set("AutoReloadOnChange", true);
+    config()->set(Config::AutoReloadOnChange, true);
     // Modify some entries
     testEditEntry();
 
@@ -430,10 +451,21 @@ void TestGui::testEditEntry()
     QCOMPARE(entry->historyItems().size(), ++editCount);
     QVERIFY(!applyButton->isEnabled());
 
+    // Test the "known bad" checkbox
+    editEntryWidget->setCurrentPage(1);
+    auto knownBadCheckBox = editEntryWidget->findChild<QCheckBox*>("knownBadCheckBox");
+    QVERIFY(knownBadCheckBox);
+    QCOMPARE(knownBadCheckBox->isChecked(), false);
+    knownBadCheckBox->setChecked(true);
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(entry->historyItems().size(), ++editCount);
+    QCOMPARE(entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD), true);
+    QCOMPARE(entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD), TRUE_STR);
+
     // Test entry colors (simulate choosing a color)
     editEntryWidget->setCurrentPage(1);
-    auto fgColor = QColor(Qt::red);
-    auto bgColor = QColor(Qt::blue);
+    auto fgColor = QString("#FF0000");
+    auto bgColor = QString("#0000FF");
     // Set foreground color
     auto colorButton = editEntryWidget->findChild<QPushButton*>("fgColorButton");
     auto colorCheckBox = editEntryWidget->findChild<QCheckBox*>("fgColorCheckBox");
@@ -460,17 +492,6 @@ void TestGui::testEditEntry()
     QCOMPARE(attrTextEdit->toPlainText(), attrText);
     editEntryWidget->setCurrentPage(0);
 
-    // Test mismatch passwords
-    auto* passwordEdit = editEntryWidget->findChild<QLineEdit*>("passwordEdit");
-    QString originalPassword = passwordEdit->text();
-    passwordEdit->setText("newpass");
-    QTest::mouseClick(okButton, Qt::LeftButton);
-    auto* messageWiget = editEntryWidget->findChild<MessageWidget*>("messageWidget");
-    QTRY_VERIFY(messageWiget->isVisible());
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
-    QCOMPARE(passwordEdit->text(), QString("newpass"));
-    passwordEdit->setText(originalPassword);
-
     // Save the edit (press OK)
     QTest::mouseClick(okButton, Qt::LeftButton);
     QApplication::processEvents();
@@ -478,9 +499,9 @@ void TestGui::testEditEntry()
     // Confirm edit was made
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
-    QCOMPARE(entry->foregroundColor(), fgColor);
+    QCOMPARE(entry->foregroundColor().toUpper(), fgColor.toUpper());
     QCOMPARE(entryItem.data(Qt::ForegroundRole), QVariant(fgColor));
-    QCOMPARE(entry->backgroundColor(), bgColor);
+    QCOMPARE(entry->backgroundColor().toUpper(), bgColor.toUpper());
     QCOMPARE(entryItem.data(Qt::BackgroundRole), QVariant(bgColor));
     QCOMPARE(entry->historyItems().size(), ++editCount);
 
@@ -495,7 +516,6 @@ void TestGui::testEditEntry()
     titleEdit->setText("multiline\ntitle");
     editEntryWidget->findChild<QComboBox*>("usernameComboBox")->lineEdit()->setText("multiline\nusername");
     editEntryWidget->findChild<QLineEdit*>("passwordEdit")->setText("multiline\npassword");
-    editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit")->setText("multiline\npassword");
     editEntryWidget->findChild<QLineEdit*>("urlEdit")->setText("multiline\nurl");
     QTest::mouseClick(okButton, Qt::LeftButton);
 
@@ -555,7 +575,7 @@ void TestGui::testSearchEditEntry()
 
     // Check the path in header is "parent-group > entry"
     QCOMPARE(m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget")->findChild<QLabel*>("headerLabel")->text(),
-             QString("Good > Doggy > Edit entry"));
+             QStringLiteral("Good \u2B29 Doggy \u2B29 Edit entry"));
 }
 
 void TestGui::testAddEntry()
@@ -604,9 +624,7 @@ void TestGui::testAddEntry()
     QTest::keyClicks(usernameComboBox, "Auto");
     QTest::keyPress(usernameComboBox, Qt::Key_Right);
     auto* passwordEdit = editEntryWidget->findChild<QLineEdit*>("passwordEdit");
-    auto* passwordRepeatEdit = editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit");
     QTest::keyClicks(passwordEdit, "something 2");
-    QTest::keyClicks(passwordRepeatEdit, "something 2");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
@@ -652,53 +670,62 @@ void TestGui::testPasswordEntryEntropy()
     QTest::keyClicks(titleEdit, "test");
 
     // Open the password generator
-    auto* generatorButton = editEntryWidget->findChild<QToolButton*>("togglePasswordGeneratorButton");
-    QTest::mouseClick(generatorButton, Qt::LeftButton);
+    auto* passwordEdit = editEntryWidget->findChild<PasswordEdit*>();
+    QVERIFY(passwordEdit);
+    QTest::mouseClick(passwordEdit, Qt::LeftButton);
 
-    // Type in some password
-    auto* editNewPassword = editEntryWidget->findChild<QLineEdit*>("editNewPassword");
-    auto* entropyLabel = editEntryWidget->findChild<QLabel*>("entropyLabel");
-    auto* strengthLabel = editEntryWidget->findChild<QLabel*>("strengthLabel");
+    QTest::keyClick(passwordEdit, Qt::Key_G, Qt::ControlModifier);
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "hello");
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 6.38 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+    TEST_MODAL(PasswordGeneratorWidget * pwGeneratorWidget;
+               QTRY_VERIFY(pwGeneratorWidget = m_dbWidget->findChild<PasswordGeneratorWidget*>());
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "helloworld");
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 13.10 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+               // Type in some password
+               auto* generatedPassword = pwGeneratorWidget->findChild<QLineEdit*>("editNewPassword");
+               auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
+               auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "password1");
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 4.00 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+               generatedPassword->setText("");
+               QTest::keyClicks(generatedPassword, "hello");
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 6.38 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "D0g..................");
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 19.02 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+               generatedPassword->setText("");
+               QTest::keyClicks(generatedPassword, "helloworld");
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 13.10 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "Tr0ub4dour&3");
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 30.87 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+               generatedPassword->setText("");
+               QTest::keyClicks(generatedPassword, "password1");
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 4.00 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 47.98 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Weak"));
+               generatedPassword->setText("");
+               QTest::keyClicks(generatedPassword, "D0g..................");
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 19.02 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "YQC3kbXbjC652dTDH");
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 95.83 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+               generatedPassword->setText("");
+               QTest::keyClicks(generatedPassword, "Tr0ub4dour&3");
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 30.87 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 174.59 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
+               generatedPassword->setText("");
+               QTest::keyClicks(generatedPassword, "correcthorsebatterystaple");
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 47.98 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Weak"));
+
+               generatedPassword->setText("");
+               QTest::keyClicks(generatedPassword, "YQC3kbXbjC652dTDH");
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 95.83 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+
+               generatedPassword->setText("");
+               QTest::keyClicks(generatedPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 174.59 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
+
+               QTest::mouseClick(generatedPassword, Qt::LeftButton);
+               QTest::keyClick(generatedPassword, Qt::Key_Escape););
 }
 
 void TestGui::testDicewareEntryEntropy()
@@ -724,25 +751,38 @@ void TestGui::testDicewareEntryEntropy()
     QTest::keyClicks(titleEdit, "test");
 
     // Open the password generator
-    auto* generatorButton = editEntryWidget->findChild<QToolButton*>("togglePasswordGeneratorButton");
-    QTest::mouseClick(generatorButton, Qt::LeftButton);
+    auto* passwordEdit = editEntryWidget->findChild<PasswordEdit*>();
+    QVERIFY(passwordEdit);
+    QTest::mouseClick(passwordEdit, Qt::LeftButton);
 
-    // Select Diceware
-    auto* tabWidget = editEntryWidget->findChild<QTabWidget*>("tabWidget");
-    auto* dicewareWidget = editEntryWidget->findChild<QWidget*>("dicewareWidget");
-    tabWidget->setCurrentWidget(dicewareWidget);
+    QTest::keyClick(passwordEdit, Qt::Key_G, Qt::ControlModifier);
 
-    auto* comboBoxWordList = dicewareWidget->findChild<QComboBox*>("comboBoxWordList");
-    comboBoxWordList->setCurrentText("eff_large.wordlist");
-    auto* spinBoxWordCount = dicewareWidget->findChild<QSpinBox*>("spinBoxWordCount");
-    spinBoxWordCount->setValue(6);
+    TEST_MODAL(PasswordGeneratorWidget * pwGeneratorWidget;
+               QTRY_VERIFY(pwGeneratorWidget = m_dbWidget->findChild<PasswordGeneratorWidget*>());
 
-    // Type in some password
-    auto* entropyLabel = editEntryWidget->findChild<QLabel*>("entropyLabel");
-    auto* strengthLabel = editEntryWidget->findChild<QLabel*>("strengthLabel");
+               // Select Diceware
+               auto* generatedPassword = pwGeneratorWidget->findChild<QLineEdit*>("editNewPassword");
+               auto* tabWidget = pwGeneratorWidget->findChild<QTabWidget*>("tabWidget");
+               auto* dicewareWidget = pwGeneratorWidget->findChild<QWidget*>("dicewareWidget");
+               tabWidget->setCurrentWidget(dicewareWidget);
 
-    QCOMPARE(entropyLabel->text(), QString("Entropy: 77.55 bit"));
-    QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+               auto* comboBoxWordList = dicewareWidget->findChild<QComboBox*>("comboBoxWordList");
+               comboBoxWordList->setCurrentText("eff_large.wordlist");
+               auto* spinBoxWordCount = dicewareWidget->findChild<QSpinBox*>("spinBoxWordCount");
+               spinBoxWordCount->setValue(6);
+
+               // Confirm a password was generated
+               QVERIFY(!pwGeneratorWidget->getGeneratedPassword().isEmpty());
+
+               // Verify entropy and strength
+               auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
+               auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
+
+               QCOMPARE(entropyLabel->text(), QString("Entropy: 77.55 bit"));
+               QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+
+               QTest::mouseClick(generatedPassword, Qt::LeftButton);
+               QTest::keyClick(generatedPassword, Qt::Key_Escape););
 }
 
 void TestGui::testTotp()
@@ -864,8 +904,8 @@ void TestGui::testSearch()
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
     auto* searchedEntry = entryView->currentEntry();
-    // Restore focus and search text selection
-    QTest::keyClick(m_mainWindow.data(), Qt::Key_F, Qt::ControlModifier);
+    // Restore focus using F1 key and search text selection
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_F1);
     QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
     QTRY_VERIFY(searchTextEdit->hasFocus());
 
@@ -882,6 +922,7 @@ void TestGui::testSearch()
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QCOMPARE(searchedEntry->password(), clipboard->text());
     // Ensure Down focuses on entry view when search text is selected
+    QTest::keyClick(searchTextEdit, Qt::Key_A, Qt::ControlModifier);
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
     QCOMPARE(entryView->currentEntry(), searchedEntry);
@@ -927,12 +968,14 @@ void TestGui::testSearch()
     searchWidget->setLimitGroup(false);
     clickIndex(rootGroupIndex, groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
+    QVERIFY(!m_dbWidget->isSearchActive());
 
     // Try to edit the first entry from the search view
     // Refocus back to search edit
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    QVERIFY(m_dbWidget->isSearchActive());
+    QTest::keyClicks(searchTextEdit, "someTHING");
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
 
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(item);
@@ -1173,6 +1216,35 @@ void TestGui::testSaveAs()
     tmpFile.remove();
 }
 
+void TestGui::testSaveBackup()
+{
+    m_db->metadata()->setName("testSaveBackup");
+
+    QFileInfo fileInfo(m_dbFilePath);
+    QDateTime lastModified = fileInfo.lastModified();
+
+    // open temporary file so it creates a filename
+    TemporaryFile tmpFile;
+    QVERIFY(tmpFile.open());
+    QString tmpFileName = tmpFile.fileName();
+    tmpFile.remove();
+
+    // wait for modified timer
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
+
+    fileDialog()->setNextFileName(tmpFileName);
+
+    triggerAction("actionDatabaseSaveBackup");
+
+    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
+
+    checkDatabase(tmpFileName);
+
+    fileInfo.refresh();
+    QCOMPARE(fileInfo.lastModified(), lastModified);
+    tmpFile.remove();
+}
+
 void TestGui::testSave()
 {
     m_db->metadata()->setName("testSave");
@@ -1189,7 +1261,7 @@ void TestGui::testSave()
 void TestGui::testDatabaseSettings()
 {
     m_db->metadata()->setName("testDatabaseSettings");
-    triggerAction("actionChangeDatabaseSettings");
+    triggerAction("actionDatabaseSettings");
     auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
     auto* transformRoundsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("transformRoundsSpinBox");
     auto advancedToggle = dbSettingsDialog->findChild<QCheckBox*>("advancedSettingsToggle");
@@ -1428,7 +1500,6 @@ int TestGui::addCannedEntries()
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     auto* passwordEdit = editEntryWidget->findChild<QLineEdit*>("passwordEdit");
-    auto* passwordRepeatEdit = editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit");
 
     // Add entry "test" and confirm added
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
@@ -1441,7 +1512,6 @@ int TestGui::addCannedEntries()
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 2");
     QTest::keyClicks(passwordEdit, "something 2");
-    QTest::keyClicks(passwordRepeatEdit, "something 2");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     ++entries_added;
 

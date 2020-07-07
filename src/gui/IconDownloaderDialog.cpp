@@ -28,7 +28,7 @@
 #include "core/Tools.h"
 #include "gui/IconModels.h"
 #ifdef Q_OS_MACOS
-#include "gui/macutils/MacUtils.h"
+#include "gui/osutils/macutils/MacUtils.h"
 #endif
 
 #include <QMutexLocker>
@@ -159,7 +159,7 @@ void IconDownloaderDialog::downloadFinished(const QString& url, const QImage& ic
 void IconDownloaderDialog::showFallbackMessage(bool state)
 {
     // Show fallback message if the option is not active
-    bool show = state && !config()->get("security/IconDownloadFallback").toBool();
+    bool show = state && !config()->get(Config::Security_IconDownloadFallback).toBool();
     m_ui->fallbackLabel->setVisible(show);
 }
 

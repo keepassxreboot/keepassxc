@@ -22,7 +22,7 @@
 
 #include "config-keepassx.h"
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 WelcomeWidget::WelcomeWidget(QWidget* parent)
     : QWidget(parent)
@@ -36,14 +36,9 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
     welcomeLabelFont.setPointSize(welcomeLabelFont.pointSize() + 4);
     m_ui->welcomeLabel->setFont(welcomeLabelFont);
 
-    m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(64));
+    m_ui->iconLabel->setPixmap(resources()->applicationIcon().pixmap(64));
 
     refreshLastDatabases();
-
-    bool recent_visibility = (m_ui->recentListWidget->count() > 0);
-    m_ui->startLabel->setVisible(!recent_visibility);
-    m_ui->recentListWidget->setVisible(recent_visibility);
-    m_ui->recentLabel->setVisible(recent_visibility);
 
     connect(m_ui->buttonNewDatabase, SIGNAL(clicked()), SIGNAL(newDatabase()));
     connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
@@ -62,28 +57,57 @@ WelcomeWidget::~WelcomeWidget()
 
 void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 {
-    if (item->text().isEmpty()) {
+    if (!item || item->text().isEmpty()) {
         return;
     }
     emit openDatabaseFile(item->text());
 }
 
+void WelcomeWidget::removeFromLastDatabases(QListWidgetItem* item)
+{
+    if (!item || item->text().isEmpty()) {
+        return;
+    }
+
+    if (config()->get(Config::RememberLastDatabases).toBool()) {
+        QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
+        lastDatabases.removeOne(item->text());
+        config()->set(Config::LastDatabases, lastDatabases);
+    }
+    refreshLastDatabases();
+}
+
 void WelcomeWidget::refreshLastDatabases()
 {
     m_ui->recentListWidget->clear();
-    const QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
+    const QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
     for (const QString& database : lastDatabases) {
         QListWidgetItem* itm = new QListWidgetItem;
         itm->setText(database);
         m_ui->recentListWidget->addItem(itm);
     }
+
+    bool recent_visibility = (m_ui->recentListWidget->count() > 0);
+    m_ui->startLabel->setVisible(!recent_visibility);
+    m_ui->recentListWidget->setVisible(recent_visibility);
+    m_ui->recentLabel->setVisible(recent_visibility);
 }
 
 void WelcomeWidget::keyPressEvent(QKeyEvent* event)
 {
-    if (m_ui->recentListWidget->hasFocus() && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
-        openDatabaseFromFile(m_ui->recentListWidget->currentItem());
+    if (m_ui->recentListWidget->hasFocus()) {
+        if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+            openDatabaseFromFile(m_ui->recentListWidget->currentItem());
+        } else if (event->key() == Qt::Key_Delete || event->key() == Qt::Key_Backspace) {
+            removeFromLastDatabases(m_ui->recentListWidget->currentItem());
+        }
     }
 
     QWidget::keyPressEvent(event);
+}
+
+void WelcomeWidget::showEvent(QShowEvent* event)
+{
+    refreshLastDatabases();
+    QWidget::showEvent(event);
 }

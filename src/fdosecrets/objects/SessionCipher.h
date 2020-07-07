@@ -22,6 +22,7 @@
 #include "fdosecrets/objects/Session.h"
 
 class TestFdoSecrets;
+class TestGuiFdoSecrets;
 
 namespace FdoSecrets
 {
@@ -42,6 +43,8 @@ namespace FdoSecrets
     {
         Q_DISABLE_COPY(PlainCipher)
     public:
+        static constexpr const char Algorithm[] = "plain";
+
         PlainCipher() = default;
         SecretStruct encrypt(const SecretStruct& input) override
         {
@@ -113,6 +116,8 @@ namespace FdoSecrets
         }
 
     public:
+        static constexpr const char Algorithm[] = "dh-ietf1024-sha256-aes128-cbc-pkcs7";
+
         explicit DhIetf1024Sha256Aes128CbcPkcs7(const QByteArray& clientPublicKeyBytes);
 
         SecretStruct encrypt(const SecretStruct& input) override;
@@ -124,8 +129,17 @@ namespace FdoSecrets
         QVariant negotiationOutput() const override;
 
     private:
+        /**
+         * For test only, fix the server side private and public key.
+         */
+        static void fixNextServerKeys(GcryptMPI priv, GcryptMPI pub);
+        static GcryptMPI NextPrivKey;
+        static GcryptMPI NextPubKey;
+
+    private:
         Q_DISABLE_COPY(DhIetf1024Sha256Aes128CbcPkcs7);
         friend class ::TestFdoSecrets;
+        friend class ::TestGuiFdoSecrets;
     };
 
 } // namespace FdoSecrets

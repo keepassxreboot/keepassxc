@@ -23,10 +23,12 @@
 #include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/SettingsModels.h"
 
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "gui/DatabaseWidget.h"
 
 #include <QAction>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QHeaderView>
 #include <QItemEditorFactory>
 #include <QStyledItemDelegate>
@@ -61,7 +63,7 @@ namespace
 
             // db settings
             m_dbSettingsAct = new QAction(tr("Database settings"), this);
-            m_dbSettingsAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("document-edit")));
+            m_dbSettingsAct->setIcon(resources()->icon(QStringLiteral("document-edit")));
             m_dbSettingsAct->setToolTip(tr("Edit database settings"));
             m_dbSettingsAct->setEnabled(false);
             connect(m_dbSettingsAct, &QAction::triggered, this, [this]() {
@@ -69,13 +71,13 @@ namespace
                     return;
                 }
                 auto db = m_dbWidget;
-                m_plugin->serviceInstance()->doSwitchToChangeDatabaseSettings(m_dbWidget);
+                m_plugin->serviceInstance()->doSwitchToDatabaseSettings(m_dbWidget);
             });
             addAction(m_dbSettingsAct);
 
             // unlock/lock
             m_lockAct = new QAction(tr("Unlock database"), this);
-            m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked"), false));
+            m_lockAct->setIcon(resources()->icon(QStringLiteral("object-locked")));
             m_lockAct->setToolTip(tr("Unlock database to show more information"));
             connect(m_lockAct, &QAction::triggered, this, [this]() {
                 if (!m_dbWidget) {
@@ -133,14 +135,13 @@ namespace
             }
             connect(m_dbWidget, &DatabaseWidget::databaseLocked, this, [this]() {
                 m_lockAct->setText(tr("Unlock database"));
-                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked"), false));
+                m_lockAct->setIcon(resources()->icon(QStringLiteral("object-locked")));
                 m_lockAct->setToolTip(tr("Unlock database to show more information"));
                 m_dbSettingsAct->setEnabled(false);
             });
             connect(m_dbWidget, &DatabaseWidget::databaseUnlocked, this, [this]() {
                 m_lockAct->setText(tr("Lock database"));
-                m_lockAct->setIcon(
-                    filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-unlocked"), false));
+                m_lockAct->setIcon(resources()->icon(QStringLiteral("object-unlocked")));
                 m_lockAct->setToolTip(tr("Lock database"));
                 m_dbSettingsAct->setEnabled(true);
             });
@@ -173,7 +174,7 @@ namespace
             addWidget(spacer);
 
             m_disconnectAct = new QAction(tr("Disconnect"), this);
-            m_disconnectAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("dialog-close")));
+            m_disconnectAct->setIcon(resources()->icon(QStringLiteral("dialog-close")));
             m_disconnectAct->setToolTip(tr("Disconnect this application"));
             connect(m_disconnectAct, &QAction::triggered, this, [this]() {
                 if (m_session) {
@@ -237,6 +238,8 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     , m_plugin(plugin)
 {
     m_ui->setupUi(this);
+    m_ui->warningMsg->setHidden(true);
+    m_ui->warningMsg->setCloseButtonVisible(false);
 
     auto sessModel = new SettingsSessionModel(plugin, this);
     m_ui->tableSessions->setModel(sessModel);
@@ -261,8 +264,17 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     dbViewHeader->setSectionResizeMode(1, QHeaderView::Stretch); // group
     dbViewHeader->setSectionResizeMode(2, QHeaderView::ResizeToContents); // manage button
 
-    m_ui->tabWidget->setEnabled(m_ui->enableFdoSecretService->isChecked());
-    connect(m_ui->enableFdoSecretService, &QCheckBox::toggled, m_ui->tabWidget, &QTabWidget::setEnabled);
+    // prompt the user to save settings before the sections are enabled
+    connect(m_plugin, &FdoSecretsPlugin::secretServiceStarted, this, &SettingsWidgetFdoSecrets::updateServiceState);
+    connect(m_plugin, &FdoSecretsPlugin::secretServiceStopped, this, &SettingsWidgetFdoSecrets::updateServiceState);
+    connect(m_ui->enableFdoSecretService, &QCheckBox::toggled, this, &SettingsWidgetFdoSecrets::updateServiceState);
+    updateServiceState();
+
+    // background checking
+    m_checkTimer.setInterval(2000);
+    connect(&m_checkTimer, &QTimer::timeout, this, &SettingsWidgetFdoSecrets::checkDBusName);
+    connect(m_plugin, &FdoSecretsPlugin::secretServiceStarted, &m_checkTimer, &QTimer::stop);
+    connect(m_plugin, SIGNAL(secretServiceStopped()), &m_checkTimer, SLOT(start()));
 }
 
 void SettingsWidgetFdoSecrets::setupView(QAbstractItemView* view,
@@ -299,6 +311,56 @@ void SettingsWidgetFdoSecrets::saveSettings()
     FdoSecrets::settings()->setEnabled(m_ui->enableFdoSecretService->isChecked());
     FdoSecrets::settings()->setShowNotification(m_ui->showNotification->isChecked());
     FdoSecrets::settings()->setNoConfirmDeleteItem(m_ui->noConfirmDeleteItem->isChecked());
+}
+
+void SettingsWidgetFdoSecrets::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+    QTimer::singleShot(0, this, &SettingsWidgetFdoSecrets::checkDBusName);
+    m_checkTimer.start();
+}
+
+void SettingsWidgetFdoSecrets::hideEvent(QHideEvent* event)
+{
+    QWidget::hideEvent(event);
+    m_checkTimer.stop();
+}
+
+void SettingsWidgetFdoSecrets::checkDBusName()
+{
+    if (m_plugin->serviceInstance()) {
+        // only need checking if the service is not started or failed to start.
+        return;
+    }
+
+    auto reply = QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral(DBUS_SERVICE_SECRET));
+    if (!reply.isValid()) {
+        m_ui->warningMsg->showMessage(
+            tr("<b>Error:</b> Failed to connect to DBus. Please check your DBus setup."), MessageWidget::Error, -1);
+        m_ui->enableFdoSecretService->setChecked(false);
+        m_ui->enableFdoSecretService->setEnabled(false);
+        return;
+    }
+    if (reply.value()) {
+        m_ui->warningMsg->showMessage(
+            tr("<b>Warning:</b> ") + m_plugin->reportExistingService(), MessageWidget::Warning, -1);
+        m_ui->enableFdoSecretService->setChecked(false);
+        m_ui->enableFdoSecretService->setEnabled(false);
+        return;
+    }
+    m_ui->warningMsg->hideMessage();
+    m_ui->enableFdoSecretService->setEnabled(true);
+}
+
+void SettingsWidgetFdoSecrets::updateServiceState()
+{
+    m_ui->tabWidget->setEnabled(m_plugin->serviceInstance() != nullptr);
+    if (m_ui->enableFdoSecretService->isChecked() && !m_plugin->serviceInstance()) {
+        m_ui->tabWidget->setToolTip(
+            tr("Save current changes to activate the plugin and enable editing of this section."));
+    } else {
+        m_ui->tabWidget->setToolTip("");
+    }
 }
 
 #include "SettingsWidgetFdoSecrets.moc"

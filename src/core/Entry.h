@@ -19,7 +19,6 @@
 #ifndef KEEPASSX_ENTRY_H
 #define KEEPASSX_ENTRY_H
 
-#include <QColor>
 #include <QImage>
 #include <QMap>
 #include <QPixmap>
@@ -32,6 +31,7 @@
 #include "core/CustomData.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
+#include "core/Global.h"
 #include "core/TimeInfo.h"
 
 class Database;
@@ -57,8 +57,8 @@ struct EntryData
 {
     int iconNumber;
     QUuid customIcon;
-    QColor foregroundColor;
-    QColor backgroundColor;
+    QString foregroundColor;
+    QString backgroundColor;
     QString overrideUrl;
     QString tags;
     bool autoTypeEnabled;
@@ -82,12 +82,11 @@ public:
     const QUuid& uuid() const;
     const QString uuidToHex() const;
     QImage icon() const;
-    QPixmap iconPixmap() const;
-    QPixmap iconScaledPixmap() const;
+    QPixmap iconPixmap(IconSize size = IconSize::Default) const;
     int iconNumber() const;
     const QUuid& iconUuid() const;
-    QColor foregroundColor() const;
-    QColor backgroundColor() const;
+    QString foregroundColor() const;
+    QString backgroundColor() const;
     QString overrideUrl() const;
     QString tags() const;
     const TimeInfo& timeInfo() const;
@@ -108,6 +107,7 @@ public:
     QString attribute(const QString& key) const;
     QString totp() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
+    int size() const;
 
     bool hasTotp() const;
     bool isExpired() const;
@@ -132,8 +132,8 @@ public:
     void setUuid(const QUuid& uuid);
     void setIcon(int iconNumber);
     void setIcon(const QUuid& uuid);
-    void setForegroundColor(const QColor& color);
-    void setBackgroundColor(const QColor& color);
+    void setForegroundColor(const QString& color);
+    void setBackgroundColor(const QString& color);
     void setOverrideUrl(const QString& url);
     void setTags(const QString& tags);
     void setTimeInfo(const TimeInfo& timeInfo);
@@ -191,7 +191,22 @@ public:
         UrlUserName,
         UrlPassword,
         Reference,
-        CustomAttribute
+        CustomAttribute,
+        DateTimeSimple,
+        DateTimeYear,
+        DateTimeMonth,
+        DateTimeDay,
+        DateTimeHour,
+        DateTimeMinute,
+        DateTimeSecond,
+        DateTimeUtcSimple,
+        DateTimeUtcYear,
+        DateTimeUtcMonth,
+        DateTimeUtcDay,
+        DateTimeUtcHour,
+        DateTimeUtcMinute,
+        DateTimeUtcSecond,
+        DbDir
     };
 
     /**
@@ -207,6 +222,7 @@ public:
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
     QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType) const;
+    QString resolveDateTimePlaceholder(PlaceholderType placeholderType) const;
     PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
@@ -216,6 +232,9 @@ public:
      */
     void beginUpdate();
     bool endUpdate();
+
+    void moveUp();
+    void moveDown();
 
     Group* group();
     const Group* group() const;

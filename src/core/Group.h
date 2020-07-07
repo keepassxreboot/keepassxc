@@ -21,12 +21,12 @@
 
 #include <QImage>
 #include <QPixmap>
-#include <QPixmapCache>
 #include <QPointer>
 
 #include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Global.h"
 #include "core/TimeInfo.h"
 
 class Group : public QObject
@@ -85,8 +85,7 @@ public:
     QString name() const;
     QString notes() const;
     QImage icon() const;
-    QPixmap iconPixmap() const;
-    QPixmap iconScaledPixmap() const;
+    QPixmap iconPixmap(IconSize size = IconSize::Default) const;
     int iconNumber() const;
     const QUuid& iconUuid() const;
     const TimeInfo& timeInfo() const;
@@ -167,6 +166,8 @@ public:
 
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
+    void moveEntryUp(Entry* entry);
+    void moveEntryDown(Entry* entry);
 
     void applyGroupIconOnCreateTo(Entry* entry);
     void applyGroupIconTo(Entry* entry);
@@ -185,10 +186,15 @@ signals:
     void aboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
     void groupModified();
+    void groupNonDataChange();
     void entryAboutToAdd(Entry* entry);
     void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);
     void entryRemoved(Entry* entry);
+    void entryAboutToMoveUp(int row);
+    void entryMovedUp();
+    void entryAboutToMoveDown(int row);
+    void entryMovedDown();
     void entryDataChanged(Entry* entry);
 
 private slots:

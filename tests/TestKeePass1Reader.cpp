@@ -106,13 +106,13 @@ void TestKeePass1Reader::testBasic()
 
 void TestKeePass1Reader::testMasterKey()
 {
-    QVERIFY(m_db->hasKey());
+    QVERIFY(m_db->isInitialized());
     QCOMPARE(m_db->kdf()->rounds(), 713);
 }
 
 void TestKeePass1Reader::testCustomIcons()
 {
-    QCOMPARE(m_db->metadata()->customIcons().size(), 1);
+    QCOMPARE(m_db->metadata()->customIconsOrder().size(), 1);
 
     Entry* entry = m_db->rootGroup()->children().at(1)->entries().at(0);
 

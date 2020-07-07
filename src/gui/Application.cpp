@@ -18,8 +18,14 @@
  */
 
 #include "Application.h"
-#include "MainWindow.h"
+
+#include "autotype/AutoType.h"
 #include "core/Config.h"
+#include "core/Global.h"
+#include "gui/MainWindow.h"
+#include "gui/osutils/OSUtils.h"
+#include "gui/styles/dark/DarkStyle.h"
+#include "gui/styles/light/LightStyle.h"
 
 #include <QFileInfo>
 #include <QFileOpenEvent>
@@ -27,9 +33,6 @@
 #include <QSocketNotifier>
 #include <QStandardPaths>
 #include <QtNetwork/QLocalSocket>
-
-#include "autotype/AutoType.h"
-#include "core/Global.h"
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
 #include "core/OSEventFilter.h"
@@ -96,7 +99,7 @@ Application::Application(int& argc, char** argv)
         m_lockServer.listen(m_socketName);
         break;
     case QLockFile::LockFailedError: {
-        if (config()->get("SingleInstance").toBool()) {
+        if (config()->get(Config::SingleInstance).toBool()) {
             // Attempt to connect to the existing instance
             QLocalSocket client;
             for (int i = 0; i < 3; ++i) {
@@ -137,6 +140,32 @@ Application::~Application()
         m_lockFile->unlock();
         delete m_lockFile;
     }
+}
+
+void Application::applyTheme()
+{
+    QString appTheme = config()->get(Config::GUI_ApplicationTheme).toString();
+    if (appTheme == "auto") {
+        if (osUtils->isDarkMode()) {
+            setStyle(new DarkStyle);
+            m_darkTheme = true;
+        } else {
+            setStyle(new LightStyle);
+        }
+    } else if (appTheme == "light") {
+        setStyle(new LightStyle);
+    } else if (appTheme == "dark") {
+        setStyle(new DarkStyle);
+        m_darkTheme = true;
+    } else {
+        // Classic mode, don't check for dark theme on Windows
+        // because Qt 5.x does not support it
+#ifndef Q_OS_WIN
+        m_darkTheme = osUtils->isDarkMode();
+#endif
+    }
+
+    setPalette(style()->standardPalette());
 }
 
 bool Application::event(QEvent* event)
@@ -257,7 +286,7 @@ bool Application::isAlreadyRunning() const
     // In DEBUG mode we can run unlimited instances
     return false;
 #endif
-    return config()->get("SingleInstance").toBool() && m_alreadyRunning;
+    return config()->get(Config::SingleInstance).toBool() && m_alreadyRunning;
 }
 
 bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
@@ -280,4 +309,22 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
     client.disconnectFromServer();
     const bool disconnected = client.waitForDisconnected(WaitTimeoutMSec);
     return writeOk && disconnected;
+}
+
+bool Application::isDarkTheme() const
+{
+    return m_darkTheme;
+}
+
+void Application::restart()
+{
+    // Disable single instance
+    m_lockServer.close();
+    if (m_lockFile) {
+        m_lockFile->unlock();
+        delete m_lockFile;
+        m_lockFile = nullptr;
+    }
+
+    exit(RESTART_EXITCODE);
 }

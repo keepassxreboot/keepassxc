@@ -70,9 +70,9 @@ namespace Bootstrap
 #ifdef QT_NO_DEBUG
         disableCoreDumps();
 #endif
+
         setupSearchPaths();
         applyEarlyQNetworkAccessManagerWorkaround();
-        Translator::installTranslators();
     }
 
     /**
@@ -83,13 +83,16 @@ namespace Bootstrap
     void bootstrapApplication()
     {
         bootstrap();
-        MessageBox::initializeButtonDefs();
+        Translator::installTranslators();
 
-#ifdef KEEPASSXC_DIST_SNAP
-        // snap: force fallback theme to avoid using system theme (gtk integration)
-        // with missing actions just like on Windows and macOS
-        QIcon::setThemeSearchPaths(QStringList() << ":/icons");
+#ifdef Q_OS_WIN
+        // Qt on Windows uses "MS Shell Dlg 2" as the default font for many widgets, which resolves
+        // to Tahoma 8pt, whereas the correct font would be "Segoe UI" 9pt.
+        // Apparently, some widgets are already using the correct font. Thanks, MuseScore for this neat fix!
+        QApplication::setFont(QApplication::font("QMessageBox"));
 #endif
+
+        MessageBox::initializeButtonDefs();
 
 #ifdef Q_OS_MACOS
         // Don't show menu icons on OSX
@@ -105,24 +108,20 @@ namespace Bootstrap
     void restoreMainWindowState(MainWindow& mainWindow)
     {
         // start minimized if configured
-        if (config()->get("GUI/MinimizeOnStartup").toBool()) {
-#ifdef Q_OS_WIN
-            mainWindow.showMinimized();
-#else
+        if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
             mainWindow.hideWindow();
-#endif
         } else {
             mainWindow.bringToFront();
         }
 
-        if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
-            const QStringList fileNames = config()->get("LastOpenedDatabases").toStringList();
+        if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
+            const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
             for (const QString& filename : fileNames) {
                 if (!filename.isEmpty() && QFile::exists(filename)) {
                     mainWindow.openDatabase(filename);
                 }
             }
-            auto lastActiveFile = config()->get("LastActiveDatabase").toString();
+            auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
             if (!lastActiveFile.isEmpty()) {
                 mainWindow.openDatabase(lastActiveFile);
             }

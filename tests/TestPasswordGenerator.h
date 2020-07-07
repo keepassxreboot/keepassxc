@@ -26,6 +26,7 @@ class TestPasswordGenerator : public QObject
 
 private slots:
     void initTestCase();
+    void testAdditionalChars();
     void testCharClasses();
     void testLookalikeExclusion();
 };

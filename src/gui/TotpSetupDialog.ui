@@ -216,7 +216,9 @@
   <tabstop>radioDefault</tabstop>
   <tabstop>radioSteam</tabstop>
   <tabstop>radioCustom</tabstop>
+  <tabstop>algorithmComboBox</tabstop>
   <tabstop>stepSpinBox</tabstop>
+  <tabstop>digitsSpinBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -19,6 +19,7 @@
 
 #include <QBuffer>
 
+#include "core/AsyncTask.h"
 #include "core/Endian.h"
 #include "core/Group.h"
 #include "crypto/CryptoHash.h"
@@ -47,14 +48,15 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
         return false;
     }
 
-    if (!db->setKey(key, false, false)) {
-        raiseError(tr("Unable to calculate master key"));
+    bool ok = AsyncTask::runAndWaitForFuture([&] { return db->setKey(key, false, false); });
+    if (!ok) {
+        raiseError(tr("Unable to calculate database key: %1").arg(db->keyError()));
         return false;
     }
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
-    hash.addData(db->transformedMasterKey());
+    hash.addData(db->transformedDatabaseKey());
     QByteArray finalKey = hash.result();
 
     QByteArray headerSha256 = device->read(32);
@@ -69,7 +71,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
     }
 
     // clang-format off
-    QByteArray hmacKey = KeePass2::hmacKey(m_masterSeed, db->transformedMasterKey());
+    QByteArray hmacKey = KeePass2::hmacKey(m_masterSeed, db->transformedDatabaseKey());
     if (headerHmac != CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey), CryptoHash::Sha256)) {
         raiseError(tr("Invalid credentials were provided, please try again.\n"
                       "If this reoccurs, then your database file may be corrupt.") + " " + tr("(HMAC mismatch)"));

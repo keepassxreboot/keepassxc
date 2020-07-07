@@ -130,18 +130,20 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
 #endif
         return nameTemplate.arg(group->name());
     } else if (role == Qt::DecorationRole) {
-        QPixmap pixmap = group->isExpired() ? databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex)
-                                            : group->iconScaledPixmap();
-#if defined(WITH_XC_KEESHARE)
-        pixmap = KeeShare::indicatorBadge(group, pixmap);
-#endif
-        return pixmap;
+        return group->iconPixmap();
     } else if (role == Qt::FontRole) {
         QFont font;
         if (group->isExpired()) {
             font.setStrikeOut(true);
         }
         return font;
+    } else if (role == Qt::ToolTipRole) {
+        QString tooltip;
+        if (!group->parentGroup()) {
+            // only show a tooltip for the root group
+            tooltip = m_db->filePath();
+        }
+        return tooltip;
     } else {
         return QVariant();
     }
@@ -297,7 +299,7 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             Database* targetDb = parentGroup->database();
             QUuid customIcon = entry->iconUuid();
 
-            if (sourceDb != targetDb && !customIcon.isNull() && !targetDb->metadata()->containsCustomIcon(customIcon)) {
+            if (sourceDb != targetDb && !customIcon.isNull() && !targetDb->metadata()->hasCustomIcon(customIcon)) {
                 targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon));
             }
 

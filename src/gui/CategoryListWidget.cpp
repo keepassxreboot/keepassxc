@@ -20,6 +20,7 @@
 
 #include <QListWidget>
 #include <QPainter>
+#include <QProxyStyle>
 #include <QScrollBar>
 #include <QSize>
 #include <QStyledItemDelegate>
@@ -158,9 +159,7 @@ CategoryListWidgetDelegate::CategoryListWidgetDelegate(QListWidget* parent)
     }
 }
 
-#ifdef Q_OS_WIN
-#include <QProxyStyle>
-class WindowsCorrectedStyle : public QProxyStyle
+class IconSelectionCorrectedStyle : public QProxyStyle
 {
 public:
     void drawPrimitive(PrimitiveElement element,
@@ -169,24 +168,44 @@ public:
                        const QWidget* widget) const override
     {
         painter->save();
-
-        if (PE_PanelItemViewItem == element) {
-            // Qt on Windows draws selection backgrounds only for the actual text/icon
-            // bounding box, not over the full width of a list item.
-            // We therefore need to translate and stretch the painter before we can
-            // tell Qt to draw its native styles.
-            // Since we are scaling horizontally, we also need to move the right and left
-            // edge pixels outside the drawing area to avoid thick border lines.
-            QRect itemRect = subElementRect(QStyle::SE_ItemViewItemFocusRect, option, widget).adjusted(1, 0, 1, 0);
-            painter->scale(static_cast<float>(option->rect.width()) / itemRect.width(), 1.0);
-            painter->translate(option->rect.left() - itemRect.left() + 1, 0);
+        if (widget && PE_PanelItemViewItem == element) {
+            // Qt on Windows and the Fusion/Phantom base styles draw selection backgrounds only for
+            // the actual text/icon bounding box, not over the full width of a list item.
+            // State_On is relevant only for the Windows hack below.
+            if (option->state & State_HasFocus || option->state & State_On) {
+                painter->fillRect(option->rect, widget->palette().color(QPalette::Active, QPalette::Highlight));
+            } else if (option->state & State_Selected) {
+                painter->fillRect(option->rect, widget->palette().color(QPalette::Inactive, QPalette::Highlight));
+            }
+        } else if (PE_FrameFocusRect == element) {
+            // don't draw the native focus rect
+        } else {
+            QProxyStyle::drawPrimitive(element, option, painter, widget);
         }
-        QProxyStyle::drawPrimitive(element, option, painter, widget);
 
         painter->restore();
     }
-};
+
+#ifdef Q_OS_WIN
+    void drawControl(ControlElement element,
+                     const QStyleOption* option,
+                     QPainter* painter,
+                     const QWidget* widget) const override
+    {
+        // Qt on Windows swallows State_HasFocus somewhere in its intestines,
+        // so we abuse State_On here to indicate the selection focus and
+        // hack into the text colour palette. Forgive me.
+        if (QStyle::CE_ItemViewItem == element && option->state & State_HasFocus) {
+            QStyleOptionViewItem newOpt(*qstyleoption_cast<const QStyleOptionViewItem*>(option));
+            newOpt.state |= State_On;
+            newOpt.palette.setColor(QPalette::All, QPalette::Text, widget->palette().color(QPalette::HighlightedText));
+            QProxyStyle::drawControl(element, &newOpt, painter, widget);
+            return;
+        }
+        QProxyStyle::drawControl(element, option, painter, widget);
+    }
 #endif
+};
 
 void CategoryListWidgetDelegate::paint(QPainter* painter,
                                        const QStyleOptionViewItem& option,
@@ -203,12 +222,7 @@ void CategoryListWidgetDelegate::paint(QPainter* painter,
     opt.decorationAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
 
-#ifdef Q_OS_WIN
-    QScopedPointer<QStyle> style(new WindowsCorrectedStyle());
-#else
-    QStyle* style = opt.widget ? opt.widget->style() : QApplication::style();
-#endif
-
+    QScopedPointer<QStyle> style(new IconSelectionCorrectedStyle());
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, opt.widget);
 
     QRect fontRect = painter->fontMetrics().boundingRect(
@@ -216,7 +230,16 @@ void CategoryListWidgetDelegate::paint(QPainter* painter,
 
     int paddingTop = fontRect.height() < 30 ? 15 : 10;
     int left = opt.rect.left() + opt.rect.width() / 2 - iconSize.width() / 2;
-    painter->drawPixmap(left, opt.rect.top() + paddingTop, icon.pixmap(iconSize));
+
+    auto mode = QIcon::Normal;
+    if ((opt.state & QStyle::State_Enabled) == 0) {
+        mode = QIcon::Disabled;
+    } else if (opt.state & QStyle::State_HasFocus) {
+        mode = QIcon::Selected;
+    } else if (opt.state & QStyle::State_Active) {
+        mode = QIcon::Active;
+    }
+    painter->drawPixmap(left, opt.rect.top() + paddingTop, icon.pixmap(iconSize, mode));
 
     painter->restore();
 }
@@ -238,7 +261,6 @@ int CategoryListWidgetDelegate::minWidth() const
 
     // add some padding
     maxWidth += 10;
-
     return maxWidth < m_size.height() ? m_size.height() : maxWidth;
 }
 
@@ -252,5 +274,5 @@ QSize CategoryListWidgetDelegate::sizeHint(const QStyleOptionViewItem& option, c
         w = m_listWidget->width();
     }
 
-    return QSize(w, m_size.height());
+    return {w, m_size.height()};
 }

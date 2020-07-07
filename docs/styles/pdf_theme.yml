@@ -1,0 +1,30 @@
+page:
+  layout: portrait
+  margin: [0.75in, 1in, 0.75in, 1in]
+  size: Letter
+base:
+  font-color: #333333
+  font-family: Times-Roman
+  font-size: 12
+  line-height-length: 17
+  line-height: $base-line-height-length / $base-font-size
+vertical-spacing: $base-line-height-length
+heading:
+  font-color: #262626
+  font-size: 17
+  font-style: bold
+  line-height: 1.2
+  margin-bottom: $vertical-spacing
+link:
+  font-color: #002FA7
+outline-list:
+  indent: $base-font-size * 1.5
+footer:
+  height: $base-line-height-length * 2.5
+  line-height: 1
+  recto:
+    right:
+      content: '{page-number}'
+  verso:
+    left:
+      content: $footer-recto-right-content

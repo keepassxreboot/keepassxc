@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>595</width>
-    <height>541</height>
+    <height>567</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -223,23 +223,23 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="passwordRepeatCheckBox">
+       <widget class="QCheckBox" name="passwordsRepeatVisibleCheckBox">
         <property name="text">
-         <string>Don't require password repeat when it is visible</string>
+         <string>Require password repeat when it is visible</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="passwordCleartextCheckBox">
+       <widget class="QCheckBox" name="passwordsHiddenCheckBox">
         <property name="text">
-         <string>Don't hide passwords when editing them</string>
+         <string>Hide passwords when editing them</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="passwordShowDotsCheckBox">
         <property name="text">
-         <string>Don't use placeholder for empty password fields</string>
+         <string>Use placeholder for empty password fields</string>
         </property>
        </widget>
       </item>
@@ -297,13 +297,18 @@
  <tabstops>
   <tabstop>clearClipboardCheckBox</tabstop>
   <tabstop>clearClipboardSpinBox</tabstop>
+  <tabstop>lockDatabaseIdleCheckBox</tabstop>
+  <tabstop>lockDatabaseIdleSpinBox</tabstop>
+  <tabstop>clearSearchCheckBox</tabstop>
+  <tabstop>clearSearchSpinBox</tabstop>
+  <tabstop>touchIDResetCheckBox</tabstop>
   <tabstop>touchIDResetSpinBox</tabstop>
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
   <tabstop>touchIDResetOnScreenLockCheckBox</tabstop>
   <tabstop>lockDatabaseMinimizeCheckBox</tabstop>
   <tabstop>relockDatabaseAutoTypeCheckBox</tabstop>
-  <tabstop>passwordRepeatCheckBox</tabstop>
-  <tabstop>passwordCleartextCheckBox</tabstop>
+  <tabstop>passwordsRepeatVisibleCheckBox</tabstop>
+  <tabstop>passwordsHiddenCheckBox</tabstop>
   <tabstop>passwordShowDotsCheckBox</tabstop>
   <tabstop>passwordPreviewCleartextCheckBox</tabstop>
   <tabstop>hideNotesCheckBox</tabstop>

@@ -27,12 +27,12 @@ DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
     , m_activeDbWidget(nullptr)
     , m_blockUpdates(false)
 {
-    m_mainSplitterSizes = variantToIntList(config()->get("GUI/SplitterState"));
-    m_previewSplitterSizes = variantToIntList(config()->get("GUI/PreviewSplitterState"));
-    m_hideUsernames = config()->get("GUI/HideUsernames").toBool();
-    m_hidePasswords = config()->get("GUI/HidePasswords").toBool();
-    m_listViewState = config()->get("GUI/ListViewState").toByteArray();
-    m_searchViewState = config()->get("GUI/SearchViewState").toByteArray();
+    m_mainSplitterSizes = variantToIntList(config()->get(Config::GUI_SplitterState));
+    m_previewSplitterSizes = variantToIntList(config()->get(Config::GUI_PreviewSplitterState));
+    m_hideUsernames = config()->get(Config::GUI_HideUsernames).toBool();
+    m_hidePasswords = true;
+    m_listViewState = config()->get(Config::GUI_ListViewState).toByteArray();
+    m_searchViewState = config()->get(Config::GUI_SearchViewState).toByteArray();
 
     connect(qApp, &QCoreApplication::aboutToQuit, this, &DatabaseWidgetStateSync::sync);
 }
@@ -46,12 +46,11 @@ DatabaseWidgetStateSync::~DatabaseWidgetStateSync()
  */
 void DatabaseWidgetStateSync::sync()
 {
-    config()->set("GUI/SplitterState", intListToVariant(m_mainSplitterSizes));
-    config()->set("GUI/PreviewSplitterState", intListToVariant(m_previewSplitterSizes));
-    config()->set("GUI/HideUsernames", m_hideUsernames);
-    config()->set("GUI/HidePasswords", m_hidePasswords);
-    config()->set("GUI/ListViewState", m_listViewState);
-    config()->set("GUI/SearchViewState", m_searchViewState);
+    config()->set(Config::GUI_SplitterState, intListToVariant(m_mainSplitterSizes));
+    config()->set(Config::GUI_PreviewSplitterState, intListToVariant(m_previewSplitterSizes));
+    config()->set(Config::GUI_HideUsernames, m_hideUsernames);
+    config()->set(Config::GUI_ListViewState, m_listViewState);
+    config()->set(Config::GUI_SearchViewState, m_searchViewState);
     config()->sync();
 }
 
@@ -101,9 +100,7 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
  *
  * NOTE:
  * If m_listViewState is empty, the list view has been activated for the first
- * time after starting with a clean (or invalid) config. Thus, save the current
- * state. Without this, m_listViewState would remain empty until there is an
- * actual view state change (e.g. column is resized)
+ * time after starting with a clean (or invalid) config.
  */
 void DatabaseWidgetStateSync::restoreListView()
 {
@@ -112,8 +109,6 @@ void DatabaseWidgetStateSync::restoreListView()
 
     if (!m_listViewState.isEmpty()) {
         m_activeDbWidget->setEntryViewState(m_listViewState);
-    } else {
-        m_listViewState = m_activeDbWidget->entryViewState();
     }
 
     m_blockUpdates = false;

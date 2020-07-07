@@ -485,10 +485,6 @@ KeySym AutoTypePlatformX11::keyToKeySym(Qt::Key key)
  */
 void AutoTypePlatformX11::updateKeymap()
 {
-    int keycode, inx;
-    int mod_index, mod_key;
-    XModifierKeymap* modifiers;
-
     if (m_xkb) {
         XkbFreeKeyboard(m_xkb, XkbAllComponentsMask, True);
     }
@@ -500,10 +496,9 @@ void AutoTypePlatformX11::updateKeymap()
     m_keysymTable = XGetKeyboardMapping(m_dpy, m_minKeycode, m_maxKeycode - m_minKeycode + 1, &m_keysymPerKeycode);
 
     /* determine the keycode to use for remapped keys */
-    inx = (m_remapKeycode - m_minKeycode) * m_keysymPerKeycode;
     if (m_remapKeycode == 0 || !isRemapKeycodeValid()) {
-        for (keycode = m_minKeycode; keycode <= m_maxKeycode; keycode++) {
-            inx = (keycode - m_minKeycode) * m_keysymPerKeycode;
+        for (int keycode = m_minKeycode; keycode <= m_maxKeycode; keycode++) {
+            int inx = (keycode - m_minKeycode) * m_keysymPerKeycode;
             if (m_keysymTable[inx] == NoSymbol) {
                 m_remapKeycode = keycode;
                 m_currentRemapKeysym = NoSymbol;
@@ -513,11 +508,11 @@ void AutoTypePlatformX11::updateKeymap()
     }
 
     /* determine the keycode to use for modifiers */
-    modifiers = XGetModifierMapping(m_dpy);
-    for (mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index++) {
+    XModifierKeymap* modifiers = XGetModifierMapping(m_dpy);
+    for (int mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index++) {
         m_modifier_keycode[mod_index] = 0;
-        for (mod_key = 0; mod_key < modifiers->max_keypermod; mod_key++) {
-            keycode = modifiers->modifiermap[mod_index * modifiers->max_keypermod + mod_key];
+        for (int mod_key = 0; mod_key < modifiers->max_keypermod; mod_key++) {
+            int keycode = modifiers->modifiermap[mod_index * modifiers->max_keypermod + mod_key];
             if (keycode) {
                 m_modifier_keycode[mod_index] = keycode;
                 break;

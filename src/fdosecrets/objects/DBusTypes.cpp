@@ -35,6 +35,16 @@ namespace FdoSecrets
         qRegisterMetaType<ObjectPathSecretMap>();
         qDBusRegisterMetaType<ObjectPathSecretMap>();
 
+        QMetaType::registerConverter<QDBusArgument, StringStringMap>([](const QDBusArgument& arg) {
+            if (arg.currentSignature() != "a{ss}") {
+                return StringStringMap{};
+            }
+            // QDBusArgument is COW and qdbus_cast modifies it by detaching even it is const.
+            // we don't want to modify the instance (arg) stored in the qvariant so we create a copy
+            const auto copy = arg; // NOLINT(performance-unnecessary-copy-initialization)
+            return qdbus_cast<StringStringMap>(copy);
+        });
+
         // NOTE: this is already registered by Qt in qtextratypes.h
         //     qRegisterMetaType<QList<QDBusObjectPath > >();
         //     qDBusRegisterMetaType<QList<QDBusObjectPath> >();

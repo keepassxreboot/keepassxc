@@ -23,12 +23,6 @@
 #include "core/Global.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "format/Kdbx3Reader.h"
-#include "format/Kdbx3Writer.h"
-#include "format/Kdbx4Reader.h"
-#include "format/Kdbx4Writer.h"
-#include "format/KdbxXmlReader.h"
-#include "format/KeePass2.h"
 #include "keys/drivers/YubiKey.h"
 
 #include "cli/Add.h"
@@ -44,6 +38,7 @@
 #include "cli/Generate.h"
 #include "cli/Help.h"
 #include "cli/Import.h"
+#include "cli/Info.h"
 #include "cli/List.h"
 #include "cli/Locate.h"
 #include "cli/Merge.h"
@@ -55,13 +50,11 @@
 #include "cli/Utils.h"
 
 #include <QClipboard>
-#include <QFile>
 #include <QFuture>
 #include <QSet>
+#include <QSignalSpy>
 #include <QTextStream>
 #include <QtConcurrent>
-
-#include <cstdio>
 
 QTEST_MAIN(TestCli)
 
@@ -74,85 +67,48 @@ void TestCli::initTestCase()
     Config::createTempFileInstance();
     Bootstrap::bootstrapApplication();
 
-    // Load the NewDatabase.kdbx file into temporary storage
-    QFile sourceDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
-    QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&sourceDbFile, m_dbData));
-    sourceDbFile.close();
-
-    // Load the NewDatabase2.kdbx file into temporary storage
-    QFile sourceDbFile2(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase2.kdbx"));
-    QVERIFY(sourceDbFile2.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&sourceDbFile2, m_dbData2));
-    sourceDbFile2.close();
-
-    // Load the KeyFileProtected.kdbx file into temporary storage
-    QFile sourceDbFile3(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtected.kdbx"));
-    QVERIFY(sourceDbFile3.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&sourceDbFile3, m_keyFileProtectedDbData));
-    sourceDbFile3.close();
-
-    // Load the KeyFileProtectedNoPassword.kdbx file into temporary storage
-    QFile sourceDbFile4(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtectedNoPassword.kdbx"));
-    QVERIFY(sourceDbFile4.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&sourceDbFile4, m_keyFileProtectedNoPasswordDbData));
-    sourceDbFile4.close();
-
-    QFile sourceDbFileYubiKeyProtected(QString(KEEPASSX_TEST_DATA_DIR).append("/YubiKeyProtectedPasswords.kdbx"));
-    QVERIFY(sourceDbFileYubiKeyProtected.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&sourceDbFileYubiKeyProtected, m_yubiKeyProtectedDbData));
-    sourceDbFileYubiKeyProtected.close();
-
-    // Load the NewDatabase.xml file into temporary storage
-    QFile sourceXmlFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"));
-    QVERIFY(sourceXmlFile.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&sourceXmlFile, m_xmlData));
-    sourceXmlFile.close();
+    auto fd = new QFile();
+#ifdef Q_OS_WIN
+    fd->open(fopen("nul", "w"), QIODevice::WriteOnly);
+#else
+    fd->open(fopen("/dev/null", "w"), QIODevice::WriteOnly);
+#endif
+    Utils::DEVNULL.setDevice(fd);
 }
 
 void TestCli::init()
 {
+    const auto file = QString(KEEPASSX_TEST_DATA_DIR).append("/%1");
+
     m_dbFile.reset(new TemporaryFile());
-    m_dbFile->open();
-    m_dbFile->write(m_dbData);
-    m_dbFile->close();
+    m_dbFile->copyFromFile(file.arg("NewDatabase.kdbx"));
 
     m_dbFile2.reset(new TemporaryFile());
-    m_dbFile2->open();
-    m_dbFile2->write(m_dbData2);
-    m_dbFile2->close();
+    m_dbFile2->copyFromFile(file.arg("NewDatabase2.kdbx"));
 
     m_xmlFile.reset(new TemporaryFile());
-    m_xmlFile->open();
-    m_xmlFile->write(m_xmlData);
-    m_xmlFile->close();
+    m_xmlFile->copyFromFile(file.arg("NewDatabase.xml"));
 
     m_keyFileProtectedDbFile.reset(new TemporaryFile());
-    m_keyFileProtectedDbFile->open();
-    m_keyFileProtectedDbFile->write(m_keyFileProtectedDbData);
-    m_keyFileProtectedDbFile->close();
+    m_keyFileProtectedDbFile->copyFromFile(file.arg("KeyFileProtected.kdbx"));
 
     m_keyFileProtectedNoPasswordDbFile.reset(new TemporaryFile());
-    m_keyFileProtectedNoPasswordDbFile->open();
-    m_keyFileProtectedNoPasswordDbFile->write(m_keyFileProtectedNoPasswordDbData);
-    m_keyFileProtectedNoPasswordDbFile->close();
+    m_keyFileProtectedNoPasswordDbFile->copyFromFile(file.arg("KeyFileProtectedNoPassword.kdbx"));
 
     m_yubiKeyProtectedDbFile.reset(new TemporaryFile());
-    m_yubiKeyProtectedDbFile->open();
-    m_yubiKeyProtectedDbFile->write(m_yubiKeyProtectedDbData);
-    m_yubiKeyProtectedDbFile->close();
+    m_yubiKeyProtectedDbFile->copyFromFile(file.arg("YubiKeyProtectedPasswords.kdbx"));
 
-    m_stdinFile.reset(new TemporaryFile());
-    m_stdinFile->open();
-    Utils::STDIN = fdopen(m_stdinFile->handle(), "r+");
+    m_stdout.reset(new QBuffer());
+    m_stdout->open(QIODevice::ReadWrite);
+    Utils::STDOUT.setDevice(m_stdout.data());
 
-    m_stdoutFile.reset(new TemporaryFile());
-    m_stdoutFile->open();
-    Utils::STDOUT = fdopen(m_stdoutFile->handle(), "r+");
+    m_stderr.reset(new QBuffer());
+    m_stderr->open(QIODevice::ReadWrite);
+    Utils::STDERR.setDevice(m_stderr.data());
 
-    m_stderrFile.reset(new TemporaryFile());
-    m_stderrFile->open();
-    Utils::STDERR = fdopen(m_stderrFile->handle(), "r+");
+    m_stdin.reset(new QBuffer());
+    m_stdin->open(QIODevice::ReadWrite);
+    Utils::STDIN.setDevice(m_stdin.data());
 }
 
 void TestCli::cleanup()
@@ -163,26 +119,89 @@ void TestCli::cleanup()
     m_keyFileProtectedNoPasswordDbFile.reset();
     m_yubiKeyProtectedDbFile.reset();
 
-    m_stdinFile.reset();
-    Utils::STDIN = stdin;
-
-    m_stdoutFile.reset();
-    Utils::STDOUT = stdout;
-
-    m_stderrFile.reset();
-    Utils::STDERR = stderr;
+    Utils::STDOUT.setDevice(nullptr);
+    Utils::STDERR.setDevice(nullptr);
+    Utils::STDIN.setDevice(nullptr);
 }
 
-void TestCli::cleanupTestCase()
+QSharedPointer<Database> TestCli::readDatabase(const QString& filename, const QString& pw, const QString& keyfile)
 {
-}
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
 
-QSharedPointer<Database> TestCli::readTestDatabase() const
-{
-    Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(m_dbFile->fileName(), true, "", "", Utils::STDOUT));
-    m_stdoutFile->seek(ftell(Utils::STDOUT)); // re-synchronize handles
+    if (filename.isEmpty()) {
+        // Open the default test database
+        key->addKey(QSharedPointer<PasswordKey>::create("a"));
+        if (!db->open(m_dbFile->fileName(), key)) {
+            return {};
+        }
+    } else {
+        // Open the specified database file using supplied credentials
+        key->addKey(QSharedPointer<PasswordKey>::create(pw));
+        if (!keyfile.isEmpty()) {
+            auto filekey = QSharedPointer<FileKey>::create();
+            filekey->load(keyfile);
+            key->addKey(filekey);
+        }
+
+        if (!db->open(filename, key)) {
+            return {};
+        }
+    }
+
     return db;
+}
+
+int TestCli::execCmd(Command& cmd, const QStringList& args) const
+{
+    // Move to end of stream
+    m_stdout->readAll();
+    m_stderr->readAll();
+
+    // Record stream position
+    auto outPos = m_stdout->pos();
+    auto errPos = m_stderr->pos();
+
+    // Execute command
+    int ret = cmd.execute(args);
+
+    // Move back to recorded position
+    m_stdout->seek(outPos);
+    m_stderr->seek(errPos);
+
+    // Skip over blank lines
+    QByteArray newline("\n");
+    while (m_stdout->peek(1) == newline) {
+        m_stdout->readLine();
+    }
+    while (m_stderr->peek(1) == newline) {
+        m_stdout->readLine();
+    }
+
+    return ret;
+}
+
+bool TestCli::isTotp(const QString& value)
+{
+    static const QRegularExpression totp("^\\d{6}$");
+    return totp.match(value.trimmed()).hasMatch();
+}
+
+void TestCli::setInput(const QString& input)
+{
+    setInput(QStringList(input));
+}
+
+void TestCli::setInput(const QStringList& input)
+{
+    auto ba = input.join("\n").toLatin1();
+    // Always end in newline
+    if (!ba.endsWith("\n")) {
+        ba.append("\n");
+    }
+    auto pos = m_stdin->pos();
+    m_stdin->write(ba);
+    m_stdin->seek(pos);
 }
 
 void TestCli::testBatchCommands()
@@ -192,7 +211,8 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("analyze"));
     QVERIFY(Commands::getCommand("clip"));
     QVERIFY(Commands::getCommand("close"));
-    QVERIFY(Commands::getCommand("create"));
+    QVERIFY(Commands::getCommand("db-create"));
+    QVERIFY(Commands::getCommand("db-info"));
     QVERIFY(Commands::getCommand("diceware"));
     QVERIFY(Commands::getCommand("edit"));
     QVERIFY(Commands::getCommand("estimate"));
@@ -210,7 +230,7 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("rmdir"));
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 21);
+    QCOMPARE(Commands::getCommands().size(), 22);
 }
 
 void TestCli::testInteractiveCommands()
@@ -220,7 +240,8 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("analyze"));
     QVERIFY(Commands::getCommand("clip"));
     QVERIFY(Commands::getCommand("close"));
-    QVERIFY(Commands::getCommand("create"));
+    QVERIFY(Commands::getCommand("db-create"));
+    QVERIFY(Commands::getCommand("db-info"));
     QVERIFY(Commands::getCommand("diceware"));
     QVERIFY(Commands::getCommand("edit"));
     QVERIFY(Commands::getCommand("estimate"));
@@ -238,7 +259,7 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("rmdir"));
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 21);
+    QCOMPARE(Commands::getCommands().size(), 22);
 }
 
 void TestCli::testAdd()
@@ -247,24 +268,23 @@ void TestCli::testAdd()
     QVERIFY(!addCmd.name.isEmpty());
     QVERIFY(addCmd.getDescriptionLine().contains(addCmd.name));
 
-    Utils::Test::setNextPassword("a");
-    addCmd.execute({"add",
-                    "-u",
-                    "newuser",
-                    "--url",
-                    "https://example.com/",
-                    "-g",
-                    "-L",
-                    "20",
-                    m_dbFile->fileName(),
-                    "/newuser-entry"});
-    m_stderrFile->reset();
-    m_stdoutFile->reset();
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry.\n"));
+    setInput("a");
+    execCmd(addCmd,
+            {"add",
+             "-u",
+             "newuser",
+             "--url",
+             "https://example.com/",
+             "-g",
+             "-L",
+             "20",
+             m_dbFile->fileName(),
+             "/newuser-entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stdout->readAll().contains("Successfully added entry newuser-entry."));
 
-    auto db = readTestDatabase();
+    auto db = readDatabase();
     auto* entry = db->rootGroup()->findEntryByPath("/newuser-entry");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser"));
@@ -272,33 +292,21 @@ void TestCli::testAdd()
     QCOMPARE(entry->password().size(), 20);
 
     // Quiet option
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    addCmd.execute({"add", "-q", "-u", "newuser", "-g", "-L", "20", m_dbFile->fileName(), "/newentry-quiet"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    db = readTestDatabase();
+    setInput("a");
+    execCmd(addCmd, {"add", "-q", "-u", "newuser", "-g", "-L", "20", m_dbFile->fileName(), "/newentry-quiet"});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newentry-quiet");
     QVERIFY(entry);
     QCOMPARE(entry->password().size(), 20);
 
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    Utils::Test::setNextPassword("newpassword");
-    addCmd.execute(
-        {"add", "-u", "newuser2", "--url", "https://example.net/", "-p", m_dbFile->fileName(), "/newuser-entry2"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stdoutFile->readLine(); // skip password input
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry2.\n"));
+    setInput({"a", "newpassword"});
+    execCmd(addCmd,
+            {"add", "-u", "newuser2", "--url", "https://example.net/", "-p", m_dbFile->fileName(), "/newuser-entry2"});
+    QVERIFY(m_stdout->readAll().contains("Successfully added entry newuser-entry2."));
 
-    db = readTestDatabase();
+    db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry2");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser2"));
@@ -306,17 +314,11 @@ void TestCli::testAdd()
     QCOMPARE(entry->password(), QString("newpassword"));
 
     // Password generation options
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    addCmd.execute({"add", "-u", "newuser3", "-g", "-L", "34", m_dbFile->fileName(), "/newuser-entry3"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry3.\n"));
+    setInput("a");
+    execCmd(addCmd, {"add", "-u", "newuser3", "-g", "-L", "34", m_dbFile->fileName(), "/newuser-entry3"});
+    QVERIFY(m_stdout->readAll().contains("Successfully added entry newuser-entry3."));
 
-    db = readTestDatabase();
+    db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry3");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser3"));
@@ -324,29 +326,24 @@ void TestCli::testAdd()
     QRegularExpression defaultPasswordClassesRegex("^[a-zA-Z0-9]+$");
     QVERIFY(defaultPasswordClassesRegex.match(entry->password()).hasMatch());
 
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    addCmd.execute({"add",
-                    "-u",
-                    "newuser4",
-                    "-g",
-                    "-L",
-                    "20",
-                    "--every-group",
-                    "-s",
-                    "-n",
-                    "-U",
-                    "-l",
-                    m_dbFile->fileName(),
-                    "/newuser-entry4"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry4.\n"));
+    setInput("a");
+    execCmd(addCmd,
+            {"add",
+             "-u",
+             "newuser4",
+             "-g",
+             "-L",
+             "20",
+             "--every-group",
+             "-s",
+             "-n",
+             "-U",
+             "-l",
+             m_dbFile->fileName(),
+             "/newuser-entry4"});
+    QVERIFY(m_stdout->readAll().contains("Successfully added entry newuser-entry4."));
 
-    db = readTestDatabase();
+    db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry4");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser4"));
@@ -360,81 +357,44 @@ void TestCli::testAddGroup()
     QVERIFY(!addGroupCmd.name.isEmpty());
     QVERIFY(addGroupCmd.getDescriptionLine().contains(addGroupCmd.name));
 
-    Utils::Test::setNextPassword("a");
-    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/new_group"});
-    m_stderrFile->reset();
-    m_stdoutFile->reset();
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added group new_group.\n"));
+    setInput("a");
+    execCmd(addGroupCmd, {"mkdir", m_dbFile->fileName(), "/new_group"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully added group new_group.\n"));
 
-    auto db = readTestDatabase();
+    auto db = readDatabase();
     auto* group = db->rootGroup()->findGroupByPath("new_group");
     QVERIFY(group);
     QCOMPARE(group->name(), QString("new_group"));
 
     // Trying to add the same group should fail.
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/new_group"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Group /new_group already exists!\n"));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(addGroupCmd, {"mkdir", m_dbFile->fileName(), "/new_group"});
+    QVERIFY(m_stderr->readAll().contains("Group /new_group already exists!"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // Should be able to add groups down the tree.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/new_group/newer_group"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added group newer_group.\n"));
+    setInput("a");
+    execCmd(addGroupCmd, {"mkdir", m_dbFile->fileName(), "/new_group/newer_group"});
+    QVERIFY(m_stdout->readAll().contains("Successfully added group newer_group."));
 
-    db = readTestDatabase();
+    db = readDatabase();
     group = db->rootGroup()->findGroupByPath("new_group/newer_group");
     QVERIFY(group);
     QCOMPARE(group->name(), QString("newer_group"));
 
     // Should fail if the path is invalid.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/invalid_group/newer_group"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Group /invalid_group not found.\n"));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(addGroupCmd, {"mkdir", m_dbFile->fileName(), "/invalid_group/newer_group"});
+    QVERIFY(m_stderr->readAll().contains("Group /invalid_group not found."));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // Should fail to add the root group.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Group / already exists!\n"));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-}
-
-bool isTOTP(const QString& value)
-{
-    QString val = value.trimmed();
-    if (val.length() < 5 || val.length() > 6) {
-        return false;
-    }
-    for (int i = 0; i < val.length(); ++i) {
-        if (!value[i].isDigit()) {
-            return false;
-        }
-    }
-    return true;
+    setInput("a");
+    execCmd(addGroupCmd, {"mkdir", m_dbFile->fileName(), "/"});
+    QVERIFY(m_stderr->readAll().contains("Group / already exists!"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 }
 
 void TestCli::testAnalyze()
@@ -445,12 +405,13 @@ void TestCli::testAnalyze()
 
     const QString hibpPath = QString(KEEPASSX_TEST_DATA_DIR).append("/hibp.txt");
 
-    Utils::Test::setNextPassword("a");
-    analyzeCmd.execute({"analyze", "--hibp", hibpPath, m_dbFile->fileName()});
-    m_stdoutFile->reset();
-    m_stdoutFile->readLine(); // skip password prompt
-    auto output = m_stdoutFile->readAll();
-    QVERIFY(output.contains("Sample Entry") && output.contains("123"));
+    setInput("a");
+    execCmd(analyzeCmd, {"analyze", "--hibp", hibpPath, m_dbFile->fileName()});
+    auto output = m_stdout->readAll();
+    QVERIFY(output.contains("Sample Entry"));
+    QVERIFY(output.contains("123"));
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
 }
 
 void TestCli::testClip()
@@ -463,78 +424,86 @@ void TestCli::testClip()
     QVERIFY(clipCmd.getDescriptionLine().contains(clipCmd.name));
 
     // Password
-    Utils::Test::setNextPassword("a");
-    clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry"});
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry"});
+    QString errorOutput(m_stderr->readAll());
 
-    m_stderrFile->reset();
-    m_stdoutFile->reset();
-    QString errorOutput(m_stderrFile->readAll());
+    if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
+        QSKIP("Clip test skipped due to QClipboard and Wayland issues");
+    }
 
     if (errorOutput.contains("Unable to start program")
         || errorOutput.contains("No program defined for clipboard manipulation")) {
         QSKIP("Clip test skipped due to missing clipboard tool");
     }
 
-    QCOMPARE(clipboard->text(), QString("Password"));
-    m_stdoutFile->readLine(); // skip prompt line
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Entry's password copied to the clipboard!\n"));
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QTRY_COMPARE(clipboard->text(), QString("Password"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Entry's \"Password\" attribute copied to the clipboard!\n"));
 
     // Quiet option
-    qint64 pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "-q"});
-    m_stdoutFile->seek(pos);
-    // Output should be empty when quiet option is set.
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(clipboard->text(), QString("Password"));
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "-q"});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QTRY_COMPARE(clipboard->text(), QString("Password"));
+
+    // Username
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "-a", "username"});
+    QTRY_COMPARE(clipboard->text(), QString("User Name"));
 
     // TOTP
-    Utils::Test::setNextPassword("a");
-    clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "--totp"});
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "--totp"});
 
-    QVERIFY(isTOTP(clipboard->text()));
+    QTRY_VERIFY(isTotp(clipboard->text()));
 
     // Password with timeout
-    Utils::Test::setNextPassword("a");
+    setInput("a");
     // clang-format off
     QFuture<void> future = QtConcurrent::run(&clipCmd,
                                              static_cast<int(Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
                                              QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
     // clang-format on
 
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString("Password"), 500);
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
+    QTRY_COMPARE(clipboard->text(), QString("Password"));
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
 
     future.waitForFinished();
 
     // TOTP with timeout
-    Utils::Test::setNextPassword("a");
+    setInput("a");
     future = QtConcurrent::run(&clipCmd,
                                static_cast<int (Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
                                QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
 
-    QTRY_VERIFY_WITH_TIMEOUT(isTOTP(clipboard->text()), 500);
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
+    QTRY_VERIFY(isTotp(clipboard->text()));
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
 
     future.waitForFinished();
 
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    clipCmd.execute({"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "0"});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Invalid timeout value 0.\n"));
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "0"});
+    QVERIFY(m_stderr->readAll().contains("Invalid timeout value 0.\n"));
 
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    clipCmd.execute({"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "bleuh"});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Invalid timeout value bleuh.\n"));
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "bleuh"});
+    QVERIFY(m_stderr->readAll().contains("Invalid timeout value bleuh.\n"));
 
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    clipCmd.execute({"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
+    QVERIFY(m_stderr->readAll().contains("Entry with path /Sample Entry has no TOTP set up.\n"));
+
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "-a", "TESTAttribute1", "/Sample Entry"});
+    QVERIFY(m_stderr->readAll().contains(
+        "ERROR: attribute TESTAttribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
+
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry"});
+    QVERIFY(m_stderr->readAll().contains("ERROR: Please specify one of --attribute or --totp, not both.\n"));
 }
 
 void TestCli::testCreate()
@@ -544,67 +513,144 @@ void TestCli::testCreate()
     QVERIFY(createCmd.getDescriptionLine().contains(createCmd.name));
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
+    QString dbFilename;
 
-    QString databaseFilename = testDir->path() + "/testCreate1.kdbx";
-    // Password
-    Utils::Test::setNextPassword("a");
-    createCmd.execute({"create", databaseFilename});
+    // Testing password option, password mismatch
+    dbFilename = testDir->path() + "/testCreate_pw.kdbx";
+    setInput({"a", "b"});
+    execCmd(createCmd, {"db-create", dbFilename, "-p"});
 
-    m_stderrFile->reset();
-    m_stdoutFile->reset();
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Error: Passwords do not match.\n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Failed to set database password.\n"));
 
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+    // Testing password option
+    setInput({"a", "a"});
+    execCmd(createCmd, {"db-create", dbFilename, "-p"});
 
-    Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, true, "", "", Utils::DEVNULL));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully created new database.\n"));
+
+    auto db = readDatabase(dbFilename, "a");
+    QVERIFY(db);
+
+    // Testing with empty password (deny it)
+    dbFilename = testDir->path() + "/testCreate_blankpw.kdbx";
+    setInput({"", "n"});
+    execCmd(createCmd, {"db-create", dbFilename, "-p"});
+
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QVERIFY(m_stderr->readLine().contains("empty password"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Failed to set database password.\n"));
+
+    // Testing with empty password (accept it)
+    setInput({"", "y"});
+    execCmd(createCmd, {"db-create", dbFilename, "-p"});
+
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QVERIFY(m_stderr->readLine().contains("empty password"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully created new database.\n"));
+
+    db = readDatabase(dbFilename, "");
     QVERIFY(db);
 
     // Should refuse to create the database if it already exists.
-    qint64 pos = m_stdoutFile->pos();
-    qint64 errPos = m_stderrFile->pos();
-    createCmd.execute({"create", databaseFilename});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(errPos);
+    execCmd(createCmd, {"db-create", dbFilename, "-p"});
     // Output should be empty when there is an error.
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
-    QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QString errorMessage = QString("File " + dbFilename + " already exists.\n");
+    QCOMPARE(m_stderr->readAll(), errorMessage.toUtf8());
+
+    // Should refuse to create without any key provided.
+    dbFilename = testDir->path() + "/testCreate_key.kdbx";
+    execCmd(createCmd, {"db-create", dbFilename});
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QCOMPARE(m_stderr->readLine(), QByteArray("No key is set. Aborting database creation.\n"));
 
     // Testing with keyfile creation
-    QString databaseFilename2 = testDir->path() + "/testCreate2.kdbx";
+    dbFilename = testDir->path() + "/testCreate_key2.kdbx";
     QString keyfilePath = testDir->path() + "/keyfile.txt";
-    pos = m_stdoutFile->pos();
-    errPos = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    createCmd.execute({"create", databaseFilename2, "-k", keyfilePath});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(errPos);
+    setInput({"a", "a"});
+    execCmd(createCmd, {"db-create", dbFilename, "-p", "-k", keyfilePath});
 
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully created new database.\n"));
 
-    Utils::Test::setNextPassword("a");
-    auto db2 =
-        QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, true, keyfilePath, "", Utils::DEVNULL));
-    QVERIFY(db2);
+    db = readDatabase(dbFilename, "a", keyfilePath);
+    QVERIFY(db);
 
     // Testing with existing keyfile
-    QString databaseFilename3 = testDir->path() + "/testCreate3.kdbx";
-    pos = m_stdoutFile->pos();
-    errPos = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    createCmd.execute({"create", databaseFilename3, "-k", keyfilePath});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(errPos);
+    dbFilename = testDir->path() + "/testCreate_key3.kdbx";
+    setInput({"a", "a"});
+    execCmd(createCmd, {"db-create", dbFilename, "-p", "-k", keyfilePath});
 
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully created new database.\n"));
 
-    Utils::Test::setNextPassword("a");
-    auto db3 =
-        QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, true, keyfilePath, "", Utils::DEVNULL));
-    QVERIFY(db3);
+    db = readDatabase(dbFilename, "a", keyfilePath);
+    QVERIFY(db);
+
+    // Invalid decryption time (format).
+    dbFilename = testDir->path() + "/testCreate_time.kdbx";
+    execCmd(createCmd, {"db-create", dbFilename, "-p", "-t", "NAN"});
+
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QCOMPARE(m_stderr->readAll(), QByteArray("Invalid decryption time NAN.\n"));
+
+    // Invalid decryption time (range).
+    execCmd(createCmd, {"db-create", dbFilename, "-p", "-t", "10"});
+
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().contains(QByteArray("Target decryption time must be between")));
+
+    int encryptionTime = 500;
+    // Custom encryption time
+    setInput({"a", "a"});
+    int epochBefore = QDateTime::currentMSecsSinceEpoch();
+    execCmd(createCmd, {"db-create", dbFilename, "-p", "-t", QString::number(encryptionTime)});
+    // Removing 100ms to make sure we account for changes in computation time.
+    QVERIFY(QDateTime::currentMSecsSinceEpoch() > (epochBefore + encryptionTime - 100));
+
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Benchmarking key derivation function for 500ms delay.\n"));
+    QVERIFY(m_stdout->readLine().contains(QByteArray("rounds for key derivation function.\n")));
+
+    db = readDatabase(dbFilename, "a");
+    QVERIFY(db);
+}
+
+void TestCli::testInfo()
+{
+    Info infoCmd;
+    QVERIFY(!infoCmd.name.isEmpty());
+    QVERIFY(infoCmd.getDescriptionLine().contains(infoCmd.name));
+
+    setInput("a");
+    execCmd(infoCmd, {"db-info", m_dbFile->fileName()});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stdout->readLine().contains(QByteArray("UUID: ")));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Name: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Description: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Cipher: AES 256-bit\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("KDF: AES (6000 rounds)\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Recycle bin is enabled.\n"));
+
+    // Test with quiet option.
+    setInput("a");
+    execCmd(infoCmd, {"db-info", "-q", m_dbFile->fileName()});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stdout->readLine().contains(QByteArray("UUID: ")));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Name: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Description: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Cipher: AES 256-bit\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("KDF: AES (6000 rounds)\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Recycle bin is enabled.\n"));
 }
 
 void TestCli::testDiceware()
@@ -613,33 +659,25 @@ void TestCli::testDiceware()
     QVERIFY(!dicewareCmd.name.isEmpty());
     QVERIFY(dicewareCmd.getDescriptionLine().contains(dicewareCmd.name));
 
-    dicewareCmd.execute({"diceware"});
-    m_stdoutFile->reset();
-    QString passphrase(m_stdoutFile->readLine());
+    execCmd(dicewareCmd, {"diceware"});
+    QString passphrase(m_stdout->readLine());
     QVERIFY(!passphrase.isEmpty());
 
-    dicewareCmd.execute({"diceware", "-W", "2"});
-    m_stdoutFile->seek(passphrase.toLatin1().size());
-    passphrase = m_stdoutFile->readLine();
+    execCmd(dicewareCmd, {"diceware", "-W", "2"});
+    passphrase = m_stdout->readLine();
     QCOMPARE(passphrase.split(" ").size(), 2);
 
-    auto pos = m_stdoutFile->pos();
-    dicewareCmd.execute({"diceware", "-W", "10"});
-    m_stdoutFile->seek(pos);
-    passphrase = m_stdoutFile->readLine();
+    execCmd(dicewareCmd, {"diceware", "-W", "10"});
+    passphrase = m_stdout->readLine();
     QCOMPARE(passphrase.split(" ").size(), 10);
 
     // Testing with invalid word count
-    auto posErr = m_stderrFile->pos();
-    dicewareCmd.execute({"diceware", "-W", "-10"});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid word count -10\n"));
+    execCmd(dicewareCmd, {"diceware", "-W", "-10"});
+    QCOMPARE(m_stderr->readLine(), QByteArray("Invalid word count -10\n"));
 
     // Testing with invalid word count format
-    posErr = m_stderrFile->pos();
-    dicewareCmd.execute({"diceware", "-W", "bleuh"});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid word count bleuh\n"));
+    execCmd(dicewareCmd, {"diceware", "-W", "bleuh"});
+    QCOMPARE(m_stderr->readLine(), QByteArray("Invalid word count bleuh\n"));
 
     TemporaryFile wordFile;
     wordFile.open();
@@ -648,10 +686,8 @@ void TestCli::testDiceware()
     }
     wordFile.close();
 
-    pos = m_stdoutFile->pos();
-    dicewareCmd.execute({"diceware", "-W", "11", "-w", wordFile.fileName()});
-    m_stdoutFile->seek(pos);
-    passphrase = m_stdoutFile->readLine();
+    execCmd(dicewareCmd, {"diceware", "-W", "11", "-w", wordFile.fileName()});
+    passphrase = m_stdout->readLine();
     const auto words = passphrase.split(" ");
     QCOMPARE(words.size(), 11);
     QRegularExpression regex("^word\\d+$");
@@ -666,10 +702,8 @@ void TestCli::testDiceware()
     }
     smallWordFile.close();
 
-    posErr = m_stderrFile->pos();
-    dicewareCmd.execute({"diceware", "-W", "11", "-w", smallWordFile.fileName()});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("The word list is too small (< 1000 items)\n"));
+    execCmd(dicewareCmd, {"diceware", "-W", "11", "-w", smallWordFile.fileName()});
+    QCOMPARE(m_stderr->readLine(), QByteArray("The word list is too small (< 1000 items)\n"));
 }
 
 void TestCli::testEdit()
@@ -678,15 +712,20 @@ void TestCli::testEdit()
     QVERIFY(!editCmd.name.isEmpty());
     QVERIFY(editCmd.getDescriptionLine().contains(editCmd.name));
 
-    Utils::Test::setNextPassword("a");
-    // clang-format off
-    editCmd.execute({"edit", "-u", "newuser", "--url", "https://otherurl.example.com/", "-t", "newtitle", m_dbFile->fileName(), "/Sample Entry"});
-    // clang-format on
-    m_stdoutFile->reset();
-    m_stdoutFile->readLine(); // skip prompt line
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully edited entry newtitle.\n"));
+    setInput("a");
+    execCmd(editCmd,
+            {"edit",
+             "-u",
+             "newuser",
+             "--url",
+             "https://otherurl.example.com/",
+             "-t",
+             "newtitle",
+             m_dbFile->fileName(),
+             "/Sample Entry"});
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully edited entry newtitle.\n"));
 
-    auto db = readTestDatabase();
+    auto db = readDatabase();
     auto* entry = db->rootGroup()->findEntryByPath("/newtitle");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser"));
@@ -694,18 +733,14 @@ void TestCli::testEdit()
     QCOMPARE(entry->password(), QString("Password"));
 
     // Quiet option
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    editCmd.execute({"edit", m_dbFile->fileName(), "-q", "-t", "newertitle", "/newtitle"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(editCmd, {"edit", m_dbFile->fileName(), "-q", "-t", "newertitle", "/newtitle"});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
-    Utils::Test::setNextPassword("a");
-    editCmd.execute({"edit", "-g", m_dbFile->fileName(), "/newertitle"});
-    db = readTestDatabase();
+    setInput("a");
+    execCmd(editCmd, {"edit", "-g", m_dbFile->fileName(), "/newertitle"});
+    db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newertitle");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser"));
@@ -713,9 +748,9 @@ void TestCli::testEdit()
     QVERIFY(!entry->password().isEmpty());
     QVERIFY(entry->password() != QString("Password"));
 
-    Utils::Test::setNextPassword("a");
-    editCmd.execute({"edit", "-g", "-L", "34", "-t", "evennewertitle", m_dbFile->fileName(), "/newertitle"});
-    db = readTestDatabase();
+    setInput("a");
+    execCmd(editCmd, {"edit", "-g", "-L", "34", "-t", "evennewertitle", m_dbFile->fileName(), "/newertitle"});
+    db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser"));
@@ -725,36 +760,31 @@ void TestCli::testEdit()
     QRegularExpression defaultPasswordClassesRegex("^[a-zA-Z0-9]+$");
     QVERIFY(defaultPasswordClassesRegex.match(entry->password()).hasMatch());
 
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    editCmd.execute({"edit",
-                     "-g",
-                     "-L",
-                     "20",
-                     "--every-group",
-                     "-s",
-                     "-n",
-                     "--upper",
-                     "-l",
-                     m_dbFile->fileName(),
-                     "/evennewertitle"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully edited entry evennewertitle.\n"));
+    setInput("a");
+    execCmd(editCmd,
+            {"edit",
+             "-g",
+             "-L",
+             "20",
+             "--every-group",
+             "-s",
+             "-n",
+             "--upper",
+             "-l",
+             m_dbFile->fileName(),
+             "/evennewertitle"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully edited entry evennewertitle.\n"));
 
-    db = readTestDatabase();
+    db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
     QCOMPARE(entry->password().size(), 20);
     QVERIFY(!defaultPasswordClassesRegex.match(entry->password()).hasMatch());
 
-    Utils::Test::setNextPassword("a");
-    Utils::Test::setNextPassword("newpassword");
-    editCmd.execute({"edit", "-p", m_dbFile->fileName(), "/evennewertitle"});
-    db = readTestDatabase();
+    setInput({"a", "newpassword"});
+    execCmd(editCmd, {"edit", "-p", m_dbFile->fileName(), "/evennewertitle"});
+    db = readDatabase();
+    QVERIFY(db);
     entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
     QCOMPARE(entry->password(), QString("newpassword"));
@@ -850,14 +880,9 @@ void TestCli::testEstimate()
     QVERIFY(!estimateCmd.name.isEmpty());
     QVERIFY(estimateCmd.getDescriptionLine().contains(estimateCmd.name));
 
-    QTextStream in(m_stdinFile.data());
-    QTextStream out(m_stdoutFile.data());
-
-    in << input << endl;
-    in.seek(0);
-    estimateCmd.execute({"estimate", "-a"});
-    out.seek(0);
-    auto result = out.readAll();
+    setInput(input);
+    execCmd(estimateCmd, {"estimate", "-a"});
+    auto result = QString(m_stdout->readAll());
     QVERIFY(result.contains("Length " + length));
     QVERIFY(result.contains("Entropy " + entropy));
     QVERIFY(result.contains("Log10 " + log10));
@@ -872,61 +897,47 @@ void TestCli::testExport()
     QVERIFY(!exportCmd.name.isEmpty());
     QVERIFY(exportCmd.getDescriptionLine().contains(exportCmd.name));
 
-    Utils::Test::setNextPassword("a");
-    exportCmd.execute({"export", m_dbFile->fileName()});
+    setInput("a");
+    execCmd(exportCmd, {"export", m_dbFile->fileName()});
 
-    m_stdoutFile->seek(0);
-    m_stdoutFile->readLine(); // skip prompt line
+    TemporaryFile xmlOutput;
+    xmlOutput.open(QIODevice::WriteOnly);
+    xmlOutput.write(m_stdout->readAll());
+    xmlOutput.close();
 
-    KdbxXmlReader reader(KeePass2::FILE_VERSION_3_1);
     QScopedPointer<Database> db(new Database());
-    reader.readDatabase(m_stdoutFile.data(), db.data());
-    QVERIFY(!reader.hasError());
-    QVERIFY(db.data());
+    QVERIFY(db->import(xmlOutput.fileName()));
+
     auto* entry = db->rootGroup()->findEntryByPath("/Sample Entry");
     QVERIFY(entry);
     QCOMPARE(entry->password(), QString("Password"));
 
-    m_stdoutFile->reset();
-
     // Quiet option
     QScopedPointer<Database> dbQuiet(new Database());
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    exportCmd.execute({"export", "-f", "xml", "-q", m_dbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    reader.readDatabase(m_stdoutFile.data(), dbQuiet.data());
-    QVERIFY(!reader.hasError());
-    QVERIFY(db.data());
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(exportCmd, {"export", "-f", "xml", "-q", m_dbFile->fileName()});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+
+    xmlOutput.open(QIODevice::WriteOnly);
+    xmlOutput.write(m_stdout->readAll());
+    xmlOutput.close();
+
+    QVERIFY(db->import(xmlOutput.fileName()));
 
     // CSV exporting
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    exportCmd.execute({"export", "-f", "csv", m_dbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip prompt line
-    m_stderrFile->seek(posErr);
-    QByteArray csvHeader = m_stdoutFile->readLine();
+    setInput("a");
+    execCmd(exportCmd, {"export", "-f", "csv", m_dbFile->fileName()});
+    QByteArray csvHeader = m_stdout->readLine();
     QCOMPARE(csvHeader, QByteArray("\"Group\",\"Title\",\"Username\",\"Password\",\"URL\",\"Notes\"\n"));
-    QByteArray csvData = m_stdoutFile->readAll();
+    QByteArray csvData = m_stdout->readAll();
     QVERIFY(csvData.contains(QByteArray(
         "\"NewDatabase\",\"Sample Entry\",\"User Name\",\"Password\",\"http://www.somesite.com/\",\"Notes\"\n")));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
 
     // test invalid format
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    exportCmd.execute({"export", "-f", "yaml", m_dbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip prompt line
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Unsupported format yaml\n"));
+    setInput("a");
+    execCmd(exportCmd, {"export", "-f", "yaml", m_dbFile->fileName()});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readLine(), QByteArray("Unsupported format yaml\n"));
 }
 
 void TestCli::testGenerate_data()
@@ -966,35 +977,30 @@ void TestCli::testGenerate()
     QVERIFY(!generateCmd.name.isEmpty());
     QVERIFY(generateCmd.getDescriptionLine().contains(generateCmd.name));
 
-    qint64 pos = 0;
-    // run multiple times to make accidental passes unlikely
-    TextStream stream(m_stdoutFile.data());
     for (int i = 0; i < 10; ++i) {
-        generateCmd.execute(parameters);
-        stream.seek(pos);
+        execCmd(generateCmd, parameters);
         QRegularExpression regex(pattern);
-        QString password = stream.readLine();
-        pos = stream.pos();
+#ifdef Q_OS_UNIX
+        QString password = QString::fromUtf8(m_stdout->readLine());
+#else
+        QString password = QString::fromLatin1(m_stdout->readLine());
+#endif
+
         QVERIFY2(regex.match(password).hasMatch(),
                  qPrintable("Password " + password + " does not match pattern " + pattern));
+        QCOMPARE(m_stderr->readAll(), QByteArray());
     }
 
     // Testing with invalid password length
-    auto posErr = m_stderrFile->pos();
-    generateCmd.execute({"generate", "-L", "-10"});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid password length -10\n"));
+    execCmd(generateCmd, {"generate", "-L", "-10"});
+    QCOMPARE(m_stderr->readLine(), QByteArray("Invalid password length -10\n"));
 
-    posErr = m_stderrFile->pos();
-    generateCmd.execute({"generate", "-L", "0"});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid password length 0\n"));
+    execCmd(generateCmd, {"generate", "-L", "0"});
+    QCOMPARE(m_stderr->readLine(), QByteArray("Invalid password length 0\n"));
 
     // Testing with invalid word count format
-    posErr = m_stderrFile->pos();
-    generateCmd.execute({"generate", "-L", "bleuh"});
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid password length bleuh\n"));
+    execCmd(generateCmd, {"generate", "-L", "bleuh"});
+    QCOMPARE(m_stderr->readLine(), QByteArray("Invalid password length bleuh\n"));
 }
 
 void TestCli::testImport()
@@ -1004,49 +1010,41 @@ void TestCli::testImport()
     QVERIFY(importCmd.getDescriptionLine().contains(importCmd.name));
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
-    QString databaseFilename = testDir->path() + "testImport1.kdbx";
+    QString databaseFilename = testDir->path() + "/testImport1.kdbx";
 
-    Utils::Test::setNextPassword("a");
-    importCmd.execute({"import", m_xmlFile->fileName(), databaseFilename});
+    setInput({"a", "a"});
+    execCmd(importCmd, {"import", m_xmlFile->fileName(), databaseFilename});
 
-    m_stderrFile->reset();
-    m_stdoutFile->reset();
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully imported database.\n"));
 
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully imported database.\n"));
-
-    Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, true, "", "", Utils::DEVNULL));
+    auto db = readDatabase(databaseFilename, "a");
     QVERIFY(db);
     auto* entry = db->rootGroup()->findEntryByPath("/Sample Entry 1");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("User Name"));
 
     // Should refuse to create the database if it already exists.
-    qint64 pos = m_stdoutFile->pos();
-    qint64 errPos = m_stderrFile->pos();
-    importCmd.execute({"import", m_xmlFile->fileName(), databaseFilename});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(errPos);
+    execCmd(importCmd, {"import", m_xmlFile->fileName(), databaseFilename});
     // Output should be empty when there is an error.
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
     QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
-    QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
+    QCOMPARE(m_stderr->readAll(), errorMessage.toUtf8());
 
     // Quiet option
     QScopedPointer<QTemporaryDir> testDirQuiet(new QTemporaryDir());
-    QString databaseFilenameQuiet = testDirQuiet->path() + "testImport2.kdbx";
+    QString databaseFilenameQuiet = testDirQuiet->path() + "/testImport2.kdbx";
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    importCmd.execute({"import", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
-    m_stdoutFile->seek(pos);
+    setInput({"a", "a"});
+    execCmd(importCmd, {"import", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
 
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray());
 
-    Utils::Test::setNextPassword("a");
-    auto dbQuiet = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilenameQuiet, true, "", "", Utils::DEVNULL));
-    QVERIFY(dbQuiet);
+    db = readDatabase(databaseFilenameQuiet, "a");
+    QVERIFY(db);
 }
 
 void TestCli::testKeyFileOption()
@@ -1054,35 +1052,26 @@ void TestCli::testKeyFileOption()
     List listCmd;
 
     QString keyFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtected.key"));
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-k", keyFilePath, m_keyFileProtectedDbFile->fileName()});
-    m_stdoutFile->reset();
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(listCmd, {"ls", "-k", keyFilePath, m_keyFileProtectedDbFile->fileName()});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("entry1\n"
                         "entry2\n"));
 
     // Should raise an error with no key file.
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", m_keyFileProtectedDbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QVERIFY(m_stderrFile->readAll().contains("Invalid credentials were provided"));
+    setInput("a");
+    execCmd(listCmd, {"ls", m_keyFileProtectedDbFile->fileName()});
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().contains("Invalid credentials were provided"));
 
     // Should raise an error if key file path is invalid.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-k", "invalidpath", m_keyFileProtectedDbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll().split(':').at(0), QByteArray("Failed to load key file invalidpath"));
+    setInput("a");
+    execCmd(listCmd, {"ls", "-k", "invalidpath", m_keyFileProtectedDbFile->fileName()});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QCOMPARE(m_stderr->readAll().split(':').at(0), QByteArray("Failed to load key file invalidpath"));
 }
 
 void TestCli::testNoPasswordOption()
@@ -1090,21 +1079,17 @@ void TestCli::testNoPasswordOption()
     List listCmd;
 
     QString keyFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtectedNoPassword.key"));
-    listCmd.execute({"ls", "-k", keyFilePath, "--no-password", m_keyFileProtectedNoPasswordDbFile->fileName()});
-    m_stdoutFile->reset();
-    QCOMPARE(m_stdoutFile->readAll(),
+    execCmd(listCmd, {"ls", "-k", keyFilePath, "--no-password", m_keyFileProtectedNoPasswordDbFile->fileName()});
+    // Expecting no password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("entry1\n"
                         "entry2\n"));
 
     // Should raise an error with no key file.
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    listCmd.execute({"ls", "--no-password", m_keyFileProtectedNoPasswordDbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QVERIFY(m_stderrFile->readAll().contains("Invalid credentials were provided"));
+    execCmd(listCmd, {"ls", "--no-password", m_keyFileProtectedNoPasswordDbFile->fileName()});
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().contains("Invalid credentials were provided"));
 }
 
 void TestCli::testList()
@@ -1113,11 +1098,11 @@ void TestCli::testList()
     QVERIFY(!listCmd.name.isEmpty());
     QVERIFY(listCmd.getDescriptionLine().contains(listCmd.name));
 
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", m_dbFile->fileName()});
-    m_stdoutFile->reset();
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(listCmd, {"ls", m_dbFile->fileName()});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Sample Entry\n"
                         "General/\n"
                         "Windows/\n"
@@ -1127,11 +1112,10 @@ void TestCli::testList()
                         "Homebanking/\n"));
 
     // Quiet option
-    qint64 pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-q", m_dbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(listCmd, {"ls", "-q", m_dbFile->fileName()});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Sample Entry\n"
                         "General/\n"
                         "Windows/\n"
@@ -1140,12 +1124,9 @@ void TestCli::testList()
                         "eMail/\n"
                         "Homebanking/\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-R", m_dbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(listCmd, {"ls", "-R", m_dbFile->fileName()});
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Sample Entry\n"
                         "General/\n"
                         "  [empty]\n"
@@ -1161,12 +1142,9 @@ void TestCli::testList()
                         "  Subgroup/\n"
                         "    Subgroup Entry\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-R", "-f", m_dbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(listCmd, {"ls", "-R", "-f", m_dbFile->fileName()});
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Sample Entry\n"
                         "General/\n"
                         "General/[empty]\n"
@@ -1182,30 +1160,21 @@ void TestCli::testList()
                         "Homebanking/Subgroup/\n"
                         "Homebanking/Subgroup/Subgroup Entry\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-R", "-f", m_dbFile->fileName(), "/Homebanking"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(listCmd, {"ls", "-R", "-f", m_dbFile->fileName(), "/Homebanking"});
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Subgroup/\n"
                         "Subgroup/Subgroup Entry\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", m_dbFile->fileName(), "/General/"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("[empty]\n"));
+    setInput("a");
+    execCmd(listCmd, {"ls", m_dbFile->fileName(), "/General/"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("[empty]\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", m_dbFile->fileName(), "/DoesNotExist/"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->reset();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Cannot find group /DoesNotExist/.\n"));
+    setInput("a");
+    execCmd(listCmd, {"ls", m_dbFile->fileName(), "/DoesNotExist/"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Cannot find group /DoesNotExist/.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 }
 
 void TestCli::testLocate()
@@ -1214,30 +1183,26 @@ void TestCli::testLocate()
     QVERIFY(!locateCmd.name.isEmpty());
     QVERIFY(locateCmd.getDescriptionLine().contains(locateCmd.name));
 
-    Utils::Test::setNextPassword("a");
-    locateCmd.execute({"locate", m_dbFile->fileName(), "Sample"});
-    m_stdoutFile->reset();
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("/Sample Entry\n"));
+    setInput("a");
+    execCmd(locateCmd, {"locate", m_dbFile->fileName(), "Sample"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n"));
 
     // Quiet option
-    qint64 pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    locateCmd.execute({"locate", m_dbFile->fileName(), "-q", "Sample"});
-    m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("/Sample Entry\n"));
+    setInput("a");
+    execCmd(locateCmd, {"locate", m_dbFile->fileName(), "-q", "Sample"});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    locateCmd.execute({"locate", m_dbFile->fileName(), "Does Not Exist"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->reset();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("No results for that search term.\n"));
+    setInput("a");
+    execCmd(locateCmd, {"locate", m_dbFile->fileName(), "Does Not Exist"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("No results for that search term.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // write a modified database
-    auto db = readTestDatabase();
+    auto db = readDatabase();
     QVERIFY(db);
     auto* group = db->rootGroup()->findGroupByPath("/General/");
     QVERIFY(group);
@@ -1245,25 +1210,19 @@ void TestCli::testLocate()
     entry->setUuid(QUuid::createUuid());
     entry->setTitle("New Entry");
     group->addEntry(entry);
+
     TemporaryFile tmpFile;
     tmpFile.open();
-    Kdbx4Writer writer;
-    writer.writeDatabase(&tmpFile, db.data());
     tmpFile.close();
+    db->saveAs(tmpFile.fileName());
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    locateCmd.execute({"locate", tmpFile.fileName(), "New"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("/General/New Entry\n"));
+    setInput("a");
+    execCmd(locateCmd, {"locate", tmpFile.fileName(), "New"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("/General/New Entry\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    locateCmd.execute({"locate", tmpFile.fileName(), "Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(locateCmd, {"locate", tmpFile.fileName(), "Entry"});
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("/Sample Entry\n/General/New Entry\n/Homebanking/Subgroup/Subgroup Entry\n"));
 }
 
@@ -1273,30 +1232,32 @@ void TestCli::testMerge()
     QVERIFY(!mergeCmd.name.isEmpty());
     QVERIFY(mergeCmd.getDescriptionLine().contains(mergeCmd.name));
 
-    Kdbx4Writer writer;
-    Kdbx4Reader reader;
-
     // load test database and save copies
-    auto db = readTestDatabase();
+    auto db = readDatabase();
     QVERIFY(db);
     TemporaryFile targetFile1;
     targetFile1.open();
-    writer.writeDatabase(&targetFile1, db.data());
     targetFile1.close();
+
     TemporaryFile targetFile2;
     targetFile2.open();
-    writer.writeDatabase(&targetFile2, db.data());
     targetFile2.close();
 
-    // save another copy with a different password
     TemporaryFile targetFile3;
     targetFile3.open();
+    targetFile3.close();
+
+    db->saveAs(targetFile1.fileName());
+    db->saveAs(targetFile2.fileName());
+
+    // save another copy with a different password
     auto oldKey = db->key();
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("b"));
     db->setKey(key);
-    writer.writeDatabase(&targetFile3, db.data());
-    targetFile3.close();
+    db->saveAs(targetFile3.fileName());
+
+    // Restore the original password
     db->setKey(oldKey);
 
     // then add a new entry to the in-memory database and save another copy
@@ -1307,91 +1268,64 @@ void TestCli::testMerge()
     auto* group = db->rootGroup()->findGroupByPath("/Internet/");
     QVERIFY(group);
     group->addEntry(entry);
+
     TemporaryFile sourceFile;
     sourceFile.open();
-    writer.writeDatabase(&sourceFile, db.data());
     sourceFile.close();
+    db->saveAs(sourceFile.fileName());
 
-    qint64 pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge", "-s", targetFile1.fileName(), sourceFile.fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();
-    m_stderrFile->reset();
-    QList<QByteArray> outLines1 = m_stdoutFile->readAll().split('\n');
-    QCOMPARE(outLines1.at(0).split('[').at(0), QByteArray("\tOverwriting Internet "));
-    QCOMPARE(outLines1.at(1).split('[').at(0), QByteArray("\tCreating missing Some Website "));
+    setInput("a");
+    execCmd(mergeCmd, {"merge", "-s", targetFile1.fileName(), sourceFile.fileName()});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QList<QByteArray> outLines1 = m_stdout->readAll().split('\n');
+    QVERIFY(outLines1.at(0).contains("Overwriting Internet"));
+    QVERIFY(outLines1.at(1).contains("Creating missing Some Website"));
     QCOMPARE(outLines1.at(2),
              QString("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile1.fileName()).toUtf8());
 
-    QFile readBack(targetFile1.fileName());
-    readBack.open(QIODevice::ReadOnly);
     auto mergedDb = QSharedPointer<Database>::create();
-    reader.readDatabase(&readBack, oldKey, mergedDb.data());
-    readBack.close();
-    QVERIFY(mergedDb);
+    QVERIFY(mergedDb->open(targetFile1.fileName(), oldKey));
+
     auto* entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
     QVERIFY(entry1);
     QCOMPARE(entry1->title(), QString("Some Website"));
     QCOMPARE(entry1->password(), QString("secretsecretsecret"));
 
     // the dry run option should not modify the target database.
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge", "--dry-run", "-s", targetFile2.fileName(), sourceFile.fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();
-    m_stderrFile->reset();
-    QList<QByteArray> outLines2 = m_stdoutFile->readAll().split('\n');
-    QCOMPARE(outLines2.at(0).split('[').at(0), QByteArray("\tOverwriting Internet "));
-    QCOMPARE(outLines2.at(1).split('[').at(0), QByteArray("\tCreating missing Some Website "));
+    setInput("a");
+    execCmd(mergeCmd, {"merge", "--dry-run", "-s", targetFile2.fileName(), sourceFile.fileName()});
+    QList<QByteArray> outLines2 = m_stdout->readAll().split('\n');
+    QVERIFY(outLines2.at(0).contains("Overwriting Internet"));
+    QVERIFY(outLines2.at(1).contains("Creating missing Some Website"));
     QCOMPARE(outLines2.at(2), QByteArray("Database was not modified by merge operation."));
 
-    QFile readBack2(targetFile2.fileName());
-    readBack2.open(QIODevice::ReadOnly);
     mergedDb = QSharedPointer<Database>::create();
-    reader.readDatabase(&readBack2, oldKey, mergedDb.data());
-    readBack2.close();
-    QVERIFY(mergedDb);
+    QVERIFY(mergedDb->open(targetFile2.fileName(), oldKey));
     entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
     QVERIFY(!entry1);
 
     // the dry run option can be used with the quiet option
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge", "--dry-run", "-s", "-q", targetFile2.fileName(), sourceFile.fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();
-    m_stderrFile->reset();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(mergeCmd, {"merge", "--dry-run", "-s", "-q", targetFile2.fileName(), sourceFile.fileName()});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
-    readBack2.setFileName(targetFile2.fileName());
-    readBack2.open(QIODevice::ReadOnly);
     mergedDb = QSharedPointer<Database>::create();
-    reader.readDatabase(&readBack2, oldKey, mergedDb.data());
-    readBack2.close();
-    QVERIFY(mergedDb);
+    QVERIFY(mergedDb->open(targetFile2.fileName(), oldKey));
     entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
     QVERIFY(!entry1);
 
     // try again with different passwords for both files
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("b");
-    Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge", targetFile3.fileName(), sourceFile.fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();
-    m_stdoutFile->readLine();
-    QList<QByteArray> outLines3 = m_stdoutFile->readAll().split('\n');
+    setInput({"b", "a"});
+    execCmd(mergeCmd, {"merge", targetFile3.fileName(), sourceFile.fileName()});
+    QList<QByteArray> outLines3 = m_stdout->readAll().split('\n');
     QCOMPARE(outLines3.at(2),
              QString("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile3.fileName()).toUtf8());
 
-    readBack.setFileName(targetFile3.fileName());
-    readBack.open(QIODevice::ReadOnly);
     mergedDb = QSharedPointer<Database>::create();
-    reader.readDatabase(&readBack, key, mergedDb.data());
-    readBack.close();
-    QVERIFY(mergedDb);
+    QVERIFY(mergedDb->open(targetFile3.fileName(), key));
+
     entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
     QVERIFY(entry1);
     QCOMPARE(entry1->title(), QString("Some Website"));
@@ -1399,27 +1333,21 @@ void TestCli::testMerge()
 
     // making sure that the message is different if the database was not
     // modified by the merge operation.
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge", "-s", sourceFile.fileName(), sourceFile.fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Database was not modified by merge operation.\n"));
+    setInput("a");
+    execCmd(mergeCmd, {"merge", "-s", sourceFile.fileName(), sourceFile.fileName()});
+    QCOMPARE(m_stdout->readAll(), QByteArray("Database was not modified by merge operation.\n"));
 
     // Quiet option
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge", "-q", "-s", sourceFile.fileName(), sourceFile.fileName()});
-    m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(mergeCmd, {"merge", "-q", "-s", sourceFile.fileName(), sourceFile.fileName()});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // Quiet option without the -s option
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge", "-q", sourceFile.fileName(), sourceFile.fileName()});
-    m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput({"a", "a"});
+    execCmd(mergeCmd, {"merge", "-q", sourceFile.fileName(), sourceFile.fileName()});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 }
 
 void TestCli::testMergeWithKeys()
@@ -1432,9 +1360,6 @@ void TestCli::testMergeWithKeys()
     QVERIFY(!mergeCmd.name.isEmpty());
     QVERIFY(mergeCmd.getDescriptionLine().contains(mergeCmd.name));
 
-    Kdbx4Writer writer;
-    Kdbx4Reader reader;
-
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
 
     QString sourceDatabaseFilename = testDir->path() + "/testSourceDatabase.kdbx";
@@ -1443,22 +1368,16 @@ void TestCli::testMergeWithKeys()
     QString targetDatabaseFilename = testDir->path() + "/testTargetDatabase.kdbx";
     QString targetKeyfilePath = testDir->path() + "/testTargetKeyfile.txt";
 
-    qint64 pos = m_stdoutFile->pos();
+    setInput({"a", "a"});
+    execCmd(createCmd, {"db-create", sourceDatabaseFilename, "-p", "-k", sourceKeyfilePath});
 
-    Utils::Test::setNextPassword("a");
-    createCmd.execute({"create", sourceDatabaseFilename, "-k", sourceKeyfilePath});
+    setInput({"b", "b"});
+    execCmd(createCmd, {"db-create", targetDatabaseFilename, "-p", "-k", targetKeyfilePath});
 
-    Utils::Test::setNextPassword("b");
-    createCmd.execute({"create", targetDatabaseFilename, "-k", targetKeyfilePath});
-
-    Utils::Test::setNextPassword("a");
-    auto sourceDatabase = QSharedPointer<Database>(
-        Utils::unlockDatabase(sourceDatabaseFilename, true, sourceKeyfilePath, "", Utils::STDOUT));
+    auto sourceDatabase = readDatabase(sourceDatabaseFilename, "a", sourceKeyfilePath);
     QVERIFY(sourceDatabase);
 
-    Utils::Test::setNextPassword("b");
-    auto targetDatabase = QSharedPointer<Database>(
-        Utils::unlockDatabase(targetDatabaseFilename, true, targetKeyfilePath, "", Utils::STDOUT));
+    auto targetDatabase = readDatabase(targetDatabaseFilename, "b", targetKeyfilePath);
     QVERIFY(targetDatabase);
 
     auto* rootGroup = new Group();
@@ -1493,34 +1412,22 @@ void TestCli::testMergeWithKeys()
 
     targetDatabase->setRootGroup(otherRootGroup);
 
-    QFile sourceDatabaseFile(sourceDatabaseFilename);
-    sourceDatabaseFile.open(QIODevice::WriteOnly);
-    QVERIFY(writer.writeDatabase(&sourceDatabaseFile, sourceDatabase.data()));
-    sourceDatabaseFile.flush();
-    sourceDatabaseFile.close();
+    sourceDatabase->saveAs(sourceDatabaseFilename);
+    targetDatabase->saveAs(targetDatabaseFilename);
 
-    QFile targetDatabaseFile(targetDatabaseFilename);
-    targetDatabaseFile.open(QIODevice::WriteOnly);
-    QVERIFY(writer.writeDatabase(&targetDatabaseFile, targetDatabase.data()));
-    targetDatabaseFile.flush();
-    targetDatabaseFile.close();
+    setInput({"b", "a"});
+    execCmd(mergeCmd,
+            {"merge",
+             "-k",
+             targetKeyfilePath,
+             "--key-file-from",
+             sourceKeyfilePath,
+             targetDatabaseFilename,
+             sourceDatabaseFilename});
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("b");
-    Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge",
-                      "-k",
-                      targetKeyfilePath,
-                      "--key-file-from",
-                      sourceKeyfilePath,
-                      targetDatabaseFile.fileName(),
-                      sourceDatabaseFile.fileName()});
-
-    m_stdoutFile->seek(pos);
-    QList<QByteArray> lines = m_stdoutFile->readAll().split('\n');
-    QVERIFY(lines.contains(QString("Successfully merged %1 into %2.")
-                               .arg(sourceDatabaseFile.fileName(), targetDatabaseFile.fileName())
-                               .toUtf8()));
+    QList<QByteArray> lines = m_stdout->readAll().split('\n');
+    QVERIFY(lines.contains(
+        QString("Successfully merged %1 into %2.").arg(sourceDatabaseFilename, targetDatabaseFilename).toUtf8()));
 }
 
 void TestCli::testMove()
@@ -1529,53 +1436,37 @@ void TestCli::testMove()
     QVERIFY(!moveCmd.name.isEmpty());
     QVERIFY(moveCmd.getDescriptionLine().contains(moveCmd.name));
 
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    moveCmd.execute({"mv", m_dbFile->fileName(), "invalid_entry_path", "invalid_group_path"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    m_stdoutFile->readLine(); // skip prompt line
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Could not find entry with path invalid_entry_path.\n"));
+    setInput("a");
+    execCmd(moveCmd, {"mv", m_dbFile->fileName(), "invalid_entry_path", "invalid_group_path"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readLine(), QByteArray("Could not find entry with path invalid_entry_path.\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray());
 
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    moveCmd.execute({"mv", m_dbFile->fileName(), "Sample Entry", "invalid_group_path"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    m_stdoutFile->readLine(); // skip prompt line
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Could not find group with path invalid_group_path.\n"));
+    setInput("a");
+    execCmd(moveCmd, {"mv", m_dbFile->fileName(), "Sample Entry", "invalid_group_path"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readLine(), QByteArray("Could not find group with path invalid_group_path.\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray());
 
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    moveCmd.execute({"mv", m_dbFile->fileName(), "Sample Entry", "General/"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    m_stdoutFile->readLine(); // skip prompt line
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully moved entry Sample Entry to group General/.\n"));
-    QCOMPARE(m_stderrFile->readLine(), QByteArray(""));
+    setInput("a");
+    execCmd(moveCmd, {"mv", m_dbFile->fileName(), "Sample Entry", "General/"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readLine(), QByteArray());
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully moved entry Sample Entry to group General/.\n"));
 
-    auto db = readTestDatabase();
+    auto db = readDatabase();
     auto* entry = db->rootGroup()->findEntryByPath("General/Sample Entry");
     QVERIFY(entry);
 
     // Test that not modified if the same group is destination.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    moveCmd.execute({"mv", m_dbFile->fileName(), "General/Sample Entry", "General/"});
-    m_stdoutFile->seek(pos);
-    m_stderrFile->seek(posErr);
-    m_stdoutFile->readLine(); // skip prompt line
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readLine(), QByteArray("Entry is already in group General/.\n"));
+    setInput("a");
+    execCmd(moveCmd, {"mv", m_dbFile->fileName(), "General/Sample Entry", "General/"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readLine(), QByteArray("Entry is already in group General/.\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray());
 
     // sanity check
-    db = readTestDatabase();
+    db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("General/Sample Entry");
     QVERIFY(entry);
 }
@@ -1586,80 +1477,52 @@ void TestCli::testRemove()
     QVERIFY(!removeCmd.name.isEmpty());
     QVERIFY(removeCmd.getDescriptionLine().contains(removeCmd.name));
 
-    Kdbx3Reader reader;
-    Kdbx3Writer writer;
-
     // load test database and save a copy with disabled recycle bin
-    auto db = readTestDatabase();
+    auto db = readDatabase();
     QVERIFY(db);
     TemporaryFile fileCopy;
     fileCopy.open();
-    db->metadata()->setRecycleBinEnabled(false);
-    writer.writeDatabase(&fileCopy, db.data());
     fileCopy.close();
 
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
+    db->metadata()->setRecycleBinEnabled(false);
+    db->saveAs(fileCopy.fileName());
 
     // delete entry and verify
-    Utils::Test::setNextPassword("a");
-    removeCmd.execute({"rm", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully recycled entry Sample Entry.\n"));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(removeCmd, {"rm", m_dbFile->fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully recycled entry Sample Entry.\n"));
 
-    auto key = QSharedPointer<CompositeKey>::create();
-    key->addKey(QSharedPointer<PasswordKey>::create("a"));
-    QFile readBack(m_dbFile->fileName());
-    readBack.open(QIODevice::ReadOnly);
-    auto readBackDb = QSharedPointer<Database>::create();
-    reader.readDatabase(&readBack, key, readBackDb.data());
-    readBack.close();
+    auto readBackDb = readDatabase();
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
     QVERIFY(readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
-    pos = m_stdoutFile->pos();
-    pos = m_stdoutFile->pos();
-
     // try again, this time without recycle bin
-    Utils::Test::setNextPassword("a");
-    removeCmd.execute({"rm", fileCopy.fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully deleted entry Sample Entry.\n"));
+    setInput("a");
+    execCmd(removeCmd, {"rm", fileCopy.fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully deleted entry Sample Entry.\n"));
 
-    readBack.setFileName(fileCopy.fileName());
-    readBack.open(QIODevice::ReadOnly);
-    readBackDb = QSharedPointer<Database>::create();
-    reader.readDatabase(&readBack, key, readBackDb.data());
-    readBack.close();
+    readBackDb = readDatabase(fileCopy.fileName(), "a");
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
     // finally, try deleting a non-existent entry
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    removeCmd.execute({"rm", fileCopy.fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry /Sample Entry not found.\n"));
+    setInput("a");
+    execCmd(removeCmd, {"rm", fileCopy.fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Entry /Sample Entry not found.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // try deleting a directory, should fail
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    removeCmd.execute({"rm", fileCopy.fileName(), "/General"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry /General not found.\n"));
+    setInput("a");
+    execCmd(removeCmd, {"rm", fileCopy.fileName(), "/General"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Entry /General not found.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 }
 
 void TestCli::testRemoveGroup()
@@ -1668,60 +1531,41 @@ void TestCli::testRemoveGroup()
     QVERIFY(!removeGroupCmd.name.isEmpty());
     QVERIFY(removeGroupCmd.getDescriptionLine().contains(removeGroupCmd.name));
 
-    Kdbx3Reader reader;
-    Kdbx3Writer writer;
-
     // try deleting a directory, should recycle it first.
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    removeGroupCmd.execute({"rmdir", m_dbFile->fileName(), "/General"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully recycled group /General.\n"));
+    setInput("a");
+    execCmd(removeGroupCmd, {"rmdir", m_dbFile->fileName(), "/General"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully recycled group /General.\n"));
 
-    auto db = readTestDatabase();
+    auto db = readDatabase();
     auto* group = db->rootGroup()->findGroupByPath("General");
     QVERIFY(!group);
 
     // try deleting a directory again, should delete it permanently.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    removeGroupCmd.execute({"rmdir", m_dbFile->fileName(), "Recycle Bin/General"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully deleted group Recycle Bin/General.\n"));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(removeGroupCmd, {"rmdir", m_dbFile->fileName(), "Recycle Bin/General"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully deleted group Recycle Bin/General.\n"));
 
-    db = readTestDatabase();
+    db = readDatabase();
     group = db->rootGroup()->findGroupByPath("Recycle Bin/General");
     QVERIFY(!group);
 
     // try deleting an invalid group, should fail.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    removeGroupCmd.execute({"rmdir", m_dbFile->fileName(), "invalid"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Group invalid not found.\n"));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(removeGroupCmd, {"rmdir", m_dbFile->fileName(), "invalid"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Group invalid not found.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // Should fail to remove the root group.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    removeGroupCmd.execute({"rmdir", m_dbFile->fileName(), "/"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Cannot remove root group from database.\n"));
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(removeGroupCmd, {"rmdir", m_dbFile->fileName(), "/"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Cannot remove root group from database.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 }
 
 void TestCli::testRemoveQuiet()
@@ -1730,44 +1574,27 @@ void TestCli::testRemoveQuiet()
     QVERIFY(!removeCmd.name.isEmpty());
     QVERIFY(removeCmd.getDescriptionLine().contains(removeCmd.name));
 
-    Kdbx3Reader reader;
-    Kdbx3Writer writer;
-
-    qint64 pos = m_stdoutFile->pos();
-
     // delete entry and verify
-    Utils::Test::setNextPassword("a");
-    removeCmd.execute({"rm", "-q", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(removeCmd, {"rm", "-q", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
-    auto key = QSharedPointer<CompositeKey>::create();
-    key->addKey(QSharedPointer<PasswordKey>::create("a"));
-    QFile readBack(m_dbFile->fileName());
-    readBack.open(QIODevice::ReadOnly);
-    auto readBackDb = QSharedPointer<Database>::create();
-    reader.readDatabase(&readBack, key, readBackDb.data());
-    readBack.close();
-    QVERIFY(readBackDb);
-    QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
-    QVERIFY(readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
+    auto db = readDatabase();
+    QVERIFY(db);
 
-    pos = m_stdoutFile->pos();
+    QVERIFY(!db->rootGroup()->findEntryByPath("/Sample Entry"));
+    QVERIFY(db->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
     // remove the entry completely
-    Utils::Test::setNextPassword("a");
-    removeCmd.execute({"rm", "-q", m_dbFile->fileName(), QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))});
-    m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    setInput("a");
+    execCmd(removeCmd, {"rm", "-q", m_dbFile->fileName(), QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
-    readBack.setFileName(m_dbFile->fileName());
-    readBack.open(QIODevice::ReadOnly);
-    readBackDb = QSharedPointer<Database>::create();
-    reader.readDatabase(&readBack, key, readBackDb.data());
-    readBack.close();
-    QVERIFY(readBackDb);
-    QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
-    QVERIFY(!readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
+    db = readDatabase();
+    QVERIFY(!db->rootGroup()->findEntryByPath("/Sample Entry"));
+    QVERIFY(!db->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 }
 
 void TestCli::testShow()
@@ -1776,96 +1603,82 @@ void TestCli::testShow()
     QVERIFY(!showCmd.name.isEmpty());
     QVERIFY(showCmd.getDescriptionLine().contains(showCmd.name));
 
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->reset();
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(showCmd, {"show", m_dbFile->fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Title: Sample Entry\n"
                         "UserName: User Name\n"
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
                         "Notes: Notes\n"));
 
-    qint64 pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", "-s", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(showCmd, {"show", "-s", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Title: Sample Entry\n"
                         "UserName: User Name\n"
                         "Password: Password\n"
                         "URL: http://www.somesite.com/\n"
                         "Notes: Notes\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(showCmd, {"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Title: Sample Entry\n"
                         "UserName: User Name\n"
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
                         "Notes: Notes\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", "-a", "Title", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"));
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "Title", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("Sample Entry\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", "-a", "Password", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Password\n"));
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "Password", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("Password\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", "-a", "Title", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "Title", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("Sample Entry\n"
                         "http://www.somesite.com/\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", "-a", "DoesNotExist", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->reset();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("ERROR: unknown attribute DoesNotExist.\n"));
+    // Test case insensitivity
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "TITLE", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("Sample Entry\n"
+                        "http://www.somesite.com/\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", "-t", m_dbFile->fileName(), "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QVERIFY(isTOTP(m_stdoutFile->readAll()));
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "DoesNotExist", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().contains("ERROR: unknown attribute DoesNotExist.\n"));
 
-    pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", "-a", "Title", m_dbFile->fileName(), "--totp", "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Sample Entry\n"));
-    QVERIFY(isTOTP(m_stdoutFile->readAll()));
+    setInput("a");
+    execCmd(showCmd, {"show", "-t", m_dbFile->fileName(), "/Sample Entry"});
+    QVERIFY(isTotp(m_stdout->readAll()));
 
-    pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "Title", m_dbFile->fileName(), "--totp", "/Sample Entry"});
+    QCOMPARE(m_stdout->readLine(), QByteArray("Sample Entry\n"));
+    QVERIFY(isTotp(m_stdout->readAll()));
+
+    setInput("a");
+    execCmd(showCmd, {"show", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().contains("Entry with path /Sample Entry has no TOTP set up.\n"));
+
+    // Show with ambiguous attributes
+    setInput("a");
+    execCmd(showCmd, {"show", m_dbFile->fileName(), "-a", "Testattribute1", "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().contains(
+        "ERROR: attribute Testattribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
 }
 
 void TestCli::testInvalidDbFiles()
@@ -1874,16 +1687,13 @@ void TestCli::testInvalidDbFiles()
     QString nonExistentDbPath("/foo/bar/baz");
     QString directoryName("/");
 
-    qint64 pos = m_stderrFile->pos();
-    showCmd.execute({"show", nonExistentDbPath, "-q", "/Sample Entry"});
-    m_stderrFile->seek(pos);
-    QCOMPARE(QString(m_stderrFile->readAll()),
+    execCmd(showCmd, {"show", nonExistentDbPath, "/Sample Entry"});
+    QCOMPARE(QString(m_stderr->readAll()),
              QObject::tr("Failed to open database file %1: not found").arg(nonExistentDbPath) + "\n");
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
-    pos = m_stderrFile->pos();
-    showCmd.execute({"show", directoryName, "-q", "whatever"});
-    m_stderrFile->seek(pos);
-    QCOMPARE(QString(m_stderrFile->readAll()),
+    execCmd(showCmd, {"show", directoryName, "whatever"});
+    QCOMPARE(QString(m_stderr->readAll()),
              QObject::tr("Failed to open database file %1: not a plain file").arg(directoryName) + "\n");
 
     // Create a write-only file and try to open it.
@@ -1895,10 +1705,8 @@ void TestCli::testInvalidDbFiles()
     QVERIFY(tempFile.open());
     QString path = QFileInfo(tempFile).absoluteFilePath();
     QVERIFY(tempFile.setPermissions(QFileDevice::WriteOwner));
-    pos = m_stderrFile->pos();
-    showCmd.execute({"show", path, "some entry"});
-    m_stderrFile->seek(pos);
-    QCOMPARE(QString(m_stderrFile->readAll()),
+    execCmd(showCmd, {"show", path, "some entry"});
+    QCOMPARE(QString(m_stderr->readAll()),
              QObject::tr("Failed to open database file %1: not readable").arg(path) + "\n");
 #endif // Q_OS_WIN
 }
@@ -1906,89 +1714,82 @@ void TestCli::testInvalidDbFiles()
 /**
  * Secret key for the YubiKey slot used by the unit test is
  * 1c e3 0f d7 8d 20 dc fa 40 b5 0c 18 77 9a fb 0f 02 28 8d b7
- * This secret should be configured at slot 2, and the slot
- * should be configured as passive.
+ * This secret can be on either slot but must be passive.
  */
 void TestCli::testYubiKeyOption()
 {
-    if (!YubiKey::instance()->init()) {
-        QSKIP("Unable to connect to YubiKey");
+    if (!YubiKey::instance()->isInitialized()) {
+        QSKIP("Unable to initialize YubiKey interface.");
     }
 
-    QString errorMessage;
-    bool isBlocking = YubiKey::instance()->checkSlotIsBlocking(2, errorMessage);
-    if (isBlocking && errorMessage.isEmpty()) {
-        QSKIP("Skipping YubiKey in press mode.");
+    YubiKey::instance()->findValidKeys();
+
+    // Wait for the hardware to respond
+    QSignalSpy detected(YubiKey::instance(), SIGNAL(detectComplete(bool)));
+    QTRY_VERIFY_WITH_TIMEOUT(detected.count() > 0, 2000);
+
+    auto keys = YubiKey::instance()->foundKeys();
+    if (keys.isEmpty()) {
+        QSKIP("No YubiKey devices were detected.");
     }
 
+    bool wouldBlock = false;
     QByteArray challenge("CLITest");
     QByteArray response;
-    YubiKey::instance()->challenge(2, false, challenge, response);
     QByteArray expected("\xA2\x3B\x94\x00\xBE\x47\x9A\x30\xA9\xEB\x50\x9B\x85\x56\x5B\x6B\x30\x25\xB4\x8E", 20);
-    QVERIFY2(response == expected, "YubiKey Slot 2 is not configured with correct secret key.");
+
+    // Find a key that as configured for this test
+    YubiKeySlot pKey(0, 0);
+    for (auto key : keys) {
+        if (YubiKey::instance()->testChallenge(key, &wouldBlock) && !wouldBlock) {
+            YubiKey::instance()->challenge(key, challenge, response);
+            if (response == expected) {
+                pKey = key;
+                break;
+            }
+            Tools::wait(100);
+        }
+    }
+
+    if (pKey.first == 0 && pKey.second == 0) {
+        QSKIP("No YubiKey is properly configured to perform this test.");
+    }
 
     List listCmd;
     Add addCmd;
 
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-y", "2", m_yubiKeyProtectedDbFile->fileName()});
-    m_stdoutFile->reset();
-    m_stderrFile->reset();
-    m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(),
+    setInput("a");
+    execCmd(listCmd, {"ls", "-y", "2", m_yubiKeyProtectedDbFile->fileName()});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
              QByteArray("entry1\n"
                         "entry2\n"));
 
     // Should raise an error with no yubikey slot.
-    qint64 pos = m_stdoutFile->pos();
-    qint64 posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", m_yubiKeyProtectedDbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readLine(),
+    setInput("a");
+    execCmd(listCmd, {"ls", m_yubiKeyProtectedDbFile->fileName()});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readLine(),
              QByteArray("Error while reading the database: Invalid credentials were provided, please try again.\n"));
-    QCOMPARE(m_stderrFile->readLine(),
+    QCOMPARE(m_stderr->readLine(),
              QByteArray("If this reoccurs, then your database file may be corrupt. (HMAC mismatch)\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // Should raise an error if yubikey slot is not a string
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-y", "invalidslot", m_yubiKeyProtectedDbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll().split(':').at(0), QByteArray("Invalid YubiKey slot invalidslot\n"));
+    setInput("a");
+    execCmd(listCmd, {"ls", "-y", "invalidslot", m_yubiKeyProtectedDbFile->fileName()});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll().split(':').at(0), QByteArray("Invalid YubiKey slot invalidslot\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // Should raise an error if yubikey slot is invalid.
-    pos = m_stdoutFile->pos();
-    posErr = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    listCmd.execute({"ls", "-y", "3", m_yubiKeyProtectedDbFile->fileName()});
-    m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll().split(':').at(0), QByteArray("Invalid YubiKey slot 3\n"));
+    setInput("a");
+    execCmd(listCmd, {"ls", "-y", "3", m_yubiKeyProtectedDbFile->fileName()});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll().split(':').at(0), QByteArray("Invalid YubiKey slot 3\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
 }
-
-namespace
-{
-
-    void expectParseResult(const QString& input, const QStringList& expectedOutput)
-    {
-        QStringList result = Utils::splitCommandString(input);
-        QCOMPARE(result.size(), expectedOutput.size());
-        for (int i = 0; i < expectedOutput.size(); ++i) {
-            QCOMPARE(result[i], expectedOutput[i]);
-        }
-    }
-
-} // namespace
 
 void TestCli::testCommandParsing_data()
 {
@@ -2011,23 +1812,25 @@ void TestCli::testCommandParsing()
     QFETCH(QString, input);
     QFETCH(QStringList, expectedOutput);
 
-    expectParseResult(input, expectedOutput);
+    QStringList result = Utils::splitCommandString(input);
+    QCOMPARE(result.size(), expectedOutput.size());
+    for (int i = 0; i < expectedOutput.size(); ++i) {
+        QCOMPARE(result[i], expectedOutput[i]);
+    }
 }
 
 void TestCli::testOpen()
 {
-    Open o;
+    Open openCmd;
 
-    Utils::Test::setNextPassword("a");
-    o.execute({"open", m_dbFile->fileName()});
-    m_stdoutFile->reset();
-    QVERIFY(o.currentDatabase);
+    setInput("a");
+    execCmd(openCmd, {"open", m_dbFile->fileName()});
+    QVERIFY(openCmd.currentDatabase);
 
-    List l;
+    List listCmd;
     // Set a current database, simulating interactive mode.
-    l.currentDatabase = o.currentDatabase;
-    l.execute({"ls"});
-    m_stdoutFile->reset();
+    listCmd.currentDatabase = openCmd.currentDatabase;
+    execCmd(listCmd, {"ls"});
     QByteArray expectedOutput("Sample Entry\n"
                               "General/\n"
                               "Windows/\n"
@@ -2035,28 +1838,20 @@ void TestCli::testOpen()
                               "Internet/\n"
                               "eMail/\n"
                               "Homebanking/\n");
-    QByteArray actualOutput = m_stdoutFile->readAll();
+    QByteArray actualOutput = m_stdout->readAll();
     actualOutput.truncate(expectedOutput.length());
     QCOMPARE(actualOutput, expectedOutput);
 }
 
 void TestCli::testHelp()
 {
-    Help h;
+    Help helpCmd;
     Commands::setupCommands(false);
 
-    {
-        h.execute({"help"});
-        m_stderrFile->reset();
-        QString output(m_stderrFile->readAll());
-        QVERIFY(output.contains(QObject::tr("Available commands")));
-    }
+    execCmd(helpCmd, {"help"});
+    QVERIFY(m_stdout->readAll().contains("Available commands"));
 
-    {
-        List l;
-        h.execute({"help", "ls"});
-        m_stderrFile->reset();
-        QString output(m_stderrFile->readAll());
-        QVERIFY(output.contains(l.description));
-    }
+    List listCmd;
+    execCmd(helpCmd, {"help", "ls"});
+    QVERIFY(m_stdout->readAll().contains(listCmd.description.toLatin1()));
 }

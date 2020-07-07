@@ -43,29 +43,27 @@ Analyze::Analyze()
 
 int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream inputTextStream(Utils::STDIN, QIODevice::ReadOnly);
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    auto& out = Utils::STDOUT;
+    auto& err = Utils::STDERR;
 
     QString hibpDatabase = parser->value(Analyze::HIBPDatabaseOption);
     QFile hibpFile(hibpDatabase);
     if (!hibpFile.open(QFile::ReadOnly)) {
-        errorTextStream << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString())
-                        << endl;
+        err << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString()) << endl;
         return EXIT_FAILURE;
     }
 
-    outputTextStream << QObject::tr("Evaluating database entries against HIBP file, this will take a while...") << endl;
+    out << QObject::tr("Evaluating database entries against HIBP file, this will take a while...") << endl;
 
     QList<QPair<const Entry*, int>> findings;
     QString error;
     if (!HibpOffline::report(database, hibpFile, findings, &error)) {
-        errorTextStream << error << endl;
+        err << error << endl;
         return EXIT_FAILURE;
     }
 
     for (auto& finding : findings) {
-        printHibpFinding(finding.first, finding.second, outputTextStream);
+        printHibpFinding(finding.first, finding.second, out);
     }
 
     return EXIT_SUCCESS;

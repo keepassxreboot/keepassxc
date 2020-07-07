@@ -22,7 +22,7 @@
 #include <QPushButton>
 #include <QScrollArea>
 
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 EditWidget::EditWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -70,7 +70,16 @@ void EditWidget::addPage(const QString& labelText, const QIcon& icon, QWidget* w
 
 void EditWidget::setPageHidden(QWidget* widget, bool hidden)
 {
-    int index = m_ui->stackedWidget->indexOf(widget);
+    int index = -1;
+
+    for (int i = 0; i < m_ui->stackedWidget->count(); i++) {
+        auto* scrollArea = qobject_cast<QScrollArea*>(m_ui->stackedWidget->widget(i));
+        if (scrollArea && scrollArea->widget() == widget) {
+            index = i;
+            break;
+        }
+    }
+
     if (index != -1) {
         m_ui->categoryList->setCategoryHidden(index, hidden);
     }

@@ -23,34 +23,43 @@
 #include <QLineEdit>
 #include <QPointer>
 
+class QDialog;
+
 class PasswordEdit : public QLineEdit
 {
     Q_OBJECT
 
 public:
-    static const QColor CorrectSoFarColor;
-    static const QColor ErrorColor;
-
     explicit PasswordEdit(QWidget* parent = nullptr);
-    void enableVerifyMode(PasswordEdit* baseEdit);
+    void enablePasswordGenerator();
+    void setRepeatPartner(PasswordEdit* repeatEdit);
     bool isPasswordVisible() const;
 
 public slots:
     void setShowPassword(bool show);
+    void updateRepeatStatus();
+
+protected:
+    bool event(QEvent* event) override;
 
 signals:
-    void showPasswordChanged(bool show);
+    void capslockToggled(bool capslockOn);
 
 private slots:
-    void updateStylesheet();
     void autocompletePassword(const QString& password);
+    void popupPasswordGenerator();
+    void setParentPasswordEdit(PasswordEdit* parent);
+    void checkCapslockState();
 
 private:
-    bool passwordsEqual() const;
-
     QPointer<QAction> m_errorAction;
     QPointer<QAction> m_correctAction;
-    QPointer<PasswordEdit> m_basePasswordEdit;
+    QPointer<QAction> m_toggleVisibleAction;
+    QPointer<QAction> m_passwordGeneratorAction;
+    QPointer<QAction> m_capslockAction;
+    QPointer<PasswordEdit> m_repeatPasswordEdit;
+    QPointer<PasswordEdit> m_parentPasswordEdit;
+    bool m_capslockState = false;
 };
 
 #endif // KEEPASSX_PASSWORDEDIT_H

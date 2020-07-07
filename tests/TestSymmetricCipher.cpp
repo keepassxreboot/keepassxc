@@ -279,7 +279,6 @@ void TestSymmetricCipher::testTwofish256CbcEncryption()
                                     QByteArray::fromHex("6F725C5950133F82EF021A94CADC8508")};
 
     SymmetricCipher cipher(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Encrypt);
-    bool ok;
 
     for (int i = 0; i < keys.size(); ++i) {
         QVERIFY(cipher.init(keys[i], ivs[i]));
@@ -287,16 +286,19 @@ void TestSymmetricCipher::testTwofish256CbcEncryption()
         QByteArray ctPrev = ivs[i];
         QByteArray ctCur;
         QCOMPARE(cipher.blockSize(), 16);
+        bool ok = false;
         for (int j = 0; j < 5000; ++j) {
             ctCur = cipher.process(ptNext, &ok);
-            if (!ok)
+            if (!ok) {
                 break;
+            }
             ptNext = ctPrev;
             ctPrev = ctCur;
 
             ctCur = cipher.process(ptNext, &ok);
-            if (!ok)
+            if (!ok) {
                 break;
+            }
             ptNext = ctPrev;
             ctPrev = ctCur;
         }
@@ -333,22 +335,24 @@ void TestSymmetricCipher::testTwofish256CbcDecryption()
                                     QByteArray::fromHex("4C81F5BDC1081170FF96F50B1F76A566")};
 
     SymmetricCipher cipher(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
-    bool ok;
 
     for (int i = 0; i < keys.size(); ++i) {
         cipher.init(keys[i], ivs[i]);
         QByteArray ctNext = cipherTexts[i];
         QByteArray ptCur;
         QCOMPARE(cipher.blockSize(), 16);
+        bool ok = false;
         for (int j = 0; j < 5000; ++j) {
             ptCur = cipher.process(ctNext, &ok);
-            if (!ok)
+            if (!ok) {
                 break;
+            }
             ctNext = ptCur;
 
             ptCur = cipher.process(ctNext, &ok);
-            if (!ok)
+            if (!ok) {
                 break;
+            }
             ctNext = ptCur;
         }
 

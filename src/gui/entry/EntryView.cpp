@@ -24,13 +24,14 @@
 #include <QMenu>
 #include <QShortcut>
 
-#include "core/FilePath.h"
 #include "gui/SortFilterHideProxyModel.h"
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
     , m_model(new EntryModel(this))
     , m_sortModel(new SortFilterHideProxyModel(this))
+    , m_lastIndex(-1)
+    , m_lastOrder(Qt::AscendingOrder)
     , m_inSearchMode(false)
 {
     m_sortModel->setSourceModel(m_model);
@@ -70,22 +71,31 @@ EntryView::EntryView(QWidget* parent)
     m_hidePasswordsAction->setCheckable(true);
     m_headerMenu->addSeparator();
 
+    resetViewToDefaults();
+
     // Actions to toggle column visibility, each carrying the corresponding
-    // colummn index as data
+    // column index as data
     m_columnActions = new QActionGroup(this);
     m_columnActions->setExclusive(false);
-    for (int columnIndex = 1; columnIndex < header()->count(); ++columnIndex) {
-        QString caption = m_model->headerData(columnIndex, Qt::Horizontal, Qt::DisplayRole).toString();
-        if (columnIndex == EntryModel::Paperclip) {
-            caption = tr("Attachments (icon)");
+    for (int visualIndex = 1; visualIndex < header()->count(); ++visualIndex) {
+        int logicalIndex = header()->logicalIndex(visualIndex);
+        QString caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::DisplayRole).toString();
+        if (logicalIndex == EntryModel::Paperclip) {
+            caption = tr("Has attachments", "Entry attachment icon toggle");
+        } else if (logicalIndex == EntryModel::Totp) {
+            caption = tr("Has TOTP", "Entry TOTP icon toggle");
         }
 
         QAction* action = m_headerMenu->addAction(caption);
         action->setCheckable(true);
-        action->setData(columnIndex);
+        action->setData(logicalIndex);
         m_columnActions->addAction(action);
     }
     connect(m_columnActions, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
+    connect(header(), &QHeaderView::sortIndicatorChanged, [this](int index, Qt::SortOrder order) {
+        Q_UNUSED(order)
+        header()->setSortIndicatorShown(index != EntryModel::Paperclip && index != EntryModel::Totp);
+    });
 
     m_headerMenu->addSeparator();
     m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
@@ -112,24 +122,8 @@ EntryView::EntryView(QWidget* parent)
     // clang-format on
 
     // clang-format off
-    connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SLOT(sortIndicatorChanged(int,Qt::SortOrder)));
     // clang-format on
-
-    resetFixedColumns();
-
-    // Configure default search view state and save for later use
-    header()->showSection(EntryModel::ParentGroup);
-    m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
-    sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
-    m_defaultSearchViewState = header()->saveState();
-
-    // Configure default list view state and save for later use
-    header()->hideSection(EntryModel::ParentGroup);
-    m_sortModel->sort(EntryModel::Title, Qt::AscendingOrder);
-    sortByColumn(EntryModel::Title, Qt::AscendingOrder);
-    m_defaultListViewState = header()->saveState();
-
-    m_model->setPaperClipPixmap(filePath()->icon("actions", "paperclip").pixmap(16));
 }
 
 void EntryView::contextMenuShortcutPressed()
@@ -137,6 +131,31 @@ void EntryView::contextMenuShortcutPressed()
     auto index = currentIndex();
     if (hasFocus() && index.isValid()) {
         emit customContextMenuRequested(visualRect(index).bottomLeft());
+    }
+}
+
+void EntryView::sortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
+{
+    int oldIndex = m_lastIndex;
+    m_lastIndex = logicalIndex;
+    Qt::SortOrder oldOrder = m_lastOrder;
+    m_lastOrder = order;
+
+    if (oldIndex == logicalIndex // same index
+        && oldOrder == Qt::DescendingOrder // old order is descending
+        && order == Qt::AscendingOrder) // new order is ascending
+    {
+        // a change from descending to ascending on the same column occurred
+        // this sets the header into no sort order
+        header()->setSortIndicator(-1, Qt::AscendingOrder);
+        // do not emit any signals,  header()->setSortIndicator recursively calls this
+        // function and the signals are emitted in the else part
+    } else {
+        // call emitEntrySelectionChanged even though the selection did not really change
+        // this triggers the evaluation of the menu activation and anyway, the position
+        // of the selected entry within the widget did change
+        emitEntrySelectionChanged();
+        emit viewStateChanged();
     }
 }
 
@@ -219,6 +238,11 @@ bool EntryView::inSearchMode()
     return m_inSearchMode;
 }
 
+bool EntryView::isSorted()
+{
+    return header()->sortIndicatorSection() != -1;
+}
+
 void EntryView::emitEntryActivated(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
@@ -263,6 +287,17 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
         return m_model->entryFromIndex(m_sortModel->mapToSource(index));
     } else {
         return nullptr;
+    }
+}
+
+int EntryView::currentEntryIndex()
+{
+    QModelIndexList list = selectionModel()->selectedRows();
+    if (list.size() == 1) {
+        auto index = m_sortModel->mapToSource(list.first());
+        return index.row();
+    } else {
+        return -1;
     }
 }
 
@@ -325,6 +360,7 @@ bool EntryView::setViewState(const QByteArray& state)
 {
     bool status = header()->restoreState(state);
     resetFixedColumns();
+    m_columnsNeedRelayout = state.isEmpty();
     return status;
 }
 
@@ -397,9 +433,11 @@ void EntryView::toggleColumnVisibility(QAction* action)
  */
 void EntryView::fitColumnsToWindow()
 {
-    header()->resizeSections(QHeaderView::Stretch);
+    header()->setSectionResizeMode(QHeaderView::Stretch);
     resetFixedColumns();
-    fillRemainingWidth(true);
+    QCoreApplication::processEvents();
+    header()->setSectionResizeMode(QHeaderView::Interactive);
+    resetFixedColumns();
     emit viewStateChanged();
 }
 
@@ -409,69 +447,89 @@ void EntryView::fitColumnsToWindow()
  */
 void EntryView::fitColumnsToContents()
 {
-    // Resize columns to fit contents
-    header()->resizeSections(QHeaderView::ResizeToContents);
+    header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     resetFixedColumns();
-    fillRemainingWidth(false);
+    QCoreApplication::processEvents();
+    header()->setSectionResizeMode(QHeaderView::Interactive);
+    resetFixedColumns();
     emit viewStateChanged();
 }
 
 /**
- * Reset view to defaults
+ * Mark icon-only columns as fixed and resize them to their minimum section size.
+ */
+void EntryView::resetFixedColumns()
+{
+    header()->setSectionResizeMode(EntryModel::Paperclip, QHeaderView::Fixed);
+    header()->resizeSection(EntryModel::Paperclip, header()->minimumSectionSize());
+
+    header()->setSectionResizeMode(EntryModel::Totp, QHeaderView::Fixed);
+    header()->resizeSection(EntryModel::Totp, header()->minimumSectionSize());
+}
+
+/**
+ * Reset item view to defaults.
  */
 void EntryView::resetViewToDefaults()
 {
     m_model->setUsernamesHidden(false);
     m_model->setPasswordsHidden(true);
 
+    // Reduce number of columns that are shown by default
     if (m_inSearchMode) {
-        header()->restoreState(m_defaultSearchViewState);
+        header()->showSection(EntryModel::ParentGroup);
     } else {
-        header()->restoreState(m_defaultListViewState);
+        header()->hideSection(EntryModel::ParentGroup);
+    }
+    header()->showSection(EntryModel::Title);
+    header()->showSection(EntryModel::Username);
+    header()->showSection(EntryModel::Url);
+    header()->showSection(EntryModel::Notes);
+    header()->showSection(EntryModel::Modified);
+    header()->showSection(EntryModel::Paperclip);
+    header()->showSection(EntryModel::Totp);
+
+    header()->hideSection(EntryModel::Password);
+    header()->hideSection(EntryModel::Expires);
+    header()->hideSection(EntryModel::Created);
+    header()->hideSection(EntryModel::Accessed);
+    header()->hideSection(EntryModel::Attachments);
+    header()->hideSection(EntryModel::Size);
+
+    // Reset column order to logical indices
+    for (int i = 0; i < header()->count(); ++i) {
+        header()->moveSection(header()->visualIndex(i), i);
     }
 
-    fitColumnsToWindow();
+    // Reorder some columns
+    header()->moveSection(header()->visualIndex(EntryModel::Paperclip), 1);
+    header()->moveSection(header()->visualIndex(EntryModel::Totp), 2);
+
+    // Sort by title or group (depending on the mode)
+    m_sortModel->sort(EntryModel::Title, Qt::AscendingOrder);
+    sortByColumn(EntryModel::Title, Qt::AscendingOrder);
+
+    if (m_inSearchMode) {
+        m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
+        sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
+    }
+
+    // The following call only relayouts reliably if the widget has been shown
+    // already, so only do it if the widget is visible and let showEvent() handle
+    // the initial default layout.
+    if (isVisible()) {
+        fitColumnsToWindow();
+    }
 }
 
-void EntryView::fillRemainingWidth(bool lastColumnOnly)
+void EntryView::showEvent(QShowEvent* event)
 {
-    // Determine total width of currently visible columns
-    int width = 0;
-    int lastColumnIndex = 0;
-    for (int columnIndex = 0; columnIndex < header()->count(); ++columnIndex) {
-        if (!header()->isSectionHidden(columnIndex)) {
-            width += header()->sectionSize(columnIndex);
-        }
-        if (header()->visualIndex(columnIndex) > lastColumnIndex) {
-            lastColumnIndex = header()->visualIndex(columnIndex);
-        }
+    QTreeView::showEvent(event);
+
+    // Check if header columns need to be resized to sensible defaults.
+    // This is only needed if no previous view state has been loaded.
+    if (m_columnsNeedRelayout) {
+        fitColumnsToWindow();
+        m_columnsNeedRelayout = false;
     }
-
-    int numColumns = header()->count() - header()->hiddenSectionCount();
-    int availWidth = header()->width() - width;
-    if ((numColumns <= 0) || (availWidth <= 0)) {
-        return;
-    }
-
-    if (!lastColumnOnly) {
-        // Equally distribute remaining width to visible columns
-        int add = availWidth / numColumns;
-        width = 0;
-        for (int columnIndex = 0; columnIndex < header()->count(); ++columnIndex) {
-            if (!header()->isSectionHidden(columnIndex)) {
-                header()->resizeSection(columnIndex, header()->sectionSize(columnIndex) + add);
-                width += header()->sectionSize(columnIndex);
-            }
-        }
-    }
-
-    // Add remaining width to last column
-    header()->resizeSection(header()->logicalIndex(lastColumnIndex),
-                            header()->sectionSize(lastColumnIndex) + (header()->width() - width));
-}
-
-void EntryView::resetFixedColumns()
-{
-    header()->setSectionResizeMode(EntryModel::Paperclip, QHeaderView::Fixed);
-    header()->resizeSection(EntryModel::Paperclip, header()->minimumSectionSize());
 }

@@ -168,8 +168,7 @@ void DatabaseSettingsWidgetFdoSecrets::settingsWarning()
         m_ui->warningWidget->hideMessage();
     } else {
         m_ui->groupBox->setEnabled(false);
-        m_ui->warningWidget->showMessage(tr("Enable fd.o Secret Service to access these settings."),
-                                         MessageWidget::Warning);
+        m_ui->warningWidget->showMessage(tr("Enable Secret Service to access these settings."), MessageWidget::Warning);
         m_ui->warningWidget->setCloseButtonVisible(false);
         m_ui->warningWidget->setAutoHideTimeout(-1);
     }

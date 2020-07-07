@@ -29,7 +29,7 @@ Help::Help()
 
 int Help::execute(const QStringList& arguments)
 {
-    TextStream out(Utils::STDERR, QIODevice::WriteOnly);
+    auto& out = Utils::STDOUT;
     QSharedPointer<Command> command;
     if (arguments.size() > 1 && (command = Commands::getCommand(arguments.at(1)))) {
         out << command->getHelpText();
@@ -39,5 +39,6 @@ int Help::execute(const QStringList& arguments)
             out << cmd->getDescriptionLine();
         }
     }
+    out.flush();
     return EXIT_SUCCESS;
 }

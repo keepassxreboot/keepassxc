@@ -55,6 +55,9 @@ void TestEntryModel::test()
 
     EntryModel* model = new EntryModel(this);
 
+    QSignalSpy spyAboutToBeMoved(model, SIGNAL(rowsAboutToBeMoved(QModelIndex, int, int, QModelIndex, int)));
+    QSignalSpy spyMoved(model, SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)));
+
     ModelTest* modelTest = new ModelTest(model, this);
 
     model->setGroup(group1);
@@ -78,6 +81,29 @@ void TestEntryModel::test()
 
     Entry* entry3 = new Entry();
     entry3->setGroup(group1);
+
+    QCOMPARE(spyAboutToBeMoved.count(), 0);
+    QCOMPARE(spyMoved.count(), 0);
+
+    entry1->moveDown();
+    QCOMPARE(spyAboutToBeMoved.count(), 1);
+    QCOMPARE(spyMoved.count(), 1);
+
+    entry1->moveDown();
+    QCOMPARE(spyAboutToBeMoved.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+
+    entry1->moveDown();
+    QCOMPARE(spyAboutToBeMoved.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+
+    entry3->moveUp();
+    QCOMPARE(spyAboutToBeMoved.count(), 3);
+    QCOMPARE(spyMoved.count(), 3);
+
+    entry3->moveUp();
+    QCOMPARE(spyAboutToBeMoved.count(), 3);
+    QCOMPARE(spyMoved.count(), 3);
 
     QCOMPARE(spyAboutToAdd.count(), 1);
     QCOMPARE(spyAdded.count(), 1);
@@ -204,7 +230,7 @@ void TestEntryModel::testDefaultIconModel()
     DefaultIconModel* model = new DefaultIconModel(this);
     ModelTest* modelTest = new ModelTest(model, this);
 
-    QCOMPARE(model->rowCount(), DatabaseIcons::IconCount);
+    QCOMPARE(model->rowCount(), databaseIcons()->count());
 
     delete modelTest;
     delete model;
@@ -295,7 +321,7 @@ void TestEntryModel::testProxyModel()
      */
     QSignalSpy spyColumnRemove(modelProxy, SIGNAL(columnsAboutToBeRemoved(QModelIndex, int, int)));
     modelProxy->hideColumn(0, true);
-    QCOMPARE(modelProxy->columnCount(), 12);
+    QCOMPARE(modelProxy->columnCount(), 13);
     QVERIFY(!spyColumnRemove.isEmpty());
 
     int oldSpyColumnRemoveSize = spyColumnRemove.size();
@@ -317,7 +343,7 @@ void TestEntryModel::testProxyModel()
      */
     QSignalSpy spyColumnInsert(modelProxy, SIGNAL(columnsAboutToBeInserted(QModelIndex, int, int)));
     modelProxy->hideColumn(0, false);
-    QCOMPARE(modelProxy->columnCount(), 13);
+    QCOMPARE(modelProxy->columnCount(), 14);
     QVERIFY(!spyColumnInsert.isEmpty());
 
     int oldSpyColumnInsertSize = spyColumnInsert.size();

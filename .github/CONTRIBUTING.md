@@ -132,7 +132,7 @@ For **Qt-UI files** (*.ui*): 2 spaces
 
 // Application includes
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 // Global includes
 #include <QWidget>

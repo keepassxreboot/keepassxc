@@ -34,7 +34,7 @@
 #include "autotype/AutoTypeSelectView.h"
 #include "core/AutoTypeMatch.h"
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "gui/entry/AutoTypeMatchModel.h"
 
 AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
@@ -49,14 +49,14 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     setAttribute(Qt::WA_X11BypassTransientForHint);
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Auto-Type - KeePassXC"));
-    setWindowIcon(filePath()->applicationIcon());
+    setWindowIcon(resources()->applicationIcon());
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QRect screenGeometry = QApplication::screenAt(QCursor::pos())->availableGeometry();
 #else
     QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());
 #endif
-    QSize size = config()->get("GUI/AutoTypeSelectDialogSize", QSize(600, 250)).toSize();
+    QSize size = config()->get(Config::GUI_AutoTypeSelectDialogSize).toSize();
     size.setWidth(qMin(size.width(), screenGeometry.width()));
     size.setHeight(qMin(size.height(), screenGeometry.height()));
     resize(size);
@@ -111,7 +111,7 @@ void AutoTypeSelectDialog::setMatchList(const QList<AutoTypeMatch>& matchList)
 
 void AutoTypeSelectDialog::done(int r)
 {
-    config()->set("GUI/AutoTypeSelectDialogSize", size());
+    config()->set(Config::GUI_AutoTypeSelectDialogSize, size());
 
     QDialog::done(r);
 }

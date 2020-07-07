@@ -21,6 +21,7 @@
 #include <QFile>
 
 #include "core/Database.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 
@@ -28,8 +29,9 @@ namespace
 {
     QString PixmapToHTML(const QPixmap& pixmap)
     {
-        if (pixmap.isNull())
+        if (pixmap.isNull()) {
             return "";
+        }
 
         // Based on https://stackoverflow.com/a/6621278
         QByteArray a;
@@ -141,7 +143,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
 
         // Header line
         auto header = QString("<hr><h2>");
-        header.append(PixmapToHTML(group.iconScaledPixmap()));
+        header.append(PixmapToHTML(group.iconPixmap(IconSize::Medium)));
         header.append("&nbsp;");
         header.append(path);
         header.append("</h2>\n");
@@ -165,7 +167,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
         auto item = QString("<div class=\"entry\"><h3>");
 
         // Begin formatting this item into HTML
-        item.append(PixmapToHTML(entry->iconScaledPixmap()));
+        item.append(PixmapToHTML(entry->iconPixmap(IconSize::Medium)));
         item.append("&nbsp;");
         item.append(entry->title().toHtmlEscaped());
         item.append("</h3>\n"
@@ -176,7 +178,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
         if (!u.isEmpty()) {
             item.append("<tr><th>");
             item.append(QObject::tr("User name"));
-            item.append("</t><td class=\"username\">");
+            item.append("</th><td class=\"username\">");
             item.append(entry->username().toHtmlEscaped());
             item.append("</td></tr>");
         }

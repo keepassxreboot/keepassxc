@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
-    <height>348</height>
+    <width>577</width>
+    <height>434</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -49,14 +49,14 @@
    <item>
     <widget class="QRadioButton" name="inheritSequenceButton">
      <property name="text">
-      <string>Inherit default Auto-Type sequence from the &amp;group</string>
+      <string>Inherit default Auto-Type sequence from the group</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QRadioButton" name="customSequenceButton">
      <property name="text">
-      <string>&amp;Use custom Auto-Type sequence:</string>
+      <string>Use custom Auto-Type sequence:</string>
      </property>
     </widget>
    </item>
@@ -105,6 +105,22 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QGroupBox" name="windowsBox">

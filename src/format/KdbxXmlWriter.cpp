@@ -111,10 +111,10 @@ void KdbxXmlWriter::writeMetadata()
     writeString("DefaultUserName", m_meta->defaultUserName());
     writeDateTime("DefaultUserNameChanged", m_meta->defaultUserNameChanged());
     writeNumber("MaintenanceHistoryDays", m_meta->maintenanceHistoryDays());
-    writeColor("Color", m_meta->color());
-    writeDateTime("MasterKeyChanged", m_meta->masterKeyChanged());
-    writeNumber("MasterKeyChangeRec", m_meta->masterKeyChangeRec());
-    writeNumber("MasterKeyChangeForce", m_meta->masterKeyChangeForce());
+    writeString("Color", m_meta->color());
+    writeDateTime("MasterKeyChanged", m_meta->databaseKeyChanged());
+    writeNumber("MasterKeyChangeRec", m_meta->databaseKeyChangeRec());
+    writeNumber("MasterKeyChangeForce", m_meta->databaseKeyChangeForce());
     writeMemoryProtection();
     writeCustomIcons();
     writeBool("RecycleBinEnabled", m_meta->recycleBinEnabled());
@@ -346,8 +346,8 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
     if (!entry->iconUuid().isNull()) {
         writeUuid("CustomIconUUID", entry->iconUuid());
     }
-    writeColor("ForegroundColor", entry->foregroundColor());
-    writeColor("BackgroundColor", entry->backgroundColor());
+    writeString("ForegroundColor", entry->foregroundColor());
+    writeString("BackgroundColor", entry->backgroundColor());
     writeString("OverrideURL", entry->overrideUrl());
     writeString("Tags", entry->tags());
     writeTimes(entry->timeInfo());
@@ -530,18 +530,6 @@ void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
 void KdbxXmlWriter::writeBinary(const QString& qualifiedName, const QByteArray& ba)
 {
     writeString(qualifiedName, QString::fromLatin1(ba.toBase64()));
-}
-
-void KdbxXmlWriter::writeColor(const QString& qualifiedName, const QColor& color)
-{
-    QString colorStr;
-
-    if (color.isValid()) {
-        colorStr = QString("#%1%2%3").arg(
-            colorPartToString(color.red()), colorPartToString(color.green()), colorPartToString(color.blue()));
-    }
-
-    writeString(qualifiedName, colorStr);
 }
 
 void KdbxXmlWriter::writeTriState(const QString& qualifiedName, Group::TriState triState)

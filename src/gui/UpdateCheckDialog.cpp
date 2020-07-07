@@ -16,7 +16,7 @@
  */
 
 #include "UpdateCheckDialog.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "ui_UpdateCheckDialog.h"
 #include "updatecheck/UpdateChecker.h"
 
@@ -28,7 +28,7 @@ UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
     setWindowFlags(Qt::Window);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
+    m_ui->iconLabel->setPixmap(resources()->applicationIcon().pixmap(48));
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(UpdateChecker::instance(),

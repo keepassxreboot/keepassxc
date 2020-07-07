@@ -72,12 +72,12 @@ namespace
         const auto sourceEntries = sourceRoot->entriesRecursive(false);
         for (const Entry* sourceEntry : sourceEntries) {
             auto* targetEntry = sourceEntry->clone(Entry::CloneIncludeHistory);
-            const bool updateTimeinfo = targetEntry->canUpdateTimeinfo();
+            const bool updateTimeinfoEntry = targetEntry->canUpdateTimeinfo();
             targetEntry->setUpdateTimeinfo(false);
             targetEntry->setGroup(targetRoot);
-            targetEntry->setUpdateTimeinfo(updateTimeinfo);
+            targetEntry->setUpdateTimeinfo(updateTimeinfoEntry);
             const auto iconUuid = targetEntry->iconUuid();
-            if (!iconUuid.isNull() && !targetMetadata->containsCustomIcon(iconUuid)) {
+            if (!iconUuid.isNull() && !targetMetadata->hasCustomIcon(iconUuid)) {
                 targetMetadata->addCustomIcon(iconUuid, sourceEntry->icon());
             }
         }

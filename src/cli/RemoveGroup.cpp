@@ -41,21 +41,20 @@ RemoveGroup::~RemoveGroup()
 
 int RemoveGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    bool quiet = parser->isSet(Command::QuietOption);
-    QString groupPath = parser->positionalArguments().at(1);
+    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& err = Utils::STDERR;
 
-    TextStream outputTextStream(quiet ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    QString groupPath = parser->positionalArguments().at(1);
 
     // Recursive option means were looking for a group to remove.
     QPointer<Group> group = database->rootGroup()->findGroupByPath(groupPath);
     if (!group) {
-        errorTextStream << QObject::tr("Group %1 not found.").arg(groupPath) << endl;
+        err << QObject::tr("Group %1 not found.").arg(groupPath) << endl;
         return EXIT_FAILURE;
     }
 
     if (group == database->rootGroup()) {
-        errorTextStream << QObject::tr("Cannot remove root group from database.") << endl;
+        err << QObject::tr("Cannot remove root group from database.") << endl;
         return EXIT_FAILURE;
     }
 
@@ -70,14 +69,14 @@ int RemoveGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedP
 
     QString errorMessage;
     if (!database->save(&errorMessage, true, false)) {
-        errorTextStream << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
+        err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
     if (recycled) {
-        outputTextStream << QObject::tr("Successfully recycled group %1.").arg(groupPath) << endl;
+        out << QObject::tr("Successfully recycled group %1.").arg(groupPath) << endl;
     } else {
-        outputTextStream << QObject::tr("Successfully deleted group %1.").arg(groupPath) << endl;
+        out << QObject::tr("Successfully deleted group %1.").arg(groupPath) << endl;
     }
 
     return EXIT_SUCCESS;

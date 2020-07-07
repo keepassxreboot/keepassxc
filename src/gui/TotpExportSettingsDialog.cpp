@@ -103,10 +103,10 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
 void TotpExportSettingsDialog::copyToClipboard()
 {
     clipboard()->setText(m_totpUri);
-    if (config()->get("HideWindowOnCopy").toBool()) {
-        if (config()->get("MinimizeOnCopy").toBool()) {
-            getMainWindow()->showMinimized();
-        } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
+    if (config()->get(Config::HideWindowOnCopy).toBool()) {
+        if (config()->get(Config::MinimizeOnCopy).toBool()) {
+            getMainWindow()->minimizeOrHide();
+        } else if (config()->get(Config::DropToBackgroundOnCopy).toBool()) {
             getMainWindow()->lower();
             window()->lower();
         }

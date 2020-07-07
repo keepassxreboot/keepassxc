@@ -48,6 +48,8 @@ public:
     MainWindow();
     ~MainWindow();
 
+    QList<DatabaseWidget*> getOpenDatabases();
+
     enum StackedWidgetIndex
     {
         DatabaseTabScreen = 0,
@@ -70,22 +72,28 @@ public slots:
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
+    void hide();
+    void show();
     void hideWindow();
+    void minimizeOrHide();
     void toggleWindow();
     void bringToFront();
     void closeAllDatabases();
     void lockAllDatabases();
     void displayDesktopNotification(const QString& msg, QString title = "", int msTimeoutHint = 10000);
+    void restartApp(const QString& message);
 
 protected:
     void closeEvent(QCloseEvent* event) override;
     void changeEvent(QEvent* event) override;
+    bool focusNextPrevChild(bool next) override;
 
 private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
+    void updateToolbarSeparatorVisibility();
     void updateWindowTitle();
     void showAboutDialog();
-    void showUpdateCheckStartup();
+    void performUpdateCheck();
     void showUpdateCheckDialog();
     void focusWindowChanged(QWindow* focusWindow);
     void hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested);
@@ -97,14 +105,13 @@ private slots:
     void openKeyboardShortcuts();
     void switchToDatabases();
     void switchToSettings(bool enabled);
-    void switchToPasswordGen(bool enabled);
+    void togglePasswordGenerator(bool enabled);
     void switchToNewDatabase();
     void switchToOpenDatabase();
     void switchToDatabaseFile(const QString& file);
     void switchToKeePass1Database();
     void switchToOpVaultDatabase();
     void switchToCsvImport();
-    void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget* dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);
@@ -122,10 +129,15 @@ private slots:
     void showErrorMessage(const QString& message);
     void selectNextDatabaseTab();
     void selectPreviousDatabaseTab();
+    void selectDatabaseTab(int tabIndex, bool wrap = false);
     void togglePasswordsHidden();
     void toggleUsernamesHidden();
     void obtainContextFocusLock();
     void releaseContextFocusLock();
+    void agentEnabled(bool enabled);
+
+private slots:
+    void updateTrayIcon();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -134,13 +146,14 @@ private:
 
     void saveWindowInformation();
     bool saveLastDatabases();
-    void updateTrayIcon();
     bool isTrayIconEnabled() const;
     void customOpenUrl(QString url);
 
     static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dropEvent(QDropEvent* event) override;
+
+    void initViewMenu();
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
@@ -161,8 +174,12 @@ private:
 
     bool m_appExitCalled = false;
     bool m_appExiting = false;
+    bool m_restartRequested = false;
     bool m_contextMenuFocusLock = false;
-    uint m_lastFocusOutTime = 0;
+    bool m_showToolbarSeparator = false;
+    qint64 m_lastFocusOutTime = 0;
+    qint64 m_lastShowTime = 0;
+    QTimer m_updateCheckTimer;
     QTimer m_trayIconTriggerTimer;
     QSystemTrayIcon::ActivationReason m_trayIconTriggerReason;
 };

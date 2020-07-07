@@ -6,29 +6,50 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>221</height>
+    <width>405</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>KeePassXC-Browser Confirm Access</string>
+   <string>KeePassXC - Browser Access Request</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="siteLabel">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string/>
+      <string>%1 is requesting access to the following entries:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="itemsList"/>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="rememberDecisionCheckBox">
-     <property name="text">
-      <string>Remember this decision</string>
+    <widget class="QTableWidget" name="itemsTable">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>false</bool>
+     </property>
+     <attribute name="horizontalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
    <item>
@@ -47,22 +68,41 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="allowButton">
+      <widget class="QCheckBox" name="rememberDecisionCheckBox">
+       <property name="toolTip">
+        <string>Remember access to checked entries</string>
+       </property>
        <property name="accessibleName">
-        <string>Allow access</string>
+        <string>Remember access to checked entries</string>
        </property>
        <property name="text">
-        <string>Allow</string>
+        <string>Remember</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="denyButton">
+      <widget class="QPushButton" name="allowButton">
        <property name="accessibleName">
-        <string>Deny access</string>
+        <string>Allow access to entries</string>
        </property>
        <property name="text">
-        <string>Deny</string>
+        <string>Allow Selected</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
+        <string>Deny All</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

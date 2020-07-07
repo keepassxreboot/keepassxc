@@ -1,25 +1,18 @@
 ---
 name: Feature Request
-about: tell us about a new capability you want to see
+about: tell us about a new feature you want
 title: 
 labels: new feature
 assignees: ''
 
 ---
-
-[TIP]:  # ( Provide a general summary of the feature in the title above ^^ )
-[TIP]:  # ( DO NOT include screenshots of your actual database! )
-
 ## Summary
+[TIP]:  # ( DO NOT include screenshots of your actual database! )
 [NOTE]: # ( Provide a brief overview of what the new feature is all about )
 
 
-## Desired Behavior
-[NOTE]: # ( Tell us how the new feature should work, be specific )
-
-
-## Possible Solution
-[NOTE]: # ( Not required, but suggest ideas on how to implement the addition or change )
+## Examples
+[NOTE]: # ( Show us a picture or mock-up of your proposal )
 
 
 ## Context

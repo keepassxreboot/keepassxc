@@ -46,12 +46,14 @@ signals:
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 
 private slots:
     void openDatabaseFromFile(QListWidgetItem* item);
 
 private:
     const QScopedPointer<Ui::WelcomeWidget> m_ui;
+    void removeFromLastDatabases(QListWidgetItem* item);
 };
 
 #endif // KEEPASSX_WELCOMEWIDGET_H

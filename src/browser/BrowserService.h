@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,9 @@
 #define BROWSERSERVICE_H
 
 #include "core/Entry.h"
-#include "gui/DatabaseTabWidget.h"
 #include <QObject>
+#include <QPointer>
+#include <QSharedPointer>
 #include <QtCore>
 
 typedef QPair<QString, QString> StringPair;
@@ -33,28 +34,32 @@ enum
     max_length = 16 * 1024
 };
 
+class DatabaseWidget;
+class BrowserHost;
+class BrowserAction;
+
 class BrowserService : public QObject
 {
     Q_OBJECT
 
 public:
-    enum ReturnValue
-    {
-        Success,
-        Error,
-        Canceled
-    };
+    explicit BrowserService();
+    static BrowserService* instance();
 
-    explicit BrowserService(DatabaseTabWidget* parent);
+    void setEnabled(bool enabled);
+
+    QString getKey(const QString& id);
+    QString storeKey(const QString& key);
+    QString getDatabaseHash(bool legacy = false);
 
     bool isDatabaseOpened() const;
     bool openDatabase(bool triggerUnlock);
-    QString getDatabaseRootUuid();
-    QString getDatabaseRecycleBinUuid();
-    QJsonObject getDatabaseGroups(const QSharedPointer<Database>& selectedDb = {});
+    void lockDatabase();
+
+    QJsonObject getDatabaseGroups();
     QJsonObject createNewGroup(const QString& groupName);
-    QString getKey(const QString& id);
-    void addEntry(const QString& id,
+
+    void addEntry(const QString& dbid,
                   const QString& login,
                   const QString& password,
                   const QString& url,
@@ -63,43 +68,39 @@ public:
                   const QString& group,
                   const QString& groupUuid,
                   const QSharedPointer<Database>& selectedDb = {});
-    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl);
-    QList<Entry*> searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList);
-    void convertAttributesToCustomData(const QSharedPointer<Database>& currentDb = {});
+    bool updateEntry(const QString& dbid,
+                     const QString& uuid,
+                     const QString& login,
+                     const QString& password,
+                     const QString& url,
+                     const QString& submitUrl);
 
-public:
-    static const QString KEEPASSXCBROWSER_NAME;
-    static const QString KEEPASSXCBROWSER_OLD_NAME;
-    static const QString ASSOCIATE_KEY_PREFIX;
-    static const QString LEGACY_ASSOCIATE_KEY_PREFIX;
-    static const QString OPTION_SKIP_AUTO_SUBMIT;
-    static const QString OPTION_HIDE_ENTRY;
-    static const QString OPTION_ONLY_HTTP_AUTH;
-    static const QString ADDITIONAL_URL;
-
-public slots:
-    QJsonArray findMatchingEntries(const QString& id,
+    QJsonArray findMatchingEntries(const QString& dbid,
                                    const QString& url,
                                    const QString& submitUrl,
                                    const QString& realm,
                                    const StringPairList& keyList,
                                    const bool httpAuth = false);
-    QString storeKey(const QString& key);
-    ReturnValue updateEntry(const QString& id,
-                            const QString& uuid,
-                            const QString& login,
-                            const QString& password,
-                            const QString& url,
-                            const QString& submitUrl);
-    void databaseLocked(DatabaseWidget* dbWidget);
-    void databaseUnlocked(DatabaseWidget* dbWidget);
-    void activateDatabaseChanged(DatabaseWidget* dbWidget);
-    void lockDatabase();
+
+    static void convertAttributesToCustomData(QSharedPointer<Database> db);
+
+    static const QString KEEPASSXCBROWSER_NAME;
+    static const QString KEEPASSXCBROWSER_OLD_NAME;
+    static const QString OPTION_SKIP_AUTO_SUBMIT;
+    static const QString OPTION_HIDE_ENTRY;
+    static const QString OPTION_ONLY_HTTP_AUTH;
+    static const QString ADDITIONAL_URL;
 
 signals:
-    void databaseLocked();
-    void databaseUnlocked();
-    void databaseChanged();
+    void requestUnlock();
+
+public slots:
+    void databaseLocked(DatabaseWidget* dbWidget);
+    void databaseUnlocked(DatabaseWidget* dbWidget);
+    void activeDatabaseChanged(DatabaseWidget* dbWidget);
+
+private slots:
+    void processClientMessage(const QJsonObject& message);
 
 private:
     enum Access
@@ -116,15 +117,17 @@ private:
         Hidden
     };
 
-private:
+    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl);
+    QList<Entry*> searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList);
     QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& submitUrl);
-    bool confirmEntries(QList<Entry*>& pwEntriesToConfirm,
-                        const QString& url,
-                        const QString& host,
-                        const QString& submitUrl,
-                        const QString& realm,
-                        const bool httpAuth);
+    QList<Entry*> confirmEntries(QList<Entry*>& pwEntriesToConfirm,
+                                 const QString& url,
+                                 const QString& host,
+                                 const QString& submitUrl,
+                                 const QString& realm,
+                                 const bool httpAuth);
     QJsonObject prepareEntry(const Entry* entry);
+    QJsonArray getChildrenFromGroup(Group* group);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
     Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});
     int
@@ -135,21 +138,36 @@ private:
     QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();
-    QJsonArray getChildrenFromGroup(Group* group);
-    bool moveSettingsToCustomData(Entry* entry, const QString& name) const;
-    int moveKeysToCustomData(Entry* entry, const QSharedPointer<Database>& db) const;
-    bool checkLegacySettings();
+    QString getDatabaseRootUuid();
+    QString getDatabaseRecycleBinUuid();
+
+    bool checkLegacySettings(QSharedPointer<Database> db);
+
     void hideWindow() const;
     void raiseWindow(const bool force = false);
+    void updateWindowState();
 
-private:
-    DatabaseTabWidget* const m_dbTabWidget;
+    static bool moveSettingsToCustomData(Entry* entry, const QString& name);
+    static int moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db);
+
+    QPointer<BrowserHost> m_browserHost;
+    QHash<QString, QSharedPointer<BrowserAction>> m_browserClients;
+
     bool m_dialogActive;
     bool m_bringToFrontRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
 
+    QPointer<DatabaseWidget> m_currentDatabaseWidget;
+
+    Q_DISABLE_COPY(BrowserService);
+
     friend class TestBrowser;
 };
+
+static inline BrowserService* browserService()
+{
+    return BrowserService::instance();
+}
 
 #endif // BROWSERSERVICE_H

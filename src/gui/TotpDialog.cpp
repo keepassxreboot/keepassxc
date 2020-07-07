@@ -65,10 +65,10 @@ TotpDialog::~TotpDialog()
 void TotpDialog::copyToClipboard()
 {
     clipboard()->setText(m_entry->totp());
-    if (config()->get("HideWindowOnCopy").toBool()) {
-        if (config()->get("MinimizeOnCopy").toBool()) {
-            getMainWindow()->showMinimized();
-        } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
+    if (config()->get(Config::HideWindowOnCopy).toBool()) {
+        if (config()->get(Config::MinimizeOnCopy).toBool()) {
+            getMainWindow()->minimizeOrHide();
+        } else if (config()->get(Config::DropToBackgroundOnCopy).toBool()) {
             getMainWindow()->lower();
             window()->lower();
         }

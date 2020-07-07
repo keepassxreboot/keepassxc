@@ -32,6 +32,7 @@ namespace Ui
 }
 
 class PasswordGenerator;
+class PasswordHealth;
 class PassphraseGenerator;
 
 class PasswordGeneratorWidget : public QWidget
@@ -48,13 +49,12 @@ public:
     ~PasswordGeneratorWidget();
     void loadSettings();
     void saveSettings();
-    void reset(int length = 0);
+    void setPasswordLength(int length);
     void setStandaloneMode(bool standalone);
     QString getGeneratedPassword();
     bool isPasswordVisible() const;
 
-protected:
-    void showEvent(QShowEvent* event) override;
+    static PasswordGeneratorWidget* popupGenerator(QWidget* parent = nullptr);
 
 public slots:
     void regeneratePassword();
@@ -64,25 +64,21 @@ public slots:
 
 signals:
     void appliedPassword(const QString& password);
-    void dialogTerminated();
+    void closed();
 
 private slots:
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
-    void selectSimpleMode();
-    void selectAdvancedMode();
+    void setAdvancedMode(bool state);
     void excludeHexChars();
 
-    void passwordSliderMoved();
-    void passwordSpinBoxChanged();
-    void dicewareSliderMoved();
-    void dicewareSpinBoxChanged();
-    void colorStrengthIndicator(double entropy);
+    void passwordLengthChanged(int length);
+    void passphraseLengthChanged(int length);
+    void colorStrengthIndicator(const PasswordHealth& health);
 
     void updateGenerator();
 
 private:
-    bool m_updatingSpinBox;
     bool m_standalone = false;
 
     PasswordGenerator::CharClasses charClasses();
@@ -91,9 +87,6 @@ private:
     const QScopedPointer<PasswordGenerator> m_passwordGenerator;
     const QScopedPointer<PassphraseGenerator> m_dicewareGenerator;
     const QScopedPointer<Ui::PasswordGeneratorWidget> m_ui;
-
-protected:
-    void keyPressEvent(QKeyEvent* e) override;
 };
 
 #endif // KEEPASSX_PASSWORDGENERATORWIDGET_H

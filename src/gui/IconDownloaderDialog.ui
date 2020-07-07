@@ -149,6 +149,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>tableView</tabstop>
+  <tabstop>closeButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

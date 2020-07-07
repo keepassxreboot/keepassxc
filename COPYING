@@ -1,5 +1,5 @@
 KeePassXC - http://www.keepassxc.org/
-Copyright (C) 2016-2019 KeePassXC Team <team@keepassxc.org>
+Copyright (C) 2016-2020 KeePassXC Team <team@keepassxc.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2000-2008, Tom Sato <VEF00200@nifty.ne.jp>
            2013, Laszlo Papp <lpapp@kde.org>
            2013, David Faure <faure@kde.org>
-           2016-2019, KeePassXC Team <team@keepassxc.org>
+           2016-2020, KeePassXC Team <team@keepassxc.org>
 License: GPL-2 or GPL-3
 
 Comment: The "KeePassXC Team" in every copyright notice is formed by the following people:
@@ -37,11 +37,6 @@ Comment: The "KeePassXC Team" in every copyright notice is formed by the followi
            - louib
            - weslly
          Every other contributor is listed on https://github.com/keepassxreboot/keepassxc/graphs/contributors
-
-Files: cmake/GNUInstallDirs.cmake
-Copyright: 2011 Nikita Krupen'ko <krnekit@gmail.com>
-           2011 Kitware, Inc.
-License: BSD-3-clause
 
 Files: cmake/CodeCoverage.cmake
 Copyright: 2012 - 2015, Lars Bilke
@@ -55,178 +50,161 @@ Files: cmake/GenerateProductVersion.cmake
 Copyright: 2015 halex2005 <akharlov@gmail.com>
 License: MIT
 
-Files: share/icons/application/*/apps/keepassxc.png
-       share/icons/application/scalable/apps/keepassxc.svg
-       share/icons/application/*/apps/keepassxc-dark.png
+Files: share/icons/application/scalable/apps/keepassxc.svg
        share/icons/application/scalable/apps/keepassxc-dark.svg
-       share/icons/application/*/apps/keepassxc-locked.png
        share/icons/application/scalable/apps/keepassxc-locked.svg
-       share/icons/application/*/apps/keepassxc-unlocked.png
        share/icons/application/scalable/apps/keepassxc-unlocked.svg
-       share/icons/application/*/mimetypes/application-x-keepassxc.png
        share/icons/application/scalable/mimetypes/application-x-keepassxc.svg
 Copyright: 2016, Lorenzo Stella <lorenzo.stl@gmail.com>
 License: LGPL-2
 
-Files: share/icons/application/*/actions/auto-type.png
-       share/icons/application/*/actions/database-change-key.png
-       share/icons/application/*/actions/entry-clone.png
-       share/icons/application/*/actions/entry-edit.png
-       share/icons/application/*/actions/entry-new.png
-       share/icons/application/*/actions/group-empty-trash.png
-       share/icons/application/*/actions/help-about.png
-       share/icons/application/*/actions/password-generate.png
-       share/icons/database/C00_Password.png
-       share/icons/database/C01_Package_Network.png
-       share/icons/database/C02_MessageBox_Warning.png
-       share/icons/database/C03_Server.png
-       share/icons/database/C04_Klipper.png
-       share/icons/database/C05_Edu_Languages.png
-       share/icons/database/C06_KCMDF.png
-       share/icons/database/C07_Kate.png
-       share/icons/database/C08_Socket.png
-       share/icons/database/C09_Identity.png
-       share/icons/database/C10_Kontact.png
-       share/icons/database/C11_Camera.png
-       share/icons/database/C12_IRKickFlash.png
-       share/icons/database/C13_KGPG_Key3.png
-       share/icons/database/C14_Laptop_Power.png
-       share/icons/database/C15_Scanner.png
-       share/icons/database/C16_Mozilla_Firebird.png
-       share/icons/database/C17_CDROM_Unmount.png
-       share/icons/database/C18_Display.png
-       share/icons/database/C19_Mail_Generic.png
-       share/icons/database/C20_Misc.png
-       share/icons/database/C21_KOrganizer.png
-       share/icons/database/C22_ASCII.png
-       share/icons/database/C23_Icons.png
-       share/icons/database/C24_Connect_Established.png
-       share/icons/database/C25_Folder_Mail.png
-       share/icons/database/C26_FileSave.png
-       share/icons/database/C27_NFS_Unmount.png
-       share/icons/database/C28_QuickTime.png
-       share/icons/database/C29_KGPG_Term.png
-       share/icons/database/C30_Konsole.png
-       share/icons/database/C31_FilePrint.png
-       share/icons/database/C32_FSView.png
-       share/icons/database/C33_Run.png
-       share/icons/database/C34_Configure.png
-       share/icons/database/C35_KRFB.png
-       share/icons/database/C36_Ark.png
-       share/icons/database/C37_KPercentage.png
-       share/icons/database/C38_Samba_Unmount.png
-       share/icons/database/C39_History.png
-       share/icons/database/C40_Mail_Find.png
-       share/icons/database/C41_VectorGfx.png
-       share/icons/database/C42_KCMMemory.png
-       share/icons/database/C43_EditTrash.png
-       share/icons/database/C44_KNotes.png
-       share/icons/database/C45_Cancel.png
-       share/icons/database/C46_Help.png
-       share/icons/database/C47_KPackage.png
-       share/icons/database/C48_Folder.png
-       share/icons/database/C49_Folder_Blue_Open.png
-       share/icons/database/C50_Folder_Tar.png
-       share/icons/database/C51_Decrypted.png
-       share/icons/database/C52_Encrypted.png
-       share/icons/database/C53_Apply.png
-       share/icons/database/C54_Signature.png
-       share/icons/database/C55_Thumbnail.png
-       share/icons/database/C56_KAddressBook.png
-       share/icons/database/C57_View_Text.png
-       share/icons/database/C58_KGPG.png
-       share/icons/database/C59_Package_Development.png
-       share/icons/database/C60_KFM_Home.png
-       share/icons/database/C61_Services.png
-Copyright: 2003-2004, David Vignoni <david@icon-king.com>
-License: LGPL-2.1
-Comment: from Nuvola icon theme
-
-Files: share/icons/application/*/actions/entry-delete.png
-       share/icons/application/*/actions/group-delete.png
-       share/icons/application/*/actions/group-edit.png
-       share/icons/application/*/actions/group-new.png
-Copyright: 2003-2004, David Vignoni <david@icon-king.com>
-           2012, Felix Geyer <debfx@fobos.de>
-License: LGPL-2.1
-Comment: based on Nuvola icon theme
-
-Files: share/icons/application/*/actions/favicon-download.png
-Copyright: 2003-2004, David Vignoni <david@icon-king.com>
-           2018, Kyle Kneitinger <kyle@kneit.in>
-License: LGPL-2.1
-Comment: based on Nuvola icon theme
-
-Files: share/icons/application/*/actions/application-exit.png
-       share/icons/application/*/actions/chronometer.png
-       share/icons/application/*/actions/configure.png
-       share/icons/application/*/actions/database-lock.png
-       share/icons/application/*/actions/dialog-close.png
-       share/icons/application/*/actions/dialog-ok.png
-       share/icons/application/*/actions/document-close.png
-       share/icons/application/*/actions/document-edit.png
-       share/icons/application/*/actions/document-new.png
-       share/icons/application/*/actions/document-open.png
-       share/icons/application/*/actions/document-properties.png
-       share/icons/application/*/actions/document-save.png
-       share/icons/application/*/actions/document-save-as.png
-       share/icons/application/*/actions/edit-clear-locationbar-ltr.png
-       share/icons/application/*/actions/edit-clear-locationbar-rtl.png
-       share/icons/application/*/actions/key-enter.png
-       share/icons/application/*/actions/password-generator.png
-       share/icons/application/*/actions/password-copy.png
-       share/icons/application/*/actions/password-show-*.png
-       share/icons/application/*/actions/system-search.png
-       share/icons/application/*/actions/username-copy.png
-       share/icons/application/*/actions/view-history.png
-       share/icons/application/*/apps/internet-web-browser.png
-       share/icons/application/*/apps/preferences-desktop-icons.png
-       share/icons/application/*/apps/utilities-terminal.png
-       share/icons/application/*/categories/preferences-other.png
-       share/icons/application/*/status/dialog-error.png
-       share/icons/application/*/status/dialog-information.png
-       share/icons/application/*/status/dialog-warning.png
-       share/icons/application/*/status/security-high.png
-       share/icons/svg/*.svg
-Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
-           2007, David Vignoni <david@icon-king.com>
-           2007, David Miller <miller@oxygen-icons.org>
-           2007, Johann Ollivier Lapeyre <johann@oxygen-icons.org>
-           2007, Kenneth Wimer <kwwii@bootsplash.org>
-           2007, Riccardo Iaconelli <riccardo@oxygen-icons.org>
-License: LGPL-3+
-Comment: from Oxygen icon theme (http://www.oxygen-icons.org/)
-
-Files: share/icons/database/C62_Tux.png
-       share/icons/database/C63_Feather.png
-       share/icons/database/C64_Apple.png
-       share/icons/database/C67_Certificate.png
-       share/icons/database/C68_BlackBerry.png
-Copyright: Mairin Duffy
-           Sarah Owens
-           James Birkett
-           Dominik Reichl
-License: CC0
-Comment: C62_Tux.png from https://openclipart.org/detail/103855
-         C63_Feather.png from http://openclipart.org/detail/122017
-         C64_Apple.png based on http://openclipart.org/detail/24319
-         C67_Certificate.png based on https://openclipart.org/detail/16729
-         C68_BlackBerry.png from https://openclipart.org/detail/4465
-
-Files: share/icons/database/C65_W.png
-       share/icons/database/C66_Money.png
+Files: share/icons/database/C00_Password.svg
+       share/icons/database/C01_Package_Network.svg
+       share/icons/database/C02_MessageBox_Warning.svg
+       share/icons/database/C03_Server.svg
+       share/icons/database/C04_Klipper.svg
+       share/icons/database/C05_Edu_Languages.svg
+       share/icons/database/C06_KCMDF.svg
+       share/icons/database/C08_Socket.svg
+       share/icons/database/C09_Identity.svg
+       share/icons/database/C10_Kontact.svg
+       share/icons/database/C11_Camera.svg
+       share/icons/database/C12_IRKickFlash.svg
+       share/icons/database/C13_KGPG_Key3.svg
+       share/icons/database/C14_Laptop_Power.svg
+       share/icons/database/C15_Scanner.svg
+       share/icons/database/C16_Mozilla_Firebird.svg
+       share/icons/database/C19_Mail_Generic.svg
+       share/icons/database/C20_Misc.svg
+       share/icons/database/C21_KOrganizer.svg
+       share/icons/database/C22_ASCII.svg
+       share/icons/database/C23_Icons.svg
+       share/icons/database/C24_Connect_Established.svg
+       share/icons/database/C25_Folder_Mail.svg
+       share/icons/database/C28_QuickTime.svg
+       share/icons/database/C29_KGPG_Term.svg
+       share/icons/database/C30_Konsole.svg
+       share/icons/database/C31_FilePrint.svg
+       share/icons/database/C32_FSView.svg
+       share/icons/database/C33_Run.svg
+       share/icons/database/C34_Configure.svg
+       share/icons/database/C36_Ark.svg
+       share/icons/database/C39_History.svg
+       share/icons/database/C40_Mail_Find.svg
+       share/icons/database/C41_VectorGfx.svg
+       share/icons/database/C42_KCMMemory.svg
+       share/icons/database/C43_EditTrash.svg
+       share/icons/database/C47_KPackage.svg
+       share/icons/database/C48_Folder.svg
+       share/icons/database/C49_Folder_Blue_Open.svg
+       share/icons/database/C50_Folder_Tar.svg
+       share/icons/database/C55_Thumbnail.svg
+       share/icons/database/C56_KAddressBook.svg
+       share/icons/database/C57_View_Text.svg
+       share/icons/database/C58_KGPG.svg
+       share/icons/database/C59_Package_Development.svg
+       share/icons/database/C60_KFM_Home.svg
+       share/icons/database/C62_Tux.svg
+       share/icons/database/C63_Feather.svg
+       share/icons/database/C65_W.svg
+       share/icons/database/C67_Certificate.svg
+       share/icons/database/C68_BlackBerry.svg
 Copyright: none
-License: public-domain
+License: MIT
+Comment: Taken from https://github.com/icons8/flat-color-icons
+
+Files: share/icons/badges/0_ShareActive.svg
+       share/icons/badges/1_ShareInactive.svg
+       share/icons/database/C07_Kate.svg
+       share/icons/database/C17_CDROM_Unmount.svg
+       share/icons/database/C18_Display.svg
+       share/icons/database/C26_FileSave.svg
+       share/icons/database/C27_NFS_Unmount.svg
+       share/icons/database/C35_KRFB.svg
+       share/icons/database/C38_Samba_Unmount.svg
+       share/icons/database/C44_KNotes.svg
+       share/icons/database/C51_Decrypted.svg
+       share/icons/database/C52_Encrypted.svg
+       share/icons/database/C54_Signature.svg
+       share/icons/database/C66_Money.svg
+Copyright: none
+License: CC0
+Comment: Taken from https://github.com/paomedia/small-n-flat
+
+Files: share/icons/badges/2_Expired.svg
+       share/icons/database/C37_KPercentage.svg
+       share/icons/database/C45_Cancel.svg
+       share/icons/database/C46_Help.svg
+       share/icons/database/C53_Apply.svg
+       share/icons/database/C61_Services.svg
+Copyright: 2020 KeePassXC Team <team@keepassxc.org>
+License: MIT
+
+Files: share/icons/application/scalable/actions/document-close.svg
+       share/icons/application/scalable/actions/document-edit.svg
+       share/icons/application/scalable/actions/document-export.svg
+       share/icons/application/scalable/actions/document-import.svg
+       share/icons/application/scalable/actions/document-new.svg
+       share/icons/application/scalable/actions/document-open.svg
+       share/icons/application/scalable/actions/document-open-recent.svg
+       share/icons/application/scalable/actions/document-properties.svg
+       share/icons/application/scalable/actions/document-save.svg
+       share/icons/application/scalable/actions/document-save-as.svg
+       share/icons/application/scalable/actions/document-save-copy.svg
+       share/icons/application/scalable/actions/edit-clear-locationbar-ltr.svg
+       share/icons/application/scalable/actions/edit-clear-locationbar-rtl.svg
+       share/icons/application/scalable/actions/entry-clone.svg
+       share/icons/application/scalable/actions/entry-delete.svg
+       share/icons/application/scalable/actions/entry-edit.svg
+       share/icons/application/scalable/actions/entry-new.svg
+       share/icons/application/scalable/actions/favicon-download.svg
+       share/icons/application/scalable/actions/group-delete.svg
+       share/icons/application/scalable/actions/group-edit.svg
+       share/icons/application/scalable/actions/group-empty-trash.svg
+       share/icons/application/scalable/actions/group-new.svg
+       share/icons/application/scalable/actions/help-about.svg
+       share/icons/application/scalable/actions/key-enter.svg
+       share/icons/application/scalable/actions/message-close.svg
+       share/icons/application/scalable/actions/move-down.svg
+       share/icons/application/scalable/actions/move-up.svg
+       share/icons/application/scalable/actions/paperclip.svg
+       share/icons/application/scalable/actions/password-copy.svg
+       share/icons/application/scalable/actions/password-generate.svg
+       share/icons/application/scalable/actions/password-generator.svg
+       share/icons/application/scalable/actions/password-show-off.svg
+       share/icons/application/scalable/actions/password-show-on.svg
+       share/icons/application/scalable/actions/refresh.svg
+       share/icons/application/scalable/actions/reports.svg
+       share/icons/application/scalable/actions/reports-exclude.svg
+       share/icons/application/scalable/actions/statistics.svg
+       share/icons/application/scalable/actions/system-help.svg
+       share/icons/application/scalable/actions/system-search.svg
+       share/icons/application/scalable/actions/url-copy.svg
+       share/icons/application/scalable/actions/username-copy.svg
+       share/icons/application/scalable/actions/view-history.svg
+       share/icons/application/scalable/apps/internet-web-browser.svg
+       share/icons/application/scalable/apps/keepassxc.svg
+       share/icons/application/scalable/apps/keepassxc-dark.svg
+       share/icons/application/scalable/apps/keepassxc-locked.svg
+       share/icons/application/scalable/apps/keepassxc-unlocked.svg
+       share/icons/application/scalable/apps/preferences-desktop-icons.svg
+       share/icons/application/scalable/apps/preferences-system-network-sharing.svg
+       share/icons/application/scalable/apps/utilities-terminal.svg
+       share/icons/application/scalable/categories/preferences-other.svg
+       share/icons/application/scalable/mimetypes/application-x-keepassxc.svg
+       share/icons/application/scalable/status/dialog-error.svg
+       share/icons/application/scalable/status/dialog-information.svg
+       share/icons/application/scalable/status/dialog-warning.svg
+       share/icons/application/scalable/status/security-high.svg
+Copyright: 2019 Austin Andrews <http://templarian.com/>
+License: SIL OPEN FONT LICENSE Version 1.1
+Comment: Taken from Material Design icon set (https://github.com/templarian/MaterialDesign/)
 
 Files: src/streams/qtiocompressor.*
        src/streams/QtIOCompressor
        tests/modeltest.*
 Copyright: 2009-2012, Nokia Corporation and/or its subsidiary(-ies)
 License: LGPL-2.1 or GPL-3
-
-Files: cmake/GetGitRevisionDescription.cmake*
-Copyright: 2009-2010, Iowa State University
-License: Boost-1.0
 
 Files: src/zxcvbn/zxcvbn.*
 Copyright: 2015-2017, Tony Evans
@@ -238,7 +216,7 @@ Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
            2014 Dominik Haumann <dhaumann@kde.org>
 License: LGPL-2.1
 
-Files: share/macosx/dmg-background.tiff
+Files: share/macosx/background.tiff
 Copyright: 2008-2014, Andrey Tarantsov
 License: MIT
 
@@ -246,10 +224,7 @@ Files: share/icons/application/scalable/apps/freedesktop.svg
 Copyright: GPL-2+
 Comment: from Freedesktop.org website
 
-Files: share/icons/application/32x32/actions/statistics.png
-Copyright: Icon made by Freepik from https://www.flaticon.com/free-icon/bars-chart_265733
-
-Files: share/icons/application/scalable/actions/object-locked.svg
-       share/icons/application/scalable/actions/object-unlocked.svg
-License: LGPL-3
-Comment: from Breeze icon theme (https://github.com/KDE/breeze-icons)
+Files: share/icons/application/scalable/actions/hibp.svg
+       share/icons/database/C64_Apple.svg
+Copyright: GPL-2+
+Comment: from the Simple Icons repo (https://github.com/simple-icons/simple-icons/)

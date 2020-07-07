@@ -25,29 +25,55 @@ BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::BrowserAccessControlDialog())
 {
-    this->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     m_ui->setupUi(this);
-    connect(m_ui->allowButton, SIGNAL(clicked()), this, SLOT(accept()));
-    connect(m_ui->denyButton, SIGNAL(clicked()), this, SLOT(reject()));
+
+    connect(m_ui->allowButton, SIGNAL(clicked()), SLOT(accept()));
+    connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
 }
 
 BrowserAccessControlDialog::~BrowserAccessControlDialog()
 {
 }
 
-void BrowserAccessControlDialog::setUrl(const QString& url)
+void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QString& hostname, bool httpAuth)
 {
-    m_ui->label->setText(QString(tr("%1 has requested access to passwords for the following item(s).\n"
-                                    "Please select whether you want to allow access."))
-                             .arg(QUrl(url).host()));
-}
+    m_ui->siteLabel->setText(m_ui->siteLabel->text().arg(hostname));
 
-void BrowserAccessControlDialog::setItems(const QList<Entry*>& items)
-{
-    for (Entry* entry : items) {
-        m_ui->itemsList->addItem(entry->title() + " - " + entry->username());
+    m_ui->rememberDecisionCheckBox->setVisible(!httpAuth);
+    m_ui->rememberDecisionCheckBox->setChecked(false);
+
+    m_ui->itemsTable->setRowCount(items.count());
+    m_ui->itemsTable->setColumnCount(2);
+
+    int row = 0;
+    for (const auto& entry : items) {
+        auto item = new QTableWidgetItem();
+        item->setText(entry->title() + " - " + entry->username());
+        item->setData(Qt::UserRole, row);
+        item->setCheckState(Qt::Checked);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+        m_ui->itemsTable->setItem(row, 0, item);
+
+        auto disableButton = new QPushButton(tr("Disable for this site"));
+        disableButton->setAutoDefault(false);
+        connect(disableButton, &QAbstractButton::pressed, [&, item] {
+            emit disableAccess(item);
+            m_ui->itemsTable->removeRow(item->row());
+            if (m_ui->itemsTable->rowCount() == 0) {
+                reject();
+            }
+        });
+        m_ui->itemsTable->setCellWidget(row, 1, disableButton);
+
+        ++row;
     }
+
+    m_ui->itemsTable->resizeColumnsToContents();
+    m_ui->itemsTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+
+    m_ui->allowButton->setFocus();
 }
 
 bool BrowserAccessControlDialog::remember() const
@@ -55,12 +81,26 @@ bool BrowserAccessControlDialog::remember() const
     return m_ui->rememberDecisionCheckBox->isChecked();
 }
 
-void BrowserAccessControlDialog::setRemember(bool r)
+QList<QTableWidgetItem*> BrowserAccessControlDialog::getSelectedEntries() const
 {
-    m_ui->rememberDecisionCheckBox->setChecked(r);
+    QList<QTableWidgetItem*> selected;
+    for (int i = 0; i < m_ui->itemsTable->rowCount(); ++i) {
+        auto item = m_ui->itemsTable->item(i, 0);
+        if (item->checkState() == Qt::Checked) {
+            selected.append(item);
+        }
+    }
+    return selected;
 }
 
-void BrowserAccessControlDialog::setHTTPAuth(bool httpAuth)
+QList<QTableWidgetItem*> BrowserAccessControlDialog::getNonSelectedEntries() const
 {
-    m_ui->rememberDecisionCheckBox->setVisible(!httpAuth);
+    QList<QTableWidgetItem*> notSelected;
+    for (int i = 0; i < m_ui->itemsTable->rowCount(); ++i) {
+        auto item = m_ui->itemsTable->item(i, 0);
+        if (item->checkState() != Qt::Checked) {
+            notSelected.append(item);
+        }
+    }
+    return notSelected;
 }

@@ -26,6 +26,7 @@
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
 
 #include <QMimeDatabase>
@@ -274,8 +275,8 @@ namespace FdoSecrets
             return ret;
         }
 
-        auto attributes = qdbus_cast<StringStringMap>(
-            properties.value(QStringLiteral(DBUS_INTERFACE_SECRET_ITEM ".Attributes")).value<QDBusArgument>());
+        auto attributes =
+            properties.value(QStringLiteral(DBUS_INTERFACE_SECRET_ITEM ".Attributes")).value<StringStringMap>();
         ret = setAttributes(attributes);
         if (ret.isError()) {
             return ret;
@@ -350,6 +351,13 @@ namespace FdoSecrets
         return pathComponents.join('/');
     }
 
+    bool Item::isDeletePermanent() const
+    {
+        auto recycleBin = backend()->database()->metadata()->recycleBin();
+        return (recycleBin && recycleBin->findEntryByUuid(backend()->uuid()))
+               || !backend()->database()->metadata()->recycleBinEnabled();
+    }
+
     void setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType)
     {
         auto mimeName = contentType.split(';').takeFirst().trimmed();
@@ -369,7 +377,8 @@ namespace FdoSecrets
         }
 
         if (!mimeType.isValid() || !mimeType.inherits(QStringLiteral("text/plain")) || !codec) {
-            // we can't handle this content type, save the data as attachment
+            // we can't handle this content type, save the data as attachment, and clear the password field
+            entry->setPassword("");
             entry->attachments()->set(FDO_SECRETS_DATA, data);
             entry->attributes()->set(FDO_SECRETS_CONTENT_TYPE, contentType);
             return;
@@ -393,8 +402,13 @@ namespace FdoSecrets
 
         if (entry->attachments()->hasKey(FDO_SECRETS_DATA)) {
             ss.value = entry->attachments()->value(FDO_SECRETS_DATA);
-            Q_ASSERT(entry->attributes()->hasKey(FDO_SECRETS_CONTENT_TYPE));
-            ss.contentType = entry->attributes()->value(FDO_SECRETS_CONTENT_TYPE);
+            if (entry->attributes()->hasKey(FDO_SECRETS_CONTENT_TYPE)) {
+                ss.contentType = entry->attributes()->value(FDO_SECRETS_CONTENT_TYPE);
+            } else {
+                // the entry is somehow corrupted, maybe the user deleted it.
+                // set to binary and hope for the best...
+                ss.contentType = QStringLiteral("application/octet-stream");
+            }
             return ss;
         }
 

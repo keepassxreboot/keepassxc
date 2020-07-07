@@ -18,30 +18,33 @@
 #ifndef KEEPASSXC_TESTCLI_H
 #define KEEPASSXC_TESTCLI_H
 
-#include "core/Database.h"
-#include "util/TemporaryFile.h"
-
-#include <QByteArray>
-#include <QFile>
+#include <QBuffer>
 #include <QScopedPointer>
 #include <QSharedPointer>
-#include <QTemporaryFile>
+#include <QStringList>
 #include <QTest>
 
-#include <stdio.h>
+#include "util/TemporaryFile.h"
+
+class Command;
+class Database;
 
 class TestCli : public QObject
 {
     Q_OBJECT
 
 private:
-    QSharedPointer<Database> readTestDatabase() const;
+    QSharedPointer<Database>
+    readDatabase(const QString& filename = {}, const QString& pw = {}, const QString& keyfile = {});
+    int execCmd(Command& cmd, const QStringList& args) const;
+    bool isTotp(const QString& value);
+    void setInput(const QString& input);
+    void setInput(const QStringList& input);
 
 private slots:
     void initTestCase();
     void init();
     void cleanup();
-    void cleanupTestCase();
 
     void testBatchCommands();
     void testAdd();
@@ -59,6 +62,7 @@ private slots:
     void testGenerate_data();
     void testGenerate();
     void testImport();
+    void testInfo();
     void testKeyFileOption();
     void testNoPasswordOption();
     void testHelp();
@@ -77,21 +81,16 @@ private slots:
     void testYubiKeyOption();
 
 private:
-    QByteArray m_dbData;
-    QByteArray m_dbData2;
-    QByteArray m_xmlData;
-    QByteArray m_yubiKeyProtectedDbData;
-    QByteArray m_keyFileProtectedDbData;
-    QByteArray m_keyFileProtectedNoPasswordDbData;
     QScopedPointer<TemporaryFile> m_dbFile;
     QScopedPointer<TemporaryFile> m_dbFile2;
     QScopedPointer<TemporaryFile> m_xmlFile;
     QScopedPointer<TemporaryFile> m_keyFileProtectedDbFile;
     QScopedPointer<TemporaryFile> m_keyFileProtectedNoPasswordDbFile;
     QScopedPointer<TemporaryFile> m_yubiKeyProtectedDbFile;
-    QScopedPointer<TemporaryFile> m_stdoutFile;
-    QScopedPointer<TemporaryFile> m_stderrFile;
-    QScopedPointer<TemporaryFile> m_stdinFile;
+
+    QScopedPointer<QBuffer> m_stdout;
+    QScopedPointer<QBuffer> m_stderr;
+    QScopedPointer<QBuffer> m_stdin;
 };
 
 #endif // KEEPASSXC_TESTCLI_H

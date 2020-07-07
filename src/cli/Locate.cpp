@@ -38,20 +38,20 @@ Locate::Locate()
 
 int Locate::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
+    auto& out = Utils::STDOUT;
+    auto& err = Utils::STDERR;
 
     const QStringList args = parser->positionalArguments();
     const QString& searchTerm = args.at(1);
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QStringList results = database->rootGroup()->locate(searchTerm);
     if (results.isEmpty()) {
-        errorTextStream << "No results for that search term." << endl;
+        err << "No results for that search term." << endl;
         return EXIT_FAILURE;
     }
 
     for (const QString& result : asConst(results)) {
-        outputTextStream << result << endl;
+        out << result << endl;
     }
     return EXIT_SUCCESS;
 }

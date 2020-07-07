@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_CONFIG_H
 #define KEEPASSX_CONFIG_H
 
+#include <QPointer>
 #include <QScopedPointer>
 #include <QVariant>
 
@@ -31,11 +32,167 @@ class Config : public QObject
 public:
     Q_DISABLE_COPY(Config)
 
+    enum ConfigKey
+    {
+        SingleInstance,
+        RememberLastDatabases,
+        NumberOfRememberedLastDatabases,
+        RememberLastKeyFiles,
+        OpenPreviousDatabasesOnStartup,
+        AutoSaveAfterEveryChange,
+        AutoReloadOnChange,
+        AutoSaveOnExit,
+        BackupBeforeSave,
+        UseAtomicSaves,
+        SearchLimitGroup,
+        MinimizeOnOpenUrl,
+        HideWindowOnCopy,
+        MinimizeOnCopy,
+        MinimizeAfterUnlock,
+        DropToBackgroundOnCopy,
+        UseGroupIconOnEntryCreation,
+        AutoTypeEntryTitleMatch,
+        AutoTypeEntryURLMatch,
+        AutoTypeDelay,
+        AutoTypeStartDelay,
+        GlobalAutoTypeKey,
+        GlobalAutoTypeModifiers,
+        TrackNonDataChanges,
+        FaviconDownloadTimeout,
+        UpdateCheckMessageShown,
+        UseTouchID,
+
+        LastDatabases,
+        LastKeyFiles,
+        LastChallengeResponse,
+        LastActiveDatabase,
+        LastOpenedDatabases,
+        LastDir,
+        LastAttachmentDir,
+
+        GUI_Language,
+        GUI_HideToolbar,
+        GUI_MovableToolbar,
+        GUI_HidePreviewPanel,
+        GUI_ToolButtonStyle,
+        GUI_ShowTrayIcon,
+        GUI_TrayIconAppearance,
+        GUI_MinimizeToTray,
+        GUI_MinimizeOnStartup,
+        GUI_MinimizeOnClose,
+        GUI_HideUsernames,
+        GUI_AdvancedSettings,
+        GUI_MonospaceNotes,
+        GUI_ApplicationTheme,
+        GUI_CompactMode,
+        GUI_CheckForUpdates,
+        GUI_CheckForUpdatesIncludeBetas,
+
+        GUI_MainWindowGeometry,
+        GUI_MainWindowState,
+        GUI_ListViewState,
+        GUI_SearchViewState,
+        GUI_PreviewSplitterState,
+        GUI_SplitterState,
+        GUI_AutoTypeSelectDialogSize,
+        GUI_CheckForUpdatesNextCheck,
+
+        Security_ClearClipboard,
+        Security_ClearClipboardTimeout,
+        Security_ClearSearch,
+        Security_ClearSearchTimeout,
+        Security_HideNotes,
+        Security_LockDatabaseIdle,
+        Security_LockDatabaseIdleSeconds,
+        Security_LockDatabaseMinimize,
+        Security_LockDatabaseScreenLock,
+        Security_RelockAutoType,
+        Security_PasswordsRepeatVisible,
+        Security_PasswordsHidden,
+        Security_PasswordEmptyPlaceholder,
+        Security_HidePasswordPreviewPanel,
+        Security_AutoTypeAsk,
+        Security_IconDownloadFallback,
+        Security_ResetTouchId,
+        Security_ResetTouchIdTimeout,
+        Security_ResetTouchIdScreenlock,
+
+        Browser_Enabled,
+        Browser_ShowNotification,
+        Browser_BestMatchOnly,
+        Browser_UnlockDatabase,
+        Browser_MatchUrlScheme,
+        Browser_SortByUsername,
+        Browser_SupportBrowserProxy,
+        Browser_UseCustomProxy,
+        Browser_CustomProxyLocation,
+        Browser_UpdateBinaryPath,
+        Browser_AllowExpiredCredentials,
+        Browser_AlwaysAllowAccess,
+        Browser_AlwaysAllowUpdate,
+        Browser_HttpAuthPermission,
+        Browser_SearchInAllDatabases,
+        Browser_SupportKphFields,
+        Browser_NoMigrationPrompt,
+        Browser_UseCustomBrowser,
+        Browser_CustomBrowserType,
+        Browser_CustomBrowserLocation,
+#ifdef QT_DEBUG
+        Browser_CustomExtensionId,
+#endif
+
+        SSHAgent_Enabled,
+        SSHAgent_UseOpenSSH,
+        SSHAgent_AuthSockOverride,
+
+        FdoSecrets_Enabled,
+        FdoSecrets_ShowNotification,
+        FdoSecrets_NoConfirmDeleteItem,
+
+        KeeShare_QuietSuccess,
+        KeeShare_Own,
+        KeeShare_Foreign,
+        KeeShare_Active,
+        KeeShare_LastDir,
+        KeeShare_LastKeyDir,
+        KeeShare_LastShareDir,
+
+        PasswordGenerator_LowerCase,
+        PasswordGenerator_UpperCase,
+        PasswordGenerator_Numbers,
+        PasswordGenerator_EASCII,
+        PasswordGenerator_AdvancedMode,
+        PasswordGenerator_SpecialChars,
+        PasswordGenerator_AdditionalChars,
+        PasswordGenerator_Braces,
+        PasswordGenerator_Punctuation,
+        PasswordGenerator_Quotes,
+        PasswordGenerator_Dashes,
+        PasswordGenerator_Math,
+        PasswordGenerator_Logograms,
+        PasswordGenerator_ExcludedChars,
+        PasswordGenerator_ExcludeAlike,
+        PasswordGenerator_EnsureEvery,
+        PasswordGenerator_Length,
+        PasswordGenerator_WordCount,
+        PasswordGenerator_WordSeparator,
+        PasswordGenerator_WordList,
+        PasswordGenerator_WordCase,
+        PasswordGenerator_Type,
+
+        Messages_NoLegacyKeyFileWarning,
+        Messages_Qt55CompatibilityWarning,
+        Messages_HidePreReleaseWarning,
+
+        // Special internal value
+        Deleted
+    };
+
     ~Config() override;
-    QVariant get(const QString& key);
-    QVariant get(const QString& key, const QVariant& defaultValue);
+    QVariant get(ConfigKey key);
     QString getFileName();
-    void set(const QString& key, const QVariant& value);
+    void set(ConfigKey key, const QVariant& value);
+    void remove(ConfigKey key);
     bool hasAccessError();
     void sync();
     void resetToDefaults();
@@ -45,17 +202,18 @@ public:
     static void createTempFileInstance();
 
 signals:
-    void changed(const QString& key);
+    void changed(ConfigKey key);
 
 private:
-    Config(const QString& fileName, QObject* parent);
+    Config(const QString& fileName, QObject* parent = nullptr);
     explicit Config(QObject* parent);
-    void init(const QString& fileName);
-    void upgrade();
+    void init(const QString& configFileName, const QString& localConfigFileName = "");
+    void migrate();
 
-    static Config* m_instance;
+    static QPointer<Config> m_instance;
 
     QScopedPointer<QSettings> m_settings;
+    QScopedPointer<QSettings> m_localSettings;
     QHash<QString, QVariant> m_defaults;
 };
 

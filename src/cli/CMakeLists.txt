@@ -30,6 +30,7 @@ set(cli_SOURCES
         Generate.cpp
         Help.cpp
         Import.cpp
+        Info.cpp
         List.cpp
         Locate.cpp
         Merge.cpp
@@ -51,13 +52,13 @@ endif()
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
+        ${GPGERROR_LIBRARIES}
         cli
         keepassx_core
         Qt5::Core
         ${GCRYPT_LIBRARIES}
         ${sodium_LIBRARY_RELEASE}
         ${ARGON2_LIBRARIES}
-        ${GPGERROR_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${ZXCVBN_LIBRARIES})
 
@@ -116,8 +117,4 @@ if(APPLE AND WITH_APP_BUNDLE)
                        POST_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy keepassxc-cli ${CLI_APP_DIR}/keepassxc-cli
                        COMMENT "Copying keepassxc-cli inside the application")
-endif()
-
-if(APPLE OR UNIX)
-    install(FILES ../../share/docs/man/keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
 endif()

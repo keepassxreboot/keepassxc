@@ -20,29 +20,30 @@ set -e
 
 DEBUG=false
 
-JSON_BASE=$(cat << EOF
+JSON_FIREFOX=$(cat << EOF
 {
     "name": "org.keepassxc.keepassxc_browser",
     "description": "KeePassXC integration with native messaging support",
     "path": "/snap/bin/keepassxc.proxy",
     "type": "stdio",
-    __EXT__
+    "allowed_extensions": [
+        "keepassxc-browser@keepassxc.org"
+    ]
 }
 EOF
 )
 
-JSON_FIREFOX=$(cat << EOF
-"allowed_extensions": [
-        "keepassxc-browser@keepassxc.org"
-    ]
-EOF
-)
-
 JSON_CHROME=$(cat << EOF
-"allowed_origins": [
+{
+    "name": "org.keepassxc.keepassxc_browser",
+    "description": "KeePassXC integration with native messaging support",
+    "path": "/snap/bin/keepassxc.proxy",
+    "type": "stdio",
+    "allowed_origins": [
         "chrome-extension://iopaggbpplllidnfmcghoonnokmjoicf/",
         "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/"
     ]
+}
 EOF
 )
 
@@ -52,12 +53,12 @@ INSTALL_DIR=""
 INSTALL_FILE="org.keepassxc.keepassxc_browser.json"
 
 buildJson() {
-    if [[ ! -z $1 ]]; then
+    if [ -n "$1" ]; then
         # Insert Firefox data
-        JSON_OUT="${JSON_BASE/__EXT__/$JSON_FIREFOX}"
+        JSON_OUT=$JSON_FIREFOX
     else
         # Insert Chrome data
-        JSON_OUT="${JSON_BASE/__EXT__/$JSON_CHROME}"
+        JSON_OUT=$JSON_CHROME
     fi
 }
 

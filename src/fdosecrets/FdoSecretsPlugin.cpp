@@ -24,14 +24,25 @@
 
 #include "gui/DatabaseTabWidget.h"
 
+#include <QFile>
+
 #include <utility>
 
 using FdoSecrets::Service;
 
+// TODO: Only used for testing. Need to split service functions away from settings page.
+QPointer<FdoSecretsPlugin> g_fdoSecretsPlugin;
+
 FdoSecretsPlugin::FdoSecretsPlugin(DatabaseTabWidget* tabWidget)
     : m_dbTabs(tabWidget)
 {
+    g_fdoSecretsPlugin = this;
     FdoSecrets::registerDBusTypes();
+}
+
+FdoSecretsPlugin* FdoSecretsPlugin::getPlugin()
+{
+    return g_fdoSecretsPlugin;
 }
 
 QWidget* FdoSecretsPlugin::createWidget()
@@ -56,7 +67,7 @@ void FdoSecretsPlugin::updateServiceState()
         if (!m_secretService && m_dbTabs) {
             m_secretService.reset(new Service(this, m_dbTabs));
             connect(m_secretService.data(), &Service::error, this, [this](const QString& msg) {
-                emit error(tr("Fdo Secret Service: %1").arg(msg));
+                emit error(tr("<b>Fdo Secret Service:</b> %1").arg(msg));
             });
             if (!m_secretService->initialize()) {
                 m_secretService.reset();
@@ -94,4 +105,30 @@ void FdoSecretsPlugin::emitRequestShowNotification(const QString& msg, const QSt
         return;
     }
     emit requestShowNotification(msg, title, 10000);
+}
+
+QString FdoSecretsPlugin::reportExistingService() const
+{
+    auto pidStr = tr("Unknown", "Unknown PID");
+    auto exeStr = tr("Unknown", "Unknown executable path");
+
+    // try get pid
+    auto pid = QDBusConnection::sessionBus().interface()->servicePid(DBUS_SERVICE_SECRET);
+    if (pid.isValid()) {
+        pidStr = QString::number(pid.value());
+
+        // try get the first part of the cmdline, which usually is the executable name/path
+        QFile proc(QStringLiteral("/proc/%1/cmdline").arg(pid.value()));
+        if (proc.open(QFile::ReadOnly)) {
+            auto parts = proc.readAll().split('\0');
+            if (parts.length() >= 1) {
+                exeStr = QString::fromLocal8Bit(parts[0]).trimmed();
+            }
+        }
+    }
+    auto otherService = tr("<i>PID: %1, Executable: %2</i>", "<i>PID: 1234, Executable: /path/to/exe</i>")
+                            .arg(pidStr, exeStr.toHtmlEscaped());
+    return tr("Another secret service is running (%1).<br/>"
+              "Please stop/remove it before re-enabling the Secret Service Integration.")
+        .arg(otherService);
 }

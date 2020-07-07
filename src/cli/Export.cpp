@@ -25,11 +25,11 @@
 #include "core/Database.h"
 #include "format/CsvExporter.h"
 
-const QCommandLineOption Export::FormatOption =
-    QCommandLineOption(QStringList() << "f"
-                                     << "format",
-                       QObject::tr("Format to use when exporting. Available choices are xml or csv. Defaults to xml."),
-                       QStringLiteral("xml|csv"));
+const QCommandLineOption Export::FormatOption = QCommandLineOption(
+    QStringList() << "f"
+                  << "format",
+    QObject::tr("Format to use when exporting. Available choices are 'xml' or 'csv'. Defaults to 'xml'."),
+    QStringLiteral("xml|csv"));
 
 Export::Export()
 {
@@ -40,23 +40,23 @@ Export::Export()
 
 int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream out(Utils::STDOUT.device());
+    auto& err = Utils::STDERR;
 
     QString format = parser->value(Export::FormatOption);
-    if (format.isEmpty() || format == QStringLiteral("xml")) {
+    if (format.isEmpty() || format.startsWith(QStringLiteral("xml"), Qt::CaseInsensitive)) {
         QByteArray xmlData;
         QString errorMessage;
         if (!database->extract(xmlData, &errorMessage)) {
-            errorTextStream << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << endl;
+            err << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }
-        outputTextStream << xmlData.constData() << endl;
-    } else if (format == QStringLiteral("csv")) {
+        out.write(xmlData.constData());
+    } else if (format.startsWith(QStringLiteral("csv"), Qt::CaseInsensitive)) {
         CsvExporter csvExporter;
-        outputTextStream << csvExporter.exportDatabase(database);
+        out << csvExporter.exportDatabase(database);
     } else {
-        errorTextStream << QObject::tr("Unsupported format %1").arg(format) << endl;
+        err << QObject::tr("Unsupported format %1").arg(format) << endl;
         return EXIT_FAILURE;
     }
 

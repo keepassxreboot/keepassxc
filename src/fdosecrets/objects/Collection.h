@@ -59,9 +59,9 @@ namespace FdoSecrets
         createItem(const QVariantMap& properties, const SecretStruct& secret, bool replace, PromptBase*& prompt);
 
     signals:
-        void itemCreated(const Item* item);
-        void itemDeleted(const Item* item);
-        void itemChanged(const Item* item);
+        void itemCreated(Item* item);
+        void itemDeleted(Item* item);
+        void itemChanged(Item* item);
 
         void collectionChanged();
         void collectionAboutToDelete();
@@ -102,7 +102,7 @@ namespace FdoSecrets
 
     public slots:
         // expose some methods for Prmopt to use
-        void doLock();
+        bool doLock();
         void doUnlock();
         // will remove self
         void doDelete();

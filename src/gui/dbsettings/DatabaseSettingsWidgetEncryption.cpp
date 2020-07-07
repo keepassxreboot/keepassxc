@@ -45,8 +45,16 @@ DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* pare
 
     m_ui->compatibilitySelection->addItem(tr("KDBX 4.0 (recommended)"), KeePass2::KDF_ARGON2.toByteArray());
     m_ui->compatibilitySelection->addItem(tr("KDBX 3.1"), KeePass2::KDF_AES_KDBX3.toByteArray());
-    m_ui->decryptionTimeSlider->setValue(10);
+    m_ui->decryptionTimeSlider->setMinimum(Kdf::MIN_ENCRYPTION_TIME / 100);
+    m_ui->decryptionTimeSlider->setMaximum(Kdf::MAX_ENCRYPTION_TIME / 100);
+    m_ui->decryptionTimeSlider->setValue(Kdf::DEFAULT_ENCRYPTION_TIME / 100);
     updateDecryptionTime(m_ui->decryptionTimeSlider->value());
+
+    m_ui->transformBenchmarkButton->setText(
+        QObject::tr("Benchmark %1 delay")
+            .arg(DatabaseSettingsWidgetEncryption::getTextualEncryptionTime(Kdf::DEFAULT_ENCRYPTION_TIME)));
+    m_ui->minTimeLabel->setText(DatabaseSettingsWidgetEncryption::getTextualEncryptionTime(Kdf::MIN_ENCRYPTION_TIME));
+    m_ui->maxTimeLabel->setText(DatabaseSettingsWidgetEncryption::getTextualEncryptionTime(Kdf::MAX_ENCRYPTION_TIME));
 
     connect(m_ui->activateChangeDecryptionTimeButton, SIGNAL(clicked()), SLOT(activateChangeDecryptionTime()));
     connect(m_ui->decryptionTimeSlider, SIGNAL(valueChanged(int)), SLOT(updateDecryptionTime(int)));
@@ -373,11 +381,7 @@ void DatabaseSettingsWidgetEncryption::setAdvancedMode(bool advanced)
 
 void DatabaseSettingsWidgetEncryption::updateDecryptionTime(int value)
 {
-    if (value < 10) {
-        m_ui->decryptionTimeValueLabel->setText(tr("%1 ms", "milliseconds", value * 100).arg(value * 100));
-    } else {
-        m_ui->decryptionTimeValueLabel->setText(tr("%1 s", "seconds", value / 10).arg(value / 10.0, 0, 'f', 1));
-    }
+    m_ui->decryptionTimeValueLabel->setText(DatabaseSettingsWidgetEncryption::getTextualEncryptionTime(value * 100));
 }
 
 void DatabaseSettingsWidgetEncryption::updateFormatCompatibility(int index, bool retransform)
@@ -407,5 +411,14 @@ void DatabaseSettingsWidgetEncryption::updateFormatCompatibility(int index, bool
         }
 
         activateChangeDecryptionTime();
+    }
+}
+
+QString DatabaseSettingsWidgetEncryption::getTextualEncryptionTime(int millisecs)
+{
+    if (millisecs < 1000) {
+        return QObject::tr("%1 ms", "milliseconds", millisecs).arg(millisecs);
+    } else {
+        return QObject::tr("%1 s", "seconds", millisecs / 1000).arg(millisecs / 1000.0, 0, 'f', 1);
     }
 }

@@ -21,7 +21,7 @@
 
 #include "core/Config.h"
 #include "core/Database.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "crypto/Random.h"
 #include "format/KeePass2Reader.h"
 #include "gui/FileDialog.h"
@@ -37,7 +37,11 @@
 #include <QDesktopServices>
 #include <QFont>
 #include <QSharedPointer>
-#include <QtConcurrentRun>
+
+namespace
+{
+    constexpr int clearFormsDelay = 30000;
+}
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -48,52 +52,60 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     m_ui->messageWidget->setHidden(true);
 
+    m_hideTimer.setInterval(clearFormsDelay);
+    m_hideTimer.setSingleShot(true);
+    connect(&m_hideTimer, &QTimer::timeout, this, [this] {
+        // Reset the password field after being hidden for a set time
+        m_ui->editPassword->setText("");
+        m_ui->editPassword->setShowPassword(false);
+    });
+
     QFont font;
     font.setPointSize(font.pointSize() + 4);
     font.setBold(true);
     m_ui->labelHeadline->setFont(font);
     m_ui->labelHeadline->setText(tr("Unlock KeePassXC Database"));
 
-    m_ui->comboKeyFile->lineEdit()->addAction(m_ui->keyFileClearIcon, QLineEdit::TrailingPosition);
-
-    m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setShowPassword(bool)));
-    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setFocus()));
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
-    m_ui->hardwareKeyLabelHelp->setIcon(filePath()->icon("actions", "system-help").pixmap(QSize(12, 12)));
+    m_ui->hardwareKeyLabelHelp->setIcon(resources()->icon("system-help").pixmap(QSize(12, 12)));
     connect(m_ui->hardwareKeyLabelHelp, SIGNAL(clicked(bool)), SLOT(openHardwareKeyHelp()));
-    m_ui->keyFileLabelHelp->setIcon(filePath()->icon("actions", "system-help").pixmap(QSize(12, 12)));
+    m_ui->keyFileLabelHelp->setIcon(resources()->icon("system-help").pixmap(QSize(12, 12)));
     connect(m_ui->keyFileLabelHelp, SIGNAL(clicked(bool)), SLOT(openKeyFileHelp()));
 
-    connect(m_ui->comboKeyFile->lineEdit(), SIGNAL(textChanged(QString)), SLOT(handleKeyFileComboEdited()));
-    connect(m_ui->comboKeyFile, SIGNAL(currentIndexChanged(int)), SLOT(handleKeyFileComboChanged()));
-    m_ui->keyFileClearIcon->setIcon(filePath()->icon("actions", "edit-clear-locationbar-rtl"));
+    connect(m_ui->keyFileLineEdit, SIGNAL(textChanged(QString)), SLOT(keyFileTextChanged()));
+    m_ui->keyFileLineEdit->addAction(m_ui->keyFileClearIcon, QLineEdit::TrailingPosition);
+    m_ui->keyFileClearIcon->setIcon(resources()->icon("edit-clear-locationbar-rtl"));
     m_ui->keyFileClearIcon->setVisible(false);
-    connect(m_ui->keyFileClearIcon, SIGNAL(triggered(bool)), SLOT(clearKeyFileEdit()));
+    connect(m_ui->keyFileClearIcon, SIGNAL(triggered(bool)), SLOT(clearKeyFileText()));
 
 #ifdef WITH_XC_YUBIKEY
-    m_ui->yubikeyProgress->setVisible(false);
-    QSizePolicy sp = m_ui->yubikeyProgress->sizePolicy();
+    m_ui->hardwareKeyProgress->setVisible(false);
+    QSizePolicy sp = m_ui->hardwareKeyProgress->sizePolicy();
     sp.setRetainSizeWhenHidden(true);
-    m_ui->yubikeyProgress->setSizePolicy(sp);
+    m_ui->hardwareKeyProgress->setSizePolicy(sp);
 
-    connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
+    connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollHardwareKey()));
+    connect(YubiKey::instance(), SIGNAL(detectComplete(bool)), SLOT(hardwareKeyResponse(bool)), Qt::QueuedConnection);
+
+    connect(YubiKey::instance(), &YubiKey::userInteractionRequest, this, [this] {
+        // Show the press notification if we are in an independent window (e.g., DatabaseOpenDialog)
+        if (window() != getMainWindow()) {
+            m_ui->messageWidget->showMessage(tr("Please touch the button on your YubiKey!"),
+                                             MessageWidget::Information,
+                                             MessageWidget::DisableAutoHide);
+        }
+    });
+    connect(YubiKey::instance(), &YubiKey::challengeCompleted, this, [this] { m_ui->messageWidget->hide(); });
 #else
     m_ui->hardwareKeyLabel->setVisible(false);
     m_ui->hardwareKeyLabelHelp->setVisible(false);
     m_ui->buttonRedetectYubikey->setVisible(false);
-    m_ui->comboChallengeResponse->setVisible(false);
-    m_ui->yubikeyProgress->setVisible(false);
-#endif
-
-#ifdef Q_OS_MACOS
-    // add random padding to layouts to align widgets properly
-    m_ui->dialogButtonsLayout->setContentsMargins(10, 0, 15, 0);
-    m_ui->gridLayout->setContentsMargins(10, 0, 0, 0);
+    m_ui->challengeResponseCombo->setVisible(false);
+    m_ui->hardwareKeyProgress->setVisible(false);
 #endif
 
 #ifndef WITH_XC_TOUCHID
@@ -113,68 +125,56 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
 {
     DialogyWidget::showEvent(event);
     m_ui->editPassword->setFocus();
-
-#ifdef WITH_XC_YUBIKEY
-    // showEvent() may be called twice, so make sure we are only polling once
-    if (!m_yubiKeyBeingPolled) {
-        // clang-format off
-        connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
-        connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
-        connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
-        // clang-format on
-
-        pollYubikey();
-        m_yubiKeyBeingPolled = true;
-    }
-#endif
+    m_hideTimer.stop();
 }
 
 void DatabaseOpenWidget::hideEvent(QHideEvent* event)
 {
     DialogyWidget::hideEvent(event);
 
-#ifdef WITH_XC_YUBIKEY
-    // Don't listen to any Yubikey events if we are hidden
-    disconnect(YubiKey::instance(), nullptr, this, nullptr);
-    m_yubiKeyBeingPolled = false;
-#endif
-
-    if (isVisible()) {
-        return;
+    // Schedule form clearing if we are hidden
+    if (!isVisible()) {
+        m_hideTimer.start();
     }
-
-    clearForms();
 }
 
 void DatabaseOpenWidget::load(const QString& filename)
 {
+    clearForms();
+
     m_filename = filename;
     m_ui->fileNameLabel->setRawText(m_filename);
 
-    m_ui->comboKeyFile->addItem(tr("Select key file..."), -1);
-    m_ui->comboKeyFile->setCurrentIndex(0);
     m_ui->keyFileClearIcon->setVisible(false);
-    m_keyFileComboEdited = false;
 
-    if (config()->get("RememberLastKeyFiles").toBool()) {
-        QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();
         if (lastKeyFiles.contains(m_filename)) {
-            m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
-            m_ui->comboKeyFile->setCurrentIndex(1);
+            m_ui->keyFileLineEdit->setText(lastKeyFiles[m_filename].toString());
         }
     }
 
-    QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
+    QHash<QString, QVariant> useTouchID = config()->get(Config::UseTouchID).toHash();
     m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
+
+#ifdef WITH_XC_YUBIKEY
+    // Only auto-poll for hardware keys if we previously used one with this database file
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        auto lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
+        if (lastChallengeResponse.contains(m_filename)) {
+            pollHardwareKey();
+        }
+    }
+#endif
 }
 
 void DatabaseOpenWidget::clearForms()
 {
     m_ui->editPassword->setText("");
-    m_ui->comboKeyFile->clear();
-    m_ui->comboKeyFile->setEditText("");
+    m_ui->editPassword->setShowPassword(false);
+    m_ui->keyFileLineEdit->clear();
     m_ui->checkTouchID->setChecked(false);
-    m_ui->buttonTogglePassword->setChecked(false);
+    m_ui->challengeResponseCombo->clear();
     m_db.reset();
 }
 
@@ -183,23 +183,28 @@ QSharedPointer<Database> DatabaseOpenWidget::database()
     return m_db;
 }
 
+QString DatabaseOpenWidget::filename()
+{
+    return m_filename;
+}
+
 void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
     m_ui->editPassword->setText(pw);
-    m_ui->comboKeyFile->setCurrentIndex(-1);
-    m_ui->comboKeyFile->setEditText(keyFile);
+    m_ui->keyFileLineEdit->setText(keyFile);
     openDatabase();
 }
 
 void DatabaseOpenWidget::openDatabase()
 {
-    QSharedPointer<CompositeKey> masterKey = databaseKey();
-    if (!masterKey) {
+    m_ui->messageWidget->hide();
+
+    QSharedPointer<CompositeKey> databaseKey = buildDatabaseKey();
+    if (!databaseKey) {
         return;
     }
 
     m_ui->editPassword->setShowPassword(false);
-    m_ui->buttonTogglePassword->setChecked(false);
     QCoreApplication::processEvents();
 
     m_db.reset(new Database());
@@ -208,11 +213,31 @@ void DatabaseOpenWidget::openDatabase()
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_ui->passwordFormFrame->setEnabled(false);
     QCoreApplication::processEvents();
-    bool ok = m_db->open(m_filename, masterKey, &error, false);
+    bool ok = m_db->open(m_filename, databaseKey, &error, false);
     QApplication::restoreOverrideCursor();
     m_ui->passwordFormFrame->setEnabled(true);
 
-    if (!ok) {
+    if (ok) {
+#ifdef WITH_XC_TOUCHID
+        QHash<QString, QVariant> useTouchID = config()->get(Config::UseTouchID).toHash();
+
+        // check if TouchID can & should be used to unlock the database next time
+        if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()) {
+            // encrypt and store key blob
+            if (TouchID::getInstance().storeKey(m_filename, PasswordKey(m_ui->editPassword->text()).rawKey())) {
+                useTouchID.insert(m_filename, true);
+            }
+        } else {
+            // when TouchID not available or unchecked, reset for the current database
+            TouchID::getInstance().reset(m_filename);
+            useTouchID.insert(m_filename, false);
+        }
+
+        config()->set(Config::UseTouchID, useTouchID);
+#endif
+        emit dialogFinished(true);
+        clearForms();
+    } else {
         if (m_ui->editPassword->text().isEmpty() && !m_retryUnlockWithEmptyPassword) {
             QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
             msgBox->setIcon(QMessageBox::Critical);
@@ -232,40 +257,12 @@ void DatabaseOpenWidget::openDatabase()
                 return;
             }
         }
+
         m_retryUnlockWithEmptyPassword = false;
         m_ui->messageWidget->showMessage(error, MessageWidget::MessageType::Error);
         // Focus on the password field and select the input for easy retry
         m_ui->editPassword->selectAll();
         m_ui->editPassword->setFocus();
-        return;
-    }
-
-    if (m_db) {
-#ifdef WITH_XC_TOUCHID
-        QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
-
-        // check if TouchID can & should be used to unlock the database next time
-        if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()) {
-            // encrypt and store key blob
-            if (TouchID::getInstance().storeKey(m_filename, PasswordKey(m_ui->editPassword->text()).rawKey())) {
-                useTouchID.insert(m_filename, true);
-            }
-        } else {
-            // when TouchID not available or unchecked, reset for the current database
-            TouchID::getInstance().reset(m_filename);
-            useTouchID.insert(m_filename, false);
-        }
-
-        config()->set("UseTouchID", useTouchID);
-#endif
-
-        if (m_ui->messageWidget->isVisible()) {
-            m_ui->messageWidget->animatedHide();
-        }
-        emit dialogFinished(true);
-    } else {
-        m_ui->messageWidget->showMessage(error, MessageWidget::Error);
-        m_ui->editPassword->setText("");
 
 #ifdef WITH_XC_TOUCHID
         // unable to unlock database, reset TouchID for the current database
@@ -274,12 +271,12 @@ void DatabaseOpenWidget::openDatabase()
     }
 }
 
-QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
+QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 {
-    auto masterKey = QSharedPointer<CompositeKey>::create();
+    auto databaseKey = QSharedPointer<CompositeKey>::create();
 
     if (!m_ui->editPassword->text().isEmpty() || m_retryUnlockWithEmptyPassword) {
-        masterKey->addKey(QSharedPointer<PasswordKey>::create(m_ui->editPassword->text()));
+        databaseKey->addKey(QSharedPointer<PasswordKey>::create(m_ui->editPassword->text()));
     }
 
 #ifdef WITH_XC_TOUCHID
@@ -287,7 +284,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
     if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()
         && m_ui->editPassword->text().isEmpty()) {
         // clear empty password from composite key
-        masterKey->clear();
+        databaseKey->clear();
 
         // try to get, decrypt and use PasswordKey
         QSharedPointer<QByteArray> passwordKey = TouchID::getInstance().getKey(m_filename);
@@ -296,23 +293,23 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
             if (passwordKey.isNull())
                 return QSharedPointer<CompositeKey>();
 
-            masterKey->addKey(PasswordKey::fromRawKey(*passwordKey));
+            databaseKey->addKey(PasswordKey::fromRawKey(*passwordKey));
         }
     }
 #endif
 
-    QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+    auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();
     lastKeyFiles.remove(m_filename);
 
     auto key = QSharedPointer<FileKey>::create();
-    QString keyFilename = m_ui->comboKeyFile->currentText();
-    if (!m_ui->comboKeyFile->currentText().isEmpty() && m_keyFileComboEdited) {
+    QString keyFilename = m_ui->keyFileLineEdit->text();
+    if (!keyFilename.isEmpty()) {
         QString errorMsg;
         if (!key->load(keyFilename, &errorMsg)) {
             m_ui->messageWidget->showMessage(tr("Failed to open key file: %1").arg(errorMsg), MessageWidget::Error);
             return {};
         }
-        if (key->type() != FileKey::Hashed && !config()->get("Messages/NoLegacyKeyFileWarning").toBool()) {
+        if (key->type() != FileKey::Hashed && !config()->get(Config::Messages_NoLegacyKeyFileWarning).toBool()) {
             QMessageBox legacyWarning;
             legacyWarning.setWindowTitle(tr("Legacy key file format"));
             legacyWarning.setText(tr("You are using a legacy key file format which may become\n"
@@ -323,42 +320,40 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
             legacyWarning.setDefaultButton(QMessageBox::Ok);
             legacyWarning.setCheckBox(new QCheckBox(tr("Don't show this warning again")));
 
-            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state) {
-                config()->set("Messages/NoLegacyKeyFileWarning", state == Qt::CheckState::Checked);
+            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, this, [](int state) {
+                config()->set(Config::Messages_NoLegacyKeyFileWarning, state == Qt::CheckState::Checked);
             });
 
             legacyWarning.exec();
         }
-        masterKey->addKey(key);
-        lastKeyFiles[m_filename] = keyFilename;
+        databaseKey->addKey(key);
+        lastKeyFiles.insert(m_filename, keyFilename);
     }
 
-    if (config()->get("RememberLastKeyFiles").toBool()) {
-        config()->set("LastKeyFiles", lastKeyFiles);
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        config()->set(Config::LastKeyFiles, lastKeyFiles);
     }
 
 #ifdef WITH_XC_YUBIKEY
-    QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();
+    auto lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
     lastChallengeResponse.remove(m_filename);
 
-    int selectionIndex = m_ui->comboChallengeResponse->currentIndex();
+    int selectionIndex = m_ui->challengeResponseCombo->currentIndex();
     if (selectionIndex > 0) {
-        int comboPayload = m_ui->comboChallengeResponse->itemData(selectionIndex).toInt();
+        auto slot = m_ui->challengeResponseCombo->itemData(selectionIndex).value<YubiKeySlot>();
+        auto crKey = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot));
+        databaseKey->addChallengeResponseKey(crKey);
 
-        // read blocking mode from LSB and slot index number from second LSB
-        bool blocking = comboPayload & 1;
-        int slot = comboPayload >> 1;
-        auto crKey = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
-        masterKey->addChallengeResponseKey(crKey);
-        lastChallengeResponse[m_filename] = true;
+        // Qt doesn't read custom types in settings so stuff into a QString
+        lastChallengeResponse.insert(m_filename, QStringLiteral("%1:%2").arg(slot.first).arg(slot.second));
     }
 
-    if (config()->get("RememberLastKeyFiles").toBool()) {
-        config()->set("LastChallengeResponse", lastChallengeResponse);
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        config()->set(Config::LastChallengeResponse, lastChallengeResponse);
     }
 #endif
 
-    return masterKey;
+    return databaseKey;
 }
 
 void DatabaseOpenWidget::reject()
@@ -369,7 +364,7 @@ void DatabaseOpenWidget::reject()
 void DatabaseOpenWidget::browseKeyFile()
 {
     QString filters = QString("%1 (*);;%2 (*.key)").arg(tr("All files"), tr("Key files"));
-    if (!config()->get("RememberLastKeyFiles").toBool()) {
+    if (!config()->get(Config::RememberLastKeyFiles).toBool()) {
         fileDialog()->setNextForgetDialog();
     }
     QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);
@@ -384,69 +379,76 @@ void DatabaseOpenWidget::browseKeyFile()
     }
 
     if (!filename.isEmpty()) {
-        m_ui->comboKeyFile->setCurrentIndex(-1);
-        m_ui->comboKeyFile->setEditText(filename);
+        m_ui->keyFileLineEdit->setText(filename);
     }
 }
 
-void DatabaseOpenWidget::clearKeyFileEdit()
+void DatabaseOpenWidget::clearKeyFileText()
 {
-    m_ui->comboKeyFile->setCurrentIndex(0);
-    // make sure that handler is called even if 0 was the current index already
-    handleKeyFileComboChanged();
+    m_ui->keyFileLineEdit->clear();
 }
 
-void DatabaseOpenWidget::handleKeyFileComboEdited()
+void DatabaseOpenWidget::keyFileTextChanged()
 {
-    m_keyFileComboEdited = true;
-    m_ui->keyFileClearIcon->setVisible(true);
+    m_ui->keyFileClearIcon->setVisible(!m_ui->keyFileLineEdit->text().isEmpty());
 }
 
-void DatabaseOpenWidget::handleKeyFileComboChanged()
+void DatabaseOpenWidget::pollHardwareKey()
 {
-    m_keyFileComboEdited = m_ui->comboKeyFile->currentIndex() != 0;
-    m_ui->keyFileClearIcon->setVisible(m_keyFileComboEdited);
-}
+    if (m_pollingHardwareKey) {
+        return;
+    }
 
-void DatabaseOpenWidget::pollYubikey()
-{
+    m_ui->challengeResponseCombo->clear();
+    m_ui->challengeResponseCombo->addItem(tr("Detecting hardware keys…"));
+
     m_ui->buttonRedetectYubikey->setEnabled(false);
-    m_ui->comboChallengeResponse->setEnabled(false);
-    m_ui->comboChallengeResponse->clear();
-    m_ui->comboChallengeResponse->addItem(tr("Select slot..."), -1);
-    m_ui->yubikeyProgress->setVisible(true);
+    m_ui->challengeResponseCombo->setEnabled(false);
+    m_ui->hardwareKeyProgress->setVisible(true);
+    m_pollingHardwareKey = true;
 
-    // YubiKey init is slow, detect asynchronously to not block the UI
-    QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
+    YubiKey::instance()->findValidKeys();
 }
 
-void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
+void DatabaseOpenWidget::hardwareKeyResponse(bool found)
 {
-    YkChallengeResponseKey yk(slot, blocking);
-    // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
-    m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1) | blocking));
+    m_ui->challengeResponseCombo->clear();
+    m_ui->buttonRedetectYubikey->setEnabled(true);
+    m_ui->hardwareKeyProgress->setVisible(false);
+    m_pollingHardwareKey = false;
 
-    if (config()->get("RememberLastKeyFiles").toBool()) {
-        QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();
+    if (!found) {
+        m_ui->challengeResponseCombo->addItem(tr("No hardware keys detected"));
+        m_ui->challengeResponseCombo->setEnabled(false);
+        return;
+    } else {
+        m_ui->challengeResponseCombo->addItem(tr("Select hardware key…"));
+    }
+
+    YubiKeySlot lastUsedSlot;
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        auto lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
         if (lastChallengeResponse.contains(m_filename)) {
-            m_ui->comboChallengeResponse->setCurrentIndex(1);
+            // Qt doesn't read custom types in settings so extract from QString
+            auto split = lastChallengeResponse.value(m_filename).toString().split(":");
+            if (split.size() > 1) {
+                lastUsedSlot = YubiKeySlot(split[0].toUInt(), split[1].toInt());
+            }
         }
     }
-}
 
-void DatabaseOpenWidget::yubikeyDetectComplete()
-{
-    m_ui->comboChallengeResponse->setEnabled(true);
-    m_ui->buttonRedetectYubikey->setEnabled(true);
-    m_ui->yubikeyProgress->setVisible(false);
-    m_yubiKeyBeingPolled = false;
-}
+    int selectedIndex = 0;
+    for (auto& slot : YubiKey::instance()->foundKeys()) {
+        // add detected YubiKey to combo box
+        m_ui->challengeResponseCombo->addItem(YubiKey::instance()->getDisplayName(slot), QVariant::fromValue(slot));
+        // Select this YubiKey + Slot if we used it in the past
+        if (lastUsedSlot == slot) {
+            selectedIndex = m_ui->challengeResponseCombo->count() - 1;
+        }
+    }
 
-void DatabaseOpenWidget::noYubikeyFound()
-{
-    m_ui->buttonRedetectYubikey->setEnabled(true);
-    m_ui->yubikeyProgress->setVisible(false);
-    m_yubiKeyBeingPolled = false;
+    m_ui->challengeResponseCombo->setCurrentIndex(selectedIndex);
+    m_ui->challengeResponseCombo->setEnabled(true);
 }
 
 void DatabaseOpenWidget::openHardwareKeyHelp()

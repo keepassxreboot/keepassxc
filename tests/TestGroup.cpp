@@ -336,12 +336,12 @@ void TestGroup::testCopyCustomIcon()
     QScopedPointer<Database> dbTarget(new Database());
 
     group->setParent(dbTarget->rootGroup());
-    QVERIFY(dbTarget->metadata()->containsCustomIcon(groupIconUuid));
+    QVERIFY(dbTarget->metadata()->hasCustomIcon(groupIconUuid));
     QCOMPARE(dbTarget->metadata()->customIcon(groupIconUuid), groupIcon);
     QCOMPARE(group->icon(), groupIcon);
 
     entry->setGroup(dbTarget->rootGroup());
-    QVERIFY(dbTarget->metadata()->containsCustomIcon(entryIconUuid));
+    QVERIFY(dbTarget->metadata()->hasCustomIcon(entryIconUuid));
     QCOMPARE(dbTarget->metadata()->customIcon(entryIconUuid), entryIcon);
     QCOMPARE(entry->icon(), entryIcon);
 }
@@ -462,11 +462,11 @@ void TestGroup::testCopyCustomIcons()
 
     Metadata* metaTarget = dbTarget->metadata();
 
-    QCOMPARE(metaTarget->customIcons().size(), 4);
-    QVERIFY(metaTarget->containsCustomIcon(group1Icon));
-    QVERIFY(metaTarget->containsCustomIcon(group2Icon));
-    QVERIFY(metaTarget->containsCustomIcon(entry1IconOld));
-    QVERIFY(metaTarget->containsCustomIcon(entry1IconNew));
+    QCOMPARE(metaTarget->customIconsOrder().size(), 4);
+    QVERIFY(metaTarget->hasCustomIcon(group1Icon));
+    QVERIFY(metaTarget->hasCustomIcon(group2Icon));
+    QVERIFY(metaTarget->hasCustomIcon(entry1IconOld));
+    QVERIFY(metaTarget->hasCustomIcon(entry1IconNew));
 
     QCOMPARE(metaTarget->customIcon(group1Icon).pixel(0, 0), qRgb(1, 2, 3));
     QCOMPARE(metaTarget->customIcon(group2Icon).pixel(0, 0), qRgb(4, 5, 6));
@@ -1207,4 +1207,115 @@ void TestGroup::testUsernamesRecursive()
     QVERIFY(usernames.contains("Name1"));
     QVERIFY(usernames.contains("Name2"));
     QVERIFY(usernames.indexOf("Name2") < usernames.indexOf("Name1"));
+}
+
+void TestGroup::testMove()
+{
+    Database database;
+    Group* root = database.rootGroup();
+    QVERIFY(root);
+
+    Entry* entry0 = new Entry();
+    QVERIFY(entry0);
+    entry0->setGroup(root);
+    Entry* entry1 = new Entry();
+    QVERIFY(entry1);
+    entry1->setGroup(root);
+    Entry* entry2 = new Entry();
+    QVERIFY(entry2);
+    entry2->setGroup(root);
+    Entry* entry3 = new Entry();
+    QVERIFY(entry3);
+    entry3->setGroup(root);
+    // default order, straight
+    QCOMPARE(root->entries().at(0), entry0);
+    QCOMPARE(root->entries().at(1), entry1);
+    QCOMPARE(root->entries().at(2), entry2);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    root->moveEntryDown(entry0);
+    QCOMPARE(root->entries().at(0), entry1);
+    QCOMPARE(root->entries().at(1), entry0);
+    QCOMPARE(root->entries().at(2), entry2);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    root->moveEntryDown(entry0);
+    QCOMPARE(root->entries().at(0), entry1);
+    QCOMPARE(root->entries().at(1), entry2);
+    QCOMPARE(root->entries().at(2), entry0);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    root->moveEntryDown(entry0);
+    QCOMPARE(root->entries().at(0), entry1);
+    QCOMPARE(root->entries().at(1), entry2);
+    QCOMPARE(root->entries().at(2), entry3);
+    QCOMPARE(root->entries().at(3), entry0);
+
+    // no effect
+    root->moveEntryDown(entry0);
+    QCOMPARE(root->entries().at(0), entry1);
+    QCOMPARE(root->entries().at(1), entry2);
+    QCOMPARE(root->entries().at(2), entry3);
+    QCOMPARE(root->entries().at(3), entry0);
+
+    root->moveEntryUp(entry0);
+    QCOMPARE(root->entries().at(0), entry1);
+    QCOMPARE(root->entries().at(1), entry2);
+    QCOMPARE(root->entries().at(2), entry0);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    root->moveEntryUp(entry0);
+    QCOMPARE(root->entries().at(0), entry1);
+    QCOMPARE(root->entries().at(1), entry0);
+    QCOMPARE(root->entries().at(2), entry2);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    root->moveEntryUp(entry0);
+    QCOMPARE(root->entries().at(0), entry0);
+    QCOMPARE(root->entries().at(1), entry1);
+    QCOMPARE(root->entries().at(2), entry2);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    // no effect
+    root->moveEntryUp(entry0);
+    QCOMPARE(root->entries().at(0), entry0);
+    QCOMPARE(root->entries().at(1), entry1);
+    QCOMPARE(root->entries().at(2), entry2);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    root->moveEntryUp(entry2);
+    QCOMPARE(root->entries().at(0), entry0);
+    QCOMPARE(root->entries().at(1), entry2);
+    QCOMPARE(root->entries().at(2), entry1);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    root->moveEntryDown(entry0);
+    QCOMPARE(root->entries().at(0), entry2);
+    QCOMPARE(root->entries().at(1), entry0);
+    QCOMPARE(root->entries().at(2), entry1);
+    QCOMPARE(root->entries().at(3), entry3);
+
+    root->moveEntryUp(entry3);
+    QCOMPARE(root->entries().at(0), entry2);
+    QCOMPARE(root->entries().at(1), entry0);
+    QCOMPARE(root->entries().at(2), entry3);
+    QCOMPARE(root->entries().at(3), entry1);
+
+    root->moveEntryUp(entry3);
+    QCOMPARE(root->entries().at(0), entry2);
+    QCOMPARE(root->entries().at(1), entry3);
+    QCOMPARE(root->entries().at(2), entry0);
+    QCOMPARE(root->entries().at(3), entry1);
+
+    root->moveEntryDown(entry2);
+    QCOMPARE(root->entries().at(0), entry3);
+    QCOMPARE(root->entries().at(1), entry2);
+    QCOMPARE(root->entries().at(2), entry0);
+    QCOMPARE(root->entries().at(3), entry1);
+
+    root->moveEntryUp(entry1);
+    QCOMPARE(root->entries().at(0), entry3);
+    QCOMPARE(root->entries().at(1), entry2);
+    QCOMPARE(root->entries().at(2), entry1);
+    QCOMPARE(root->entries().at(3), entry0);
 }

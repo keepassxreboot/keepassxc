@@ -520,7 +520,7 @@ merge() {
     fi
     git diff-index --quiet HEAD --
     if [ $? -ne 0 ]; then
-        git add ./share/translations/*
+        git add -A ./share/translations/
         logInfo "Committing changes..."
         if [ "" == "$GPG_GIT_KEY" ]; then
             git commit -m "Update translations"
@@ -616,11 +616,9 @@ appimage() {
     fi
 
     if [ ! -d "${appdir}" ]; then
-        logError "AppDir does not exist, please create one with 'make install'!\n"
-        exit 1
+        exitError "AppDir does not exist, please create one with 'make install'!"
     elif [ -e "${appdir}/AppRun" ]; then
-        logError "AppDir has already been run through linuxdeploy, please create a fresh AppDir with 'make install'.\n"
-        exit 1
+        exitError "AppDir has already been run through linuxdeploy, please create a fresh AppDir with 'make install'."
     fi
 
     appdir="$(realpath "$appdir")"
@@ -652,14 +650,18 @@ appimage() {
         logInfo "Downloading linuxdeploy..."
         linuxdeploy="./linuxdeploy"
         linuxdeploy_cleanup="rm -f ${linuxdeploy}"
-        curl -L "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" > "$linuxdeploy"
+        if ! curl -Lf "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" > "$linuxdeploy"; then
+            exitError "linuxdeploy download failed."
+        fi
         chmod +x "$linuxdeploy"
     fi
     if ! ${docker_test_cmd} which ${linuxdeploy_plugin_qt} &> /dev/null; then
         logInfo "Downloading linuxdeploy-plugin-qt..."
         linuxdeploy_plugin_qt="./linuxdeploy-plugin-qt"
         linuxdeploy_plugin_qt_cleanup="rm -f ${linuxdeploy_plugin_qt}"
-        curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" > "$linuxdeploy_plugin_qt"
+        if ! curl -Lf "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" > "$linuxdeploy_plugin_qt"; then
+            exitError "linuxdeploy-plugin-qt download failed."
+        fi
         chmod +x "$linuxdeploy_plugin_qt"
     fi
 
@@ -668,7 +670,9 @@ appimage() {
         logInfo "Downloading appimagetool..."
         appimagetool="./appimagetool"
         appimagetool_cleanup="rm -f ${appimagetool}"
-        curl -L "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" > "$appimagetool"
+        if ! curl -Lf "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" > "$appimagetool"; then
+            exitError "appimagetool download failed."
+        fi
         chmod +x "$appimagetool"
     fi
 
@@ -718,6 +722,10 @@ EOF
             --library=\$(ldconfig -p | grep x86-64 | grep -oP '/[^\s]+/libgpg-error\.so\.\d+$' | head -n1)"
     fi
 
+    if [ $? -ne 0 ]; then
+        exitError "AppDir deployment failed."
+    fi
+
     logInfo "Creating AppImage..."
     local appsign_flag=""
     local appsign_key_flag=""
@@ -728,17 +736,16 @@ EOF
     local appimage_name="KeePassXC-x86_64.AppImage"
     if [ "" != "$RELEASE_NAME" ]; then
         appimage_name="KeePassXC-${RELEASE_NAME}-x86_64.AppImage"
+        echo "X-AppImage-Version=${RELEASE_NAME}" >> "$desktop_file"
     fi
-
-    # Allow appimagetool to insert version information into the AppImage to allow
-    # desktop integration tools to display that in app launchers
-    export VERSION="${RELEASE_NAME}"
 
     # Run appimagetool to package (and possibly sign) AppImage
     # --no-appstream is required, since it may crash on newer systems
     # see: https://github.com/AppImage/AppImageKit/issues/856
-    "$appimagetool" --updateinformation "gh-releases-zsync|keepassxreboot|keepassxc|latest|KeePassXC-*-x86_64.AppImage.zsync" \
-        ${appsign_flag} ${appsign_key_flag} --no-appstream "$appdir" "${out_real}/${appimage_name}"
+    if ! "$appimagetool" --updateinformation "gh-releases-zsync|keepassxreboot|keepassxc|latest|KeePassXC-*-x86_64.AppImage.zsync" \
+        ${appsign_flag} ${appsign_key_flag} --no-appstream "$appdir" "${out_real}/${appimage_name}"; then
+        exitError "AppImage creation failed."
+    fi
 
     logInfo "Cleaning up temporary files..."
     ${linuxdeploy_cleanup}
@@ -906,7 +913,7 @@ build() {
 
     if ! ${build_snapshot} && [ -e "${OUTPUT_DIR}/build-release" ]; then
         logInfo "Cleaning existing build directory..."
-        rm -r "${OUTPUT_DIR}/build-release" 2> /dev/null
+        rm -rf "${OUTPUT_DIR}/build-release" 2> /dev/null
         if [ $? -ne 0 ]; then
             exitError "Failed to clean existing build directory, please do it manually."
         fi
@@ -977,13 +984,15 @@ build() {
             cpack -G "${CPACK_GENERATORS};${build_generators}"
 
             # Inject the portable config into the zip build and rename
+            touch .portable
             for filename in ${APP_NAME}-*.zip; do
                 logInfo "Creating portable zip file"
                 local folder=$(echo ${filename} | sed -r 's/(.*)\.zip/\1/')
                 python -c 'import zipfile,sys ; zipfile.ZipFile(sys.argv[1],"a").write(sys.argv[2],sys.argv[3])' \
-                    ${filename} ${SRC_DIR}/share/keepassxc.ini ${folder}/keepassxc.ini
+                    ${filename} .portable ${folder}/.portable
                 mv ${filename} ${folder}-portable.zip
             done
+            rm .portable
 
             mv "${APP_NAME}-"*.* ../
         else

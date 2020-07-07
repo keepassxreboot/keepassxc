@@ -43,7 +43,8 @@ public:
         Accessed = 9,
         Paperclip = 10,
         Attachments = 11,
-        Totp = 12
+        Totp = 12,
+        Size = 13
     };
 
     explicit EntryModel(QObject* parent = nullptr);
@@ -68,8 +69,6 @@ public:
     bool isPasswordsHidden() const;
     void setPasswordsHidden(bool hide);
 
-    void setPaperClipPixmap(const QPixmap& paperclip);
-
 signals:
     void usernamesHiddenChanged();
     void passwordsHiddenChanged();
@@ -79,6 +78,10 @@ private slots:
     void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);
     void entryRemoved();
+    void entryAboutToMoveUp(int row);
+    void entryMovedUp();
+    void entryAboutToMoveDown(int row);
+    void entryMovedDown();
     void entryDataChanged(Entry* entry);
 
 private:
@@ -92,8 +95,6 @@ private:
 
     bool m_hideUsernames;
     bool m_hidePasswords;
-
-    QPixmap m_paperClipPixmap;
 
     const QString HiddenContentDisplay;
     const Qt::DateFormat DateFormat;

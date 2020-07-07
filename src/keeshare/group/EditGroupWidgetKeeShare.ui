@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>342</width>
-    <height>378</height>
+    <width>361</width>
+    <height>180</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -30,32 +30,97 @@
     <widget class="MessageWidget" name="messageWidget" native="true"/>
    </item>
    <item>
-    <layout class="QFormLayout" name="formLayout">
-     <item row="2" column="0">
-      <widget class="QLabel" name="typeLabel">
-       <property name="text">
-        <string>Type:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="horizontalSpacing">
+      <number>10</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>8</number>
+     </property>
+     <item row="0" column="1">
       <widget class="QComboBox" name="typeComboBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="accessibleName">
         <string>Sharing mode field</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="1">
+      <widget class="PasswordEdit" name="passwordEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="accessibleName">
+        <string>Password field</string>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="typeLabel">
+       <property name="text">
+        <string>Type:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="passwordLabel">
+       <property name="text">
+        <string>Password:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="pathLabel">
        <property name="text">
         <string>Path:</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="1" column="1">
       <layout class="QHBoxLayout" name="pathLayout">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <item>
         <widget class="QLineEdit" name="pathEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="accessibleName">
           <string>Path to share file field</string>
          </property>
@@ -64,93 +129,66 @@
        <item>
         <widget class="QToolButton" name="pathSelectionButton">
          <property name="accessibleName">
-          <string>Browser for share file</string>
+          <string>Browse for share file</string>
          </property>
          <property name="text">
-          <string>...</string>
+          <string>Browse...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="clearButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="accessibleName">
+          <string>Clear fields</string>
+         </property>
+         <property name="text">
+          <string>Clear</string>
          </property>
         </widget>
        </item>
       </layout>
      </item>
      <item row="4" column="0">
-      <widget class="QLabel" name="passwordLabel">
-       <property name="text">
-        <string>Password:</string>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <layout class="QHBoxLayout" name="passwordLayout">
-       <item>
-        <widget class="PasswordEdit" name="passwordEdit">
-         <property name="accessibleName">
-          <string>Password field</string>
-         </property>
-         <property name="echoMode">
-          <enum>QLineEdit::Password</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="togglePasswordButton">
-         <property name="accessibleName">
-          <string>Toggle password visibility</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="togglePasswordGeneratorButton">
-         <property name="accessibleName">
-          <string>Toggle password generator</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="5" column="1">
-      <widget class="PasswordGeneratorWidget" name="passwordGenerator" native="true"/>
-     </item>
-     <item row="6" column="1">
-      <widget class="QPushButton" name="clearButton">
-       <property name="accessibleName">
-        <string>Clear fields</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>0</height>
+        </size>
        </property>
-       <property name="text">
-        <string>Clear</string>
-       </property>
-      </widget>
+      </spacer>
      </item>
     </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>PasswordGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/PasswordGeneratorWidget.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>PasswordEdit</class>
    <extends>QLineEdit</extends>
@@ -164,6 +202,13 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>typeComboBox</tabstop>
+  <tabstop>pathEdit</tabstop>
+  <tabstop>pathSelectionButton</tabstop>
+  <tabstop>passwordEdit</tabstop>
+  <tabstop>clearButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
