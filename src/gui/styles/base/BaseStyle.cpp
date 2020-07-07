@@ -128,7 +128,7 @@ namespace Phantom
         constexpr bool AllowToolBarAutoRaise = true;
         // Note that this only applies to the disclosure etc. decorators in tree views.
         constexpr bool ShowItemViewDecorationSelected = false;
-        constexpr bool UseQMenuForComboBoxPopup = true;
+        constexpr bool UseQMenuForComboBoxPopup = false;
         constexpr bool ItemView_UseFontHeightForDecorationSize = true;
 
         // Whether or not the non-raised tabs in a tab bar have shininess/highlights to
