@@ -4,8 +4,9 @@
 
 ### Added
 
-- Custom Light and Dark themes [#4110, #4769, #4791, #4796, #4892, #4915]
+- Custom Light and Dark themes [#4110, #4769, #4791, #4892, #4915]
 - Compact mode to use classic Group and Entry line height [#4910]
+- New monochrome tray icons [#4796, #4803]
 - View menu to quickly switch themes, compact mode, and toggle UI elements [#4910]
 - Search for groups and scope search to matched groups [#4705]
 - Save Database Backup feature [#4550]
@@ -66,9 +67,11 @@
 - Improve search help widget displaying on macOS and Linux [#4236]
 - Return keyboard focus after editing an entry [#4287]
 - Reset database path after failed "Save As" [#4526]
-- Use SHA256 Digest for Windows code signing [#4129]
+- Make builds reproducible [#4411]
 - Improve handling of ccache when building [#4104, #4335]
+- Windows: Use correct UI font and size [#4769]
 - macOS: Properly re-hide application window after browser integration and Auto-Type usage [#4909]
+- Linux: Fix version number not embedded in AppImage [#4842]
 - Auto-Type: Fix crash when performing on new entry [#4132]
 - Browser: Send legacy HTTP settings to recycle bin [#4589]
 - Browser: Fix merging browser keys [#4685]
