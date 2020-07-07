@@ -161,8 +161,7 @@ int main(int argc, char** argv)
 
     // Check if restart was requested
     if (exitCode == RESTART_EXITCODE) {
-        QProcess* proc = new QProcess();
-        proc->start(QCoreApplication::applicationFilePath());
+        QProcess::startDetached(QCoreApplication::applicationFilePath(), {});
     }
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
