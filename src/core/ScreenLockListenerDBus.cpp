@@ -51,6 +51,13 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget* parent)
                        this, // receiver
                        SLOT(gnomeSessionStatusChanged(uint)));
 
+    sessionBus.connect("org.xfce.ScreenSaver", // service
+                       "/org/xfce/ScreenSaver", // path
+                       "org.xfce.ScreenSaver", // interface
+                       "ActiveChanged", // signal name
+                       this, // receiver
+                       SLOT(freedesktopScreenSaver(bool)));
+
     systemBus.connect("org.freedesktop.login1", // service
                       "/org/freedesktop/login1", // path
                       "org.freedesktop.login1.Manager", // interface
