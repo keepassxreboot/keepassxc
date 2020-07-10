@@ -1813,7 +1813,7 @@ bool DatabaseWidget::save()
     m_blockAutoSave = true;
     ++m_saveAttempts;
 
-    auto focusWidget = qApp->focusWidget();
+    QPointer<QWidget> focusWidget(qApp->focusWidget());
 
     // TODO: Make this async
     // Lock out interactions
@@ -1887,7 +1887,7 @@ bool DatabaseWidget::saveAs()
 
     bool ok = false;
     if (!newFilePath.isEmpty()) {
-        auto focusWidget = qApp->focusWidget();
+        QPointer<QWidget> focusWidget(qApp->focusWidget());
 
         // Lock out interactions
         m_entryView->setDisabled(true);
