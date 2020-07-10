@@ -153,6 +153,15 @@ QIcon Resources::icon(const QString& name, bool recolor, const QColor& overrideC
         return icon;
     }
 
+    // Resetting the application theme name before calling QIcon::fromTheme() is required for hacky
+    // QPA platform themes such as qt5ct, which randomly mess with the configured icon theme.
+    // If we do not reset the theme name here, it will become empty at some point, causing
+    // Qt to look for icons at the user-level and global default locations.
+    //
+    // See issue #4963: https://github.com/keepassxreboot/keepassxc/issues/4963
+    // and qt5ct issue #80: https://sourceforge.net/p/qt5ct/tickets/80/
+    QIcon::setThemeName("application");
+
     icon = QIcon::fromTheme(name);
     if (getMainWindow() && recolor) {
         QImage img = icon.pixmap(128, 128).toImage().convertToFormat(QImage::Format_ARGB32_Premultiplied);
