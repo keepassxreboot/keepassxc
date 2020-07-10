@@ -1,10 +1,28 @@
+//  Copyright (C) 2017 Manolis Agkopian <m.agkopian@gmail.com>
+//  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 2 or (at your option)
+//  version 3 of the License.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 = keepassxc-cli(1)
-:docdate: 2020-07-05
+:docdate: 2020-07-10
 :doctype: manpage
+:revnumber: 2.6.0
+:mansource: KeePassXC {revnumber}
 :manmanual: General Commands Manual
 
 == NAME
-keepassxc-cli - command line interface for the KeePassXC password manager.
+keepassxc-cli - command line interface for the KeePassXC password manager
 
 == SYNOPSIS
 *keepassxc-cli* _command_ [_options_]
@@ -16,21 +34,21 @@ It provides the ability to query and modify the entries of a KeePass database, d
 == COMMANDS
 *add* [_options_] <__database__> <__entry__>::
   Adds a new entry to a database.
-  A password can be generated (_-g_ option), or a prompt can be displayed to input the password (_-p_ option).
-  The same password generation options as documented for the generate command can be used when the _-g_ option is set.
+  A password can be generated (*-g* option), or a prompt can be displayed to input the password (*-p* option).
+  The same password generation options as documented for the generate command can be used when the *-g* option is set.
 
 *analyze* [_options_] <__database__>::
   Analyzes passwords in a database for weaknesses.
 
 *clip* [_options_] <__database__> <__entry__> [_timeout_]::
-  Copies an attribute or the current TOTP (if the _-t_ option is specified) of a database entry to the clipboard.
-  If no attribute name is specified using the _-a_ option, the password is copied.
+  Copies an attribute or the current TOTP (if the *-t* option is specified) of a database entry to the clipboard.
+  If no attribute name is specified using the *-a* option, the password is copied.
   If multiple entries with the same name exist in different groups, only the attribute for the first one is copied.
   For copying the attribute of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name.
   Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
 *close*::
-  In interactive mode, closes the currently opened database (see _open_).
+  In interactive mode, closes the currently opened database (see *open*).
 
 *db-create* [_options_] <__database__>::
   Creates a new database with a password and/or a key file.
@@ -45,8 +63,8 @@ It provides the ability to query and modify the entries of a KeePass database, d
 
 *edit* [_options_] <__database__> <__entry__>::
   Edits a database entry.
-  A password can be generated (_-g_ option), or a prompt can be displayed to input the password (_-p_ option).
-  The same password generation options as documented for the generate command can be used when the _-g_ option is set.
+  A password can be generated (*-g* option), or a prompt can be displayed to input the password (*-p* option).
+  The same password generation options as documented for the generate command can be used when the *-g* option is set.
 
 *estimate* [_options_] [_password_]::
   Estimates the entropy of a password.
@@ -54,7 +72,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 
 *exit*::
   Exits interactive mode.
-  Synonymous with _quit_.
+  Synonymous with *quit*.
 
 *export* [_options_] <__database__>::
   Exports the content of a database to standard output in the specified format (defaults to XML).
@@ -78,7 +96,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *merge* [_options_] <__database1__> <__database2__>::
   Merges two databases together.
   The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge.
-  In the case that both databases make use of the same credentials, the _--same-credentials_ or _-s_ option can be used.
+  In the case that both databases make use of the same credentials, the *--same-credentials* or *-s* option can be used.
 
 *mkdir* [_options_] <__database__> <__group__>::
   Adds a new group to a database.
@@ -88,11 +106,11 @@ It provides the ability to query and modify the entries of a KeePass database, d
 
 *open* [_options_] <__database__>::
   Opens the given database in a shell-style interactive mode.
-  This is useful for performing multiple operations on a single database (e.g. _ls_ followed by _show_).
+  This is useful for performing multiple operations on a single database (e.g. *ls* followed by *show*).
 
 *quit*::
   Exits interactive mode.
-  Synonymous with _exit_.
+  Synonymous with *exit*.
 
 *rm* [_options_] <__database__> <__entry__>::
   Removes an entry from a database.
@@ -107,7 +125,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *show* [_options_] <__database__> <__entry__>::
   Shows the title, username, password, URL and notes of a database entry.
   Can also show the current TOTP.
-  Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the _clip_ command section also applies here.
+  Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the *clip* command section also applies here.
 
 == OPTIONS
 === General options
@@ -151,7 +169,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
   Uses the same credentials for unlocking both databases.
 
 === Add and edit options
-The same password generation options as documented for the generate command can be used with those 2 commands when the -g option is set.
+The same password generation options as documented for the generate command can be used with those 2 commands when the *-g* option is set.
 
 *-u*, *--username* <__username__>::
   Specifies the username of the entry.
@@ -183,7 +201,7 @@ The same password generation options as documented for the generate command can 
 *-a*, *--attribute*::
   Copies the specified attribute to the clipboard.
   If no attribute is specified, the password attribute is the default.
-  For example, "_-a_ username" would copy the username to the clipboard.
+  For example, "*-a* *username*" would copy the username to the clipboard.
   [Default: password]
 
 *-t*, *--totp*::
@@ -204,7 +222,7 @@ The same password generation options as documented for the generate command can 
 *-a*, *--attributes* <__attribute__>...::
   Shows the named attributes.
   This option can be specified more than once, with each attribute shown one-per-line in the given order.
-  If no attributes are specified and _-t_ is not specified, a summary of the default attributes is given.
+  If no attributes are specified and *-t* is not specified, a summary of the default attributes is given.
   Protected attributes will be displayed in clear text if specified explicitly by this option.
 
 *-s*, *--show-protected*::
@@ -274,9 +292,11 @@ The same password generation options as documented for the generate command can 
   Include characters from every selected group.
   [Default: Disabled]
 
-== REPORTING BUGS
-Bugs and feature requests can be reported on GitHub at https://github.com/keepassxreboot/keepassxc/issues.
+include::section-notes.adoc[]
 
 == AUTHOR
-This manual page was originally written by Manolis Agkopian <m.agkopian@gmail.com>,
-and is maintained by the KeePassXC Team <team@keepassxc.org>.
+This manual page was originally written by Manolis Agkopian <m.agkopian@gmail.com>.
+
+include::section-reporting-bugs.adoc[]
+
+include::section-copyright.adoc[]
