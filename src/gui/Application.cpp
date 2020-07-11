@@ -148,7 +148,7 @@ void Application::applyTheme()
     if (appTheme == "auto") {
         if (osUtils->isDarkMode()) {
             setStyle(new DarkStyle);
-            m_darkTheme = true;
+            m_isDarkTheme = true;
         } else {
             setStyle(new LightStyle);
         }
@@ -156,15 +156,16 @@ void Application::applyTheme()
         setStyle(new LightStyle);
     } else if (appTheme == "dark") {
         setStyle(new DarkStyle);
-        m_darkTheme = true;
+        m_isDarkTheme = true;
     } else {
         // Classic mode, don't check for dark theme on Windows
         // because Qt 5.x does not support it
 #ifndef Q_OS_WIN
-        m_darkTheme = osUtils->isDarkMode();
+        m_isDarkTheme = osUtils->isDarkMode();
 #endif
     }
 
+    m_theme = appTheme;
     setPalette(style()->standardPalette());
 }
 
@@ -313,7 +314,12 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
 
 bool Application::isDarkTheme() const
 {
-    return m_darkTheme;
+    return m_isDarkTheme;
+}
+
+QString Application::theme() const
+{
+    return m_theme;
 }
 
 void Application::restart()

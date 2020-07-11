@@ -46,6 +46,7 @@ public:
     bool event(QEvent* event) override;
     bool isAlreadyRunning() const;
     bool isDarkTheme() const;
+    QString theme() const;
 
     bool sendFileNamesToRunningInstance(const QStringList& fileNames);
 
@@ -75,7 +76,8 @@ private:
     static int unixSignalSocket[2];
 #endif
     bool m_alreadyRunning;
-    bool m_darkTheme = false;
+    bool m_isDarkTheme = false;
+    QString m_theme;
     QLockFile* m_lockFile;
     QLocalServer m_lockServer;
     QString m_socketName;

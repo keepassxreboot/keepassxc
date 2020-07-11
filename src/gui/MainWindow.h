@@ -177,6 +177,7 @@ private:
     bool m_restartRequested = false;
     bool m_contextMenuFocusLock = false;
     bool m_showToolbarSeparator = false;
+    bool m_isCompactMode = false;
     qint64 m_lastFocusOutTime = 0;
     qint64 m_lastShowTime = 0;
     QTimer m_updateCheckTimer;

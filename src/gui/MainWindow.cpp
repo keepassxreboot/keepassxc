@@ -93,6 +93,7 @@ MainWindow* getMainWindow()
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
+    , m_isCompactMode(config()->get(Config::GUI_CompactMode).toBool())
 {
     g_MainWindow = this;
 
@@ -218,7 +219,7 @@ MainWindow::MainWindow()
     }
 
     m_ui->toolbarSeparator->setVisible(false);
-    m_showToolbarSeparator = config()->get(Config::GUI_ApplicationTheme).toString() != "classic";
+    m_showToolbarSeparator = kpxcApp->theme() != "classic";
 
     m_ui->actionEntryAutoType->setVisible(autoType()->isAvailable());
 
@@ -1671,25 +1672,26 @@ void MainWindow::initViewMenu()
     themeActions->addAction(m_ui->actionThemeDark);
     themeActions->addAction(m_ui->actionThemeClassic);
 
-    auto theme = config()->get(Config::GUI_ApplicationTheme).toString();
     for (auto action : themeActions->actions()) {
-        if (action->data() == theme) {
+        if (action->data() == kpxcApp->theme()) {
             action->setChecked(true);
             break;
         }
     }
 
     connect(themeActions, &QActionGroup::triggered, this, [this](QAction* action) {
-        if (action->data() != config()->get(Config::GUI_ApplicationTheme)) {
-            config()->set(Config::GUI_ApplicationTheme, action->data());
+        config()->set(Config::GUI_ApplicationTheme, action->data());
+        if (action->data() != kpxcApp->theme()) {
             restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
         }
     });
 
-    m_ui->actionCompactMode->setChecked(config()->get(Config::GUI_CompactMode).toBool());
+    m_ui->actionCompactMode->setChecked(m_isCompactMode);
     connect(m_ui->actionCompactMode, &QAction::toggled, this, [this](bool checked) {
         config()->set(Config::GUI_CompactMode, checked);
-        restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        if (checked != m_isCompactMode) {
+            restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        }
     });
 
     m_ui->actionShowToolbar->setChecked(!config()->get(Config::GUI_HideToolbar).toBool());
