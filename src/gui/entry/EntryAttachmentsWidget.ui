@@ -31,6 +31,9 @@
      <property name="accessibleName">
       <string>Attachments</string>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+     </property>
     </widget>
    </item>
    <item>
@@ -71,6 +74,19 @@
         </property>
         <property name="text">
          <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="renameAttachmentButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="accessibleName">
+         <string>Rename selected attachment</string>
+        </property>
+        <property name="text">
+         <string>Rename</string>
         </property>
        </widget>
       </item>

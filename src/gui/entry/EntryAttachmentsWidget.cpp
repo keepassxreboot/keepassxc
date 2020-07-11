@@ -49,12 +49,14 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
             SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(updateButtonsEnabled()));
     // clang-format on
+    connect(this, SIGNAL(readOnlyChanged(bool)), m_attachmentsModel, SLOT(setReadOnly(bool)));
 
     connect(m_ui->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
     connect(m_ui->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveSelectedAttachments()));
     connect(m_ui->openAttachmentButton, SIGNAL(clicked()), SLOT(openSelectedAttachments()));
     connect(m_ui->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachments()));
     connect(m_ui->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeSelectedAttachments()));
+    connect(m_ui->renameAttachmentButton, SIGNAL(clicked()), SLOT(renameSelectedAttachments()));
 
     updateButtonsVisible();
     updateButtonsEnabled();
@@ -184,6 +186,11 @@ void EntryAttachmentsWidget::removeSelectedAttachments()
     }
 }
 
+void EntryAttachmentsWidget::renameSelectedAttachments()
+{
+    m_ui->attachmentsView->edit(m_ui->attachmentsView->selectionModel()->selectedIndexes().first());
+}
+
 void EntryAttachmentsWidget::saveSelectedAttachments()
 {
     const QModelIndexList indexes = m_ui->attachmentsView->selectionModel()->selectedRows(0);
@@ -289,6 +296,7 @@ void EntryAttachmentsWidget::updateButtonsEnabled()
 
     m_ui->addAttachmentButton->setEnabled(!m_readOnly);
     m_ui->removeAttachmentButton->setEnabled(hasSelection && !m_readOnly);
+    m_ui->renameAttachmentButton->setEnabled(hasSelection && !m_readOnly);
 
     m_ui->saveAttachmentButton->setEnabled(hasSelection);
     m_ui->openAttachmentButton->setEnabled(hasSelection);

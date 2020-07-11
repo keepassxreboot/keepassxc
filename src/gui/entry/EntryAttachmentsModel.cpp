@@ -101,6 +101,28 @@ QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
+bool EntryAttachmentsModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+    if (!m_readOnly && index.column() == Columns::NameColumn) {
+        const QString key = value.toString().trimmed();
+        if (key.isEmpty() || m_entryAttachments->hasKey(key)) {
+            return false;
+        }
+        m_entryAttachments->rename(keyByIndex(index), key);
+        return true;
+    }
+    return QAbstractListModel::setData(index, value, role);
+}
+
+Qt::ItemFlags EntryAttachmentsModel::flags(const QModelIndex& index) const
+{
+    Qt::ItemFlags flags = QAbstractListModel::flags(index);
+    if (!m_readOnly && index.column() == Columns::NameColumn) {
+        flags = flags | Qt::ItemIsEditable;
+    }
+    return flags;
+}
+
 QString EntryAttachmentsModel::keyByIndex(const QModelIndex& index) const
 {
     if (!index.isValid()) {
@@ -149,4 +171,9 @@ void EntryAttachmentsModel::aboutToReset()
 void EntryAttachmentsModel::reset()
 {
     endResetModel();
+}
+
+void EntryAttachmentsModel::setReadOnly(bool readOnly)
+{
+    m_readOnly = readOnly;
 }
