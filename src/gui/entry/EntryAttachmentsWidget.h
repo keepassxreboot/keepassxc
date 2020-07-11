@@ -45,6 +45,7 @@ signals:
 private slots:
     void insertAttachments();
     void removeSelectedAttachments();
+    void renameSelectedAttachments();
     void saveSelectedAttachments();
     void openAttachment(const QModelIndex& index);
     void openSelectedAttachments();

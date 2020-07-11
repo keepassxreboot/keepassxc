@@ -112,6 +112,13 @@ void EntryAttachments::remove(const QStringList& keys)
     }
 }
 
+void EntryAttachments::rename(const QString& key, const QString& newKey)
+{
+    const QByteArray val = value(key);
+    remove(key);
+    set(newKey, val);
+}
+
 bool EntryAttachments::isEmpty() const
 {
     return m_attachments.isEmpty();
