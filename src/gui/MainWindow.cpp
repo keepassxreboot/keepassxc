@@ -108,7 +108,7 @@ MainWindow::MainWindow()
 
     setAcceptDrops(true);
 
-    if (config()->get(Config::GUI_CompactMode).toBool()) {
+    if (m_isCompactMode) {
         m_ui->toolBar->setIconSize({20, 20});
     }
 
