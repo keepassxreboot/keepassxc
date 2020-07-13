@@ -176,7 +176,7 @@ void YubiKey::findValidKeys()
                 bool wouldBlock;
                 QList<QPair<int, QString>> ykSlots;
                 for (int slot = 1; slot <= 2; ++slot) {
-                    auto config = (i == 1 ? CONFIG1_VALID : CONFIG2_VALID);
+                    auto config = (slot == 1 ? CONFIG1_VALID : CONFIG2_VALID);
                     if (!(ykds_touch_level(st) & config)) {
                         // Slot is not configured
                         continue;
