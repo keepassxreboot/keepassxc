@@ -61,13 +61,13 @@ signals:
 
 public slots:
     void databaseChanged(DatabaseWidget* dbWidget = nullptr);
+    void searchFocus();
 
 private slots:
     void startSearchTimer();
     void startSearch();
     void updateCaseSensitive();
     void updateLimitGroup();
-    void searchFocus();
     void toggleHelp();
     void showSearchMenu();
     void resetSearchClearTimer();
