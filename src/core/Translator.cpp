@@ -71,6 +71,8 @@ bool Translator::installTranslator(const QStringList& languages, const QString& 
         QScopedPointer<QTranslator> translator(new QTranslator(qApp));
         if (translator->load(locale, "keepassx_", "", path)) {
             return QCoreApplication::installTranslator(translator.take());
+        } else if (translator->load(locale, "keepassx_", "", QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+            return QCoreApplication::installTranslator(translator.take());
         }
     }
 
