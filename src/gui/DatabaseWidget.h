@@ -167,8 +167,8 @@ public slots:
     void cloneEntry();
     void deleteSelectedEntries();
     void deleteEntries(QList<Entry*> entries);
-    void focusOnEntries();
-    void focusOnGroups();
+    void focusOnEntries(bool editIfFocused = false);
+    void focusOnGroups(bool editIfFocused = false);
     void moveEntryUp();
     void moveEntryDown();
     void copyTitle();

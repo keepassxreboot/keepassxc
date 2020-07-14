@@ -631,17 +631,25 @@ void DatabaseWidget::setFocus(Qt::FocusReason reason)
     }
 }
 
-void DatabaseWidget::focusOnEntries()
+void DatabaseWidget::focusOnEntries(bool editIfFocused)
 {
     if (isEntryViewActive()) {
-        m_entryView->setFocus();
+        if (editIfFocused && m_entryView->hasFocus()) {
+            switchToEntryEdit();
+        } else {
+            m_entryView->setFocus();
+        }
     }
 }
 
-void DatabaseWidget::focusOnGroups()
+void DatabaseWidget::focusOnGroups(bool editIfFocused)
 {
     if (isEntryViewActive()) {
-        m_groupView->setFocus();
+        if (editIfFocused && m_groupView->hasFocus()) {
+            switchToGroupEdit();
+        } else {
+            m_groupView->setFocus();
+        }
     }
 }
 
