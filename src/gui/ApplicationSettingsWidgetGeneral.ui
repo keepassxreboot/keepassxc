@@ -626,6 +626,12 @@
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <property name="accessibleName">
+                   <string>Tray icon type</string>
+                  </property>
                  </widget>
                 </item>
                 <item row="0" column="1">
