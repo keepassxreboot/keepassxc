@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation>Bei Programmstartstart wöchentlich auf Updates prüfen</translation>
+        <translation>Bei Programmstart wöchentlich auf Updates prüfen</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
