@@ -1679,17 +1679,20 @@ void MainWindow::initViewMenu()
         }
     }
 
-    connect(themeActions, &QActionGroup::triggered, this, [this](QAction* action) {
-        if (action->data() != config()->get(Config::GUI_ApplicationTheme)) {
-            config()->set(Config::GUI_ApplicationTheme, action->data());
+    connect(themeActions, &QActionGroup::triggered, this, [this, theme](QAction* action) {
+        config()->set(Config::GUI_ApplicationTheme, action->data());
+        if (action->data() != theme) {
             restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
         }
     });
 
-    m_ui->actionCompactMode->setChecked(config()->get(Config::GUI_CompactMode).toBool());
-    connect(m_ui->actionCompactMode, &QAction::toggled, this, [this](bool checked) {
+    bool compact = config()->get(Config::GUI_CompactMode).toBool();
+    m_ui->actionCompactMode->setChecked(compact);
+    connect(m_ui->actionCompactMode, &QAction::toggled, this, [this, compact](bool checked) {
         config()->set(Config::GUI_CompactMode, checked);
-        restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        if (checked != compact) {
+            restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        }
     });
 
     m_ui->actionShowToolbar->setChecked(!config()->get(Config::GUI_HideToolbar).toBool());
