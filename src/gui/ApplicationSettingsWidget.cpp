@@ -27,6 +27,7 @@
 #include "core/Global.h"
 #include "core/Resources.h"
 #include "core/Translator.h"
+#include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
 
 #include "MessageBox.h"
@@ -324,7 +325,15 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::AutoTypeEntryURLMatch, m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     config()->set(Config::FaviconDownloadTimeout, m_generalUi->faviconTimeoutSpinBox->value());
 
-    config()->set(Config::GUI_Language, m_generalUi->languageComboBox->currentData().toString());
+    auto language = m_generalUi->languageComboBox->currentData().toString();
+    if (config()->get(Config::GUI_Language) != language) {
+        QTimer::singleShot(200, [] {
+            getMainWindow()->restartApp(
+                tr("You must restart the application to set the new language. Would you like to restart now?"));
+        });
+    }
+    config()->set(Config::GUI_Language, language);
+
     config()->set(Config::GUI_MovableToolbar, m_generalUi->toolbarMovableCheckBox->isChecked());
     config()->set(Config::GUI_MonospaceNotes, m_generalUi->monospaceNotesCheckBox->isChecked());
 
