@@ -447,12 +447,8 @@ void SSHAgent::databaseLocked()
             if (!removeIdentity(key)) {
                 emit error(m_error);
             }
-            it = m_addedKeys.erase(it);
-        } else {
-            // don't remove it yet
-            m_addedKeys[key].second = false;
-            ++it;
         }
+        it = m_addedKeys.erase(it);
     }
 }
 
