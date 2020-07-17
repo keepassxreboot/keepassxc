@@ -72,10 +72,14 @@ void TestTools::testEnvSubstitute()
 #if defined(Q_OS_WIN)
     environment.insert("HOMEDRIVE", "C:");
     environment.insert("HOMEPATH", "\\Users\\User");
+    environment.insert("USERPROFILE", "C:\\Users\\User");
 
     QCOMPARE(Tools::envSubstitute("%HOMEDRIVE%%HOMEPATH%\\.ssh\\id_rsa", environment),
              QString("C:\\Users\\User\\.ssh\\id_rsa"));
     QCOMPARE(Tools::envSubstitute("start%EMPTY%%EMPTY%%%HOMEDRIVE%%end", environment), QString("start%C:%end"));
+    QCOMPARE(Tools::envSubstitute("%USERPROFILE%\\.ssh\\id_rsa", environment),
+             QString("C:\\Users\\User\\.ssh\\id_rsa"));
+    QCOMPARE(Tools::envSubstitute("~\\.ssh\\id_rsa", environment), QString("C:\\Users\\User\\.ssh\\id_rsa"));
 #else
     environment.insert("HOME", QString("/home/user"));
     environment.insert("USER", QString("user"));
