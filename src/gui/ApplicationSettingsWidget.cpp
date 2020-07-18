@@ -384,7 +384,6 @@ void ApplicationSettingsWidget::saveSettings()
     // Security: clear storage if related settings are disabled
     if (!config()->get(Config::RememberLastDatabases).toBool()) {
         config()->remove(Config::LastDatabases);
-        config()->remove(Config::OpenPreviousDatabasesOnStartup);
         config()->remove(Config::LastActiveDatabase);
         config()->remove(Config::LastAttachmentDir);
     }
@@ -424,7 +423,6 @@ void ApplicationSettingsWidget::resetSettings()
 
     // Clear recently used data
     config()->remove(Config::LastDatabases);
-    config()->remove(Config::OpenPreviousDatabasesOnStartup);
     config()->remove(Config::LastActiveDatabase);
     config()->remove(Config::LastAttachmentDir);
     config()->remove(Config::LastKeyFiles);
