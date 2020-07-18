@@ -50,21 +50,28 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
     setFont(passwordFont);
 
+    // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
+#ifdef Q_OS_MAC
+    auto modifier = Qt::META;
+#else
+    auto modifier = Qt::CTRL;
+#endif
+
     m_toggleVisibleAction = new QAction(
         resources()->icon("password-show-off"),
-        tr("Toggle Password (%1)").arg(QKeySequence(Qt::CTRL + Qt::Key_H).toString(QKeySequence::NativeText)),
+        tr("Toggle Password (%1)").arg(QKeySequence(modifier + Qt::Key_H).toString(QKeySequence::NativeText)),
         nullptr);
     m_toggleVisibleAction->setCheckable(true);
-    m_toggleVisibleAction->setShortcut(Qt::CTRL + Qt::Key_H);
+    m_toggleVisibleAction->setShortcut(modifier + Qt::Key_H);
     m_toggleVisibleAction->setShortcutContext(Qt::WidgetShortcut);
     addAction(m_toggleVisibleAction, QLineEdit::TrailingPosition);
     connect(m_toggleVisibleAction, &QAction::triggered, this, &PasswordEdit::setShowPassword);
 
     m_passwordGeneratorAction = new QAction(
         resources()->icon("password-generator"),
-        tr("Generate Password (%1)").arg(QKeySequence(Qt::CTRL + Qt::Key_G).toString(QKeySequence::NativeText)),
+        tr("Generate Password (%1)").arg(QKeySequence(modifier + Qt::Key_G).toString(QKeySequence::NativeText)),
         nullptr);
-    m_passwordGeneratorAction->setShortcut(Qt::CTRL + Qt::Key_G);
+    m_passwordGeneratorAction->setShortcut(modifier + Qt::Key_G);
     m_passwordGeneratorAction->setShortcutContext(Qt::WidgetShortcut);
     addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
     m_passwordGeneratorAction->setVisible(false);
