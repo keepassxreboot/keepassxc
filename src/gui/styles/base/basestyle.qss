@@ -8,6 +8,11 @@ QPushButton:!default:hover {
     background: palette(mid);
 }
 
+PasswordGeneratorWidget QPushButton:checked {
+    background: palette(highlight);
+    color: palette(highlighted-text);
+}
+
 QSpinBox {
     min-width: 90px;
 }
