@@ -2060,18 +2060,23 @@ void DatabaseWidget::processAutoOpen()
         // Support ifDevice advanced entry, a comma separated list of computer names
         // that control whether to perform AutoOpen on this entry or not. Can be
         // negated using '!'
-        auto ifDevice = entry->attribute("ifDevice");
+        auto ifDevice = entry->attribute("IfDevice");
         if (!ifDevice.isEmpty()) {
-            bool loadDb = false;
+            bool loadDb = true;
             auto hostName = QHostInfo::localHostName();
-            for (auto& dev : ifDevice.split(",")) {
-                dev = dev.trimmed();
-                if (dev.startsWith("!") && dev.mid(1).compare(hostName, Qt::CaseInsensitive) == 0) {
-                    // Machine name matched an exclusion, don't load this database
-                    loadDb = false;
-                    break;
-                } else if (dev.compare(hostName, Qt::CaseInsensitive) == 0) {
+            for (auto& device : ifDevice.split(",")) {
+                device = device.trimmed();
+                if (device.startsWith("!")) {
+                    if (device.mid(1).compare(hostName, Qt::CaseInsensitive) == 0) {
+                        // Machine name matched an exclusion, don't load this database
+                        loadDb = false;
+                        break;
+                    }
+                } else if (device.compare(hostName, Qt::CaseInsensitive) == 0) {
                     loadDb = true;
+                } else {
+                    // Don't load the database if there are devices not starting with '!'
+                    loadDb = false;
                 }
             }
             if (!loadDb) {
