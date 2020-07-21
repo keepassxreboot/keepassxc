@@ -233,7 +233,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
         macUtils()->raiseLastActiveWindow();
         m_plugin->hideOwnWindow();
 #else
-        hideWindow->showMinimized();
+        getMainWindow()->minimizeOrHide();
 #endif
     }
 
