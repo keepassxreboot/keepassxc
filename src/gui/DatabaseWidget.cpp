@@ -799,6 +799,38 @@ void DatabaseWidget::performAutoType()
     }
 }
 
+void DatabaseWidget::performAutoTypeUsername()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{USERNAME}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypeUsernameEnter()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{USERNAME}{ENTER}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypePassword()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{PASSWORD}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypePasswordEnter()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{PASSWORD}{ENTER}"), window());
+    }
+}
+
 void DatabaseWidget::openUrl()
 {
     auto currentEntry = currentSelectedEntry();
@@ -1813,7 +1845,7 @@ bool DatabaseWidget::save()
     m_blockAutoSave = true;
     ++m_saveAttempts;
 
-    auto focusWidget = qApp->focusWidget();
+    QPointer<QWidget> focusWidget(qApp->focusWidget());
 
     // TODO: Make this async
     // Lock out interactions
@@ -1887,7 +1919,7 @@ bool DatabaseWidget::saveAs()
 
     bool ok = false;
     if (!newFilePath.isEmpty()) {
-        auto focusWidget = qApp->focusWidget();
+        QPointer<QWidget> focusWidget(qApp->focusWidget());
 
         // Lock out interactions
         m_entryView->setDisabled(true);

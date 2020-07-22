@@ -481,6 +481,8 @@ void Entry::updateTotp()
                                                   m_attributes->value(Totp::ATTRIBUTE_SEED));
     } else if (m_attributes->contains(Totp::ATTRIBUTE_OTP)) {
         m_data.totpSettings = Totp::parseSettings(m_attributes->value(Totp::ATTRIBUTE_OTP));
+    } else {
+        m_data.totpSettings.reset();
     }
 }
 

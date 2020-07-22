@@ -186,6 +186,10 @@ public slots:
     void removeFromAgent();
 #endif
     void performAutoType();
+    void performAutoTypeUsername();
+    void performAutoTypeUsernameEnter();
+    void performAutoTypePassword();
+    void performAutoTypePasswordEnter();
     void openUrl();
     void downloadSelectedFavicons();
     void downloadAllFavicons();

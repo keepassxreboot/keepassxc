@@ -28,23 +28,23 @@
 
     <screenshots>
         <screenshot type="default">
-            <image>https://keepassxc.org/images/screenshots/linux/screen_001.png</image>
+            <image>https://keepassxc.org/images/screenshots/thumbs/welcome_screen.png</image>
             <caption>Create, Import or Open Databases</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_002.png</image>
+            <image>https://keepassxc.org/images/screenshots/thumbs/database_view.png</image>
             <caption>Organize with Groups and Entries</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_003.png</image>
+            <image>https://keepassxc.org/images/screenshots/thumbs/edit_entry.png</image>
             <caption>Database Entry</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_004.png</image>
+            <image>https://keepassxc.org/images/screenshots/thumbs/edit_entry_icons.png</image>
             <caption>Icon Selection for Entry</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_006.png</image>
+            <image>https://keepassxc.org/images/screenshots/thumbs/password_generator_advanced.png</image>
             <caption>Password Generator</caption>
         </screenshot>
     </screenshots>
@@ -614,4 +614,5 @@
             </description>
         </release>
     </releases>
+    <content_rating type="oars-1.0" />
 </component>

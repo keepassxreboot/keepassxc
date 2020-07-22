@@ -48,6 +48,7 @@ public:
     static bool checkHighDelay(const QString& string);
     static bool verifyAutoTypeSyntax(const QString& sequence);
     void performAutoType(const Entry* entry, QWidget* hideWindow = nullptr);
+    void performAutoTypeWithSequence(const Entry* entry, const QString& sequence, QWidget* hideWindow = nullptr);
 
     inline bool isAvailable()
     {

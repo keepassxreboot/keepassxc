@@ -47,6 +47,7 @@ private slots:
     void testSubdomainsAndPaths();
     void testSortEntries();
     void testValidURLs();
+    void testBestMatchingCredentials();
 
 private:
     QList<Entry*> createEntries(QStringList& urls, Group* root) const;
