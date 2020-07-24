@@ -10,35 +10,35 @@ NOTE: On Mac OS please substitute kbd:[Ctrl] with kbd:[Cmd] aka kbd:[⌘].
 |===
 |Action                       | Keyboard Shortcut
 
-|Open Database                | Ctrl + O
-|Save Database                | Ctrl + S
-|Save Database As             | Ctrl + Shift + S
-|New Database                 | Ctrl + Shift + N
-|Close Database               | Ctrl + W ; Ctrl + F4
-|Lock All Databases           | Ctrl + L
-|Quit                         | Ctrl + Q
-|New Entry                    | Ctrl + N
-|Edit Entry                   | Enter ; Ctrl + E
-|Delete Entry                 | Delete
-|Clone Entry                  | Ctrl + K
-|Copy Username                | Ctrl + B
-|Copy Password                | Ctrl + C
-|Copy URL                     | Ctrl + U
-|Open URL                     | Ctrl + Shift + U
-|Copy TOTP                    | Ctrl + T
-|Show TOTP                    | Ctrl + Shift + T
-|Trigger AutoType             | Ctrl + Shift + V
-|Add key to SSH Agent         | Ctrl + H
-|Remove key from SSH Agent    | Ctrl + Shift + H
-|Minimize Window              | Ctrl + M
-|Hide Window                  | Ctrl + Shift + M
-|Select Next Database Tab     | Ctrl + Tab ; Ctrl + PageDn
-|Select Previous Database Tab | Ctrl + Shift + Tab ; Ctrl + PageUp
-|Select the nth database      | Ctrl + n, where n is the number of the database tab
-|Toggle Passwords Hidden      | Ctrl + Shift + C
-|Toggle Usernames Hidden      | Ctrl + Shift + B
-|Focus Search                 | Ctrl + F
-|Clear Search                 | Escape
-|Show Keyboard Shortcuts      | Ctrl + /
+|Open Database                | kbd:[Ctrl+O]
+|Save Database                | kbd:[Ctrl+S]
+|Save Database As             | kbd:[Ctrl+Shift + S]
+|New Database                 | kbd:[Ctrl+Shift + N]
+|Close Database               | kbd:[Ctrl+W] ; kbd:[Ctrl + F4]
+|Lock All Databases           | kbd:[Ctrl+L]
+|Quit                         | kbd:[Ctrl+Q]
+|New Entry                    | kbd:[Ctrl+N]
+|Edit Entry                   | kbd:[Enter] ; kbd:[Ctrl+E]
+|Delete Entry                 | kbd:[Delete]
+|Clone Entry                  | kbd:[Ctrl+K]
+|Copy Username                | kbd:[Ctrl+B]
+|Copy Password                | kbd:[Ctrl+C]
+|Copy URL                     | kbd:[Ctrl+U]
+|Open URL                     | kbd:[Ctrl+Shift + U]
+|Copy TOTP                    | kbd:[Ctrl+T]
+|Show TOTP                    | kbd:[Ctrl+Shift + T]
+|Trigger AutoType             | kbd:[Ctrl+Shift + V]
+|Add key to SSH Agent         | kbd:[Ctrl+H]
+|Remove key from SSH Agent    | kbd:[Ctrl+Shift + H]
+|Minimize Window              | kbd:[Ctrl+M]
+|Hide Window                  | kbd:[Ctrl+Shift + M]
+|Select Next Database Tab     | kbd:[Ctrl+Tab] ; kbd:[Ctrl + PageDn]
+|Select Previous Database Tab | kbd:[Ctrl+Shift + Tab] ; kbd:[Ctrl + PageUp]
+|Select the nth database      | kbd:[Ctrl+n], where n is the number of the database tab
+|Toggle Passwords Hidden      | kbd:[Ctrl+Shift + C]
+|Toggle Usernames Hidden      | kbd:[Ctrl+Shift + B]
+|Focus Search                 | kbd:[Ctrl+F]
+|Clear Search                 | kbd:[Escape]
+|Show Keyboard Shortcuts      | kbd:[Ctrl+/]
 |===
 // end::content[]
