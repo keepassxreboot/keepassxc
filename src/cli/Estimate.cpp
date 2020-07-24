@@ -156,23 +156,18 @@ static void estimate(const char* pwd, bool advanced)
     }
 }
 
-int Estimate::execute(const QStringList& arguments)
+int Estimate::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
-    if (parser.isNull()) {
-        return EXIT_FAILURE;
-    }
+    Q_UNUSED(ctx);
 
-    auto& in = Utils::STDIN;
-    const QStringList args = parser->positionalArguments();
-
+    const QStringList& args = parser.positionalArguments();
     QString password;
     if (args.size() == 1) {
         password = args.at(0);
     } else {
-        password = in.readLine();
+        password = Utils::STDIN.readLine();
     }
 
-    estimate(password.toLatin1(), parser->isSet(Estimate::AdvancedOption));
+    estimate(password.toLatin1(), parser.isSet(Estimate::AdvancedOption));
     return EXIT_SUCCESS;
 }

@@ -38,22 +38,23 @@ Move::~Move()
 {
 }
 
-int Move::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Move::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
+    const QStringList args = parser.positionalArguments();
     const QString& entryPath = args.at(1);
     const QString& destinationPath = args.at(2);
 
-    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
+    Database& database = ctx.getDb();
+    Entry* entry = database.rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
-    Group* destinationGroup = database->rootGroup()->findGroupByPath(destinationPath);
+    Group* destinationGroup = database.rootGroup()->findGroupByPath(destinationPath);
     if (!destinationGroup) {
         err << QObject::tr("Could not find group with path %1.").arg(destinationPath) << endl;
         return EXIT_FAILURE;
@@ -69,7 +70,7 @@ int Move::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     entry->endUpdate();
 
     QString errorMessage;
-    if (!database->save(&errorMessage, true, false)) {
+    if (!database.save(&errorMessage, true, false)) {
         err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

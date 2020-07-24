@@ -22,18 +22,19 @@
 
 #include "keys/FileKey.h"
 
-class Create : public Command
+class Create final : public Command
 {
 public:
     Create();
-    int execute(const QStringList& arguments) override;
 
     static const QCommandLineOption SetKeyFileOption;
     static const QCommandLineOption SetPasswordOption;
     static const QCommandLineOption DecryptionTimeOption;
 
 private:
+    virtual int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
     bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey);
 };
+DECL_TRAITS(Create, "db-create", "Create a new database.");
 
 #endif // KEEPASSXC_CREATE_H

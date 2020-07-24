@@ -25,10 +25,11 @@ class Clip : public DatabaseCommand
 public:
     Clip();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
     static const QCommandLineOption AttributeOption;
     static const QCommandLineOption TotpOption;
 };
+DECL_TRAITS(Clip, "clip", "Copy an entry's attribute to the clipboard.");
 
 #endif // KEEPASSXC_CLIP_H

@@ -26,7 +26,8 @@ public:
     RemoveGroup();
     ~RemoveGroup();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
 };
+DECL_TRAITS(RemoveGroup, "rmdir", "Removes a group from a database.");
 
 #endif // KEEPASSXC_REMOVEGROUP_H

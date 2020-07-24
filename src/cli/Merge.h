@@ -25,7 +25,7 @@ class Merge : public DatabaseCommand
 public:
     Merge();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
     static const QCommandLineOption SameCredentialsOption;
     static const QCommandLineOption KeyFileFromOption;
@@ -33,5 +33,6 @@ public:
     static const QCommandLineOption YubiKeyFromOption;
     static const QCommandLineOption DryRunOption;
 };
+DECL_TRAITS(Merge, "merge", "Merge two databases.");
 
 #endif // KEEPASSXC_MERGE_H

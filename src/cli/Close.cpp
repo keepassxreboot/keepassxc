@@ -30,9 +30,9 @@ Close::Close()
     description = QObject::tr("Close the currently opened database.");
 }
 
-int Close::execute(const QStringList& arguments)
+int Close::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    Q_UNUSED(arguments)
-    currentDatabase.reset(nullptr);
+    Q_UNUSED(parser)
+    ctx.setDb(nullptr);
     return EXIT_SUCCESS;
 }

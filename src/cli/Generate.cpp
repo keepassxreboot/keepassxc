@@ -23,6 +23,58 @@
 #include "cli/TextStream.h"
 #include "cli/Utils.h"
 
+
+QSharedPointer<PasswordGenerator> createGenerator(CommandCtx& ctx, const QCommandLineParser& parser)
+{
+    auto passwordGenerator = QSharedPointer<PasswordGenerator>::create();
+    const QString& passwordLength = parser.value(Generate::PasswordLengthOption);
+    if (passwordLength.isEmpty())
+        passwordGenerator->setLength(PasswordGenerator::DefaultLength);
+
+    const int length = passwordLength.toInt();
+    BREAK_IF(length <= 0, nullptr,
+             ctx, QObject::tr("Invalid password length=%1").arg(passwordLength));
+    passwordGenerator->setLength(length);
+
+    PasswordGenerator::CharClasses classes = 0x0;
+
+    if (parser.isSet(Generate::LowerCaseOption)) {
+        classes |= PasswordGenerator::LowerLetters;
+    }
+    if (parser.isSet(Generate::UpperCaseOption)) {
+        classes |= PasswordGenerator::UpperLetters;
+    }
+    if (parser.isSet(Generate::NumbersOption)) {
+        classes |= PasswordGenerator::Numbers;
+    }
+    if (parser.isSet(Generate::SpecialCharsOption)) {
+        classes |= PasswordGenerator::SpecialCharacters;
+    }
+    if (parser.isSet(Generate::ExtendedAsciiOption)) {
+        classes |= PasswordGenerator::EASCII;
+    }
+
+    PasswordGenerator::GeneratorFlags flags = 0x0;
+
+    if (parser.isSet(Generate::ExcludeSimilarCharsOption)) {
+        flags |= PasswordGenerator::ExcludeLookAlike;
+    }
+    if (parser.isSet(Generate::IncludeEveryGroupOption)) {
+        flags |= PasswordGenerator::CharFromEveryGroup;
+    }
+
+    // The default charset will be used if no explicit class
+    // option was set.
+    passwordGenerator->setCharClasses(classes);
+    passwordGenerator->setFlags(flags);
+    passwordGenerator->setExcludedChars(parser.value(Generate::ExcludeCharsOption));
+
+    BREAK_IF(!passwordGenerator->isValid(), nullptr,
+             ctx, QObject::tr("Invalid password generator after applying all options"));
+    return passwordGenerator;
+}
+
+
 const QCommandLineOption Generate::PasswordLengthOption =
     QCommandLineOption(QStringList() << "L"
                                      << "length",
@@ -74,80 +126,13 @@ Generate::Generate()
     options.append(Generate::IncludeEveryGroupOption);
 }
 
-/**
- * Creates a password generator instance using the command line options
- * of the parser object.
- */
-QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QCommandLineParser> parser)
+int Generate::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    auto& err = Utils::STDERR;
-    QSharedPointer<PasswordGenerator> passwordGenerator = QSharedPointer<PasswordGenerator>(new PasswordGenerator());
-    QString passwordLength = parser->value(Generate::PasswordLengthOption);
-    if (passwordLength.isEmpty()) {
-        passwordGenerator->setLength(PasswordGenerator::DefaultLength);
-    } else if (passwordLength.toInt() <= 0) {
-        err << QObject::tr("Invalid password length %1").arg(passwordLength) << endl;
-        return QSharedPointer<PasswordGenerator>(nullptr);
-    } else {
-        passwordGenerator->setLength(passwordLength.toInt());
-    }
-
-    PasswordGenerator::CharClasses classes = 0x0;
-
-    if (parser->isSet(Generate::LowerCaseOption)) {
-        classes |= PasswordGenerator::LowerLetters;
-    }
-    if (parser->isSet(Generate::UpperCaseOption)) {
-        classes |= PasswordGenerator::UpperLetters;
-    }
-    if (parser->isSet(Generate::NumbersOption)) {
-        classes |= PasswordGenerator::Numbers;
-    }
-    if (parser->isSet(Generate::SpecialCharsOption)) {
-        classes |= PasswordGenerator::SpecialCharacters;
-    }
-    if (parser->isSet(Generate::ExtendedAsciiOption)) {
-        classes |= PasswordGenerator::EASCII;
-    }
-
-    PasswordGenerator::GeneratorFlags flags = 0x0;
-
-    if (parser->isSet(Generate::ExcludeSimilarCharsOption)) {
-        flags |= PasswordGenerator::ExcludeLookAlike;
-    }
-    if (parser->isSet(Generate::IncludeEveryGroupOption)) {
-        flags |= PasswordGenerator::CharFromEveryGroup;
-    }
-
-    // The default charset will be used if no explicit class
-    // option was set.
-    passwordGenerator->setCharClasses(classes);
-    passwordGenerator->setFlags(flags);
-    passwordGenerator->setExcludedChars(parser->value(Generate::ExcludeCharsOption));
-
-    if (!passwordGenerator->isValid()) {
-        err << QObject::tr("Invalid password generator after applying all options") << endl;
-        return QSharedPointer<PasswordGenerator>(nullptr);
-    }
-
-    return passwordGenerator;
-}
-
-int Generate::execute(const QStringList& arguments)
-{
-    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
-    if (parser.isNull()) {
-        return EXIT_FAILURE;
-    }
-
-    QSharedPointer<PasswordGenerator> passwordGenerator = Generate::createGenerator(parser);
-    if (passwordGenerator.isNull()) {
-        return EXIT_FAILURE;
-    }
-
-    auto& out = Utils::STDOUT;
-    QString password = passwordGenerator->generatePassword();
-    out << password << endl;
-
+    Q_UNUSED(ctx);
+    QSharedPointer<PasswordGenerator> passwordGenerator = createGenerator(ctx, parser);
+    BREAK_IF(passwordGenerator.isNull(), EXIT_FAILURE,
+             ctx, QObject::tr("Failed to generate password"));
+    Utils::STDOUT << passwordGenerator->generatePassword() << endl;
+    Utils::STDOUT.flush();
     return EXIT_SUCCESS;
 }

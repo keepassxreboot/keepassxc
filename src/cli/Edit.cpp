@@ -58,16 +58,16 @@ Edit::Edit()
     options.append(Generate::IncludeEveryGroupOption);
 }
 
-int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Edit::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
+    const QStringList args = parser.positionalArguments();
     const QString& entryPath = args.at(1);
 
     // Cannot use those 2 options at the same time!
-    if (parser->isSet(Add::GenerateOption) && parser->isSet(Add::PasswordPromptOption)) {
+    if (parser.isSet(Add::GenerateOption) && parser.isSet(Add::PasswordPromptOption)) {
         err << QObject::tr("Cannot generate a password and prompt at the same time!") << endl;
         return EXIT_FAILURE;
     }
@@ -75,24 +75,25 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     // Validating the password generator here, before we actually start
     // the update.
     QSharedPointer<PasswordGenerator> passwordGenerator;
-    bool generate = parser->isSet(Add::GenerateOption);
+    bool generate = parser.isSet(Add::GenerateOption);
     if (generate) {
-        passwordGenerator = Generate::createGenerator(parser);
+        passwordGenerator = createGenerator(ctx, parser);
         if (passwordGenerator.isNull()) {
             return EXIT_FAILURE;
         }
     }
 
-    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
+    Database& database = ctx.getDb();
+    Entry* entry = database.rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
-    QString username = parser->value(Add::UsernameOption);
-    QString url = parser->value(Add::UrlOption);
-    QString title = parser->value(Edit::TitleOption);
-    bool prompt = parser->isSet(Add::PasswordPromptOption);
+    QString username = parser.value(Add::UsernameOption);
+    QString url = parser.value(Add::UrlOption);
+    QString title = parser.value(Edit::TitleOption);
+    bool prompt = parser.isSet(Add::PasswordPromptOption);
     if (username.isEmpty() && url.isEmpty() && title.isEmpty() && !prompt && !generate) {
         err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
@@ -114,7 +115,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     if (prompt) {
         out << QObject::tr("Enter new password for entry: ") << flush;
-        QString password = Utils::getPassword(parser->isSet(Command::QuietOption));
+        QString password = Utils::getPassword(parser.isSet(Command::QuietOption));
         entry->setPassword(password);
     } else if (generate) {
         QString password = passwordGenerator->generatePassword();
@@ -124,7 +125,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     entry->endUpdate();
 
     QString errorMessage;
-    if (!database->save(&errorMessage, true, false)) {
+    if (!database.save(&errorMessage, true, false)) {
         err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

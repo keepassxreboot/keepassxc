@@ -25,11 +25,12 @@ class Show : public DatabaseCommand
 public:
     Show();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
 
     static const QCommandLineOption TotpOption;
     static const QCommandLineOption AttributesOption;
     static const QCommandLineOption ProtectedAttributesOption;
 };
+DECL_TRAITS(Show, "show", "Show an entry's information.");
 
 #endif // KEEPASSXC_SHOW_H

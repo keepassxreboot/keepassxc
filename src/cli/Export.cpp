@@ -38,16 +38,17 @@ Export::Export()
     description = QObject::tr("Exports the content of a database to standard output in the specified format.");
 }
 
-int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Export::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     TextStream out(Utils::STDOUT.device());
     auto& err = Utils::STDERR;
 
-    QString format = parser->value(Export::FormatOption);
+    Database& database = ctx.getDb();
+    QString format = parser.value(Export::FormatOption);
     if (format.isEmpty() || format.startsWith(QStringLiteral("xml"), Qt::CaseInsensitive)) {
         QByteArray xmlData;
         QString errorMessage;
-        if (!database->extract(xmlData, &errorMessage)) {
+        if (!database.extract(xmlData, &errorMessage)) {
             err << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }

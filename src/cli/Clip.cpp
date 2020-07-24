@@ -51,12 +51,12 @@ Clip::Clip()
         {QString("timeout"), QObject::tr("Timeout in seconds before clearing the clipboard."), QString("[timeout]")});
 }
 
-int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Clip::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
+    const QStringList args = parser.positionalArguments();
     const QString& entryPath = args.at(1);
     QString timeout;
     if (args.size() == 3) {
@@ -71,21 +71,21 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         timeoutSeconds = timeout.toInt();
     }
 
-    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
+    Entry* entry = ctx.getDb().rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
-    if (parser->isSet(AttributeOption) && parser->isSet(TotpOption)) {
+    if (parser.isSet(AttributeOption) && parser.isSet(TotpOption)) {
         err << QObject::tr("ERROR: Please specify one of --attribute or --totp, not both.") << endl;
         return EXIT_FAILURE;
     }
 
-    QString selectedAttribute = parser->value(AttributeOption);
+    QString selectedAttribute = parser.value(AttributeOption);
     QString value;
     bool found = false;
-    if (parser->isSet(TotpOption) || selectedAttribute == "totp") {
+    if (parser.isSet(TotpOption) || selectedAttribute == "totp") {
         if (!entry->hasTotp()) {
             err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
             return EXIT_FAILURE;

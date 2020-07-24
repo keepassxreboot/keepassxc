@@ -26,7 +26,8 @@ public:
     AddGroup();
     ~AddGroup();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
 };
+DECL_TRAITS(AddGroup, "mkdir", "Adds a new group to a database.");
 
 #endif // KEEPASSXC_ADDGROUP_H

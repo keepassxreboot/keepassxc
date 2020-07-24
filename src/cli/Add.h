@@ -25,7 +25,7 @@ class Add : public DatabaseCommand
 public:
     Add();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
     static const QCommandLineOption UsernameOption;
     static const QCommandLineOption UrlOption;
@@ -33,5 +33,6 @@ public:
     static const QCommandLineOption GenerateOption;
     static const QCommandLineOption PasswordLengthOption;
 };
+DECL_TRAITS(Add, "add", "Add a new entry to a database.");
 
 #endif // KEEPASSXC_ADD_H

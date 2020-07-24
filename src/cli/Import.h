@@ -24,7 +24,10 @@ class Import : public Command
 {
 public:
     Import();
-    int execute(const QStringList& arguments) override;
+
+private:
+    int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
 };
+DECL_TRAITS(Import, "import", "Import the contents of an XML database.");
 
 #endif // KEEPASSXC_IMPORT_H

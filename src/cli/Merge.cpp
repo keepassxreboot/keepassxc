@@ -59,45 +59,39 @@ Merge::Merge()
     positionalArguments.append({QString("database2"), QObject::tr("Path of the database to merge from."), QString("")});
 }
 
-int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Merge::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
+    const QStringList args = parser.positionalArguments();
 
-    auto& toDatabasePath = args.at(0);
-    auto& fromDatabasePath = args.at(1);
+    Database& database = ctx.getDb();
+    const QString& toDatabasePath = args.at(0);
+    const QString& fromDatabasePath = args.at(1);
 
-    QSharedPointer<Database> db2;
-    if (!parser->isSet(Merge::SameCredentialsOption)) {
-        db2 = Utils::unlockDatabase(fromDatabasePath,
-                                    !parser->isSet(Merge::NoPasswordFromOption),
-                                    parser->value(Merge::KeyFileFromOption),
-                                    parser->value(Merge::YubiKeyFromOption),
-                                    parser->isSet(Command::QuietOption));
-        if (!db2) {
-            return EXIT_FAILURE;
-        }
+    std::unique_ptr<Database> db2;
+    if (!parser.isSet(Merge::SameCredentialsOption)) {
+        db2 = openDatabase(parser);
     } else {
-        db2 = QSharedPointer<Database>::create();
+        db2 = Utils::make_unique<Database>();
         QString errorMessage;
-        if (!db2->open(fromDatabasePath, database->key(), &errorMessage, false)) {
+        if (!db2->open(fromDatabasePath, database.key(), &errorMessage, false)) {
             err << QObject::tr("Error reading merge file:\n%1").arg(errorMessage);
             return EXIT_FAILURE;
         }
     }
 
-    Merger merger(db2.data(), database.data());
+    Merger merger(db2.get(), &database);
     QStringList changeList = merger.merge();
 
     for (auto& mergeChange : changeList) {
         out << "\t" << mergeChange << endl;
     }
 
-    if (!changeList.isEmpty() && !parser->isSet(Merge::DryRunOption)) {
+    if (!changeList.isEmpty() && !parser.isSet(Merge::DryRunOption)) {
         QString errorMessage;
-        if (!database->save(&errorMessage, true, false)) {
+        if (!database.save(&errorMessage, true, false)) {
             err << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }

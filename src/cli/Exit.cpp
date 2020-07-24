@@ -21,15 +21,17 @@
 #include <QObject>
 #include <QtGlobal>
 
-Exit::Exit(const QString& name)
+Exit::Exit()
 {
-    this->name = name;
+    this->name = "exit";
     description = QObject::tr("Exit interactive mode.");
 }
 
-int Exit::execute(const QStringList& arguments)
+int Exit::execImpl(CommandCtx &ctx, const QCommandLineParser &parser)
 {
-    Q_UNUSED(arguments)
-    // A placeholder only, behavior is implemented in keepassxc-cli.cpp.
+    Q_UNUSED(parser);
+    Q_ASSERT(ctx.getRunmode() == Runmode::InteractiveCmd);
+
+    ctx.stopInteractive();
     return EXIT_SUCCESS;
 }

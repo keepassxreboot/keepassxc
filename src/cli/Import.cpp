@@ -48,17 +48,14 @@ Import::Import()
     positionalArguments.append({QString("database"), QObject::tr("Path of the new database."), QString("")});
 }
 
-int Import::execute(const QStringList& arguments)
+int Import::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
-    if (parser.isNull()) {
-        return EXIT_FAILURE;
-    }
+    Q_UNUSED(ctx);
 
-    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
+    const QStringList& args = parser.positionalArguments();
     const QString& xmlExportPath = args.at(0);
     const QString& dbPath = args.at(1);
 

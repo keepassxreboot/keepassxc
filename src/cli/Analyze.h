@@ -24,12 +24,13 @@ class Analyze : public DatabaseCommand
 {
 public:
     Analyze();
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
     static const QCommandLineOption HIBPDatabaseOption;
 
 private:
     void printHibpFinding(const Entry* entry, int count, QTextStream& out);
 };
+DECL_TRAITS(Analyze, "analyze", "Analyze passwords for weaknesses and problems.");
 
 #endif // KEEPASSXC_HIBP_H

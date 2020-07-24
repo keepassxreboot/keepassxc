@@ -25,20 +25,19 @@ Help::Help()
 {
     name = QString("help");
     description = QObject::tr("Display command help.");
+
+    positionalArguments.append({QString("command"), QObject::tr("Command name."), QString("")});
 }
 
-int Help::execute(const QStringList& arguments)
+int Help::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     auto& out = Utils::STDOUT;
-    QSharedPointer<Command> command;
-    if (arguments.size() > 1 && (command = Commands::getCommand(arguments.at(1)))) {
-        out << command->getHelpText();
-    } else {
-        out << "\n\n" << QObject::tr("Available commands:") << "\n";
-        for (auto& cmd : Commands::getCommands()) {
-            out << cmd->getDescriptionLine();
-        }
-    }
-    out.flush();
+
+    const QString& cmdName = parser.positionalArguments().first();
+    QSharedPointer<Command> cmd = ctx.getCmd(cmdName);
+    BREAK_IF(!cmd, EXIT_FAILURE,
+             ctx, QString("Command '%1' not found.").arg(cmdName));
+
+    out << cmd->getHelpText(parser) << endl;
     return EXIT_SUCCESS;
 }

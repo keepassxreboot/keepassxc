@@ -57,18 +57,18 @@ Show::Show()
     positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
 }
 
-int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Show::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
-    const QString& entryPath = args.at(1);
-    bool showTotp = parser->isSet(Show::TotpOption);
-    bool showProtectedAttributes = parser->isSet(Show::ProtectedAttributesOption);
-    QStringList attributes = parser->values(Show::AttributesOption);
+    // TODO_vanda why at(1) ???
+    const QString& entryPath = parser.positionalArguments().at(1);
+    bool showTotp = parser.isSet(Show::TotpOption);
+    bool showProtectedAttributes = parser.isSet(Show::ProtectedAttributesOption);
+    QStringList attributes = parser.values(Show::AttributesOption);
 
-    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
+    const Entry* entry = ctx.getDb().rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;

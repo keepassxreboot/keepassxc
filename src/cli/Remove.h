@@ -25,7 +25,8 @@ class Remove : public DatabaseCommand
 public:
     Remove();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
 };
+DECL_TRAITS(Remove, "rm", "Remove an entry from the database.");
 
 #endif // KEEPASSXC_REMOVE_H

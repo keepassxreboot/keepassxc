@@ -26,7 +26,8 @@ public:
     Move();
     ~Move();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
 };
+DECL_TRAITS(Move, "mv", "Moves an entry to a new group.");
 
 #endif // KEEPASSXC_MOVE_H

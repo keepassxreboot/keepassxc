@@ -39,36 +39,37 @@ RemoveGroup::~RemoveGroup()
 {
 }
 
-int RemoveGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int RemoveGroup::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    QString groupPath = parser->positionalArguments().at(1);
+    QString groupPath = parser.positionalArguments().at(1);
 
     // Recursive option means were looking for a group to remove.
-    QPointer<Group> group = database->rootGroup()->findGroupByPath(groupPath);
+    Database& database = ctx.getDb();
+    QPointer<Group> group = database.rootGroup()->findGroupByPath(groupPath);
     if (!group) {
         err << QObject::tr("Group %1 not found.").arg(groupPath) << endl;
         return EXIT_FAILURE;
     }
 
-    if (group == database->rootGroup()) {
+    if (group == database.rootGroup()) {
         err << QObject::tr("Cannot remove root group from database.") << endl;
         return EXIT_FAILURE;
     }
 
     bool recycled = true;
-    auto* recycleBin = database->metadata()->recycleBin();
-    if (!database->metadata()->recycleBinEnabled() || (recycleBin && recycleBin->findGroupByUuid(group->uuid()))) {
+    auto* recycleBin = database.metadata()->recycleBin();
+    if (!database.metadata()->recycleBinEnabled() || (recycleBin && recycleBin->findGroupByUuid(group->uuid()))) {
         delete group;
         recycled = false;
     } else {
-        database->recycleGroup(group);
+        database.recycleGroup(group);
     };
 
     QString errorMessage;
-    if (!database->save(&errorMessage, true, false)) {
+    if (!database.save(&errorMessage, true, false)) {
         err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

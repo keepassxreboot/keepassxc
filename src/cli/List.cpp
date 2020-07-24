@@ -45,23 +45,24 @@ List::List()
         {QString("group"), QObject::tr("Path of the group to list. Default is /"), QString("[group]")});
 }
 
-int List::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int List::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
-    bool recursive = parser->isSet(List::RecursiveOption);
-    bool flatten = parser->isSet(List::FlattenOption);
+    const QStringList args = parser.positionalArguments();
+    bool recursive = parser.isSet(List::RecursiveOption);
+    bool flatten = parser.isSet(List::FlattenOption);
 
+    Database& database = ctx.getDb();
     // No group provided, defaulting to root group.
     if (args.size() == 1) {
-        out << database->rootGroup()->print(recursive, flatten) << flush;
+        out << database.rootGroup()->print(recursive, flatten) << flush;
         return EXIT_SUCCESS;
     }
 
     const QString& groupPath = args.at(1);
-    Group* group = database->rootGroup()->findGroupByPath(groupPath);
+    const Group* group = database.rootGroup()->findGroupByPath(groupPath);
     if (!group) {
         err << QObject::tr("Cannot find group %1.").arg(groupPath) << endl;
         return EXIT_FAILURE;

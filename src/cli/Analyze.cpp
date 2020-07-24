@@ -41,12 +41,12 @@ Analyze::Analyze()
     options.append(Analyze::HIBPDatabaseOption);
 }
 
-int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Analyze::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    QString hibpDatabase = parser->value(Analyze::HIBPDatabaseOption);
+    QString hibpDatabase = parser.value(Analyze::HIBPDatabaseOption);
     QFile hibpFile(hibpDatabase);
     if (!hibpFile.open(QFile::ReadOnly)) {
         err << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString()) << endl;
@@ -57,7 +57,7 @@ int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPoint
 
     QList<QPair<const Entry*, int>> findings;
     QString error;
-    if (!HibpOffline::report(database, hibpFile, findings, &error)) {
+    if (!HibpOffline::report(ctx.getDb(), hibpFile, findings, &error)) {
         err << error << endl;
         return EXIT_FAILURE;
     }

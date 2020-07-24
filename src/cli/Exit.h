@@ -26,8 +26,18 @@
 class Exit : public Command
 {
 public:
-    Exit(const QString& name);
-    int execute(const QStringList& arguments) override;
+    Exit();
+
+private:
+    int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
+};
+
+template<>
+struct CommandTraits<Exit>
+{
+    static constexpr const char* Name = "exit";
+    static constexpr const char* Alias = "quit";
+    static constexpr const char* Description = "Exit interactive mode.";
 };
 
 #endif // KEEPASSXC_EXIT_H

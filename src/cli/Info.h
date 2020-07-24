@@ -25,7 +25,8 @@ class Info : public DatabaseCommand
 public:
     Info();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
 };
+DECL_TRAITS(Info, "db-info", "Show a database's information.");
 
 #endif // KEEPASSXC_INFO_H

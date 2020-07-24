@@ -25,10 +25,11 @@ class List : public DatabaseCommand
 public:
     List();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
     static const QCommandLineOption RecursiveOption;
     static const QCommandLineOption FlattenOption;
 };
+DECL_TRAITS(List, "ls", "List database entries.");
 
 #endif // KEEPASSXC_LIST_H

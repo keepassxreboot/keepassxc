@@ -24,9 +24,12 @@ class Estimate : public Command
 {
 public:
     Estimate();
-    int execute(const QStringList& arguments) override;
 
     static const QCommandLineOption AdvancedOption;
+
+private:
+    int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
 };
+DECL_TRAITS(Estimate, "estimate", "Estimate the entropy of a password.");
 
 #endif // KEEPASSXC_ESTIMATE_H

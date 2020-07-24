@@ -70,17 +70,12 @@ Create::Create()
  *
  * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure
  */
-int Create::execute(const QStringList& arguments)
+int Create::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
-    if (parser.isNull()) {
-        return EXIT_FAILURE;
-    }
-
-    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
+    const QStringList args = parser.positionalArguments();
 
     const QString& databaseFilename = args.at(0);
     if (QFileInfo::exists(databaseFilename)) {
@@ -89,7 +84,7 @@ int Create::execute(const QStringList& arguments)
     }
 
     // Validate the decryption time before asking for a password.
-    QString decryptionTimeValue = parser->value(Create::DecryptionTimeOption);
+    QString decryptionTimeValue = parser.value(Create::DecryptionTimeOption);
     int decryptionTime = 0;
     if (decryptionTimeValue.length() != 0) {
         decryptionTime = decryptionTimeValue.toInt();
@@ -107,7 +102,7 @@ int Create::execute(const QStringList& arguments)
 
     auto key = QSharedPointer<CompositeKey>::create();
 
-    if (parser->isSet(Create::SetPasswordOption)) {
+    if (parser.isSet(Create::SetPasswordOption)) {
         auto passwordKey = Utils::getConfirmedPassword();
         if (passwordKey.isNull()) {
             err << QObject::tr("Failed to set database password.") << endl;
@@ -116,10 +111,10 @@ int Create::execute(const QStringList& arguments)
         key->addKey(passwordKey);
     }
 
-    if (parser->isSet(Create::SetKeyFileOption)) {
+    if (parser.isSet(Create::SetKeyFileOption)) {
         QSharedPointer<FileKey> fileKey;
 
-        if (!loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
+        if (!loadFileKey(parser.value(Create::SetKeyFileOption), fileKey)) {
             err << QObject::tr("Loading the key file failed") << endl;
             return EXIT_FAILURE;
         }
@@ -134,7 +129,7 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    QSharedPointer<Database> db(new Database);
+    auto db = Utils::make_unique<Database>();
     db->setKey(key);
 
     if (decryptionTime != 0) {
@@ -161,7 +156,7 @@ int Create::execute(const QStringList& arguments)
     }
 
     out << QObject::tr("Successfully created new database.") << endl;
-    currentDatabase = db;
+    ctx.setDb(std::move(db));
     return EXIT_SUCCESS;
 }
 

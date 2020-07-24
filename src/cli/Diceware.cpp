@@ -44,19 +44,16 @@ Diceware::Diceware()
     options.append(Diceware::WordListOption);
 }
 
-int Diceware::execute(const QStringList& arguments)
+int Diceware::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
-    if (parser.isNull()) {
-        return EXIT_FAILURE;
-    }
+    Q_UNUSED(ctx);
 
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
     PassphraseGenerator dicewareGenerator;
 
-    QString wordCount = parser->value(Diceware::WordCountOption);
+    QString wordCount = parser.value(Diceware::WordCountOption);
     if (wordCount.isEmpty()) {
         dicewareGenerator.setWordCount(PassphraseGenerator::DefaultWordCount);
     } else if (wordCount.toInt() <= 0) {
@@ -66,7 +63,7 @@ int Diceware::execute(const QStringList& arguments)
         dicewareGenerator.setWordCount(wordCount.toInt());
     }
 
-    QString wordListFile = parser->value(Diceware::WordListOption);
+    QString wordListFile = parser.value(Diceware::WordListOption);
     if (!wordListFile.isEmpty()) {
         dicewareGenerator.setWordList(wordListFile);
     }
@@ -77,9 +74,6 @@ int Diceware::execute(const QStringList& arguments)
         err << QObject::tr("The word list is too small (< 1000 items)") << endl;
         return EXIT_FAILURE;
     }
-
-    QString password = dicewareGenerator.generatePassphrase();
-    out << password << endl;
-
+    out << dicewareGenerator.generatePassphrase() << endl;
     return EXIT_SUCCESS;
 }

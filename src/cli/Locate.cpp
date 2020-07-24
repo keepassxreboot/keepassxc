@@ -36,15 +36,15 @@ Locate::Locate()
     positionalArguments.append({QString("term"), QObject::tr("Search term."), QString("")});
 }
 
-int Locate::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Locate::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser->positionalArguments();
+    const QStringList args = parser.positionalArguments();
     const QString& searchTerm = args.at(1);
 
-    QStringList results = database->rootGroup()->locate(searchTerm);
+    const QStringList& results = ctx.getDb().rootGroup()->locate(searchTerm);
     if (results.isEmpty()) {
         err << "No results for that search term." << endl;
         return EXIT_FAILURE;

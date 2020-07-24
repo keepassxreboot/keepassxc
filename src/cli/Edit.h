@@ -24,9 +24,10 @@ class Edit : public DatabaseCommand
 {
 public:
     Edit();
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
     static const QCommandLineOption TitleOption;
 };
+DECL_TRAITS(Edit, "edit", "Edit an entry.");
 
 #endif // KEEPASSXC_EDIT_H

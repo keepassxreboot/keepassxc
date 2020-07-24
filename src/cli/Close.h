@@ -26,7 +26,10 @@ class Close : public Command
 {
 public:
     Close();
-    int execute(const QStringList& arguments) override;
+
+private:
+    int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };
+DECL_TRAITS(Close, "close", "Close the currently opened database.");
 
 #endif // KEEPASSXC_CLOSE_H

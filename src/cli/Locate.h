@@ -25,7 +25,8 @@ class Locate : public DatabaseCommand
 public:
     Locate();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };
+DECL_TRAITS(Locate, "locate", "Find entries quickly.");
 
 #endif // KEEPASSXC_LOCATE_H

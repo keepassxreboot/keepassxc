@@ -25,10 +25,12 @@ class Diceware : public Command
 public:
     Diceware();
 
-    int execute(const QStringList& arguments) override;
-
     static const QCommandLineOption WordCountOption;
     static const QCommandLineOption WordListOption;
+
+private:
+    int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
 };
+DECL_TRAITS(Diceware, "diceware", "Generate a new random diceware passphrase.");
 
 #endif // KEEPASSXC_DICEWARE_H

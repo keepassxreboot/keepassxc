@@ -25,9 +25,10 @@ class Export : public DatabaseCommand
 public:
     Export();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
     static const QCommandLineOption FormatOption;
 };
+DECL_TRAITS(Export, "export", "Exports the content of a database to standard output in the specified format.");
 
 #endif // KEEPASSXC_EXPORT_H

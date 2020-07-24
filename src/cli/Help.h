@@ -25,7 +25,10 @@ class Help : public Command
 public:
     Help();
     ~Help() override = default;
-    int execute(const QStringList& arguments) override;
+
+private:
+    int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
 };
+DECL_TRAITS(Help, "help", "Display command help.");
 
 #endif // KEEPASSXC_HELP_H

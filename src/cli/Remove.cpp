@@ -35,13 +35,14 @@ Remove::Remove()
     positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to remove."), QString("")});
 }
 
-int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Remove::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    auto& entryPath = parser->positionalArguments().at(1);
-    QPointer<Entry> entry = database->rootGroup()->findEntryByPath(entryPath);
+    Database& database = ctx.getDb();
+    auto& entryPath = parser.positionalArguments().at(1);
+    QPointer<Entry> entry = database.rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
         return EXIT_FAILURE;
@@ -49,16 +50,16 @@ int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
 
     QString entryTitle = entry->title();
     bool recycled = true;
-    auto* recycleBin = database->metadata()->recycleBin();
-    if (!database->metadata()->recycleBinEnabled() || (recycleBin && recycleBin->findEntryByUuid(entry->uuid()))) {
+    auto* recycleBin = database.metadata()->recycleBin();
+    if (!database.metadata()->recycleBinEnabled() || (recycleBin && recycleBin->findEntryByUuid(entry->uuid()))) {
         delete entry;
         recycled = false;
     } else {
-        database->recycleEntry(entry);
+        database.recycleEntry(entry);
     };
 
     QString errorMessage;
-    if (!database->save(&errorMessage, true, false)) {
+    if (!database.save(&errorMessage, true, false)) {
         err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

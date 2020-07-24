@@ -31,20 +31,22 @@ Info::Info()
     description = QObject::tr("Show a database's information.");
 }
 
-int Info::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser>)
+int Info::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
+    Q_UNUSED(parser);
     auto& out = Utils::STDOUT;
 
-    out << QObject::tr("UUID: ") << database->uuid().toString() << endl;
-    out << QObject::tr("Name: ") << database->metadata()->name() << endl;
-    out << QObject::tr("Description: ") << database->metadata()->description() << endl;
+    const Database& database = ctx.getDb();
+    out << QObject::tr("UUID: ") << database.uuid().toString() << endl;
+    out << QObject::tr("Name: ") << database.metadata()->name() << endl;
+    out << QObject::tr("Description: ") << database.metadata()->description() << endl;
     for (auto& cipher : asConst(KeePass2::CIPHERS)) {
-        if (cipher.first == database->cipher()) {
+        if (cipher.first == database.cipher()) {
             out << QObject::tr("Cipher: ") << cipher.second << endl;
         }
     }
-    out << QObject::tr("KDF: ") << database->kdf()->toString() << endl;
-    if (database->metadata()->recycleBinEnabled()) {
+    out << QObject::tr("KDF: ") << database.kdf()->toString() << endl;
+    if (database.metadata()->recycleBinEnabled()) {
         out << QObject::tr("Recycle bin is enabled.") << endl;
     } else {
         out << QObject::tr("Recycle bin is not enabled.") << endl;
