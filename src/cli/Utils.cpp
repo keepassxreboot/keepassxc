@@ -90,7 +90,7 @@ namespace Utils
 #endif
     }
 
-    QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
+    std::unique_ptr<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected,
                                             const QString& keyFilename,
                                             const QString& yubiKeySlot,
@@ -173,13 +173,13 @@ namespace Utils
         Q_UNUSED(yubiKeySlot);
 #endif // WITH_XC_YUBIKEY
 
-        auto db = QSharedPointer<Database>::create();
+        auto db = Utils::make_unique<Database>();
         QString error;
         if (db->open(databaseFilename, compositeKey, &error, false)) {
             return db;
         } else {
             err << error << endl;
-            return {};
+            return nullptr;
         }
     }
 

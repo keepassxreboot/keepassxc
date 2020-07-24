@@ -726,7 +726,7 @@ Group* Group::findGroupByPathRecursive(const QString& groupPath, const QString& 
     return nullptr;
 }
 
-QString Group::print(bool recursive, bool flatten, int depth)
+QString Group::print(bool recursive, bool flatten, int depth) const
 {
     QString response;
     QString prefix;

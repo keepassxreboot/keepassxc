@@ -19,49 +19,58 @@
 
 #include "Utils.h"
 
+
+const QCommandLineOption DatabaseCommand::KeyFileOption = QCommandLineOption(QStringList() << "k"
+                                                                                   << "key-file",
+                                                                     QObject::tr("Key file of the database."),
+                                                                     QObject::tr("path"));
+
+const QCommandLineOption DatabaseCommand::NoPasswordOption =
+    QCommandLineOption(QStringList() << "no-password", QObject::tr("Deactivate password key for the database."));
+
+#ifdef WITH_XC_YUBIKEY
+const QCommandLineOption DatabaseCommand::YubiKeyOption =
+    QCommandLineOption(QStringList() << "y"
+                                     << "yubikey",
+                       QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001)."),
+                       QObject::tr("slot[:serial]"));
+#endif
+
 DatabaseCommand::DatabaseCommand()
 {
-    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
-    options.append(Command::KeyFileOption);
-    options.append(Command::NoPasswordOption);
+    options.append(KeyFileOption);
+    options.append(NoPasswordOption);
 #ifdef WITH_XC_YUBIKEY
     options.append(Command::YubiKeyOption);
 #endif
+
+    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
 }
 
-int DatabaseCommand::execute(const QStringList& arguments)
+std::unique_ptr<Database> DatabaseCommand::openDatabase(const QCommandLineParser& parser)
 {
-    QStringList amendedArgs(arguments);
-    if (currentDatabase) {
-        amendedArgs.insert(1, currentDatabase->filePath());
-    }
-    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(amendedArgs);
-
-    if (parser.isNull()) {
-        return EXIT_FAILURE;
-    }
-
-    QStringList args = parser->positionalArguments();
-    auto db = currentDatabase;
-    if (!db) {
-        // It would be nice to update currentDatabase here, but the CLI tests frequently
-        // re-use Command objects to exercise non-interactive behavior. Updating the current
-        // database confuses these tests. Because of this, we leave it up to the interactive
-        // mode implementation in the main command loop to update currentDatabase
-        // (see keepassxc-cli.cpp).
-        db = Utils::unlockDatabase(args.at(0),
-                                   !parser->isSet(Command::NoPasswordOption),
-                                   parser->value(Command::KeyFileOption),
+    return Utils::unlockDatabase(parser.positionalArguments().first(),
+                                 !parser.isSet(NoPasswordOption),
+                                 parser.value(KeyFileOption),
 #ifdef WITH_XC_YUBIKEY
-                                   parser->value(Command::YubiKeyOption),
+                                 parser->value(Command::YubiKeyOption),
 #else
-                                   "",
+                                 "",
 #endif
-                                   parser->isSet(Command::QuietOption));
-        if (!db) {
-            return EXIT_FAILURE;
-        }
-    }
+                                 parser.isSet(Command::QuietOption));
+}
 
-    return executeWithDatabase(db, parser);
+int DatabaseCommand::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
+{
+    // TODO_vanda
+    // QStringList amendedArgs(arguments);
+    // if (ctx.hasDb())
+    //     amendedArgs.insert(1, ctx.getDb().filePath());
+    if (ctx.hasDb())
+        return executeWithDatabase(ctx, parser);
+    std::unique_ptr<Database> db = openDatabase(parser);
+    BREAK_IF(!db, EXIT_FAILURE,
+             ctx, QString("Error opening database '%1'.").arg(parser.positionalArguments().first()));
+    ctx.setDb(std::move(db));
+    return executeWithDatabase(ctx, parser);
 }

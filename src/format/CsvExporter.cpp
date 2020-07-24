@@ -48,9 +48,15 @@ bool CsvExporter::exportDatabase(QIODevice* device, const QSharedPointer<const D
     return true;
 }
 
+QString CsvExporter::exportDatabase(const Database& db)
+{
+    return exportHeader() + exportGroup(db.rootGroup());
+}
+
 QString CsvExporter::exportDatabase(const QSharedPointer<const Database>& db)
 {
-    return exportHeader() + exportGroup(db->rootGroup());
+    Q_ASSERT(db);
+    return exportDatabase(*db);
 }
 
 QString CsvExporter::errorString() const

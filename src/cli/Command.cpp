@@ -60,53 +60,40 @@ const QCommandLineOption Command::HelpOption = QCommandLineOption(QStringList()
 const QCommandLineOption Command::QuietOption =
     QCommandLineOption(QStringList() << "q"
                                      << "quiet",
-                       QObject::tr("Silence password prompt and other secondary outputs."));
+                       QObject::tr("Silent password prompt and other secondary outputs."));
 
-const QCommandLineOption Command::KeyFileOption = QCommandLineOption(QStringList() << "k"
-                                                                                   << "key-file",
-                                                                     QObject::tr("Key file of the database."),
-                                                                     QObject::tr("path"));
 
-const QCommandLineOption Command::NoPasswordOption =
-    QCommandLineOption(QStringList() << "no-password", QObject::tr("Deactivate password key for the database."));
-
-const QCommandLineOption Command::YubiKeyOption =
-    QCommandLineOption(QStringList() << "y"
-                                     << "yubikey",
-                       QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001)."),
-                       QObject::tr("slot[:serial]"));
-
-namespace
+QSharedPointer<QCommandLineParser> Command::makeParser(CommandCtx& ctx, const QStringList& args,
+                                                       const QList<CommandLineArgument>& posArgs,
+                                                       const QList<CommandLineArgument>& optArgs,
+                                                       const QList<QCommandLineOption>& options)
 {
+    auto parser = QSharedPointer<QCommandLineParser>::create();
+    if (!parser)
+        return nullptr;
+    BREAK_IF(!parser, nullptr, ctx, QString("Failed to create command parser for { '%1' }").arg(args.join("', '")));
 
-    QSharedPointer<QCommandLineParser> buildParser(Command* command)
-    {
-        auto parser = QSharedPointer<QCommandLineParser>(new QCommandLineParser());
-        parser->setApplicationDescription(command->description);
-        for (const CommandLineArgument& positionalArgument : command->positionalArguments) {
-            parser->addPositionalArgument(
-                positionalArgument.name, positionalArgument.description, positionalArgument.syntax);
-        }
-        for (const CommandLineArgument& optionalArgument : command->optionalArguments) {
-            parser->addPositionalArgument(optionalArgument.name, optionalArgument.description, optionalArgument.syntax);
-        }
-        for (const QCommandLineOption& option : command->options) {
-            parser->addOption(option);
-        }
-        parser->addOption(Command::HelpOption);
-        return parser;
+    parser->setApplicationDescription(description);
+    for (const CommandLineArgument& arg : posArgs) {
+        parser->addPositionalArgument(arg.name, arg.description, arg.syntax);
+    }
+    for (const CommandLineArgument& arg : optArgs) {
+        parser->addPositionalArgument(arg.name, arg.description, arg.syntax);
+    }
+    parser->addOption(Command::HelpOption);
+    parser->addOption(Command::QuietOption);
+    for (const QCommandLineOption& opt : options) {
+        parser->addOption(opt);
     }
 
-} // namespace
+    BREAK_IF(!parser->parse(args), nullptr, ctx, QString("Failed to parse arguments { '%1' }: '%2'").arg(args.join("', '")).arg(parser->errorText()));
+    const QStringList& parsedArgs = parser->positionalArguments();
+    BREAK_IF(parsedArgs.size() < posArgs.size() && !parser->isSet(HelpOption), nullptr,
+             ctx, QString("Too few arguments.\n\n").append(getHelpText(*parser)));
+    BREAK_IF(parsedArgs.size() > posArgs.size() + optArgs.size(), nullptr,
+             ctx, QString("Too much arguments.\n\n").append(getHelpText(*parser)));
 
-Command::Command()
-    : currentDatabase(nullptr)
-{
-    options.append(Command::QuietOption);
-}
-
-Command::~Command()
-{
+    return parser;
 }
 
 QString Command::getDescriptionLine()
@@ -120,89 +107,26 @@ QString Command::getDescriptionLine()
     return response;
 }
 
-QString Command::getHelpText()
+QString Command::getHelpText(const QCommandLineParser& parser) const
 {
-    auto help = buildParser(this)->helpText();
+    QString help = parser.helpText();
     // Fix spacing of options parameter
     help.replace(QStringLiteral("[options]"), name + QStringLiteral(" [options]"));
     // Remove application directory from command line example
-    auto appname = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
-    auto regex = QRegularExpression(QStringLiteral(" .*%1").arg(QRegularExpression::escape(appname)));
+    QString appname = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
+    const QRegularExpression regex(QStringLiteral(" .*%1").arg(QRegularExpression::escape(appname)));
     help.replace(regex, appname.prepend(" "));
-
     return help;
 }
 
-QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringList& arguments)
+int Command::execute(CommandCtx& ctx, const QStringList& arguments)
 {
-    auto& err = Utils::STDERR;
-    QSharedPointer<QCommandLineParser> parser = buildParser(this);
-
-    if (!parser->parse(arguments)) {
-        err << parser->errorText() << "\n\n";
-        err << getHelpText();
-        return {};
-    }
-    if (parser->positionalArguments().size() < positionalArguments.size()) {
-        err << getHelpText();
-        return {};
-    }
-    if (parser->positionalArguments().size() > (positionalArguments.size() + optionalArguments.size())) {
-        err << getHelpText();
-        return {};
-    }
+    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(ctx, arguments);
+    if (parser.isNull())
+        return EXIT_FAILURE;
     if (parser->isSet(HelpOption)) {
-        err << getHelpText();
-        return {};
+        Utils::STDOUT << getHelpText(*parser) << endl;
+        return EXIT_SUCCESS;
     }
-    return parser;
+    return execImpl(ctx, *parser);
 }
-
-namespace Commands
-{
-    QMap<QString, QSharedPointer<Command>> s_commands;
-
-    void setupCommands(bool interactive)
-    {
-        s_commands.clear();
-
-        s_commands.insert(QStringLiteral("add"), QSharedPointer<Command>(new Add()));
-        s_commands.insert(QStringLiteral("analyze"), QSharedPointer<Command>(new Analyze()));
-        s_commands.insert(QStringLiteral("clip"), QSharedPointer<Command>(new Clip()));
-        s_commands.insert(QStringLiteral("close"), QSharedPointer<Command>(new Close()));
-        s_commands.insert(QStringLiteral("db-create"), QSharedPointer<Command>(new Create()));
-        s_commands.insert(QStringLiteral("db-info"), QSharedPointer<Command>(new Info()));
-        s_commands.insert(QStringLiteral("diceware"), QSharedPointer<Command>(new Diceware()));
-        s_commands.insert(QStringLiteral("edit"), QSharedPointer<Command>(new Edit()));
-        s_commands.insert(QStringLiteral("estimate"), QSharedPointer<Command>(new Estimate()));
-        s_commands.insert(QStringLiteral("generate"), QSharedPointer<Command>(new Generate()));
-        s_commands.insert(QStringLiteral("help"), QSharedPointer<Command>(new Help()));
-        s_commands.insert(QStringLiteral("locate"), QSharedPointer<Command>(new Locate()));
-        s_commands.insert(QStringLiteral("ls"), QSharedPointer<Command>(new List()));
-        s_commands.insert(QStringLiteral("merge"), QSharedPointer<Command>(new Merge()));
-        s_commands.insert(QStringLiteral("mkdir"), QSharedPointer<Command>(new AddGroup()));
-        s_commands.insert(QStringLiteral("mv"), QSharedPointer<Command>(new Move()));
-        s_commands.insert(QStringLiteral("open"), QSharedPointer<Command>(new Open()));
-        s_commands.insert(QStringLiteral("rm"), QSharedPointer<Command>(new Remove()));
-        s_commands.insert(QStringLiteral("rmdir"), QSharedPointer<Command>(new RemoveGroup()));
-        s_commands.insert(QStringLiteral("show"), QSharedPointer<Command>(new Show()));
-
-        if (interactive) {
-            s_commands.insert(QStringLiteral("exit"), QSharedPointer<Command>(new Exit("exit")));
-            s_commands.insert(QStringLiteral("quit"), QSharedPointer<Command>(new Exit("quit")));
-        } else {
-            s_commands.insert(QStringLiteral("export"), QSharedPointer<Command>(new Export()));
-            s_commands.insert(QStringLiteral("import"), QSharedPointer<Command>(new Import()));
-        }
-    }
-
-    QList<QSharedPointer<Command>> getCommands()
-    {
-        return s_commands.values();
-    }
-
-    QSharedPointer<Command> getCommand(const QString& commandName)
-    {
-        return s_commands.value(commandName);
-    }
-} // namespace Commands

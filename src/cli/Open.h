@@ -24,8 +24,9 @@ class Open : public DatabaseCommand
 {
 public:
     Open();
-    int execute(const QStringList& arguments) override;
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };
+DECL_TRAITS(Open, "open", "Open a database.");
 
 #endif // KEEPASSXC_OPEN_H

@@ -21,6 +21,7 @@ set(cli_SOURCES
         Close.cpp
         Create.cpp
         Command.cpp
+        CommandCtx.cpp
         DatabaseCommand.cpp
         Diceware.cpp
         Edit.cpp

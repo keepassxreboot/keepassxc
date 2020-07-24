@@ -77,10 +77,10 @@ namespace HibpOffline
     }
 
     bool
-    report(QSharedPointer<Database> db, QIODevice& hibpInput, QList<QPair<const Entry*, int>>& findings, QString* error)
+    report(const Database& db, QIODevice& hibpInput, QList<QPair<const Entry*, int>>& findings, QString* error)
     {
         QMultiHash<QByteArray, const Entry*> entriesBySha1;
-        for (const auto* entry : db->rootGroup()->entriesRecursive()) {
+        for (const auto* entry : db.rootGroup()->entriesRecursive()) {
             if (!entry->isRecycled()) {
                 const auto sha1 = QCryptographicHash::hash(entry->password().toUtf8(), QCryptographicHash::Sha1);
                 entriesBySha1.insert(sha1, entry);
@@ -105,5 +105,12 @@ namespace HibpOffline
                 findings.append({entry, count});
             }
         }
+    }
+
+    bool
+    report(QSharedPointer<Database> db, QIODevice& hibpInput, QList<QPair<const Entry*, int>>& findings, QString* error)
+    {
+        Q_ASSERT(!db.isNull());
+        return report(*db, hibpInput, findings, error);
     }
 } // namespace HibpOffline

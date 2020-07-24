@@ -18,6 +18,8 @@
 #ifndef KEEPASSXC_UTILS_H
 #define KEEPASSXC_UTILS_H
 
+#include <memory>
+
 #include "cli/TextStream.h"
 #include "core/Database.h"
 #include "core/EntryAttributes.h"
@@ -25,6 +27,9 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include <QtCore/qglobal.h>
+#include "core/Tools.h"
+#include "crypto/Crypto.h"
+
 
 namespace Utils
 {
@@ -39,11 +44,11 @@ namespace Utils
     QString getPassword(bool quiet = false);
     QSharedPointer<PasswordKey> getConfirmedPassword();
     int clipText(const QString& text);
-    QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
-                                            const bool isPasswordProtected = true,
-                                            const QString& keyFilename = {},
-                                            const QString& yubiKeySlot = {},
-                                            bool quiet = false);
+    std::unique_ptr<Database> unlockDatabase(const QString& databaseFilename,
+                                             const bool isPasswordProtected = true,
+                                             const QString& keyFilename = {},
+                                             const QString& yubiKeySlot = {},
+                                             bool quiet = false);
 
     QStringList splitCommandString(const QString& command);
 
@@ -54,6 +59,19 @@ namespace Utils
      * (case-insensitive).
      */
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name);
+
+    inline QTextStream& debugInfo(QTextStream& out)
+    {
+        out << Tools::debugInfo() << endl
+            << Crypto::debugInfo() << endl;
+        return out;
+    }
+
+    template<class T, class... Args>
+    std::unique_ptr<T> make_unique(Args&&... args)
+    {
+        return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+    }
 }; // namespace Utils
 
 #endif // KEEPASSXC_UTILS_H

@@ -26,6 +26,21 @@
 #include <QStringList>
 
 #include "core/Database.h"
+#include "CommandCtx.h"
+
+
+///
+/// Following traits are mandatory:
+/// const char* Name        - printable command name
+/// const char* Description - printable description
+template<class Cmd>
+struct CommandTraits;
+
+#define DECL_TRAITS(TYPE, NAME, DESC)                       \
+    template<> struct CommandTraits<TYPE> {                 \
+        static constexpr const char* Name = NAME;           \
+        static constexpr const char* Description = DESC;    \
+    }
 
 // At the moment, there's no QT class for the positional arguments
 // like there is for the options (QCommandLineOption).
@@ -39,32 +54,32 @@ struct CommandLineArgument
 class Command
 {
 public:
-    Command();
-    virtual ~Command();
-    virtual int execute(const QStringList& arguments) = 0;
+    Command() = default;
+    virtual ~Command() = default;
+    int execute(CommandCtx& ctx, const QStringList& arguments);
+
     QString name;
     QString description;
-    QSharedPointer<Database> currentDatabase;
+
     QList<CommandLineArgument> positionalArguments;
     QList<CommandLineArgument> optionalArguments;
     QList<QCommandLineOption> options;
 
+    QString getHelpText(const QCommandLineParser& parser) const;
     QString getDescriptionLine();
-    QSharedPointer<QCommandLineParser> getCommandLineParser(const QStringList& arguments);
-    QString getHelpText();
 
     static const QCommandLineOption HelpOption;
     static const QCommandLineOption QuietOption;
-    static const QCommandLineOption KeyFileOption;
-    static const QCommandLineOption NoPasswordOption;
-    static const QCommandLineOption YubiKeyOption;
+
+protected:
+    virtual QSharedPointer<QCommandLineParser> getCommandLineParser(CommandCtx& ctx, const QStringList& arguments) = 0;
+    virtual int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) = 0;
+
+    QSharedPointer<QCommandLineParser> makeParser(CommandCtx &ctx, const QStringList& args,
+                                                  const QList<CommandLineArgument>& posArgs,
+                                                  const QList<CommandLineArgument>& optArgs,
+                                                  const QList<QCommandLineOption>& options);
 };
 
-namespace Commands
-{
-    void setupCommands(bool interactive);
-    QList<QSharedPointer<Command>> getCommands();
-    QSharedPointer<Command> getCommand(const QString& commandName);
-} // namespace Commands
 
 #endif // KEEPASSXC_COMMAND_H

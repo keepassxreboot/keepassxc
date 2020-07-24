@@ -18,10 +18,14 @@
 #include "Open.h"
 
 #include <QCommandLineParser>
+#include <QDir>
 
 #include "DatabaseCommand.h"
 #include "TextStream.h"
 #include "Utils.h"
+#include "core/Metadata.h"
+
+#include "Exit.h"
 
 Open::Open()
 {
@@ -29,15 +33,139 @@ Open::Open()
     description = QObject::tr("Open a database.");
 }
 
-int Open::execute(const QStringList& arguments)
+class LineReader
 {
-    currentDatabase.reset(nullptr);
-    return this->DatabaseCommand::execute(arguments);
+public:
+    virtual ~LineReader() = default;
+    virtual QString readLine(QString prompt) = 0;
+    virtual bool isFinished() = 0;
+};
+
+class SimpleLineReader : public LineReader
+{
+public:
+    SimpleLineReader()
+        : inStream(stdin, QIODevice::ReadOnly)
+        , outStream(stdout, QIODevice::WriteOnly)
+        , finished(false)
+    {
+    }
+
+    QString readLine(QString prompt) override
+    {
+        outStream << prompt;
+        outStream.flush();
+        QString result = inStream.readLine();
+        if (result.isNull()) {
+            finished = true;
+        }
+        return result;
+    }
+
+    bool isFinished() override
+    {
+        return finished;
+    }
+
+private:
+    TextStream inStream;
+    TextStream outStream;
+    bool finished;
+};
+
+#if defined(USE_READLINE)
+class ReadlineLineReader : public LineReader
+public:
+    ReadlineLineReader()
+        : finished(false)
+    {
+    }
+
+    QString readLine(QString prompt) override
+    {
+        char* result = readline(prompt.toStdString().c_str());
+        if (!result) {
+            finished = true;
+            return {};
+        }
+        add_history(result);
+        QString qstr(result);
+        free(result);
+        return qstr;
+    }
+
+    bool isFinished() override
+    {
+        return finished;
+    }
+
+private:
+    bool finished;
+};
+#endif
+
+static int commandLoop(CommandCtx& ctx)
+{
+    auto& err = Utils::STDERR;
+    // TODO_vanda: replace command list with interactive version
+    // Commands::setupCommands(true);
+
+    QScopedPointer<LineReader> reader(new
+#if defined(USE_READLINE)
+                ReadlineLineReader
+#else
+                SimpleLineReader
+#endif
+    );
+
+    QString command;
+    while (ctx.getRunmode() == Runmode::InteractiveCmd) {
+        QString prompt;
+        if (ctx.hasDb()) {
+            const Database& db = ctx.getDb();
+            prompt += db.metadata()->name();
+            if (prompt.isEmpty()) {
+                prompt += QFileInfo(db.filePath()).fileName();
+            }
+        }
+        prompt += "> ";
+        command = reader->readLine(prompt);
+        if (reader->isFinished()) {
+            break;
+        }
+
+        QStringList args = Utils::splitCommandString(command);
+        if (args.empty()) {
+            continue;
+        }
+
+        const QString& cmdName = args.first();
+        QSharedPointer<Command> cmd = ctx.getCmd(cmdName);
+        if (!cmd) {
+            err << QObject::tr("Command '%1' not found.\n").arg(cmdName);
+            err.flush();
+            continue;
+        }
+        // TODO_vanda: no need to insert 'path' when the command args become
+        // appropriate to current runmode
+        args.insert(1, ctx.getDb().filePath());
+        if (cmd->execute(ctx, args) == EXIT_FAILURE) {
+            err << QObject::tr("Failed to execute command '%1'.").arg(cmdName) << endl;
+            for (const auto& e : ctx.getErrors())
+                err << e << endl;
+            ctx.clearErrors();
+        }
+    }
+    return ctx.error()
+            ? EXIT_FAILURE
+            : EXIT_SUCCESS;
 }
 
-int Open::executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser)
+int Open::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    Q_UNUSED(parser)
-    currentDatabase = db;
-    return EXIT_SUCCESS;
+    Q_UNUSED(parser);
+    Q_ASSERT(ctx.hasDb());
+
+    ctx.startInteractive();
+    return commandLoop(ctx);
 }

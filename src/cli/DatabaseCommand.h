@@ -28,8 +28,18 @@ class DatabaseCommand : public Command
 {
 public:
     DatabaseCommand();
-    int execute(const QStringList& arguments) override;
-    virtual int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) = 0;
+
+    virtual int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) = 0;
+
+    static const QCommandLineOption KeyFileOption;
+    static const QCommandLineOption NoPasswordOption;
+    static const QCommandLineOption YubiKeyOption;
+
+protected:
+    std::unique_ptr<Database> openDatabase(const QCommandLineParser& parser);
+
+private:
+    int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };
 
 #endif // KEEPASSXC_DATABASECOMMAND_H
