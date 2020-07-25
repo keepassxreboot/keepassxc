@@ -83,6 +83,7 @@ private slots:
 private:
     QScopedPointer<TemporaryFile> m_dbFile;
     QScopedPointer<TemporaryFile> m_dbFile2;
+    QScopedPointer<TemporaryFile> m_dbFileMulti;
     QScopedPointer<TemporaryFile> m_xmlFile;
     QScopedPointer<TemporaryFile> m_keyFileProtectedDbFile;
     QScopedPointer<TemporaryFile> m_keyFileProtectedNoPasswordDbFile;

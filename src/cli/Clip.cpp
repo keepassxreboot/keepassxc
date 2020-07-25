@@ -25,6 +25,7 @@
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Global.h"
 #include "core/Group.h"
 
 const QCommandLineOption Clip::AttributeOption = QCommandLineOption(
@@ -39,12 +40,18 @@ const QCommandLineOption Clip::TotpOption =
                                      << "totp",
                        QObject::tr("Copy the current TOTP to the clipboard (equivalent to \"-a totp\")."));
 
+const QCommandLineOption Clip::BestMatchOption = QCommandLineOption(
+    QStringList() << "b"
+                  << "best-match",
+    QObject::tr("Try to find the unique entry matching, will fail and display the list of matches otherwise."));
+
 Clip::Clip()
 {
     name = QString("clip");
     description = QObject::tr("Copy an entry's attribute to the clipboard.");
     options.append(Clip::AttributeOption);
     options.append(Clip::TotpOption);
+    options.append(Clip::BestMatchOption);
     positionalArguments.append(
         {QString("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QString("")});
     optionalArguments.append(
@@ -57,11 +64,30 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     auto& err = Utils::STDERR;
 
     const QStringList args = parser->positionalArguments();
-    const QString& entryPath = args.at(1);
+    QString bestEntryPath;
+
     QString timeout;
     if (args.size() == 3) {
         timeout = args.at(2);
     }
+
+    if (parser->isSet(Clip::BestMatchOption)) {
+        QStringList results = database->rootGroup()->locate(args.at(1));
+        if (results.count() > 1) {
+            err << QObject::tr("Multiple entries matching:") << endl;
+            for (const QString& result : asConst(results)) {
+                err << result << endl;
+            }
+            return EXIT_FAILURE;
+        } else {
+            bestEntryPath = (results.isEmpty()) ? args.at(1) : results[0];
+            out << QObject::tr("Matching \"%1\" entry used.").arg(bestEntryPath) << endl;
+        }
+    } else {
+        bestEntryPath = args.at(1);
+    }
+
+    const QString& entryPath = bestEntryPath;
 
     int timeoutSeconds = 0;
     if (!timeout.isEmpty() && timeout.toInt() <= 0) {

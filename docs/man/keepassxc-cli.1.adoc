@@ -207,6 +207,11 @@ The same password generation options as documented for the generate command can 
   Copies the current TOTP instead of the specified attribute to the clipboard.
   Will report an error if no TOTP is configured for the entry.
 
+*-b*, *--best*::
+  Try to find and copy to clipboard a unique entry matching the input (similar to *-locate*)
+  If a unique matching entry is found it will be copied to the clipboard.
+  If multiple entries are found they will be listed to refine the search. (no clip performed)
+
 === Create options
 *-k*, *--set-key-file* <__path__>::
   Set the key file for the database.

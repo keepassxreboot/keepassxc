@@ -86,6 +86,9 @@ void TestCli::init()
     m_dbFile2.reset(new TemporaryFile());
     m_dbFile2->copyFromFile(file.arg("NewDatabase2.kdbx"));
 
+    m_dbFileMulti.reset(new TemporaryFile());
+    m_dbFileMulti->copyFromFile(file.arg("NewDatabaseMulti.kdbx"));
+
     m_xmlFile.reset(new TemporaryFile());
     m_xmlFile->copyFromFile(file.arg("NewDatabase.xml"));
 
@@ -115,6 +118,7 @@ void TestCli::cleanup()
 {
     m_dbFile.reset();
     m_dbFile2.reset();
+    m_dbFileMulti.reset();
     m_keyFileProtectedDbFile.reset();
     m_keyFileProtectedNoPasswordDbFile.reset();
     m_yubiKeyProtectedDbFile.reset();
@@ -504,6 +508,17 @@ void TestCli::testClip()
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry"});
     QVERIFY(m_stderr->readAll().contains("ERROR: Please specify one of --attribute or --totp, not both.\n"));
+
+    // Best option
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFileMulti->fileName(), "Multi", "-b"});
+    QByteArray errorChoices = m_stderr->readAll();
+    QVERIFY(errorChoices.contains("Multi Entry 1"));
+    QVERIFY(errorChoices.contains("Multi Entry 2"));
+
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFileMulti->fileName(), "Entry 2", "-b"});
+    QTRY_COMPARE(clipboard->text(), QString("Password2"));
 }
 
 void TestCli::testCreate()
