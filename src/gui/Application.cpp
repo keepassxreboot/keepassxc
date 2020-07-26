@@ -144,18 +144,19 @@ Application::~Application()
 
 void Application::applyTheme()
 {
-    QString appTheme = config()->get(Config::GUI_ApplicationTheme).toString();
+    auto appTheme = config()->get(Config::GUI_ApplicationTheme).toString();
     if (appTheme == "auto") {
-        if (osUtils->isDarkMode()) {
-            setStyle(new DarkStyle);
-            m_darkTheme = true;
-        } else {
-            setStyle(new LightStyle);
-        }
-    } else if (appTheme == "light") {
+        appTheme = osUtils->isDarkMode() ? "dark" : "light";
+    }
+
+    if (appTheme == "light") {
         setStyle(new LightStyle);
+        // Workaround Qt 5.15+ bug
+        setPalette(style()->standardPalette());
     } else if (appTheme == "dark") {
         setStyle(new DarkStyle);
+        // Workaround Qt 5.15+ bug
+        setPalette(style()->standardPalette());
         m_darkTheme = true;
     } else {
         // Classic mode, don't check for dark theme on Windows
@@ -164,8 +165,6 @@ void Application::applyTheme()
         m_darkTheme = osUtils->isDarkMode();
 #endif
     }
-
-    setPalette(style()->standardPalette());
 }
 
 bool Application::event(QEvent* event)

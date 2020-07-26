@@ -3,6 +3,11 @@ QPushButton:default {
     color: palette(highlighted-text);
 }
 
+/* Note: default button hover is defined in the respective theme style */
+QPushButton:!default:hover {
+    background: palette(mid);
+}
+
 QSpinBox {
     min-width: 90px;
 }
