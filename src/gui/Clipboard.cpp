@@ -67,11 +67,14 @@ void Clipboard::setText(const QString& text, bool clear)
     }
 #endif
 
-    if (clear && config()->get(Config::Security_ClearClipboard).toBool()) {
-        int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
-        if (timeout > 0) {
-            m_lastCopied = text;
-            m_timer->start(timeout * 1000);
+    if (clear) {
+        m_lastCopied = text;
+        if (config()->get(Config::Security_ClearClipboard).toBool()) {
+            int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
+            if (timeout > 0) {
+                m_lastCopied = text;
+                m_timer->start(timeout * 1000);
+            }
         }
     }
 }
@@ -80,8 +83,9 @@ void Clipboard::clearCopiedText()
 {
     if (m_timer->isActive()) {
         m_timer->stop();
-        clearClipboard();
     }
+
+    clearClipboard();
 }
 
 void Clipboard::clearClipboard()
