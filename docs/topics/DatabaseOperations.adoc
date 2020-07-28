@@ -141,7 +141,8 @@ KeePassXC provides an enhanced and granular search features the enables you to s
 |===
 |Modifier   |Description
 
-|-	        |Exclude this term from results
+|-          |Exclude this term from results
+|!          |Exclude this term from results
 |+	        |Match this term exactly
 |*	        |Term is handled as a regular expression
 |===

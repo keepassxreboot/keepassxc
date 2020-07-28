@@ -7,6 +7,8 @@ The Auto-Type feature acts like a virtual keyboard to populate data from your en
 
 NOTE: Auto-Type is a completely separate feature from Browser Integration. You do not need to have the KeePassXC browser extension installed in your browser to use Auto-Type.
 
+WARNING: Auto-Type will be disabled when run with a Wayland compositor on Linux. To use Auto-Type in this environment, you must set `QT_QPA_PLATFORM=xcb` or start KeePassXC with the `-platform xcb` command-line flag.
+
 === Configure Global Auto-Type
 You can define a global Auto-Type hotkey that starts the Auto-Type process. To configure the hotkey, perform the following steps:
 
