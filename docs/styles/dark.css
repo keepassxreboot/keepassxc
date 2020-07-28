@@ -470,13 +470,6 @@ video {
   max-width: 100%;
 }
 
-@media all and (max-width: 600px) {
-  table {
-    width: 55vw!important;
-    font-size: 3vw;
-  }
-}
-
 .exampleblock > .content {
   background-color: var(--background);
 }
