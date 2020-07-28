@@ -147,6 +147,11 @@ void Application::applyTheme()
     auto appTheme = config()->get(Config::GUI_ApplicationTheme).toString();
     if (appTheme == "auto") {
         appTheme = osUtils->isDarkMode() ? "dark" : "light";
+#ifdef Q_OS_WIN
+        if (winUtils()->isHighContrastMode()) {
+            appTheme = "classic";
+        }
+#endif
     }
 
     if (appTheme == "light") {
