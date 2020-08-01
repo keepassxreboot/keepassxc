@@ -141,21 +141,15 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitEntryContextMenuRequested(QPoint)));
 
     // Add a notification for when we are searching
+    m_searchingLabel->setObjectName("SearchBanner");
     m_searchingLabel->setText(tr("Searching..."));
     m_searchingLabel->setAlignment(Qt::AlignCenter);
-    m_searchingLabel->setStyleSheet("color: rgb(0, 0, 0);"
-                                    "background-color: rgb(255, 253, 160);"
-                                    "border: 2px solid rgb(190, 190, 190);"
-                                    "border-radius: 4px;");
     m_searchingLabel->setVisible(false);
 
 #ifdef WITH_XC_KEESHARE
+    m_shareLabel->setObjectName("KeeShareBanner");
     m_shareLabel->setText(tr("Shared group..."));
     m_shareLabel->setAlignment(Qt::AlignCenter);
-    m_shareLabel->setStyleSheet("color: rgb(0, 0, 0);"
-                                "background-color: rgb(255, 253, 160);"
-                                "border: 2px solid rgb(190, 190, 190);"
-                                "border-radius: 4px;");
     m_shareLabel->setVisible(false);
 #endif
 
