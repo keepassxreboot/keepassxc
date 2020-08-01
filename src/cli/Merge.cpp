@@ -73,10 +73,11 @@ int Merge::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser
     auto& err = Utils::STDERR;
 
     const QStringList args = parser.positionalArguments();
-
     Database& database = ctx.getDb();
-    const QString& toDatabasePath = args.at(0);
-    const QString& fromDatabasePath = args.at(1);
+    const int db2ArgIdx = ctx.getRunmode() == Runmode::InteractiveCmd ? 0 : 1;
+    Q_ASSERT(args.size() == db2ArgIdx + 1);
+    const QString& toDatabasePath = ctx.getDb().filePath();
+    const QString& fromDatabasePath = args.at(db2ArgIdx);
 
     std::unique_ptr<Database> db2;
     if (!parser.isSet(SameCredentialsOption)) {

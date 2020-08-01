@@ -58,6 +58,7 @@ void CommandCtx::cmdInit()
 #define REG_CMD(CMD_T) regCmd<CMD_T>(m_commands)
 
     REG_CMD(Add);
+    REG_CMD(AddGroup);
     REG_CMD(Analyze);
     REG_CMD(Clip);
     REG_CMD(Close);
@@ -71,7 +72,6 @@ void CommandCtx::cmdInit()
     REG_CMD(Locate);
     REG_CMD(List);
     REG_CMD(Merge);
-    REG_CMD(AddGroup);
     REG_CMD(Move);
     REG_CMD(Open);
     REG_CMD(Remove);

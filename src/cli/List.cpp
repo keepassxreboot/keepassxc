@@ -53,18 +53,17 @@ int List::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser.positionalArguments();
-    bool recursive = parser.isSet(RecursiveOption);
-    bool flatten = parser.isSet(FlattenOption);
+    const bool recursive = parser.isSet(RecursiveOption);
+    const bool flatten = parser.isSet(FlattenOption);
 
     Database& database = ctx.getDb();
+    const QStringList args = parser.positionalArguments();
     // No group provided, defaulting to root group.
-    if (args.size() == 1) {
+    if (args.empty() || (ctx.getRunmode() == Runmode::SingleCmd && args.size() == 1)) {
         out << database.rootGroup()->print(recursive, flatten) << flush;
         return EXIT_SUCCESS;
     }
-
-    const QString& groupPath = args.at(1);
+    const QString& groupPath = getArg(0, ctx.getRunmode(), args);
     const Group* group = database.rootGroup()->findGroupByPath(groupPath);
     if (!group) {
         err << QObject::tr("Cannot find group %1.").arg(groupPath) << endl;

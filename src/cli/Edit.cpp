@@ -66,9 +66,7 @@ int Edit::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser.positionalArguments();
-    const QString& entryPath = args.at(1);
-
+    const QString& entryPath = getArg(0, ctx.getRunmode(), parser.positionalArguments());
     // Cannot use those 2 options at the same time!
     if (parser.isSet(Add::GenerateOption) && parser.isSet(Add::PasswordPromptOption)) {
         err << QObject::tr("Cannot generate a password and prompt at the same time!") << endl;

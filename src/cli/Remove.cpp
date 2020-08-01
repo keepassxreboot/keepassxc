@@ -45,7 +45,7 @@ int Remove::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parse
     auto& err = Utils::STDERR;
 
     Database& database = ctx.getDb();
-    auto& entryPath = parser.positionalArguments().at(1);
+    const QString& entryPath = getArg(0, ctx.getRunmode(), parser.positionalArguments());
     QPointer<Entry> entry = database.rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;

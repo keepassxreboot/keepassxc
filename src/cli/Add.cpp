@@ -74,9 +74,6 @@ int Add::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser.positionalArguments();
-    auto& entryPath = args.at(1);
-
     // Cannot use those 2 options at the same time!
     if (parser.isSet(Add::GenerateOption) && parser.isSet(Add::PasswordPromptOption)) {
         err << QObject::tr("Cannot generate a password and prompt at the same time!") << endl;
@@ -94,6 +91,7 @@ int Add::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     }
 
     Database& database = ctx.getDb();
+    const QString& entryPath = getArg(0, ctx.getRunmode(), parser.positionalArguments());
     Entry* entry = database.rootGroup()->addEntryWithPath(entryPath);
     if (!entry) {
         err << QObject::tr("Could not create entry with path %1.").arg(entryPath) << endl;

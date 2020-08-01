@@ -45,16 +45,14 @@ int Locate::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parse
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser.positionalArguments();
-    const QString& searchTerm = args.at(1);
-
-    const QStringList& results = ctx.getDb().rootGroup()->locate(searchTerm);
+    const QStringList& results = ctx.getDb().rootGroup()->locate(getArg(0, ctx.getRunmode(),
+                                                                        parser.positionalArguments()));
     if (results.isEmpty()) {
         err << "No results for that search term." << endl;
-        return EXIT_FAILURE;
+        return EXIT_SUCCESS;
     }
 
-    for (const QString& result : asConst(results)) {
+    for (const QString& result : results) {
         out << result << endl;
     }
     return EXIT_SUCCESS;

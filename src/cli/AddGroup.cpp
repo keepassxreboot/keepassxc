@@ -42,7 +42,7 @@ int AddGroup::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& par
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QString& groupPath = parser.positionalArguments().at(1);
+    const QString& groupPath = getArg(0, ctx.getRunmode(), parser.positionalArguments());
     QStringList pathParts = groupPath.split("/");
     QString groupName = pathParts.takeLast();
     QString parentGroupPath = pathParts.join("/");

@@ -126,5 +126,12 @@ private:
     int m_allowedRunmodes = runmodeMaskBoth();
 };
 
+static inline const QString& getArg(int idx, Runmode currentRunmode, const QStringList& args)
+{
+    if (currentRunmode == Runmode::SingleCmd)
+        ++idx;
+    Q_ASSERT(idx < args.size());
+    return args.at(idx);
+}
 
 #endif // KEEPASSXC_COMMAND_H

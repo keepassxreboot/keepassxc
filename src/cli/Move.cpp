@@ -46,8 +46,8 @@ int Move::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& err = Utils::STDERR;
 
     const QStringList args = parser.positionalArguments();
-    const QString& entryPath = args.at(1);
-    const QString& destinationPath = args.at(2);
+    const QString& entryPath = getArg(0, ctx.getRunmode(), args);
+    const QString& destinationPath = getArg(1, ctx.getRunmode(), args);
 
     Database& database = ctx.getDb();
     Entry* entry = database.rootGroup()->findEntryByPath(entryPath);

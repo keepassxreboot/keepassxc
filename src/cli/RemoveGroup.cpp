@@ -44,11 +44,10 @@ int RemoveGroup::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& 
     auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    QString groupPath = parser.positionalArguments().at(1);
-
     // Recursive option means were looking for a group to remove.
     Database& database = ctx.getDb();
-    QPointer<Group> group = database.rootGroup()->findGroupByPath(groupPath);
+    const QString& groupPath = getArg(0, ctx.getRunmode(), parser.positionalArguments());
+    const QPointer<Group> group = database.rootGroup()->findGroupByPath(groupPath);
     if (!group) {
         err << QObject::tr("Group %1 not found.").arg(groupPath) << endl;
         return EXIT_FAILURE;

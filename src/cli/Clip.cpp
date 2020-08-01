@@ -59,10 +59,12 @@ int Clip::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& err = Utils::STDERR;
 
     const QStringList args = parser.positionalArguments();
-    const QString& entryPath = args.at(1);
+    const int kMaxArgs = ctx.getRunmode() == Runmode::InteractiveCmd ? 2 : 3;
+    Q_ASSERT(args.size() <= kMaxArgs);
+    const QString& entryPath = getArg(0, ctx.getRunmode(), args);
     QString timeout;
-    if (args.size() == 3) {
-        timeout = args.at(2);
+    if (args.size() == kMaxArgs) {
+        timeout = getArg(1, ctx.getRunmode(), args);
     }
 
     int timeoutSeconds = 0;
