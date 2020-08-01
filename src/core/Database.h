@@ -81,7 +81,8 @@ public:
     void releaseData();
 
     bool isInitialized() const;
-    bool isModified(bool includeNonDataChanges = false) const;
+    bool isModified() const;
+    bool hasNonDataChanges() const;
     void setEmitModified(bool value);
     bool isReadOnly() const;
     void setReadOnly(bool readOnly);

@@ -184,6 +184,7 @@ void ApplicationSettingsWidget::loadSettings()
         config()->get(Config::OpenPreviousDatabasesOnStartup).toBool());
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get(Config::AutoSaveAfterEveryChange).toBool());
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get(Config::AutoSaveOnExit).toBool());
+    m_generalUi->autoSaveNonDataChangesCheckBox->setChecked(config()->get(Config::AutoSaveNonDataChanges).toBool());
     m_generalUi->backupBeforeSaveCheckBox->setChecked(config()->get(Config::BackupBeforeSave).toBool());
     m_generalUi->useAtomicSavesCheckBox->setChecked(config()->get(Config::UseAtomicSaves).toBool());
     m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get(Config::AutoReloadOnChange).toBool());
@@ -197,7 +198,6 @@ void ApplicationSettingsWidget::loadSettings()
         config()->get(Config::UseGroupIconOnEntryCreation).toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryTitleMatch).toBool());
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryURLMatch).toBool());
-    m_generalUi->trackNonDataChangesCheckBox->setChecked(config()->get(Config::TrackNonDataChanges).toBool());
     m_generalUi->faviconTimeoutSpinBox->setValue(config()->get(Config::FaviconDownloadTimeout).toInt());
 
     m_generalUi->languageComboBox->clear();
@@ -312,6 +312,7 @@ void ApplicationSettingsWidget::saveSettings()
                   m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
     config()->set(Config::AutoSaveAfterEveryChange, m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set(Config::AutoSaveOnExit, m_generalUi->autoSaveOnExitCheckBox->isChecked());
+    config()->set(Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox->isChecked());
     config()->set(Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox->isChecked());
     config()->set(Config::UseAtomicSaves, m_generalUi->useAtomicSavesCheckBox->isChecked());
     config()->set(Config::AutoReloadOnChange, m_generalUi->autoReloadOnChangeCheckBox->isChecked());
@@ -321,7 +322,6 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::MinimizeOnCopy, m_generalUi->minimizeOnCopyRadioButton->isChecked());
     config()->set(Config::DropToBackgroundOnCopy, m_generalUi->dropToBackgroundOnCopyRadioButton->isChecked());
     config()->set(Config::UseGroupIconOnEntryCreation, m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
-    config()->set(Config::TrackNonDataChanges, m_generalUi->trackNonDataChangesCheckBox->isChecked());
     config()->set(Config::AutoTypeEntryTitleMatch, m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     config()->set(Config::AutoTypeEntryURLMatch, m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     config()->set(Config::FaviconDownloadTimeout, m_generalUi->faviconTimeoutSpinBox->value());
@@ -453,11 +453,13 @@ void ApplicationSettingsWidget::reject()
 
 void ApplicationSettingsWidget::autoSaveToggled(bool checked)
 {
-    // Explicitly enable auto-save on exit if it wasn't already
-    if (checked && !m_generalUi->autoSaveOnExitCheckBox->isChecked()) {
+    // Explicitly enable other auto-save options
+    if (checked) {
         m_generalUi->autoSaveOnExitCheckBox->setChecked(true);
+        m_generalUi->autoSaveNonDataChangesCheckBox->setChecked(true);
     }
     m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
+    m_generalUi->autoSaveNonDataChangesCheckBox->setEnabled(!checked);
 }
 
 void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)

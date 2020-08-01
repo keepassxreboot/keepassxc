@@ -253,14 +253,14 @@
               <item>
                <widget class="QCheckBox" name="autoSaveOnExitCheckBox">
                 <property name="text">
-                 <string>Automatically save on exit</string>
+                 <string>Automatically save when locking database</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="trackNonDataChangesCheckBox">
+               <widget class="QCheckBox" name="autoSaveNonDataChangesCheckBox">
                 <property name="text">
-                 <string>Mark database as modified for non-data changes (e.g., expanding groups)</string>
+                 <string>Automatically save non-data changes when locking database</string>
                 </property>
                </widget>
               </item>
@@ -1037,7 +1037,7 @@
   <tabstop>checkForUpdatesIncludeBetasCheckBox</tabstop>
   <tabstop>autoSaveAfterEveryChangeCheckBox</tabstop>
   <tabstop>autoSaveOnExitCheckBox</tabstop>
-  <tabstop>trackNonDataChangesCheckBox</tabstop>
+  <tabstop>autoSaveNonDataChangesCheckBox</tabstop>
   <tabstop>backupBeforeSaveCheckBox</tabstop>
   <tabstop>autoReloadOnChangeCheckBox</tabstop>
   <tabstop>useAtomicSavesCheckBox</tabstop>

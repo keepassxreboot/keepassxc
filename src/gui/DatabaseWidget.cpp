@@ -1568,7 +1568,7 @@ bool DatabaseWidget::lock()
         }
     }
 
-    if (m_db->isModified(true)) {
+    if (m_db->isModified()) {
         bool saved = false;
         // Attempt to save on exit, but don't block locking if it fails
         if (config()->get(Config::AutoSaveOnExit).toBool()
@@ -1596,6 +1596,10 @@ bool DatabaseWidget::lock()
                 return false;
             }
         }
+    } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
+        // Silently auto-save non-data changes, ignore errors
+        QString errorMessage;
+        performSave(errorMessage);
     }
 
     if (m_groupView->currentGroup()) {
@@ -1652,7 +1656,7 @@ void DatabaseWidget::reloadDatabaseFile()
     QString error;
     auto db = QSharedPointer<Database>::create(m_db->filePath());
     if (db->open(database()->key(), &error)) {
-        if (m_db->isModified(true)) {
+        if (m_db->isModified() || db->hasNonDataChanges()) {
             // Ask if we want to merge changes into new database
             auto result = MessageBox::question(
                 this,
@@ -1845,33 +1849,14 @@ bool DatabaseWidget::save()
     m_blockAutoSave = true;
     ++m_saveAttempts;
 
-    QPointer<QWidget> focusWidget(qApp->focusWidget());
-
-    // TODO: Make this async
-    // Lock out interactions
-    m_entryView->setDisabled(true);
-    m_groupView->setDisabled(true);
-    QApplication::processEvents();
-
-    bool useAtomicSaves = config()->get(Config::UseAtomicSaves).toBool();
     QString errorMessage;
-    bool ok = m_db->save(&errorMessage, useAtomicSaves, config()->get(Config::BackupBeforeSave).toBool());
-
-    // Return control
-    m_entryView->setDisabled(false);
-    m_groupView->setDisabled(false);
-
-    if (focusWidget) {
-        focusWidget->setFocus();
-    }
-
-    if (ok) {
+    if (performSave(errorMessage)) {
         m_saveAttempts = 0;
         m_blockAutoSave = false;
         return true;
     }
 
-    if (m_saveAttempts > 2 && useAtomicSaves) {
+    if (m_saveAttempts > 2 && config()->get(Config::UseAtomicSaves).toBool()) {
         // Saving failed 3 times, issue a warning and attempt to resolve
         auto result = MessageBox::question(this,
                                            tr("Disable safe saves?"),
@@ -1919,33 +1904,45 @@ bool DatabaseWidget::saveAs()
 
     bool ok = false;
     if (!newFilePath.isEmpty()) {
-        QPointer<QWidget> focusWidget(qApp->focusWidget());
-
-        // Lock out interactions
-        m_entryView->setDisabled(true);
-        m_groupView->setDisabled(true);
-        QApplication::processEvents();
-
         QString errorMessage;
-        ok = m_db->saveAs(newFilePath,
-                          &errorMessage,
-                          config()->get(Config::UseAtomicSaves).toBool(),
-                          config()->get(Config::BackupBeforeSave).toBool());
-
-        // Return control
-        m_entryView->setDisabled(false);
-        m_groupView->setDisabled(false);
-
-        if (focusWidget) {
-            focusWidget->setFocus();
-        }
-
-        if (!ok) {
+        if (!performSave(errorMessage, newFilePath)) {
             showMessage(tr("Writing the database failed: %1").arg(errorMessage),
                         MessageWidget::Error,
                         true,
                         MessageWidget::LongAutoHideTimeout);
         }
+    }
+
+    return ok;
+}
+
+bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
+{
+    QPointer<QWidget> focusWidget(qApp->focusWidget());
+
+    // Lock out interactions
+    m_entryView->setDisabled(true);
+    m_groupView->setDisabled(true);
+    QApplication::processEvents();
+
+    bool ok;
+    if (fileName.isEmpty()) {
+        ok = m_db->save(&errorMessage,
+                        config()->get(Config::UseAtomicSaves).toBool(),
+                        config()->get(Config::BackupBeforeSave).toBool());
+    } else {
+        ok = m_db->saveAs(fileName,
+                          &errorMessage,
+                          config()->get(Config::UseAtomicSaves).toBool(),
+                          config()->get(Config::BackupBeforeSave).toBool());
+    }
+
+    // Return control
+    m_entryView->setDisabled(false);
+    m_groupView->setDisabled(false);
+
+    if (focusWidget) {
+        focusWidget->setFocus();
     }
 
     return ok;
