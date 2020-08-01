@@ -362,11 +362,7 @@ void Group::setExpanded(bool expanded)
 {
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
-        if (config()->get(Config::TrackNonDataChanges).toBool()) {
-            emit groupModified();
-        } else {
-            emit groupNonDataChange();
-        }
+        emit groupNonDataChange();
     }
 }
 
@@ -972,11 +968,7 @@ void Group::moveEntryUp(Entry* entry)
     emit entryAboutToMoveUp(row);
     m_entries.move(row, row - 1);
     emit entryMovedUp();
-    if (config()->get(Config::TrackNonDataChanges).toBool()) {
-        emit groupModified();
-    } else {
-        emit groupNonDataChange();
-    }
+    emit groupNonDataChange();
 }
 
 void Group::moveEntryDown(Entry* entry)
@@ -989,11 +981,7 @@ void Group::moveEntryDown(Entry* entry)
     emit entryAboutToMoveDown(row);
     m_entries.move(row, row + 1);
     emit entryMovedDown();
-    if (config()->get(Config::TrackNonDataChanges).toBool()) {
-        emit groupModified();
-    } else {
-        emit groupNonDataChange();
-    }
+    emit groupNonDataChange();
 }
 
 void Group::connectDatabaseSignalsRecursive(Database* db)

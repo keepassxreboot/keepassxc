@@ -260,6 +260,7 @@ private:
     void openDatabaseFromEntry(const Entry* entry, bool inBackground = true);
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false);
+    bool performSave(QString& errorMessage, const QString& fileName = {});
     Entry* currentSelectedEntry();
 
     QSharedPointer<Database> m_db;

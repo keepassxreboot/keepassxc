@@ -58,6 +58,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::AutoSaveAfterEveryChange,{QS("AutoSaveAfterEveryChange"), Roaming, true}},
     {Config::AutoReloadOnChange,{QS("AutoReloadOnChange"), Roaming, true}},
     {Config::AutoSaveOnExit,{QS("AutoSaveOnExit"), Roaming, true}},
+    {Config::AutoSaveNonDataChanges,{QS("AutoSaveNonDataChanges"), Roaming, true}},
     {Config::BackupBeforeSave,{QS("BackupBeforeSave"), Roaming, false}},
     {Config::UseAtomicSaves,{QS("UseAtomicSaves"), Roaming, true}},
     {Config::SearchLimitGroup,{QS("SearchLimitGroup"), Roaming, false}},
@@ -73,7 +74,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::AutoTypeStartDelay,{QS("AutoTypeStartDelay"), Roaming, 500}},
     {Config::GlobalAutoTypeKey,{QS("GlobalAutoTypeKey"), Roaming, 0}},
     {Config::GlobalAutoTypeModifiers,{QS("GlobalAutoTypeModifiers"), Roaming, 0}},
-    {Config::TrackNonDataChanges,{QS("TrackNonDataChanges"), Roaming, false}},
     {Config::FaviconDownloadTimeout,{QS("FaviconDownloadTimeout"), Roaming, 10}},
     {Config::UpdateCheckMessageShown,{QS("UpdateCheckMessageShown"), Roaming, false}},
     {Config::UseTouchID,{QS("UseTouchID"), Roaming, false}},
@@ -297,7 +297,6 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("security/IconDownloadFallbackToGoogle"), Config::Security_IconDownloadFallback},
 
     // 2.6.0
-    {QS("IgnoreGroupExpansion"), Config::TrackNonDataChanges},
     {QS("security/autotypeask"), Config::Security_AutoTypeAsk},
     {QS("security/clearclipboard"), Config::Security_ClearClipboard},
     {QS("security/clearclipboardtimeout"), Config::Security_ClearClipboardTimeout},
