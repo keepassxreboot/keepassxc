@@ -28,11 +28,15 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 
-Remove::Remove()
+
+CommandArgs Remove::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("rm");
-    description = QString("Remove an entry from the database.");
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to remove."), QString("")});
+    static const CommandArgs args {
+        { {"entry", QObject::tr("Path of the entry to remove."), ""} },
+        {},
+        {}
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int Remove::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)

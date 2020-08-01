@@ -29,32 +29,34 @@
 
 #include <QLocale>
 
-const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
-                                                                             << "totp",
-                                                               QObject::tr("Show the entry's current TOTP."));
+const QCommandLineOption TotpOption = QCommandLineOption(QStringList() << "t" << "totp",
+                                                         QObject::tr("Show the entry's current TOTP."));
 
-const QCommandLineOption Show::ProtectedAttributesOption =
-    QCommandLineOption(QStringList() << "s"
-                                     << "show-protected",
+const QCommandLineOption ProtectedAttributesOption =
+    QCommandLineOption(QStringList() << "s" << "show-protected",
                        QObject::tr("Show the protected attributes in clear text."));
 
-const QCommandLineOption Show::AttributesOption = QCommandLineOption(
-    QStringList() << "a"
-                  << "attributes",
+const QCommandLineOption AttributesOption = QCommandLineOption(
+    QStringList() << "a" << "attributes",
     QObject::tr(
         "Names of the attributes to show. "
         "This option can be specified more than once, with each attribute shown one-per-line in the given order. "
         "If no attributes are specified, a summary of the default attributes is given."),
     QObject::tr("attribute"));
 
-Show::Show()
+
+CommandArgs Show::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("show");
-    description = QObject::tr("Show an entry's information.");
-    options.append(Show::TotpOption);
-    options.append(Show::AttributesOption);
-    options.append(Show::ProtectedAttributesOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
+    static const CommandArgs args {
+        { {"entry", QObject::tr("Name of the entry to show."), ""} },
+        {},
+        {
+            TotpOption,
+            AttributesOption,
+            ProtectedAttributesOption
+        }
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int Show::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
@@ -62,11 +64,10 @@ int Show::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    // TODO_vanda why at(1) ???
-    const QString& entryPath = parser.positionalArguments().at(1);
-    bool showTotp = parser.isSet(Show::TotpOption);
-    bool showProtectedAttributes = parser.isSet(Show::ProtectedAttributesOption);
-    QStringList attributes = parser.values(Show::AttributesOption);
+    const QString entryPath = parser.positionalArguments().first();
+    bool showTotp = parser.isSet(TotpOption);
+    bool showProtectedAttributes = parser.isSet(ProtectedAttributesOption);
+    QStringList attributes = parser.values(AttributesOption);
 
     const Entry* entry = ctx.getDb().rootGroup()->findEntryByPath(entryPath);
     if (!entry) {

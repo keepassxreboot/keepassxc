@@ -21,23 +21,39 @@
 #include "TextStream.h"
 #include "Utils.h"
 
-Help::Help()
-{
-    name = QString("help");
-    description = QObject::tr("Display command help.");
 
-    positionalArguments.append({QString("command"), QObject::tr("Command name."), QString("")});
+CommandArgs Help::getParserArgs(const CommandCtx& ctx) const
+{
+    Q_UNUSED(ctx);
+    static const CommandArgs args {
+        {},
+        // If command is missing then print all available commands
+        { {"command", QObject::tr("Command name."), "[command]"} },
+        {}
+    };
+    return args;
 }
 
 int Help::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     auto& out = Utils::STDOUT;
 
+    const QStringList& args = parser.positionalArguments();
+    if (args.empty()) {
+        out << "\n\n" << QObject::tr("Available commands:") << "\n";
+        ctx.forEachCmd([&out, &ctx] (const Command& cmd) {
+            if (cmd.isAllowedRunmode(ctx.getRunmode()))
+                out << cmd.getDescriptionLine();
+        });
+        out << endl;
+        return EXIT_SUCCESS;
+    }
+
     const QString& cmdName = parser.positionalArguments().first();
     QSharedPointer<Command> cmd = ctx.getCmd(cmdName);
     BREAK_IF(!cmd, EXIT_FAILURE,
              ctx, QString("Command '%1' not found.").arg(cmdName));
 
-    out << cmd->getHelpText(parser) << endl;
+    out << cmd->getHelpText(ctx) << endl;
     return EXIT_SUCCESS;
 }

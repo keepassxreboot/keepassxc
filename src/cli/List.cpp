@@ -26,23 +26,26 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 
-const QCommandLineOption List::RecursiveOption =
+const QCommandLineOption RecursiveOption =
     QCommandLineOption(QStringList() << "R"
                                      << "recursive",
                        QObject::tr("Recursively list the elements of the group."));
 
-const QCommandLineOption List::FlattenOption = QCommandLineOption(QStringList() << "f"
+const QCommandLineOption FlattenOption = QCommandLineOption(QStringList() << "f"
                                                                                 << "flatten",
                                                                   QObject::tr("Flattens the output to single lines."));
 
-List::List()
+CommandArgs List::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("ls");
-    description = QObject::tr("List database entries.");
-    options.append(List::RecursiveOption);
-    options.append(List::FlattenOption);
-    optionalArguments.append(
-        {QString("group"), QObject::tr("Path of the group to list. Default is /"), QString("[group]")});
+    static const CommandArgs args {
+        {},
+        { {"group", QObject::tr("Path of the group to list. Default is /"), "[group]"} },
+        {
+            RecursiveOption,
+            FlattenOption
+        }
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int List::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
@@ -51,8 +54,8 @@ int List::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& err = Utils::STDERR;
 
     const QStringList args = parser.positionalArguments();
-    bool recursive = parser.isSet(List::RecursiveOption);
-    bool flatten = parser.isSet(List::FlattenOption);
+    bool recursive = parser.isSet(RecursiveOption);
+    bool flatten = parser.isSet(FlattenOption);
 
     Database& database = ctx.getDb();
     // No group provided, defaulting to root group.

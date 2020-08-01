@@ -24,11 +24,6 @@
 #include "TextStream.h"
 #include "Utils.h"
 
-Close::Close()
-{
-    name = QString("close");
-    description = QObject::tr("Close the currently opened database.");
-}
 
 int Close::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {

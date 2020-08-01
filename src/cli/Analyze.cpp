@@ -27,18 +27,22 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 
-const QCommandLineOption Analyze::HIBPDatabaseOption = QCommandLineOption(
+const QCommandLineOption HIBPDatabaseOption = QCommandLineOption(
     {"H", "hibp"},
     QObject::tr("Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing "
                 "SHA-1 hashes of leaked passwords in HIBP format, as available from "
                 "https://haveibeenpwned.com/Passwords."),
     QObject::tr("FILENAME"));
 
-Analyze::Analyze()
+
+CommandArgs Analyze::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("analyze");
-    description = QObject::tr("Analyze passwords for weaknesses and problems.");
-    options.append(Analyze::HIBPDatabaseOption);
+    static const CommandArgs args {
+        {},
+        {},
+        { HIBPDatabaseOption }
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int Analyze::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
@@ -46,7 +50,7 @@ int Analyze::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& pars
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    QString hibpDatabase = parser.value(Analyze::HIBPDatabaseOption);
+    QString hibpDatabase = parser.value(HIBPDatabaseOption);
     QFile hibpFile(hibpDatabase);
     if (!hibpFile.open(QFile::ReadOnly)) {
         err << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString()) << endl;

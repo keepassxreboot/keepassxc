@@ -20,15 +20,14 @@
 
 #include "Command.h"
 
-class Diceware : public Command
+class Diceware final : public Command
 {
+    using Ancestor = Command;
 public:
-    Diceware();
-
-    static const QCommandLineOption WordCountOption;
-    static const QCommandLineOption WordListOption;
+    using Ancestor::Ancestor;
 
 private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
     int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
 };
 DECL_TRAITS(Diceware, "diceware", "Generate a new random diceware passphrase.");

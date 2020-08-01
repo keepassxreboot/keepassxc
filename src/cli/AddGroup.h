@@ -20,13 +20,16 @@
 
 #include "DatabaseCommand.h"
 
-class AddGroup : public DatabaseCommand
+class AddGroup final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    AddGroup();
-    ~AddGroup();
+    using Ancestor::Ancestor;
 
-    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(AddGroup, "mkdir", "Adds a new group to a database.");
 

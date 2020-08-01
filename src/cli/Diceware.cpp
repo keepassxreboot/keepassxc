@@ -24,24 +24,31 @@
 #include "cli/TextStream.h"
 #include "core/PassphraseGenerator.h"
 
-const QCommandLineOption Diceware::WordCountOption =
+const QCommandLineOption WordCountOption =
     QCommandLineOption(QStringList() << "W"
                                      << "words",
                        QObject::tr("Word count for the diceware passphrase."),
                        QObject::tr("count", "CLI parameter"));
 
-const QCommandLineOption Diceware::WordListOption =
+const QCommandLineOption WordListOption =
     QCommandLineOption(QStringList() << "w"
                                      << "word-list",
                        QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
                        QObject::tr("path"));
 
-Diceware::Diceware()
+
+CommandArgs Diceware::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("diceware");
-    description = QObject::tr("Generate a new random diceware passphrase.");
-    options.append(Diceware::WordCountOption);
-    options.append(Diceware::WordListOption);
+    Q_UNUSED(ctx);
+    static const CommandArgs args {
+        {},
+        {},
+        {
+            WordCountOption,
+            WordListOption
+        }
+    };
+    return args;
 }
 
 int Diceware::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
@@ -53,7 +60,7 @@ int Diceware::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 
     PassphraseGenerator dicewareGenerator;
 
-    QString wordCount = parser.value(Diceware::WordCountOption);
+    QString wordCount = parser.value(WordCountOption);
     if (wordCount.isEmpty()) {
         dicewareGenerator.setWordCount(PassphraseGenerator::DefaultWordCount);
     } else if (wordCount.toInt() <= 0) {
@@ -63,7 +70,7 @@ int Diceware::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
         dicewareGenerator.setWordCount(wordCount.toInt());
     }
 
-    QString wordListFile = parser.value(Diceware::WordListOption);
+    QString wordListFile = parser.value(WordListOption);
     if (!wordListFile.isEmpty()) {
         dicewareGenerator.setWordList(wordListFile);
     }

@@ -44,9 +44,13 @@
 
 
 template<class Cmd>
-void regCmd(QHash<QString, QSharedPointer<Command>>& map)
+void regCmd(QMap<QString, QSharedPointer<Command>>& map)
 {
-    map.insert(CommandTraits<Cmd>::Name, QSharedPointer<Cmd>::create());
+    // direct passing to 'QSharedPointer::create' will make Name and
+    // Description 'odr-used' and force us to define them
+    const QString name(CommandTraits<Cmd>::Name);
+    const QString descr(CommandTraits<Cmd>::Description);
+    map.insert(name, QSharedPointer<Cmd>::create(name, descr));
 }
 
 void CommandCtx::cmdInit()
@@ -73,10 +77,16 @@ void CommandCtx::cmdInit()
     REG_CMD(Remove);
     REG_CMD(RemoveGroup);
     REG_CMD(Show);
-    // TODO_vanda interactive
-    // TODO_vanda alias 'quit'
-    REG_CMD(Exit);
-    // TODO_vanda non-interactive
+    // 'exit'/'quit'
+    {
+        static const QString names[] = {
+            CommandTraits<Exit>::Name,
+            CommandTraits<Exit>::Alias
+        };
+        const QString descr(CommandTraits<Exit>::Description);
+        for (const QString& name : names)
+            m_commands.insert(name, QSharedPointer<Exit>::create(name, descr));
+    }
     REG_CMD(Export);
     REG_CMD(Import);
 
@@ -90,7 +100,8 @@ int CommandCtx::parseArgs(QCommandLineParser& parser, const QStringList& args)
     QString description("KeePassXC command line interface.");
     description = description.append(QObject::tr("\n\nAvailable commands:\n"));
     for (const auto& command : m_commands)
-        description = description.append(command->getDescriptionLine());
+        if (command->isAllowedRunmode(Runmode::SingleCmd))
+            description.append(command->getDescriptionLine());
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("command", QObject::tr("Name of the command to execute."));
     const QCommandLineOption debugInfo("debug-info", QObject::tr("Displays debugging information."));

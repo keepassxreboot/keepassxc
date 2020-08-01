@@ -25,13 +25,6 @@
 #include "Utils.h"
 #include "core/Metadata.h"
 
-#include "Exit.h"
-
-Open::Open()
-{
-    name = QString("open");
-    description = QObject::tr("Open a database.");
-}
 
 class LineReader
 {
@@ -107,8 +100,6 @@ private:
 static int commandLoop(CommandCtx& ctx)
 {
     auto& err = Utils::STDERR;
-    // TODO_vanda: replace command list with interactive version
-    // Commands::setupCommands(true);
 
     QScopedPointer<LineReader> reader(new
 #if defined(USE_READLINE)
@@ -146,9 +137,6 @@ static int commandLoop(CommandCtx& ctx)
             err.flush();
             continue;
         }
-        // TODO_vanda: no need to insert 'path' when the command args become
-        // appropriate to current runmode
-        args.insert(1, ctx.getDb().filePath());
         if (cmd->execute(ctx, args) == EXIT_FAILURE) {
             err << QObject::tr("Failed to execute command '%1'.").arg(cmdName) << endl;
             for (const auto& e : ctx.getErrors())

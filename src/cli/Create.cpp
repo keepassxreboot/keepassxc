@@ -30,31 +30,37 @@
 #include "keys/CompositeKey.h"
 #include "keys/Key.h"
 
-const QCommandLineOption Create::DecryptionTimeOption =
+const QCommandLineOption DecryptionTimeOption =
     QCommandLineOption(QStringList() << "t"
                                      << "decryption-time",
                        QObject::tr("Target decryption time in MS for the database."),
                        QObject::tr("time"));
 
-const QCommandLineOption Create::SetKeyFileOption =
+const QCommandLineOption SetKeyFileOption =
     QCommandLineOption(QStringList() << "k"
                                      << "set-key-file",
                        QObject::tr("Set the key file for the database."),
                        QObject::tr("path"));
 
-const QCommandLineOption Create::SetPasswordOption =
+const QCommandLineOption SetPasswordOption =
     QCommandLineOption(QStringList() << "p"
                                      << "set-password",
                        QObject::tr("Set a password for the database."));
 
-Create::Create()
+
+CommandArgs Create::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("db-create");
-    description = QObject::tr("Create a new database.");
-    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
-    options.append(Create::SetKeyFileOption);
-    options.append(Create::SetPasswordOption);
-    options.append(Create::DecryptionTimeOption);
+    Q_UNUSED(ctx);
+    static const CommandArgs args {
+        { {QString("database"), QObject::tr("Path of the database."), QString("")} },
+        {},
+        {
+            SetKeyFileOption,
+            SetPasswordOption,
+            DecryptionTimeOption,
+        }
+    };
+    return args;
 }
 
 /**
@@ -84,7 +90,7 @@ int Create::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
     }
 
     // Validate the decryption time before asking for a password.
-    QString decryptionTimeValue = parser.value(Create::DecryptionTimeOption);
+    QString decryptionTimeValue = parser.value(DecryptionTimeOption);
     int decryptionTime = 0;
     if (decryptionTimeValue.length() != 0) {
         decryptionTime = decryptionTimeValue.toInt();
@@ -102,7 +108,7 @@ int Create::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 
     auto key = QSharedPointer<CompositeKey>::create();
 
-    if (parser.isSet(Create::SetPasswordOption)) {
+    if (parser.isSet(SetPasswordOption)) {
         auto passwordKey = Utils::getConfirmedPassword();
         if (passwordKey.isNull()) {
             err << QObject::tr("Failed to set database password.") << endl;
@@ -111,10 +117,10 @@ int Create::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
         key->addKey(passwordKey);
     }
 
-    if (parser.isSet(Create::SetKeyFileOption)) {
+    if (parser.isSet(SetKeyFileOption)) {
         QSharedPointer<FileKey> fileKey;
 
-        if (!loadFileKey(parser.value(Create::SetKeyFileOption), fileKey)) {
+        if (!loadFileKey(parser.value(SetKeyFileOption), fileKey)) {
             err << QObject::tr("Loading the key file failed") << endl;
             return EXIT_FAILURE;
         }

@@ -24,15 +24,13 @@
 
 class Create final : public Command
 {
+    using Ancestor = Command;
 public:
-    Create();
-
-    static const QCommandLineOption SetKeyFileOption;
-    static const QCommandLineOption SetPasswordOption;
-    static const QCommandLineOption DecryptionTimeOption;
+    using Ancestor::Ancestor;
 
 private:
-    virtual int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
+    int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
     bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey);
 };
 DECL_TRAITS(Create, "db-create", "Create a new database.");

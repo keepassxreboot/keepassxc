@@ -20,15 +20,15 @@
 
 #include "DatabaseCommand.h"
 
-class Analyze : public DatabaseCommand
+class Analyze final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Analyze();
+    using Ancestor::Ancestor;
+
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
-
-    static const QCommandLineOption HIBPDatabaseOption;
-
 private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
     void printHibpFinding(const Entry* entry, int count, QTextStream& out);
 };
 DECL_TRAITS(Analyze, "analyze", "Analyze passwords for weaknesses and problems.");

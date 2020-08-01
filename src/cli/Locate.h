@@ -22,10 +22,14 @@
 
 class Locate : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Locate();
+    using Ancestor::Ancestor;
 
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Locate, "locate", "Find entries quickly.");
 

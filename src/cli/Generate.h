@@ -23,17 +23,17 @@
 #include "core/PasswordGenerator.h"
 
 
-
 /**
  * Creates a password generator instance using the command line options
  * of the parser object.
  */
 QSharedPointer<PasswordGenerator> createGenerator(CommandCtx& ctx, const QCommandLineParser& parser);
 
-class Generate : public Command
+class Generate final : public Command
 {
+    using Ancestor = Command;
 public:
-    Generate();
+    using Ancestor::Ancestor;
 
     static const QCommandLineOption PasswordLengthOption;
     static const QCommandLineOption LowerCaseOption;
@@ -46,7 +46,8 @@ public:
     static const QCommandLineOption IncludeEveryGroupOption;
 
 private:
-    int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
+    int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };
 DECL_TRAITS(Generate, "generate", "Generate a new random password.");
 

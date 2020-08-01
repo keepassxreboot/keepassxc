@@ -20,15 +20,16 @@
 
 #include "DatabaseCommand.h"
 
-class Clip : public DatabaseCommand
+class Clip final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Clip();
+    using Ancestor::Ancestor;
 
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
-    static const QCommandLineOption AttributeOption;
-    static const QCommandLineOption TotpOption;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Clip, "clip", "Copy an entry's attribute to the clipboard.");
 

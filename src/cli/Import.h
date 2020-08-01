@@ -20,13 +20,16 @@
 
 #include "Command.h"
 
-class Import : public Command
+class Import final : public Command
 {
 public:
-    Import();
+    Import(const QString& name, const QString& description)
+        : Command(name, description, runmodeMask(Runmode::SingleCmd))
+    {}
 
 private:
-    int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
+    int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };
 DECL_TRAITS(Import, "import", "Import the contents of an XML database.");
 

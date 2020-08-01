@@ -26,15 +26,15 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 
-AddGroup::AddGroup()
-{
-    name = QString("mkdir");
-    description = QObject::tr("Adds a new group to a database.");
-    positionalArguments.append({QString("group"), QObject::tr("Path of the group to add."), QString("")});
-}
 
-AddGroup::~AddGroup()
+CommandArgs AddGroup::getParserArgs(const CommandCtx& ctx) const
 {
+    static const CommandArgs args {
+        { {QString("group"), QObject::tr("Path of the group to add."), QString("")} },
+        {},
+        {}
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int AddGroup::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)

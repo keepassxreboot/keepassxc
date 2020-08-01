@@ -26,17 +26,16 @@
 
 class DatabaseCommand : public Command
 {
+    using Ancestor = Command;
+
 public:
-    DatabaseCommand();
+    using Ancestor::Ancestor;
 
     virtual int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) = 0;
 
-    static const QCommandLineOption KeyFileOption;
-    static const QCommandLineOption NoPasswordOption;
-    static const QCommandLineOption YubiKeyOption;
-
 protected:
     std::unique_ptr<Database> openDatabase(const QCommandLineParser& parser);
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 
 private:
     int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;

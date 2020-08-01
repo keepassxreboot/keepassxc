@@ -111,19 +111,27 @@ const QCommandLineOption Generate::ExcludeSimilarCharsOption =
 
 const QCommandLineOption Generate::IncludeEveryGroupOption =
     QCommandLineOption(QStringList() << "every-group", QObject::tr("Include characters from every selected group"));
-Generate::Generate()
+
+
+CommandArgs Generate::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("generate");
-    description = QObject::tr("Generate a new random password.");
-    options.append(Generate::PasswordLengthOption);
-    options.append(Generate::LowerCaseOption);
-    options.append(Generate::UpperCaseOption);
-    options.append(Generate::NumbersOption);
-    options.append(Generate::SpecialCharsOption);
-    options.append(Generate::ExtendedAsciiOption);
-    options.append(Generate::ExcludeCharsOption);
-    options.append(Generate::ExcludeSimilarCharsOption);
-    options.append(Generate::IncludeEveryGroupOption);
+    Q_UNUSED(ctx);
+    static const CommandArgs args {
+        {},
+        {},
+        {
+            Generate::PasswordLengthOption,
+            Generate::LowerCaseOption,
+            Generate::UpperCaseOption,
+            Generate::NumbersOption,
+            Generate::SpecialCharsOption,
+            Generate::ExtendedAsciiOption,
+            Generate::ExcludeCharsOption,
+            Generate::ExcludeSimilarCharsOption,
+            Generate::IncludeEveryGroupOption
+        }
+    };
+    return args;
 }
 
 int Generate::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)

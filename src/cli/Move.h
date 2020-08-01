@@ -20,13 +20,15 @@
 
 #include "DatabaseCommand.h"
 
-class Move : public DatabaseCommand
+class Move final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Move();
-    ~Move();
+    using Ancestor::Ancestor;
 
-    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Move, "mv", "Moves an entry to a new group.");
 

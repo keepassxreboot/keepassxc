@@ -29,11 +29,15 @@
 #include "core/Global.h"
 #include "core/Group.h"
 
-Locate::Locate()
+
+CommandArgs Locate::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("locate");
-    description = QObject::tr("Find entries quickly.");
-    positionalArguments.append({QString("term"), QObject::tr("Search term."), QString("")});
+    static const CommandArgs args {
+        { {"term", QObject::tr("Search term."), ""} },
+        {},
+        {}
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int Locate::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)

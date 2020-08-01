@@ -20,13 +20,15 @@
 
 #include "DatabaseCommand.h"
 
-class RemoveGroup : public DatabaseCommand
+class RemoveGroup final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    RemoveGroup();
-    ~RemoveGroup();
+    using Ancestor::Ancestor;
 
-    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(RemoveGroup, "rmdir", "Removes a group from a database.");
 

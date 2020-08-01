@@ -45,26 +45,28 @@ const QCommandLineOption Add::GenerateOption = QCommandLineOption(QStringList() 
                                                                                 << "generate",
                                                                   QObject::tr("Generate a password for the entry."));
 
-Add::Add()
+CommandArgs Add::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("add");
-    description = QObject::tr("Add a new entry to a database.");
-    options.append(Add::UsernameOption);
-    options.append(Add::UrlOption);
-    options.append(Add::PasswordPromptOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to add."), QString("")});
-
-    // Password generation options.
-    options.append(Add::GenerateOption);
-    options.append(Generate::PasswordLengthOption);
-    options.append(Generate::LowerCaseOption);
-    options.append(Generate::UpperCaseOption);
-    options.append(Generate::NumbersOption);
-    options.append(Generate::SpecialCharsOption);
-    options.append(Generate::ExtendedAsciiOption);
-    options.append(Generate::ExcludeCharsOption);
-    options.append(Generate::ExcludeSimilarCharsOption);
-    options.append(Generate::IncludeEveryGroupOption);
+    static const CommandArgs args {
+        { {"entry", QObject::tr("Path of the entry to add."), ""} },
+        {},
+        {
+            UsernameOption,
+            UrlOption,
+            PasswordPromptOption,
+            GenerateOption,
+            Generate::PasswordLengthOption,
+            Generate::LowerCaseOption,
+            Generate::UpperCaseOption,
+            Generate::NumbersOption,
+            Generate::SpecialCharsOption,
+            Generate::ExtendedAsciiOption,
+            Generate::ExcludeCharsOption,
+            Generate::ExcludeSimilarCharsOption,
+            Generate::IncludeEveryGroupOption
+        }
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int Add::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)

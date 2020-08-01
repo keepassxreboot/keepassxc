@@ -25,17 +25,21 @@
 #include "core/Database.h"
 #include "format/CsvExporter.h"
 
-const QCommandLineOption Export::FormatOption = QCommandLineOption(
+const QCommandLineOption FormatOption = QCommandLineOption(
     QStringList() << "f"
                   << "format",
     QObject::tr("Format to use when exporting. Available choices are 'xml' or 'csv'. Defaults to 'xml'."),
     QStringLiteral("xml|csv"));
 
-Export::Export()
+
+CommandArgs Export::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QStringLiteral("export");
-    options.append(Export::FormatOption);
-    description = QObject::tr("Exports the content of a database to standard output in the specified format.");
+    static const CommandArgs args {
+        {},
+        {},
+        { FormatOption }
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int Export::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
@@ -44,7 +48,7 @@ int Export::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parse
     auto& err = Utils::STDERR;
 
     Database& database = ctx.getDb();
-    QString format = parser.value(Export::FormatOption);
+    QString format = parser.value(FormatOption);
     if (format.isEmpty() || format.startsWith(QStringLiteral("xml"), Qt::CaseInsensitive)) {
         QByteArray xmlData;
         QString errorMessage;

@@ -20,12 +20,15 @@
 
 #include "DatabaseCommand.h"
 
-class Remove : public DatabaseCommand
+class Remove final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Remove();
+    using Ancestor::Ancestor;
 
-    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Remove, "rm", "Remove an entry from the database.");
 

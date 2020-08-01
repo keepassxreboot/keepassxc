@@ -20,14 +20,16 @@
 
 #include "DatabaseCommand.h"
 
-class Export : public DatabaseCommand
+class Export final : public DatabaseCommand
 {
 public:
-    Export();
+    Export(const QString& name, const QString& description)
+        : DatabaseCommand(name, description, runmodeMask(Runmode::SingleCmd))
+    {}
 
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
-
-    static const QCommandLineOption FormatOption;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Export, "export", "Exports the content of a database to standard output in the specified format.");
 

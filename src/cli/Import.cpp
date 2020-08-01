@@ -40,12 +40,20 @@
  *
  * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure
  */
-Import::Import()
+
+
+CommandArgs Import::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("import");
-    description = QObject::tr("Import the contents of an XML database.");
-    positionalArguments.append({QString("xml"), QObject::tr("Path of the XML database export."), QString("")});
-    positionalArguments.append({QString("database"), QObject::tr("Path of the new database."), QString("")});
+    Q_UNUSED(ctx);
+    static const CommandArgs args {
+        {
+            { "xml", QObject::tr("Path of the XML database export."), "" },
+            { "database", QObject::tr("Path of the new database."), "" }
+        },
+        {},
+        {}
+    };
+    return args;
 }
 
 int Import::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)

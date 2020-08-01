@@ -50,6 +50,7 @@
 #include "TextStream.h"
 #include "Utils.h"
 
+
 const QCommandLineOption Command::HelpOption = QCommandLineOption(QStringList()
 #ifdef Q_OS_WIN
                                                                       << QStringLiteral("?")
@@ -63,17 +64,17 @@ const QCommandLineOption Command::QuietOption =
                        QObject::tr("Silent password prompt and other secondary outputs."));
 
 
-QSharedPointer<QCommandLineParser> Command::makeParser(CommandCtx& ctx, const QStringList& args,
-                                                       const QList<CommandLineArgument>& posArgs,
-                                                       const QList<CommandLineArgument>& optArgs,
-                                                       const QList<QCommandLineOption>& options)
+QSharedPointer<QCommandLineParser> Command::makeParser(const CommandCtx& ctx) const
 {
     auto parser = QSharedPointer<QCommandLineParser>::create();
     if (!parser)
         return nullptr;
-    BREAK_IF(!parser, nullptr, ctx, QString("Failed to create command parser for { '%1' }").arg(args.join("', '")));
 
-    parser->setApplicationDescription(description);
+    parser->setApplicationDescription(m_description);
+    const CommandArgs& parserArgs = getParserArgs(ctx);
+    const QList<CommandLineArgument>& posArgs = parserArgs.positionalArguments;
+    const QList<CommandLineArgument>& optArgs = parserArgs.optionalArguments;
+    const QList<QCommandLineOption>& options = parserArgs.options;
     for (const CommandLineArgument& arg : posArgs) {
         parser->addPositionalArgument(arg.name, arg.description, arg.syntax);
     }
@@ -85,33 +86,44 @@ QSharedPointer<QCommandLineParser> Command::makeParser(CommandCtx& ctx, const QS
     for (const QCommandLineOption& opt : options) {
         parser->addOption(opt);
     }
+    return parser;
+}
+
+QSharedPointer<QCommandLineParser> Command::parse(CommandCtx& ctx, const QStringList& args)
+{
+    QSharedPointer<QCommandLineParser> parser = makeParser(ctx);
+    BREAK_IF(!parser, nullptr, ctx, QString("Failed to create command parser for args={ '%1' }").arg(args.join("', '")));
 
     BREAK_IF(!parser->parse(args), nullptr, ctx, QString("Failed to parse arguments { '%1' }: '%2'").arg(args.join("', '")).arg(parser->errorText()));
+
     const QStringList& parsedArgs = parser->positionalArguments();
+    const CommandArgs& parserArgs = getParserArgs(ctx);
+    const QList<CommandLineArgument>& posArgs = parserArgs.positionalArguments;
+    const QList<CommandLineArgument>& optArgs = parserArgs.optionalArguments;
     BREAK_IF(parsedArgs.size() < posArgs.size() && !parser->isSet(HelpOption), nullptr,
-             ctx, QString("Too few arguments.\n\n").append(getHelpText(*parser)));
+             ctx, QString("Too few arguments.\n\n").append(getHelpText(ctx)));
     BREAK_IF(parsedArgs.size() > posArgs.size() + optArgs.size(), nullptr,
-             ctx, QString("Too much arguments.\n\n").append(getHelpText(*parser)));
+             ctx, QString("Too much arguments.\n\n").append(getHelpText(ctx)));
 
     return parser;
 }
 
-QString Command::getDescriptionLine()
+QString Command::getDescriptionLine() const
 {
-    QString response = name;
+    QString response = m_name;
     QString space(" ");
-    QString spaces = space.repeated(15 - name.length());
+    QString spaces = space.repeated(15 - m_name.length());
     response = response.append(spaces);
-    response = response.append(description);
+    response = response.append(m_description);
     response = response.append("\n");
     return response;
 }
 
-QString Command::getHelpText(const QCommandLineParser& parser) const
+QString Command::getHelpText(const CommandCtx& ctx) const
 {
-    QString help = parser.helpText();
+    QString help = makeParser(ctx)->helpText();
     // Fix spacing of options parameter
-    help.replace(QStringLiteral("[options]"), name + QStringLiteral(" [options]"));
+    help.replace(QStringLiteral("[options]"), m_name + QStringLiteral(" [options]"));
     // Remove application directory from command line example
     QString appname = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
     const QRegularExpression regex(QStringLiteral(" .*%1").arg(QRegularExpression::escape(appname)));
@@ -119,13 +131,13 @@ QString Command::getHelpText(const QCommandLineParser& parser) const
     return help;
 }
 
-int Command::execute(CommandCtx& ctx, const QStringList& arguments)
+int Command::execute(CommandCtx& ctx, const QStringList& args)
 {
-    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(ctx, arguments);
+    QSharedPointer<QCommandLineParser> parser = parse(ctx, args);
     if (parser.isNull())
         return EXIT_FAILURE;
     if (parser->isSet(HelpOption)) {
-        Utils::STDOUT << getHelpText(*parser) << endl;
+        Utils::STDOUT << getHelpText(ctx) << endl;
         return EXIT_SUCCESS;
     }
     return execImpl(ctx, *parser);

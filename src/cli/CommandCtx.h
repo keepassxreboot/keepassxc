@@ -23,6 +23,15 @@ enum class Runmode
     InteractiveCmd
 };
 
+constexpr int runmodeMask(Runmode mode)
+{
+    return 1 << static_cast<int>(mode);
+}
+constexpr int runmodeMaskBoth()
+{
+    return runmodeMask(Runmode::SingleCmd) | runmodeMask(Runmode::InteractiveCmd);
+}
+
 struct Command;
 
 struct CommandCtx
@@ -49,6 +58,13 @@ struct CommandCtx
                 : nullptr;
     }
 
+    template<class F>
+    void forEachCmd(const F& f) const
+    {
+        for (const auto& cmd : m_commands)
+            f(*cmd);
+    }
+
     Database& getDb()
     {
         Q_ASSERT(m_db);
@@ -72,7 +88,7 @@ private:
     int parseArgs(QCommandLineParser& parser, const QStringList& args);
 
     Runmode m_runmode;
-    QHash<QString, QSharedPointer<Command>> m_commands;
+    QMap<QString, QSharedPointer<Command>> m_commands;
     std::unique_ptr<Database> m_db;
     QStack<QString> m_errors;
 };

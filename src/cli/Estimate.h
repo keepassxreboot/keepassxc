@@ -20,14 +20,14 @@
 
 #include "Command.h"
 
-class Estimate : public Command
+class Estimate final : public Command
 {
+    using Ancestor = Command;
 public:
-    Estimate();
-
-    static const QCommandLineOption AdvancedOption;
+    using Ancestor::Ancestor;
 
 private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
     int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
 };
 DECL_TRAITS(Estimate, "estimate", "Estimate the entropy of a password.");

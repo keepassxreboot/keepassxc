@@ -25,12 +25,6 @@
 #include "core/Metadata.h"
 #include "format/KeePass2.h"
 
-Info::Info()
-{
-    name = QString("db-info");
-    description = QObject::tr("Show a database's information.");
-}
-
 int Info::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     Q_UNUSED(parser);

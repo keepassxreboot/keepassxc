@@ -22,10 +22,12 @@
 
 #include "Command.h"
 
-class Close : public Command
+class Close final : public Command
 {
 public:
-    Close();
+    Close(const QString& name, const QString& description)
+        : Command(name, description, runmodeMask(Runmode::InteractiveCmd))
+    {}
 
 private:
     int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;

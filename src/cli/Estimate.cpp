@@ -32,18 +32,21 @@
 #endif
 #endif
 
-const QCommandLineOption Estimate::AdvancedOption =
+const QCommandLineOption AdvancedOption =
     QCommandLineOption(QStringList() << "a"
                                      << "advanced",
                        QObject::tr("Perform advanced analysis on the password."));
 
-Estimate::Estimate()
+CommandArgs Estimate::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("estimate");
-    optionalArguments.append(
-        {QString("password"), QObject::tr("Password for which to estimate the entropy."), QString("[password]")});
-    options.append(Estimate::AdvancedOption);
-    description = QObject::tr("Estimate the entropy of a password.");
+    Q_UNUSED(ctx);
+    static const CommandArgs args {
+        {},
+        // if doesn't passed, read from stdin
+        { {QString("password"), QObject::tr("Password for which to estimate the entropy."), QString("[password]")} },
+        { AdvancedOption }
+    };
+    return args;
 }
 
 static void estimate(const char* pwd, bool advanced)
@@ -168,6 +171,6 @@ int Estimate::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
         password = Utils::STDIN.readLine();
     }
 
-    estimate(password.toLatin1(), parser.isSet(Estimate::AdvancedOption));
+    estimate(password.toLatin1(), parser.isSet(AdvancedOption));
     return EXIT_SUCCESS;
 }

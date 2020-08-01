@@ -20,12 +20,13 @@
 
 #include "DatabaseCommand.h"
 
-class Info : public DatabaseCommand
+class Info final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Info();
+    using Ancestor::Ancestor;
 
-    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };
 DECL_TRAITS(Info, "db-info", "Show a database's information.");
 

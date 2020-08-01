@@ -20,15 +20,16 @@
 
 #include "DatabaseCommand.h"
 
-class List : public DatabaseCommand
+class List final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    List();
+    using Ancestor::Ancestor;
 
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
-    static const QCommandLineOption RecursiveOption;
-    static const QCommandLineOption FlattenOption;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(List, "ls", "List database entries.");
 

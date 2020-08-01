@@ -20,14 +20,15 @@
 
 #include "Command.h"
 
-class Help : public Command
+class Help final : public Command
 {
+    using Ancestor = Command;
 public:
-    Help();
-    ~Help() override = default;
+    using Ancestor::Ancestor;
 
 private:
-    int execImpl(CommandCtx &ctx, const QCommandLineParser &parser) override;
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
+    int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };
 DECL_TRAITS(Help, "help", "Display command help.");
 

@@ -20,16 +20,15 @@
 
 #include "DatabaseCommand.h"
 
-class Show : public DatabaseCommand
+class Show final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Show();
+    using Ancestor::Ancestor;
 
-    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser);
-
-    static const QCommandLineOption TotpOption;
-    static const QCommandLineOption AttributesOption;
-    static const QCommandLineOption ProtectedAttributesOption;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Show, "show", "Show an entry's information.");
 

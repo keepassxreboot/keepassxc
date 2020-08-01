@@ -22,11 +22,13 @@
 
 class Edit : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Edit();
-    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+    using Ancestor::Ancestor;
 
-    static const QCommandLineOption TitleOption;
+    int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Edit, "edit", "Edit an entry.");
 

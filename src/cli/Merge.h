@@ -20,18 +20,16 @@
 
 #include "DatabaseCommand.h"
 
-class Merge : public DatabaseCommand
+class Merge final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Merge();
+    using Ancestor::Ancestor;
 
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
-    static const QCommandLineOption SameCredentialsOption;
-    static const QCommandLineOption KeyFileFromOption;
-    static const QCommandLineOption NoPasswordFromOption;
-    static const QCommandLineOption YubiKeyFromOption;
-    static const QCommandLineOption DryRunOption;
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Merge, "merge", "Merge two databases.");
 

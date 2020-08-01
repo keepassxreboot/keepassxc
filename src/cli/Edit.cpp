@@ -29,33 +29,36 @@
 #include "core/Group.h"
 #include "core/PasswordGenerator.h"
 
-const QCommandLineOption Edit::TitleOption = QCommandLineOption(QStringList() << "t"
-                                                                              << "title",
-                                                                QObject::tr("Title for the entry."),
-                                                                QObject::tr("title"));
+const QCommandLineOption TitleOption = QCommandLineOption(QStringList() << "t" << "title",
+                                                          QObject::tr("Title for the entry."),
+                                                          QObject::tr("title"));
 
-Edit::Edit()
+
+CommandArgs Edit::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("edit");
-    description = QObject::tr("Edit an entry.");
-    // Using some of the options from the Add command since they are the same.
-    options.append(Add::UsernameOption);
-    options.append(Add::UrlOption);
-    options.append(Add::PasswordPromptOption);
-    options.append(Edit::TitleOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString("")});
-
-    // Password generation options.
-    options.append(Add::GenerateOption);
-    options.append(Generate::PasswordLengthOption);
-    options.append(Generate::LowerCaseOption);
-    options.append(Generate::UpperCaseOption);
-    options.append(Generate::NumbersOption);
-    options.append(Generate::SpecialCharsOption);
-    options.append(Generate::ExtendedAsciiOption);
-    options.append(Generate::ExcludeCharsOption);
-    options.append(Generate::ExcludeSimilarCharsOption);
-    options.append(Generate::IncludeEveryGroupOption);
+    static const CommandArgs args {
+        { {QString("entry"), QObject::tr("Path of the entry to edit."), QString("")} },
+        {},
+        {
+            TitleOption,
+            // Using some of the options from the Add command since they are the same.
+            Add::UsernameOption,
+            Add::UrlOption,
+            Add::PasswordPromptOption,
+            // Password generation options.
+            Add::GenerateOption,
+            Generate::PasswordLengthOption,
+            Generate::LowerCaseOption,
+            Generate::UpperCaseOption,
+            Generate::NumbersOption,
+            Generate::SpecialCharsOption,
+            Generate::ExtendedAsciiOption,
+            Generate::ExcludeCharsOption,
+            Generate::ExcludeSimilarCharsOption,
+            Generate::IncludeEveryGroupOption
+        }
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int Edit::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
@@ -92,7 +95,7 @@ int Edit::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
 
     QString username = parser.value(Add::UsernameOption);
     QString url = parser.value(Add::UrlOption);
-    QString title = parser.value(Edit::TitleOption);
+    QString title = parser.value(TitleOption);
     bool prompt = parser.isSet(Add::PasswordPromptOption);
     if (username.isEmpty() && url.isEmpty() && title.isEmpty() && !prompt && !generate) {
         err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;

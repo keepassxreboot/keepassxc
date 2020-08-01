@@ -21,11 +21,6 @@
 #include <QObject>
 #include <QtGlobal>
 
-Exit::Exit()
-{
-    this->name = "exit";
-    description = QObject::tr("Exit interactive mode.");
-}
 
 int Exit::execImpl(CommandCtx &ctx, const QCommandLineParser &parser)
 {

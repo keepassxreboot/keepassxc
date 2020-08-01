@@ -20,10 +20,11 @@
 
 #include "DatabaseCommand.h"
 
-class Add : public DatabaseCommand
+class Add final : public DatabaseCommand
 {
+    using Ancestor = DatabaseCommand;
 public:
-    Add();
+    using Ancestor::Ancestor;
 
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 
@@ -32,6 +33,9 @@ public:
     static const QCommandLineOption PasswordPromptOption;
     static const QCommandLineOption GenerateOption;
     static const QCommandLineOption PasswordLengthOption;
+
+private:
+    CommandArgs getParserArgs(const CommandCtx& ctx) const override;
 };
 DECL_TRAITS(Add, "add", "Add a new entry to a database.");
 

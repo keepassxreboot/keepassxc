@@ -20,31 +20,38 @@
 #include "Utils.h"
 
 
-const QCommandLineOption DatabaseCommand::KeyFileOption = QCommandLineOption(QStringList() << "k"
-                                                                                   << "key-file",
-                                                                     QObject::tr("Key file of the database."),
-                                                                     QObject::tr("path"));
+const QCommandLineOption KeyFileOption = QCommandLineOption(QStringList() << "k" << "key-file",
+                                                                             QObject::tr("Key file of the database."),
+                                                                             QObject::tr("path"));
 
-const QCommandLineOption DatabaseCommand::NoPasswordOption =
+const QCommandLineOption NoPasswordOption =
     QCommandLineOption(QStringList() << "no-password", QObject::tr("Deactivate password key for the database."));
 
 #ifdef WITH_XC_YUBIKEY
-const QCommandLineOption DatabaseCommand::YubiKeyOption =
+const QCommandLineOption YubiKeyOption =
     QCommandLineOption(QStringList() << "y"
                                      << "yubikey",
                        QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001)."),
                        QObject::tr("slot[:serial]"));
 #endif
 
-DatabaseCommand::DatabaseCommand()
-{
-    options.append(KeyFileOption);
-    options.append(NoPasswordOption);
-#ifdef WITH_XC_YUBIKEY
-    options.append(Command::YubiKeyOption);
-#endif
 
-    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
+CommandArgs DatabaseCommand::getParserArgs(const CommandCtx& ctx) const
+{
+    if (ctx.getRunmode() == Runmode::InteractiveCmd)
+        return {};
+
+    static const CommandArgs dbArgs = {
+        { {QString("database"), QObject::tr("Path of the database."), QString("")} },
+        {},
+        {
+            KeyFileOption,
+#ifdef WITH_XC_YUBIKEY
+            YubiKeyOption;
+#endif
+            NoPasswordOption }
+    };
+    return dbArgs;
 }
 
 std::unique_ptr<Database> DatabaseCommand::openDatabase(const QCommandLineParser& parser)
@@ -62,10 +69,6 @@ std::unique_ptr<Database> DatabaseCommand::openDatabase(const QCommandLineParser
 
 int DatabaseCommand::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    // TODO_vanda
-    // QStringList amendedArgs(arguments);
-    // if (ctx.hasDb())
-    //     amendedArgs.insert(1, ctx.getDb().filePath());
     if (ctx.hasDb())
         return executeWithDatabase(ctx, parser);
     std::unique_ptr<Database> db = openDatabase(parser);

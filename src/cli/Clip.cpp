@@ -27,28 +27,30 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 
-const QCommandLineOption Clip::AttributeOption = QCommandLineOption(
+const QCommandLineOption AttributeOption = QCommandLineOption(
     QStringList() << "a"
                   << "attribute",
     QObject::tr("Copy the given attribute to the clipboard. Defaults to \"password\" if not specified."),
     "attr",
     "password");
 
-const QCommandLineOption Clip::TotpOption =
+const QCommandLineOption TotpOption =
     QCommandLineOption(QStringList() << "t"
                                      << "totp",
                        QObject::tr("Copy the current TOTP to the clipboard (equivalent to \"-a totp\")."));
 
-Clip::Clip()
+
+CommandArgs Clip::getParserArgs(const CommandCtx& ctx) const
 {
-    name = QString("clip");
-    description = QObject::tr("Copy an entry's attribute to the clipboard.");
-    options.append(Clip::AttributeOption);
-    options.append(Clip::TotpOption);
-    positionalArguments.append(
-        {QString("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QString("")});
-    optionalArguments.append(
-        {QString("timeout"), QObject::tr("Timeout in seconds before clearing the clipboard."), QString("[timeout]")});
+    static const CommandArgs args {
+        { {"entry", QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), ""} },
+        { {"timeout", QObject::tr("Timeout in seconds before clearing the clipboard."), "[timeout]"} },
+        {
+            AttributeOption,
+            TotpOption
+        }
+    };
+    return DatabaseCommand::getParserArgs(ctx).merge(args);
 }
 
 int Clip::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)

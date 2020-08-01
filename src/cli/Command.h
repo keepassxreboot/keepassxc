@@ -51,34 +51,79 @@ struct CommandLineArgument
     QString syntax;
 };
 
-class Command
+struct CommandArgs
 {
-public:
-    Command() = default;
-    virtual ~Command() = default;
-    int execute(CommandCtx& ctx, const QStringList& arguments);
-
-    QString name;
-    QString description;
+    CommandArgs& merge(const CommandArgs& other)
+    {
+        positionalArguments.append(other.positionalArguments);
+        optionalArguments.append(other.optionalArguments);
+        options.append(other.options);
+        return *this;
+    }
 
     QList<CommandLineArgument> positionalArguments;
     QList<CommandLineArgument> optionalArguments;
-    QList<QCommandLineOption> options;
+    QList<QCommandLineOption>  options;
+};
 
-    QString getHelpText(const QCommandLineParser& parser) const;
-    QString getDescriptionLine();
+class Command
+{
+public:
+    Command(const QString& name, const QString& description)
+        : m_name(name)
+        , m_description(description)
+    {}
+    virtual ~Command() = default;
+
+    int execute(CommandCtx& ctx, const QStringList& args);
+
+    bool isAllowedRunmode(Runmode mode) const
+    {
+        return m_allowedRunmodes & runmodeMask(mode);
+    }
+
+    QString getHelpText(const CommandCtx& ctx) const;
+    QString getDescriptionLine() const;
 
     static const QCommandLineOption HelpOption;
     static const QCommandLineOption QuietOption;
 
 protected:
-    virtual QSharedPointer<QCommandLineParser> getCommandLineParser(CommandCtx& ctx, const QStringList& arguments) = 0;
+    Command(const QString& name, const QString& description, int runmodeMask)
+        : Command(name, description)
+    {
+        m_allowedRunmodes = runmodeMask;
+    }
+
+    ///
+    /// \brief Execute command with fully configured environment and parsed arguments.
+    /// \param ctx configured environment ctx
+    /// \param parser successfully parsed arguments and options
+    /// \return EXIT_SUCCESS on success, otherwise EXIT_FAILURE
+    ///
     virtual int execImpl(CommandCtx& ctx, const QCommandLineParser& parser) = 0;
 
-    QSharedPointer<QCommandLineParser> makeParser(CommandCtx &ctx, const QStringList& args,
-                                                  const QList<CommandLineArgument>& posArgs,
-                                                  const QList<CommandLineArgument>& optArgs,
-                                                  const QList<QCommandLineOption>& options);
+    ///
+    /// \brief Return positional arguments and options required for current command.
+    /// \param ctx configured environment ctx
+    /// \return initialized CommandArgs structure
+    ///
+    virtual CommandArgs getParserArgs(const CommandCtx& ctx) const { Q_UNUSED(ctx); return {}; };
+
+    QSharedPointer<QCommandLineParser> makeParser(const CommandCtx& ctx) const;
+
+    ///
+    /// \brief Parse command arguments and return parser object with results.
+    /// \param ctx configured environment ctx
+    /// \param args command arguments list
+    /// \return on success return valid parser object with parse results; nullptr on failure
+    ///
+    QSharedPointer<QCommandLineParser> parse(CommandCtx& ctx, const QStringList& args);
+
+private:
+    QString m_name;
+    QString m_description;
+    int m_allowedRunmodes = runmodeMaskBoth();
 };
 
 
