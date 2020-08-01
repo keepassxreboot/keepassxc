@@ -169,6 +169,11 @@ void Application::applyTheme()
 #ifndef Q_OS_WIN
         m_darkTheme = osUtils->isDarkMode();
 #endif
+        QFile stylesheetFile(":/styles/base/classicstyle.qss");
+        if (stylesheetFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            setStyleSheet(stylesheetFile.readAll());
+            stylesheetFile.close();
+        }
     }
 }
 
