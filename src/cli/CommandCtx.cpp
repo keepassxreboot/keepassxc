@@ -95,8 +95,6 @@ void CommandCtx::cmdInit()
 
 int CommandCtx::parseArgs(QCommandLineParser& parser, const QStringList& args)
 {
-    parser.setOptionsAfterPositionalArgumentsMode(QCommandLineParser::ParseAsPositionalArguments);
-
     QString description("KeePassXC command line interface.");
     description = description.append(QObject::tr("\n\nAvailable commands:\n"));
     for (const auto& command : m_commands)
