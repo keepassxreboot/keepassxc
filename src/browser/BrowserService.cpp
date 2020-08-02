@@ -776,7 +776,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
         config.save(entry);
     });
 
-    accessControlDialog.setItems(pwEntriesToConfirm, !submitHost.isEmpty() ? submitHost : url, httpAuth);
+    accessControlDialog.setItems(pwEntriesToConfirm, url, httpAuth);
 
     QList<Entry*> allowedEntries;
     if (accessControlDialog.exec() == QDialog::Accepted) {
