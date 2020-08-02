@@ -68,7 +68,7 @@ QSharedPointer<QCommandLineParser> Command::makeParser(const CommandCtx& ctx) co
 {
     auto parser = QSharedPointer<QCommandLineParser>::create();
     if (!parser)
-        return nullptr;
+        return QSharedPointer<QCommandLineParser>(nullptr);
 
     parser->setApplicationDescription(m_description);
     const CommandArgs& parserArgs = getParserArgs(ctx);
