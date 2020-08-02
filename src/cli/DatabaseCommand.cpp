@@ -60,7 +60,7 @@ std::unique_ptr<Database> DatabaseCommand::openDatabase(const QCommandLineParser
                                  !parser.isSet(NoPasswordOption),
                                  parser.value(KeyFileOption),
 #ifdef WITH_XC_YUBIKEY
-                                 parser->value(YubiKeyOption),
+                                 parser.value(YubiKeyOption),
 #else
                                  "",
 #endif
