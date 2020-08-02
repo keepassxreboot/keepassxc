@@ -37,9 +37,11 @@ BrowserAccessControlDialog::~BrowserAccessControlDialog()
 {
 }
 
-void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QString& hostname, bool httpAuth)
+void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QString& urlString, bool httpAuth)
 {
-    m_ui->siteLabel->setText(m_ui->siteLabel->text().arg(hostname));
+    QUrl url(urlString);
+    m_ui->siteLabel->setText(m_ui->siteLabel->text().arg(
+        url.toDisplayString(QUrl::RemoveUserInfo | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment)));
 
     m_ui->rememberDecisionCheckBox->setVisible(!httpAuth);
     m_ui->rememberDecisionCheckBox->setChecked(false);

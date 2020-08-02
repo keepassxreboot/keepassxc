@@ -38,7 +38,7 @@ public:
     explicit BrowserAccessControlDialog(QWidget* parent = nullptr);
     ~BrowserAccessControlDialog() override;
 
-    void setItems(const QList<Entry*>& items, const QString& hostname, bool httpAuth);
+    void setItems(const QList<Entry*>& items, const QString& urlString, bool httpAuth);
     bool remember() const;
 
     QList<QTableWidgetItem*> getSelectedEntries() const;
