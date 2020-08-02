@@ -32,7 +32,7 @@ QSharedPointer<PasswordGenerator> createGenerator(CommandCtx& ctx, const QComman
         passwordGenerator->setLength(PasswordGenerator::DefaultLength);
 
     const int length = passwordLength.toInt();
-    BREAK_IF(length <= 0, nullptr,
+    BREAK_IF(length <= 0, QSharedPointer<PasswordGenerator>(nullptr),
              ctx, QObject::tr("Invalid password length=%1").arg(passwordLength));
     passwordGenerator->setLength(length);
 
@@ -69,7 +69,7 @@ QSharedPointer<PasswordGenerator> createGenerator(CommandCtx& ctx, const QComman
     passwordGenerator->setFlags(flags);
     passwordGenerator->setExcludedChars(parser.value(Generate::ExcludeCharsOption));
 
-    BREAK_IF(!passwordGenerator->isValid(), nullptr,
+    BREAK_IF(!passwordGenerator->isValid(), QSharedPointer<PasswordGenerator>(nullptr),
              ctx, QObject::tr("Invalid password generator after applying all options"));
     return passwordGenerator;
 }
