@@ -95,7 +95,8 @@ QSharedPointer<QCommandLineParser> Command::parse(CommandCtx& ctx, const QString
     BREAK_IF(!parser, QSharedPointer<QCommandLineParser>(nullptr), ctx,
              QString("Failed to create command parser for args={ '%1' }").arg(args.join("', '")));
 
-    BREAK_IF(!parser->parse(args), nullptr, ctx, QString("Failed to parse arguments { '%1' }: '%2'").arg(args.join("', '")).arg(parser->errorText()));
+    BREAK_IF(!parser->parse(args), QSharedPointer<QCommandLineParser>(nullptr),
+             ctx, QString("Failed to parse arguments { '%1' }: '%2'").arg(args.join("', '")).arg(parser->errorText()));
 
     const QStringList& parsedArgs = parser->positionalArguments();
     const CommandArgs& parserArgs = getParserArgs(ctx);
