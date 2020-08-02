@@ -27,15 +27,12 @@ class Entry;
 
 namespace HibpOffline
 {
-    bool report(const Database& db,
-                QIODevice& hibpInput,
-                QList<QPair<const Entry*, int>>& findings,
-                QString* error);
+    bool report(const Database& db, QIODevice& hibpInput, QList<QPair<const Entry*, int>>& findings, QString* error);
 
     bool report(QSharedPointer<Database> db,
                 QIODevice& hibpInput,
                 QList<QPair<const Entry*, int>>& findings,
                 QString* error);
-}
+} // namespace HibpOffline
 
 #endif // KEEPASSXC_HIBPOFFLINE_H

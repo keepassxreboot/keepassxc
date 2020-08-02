@@ -53,9 +53,9 @@ struct CommandCtx
     QSharedPointer<Command> getCmd(const QString& name)
     {
         const auto cmd = m_commands.find(name);
-        return cmd != m_commands.end()
-                ? *cmd
-                : nullptr;
+        if (cmd != m_commands.end())
+            return *cmd;
+        return nullptr;
     }
 
     template<class F>
