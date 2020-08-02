@@ -47,7 +47,7 @@ CommandArgs DatabaseCommand::getParserArgs(const CommandCtx& ctx) const
         {
             KeyFileOption,
 #ifdef WITH_XC_YUBIKEY
-            YubiKeyOption;
+            YubiKeyOption,
 #endif
             NoPasswordOption }
     };
