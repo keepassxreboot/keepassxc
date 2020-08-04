@@ -27,17 +27,16 @@
 QSharedPointer<PasswordGenerator> createGenerator(CommandCtx& ctx, const QCommandLineParser& parser)
 {
     auto passwordGenerator = QSharedPointer<PasswordGenerator>::create();
-    const QString& passwordLength = parser.value(Generate::PasswordLengthOption);
-    if (passwordLength.isEmpty())
-        passwordGenerator->setLength(PasswordGenerator::DefaultLength);
-
-    const int length = passwordLength.toInt();
-    BREAK_IF(length <= 0, QSharedPointer<PasswordGenerator>(nullptr),
-             ctx, QObject::tr("Invalid password length=%1").arg(passwordLength));
+    int length = PasswordGenerator::DefaultLength;
+    if (parser.isSet(Generate::PasswordLengthOption)) {
+        const QString& passwordLength = parser.value(Generate::PasswordLengthOption);
+        length = passwordLength.toInt();
+        BREAK_IF(length <= 0, QSharedPointer<PasswordGenerator>(nullptr),
+                 ctx, QObject::tr("Invalid password length %1").arg(passwordLength));
+    }
     passwordGenerator->setLength(length);
 
     PasswordGenerator::CharClasses classes = 0x0;
-
     if (parser.isSet(Generate::LowerCaseOption)) {
         classes |= PasswordGenerator::LowerLetters;
     }

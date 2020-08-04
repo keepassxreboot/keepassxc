@@ -64,7 +64,7 @@ int Show::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QString entryPath = parser.positionalArguments().first();
+    const QString& entryPath = getArg(0, ctx.getRunmode(), parser.positionalArguments());
     bool showTotp = parser.isSet(TotpOption);
     bool showProtectedAttributes = parser.isSet(ProtectedAttributesOption);
     QStringList attributes = parser.values(AttributesOption);

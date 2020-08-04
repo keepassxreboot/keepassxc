@@ -304,7 +304,7 @@ namespace Utils
         }
 
         // No clipping program worked
-        err << QObject::tr("All clipping programs failed. Tried %1\n").arg(failedProgramNames.join(", "));
+        err << QObject::tr("All clipping programs failed. Tried: [%1]\n").arg(failedProgramNames.join(", "));
         err.flush();
         return EXIT_FAILURE;
     }

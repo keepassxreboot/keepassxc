@@ -64,8 +64,9 @@ int Import::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
     auto& err = Utils::STDERR;
 
     const QStringList& args = parser.positionalArguments();
-    const QString& xmlExportPath = getArg(0, ctx.getRunmode(), args);
-    const QString& dbPath = getArg(1, ctx.getRunmode(), args);
+    Q_ASSERT(args.size() == 2);
+    const QString& xmlExportPath = args.first();
+    const QString& dbPath = args.last();
 
     if (QFileInfo::exists(dbPath)) {
         err << QObject::tr("File %1 already exists.").arg(dbPath) << endl;

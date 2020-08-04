@@ -72,16 +72,21 @@ int Merge::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser
     auto& out = parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    const QStringList args = parser.positionalArguments();
     Database& database = ctx.getDb();
-    const int db2ArgIdx = ctx.getRunmode() == Runmode::InteractiveCmd ? 0 : 1;
-    Q_ASSERT(args.size() == db2ArgIdx + 1);
     const QString& toDatabasePath = ctx.getDb().filePath();
-    const QString& fromDatabasePath = args.at(db2ArgIdx);
+    const QString& fromDatabasePath = getArg(0, ctx.getRunmode(), parser.positionalArguments());
 
     std::unique_ptr<Database> db2;
     if (!parser.isSet(SameCredentialsOption)) {
-        db2 = openDatabase(parser);
+        db2 = Utils::unlockDatabase(fromDatabasePath,
+                                    !parser.isSet(NoPasswordFromOption),
+                                    parser.value(KeyFileFromOption),
+#ifdef WITH_XC_YUBIKEY
+                                    parser.value(YubiKeyFromOption),
+#else
+                                    "",
+#endif
+                                    parser.isSet(Command::QuietOption));
     } else {
         db2 = Utils::make_unique<Database>();
         QString errorMessage;
@@ -90,6 +95,7 @@ int Merge::executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser
             return EXIT_FAILURE;
         }
     }
+    BREAK_IF(!db2, EXIT_FAILURE, ctx, QString("Failed to open database (%1)").arg(fromDatabasePath));
 
     Merger merger(db2.get(), &database);
     QStringList changeList = merger.merge();
