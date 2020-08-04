@@ -66,13 +66,11 @@ private slots:
     void testKeyFileOption();
     void testNoPasswordOption();
     void testHelp();
-    void testInteractiveCommands();
     void testList();
     void testLocate();
     void testMerge();
     void testMergeWithKeys();
     void testMove();
-    void testOpen();
     void testRemove();
     void testRemoveGroup();
     void testRemoveQuiet();

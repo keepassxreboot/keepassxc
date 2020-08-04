@@ -162,8 +162,16 @@ int TestCli::execCmd(Command& cmd, const QStringList& args) const
     auto outPos = m_stdout->pos();
     auto errPos = m_stderr->pos();
 
+    QCommandLineParser parser;
+    CommandCtx ctx(parser, QStringList{"testcli"} + args);
+    if (ctx.error())
+        return -1;
     // Execute command
-    int ret = cmd.execute(args);
+    const int result = cmd.execute(ctx, args);
+    if (result == EXIT_FAILURE && ctx.error()) {
+        for (const auto& e : ctx.getErrors())
+            Utils::STDERR << e << endl;
+    }
 
     // Move back to recorded position
     m_stdout->seek(outPos);
@@ -178,7 +186,7 @@ int TestCli::execCmd(Command& cmd, const QStringList& args) const
         m_stdout->readLine();
     }
 
-    return ret;
+    return result;
 }
 
 bool TestCli::isTotp(const QString& value)
@@ -206,67 +214,45 @@ void TestCli::setInput(const QStringList& input)
 
 void TestCli::testBatchCommands()
 {
-    Commands::setupCommands(false);
-    QVERIFY(Commands::getCommand("add"));
-    QVERIFY(Commands::getCommand("analyze"));
-    QVERIFY(Commands::getCommand("clip"));
-    QVERIFY(Commands::getCommand("close"));
-    QVERIFY(Commands::getCommand("db-create"));
-    QVERIFY(Commands::getCommand("db-info"));
-    QVERIFY(Commands::getCommand("diceware"));
-    QVERIFY(Commands::getCommand("edit"));
-    QVERIFY(Commands::getCommand("estimate"));
-    QVERIFY(Commands::getCommand("export"));
-    QVERIFY(Commands::getCommand("generate"));
-    QVERIFY(Commands::getCommand("help"));
-    QVERIFY(Commands::getCommand("import"));
-    QVERIFY(Commands::getCommand("locate"));
-    QVERIFY(Commands::getCommand("ls"));
-    QVERIFY(Commands::getCommand("merge"));
-    QVERIFY(Commands::getCommand("mkdir"));
-    QVERIFY(Commands::getCommand("mv"));
-    QVERIFY(Commands::getCommand("open"));
-    QVERIFY(Commands::getCommand("rm"));
-    QVERIFY(Commands::getCommand("rmdir"));
-    QVERIFY(Commands::getCommand("show"));
-    QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 22);
+    const QStringList args {"testcli", "help"};
+    QCommandLineParser parser;
+    CommandCtx ctx(parser, args);
+    QVERIFY(!ctx.error());
+
+    QVERIFY(ctx.getCmd("add"));
+    QVERIFY(ctx.getCmd("analyze"));
+    QVERIFY(ctx.getCmd("clip"));
+    QVERIFY(ctx.getCmd("close"));
+    QVERIFY(ctx.getCmd("db-create"));
+    QVERIFY(ctx.getCmd("db-info"));
+    QVERIFY(ctx.getCmd("diceware"));
+    QVERIFY(ctx.getCmd("edit"));
+    QVERIFY(ctx.getCmd("estimate"));
+    QVERIFY(ctx.getCmd("export"));
+    QVERIFY(ctx.getCmd("generate"));
+    QVERIFY(ctx.getCmd("help"));
+    QVERIFY(ctx.getCmd("import"));
+    QVERIFY(ctx.getCmd("locate"));
+    QVERIFY(ctx.getCmd("ls"));
+    QVERIFY(ctx.getCmd("merge"));
+    QVERIFY(ctx.getCmd("mkdir"));
+    QVERIFY(ctx.getCmd("mv"));
+    QVERIFY(ctx.getCmd("open"));
+    QVERIFY(ctx.getCmd("rm"));
+    QVERIFY(ctx.getCmd("rmdir"));
+    QVERIFY(ctx.getCmd("show"));
+    QVERIFY(!ctx.getCmd("doesnotexist"));
 }
 
-void TestCli::testInteractiveCommands()
-{
-    Commands::setupCommands(true);
-    QVERIFY(Commands::getCommand("add"));
-    QVERIFY(Commands::getCommand("analyze"));
-    QVERIFY(Commands::getCommand("clip"));
-    QVERIFY(Commands::getCommand("close"));
-    QVERIFY(Commands::getCommand("db-create"));
-    QVERIFY(Commands::getCommand("db-info"));
-    QVERIFY(Commands::getCommand("diceware"));
-    QVERIFY(Commands::getCommand("edit"));
-    QVERIFY(Commands::getCommand("estimate"));
-    QVERIFY(Commands::getCommand("exit"));
-    QVERIFY(Commands::getCommand("generate"));
-    QVERIFY(Commands::getCommand("help"));
-    QVERIFY(Commands::getCommand("locate"));
-    QVERIFY(Commands::getCommand("ls"));
-    QVERIFY(Commands::getCommand("merge"));
-    QVERIFY(Commands::getCommand("mkdir"));
-    QVERIFY(Commands::getCommand("mv"));
-    QVERIFY(Commands::getCommand("open"));
-    QVERIFY(Commands::getCommand("quit"));
-    QVERIFY(Commands::getCommand("rm"));
-    QVERIFY(Commands::getCommand("rmdir"));
-    QVERIFY(Commands::getCommand("show"));
-    QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 22);
-}
+#define DECL_CMD(TYPE, VAR)                                                 \
+    QVERIFY(!!CommandTraits<TYPE>::Name);                                   \
+    QVERIFY(!!CommandTraits<TYPE>::Description);                            \
+    TYPE VAR(CommandTraits<TYPE>::Name, CommandTraits<TYPE>::Description);  \
+    QVERIFY(VAR.getDescriptionLine().contains(CommandTraits<TYPE>::Name))
 
 void TestCli::testAdd()
 {
-    Add addCmd;
-    QVERIFY(!addCmd.name.isEmpty());
-    QVERIFY(addCmd.getDescriptionLine().contains(addCmd.name));
+    DECL_CMD(Add, addCmd);
 
     setInput("a");
     execCmd(addCmd,
@@ -353,9 +339,7 @@ void TestCli::testAdd()
 
 void TestCli::testAddGroup()
 {
-    AddGroup addGroupCmd;
-    QVERIFY(!addGroupCmd.name.isEmpty());
-    QVERIFY(addGroupCmd.getDescriptionLine().contains(addGroupCmd.name));
+    DECL_CMD(AddGroup, addGroupCmd);
 
     setInput("a");
     execCmd(addGroupCmd, {"mkdir", m_dbFile->fileName(), "/new_group"});
@@ -399,9 +383,7 @@ void TestCli::testAddGroup()
 
 void TestCli::testAnalyze()
 {
-    Analyze analyzeCmd;
-    QVERIFY(!analyzeCmd.name.isEmpty());
-    QVERIFY(analyzeCmd.getDescriptionLine().contains(analyzeCmd.name));
+    DECL_CMD(Analyze, analyzeCmd);
 
     const QString hibpPath = QString(KEEPASSX_TEST_DATA_DIR).append("/hibp.txt");
 
@@ -419,9 +401,7 @@ void TestCli::testClip()
     QClipboard* clipboard = QGuiApplication::clipboard();
     clipboard->clear();
 
-    Clip clipCmd;
-    QVERIFY(!clipCmd.name.isEmpty());
-    QVERIFY(clipCmd.getDescriptionLine().contains(clipCmd.name));
+    DECL_CMD(Clip, clipCmd);
 
     // Password
     setInput("a");
@@ -460,29 +440,37 @@ void TestCli::testClip()
 
     QTRY_VERIFY(isTotp(clipboard->text()));
 
-    // Password with timeout
-    setInput("a");
     // clang-format off
-    QFuture<void> future = QtConcurrent::run(&clipCmd,
-                                             static_cast<int(Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
-                                             QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
+    {
+        // Password with timeout
+        setInput("a");
+        QStringList clipArgs = {"clip", m_dbFile->fileName(), "/Sample Entry", "1"};
+        QCommandLineParser parser;
+        CommandCtx ctx(parser, clipArgs);
+        QVERIFY(!ctx.error());
+        QFuture<void> future = QtConcurrent::run([&ctx, &clipArgs](Clip* clip) {
+                return clip->execute(ctx, clipArgs);
+            }, &clipCmd);
+        QTRY_COMPARE(clipboard->text(), QString("Password"));
+        QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
+        future.waitForFinished();
+    }
     // clang-format on
 
-    QTRY_COMPARE(clipboard->text(), QString("Password"));
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
-
-    future.waitForFinished();
-
     // TOTP with timeout
-    setInput("a");
-    future = QtConcurrent::run(&clipCmd,
-                               static_cast<int (Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
-                               QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
-
-    QTRY_VERIFY(isTotp(clipboard->text()));
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
-
-    future.waitForFinished();
+    {
+        setInput("a");
+        QStringList clipArgs = QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"};
+        QCommandLineParser parser;
+        CommandCtx ctx(parser, clipArgs);
+        QVERIFY(!ctx.error());
+        QFuture<void> future = QtConcurrent::run([&ctx, &clipArgs](Clip* clip) {
+                return clip->execute(ctx, clipArgs);
+            }, &clipCmd);
+        QTRY_VERIFY(isTotp(clipboard->text()));
+        QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
+        future.waitForFinished();
+    }
 
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "0"});
@@ -508,9 +496,7 @@ void TestCli::testClip()
 
 void TestCli::testCreate()
 {
-    Create createCmd;
-    QVERIFY(!createCmd.name.isEmpty());
-    QVERIFY(createCmd.getDescriptionLine().contains(createCmd.name));
+    DECL_CMD(Create, createCmd);
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
     QString dbFilename;
@@ -626,9 +612,7 @@ void TestCli::testCreate()
 
 void TestCli::testInfo()
 {
-    Info infoCmd;
-    QVERIFY(!infoCmd.name.isEmpty());
-    QVERIFY(infoCmd.getDescriptionLine().contains(infoCmd.name));
+    DECL_CMD(Info, infoCmd);
 
     setInput("a");
     execCmd(infoCmd, {"db-info", m_dbFile->fileName()});
@@ -655,9 +639,7 @@ void TestCli::testInfo()
 
 void TestCli::testDiceware()
 {
-    Diceware dicewareCmd;
-    QVERIFY(!dicewareCmd.name.isEmpty());
-    QVERIFY(dicewareCmd.getDescriptionLine().contains(dicewareCmd.name));
+    DECL_CMD(Diceware, dicewareCmd);
 
     execCmd(dicewareCmd, {"diceware"});
     QString passphrase(m_stdout->readLine());
@@ -708,9 +690,7 @@ void TestCli::testDiceware()
 
 void TestCli::testEdit()
 {
-    Edit editCmd;
-    QVERIFY(!editCmd.name.isEmpty());
-    QVERIFY(editCmd.getDescriptionLine().contains(editCmd.name));
+    DECL_CMD(Edit, editCmd);
 
     setInput("a");
     execCmd(editCmd,
@@ -876,9 +856,7 @@ void TestCli::testEstimate()
     QFETCH(QString, log10);
     QFETCH(QStringList, searchStrings);
 
-    Estimate estimateCmd;
-    QVERIFY(!estimateCmd.name.isEmpty());
-    QVERIFY(estimateCmd.getDescriptionLine().contains(estimateCmd.name));
+    DECL_CMD(Estimate, estimateCmd);
 
     setInput(input);
     execCmd(estimateCmd, {"estimate", "-a"});
@@ -893,9 +871,7 @@ void TestCli::testEstimate()
 
 void TestCli::testExport()
 {
-    Export exportCmd;
-    QVERIFY(!exportCmd.name.isEmpty());
-    QVERIFY(exportCmd.getDescriptionLine().contains(exportCmd.name));
+    DECL_CMD(Export, exportCmd);
 
     setInput("a");
     execCmd(exportCmd, {"export", m_dbFile->fileName()});
@@ -973,9 +949,7 @@ void TestCli::testGenerate()
     QFETCH(QStringList, parameters);
     QFETCH(QString, pattern);
 
-    Generate generateCmd;
-    QVERIFY(!generateCmd.name.isEmpty());
-    QVERIFY(generateCmd.getDescriptionLine().contains(generateCmd.name));
+    DECL_CMD(Generate, generateCmd);
 
     for (int i = 0; i < 10; ++i) {
         execCmd(generateCmd, parameters);
@@ -993,21 +967,20 @@ void TestCli::testGenerate()
 
     // Testing with invalid password length
     execCmd(generateCmd, {"generate", "-L", "-10"});
-    QCOMPARE(m_stderr->readLine(), QByteArray("Invalid password length -10\n"));
+    auto er = m_stderr->readLine();
+    QVERIFY(er.contains("Invalid password length -10\n"));
 
     execCmd(generateCmd, {"generate", "-L", "0"});
-    QCOMPARE(m_stderr->readLine(), QByteArray("Invalid password length 0\n"));
+    QVERIFY(m_stderr->readLine().contains("Invalid password length 0\n"));
 
     // Testing with invalid word count format
     execCmd(generateCmd, {"generate", "-L", "bleuh"});
-    QCOMPARE(m_stderr->readLine(), QByteArray("Invalid password length bleuh\n"));
+    QVERIFY(m_stderr->readLine().contains("Invalid password length bleuh\n"));
 }
 
 void TestCli::testImport()
 {
-    Import importCmd;
-    QVERIFY(!importCmd.name.isEmpty());
-    QVERIFY(importCmd.getDescriptionLine().contains(importCmd.name));
+    DECL_CMD(Import, importCmd);
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
     QString databaseFilename = testDir->path() + "/testImport1.kdbx";
@@ -1049,7 +1022,7 @@ void TestCli::testImport()
 
 void TestCli::testKeyFileOption()
 {
-    List listCmd;
+    DECL_CMD(List, listCmd);
 
     QString keyFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtected.key"));
     setInput("a");
@@ -1076,7 +1049,7 @@ void TestCli::testKeyFileOption()
 
 void TestCli::testNoPasswordOption()
 {
-    List listCmd;
+    DECL_CMD(List, listCmd);
 
     QString keyFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtectedNoPassword.key"));
     execCmd(listCmd, {"ls", "-k", keyFilePath, "--no-password", m_keyFileProtectedNoPasswordDbFile->fileName()});
@@ -1094,9 +1067,7 @@ void TestCli::testNoPasswordOption()
 
 void TestCli::testList()
 {
-    List listCmd;
-    QVERIFY(!listCmd.name.isEmpty());
-    QVERIFY(listCmd.getDescriptionLine().contains(listCmd.name));
+    DECL_CMD(List, listCmd);
 
     setInput("a");
     execCmd(listCmd, {"ls", m_dbFile->fileName()});
@@ -1179,9 +1150,7 @@ void TestCli::testList()
 
 void TestCli::testLocate()
 {
-    Locate locateCmd;
-    QVERIFY(!locateCmd.name.isEmpty());
-    QVERIFY(locateCmd.getDescriptionLine().contains(locateCmd.name));
+    DECL_CMD(Locate, locateCmd);
 
     setInput("a");
     execCmd(locateCmd, {"locate", m_dbFile->fileName(), "Sample"});
@@ -1228,9 +1197,7 @@ void TestCli::testLocate()
 
 void TestCli::testMerge()
 {
-    Merge mergeCmd;
-    QVERIFY(!mergeCmd.name.isEmpty());
-    QVERIFY(mergeCmd.getDescriptionLine().contains(mergeCmd.name));
+    DECL_CMD(Merge, mergeCmd);
 
     // load test database and save copies
     auto db = readDatabase();
@@ -1318,7 +1285,7 @@ void TestCli::testMerge()
 
     // try again with different passwords for both files
     setInput({"b", "a"});
-    execCmd(mergeCmd, {"merge", targetFile3.fileName(), sourceFile.fileName()});
+    QVERIFY(execCmd(mergeCmd, {"merge", targetFile3.fileName(), sourceFile.fileName()}) == EXIT_SUCCESS);
     QList<QByteArray> outLines3 = m_stdout->readAll().split('\n');
     QCOMPARE(outLines3.at(2),
              QString("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile3.fileName()).toUtf8());
@@ -1352,13 +1319,8 @@ void TestCli::testMerge()
 
 void TestCli::testMergeWithKeys()
 {
-    Create createCmd;
-    QVERIFY(!createCmd.name.isEmpty());
-    QVERIFY(createCmd.getDescriptionLine().contains(createCmd.name));
-
-    Merge mergeCmd;
-    QVERIFY(!mergeCmd.name.isEmpty());
-    QVERIFY(mergeCmd.getDescriptionLine().contains(mergeCmd.name));
+    DECL_CMD(Create, createCmd);
+    DECL_CMD(Merge, mergeCmd);
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
 
@@ -1432,9 +1394,7 @@ void TestCli::testMergeWithKeys()
 
 void TestCli::testMove()
 {
-    Move moveCmd;
-    QVERIFY(!moveCmd.name.isEmpty());
-    QVERIFY(moveCmd.getDescriptionLine().contains(moveCmd.name));
+    DECL_CMD(Move, moveCmd);
 
     setInput("a");
     execCmd(moveCmd, {"mv", m_dbFile->fileName(), "invalid_entry_path", "invalid_group_path"});
@@ -1473,9 +1433,7 @@ void TestCli::testMove()
 
 void TestCli::testRemove()
 {
-    Remove removeCmd;
-    QVERIFY(!removeCmd.name.isEmpty());
-    QVERIFY(removeCmd.getDescriptionLine().contains(removeCmd.name));
+    DECL_CMD(Remove, removeCmd);
 
     // load test database and save a copy with disabled recycle bin
     auto db = readDatabase();
@@ -1527,9 +1485,7 @@ void TestCli::testRemove()
 
 void TestCli::testRemoveGroup()
 {
-    RemoveGroup removeGroupCmd;
-    QVERIFY(!removeGroupCmd.name.isEmpty());
-    QVERIFY(removeGroupCmd.getDescriptionLine().contains(removeGroupCmd.name));
+    DECL_CMD(RemoveGroup, removeGroupCmd);
 
     // try deleting a directory, should recycle it first.
     setInput("a");
@@ -1570,9 +1526,7 @@ void TestCli::testRemoveGroup()
 
 void TestCli::testRemoveQuiet()
 {
-    Remove removeCmd;
-    QVERIFY(!removeCmd.name.isEmpty());
-    QVERIFY(removeCmd.getDescriptionLine().contains(removeCmd.name));
+    DECL_CMD(Remove, removeCmd);
 
     // delete entry and verify
     setInput("a");
@@ -1599,9 +1553,7 @@ void TestCli::testRemoveQuiet()
 
 void TestCli::testShow()
 {
-    Show showCmd;
-    QVERIFY(!showCmd.name.isEmpty());
-    QVERIFY(showCmd.getDescriptionLine().contains(showCmd.name));
+    DECL_CMD(Show, showCmd);
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "/Sample Entry"});
@@ -1683,18 +1635,16 @@ void TestCli::testShow()
 
 void TestCli::testInvalidDbFiles()
 {
-    Show showCmd;
+    DECL_CMD(Show, showCmd);
     QString nonExistentDbPath("/foo/bar/baz");
     QString directoryName("/");
 
     execCmd(showCmd, {"show", nonExistentDbPath, "/Sample Entry"});
-    QCOMPARE(QString(m_stderr->readAll()),
-             QObject::tr("Failed to open database file %1: not found").arg(nonExistentDbPath) + "\n");
+    QVERIFY(QString(m_stderr->readAll()).contains(QString("Failed to open database file %1: not found\n").arg(nonExistentDbPath)));
     QCOMPARE(m_stdout->readAll(), QByteArray());
 
     execCmd(showCmd, {"show", directoryName, "whatever"});
-    QCOMPARE(QString(m_stderr->readAll()),
-             QObject::tr("Failed to open database file %1: not a plain file").arg(directoryName) + "\n");
+    QVERIFY(QString(m_stderr->readAll()).contains(QString("Failed to open database file %1: not a plain file\n").arg(directoryName)));
 
     // Create a write-only file and try to open it.
     // QFileInfo.isReadable returns 'true' on Windows, even after the call to
@@ -1706,8 +1656,7 @@ void TestCli::testInvalidDbFiles()
     QString path = QFileInfo(tempFile).absoluteFilePath();
     QVERIFY(tempFile.setPermissions(QFileDevice::WriteOwner));
     execCmd(showCmd, {"show", path, "some entry"});
-    QCOMPARE(QString(m_stderr->readAll()),
-             QObject::tr("Failed to open database file %1: not readable").arg(path) + "\n");
+    QVERIFY(QString(m_stderr->readAll()).contains(QString("Failed to open database file %1: not readable\n").arg(path)));
 #endif // Q_OS_WIN
 }
 
@@ -1755,8 +1704,8 @@ void TestCli::testYubiKeyOption()
         QSKIP("No YubiKey is properly configured to perform this test.");
     }
 
-    List listCmd;
-    Add addCmd;
+    DECL_CMD(List, listCmd);
+    DECL_CMD(Add, addCmd);
 
     setInput("a");
     execCmd(listCmd, {"ls", "-y", "2", m_yubiKeyProtectedDbFile->fileName()});
@@ -1819,39 +1768,14 @@ void TestCli::testCommandParsing()
     }
 }
 
-void TestCli::testOpen()
-{
-    Open openCmd;
-
-    setInput("a");
-    execCmd(openCmd, {"open", m_dbFile->fileName()});
-    QVERIFY(openCmd.currentDatabase);
-
-    List listCmd;
-    // Set a current database, simulating interactive mode.
-    listCmd.currentDatabase = openCmd.currentDatabase;
-    execCmd(listCmd, {"ls"});
-    QByteArray expectedOutput("Sample Entry\n"
-                              "General/\n"
-                              "Windows/\n"
-                              "Network/\n"
-                              "Internet/\n"
-                              "eMail/\n"
-                              "Homebanking/\n");
-    QByteArray actualOutput = m_stdout->readAll();
-    actualOutput.truncate(expectedOutput.length());
-    QCOMPARE(actualOutput, expectedOutput);
-}
-
 void TestCli::testHelp()
 {
-    Help helpCmd;
-    Commands::setupCommands(false);
+    DECL_CMD(Help, helpCmd);
 
     execCmd(helpCmd, {"help"});
     QVERIFY(m_stdout->readAll().contains("Available commands"));
 
-    List listCmd;
+    DECL_CMD(List, listCmd);
     execCmd(helpCmd, {"help", "ls"});
-    QVERIFY(m_stdout->readAll().contains(listCmd.description.toLatin1()));
+    QVERIFY(m_stdout->readAll().contains(QString(CommandTraits<List>::Description).toLatin1()));
 }
