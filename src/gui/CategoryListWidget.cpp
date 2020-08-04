@@ -221,6 +221,7 @@ void CategoryListWidgetDelegate::paint(QPainter* painter,
     opt.icon = QIcon();
     opt.decorationAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
+    opt.decorationSize = iconSize;
 
     QScopedPointer<QStyle> style(new IconSelectionCorrectedStyle());
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, opt.widget);
