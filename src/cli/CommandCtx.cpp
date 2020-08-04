@@ -107,10 +107,7 @@ int CommandCtx::parseArgs(QCommandLineParser& parser, const QStringList& args)
     const QCommandLineOption help = parser.addHelpOption();
     const QCommandLineOption version = parser.addVersionOption();
 
-    if (!parser.parse(args)) {
-        logError(parser.errorText());
-        return EXIT_FAILURE;
-    }
+    parser.parse(args);
 
     if (parser.isSet(version)) {
         m_runmode = Runmode::Version;

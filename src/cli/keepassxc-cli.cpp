@@ -72,7 +72,8 @@ static int run(const QStringList& args)
             out << parser.helpText() << endl;
             return EXIT_SUCCESS;
         default: {
-            const QStringList& cmdArgs = parser.positionalArguments();
+            QStringList cmdArgs = args;
+            cmdArgs.removeFirst();
             const QString cmdName = cmdArgs.first();
             QSharedPointer<Command> cmd = ctx.getCmd(cmdName);
             if (!cmd) {
