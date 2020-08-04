@@ -32,7 +32,7 @@ constexpr int runmodeMaskBoth()
     return runmodeMask(Runmode::SingleCmd) | runmodeMask(Runmode::InteractiveCmd);
 }
 
-struct Command;
+class Command;
 
 struct CommandCtx
 {
