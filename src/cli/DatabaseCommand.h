@@ -26,10 +26,8 @@
 
 class DatabaseCommand : public Command
 {
-    using Ancestor = Command;
-
 public:
-    using Ancestor::Ancestor;
+    using Command::Command;
 
     virtual int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) = 0;
 

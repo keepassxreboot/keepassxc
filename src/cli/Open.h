@@ -22,9 +22,8 @@
 
 class Open : public DatabaseCommand
 {
-    using Ancestor = DatabaseCommand;
 public:
-    using Ancestor::Ancestor;
+    using DatabaseCommand::DatabaseCommand;
 
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
 };

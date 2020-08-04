@@ -22,9 +22,8 @@
 
 class Estimate final : public Command
 {
-    using Ancestor = Command;
 public:
-    using Ancestor::Ancestor;
+    using Command::Command;
 
 private:
     CommandArgs getParserArgs(const CommandCtx& ctx) const override;

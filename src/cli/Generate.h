@@ -31,9 +31,8 @@ QSharedPointer<PasswordGenerator> createGenerator(CommandCtx& ctx, const QComman
 
 class Generate final : public Command
 {
-    using Ancestor = Command;
 public:
-    using Ancestor::Ancestor;
+    using Command::Command;
 
     static const QCommandLineOption PasswordLengthOption;
     static const QCommandLineOption LowerCaseOption;
