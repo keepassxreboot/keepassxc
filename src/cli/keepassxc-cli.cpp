@@ -54,13 +54,13 @@ static int run(const QStringList& args)
     CommandCtx ctx(parser, args);
     if (ctx.error()) {
         err << "Failed to parse command:\n";
-        for (const auto& e : ctx.getErrors())
+        for (const auto& e : ctx.getErrors()) {
             err << e << endl;
+        }
         return EXIT_FAILURE;
     }
 
-    switch (ctx.getRunmode())
-    {
+    switch (ctx.getRunmode()) {
         case Runmode::Version:
             out << KEEPASSXC_VERSION << endl;
             return EXIT_SUCCESS;
@@ -82,8 +82,9 @@ static int run(const QStringList& args)
             }
             const int result = cmd->execute(ctx, cmdArgs);
             if (result == EXIT_FAILURE && ctx.error()) {
-                for (const auto& e : ctx.getErrors())
+                for (const auto& e : ctx.getErrors()) {
                     err << e << endl;
+                }
             }
             return result;
         }
@@ -104,8 +105,9 @@ int main(int argc, char** argv)
     Utils::setDefaultTextStreams();
 
     QStringList args;
-    for (int i = 0; i < argc; ++i)
+    for (int i = 0; i < argc; ++i) {
         args.push_back(argv[i]);
+    }
     const int exitCode = run(args);
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)

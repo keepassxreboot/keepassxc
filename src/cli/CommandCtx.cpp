@@ -97,9 +97,11 @@ int CommandCtx::parseArgs(QCommandLineParser& parser, const QStringList& args)
 {
     QString description("KeePassXC command line interface.");
     description = description.append(QObject::tr("\n\nAvailable commands:\n"));
-    for (const auto& command : m_commands)
-        if (command->isAllowedRunmode(Runmode::SingleCmd))
+    for (const auto& command : m_commands) {
+        if (command->isAllowedRunmode(Runmode::SingleCmd)) {
             description.append(command->getDescriptionLine());
+        }
+    }
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("command", QObject::tr("Name of the command to execute."));
     const QCommandLineOption debugInfo("debug-info", QObject::tr("Displays debugging information."));

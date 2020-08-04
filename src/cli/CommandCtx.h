@@ -61,8 +61,9 @@ struct CommandCtx
     template<class F>
     void forEachCmd(const F& f) const
     {
-        for (const auto& cmd : m_commands)
+        for (const auto& cmd : m_commands) {
             f(*cmd);
+        }
     }
 
     Database& getDb()

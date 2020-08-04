@@ -69,8 +69,9 @@ std::unique_ptr<Database> DatabaseCommand::openDatabase(const QCommandLineParser
 
 int DatabaseCommand::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
 {
-    if (ctx.hasDb())
+    if (ctx.hasDb()) {
         return executeWithDatabase(ctx, parser);
+    }
     std::unique_ptr<Database> db = openDatabase(parser);
     BREAK_IF(!db, EXIT_FAILURE,
              ctx, QString("Error opening database '%1'.").arg(parser.positionalArguments().first()));

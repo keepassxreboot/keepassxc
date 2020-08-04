@@ -42,8 +42,9 @@ int Help::execImpl(CommandCtx& ctx, const QCommandLineParser& parser)
     if (args.empty()) {
         out << "\n\n" << QObject::tr("Available commands:") << "\n";
         ctx.forEachCmd([&out, &ctx] (const Command& cmd) {
-            if (cmd.isAllowedRunmode(ctx.getRunmode()))
+            if (cmd.isAllowedRunmode(ctx.getRunmode())) {
                 out << cmd.getDescriptionLine();
+            }
         });
         out << endl;
         return EXIT_SUCCESS;

@@ -139,8 +139,9 @@ static int commandLoop(CommandCtx& ctx)
         }
         if (cmd->execute(ctx, args) == EXIT_FAILURE) {
             err << QObject::tr("Failed to execute command '%1'.").arg(cmdName) << endl;
-            for (const auto& e : ctx.getErrors())
+            for (const auto& e : ctx.getErrors()) {
                 err << e << endl;
+            }
             ctx.clearErrors();
         }
     }

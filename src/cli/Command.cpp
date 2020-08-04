@@ -67,8 +67,9 @@ const QCommandLineOption Command::QuietOption =
 QSharedPointer<QCommandLineParser> Command::makeParser(const CommandCtx& ctx) const
 {
     auto parser = QSharedPointer<QCommandLineParser>::create();
-    if (!parser)
+    if (!parser) {
         return QSharedPointer<QCommandLineParser>(nullptr);
+    }
 
     parser->setApplicationDescription(m_description);
     const CommandArgs& parserArgs = getParserArgs(ctx);
@@ -136,8 +137,9 @@ QString Command::getHelpText(const CommandCtx& ctx) const
 int Command::execute(CommandCtx& ctx, const QStringList& args)
 {
     QSharedPointer<QCommandLineParser> parser = parse(ctx, args);
-    if (parser.isNull())
+    if (parser.isNull()) {
         return EXIT_FAILURE;
+    }
     if (parser->isSet(HelpOption)) {
         Utils::STDOUT << getHelpText(ctx) << endl;
         return EXIT_SUCCESS;
