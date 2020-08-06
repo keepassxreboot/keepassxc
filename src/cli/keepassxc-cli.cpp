@@ -61,33 +61,33 @@ static int run(const QStringList& args)
     }
 
     switch (ctx.getRunmode()) {
-        case Runmode::Version:
-            out << KEEPASSXC_VERSION << endl;
-            return EXIT_SUCCESS;
-        case Runmode::DebugInfo:
-            Utils::debugInfo(out);
-            return EXIT_SUCCESS;
-        case Runmode::Help:
-            // cannot use 'showHelp' because of the asan postprocessing
-            out << parser.helpText() << endl;
-            return EXIT_SUCCESS;
-        default: {
-            QStringList cmdArgs = args;
-            cmdArgs.removeFirst();
-            const QString cmdName = cmdArgs.first();
-            QSharedPointer<Command> cmd = ctx.getCmd(cmdName);
-            if (!cmd) {
-                err << QObject::tr("Command '%1' not found.").arg(cmdName) << endl;
-                return EXIT_FAILURE;
-            }
-            const int result = cmd->execute(ctx, cmdArgs);
-            if (result == EXIT_FAILURE && ctx.error()) {
-                for (const auto& e : ctx.getErrors()) {
-                    err << e << endl;
-                }
-            }
-            return result;
+    case Runmode::Version:
+        out << KEEPASSXC_VERSION << endl;
+        return EXIT_SUCCESS;
+    case Runmode::DebugInfo:
+        Utils::debugInfo(out);
+        return EXIT_SUCCESS;
+    case Runmode::Help:
+        // cannot use 'showHelp' because of the asan postprocessing
+        out << parser.helpText() << endl;
+        return EXIT_SUCCESS;
+    default: {
+        QStringList cmdArgs = args;
+        cmdArgs.removeFirst();
+        const QString cmdName = cmdArgs.first();
+        QSharedPointer<Command> cmd = ctx.getCmd(cmdName);
+        if (!cmd) {
+            err << QObject::tr("Command '%1' not found.").arg(cmdName) << endl;
+            return EXIT_FAILURE;
         }
+        const int result = cmd->execute(ctx, cmdArgs);
+        if (result == EXIT_FAILURE && ctx.error()) {
+            for (const auto& e : ctx.getErrors()) {
+                err << e << endl;
+            }
+        }
+        return result;
+    }
     }
 }
 

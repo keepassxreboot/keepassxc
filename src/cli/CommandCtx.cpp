@@ -42,7 +42,6 @@
 #include "RemoveGroup.h"
 #include "Show.h"
 
-
 template<class Cmd>
 void regCmd(QMap<QString, QSharedPointer<Command>>& map)
 {

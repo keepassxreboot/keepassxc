@@ -25,16 +25,14 @@
 #include <QString>
 #include <QStringList>
 
-#include "core/Database.h"
 #include "CommandCtx.h"
-
+#include "core/Database.h"
 
 ///
 /// Following traits are mandatory:
 /// const char* Name        - printable command name
 /// const char* Description - printable description
-template<class Cmd>
-struct CommandTraits;
+template<class Cmd> struct CommandTraits;
 
 #define DECL_TRAITS(TYPE, NAME, DESC)                       \
     template<> struct CommandTraits<TYPE> {                 \
@@ -108,7 +106,11 @@ protected:
     /// \param ctx configured environment ctx
     /// \return initialized CommandArgs structure
     ///
-    virtual CommandArgs getParserArgs(const CommandCtx& ctx) const { Q_UNUSED(ctx); return {}; };
+    virtual CommandArgs getParserArgs(const CommandCtx& ctx) const
+    {
+        Q_UNUSED(ctx);
+        return {};
+    };
 
     QSharedPointer<QCommandLineParser> makeParser(const CommandCtx& ctx) const;
 

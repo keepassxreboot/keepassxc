@@ -1,7 +1,6 @@
 #ifndef COMMANDCTX_H
 #define COMMANDCTX_H
 
-#include <memory>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
 #include <QList>
@@ -9,10 +8,10 @@
 #include <QString>
 #include <QStringList>
 #include <QStack>
+#include <memory>
 
-#include "core/Database.h"
 #include "Utils.h"
-
+#include "core/Database.h"
 
 enum class Runmode
 {

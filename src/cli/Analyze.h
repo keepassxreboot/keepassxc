@@ -27,6 +27,7 @@ public:
     using DatabaseCommand::DatabaseCommand;
 
     int executeWithDatabase(CommandCtx& ctx, const QCommandLineParser& parser) override;
+
 private:
     CommandArgs getParserArgs(const CommandCtx& ctx) const override;
     void printHibpFinding(const Entry* entry, int count, QTextStream& out);

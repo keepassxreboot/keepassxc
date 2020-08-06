@@ -93,20 +93,28 @@ QSharedPointer<QCommandLineParser> Command::makeParser(const CommandCtx& ctx) co
 QSharedPointer<QCommandLineParser> Command::parse(CommandCtx& ctx, const QStringList& args)
 {
     QSharedPointer<QCommandLineParser> parser = makeParser(ctx);
-    BREAK_IF(!parser, QSharedPointer<QCommandLineParser>(nullptr), ctx,
+    BREAK_IF(!parser,
+             QSharedPointer<QCommandLineParser>(nullptr),
+             ctx,
              QString("Failed to create command parser for args={ '%1' }").arg(args.join("', '")));
 
-    BREAK_IF(!parser->parse(args), QSharedPointer<QCommandLineParser>(nullptr),
-             ctx, QString("Failed to parse arguments { '%1' }: %2").arg(args.join("', '")).arg(parser->errorText()));
+    BREAK_IF(!parser->parse(args),
+             QSharedPointer<QCommandLineParser>(nullptr),
+             ctx,
+             QString("Failed to parse arguments { '%1' }: %2").arg(args.join("', '")).arg(parser->errorText()));
 
     const QStringList& parsedArgs = parser->positionalArguments();
     const CommandArgs& parserArgs = getParserArgs(ctx);
     const QList<CommandLineArgument>& posArgs = parserArgs.positionalArguments;
     const QList<CommandLineArgument>& optArgs = parserArgs.optionalArguments;
-    BREAK_IF(parsedArgs.size() < posArgs.size() && !parser->isSet(HelpOption), QSharedPointer<QCommandLineParser>(nullptr),
-             ctx, QString("Too few arguments.\n\n").append(getHelpText(ctx)));
-    BREAK_IF(parsedArgs.size() > posArgs.size() + optArgs.size(), QSharedPointer<QCommandLineParser>(nullptr),
-             ctx, QString("Too much arguments.\n\n").append(getHelpText(ctx)));
+    BREAK_IF(parsedArgs.size() < posArgs.size() && !parser->isSet(HelpOption),
+             QSharedPointer<QCommandLineParser>(nullptr),
+             ctx,
+             QString("Too few arguments.\n\n").append(getHelpText(ctx)));
+    BREAK_IF(parsedArgs.size() > posArgs.size() + optArgs.size(),
+             QSharedPointer<QCommandLineParser>(nullptr),
+             ctx,
+             QString("Too much arguments.\n\n").append(getHelpText(ctx)));
 
     return parser;
 }
