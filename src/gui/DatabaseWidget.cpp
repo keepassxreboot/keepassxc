@@ -609,6 +609,8 @@ bool DatabaseWidget::confirmDeleteEntries(QList<Entry*> entries, bool permanent)
                                            MessageBox::Cancel);
 
         return answer == MessageBox::Delete;
+    } else if (config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool()) {
+        return true;
     } else {
         QString prompt;
         if (entries.size() == 1) {
