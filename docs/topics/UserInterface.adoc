@@ -10,7 +10,7 @@ The KeePassXC interface is designed for simplicity and easy access to your infor
 .Main database interface
 image::main_interface.png[]
 
-*(A) Groups* - Organize your entries into discrete groups to bring order to all of your sensitive information. Groups can be nested under each other to create a hierarchy. Settings from parent groups get applied to their children.
+*(A) Groups* - Organize your entries into discrete groups to bring order to all of your sensitive information. Groups can be nested under each other to create a hierarchy. Settings from parent groups get applied to their children. You can hide this panel on the View menu.
 
 *(B) Entries* - Entries contain all the information for each website or application you are storing in KeePassXC. This view shows all the entries in the selected group. Each column can be resized, reordered, and shown or hidden based on your preference. Right click the header row to see all available options.
 
