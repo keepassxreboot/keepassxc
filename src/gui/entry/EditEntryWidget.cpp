@@ -339,20 +339,25 @@ void EditEntryWidget::removeCurrentURL()
     QModelIndex index = m_browserUi->additionalURLsView->currentIndex();
 
     if (index.isValid()) {
-        auto result = MessageBox::question(this,
-                                           tr("Confirm Removal"),
-                                           tr("Are you sure you want to remove this URL?"),
-                                           MessageBox::Remove | MessageBox::Cancel,
-                                           MessageBox::Cancel);
+        auto name = m_additionalURLsDataModel->keyByIndex(index);
+        auto url = m_entryAttributes->value(name);
+        if (url != tr("<empty URL>")) {
+            auto result = MessageBox::question(this,
+                                               tr("Confirm Removal"),
+                                               tr("Are you sure you want to remove this URL?"),
+                                               MessageBox::Remove | MessageBox::Cancel,
+                                               MessageBox::Cancel);
 
-        if (result == MessageBox::Remove) {
-            m_entryAttributes->remove(m_additionalURLsDataModel->keyByIndex(index));
-            if (m_additionalURLsDataModel->rowCount() == 0) {
-                m_browserUi->editURLButton->setEnabled(false);
-                m_browserUi->removeURLButton->setEnabled(false);
+            if (result != MessageBox::Remove) {
+                return;
             }
-            setModified(true);
         }
+        m_entryAttributes->remove(m_additionalURLsDataModel->keyByIndex(index));
+        if (m_additionalURLsDataModel->rowCount() == 0) {
+            m_browserUi->editURLButton->setEnabled(false);
+            m_browserUi->removeURLButton->setEnabled(false);
+        }
+        setModified(true);
     }
 }
 
