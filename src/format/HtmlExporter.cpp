@@ -80,15 +80,11 @@ bool HtmlExporter::exportDatabase(QIODevice* device, const QSharedPointer<const 
                                   "th, td "
                                   "{ text-align: left; vertical-align: top; padding: 1px; }"
                                   "th "
-                                  "{ min-width: 5em; } "
+                                  "{ min-width: 5em; width: 20%; } "
                                   ".username, .password, .url, .attr "
                                   "{ font-size: larger; font-family: monospace; } "
                                   ".notes "
                                   "{ font-size: medium; } "
-                                  "@media print {"
-                                  ".entry"
-                                  "{ page-break-inside: avoid; } "
-                                  "}"
                                   "</style>"
                                   "</head>\n"
                                   "<body>"
@@ -162,16 +158,14 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
         }
     }
 
-    // Output the entries in this  group
-    for (const auto entry : entries) {
-        auto item = QString("<div class=\"entry\"><h3>");
+    // Begin the table for the entries in this group
+    auto table = QString("<table width=\"100%\">");
 
-        // Begin formatting this item into HTML
-        item.append(PixmapToHTML(entry->iconPixmap(IconSize::Medium)));
-        item.append("&nbsp;");
-        item.append(entry->title().toHtmlEscaped());
-        item.append("</h3>\n"
-                    "<table>");
+    // Output the entries in this group
+    for (const auto entry : entries) {
+
+        // Here we collect the table rows with this entry's data fields
+        QString item;
 
         // Output the fixed fields
         const auto& u = entry->username();
@@ -230,17 +224,31 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
                 item.append("<tr><th>");
                 item.append(key.toHtmlEscaped());
                 item.append("</th><td class=\"attr\">");
-                item.append(attr->value(key).toHtmlEscaped().replace("\n", "<br>"));
+                item.append(attr->value(key).toHtmlEscaped().replace(" ", "&nbsp;").replace("\n", "<br>"));
                 item.append("</td></tr>");
             }
         }
 
-        // Done with this entry
-        item.append("</table></div>\n");
-        if (device.write(item.toUtf8()) == -1) {
-            m_error = device.errorString();
-            return false;
-        }
+        // Skip if everything is empty
+        if (item.isEmpty())
+            continue;
+
+        // Output it into our table. First the left side with
+        // icon and entry title ...
+        table += "<tr>";
+        table += "<td width=\"1%\">" + PixmapToHTML(entry->iconPixmap(IconSize::Medium)) + "</td>";
+        table += "<td width=\"19%\" valign=\"top\"><h3>" + entry->title().toHtmlEscaped() + "</h3></td>";
+
+        // ... then the right side with the data fields
+        table += "<td style=\"padding-bottom: 0.5em;\"><table width=\"100%\">" + item + "</table></td>";
+        table += "</tr>";
+    }
+
+    // Output the complete table of this group
+    table.append("</table>\n");
+    if (device.write(table.toUtf8()) == -1) {
+        m_error = device.errorString();
+        return false;
     }
 
     // Recursively output the child groups
