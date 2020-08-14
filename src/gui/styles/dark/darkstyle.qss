@@ -13,7 +13,7 @@ QPushButton:!default:hover {
     background: #252528;
 }
 
-QPushButton:default:hover {
+QPushButton:default:hover, QPushButton:checked:hover {
     /* Using slightly lighter shade from palette(highlight) */
     background: #2E582E;
 }
