@@ -8,7 +8,7 @@ QPushButton:!default:hover {
     background: palette(mid);
 }
 
-PasswordGeneratorWidget QPushButton:checked {
+QPushButton:checked {
     background: palette(highlight);
     color: palette(highlighted-text);
 }
