@@ -107,6 +107,8 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
         return handleGetDatabaseGroups(json, action);
     } else if (action.compare("create-new-group", Qt::CaseSensitive) == 0) {
         return handleCreateNewGroup(json, action);
+    } else if (action.compare("get-totp", Qt::CaseSensitive) == 0) {
+        return handleGetTotp(json, action);
     }
 
     // Action was not recognized
@@ -461,6 +463,37 @@ QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const Q
     QJsonObject message = buildMessage(newNonce);
     message["name"] = newGroup["name"];
     message["uuid"] = newGroup["uuid"];
+
+    return buildResponse(action, message, newNonce);
+}
+
+QJsonObject BrowserAction::handleGetTotp(const QJsonObject& json, const QString& action)
+{
+    const QString nonce = json.value("nonce").toString();
+    const QString encrypted = json.value("message").toString();
+
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    QString command = decrypted.value("action").toString();
+    if (command.isEmpty() || command.compare("get-totp", Qt::CaseSensitive) != 0) {
+        return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
+    }
+
+    const QString uuid = decrypted.value("uuid").toString();
+
+    // Get the current TOTP
+    const auto totp = browserService()->getCurrentTotp(uuid);
+    const QString newNonce = incrementNonce(nonce);
+
+    QJsonObject message = buildMessage(newNonce);
+    message["totp"] = totp;
 
     return buildResponse(action, message, newNonce);
 }
