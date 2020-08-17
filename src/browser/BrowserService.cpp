@@ -297,8 +297,9 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
         databases << getDatabase();
     }
 
+    auto entryUuid = Tools::hexToUuid(uuid);
     for (const auto& db : databases) {
-        Entry* entry = db->rootGroup()->findEntryByUuid(Tools::hexToUuid(uuid), true);
+        auto entry = db->rootGroup()->findEntryByUuid(entryUuid, true);
         if (entry) {
             return entry->totp();
         }
