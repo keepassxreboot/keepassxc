@@ -215,7 +215,6 @@ QJsonObject BrowserService::getDatabaseGroups()
 
 QJsonObject BrowserService::createNewGroup(const QString& groupName)
 {
-
     auto db = getDatabase();
     if (!db) {
         return {};
@@ -282,6 +281,31 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
     result["name"] = name;
     result["uuid"] = uuid;
     return result;
+}
+
+QString BrowserService::getCurrentTotp(const QString& uuid)
+{
+    QList<QSharedPointer<Database>> databases;
+    if (browserSettings()->searchInAllDatabases()) {
+        for (auto dbWidget : getMainWindow()->getOpenDatabases()) {
+            auto db = dbWidget->database();
+            if (db) {
+                databases << db;
+            }
+        }
+    } else {
+        databases << getDatabase();
+    }
+
+    auto entryUuid = Tools::hexToUuid(uuid);
+    for (const auto& db : databases) {
+        auto entry = db->rootGroup()->findEntryByUuid(entryUuid, true);
+        if (entry) {
+            return entry->totp();
+        }
+    }
+
+    return {};
 }
 
 QString BrowserService::storeKey(const QString& key)
