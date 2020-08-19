@@ -5883,7 +5883,7 @@ Võimalikud käsud:
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation type="unfinished"/>
+        <translation>Andmebaasi kirjutamine ebaõnnestus: %1</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
@@ -6708,23 +6708,23 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
-        <translation type="unfinished"/>
+        <translation>AES (%1 raundi)</translation>
     </message>
     <message>
         <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2 (%1 raundi, %2 KB)</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>AES: 256-bitine</translation>
     </message>
     <message>
         <source>Twofish 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish: 256-bitine</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20: 256-bitine</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>

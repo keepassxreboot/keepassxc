@@ -66,7 +66,7 @@
     </message>
     <message>
         <source>(empty)</source>
-        <translation type="unfinished"/>
+        <translation>(ว่าง)</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
@@ -125,15 +125,15 @@
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation type="unfinished"/>
+        <translation>สีเดียว (สว่าง)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation type="unfinished"/>
+        <translation>สีเดียว (มืด)</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation type="unfinished"/>
+        <translation>สีสดใส</translation>
     </message>
 </context>
 <context>
@@ -221,7 +221,7 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation>จำฐานข้อมูลที่ใช้ครั้งที่แล้ว</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
@@ -229,15 +229,15 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>จำแฟ้มกุญแจและดองเกิลความปลอดภัยที่ใช้กับฐานข้อมูล</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation type="unfinished"/>
+        <translation>ตรวจสอบการปรับปรุงสัปดาห์ละครั้งขณะเปิดแอป</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>ให้ตรวจสอบรุ่นทดสอบเบตาด้วย ขณะตรวจสอบการปรับปรุง</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -245,7 +245,7 @@
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation type="unfinished"/>
+        <translation>(เริ่มโปรแกรมใหม่เพื่อใช้งาน)</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
@@ -265,7 +265,7 @@
     </message>
     <message>
         <source>Drop to background</source>
-        <translation type="unfinished"/>
+        <translation>หลบไปอยู่ที่ฉากหลัง</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
@@ -273,7 +273,7 @@
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation type="unfinished"/>
+        <translation>จำนวนวินาทีที่จะพยายามดาวน์โหลดไอคอนของเว็บไซต์</translation>
     </message>
     <message>
         <source> sec</source>
@@ -302,7 +302,7 @@
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation type="unfinished"/>
+        <translation>เรียกให้ KeePassXC โดยอัตโนมัติเมื่อเริ่มระบบ</translation>
     </message>
     <message>
         <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
@@ -314,7 +314,7 @@
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"/>
+        <translation>ส่วนติดต่อผู้ใช้</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
@@ -326,7 +326,7 @@
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation type="unfinished"/>
+        <translation>ชนิดไอคอนที่ถาด:</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
@@ -556,7 +556,7 @@
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - การขอเข้าถึงเบราว์เซอร์</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
@@ -712,7 +712,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation type="unfinished"/>
+        <translation>เปิดใช้การผสานกับเว็บเบราว์เซอร์</translation>
     </message>
     <message>
         <source>General</source>
@@ -720,7 +720,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation type="unfinished"/>
+        <translation>ยังไม่รองรับเบราว์เซอร์ที่ถูกติดตั้งจาก Snap</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
@@ -728,31 +728,31 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Vivaldi</source>
-        <translation type="unfinished"/>
+        <translation>Vivaldi</translation>
     </message>
     <message>
         <source>&amp;Edge</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Edge</translation>
     </message>
     <message>
         <source>Firefox</source>
-        <translation type="unfinished"/>
+        <translation>Firefox</translation>
     </message>
     <message>
         <source>Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>Tor Browser</translation>
     </message>
     <message>
         <source>Brave</source>
-        <translation type="unfinished"/>
+        <translation>Brave</translation>
     </message>
     <message>
         <source>Google Chrome</source>
-        <translation type="unfinished"/>
+        <translation>Google Chrome</translation>
     </message>
     <message>
         <source>Chromium</source>
-        <translation type="unfinished"/>
+        <translation>Chromium</translation>
     </message>
     <message>
         <source>Show a notification when credentials are requested</source>
@@ -864,7 +864,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation type="unfinished"/>
+        <translation>เรียกดูแฟ้มพร็อกซีที่กำหนดเอง</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -877,7 +877,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation type="unfinished"/>
+        <translation>ชนิดเบราว์เซอร์:</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -897,7 +897,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Browse for custom browser path</source>
-        <translation type="unfinished"/>
+        <translation>เบราว์เซอร์จากพาธที่ตั้งเบราว์เซอร์ที่ระบุเอง</translation>
     </message>
     <message>
         <source>Custom extension ID:</source>
@@ -913,7 +913,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation type="unfinished"/>
+        <translation>จำเป็นต้องมีโปรแกรม KeePassXC-Browser เพื่อให้การผสานกับเบราว์เซอร์ทำงานได้ &lt;br /&gt;ดาวน์โหลดมันสำหรับ %1 และ %2 และ %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -1144,19 +1144,20 @@ chrome-laptop.</source>
     <message>
         <source>%1
 Backup database located at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1
+พบฐานข้อมูลสำรองที่ %2</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"/>
+        <translation>ไม่สามารถบันทึกได้ ฐานข้อมูลไม่ได้ถูกชี้ไปยังแฟ้มที่ใช้งานได้</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation type="unfinished"/>
+        <translation>ไม่สามารถบันทึกได้ แฟ้มฐานข้อมูลเป็นแบบอ่านอย่างเดียว</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation type="unfinished"/>
+        <translation>แฟ้มฐานข้อมูลมีความเปลี่ยนแปลงที่ยังไม่ถูกบันทึกกลับ</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1236,7 +1237,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องรหัสผ่าน</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
@@ -1244,7 +1245,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>เลือกแฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1287,7 +1288,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation type="unfinished"/>
+        <translation>ลองด้วยรหัสผ่านว่างเปล่า</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
@@ -1308,7 +1309,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation type="unfinished"/>
+        <translation>ไม่สามารถใช้แฟ้มฐานข้อมูลเป็นแฟ้มกุญแจได้</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
@@ -1337,7 +1338,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation type="unfinished"/>
+        <translation>เลือกกุญแจกายภาพ...</translation>
     </message>
 </context>
 <context>
@@ -1481,7 +1482,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation type="unfinished"/>
+        <translation>กุญแจเบราว์เซอร์ที่ถูกเก็บอยู่</translation>
     </message>
     <message>
         <source>Remove selected key</source>
@@ -1699,11 +1700,11 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>?? ms</source>
-        <translation type="unfinished"/>
+        <translation>?? มิลลิวินาที</translation>
     </message>
     <message>
         <source>? s</source>
-        <translation type="unfinished"/>
+        <translation>? วิ</translation>
     </message>
 </context>
 <context>
@@ -2426,7 +2427,7 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>การตั้งค่าเหล่านี้จะส่งผลต่อพฤติกรรมการป้อนข้อมูลด้วยส่วนเสริมในเบราว์เซอร์</translation>
     </message>
     <message>
         <source>General</source>
@@ -2438,11 +2439,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation type="unfinished"/>
+        <translation>ซ่อนรายการข้อมูลนี้จากส่วนเสริมในเบราว์เซอร์</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation type="unfinished"/>
+        <translation>URL เพิ่มเติม</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2454,7 +2455,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>แก้ไข</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
@@ -2497,11 +2498,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation type="unfinished"/>
+        <translation>ลบช่วงประวัติที่เลือก</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation type="unfinished"/>
+        <translation>ลบประวัติทั้งหมด</translation>
     </message>
 </context>
 <context>
@@ -2540,15 +2541,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องรหัสผ่าน</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation type="unfinished"/>
+        <translation>สลับให้เห็นบันทึก</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องการหมดอายุ</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
@@ -2560,19 +2561,19 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อบันทึก</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องหัวเรื่อง</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องชื่อผู้ใช้</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>สลับการหมดอายุ</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -2584,7 +2585,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>หมดอายุ:</translation>
     </message>
 </context>
 <context>
@@ -2668,7 +2669,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation type="unfinished"/>
+        <translation>เรียกดูแฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>External key file</source>
@@ -2812,7 +2813,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องรหัสผ่าน</translation>
     </message>
     <message>
         <source>Clear fields</source>
@@ -2820,7 +2821,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Browse for share file</source>
-        <translation type="unfinished"/>
+        <translation>เรียกดูแฟ้มที่แบ่งปัน</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -2831,15 +2832,15 @@ Supported extensions are: %1.</source>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องชื่อ</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อบันทึก</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>สลับการหมดอายุ</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
@@ -2847,7 +2848,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องการหมดอายุ</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
@@ -2859,7 +2860,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>หมดอายุ:</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
@@ -2867,7 +2868,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation type="unfinished"/>
+        <translation>Auto-Type:</translation>
     </message>
     <message>
         <source>Search:</source>
@@ -2879,7 +2880,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อ:</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
@@ -3043,7 +3044,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>รหัสระบุตัวที่ไม่ซ้ำ</translation>
     </message>
     <message>
         <source>Plugin data</source>
@@ -3576,7 +3577,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>กำลังดาวน์โหลด...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3584,15 +3585,15 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Already Exists</source>
-        <translation type="unfinished"/>
+        <translation>มีอยู่แล้ว</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation type="unfinished"/>
+        <translation>การดาวน์โหลดล้มเหลว</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation type="unfinished"/>
+        <translation>กำลังดาวน์โหลด favicon (%1/%2)...</translation>
     </message>
 </context>
 <context>
@@ -4224,11 +4225,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Imported from</source>
-        <translation type="unfinished"/>
+        <translation>นำเข้าจาก</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation type="unfinished"/>
+        <translation>ส่งออกไป</translation>
     </message>
     <message>
         <source>Synchronized with</source>
@@ -4324,11 +4325,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>เลือกแฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>เลือกแฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -4336,7 +4337,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Generate a new key file</source>
-        <translation type="unfinished"/>
+        <translation>สร้างแฟ้มกุญแจใหม่</translation>
     </message>
     <message>
         <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
@@ -5197,7 +5198,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>ช่องรหัสผ่าน</translation>
     </message>
     <message>
         <source>Repeat password field</source>
@@ -6246,7 +6247,7 @@ Available commands:
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation type="unfinished"/>
+        <translation>ชนิดรุ่นที่สร้าง: %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
@@ -6538,7 +6539,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
-        <translation type="unfinished"/>
+        <translation>โปรแกรมเสริมเบราว์เซอร์ล้มเหลว</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>

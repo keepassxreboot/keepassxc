@@ -302,7 +302,7 @@
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Iniciar KeePassXc ao arrancar o sistema</translation>
+        <translation>Iniciar KeePassXC ao arrancar o sistema</translation>
     </message>
     <message>
         <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
@@ -2991,11 +2991,11 @@ As extensões suportadas são: %1.</translation>
     </message>
     <message>
         <source>Use default icon</source>
-        <translation>Utilizar icon padrão</translation>
+        <translation>Utilizar ícone padrão</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Utilizar icon padrão</translation>
+        <translation>Utilizar ícone padrão</translation>
     </message>
     <message>
         <source>Apply icon to...</source>
@@ -3467,7 +3467,7 @@ Tem a certeza de que deseja adicionar este ficheiro?</translation>
     <message>
         <source>Has attachments</source>
         <comment>Entry attachment icon toggle</comment>
-        <translation>Tem anexosTem anexos</translation>
+        <translation>Tem anexos</translation>
     </message>
     <message>
         <source>Has TOTP</source>
@@ -5129,7 +5129,7 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation>Necessita de uma palavra-passe para decifrar esta chave</translation>
+        <translation>Necessita de uma frase-chave para decifrar esta chave</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
@@ -5137,7 +5137,7 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>Falha ao decifrar, palavra-passe errada?</translation>
+        <translation>Falha ao decifrar, frase-chave errada?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
@@ -5283,7 +5283,7 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Palavra-passe</translation>
+        <translation>Frase-chave</translation>
     </message>
     <message>
         <source>Wordlist:</source>
@@ -5589,7 +5589,7 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
     </message>
     <message>
         <source>Empty</source>
-        <translation>Vazio</translation>
+        <translation>Sim</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5873,11 +5873,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>Gerar uma nova palavra-passe baseada em dados (diceware).</translation>
+        <translation>Gerar uma frase-chave baseada em dados (diceware).</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>Número de palavras para a palavra-passe.</translation>
+        <translation>Número de palavras para a frase-chave.</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
