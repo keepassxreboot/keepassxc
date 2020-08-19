@@ -113,7 +113,7 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
     }
 
     // Bound digits and step
-    settings->digits = qMax(1u, settings->digits);
+    settings->digits = qBound(1u, settings->digits, 10u);
     settings->step = qBound(1u, settings->step, 60u);
 
     // Detect custom settings, used by setup GUI

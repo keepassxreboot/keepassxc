@@ -52,7 +52,7 @@ public slots:
 private:
     QTimer* m_autoHideTimer;
     int m_autoHideTimeout;
-    bool m_animate;
+    bool m_animate = true;
 };
 
 #endif // MESSAGEWIDGET_H

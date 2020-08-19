@@ -331,10 +331,14 @@ namespace Tools
 
 #if defined(Q_OS_WIN)
         QRegularExpression varRe("\\%([A-Za-z][A-Za-z0-9_]*)\\%");
+        QString homeEnv = "USERPROFILE";
 #else
         QRegularExpression varRe("\\$([A-Za-z][A-Za-z0-9_]*)");
-        subbed.replace("~", environment.value("HOME"));
+        QString homeEnv = "HOME";
 #endif
+
+        if (subbed.startsWith("~/") || subbed.startsWith("~\\"))
+            subbed.replace(0, 1, environment.value(homeEnv));
 
         QRegularExpressionMatch match;
 

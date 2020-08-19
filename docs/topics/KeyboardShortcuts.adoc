@@ -33,7 +33,9 @@ include::.sharedheader[]
 |Select Previous Database Tab | Ctrl + Shift + Tab ; Ctrl + PageUp
 |Toggle Passwords Hidden      | Ctrl + Shift + C
 |Toggle Usernames Hidden      | Ctrl + Shift + B
-|Focus Search                 | Ctrl + F
+|Focus Groups (edit if focused)  | F1
+|Focus Entries (edit if focused) | F2
+|Focus Search                 | F3 ; Ctrl + F
 |Clear Search                 | Escape
 |Show Keyboard Shortcuts      | Ctrl + /
 |===

@@ -310,7 +310,7 @@
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
-        <translation>Sicheres speichern der Datenbank (bei Problemen mit Dropbox, etc. deaktivieren)</translation>
+        <translation>Sicheres Speichern der Datenbank (bei Problemen mit Dropbox, etc. deaktivieren)</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -3107,7 +3107,7 @@ Das kann dazu führen, dass die betroffenen Plugins nicht mehr richtig funktioni
     </message>
     <message>
         <source>Open</source>
-        <translation>Offen</translation>
+        <translation>Öffnen</translation>
     </message>
     <message>
         <source>Save</source>
@@ -6829,7 +6829,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(ausgeschlossen)</translation>
+        <translation> (ausgeschlossen)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
@@ -6904,7 +6904,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(ausgeschlossen)</translation>
+        <translation> (ausgeschlossen)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>

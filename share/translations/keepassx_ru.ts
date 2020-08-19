@@ -358,7 +358,7 @@
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>сек</translation>
+        <translation> с</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -418,7 +418,7 @@
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation>Задержка блокирования базы (сек):</translation>
+        <translation>Задержка блокирования базы (с):</translation>
     </message>
     <message>
         <source> min</source>
@@ -1382,7 +1382,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Доступ к базе данных</translation>
     </message>
 </context>
 <context>
@@ -1501,11 +1501,11 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser custom data</source>
-        <translation type="unfinished"/>
+        <translation>Переместить аттрибуты KeePassHTTP в пользовательские данные KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation type="unfinished"/>
+        <translation>Обновление идентификатора корневой записи базы данных</translation>
     </message>
     <message>
         <source>Created</source>
@@ -1518,7 +1518,8 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation type="unfinished"/>
+        <translation>Действительно хотите перезагруить ID базы данных?
+Это необходимо только если ваша база является копией другой и браузерное расширение не может подключиться.</translation>
     </message>
 </context>
 <context>
@@ -1557,7 +1558,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation type="unfinished"/>
+        <translation>Не получилось изменить учётные данные базы</translation>
     </message>
 </context>
 <context>
@@ -1596,7 +1597,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>?? s</source>
-        <translation>?? сек</translation>
+        <translation>?? с</translation>
     </message>
     <message>
         <source>Change</source>
@@ -1728,15 +1729,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Don&apos;t expose this database</source>
-        <translation type="unfinished"/>
+        <translation>Не публиковать эту базу данных</translation>
     </message>
     <message>
         <source>Expose entries under this group:</source>
-        <translation type="unfinished"/>
+        <translation>Показать записи внутри этой группы:</translation>
     </message>
     <message>
         <source>Enable Secret Service to access these settings.</source>
-        <translation type="unfinished"/>
+        <translation>Включите службу Secret Service, чтобы настроить эти параметры.</translation>
     </message>
 </context>
 <context>
@@ -1817,7 +1818,7 @@ This action is not reversible.</source>
     </message>
     <message>
         <source>Enable compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Использовать сжатие (рекомендуется)</translation>
     </message>
 </context>
 <context>
@@ -2363,7 +2364,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Exclude from database reports</source>
-        <translation type="unfinished"/>
+        <translation>Исключить из отчетов</translation>
     </message>
 </context>
 <context>
@@ -2614,7 +2615,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source> seconds</source>
-        <translation> сек</translation>
+        <translation> с</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -2878,7 +2879,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Использовать последовательность по умолчанию автоввода родительской группы</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
@@ -3547,7 +3548,7 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation type="unfinished"/>
+        <translation>Запущен другой Secret Service (%1)&lt;br/&gt;Пожалуйста отключите/удалите его перед тем как включать интеграцию с ним.</translation>
     </message>
 </context>
 <context>
@@ -3562,7 +3563,7 @@ Are you sure to add this file?</source>
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось проверить пароли онлайн</translation>
     </message>
 </context>
 <context>
@@ -3659,22 +3660,22 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось вычислить ключ базы данных</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось выполнить вызов-ответ: %1</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось выполнить вызов-ответ: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось вычислить ключ базы данных</translation>
     </message>
 </context>
 <context>
@@ -3803,7 +3804,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось вычислить ключ базы данных: %1</translation>
     </message>
 </context>
 <context>
@@ -3824,7 +3825,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось вычислить ключ базы данных: %1</translation>
     </message>
 </context>
 <context>
@@ -4024,15 +4025,15 @@ Line %2, column %3</source>
     <name>KeeAgentSettings</name>
     <message>
         <source>Invalid KeeAgent settings file structure.</source>
-        <translation type="unfinished"/>
+        <translation>Неверная структура файла параметров KeeAgent</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Закрытый ключ — это вложение, но вложенные файлы отсутствуют.</translation>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation type="unfinished"/>
+        <translation>Закрытый ключ не содержит данных</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
@@ -4209,7 +4210,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось вычислить ключ базы данных</translation>
     </message>
 </context>
 <context>
@@ -4622,7 +4623,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"/>
+        <translation>Оформление</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
@@ -4682,15 +4683,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Безопаснось базы данных…</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Отчёты по базе данных…</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
-        <translation type="unfinished"/>
+        <translation>Статистика, проверка безопасности…</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
@@ -4822,11 +4823,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation type="unfinished"/>
+        <translation>Показывать панель предварительного просмотра</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation type="unfinished"/>
+        <translation>Не показывать предупреждение для этой версии</translation>
     </message>
     <message>
         <source>Restart Application?</source>
@@ -4834,7 +4835,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>Требуется перезапуск приложения для применения этого параметра. Выполнить перезапуск сейчас?</translation>
     </message>
 </context>
 <context>
@@ -4903,7 +4904,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Повторное применение более старой исходной записи поверх более новой мишени %1 [%2]</translation>
+        <translation>Повторное применение более старой исходной записи поверх более новой целевой записи %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
@@ -4915,11 +4916,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation>Удаление дочерней %1 [%2]</translation>
+        <translation>Удаление дочерней записи %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation>Удаление &quot;осиротевшей&quot; %1 [%2]</translation>
+        <translation>Удаление «осиротевшей» записи %1 [%2]</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
@@ -4954,7 +4955,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPage</name>
     <message>
         <source>WizardPage</source>
-        <translation>СтраницаМастера</translation>
+        <translation>Страница мастера</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
@@ -4977,11 +4978,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Доступ к базе данных</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation type="unfinished"/>
+        <translation>Известные только вам реквизиты для входа, защищающие базу данных.</translation>
     </message>
 </context>
 <context>
@@ -5191,15 +5192,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Toggle Password (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Скрыть или показать пароль (%1)</translation>
     </message>
     <message>
         <source>Generate Password (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Сгенерировать пароль (%1)</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation type="unfinished"/>
+        <translation>Внимание: включен режим CAPS LOCK.</translation>
     </message>
 </context>
 <context>
@@ -5402,7 +5403,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Исключить символы: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+        <translation>Исключить символы: «0», «1», «l», «I», «O», «|», «﹒»</translation>
     </message>
     <message>
         <source>Generated password</source>
@@ -5466,19 +5467,19 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Generate Password</source>
-        <translation type="unfinished"/>
+        <translation>Создать пароль</translation>
     </message>
     <message>
         <source>Also choose from:</source>
-        <translation type="unfinished"/>
+        <translation>Дополнительные символы:</translation>
     </message>
     <message>
         <source>Additional characters to use for the generated password</source>
-        <translation type="unfinished"/>
+        <translation>Дополнительные символы</translation>
     </message>
     <message>
         <source>Additional characters</source>
-        <translation type="unfinished"/>
+        <translation>Дополнительные символы</translation>
     </message>
     <message>
         <source>Word Count:</source>
@@ -5486,15 +5487,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished"/>
+        <translation>Esc</translation>
     </message>
     <message>
         <source>Apply Password</source>
-        <translation type="unfinished"/>
+        <translation>Использовать пароль</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -5502,7 +5503,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Regenerate password (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Создать заново (%1)</translation>
     </message>
 </context>
 <context>
@@ -5517,55 +5518,55 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Very weak password</source>
-        <translation type="unfinished"/>
+        <translation>Очень слабый пароль</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>
-        <translation type="unfinished"/>
+        <translation>Энтропия пароля: %1 бит</translation>
     </message>
     <message>
         <source>Weak password</source>
-        <translation type="unfinished"/>
+        <translation>Слабый пароль</translation>
     </message>
     <message>
         <source>Used in %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>Используется в %1/%2</translation>
     </message>
     <message>
         <source>Password is used %1 times</source>
-        <translation type="unfinished"/>
+        <translation>Пароль используется %1 раз(а)</translation>
     </message>
     <message>
         <source>Password has expired</source>
-        <translation type="unfinished"/>
+        <translation>Истёк срок действия пароля</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
-        <translation type="unfinished"/>
+        <translation>Срок действия пароля истёк %1</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
-        <translation type="unfinished"/>
+        <translation>Срок действия пароля скоро истечёт</translation>
     </message>
     <message>
         <source>Password expires in %1 days</source>
-        <translation type="unfinished"/>
+        <translation>Срок действия пароля истечёт через %1 дня (дней).</translation>
     </message>
     <message>
         <source>Password will expire soon</source>
-        <translation type="unfinished"/>
+        <translation>Срок действия пароля скоро истечёт</translation>
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation type="unfinished"/>
+        <translation>Срок действия пароля истекает %1</translation>
     </message>
     <message>
         <source>Health Check</source>
-        <translation type="unfinished"/>
+        <translation>Проверка безопасности</translation>
     </message>
     <message>
         <source>HIBP</source>
-        <translation type="unfinished"/>
+        <translation>HIBP</translation>
     </message>
 </context>
 <context>
@@ -5584,7 +5585,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Empty</source>
-        <translation>Пустая</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5918,7 +5919,7 @@ Available commands:
     </message>
     <message>
         <source>Clipboard cleared!</source>
-        <translation>Буфер обмена очищен!</translation>
+        <translation>Буфер обмена очищен.</translation>
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
@@ -5967,79 +5968,79 @@ Available commands:
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation>Тип: Перебор</translation>
+        <translation>Тип: перебор</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation>Тип: Словарь</translation>
+        <translation>Тип: словарь</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
-        <translation>Тип: Словать+замена букв цифрами/знаками</translation>
+        <translation>Тип: словарь + замена букв цифрами и знаками</translation>
     </message>
     <message>
         <source>Type: User Words</source>
-        <translation>Тип: Пользовательские слова</translation>
+        <translation>Тип: пользовательские слова</translation>
     </message>
     <message>
         <source>Type: User+Leet</source>
-        <translation>Тип: Пользователь+замена букв цифрами/знаками</translation>
+        <translation>Тип: пользователь + замена букв цифрами и знаками</translation>
     </message>
     <message>
         <source>Type: Repeated</source>
-        <translation>Тип: Повторы</translation>
+        <translation>Тип: повторы</translation>
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation>Тип: Последовательность</translation>
+        <translation>Тип: последовательность</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
-        <translation>Тип: Пространственный</translation>
+        <translation>Тип: пространственный</translation>
     </message>
     <message>
         <source>Type: Date</source>
-        <translation>Тип: Дата</translation>
+        <translation>Тип: дата</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>Тип: Перебор (повт.)</translation>
+        <translation>Тип: перебор (повт.)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation>Тип: Словарь (повт.)</translation>
+        <translation>Тип: словарь (повт.)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation>Тип: Словарь+замена букв цифрами/знаками (повт.)</translation>
+        <translation>Тип: словарь + замена букв цифрами и знаками (повт.)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation>Тип: Пользовательские слова (повт.)</translation>
+        <translation>Тип: пользовательские слова (повт.)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation>Тип: Пользователь+замена букв цифрами/знаками (повт.)</translation>
+        <translation>Тип: Пользователь + замена букв цифрами и знаками (повт.)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation>Тип: Повторы (повт.)</translation>
+        <translation>Тип: повторы (повт.)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation>Тип: Последовательность (повт.)</translation>
+        <translation>Тип: последовательность (повт.)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation>Тип: Пространственный (повт.)</translation>
+        <translation>Тип: пространственный (повт.)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation>Тип: Дата (повт.)</translation>
+        <translation>Тип: дата (повт.)</translation>
     </message>
     <message>
         <source>Type: Unknown%1</source>
-        <translation>Тип: Неизвестный%1</translation>
+        <translation>Тип: неизвестный%1</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
@@ -6555,7 +6556,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Пароль для «%1» был замечен в утечках %2 раз.</numerusform><numerusform>Пароль для «%1» был замечен в утечках %2 раза.</numerusform><numerusform>Пароль для «%1» был замечен в утечках %2 раз.</numerusform><numerusform>Пароль для «%1» был замечен в утечках %2 раза.</numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
@@ -6567,55 +6568,55 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка подключаемого модуля браузера</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation type="unfinished"/>
+        <translation>Не удается сохранить файл сценария механизма native messaging для «%1».</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
-        <translation type="unfinished"/>
+        <translation>Скопировать указанный аттрибут в буфер обмена. Если аттрибут не указан, используется пароль.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation type="unfinished"/>
+        <translation>Скопировать текущий TOTP в буфер обмена (эквивалентно «-a totp»).</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Скопировать в буфер обмена аттрибуты записи.</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation type="unfinished"/>
+        <translation>ОШИБКА: Используйте один из аргументов --attribute или --totp, а не оба.</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation type="unfinished"/>
+        <translation>ОШИБКА: аттрибут %1 неоднозначный, он соответствует %2. </translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
-        <translation type="unfinished"/>
+        <translation>Аттрибут «%1» не найден.</translation>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation type="unfinished"/>
+        <translation>Аттрибуты записи «%1» скопированы в буфер обмена.</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation type="unfinished"/>
+        <translation>Номер слота ключа Yubikey и дополнительный серийный номер для доступа к базе данных (например: :7370001).</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
-        <translation type="unfinished"/>
+        <translation>слот[:serial]</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Целевое время расшифровывания базы данных в миллисекундах.</translation>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"/>
+        <translation>время</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -6623,95 +6624,95 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Задать пароль базы данных.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
-        <translation type="unfinished"/>
+        <translation>Неверное время расшифровывания %1.</translation>
     </message>
     <message>
         <source>Target decryption time must be between %1 and %2.</source>
-        <translation type="unfinished"/>
+        <translation>Целевое время расшифровывания должно находиться в интервале от %1 до %2.</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось установить пароль базы данных.</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation type="unfinished"/>
+        <translation>Тест функции формирования ключа на %1 мс задержку.</translation>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation type="unfinished"/>
+        <translation>Для функции формирования ключа задано использование %1 раундов.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
-        <translation type="unfinished"/>
+        <translation>ошибка при задании параметров базы данных для функции формирования ключа.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Выбор формата файла для экспорта. Возможные варианты: XML (по умолчанию) или CSV.</translation>
     </message>
     <message>
         <source>Unable to import XML database: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка импорта базы данных из формата XML: %1</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
-        <translation type="unfinished"/>
+        <translation>Показать сведения о базе данных.</translation>
     </message>
     <message>
         <source>UUID: </source>
-        <translation type="unfinished"/>
+        <translation>UUID: </translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation type="unfinished"/>
+        <translation>Имя:</translation>
     </message>
     <message>
         <source>Description: </source>
-        <translation type="unfinished"/>
+        <translation>Описание:</translation>
     </message>
     <message>
         <source>Cipher: </source>
-        <translation type="unfinished"/>
+        <translation>Шифрование:</translation>
     </message>
     <message>
         <source>KDF: </source>
-        <translation type="unfinished"/>
+        <translation>KDF: </translation>
     </message>
     <message>
         <source>Recycle bin is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>Использование корзины включено.</translation>
     </message>
     <message>
         <source>Recycle bin is not enabled.</source>
-        <translation type="unfinished"/>
+        <translation>Использование корзины не включено.</translation>
     </message>
     <message>
         <source>Invalid command %1.</source>
-        <translation type="unfinished"/>
+        <translation>Неверная команда: %1.</translation>
     </message>
     <message>
         <source>Invalid YubiKey serial %1</source>
-        <translation type="unfinished"/>
+        <translation>Неверный серийный номер Yubikey %1</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to continue…</source>
-        <translation type="unfinished"/>
+        <translation>Для продолжения нажмите кнопку на устройстве YubiKey…</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation type="unfinished"/>
+        <translation>Использовать пустой пароль базы данных? [y/N]:</translation>
     </message>
     <message>
         <source>Repeat password: </source>
-        <translation type="unfinished"/>
+        <translation>Повторите пароль:</translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка: пароли не совпадают</translation>
     </message>
     <message>
         <source>All clipping programs failed. Tried %1
@@ -6720,37 +6721,37 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
-        <translation type="unfinished"/>
+        <translation>AES (%1 раунд(а))</translation>
     </message>
     <message>
         <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2 (%1 раунда(а), %2 КБ)</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>AES 256 бит</translation>
     </message>
     <message>
         <source>Twofish 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish 256-бит</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20: 256-бит {20 256-?}</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
-        <translation type="unfinished"/>
+        <translation>Тест %1-секундной задержки</translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 мс</numerusform><numerusform>%1 мс</numerusform><numerusform>%1 мс</numerusform><numerusform>%1 мс</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 с</numerusform><numerusform>%1 с</numerusform><numerusform>%1 с</numerusform><numerusform>%1 с</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6791,29 +6792,29 @@ Kernel: %3 %4</source>
     <name>ReportsWidgetHealthcheck</name>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Также показать записи, которые были исключены из отчётов</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation type="unfinished"/>
+        <translation>Наведите курсор чтобы просмотреть дополнительные сведения. Для редактирования записи щелкните два раза левой кнопкой мыши.</translation>
     </message>
     <message>
         <source>Bad</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Плохой</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
-        <translation type="unfinished"/>
+        <translation>Плохой — пароль должен быть изменён</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Плохой</translation>
+        <translation>Слабый</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
-        <translation type="unfinished"/>
+        <translation>Так себе — пароль следует изменить</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -6822,7 +6823,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation type="unfinished"/>
+        <translation>Слабый — пароль желательно изменить</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -6830,15 +6831,15 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Эта запись исключена из отчёта</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated...</source>
-        <translation type="unfinished"/>
+        <translation>Отчёт готовится...</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
-        <translation type="unfinished"/>
+        <translation>Проблем безопасности не найдено.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -6850,7 +6851,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Score</source>
-        <translation type="unfinished"/>
+        <translation>Рейтинг</translation>
     </message>
     <message>
         <source>Reason</source>
@@ -6869,15 +6870,15 @@ Kernel: %3 %4</source>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation type="unfinished"/>
+        <translation>ВНИМАНИЕ: Для подготовки этого отчёта данные будут переданы в службу «Have I Been Pwned» (https://haveibeenpwned.com) в виде первых пяти символов от хеша пароля. Другие сведения, за исключением количества паролей и IP-адреса, не передаются.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation type="unfinished"/>
+        <translation>Выполнить анализ онлайн</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Также показать записи, которые были исключены из отчётов</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
@@ -6897,7 +6898,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation type="unfinished"/>
+        <translation>Пароль опубликован...</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -6905,35 +6906,35 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Эта запись исключена из отчёта</translation>
     </message>
     <message>
         <source>once</source>
-        <translation type="unfinished"/>
+        <translation>один раз</translation>
     </message>
     <message>
         <source>up to 10 times</source>
-        <translation type="unfinished"/>
+        <translation>до десяти раз</translation>
     </message>
     <message>
         <source>up to 100 times</source>
-        <translation type="unfinished"/>
+        <translation>до ста раз</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
-        <translation type="unfinished"/>
+        <translation>до тысячи раз</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
-        <translation type="unfinished"/>
+        <translation>до 10 000 раз</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
-        <translation type="unfinished"/>
+        <translation>до 100 000 раз</translation>
     </message>
     <message>
         <source>up to a million times</source>
-        <translation type="unfinished"/>
+        <translation>до миллиона раз</translation>
     </message>
     <message>
         <source>millions of times</source>
@@ -7052,11 +7053,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Исключённые из отчёта записи</translation>
     </message>
     <message>
         <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
-        <translation type="unfinished"/>
+        <translation>Исключение записей из отчётов, если, к примеру, известно, что в таких записях используется слабый пароль, не обязательно является проблемой, но стоит обратить на это внимание.</translation>
     </message>
     <message>
         <source>Average password length</source>
@@ -7107,7 +7108,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Key identity ownership conflict. Refusing to add.</source>
-        <translation type="unfinished"/>
+        <translation>Конфликт владения идентификационным ключом, добавление отменено.</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
@@ -7118,7 +7119,7 @@ Kernel: %3 %4</source>
     <name>SearchHelpWidget</name>
     <message>
         <source>Search Help</source>
-        <translation>Поиск в Справке</translation>
+        <translation>Поиск в справке</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
@@ -7233,19 +7234,19 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Don&apos;t confirm when entries are deleted by clients</source>
-        <translation type="unfinished"/>
+        <translation>Не подтверждать удаление записей приложениями-клиентами</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; Failed to connect to DBus. Please check your DBus setup.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Ошибка:&lt;/b&gt; не удалось подключиться к D-Bus, проверьте параметры. </translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Внимание:&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation type="unfinished"/>
+        <translation>Сохраните изменения для активации подключаемого модуля и редактирования этого раздела.</translation>
     </message>
 </context>
 <context>
@@ -7605,7 +7606,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation>Закрытие через %1 сек.</translation>
+        <translation>Закрытие через %1 с.</translation>
     </message>
 </context>
 <context>
@@ -7724,7 +7725,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation>Доступна новая версия KeePassXC!</translation>
+        <translation>Доступна новая версия KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
@@ -7786,11 +7787,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     <name>YubiKey</name>
     <message>
         <source>%1 [%2] Configured Slot - %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] Настроенный слот — %3</translation>
     </message>
     <message>
         <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] Вызов-ответ — слот %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -7802,31 +7803,31 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>%1 Invalid slot specified - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 указан неверный слот — %2</translation>
     </message>
     <message>
         <source>The YubiKey interface has not been initialized.</source>
-        <translation type="unfinished"/>
+        <translation>Интерфейс YubiKey не был инициализирован.</translation>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation type="unfinished"/>
+        <translation>Аппаратный ключ уже используется.</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation type="unfinished"/>
+        <translation>Для продолжения работы подключите аппаратный ключ с серийным номером %1.</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation type="unfinished"/>
+        <translation>Тайм-аут аппаратного ключа во время ожидания действий пользователя.</translation>
     </message>
     <message>
         <source>A USB error ocurred when accessing the hardware key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка подсистемы USB при доступе к аппаратному ключу: %1</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось завершить обмен «вызов—ответ»: %1</translation>
     </message>
 </context>
 <context>
@@ -7853,11 +7854,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось найти ни одного аппаратного ключа.</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation type="unfinished"/>
+        <translation>Выбранный аппаратный ключ не поддерживает механизм «вызов—ответ».</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>

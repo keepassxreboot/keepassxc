@@ -153,9 +153,20 @@ QIcon Resources::icon(const QString& name, bool recolor, const QColor& overrideC
         return icon;
     }
 
+    // Resetting the application theme name before calling QIcon::fromTheme() is required for hacky
+    // QPA platform themes such as qt5ct, which randomly mess with the configured icon theme.
+    // If we do not reset the theme name here, it will become empty at some point, causing
+    // Qt to look for icons at the user-level and global default locations.
+    //
+    // See issue #4963: https://github.com/keepassxreboot/keepassxc/issues/4963
+    // and qt5ct issue #80: https://sourceforge.net/p/qt5ct/tickets/80/
+    QIcon::setThemeName("application");
+
     icon = QIcon::fromTheme(name);
     if (getMainWindow() && recolor) {
-        QImage img = icon.pixmap(128, 128).toImage().convertToFormat(QImage::Format_ARGB32_Premultiplied);
+        const QRect rect(0, 0, 48, 48);
+        QImage img = icon.pixmap(rect.width(), rect.height()).toImage();
+        img = img.convertToFormat(QImage::Format_ARGB32_Premultiplied);
         icon = {};
 
         QPainter painter(&img);
@@ -163,20 +174,19 @@ QIcon Resources::icon(const QString& name, bool recolor, const QColor& overrideC
 
         if (!overrideColor.isValid()) {
             QPalette palette = getMainWindow()->palette();
-            painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Normal, QPalette::WindowText));
+            painter.fillRect(rect, palette.color(QPalette::Normal, QPalette::WindowText));
             icon.addPixmap(QPixmap::fromImage(img), QIcon::Normal);
 
-            painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Active, QPalette::ButtonText));
+            painter.fillRect(rect, palette.color(QPalette::Active, QPalette::ButtonText));
             icon.addPixmap(QPixmap::fromImage(img), QIcon::Active);
 
-            painter.fillRect(
-                0, 0, img.width(), img.height(), palette.color(QPalette::Active, QPalette::HighlightedText));
+            painter.fillRect(rect, palette.color(QPalette::Active, QPalette::HighlightedText));
             icon.addPixmap(QPixmap::fromImage(img), QIcon::Selected);
 
-            painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Disabled, QPalette::WindowText));
+            painter.fillRect(rect, palette.color(QPalette::Disabled, QPalette::WindowText));
             icon.addPixmap(QPixmap::fromImage(img), QIcon::Disabled);
         } else {
-            painter.fillRect(0, 0, img.width(), img.height(), overrideColor);
+            painter.fillRect(rect, overrideColor);
             icon.addPixmap(QPixmap::fromImage(img), QIcon::Normal);
         }
 
@@ -202,18 +212,16 @@ QIcon Resources::onOffIcon(const QString& name, bool recolor)
         return icon;
     }
 
+    const QSize size(48, 48);
     QIcon on = Resources::icon(name + "-on", recolor);
-    for (const auto& size : on.availableSizes()) {
-        icon.addPixmap(on.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::On);
-        icon.addPixmap(on.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::On);
-        icon.addPixmap(on.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::On);
-    }
+    icon.addPixmap(on.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::On);
+    icon.addPixmap(on.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::On);
+    icon.addPixmap(on.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::On);
+
     QIcon off = Resources::icon(name + "-off", recolor);
-    for (const auto& size : off.availableSizes()) {
-        icon.addPixmap(off.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::Off);
-        icon.addPixmap(off.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::Off);
-        icon.addPixmap(off.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::Off);
-    }
+    icon.addPixmap(off.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::Off);
+    icon.addPixmap(off.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::Off);
+    icon.addPixmap(off.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::Off);
 
     m_iconCache.insert(cacheName, icon);
 

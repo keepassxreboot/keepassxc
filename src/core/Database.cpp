@@ -848,9 +848,14 @@ void Database::setEmitModified(bool value)
     m_emitModified = value;
 }
 
-bool Database::isModified(bool includeNonDataChanges) const
+bool Database::isModified() const
 {
-    return m_modified || (includeNonDataChanges && m_hasNonDataChange);
+    return m_modified;
+}
+
+bool Database::hasNonDataChanges() const
+{
+    return m_hasNonDataChange;
 }
 
 void Database::markAsModified()

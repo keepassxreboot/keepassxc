@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation type="unfinished"/>
+        <translation>Activar integració de l&apos;agent SSH</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
@@ -125,11 +125,11 @@
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation type="unfinished"/>
+        <translation>Monocrom (clar)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation type="unfinished"/>
+        <translation>Monocrom (fosc)</translation>
     </message>
     <message>
         <source>Colorful</source>
@@ -302,7 +302,7 @@
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation type="unfinished"/>
+        <translation>Executar KeePassXC a l&apos;inici del sistema</translation>
     </message>
     <message>
         <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
@@ -314,11 +314,11 @@
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"/>
+        <translation>Interfície d&apos;usuari</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation type="unfinished"/>
+        <translation>Estil de la barra d&apos;eines</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
@@ -326,11 +326,11 @@
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipus d&apos;icona de la safata del sistema</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation type="unfinished"/>
+        <translation>Valors de configuració per defecte...</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
@@ -560,7 +560,7 @@
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
-        <translation type="unfinished"/>
+        <translation>%1 demana accés a les entrades següents:</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
@@ -568,11 +568,11 @@
     </message>
     <message>
         <source>Remember</source>
-        <translation type="unfinished"/>
+        <translation>Recorda</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation type="unfinished"/>
+        <translation>Permetre accés a les entrades</translation>
     </message>
     <message>
         <source>Allow Selected</source>
@@ -659,11 +659,11 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: No s&apos;ha trobat cap entrada amb atributs KeePassHTTP</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation type="unfinished"/>
+        <translation>La base de dades activa no conté cap entrada amb atributs KeePassHTTP</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
@@ -726,31 +726,31 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Vivaldi</source>
-        <translation type="unfinished"/>
+        <translation>Vivaldi</translation>
     </message>
     <message>
         <source>&amp;Edge</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Edge</translation>
     </message>
     <message>
         <source>Firefox</source>
-        <translation type="unfinished"/>
+        <translation>Firefox</translation>
     </message>
     <message>
         <source>Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>Tor Browser</translation>
     </message>
     <message>
         <source>Brave</source>
-        <translation type="unfinished"/>
+        <translation>Brave</translation>
     </message>
     <message>
         <source>Google Chrome</source>
-        <translation type="unfinished"/>
+        <translation>Google Chrome</translation>
     </message>
     <message>
         <source>Chromium</source>
-        <translation type="unfinished"/>
+        <translation>Chromium</translation>
     </message>
     <message>
         <source>Show a notification when credentials are requested</source>
@@ -875,7 +875,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipus de navegador:</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -1095,7 +1095,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Column %1</source>
-        <translation type="unfinished"/>
+        <translation>Columna %1</translation>
     </message>
 </context>
 <context>

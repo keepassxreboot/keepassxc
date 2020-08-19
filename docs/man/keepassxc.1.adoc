@@ -1,10 +1,28 @@
+//  Copyright (C) 2019 Janek Bevendorff <janek@jbev.net>
+//  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 2 or (at your option)
+//  version 3 of the License.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 = keepassxc(1)
-:docdate: 2020-07-05
+:docdate: 2020-07-10
 :doctype: manpage
+:revnumber: 2.6.0
+:mansource: KeePassXC {revnumber}
 :manmanual: General Commands Manual
 
 == NAME
-keepassxc - password manager
+keepassxc - a modern open-source password manager
 
 == SYNOPSIS
 *keepassxc* [_options_] [_filename(s)_]
@@ -23,19 +41,25 @@ Your wallet works offline and requires no Internet connection.
   Displays version information.
 
 *--config* <__config__>::
-  Path to a custom config file
+  Path to a custom config file.
 
 *--keyfile* <__keyfile__>::
-  Key file of the database
+  Key file of the database.
 
 *--pw-stdin*::
-  Read password of the database from stdin
+  Read password of the database from stdin.
 
 *--pw*, *--parent-window* <__handle__>::
-  Parent window handle
+  Parent window handle.
 
 *--debug-info*::
   Displays debugging information.
 
+include::section-notes.adoc[]
+
 == AUTHOR
-This manual page is maintained by the KeePassXC Team <team@keepassxc.org>.
+This manual page was originally written by Janek Bevendorff <janek@jbev.net>.
+
+include::section-reporting-bugs.adoc[]
+
+include::section-copyright.adoc[]

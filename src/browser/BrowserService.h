@@ -58,6 +58,7 @@ public:
 
     QJsonObject getDatabaseGroups();
     QJsonObject createNewGroup(const QString& groupName);
+    QString getCurrentTotp(const QString& uuid);
 
     void addEntry(const QString& dbid,
                   const QString& login,
@@ -119,7 +120,8 @@ private:
 
     QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl);
     QList<Entry*> searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList);
-    QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& submitUrl);
+    QList<Entry*>
+    sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& submitUrl, const QString& fullUrl);
     QList<Entry*> confirmEntries(QList<Entry*>& pwEntriesToConfirm,
                                  const QString& url,
                                  const QString& host,
@@ -130,8 +132,11 @@ private:
     QJsonArray getChildrenFromGroup(Group* group);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
     Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});
-    int
-    sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
+    int sortPriority(const Entry* entry,
+                     const QString& host,
+                     const QString& submitUrl,
+                     const QString& baseSubmitUrl,
+                     const QString& fullUrl) const;
     bool schemeFound(const QString& url);
     bool removeFirstDomain(QString& hostname);
     bool handleURL(const QString& entryUrl, const QString& url, const QString& submitUrl);

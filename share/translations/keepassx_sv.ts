@@ -310,7 +310,7 @@
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
-        <translation type="unfinished"/>
+        <translation>Spara databasfiler säkert (inaktivera vid problem med Dropbox etc)</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -326,7 +326,7 @@
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation type="unfinished"/>
+        <translation>Typ av systemfältsikon:</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
@@ -1092,15 +1092,15 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation type="unfinished"/>
+        <translation>Rubriker undantagna</translation>
     </message>
     <message>
         <source>First line has field names</source>
-        <translation type="unfinished"/>
+        <translation>Första raden har fältnamn</translation>
     </message>
     <message>
         <source>Not Present</source>
-        <translation type="unfinished"/>
+        <translation>Inte tillgänglig</translation>
     </message>
     <message>
         <source>Column %1</source>
@@ -1332,11 +1332,11 @@ Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Som tillägg till ditt huvudlösenord, kan du använda en hemlig fil för att förbättra säkerheten i din databas. En sådan fil kan genereras i databasens säkerhetsinställningar.&lt;/p&gt;&lt;p&gt;Detta är &lt;strong&gt;inte&lt;/strong&gt; din *.kdbx-databasfil!&lt;br&gt;Om du inte har någon nyckelfil, lämnar du fältet tomt.&lt;/p&gt;&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation type="unfinished"/>
+        <translation>Nyckelfil för att låsa upp databasen</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
@@ -1386,7 +1386,7 @@ Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Databasens inloggningsuppgifter</translation>
     </message>
 </context>
 <context>
@@ -1562,7 +1562,7 @@ Vill du verkligen fortsätta utan lösenord?</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte ändra databasens inloggningsuppgifter</translation>
     </message>
 </context>
 <context>
@@ -2162,7 +2162,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte hitta databasfilen: %1</translation>
     </message>
 </context>
 <context>
@@ -3662,22 +3662,22 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte beräkna databasnyckeln</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte utfärda challenge-response: %1</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte utfärda challenge-response: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte beräkna databasnyckeln</translation>
     </message>
 </context>
 <context>
@@ -3806,7 +3806,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte beräkna databasnyckel: %1</translation>
     </message>
 </context>
 <context>
@@ -3827,7 +3827,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte beräkna databasnyckel: %1</translation>
     </message>
 </context>
 <context>
@@ -4027,15 +4027,15 @@ Rad %2, kolumn: %3</translation>
     <name>KeeAgentSettings</name>
     <message>
         <source>Invalid KeeAgent settings file structure.</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig KeeAgent-inställningsfilstruktur.</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Privat nyckel är en bifogad fil men inga bilagor tillhandahålls.</translation>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation type="unfinished"/>
+        <translation>Privat nyckel är tom</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
@@ -4212,7 +4212,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte beräkna databasnyckeln</translation>
     </message>
 </context>
 <context>
@@ -4392,7 +4392,10 @@ Vill du verkligen fortsätta med den här filen?</translation>
 unsupported in the future.
 
 Generate a new key file in the database security settings.</source>
-        <translation type="unfinished"/>
+        <translation>Du använder ett äldre nyckelfilsformat som kanske inte
+kommer att stödjas i framtiden.
+
+Generera en ny nyckelfil i databasens säkerhetsinställningar.</translation>
     </message>
 </context>
 <context>
@@ -4683,11 +4686,11 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation type="unfinished"/>
+        <translation>Databas&amp;säkerhet...</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
-        <translation type="unfinished"/>
+        <translation>Databas&amp;rapporter...</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
@@ -4735,11 +4738,11 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;CSV-fil...</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;HTML-fil...</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
@@ -4771,7 +4774,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Open Getting Started Guide</source>
-        <translation type="unfinished"/>
+        <translation>Öppna Kom-igång-guiden</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
@@ -4779,7 +4782,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Go to online documentation</source>
-        <translation type="unfinished"/>
+        <translation>Gå till online-dokumentationen</translation>
     </message>
     <message>
         <source>Open User Guide</source>
@@ -4823,7 +4826,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation type="unfinished"/>
+        <translation>Visa förhandsgranskningspanelen</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
@@ -4831,11 +4834,11 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du starta om programmet?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>Du måste starta om programmet för att tillämpa den här inställningen. Vill du starta om nu?</translation>
     </message>
 </context>
 <context>
@@ -4978,11 +4981,11 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Databasens inloggningsuppgifter</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation type="unfinished"/>
+        <translation>En uppsättning inloggningsuppgifter som bara du känner till, skyddar din databas.</translation>
     </message>
 </context>
 <context>
@@ -5192,15 +5195,15 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Toggle Password (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Växla lösenord (%1)</translation>
     </message>
     <message>
         <source>Generate Password (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Generera lösenord (%1)</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation type="unfinished"/>
+        <translation>Varning! Caps Lock aktiverat!</translation>
     </message>
 </context>
 <context>
@@ -5467,19 +5470,19 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Generate Password</source>
-        <translation type="unfinished"/>
+        <translation>Generera lösenord</translation>
     </message>
     <message>
         <source>Also choose from:</source>
-        <translation type="unfinished"/>
+        <translation>Välj också från:</translation>
     </message>
     <message>
         <source>Additional characters to use for the generated password</source>
-        <translation type="unfinished"/>
+        <translation>Fler tecken att användas för lösenordsgenerering</translation>
     </message>
     <message>
         <source>Additional characters</source>
-        <translation type="unfinished"/>
+        <translation>Fler tecken</translation>
     </message>
     <message>
         <source>Word Count:</source>
@@ -5491,7 +5494,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Apply Password</source>
-        <translation type="unfinished"/>
+        <translation>Tillämpa lösenordet</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
@@ -5503,7 +5506,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Regenerate password (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Generera om lösenordet (%1)</translation>
     </message>
 </context>
 <context>
@@ -5518,51 +5521,51 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Very weak password</source>
-        <translation type="unfinished"/>
+        <translation>Mycket svagt lösenord</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordsentropin är %1 bitar</translation>
     </message>
     <message>
         <source>Weak password</source>
-        <translation type="unfinished"/>
+        <translation>Svagt lösenord</translation>
     </message>
     <message>
         <source>Used in %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>Använt i %1/%2</translation>
     </message>
     <message>
         <source>Password is used %1 times</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordet används %1 gånger</translation>
     </message>
     <message>
         <source>Password has expired</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordet har upphört att gälla</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordet upphörde att gälla %1</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordet upphör snart att gälla</translation>
     </message>
     <message>
         <source>Password expires in %1 days</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordet upphör att gälla om %1 dagar</translation>
     </message>
     <message>
         <source>Password will expire soon</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordet upphör snart att gälla</translation>
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordet upphör att gälla %1</translation>
     </message>
     <message>
         <source>Health Check</source>
-        <translation type="unfinished"/>
+        <translation>Hälsokontroll</translation>
     </message>
     <message>
         <source>HIBP</source>
@@ -6556,7 +6559,7 @@ Kärna: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Lösenordet för &quot;%1&quot; har läckts %2 gång!</numerusform><numerusform>Lösenordet för &quot;%1&quot; har läckts %2 gånger!</numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
@@ -6568,190 +6571,191 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
-        <translation type="unfinished"/>
+        <translation>Webbläsartillägget misslyckades</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte spara den inbyggda meddelandeskriptfilen för %1.</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera det angivna attributet till urklipp. Standardvärdet är &quot;password&quot; om inget annat anges.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera aktuell TOTP till urklipp (motsvarar &quot;-a totp&quot;).</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera en posts attribut till urklipp.</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation type="unfinished"/>
+        <translation>FEL: Ange antingen --attribute eller --totp, inte bägge.</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation type="unfinished"/>
+        <translation>FEL: attributet %1 är tvetydigt, det matchar %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte hitta attributet &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation type="unfinished"/>
+        <translation>Attributet &quot;%1&quot; kopierat till urklipp!</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation type="unfinished"/>
+        <translation>Yubikey-plats och valfritt serienummer som används för att komma åt databasen (t.ex. 1:7370001).</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
-        <translation type="unfinished"/>
+        <translation>slot[:serial]</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Målets avkrypteringstid i ms för databasen.</translation>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"/>
+        <translation>tid</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Ange nyckelfil för databasen.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Ange lösenord för databasen.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig avkrypteringstid %1.</translation>
     </message>
     <message>
         <source>Target decryption time must be between %1 and %2.</source>
-        <translation type="unfinished"/>
+        <translation>Målets avkrypteringstid måste vara mellan %1 och %2.</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte ange databaslösenord.</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation type="unfinished"/>
+        <translation>Benchmarking nyckelhärledningsfunktion för %1ms fördröjning.</translation>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation type="unfinished"/>
+        <translation>Anger %1 rundor för nyckelhärledningsfunktionen.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
-        <translation type="unfinished"/>
+        <translation>fel vid inställning av databasens nyckel härledning.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Format att använda vid export. Tillgängliga alternativ är &quot;xml&quot; eller &quot;csv&quot;. Standardvärdet är &quot;xml&quot;.</translation>
     </message>
     <message>
         <source>Unable to import XML database: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte importera XML-databas: %1</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
-        <translation type="unfinished"/>
+        <translation>Visa en databas information.</translation>
     </message>
     <message>
         <source>UUID: </source>
-        <translation type="unfinished"/>
+        <translation>UUID: </translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation>Namn:</translation>
+        <translation>Namn: </translation>
     </message>
     <message>
         <source>Description: </source>
-        <translation>Beskrivning:</translation>
+        <translation>Beskrivning: </translation>
     </message>
     <message>
         <source>Cipher: </source>
-        <translation type="unfinished"/>
+        <translation>Chiffer: </translation>
     </message>
     <message>
         <source>KDF: </source>
-        <translation type="unfinished"/>
+        <translation>KDF: </translation>
     </message>
     <message>
         <source>Recycle bin is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>Papperskorgen är aktiverad.</translation>
     </message>
     <message>
         <source>Recycle bin is not enabled.</source>
-        <translation type="unfinished"/>
+        <translation>Papperskorgen är inte aktiverad.</translation>
     </message>
     <message>
         <source>Invalid command %1.</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt kommando %1.</translation>
     </message>
     <message>
         <source>Invalid YubiKey serial %1</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt YubiKey serienummer %1</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to continue…</source>
-        <translation type="unfinished"/>
+        <translation>Tryck på knappen på din YubiKey för att fortsätta...</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation type="unfinished"/>
+        <translation>Vill du skapa en databas med ett tomt lösenord? [y/N]: </translation>
     </message>
     <message>
         <source>Repeat password: </source>
-        <translation>Repetera lösenord:</translation>
+        <translation>Upprepa lösenordet: </translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation type="unfinished"/>
+        <translation>Fel: Lösenorden stämmer inte.</translation>
     </message>
     <message>
         <source>All clipping programs failed. Tried %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Alla klippprogram misslyckades. Försökte med %1
+</translation>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
-        <translation type="unfinished"/>
+        <translation>AES (%1 rundor)</translation>
     </message>
     <message>
         <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2 (%1 rundor, %2 KB)</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>AES 256-bit</translation>
     </message>
     <message>
         <source>Twofish 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish 256-bit</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
-        <translation type="unfinished"/>
+        <translation>Benchmark %1 fördröjning</translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6792,20 +6796,20 @@ Kärna: %3 %4</translation>
     <name>ReportsWidgetHealthcheck</name>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Visa också poster som har undantagits från rapporter</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation type="unfinished"/>
+        <translation>Håll muspekaren över anledning, för att visa fler detaljer. Dubbelklicka på posten för att redigera.</translation>
     </message>
     <message>
         <source>Bad</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Usel</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
-        <translation type="unfinished"/>
+        <translation>Usel — Lösenordet måste ändras</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -6814,7 +6818,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
-        <translation type="unfinished"/>
+        <translation>Dålig — Lösenordet måste ändras</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -6823,23 +6827,23 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation type="unfinished"/>
+        <translation>Svag — Överväg att ändra lösenordet</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation type="unfinished"/>
+        <translation> (Undantagen)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Denna post undantas från rapporter</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated...</source>
-        <translation type="unfinished"/>
+        <translation>Vänta, hälsodata beräknas...</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
-        <translation type="unfinished"/>
+        <translation>Grattis! Allt är friskt!</translation>
     </message>
     <message>
         <source>Title</source>
@@ -6851,7 +6855,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Score</source>
-        <translation type="unfinished"/>
+        <translation>Poäng</translation>
     </message>
     <message>
         <source>Reason</source>
@@ -6863,30 +6867,30 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation type="unfinished"/>
+        <translation>Undanta från rapporter</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation type="unfinished"/>
+        <translation>VARNING! Denna rapport kräver att du skickar information till onlinetjänsten Have I Been Pwned (https://haveibeenpwned.com). Om du fortsätter kommer dina databaslösenord att hashas kryptografiskt och de första fem tecknen i dessa hashar kommer att skickas säkert till den här tjänsten. Databasen förblir säker och kan inte rekonstitueras från denna information. Antalet lösenord som du skickar och din IP-adress kommer dock att exponeras för den här tjänsten.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation type="unfinished"/>
+        <translation>Utför online-analys</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Visa även poster som har uteslutits från rapporter</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation type="unfinished"/>
+        <translation>Denna version av KeePassXC har inga nätverksfunktioner. Nätverk krävs för att kontrollera dina lösenord mot Have I Been Pwned-databaser.</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
-        <translation type="unfinished"/>
+        <translation>Grattis, inga exponerade lösenord!</translation>
     </message>
     <message>
         <source>Title</source>
@@ -6898,55 +6902,55 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord exponerat...</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation type="unfinished"/>
+        <translation> (Undantaget)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Denna post har undantagits från rapporter</translation>
     </message>
     <message>
         <source>once</source>
-        <translation type="unfinished"/>
+        <translation>en gång</translation>
     </message>
     <message>
         <source>up to 10 times</source>
-        <translation type="unfinished"/>
+        <translation>upp till 10 gånger</translation>
     </message>
     <message>
         <source>up to 100 times</source>
-        <translation type="unfinished"/>
+        <translation>upp till 100 gånger</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
-        <translation type="unfinished"/>
+        <translation>upp till 1000 gånger</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
-        <translation type="unfinished"/>
+        <translation>upp till 10000 gånger</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
-        <translation type="unfinished"/>
+        <translation>upp till 100000 gånger</translation>
     </message>
     <message>
         <source>up to a million times</source>
-        <translation type="unfinished"/>
+        <translation>upp till en miljon gånger</translation>
     </message>
     <message>
         <source>millions of times</source>
-        <translation type="unfinished"/>
+        <translation>milljoner gånger</translation>
     </message>
     <message>
         <source>Edit Entry...</source>
-        <translation>Redigera post...</translation>
+        <translation>Redigera posten...</translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation type="unfinished"/>
+        <translation>Undanta från rapporter</translation>
     </message>
 </context>
 <context>
@@ -7053,11 +7057,11 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Poster undantagna från rapporter</translation>
     </message>
     <message>
         <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
-        <translation type="unfinished"/>
+        <translation>Att utesluta poster från rapporter, t.ex. för att de har ett svagt lösenord, är inte nödvändigtvis ett problem, men du bör hålla ett öga på dem.</translation>
     </message>
     <message>
         <source>Average password length</source>
@@ -7108,11 +7112,11 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Key identity ownership conflict. Refusing to add.</source>
-        <translation type="unfinished"/>
+        <translation>Nyckelidentitets ägarskapskonflikt. Nekar att lägga till.</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation type="unfinished"/>
+        <translation>Tjänsten körs inte, kan inte lista identiteter.</translation>
     </message>
 </context>
 <context>
@@ -7234,19 +7238,19 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Don&apos;t confirm when entries are deleted by clients</source>
-        <translation type="unfinished"/>
+        <translation>Bekräfta inte när poster tas bort av klienter</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; Failed to connect to DBus. Please check your DBus setup.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Fel:&lt;/b&gt; Kunde inte ansluta till DBus. Kontrollera din DBus-installation.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Varning!&lt;/b&gt; </translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation type="unfinished"/>
+        <translation>Spara aktuella ändringar för att aktivera insticksmodulen och aktivera redigering av det här avsnittet.</translation>
     </message>
 </context>
 <context>
@@ -7788,11 +7792,11 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     <name>YubiKey</name>
     <message>
         <source>%1 [%2] Configured Slot - %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] Konfigurerad plats - %3</translation>
     </message>
     <message>
         <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] Challenge Response - Plats %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -7804,31 +7808,31 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>%1 Invalid slot specified - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 Ogiltig plats specificerad - %2</translation>
     </message>
     <message>
         <source>The YubiKey interface has not been initialized.</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey-gränssnittet har inte startats.</translation>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation type="unfinished"/>
+        <translation>Hårdvarunyckel används för närvarande.</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde hitta hårdvarunyckel med serienummer %1. Anslut den för att fortsätta.</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation type="unfinished"/>
+        <translation>Hårdvarunyckelns tidsgräns för användarinteraktion överskreds.</translation>
     </message>
     <message>
         <source>A USB error ocurred when accessing the hardware key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ett USB-fel uppstod vid åtkomst till maskinvarunyckeln: %1</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte slutföra en challenge-response, det specifika felet var: %1</translation>
     </message>
 </context>
 <context>
@@ -7855,11 +7859,11 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte hitta några hårdvarunycklar!</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation type="unfinished"/>
+        <translation>Den valda maskinvarunyckelplatsen stöder inte challenge-response!</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>

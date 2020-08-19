@@ -54,27 +54,27 @@
     </message>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation type="unfinished"/>
+        <translation>Aktivér SSH-agent (kræver genstart)</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation type="unfinished"/>
+        <translation>SSH_AUTH_SOCK-værdi</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation type="unfinished"/>
+        <translation>SSH_AUTH_SOCK-overstyring</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation type="unfinished"/>
+        <translation>(tom)</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation type="unfinished"/>
+        <translation>Ingen SSH+agent socket tilgængelig. Sørg enten for at SSH_AUTH_SOCK eksisterer eller opsæt en overstyring.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation type="unfinished"/>
+        <translation>SSH-agent-forbindelsen virker!</translation>
     </message>
 </context>
 <context>
@@ -117,23 +117,23 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation type="unfinished"/>
+        <translation>Nulstil indstillingerne?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>Er du sikker på at du vil nulstille alle generelle og sikkerhedsindstillinger til standardværdierne?</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation type="unfinished"/>
+        <translation>Monokrom (lys)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation type="unfinished"/>
+        <translation>Monokrom (mørk)</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation type="unfinished"/>
+        <translation>Farverig</translation>
     </message>
 </context>
 <context>
@@ -221,27 +221,27 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation>Husk tidligere anvendte databaser</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>Indlæs tidligere anvendte databaser ved opstart</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>Husk databasenøglefiler og sikkerhedsdongler</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation type="unfinished"/>
+        <translation>Søg efter opdateringer ved programstart en gang ugentligt</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Medtag beta-udgivelser når der søges efter opdateringer</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>Sprog: </translation>
     </message>
     <message>
         <source>(restart program to activate)</source>

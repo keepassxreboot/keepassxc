@@ -21,6 +21,7 @@
 #include "core/Entry.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
+#include "gui/styles/StateColorPalette.h"
 
 #include <algorithm>
 
@@ -70,7 +71,8 @@ QVariant EntryURLModel::data(const QModelIndex& index, int role) const
     const auto urlValid = Tools::checkUrlValid(value);
 
     if (role == Qt::BackgroundRole && !urlValid) {
-        return QColor(255, 125, 125);
+        StateColorPalette statePalette;
+        return statePalette.color(StateColorPalette::ColorRole::Error);
     } else if (role == Qt::DecorationRole && !urlValid) {
         return m_errorIcon;
     } else if (role == Qt::DisplayRole || role == Qt::EditRole) {

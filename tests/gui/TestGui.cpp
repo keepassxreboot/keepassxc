@@ -904,10 +904,10 @@ void TestGui::testSearch()
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
     auto* searchedEntry = entryView->currentEntry();
-    // Restore focus using F1 key and search text selection
-    QTest::keyClick(m_mainWindow.data(), Qt::Key_F1);
-    QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
+    // Restore focus using F3 key and search text selection
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_F3);
     QTRY_VERIFY(searchTextEdit->hasFocus());
+    QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
 
     searchedEntry->setPassword("password");
     QClipboard* clipboard = QApplication::clipboard();

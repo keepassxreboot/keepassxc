@@ -126,6 +126,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
+    m_entryContextMenu->addAction(m_ui->menuEntryAutoTypeWithSequence->menuAction());
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryEdit);
     m_entryContextMenu->addAction(m_ui->actionEntryClone);
@@ -220,7 +221,12 @@ MainWindow::MainWindow()
     m_ui->toolbarSeparator->setVisible(false);
     m_showToolbarSeparator = config()->get(Config::GUI_ApplicationTheme).toString() != "classic";
 
-    m_ui->actionEntryAutoType->setVisible(autoType()->isAvailable());
+    bool isAutoTypeAvailable = autoType()->isAvailable();
+    m_ui->actionEntryAutoType->setVisible(isAutoTypeAvailable);
+    m_ui->actionEntryAutoTypeUsername->setVisible(isAutoTypeAvailable);
+    m_ui->actionEntryAutoTypeUsernameEnter->setVisible(isAutoTypeAvailable);
+    m_ui->actionEntryAutoTypePassword->setVisible(isAutoTypeAvailable);
+    m_ui->actionEntryAutoTypePasswordEnter->setVisible(isAutoTypeAvailable);
 
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
@@ -319,14 +325,6 @@ MainWindow::MainWindow()
     shortcut = new QShortcut(dbTabModifier + Qt::Key_9, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(m_ui->tabWidget->count() - 1); });
 
-    // Allow for direct focus of search, group view, and entry view
-    shortcut = new QShortcut(Qt::Key_F1, this);
-    connect(shortcut, SIGNAL(activated()), m_searchWidget, SLOT(searchFocus()));
-    shortcut = new QShortcut(Qt::Key_F2, this);
-    m_actionMultiplexer.connect(shortcut, SIGNAL(activated()), SLOT(focusOnGroups()));
-    shortcut = new QShortcut(Qt::Key_F3, this);
-    m_actionMultiplexer.connect(shortcut, SIGNAL(activated()), SLOT(focusOnEntries()));
-
     // Toggle password and username visibility in entry view
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
@@ -352,6 +350,11 @@ MainWindow::MainWindow()
     m_ui->actionEntryEdit->setIcon(resources()->icon("entry-edit"));
     m_ui->actionEntryDelete->setIcon(resources()->icon("entry-delete"));
     m_ui->actionEntryAutoType->setIcon(resources()->icon("auto-type"));
+    m_ui->menuEntryAutoTypeWithSequence->setIcon(resources()->icon("auto-type"));
+    m_ui->actionEntryAutoTypeUsername->setIcon(resources()->icon("auto-type"));
+    m_ui->actionEntryAutoTypeUsernameEnter->setIcon(resources()->icon("auto-type"));
+    m_ui->actionEntryAutoTypePassword->setIcon(resources()->icon("auto-type"));
+    m_ui->actionEntryAutoTypePasswordEnter->setIcon(resources()->icon("auto-type"));
     m_ui->actionEntryMoveUp->setIcon(resources()->icon("move-up"));
     m_ui->actionEntryMoveDown->setIcon(resources()->icon("move-down"));
     m_ui->actionEntryCopyUsername->setIcon(resources()->icon("username-copy"));
@@ -446,6 +449,14 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryCopyURL, SIGNAL(triggered()), SLOT(copyURL()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyNotes, SIGNAL(triggered()), SLOT(copyNotes()));
     m_actionMultiplexer.connect(m_ui->actionEntryAutoType, SIGNAL(triggered()), SLOT(performAutoType()));
+    m_actionMultiplexer.connect(
+        m_ui->actionEntryAutoTypeUsername, SIGNAL(triggered()), SLOT(performAutoTypeUsername()));
+    m_actionMultiplexer.connect(
+        m_ui->actionEntryAutoTypeUsernameEnter, SIGNAL(triggered()), SLOT(performAutoTypeUsernameEnter()));
+    m_actionMultiplexer.connect(
+        m_ui->actionEntryAutoTypePassword, SIGNAL(triggered()), SLOT(performAutoTypePassword()));
+    m_actionMultiplexer.connect(
+        m_ui->actionEntryAutoTypePasswordEnter, SIGNAL(triggered()), SLOT(performAutoTypePasswordEnter()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()), SLOT(openUrl()));
     m_actionMultiplexer.connect(m_ui->actionEntryDownloadIcon, SIGNAL(triggered()), SLOT(downloadSelectedFavicons()));
 #ifdef WITH_XC_SSHAGENT
@@ -711,6 +722,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
             m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
+            m_ui->menuEntryAutoTypeWithSequence->setEnabled(singleEntrySelected);
+            m_ui->actionEntryAutoTypeUsername->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUsername());
+            m_ui->actionEntryAutoTypeUsernameEnter->setEnabled(singleEntrySelected
+                                                               && dbWidget->currentEntryHasUsername());
+            m_ui->actionEntryAutoTypePassword->setEnabled(singleEntrySelected && dbWidget->currentEntryHasPassword());
+            m_ui->actionEntryAutoTypePasswordEnter->setEnabled(singleEntrySelected
+                                                               && dbWidget->currentEntryHasPassword());
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
@@ -761,6 +779,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                                                                m_ui->actionEntryCopyURL,
                                                                m_ui->actionEntryOpenUrl,
                                                                m_ui->actionEntryAutoType,
+                                                               m_ui->menuEntryAutoTypeWithSequence->menuAction(),
                                                                m_ui->actionEntryDownloadIcon,
                                                                m_ui->actionEntryCopyNotes,
                                                                m_ui->actionEntryCopyTitle,
@@ -1160,6 +1179,28 @@ void MainWindow::changeEvent(QEvent* event)
     } else {
         QMainWindow::changeEvent(event);
     }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+    if (!event->modifiers()) {
+        // Allow for direct focus of search, group view, and entry view
+        auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+        if (dbWidget && dbWidget->isEntryViewActive()) {
+            if (event->key() == Qt::Key_F1) {
+                dbWidget->focusOnGroups(true);
+                return;
+            } else if (event->key() == Qt::Key_F2) {
+                dbWidget->focusOnEntries(true);
+                return;
+            } else if (event->key() == Qt::Key_F3) {
+                m_searchWidget->searchFocus();
+                return;
+            }
+        }
+    }
+
+    QWidget::keyPressEvent(event);
 }
 
 bool MainWindow::focusNextPrevChild(bool next)
@@ -1679,17 +1720,20 @@ void MainWindow::initViewMenu()
         }
     }
 
-    connect(themeActions, &QActionGroup::triggered, this, [this](QAction* action) {
-        if (action->data() != config()->get(Config::GUI_ApplicationTheme)) {
-            config()->set(Config::GUI_ApplicationTheme, action->data());
+    connect(themeActions, &QActionGroup::triggered, this, [this, theme](QAction* action) {
+        config()->set(Config::GUI_ApplicationTheme, action->data());
+        if (action->data() != theme) {
             restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
         }
     });
 
-    m_ui->actionCompactMode->setChecked(config()->get(Config::GUI_CompactMode).toBool());
-    connect(m_ui->actionCompactMode, &QAction::toggled, this, [this](bool checked) {
+    bool compact = config()->get(Config::GUI_CompactMode).toBool();
+    m_ui->actionCompactMode->setChecked(compact);
+    connect(m_ui->actionCompactMode, &QAction::toggled, this, [this, compact](bool checked) {
         config()->set(Config::GUI_CompactMode, checked);
-        restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        if (checked != compact) {
+            restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        }
     });
 
     m_ui->actionShowToolbar->setChecked(!config()->get(Config::GUI_HideToolbar).toBool());

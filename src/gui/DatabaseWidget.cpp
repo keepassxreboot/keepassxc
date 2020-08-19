@@ -141,21 +141,15 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitEntryContextMenuRequested(QPoint)));
 
     // Add a notification for when we are searching
+    m_searchingLabel->setObjectName("SearchBanner");
     m_searchingLabel->setText(tr("Searching..."));
     m_searchingLabel->setAlignment(Qt::AlignCenter);
-    m_searchingLabel->setStyleSheet("color: rgb(0, 0, 0);"
-                                    "background-color: rgb(255, 253, 160);"
-                                    "border: 2px solid rgb(190, 190, 190);"
-                                    "border-radius: 4px;");
     m_searchingLabel->setVisible(false);
 
 #ifdef WITH_XC_KEESHARE
+    m_shareLabel->setObjectName("KeeShareBanner");
     m_shareLabel->setText(tr("Shared group..."));
     m_shareLabel->setAlignment(Qt::AlignCenter);
-    m_shareLabel->setStyleSheet("color: rgb(0, 0, 0);"
-                                "background-color: rgb(255, 253, 160);"
-                                "border: 2px solid rgb(190, 190, 190);"
-                                "border-radius: 4px;");
     m_shareLabel->setVisible(false);
 #endif
 
@@ -637,17 +631,25 @@ void DatabaseWidget::setFocus(Qt::FocusReason reason)
     }
 }
 
-void DatabaseWidget::focusOnEntries()
+void DatabaseWidget::focusOnEntries(bool editIfFocused)
 {
     if (isEntryViewActive()) {
-        m_entryView->setFocus();
+        if (editIfFocused && m_entryView->hasFocus()) {
+            switchToEntryEdit();
+        } else {
+            m_entryView->setFocus();
+        }
     }
 }
 
-void DatabaseWidget::focusOnGroups()
+void DatabaseWidget::focusOnGroups(bool editIfFocused)
 {
     if (isEntryViewActive()) {
-        m_groupView->setFocus();
+        if (editIfFocused && m_groupView->hasFocus()) {
+            switchToGroupEdit();
+        } else {
+            m_groupView->setFocus();
+        }
     }
 }
 
@@ -796,6 +798,38 @@ void DatabaseWidget::performAutoType()
     auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         autoType()->performAutoType(currentEntry, window());
+    }
+}
+
+void DatabaseWidget::performAutoTypeUsername()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{USERNAME}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypeUsernameEnter()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{USERNAME}{ENTER}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypePassword()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{PASSWORD}"), window());
+    }
+}
+
+void DatabaseWidget::performAutoTypePasswordEnter()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{PASSWORD}{ENTER}"), window());
     }
 }
 
@@ -1536,7 +1570,7 @@ bool DatabaseWidget::lock()
         }
     }
 
-    if (m_db->isModified(true)) {
+    if (m_db->isModified()) {
         bool saved = false;
         // Attempt to save on exit, but don't block locking if it fails
         if (config()->get(Config::AutoSaveOnExit).toBool()
@@ -1564,6 +1598,10 @@ bool DatabaseWidget::lock()
                 return false;
             }
         }
+    } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
+        // Silently auto-save non-data changes, ignore errors
+        QString errorMessage;
+        performSave(errorMessage);
     }
 
     if (m_groupView->currentGroup()) {
@@ -1620,7 +1658,7 @@ void DatabaseWidget::reloadDatabaseFile()
     QString error;
     auto db = QSharedPointer<Database>::create(m_db->filePath());
     if (db->open(database()->key(), &error)) {
-        if (m_db->isModified(true)) {
+        if (m_db->isModified() || db->hasNonDataChanges()) {
             // Ask if we want to merge changes into new database
             auto result = MessageBox::question(
                 this,
@@ -1813,33 +1851,14 @@ bool DatabaseWidget::save()
     m_blockAutoSave = true;
     ++m_saveAttempts;
 
-    auto focusWidget = qApp->focusWidget();
-
-    // TODO: Make this async
-    // Lock out interactions
-    m_entryView->setDisabled(true);
-    m_groupView->setDisabled(true);
-    QApplication::processEvents();
-
-    bool useAtomicSaves = config()->get(Config::UseAtomicSaves).toBool();
     QString errorMessage;
-    bool ok = m_db->save(&errorMessage, useAtomicSaves, config()->get(Config::BackupBeforeSave).toBool());
-
-    // Return control
-    m_entryView->setDisabled(false);
-    m_groupView->setDisabled(false);
-
-    if (focusWidget) {
-        focusWidget->setFocus();
-    }
-
-    if (ok) {
+    if (performSave(errorMessage)) {
         m_saveAttempts = 0;
         m_blockAutoSave = false;
         return true;
     }
 
-    if (m_saveAttempts > 2 && useAtomicSaves) {
+    if (m_saveAttempts > 2 && config()->get(Config::UseAtomicSaves).toBool()) {
         // Saving failed 3 times, issue a warning and attempt to resolve
         auto result = MessageBox::question(this,
                                            tr("Disable safe saves?"),
@@ -1887,33 +1906,45 @@ bool DatabaseWidget::saveAs()
 
     bool ok = false;
     if (!newFilePath.isEmpty()) {
-        auto focusWidget = qApp->focusWidget();
-
-        // Lock out interactions
-        m_entryView->setDisabled(true);
-        m_groupView->setDisabled(true);
-        QApplication::processEvents();
-
         QString errorMessage;
-        ok = m_db->saveAs(newFilePath,
-                          &errorMessage,
-                          config()->get(Config::UseAtomicSaves).toBool(),
-                          config()->get(Config::BackupBeforeSave).toBool());
-
-        // Return control
-        m_entryView->setDisabled(false);
-        m_groupView->setDisabled(false);
-
-        if (focusWidget) {
-            focusWidget->setFocus();
-        }
-
-        if (!ok) {
+        if (!performSave(errorMessage, newFilePath)) {
             showMessage(tr("Writing the database failed: %1").arg(errorMessage),
                         MessageWidget::Error,
                         true,
                         MessageWidget::LongAutoHideTimeout);
         }
+    }
+
+    return ok;
+}
+
+bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
+{
+    QPointer<QWidget> focusWidget(qApp->focusWidget());
+
+    // Lock out interactions
+    m_entryView->setDisabled(true);
+    m_groupView->setDisabled(true);
+    QApplication::processEvents();
+
+    bool ok;
+    if (fileName.isEmpty()) {
+        ok = m_db->save(&errorMessage,
+                        config()->get(Config::UseAtomicSaves).toBool(),
+                        config()->get(Config::BackupBeforeSave).toBool());
+    } else {
+        ok = m_db->saveAs(fileName,
+                          &errorMessage,
+                          config()->get(Config::UseAtomicSaves).toBool(),
+                          config()->get(Config::BackupBeforeSave).toBool());
+    }
+
+    // Return control
+    m_entryView->setDisabled(false);
+    m_groupView->setDisabled(false);
+
+    if (focusWidget) {
+        focusWidget->setFocus();
     }
 
     return ok;
@@ -2028,18 +2059,23 @@ void DatabaseWidget::processAutoOpen()
         // Support ifDevice advanced entry, a comma separated list of computer names
         // that control whether to perform AutoOpen on this entry or not. Can be
         // negated using '!'
-        auto ifDevice = entry->attribute("ifDevice");
+        auto ifDevice = entry->attribute("IfDevice");
         if (!ifDevice.isEmpty()) {
-            bool loadDb = false;
+            bool loadDb = true;
             auto hostName = QHostInfo::localHostName();
-            for (auto& dev : ifDevice.split(",")) {
-                dev = dev.trimmed();
-                if (dev.startsWith("!") && dev.mid(1).compare(hostName, Qt::CaseInsensitive) == 0) {
-                    // Machine name matched an exclusion, don't load this database
-                    loadDb = false;
-                    break;
-                } else if (dev.compare(hostName, Qt::CaseInsensitive) == 0) {
+            for (auto& device : ifDevice.split(",")) {
+                device = device.trimmed();
+                if (device.startsWith("!")) {
+                    if (device.mid(1).compare(hostName, Qt::CaseInsensitive) == 0) {
+                        // Machine name matched an exclusion, don't load this database
+                        loadDb = false;
+                        break;
+                    }
+                } else if (device.compare(hostName, Qt::CaseInsensitive) == 0) {
                     loadDb = true;
+                } else {
+                    // Don't load the database if there are devices not starting with '!'
+                    loadDb = false;
                 }
             }
             if (!loadDb) {
