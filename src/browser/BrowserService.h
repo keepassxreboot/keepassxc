@@ -58,6 +58,7 @@ public:
 
     QJsonObject getDatabaseGroups();
     QJsonObject createNewGroup(const QString& groupName);
+    QString getCurrentTotp(const QString& uuid);
 
     void addEntry(const QString& dbid,
                   const QString& login,

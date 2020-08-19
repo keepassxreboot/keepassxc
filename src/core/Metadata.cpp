@@ -379,11 +379,8 @@ void Metadata::addCustomIcon(const QUuid& uuid, const QImage& image)
     static bool isGui = qApp->inherits("QGuiApplication");
     if (isGui) {
         // Generate QIcon with pre-baked resolutions
-        auto basePixmap = QPixmap::fromImage(image).scaled(128, 128, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        auto basePixmap = QPixmap::fromImage(image.scaled(64, 64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         QIcon icon(basePixmap);
-        icon.addPixmap(icon.pixmap(databaseIcons()->iconSize(IconSize::Default)));
-        icon.addPixmap(icon.pixmap(databaseIcons()->iconSize(IconSize::Medium)));
-        icon.addPixmap(icon.pixmap(databaseIcons()->iconSize(IconSize::Large)));
         m_customIcons.insert(uuid, icon);
     } else {
         m_customIcons.insert(uuid, QIcon());

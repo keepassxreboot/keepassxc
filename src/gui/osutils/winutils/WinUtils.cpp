@@ -105,3 +105,9 @@ bool WinUtils::isCapslockEnabled()
 {
     return GetKeyState(VK_CAPITAL) == 1;
 }
+
+bool WinUtils::isHighContrastMode() const
+{
+    QSettings settings(R"(HKEY_CURRENT_USER\Control Panel\Accessibility\HighContrast)", QSettings::NativeFormat);
+    return (settings.value("Flags").toInt() & 1u) != 0;
+}

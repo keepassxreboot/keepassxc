@@ -40,9 +40,6 @@ namespace
 
 DatabaseIcons::DatabaseIcons()
 {
-    // Set the pixmap cache limit to 20 MB
-    QPixmapCache::setCacheLimit(20480);
-
     iconList = QDir(iconDir).entryList(QDir::NoFilter, QDir::Name);
     badgeList = QDir(badgeDir).entryList(QDir::NoFilter, QDir::Name);
 
@@ -70,9 +67,7 @@ QPixmap DatabaseIcons::icon(int index, IconSize size)
     auto icon = m_iconCache.value(cacheKey);
     if (icon.isNull()) {
         icon.addFile(iconDir + iconList[index]);
-        icon.addPixmap(icon.pixmap(iconSize(IconSize::Default)));
-        icon.addPixmap(icon.pixmap(iconSize(IconSize::Medium)));
-        icon.addPixmap(icon.pixmap(iconSize(IconSize::Large)));
+        icon.addPixmap(icon.pixmap(64));
         m_iconCache.insert(cacheKey, icon);
     }
 

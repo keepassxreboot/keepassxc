@@ -3,6 +3,16 @@ QPushButton:default {
     color: palette(highlighted-text);
 }
 
+/* Note: default button hover is defined in the respective theme style */
+QPushButton:!default:hover {
+    background: palette(mid);
+}
+
+QPushButton:checked {
+    background: palette(highlight);
+    color: palette(highlighted-text);
+}
+
 QSpinBox {
     min-width: 90px;
 }
@@ -45,4 +55,12 @@ QGroupBox::title {
 QToolTip {
     border: none;
     padding: 3px;
+}
+
+DatabaseWidget #SearchBanner, DatabaseWidget #KeeShareBanner {
+    font-weight: bold;
+    background-color: palette(highlight);
+    color: palette(highlighted-text);
+    border: 1px solid palette(dark);
+    padding: 2px;
 }

@@ -1,0 +1,15 @@
+DatabaseOpenWidget #loginFrame {
+    border: 2px groove palette(mid);
+    background: palette(light);
+}
+
+QToolTip {
+    padding: 3px;
+}
+
+DatabaseWidget #SearchBanner, DatabaseWidget #KeeShareBanner {
+    font-weight: bold;
+    background-color: rgb(94, 161, 14);
+    border: 1px solid rgb(190, 190, 190);
+    padding: 2px;
+}

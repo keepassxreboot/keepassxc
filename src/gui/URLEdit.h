@@ -28,8 +28,6 @@ class URLEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    static const QColor ErrorColor;
-
     explicit URLEdit(QWidget* parent = nullptr);
     void enableVerifyMode();
 

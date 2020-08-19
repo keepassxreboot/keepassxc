@@ -48,6 +48,7 @@ private slots:
     void saveSelectedAttachments();
     void openAttachment(const QModelIndex& index);
     void openSelectedAttachments();
+    void updateButtonsVisible();
     void updateButtonsEnabled();
 
 private:

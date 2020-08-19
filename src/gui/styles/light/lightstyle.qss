@@ -8,11 +8,16 @@ EntryPreviewWidget QLineEdit:disabled, EntryPreviewWidget QTextEdit:disabled {
     background-color: #EDEDED;
 }
 
-QGroupBox::title {
-    color: #4B7B19;
+QPushButton:default:hover, QPushButton:checked:hover {
+    /* Using slightly lighter shade from palette(highlight) */
+    background: #568821;
 }
 
 QToolTip {
     color: #F9F9F9;
     background-color: #4D7F1A;
+}
+
+QGroupBox::title {
+    color: #4B7B19;
 }

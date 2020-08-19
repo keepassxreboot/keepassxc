@@ -5037,7 +5037,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation>无法直接处理纯文本。</translation>
+        <translation>无法原地处理纯文本。</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>

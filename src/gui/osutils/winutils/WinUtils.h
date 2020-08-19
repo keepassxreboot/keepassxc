@@ -36,6 +36,7 @@ public:
     bool isLaunchAtStartupEnabled() const override;
     void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
+    bool isHighContrastMode() const;
 
 protected:
     explicit WinUtils(QObject* parent = nullptr);

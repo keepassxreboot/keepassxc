@@ -1,5 +1,48 @@
 # Changelog
 
+## 2.6.1 (2020-08-19)
+
+### Added
+
+- Add menu entries for auto-typing only username or only password [#4891]
+- Browser: Add command for retrieving current TOTP [#5278]
+- Improve man pages [#5010]
+- Linux: Support Xfce screen lock signals [#4971]
+- Linux: Add OARS metadata to AppStream markup [#5031]
+- SSH Agent: Substitute tilde with %USERPROFILE% on Windows [#5116]
+
+### Changed
+
+- Improve password generator UI and UX [#5129]
+- Do not prompt to restart if switching the theme back and forth [#5084]
+- Change actions for F1, F2, and F3 keys [#5082]
+- Skip referenced passwords in health check report [#5056]
+- Check system-wide Qt translations directory for downstream translations packaging [#5064]
+- macOS: Change password visibility toggle shortcut to Ctrl+H to avoid conflict with system shortcut [#5114]
+- Browser: Only display domain name in browser access confirm dialog to avoid overly wide window sizes [#5214]
+
+### Fixed
+
+- Fix clipboard not being cleared when database is locked while timeout is still active [#5184]
+- Fix list of previous databases not being cleared in some cases [#5123]
+- Fix saving of non-data changes on database lock [#5210]
+- Fix search results banner theming [#5197]
+- Don't enforce theme palette in Classic theme mode and add hover effect for buttons [#5122,#5267]
+- Fix label clipping in settings on high-DPI screens [#5227]
+- Fix excessive memory usage by icons on systems with high-DPI screens [#5266]
+- Fix crash if number of TOTP digits exceeds ten [#5106]
+- Fix slot detection when first YubiKey is configured on the second slot [#5004]
+- Prevent crash if focus widget gets deleted during saving [#5005]
+- Always show buttons for opening or saving attachments [#4956]
+- Update link to Auto-Type help [#5228]
+- Fix build errors with Ninja [#5121]
+- CLI: Fix db-info command wrongly labelled as db-show in usage listing [#5140]
+- Windows: Use Classic theme by default if high-contrast mode is on [#5191]
+- Linux: Add workaround for qt5ct bug, causing icons not to show up [#5011]
+- Linux: Correct high-DPI display by not allowing fractional scaling [#5185]
+- Browser: Consider subdomain and path when requesting only "best-matching credentials" [#4832]
+- SSH Agent: Always forget all keys on lock [#5115]
+
 ## 2.6.0 (2020-07-06)
 
 ### Added

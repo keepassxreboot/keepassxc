@@ -302,11 +302,11 @@
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Lance automatiquement KeepaxxXC au démarrage du système.</translation>
+        <translation>Lancer automatiquement KeepassXC au démarrage du système.</translation>
     </message>
     <message>
         <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Indiquer la base de données comme modifiée pour les changements hors-données (par exemple : groupes développés)</translation>
+        <translation>Considérer la base de données comme modifiée lors des modifications hors-données (par exemple : groupes développés)</translation>
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>

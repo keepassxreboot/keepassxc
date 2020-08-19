@@ -125,15 +125,15 @@
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation type="unfinished"/>
+        <translation>Monokrom (terang)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation type="unfinished"/>
+        <translation>Monokrom (gelap)</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation type="unfinished"/>
+        <translation>Berwarna</translation>
     </message>
 </context>
 <context>
@@ -160,7 +160,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Cadangkan basis data sebelum disimpan</translation>
+        <translation>Cadangkan basisdata sebelum disimpan</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
@@ -172,7 +172,7 @@
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Muat ulang basis data secara otomatis ketika diubah secara eksternal</translation>
+        <translation>Muat ulang basisdata secara otomatis ketika diubah secara eksternal</translation>
     </message>
     <message>
         <source>Entry Management</source>
@@ -221,11 +221,11 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation>Ingat basis data yang sebelumnya digunakan</translation>
+        <translation>Ingat basisdata yang sebelumnya digunakan</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation>Muat basis data yang sebelumnya terbuka saat memulai</translation>
+        <translation>Muat basisdata yang sebelumnya terbuka saat memulai</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Minimalkan jendela setelah membuka basis data</translation>
+        <translation>Minimalkan jendela setelah membuka basisdata</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
@@ -306,27 +306,27 @@
     </message>
     <message>
         <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Tandai basis data telah diubah untuk perubahan non-data (mis. melebarkan grup)</translation>
+        <translation>Tandai basisdata telah diubah untuk perubahan non-data (mis. melebarkan grup)</translation>
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
-        <translation type="unfinished"/>
+        <translation>Simpan berkas basisdata secara aman (nonaktifkan jika anda mengalami masalah dengan Dropbox, dll.)</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"/>
+        <translation>Antarmuka Pengguna</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation type="unfinished"/>
+        <translation>Gaya tombol bilah alat:</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation type="unfinished"/>
+        <translation>Gunakan fon monospace untuk catatan</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipe ikon baki:</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
@@ -362,7 +362,7 @@
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Kunci basis data setelah tidak aktif selama</translation>
+        <translation>Kunci basisdata setelah tidak aktif selama</translation>
     </message>
     <message>
         <source> min</source>
@@ -378,7 +378,7 @@
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Kunci basis data ketika sesi dikunci atau lid ditutup</translation>
+        <translation>Kunci basisdata ketika sesi dikunci atau lid ditutup</translation>
     </message>
     <message>
         <source>Forget TouchID when session is locked or lid is closed</source>
@@ -386,11 +386,11 @@
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Kunci basis data setelah meminimalkan jendela</translation>
+        <translation>Kunci basisdata setelah meminimalkan jendela</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Kunci ulang basis data yang sebelumnya terkunci setelah menjalankan Ketik-Otomatis</translation>
+        <translation>Kunci ulang basisdata yang sebelumnya terkunci setelah menjalankan Ketik-Otomatis</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
@@ -604,8 +604,8 @@
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation>Ada beberapa basis data yang terbuka.
-Silakan pilih basis data yang digunakan untuk menyimpan kredensial.</translation>
+        <translation>Ada beberapa basisdata yang terbuka.
+Silakan pilih basisdata yang digunakan untuk menyimpan kredensial.</translation>
     </message>
 </context>
 <context>
@@ -664,7 +664,7 @@ Memindahkan %2 ke data khusus.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>Basis data yang aktif tidak berisi entri dengan atribut KeePassHTTP.</translation>
+        <translation>Basisdata yang aktif tidak berisi entri dengan atribut KeePassHTTP.</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
@@ -686,7 +686,7 @@ Apakah anda ingin membuat grup ini?
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation>Pengaturan KeePassXC-Browser anda perlu dipindahkan ke dalam pengaturan basis data.
+        <translation>Pengaturan KeePassXC-Browser anda perlu dipindahkan ke dalam pengaturan basisdata.
 Hal ini diperlukan untuk mempertahankan koneksi peramban anda saat ini.
 Apakah anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
@@ -700,7 +700,7 @@ Apakah anda ingin memindahkan pengaturan yang ada sekarang?</translation>
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation>Anda telah menerima permintaan asosiasi untuk basis data berikut:
+        <translation>Anda telah menerima permintaan asosiasi untuk basisdata berikut:
 %1
 
 Berikan koneksi nama yang unik atau ID, sebagai contoh:
@@ -715,7 +715,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Ini dibutuhkan untuk mengakses basis data anda menggunakan KeePassXC-Browser</translation>
+        <translation>Ini dibutuhkan untuk mengakses basisdata anda menggunakan KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -768,7 +768,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation>Minta untuk membuka basis data jika terkunci</translation>
+        <translation>Minta untuk membuka basisdata jika terkunci</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
@@ -796,12 +796,12 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation>Semua basis data yang terhubung ke ekstensi akan mengembalikan kredensial yang cocok.</translation>
+        <translation>Semua basisdata yang terhubung ke ekstensi akan mengembalikan kredensial yang cocok.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Cari kredensial yang cocok di semua basis data yang terbuka</translation>
+        <translation>Cari kredensial yang cocok di semua basisdata yang terbuka</translation>
     </message>
     <message>
         <source>Sort matching credentials by title</source>
@@ -1056,7 +1056,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Column Association</source>
-        <translation type="unfinished"/>
+        <translation>Asosiasi Kolom</translation>
     </message>
     <message>
         <source>Last Modified</source>
@@ -1104,7 +1104,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Column %1</source>
-        <translation type="unfinished"/>
+        <translation>Kolom %1</translation>
     </message>
 </context>
 <context>
@@ -1139,7 +1139,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation>Terjadi kesalahan saat membaca basis data: %1</translation>
+        <translation>Terjadi kesalahan saat membaca basisdata: %1</translation>
     </message>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
@@ -1153,19 +1153,19 @@ chrome-laptop.</translation>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
-Lokasi cadangan basis data ada di %2</translation>
+Lokasi cadangan basisdata ada di %2</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation>Tidak bisa menyimpan, basis data tidak merujuk ke berkas yang valid.</translation>
+        <translation>Tidak bisa menyimpan, basisdata tidak merujuk ke berkas yang valid.</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation>Tidak bisa menyimpan, basis data memiliki atribut hanya-baca.</translation>
+        <translation>Tidak bisa menyimpan, basisdata memiliki atribut hanya-baca.</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation>Berkas basis data memiliki perubahan yang belum digabung.</translation>
+        <translation>Berkas basisdata memiliki perubahan yang belum digabung.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1178,18 +1178,18 @@ Lokasi cadangan basis data ada di %2</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation>Proses menyimpan basis data sedang berjalan.</translation>
+        <translation>Proses menyimpan basisdata sedang berjalan.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>Tidak bisa menyimpan, basis data belum aktif!</translation>
+        <translation>Tidak bisa menyimpan, basisdata belum aktif!</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>Buka Kunci Basis Data - KeePassXC</translation>
+        <translation>Buka Kunci Basisdata - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -1238,7 +1238,7 @@ Harap pertimbangkan untuk membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation>Buka Kunci Basis Data KeePassXC</translation>
+        <translation>Buka Kunci Basisdata KeePassXC</translation>
     </message>
     <message>
         <source>Enter Password:</source>
@@ -1293,9 +1293,9 @@ Harap pertimbangkan untuk membuat berkas kunci baru.</translation>
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation>Membuka kunci basis data gagal dan anda tidak memasukkan kata sandi.
+        <translation>Membuka kunci basisdata gagal dan anda tidak memasukkan kata sandi.
 Apakah anda ingin mencoba kembali dengan kata sandi &quot;kosong&quot;?
-Untuk mencegah munculnya kesalahan ini, anda harus ke &quot;Pengaturan Basis Data / Keamanan&quot; dan mengatur ulang kata sandi anda.</translation>
+Untuk mencegah munculnya kesalahan ini, anda harus ke &quot;Pengaturan Basisdata / Keamanan&quot; dan mengatur ulang kata sandi anda.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
@@ -1321,12 +1321,12 @@ Untuk mencegah munculnya kesalahan ini, anda harus ke &quot;Pengaturan Basis Dat
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation>Tidak bisa menggunakan berkas basis data sebagai berkas kunci</translation>
+        <translation>Tidak bisa menggunakan berkas basisdata sebagai berkas kunci</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation>Anda tidak bisa menggunakan berkas basis data anda sebagai berkas kunci,
+        <translation>Anda tidak bisa menggunakan berkas basisdata anda sebagai berkas kunci,
 Jika anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
     <message>
@@ -1385,7 +1385,7 @@ Jika anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Kredensial Basisdata</translation>
     </message>
 </context>
 <context>
@@ -1444,7 +1444,7 @@ Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Buang kunci dari basis data</translation>
+        <translation>KeePassXC: Buang kunci dari basisdata</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -1482,7 +1482,7 @@ Izin untuk mengakses entri akan dicabut.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>Basis data aktif tidak berisi entri dengan izin.</translation>
+        <translation>Basisdata aktif tidak berisi entri dengan izin.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
@@ -1508,7 +1508,7 @@ Hal ini diperlukan untuk mempertahankan kompatibilitas dengan pengaya peramban.<
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation>Segarkan ID grup root basis data</translation>
+        <translation>Segarkan ID grup root basisdata</translation>
     </message>
     <message>
         <source>Created</source>
@@ -1516,13 +1516,13 @@ Hal ini diperlukan untuk mempertahankan kompatibilitas dengan pengaya peramban.<
     </message>
     <message>
         <source>Refresh database ID</source>
-        <translation>Segarkan ID basis data</translation>
+        <translation>Segarkan ID basisdata</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Apakah anda yakin ingin menyegarkan ID basis data?
-Ini hanya diperlukan jika basis data anda adalah salinan dari basis data yang lain dan ekstensi peramban tidak bisa tersambung.</translation>
+        <translation>Apakah anda yakin ingin menyegarkan ID basisdata?
+Ini hanya diperlukan jika basisdata anda adalah salinan dari basisdata yang lain dan ekstensi peramban tidak bisa tersambung.</translation>
     </message>
 </context>
 <context>
@@ -1539,7 +1539,7 @@ Ini hanya diperlukan jika basis data anda adalah salinan dari basis data yang la
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>PERINGATAN! Anda belum mengatur sandi. Menggunakan basis data tanpa sandi amat sangat tidak disarankan!
+        <translation>PERINGATAN! Anda belum mengatur sandi. Menggunakan basisdata tanpa sandi amat sangat tidak disarankan!
 
 Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
@@ -1553,7 +1553,7 @@ Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Anda harus menambahkan paling tidak satu kunci enkripsi untuk mengamankan basis data anda!</translation>
+        <translation>Anda harus menambahkan paling tidak satu kunci enkripsi untuk mengamankan basisdata anda!</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1561,7 +1561,7 @@ Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation type="unfinished"/>
+        <translation>Gagal mengubah kredensial basisdata</translation>
     </message>
 </context>
 <context>
@@ -1608,15 +1608,15 @@ Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation>Nilai yang lebih tinggi memberikan perlindungan lebih, tetapi membuka basis data akan menjadi lebih lama.</translation>
+        <translation>Nilai yang lebih tinggi memberikan perlindungan lebih, tetapi membuka basisdata akan menjadi lebih lama.</translation>
     </message>
     <message>
         <source>Database format:</source>
-        <translation>Format basis data:</translation>
+        <translation>Format basisdata:</translation>
     </message>
     <message>
         <source>This is only important if you need to use your database with other programs.</source>
-        <translation>Hal ini penting jika anda ingin memuat basis data menggunakan program lain.</translation>
+        <translation>Hal ini penting jika anda ingin memuat basisdata menggunakan program lain.</translation>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
@@ -1642,7 +1642,7 @@ Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
         <translation>Jumlah transformasi kunci yang anda gunakan dengan Argon2 terlalu tinggi.
 
-Jika anda tetap mempertahankan jumlah setinggi ini, basis data mungkin akan membutuhkan waktu berjam-jam atau bahkan berhari-hari untuk bisa dibuka!</translation>
+Jika anda tetap mempertahankan jumlah setinggi ini, basisdata mungkin akan membutuhkan waktu berjam-jam atau bahkan berhari-hari untuk bisa dibuka!</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
@@ -1663,7 +1663,7 @@ Jika anda tetap mempertahankan jumlah setinggi ini, basis data mungkin akan memb
 If you keep this number, your database may be too easy to crack!</source>
         <translation>Jumlah transformasi kunci yang anda gunakan dengan AES-KDF terlalu rendah.
 
-Jika anda tetap mempertahankan jumlah serendah ini, basis data anda mungkin akan menjadi terlalu mudah untuk diretas!</translation>
+Jika anda tetap mempertahankan jumlah serendah ini, basisdata anda mungkin akan menjadi terlalu mudah untuk diretas!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -1693,7 +1693,7 @@ Jika anda tetap mempertahankan jumlah serendah ini, basis data anda mungkin akan
     </message>
     <message>
         <source>Database format</source>
-        <translation>Format basis data</translation>
+        <translation>Format basisdata</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
@@ -1732,7 +1732,7 @@ Jika anda tetap mempertahankan jumlah serendah ini, basis data anda mungkin akan
     </message>
     <message>
         <source>Don&apos;t expose this database</source>
-        <translation>Jangan ekspos basis data ini</translation>
+        <translation>Jangan ekspos basisdata ini</translation>
     </message>
     <message>
         <source>Expose entries under this group:</source>
@@ -1747,15 +1747,15 @@ Jika anda tetap mempertahankan jumlah serendah ini, basis data anda mungkin akan
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation>Data Meta Basis Data</translation>
+        <translation>Data Meta Basisdata</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>Nama basis data:</translation>
+        <translation>Nama basisdata:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Deskripsi basis data:</translation>
+        <translation>Deskripsi basisdata:</translation>
     </message>
     <message>
         <source>Default username:</source>
@@ -1783,15 +1783,15 @@ Jika anda tetap mempertahankan jumlah serendah ini, basis data anda mungkin akan
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Pengaturan Basis Data Tambahan</translation>
+        <translation>Pengaturan Basisdata Tambahan</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Ruas nama basis data</translation>
+        <translation>Ruas nama basisdata</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>Ruas deskripsi basis data</translation>
+        <translation>Ruas deskripsi basisdata</translation>
     </message>
     <message>
         <source>Default username field</source>
@@ -1860,7 +1860,7 @@ Tidakan ini tidak bisa diurungkan.</translation>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation>Nama Basis Data:</translation>
+        <translation>Nama Basisdata:</translation>
     </message>
     <message>
         <source>Description:</source>
@@ -1868,18 +1868,18 @@ Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Ruas nama basis data</translation>
+        <translation>Ruas nama basisdata</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>Ruas deskripsi basis data</translation>
+        <translation>Ruas deskripsi basisdata</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Basis Data KeePass 2</translation>
+        <translation>Basisdata KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
@@ -1887,7 +1887,7 @@ Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Buka basis data</translation>
+        <translation>Buka basisdata</translation>
     </message>
     <message>
         <source>CSV file</source>
@@ -1895,19 +1895,19 @@ Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Gabung basis data</translation>
+        <translation>Gabung basisdata</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Buka basis data KeePass 1</translation>
+        <translation>Buka basisdata KeePass 1</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>Basis data KeePass 1</translation>
+        <translation>Basisdata KeePass 1</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Ekspor basis data ke berkas CSV</translation>
+        <translation>Ekspor basisdata ke berkas CSV</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
@@ -1915,12 +1915,12 @@ Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
         <source>Database creation error</source>
-        <translation>Kesalahan dalam membuat basis data</translation>
+        <translation>Kesalahan dalam membuat basisdata</translation>
     </message>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
-        <translation>Basis data yang dibuat tidak memiliki kunci atau KDF, aplikasi tidak bisa menyompannya.
+        <translation>Basisdata yang dibuat tidak memiliki kunci atau KDF, aplikasi tidak bisa menyompannya.
 Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
@@ -1929,12 +1929,12 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation>Basis Data Baru</translation>
+        <translation>Basisdata Baru</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [Basis Data Baru]</translation>
+        <translation>%1 [Basisdata Baru]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
@@ -1952,7 +1952,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation>Ekspor basis data ke berkas HTML</translation>
+        <translation>Ekspor basisdata ke berkas HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
@@ -1968,7 +1968,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Anda akan mengekspor basis data anda ke berkas tanpa enkripsi. Ini akan membuat sandi dan informasi sensitif lainnya menjadi sangat rentan. Apakah anda yakin ingin melanjutkan?</translation>
+        <translation>Anda akan mengekspor basisdata anda ke berkas tanpa enkripsi. Ini akan membuat sandi dan informasi sensitif lainnya menjadi sangat rentan. Apakah anda yakin ingin melanjutkan?</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -2011,11 +2011,11 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Tidak ada basis data.</translation>
+        <translation>Tidak ada basisdata.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>Tidak ada sumber basis data, tidak perlu melakukan apa-apa.</translation>
+        <translation>Tidak ada sumber basisdata, tidak perlu melakukan apa-apa.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
@@ -2031,7 +2031,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>Berkas basis data telah berubah. Apakah Anda ingin memuat perubahannya?</translation>
+        <translation>Berkas basisdata telah berubah. Apakah Anda ingin memuat perubahannya?</translation>
     </message>
     <message>
         <source>Merge Request</source>
@@ -2040,7 +2040,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>Berkas basis data telah berubah dan anda memiliki ubahan yang belum disimpan.
+        <translation>Berkas basisdata telah berubah dan anda memiliki ubahan yang belum disimpan.
 Apakah anda ingin menggabungkan ubahan anda?</translation>
     </message>
     <message>
@@ -2065,7 +2065,7 @@ Apakah anda ingin menggabungkan ubahan anda?</translation>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation>Kunci Basis Data?</translation>
+        <translation>Kunci Basisdata?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
@@ -2080,7 +2080,7 @@ Simpan perubahan?</translation>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation>Basis data telah diubah.
+        <translation>Basisdata telah diubah.
 Simpan perubahan?</translation>
     </message>
     <message>
@@ -2090,7 +2090,7 @@ Simpan perubahan?</translation>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
 Error: %1</source>
-        <translation>Tidak bisa membuka berkas basis data baru saat mencoba untuk memuat ulang.
+        <translation>Tidak bisa membuka berkas basisdata baru saat mencoba untuk memuat ulang.
 Galat: %1</translation>
     </message>
     <message>
@@ -2100,7 +2100,7 @@ Galat: %1</translation>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC telah beberapa kali gagal menyimpan basis data. Hal ini mungkin disebabkan oleh layanan sinkronisasi berkas yang menghalangi berkas yang akan disimpan.
+        <translation>KeePassXC telah beberapa kali gagal menyimpan basisdata. Hal ini mungkin disebabkan oleh layanan sinkronisasi berkas yang menghalangi berkas yang akan disimpan.
 Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
@@ -2109,11 +2109,11 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Simpan basis data sebagai</translation>
+        <translation>Simpan basisdata sebagai</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Basis Data KeePass 2</translation>
+        <translation>Basisdata KeePass 2</translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -2137,11 +2137,11 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation>Berhasil menggabungkan berkas basis data.</translation>
+        <translation>Berhasil menggabungkan berkas basisdata.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>Basis data tidak ada perubahan yang diakibatkan oleh proses penggabungan.</translation>
+        <translation>Basisdata tidak ada perubahan yang diakibatkan oleh proses penggabungan.</translation>
     </message>
     <message>
         <source>Shared group...</source>
@@ -2149,19 +2149,19 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>Gagal menyimpan basis data: %1</translation>
+        <translation>Gagal menyimpan basisdata: %1</translation>
     </message>
     <message>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation>Basis data ini dibuka dalam mode baca-saja. Simpan otomatis dinonaktifkan.</translation>
+        <translation>Basisdata ini dibuka dalam mode baca-saja. Simpan otomatis dinonaktifkan.</translation>
     </message>
     <message>
         <source>Save database backup</source>
-        <translation>Simpan cadangan basis data</translation>
+        <translation>Simpan cadangan basisdata</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tidak bisa menemukan berkas basisdata: %1</translation>
     </message>
 </context>
 <context>
@@ -2367,7 +2367,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
-        <translation>Kecualikan dari laporan basis data</translation>
+        <translation>Kecualikan dari laporan basisdata</translation>
     </message>
 </context>
 <context>
@@ -2571,11 +2571,11 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation type="unfinished"/>
+        <translation>Prasetel Kedaluwarsa</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation type="unfinished"/>
+        <translation>Prasetel kedaluwarsa</translation>
     </message>
     <message>
         <source>Notes field</source>
@@ -2603,7 +2603,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Kedaluwarsa:</translation>
     </message>
 </context>
 <context>
@@ -2626,7 +2626,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>Buang kunci dari agent saat basis data ditutup/dikunci</translation>
+        <translation>Buang kunci dari agent saat basisdata ditutup/dikunci</translation>
     </message>
     <message>
         <source>Public key</source>
@@ -2634,7 +2634,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Tambahkan kunci ke agent saat basis data dibuka/tak terkunci</translation>
+        <translation>Tambahkan kunci ke agent saat basisdata dibuka/tak terkunci</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -2799,15 +2799,15 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation>%1 telah diekspor oleh basis data ini.</translation>
+        <translation>%1 telah diekspor oleh basisdata ini.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation>%1 telah diimpor oleh basis data ini.</translation>
+        <translation>%1 telah diimpor oleh basisdata ini.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation>%1 sedang diimpor dan diekspor oleh berbagai grup  dalam basis data ini.</translation>
+        <translation>%1 sedang diimpor dan diekspor oleh berbagai grup  dalam basisdata ini.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
@@ -2816,11 +2816,11 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Ekspor basis data saat ini dinonaktifkan oleh pengaturan aplikasi.</translation>
+        <translation>Ekspor basisdata saat ini dinonaktifkan oleh pengaturan aplikasi.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Impor basis data saat ini dinonaktifkan oleh pengaturan aplikasi.</translation>
+        <translation>Impor basisdata saat ini dinonaktifkan oleh pengaturan aplikasi.</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
@@ -2879,7 +2879,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Kedaluwarsa:</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
@@ -2887,11 +2887,11 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation type="unfinished"/>
+        <translation>Ketik-Otomatis:</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation type="unfinished"/>
+        <translation>Cari:</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -2899,7 +2899,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nama:</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
@@ -2950,7 +2950,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n ikon sudah ada didalam basis data</numerusform></translation>
+        <translation><numerusform>%n ikon sudah ada didalam basisdata</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
@@ -3194,7 +3194,7 @@ Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
         <translation>%1 adalah berkas yang sangat besar (%2 MB).
-Basis data anda akan menjadi sangat besar dan akan mengurangi performa kinerja.
+Basisdata anda akan menjadi sangat besar dan akan mengurangi performa kinerja.
 
 Apakah anda yakin ingin menambahkan berkas ini?</translation>
     </message>
@@ -3477,7 +3477,7 @@ Apakah anda yakin ingin menambahkan berkas ini?</translation>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>Entri &quot;%1&quot; dari basis data &quot;%2&quot; telah digunakan oleh %3</translation>
+        <translation>Entri &quot;%1&quot; dari basisdata &quot;%2&quot; telah digunakan oleh %3</translation>
     </message>
 </context>
 <context>
@@ -3635,7 +3635,7 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
     <name>Kdbx3Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>kehilangan tajuk basis data</translation>
+        <translation>kehilangan tajuk basisdata</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -3657,11 +3657,11 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basis data anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>TIdak bisa mengkalkulasi kunci basisdata</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
@@ -3676,14 +3676,14 @@ Jika terus berulang, maka basis data anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>TIdak bisa mengkalkulasi kunci basisdata</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>kehilangan tajuk basis data</translation>
+        <translation>kehilangan tajuk basisdata</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
@@ -3797,7 +3797,7 @@ Jika terus berulang, maka basis data anda mungkin rusak.</translation>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basis data anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -3869,21 +3869,21 @@ Jika terus berulang, maka basis data anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Bukan basis data KeePass.</translation>
+        <translation>Bukan basisdata KeePass.</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>Berkas yang dipilih adalah basis data lama KeePass 1 (.kdb).
+        <translation>Berkas yang dipilih adalah basisdata lama KeePass 1 (.kdb).
 
-Anda bisa mengimpornya dengan mengklik Basis Data &gt; &apos;Impor basis data KeePass 1...&apos;.
-Ini adalah migrasi satu arah. Anda tidak akan bisa membuka basis data yang diimpor dengan versi lama KeePassX 0.4.</translation>
+Anda bisa mengimpornya dengan mengklik Basisdata &gt; &apos;Impor basisdata KeePass 1...&apos;.
+Ini adalah migrasi satu arah. Anda tidak akan bisa membuka basisdata yang diimpor dengan versi lama KeePassX 0.4.</translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>Versi basis data KeePass 2 tidak didukung.</translation>
+        <translation>Versi basisdata KeePass 2 tidak didukung.</translation>
     </message>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
@@ -3895,7 +3895,7 @@ Ini adalah migrasi satu arah. Anda tidak akan bisa membuka basis data yang diimp
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation>Gagal membaca berkas basis data.</translation>
+        <translation>Gagal membaca berkas basisdata.</translation>
     </message>
 </context>
 <context>
@@ -4049,11 +4049,11 @@ Baris %2, kolom %3</translation>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Tidak bisa membuka basis data.</translation>
+        <translation>Tidak bisa membuka basisdata.</translation>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation>Impor Basis Data KeePass1</translation>
+        <translation>Impor Basisdata KeePass1</translation>
     </message>
 </context>
 <context>
@@ -4064,7 +4064,7 @@ Baris %2, kolom %3</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Bukan basis data KeePass.</translation>
+        <translation>Bukan basisdata KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
@@ -4072,7 +4072,7 @@ Baris %2, kolom %3</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Versi basis data KeePass tidak didukung.</translation>
+        <translation>Versi basisdata KeePass tidak didukung.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
@@ -4207,11 +4207,11 @@ Baris %2, kolom %3</translation>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basis data anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>TIdak bisa mengkalkulasi kunci basisdata</translation>
     </message>
 </context>
 <context>
@@ -4366,7 +4366,7 @@ Pesan: %2</translation>
     </message>
     <message>
         <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Catatan: Jangan gunakan berkas yang dapat berubah karena itu akan mencegah anda membuka kunci basis data anda!</translation>
+        <translation>Catatan: Jangan gunakan berkas yang dapat berubah karena itu akan mencegah anda membuka kunci basisdata anda!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4374,7 +4374,7 @@ Pesan: %2</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation>Anda tidak dapat menggunakan basis data sekarang sebagai kunci berkasnya sendiri. Harap pilih berkas berbeda atau hasilkan kunci berkas baru.</translation>
+        <translation>Anda tidak dapat menggunakan basisdata sekarang sebagai kunci berkasnya sendiri. Harap pilih berkas berbeda atau hasilkan kunci berkas baru.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
@@ -4383,7 +4383,7 @@ Pesan: %2</translation>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>Kunci berkas yang dipilih terlihat seperti kata sandi basis data. Kunci berkas harus berkas statis yang tidak pernah berubah atau anda akan kehilangan akses ke basis data anda selamanya.
+        <translation>Kunci berkas yang dipilih terlihat seperti kata sandi basisdata. Kunci berkas harus berkas statis yang tidak pernah berubah atau anda akan kehilangan akses ke basisdata anda selamanya.
 Apakah anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
@@ -4398,7 +4398,7 @@ Generate a new key file in the database security settings.</source>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation>Basis &amp;data</translation>
+        <translation>Basis&amp;data</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -4422,7 +4422,7 @@ Generate a new key file in the database security settings.</source>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Pengaturan basis data</translation>
+        <translation>Pengaturan basisdata</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
@@ -4497,7 +4497,7 @@ Generate a new key file in the database security settings.</source>
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
         <translation>PERINGATAN! Anda menggunakan versi tidak stabil dari KeePassXC!
-Tinggi kemungkinan terjadi kerusakan, harap kelola salinan basis data anda dengan baik.
+Tinggi kemungkinan terjadi kerusakan, harap kelola salinan basisdata anda dengan baik.
 Versi ini tidak dimaksudkan untuk penggunaan sehari-hari.</translation>
     </message>
     <message>
@@ -4516,11 +4516,11 @@ Kami sarankan anda menggunakan AppImage yang tersedia di halaman unduhan kami.</
     </message>
     <message>
         <source>Create a new database</source>
-        <translation>Buat basis data baru</translation>
+        <translation>Buat basisdata baru</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation>Gabung dari basis data KDBX lainnya</translation>
+        <translation>Gabung dari basisdata KDBX lainnya</translation>
     </message>
     <message>
         <source>Add a new entry</source>
@@ -4544,7 +4544,7 @@ Kami sarankan anda menggunakan AppImage yang tersedia di halaman unduhan kami.</
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation>Impor basis data KeePass 1</translation>
+        <translation>Impor basisdata KeePass 1</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
@@ -4603,7 +4603,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>&amp;Recent Databases</source>
-        <translation>Basis Data Ba&amp;ru-baru Ini</translation>
+        <translation>Basisdata Ba&amp;ru-baru Ini</translation>
     </message>
     <message>
         <source>&amp;Entries</source>
@@ -4623,7 +4623,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"/>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
@@ -4631,23 +4631,23 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>&amp;Buka Basis Data…</translation>
+        <translation>&amp;Buka Basisdata…</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
-        <translation>&amp;Simpan Basis Data</translation>
+        <translation>&amp;Simpan Basisdata</translation>
     </message>
     <message>
         <source>&amp;Close Database</source>
-        <translation>&amp;Tutup Basis Data</translation>
+        <translation>&amp;Tutup Basisdata</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>Basis Data &amp;Baru…</translation>
+        <translation>Basisdata &amp;Baru…</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>&amp;Gabung Dari Basis Data…</translation>
+        <translation>&amp;Gabung Dari Basisdata…</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
@@ -4679,15 +4679,15 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>Sim&amp;pan Basis Data Sebagai…</translation>
+        <translation>Sim&amp;pan Basisdata Sebagai…</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Keamanan Basisdata…</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Laporan Basisdata...</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
@@ -4731,19 +4731,19 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>&amp;Lock Databases</source>
-        <translation>&amp;Kunci Basis Data</translation>
+        <translation>&amp;Kunci Basisdata</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation type="unfinished"/>
+        <translation>Berkas &amp;CSV…</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation type="unfinished"/>
+        <translation>Berkas &amp;HTML…</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
-        <translation>Basis Data KeePass 1…</translation>
+        <translation>Basisdata KeePass 1…</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
@@ -4771,7 +4771,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Open Getting Started Guide</source>
-        <translation type="unfinished"/>
+        <translation>Buka Panduan Memulai</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
@@ -4779,15 +4779,15 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Go to online documentation</source>
-        <translation type="unfinished"/>
+        <translation>Kunjungi dokumentasi daring</translation>
     </message>
     <message>
         <source>Open User Guide</source>
-        <translation type="unfinished"/>
+        <translation>Buka Panduan Pengguna</translation>
     </message>
     <message>
         <source>Save Database Backup...</source>
-        <translation>Simpan Cadangan Basis Data...</translation>
+        <translation>Simpan Cadangan Basisdata...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -4799,7 +4799,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Compact Mode</source>
-        <translation type="unfinished"/>
+        <translation>Mode Ringkas</translation>
     </message>
     <message>
         <source>Automatic</source>
@@ -4819,11 +4819,11 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan Bilah Alat</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan Panel Pratinjau</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
@@ -4831,34 +4831,34 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation type="unfinished"/>
+        <translation>Mulai Ulang Aplikasi?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>Anda harus memulai ulang aplikasi untuk menerapkan pengaturan ini. Apakah anda ingin memulai ulang sekarang?</translation>
     </message>
 </context>
 <context>
     <name>ManageDatabase</name>
     <message>
         <source>Database settings</source>
-        <translation>Pengaturan basis data</translation>
+        <translation>Pengaturan basisdata</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation>Sunting pengaturan basis data</translation>
+        <translation>Sunting pengaturan basisdata</translation>
     </message>
     <message>
         <source>Unlock database</source>
-        <translation>Buka kunci basis data</translation>
+        <translation>Buka kunci basisdata</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation>Buka kunci basis data untuk menampilkan lebih banyak informasi</translation>
+        <translation>Buka kunci basisdata untuk menampilkan lebih banyak informasi</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Kunci basis data</translation>
+        <translation>Kunci basisdata</translation>
     </message>
 </context>
 <context>
@@ -4888,7 +4888,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>entri lama yang digabung dari basis data &quot;%1&quot;</translation>
+        <translation>entri lama yang digabung dari basisdata &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
@@ -4943,7 +4943,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database...</source>
-        <translation>Buat basis data KeePassXC baru...</translation>
+        <translation>Buat basisdata KeePassXC baru...</translation>
     </message>
     <message>
         <source>Root</source>
@@ -4959,7 +4959,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Di sini anda bisa menyesuaikan pengaturan enkripsi basis data. Jangan khawatir, anda bisa mengubahnya lagi nanti di pengaturan basis data.</translation>
+        <translation>Di sini anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
@@ -4978,7 +4978,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Kredensial Basisdata</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
@@ -4993,18 +4993,18 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Di sini anda bisa menyesuaikan pengaturan enkripsi basis data. Jangan khawatir, anda bisa mengubahnya lagi nanti di pengaturan basis data.</translation>
+        <translation>Di sini anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>Informasi Basis Data Umum</translation>
+        <translation>Informasi Basisdata Umum</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>Silakan masukkan nama dan deskripsi opsional untuk basis data anda yang baru:</translation>
+        <translation>Silakan masukkan nama dan deskripsi opsional untuk basisdata anda yang baru:</translation>
     </message>
 </context>
 <context>
@@ -5218,7 +5218,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Kata sandi adalah metode utama untuk mengamankan basis data anda.&lt;/p&gt;&lt;p&gt;Kata sandi yang bagus adalah unik dan panjang. KeePassXC dapat menghasilkan satu untuk anda.&lt;/p&gt; </translation>
+        <translation>&lt;p&gt;Kata sandi adalah metode utama untuk mengamankan basisdata anda.&lt;/p&gt;&lt;p&gt;Kata sandi yang bagus adalah unik dan panjang. KeePassXC dapat menghasilkan satu untuk anda.&lt;/p&gt; </translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -5486,7 +5486,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished"/>
+        <translation>Esc</translation>
     </message>
     <message>
         <source>Apply Password</source>
@@ -5494,7 +5494,7 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -5611,11 +5611,11 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation>Basis data tidak terbuka</translation>
+        <translation>Basisdata tidak terbuka</translation>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation>Hash basis data tidak tersedia</translation>
+        <translation>Hash basisdata tidak tersedia</translation>
     </message>
     <message>
         <source>Client public key not received</source>
@@ -5659,15 +5659,15 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>Tambahkan entri baru ke basis data.</translation>
+        <translation>Tambahkan entri baru ke basisdata.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Jalur ke basis data.</translation>
+        <translation>Jalur ke basisdata.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>Berkas kunci dari basis data.</translation>
+        <translation>Berkas kunci dari basisdata.</translation>
     </message>
     <message>
         <source>path</source>
@@ -5768,7 +5768,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>List database entries.</source>
-        <translation>Daftar entri basis data.</translation>
+        <translation>Daftar entri basisdata.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
@@ -5784,19 +5784,19 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation>Gabungkan dua basis data.</translation>
+        <translation>Gabungkan dua basisdata.</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation>Jalur sumber basis data untuk digabungkan.</translation>
+        <translation>Jalur sumber basisdata untuk digabungkan.</translation>
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Gunakan kredensial yang sama untuk kedua berkas basis data.</translation>
+        <translation>Gunakan kredensial yang sama untuk kedua berkas basisdata.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>Berkas kunci dari basis data yang akan digabungkan.</translation>
+        <translation>Berkas kunci dari basisdata yang akan digabungkan.</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
@@ -5894,7 +5894,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation>Gagal menyimpan basis data %1.</translation>
+        <translation>Gagal menyimpan basisdata %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
@@ -5943,7 +5943,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>Gagal menyimpan basis data: %1</translation>
+        <translation>Gagal menyimpan basisdata: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -6105,11 +6105,11 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation>Tidak bisa menyimpan basis data ke berkas : %1</translation>
+        <translation>Tidak bisa menyimpan basisdata ke berkas : %1</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation>Tidak bisa menyimpan basis data ke berkas: %1</translation>
+        <translation>Tidak bisa menyimpan basisdata ke berkas: %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
@@ -6171,7 +6171,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation>Buat basis data baru.</translation>
+        <translation>Buat basisdata baru.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
@@ -6183,15 +6183,15 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation>Tidak ada kunci yang diatur. Membatalkan pembuatan basis data.</translation>
+        <translation>Tidak ada kunci yang diatur. Membatalkan pembuatan basisdata.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation>Gagal menyimpan basis data: %1.</translation>
+        <translation>Gagal menyimpan basisdata: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation>Berhasil membuat basis data baru.</translation>
+        <translation>Berhasil membuat basisdata baru.</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
@@ -6219,7 +6219,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>nama berkas basis data sandi untuk dibuka (*.kdbx)</translation>
+        <translation>nama berkas basisdata sandi untuk dibuka (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
@@ -6227,11 +6227,11 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>berkas kunci basis data</translation>
+        <translation>berkas kunci basisdata</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>baca sandi basis data dari stdin</translation>
+        <translation>baca sandi basisdata dari stdin</translation>
     </message>
     <message>
         <source>Parent window handle</source>
@@ -6251,7 +6251,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Database password: </source>
-        <translation>Sandi basis data:</translation>
+        <translation>Sandi basisdata:</translation>
     </message>
     <message>
         <source>Cannot create new group</source>
@@ -6259,7 +6259,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation>Nonaktifkan kunci kata sandi untuk basis data.</translation>
+        <translation>Nonaktifkan kunci kata sandi untuk basisdata.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
@@ -6267,7 +6267,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation>Nonaktifkan kunci kata sandi untuk menggabungkan basis data.</translation>
+        <translation>Nonaktifkan kunci kata sandi untuk menggabungkan basisdata.</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -6343,7 +6343,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation>Menambahkan grup baru ke basis data.</translation>
+        <translation>Menambahkan grup baru ke basisdata.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
@@ -6379,11 +6379,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation>Mengevaluasi entri basis data terhadap berkas HIBP, ini akan memakan waktu cukup lama...</translation>
+        <translation>Mengevaluasi entri basisdata terhadap berkas HIBP, ini akan memakan waktu cukup lama...</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation>Tutup basis data yang saat ini dibuka.</translation>
+        <translation>Tutup basisdata yang saat ini dibuka.</translation>
     </message>
     <message>
         <source>Display this help.</source>
@@ -6407,11 +6407,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation>Ekspor konten dari basis data ke keluaran standar dalam format yang ditentukan.</translation>
+        <translation>Ekspor konten dari basisdata ke keluaran standar dalam format yang ditentukan.</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation>Tidak bisa mengekspor basis data ke XML: %1</translation>
+        <translation>Tidak bisa mengekspor basisdata ke XML: %1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
@@ -6435,7 +6435,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation>Impor konten dari basis data XML.</translation>
+        <translation>Impor konten dari basisdata XML.</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
@@ -6443,11 +6443,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation>Jalur dari basis data baru.</translation>
+        <translation>Jalur dari basisdata baru.</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation>Berhasil mengimpor basis data.</translation>
+        <translation>Berhasil mengimpor basisdata.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
@@ -6463,7 +6463,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation>Slot Yubikey untuk basis data kedua.</translation>
+        <translation>Slot Yubikey untuk basisdata kedua.</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
@@ -6471,7 +6471,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>Basis data tidak ada perubahan yang diakibatkan oleh proses penggabungan.</translation>
+        <translation>Basisdata tidak ada perubahan yang diakibatkan oleh proses penggabungan.</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
@@ -6499,7 +6499,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation>Buka basis data.</translation>
+        <translation>Buka basisdata.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
@@ -6507,7 +6507,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation>Tidak dapat menghapus grup root dari  basis data.</translation>
+        <translation>Tidak dapat menghapus grup root dari  basisdata.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
@@ -6519,7 +6519,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation>Gagal membuka berkas basis data %1: tidak ditemukan</translation>
+        <translation>Gagal membuka berkas basisdata %1: tidak ditemukan</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
@@ -6527,7 +6527,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation>Gagal membuka berkas basis data %1: tidak terbaca</translation>
+        <translation>Gagal membuka berkas basisdata %1: tidak terbaca</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
@@ -6539,7 +6539,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation>Masukkan sandi untuk mengenkripsi basis data (opsional):</translation>
+        <translation>Masukkan sandi untuk mengenkripsi basisdata (opsional):</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
@@ -6619,11 +6619,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation>Atur berkas kunci untuk basis data.</translation>
+        <translation>Atur berkas kunci untuk basisdata.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation>Atur kata sandi untuk basis data.</translation>
+        <translation>Atur kata sandi untuk basisdata.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
@@ -6635,7 +6635,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
-        <translation>Gagal mengatur kata sandi basis data.</translation>
+        <translation>Gagal mengatur kata sandi basisdata.</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
@@ -6655,11 +6655,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Unable to import XML database: %1</source>
-        <translation>Tidak bisa mengimpor basis data XML: %1</translation>
+        <translation>Tidak bisa mengimpor basisdata XML: %1</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
-        <translation>Tampilkan informasi basis data.</translation>
+        <translation>Tampilkan informasi basisdata.</translation>
     </message>
     <message>
         <source>UUID: </source>
@@ -6703,7 +6703,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation>Apakah anda ingin membuat basis data dengan kata sandi kosong? [y/N]:</translation>
+        <translation>Apakah anda ingin membuat basisdata dengan kata sandi kosong? [y/N]:</translation>
     </message>
     <message>
         <source>Repeat password: </source>
@@ -6869,7 +6869,7 @@ Kernel: %3 %4</translation>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>PERHATIAN: Laporan ini membutuhkan pengiriman informasi ke layanan online Have I Been Pwned (https://haveibeenpwned.com). Jika Anda melanjutkan, kata sandi basis data Anda akan diacak secara kriptografis dan lima karakter pertama dari hash tersebut akan dikirim dengan aman ke layanan ini. Basis data Anda tetap aman dan tidak dapat dibangun kembali dari informasi ini. Namun, jumlah kata sandi yang Anda kirim dan alamat IP Anda akan terpapar ke layanan ini.</translation>
+        <translation>PERHATIAN: Laporan ini membutuhkan pengiriman informasi ke layanan online Have I Been Pwned (https://haveibeenpwned.com). Jika anda melanjutkan, kata sandi basisdata anda akan diacak secara kriptografis dan lima karakter pertama dari hash tersebut akan dikirim dengan aman ke layanan ini. Basisdata anda tetap aman dan tidak dapat dibangun kembali dari informasi ini. Namun, jumlah kata sandi yang anda kirim dan alamat IP anda akan terpapar ke layanan ini.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
@@ -6881,7 +6881,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation>Versi KeePassXC ini tidak memiliki fungsi konektivitas jaringan. Konektivitas jaringan diperlukan untuk memeriksa kata sandi Anda terhadap basis data Have I Been Pwned.</translation>
+        <translation>Versi KeePassXC ini tidak memiliki fungsi konektivitas jaringan. Konektivitas jaringan diperlukan untuk memeriksa kata sandi Anda terhadap basisdata Have I Been Pwned.</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
@@ -6964,11 +6964,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated...</source>
-        <translation>Harap tunggu, statistik basis data sedang dikalkulasi...</translation>
+        <translation>Harap tunggu, statistik basisdata sedang dikalkulasi...</translation>
     </message>
     <message>
         <source>Database name</source>
-        <translation>Nama basis data</translation>
+        <translation>Nama basisdata</translation>
     </message>
     <message>
         <source>Description</source>
@@ -6996,7 +6996,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation>Basis data telah dimodifikasi, tetapi perubahan belum disimpan ke penyimpanan.</translation>
+        <translation>Basisdata telah dimodifikasi, tetapi perubahan belum disimpan ke penyimpanan.</translation>
     </message>
     <message>
         <source>Number of groups</source>
@@ -7012,7 +7012,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation>Basis data berisi entri yang sudah kedaluwarsa.</translation>
+        <translation>Basisdata berisi entri yang sudah kedaluwarsa.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
@@ -7748,15 +7748,15 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Mulai menyimpan sandi anda dengan aman di dalam basis data KeePassXC</translation>
+        <translation>Mulai menyimpan sandi anda dengan aman di dalam basisdata KeePassXC</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>Buat basis data baru</translation>
+        <translation>Buat basisdata baru</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation>Buka basis data yang ada</translation>
+        <translation>Buka basisdata yang ada</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
@@ -7768,7 +7768,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Basis data baru-baru ini</translation>
+        <translation>Basisdata baru-baru ini</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
@@ -7780,7 +7780,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation>Buka basis data terbaru</translation>
+        <translation>Buka basisdata terbaru</translation>
     </message>
 </context>
 <context>

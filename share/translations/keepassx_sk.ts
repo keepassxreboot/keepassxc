@@ -6387,7 +6387,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation type="unfinished"/>
+        <translation>Hodnotenie položiek databázy oproti súboru HIBP, bude to chvíľu trvať…</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
@@ -6467,7 +6467,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>Vypisovať len zmeny zistený pri operácii zlúčenia.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
@@ -6647,7 +6647,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation type="unfinished"/>
+        <translation>meranie výkonu funkcie odvodenia kľúča pre %1ms trvanie.</translation>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
@@ -6748,7 +6748,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
-        <translation type="unfinished"/>
+        <translation>Meranie výkonu %1 oneskorenie</translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
@@ -7253,7 +7253,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation type="unfinished"/>
+        <translation>Uložte aktuálne zmeny na aktiváciu zásuvného modulu a zapnutie úpravy tejto sekcie.</translation>
     </message>
 </context>
 <context>
@@ -7795,11 +7795,11 @@ Napríklad: JBSWY3DPEHPK3PXP</translation>
     <name>YubiKey</name>
     <message>
         <source>%1 [%2] Configured Slot - %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] Nastavený slot – %3</translation>
     </message>
     <message>
         <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
+        <translation>%1[%2] Výzva – odpoveď – slot %3 – %4</translation>
     </message>
     <message>
         <source>Press</source>
