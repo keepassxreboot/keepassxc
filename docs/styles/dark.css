@@ -455,6 +455,7 @@ p{font-family: "Noto Sans",sans-serif !important}
 blockquote{color:var(--quotecolor) !important}
 .quoteblock{color:var(--textcolor)}
 code{color:var(--textcoloralt);background-color: var(--sidebarbackground) !important}
+.keyseq{color:var(--textcoloralt);}
 
 
 /* Table styles */
