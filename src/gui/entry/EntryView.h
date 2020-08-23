@@ -80,6 +80,7 @@ private slots:
 
 private:
     void resetFixedColumns();
+    bool isColumnHidden(int logicalIndex);
 
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
