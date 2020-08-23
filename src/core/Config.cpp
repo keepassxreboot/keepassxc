@@ -446,7 +446,7 @@ Config::Config(QObject* parent)
 #else
     // On case-sensitive Operating Systems, force use of lowercase app directories
     configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + "/keepassxc";
-    localConfigPath = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
+    localConfigPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/keepassxc";
 #endif
 
     configPath += "/keepassxc";
