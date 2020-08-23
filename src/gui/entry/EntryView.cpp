@@ -379,8 +379,7 @@ void EntryView::showHeaderMenu(const QPoint& position)
             continue;
         }
         int columnIndex = action->data().toInt();
-        bool hidden = header()->isSectionHidden(columnIndex) || (header()->sectionSize(columnIndex) == 0);
-        action->setChecked(!hidden);
+        action->setChecked(!isColumnHidden(columnIndex));
     }
 
     m_headerMenu->popup(mapToGlobal(position));
@@ -408,6 +407,7 @@ void EntryView::toggleColumnVisibility(QAction* action)
         if (header()->sectionSize(columnIndex) == 0) {
             header()->resizeSection(columnIndex, header()->defaultSectionSize());
         }
+        resetFixedColumns();
         return;
     }
     if ((header()->count() - header()->hiddenSectionCount()) > 1) {
@@ -460,11 +460,15 @@ void EntryView::fitColumnsToContents()
  */
 void EntryView::resetFixedColumns()
 {
-    header()->setSectionResizeMode(EntryModel::Paperclip, QHeaderView::Fixed);
-    header()->resizeSection(EntryModel::Paperclip, header()->minimumSectionSize());
+    if (!isColumnHidden(EntryModel::Paperclip)) {
+        header()->setSectionResizeMode(EntryModel::Paperclip, QHeaderView::Fixed);
+        header()->resizeSection(EntryModel::Paperclip, header()->minimumSectionSize());
+    }
 
-    header()->setSectionResizeMode(EntryModel::Totp, QHeaderView::Fixed);
-    header()->resizeSection(EntryModel::Totp, header()->minimumSectionSize());
+    if (!isColumnHidden(EntryModel::Totp)) {
+        header()->setSectionResizeMode(EntryModel::Totp, QHeaderView::Fixed);
+        header()->resizeSection(EntryModel::Totp, header()->minimumSectionSize());
+    }
 }
 
 /**
@@ -532,4 +536,9 @@ void EntryView::showEvent(QShowEvent* event)
         fitColumnsToWindow();
         m_columnsNeedRelayout = false;
     }
+}
+
+bool EntryView::isColumnHidden(int logicalIndex)
+{
+    return header()->isSectionHidden(logicalIndex) || header()->sectionSize(logicalIndex) == 0;
 }
