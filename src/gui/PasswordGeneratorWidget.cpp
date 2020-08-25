@@ -170,6 +170,7 @@ void PasswordGeneratorWidget::loadSettings()
     // Set advanced mode
     m_ui->buttonAdvancedMode->setChecked(advanced);
     setAdvancedMode(advanced);
+    updateGenerator();
 }
 
 void PasswordGeneratorWidget::saveSettings()
