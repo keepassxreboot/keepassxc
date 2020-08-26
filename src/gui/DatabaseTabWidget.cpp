@@ -275,7 +275,7 @@ void DatabaseTabWidget::importKeePass1Database()
 
 void DatabaseTabWidget::importOpVaultDatabase()
 {
-#ifdef Q_MACOS
+#ifdef Q_OS_MACOS
     QString fileName = fileDialog()->getOpenFileName(this, tr("Open OPVault"), {}, "OPVault (*.opvault)");
 #else
     QString fileName = fileDialog()->getExistingDirectory(this, tr("Open OPVault"));
