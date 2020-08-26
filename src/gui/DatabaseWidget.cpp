@@ -2061,7 +2061,7 @@ void DatabaseWidget::processAutoOpen()
         // negated using '!'
         auto ifDevice = entry->attribute("IfDevice");
         if (!ifDevice.isEmpty()) {
-            bool loadDb = true;
+            bool loadDb = false;
             auto hostName = QHostInfo::localHostName();
             for (auto& device : ifDevice.split(",")) {
                 device = device.trimmed();
@@ -2070,12 +2070,13 @@ void DatabaseWidget::processAutoOpen()
                         // Machine name matched an exclusion, don't load this database
                         loadDb = false;
                         break;
+                    } else {
+                        // Not matching an exclusion allows loading on all machines
+                        loadDb = true;
                     }
                 } else if (device.compare(hostName, Qt::CaseInsensitive) == 0) {
+                    // Explicitly named for loading
                     loadDb = true;
-                } else {
-                    // Don't load the database if there are devices not starting with '!'
-                    loadDb = false;
                 }
             }
             if (!loadDb) {
