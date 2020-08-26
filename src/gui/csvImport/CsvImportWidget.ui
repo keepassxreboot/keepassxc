@@ -96,21 +96,8 @@
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
              <layout class="QGridLayout" name="gridLayout_combos">
-              <item row="2" column="2">
-               <widget class="QLabel" name="lastModifiedLabel">
-                <property name="font">
-                 <font>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Last Modified</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
+              <item row="3" column="1">
+               <widget class="QComboBox" name="passwordCombo"/>
               </item>
               <item row="3" column="0">
                <widget class="QLabel" name="passwordLabel">
@@ -126,13 +113,13 @@
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
+                <property name="indent">
+                 <number>2</number>
+                </property>
                </widget>
               </item>
-              <item row="3" column="1">
-               <widget class="QComboBox" name="passwordCombo"/>
-              </item>
-              <item row="3" column="2">
-               <widget class="QLabel" name="createdLabel">
+              <item row="2" column="0">
+               <widget class="QLabel" name="usernameLabel">
                 <property name="font">
                  <font>
                   <weight>50</weight>
@@ -140,28 +127,21 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Created</string>
+                 <string>Username</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="indent">
+                 <number>2</number>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <widget class="QLabel" name="notesLabel">
-                <property name="font">
-                 <font>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Notes</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="usernameCombo"/>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="titleCombo"/>
               </item>
               <item row="1" column="0">
                <widget class="QLabel" name="titleLabel">
@@ -176,6 +156,9 @@
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="indent">
+                 <number>2</number>
                 </property>
                </widget>
               </item>
@@ -196,9 +179,12 @@
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
+                <property name="indent">
+                 <number>2</number>
+                </property>
                </widget>
               </item>
-              <item row="0" column="2">
+              <item row="4" column="0">
                <widget class="QLabel" name="urlLabel">
                 <property name="font">
                  <font>
@@ -212,10 +198,16 @@
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
+                <property name="indent">
+                 <number>2</number>
+                </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="usernameLabel">
+              <item row="4" column="1">
+               <widget class="QComboBox" name="urlCombo"/>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="notesLabel">
                 <property name="font">
                  <font>
                   <weight>50</weight>
@@ -223,30 +215,106 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Username</string>
+                 <string>Notes</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
+                <property name="indent">
+                 <number>2</number>
+                </property>
                </widget>
               </item>
-              <item row="2" column="1">
-               <widget class="QComboBox" name="usernameCombo"/>
-              </item>
-              <item row="1" column="1">
-               <widget class="QComboBox" name="titleCombo"/>
-              </item>
               <item row="0" column="3">
-               <widget class="QComboBox" name="urlCombo"/>
-              </item>
-              <item row="1" column="3">
                <widget class="QComboBox" name="notesCombo"/>
               </item>
-              <item row="2" column="3">
-               <widget class="QComboBox" name="lastModifiedCombo"/>
+              <item row="1" column="2">
+               <widget class="QLabel" name="totpLabel">
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>TOTP</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="indent">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QComboBox" name="totpCombo"/>
+              </item>
+              <item row="4" column="3">
+               <widget class="QComboBox" name="createdCombo"/>
+              </item>
+              <item row="4" column="2">
+               <widget class="QLabel" name="createdLabel">
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Created</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="indent">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLabel" name="lastModifiedLabel">
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Last Modified</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="indent">
+                 <number>2</number>
+                </property>
+               </widget>
               </item>
               <item row="3" column="3">
-               <widget class="QComboBox" name="createdCombo"/>
+               <widget class="QComboBox" name="lastModifiedCombo"/>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLabel" name="iconLabel">
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Icon</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="indent">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QComboBox" name="iconCombo"/>
               </item>
              </layout>
             </item>
@@ -682,10 +750,6 @@
   <tabstop>titleCombo</tabstop>
   <tabstop>usernameCombo</tabstop>
   <tabstop>passwordCombo</tabstop>
-  <tabstop>urlCombo</tabstop>
-  <tabstop>notesCombo</tabstop>
-  <tabstop>lastModifiedCombo</tabstop>
-  <tabstop>createdCombo</tabstop>
   <tabstop>comboBoxCodec</tabstop>
   <tabstop>comboBoxTextQualifier</tabstop>
   <tabstop>comboBoxFieldSeparator</tabstop>
