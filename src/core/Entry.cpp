@@ -463,7 +463,8 @@ void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
         m_data.totpSettings.reset();
     } else {
         m_data.totpSettings = std::move(settings);
-        auto text = Totp::writeSettings(m_data.totpSettings, title(), username());
+        auto text = Totp::writeSettings(
+            m_data.totpSettings, resolveMultiplePlaceholders(title()), resolveMultiplePlaceholders(username()));
         if (m_data.totpSettings->format != Totp::StorageFormat::LEGACY) {
             m_attributes->set(Totp::ATTRIBUTE_OTP, text, true);
         } else {
@@ -489,6 +490,15 @@ void Entry::updateTotp()
 QSharedPointer<Totp::Settings> Entry::totpSettings() const
 {
     return m_data.totpSettings;
+}
+
+QString Entry::totpSettingsString() const
+{
+    if (m_data.totpSettings) {
+        return Totp::writeSettings(
+            m_data.totpSettings, resolveMultiplePlaceholders(title()), resolveMultiplePlaceholders(username()), true);
+    }
+    return {};
 }
 
 void Entry::setUuid(const QUuid& uuid)
