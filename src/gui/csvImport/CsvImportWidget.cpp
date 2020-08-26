@@ -27,6 +27,7 @@
 #include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
 #include "gui/MessageWidget.h"
+#include "totp/totp.h"
 
 // I wanted to make the CSV import GUI future-proof, so if one day you need a new field,
 // all you have to do is add a field to m_columnHeader, and the GUI will follow:
@@ -39,7 +40,8 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
     , m_comboModel(new QStringListModel(this))
     , m_columnHeader(QStringList() << QObject::tr("Group") << QObject::tr("Title") << QObject::tr("Username")
                                    << QObject::tr("Password") << QObject::tr("URL") << QObject::tr("Notes")
-                                   << QObject::tr("Last Modified") << QObject::tr("Created"))
+                                   << QObject::tr("TOTP") << QObject::tr("Icon") << QObject::tr("Last Modified")
+                                   << QObject::tr("Created"))
     , m_fieldSeparatorList(QStringList() << ","
                                          << ";"
                                          << "-"
@@ -54,7 +56,7 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
     m_ui->messageWidget->setHidden(true);
 
     m_combos << m_ui->groupCombo << m_ui->titleCombo << m_ui->usernameCombo << m_ui->passwordCombo << m_ui->urlCombo
-             << m_ui->notesCombo << m_ui->lastModifiedCombo << m_ui->createdCombo;
+             << m_ui->notesCombo << m_ui->totpCombo << m_ui->iconCombo << m_ui->lastModifiedCombo << m_ui->createdCombo;
 
     for (auto combo : m_combos) {
         combo->setModel(m_comboModel);
@@ -206,17 +208,38 @@ void CsvImportWidget::writeDatabase()
         entry->setUrl(m_parserModel->data(m_parserModel->index(r, 4)).toString());
         entry->setNotes(m_parserModel->data(m_parserModel->index(r, 5)).toString());
 
-        TimeInfo timeInfo;
         if (m_parserModel->data(m_parserModel->index(r, 6)).isValid()) {
-            qint64 lastModified = m_parserModel->data(m_parserModel->index(r, 6)).toString().toLongLong();
-            if (lastModified) {
-                timeInfo.setLastModificationTime(Clock::datetimeUtc(lastModified * 1000));
+            auto totp = Totp::parseSettings(m_parserModel->data(m_parserModel->index(r, 6)).toString());
+            entry->setTotp(totp);
+        }
+
+        bool ok;
+        int icon = m_parserModel->data(m_parserModel->index(r, 7)).toInt(&ok);
+        if (ok) {
+            entry->setIcon(icon);
+        }
+
+        TimeInfo timeInfo;
+        if (m_parserModel->data(m_parserModel->index(r, 8)).isValid()) {
+            auto datetime = m_parserModel->data(m_parserModel->index(r, 8)).toString();
+            if (datetime.contains(QRegularExpression("^\\d+$"))) {
+                timeInfo.setLastModificationTime(Clock::datetimeUtc(datetime.toLongLong() * 1000));
+            } else {
+                auto lastModified = QDateTime::fromString(datetime, Qt::ISODate);
+                if (lastModified.isValid()) {
+                    timeInfo.setLastModificationTime(lastModified);
+                }
             }
         }
-        if (m_parserModel->data(m_parserModel->index(r, 7)).isValid()) {
-            qint64 created = m_parserModel->data(m_parserModel->index(r, 7)).toString().toLongLong();
-            if (created) {
-                timeInfo.setCreationTime(Clock::datetimeUtc(created * 1000));
+        if (m_parserModel->data(m_parserModel->index(r, 9)).isValid()) {
+            auto datetime = m_parserModel->data(m_parserModel->index(r, 9)).toString();
+            if (datetime.contains(QRegularExpression("^\\d+$"))) {
+                timeInfo.setCreationTime(Clock::datetimeUtc(datetime.toLongLong() * 1000));
+            } else {
+                auto created = QDateTime::fromString(datetime, Qt::ISODate);
+                if (created.isValid()) {
+                    timeInfo.setCreationTime(created);
+                }
             }
         }
         entry->setTimeInfo(timeInfo);

@@ -106,6 +106,7 @@ public:
     QString notes() const;
     QString attribute(const QString& key) const;
     QString totp() const;
+    QString totpSettingsString() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
     int size() const;
 
