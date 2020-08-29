@@ -56,6 +56,7 @@ public:
         AutoTypeEntryURLMatch,
         AutoTypeDelay,
         AutoTypeStartDelay,
+        AutoTypeHideExpiredEntry,
         GlobalAutoTypeKey,
         GlobalAutoTypeModifiers,
         FaviconDownloadTimeout,
