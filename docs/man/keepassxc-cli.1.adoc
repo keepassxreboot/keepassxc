@@ -15,7 +15,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 = keepassxc-cli(1)
-:docdate: 2020-07-10
+:docdate: 2020-08-31
 :doctype: manpage
 :mansource: KeePassXC {revnumber}
 :manmanual: General Commands Manual
