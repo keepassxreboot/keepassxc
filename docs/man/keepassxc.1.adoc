@@ -17,7 +17,6 @@
 = keepassxc(1)
 :docdate: 2020-07-10
 :doctype: manpage
-:revnumber: 2.6.0
 :mansource: KeePassXC {revnumber}
 :manmanual: General Commands Manual
 
