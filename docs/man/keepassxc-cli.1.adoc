@@ -292,11 +292,11 @@ The same password generation options as documented for the generate command can 
   Include characters from every selected group.
   [Default: Disabled]
 
-include::section-notes.adoc[]
+include::includes/section-notes.adoc[]
 
 == AUTHOR
 This manual page was originally written by Manolis Agkopian <m.agkopian@gmail.com>.
 
-include::section-reporting-bugs.adoc[]
+include::includes/section-reporting-bugs.adoc[]
 
-include::section-copyright.adoc[]
+include::includes/section-copyright.adoc[]

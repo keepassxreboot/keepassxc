@@ -55,11 +55,11 @@ Your wallet works offline and requires no Internet connection.
 *--debug-info*::
   Displays debugging information.
 
-include::section-notes.adoc[]
+include::includes/section-notes.adoc[]
 
 == AUTHOR
 This manual page was originally written by Janek Bevendorff <janek@jbev.net>.
 
-include::section-reporting-bugs.adoc[]
+include::includes/section-reporting-bugs.adoc[]
 
-include::section-copyright.adoc[]
+include::includes/section-copyright.adoc[]
