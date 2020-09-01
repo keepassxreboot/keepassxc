@@ -371,8 +371,8 @@ QString BrowserService::getKey(const QString& id)
 }
 
 QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
-                                               const QString& url,
-                                               const QString& submitUrl,
+                                               const QString& siteUrlStr,
+                                               const QString& formUrlStr,
                                                const QString& realm,
                                                const StringPairList& keyList,
                                                const bool httpAuth)
@@ -380,13 +380,13 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
     Q_UNUSED(dbid);
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
     const bool ignoreHttpAuth = browserSettings()->httpAuthPermission();
-    const QString host = QUrl(url).host();
-    const QString submitHost = QUrl(submitUrl).host();
+    const QString siteHost = QUrl(siteUrlStr).host();
+    const QString formHost = QUrl(formUrlStr).host();
 
     // Check entries for authorization
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
-    for (auto* entry : searchEntries(url, submitUrl, keyList)) {
+    for (auto* entry : searchEntries(siteUrlStr, formUrlStr, keyList)) {
         if (entry->customData()->contains(BrowserService::OPTION_HIDE_ENTRY)
             && entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == TRUE_STR) {
             continue;
@@ -403,7 +403,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
             continue;
         }
 
-        switch (checkAccess(entry, host, submitHost, realm)) {
+        switch (checkAccess(entry, siteHost, formHost, realm)) {
         case Denied:
             continue;
 
@@ -422,7 +422,8 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
     }
 
     // Confirm entries
-    QList<Entry*> selectedEntriesToConfirm = confirmEntries(pwEntriesToConfirm, url, host, submitHost, realm, httpAuth);
+    QList<Entry*> selectedEntriesToConfirm =
+        confirmEntries(pwEntriesToConfirm, siteUrlStr, siteHost, formHost, realm, httpAuth);
     if (!selectedEntriesToConfirm.isEmpty()) {
         pwEntries.append(selectedEntriesToConfirm);
     }
@@ -437,7 +438,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
     }
 
     // Sort results
-    pwEntries = sortEntries(pwEntries, host, submitUrl, url);
+    pwEntries = sortEntries(pwEntries, formUrlStr, siteUrlStr);
 
     // Fill the list
     QJsonArray result;
@@ -451,8 +452,8 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
 void BrowserService::addEntry(const QString& dbid,
                               const QString& login,
                               const QString& password,
-                              const QString& url,
-                              const QString& submitUrl,
+                              const QString& siteUrlStr,
+                              const QString& formUrlStr,
                               const QString& realm,
                               const QString& group,
                               const QString& groupUuid,
@@ -467,8 +468,8 @@ void BrowserService::addEntry(const QString& dbid,
 
     auto* entry = new Entry();
     entry->setUuid(QUuid::createUuid());
-    entry->setTitle(QUrl(url).host());
-    entry->setUrl(url);
+    entry->setTitle(QUrl(siteUrlStr).host());
+    entry->setUrl(siteUrlStr);
     entry->setIcon(KEEPASSXCBROWSER_DEFAULT_ICON);
     entry->setUsername(login);
     entry->setPassword(password);
@@ -487,8 +488,8 @@ void BrowserService::addEntry(const QString& dbid,
         entry->setGroup(getDefaultEntryGroup(db));
     }
 
-    const QString host = QUrl(url).host();
-    const QString submitHost = QUrl(submitUrl).host();
+    const QString host = QUrl(siteUrlStr).host();
+    const QString submitHost = QUrl(formUrlStr).host();
     BrowserEntryConfig config;
     config.allow(host);
 
@@ -505,8 +506,8 @@ bool BrowserService::updateEntry(const QString& dbid,
                                  const QString& uuid,
                                  const QString& login,
                                  const QString& password,
-                                 const QString& url,
-                                 const QString& submitUrl)
+                                 const QString& siteUrlStr,
+                                 const QString& formUrlStr)
 {
     // TODO: select database based on this key id
     Q_UNUSED(dbid);
@@ -518,7 +519,7 @@ bool BrowserService::updateEntry(const QString& dbid,
     Entry* entry = db->rootGroup()->findEntryByUuid(Tools::hexToUuid(uuid));
     if (!entry) {
         // If entry is not found for update, add a new one to the selected database
-        addEntry(dbid, login, password, url, submitUrl, "", "", "", db);
+        addEntry(dbid, login, password, siteUrlStr, formUrlStr, "", "", "", db);
         return true;
     }
 
@@ -547,7 +548,7 @@ bool BrowserService::updateEntry(const QString& dbid,
             dialogResult = MessageBox::question(
                 nullptr,
                 tr("KeePassXC: Update Entry"),
-                tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host(), username),
+                tr("Do you want to update the information in %1 - %2?").arg(QUrl(siteUrlStr).host(), username),
                 MessageBox::Save | MessageBox::Cancel,
                 MessageBox::Cancel,
                 MessageBox::Raise);
@@ -570,7 +571,7 @@ bool BrowserService::updateEntry(const QString& dbid,
 }
 
 QList<Entry*>
-BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl)
+BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString& siteUrlStr, const QString& formUrlStr)
 {
     QList<Entry*> entries;
     auto* rootGroup = db->rootGroup();
@@ -590,25 +591,29 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
 
             // Search for additional URL's starting with KP2A_URL
             for (const auto& key : entry->attributes()->keys()) {
-                if (key.startsWith(ADDITIONAL_URL) && handleURL(entry->attributes()->value(key), url, submitUrl)
+                if (key.startsWith(ADDITIONAL_URL) && handleURL(entry->attributes()->value(key), siteUrlStr, formUrlStr)
                     && !entries.contains(entry)) {
                     entries.append(entry);
                     continue;
                 }
             }
 
-            if (!handleURL(entry->url(), url, submitUrl)) {
+            if (!handleURL(entry->url(), siteUrlStr, formUrlStr)) {
                 continue;
             }
 
-            entries.append(entry);
+            // Additional URL check may have already inserted the entry to the list
+            if (!entries.contains(entry)) {
+                entries.append(entry);
+            }
         }
     }
 
     return entries;
 }
 
-QList<Entry*> BrowserService::searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList)
+QList<Entry*>
+BrowserService::searchEntries(const QString& siteUrlStr, const QString& formUrlStr, const StringPairList& keyList)
 {
     // Check if database is connected with KeePassXC-Browser
     auto databaseConnected = [&](const QSharedPointer<Database>& db) {
@@ -638,11 +643,11 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const QString& s
     }
 
     // Search entries matching the hostname
-    QString hostname = QUrl(url).host();
+    QString hostname = QUrl(siteUrlStr).host();
     QList<Entry*> entries;
     do {
         for (const auto& db : databases) {
-            entries << searchEntries(db, url, submitUrl);
+            entries << searchEntries(db, siteUrlStr, formUrlStr);
         }
     } while (entries.isEmpty() && removeFirstDomain(hostname));
 
@@ -722,24 +727,13 @@ void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> db)
     }
 }
 
-QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries,
-                                          const QString& host,
-                                          const QString& entryUrl,
-                                          const QString& fullUrl)
+QList<Entry*>
+BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& formUrlStr, const QString& siteUrlStr)
 {
-    QUrl url(entryUrl);
-    if (url.scheme().isEmpty()) {
-        url.setScheme("https");
-    }
-
-    const QString submitUrl = url.toString(QUrl::StripTrailingSlash);
-    const QString baseSubmitUrl =
-        url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
-
     // Build map of prioritized entries
     QMultiMap<int, Entry*> priorities;
     for (auto* entry : pwEntries) {
-        priorities.insert(sortPriority(entry, host, submitUrl, baseSubmitUrl, fullUrl), entry);
+        priorities.insert(sortPriority(getEntryURLs(entry), siteUrlStr, formUrlStr), entry);
     }
 
     QList<Entry*> results;
@@ -770,9 +764,9 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries,
 }
 
 QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
-                                             const QString& url,
-                                             const QString& host,
-                                             const QString& submitHost,
+                                             const QString& siteUrlStr,
+                                             const QString& siteHost,
+                                             const QString& formUrlStr,
                                              const QString& realm,
                                              const bool httpAuth)
 {
@@ -790,9 +784,9 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
         auto entry = pwEntriesToConfirm[item->row()];
         BrowserEntryConfig config;
         config.load(entry);
-        config.deny(host);
-        if (!submitHost.isEmpty() && host != submitHost) {
-            config.deny(submitHost);
+        config.deny(siteHost);
+        if (!formUrlStr.isEmpty() && siteHost != formUrlStr) {
+            config.deny(formUrlStr);
         }
         if (!realm.isEmpty()) {
             config.setRealm(realm);
@@ -800,7 +794,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
         config.save(entry);
     });
 
-    accessControlDialog.setItems(pwEntriesToConfirm, url, httpAuth);
+    accessControlDialog.setItems(pwEntriesToConfirm, siteUrlStr, httpAuth);
 
     QList<Entry*> allowedEntries;
     if (accessControlDialog.exec() == QDialog::Accepted) {
@@ -810,9 +804,9 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
             if (accessControlDialog.remember()) {
                 BrowserEntryConfig config;
                 config.load(entry);
-                config.allow(host);
-                if (!submitHost.isEmpty() && host != submitHost) {
-                    config.allow(submitHost);
+                config.allow(siteHost);
+                if (!formUrlStr.isEmpty() && siteHost != formUrlStr) {
+                    config.allow(formUrlStr);
                 }
                 if (!realm.isEmpty()) {
                     config.setRealm(realm);
@@ -871,7 +865,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
 }
 
 BrowserService::Access
-BrowserService::checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm)
+BrowserService::checkAccess(const Entry* entry, const QString& siteHost, const QString& formHost, const QString& realm)
 {
     if (entry->isExpired()) {
         return browserSettings()->allowExpiredCredentials() ? Allowed : Denied;
@@ -881,10 +875,10 @@ BrowserService::checkAccess(const Entry* entry, const QString& host, const QStri
     if (!config.load(entry)) {
         return Unknown;
     }
-    if ((config.isAllowed(host)) && (submitHost.isEmpty() || config.isAllowed(submitHost))) {
+    if ((config.isAllowed(siteHost)) && (formHost.isEmpty() || config.isAllowed(formHost))) {
         return Allowed;
     }
-    if ((config.isDenied(host)) || (!submitHost.isEmpty() && config.isDenied(submitHost))) {
+    if ((config.isDenied(siteHost)) || (!formHost.isEmpty() && config.isDenied(formHost))) {
         return Denied;
     }
     if (!realm.isEmpty() && config.realm() != realm) {
@@ -919,66 +913,91 @@ Group* BrowserService::getDefaultEntryGroup(const QSharedPointer<Database>& sele
     return group;
 }
 
-int BrowserService::sortPriority(const Entry* entry,
-                                 const QString& host,
-                                 const QString& submitUrl,
-                                 const QString& baseSubmitUrl,
-                                 const QString& fullUrl) const
+// Make a list of priorities and return the max value
+int BrowserService::sortPriority(const QStringList& urls, const QString& siteUrlStr, const QString& formUrlStr)
 {
-    QUrl url(entry->url());
-    if (url.scheme().isEmpty()) {
-        url.setScheme("https");
-    }
+    QList<int> priorityList;
+    const auto siteHost = QUrl(siteUrlStr).host();
+    const auto baseFormUrl =
+        QUrl(formUrlStr)
+            .toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
 
-    // Add the empty path to the URL if it's missing
-    if (url.path().isEmpty() && !url.hasFragment() && !url.hasQuery()) {
-        url.setPath("/");
-    }
+    auto getPriority = [&](const QString& givenUrl) {
+        QUrl url(givenUrl);
+        if (url.scheme().isEmpty()) {
+            url.setScheme("https");
+        }
 
-    const QString entryURL = url.toString(QUrl::StripTrailingSlash);
-    const QString baseEntryURL =
-        url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
+        // Add the empty path to the URL if it's missing.
+        // URL's from the extension always have a path set, entry URL's can be without.
+        if (url.path().isEmpty() && !url.hasFragment() && !url.hasQuery()) {
+            url.setPath("/");
+        }
 
-    if (!url.host().contains(".") && url.host() != "localhost") {
+        const auto entryUrl = url.toString(QUrl::StripTrailingSlash);
+        const auto baseEntryUrl =
+            url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
+
+        if (!url.host().contains(".") && url.host() != "localhost") {
+            return 0;
+        }
+
+        if (siteUrlStr == entryUrl) {
+            return 100;
+        }
+
+        if (formUrlStr == entryUrl) {
+            return 95;
+        }
+
+        if (formUrlStr.startsWith(entryUrl) && entryUrl != siteHost && baseFormUrl != entryUrl) {
+            return 90;
+        }
+
+        if (formUrlStr.startsWith(baseEntryUrl) && entryUrl != siteHost && baseFormUrl != baseEntryUrl) {
+            return 80;
+        }
+
+        if (entryUrl == siteHost) {
+            return 70;
+        }
+
+        if (entryUrl == baseFormUrl) {
+            return 60;
+        }
+
+        if (entryUrl.startsWith(formUrlStr)) {
+            return 50;
+        }
+
+        if (entryUrl.startsWith(baseFormUrl) && baseFormUrl != siteHost) {
+            return 40;
+        }
+
+        if (formUrlStr.startsWith(entryUrl)) {
+            return 30;
+        }
+
+        if (formUrlStr.startsWith(baseEntryUrl)) {
+            return 20;
+        }
+
+        if (entryUrl.startsWith(siteHost)) {
+            return 10;
+        }
+
+        if (siteHost.startsWith(entryUrl)) {
+            return 5;
+        }
+
         return 0;
+    };
+
+    for (const auto& entryUrl : urls) {
+        priorityList << getPriority(entryUrl);
     }
-    if (fullUrl == entryURL) {
-        return 100;
-    }
-    if (submitUrl == entryURL) {
-        return 95;
-    }
-    if (submitUrl.startsWith(entryURL) && entryURL != host && baseSubmitUrl != entryURL) {
-        return 90;
-    }
-    if (submitUrl.startsWith(baseEntryURL) && entryURL != host && baseSubmitUrl != baseEntryURL) {
-        return 80;
-    }
-    if (entryURL == host) {
-        return 70;
-    }
-    if (entryURL == baseSubmitUrl) {
-        return 60;
-    }
-    if (entryURL.startsWith(submitUrl)) {
-        return 50;
-    }
-    if (entryURL.startsWith(baseSubmitUrl) && baseSubmitUrl != host) {
-        return 40;
-    }
-    if (submitUrl.startsWith(entryURL)) {
-        return 30;
-    }
-    if (submitUrl.startsWith(baseEntryURL)) {
-        return 20;
-    }
-    if (entryURL.startsWith(host)) {
-        return 10;
-    }
-    if (host.startsWith(entryURL)) {
-        return 5;
-    }
-    return 0;
+
+    return *std::max_element(priorityList.begin(), priorityList.end());
 }
 
 bool BrowserService::schemeFound(const QString& url)
@@ -1004,7 +1023,7 @@ bool BrowserService::removeFirstDomain(QString& hostname)
     return false;
 }
 
-bool BrowserService::handleURL(const QString& entryUrl, const QString& url, const QString& submitUrl)
+bool BrowserService::handleURL(const QString& entryUrl, const QString& siteUrlStr, const QString& formUrlStr)
 {
     if (entryUrl.isEmpty()) {
         return false;
@@ -1022,8 +1041,8 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& url, cons
     }
 
     // Make a direct compare if a local file is used
-    if (url.contains("file://")) {
-        return entryUrl == submitUrl;
+    if (siteUrlStr.contains("file://")) {
+        return entryUrl == formUrlStr;
     }
 
     // URL host validation fails
@@ -1032,7 +1051,7 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& url, cons
     }
 
     // Match port, if used
-    QUrl siteQUrl(url);
+    QUrl siteQUrl(siteUrlStr);
     if (entryQUrl.port() > 0 && entryQUrl.port() != siteQUrl.port()) {
         return false;
     }
@@ -1056,17 +1075,7 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& url, cons
 
     // Match the subdomains with the limited wildcard
     if (siteQUrl.host().endsWith(entryQUrl.host())) {
-        if (!browserSettings()->bestMatchOnly()) {
-            return true;
-        }
-
-        // Match the exact subdomain and path, or start of the path when entry's path is longer than plain "/"
-        if (siteQUrl.host() == entryQUrl.host()) {
-            if (siteQUrl.path() == entryQUrl.path()
-                || (entryQUrl.path().size() > 1 && siteQUrl.path().startsWith(entryQUrl.path()))) {
-                return true;
-            }
-        }
+        return true;
     }
 
     return false;
@@ -1210,6 +1219,21 @@ bool BrowserService::checkLegacySettings(QSharedPointer<Database> db)
                             checkbox);
 
     return dialogResult == MessageBox::Yes;
+}
+
+QStringList BrowserService::getEntryURLs(const Entry* entry)
+{
+    QStringList urlList;
+    urlList << entry->url();
+
+    // Handle additional URL's
+    for (const auto& key : entry->attributes()->keys()) {
+        if (key.startsWith(ADDITIONAL_URL)) {
+            urlList << entry->attributes()->value(key);
+        }
+    }
+
+    return urlList;
 }
 
 void BrowserService::hideWindow() const
