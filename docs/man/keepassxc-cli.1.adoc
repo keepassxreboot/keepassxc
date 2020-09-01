@@ -15,9 +15,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 = keepassxc-cli(1)
-:docdate: 2020-07-10
+:docdate: 2020-08-31
 :doctype: manpage
-:revnumber: 2.6.0
 :mansource: KeePassXC {revnumber}
 :manmanual: General Commands Manual
 
@@ -292,11 +291,11 @@ The same password generation options as documented for the generate command can 
   Include characters from every selected group.
   [Default: Disabled]
 
-include::section-notes.adoc[]
+include::includes/section-notes.adoc[]
 
 == AUTHOR
 This manual page was originally written by Manolis Agkopian <m.agkopian@gmail.com>.
 
-include::section-reporting-bugs.adoc[]
+include::includes/section-reporting-bugs.adoc[]
 
-include::section-copyright.adoc[]
+include::includes/section-copyright.adoc[]

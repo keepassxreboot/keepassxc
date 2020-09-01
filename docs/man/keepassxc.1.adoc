@@ -15,9 +15,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 = keepassxc(1)
-:docdate: 2020-07-10
+:docdate: 2020-08-31
 :doctype: manpage
-:revnumber: 2.6.0
 :mansource: KeePassXC {revnumber}
 :manmanual: General Commands Manual
 
@@ -55,11 +54,11 @@ Your wallet works offline and requires no Internet connection.
 *--debug-info*::
   Displays debugging information.
 
-include::section-notes.adoc[]
+include::includes/section-notes.adoc[]
 
 == AUTHOR
 This manual page was originally written by Janek Bevendorff <janek@jbev.net>.
 
-include::section-reporting-bugs.adoc[]
+include::includes/section-reporting-bugs.adoc[]
 
-include::section-copyright.adoc[]
+include::includes/section-copyright.adoc[]

@@ -51,11 +51,11 @@ install(FILES
 # Build Man Pages on Linux and macOS
 if(APPLE OR UNIX)
     add_custom_command(OUTPUT keepassxc.1
-        COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -b manpage ${DOC_DIR}/man/keepassxc.1.adoc
+        COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -b manpage -a revnumber=${KEEPASSXC_VERSION} ${DOC_DIR}/man/keepassxc.1.adoc
         DEPENDS ${DOC_DIR}/man/keepassxc.1.adoc
         VERBATIM)
     add_custom_command(OUTPUT keepassxc-cli.1
-        COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -b manpage ${DOC_DIR}/man/keepassxc-cli.1.adoc
+        COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -b manpage -a revnumber=${KEEPASSXC_VERSION} ${DOC_DIR}/man/keepassxc-cli.1.adoc
         DEPENDS ${DOC_DIR}/man/keepassxc-cli.1.adoc
         VERBATIM)
     add_custom_target(manpages ALL DEPENDS keepassxc.1 keepassxc-cli.1)
