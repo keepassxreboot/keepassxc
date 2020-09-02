@@ -17,6 +17,7 @@
 
 #include "EntryAttachments.h"
 
+#include "config-keepassx.h"
 #include "core/Global.h"
 #include "crypto/Random.h"
 
@@ -218,9 +219,13 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
         const QByteArray attachmentData = value(key);
         auto ext = key.contains(".") ? "." + key.split(".").last() : "";
 
-#ifdef KEEPASSXC_DIST_SNAP
+#if defined(KEEPASSXC_DIST_SNAP)
         const QString tmpFileTemplate =
             QString("%1/XXXXXXXXXXXX%2").arg(QProcessEnvironment::systemEnvironment().value("SNAP_USER_DATA"), ext);
+#elif defined(KEEPASSXC_DIST_FLATPAK)
+        const QString tmpFileTemplate =
+            QString("%1/app/%2/XXXXXX.%3").arg(QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation),
+                    "org.keepassxc.KeePassXC", filename);
 #else
         const QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXXXXXXXX").append(ext));
 #endif
