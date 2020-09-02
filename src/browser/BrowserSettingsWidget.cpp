@@ -158,6 +158,18 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif
+#ifdef KEEPASSXC_DIST_FLATPAK
+    // Guarantees proxy path works with different flatpak installations
+    m_ui->updateBinaryPath->setChecked(true);
+    m_ui->updateBinaryPath->setEnabled(false);
+    // The sandbox makes custom proxy locations very unintuitive
+    m_ui->useCustomProxy->setChecked(false);
+    m_ui->useCustomProxy->setEnabled(false);
+    m_ui->useCustomProxy->setVisible(false);
+    m_ui->customProxyLocation->setVisible(false);
+    // Won't work with xdg portals and executables that must be browser accessible
+    m_ui->customProxyLocationBrowseButton->setVisible(false);
+#endif
 
     const auto customBrowserSet = settings->customBrowserSupport();
     m_ui->customBrowserSupport->setChecked(customBrowserSet);

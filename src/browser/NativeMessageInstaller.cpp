@@ -30,6 +30,7 @@
 #include <QProcessEnvironment>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QRegularExpression>
 
 using namespace BrowserShared;
 
@@ -247,8 +248,10 @@ QString NativeMessageInstaller::getProxyPath() const
     }
 
     QString path;
-#ifdef KEEPASSXC_DIST_APPIMAGE
+#if defined(KEEPASSXC_DIST_APPIMAGE)
     path = QProcessEnvironment::systemEnvironment().value("APPIMAGE");
+#elif defined(KEEPASSXC_DIST_FLATPAK)
+    path = NativeMessageInstaller::constructFlatpakPath();
 #else
     path = QCoreApplication::applicationDirPath() + QStringLiteral("/keepassxc-proxy");
 #ifdef Q_OS_WIN
@@ -258,6 +261,35 @@ QString NativeMessageInstaller::getProxyPath() const
 #endif // #ifdef KEEPASSXC_DIST_APPIMAGE
     return QDir::toNativeSeparators(path);
 }
+
+/** Constructs a host accessible proxy path for use with flatpak
+ *
+ * @return path Path to host accessible wrapper script (org.keepassxc.KeePassXC)
+ */
+
+#ifdef KEEPASSXC_DIST_FLATPAK
+QString NativeMessageInstaller::constructFlatpakPath() const
+{
+    // Find and extract the host flatpak data directory (in /var)
+    QString path;
+    QSettings settings("/.flatpak-info",QSettings::IniFormat);
+    settings.beginGroup("Instance");
+    QString appPath = settings.value("app-path").toString();
+
+    QRegularExpression re("^((?:/[\\.\\w-]*)+)+/app");
+    QRegularExpressionMatch match = re.match(appPath);
+    if (match.hasMatch()) {
+        // Construct a proxy path that should work with all flatpak installations
+        path = match.captured(1) + "/exports/bin/" + "org.keepassxc.KeePassXC";
+    } else {
+        // Fallback to the most common and default flatpak installation path
+        path = "/var/lib/flatpak/exports/bin/org.keepassxc.KeePassXC";
+    }
+    settings.endGroup();
+
+    return path;
+}
+#endif
 
 /**
  * Constructs the JSON script file used with native messaging

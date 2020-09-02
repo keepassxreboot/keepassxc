@@ -31,6 +31,9 @@ namespace BrowserShared
         const auto serverName = QStringLiteral("/org.keepassxc.KeePassXC.BrowserServer");
 #if defined(KEEPASSXC_DIST_SNAP)
         return QProcessEnvironment::systemEnvironment().value("SNAP_USER_COMMON") + serverName;
+#elif defined(KEEPASSXC_DIST_FLATPAK)
+        return QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation)
+            + "/app/" + "org.keepassxc.KeePassXC" + serverName;
 #elif defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
         // Use XDG_RUNTIME_DIR instead of /tmp if it's available
         QString path = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
