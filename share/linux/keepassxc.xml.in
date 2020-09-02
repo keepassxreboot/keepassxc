@@ -3,6 +3,6 @@
   <mime-type type="application/x-keepass2">
     <comment>KeePass 2 Database</comment>
     <glob pattern="*.kdbx"/>
-    <icon name="application-x-keepassxc"/>
+    <icon name="@MIME_ICON@"/>
   </mime-type>
 </mime-info>
