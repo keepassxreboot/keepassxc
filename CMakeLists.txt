@@ -17,6 +17,7 @@
 cmake_minimum_required(VERSION 3.3.0)
 
 project(KeePassXC)
+set(ID "org.keepassxc.${PROJECT_NAME}")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
@@ -158,11 +159,13 @@ message(STATUS "Setting up build for KeePassXC v${KEEPASSXC_VERSION}\n")
 # Distribution info
 set(KEEPASSXC_DIST ON)
 set(KEEPASSXC_DIST_TYPE "Other" CACHE STRING "KeePassXC Distribution Type")
-set_property(CACHE KEEPASSXC_DIST_TYPE PROPERTY STRINGS Snap AppImage Other)
+set_property(CACHE KEEPASSXC_DIST_TYPE PROPERTY STRINGS Snap AppImage Flatpak Other)
 if(KEEPASSXC_DIST_TYPE STREQUAL "Snap")
     set(KEEPASSXC_DIST_SNAP ON)
 elseif(KEEPASSXC_DIST_TYPE STREQUAL "AppImage")
     set(KEEPASSXC_DIST_APPIMAGE ON)
+elseif(KEEPASSXC_DIST_TYPE STREQUAL "Flatpak")
+    set(KEEPASSXC_DIST_FLATPAK ON)
 elseif(KEEPASSXC_DIST_TYPE STREQUAL "Other")
     unset(KEEPASSXC_DIST)
 endif()
