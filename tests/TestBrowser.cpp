@@ -437,6 +437,7 @@ void TestBrowser::testValidURLs()
     urls["http:/example.com"] = false;
     urls["cmd://C:/Toolchains/msys2/usr/bin/mintty \"ssh jon@192.168.0.1:22\""] = true;
     urls["file:///Users/testUser/Code/test.html"] = true;
+    urls["{REF:A@I:46C9B1FFBD4ABC4BBB260C6190BAD20C} "] = true;
 
     QHashIterator<QString, bool> i(urls);
     while (i.hasNext()) {
