@@ -40,12 +40,20 @@
  *
  * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure
  */
+
+const QCommandLineOption Import::SetKeyFileOption =
+    QCommandLineOption(QStringList() << "k"
+                                     << "set-key-file",
+                       QObject::tr("Set the key file for the database."),
+                       QObject::tr("path"));
+
 Import::Import()
 {
     name = QString("import");
     description = QObject::tr("Import the contents of an XML database.");
     positionalArguments.append({QString("xml"), QObject::tr("Path of the XML database export."), QString("")});
     positionalArguments.append({QString("database"), QObject::tr("Path of the new database."), QString("")});
+    options.append(Import::SetKeyFileOption);
 }
 
 int Import::execute(const QStringList& arguments)
