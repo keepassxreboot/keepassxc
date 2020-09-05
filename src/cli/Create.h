@@ -20,8 +20,6 @@
 
 #include "Command.h"
 
-#include "keys/FileKey.h"
-
 class Create : public Command
 {
 public:
@@ -31,9 +29,6 @@ public:
     static const QCommandLineOption SetKeyFileOption;
     static const QCommandLineOption SetPasswordOption;
     static const QCommandLineOption DecryptionTimeOption;
-
-private:
-    bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey);
 };
 
 #endif // KEEPASSXC_CREATE_H

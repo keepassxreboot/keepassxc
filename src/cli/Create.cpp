@@ -119,7 +119,7 @@ int Create::execute(const QStringList& arguments)
     if (parser->isSet(Create::SetKeyFileOption)) {
         QSharedPointer<FileKey> fileKey;
 
-        if (!loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
+        if (!Utils::loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
             err << QObject::tr("Loading the key file failed") << endl;
             return EXIT_FAILURE;
         }
@@ -163,38 +163,4 @@ int Create::execute(const QStringList& arguments)
     out << QObject::tr("Successfully created new database.") << endl;
     currentDatabase = db;
     return EXIT_SUCCESS;
-}
-
-/**
- * Load a key file from disk. When the path specified does not exist a
- * new file will be generated. No folders will be generated so the parent
- * folder of the specified file nees to exist
- *
- * If the key file cannot be loaded or created the function will fail.
- *
- * @param path Path to the key file to be loaded
- * @param fileKey Resulting fileKey
- * @return true if the key file was loaded succesfully
- */
-bool Create::loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey)
-{
-    auto& err = Utils::STDERR;
-    QString error;
-    fileKey = QSharedPointer<FileKey>(new FileKey());
-
-    if (!QFileInfo::exists(path)) {
-        fileKey->create(path, &error);
-
-        if (!error.isEmpty()) {
-            err << QObject::tr("Creating KeyFile %1 failed: %2").arg(path, error) << endl;
-            return false;
-        }
-    }
-
-    if (!fileKey->load(path, &error)) {
-        err << QObject::tr("Loading KeyFile %1 failed: %2").arg(path, error) << endl;
-        return false;
-    }
-
-    return true;
 }

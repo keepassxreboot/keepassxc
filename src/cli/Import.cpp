@@ -84,6 +84,19 @@ int Import::execute(const QStringList& arguments)
     }
     key->addKey(passwordKey);
 
+    if (parser->isSet(Import::SetKeyFileOption)) {
+        QSharedPointer<FileKey> fileKey;
+
+        if (!Utils::loadFileKey(parser->value(Import::SetKeyFileOption), fileKey)) {
+            err << QObject::tr("Loading the key file failed") << endl;
+            return EXIT_FAILURE;
+        }
+
+        if (!fileKey.isNull()) {
+            key->addKey(fileKey);
+        }
+    }
+
     if (key->isEmpty()) {
         err << QObject::tr("No key is set. Aborting database creation.") << endl;
         return EXIT_FAILURE;
