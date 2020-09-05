@@ -264,7 +264,7 @@ namespace Tools
     bool checkUrlValid(const QString& urlField)
     {
         if (urlField.isEmpty() || urlField.startsWith("cmd://", Qt::CaseInsensitive)
-            || urlField.startsWith("{REF:A", Qt::CaseSensitive)) {
+            || urlField.startsWith("{REF:A", Qt::CaseInsensitive)) {
             return true;
         }
 
