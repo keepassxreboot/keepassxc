@@ -479,6 +479,17 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
         QDir().rmdir(QFileInfo(localConfigFileName).absolutePath());
     }
 
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
+    // Move config from ~/.cache to ~/.local/share equivalent
+    QString oldLocalConfig = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc/keepassxc.ini";
+    if (QFile::exists(oldLocalConfig) && !QFile::exists(localConfigFileName)) {
+        QDir().mkpath(QFileInfo(localConfigFileName).absolutePath());
+        QFile::copy(oldLocalConfig, localConfigFileName);
+        QFile::remove(oldLocalConfig);
+        QDir().rmdir(QFileInfo(oldLocalConfig).absolutePath());
+    }
+#endif
+
     m_settings.reset(new QSettings(configFileName, QSettings::IniFormat));
     if (!localConfigFileName.isEmpty() && configFileName != localConfigFileName) {
         m_localSettings.reset(new QSettings(localConfigFileName, QSettings::IniFormat));
