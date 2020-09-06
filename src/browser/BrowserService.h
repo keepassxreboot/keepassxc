@@ -118,9 +118,10 @@ private:
         Hidden
     };
 
-    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& siteUrlStr, const QString& formUrlStr);
+    QList<Entry*>
+    searchEntries(const QSharedPointer<Database>& db, const QString& siteUrlStr, const QString& formUrlStr);
     QList<Entry*> searchEntries(const QString& siteUrlStr, const QString& formUrlStr, const StringPairList& keyList);
-    QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& formUrlStr, const QString& siteUrlStr);
+    QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& siteUrlStr, const QString& formUrlStr);
     QList<Entry*> confirmEntries(QList<Entry*>& pwEntriesToConfirm,
                                  const QString& siteUrlStr,
                                  const QString& siteHost,

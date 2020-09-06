@@ -142,8 +142,8 @@ void TestBrowser::testSortPriority()
 
 void TestBrowser::testSortPriority_data()
 {
-    QString siteUrl = "https://github.com/login";
-    QString formUrl = "https://github.com/session";
+    const QString siteUrl = "https://github.com/login";
+    const QString formUrl = "https://github.com/session";
 
     QTest::addColumn<QString>("entryUrl");
     QTest::addColumn<QString>("siteUrl");
@@ -151,12 +151,28 @@ void TestBrowser::testSortPriority_data()
     QTest::addColumn<int>("expectedScore");
 
     QTest::newRow("Exact Match") << siteUrl << siteUrl << siteUrl << 100;
-    QTest::newRow("Different Form Url") << siteUrl << siteUrl << formUrl << 100;
-    QTest::newRow("Path Mismatch") << "https://github.com/" << siteUrl << formUrl << 90;
-    QTest::newRow("No Schema") << "github.com" << siteUrl << formUrl << 0;
-    QTest::newRow("No Schema w/path") << "github.com/login" << siteUrl << formUrl << 0;
-    QTest::newRow("Schema Mismatch") << "http://github.com" << siteUrl << formUrl << 0;
-    QTest::newRow("Schema Mismatch w/path") << "http://github.com/login" << siteUrl << formUrl << 0;
+    QTest::newRow("Exact Match (site)") << siteUrl << siteUrl << formUrl << 100;
+    QTest::newRow("Exact Match (form)") << siteUrl << "https://github.net" << siteUrl << 100;
+    QTest::newRow("Exact Match No Trailing Slash") << "https://github.com"
+                                                   << "https://github.com/" << formUrl << 100;
+    QTest::newRow("Exact Match No Scheme") << "github.com/login" << siteUrl << formUrl << 100;
+    QTest::newRow("Exact Match with Query") << "https://github.com/login?test=test#fragment"
+                                            << "https://github.com/login?test=test" << formUrl << 100;
+
+    QTest::newRow("Site Query Mismatch") << siteUrl << siteUrl + "?test=test" << formUrl << 90;
+
+    QTest::newRow("Path Mismatch (site)") << "https://github.com/" << siteUrl << formUrl << 80;
+    QTest::newRow("Path Mismatch (site) No Scheme") << "github.com" << siteUrl << formUrl << 80;
+    QTest::newRow("Path Mismatch (form)") << "https://github.com/"
+                                          << "https://github.net" << formUrl << 70;
+
+    QTest::newRow("Subdomain Mismatch (site)") << siteUrl << "https://sub.github.com/"
+                                               << "https://github.net/" << 60;
+    QTest::newRow("Subdomain Mismatch (form)") << siteUrl << "https://github.net/"
+                                               << "https://sub.github.com/" << 50;
+
+    QTest::newRow("Scheme Mismatch") << "http://github.com" << siteUrl << formUrl << 0;
+    QTest::newRow("Scheme Mismatch w/path") << "http://github.com/login" << siteUrl << formUrl << 0;
     QTest::newRow("Invalid URL") << "http://github" << siteUrl << formUrl << 0;
 }
 
@@ -358,32 +374,32 @@ void TestBrowser::testSortEntries()
                         "http://github.com",
                         "http://github.com/login",
                         "github.com",
-                        "github.com/login",
+                        "github.com/login?test=test",
                         "https://github", // Invalid URL
                         "github.com"};
 
     auto entries = createEntries(urls, root);
 
     browserSettings()->setBestMatchOnly(false);
-    auto result = m_browserService->sortEntries(
-        entries, "https://github.com/session", "https://github.com"); // entries, submitUrl, fullUrl
+    browserSettings()->setSortByUsername(true);
+    auto result = m_browserService->sortEntries(entries, "https://github.com/login", "https://github.com/session");
     QCOMPARE(result.size(), 10);
-    QCOMPARE(result[0]->username(), QString("User 2"));
-    QCOMPARE(result[0]->url(), QString("https://github.com/"));
-    QCOMPARE(result[1]->username(), QString("User 0"));
-    QCOMPARE(result[1]->url(), QString("https://github.com/login_page"));
-    QCOMPARE(result[2]->username(), QString("User 1"));
-    QCOMPARE(result[2]->url(), QString("https://github.com/login"));
-    QCOMPARE(result[3]->username(), QString("User 3"));
-    QCOMPARE(result[3]->url(), QString("github.com/login"));
+    QCOMPARE(result[0]->username(), QString("User 1"));
+    QCOMPARE(result[0]->url(), urls[1]);
+    QCOMPARE(result[1]->username(), QString("User 3"));
+    QCOMPARE(result[1]->url(), urls[3]);
+    QCOMPARE(result[2]->username(), QString("User 7"));
+    QCOMPARE(result[2]->url(), urls[7]);
+    QCOMPARE(result[3]->username(), QString("User 0"));
+    QCOMPARE(result[3]->url(), urls[0]);
 
     // Test with a perfect match. That should be first in the list.
-    result = m_browserService->sortEntries(entries, "https://github.com/session", "https://github.com/login_page");
+    result = m_browserService->sortEntries(entries, "https://github.com/login_page", "https://github.com/session");
     QCOMPARE(result.size(), 10);
     QCOMPARE(result[0]->username(), QString("User 0"));
     QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
-    QCOMPARE(result[1]->username(), QString("User 2"));
-    QCOMPARE(result[1]->url(), QString("https://github.com/"));
+    QCOMPARE(result[1]->username(), QString("User 1"));
+    QCOMPARE(result[1]->url(), QString("https://github.com/login"));
 }
 
 QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const

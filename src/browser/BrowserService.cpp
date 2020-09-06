@@ -438,7 +438,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
     }
 
     // Sort results
-    pwEntries = sortEntries(pwEntries, formUrlStr, siteUrlStr);
+    pwEntries = sortEntries(pwEntries, siteUrlStr, formUrlStr);
 
     // Fill the list
     QJsonArray result;
@@ -728,7 +728,7 @@ void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> db)
 }
 
 QList<Entry*>
-BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& formUrlStr, const QString& siteUrlStr)
+BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& siteUrlStr, const QString& formUrlStr)
 {
     // Build map of prioritized entries
     QMultiMap<int, Entry*> priorities;
@@ -736,27 +736,21 @@ BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& formUrlStr,
         priorities.insert(sortPriority(getEntryURLs(entry), siteUrlStr, formUrlStr), entry);
     }
 
+    auto keys = priorities.uniqueKeys();
+    std::sort(keys.begin(), keys.end(), [](int l, int r) { return l > r; });
+
     QList<Entry*> results;
-    QString field = browserSettings()->sortByTitle() ? "Title" : "UserName";
-    for (int i = 100; i >= 0; i -= 5) {
-        if (priorities.count(i) > 0) {
-            // Sort same priority entries by Title or UserName
-            auto entries = priorities.values(i);
-            std::sort(entries.begin(), entries.end(), [&field](Entry* left, Entry* right) {
-                return (QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field))
-                        < 0)
-                       || ((QString::localeAwareCompare(left->attributes()->value(field),
-                                                        right->attributes()->value(field))
-                            == 0)
-                           && (QString::localeAwareCompare(left->attributes()->value("UserName"),
-                                                           right->attributes()->value("UserName"))
-                               < 0));
-            });
-            results << entries;
-            if (browserSettings()->bestMatchOnly() && !pwEntries.isEmpty()) {
-                // Early out once we find the highest batch of matches
-                break;
-            }
+    auto sortField = browserSettings()->sortByTitle() ? EntryAttributes::TitleKey : EntryAttributes::UserNameKey;
+    for (auto key : keys) {
+        // Sort same priority entries by Title or UserName
+        auto entries = priorities.values(key);
+        std::sort(entries.begin(), entries.end(), [&sortField](Entry* left, Entry* right) {
+            return QString::localeAwareCompare(left->attribute(sortField), right->attribute(sortField));
+        });
+        results << entries;
+        if (browserSettings()->bestMatchOnly() && !results.isEmpty()) {
+            // Early out once we find the highest batch of matches
+            break;
         }
     }
 
@@ -913,18 +907,22 @@ Group* BrowserService::getDefaultEntryGroup(const QSharedPointer<Database>& sele
     return group;
 }
 
-// Make a list of priorities and return the max value
+// Returns the maximum sort priority given a set of match urls and the
+// extension provided site and form url.
 int BrowserService::sortPriority(const QStringList& urls, const QString& siteUrlStr, const QString& formUrlStr)
 {
     QList<int> priorityList;
-    const auto siteHost = QUrl(siteUrlStr).host();
-    const auto baseFormUrl =
-        QUrl(formUrlStr)
-            .toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
+    // NOTE: QUrl::matches is utterly broken in Qt < 5.11, so we work around that
+    // by removing parts of the url that we don't match and direct matching others
+    const auto stdOpts = QUrl::RemoveFragment | QUrl::RemoveUserInfo;
+    const auto siteUrl = QUrl(siteUrlStr).adjusted(stdOpts);
+    const auto formUrl = QUrl(formUrlStr).adjusted(stdOpts);
 
     auto getPriority = [&](const QString& givenUrl) {
-        QUrl url(givenUrl);
-        if (url.scheme().isEmpty()) {
+        auto url = QUrl::fromUserInput(givenUrl).adjusted(stdOpts);
+
+        // Default to https scheme if undefined
+        if (url.scheme().isEmpty() || !givenUrl.contains("://")) {
             url.setScheme("https");
         }
 
@@ -934,62 +932,39 @@ int BrowserService::sortPriority(const QStringList& urls, const QString& siteUrl
             url.setPath("/");
         }
 
-        const auto entryUrl = url.toString(QUrl::StripTrailingSlash);
-        const auto baseEntryUrl =
-            url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
-
-        if (!url.host().contains(".") && url.host() != "localhost") {
+        // Reject invalid urls and hosts, except 'localhost', and scheme mismatch
+        if (!url.isValid() || (!url.host().contains(".") && url.host() != "localhost")
+            || url.scheme() != siteUrl.scheme()) {
             return 0;
         }
 
-        if (siteUrlStr == entryUrl) {
+        // Exact match with site url or form url
+        if (url.matches(siteUrl, QUrl::None) || url.matches(formUrl, QUrl::None)) {
             return 100;
         }
 
-        if (formUrlStr == entryUrl) {
-            return 95;
-        }
-
-        if (formUrlStr.startsWith(entryUrl) && entryUrl != siteHost && baseFormUrl != entryUrl) {
+        // Exact match without the query string
+        if (url.matches(siteUrl, QUrl::RemoveQuery) || url.matches(formUrl, QUrl::RemoveQuery)) {
             return 90;
         }
 
-        if (formUrlStr.startsWith(baseEntryUrl) && entryUrl != siteHost && baseFormUrl != baseEntryUrl) {
+        // Match without path (ie, FQDN match), form url prioritizes lower than site url
+        if (url.host() == siteUrl.host()) {
             return 80;
         }
-
-        if (entryUrl == siteHost) {
+        if (url.host() == formUrl.host()) {
             return 70;
         }
 
-        if (entryUrl == baseFormUrl) {
+        // Site/form url ends with given url (subdomain mismatch)
+        if (siteUrl.host().endsWith(url.host())) {
             return 60;
         }
-
-        if (entryUrl.startsWith(formUrlStr)) {
+        if (formUrl.host().endsWith(url.host())) {
             return 50;
         }
 
-        if (entryUrl.startsWith(baseFormUrl) && baseFormUrl != siteHost) {
-            return 40;
-        }
-
-        if (formUrlStr.startsWith(entryUrl)) {
-            return 30;
-        }
-
-        if (formUrlStr.startsWith(baseEntryUrl)) {
-            return 20;
-        }
-
-        if (entryUrl.startsWith(siteHost)) {
-            return 10;
-        }
-
-        if (siteHost.startsWith(entryUrl)) {
-            return 5;
-        }
-
+        // No valid match found
         return 0;
     };
 
