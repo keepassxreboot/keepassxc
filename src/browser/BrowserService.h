@@ -90,6 +90,7 @@ public:
     static const QString OPTION_SKIP_AUTO_SUBMIT;
     static const QString OPTION_HIDE_ENTRY;
     static const QString OPTION_ONLY_HTTP_AUTH;
+    static const QString OPTION_NOT_HTTP_AUTH;
     static const QString ADDITIONAL_URL;
 
 signals:

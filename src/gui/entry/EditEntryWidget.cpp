@@ -283,6 +283,7 @@ void EditEntryWidget::setupBrowser()
         connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
         connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
         connect(m_browserUi->onlyHttpAuthCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
+        connect(m_browserUi->notHttpAuthCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
         connect(m_browserUi->addURLButton, SIGNAL(clicked()), SLOT(insertURL()));
         connect(m_browserUi->removeURLButton, SIGNAL(clicked()), SLOT(removeCurrentURL()));
         connect(m_browserUi->editURLButton, SIGNAL(clicked()), SLOT(editCurrentURL()));
@@ -310,9 +311,11 @@ void EditEntryWidget::updateBrowser()
     auto skip = m_browserUi->skipAutoSubmitCheckbox->isChecked();
     auto hide = m_browserUi->hideEntryCheckbox->isChecked();
     auto onlyHttpAuth = m_browserUi->onlyHttpAuthCheckbox->isChecked();
+    auto notHttpAuth = m_browserUi->notHttpAuthCheckbox->isChecked();
     m_customData->set(BrowserService::OPTION_SKIP_AUTO_SUBMIT, (skip ? TRUE_STR : FALSE_STR));
     m_customData->set(BrowserService::OPTION_HIDE_ENTRY, (hide ? TRUE_STR : FALSE_STR));
     m_customData->set(BrowserService::OPTION_ONLY_HTTP_AUTH, (onlyHttpAuth ? TRUE_STR : FALSE_STR));
+    m_customData->set(BrowserService::OPTION_NOT_HTTP_AUTH, (notHttpAuth ? TRUE_STR : FALSE_STR));
 }
 
 void EditEntryWidget::insertURL()
@@ -482,6 +485,7 @@ void EditEntryWidget::setupEntryUpdate()
         connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->onlyHttpAuthCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
+        connect(m_browserUi->notHttpAuthCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->addURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->removeURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->editURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
@@ -959,6 +963,13 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
                                                       == TRUE_STR);
     } else {
         m_browserUi->onlyHttpAuthCheckbox->setChecked(false);
+    }
+
+    if (m_customData->contains(BrowserService::OPTION_NOT_HTTP_AUTH)) {
+        m_browserUi->notHttpAuthCheckbox->setChecked(m_customData->value(BrowserService::OPTION_NOT_HTTP_AUTH)
+                                                     == TRUE_STR);
+    } else {
+        m_browserUi->notHttpAuthCheckbox->setChecked(false);
     }
 
     m_browserUi->addURLButton->setEnabled(!m_history);
