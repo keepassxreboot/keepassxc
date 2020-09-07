@@ -29,6 +29,7 @@
 #include "core/Database.h"
 #include "keys/CompositeKey.h"
 #include "keys/Key.h"
+#include "keys/FileKey.h"
 
 /**
  * Create a database file from an XML export of another database.
