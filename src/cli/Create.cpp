@@ -28,8 +28,8 @@
 #include "core/Database.h"
 
 #include "keys/CompositeKey.h"
-#include "keys/Key.h"
 #include "keys/FileKey.h"
+#include "keys/Key.h"
 
 const QCommandLineOption Create::DecryptionTimeOption =
     QCommandLineOption(QStringList() << "t"

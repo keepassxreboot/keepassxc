@@ -365,16 +365,16 @@ namespace Utils
     }
 
     /**
-    * Load a key file from disk. When the path specified does not exist a
-    * new file will be generated. No folders will be generated so the parent
-    * folder of the specified file nees to exist
-    *
-    * If the key file cannot be loaded or created the function will fail.
-    *
-    * @param path Path to the key file to be loaded
-    * @param fileKey Resulting fileKey
-    * @return true if the key file was loaded succesfully
-    */
+     * Load a key file from disk. When the path specified does not exist a
+     * new file will be generated. No folders will be generated so the parent
+     * folder of the specified file nees to exist
+     *
+     * If the key file cannot be loaded or created the function will fail.
+     *
+     * @param path Path to the key file to be loaded
+     * @param fileKey Resulting fileKey
+     * @return true if the key file was loaded succesfully
+     */
     bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey)
     {
         auto& err = Utils::STDERR;
