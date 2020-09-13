@@ -264,7 +264,13 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
     if (m_ui->tabWidget->currentIndex() == Diceware) {
         // Diceware estimates entropy differently
         health = PasswordHealth(m_dicewareGenerator->estimateEntropy());
-        int passphraselength = password.size();
+
+        int passphraselength = 0;
+        for (auto character : password) {
+            if (character.isLetterOrNumber()) {
+                passphraselength += 1;
+            }
+        }
 
         m_ui->charactersInPassphraseLabel->setText(
             tr("Characters in passphrase: %1").arg(passphraselength));
