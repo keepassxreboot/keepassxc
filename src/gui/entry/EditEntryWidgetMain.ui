@@ -1,251 +1,279 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>EditEntryWidgetMain</class>
- <widget class="QWidget" name="EditEntryWidgetMain">
+ <widget class="QScrollArea" name="EditEntryWidgetMain">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
-    <height>420</height>
+    <width>539</width>
+    <height>523</height>
    </rect>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>0</number>
+  <property name="windowTitle">
+   <string>Edit Entry</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::NoFrame</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Plain</enum>
+  </property>
+  <property name="horizontalScrollBarPolicy">
+   <enum>Qt::ScrollBarAlwaysOff</enum>
+  </property>
+  <property name="sizeAdjustPolicy">
+   <enum>QAbstractScrollArea::AdjustToContents</enum>
+  </property>
+  <property name="widgetResizable">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="container">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>539</width>
+     <height>523</height>
+    </rect>
    </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
-   <property name="horizontalSpacing">
-    <number>10</number>
-   </property>
-   <property name="verticalSpacing">
-    <number>8</number>
-   </property>
-   <item row="6" column="1">
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QPlainTextEdit" name="notesEdit">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>1</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="accessibleName">
-        <string>Notes field</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="notesHint">
-       <property name="visible">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>Toggle the checkbox to reveal the notes section.</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignTop</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="1">
-    <widget class="QComboBox" name="usernameComboBox">
-     <property name="accessibleName">
-      <string>Username field</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QCheckBox" name="notesEnabled">
-       <property name="toolTip">
-        <string>Toggle notes visible</string>
-       </property>
-       <property name="accessibleName">
-        <string>Toggle notes visible</string>
-       </property>
-       <property name="text">
-        <string>Notes:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item row="5" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <property name="spacing">
-      <number>8</number>
-     </property>
-     <item>
-      <widget class="QDateTimeEdit" name="expireDatePicker">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="accessibleName">
-        <string>Expiration field</string>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="expirePresets">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string>Expiration Presets</string>
-       </property>
-       <property name="accessibleName">
-        <string>Expiration presets</string>
-       </property>
-       <property name="text">
-        <string>Presets</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="passwordLabel">
-     <property name="text">
-      <string>Password:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="urlLabel">
-     <property name="text">
-      <string>URL:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <property name="spacing">
-      <number>8</number>
-     </property>
-     <item>
-      <widget class="URLEdit" name="urlEdit">
-       <property name="accessibleName">
-        <string>Url field</string>
-       </property>
-       <property name="placeholderText">
-        <string>https://example.com</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="fetchFaviconButton">
-       <property name="toolTip">
-        <string>Download favicon for URL</string>
-       </property>
-       <property name="accessibleName">
-        <string>Download favicon for URL</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="titleLabel">
-     <property name="text">
-      <string>Title:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="titleEdit">
-     <property name="accessibleName">
-      <string>Title field</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="usernameLabel">
-     <property name="text">
-      <string>Username:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="PasswordEdit" name="passwordEdit">
-     <property name="accessibleName">
-      <string>Password field</string>
-     </property>
-     <property name="echoMode">
-      <enum>QLineEdit::Password</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QCheckBox" name="expireCheck">
-       <property name="toolTip">
-        <string>Toggle expiration</string>
-       </property>
-       <property name="accessibleName">
-        <string>Toggle expiration</string>
-       </property>
-       <property name="text">
-        <string>Expires:</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-  </layout>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="horizontalSpacing">
+     <number>10</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>8</number>
+    </property>
+    <item row="6" column="1">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QPlainTextEdit" name="notesEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="accessibleName">
+         <string>Notes field</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="notesHint">
+        <property name="visible">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Toggle the checkbox to reveal the notes section.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignTop</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="usernameComboBox">
+      <property name="accessibleName">
+       <string>Username field</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCheckBox" name="notesEnabled">
+        <property name="toolTip">
+         <string>Toggle notes visible</string>
+        </property>
+        <property name="accessibleName">
+         <string>Toggle notes visible</string>
+        </property>
+        <property name="text">
+         <string>Notes:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="5" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <item>
+       <widget class="QDateTimeEdit" name="expireDatePicker">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="accessibleName">
+         <string>Expiration field</string>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="expirePresets">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Expiration Presets</string>
+        </property>
+        <property name="accessibleName">
+         <string>Expiration presets</string>
+        </property>
+        <property name="text">
+         <string>Presets</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="passwordLabel">
+      <property name="text">
+       <string>Password:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="urlLabel">
+      <property name="text">
+       <string>URL:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <item>
+       <widget class="URLEdit" name="urlEdit">
+        <property name="accessibleName">
+         <string>Url field</string>
+        </property>
+        <property name="placeholderText">
+         <string>https://example.com</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="fetchFaviconButton">
+        <property name="toolTip">
+         <string>Download favicon for URL</string>
+        </property>
+        <property name="accessibleName">
+         <string>Download favicon for URL</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="titleLabel">
+      <property name="text">
+       <string>Title:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="titleEdit">
+      <property name="accessibleName">
+       <string>Title field</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="usernameLabel">
+      <property name="text">
+       <string>Username:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="PasswordEdit" name="passwordEdit">
+      <property name="accessibleName">
+       <string>Password field</string>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="expireCheck">
+        <property name="toolTip">
+         <string>Toggle expiration</string>
+        </property>
+        <property name="accessibleName">
+         <string>Toggle expiration</string>
+        </property>
+        <property name="text">
+         <string>Expires:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>

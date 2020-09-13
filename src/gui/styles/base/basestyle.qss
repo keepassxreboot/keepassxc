@@ -64,3 +64,8 @@ DatabaseWidget #SearchBanner, DatabaseWidget #KeeShareBanner {
     border: 1px solid palette(dark);
     padding: 2px;
 }
+
+QPlainTextEdit, QTextEdit {
+    background-color: palette(base);
+    padding-left: 4px;
+}

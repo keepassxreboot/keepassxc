@@ -76,7 +76,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_historyUi(new Ui::EditEntryWidgetHistory())
     , m_browserUi(new Ui::EditEntryWidgetBrowser())
     , m_customData(new CustomData())
-    , m_mainWidget(new QWidget())
+    , m_mainWidget(new QScrollArea())
     , m_advancedWidget(new QWidget())
     , m_iconsWidget(new EditWidgetIcons())
     , m_autoTypeWidget(new QWidget())
@@ -178,6 +178,9 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
+
+    // HACK: Align username text with other line edits. Qt does not let you do this with an application stylesheet.
+    m_mainUi->usernameComboBox->lineEdit()->setStyleSheet("padding-left: 8px;");
 }
 
 void EditEntryWidget::setupAdvanced()
