@@ -267,8 +267,8 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    const QString url = decrypted.value("url").toString();
-    if (url.isEmpty()) {
+    const QString siteUrl = decrypted.value("url").toString();
+    if (siteUrl.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
     }
 
@@ -281,10 +281,10 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     }
 
     const QString id = decrypted.value("id").toString();
-    const QString submit = decrypted.value("submitUrl").toString();
+    const QString formUrl = decrypted.value("submitUrl").toString();
     const QString auth = decrypted.value("httpAuth").toString();
     const bool httpAuth = auth.compare(TRUE_STR, Qt::CaseSensitive) == 0 ? true : false;
-    const QJsonArray users = browserService()->findMatchingEntries(id, url, submit, "", keyList, httpAuth);
+    const QJsonArray users = browserService()->findMatchingEntries(id, siteUrl, formUrl, "", keyList, httpAuth);
 
     if (users.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
