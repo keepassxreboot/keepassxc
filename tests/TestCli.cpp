@@ -1073,6 +1073,31 @@ void TestCli::testImport()
     QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
     QCOMPARE(m_stderr->readAll(), errorMessage.toUtf8());
 
+    // Testing import with non-existing keyfile
+    databaseFilename = testDir->path() + "/testImport2.kdbx";
+    QString keyfilePath = testDir->path() + "/keyfile.txt";
+    setInput({"a", "a"});
+    execCmd(importCmd, {"import", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
+
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully imported database.\n"));
+
+    db = readDatabase(databaseFilename, "a", keyfilePath);
+    QVERIFY(db);
+
+    // Testing import with existing keyfile
+    databaseFilename = testDir->path() + "/testImport3.kdbx";
+    setInput({"a", "a"});
+    execCmd(importCmd, {"import", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
+
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully imported database.\n"));
+
+    db = readDatabase(databaseFilename, "a", keyfilePath);
+    QVERIFY(db);
+
     // Quiet option
     QScopedPointer<QTemporaryDir> testDirQuiet(new QTemporaryDir());
     QString databaseFilenameQuiet = testDirQuiet->path() + "/testImport2.kdbx";
