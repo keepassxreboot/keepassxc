@@ -45,17 +45,38 @@ namespace
         return entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
                && entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD) == TRUE_STR;
     }
+
+    class ReportSortProxyModel : public QSortFilterProxyModel
+    {
+    public:
+        ReportSortProxyModel(QObject* parent)
+            : QSortFilterProxyModel(parent){};
+        ~ReportSortProxyModel() override = default;
+
+    protected:
+        bool lessThan(const QModelIndex& left, const QModelIndex& right) const override
+        {
+            // Sort count column by user data
+            if (left.column() == 2) {
+                return sourceModel()->data(left, Qt::UserRole).toInt()
+                       < sourceModel()->data(right, Qt::UserRole).toInt();
+            }
+            // Otherwise use default sorting
+            return QSortFilterProxyModel::lessThan(left, right);
+        }
+    };
 } // namespace
 
 ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::ReportsWidgetHibp())
     , m_referencesModel(new QStandardItemModel(this))
-    , m_modelProxy(new QSortFilterProxyModel(this))
+    , m_modelProxy(new ReportSortProxyModel(this))
 {
     m_ui->setupUi(this);
 
     m_modelProxy->setSourceModel(m_referencesModel.data());
+    m_modelProxy->setSortLocaleAware(true);
     m_ui->hibpTableView->setModel(m_modelProxy.data());
     m_ui->hibpTableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -167,6 +188,7 @@ void ReportsWidgetHibp::makeHibpTable()
         }
 
         row[2]->setForeground(red);
+        row[2]->setData(count, Qt::UserRole);
         m_referencesModel->appendRow(row);
 
         // Store entry pointer per table row (used in double click handler)
@@ -198,6 +220,7 @@ void ReportsWidgetHibp::makeHibpTable()
     }
 
     m_ui->hibpTableView->resizeRowsToContents();
+    m_ui->hibpTableView->sortByColumn(2, Qt::DescendingOrder);
 
     m_ui->stackedWidget->setCurrentIndex(1);
 }
