@@ -258,6 +258,22 @@ void PasswordGeneratorWidget::updateButtonsEnabled(const QString& password)
     m_ui->buttonCopy->setEnabled(!password.isEmpty());
 }
 
+int PasswordGeneratorWidget::getPassphraseLength(const QString& password)
+{
+    if (password.isNull() || password.isEmpty()) {
+        return 0;
+    }
+
+    int passphraselength = 0;
+    for (auto character : password) {
+        if (character.isLetterOrNumber()) {
+            passphraselength += 1;
+        }
+    }
+
+    return passphraselength;
+}
+
 void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
     PasswordHealth health(password);
@@ -265,14 +281,7 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
         // Diceware estimates entropy differently
         health = PasswordHealth(m_dicewareGenerator->estimateEntropy());
 
-        int passphraselength = 0;
-        for (auto character : password) {
-            if (character.isLetterOrNumber()) {
-                passphraselength += 1;
-            }
-        }
-
-        m_ui->charactersInPassphraseLabel->setText(tr("%1").arg(passphraselength));
+        m_ui->charactersInPassphraseLabel->setText(QString::number(getPassphraseLength(password)));
     }
 
     m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(health.entropy(), 'f', 2)));

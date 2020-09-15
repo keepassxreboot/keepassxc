@@ -55,6 +55,7 @@ public:
     void setStandaloneMode(bool standalone);
     QString getGeneratedPassword();
     bool isPasswordVisible() const;
+    int getPassphraseLength(const QString& password);
 
     static PasswordGeneratorWidget* popupGenerator(QWidget* parent = nullptr);
 
