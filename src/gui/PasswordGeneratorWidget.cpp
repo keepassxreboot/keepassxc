@@ -272,8 +272,7 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
             }
         }
 
-        m_ui->charactersInPassphraseLabel->setText(
-            tr("Characters in passphrase: %1").arg(passphraselength));
+        m_ui->charactersInPassphraseLabel->setText(tr("%1").arg(passphraselength));
     }
 
     m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(health.entropy(), 'f', 2)));
