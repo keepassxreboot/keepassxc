@@ -297,13 +297,13 @@ MainWindow::MainWindow()
     // Control database tabs
     // Ctrl+Tab is broken on Mac, so use Alt (i.e. the Option key) - https://bugreports.qt.io/browse/QTBUG-8596
     auto dbTabModifier2 = Qt::CTRL;
-#ifdef Q_OS_DARWIN
+#ifdef Q_OS_MACOS
     dbTabModifier2 = Qt::ALT;
 #endif
     new QShortcut(dbTabModifier2 + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
-    new QShortcut(dbTabModifier2 + Qt::Key_PageDown, this, SLOT(selectNextDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectNextDatabaseTab()));
     new QShortcut(dbTabModifier2 + Qt::SHIFT + Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
-    new QShortcut(dbTabModifier2 + Qt::Key_PageUp, this, SLOT(selectPreviousDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectPreviousDatabaseTab()));
 
     // Tab selection by number, Windows uses Ctrl, macOS uses Command,
     // and Linux uses Alt to emulate a browser-like experience
