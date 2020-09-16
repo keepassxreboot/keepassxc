@@ -109,21 +109,12 @@ EntryView::EntryView(QWidget* parent)
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(header(), SIGNAL(customContextMenuRequested(QPoint)), SLOT(showHeaderMenu(QPoint)));
-    // clang-format off
-    connect(header(), SIGNAL(sectionCountChanged(int,int)), SIGNAL(viewStateChanged()));
-    // clang-format on
+    connect(header(), SIGNAL(sectionCountChanged(int, int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionMoved(int, int, int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionResized(int, int, int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), SLOT(sortIndicatorChanged(int, Qt::SortOrder)));
 
     // clang-format off
-    connect(header(), SIGNAL(sectionMoved(int,int,int)), SIGNAL(viewStateChanged()));
-    // clang-format on
-
-    // clang-format off
-    connect(header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(viewStateChanged()));
-    // clang-format on
-
-    // clang-format off
-    connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SLOT(sortIndicatorChanged(int,Qt::SortOrder)));
-    // clang-format on
 }
 
 void EntryView::contextMenuShortcutPressed()
@@ -358,6 +349,8 @@ QByteArray EntryView::viewState() const
  */
 bool EntryView::setViewState(const QByteArray& state)
 {
+    // Reset to unsorted first (https://bugreports.qt.io/browse/QTBUG-86694)
+    header()->setSortIndicator(-1, Qt::AscendingOrder);
     bool status = header()->restoreState(state);
     resetFixedColumns();
     m_columnsNeedRelayout = state.isEmpty();
