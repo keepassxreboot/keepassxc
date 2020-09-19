@@ -25,8 +25,6 @@ class Import : public Command
 public:
     Import();
     int execute(const QStringList& arguments) override;
-
-    static const QCommandLineOption SetKeyFileOption;
 };
 
 #endif // KEEPASSXC_IMPORT_H
