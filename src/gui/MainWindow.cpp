@@ -1269,6 +1269,8 @@ bool MainWindow::saveLastDatabases()
 void MainWindow::updateTrayIcon()
 {
     if (isTrayIconEnabled()) {
+        QApplication::setQuitOnLastWindowClosed(false);
+
         if (!m_trayIcon) {
             m_trayIcon = new QSystemTrayIcon(this);
             auto* menu = new QMenu(this);
@@ -1307,6 +1309,8 @@ void MainWindow::updateTrayIcon()
             m_trayIcon->setIcon(resources()->trayIconLocked());
         }
     } else {
+        QApplication::setQuitOnLastWindowClosed(true);
+
         if (m_trayIcon) {
             m_trayIcon->hide();
             delete m_trayIcon;
