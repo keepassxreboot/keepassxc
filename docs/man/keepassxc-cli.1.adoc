@@ -84,8 +84,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 
 *import* [_options_] <__xml__> <__database__>::
   Imports the contents of an XML exported database to a new created database
-  with a password. If the *-k* option is specified and a valid key file path
-  is provided this key file will be attached to the created database.
+  with a password and/or key file.
   The key file will be created if the file that is referred to does not exist.
   If both the key file and password are empty, no database will be created.
   The new database will be in kdbx 4 format.
@@ -267,6 +266,9 @@ The same password generation options as documented for the generate command can 
 === Import options
 *-k*, *--set-key-file* <__path__>::
   Set the key file for the database.
+
+*-p*, *--set-password*::
+  Set a password for the database.
 
 === List options
 *-R*, *--recursive*::

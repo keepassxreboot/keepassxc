@@ -50,6 +50,7 @@ Import::Import()
     positionalArguments.append({QString("xml"), QObject::tr("Path of the XML database export."), QString("")});
     positionalArguments.append({QString("database"), QObject::tr("Path of the new database."), QString("")});
     options.append(Create::SetKeyFileOption);
+    options.append(Create::SetPasswordOption);
 }
 
 int Import::execute(const QStringList& arguments)
@@ -73,12 +74,14 @@ int Import::execute(const QStringList& arguments)
 
     auto key = QSharedPointer<CompositeKey>::create();
 
-    auto passwordKey = Utils::getConfirmedPassword();
-    if (passwordKey.isNull()) {
-        err << QObject::tr("Failed to set database password.") << endl;
-        return EXIT_FAILURE;
+    if (parser->isSet(Create::SetPasswordOption)) {
+        auto passwordKey = Utils::getConfirmedPassword();
+        if (passwordKey.isNull()) {
+            err << QObject::tr("Failed to set database password.") << endl;
+            return EXIT_FAILURE;
+        }
+        key->addKey(passwordKey);
     }
-    key->addKey(passwordKey);
 
     if (parser->isSet(Create::SetKeyFileOption)) {
         QSharedPointer<FileKey> fileKey;

@@ -1054,7 +1054,7 @@ void TestCli::testImport()
     QString databaseFilename = testDir->path() + "/testImport1.kdbx";
 
     setInput({"a", "a"});
-    execCmd(importCmd, {"import", m_xmlFile->fileName(), databaseFilename});
+    execCmd(importCmd, {"import", m_xmlFile->fileName(), databaseFilename, "-p"});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
@@ -1077,7 +1077,7 @@ void TestCli::testImport()
     databaseFilename = testDir->path() + "/testImport2.kdbx";
     QString keyfilePath = testDir->path() + "/keyfile.txt";
     setInput({"a", "a"});
-    execCmd(importCmd, {"import", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
+    execCmd(importCmd, {"import", "-p", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
@@ -1089,7 +1089,7 @@ void TestCli::testImport()
     // Testing import with existing keyfile
     databaseFilename = testDir->path() + "/testImport3.kdbx";
     setInput({"a", "a"});
-    execCmd(importCmd, {"import", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
+    execCmd(importCmd, {"import", "-p", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
@@ -1103,7 +1103,7 @@ void TestCli::testImport()
     QString databaseFilenameQuiet = testDirQuiet->path() + "/testImport2.kdbx";
 
     setInput({"a", "a"});
-    execCmd(importCmd, {"import", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
+    execCmd(importCmd, {"import", "-p", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
