@@ -99,11 +99,14 @@ private slots:
     void toggleTabbar();
     void emitActiveDatabaseChanged();
     void emitDatabaseLockChanged();
+    void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 private:
     QSharedPointer<Database> execNewDatabaseWizard();
     void updateLastDatabases(const QString& filename);
     bool warnOnExport();
+    void unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent);
+    void displayUnlockDialog();
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbWidgetPendingLock;
