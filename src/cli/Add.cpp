@@ -37,9 +37,9 @@ const QCommandLineOption Add::UrlOption =
     QCommandLineOption(QStringList() << "url", QObject::tr("URL for the entry."), QObject::tr("URL"));
 
 const QCommandLineOption Add::NotesOption = QCommandLineOption(QStringList() << "n"
-                                                                            << "notes",
-                                                              QObject::tr("Notes for the entry."),
-                                                              QObject::tr("Notes"));
+                                                                             << "notes",
+                                                               QObject::tr("Notes for the entry."),
+                                                               QObject::tr("Notes"));
 
 const QCommandLineOption Add::PasswordPromptOption =
     QCommandLineOption(QStringList() << "p"
