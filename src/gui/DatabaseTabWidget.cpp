@@ -51,7 +51,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
     connect(autoType(), SIGNAL(autotypeRejected()), SLOT(relockPendingDatabase()));
     connect(m_databaseOpenDialog.data(), &DatabaseOpenDialog::dialogFinished,
-            this, &DatabaseTabWidget::databaseUnlockDialogFinished);
+            this, &DatabaseTabWidget::handleDatabaseUnlockDialogFinished);
     // clang-format on
 
 #ifdef Q_OS_MACOS
@@ -664,11 +664,43 @@ void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget,
                                                DatabaseOpenDialog::Intent intent,
                                                const QString& filePath)
 {
-    m_databaseOpenDialog->setTargetDatabaseWidget(dbWidget);
+    m_databaseOpenDialog->clearForms();
     m_databaseOpenDialog->setIntent(intent);
-    m_databaseOpenDialog->setFilePath(filePath);
+    m_databaseOpenDialog->setTarget(dbWidget, filePath);
+    displayUnlockDialog();
+}
 
+/**
+ * Unlock a database with an unlock popup dialog.
+ * The dialog allows the user to select any open & locked database.
+ *
+ * @param intent intent for unlocking
+ */
+void DatabaseTabWidget::unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent)
+{
+    m_databaseOpenDialog->clearForms();
+    m_databaseOpenDialog->setIntent(intent);
+
+    // add a tab to the dialog for each open unlocked database
+    for (int i = 0, c = count(); i < c; ++i) {
+        auto* dbWidget = databaseWidgetFromIndex(i);
+        if (dbWidget && dbWidget->isLocked()) {
+            m_databaseOpenDialog->addDatabaseTab(dbWidget);
+        }
+    }
+    // default to the current tab
+    m_databaseOpenDialog->setActiveDatabaseTab(currentDatabaseWidget());
+    displayUnlockDialog();
+}
+
+/**
+ * Display the unlock dialog after it's been initialized.
+ * This is an internal method, it should only be called by unlockDatabaseInDialog or unlockAnyDatabaseInDialog.
+ */
+void DatabaseTabWidget::displayUnlockDialog()
+{
 #ifdef Q_OS_MACOS
+    auto intent = m_databaseOpenDialog->intent();
     if (intent == DatabaseOpenDialog::Intent::AutoType || intent == DatabaseOpenDialog::Intent::Browser) {
         macUtils()->raiseOwnWindow();
         Tools::wait(200);
@@ -678,6 +710,29 @@ void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget,
     m_databaseOpenDialog->show();
     m_databaseOpenDialog->raise();
     m_databaseOpenDialog->activateWindow();
+}
+
+/**
+ * Actions to take when the unlock dialog has completed.
+ */
+void DatabaseTabWidget::handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget)
+{
+    // change the active tab to the database that was just unlocked in the dialog
+    auto intent = m_databaseOpenDialog->intent();
+    if (accepted && intent != DatabaseOpenDialog::Intent::Merge) {
+        int index = indexOf(dbWidget);
+        if (index != -1) {
+            setCurrentIndex(index);
+        }
+    }
+
+    // if unlocked for AutoType, set pending lock flag if needed
+    if (intent == DatabaseOpenDialog::Intent::AutoType && config()->get(Config::Security_RelockAutoType).toBool()) {
+        m_dbWidgetPendingLock = dbWidget;
+    }
+
+    // signal other objects that the dialog finished
+    emit databaseUnlockDialogFinished(accepted, dbWidget);
 }
 
 /**
@@ -737,23 +792,26 @@ void DatabaseTabWidget::emitDatabaseLockChanged()
 
 void DatabaseTabWidget::performGlobalAutoType()
 {
-    QList<QSharedPointer<Database>> unlockedDatabases;
-
-    for (int i = 0, c = count(); i < c; ++i) {
-        auto* dbWidget = databaseWidgetFromIndex(i);
-        if (!dbWidget->isLocked()) {
-            unlockedDatabases.append(dbWidget->database());
+    auto currentDbWidget = currentDatabaseWidget();
+    if (!currentDbWidget) {
+        // no open databases, nothing to do
+        return;
+    } else if (currentDbWidget->isLocked()) {
+        // Current database tab is locked, match behavior of browser unlock - prompt with
+        // the unlock dialog even if there are additional unlocked open database tabs.
+        unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent::AutoType);
+    } else {
+        // current database is unlocked, use it for AutoType along with any other unlocked databases
+        QList<QSharedPointer<Database>> unlockedDatabases;
+        for (int i = 0, c = count(); i < c; ++i) {
+            auto* dbWidget = databaseWidgetFromIndex(i);
+            if (!dbWidget->isLocked()) {
+                unlockedDatabases.append(dbWidget->database());
+            }
         }
-    }
 
-    // TODO: allow for database selection during Auto-Type instead of using the current tab
-    if (!unlockedDatabases.isEmpty()) {
+        Q_ASSERT(!unlockedDatabases.isEmpty());
         autoType()->performGlobalAutoType(unlockedDatabases);
-    } else if (count() > 0) {
-        if (config()->get(Config::Security_RelockAutoType).toBool()) {
-            m_dbWidgetPendingLock = currentDatabaseWidget();
-        }
-        unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::AutoType);
     }
 }
 
@@ -761,6 +819,6 @@ void DatabaseTabWidget::performBrowserUnlock()
 {
     auto dbWidget = currentDatabaseWidget();
     if (dbWidget && dbWidget->isLocked()) {
-        unlockDatabaseInDialog(dbWidget, DatabaseOpenDialog::Intent::Browser);
+        unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent::Browser);
     }
 }

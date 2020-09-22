@@ -151,6 +151,7 @@ signals:
     void previewSplitterSizesChanged();
     void entryViewStateChanged();
     void clearSearch();
+    void requestGlobalAutoType();
 
 public slots:
     bool lock();

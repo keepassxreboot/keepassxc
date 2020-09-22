@@ -186,6 +186,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_opVaultOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
+    connect(this, SIGNAL(requestGlobalAutoType()), parent, SLOT(performGlobalAutoType()));
     // clang-format on
 
     connectDatabaseSignals();
@@ -1109,9 +1110,10 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     }
 
     if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::AutoType) {
-        QList<QSharedPointer<Database>> dbList;
-        dbList.append(m_db);
-        autoType()->performGlobalAutoType(dbList);
+        // Rather than starting AutoType directly for this database, signal the parent DatabaseTabWidget to
+        // restart AutoType now that this database is unlocked, so that other open+unlocked databases
+        // can be included in the search.
+        emit requestGlobalAutoType();
     }
 }
 
