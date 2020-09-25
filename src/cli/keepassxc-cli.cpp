@@ -247,6 +247,10 @@ int main(int argc, char** argv)
     arguments.removeFirst();
     int exitCode = command->execute(arguments);
 
+    if (command->currentDatabase) {
+        command->currentDatabase.reset();
+    }
+
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
     // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries
     __lsan_do_leak_check();
