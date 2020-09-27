@@ -21,20 +21,6 @@
 
 #include <QDir>
 
-namespace
-{
-    QString modFilter(const QString& filter)
-    {
-#ifdef Q_OS_MACOS
-        // Fix macOS bug that causes the file dialog to freeze when a dot is included in the filters
-        // See https://github.com/keepassxreboot/keepassxc/issues/3895#issuecomment-586724167
-        auto mod = filter;
-        return mod.replace("*.", "*");
-#endif
-        return filter;
-    }
-} // namespace
-
 FileDialog* FileDialog::m_instance(nullptr);
 
 QString FileDialog::getOpenFileName(QWidget* parent,
@@ -51,7 +37,7 @@ QString FileDialog::getOpenFileName(QWidget* parent,
     } else {
         const auto& workingDir = dir.isEmpty() ? config()->get(Config::LastDir).toString() : dir;
         const auto result = QDir::toNativeSeparators(
-            QFileDialog::getOpenFileName(parent, caption, workingDir, modFilter(filter), selectedFilter, options));
+            QFileDialog::getOpenFileName(parent, caption, workingDir, filter, selectedFilter, options));
 
 #ifdef Q_OS_MACOS
         // on Mac OS X the focus is lost after closing the native dialog
@@ -77,8 +63,7 @@ QStringList FileDialog::getOpenFileNames(QWidget* parent,
         return results;
     } else {
         const auto& workingDir = dir.isEmpty() ? config()->get(Config::LastDir).toString() : dir;
-        auto results =
-            QFileDialog::getOpenFileNames(parent, caption, workingDir, modFilter(filter), selectedFilter, options);
+        auto results = QFileDialog::getOpenFileNames(parent, caption, workingDir, filter, selectedFilter, options);
 
         for (auto& path : results) {
             path = QDir::toNativeSeparators(path);
@@ -111,7 +96,7 @@ QString FileDialog::getSaveFileName(QWidget* parent,
     } else {
         const auto& workingDir = dir.isEmpty() ? config()->get(Config::LastDir).toString() : dir;
         const auto result = QDir::toNativeSeparators(
-            QFileDialog::getSaveFileName(parent, caption, workingDir, modFilter(filter), selectedFilter, options));
+            QFileDialog::getSaveFileName(parent, caption, workingDir, filter, selectedFilter, options));
 
 #ifdef Q_OS_MACOS
         // on Mac OS X the focus is lost after closing the native dialog
