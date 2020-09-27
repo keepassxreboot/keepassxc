@@ -34,11 +34,17 @@ const QCommandLineOption Analyze::HIBPDatabaseOption = QCommandLineOption(
                 "https://haveibeenpwned.com/Passwords."),
     QObject::tr("FILENAME"));
 
+const QCommandLineOption Analyze::OkonOption =
+    QCommandLineOption("okon",
+                       QObject::tr("Path to okon-cli to search a formatted HIBP file"),
+                       QObject::tr("okon-cli"));
+
 Analyze::Analyze()
 {
     name = QString("analyze");
     description = QObject::tr("Analyze passwords for weaknesses and problems.");
     options.append(Analyze::HIBPDatabaseOption);
+    options.append(Analyze::OkonOption);
 }
 
 int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
@@ -46,20 +52,36 @@ int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPoint
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    QString hibpDatabase = parser->value(Analyze::HIBPDatabaseOption);
-    QFile hibpFile(hibpDatabase);
-    if (!hibpFile.open(QFile::ReadOnly)) {
-        err << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString()) << endl;
+    QList<QPair<const Entry*, int>> findings;
+    QString error;
+
+    auto hibpDatabase = parser->value(Analyze::HIBPDatabaseOption);
+    if (!QFile::exists(hibpDatabase) || hibpDatabase.isEmpty()) {
+        err << QObject::tr("Cannot find HIBP file: %1").arg(hibpDatabase);
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Evaluating database entries against HIBP file, this will take a while...") << endl;
+    auto okon = parser->value(Analyze::OkonOption);
+    if (!okon.isEmpty()) {
+        out << QObject::tr("Evaluating database entries using okon...") << endl;
 
-    QList<QPair<const Entry*, int>> findings;
-    QString error;
-    if (!HibpOffline::report(database, hibpFile, findings, &error)) {
-        err << error << endl;
-        return EXIT_FAILURE;
+        if (!HibpOffline::okonReport(database, okon, hibpDatabase, findings, &error)) {
+            err << error << endl;
+            return EXIT_FAILURE;
+        }
+    } else {
+        QFile hibpFile(hibpDatabase);
+        if (!hibpFile.open(QFile::ReadOnly)) {
+            err << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString()) << endl;
+            return EXIT_FAILURE;
+        }
+
+        out << QObject::tr("Evaluating database entries against HIBP file, this will take a while...") << endl;
+
+        if (!HibpOffline::report(database, hibpFile, findings, &error)) {
+            err << error << endl;
+            return EXIT_FAILURE;
+        }
     }
 
     for (auto& finding : findings) {
@@ -76,5 +98,9 @@ void Analyze::printHibpFinding(const Entry* entry, int count, QTextStream& out)
         path.prepend("/").prepend(g->name());
     }
 
-    out << QObject::tr("Password for '%1' has been leaked %2 time(s)!", "", count).arg(path).arg(count) << endl;
+    if (count > 0) {
+        out << QObject::tr("Password for '%1' has been leaked %2 time(s)!", "", count).arg(path).arg(count) << endl;
+    } else {
+        out << QObject::tr("Password for '%1' has been leaked!", "", count).arg(path) << endl;
+    }
 }
