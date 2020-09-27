@@ -3,6 +3,8 @@ include::.sharedheader[]
 :imagesdir: ../images
 
 // tag::content[]
+NOTE: On macOS please substitute `Ctrl` with `Cmd` (aka `⌘`).
+
 [grid=rows, frame=none, width=75%]
 |===
 |Action                       | Keyboard Shortcut
@@ -31,6 +33,7 @@ include::.sharedheader[]
 |Hide Window                  | Ctrl + Shift + M
 |Select Next Database Tab     | Ctrl + Tab ; Ctrl + PageDn
 |Select Previous Database Tab | Ctrl + Shift + Tab ; Ctrl + PageUp
+|Select the nth database      | Ctrl + n, where n is the number of the database tab
 |Toggle Passwords Hidden      | Ctrl + Shift + C
 |Toggle Usernames Hidden      | Ctrl + Shift + B
 |Focus Groups (edit if focused)  | F1

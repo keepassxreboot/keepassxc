@@ -50,7 +50,6 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     // Entry
     m_ui->entryTotpButton->setIcon(resources()->icon("chronometer"));
     m_ui->entryCloseButton->setIcon(resources()->icon("dialog-close"));
-    m_ui->entryPasswordLabel->setFont(Font::fixedFont());
     m_ui->togglePasswordButton->setIcon(resources()->onOffIcon("password-show"));
     m_ui->toggleEntryNotesButton->setIcon(resources()->onOffIcon("password-show"));
     m_ui->toggleGroupNotesButton->setIcon(resources()->onOffIcon("password-show"));
@@ -194,6 +193,7 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
     if (state) {
         m_ui->entryPasswordLabel->setText(password);
         m_ui->entryPasswordLabel->setCursorPosition(0);
+        m_ui->entryPasswordLabel->setFont(Font::fixedFont());
     } else if (password.isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
         m_ui->entryPasswordLabel->setText("");
     } else {

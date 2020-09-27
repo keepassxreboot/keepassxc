@@ -109,21 +109,12 @@ EntryView::EntryView(QWidget* parent)
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(header(), SIGNAL(customContextMenuRequested(QPoint)), SLOT(showHeaderMenu(QPoint)));
-    // clang-format off
-    connect(header(), SIGNAL(sectionCountChanged(int,int)), SIGNAL(viewStateChanged()));
-    // clang-format on
+    connect(header(), SIGNAL(sectionCountChanged(int, int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionMoved(int, int, int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionResized(int, int, int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), SLOT(sortIndicatorChanged(int, Qt::SortOrder)));
 
     // clang-format off
-    connect(header(), SIGNAL(sectionMoved(int,int,int)), SIGNAL(viewStateChanged()));
-    // clang-format on
-
-    // clang-format off
-    connect(header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(viewStateChanged()));
-    // clang-format on
-
-    // clang-format off
-    connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SLOT(sortIndicatorChanged(int,Qt::SortOrder)));
-    // clang-format on
 }
 
 void EntryView::contextMenuShortcutPressed()
@@ -358,6 +349,8 @@ QByteArray EntryView::viewState() const
  */
 bool EntryView::setViewState(const QByteArray& state)
 {
+    // Reset to unsorted first (https://bugreports.qt.io/browse/QTBUG-86694)
+    header()->setSortIndicator(-1, Qt::AscendingOrder);
     bool status = header()->restoreState(state);
     resetFixedColumns();
     m_columnsNeedRelayout = state.isEmpty();
@@ -379,8 +372,7 @@ void EntryView::showHeaderMenu(const QPoint& position)
             continue;
         }
         int columnIndex = action->data().toInt();
-        bool hidden = header()->isSectionHidden(columnIndex) || (header()->sectionSize(columnIndex) == 0);
-        action->setChecked(!hidden);
+        action->setChecked(!isColumnHidden(columnIndex));
     }
 
     m_headerMenu->popup(mapToGlobal(position));
@@ -408,6 +400,7 @@ void EntryView::toggleColumnVisibility(QAction* action)
         if (header()->sectionSize(columnIndex) == 0) {
             header()->resizeSection(columnIndex, header()->defaultSectionSize());
         }
+        resetFixedColumns();
         return;
     }
     if ((header()->count() - header()->hiddenSectionCount()) > 1) {
@@ -460,11 +453,15 @@ void EntryView::fitColumnsToContents()
  */
 void EntryView::resetFixedColumns()
 {
-    header()->setSectionResizeMode(EntryModel::Paperclip, QHeaderView::Fixed);
-    header()->resizeSection(EntryModel::Paperclip, header()->minimumSectionSize());
+    if (!isColumnHidden(EntryModel::Paperclip)) {
+        header()->setSectionResizeMode(EntryModel::Paperclip, QHeaderView::Fixed);
+        header()->resizeSection(EntryModel::Paperclip, header()->minimumSectionSize());
+    }
 
-    header()->setSectionResizeMode(EntryModel::Totp, QHeaderView::Fixed);
-    header()->resizeSection(EntryModel::Totp, header()->minimumSectionSize());
+    if (!isColumnHidden(EntryModel::Totp)) {
+        header()->setSectionResizeMode(EntryModel::Totp, QHeaderView::Fixed);
+        header()->resizeSection(EntryModel::Totp, header()->minimumSectionSize());
+    }
 }
 
 /**
@@ -532,4 +529,9 @@ void EntryView::showEvent(QShowEvent* event)
         fitColumnsToWindow();
         m_columnsNeedRelayout = false;
     }
+}
+
+bool EntryView::isColumnHidden(int logicalIndex)
+{
+    return header()->isSectionHidden(logicalIndex) || header()->sectionSize(logicalIndex) == 0;
 }

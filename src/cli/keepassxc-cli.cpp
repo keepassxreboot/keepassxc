@@ -158,7 +158,7 @@ void enterInteractiveMode(const QStringList& arguments)
 
         auto cmd = Commands::getCommand(args[0]);
         if (!cmd) {
-            err << QObject::tr("Unknown command %1").arg(args[0]) << "\n";
+            err << QObject::tr("Unknown command %1").arg(args[0]) << endl;
             continue;
         } else if (cmd->name == "quit" || cmd->name == "exit") {
             break;
@@ -167,6 +167,7 @@ void enterInteractiveMode(const QStringList& arguments)
         cmd->currentDatabase = currentDatabase;
         cmd->execute(args);
         currentDatabase = cmd->currentDatabase;
+        cmd->currentDatabase.reset();
     }
 
     if (currentDatabase) {
@@ -245,6 +246,10 @@ int main(int argc, char** argv)
     // Removing the first argument (keepassxc).
     arguments.removeFirst();
     int exitCode = command->execute(arguments);
+
+    if (command->currentDatabase) {
+        command->currentDatabase.reset();
+    }
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
     // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries

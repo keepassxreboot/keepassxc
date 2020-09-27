@@ -62,7 +62,7 @@ private:
 EditGroupWidget::EditGroupWidget(QWidget* parent)
     : EditWidget(parent)
     , m_mainUi(new Ui::EditGroupWidgetMain())
-    , m_editGroupWidgetMain(new QWidget())
+    , m_editGroupWidgetMain(new QScrollArea())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_group(nullptr)

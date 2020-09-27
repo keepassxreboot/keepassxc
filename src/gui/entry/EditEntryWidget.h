@@ -24,6 +24,7 @@
 #include <QModelIndex>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QScrollArea>
 #include <QTimer>
 
 #include "config-keepassx.h"
@@ -174,7 +175,7 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetBrowser> m_browserUi;
     const QScopedPointer<CustomData> m_customData;
 
-    QWidget* const m_mainWidget;
+    QScrollArea* const m_mainWidget;
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
     QWidget* const m_autoTypeWidget;
