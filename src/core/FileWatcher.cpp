@@ -118,13 +118,16 @@ void FileWatcher::checkFileChanged()
     // Prevent reentrance
     m_ignoreFileChange = true;
 
-    auto checksum = AsyncTask::runAndWaitForFuture([this]() -> QByteArray { return calculateChecksum(); });
-    if (checksum != m_fileChecksum) {
-        m_fileChecksum = checksum;
-        m_fileChangeDelayTimer.start(0);
-    }
+    AsyncTask::runThenCallback([=] { return calculateChecksum(); },
+                               this,
+                               [=](QByteArray checksum) {
+                                   if (checksum != m_fileChecksum) {
+                                       m_fileChecksum = checksum;
+                                       m_fileChangeDelayTimer.start(0);
+                                   }
 
-    m_ignoreFileChange = false;
+                                   m_ignoreFileChange = false;
+                               });
 }
 
 QByteArray FileWatcher::calculateChecksum()
