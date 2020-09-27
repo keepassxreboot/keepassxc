@@ -16,9 +16,8 @@
 find_program(ASCIIDOCTOR_EXE asciidoctor)
 if(NOT ASCIIDOCTOR_EXE)
     message(FATAL_ERROR "asciidoctor is required to build documentation")
-else()
-    message(STATUS "Using asciidoctor: ${ASCIIDOCTOR_EXE}")
 endif()
+message(STATUS "Using asciidoctor: ${ASCIIDOCTOR_EXE}")
 
 set(DOC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(OUT_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -49,7 +48,7 @@ install(FILES
     DESTINATION ${DATA_INSTALL_DIR}/docs)
 
 # Build Man Pages on Linux and macOS
-if(APPLE OR UNIX)
+if(UNIX)
     add_custom_command(OUTPUT keepassxc.1
         COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -b manpage -a revnumber=${KEEPASSXC_VERSION} ${DOC_DIR}/man/keepassxc.1.adoc
         DEPENDS ${DOC_DIR}/man/keepassxc.1.adoc
