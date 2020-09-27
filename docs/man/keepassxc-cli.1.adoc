@@ -37,7 +37,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
   The same password generation options as documented for the generate command can be used when the *-g* option is set.
 
 *analyze* [_options_] <__database__>::
-  Analyzes passwords in a database for weaknesses.
+  Analyzes passwords in a database for weaknesses using offline HIBP SHA-1 hash lookup.
 
 *clip* [_options_] <__database__> <__entry__> [_timeout_]::
   Copies an attribute or the current TOTP (if the *-t* option is specified) of a database entry to the clipboard.
@@ -198,6 +198,10 @@ The same password generation options as documented for the generate command can 
   Checks if any passwords have been publicly leaked, by comparing against the given list of password SHA-1 hashes, which must be in "Have I Been Pwned" format.
   Such files are available from https://haveibeenpwned.com/Passwords;
   note that they are large, and so this operation typically takes some time (minutes up to an hour or so).
+
+*--okon* <__okon-cli path__>::
+  Use the specified okon-cli program to perform offline breach checks. You can obtain okon-cli from https://github.com/stryku/okon.
+  When using this option, *-H, --hibp* must point to a post-processed okon file (e.g. file.okon).
 
 === Clip options
 *-a*, *--attribute*::

@@ -19,6 +19,7 @@
 
 #include <QCryptographicHash>
 #include <QMultiHash>
+#include <QProcess>
 
 #include "core/Database.h"
 #include "core/Group.h"
@@ -105,5 +106,46 @@ namespace HibpOffline
                 findings.append({entry, count});
             }
         }
+    }
+
+    bool okonReport(QSharedPointer<Database> db,
+                    const QString& okon,
+                    const QString& okonDatabase,
+                    QList<QPair<const Entry*, int>>& findings,
+                    QString* error)
+    {
+        if (!okonDatabase.endsWith(".okon")) {
+            *error = QObject::tr("To use okon you must provide a post-processed file (e.g. file.okon)");
+            return false;
+        }
+
+        QProcess okonProcess;
+
+        for (const auto* entry : db->rootGroup()->entriesRecursive()) {
+            if (!entry->isRecycled()) {
+                const auto sha1 = QCryptographicHash::hash(entry->password().toUtf8(), QCryptographicHash::Sha1);
+                okonProcess.start(okon, {"--path", okonDatabase, "--hash", QString::fromLatin1(sha1.toHex())});
+                if (!okonProcess.waitForStarted()) {
+                    *error = QObject::tr("Could not start okon process: %1").arg(okon);
+                    return false;
+                }
+
+                if (!okonProcess.waitForFinished()) {
+                    *error = QObject::tr("Error: okon process did not finish");
+                    return false;
+                }
+
+                switch (okonProcess.exitCode()) {
+                case 1:
+                    findings.append({entry, -1});
+                    break;
+                case 2:
+                    *error = QObject::tr("Failed to load okon processed database: %1").arg(okonDatabase);
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 } // namespace HibpOffline
