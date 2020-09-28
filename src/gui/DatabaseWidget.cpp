@@ -1458,6 +1458,8 @@ void DatabaseWidget::endSearch()
         m_entryView->displayGroup(currentGroup());
         emit listModeActivated();
         m_entryView->setFirstEntryActive();
+        // Enforce preview view update (prevents stale information if focus group is empty)
+        m_previewView->setEntry(currentSelectedEntry());
     }
 
     m_searchingLabel->setVisible(false);
