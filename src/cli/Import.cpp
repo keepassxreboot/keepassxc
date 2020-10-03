@@ -51,6 +51,7 @@ Import::Import()
     positionalArguments.append({QString("database"), QObject::tr("Path of the new database."), QString("")});
     options.append(Create::SetKeyFileOption);
     options.append(Create::SetPasswordOption);
+    options.append(Create::DecryptionTimeOption);
 }
 
 int Import::execute(const QStringList& arguments)
@@ -70,6 +71,23 @@ int Import::execute(const QStringList& arguments)
     if (QFileInfo::exists(dbPath)) {
         err << QObject::tr("File %1 already exists.").arg(dbPath) << endl;
         return EXIT_FAILURE;
+    }
+
+    // Validate the decryption time before asking for a password.
+    QString decryptionTimeValue = parser->value(Create::DecryptionTimeOption);
+    int decryptionTime = 0;
+    if (decryptionTimeValue.length() != 0) {
+        decryptionTime = decryptionTimeValue.toInt();
+        if (decryptionTime <= 0) {
+            err << QObject::tr("Invalid decryption time %1.").arg(decryptionTimeValue) << endl;
+            return EXIT_FAILURE;
+        }
+        if (decryptionTime < Kdf::MIN_ENCRYPTION_TIME || decryptionTime > Kdf::MAX_ENCRYPTION_TIME) {
+            err << QObject::tr("Target decryption time must be between %1 and %2.")
+                       .arg(QString::number(Kdf::MIN_ENCRYPTION_TIME), QString::number(Kdf::MAX_ENCRYPTION_TIME))
+                << endl;
+            return EXIT_FAILURE;
+        }
     }
 
     auto key = QSharedPointer<CompositeKey>::create();
@@ -103,8 +121,24 @@ int Import::execute(const QStringList& arguments)
 
     QString errorMessage;
     Database db;
-    db.setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
     db.setKey(key);
+
+    if (decryptionTime != 0) {
+        auto kdf = db.kdf();
+        Q_ASSERT(kdf);
+
+        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTimeValue) << endl;
+        int rounds = kdf->benchmark(decryptionTime);
+        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << endl;
+        kdf->setRounds(rounds);
+
+        bool ok = db.changeKdf(kdf);
+
+        if (!ok) {
+            err << QObject::tr("error while setting database key derivation settings.") << endl;
+            return EXIT_FAILURE;
+        }
+    }
 
     if (!db.import(xmlExportPath, &errorMessage)) {
         err << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << endl;
