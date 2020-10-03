@@ -66,6 +66,6 @@ The HTML export file is intended to be human-readable (viewed/printed in a web b
 
 WARNING: Creating a paper backup exposes your passwords to potentially insecure components, like printer drivers on your computer or software inside the printer. Make sure all these components can be trusted.
 
-For more information, check out the https://keepassxc.org/blog/TO_BE_DONE[blog article about paper backups].
+For more information, check out the https://keepassxc.org/blog/2020-10-03-paper-backup/[blog article about paper backups].
 
 // end::content[]
