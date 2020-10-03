@@ -71,9 +71,8 @@ Create::Create()
  *
  * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure
  */
-int Create::execute(const QStringList& arguments)
+int Create::createDataBase(const QSharedPointer<QCommandLineParser>& parser, bool importDatabase)
 {
-    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
     if (parser.isNull()) {
         return EXIT_FAILURE;
     }
@@ -82,8 +81,16 @@ int Create::execute(const QStringList& arguments)
     auto& err = Utils::STDERR;
 
     const QStringList args = parser->positionalArguments();
+    QString databaseFilename;
+    QString xmlExportPath;
 
-    const QString& databaseFilename = args.at(0);
+    if (importDatabase) {
+        xmlExportPath = args.at(0);
+        databaseFilename = args.at(1);
+    } else {
+        databaseFilename = args.at(0);
+    }
+
     if (QFileInfo::exists(databaseFilename)) {
         err << QObject::tr("File %1 already exists.").arg(databaseFilename) << endl;
         return EXIT_FAILURE;
@@ -135,11 +142,11 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    QSharedPointer<Database> db(new Database);
-    db->setKey(key);
+    Database db;
+    db.setKey(key);
 
     if (decryptionTime != 0) {
-        auto kdf = db->kdf();
+        auto kdf = db.kdf();
         Q_ASSERT(kdf);
 
         out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTimeValue) << endl;
@@ -147,21 +154,44 @@ int Create::execute(const QStringList& arguments)
         out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << endl;
         kdf->setRounds(rounds);
 
-        bool ok = db->changeKdf(kdf);
+        bool ok = db.changeKdf(kdf);
 
         if (!ok) {
             err << QObject::tr("error while setting database key derivation settings.") << endl;
             return EXIT_FAILURE;
         }
+    } else {
+        db.setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+    }
+
+    if (importDatabase) {
+        QString errorMessage;
+
+        if (!db.import(xmlExportPath, &errorMessage)) {
+            err << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << endl;
+            return EXIT_FAILURE;
+        }
+
+        if (!db.saveAs(databaseFilename, &errorMessage, true, false)) {
+            err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
+            return EXIT_FAILURE;
+        }
+
+        out << QObject::tr("Successfully imported database.") << endl;
+        return EXIT_SUCCESS;
     }
 
     QString errorMessage;
-    if (!db->saveAs(databaseFilename, &errorMessage, true, false)) {
+    if (!db.saveAs(databaseFilename, &errorMessage, true, false)) {
         err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
     out << QObject::tr("Successfully created new database.") << endl;
-    currentDatabase = db;
     return EXIT_SUCCESS;
+}
+
+int Create::execute(const QStringList& arguments)
+{
+    return Create::createDataBase(getCommandLineParser(arguments), false);
 }
