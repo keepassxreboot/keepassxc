@@ -224,7 +224,7 @@ The same password generation options as documented for the generate command can 
   If a unique matching entry is found it will be copied to the clipboard.
   If multiple entries are found they will be listed to refine the search. (no clip performed)
 
-=== Create options
+=== Create and Import options
 *-k*, *--set-key-file* <__path__>::
   Set the key file for the database.
 
@@ -262,13 +262,6 @@ The same password generation options as documented for the generate command can 
   Format to use when exporting.
   Available choices are xml or csv.
   Defaults to xml.
-
-=== Import options
-*-k*, *--set-key-file* <__path__>::
-  Set the key file for the database.
-
-*-p*, *--set-password*::
-  Set a password for the database.
 
 === List options
 *-R*, *--recursive*::
