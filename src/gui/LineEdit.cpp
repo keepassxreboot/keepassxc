@@ -22,7 +22,7 @@
 #include <QStyle>
 #include <QToolButton>
 
-#include "core/Resources.h"
+#include "gui/IconResources.h"
 
 LineEdit::LineEdit(QWidget* parent)
     : QLineEdit(parent)
@@ -33,7 +33,7 @@ LineEdit::LineEdit(QWidget* parent)
     QString iconNameDirected =
         QString("edit-clear-locationbar-").append((layoutDirection() == Qt::LeftToRight) ? "rtl" : "ltr");
 
-    const auto icon = resources()->icon(iconNameDirected);
+    const auto icon = iconResources()->icon(iconNameDirected);
 
     m_clearButton->setIcon(icon);
     m_clearButton->setCursor(Qt::ArrowCursor);

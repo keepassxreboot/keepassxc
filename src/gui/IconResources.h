@@ -16,35 +16,40 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_RESOURCES_H
-#define KEEPASSX_RESOURCES_H
+#ifndef KEEPASSX_ICONRESOURCES_H
+#define KEEPASSX_ICONRESOURCES_H
 
+#include <QColor>
 #include <QHash>
+#include <QIcon>
 #include <QString>
 
-class Resources
+class IconResources
 {
 public:
-    QString dataPath(const QString& name) const;
-    QString pluginPath(const QString& name) const;
-    QString wordlistPath(const QString& name) const;
+    QIcon applicationIcon();
+    QIcon trayIcon();
+    QIcon trayIconLocked();
+    QIcon trayIconUnlocked();
+    QString trayIconAppearance() const;
+    QIcon icon(const QString& name, bool recolor = true, const QColor& overrideColor = QColor::Invalid);
+    QIcon onOffIcon(const QString& name, bool recolor = true);
 
-    static Resources* instance();
+    static IconResources* instance();
 
 private:
-    Resources();
-    bool trySetResourceDir(const QString& path);
+    IconResources();
 
-    static Resources* m_instance;
+    static IconResources* m_instance;
 
-    QString m_dataPath;
+    QHash<QString, QIcon> m_iconCache;
 
-    Q_DISABLE_COPY(Resources)
+    Q_DISABLE_COPY(IconResources)
 };
 
-inline Resources* resources()
+inline IconResources* iconResources()
 {
-    return Resources::instance();
+    return IconResources::instance();
 }
 
-#endif // KEEPASSX_RESOURCES_H
+#endif // KEEPASSX_ICONRESOURCES_H

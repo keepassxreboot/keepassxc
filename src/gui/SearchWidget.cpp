@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include <QToolButton>
 
 #include "core/Config.h"
-#include "core/Resources.h"
+#include "gui/IconResources.h"
 #include "gui/widgets/PopupHelpWidget.h"
 
 SearchWidget::SearchWidget(QWidget* parent)
@@ -69,13 +69,13 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionLimitGroup->setCheckable(true);
     m_actionLimitGroup->setChecked(config()->get(Config::SearchLimitGroup).toBool());
 
-    m_ui->searchIcon->setIcon(resources()->icon("system-search"));
+    m_ui->searchIcon->setIcon(iconResources()->icon("system-search"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
 
-    m_ui->helpIcon->setIcon(resources()->icon("system-help"));
+    m_ui->helpIcon->setIcon(iconResources()->icon("system-help"));
     m_ui->searchEdit->addAction(m_ui->helpIcon, QLineEdit::TrailingPosition);
 
-    m_ui->clearIcon->setIcon(resources()->icon("edit-clear-locationbar-rtl"));
+    m_ui->clearIcon->setIcon(iconResources()->icon("edit-clear-locationbar-rtl"));
     m_ui->clearIcon->setVisible(false);
     m_ui->searchEdit->addAction(m_ui->clearIcon, QLineEdit::TrailingPosition);
 

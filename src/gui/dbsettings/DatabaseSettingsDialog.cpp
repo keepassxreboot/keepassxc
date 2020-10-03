@@ -35,7 +35,7 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Global.h"
-#include "core/Resources.h"
+#include "gui/IconResources.h"
 #include "touchid/TouchID.h"
 
 class DatabaseSettingsDialog::ExtraPage
@@ -76,8 +76,8 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(save()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
-    m_ui->categoryList->addCategory(tr("General"), Resources::instance()->icon("preferences-other"));
-    m_ui->categoryList->addCategory(tr("Security"), Resources::instance()->icon("security-high"));
+    m_ui->categoryList->addCategory(tr("General"), iconResources()->icon("preferences-other"));
+    m_ui->categoryList->addCategory(tr("Security"), iconResources()->icon("security-high"));
     m_ui->stackedWidget->addWidget(m_generalWidget);
 
     m_ui->stackedWidget->addWidget(m_securityTabWidget);
@@ -100,7 +100,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     connect(m_ui->advancedSettingsToggle, SIGNAL(toggled(bool)), SLOT(toggleAdvancedMode(bool)));
 
 #ifdef WITH_XC_BROWSER
-    m_ui->categoryList->addCategory(tr("Browser Integration"), Resources::instance()->icon("internet-web-browser"));
+    m_ui->categoryList->addCategory(tr("Browser Integration"), iconResources()->icon("internet-web-browser"));
     m_ui->stackedWidget->addWidget(m_browserWidget);
 #endif
 

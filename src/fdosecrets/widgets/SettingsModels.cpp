@@ -24,7 +24,7 @@
 
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
-#include "core/Resources.h"
+#include "gui/IconResources.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 
@@ -130,7 +130,7 @@ namespace FdoSecrets
             case Qt::DisplayRole:
                 return tr("Unlock to show");
             case Qt::DecorationRole:
-                return resources()->icon(QStringLiteral("object-locked"));
+                return iconResources()->icon(QStringLiteral("object-locked"));
             case Qt::FontRole: {
                 QFont font;
                 font.setItalic(true);
@@ -164,7 +164,7 @@ namespace FdoSecrets
             case Qt::DisplayRole:
                 return tr("None");
             case Qt::DecorationRole:
-                return resources()->icon(QStringLiteral("paint-none"));
+                return iconResources()->icon(QStringLiteral("paint-none"));
             default:
                 return {};
             }

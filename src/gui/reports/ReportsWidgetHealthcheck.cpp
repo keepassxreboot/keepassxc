@@ -23,7 +23,7 @@
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/PasswordHealth.h"
-#include "core/Resources.h"
+#include "gui/IconResources.h"
 #include "gui/styles/StateColorPalette.h"
 
 #include <QMenu>
@@ -140,7 +140,7 @@ Health::Health(QSharedPointer<Database> db)
 ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::ReportsWidgetHealthcheck())
-    , m_errorIcon(Resources::instance()->icon("dialog-error"))
+    , m_errorIcon(iconResources()->icon("dialog-error"))
     , m_referencesModel(new QStandardItemModel(this))
     , m_modelProxy(new ReportSortProxyModel(this))
 {
@@ -325,12 +325,12 @@ void ReportsWidgetHealthcheck::customMenuRequested(QPoint pos)
     const auto menu = new QMenu(this);
 
     // Create the "edit entry" menu item
-    const auto edit = new QAction(Resources::instance()->icon("entry-edit"), tr("Edit Entry..."), this);
+    const auto edit = new QAction(iconResources()->icon("entry-edit"), tr("Edit Entry..."), this);
     menu->addAction(edit);
     connect(edit, SIGNAL(triggered()), SLOT(editFromContextmenu()));
 
     // Create the "exclude from reports" menu item
-    const auto knownbad = new QAction(Resources::instance()->icon("reports-exclude"), tr("Exclude from reports"), this);
+    const auto knownbad = new QAction(iconResources()->icon("reports-exclude"), tr("Exclude from reports"), this);
     knownbad->setCheckable(true);
     knownbad->setChecked(m_contextmenuEntry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
                          && m_contextmenuEntry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD) == TRUE_STR);
