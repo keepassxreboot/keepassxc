@@ -297,9 +297,9 @@ endif()
 if(WITH_XC_NETWORKING)
     list(APPEND keepassx_SOURCES
             core/HibpDownloader.cpp
-            core/IconDownloader.cpp
             core/NetworkManager.cpp
             gui/UpdateCheckDialog.cpp
+            gui/IconDownloader.cpp
             gui/IconDownloaderDialog.cpp
             updatecheck/UpdateChecker.cpp)
 endif()
