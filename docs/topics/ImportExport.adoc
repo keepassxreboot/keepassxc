@@ -61,4 +61,11 @@ WARNING: Exporting your database will result in all of your passwords and sensit
 
 .Database export menu
 image::export_database.png[,80%]
+
+The HTML export file is intended to be human-readable (viewed/printed in a web browser) rather than machine-readable (re-imported into another database file). The intention of HTML export is to provide a "paper backup" functionality for those who want to ensure access to their passwords in case of catastrophic failure of IT infrastructure. To create a paper backup, export the database to an HTML file, print the file with your web browser, then delete the file.
+
+WARNING: Creating a paper backup exposes your passwords to potentially insecure components, like printer drivers on your computer or software inside the printer. Make sure all these components can be trusted.
+
+For more information, check out the https://keepassxc.org/blog/2020-10-03-paper-backup/[blog article about paper backups].
+
 // end::content[]
