@@ -19,7 +19,6 @@
 #ifndef KEEPASSX_RESOURCES_H
 #define KEEPASSX_RESOURCES_H
 
-#include <QHash>
 #include <QString>
 
 class Resources

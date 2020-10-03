@@ -19,8 +19,6 @@
 #include "IconResources.h"
 
 #include <QBitmap>
-#include <QDir>
-#include <QLibrary>
 #include <QPainter>
 #include <QStyle>
 
