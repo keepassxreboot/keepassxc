@@ -58,8 +58,6 @@ set(keepassx_SOURCES
         core/PassphraseGenerator.cpp
         core/Resources.cpp
         core/SignalMultiplexer.cpp
-        core/ScreenLockListener.cpp
-        core/ScreenLockListenerPrivate.cpp
         core/TimeDelta.cpp
         core/TimeInfo.cpp
         core/Tools.cpp
@@ -172,6 +170,8 @@ set(keepassx_SOURCES
         gui/reports/ReportsWidgetStatistics.cpp
         gui/reports/ReportsPageStatistics.cpp
         gui/osutils/OSUtilsBase.cpp
+        gui/osutils/ScreenLockListener.cpp
+        gui/osutils/ScreenLockListenerPrivate.cpp
         gui/settings/SettingsWidget.cpp
         gui/widgets/ElidedLabel.cpp
         gui/widgets/PopupHelpWidget.cpp
@@ -195,29 +195,29 @@ set(keepassx_SOURCES
 if(APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            core/ScreenLockListenerMac.cpp
             core/MacPasteboard.cpp
             gui/osutils/macutils/MacUtils.cpp
+            gui/osutils/macutils/ScreenLockListenerMac.cpp
             gui/osutils/macutils/AppKitImpl.mm
             gui/osutils/macutils/AppKit.h)
 endif()
 if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            core/ScreenLockListenerDBus.cpp
             gui/MainWindowAdaptor.cpp
+            gui/osutils/nixutils/ScreenLockListenerDBus.cpp
             gui/osutils/nixutils/NixUtils.cpp)
 endif()
 if(MINGW)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            core/ScreenLockListenerWin.cpp
+            gui/osutils/winutils/ScreenLockListenerWin.cpp
             gui/osutils/winutils/WinUtils.cpp)
 endif()
 if(MINGW OR (UNIX AND NOT APPLE))
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            core/OSEventFilter.cpp)
+            gui/osutils/OSEventFilter.cpp)
 endif()
 
 set(keepassx_SOURCES ${keepassx_SOURCES}

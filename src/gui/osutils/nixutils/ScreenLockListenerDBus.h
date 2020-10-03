@@ -17,7 +17,7 @@
 
 #ifndef SCREENLOCKLISTENERDBUS_H
 #define SCREENLOCKLISTENERDBUS_H
-#include "ScreenLockListenerPrivate.h"
+#include "gui/osutils/ScreenLockListenerPrivate.h"
 #include <QDBusMessage>
 #include <QObject>
 #include <QWidget>
