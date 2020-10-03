@@ -35,7 +35,7 @@
 #include <QtNetwork/QLocalSocket>
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
-#include "core/OSEventFilter.h"
+#include "gui/osutils/OSEventFilter.h"
 #endif
 
 #if defined(Q_OS_UNIX)

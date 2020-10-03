@@ -23,10 +23,10 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
-#include "core/ScreenLockListener.h"
 #include "core/SignalMultiplexer.h"
 #include "gui/Application.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/osutils/ScreenLockListener.h"
 
 namespace Ui
 {

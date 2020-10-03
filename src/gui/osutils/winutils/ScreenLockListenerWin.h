@@ -15,30 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENLOCKLISTENERMAC_H
-#define SCREENLOCKLISTENERMAC_H
+#ifndef SCREENLOCKLISTENERWIN_H
+#define SCREENLOCKLISTENERWIN_H
+#include <QAbstractNativeEventFilter>
 #include <QObject>
 #include <QWidget>
 
-#include <CoreFoundation/CoreFoundation.h>
+#include "gui/osutils/ScreenLockListenerPrivate.h"
 
-#include "ScreenLockListenerPrivate.h"
-
-class ScreenLockListenerMac : public ScreenLockListenerPrivate
+class ScreenLockListenerWin : public ScreenLockListenerPrivate, public QAbstractNativeEventFilter
 {
     Q_OBJECT
-
 public:
-    static ScreenLockListenerMac* instance();
-    static void notificationCenterCallBack(CFNotificationCenterRef center,
-                                           void* observer,
-                                           CFStringRef name,
-                                           const void* object,
-                                           CFDictionaryRef userInfo);
+    explicit ScreenLockListenerWin(QWidget* parent = nullptr);
+    ~ScreenLockListenerWin();
+    bool nativeEventFilter(const QByteArray& eventType, void* message, long*) override;
 
 private:
-    ScreenLockListenerMac(QWidget* parent = nullptr);
-    void onSignalReception();
+    void* m_powerNotificationHandle;
 };
 
-#endif // SCREENLOCKLISTENERMAC_H
+#endif // SCREENLOCKLISTENERWIN_H

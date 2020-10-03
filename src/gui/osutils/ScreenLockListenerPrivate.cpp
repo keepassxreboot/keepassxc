@@ -17,11 +17,11 @@
 
 #include "ScreenLockListenerPrivate.h"
 #if defined(Q_OS_MACOS)
-#include "ScreenLockListenerMac.h"
+#include "macutils/ScreenLockListenerMac.h"
 #elif defined(Q_OS_UNIX)
-#include "ScreenLockListenerDBus.h"
+#include "nixutils/ScreenLockListenerDBus.h"
 #elif defined(Q_OS_WIN)
-#include "ScreenLockListenerWin.h"
+#include "winutils/ScreenLockListenerWin.h"
 #endif
 
 ScreenLockListenerPrivate::ScreenLockListenerPrivate(QWidget* parent)
