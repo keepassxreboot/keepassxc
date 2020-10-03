@@ -19,8 +19,8 @@
 
 #include "core/Database.h"
 #include "core/Group.h"
-#include "gui/IconResources.h"
 #include "gui/DatabaseTabWidget.h"
+#include "gui/IconResources.h"
 #include "gui/MessageWidget.h"
 #include "keeshare/KeeShare.h"
 #include "keeshare/SettingsWidgetKeeShare.h"

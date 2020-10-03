@@ -18,8 +18,8 @@
 #ifndef KEEPASSXC_FDOSECRETSPLUGIN_H
 #define KEEPASSXC_FDOSECRETSPLUGIN_H
 
-#include "gui/IconResources.h"
 #include "gui/ApplicationSettingsWidget.h"
+#include "gui/IconResources.h"
 
 #include <QPointer>
 #include <QScopedPointer>

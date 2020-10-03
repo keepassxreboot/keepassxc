@@ -24,9 +24,9 @@
 
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
-#include "gui/IconResources.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/IconResources.h"
 
 #include <QFileInfo>
 

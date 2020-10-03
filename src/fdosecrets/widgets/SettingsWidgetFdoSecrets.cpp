@@ -23,8 +23,8 @@
 #include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/SettingsModels.h"
 
-#include "gui/IconResources.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/IconResources.h"
 
 #include <QAction>
 #include <QDBusConnection>

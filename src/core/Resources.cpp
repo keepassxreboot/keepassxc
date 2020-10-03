@@ -18,8 +18,8 @@
 
 #include "Resources.h"
 
-#include <QDir>
 #include <QCoreApplication>
+#include <QDir>
 #include <QLibrary>
 
 #include "config-keepassx.h"
