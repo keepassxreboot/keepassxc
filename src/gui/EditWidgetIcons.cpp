@@ -29,7 +29,7 @@
 #include "gui/IconModels.h"
 #include "gui/MessageBox.h"
 #ifdef WITH_XC_NETWORKING
-#include "core/IconDownloader.h"
+#include "gui/IconDownloader.h"
 #endif
 
 IconStruct::IconStruct()
