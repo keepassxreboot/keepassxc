@@ -59,6 +59,8 @@ private:
     QNetworkReply* m_reply;
     QTimer m_timeout;
     int m_redirects;
+
+    friend class TestIconDownloader;
 };
 
 #endif // KEEPASSXC_ICONDOWNLOADER_H

@@ -73,16 +73,30 @@ namespace
 void IconDownloader::setUrl(const QString& entryUrl)
 {
     m_url = entryUrl;
-    QUrl url(m_url);
-    if (!url.isValid()) {
+    QUrl url = QUrl::fromUserInput(m_url);
+    if (!url.isValid() || url.host().isEmpty()) {
         return;
     }
 
     m_redirects = 0;
     m_urlsToTry.clear();
 
-    if (url.scheme().isEmpty()) {
-        url.setUrl(QString("https://%1").arg(url.toString()));
+    // Fall back to https if no scheme is specified
+    // fromUserInput defaults to http. Hence, we need to replace the default scheme should we detect that it has
+    // been added by fromUserInput
+    if (!entryUrl.startsWith(url.scheme())) {
+        url.setScheme("https");
+    } else if (url.scheme() != "https" && url.scheme() != "http") {
+        return;
+    }
+
+    // Remove query string - if any
+    if (url.hasQuery()) {
+        url.setQuery(QString());
+    }
+    // Remove fragment - if any
+    if (url.hasFragment()) {
+        url.setFragment(QString());
     }
 
     QString fullyQualifiedDomain = url.host();
@@ -91,16 +105,15 @@ void IconDownloader::setUrl(const QString& entryUrl)
     // searching for a match with the returned address(es).
     bool hostIsIp = false;
     QList<QHostAddress> hostAddressess = QHostInfo::fromName(fullyQualifiedDomain).addresses();
-    for (const auto& addr : hostAddressess) {
-        if (addr.toString() == fullyQualifiedDomain) {
-            hostIsIp = true;
-        }
-    }
+    hostIsIp =
+        std::any_of(hostAddressess.begin(), hostAddressess.end(), [&fullyQualifiedDomain](const QHostAddress& addr) {
+            return addr.toString() == fullyQualifiedDomain;
+        });
 
     // Determine the second-level domain, if available
     QString secondLevelDomain;
     if (!hostIsIp) {
-        secondLevelDomain = getSecondLevelDomain(m_url);
+        secondLevelDomain = getSecondLevelDomain(url);
     }
 
     // Start with the "fallback" url (if enabled) to try to get the best favicon
@@ -117,11 +130,21 @@ void IconDownloader::setUrl(const QString& entryUrl)
     }
 
     // Add a direct pull of the website's own favicon.ico file
-    m_urlsToTry.append(QUrl(url.scheme() + "://" + fullyQualifiedDomain + "/favicon.ico"));
+    QUrl favicon_url = url;
+    favicon_url.setPath("/favicon.ico");
+    m_urlsToTry.append(favicon_url);
 
     // Also try a direct pull of the second-level domain (if possible)
-    if (!hostIsIp && fullyQualifiedDomain != secondLevelDomain) {
-        m_urlsToTry.append(QUrl(url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
+    if (!hostIsIp && fullyQualifiedDomain != secondLevelDomain && !secondLevelDomain.isEmpty()) {
+        favicon_url.setHost(secondLevelDomain);
+        m_urlsToTry.append(favicon_url);
+        if (!favicon_url.userInfo().isEmpty() || favicon_url.port() != -1) {
+            // Remove additional fields from the URL as a fallback. Keep only host and scheme
+            // Fragment and query have been removed earlier
+            favicon_url.setPort(-1);
+            favicon_url.setUserInfo(QString());
+            m_urlsToTry.append(favicon_url);
+        }
     }
 }
 
