@@ -152,6 +152,8 @@ add_unit_test(NAME testopvaultreader SOURCES TestOpVaultReader.cpp
 if(WITH_XC_NETWORKING)
     add_unit_test(NAME testupdatecheck SOURCES TestUpdateCheck.cpp
             LIBS ${TEST_LIBRARIES})
+
+    add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp LIBS ${TEST_LIBRARIES})
 endif()
 
 if(WITH_XC_AUTOTYPE)
