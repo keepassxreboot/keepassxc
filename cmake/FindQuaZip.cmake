@@ -10,12 +10,12 @@ if(MINGW)
     find_path(QUAZIP_ZLIB_INCLUDE_DIR zlib.h)
 else()
     find_library(QUAZIP_LIBRARIES
-        NAMES quazip5 quazip
+        NAMES quazip5 quazip quazip1-qt5
 	PATHS /usr/lib /usr/lib64 /usr/local/lib
     )
     find_path(QUAZIP_INCLUDE_DIR quazip.h
 	PATHS /usr/include /usr/local/include
-        PATH_SUFFIXES quazip5 quazip
+        PATH_SUFFIXES quazip5 quazip QuaZip-Qt5-1.0/quazip
     )
     find_path(QUAZIP_ZLIB_INCLUDE_DIR zlib.h PATHS /usr/include /usr/local/include)
 endif()
