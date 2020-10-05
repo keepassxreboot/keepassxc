@@ -58,6 +58,84 @@ Create::Create()
     options.append(Create::DecryptionTimeOption);
 }
 
+QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPointer<QCommandLineParser>& parser)
+{
+    if (parser.isNull()) {
+        return {};
+    }
+
+    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& err = Utils::STDERR;
+
+    // Validate the decryption time before asking for a password.
+    QString decryptionTimeValue = parser->value(Create::DecryptionTimeOption);
+    int decryptionTime = 0;
+    if (decryptionTimeValue.length() != 0) {
+        decryptionTime = decryptionTimeValue.toInt();
+        if (decryptionTime <= 0) {
+            err << QObject::tr("Invalid decryption time %1.").arg(decryptionTimeValue) << endl;
+            return {};
+        }
+        if (decryptionTime < Kdf::MIN_ENCRYPTION_TIME || decryptionTime > Kdf::MAX_ENCRYPTION_TIME) {
+            err << QObject::tr("Target decryption time must be between %1 and %2.")
+                       .arg(QString::number(Kdf::MIN_ENCRYPTION_TIME), QString::number(Kdf::MAX_ENCRYPTION_TIME))
+                << endl;
+            return {};
+        }
+    }
+
+    auto key = QSharedPointer<CompositeKey>::create();
+
+    if (parser->isSet(Create::SetPasswordOption)) {
+        auto passwordKey = Utils::getConfirmedPassword();
+        if (passwordKey.isNull()) {
+            err << QObject::tr("Failed to set database password.") << endl;
+            return {};
+        }
+        key->addKey(passwordKey);
+    }
+
+    if (parser->isSet(Create::SetKeyFileOption)) {
+        QSharedPointer<FileKey> fileKey;
+
+        if (!Utils::loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
+            err << QObject::tr("Loading the key file failed") << endl;
+            return {};
+        }
+
+        if (!fileKey.isNull()) {
+            key->addKey(fileKey);
+        }
+    }
+
+    if (key->isEmpty()) {
+        err << QObject::tr("No key is set. Aborting database creation.") << endl;
+        return {};
+    }
+
+    auto db = QSharedPointer<Database>::create();
+    db->setKey(key);
+
+    if (decryptionTime != 0) {
+        auto kdf = db->kdf();
+        Q_ASSERT(kdf);
+
+        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTimeValue) << endl;
+        int rounds = kdf->benchmark(decryptionTime);
+        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << endl;
+        kdf->setRounds(rounds);
+
+        bool ok = db->changeKdf(kdf);
+
+        if (!ok) {
+            err << QObject::tr("error while setting database key derivation settings.") << endl;
+            return {};
+        }
+    }
+
+    return db;
+}
+
 /**
  * Create a database file using the command line. A key file and/or
  * password can be specified to encrypt the password. If none is
@@ -71,8 +149,9 @@ Create::Create()
  *
  * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure
  */
-int Create::createDataBase(const QSharedPointer<QCommandLineParser>& parser, bool importDatabase)
+int Create::execute(const QStringList& arguments)
 {
+    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
     if (parser.isNull()) {
         return EXIT_FAILURE;
     }
@@ -81,117 +160,24 @@ int Create::createDataBase(const QSharedPointer<QCommandLineParser>& parser, boo
     auto& err = Utils::STDERR;
 
     const QStringList args = parser->positionalArguments();
-    QString databaseFilename;
-    QString xmlExportPath;
 
-    if (importDatabase) {
-        xmlExportPath = args.at(0);
-        databaseFilename = args.at(1);
-    } else {
-        databaseFilename = args.at(0);
-    }
-
+    const QString& databaseFilename = args.at(0);
     if (QFileInfo::exists(databaseFilename)) {
         err << QObject::tr("File %1 already exists.").arg(databaseFilename) << endl;
         return EXIT_FAILURE;
     }
 
-    // Validate the decryption time before asking for a password.
-    QString decryptionTimeValue = parser->value(Create::DecryptionTimeOption);
-    int decryptionTime = 0;
-    if (decryptionTimeValue.length() != 0) {
-        decryptionTime = decryptionTimeValue.toInt();
-        if (decryptionTime <= 0) {
-            err << QObject::tr("Invalid decryption time %1.").arg(decryptionTimeValue) << endl;
-            return EXIT_FAILURE;
-        }
-        if (decryptionTime < Kdf::MIN_ENCRYPTION_TIME || decryptionTime > Kdf::MAX_ENCRYPTION_TIME) {
-            err << QObject::tr("Target decryption time must be between %1 and %2.")
-                       .arg(QString::number(Kdf::MIN_ENCRYPTION_TIME), QString::number(Kdf::MAX_ENCRYPTION_TIME))
-                << endl;
-            return EXIT_FAILURE;
-        }
-    }
-
-    auto key = QSharedPointer<CompositeKey>::create();
-
-    if (parser->isSet(Create::SetPasswordOption)) {
-        auto passwordKey = Utils::getConfirmedPassword();
-        if (passwordKey.isNull()) {
-            err << QObject::tr("Failed to set database password.") << endl;
-            return EXIT_FAILURE;
-        }
-        key->addKey(passwordKey);
-    }
-
-    if (parser->isSet(Create::SetKeyFileOption)) {
-        QSharedPointer<FileKey> fileKey;
-
-        if (!Utils::loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
-            err << QObject::tr("Loading the key file failed") << endl;
-            return EXIT_FAILURE;
-        }
-
-        if (!fileKey.isNull()) {
-            key->addKey(fileKey);
-        }
-    }
-
-    if (key->isEmpty()) {
-        err << QObject::tr("No key is set. Aborting database creation.") << endl;
+    QSharedPointer<Database> db = Create::initializeDatabaseFromOptions(parser);
+    if (!db) {
         return EXIT_FAILURE;
     }
 
-    Database db;
-    db.setKey(key);
-
-    if (decryptionTime != 0) {
-        auto kdf = db.kdf();
-        Q_ASSERT(kdf);
-
-        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTimeValue) << endl;
-        int rounds = kdf->benchmark(decryptionTime);
-        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << endl;
-        kdf->setRounds(rounds);
-
-        bool ok = db.changeKdf(kdf);
-
-        if (!ok) {
-            err << QObject::tr("error while setting database key derivation settings.") << endl;
-            return EXIT_FAILURE;
-        }
-    } else {
-        db.setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
-    }
-
-    if (importDatabase) {
-        QString errorMessage;
-
-        if (!db.import(xmlExportPath, &errorMessage)) {
-            err << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << endl;
-            return EXIT_FAILURE;
-        }
-
-        if (!db.saveAs(databaseFilename, &errorMessage, true, false)) {
-            err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
-            return EXIT_FAILURE;
-        }
-
-        out << QObject::tr("Successfully imported database.") << endl;
-        return EXIT_SUCCESS;
-    }
-
     QString errorMessage;
-    if (!db.saveAs(databaseFilename, &errorMessage, true, false)) {
+    if (!db->saveAs(databaseFilename, &errorMessage, true, false)) {
         err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
     out << QObject::tr("Successfully created new database.") << endl;
     return EXIT_SUCCESS;
-}
-
-int Create::execute(const QStringList& arguments)
-{
-    return Create::createDataBase(getCommandLineParser(arguments), false);
 }

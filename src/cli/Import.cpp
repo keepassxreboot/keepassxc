@@ -56,5 +56,39 @@ Import::Import()
 
 int Import::execute(const QStringList& arguments)
 {
-    return Create::createDataBase(getCommandLineParser(arguments), true);
+    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
+    if (parser.isNull()) {
+        return EXIT_FAILURE;
+    }
+
+    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& err = Utils::STDERR;
+
+    const QStringList args = parser->positionalArguments();
+    const QString& xmlExportPath = args.at(0);
+    const QString& dbPath = args.at(1);
+
+    if (QFileInfo::exists(dbPath)) {
+        err << QObject::tr("File %1 already exists.").arg(dbPath) << endl;
+        return EXIT_FAILURE;
+    }
+
+    QSharedPointer<Database> db = Create::initializeDatabaseFromOptions(parser);
+    if (!db) {
+        return EXIT_FAILURE;
+    }
+
+    QString errorMessage;
+    if (!db->import(xmlExportPath, &errorMessage)) {
+        err << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << endl;
+        return EXIT_FAILURE;
+    }
+
+    if (!db->saveAs(dbPath, &errorMessage, true, false)) {
+        err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
+        return EXIT_FAILURE;
+    }
+
+    out << QObject::tr("Successfully imported database.") << endl;
+    return EXIT_SUCCESS;
 }

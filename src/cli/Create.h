@@ -26,7 +26,7 @@ public:
     Create();
     int execute(const QStringList& arguments) override;
 
-    static int createDataBase(const QSharedPointer<QCommandLineParser>& parser, bool importDatabase);
+    static QSharedPointer<Database> initializeDatabaseFromOptions(const QSharedPointer<QCommandLineParser>& parser);
 
     static const QCommandLineOption SetKeyFileOption;
     static const QCommandLineOption SetPasswordOption;
