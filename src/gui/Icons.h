@@ -16,15 +16,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ICONRESOURCES_H
-#define KEEPASSX_ICONRESOURCES_H
+#ifndef KEEPASSX_ICONS_H
+#define KEEPASSX_ICONS_H
 
 #include <QColor>
 #include <QHash>
 #include <QIcon>
 #include <QString>
 
-class IconResources
+class Icons
 {
 public:
     QIcon applicationIcon();
@@ -35,21 +35,21 @@ public:
     QIcon icon(const QString& name, bool recolor = true, const QColor& overrideColor = QColor::Invalid);
     QIcon onOffIcon(const QString& name, bool recolor = true);
 
-    static IconResources* instance();
+    static Icons* instance();
 
 private:
-    IconResources();
+    Icons();
 
-    static IconResources* m_instance;
+    static Icons* m_instance;
 
     QHash<QString, QIcon> m_iconCache;
 
-    Q_DISABLE_COPY(IconResources)
+    Q_DISABLE_COPY(Icons)
 };
 
-inline IconResources* iconResources()
+inline Icons* icons()
 {
-    return IconResources::instance();
+    return Icons::instance();
 }
 
-#endif // KEEPASSX_ICONRESOURCES_H
+#endif // KEEPASSX_ICONS_H

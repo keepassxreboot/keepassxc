@@ -23,13 +23,13 @@
 #include "core/Config.h"
 #include "core/Tools.h"
 #include "gui/Font.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
 
 URLEdit::URLEdit(QWidget* parent)
     : QLineEdit(parent)
 {
-    const QIcon errorIcon = iconResources()->icon("dialog-error");
+    const QIcon errorIcon = icons()->icon("dialog-error");
     m_errorAction = addAction(errorIcon, QLineEdit::TrailingPosition);
     m_errorAction->setVisible(false);
     m_errorAction->setToolTip(tr("Invalid URL"));

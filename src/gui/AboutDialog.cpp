@@ -22,7 +22,7 @@
 #include "config-keepassx.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 
 #include <QClipboard>
 
@@ -210,7 +210,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
     m_ui->nameLabel->setFont(nameLabelFont);
 
-    m_ui->iconLabel->setPixmap(iconResources()->applicationIcon().pixmap(48));
+    m_ui->iconLabel->setPixmap(icons()->applicationIcon().pixmap(48));
 
     QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
     m_ui->debugInfo->setPlainText(debugInfo);

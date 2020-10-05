@@ -29,7 +29,7 @@
 #include "core/PasswordHealth.h"
 #include "core/Resources.h"
 #include "gui/Clipboard.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
@@ -40,17 +40,17 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 
-    m_ui->buttonGenerate->setIcon(iconResources()->icon("refresh"));
+    m_ui->buttonGenerate->setIcon(icons()->icon("refresh"));
     m_ui->buttonGenerate->setToolTip(
         tr("Regenerate password (%1)").arg(m_ui->buttonGenerate->shortcut().toString(QKeySequence::NativeText)));
-    m_ui->buttonCopy->setIcon(iconResources()->icon("clipboard-text"));
+    m_ui->buttonCopy->setIcon(icons()->icon("clipboard-text"));
     m_ui->buttonClose->setShortcut(Qt::Key_Escape);
 
-    m_ui->clearInclude->setIcon(iconResources()->icon("edit-clear-locationbar-rtl"));
+    m_ui->clearInclude->setIcon(icons()->icon("edit-clear-locationbar-rtl"));
     m_ui->editAdditionalChars->addAction(m_ui->clearInclude, QLineEdit::TrailingPosition);
     m_ui->clearInclude->setVisible(false);
 
-    m_ui->clearExclude->setIcon(iconResources()->icon("edit-clear-locationbar-rtl"));
+    m_ui->clearExclude->setIcon(icons()->icon("edit-clear-locationbar-rtl"));
     m_ui->editExcludedChars->addAction(m_ui->clearExclude, QLineEdit::TrailingPosition);
     m_ui->clearExclude->setVisible(false);
 

@@ -20,7 +20,7 @@
 #include "BrowserService.h"
 #include "BrowserSettings.h"
 #include "BrowserSettingsWidget.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 
 QString BrowserSettingsPage::name()
 {
@@ -29,7 +29,7 @@ QString BrowserSettingsPage::name()
 
 QIcon BrowserSettingsPage::icon()
 {
-    return iconResources()->icon("internet-web-browser");
+    return icons()->icon("internet-web-browser");
 }
 
 QWidget* BrowserSettingsPage::createWidget()

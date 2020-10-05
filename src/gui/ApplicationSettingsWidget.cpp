@@ -26,7 +26,7 @@
 #include "core/Config.h"
 #include "core/Global.h"
 #include "core/Translator.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
 
@@ -93,8 +93,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 
     m_secUi->setupUi(m_secWidget);
     m_generalUi->setupUi(m_generalWidget);
-    addPage(tr("General"), iconResources()->icon("preferences-other"), m_generalWidget);
-    addPage(tr("Security"), iconResources()->icon("security-high"), m_secWidget);
+    addPage(tr("General"), icons()->icon("preferences-other"), m_generalWidget);
+    addPage(tr("Security"), icons()->icon("security-high"), m_secWidget);
 
     if (!autoType()->isAvailable()) {
         m_generalUi->generalSettingsTabWidget->removeTab(1);
@@ -254,7 +254,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->trayIconAppearance->addItem(tr("Monochrome (light)"), "monochrome-light");
     m_generalUi->trayIconAppearance->addItem(tr("Monochrome (dark)"), "monochrome-dark");
     m_generalUi->trayIconAppearance->addItem(tr("Colorful"), "colorful");
-    int trayIconIndex = m_generalUi->trayIconAppearance->findData(iconResources()->trayIconAppearance());
+    int trayIconIndex = m_generalUi->trayIconAppearance->findData(icons()->trayIconAppearance());
     if (trayIconIndex > 0) {
         m_generalUi->trayIconAppearance->setCurrentIndex(trayIconIndex);
     }

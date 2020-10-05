@@ -21,7 +21,7 @@
 #include "KMessageWidget.h"
 
 #include "core/Global.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 
 #include <QAction>
 #include <QEvent>
@@ -94,7 +94,7 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     QAction *closeAction = new QAction(q);
     closeAction->setText(KMessageWidget::tr("&Close"));
     closeAction->setToolTip(KMessageWidget::tr("Close message"));
-    closeAction->setIcon(iconResources()->icon("message-close"));
+    closeAction->setIcon(icons()->icon("message-close"));
 
     QObject::connect(closeAction, SIGNAL(triggered(bool)), q, SLOT(animatedHide()));
 

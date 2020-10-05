@@ -20,7 +20,7 @@
 
 #include "core/Config.h"
 #include "gui/Font.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/styles/StateColorPalette.h"
@@ -33,12 +33,12 @@
 PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
 {
-    const QIcon errorIcon = iconResources()->icon("dialog-error");
+    const QIcon errorIcon = icons()->icon("dialog-error");
     m_errorAction = addAction(errorIcon, QLineEdit::TrailingPosition);
     m_errorAction->setVisible(false);
     m_errorAction->setToolTip(tr("Passwords do not match"));
 
-    const QIcon correctIcon = iconResources()->icon("dialog-ok");
+    const QIcon correctIcon = icons()->icon("dialog-ok");
     m_correctAction = addAction(correctIcon, QLineEdit::TrailingPosition);
     m_correctAction->setVisible(false);
     m_correctAction->setToolTip(tr("Passwords match so far"));
@@ -58,7 +58,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
 #endif
 
     m_toggleVisibleAction = new QAction(
-        iconResources()->icon("password-show-off"),
+        icons()->icon("password-show-off"),
         tr("Toggle Password (%1)").arg(QKeySequence(modifier + Qt::Key_H).toString(QKeySequence::NativeText)),
         nullptr);
     m_toggleVisibleAction->setCheckable(true);
@@ -68,7 +68,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     connect(m_toggleVisibleAction, &QAction::triggered, this, &PasswordEdit::setShowPassword);
 
     m_passwordGeneratorAction = new QAction(
-        iconResources()->icon("password-generator"),
+        icons()->icon("password-generator"),
         tr("Generate Password (%1)").arg(QKeySequence(modifier + Qt::Key_G).toString(QKeySequence::NativeText)),
         nullptr);
     m_passwordGeneratorAction->setShortcut(modifier + Qt::Key_G);
@@ -77,7 +77,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     m_passwordGeneratorAction->setVisible(false);
 
     m_capslockAction =
-        new QAction(iconResources()->icon("dialog-warning", true, StateColorPalette().color(StateColorPalette::Error)),
+        new QAction(icons()->icon("dialog-warning", true, StateColorPalette().color(StateColorPalette::Error)),
                     tr("Warning: Caps Lock enabled!"),
                     nullptr);
     addAction(m_capslockAction, QLineEdit::LeadingPosition);
@@ -113,7 +113,7 @@ void PasswordEdit::enablePasswordGenerator()
 void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-    m_toggleVisibleAction->setIcon(iconResources()->icon(show ? "password-show-on" : "password-show-off"));
+    m_toggleVisibleAction->setIcon(icons()->icon(show ? "password-show-on" : "password-show-off"));
     m_toggleVisibleAction->setChecked(show);
 
     if (m_repeatPasswordEdit) {

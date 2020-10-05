@@ -37,7 +37,7 @@
 #include "core/Tools.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
 #include "keys/CompositeKey.h"
@@ -166,8 +166,8 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryAddToAgent);
     m_entryContextMenu->addAction(m_ui->actionEntryRemoveFromAgent);
 
-    m_ui->actionEntryAddToAgent->setIcon(iconResources()->icon("utilities-terminal"));
-    m_ui->actionEntryRemoveFromAgent->setIcon(iconResources()->icon("utilities-terminal"));
+    m_ui->actionEntryAddToAgent->setIcon(icons()->icon("utilities-terminal"));
+    m_ui->actionEntryRemoveFromAgent->setIcon(icons()->icon("utilities-terminal"));
 #endif
 
     m_ui->actionEntryAddToAgent->setVisible(false);
@@ -197,7 +197,7 @@ MainWindow::MainWindow()
     connect(YubiKey::instance(), SIGNAL(challengeCompleted()), SLOT(hideYubiKeyPopup()), Qt::QueuedConnection);
 #endif
 
-    setWindowIcon(iconResources()->applicationIcon());
+    setWindowIcon(icons()->applicationIcon());
     m_ui->globalMessageWidget->hideMessage();
     connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
 
@@ -335,59 +335,59 @@ MainWindow::MainWindow()
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
 
-    m_ui->actionDatabaseNew->setIcon(iconResources()->icon("document-new"));
-    m_ui->actionDatabaseOpen->setIcon(iconResources()->icon("document-open"));
-    m_ui->menuRecentDatabases->setIcon(iconResources()->icon("document-open-recent"));
-    m_ui->actionDatabaseSave->setIcon(iconResources()->icon("document-save"));
-    m_ui->actionDatabaseSaveAs->setIcon(iconResources()->icon("document-save-as"));
-    m_ui->actionDatabaseSaveBackup->setIcon(iconResources()->icon("document-save-copy"));
-    m_ui->actionDatabaseClose->setIcon(iconResources()->icon("document-close"));
-    m_ui->actionReports->setIcon(iconResources()->icon("reports"));
-    m_ui->actionDatabaseSettings->setIcon(iconResources()->icon("document-edit"));
-    m_ui->actionDatabaseSecurity->setIcon(iconResources()->icon("database-change-key"));
-    m_ui->actionLockDatabases->setIcon(iconResources()->icon("database-lock"));
-    m_ui->actionQuit->setIcon(iconResources()->icon("application-exit"));
-    m_ui->actionDatabaseMerge->setIcon(iconResources()->icon("database-merge"));
-    m_ui->menuImport->setIcon(iconResources()->icon("document-import"));
-    m_ui->menuExport->setIcon(iconResources()->icon("document-export"));
+    m_ui->actionDatabaseNew->setIcon(icons()->icon("document-new"));
+    m_ui->actionDatabaseOpen->setIcon(icons()->icon("document-open"));
+    m_ui->menuRecentDatabases->setIcon(icons()->icon("document-open-recent"));
+    m_ui->actionDatabaseSave->setIcon(icons()->icon("document-save"));
+    m_ui->actionDatabaseSaveAs->setIcon(icons()->icon("document-save-as"));
+    m_ui->actionDatabaseSaveBackup->setIcon(icons()->icon("document-save-copy"));
+    m_ui->actionDatabaseClose->setIcon(icons()->icon("document-close"));
+    m_ui->actionReports->setIcon(icons()->icon("reports"));
+    m_ui->actionDatabaseSettings->setIcon(icons()->icon("document-edit"));
+    m_ui->actionDatabaseSecurity->setIcon(icons()->icon("database-change-key"));
+    m_ui->actionLockDatabases->setIcon(icons()->icon("database-lock"));
+    m_ui->actionQuit->setIcon(icons()->icon("application-exit"));
+    m_ui->actionDatabaseMerge->setIcon(icons()->icon("database-merge"));
+    m_ui->menuImport->setIcon(icons()->icon("document-import"));
+    m_ui->menuExport->setIcon(icons()->icon("document-export"));
 
-    m_ui->actionEntryNew->setIcon(iconResources()->icon("entry-new"));
-    m_ui->actionEntryClone->setIcon(iconResources()->icon("entry-clone"));
-    m_ui->actionEntryEdit->setIcon(iconResources()->icon("entry-edit"));
-    m_ui->actionEntryDelete->setIcon(iconResources()->icon("entry-delete"));
-    m_ui->actionEntryAutoType->setIcon(iconResources()->icon("auto-type"));
-    m_ui->menuEntryAutoTypeWithSequence->setIcon(iconResources()->icon("auto-type"));
-    m_ui->actionEntryAutoTypeUsername->setIcon(iconResources()->icon("auto-type"));
-    m_ui->actionEntryAutoTypeUsernameEnter->setIcon(iconResources()->icon("auto-type"));
-    m_ui->actionEntryAutoTypePassword->setIcon(iconResources()->icon("auto-type"));
-    m_ui->actionEntryAutoTypePasswordEnter->setIcon(iconResources()->icon("auto-type"));
-    m_ui->actionEntryMoveUp->setIcon(iconResources()->icon("move-up"));
-    m_ui->actionEntryMoveDown->setIcon(iconResources()->icon("move-down"));
-    m_ui->actionEntryCopyUsername->setIcon(iconResources()->icon("username-copy"));
-    m_ui->actionEntryCopyPassword->setIcon(iconResources()->icon("password-copy"));
-    m_ui->actionEntryCopyURL->setIcon(iconResources()->icon("url-copy"));
-    m_ui->actionEntryDownloadIcon->setIcon(iconResources()->icon("favicon-download"));
-    m_ui->actionGroupSortAsc->setIcon(iconResources()->icon("sort-alphabetical-ascending"));
-    m_ui->actionGroupSortDesc->setIcon(iconResources()->icon("sort-alphabetical-descending"));
+    m_ui->actionEntryNew->setIcon(icons()->icon("entry-new"));
+    m_ui->actionEntryClone->setIcon(icons()->icon("entry-clone"));
+    m_ui->actionEntryEdit->setIcon(icons()->icon("entry-edit"));
+    m_ui->actionEntryDelete->setIcon(icons()->icon("entry-delete"));
+    m_ui->actionEntryAutoType->setIcon(icons()->icon("auto-type"));
+    m_ui->menuEntryAutoTypeWithSequence->setIcon(icons()->icon("auto-type"));
+    m_ui->actionEntryAutoTypeUsername->setIcon(icons()->icon("auto-type"));
+    m_ui->actionEntryAutoTypeUsernameEnter->setIcon(icons()->icon("auto-type"));
+    m_ui->actionEntryAutoTypePassword->setIcon(icons()->icon("auto-type"));
+    m_ui->actionEntryAutoTypePasswordEnter->setIcon(icons()->icon("auto-type"));
+    m_ui->actionEntryMoveUp->setIcon(icons()->icon("move-up"));
+    m_ui->actionEntryMoveDown->setIcon(icons()->icon("move-down"));
+    m_ui->actionEntryCopyUsername->setIcon(icons()->icon("username-copy"));
+    m_ui->actionEntryCopyPassword->setIcon(icons()->icon("password-copy"));
+    m_ui->actionEntryCopyURL->setIcon(icons()->icon("url-copy"));
+    m_ui->actionEntryDownloadIcon->setIcon(icons()->icon("favicon-download"));
+    m_ui->actionGroupSortAsc->setIcon(icons()->icon("sort-alphabetical-ascending"));
+    m_ui->actionGroupSortDesc->setIcon(icons()->icon("sort-alphabetical-descending"));
 
-    m_ui->actionGroupNew->setIcon(iconResources()->icon("group-new"));
-    m_ui->actionGroupEdit->setIcon(iconResources()->icon("group-edit"));
-    m_ui->actionGroupDelete->setIcon(iconResources()->icon("group-delete"));
-    m_ui->actionGroupEmptyRecycleBin->setIcon(iconResources()->icon("group-empty-trash"));
-    m_ui->actionEntryOpenUrl->setIcon(iconResources()->icon("web"));
-    m_ui->actionGroupDownloadFavicons->setIcon(iconResources()->icon("favicon-download"));
+    m_ui->actionGroupNew->setIcon(icons()->icon("group-new"));
+    m_ui->actionGroupEdit->setIcon(icons()->icon("group-edit"));
+    m_ui->actionGroupDelete->setIcon(icons()->icon("group-delete"));
+    m_ui->actionGroupEmptyRecycleBin->setIcon(icons()->icon("group-empty-trash"));
+    m_ui->actionEntryOpenUrl->setIcon(icons()->icon("web"));
+    m_ui->actionGroupDownloadFavicons->setIcon(icons()->icon("favicon-download"));
 
-    m_ui->actionSettings->setIcon(iconResources()->icon("configure"));
-    m_ui->actionPasswordGenerator->setIcon(iconResources()->icon("password-generator"));
+    m_ui->actionSettings->setIcon(icons()->icon("configure"));
+    m_ui->actionPasswordGenerator->setIcon(icons()->icon("password-generator"));
 
-    m_ui->actionAbout->setIcon(iconResources()->icon("help-about"));
-    m_ui->actionDonate->setIcon(iconResources()->icon("donate"));
-    m_ui->actionBugReport->setIcon(iconResources()->icon("bugreport"));
-    m_ui->actionGettingStarted->setIcon(iconResources()->icon("getting-started"));
-    m_ui->actionUserGuide->setIcon(iconResources()->icon("user-guide"));
-    m_ui->actionOnlineHelp->setIcon(iconResources()->icon("system-help"));
-    m_ui->actionKeyboardShortcuts->setIcon(iconResources()->icon("keyboard-shortcuts"));
-    m_ui->actionCheckForUpdates->setIcon(iconResources()->icon("system-software-update"));
+    m_ui->actionAbout->setIcon(icons()->icon("help-about"));
+    m_ui->actionDonate->setIcon(icons()->icon("donate"));
+    m_ui->actionBugReport->setIcon(icons()->icon("bugreport"));
+    m_ui->actionGettingStarted->setIcon(icons()->icon("getting-started"));
+    m_ui->actionUserGuide->setIcon(icons()->icon("user-guide"));
+    m_ui->actionOnlineHelp->setIcon(icons()->icon("system-help"));
+    m_ui->actionKeyboardShortcuts->setIcon(icons()->icon("keyboard-shortcuts"));
+    m_ui->actionCheckForUpdates->setIcon(icons()->icon("system-software-update"));
 
     m_actionMultiplexer.connect(
         SIGNAL(currentModeChanged(DatabaseWidget::Mode)), this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
@@ -1283,7 +1283,7 @@ void MainWindow::updateTrayIcon()
 
             auto* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
-            actionToggle->setIcon(iconResources()->icon("keepassxc-monochrome-dark"));
+            actionToggle->setIcon(icons()->icon("keepassxc-monochrome-dark"));
 
             menu->addAction(m_ui->actionLockDatabases);
 
@@ -1303,16 +1303,16 @@ void MainWindow::updateTrayIcon()
 
             m_trayIcon->setContextMenu(menu);
 
-            m_trayIcon->setIcon(iconResources()->trayIcon());
+            m_trayIcon->setIcon(icons()->trayIcon());
             m_trayIcon->show();
         }
 
         if (m_ui->tabWidget->count() == 0) {
-            m_trayIcon->setIcon(iconResources()->trayIcon());
+            m_trayIcon->setIcon(icons()->trayIcon());
         } else if (m_ui->tabWidget->hasLockableDatabases()) {
-            m_trayIcon->setIcon(iconResources()->trayIconUnlocked());
+            m_trayIcon->setIcon(icons()->trayIconUnlocked());
         } else {
-            m_trayIcon->setIcon(iconResources()->trayIconLocked());
+            m_trayIcon->setIcon(icons()->trayIconLocked());
         }
     } else {
         QApplication::setQuitOnLastWindowClosed(true);
@@ -1690,7 +1690,7 @@ void MainWindow::displayDesktopNotification(const QString& msg, QString title, i
     }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
-    m_trayIcon->showMessage(title, msg, iconResources()->applicationIcon(), msTimeoutHint);
+    m_trayIcon->showMessage(title, msg, icons()->applicationIcon(), msTimeoutHint);
 #else
     m_trayIcon->showMessage(title, msg, QSystemTrayIcon::Information, msTimeoutHint);
 #endif

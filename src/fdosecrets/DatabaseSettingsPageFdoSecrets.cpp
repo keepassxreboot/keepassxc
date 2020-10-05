@@ -19,7 +19,7 @@
 
 #include "fdosecrets/widgets/DatabaseSettingsWidgetFdoSecrets.h"
 
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 
 QString DatabaseSettingsPageFdoSecrets::name()
 {
@@ -28,7 +28,7 @@ QString DatabaseSettingsPageFdoSecrets::name()
 
 QIcon DatabaseSettingsPageFdoSecrets::icon()
 {
-    return iconResources()->icon(QStringLiteral("freedesktop"));
+    return icons()->icon(QStringLiteral("freedesktop"));
 }
 
 QWidget* DatabaseSettingsPageFdoSecrets::createWidget()

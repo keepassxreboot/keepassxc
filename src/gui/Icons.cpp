@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "IconResources.h"
+#include "Icons.h"
 
 #include <QBitmap>
 #include <QPainter>
@@ -27,14 +27,14 @@
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
 
-IconResources* IconResources::m_instance(nullptr);
+Icons* Icons::m_instance(nullptr);
 
-QIcon IconResources::applicationIcon()
+QIcon Icons::applicationIcon()
 {
     return icon("keepassxc", false);
 }
 
-QString IconResources::trayIconAppearance() const
+QString Icons::trayIconAppearance() const
 {
     auto iconAppearance = config()->get(Config::GUI_TrayIconAppearance).toString();
     if (iconAppearance.isNull()) {
@@ -47,12 +47,12 @@ QString IconResources::trayIconAppearance() const
     return iconAppearance;
 }
 
-QIcon IconResources::trayIcon()
+QIcon Icons::trayIcon()
 {
     return trayIconUnlocked();
 }
 
-QIcon IconResources::trayIconLocked()
+QIcon Icons::trayIconLocked()
 {
     auto iconApperance = trayIconAppearance();
 
@@ -65,7 +65,7 @@ QIcon IconResources::trayIconLocked()
     return icon("keepassxc-locked", false);
 }
 
-QIcon IconResources::trayIconUnlocked()
+QIcon Icons::trayIconUnlocked()
 {
     auto iconApperance = trayIconAppearance();
 
@@ -78,7 +78,7 @@ QIcon IconResources::trayIconUnlocked()
     return icon("keepassxc", false);
 }
 
-QIcon IconResources::icon(const QString& name, bool recolor, const QColor& overrideColor)
+QIcon Icons::icon(const QString& name, bool recolor, const QColor& overrideColor)
 {
     QIcon icon = m_iconCache.value(name);
 
@@ -135,7 +135,7 @@ QIcon IconResources::icon(const QString& name, bool recolor, const QColor& overr
     return icon;
 }
 
-QIcon IconResources::onOffIcon(const QString& name, bool recolor)
+QIcon Icons::onOffIcon(const QString& name, bool recolor)
 {
     QString cacheName = "onoff/" + name;
 
@@ -146,12 +146,12 @@ QIcon IconResources::onOffIcon(const QString& name, bool recolor)
     }
 
     const QSize size(48, 48);
-    QIcon on = IconResources::icon(name + "-on", recolor);
+    QIcon on = Icons::icon(name + "-on", recolor);
     icon.addPixmap(on.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::On);
     icon.addPixmap(on.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::On);
     icon.addPixmap(on.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::On);
 
-    QIcon off = IconResources::icon(name + "-off", recolor);
+    QIcon off = Icons::icon(name + "-off", recolor);
     icon.addPixmap(off.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::Off);
     icon.addPixmap(off.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::Off);
     icon.addPixmap(off.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::Off);
@@ -161,14 +161,14 @@ QIcon IconResources::onOffIcon(const QString& name, bool recolor)
     return icon;
 }
 
-IconResources::IconResources()
+Icons::Icons()
 {
 }
 
-IconResources* IconResources::instance()
+Icons* Icons::instance()
 {
     if (!m_instance) {
-        m_instance = new IconResources();
+        m_instance = new Icons();
 
         Q_INIT_RESOURCE(icons);
         QIcon::setThemeSearchPaths(QStringList{":/icons"} << QIcon::themeSearchPaths());

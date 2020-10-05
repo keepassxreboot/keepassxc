@@ -20,7 +20,7 @@
 
 #include "core/Entry.h"
 #include "core/Tools.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
 
 #include <algorithm>
@@ -28,7 +28,7 @@
 EntryURLModel::EntryURLModel(QObject* parent)
     : QStandardItemModel(parent)
     , m_entryAttributes(nullptr)
-    , m_errorIcon(iconResources()->icon("dialog-error"))
+    , m_errorIcon(icons()->icon("dialog-error"))
 {
 }
 

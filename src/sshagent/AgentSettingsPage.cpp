@@ -18,7 +18,7 @@
 
 #include "AgentSettingsPage.h"
 #include "AgentSettingsWidget.h"
-#include "gui/IconResources.h"
+#include "gui/Icons.h"
 
 QString AgentSettingsPage::name()
 {
@@ -27,7 +27,7 @@ QString AgentSettingsPage::name()
 
 QIcon AgentSettingsPage::icon()
 {
-    return iconResources()->icon("utilities-terminal");
+    return icons()->icon("utilities-terminal");
 }
 
 QWidget* AgentSettingsPage::createWidget()
