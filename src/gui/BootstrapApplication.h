@@ -23,7 +23,6 @@
 namespace BootstrapApplication
 {
     void bootstrapApplication();
-    void restoreMainWindowState(MainWindow& mainWindow);
 }; // namespace BootstrapApplication
 
 #endif // KEEPASSXC_BOOTSTRAPAPPLICATION_H

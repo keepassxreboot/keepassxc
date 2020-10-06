@@ -50,32 +50,4 @@ namespace BootstrapApplication
 #endif
     }
 
-    /**
-     * Restore the main window's state after launch
-     *
-     * @param mainWindow the main window whose state to restore
-     */
-    void restoreMainWindowState(MainWindow& mainWindow)
-    {
-        // start minimized if configured
-        if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
-            mainWindow.hideWindow();
-        } else {
-            mainWindow.bringToFront();
-        }
-
-        if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
-            const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
-            for (const QString& filename : fileNames) {
-                if (!filename.isEmpty() && QFile::exists(filename)) {
-                    mainWindow.openDatabase(filename);
-                }
-            }
-            auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
-            if (!lastActiveFile.isEmpty()) {
-                mainWindow.openDatabase(lastActiveFile);
-            }
-        }
-    }
-
 } // namespace BootstrapApplication

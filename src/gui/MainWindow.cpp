@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -601,6 +601,32 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
+}
+
+/**
+ * Restore the main window's state after launch
+ */
+void MainWindow::restoreConfigState()
+{
+    // start minimized if configured
+    if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
+        this->hideWindow();
+    } else {
+        this->bringToFront();
+    }
+
+    if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
+        const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
+        for (const QString& filename : fileNames) {
+            if (!filename.isEmpty() && QFile::exists(filename)) {
+                this->openDatabase(filename);
+            }
+        }
+        auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
+        if (!lastActiveFile.isEmpty()) {
+            this->openDatabase(lastActiveFile);
+        }
+    }
 }
 
 QList<DatabaseWidget*> MainWindow::getOpenDatabases()
