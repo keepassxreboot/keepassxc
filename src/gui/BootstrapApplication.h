@@ -15,15 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BOOTSTRAP_H
-#define KEEPASSXC_BOOTSTRAP_H
+#ifndef KEEPASSXC_BOOTSTRAPAPPLICATION_H
+#define KEEPASSXC_BOOTSTRAPAPPLICATION_H
 
-namespace Bootstrap
+#include "gui/MainWindow.h"
+
+namespace BootstrapApplication
 {
-    void bootstrap();
-    void disableCoreDumps();
-    bool createWindowsDACL();
-    void setupSearchPaths();
-}; // namespace Bootstrap
+    void bootstrapApplication();
+    void restoreMainWindowState(MainWindow& mainWindow);
+}; // namespace BootstrapApplication
 
-#endif // KEEPASSXC_BOOTSTRAP_H
+#endif // KEEPASSXC_BOOTSTRAPAPPLICATION_H

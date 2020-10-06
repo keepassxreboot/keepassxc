@@ -29,10 +29,10 @@
 #include "TestGlobal.h"
 #include "config-keepassx-tests.h"
 
-#include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "gui/BootstrapApplication.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
@@ -195,7 +195,7 @@ void TestGuiFdoSecrets::initTestCase()
     // activate within individual tests
     FdoSecrets::settings()->setShowNotification(false);
 
-    Bootstrap::bootstrapApplication();
+    BootstrapApplication::bootstrapApplication();
 
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");

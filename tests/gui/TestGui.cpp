@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,6 @@
 #include <QToolButton>
 
 #include "config-keepassx-tests.h"
-#include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -51,6 +50,7 @@
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "gui/ApplicationSettingsWidget.h"
+#include "gui/BootstrapApplication.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
 #include "gui/DatabaseTabWidget.h"
@@ -118,7 +118,7 @@ void TestGui::initTestCase()
     // Disable the update check first time alert
     config()->set(Config::UpdateCheckMessageShown, true);
 
-    Bootstrap::bootstrapApplication();
+    BootstrapApplication::bootstrapApplication();
 
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");

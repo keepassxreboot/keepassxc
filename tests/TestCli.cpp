@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@
 #include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Global.h"
+#include "core/Group.h"
+#include "core/Entry.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "keys/drivers/YubiKey.h"
@@ -65,7 +68,7 @@ void TestCli::initTestCase()
     QVERIFY(Crypto::init());
 
     Config::createTempFileInstance();
-    Bootstrap::bootstrapApplication();
+    Bootstrap::bootstrap();
 
     auto fd = new QFile();
 #ifdef Q_OS_WIN
