@@ -24,7 +24,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
-#include "core/Resources.h"
+#include "gui/Icons.h"
 
 #include <QFileInfo>
 #include <QHash>
@@ -157,7 +157,7 @@ namespace
 ReportsWidgetStatistics::ReportsWidgetStatistics(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::ReportsWidgetStatistics())
-    , m_errIcon(Resources::instance()->icon("dialog-error"))
+    , m_errIcon(icons()->icon("dialog-error"))
 {
     m_ui->setupUi(this);
 

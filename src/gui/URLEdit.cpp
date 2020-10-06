@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2014 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,15 +21,15 @@
 #include <QRegularExpression>
 
 #include "core/Config.h"
-#include "core/Resources.h"
 #include "core/Tools.h"
 #include "gui/Font.h"
+#include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
 
 URLEdit::URLEdit(QWidget* parent)
     : QLineEdit(parent)
 {
-    const QIcon errorIcon = resources()->icon("dialog-error");
+    const QIcon errorIcon = icons()->icon("dialog-error");
     m_errorAction = addAction(errorIcon, QLineEdit::TrailingPosition);
     m_errorAction->setVisible(false);
     m_errorAction->setToolTip(tr("Invalid URL"));

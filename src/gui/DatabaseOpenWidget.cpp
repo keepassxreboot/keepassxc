@@ -21,10 +21,10 @@
 
 #include "core/Config.h"
 #include "core/Database.h"
-#include "core/Resources.h"
 #include "crypto/Random.h"
 #include "format/KeePass2Reader.h"
 #include "gui/FileDialog.h"
+#include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "keys/FileKey.h"
@@ -71,14 +71,14 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
-    m_ui->hardwareKeyLabelHelp->setIcon(resources()->icon("system-help").pixmap(QSize(12, 12)));
+    m_ui->hardwareKeyLabelHelp->setIcon(icons()->icon("system-help").pixmap(QSize(12, 12)));
     connect(m_ui->hardwareKeyLabelHelp, SIGNAL(clicked(bool)), SLOT(openHardwareKeyHelp()));
-    m_ui->keyFileLabelHelp->setIcon(resources()->icon("system-help").pixmap(QSize(12, 12)));
+    m_ui->keyFileLabelHelp->setIcon(icons()->icon("system-help").pixmap(QSize(12, 12)));
     connect(m_ui->keyFileLabelHelp, SIGNAL(clicked(bool)), SLOT(openKeyFileHelp()));
 
     connect(m_ui->keyFileLineEdit, SIGNAL(textChanged(QString)), SLOT(keyFileTextChanged()));
     m_ui->keyFileLineEdit->addAction(m_ui->keyFileClearIcon, QLineEdit::TrailingPosition);
-    m_ui->keyFileClearIcon->setIcon(resources()->icon("edit-clear-locationbar-rtl"));
+    m_ui->keyFileClearIcon->setIcon(icons()->icon("edit-clear-locationbar-rtl"));
     m_ui->keyFileClearIcon->setVisible(false);
     connect(m_ui->keyFileClearIcon, SIGNAL(triggered(bool)), SLOT(clearKeyFileText()));
 

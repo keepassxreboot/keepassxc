@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 #include "config-keepassx.h"
 #include "core/Config.h"
-#include "core/Resources.h"
+#include "gui/Icons.h"
 
 WelcomeWidget::WelcomeWidget(QWidget* parent)
     : QWidget(parent)
@@ -36,7 +36,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
     welcomeLabelFont.setPointSize(welcomeLabelFont.pointSize() + 4);
     m_ui->welcomeLabel->setFont(welcomeLabelFont);
 
-    m_ui->iconLabel->setPixmap(resources()->applicationIcon().pixmap(64));
+    m_ui->iconLabel->setPixmap(icons()->applicationIcon().pixmap(64));
 
     refreshLastDatabases();
 

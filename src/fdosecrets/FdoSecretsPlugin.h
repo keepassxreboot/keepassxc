@@ -18,8 +18,8 @@
 #ifndef KEEPASSXC_FDOSECRETSPLUGIN_H
 #define KEEPASSXC_FDOSECRETSPLUGIN_H
 
-#include "core/Resources.h"
 #include "gui/ApplicationSettingsWidget.h"
+#include "gui/Icons.h"
 
 #include <QPointer>
 #include <QScopedPointer>
@@ -45,7 +45,7 @@ public:
 
     QIcon icon() override
     {
-        return Resources::instance()->icon("freedesktop");
+        return icons()->icon("freedesktop");
     }
 
     QWidget* createWidget() override;

@@ -29,7 +29,7 @@
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/Resources.h"
+#include "gui/Icons.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -280,12 +280,12 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return entry->iconPixmap();
         case Paperclip:
             if (!entry->attachments()->isEmpty()) {
-                return resources()->icon("paperclip");
+                return icons()->icon("paperclip");
             }
             break;
         case Totp:
             if (entry->hasTotp()) {
-                return resources()->icon("chronometer");
+                return icons()->icon("chronometer");
             }
             break;
         }
@@ -358,9 +358,9 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
     } else if (role == Qt::DecorationRole) {
         switch (section) {
         case Paperclip:
-            return resources()->icon("paperclip");
+            return icons()->icon("paperclip");
         case Totp:
-            return resources()->icon("chronometer");
+            return icons()->icon("chronometer");
         }
     } else if (role == Qt::ToolTipRole) {
         switch (section) {

@@ -19,7 +19,7 @@
 
 #include "core/Database.h"
 #include "core/Group.h"
-#include "core/Resources.h"
+#include "gui/Icons.h"
 #include "keeshare/DatabaseSettingsWidgetKeeShare.h"
 #include "keeshare/KeeShare.h"
 
@@ -32,7 +32,7 @@ QString DatabaseSettingsPageKeeShare::name()
 
 QIcon DatabaseSettingsPageKeeShare::icon()
 {
-    return Resources::instance()->icon("preferences-system-network-sharing");
+    return icons()->icon("preferences-system-network-sharing");
 }
 
 QWidget* DatabaseSettingsPageKeeShare::createWidget()

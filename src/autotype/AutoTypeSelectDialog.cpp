@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 #include "autotype/AutoTypeSelectView.h"
 #include "core/AutoTypeMatch.h"
 #include "core/Config.h"
-#include "core/Resources.h"
+#include "gui/Icons.h"
 #include "gui/entry/AutoTypeMatchModel.h"
 
 AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
@@ -49,7 +49,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     setAttribute(Qt::WA_X11BypassTransientForHint);
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Auto-Type - KeePassXC"));
-    setWindowIcon(resources()->applicationIcon());
+    setWindowIcon(icons()->applicationIcon());
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QRect screenGeometry = QApplication::screenAt(QCursor::pos())->availableGeometry();

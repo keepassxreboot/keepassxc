@@ -17,7 +17,7 @@
 
 #include "EditGroupPageKeeShare.h"
 
-#include "core/Resources.h"
+#include "gui/Icons.h"
 #include "keeshare/group/EditGroupWidgetKeeShare.h"
 
 #include <QApplication>
@@ -34,7 +34,7 @@ QString EditGroupPageKeeShare::name()
 
 QIcon EditGroupPageKeeShare::icon()
 {
-    return Resources::instance()->icon("preferences-system-network-sharing");
+    return icons()->icon("preferences-system-network-sharing");
 }
 
 QWidget* EditGroupPageKeeShare::createWidget()

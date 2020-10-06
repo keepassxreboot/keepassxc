@@ -18,7 +18,7 @@
 #include "ReportsPageStatistics.h"
 
 #include "ReportsWidgetStatistics.h"
-#include "core/Resources.h"
+#include "gui/Icons.h"
 
 #include <QApplication>
 
@@ -29,7 +29,7 @@ QString ReportsPageStatistics::name()
 
 QIcon ReportsPageStatistics::icon()
 {
-    return Resources::instance()->icon("statistics");
+    return icons()->icon("statistics");
 }
 
 QWidget* ReportsPageStatistics::createWidget()
