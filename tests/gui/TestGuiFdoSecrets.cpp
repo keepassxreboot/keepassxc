@@ -196,7 +196,7 @@ void TestGuiFdoSecrets::initTestCase()
     // activate within individual tests
     FdoSecrets::settings()->setShowNotification(false);
 
-    Application::bootstrapApplication();
+    Application::bootstrap();
 
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");

@@ -111,7 +111,7 @@ int main(int argc, char** argv)
     QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
 #endif
 
-    Application::bootstrapApplication();
+    Application::bootstrap();
 
     if (!Crypto::init()) {
         QString error = QObject::tr("Fatal error while testing the cryptographic functions.");

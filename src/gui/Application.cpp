@@ -150,7 +150,7 @@ Application::~Application()
  * configuration OS security properties, and loading translators.
  * A QApplication object has to be instantiated before calling this function.
  */
-void Application::bootstrapApplication()
+void Application::bootstrap()
 {
     Bootstrap::bootstrap();
     Translator::installTranslators();

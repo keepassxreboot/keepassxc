@@ -41,7 +41,7 @@ public:
     Application(int& argc, char** argv);
     ~Application() override;
 
-    static void bootstrapApplication();
+    static void bootstrap();
 
     void applyTheme();
 

@@ -117,7 +117,7 @@ void TestGui::initTestCase()
     // Disable the update check first time alert
     config()->set(Config::UpdateCheckMessageShown, true);
 
-    Application::bootstrapApplication();
+    Application::bootstrap();
 
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
