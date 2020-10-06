@@ -23,7 +23,6 @@
 #include "core/Translator.h"
 #include "gui/MessageBox.h"
 
-
 namespace BootstrapApplication
 {
     /**
