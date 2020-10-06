@@ -49,6 +49,7 @@ public:
     ~MainWindow();
 
     QList<DatabaseWidget*> getOpenDatabases();
+    void restoreConfigState();
 
     enum StackedWidgetIndex
     {
@@ -59,7 +60,6 @@ public:
     };
 
 public slots:
-    void restoreConfigState();
     void openDatabase(const QString& filePath, const QString& password = {}, const QString& keyfile = {});
     void appExit();
     void displayGlobalMessage(const QString& text,
