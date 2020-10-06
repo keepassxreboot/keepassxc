@@ -38,7 +38,6 @@
 #include "core/Entry.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "gui/BootstrapApplication.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"

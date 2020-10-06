@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2012 Tobias Tangemann
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,9 +20,12 @@
 #include "Application.h"
 
 #include "autotype/AutoType.h"
+#include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Global.h"
+#include "core/Translator.h"
 #include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/styles/dark/DarkStyle.h"
 #include "gui/styles/light/LightStyle.h"
@@ -140,6 +143,31 @@ Application::~Application()
         m_lockFile->unlock();
         delete m_lockFile;
     }
+}
+
+/**
+ * Perform early application bootstrapping such as setting up search paths,
+ * configuration OS security properties, and loading translators.
+ * A QApplication object has to be instantiated before calling this function.
+ */
+void Application::bootstrapApplication()
+{
+    Bootstrap::bootstrap();
+    Translator::installTranslators();
+
+#ifdef Q_OS_WIN
+    // Qt on Windows uses "MS Shell Dlg 2" as the default font for many widgets, which resolves
+    // to Tahoma 8pt, whereas the correct font would be "Segoe UI" 9pt.
+    // Apparently, some widgets are already using the correct font. Thanks, MuseScore for this neat fix!
+    QApplication::setFont(QApplication::font("QMessageBox"));
+#endif
+
+    MessageBox::initializeButtonDefs();
+
+#ifdef Q_OS_MACOS
+    // Don't show menu icons on OSX
+    QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
+#endif
 }
 
 void Application::applyTheme()

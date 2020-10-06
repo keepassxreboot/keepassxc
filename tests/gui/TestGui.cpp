@@ -50,7 +50,6 @@
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "gui/ApplicationSettingsWidget.h"
-#include "gui/BootstrapApplication.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
 #include "gui/DatabaseTabWidget.h"
@@ -118,7 +117,7 @@ void TestGui::initTestCase()
     // Disable the update check first time alert
     config()->set(Config::UpdateCheckMessageShown, true);
 
-    BootstrapApplication::bootstrapApplication();
+    Application::bootstrapApplication();
 
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");

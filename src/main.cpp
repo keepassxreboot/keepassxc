@@ -26,7 +26,6 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
-#include "gui/BootstrapApplication.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 
@@ -112,7 +111,7 @@ int main(int argc, char** argv)
     QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
 #endif
 
-    BootstrapApplication::bootstrapApplication();
+    Application::bootstrapApplication();
 
     if (!Crypto::init()) {
         QString error = QObject::tr("Fatal error while testing the cryptographic functions.");

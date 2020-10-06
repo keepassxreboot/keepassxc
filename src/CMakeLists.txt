@@ -100,7 +100,6 @@ set(keepassx_SOURCES
         gui/styles/light/LightStyle.cpp
         gui/AboutDialog.cpp
         gui/Application.cpp
-        gui/BootstrapApplication.cpp
         gui/CategoryListWidget.cpp
         gui/Clipboard.cpp
         gui/CloneDialog.cpp
