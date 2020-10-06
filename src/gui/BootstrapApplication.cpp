@@ -19,7 +19,6 @@
 
 #include "config-keepassx.h"
 #include "core/Bootstrap.h"
-#include "core/Config.h"
 #include "core/Translator.h"
 #include "gui/MessageBox.h"
 
