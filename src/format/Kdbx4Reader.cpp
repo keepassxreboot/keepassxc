@@ -166,7 +166,7 @@ bool Kdbx4Reader::readHeaderField(StoreDataStream& device, Database* db)
     bool ok;
     auto fieldLen = Endian::readSizedInt<quint32>(&device, KeePass2::BYTEORDER, &ok);
     if (!ok) {
-        raiseError(tr("Invalid header field length"));
+        raiseError(tr("Invalid header field length: field %1").arg(fieldID));
         return false;
     }
 
@@ -174,7 +174,10 @@ bool Kdbx4Reader::readHeaderField(StoreDataStream& device, Database* db)
     if (fieldLen != 0) {
         fieldData = device.read(fieldLen);
         if (static_cast<quint32>(fieldData.size()) != fieldLen) {
-            raiseError(tr("Invalid header data length"));
+            raiseError(tr("Invalid header data length: field %1, %2 expected, %3 found")
+                           .arg(static_cast<int>(fieldID))
+                           .arg(fieldLen)
+                           .arg(fieldData.size()));
             return false;
         }
     }
@@ -258,7 +261,7 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
     bool ok;
     auto fieldLen = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
     if (!ok) {
-        raiseError(tr("Invalid inner header field length"));
+        raiseError(tr("Invalid inner header field length: field %1").arg(static_cast<int>(fieldID)));
         return false;
     }
 
@@ -266,7 +269,10 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
     if (fieldLen != 0) {
         fieldData = device->read(fieldLen);
         if (static_cast<quint32>(fieldData.size()) != fieldLen) {
-            raiseError(tr("Invalid header data length"));
+            raiseError(tr("Invalid inner header data length: field %1, %2 expected, %3 found")
+                           .arg(static_cast<int>(fieldID))
+                           .arg(fieldLen)
+                           .arg(fieldData.size()));
             return false;
         }
     }
