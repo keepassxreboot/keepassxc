@@ -367,7 +367,7 @@ namespace Utils
     /**
      * Load a key file from disk. When the path specified does not exist a
      * new file will be generated. No folders will be generated so the parent
-     * folder of the specified file nees to exist
+     * folder of the specified file needs to exist
      *
      * If the key file cannot be loaded or created the function will fail.
      *
