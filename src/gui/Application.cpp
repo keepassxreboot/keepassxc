@@ -23,7 +23,6 @@
 #include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Global.h"
-#include "core/Translator.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
@@ -153,7 +152,6 @@ Application::~Application()
 void Application::bootstrap()
 {
     Bootstrap::bootstrap();
-    Translator::installTranslators();
 
 #ifdef Q_OS_WIN
     // Qt on Windows uses "MS Shell Dlg 2" as the default font for many widgets, which resolves

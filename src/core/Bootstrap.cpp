@@ -72,6 +72,8 @@ namespace Bootstrap
 
         setupSearchPaths();
         applyEarlyQNetworkAccessManagerWorkaround();
+
+        Translator::installTranslators();
     }
 
     // LCOV_EXCL_START
