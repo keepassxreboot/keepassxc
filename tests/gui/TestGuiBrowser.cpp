@@ -80,7 +80,6 @@ void TestGuiBrowser::initTestCase()
     config()->set(Config::UpdateCheckMessageShown, true);
 
     m_mainWindow.reset(new MainWindow());
-    m_mainWindow->restoreConfigState();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
 }

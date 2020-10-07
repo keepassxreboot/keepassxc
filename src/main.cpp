@@ -131,12 +131,6 @@ int main(int argc, char** argv)
     }
 
     MainWindow mainWindow;
-    QObject::connect(&app, SIGNAL(anotherInstanceStarted()), &mainWindow, SLOT(bringToFront()));
-    QObject::connect(&app, SIGNAL(applicationActivated()), &mainWindow, SLOT(bringToFront()));
-    QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
-    QObject::connect(&app, SIGNAL(quitSignalReceived()), &mainWindow, SLOT(appExit()), Qt::DirectConnection);
-
-    mainWindow.restoreConfigState();
 
     const bool pwstdin = parser.isSet(pwstdinOption);
     for (const QString& filename : fileNames) {

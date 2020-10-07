@@ -597,6 +597,13 @@ MainWindow::MainWindow()
         config()->set(Config::Messages_Qt55CompatibilityWarning, true);
     }
 #endif
+
+    QObject::connect(qApp, SIGNAL(anotherInstanceStarted()), this, SLOT(bringToFront()));
+    QObject::connect(qApp, SIGNAL(applicationActivated()), this, SLOT(bringToFront()));
+    QObject::connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
+    QObject::connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
+
+    restoreConfigState();
 }
 
 MainWindow::~MainWindow()
