@@ -610,21 +610,21 @@ void MainWindow::restoreConfigState()
 {
     // start minimized if configured
     if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
-        this->hideWindow();
+        hideWindow();
     } else {
-        this->bringToFront();
+        bringToFront();
     }
 
     if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
         const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
         for (const QString& filename : fileNames) {
             if (!filename.isEmpty() && QFile::exists(filename)) {
-                this->openDatabase(filename);
+                openDatabase(filename);
             }
         }
         auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
         if (!lastActiveFile.isEmpty()) {
-            this->openDatabase(lastActiveFile);
+            openDatabase(lastActiveFile);
         }
     }
 }
