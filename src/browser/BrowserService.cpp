@@ -1177,6 +1177,10 @@ bool BrowserService::checkLegacySettings(QSharedPointer<Database> db)
     bool legacySettingsFound = false;
     QList<Entry*> entries = db->rootGroup()->entriesRecursive();
     for (const auto& e : entries) {
+        if (e->isRecycled()) {
+            continue;
+        }
+
         if ((e->attributes()->contains(KEEPASSHTTP_NAME) || e->attributes()->contains(KEEPASSXCBROWSER_NAME))
             || (e->title() == KEEPASSHTTP_NAME || e->title().contains(KEEPASSXCBROWSER_NAME, Qt::CaseInsensitive))) {
             legacySettingsFound = true;
