@@ -54,6 +54,8 @@
 
 #include <cmath>
 
+#include "core/Resources.h"
+
 QT_BEGIN_NAMESPACE
 Q_GUI_EXPORT int qt_defaultDpiX();
 QT_END_NAMESPACE
@@ -3034,6 +3036,21 @@ void BaseStyle::drawControl(ControlElement element,
 QPalette BaseStyle::standardPalette() const
 {
     return QCommonStyle::standardPalette();
+}
+
+QIcon BaseStyle::standardIcon(StandardPixmap sp, const QStyleOption* opt, const QWidget* widget) const
+{
+    switch (sp) {
+    case SP_ToolBarHorizontalExtensionButton:
+        return resources()->icon("chevron-double-down");
+    case SP_ToolBarVerticalExtensionButton:
+        return resources()->icon("chevron-double-right");
+    case SP_LineEditClearButton:
+        return resources()->icon(
+            QString("edit-clear-locationbar-").append((opt->direction == Qt::LeftToRight) ? "rtl" : "ltr"));
+    default:
+        return QCommonStyle::standardIcon(sp, opt, widget);
+    }
 }
 
 void BaseStyle::drawComplexControl(ComplexControl control,

@@ -45,14 +45,6 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->buttonCopy->setIcon(resources()->icon("clipboard-text"));
     m_ui->buttonClose->setShortcut(Qt::Key_Escape);
 
-    m_ui->clearInclude->setIcon(resources()->icon("edit-clear-locationbar-rtl"));
-    m_ui->editAdditionalChars->addAction(m_ui->clearInclude, QLineEdit::TrailingPosition);
-    m_ui->clearInclude->setVisible(false);
-
-    m_ui->clearExclude->setIcon(resources()->icon("edit-clear-locationbar-rtl"));
-    m_ui->editExcludedChars->addAction(m_ui->clearExclude, QLineEdit::TrailingPosition);
-    m_ui->clearExclude->setVisible(false);
-
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateButtonsEnabled(QString)));
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
     connect(m_ui->buttonAdvancedMode, SIGNAL(toggled(bool)), SLOT(setAdvancedMode(bool)));
@@ -63,8 +55,6 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->buttonCopy, SIGNAL(clicked()), SLOT(copyPassword()));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
     connect(m_ui->buttonClose, SIGNAL(clicked()), SIGNAL(closed()));
-    connect(m_ui->clearInclude, SIGNAL(triggered(bool)), m_ui->editAdditionalChars, SLOT(clear()));
-    connect(m_ui->clearExclude, SIGNAL(triggered(bool)), m_ui->editExcludedChars, SLOT(clear()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
     connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
@@ -530,9 +520,6 @@ void PasswordGeneratorWidget::updateGenerator()
         } else {
             m_ui->buttonGenerate->setEnabled(false);
         }
-
-        m_ui->clearInclude->setVisible(!m_ui->editAdditionalChars->text().isEmpty());
-        m_ui->clearExclude->setVisible(!m_ui->editExcludedChars->text().isEmpty());
     } else {
         m_dicewareGenerator->setWordCase(
             static_cast<PassphraseGenerator::PassphraseWordCase>(m_ui->wordCaseComboBox->currentData().toInt()));
