@@ -22,7 +22,7 @@
 #include <QFile>
 #include <QTemporaryFile>
 
-#include "core/CsvParser.h"
+#include "format/CsvParser.h"
 
 class CsvParser;
 
