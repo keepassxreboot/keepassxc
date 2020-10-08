@@ -42,6 +42,8 @@ public:
     };
 
     QPalette standardPalette() const override;
+    QIcon
+    standardIcon(StandardPixmap sp, const QStyleOption* opt = nullptr, const QWidget* widget = nullptr) const override;
     void drawPrimitive(PrimitiveElement elem,
                        const QStyleOption* option,
                        QPainter* painter,

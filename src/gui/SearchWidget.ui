@@ -41,7 +41,7 @@
       <string/>
      </property>
      <property name="clearButtonEnabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -49,11 +49,6 @@
   <action name="searchIcon">
    <property name="text">
     <string>Search</string>
-   </property>
-  </action>
-  <action name="clearIcon">
-   <property name="text">
-    <string>Clear</string>
    </property>
   </action>
   <action name="helpIcon">
