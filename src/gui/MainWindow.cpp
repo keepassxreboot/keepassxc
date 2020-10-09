@@ -1792,6 +1792,11 @@ void MainWindow::initViewMenu()
         applySettingsChanges();
     });
 
+    m_ui->actionShowGroupsPanel->setChecked(!config()->get(Config::GUI_HideGroupsPanel).toBool());
+    connect(m_ui->actionShowGroupsPanel, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HideGroupsPanel, !checked);
+    });
+
     m_ui->actionShowPreviewPanel->setChecked(!config()->get(Config::GUI_HidePreviewPanel).toBool());
     connect(m_ui->actionShowPreviewPanel, &QAction::toggled, this, [](bool checked) {
         config()->set(Config::GUI_HidePreviewPanel, !checked);

@@ -22,6 +22,7 @@
 #include <QMimeData>
 #include <QShortcut>
 
+#include "core/Config.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "gui/group/GroupModel.h"
@@ -52,6 +53,13 @@ GroupView::GroupView(Database* db, QWidget* parent)
     viewport()->setAcceptDrops(true);
     setDropIndicatorShown(true);
     setDefaultDropAction(Qt::MoveAction);
+    setVisible(!config()->get(Config::GUI_HideGroupsPanel).toBool());
+
+    connect(config(), &Config::changed, this, [this](Config::ConfigKey key) {
+        if (key == Config::GUI_HideGroupsPanel) {
+            setVisible(!config()->get(Config::GUI_HideGroupsPanel).toBool());
+        }
+    });
 }
 
 void GroupView::contextMenuShortcutPressed()

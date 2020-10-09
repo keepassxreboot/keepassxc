@@ -4880,6 +4880,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation type="unfinished"></translation>
     </message>
