@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -597,10 +597,43 @@ MainWindow::MainWindow()
         config()->set(Config::Messages_Qt55CompatibilityWarning, true);
     }
 #endif
+
+    QObject::connect(qApp, SIGNAL(anotherInstanceStarted()), this, SLOT(bringToFront()));
+    QObject::connect(qApp, SIGNAL(applicationActivated()), this, SLOT(bringToFront()));
+    QObject::connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
+    QObject::connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
+
+    restoreConfigState();
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+/**
+ * Restore the main window's state after launch
+ */
+void MainWindow::restoreConfigState()
+{
+    // start minimized if configured
+    if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
+        hideWindow();
+    } else {
+        bringToFront();
+    }
+
+    if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
+        const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
+        for (const QString& filename : fileNames) {
+            if (!filename.isEmpty() && QFile::exists(filename)) {
+                openDatabase(filename);
+            }
+        }
+        auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
+        if (!lastActiveFile.isEmpty()) {
+            openDatabase(lastActiveFile);
+        }
+    }
 }
 
 QList<DatabaseWidget*> MainWindow::getOpenDatabases()

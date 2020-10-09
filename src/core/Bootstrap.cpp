@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Translator.h"
-#include "gui/MessageBox.h"
 
 #ifdef Q_OS_WIN
 #include <aclapi.h> // for createWindowsDACL()
@@ -73,59 +72,8 @@ namespace Bootstrap
 
         setupSearchPaths();
         applyEarlyQNetworkAccessManagerWorkaround();
-    }
 
-    /**
-     * Perform early application bootstrapping such as setting up search paths,
-     * configuration OS security properties, and loading translators.
-     * A QApplication object has to be instantiated before calling this function.
-     */
-    void bootstrapApplication()
-    {
-        bootstrap();
         Translator::installTranslators();
-
-#ifdef Q_OS_WIN
-        // Qt on Windows uses "MS Shell Dlg 2" as the default font for many widgets, which resolves
-        // to Tahoma 8pt, whereas the correct font would be "Segoe UI" 9pt.
-        // Apparently, some widgets are already using the correct font. Thanks, MuseScore for this neat fix!
-        QApplication::setFont(QApplication::font("QMessageBox"));
-#endif
-
-        MessageBox::initializeButtonDefs();
-
-#ifdef Q_OS_MACOS
-        // Don't show menu icons on OSX
-        QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
-#endif
-    }
-
-    /**
-     * Restore the main window's state after launch
-     *
-     * @param mainWindow the main window whose state to restore
-     */
-    void restoreMainWindowState(MainWindow& mainWindow)
-    {
-        // start minimized if configured
-        if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
-            mainWindow.hideWindow();
-        } else {
-            mainWindow.bringToFront();
-        }
-
-        if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
-            const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
-            for (const QString& filename : fileNames) {
-                if (!filename.isEmpty() && QFile::exists(filename)) {
-                    mainWindow.openDatabase(filename);
-                }
-            }
-            auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
-            if (!lastActiveFile.isEmpty()) {
-                mainWindow.openDatabase(lastActiveFile);
-            }
-        }
     }
 
     // LCOV_EXCL_START

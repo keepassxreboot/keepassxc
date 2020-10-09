@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,6 @@
 
 #include "browser/BrowserService.h"
 #include "config-keepassx-tests.h"
-#include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -81,7 +80,6 @@ void TestGuiBrowser::initTestCase()
     config()->set(Config::UpdateCheckMessageShown, true);
 
     m_mainWindow.reset(new MainWindow());
-    Bootstrap::restoreMainWindowState(*m_mainWindow);
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
 }

@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 
 #include "cli/Utils.h"
 #include "config-keepassx.h"
-#include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -112,7 +111,7 @@ int main(int argc, char** argv)
     QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
 #endif
 
-    Bootstrap::bootstrapApplication();
+    Application::bootstrap();
 
     if (!Crypto::init()) {
         QString error = QObject::tr("Fatal error while testing the cryptographic functions.");
@@ -132,12 +131,6 @@ int main(int argc, char** argv)
     }
 
     MainWindow mainWindow;
-    QObject::connect(&app, SIGNAL(anotherInstanceStarted()), &mainWindow, SLOT(bringToFront()));
-    QObject::connect(&app, SIGNAL(applicationActivated()), &mainWindow, SLOT(bringToFront()));
-    QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
-    QObject::connect(&app, SIGNAL(quitSignalReceived()), &mainWindow, SLOT(appExit()), Qt::DirectConnection);
-
-    Bootstrap::restoreMainWindowState(mainWindow);
 
     const bool pwstdin = parser.isSet(pwstdinOption);
     for (const QString& filename : fileNames) {
