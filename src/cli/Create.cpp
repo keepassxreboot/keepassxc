@@ -28,6 +28,7 @@
 #include "core/Database.h"
 
 #include "keys/CompositeKey.h"
+#include "keys/FileKey.h"
 #include "keys/Key.h"
 
 const QCommandLineOption Create::DecryptionTimeOption =
@@ -55,6 +56,84 @@ Create::Create()
     options.append(Create::SetKeyFileOption);
     options.append(Create::SetPasswordOption);
     options.append(Create::DecryptionTimeOption);
+}
+
+QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPointer<QCommandLineParser>& parser)
+{
+    if (parser.isNull()) {
+        return {};
+    }
+
+    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& err = Utils::STDERR;
+
+    // Validate the decryption time before asking for a password.
+    QString decryptionTimeValue = parser->value(Create::DecryptionTimeOption);
+    int decryptionTime = 0;
+    if (decryptionTimeValue.length() != 0) {
+        decryptionTime = decryptionTimeValue.toInt();
+        if (decryptionTime <= 0) {
+            err << QObject::tr("Invalid decryption time %1.").arg(decryptionTimeValue) << endl;
+            return {};
+        }
+        if (decryptionTime < Kdf::MIN_ENCRYPTION_TIME || decryptionTime > Kdf::MAX_ENCRYPTION_TIME) {
+            err << QObject::tr("Target decryption time must be between %1 and %2.")
+                       .arg(QString::number(Kdf::MIN_ENCRYPTION_TIME), QString::number(Kdf::MAX_ENCRYPTION_TIME))
+                << endl;
+            return {};
+        }
+    }
+
+    auto key = QSharedPointer<CompositeKey>::create();
+
+    if (parser->isSet(Create::SetPasswordOption)) {
+        auto passwordKey = Utils::getConfirmedPassword();
+        if (passwordKey.isNull()) {
+            err << QObject::tr("Failed to set database password.") << endl;
+            return {};
+        }
+        key->addKey(passwordKey);
+    }
+
+    if (parser->isSet(Create::SetKeyFileOption)) {
+        QSharedPointer<FileKey> fileKey;
+
+        if (!Utils::loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
+            err << QObject::tr("Loading the key file failed") << endl;
+            return {};
+        }
+
+        if (!fileKey.isNull()) {
+            key->addKey(fileKey);
+        }
+    }
+
+    if (key->isEmpty()) {
+        err << QObject::tr("No key is set. Aborting database creation.") << endl;
+        return {};
+    }
+
+    auto db = QSharedPointer<Database>::create();
+    db->setKey(key);
+
+    if (decryptionTime != 0) {
+        auto kdf = db->kdf();
+        Q_ASSERT(kdf);
+
+        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTimeValue) << endl;
+        int rounds = kdf->benchmark(decryptionTime);
+        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << endl;
+        kdf->setRounds(rounds);
+
+        bool ok = db->changeKdf(kdf);
+
+        if (!ok) {
+            err << QObject::tr("error while setting database key derivation settings.") << endl;
+            return {};
+        }
+    }
+
+    return db;
 }
 
 /**
@@ -88,70 +167,9 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    // Validate the decryption time before asking for a password.
-    QString decryptionTimeValue = parser->value(Create::DecryptionTimeOption);
-    int decryptionTime = 0;
-    if (decryptionTimeValue.length() != 0) {
-        decryptionTime = decryptionTimeValue.toInt();
-        if (decryptionTime <= 0) {
-            err << QObject::tr("Invalid decryption time %1.").arg(decryptionTimeValue) << endl;
-            return EXIT_FAILURE;
-        }
-        if (decryptionTime < Kdf::MIN_ENCRYPTION_TIME || decryptionTime > Kdf::MAX_ENCRYPTION_TIME) {
-            err << QObject::tr("Target decryption time must be between %1 and %2.")
-                       .arg(QString::number(Kdf::MIN_ENCRYPTION_TIME), QString::number(Kdf::MAX_ENCRYPTION_TIME))
-                << endl;
-            return EXIT_FAILURE;
-        }
-    }
-
-    auto key = QSharedPointer<CompositeKey>::create();
-
-    if (parser->isSet(Create::SetPasswordOption)) {
-        auto passwordKey = Utils::getConfirmedPassword();
-        if (passwordKey.isNull()) {
-            err << QObject::tr("Failed to set database password.") << endl;
-            return EXIT_FAILURE;
-        }
-        key->addKey(passwordKey);
-    }
-
-    if (parser->isSet(Create::SetKeyFileOption)) {
-        QSharedPointer<FileKey> fileKey;
-
-        if (!loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
-            err << QObject::tr("Loading the key file failed") << endl;
-            return EXIT_FAILURE;
-        }
-
-        if (!fileKey.isNull()) {
-            key->addKey(fileKey);
-        }
-    }
-
-    if (key->isEmpty()) {
-        err << QObject::tr("No key is set. Aborting database creation.") << endl;
+    QSharedPointer<Database> db = Create::initializeDatabaseFromOptions(parser);
+    if (!db) {
         return EXIT_FAILURE;
-    }
-
-    QSharedPointer<Database> db(new Database);
-    db->setKey(key);
-
-    if (decryptionTime != 0) {
-        auto kdf = db->kdf();
-        Q_ASSERT(kdf);
-
-        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTimeValue) << endl;
-        int rounds = kdf->benchmark(decryptionTime);
-        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << endl;
-        kdf->setRounds(rounds);
-
-        bool ok = db->changeKdf(kdf);
-
-        if (!ok) {
-            err << QObject::tr("error while setting database key derivation settings.") << endl;
-            return EXIT_FAILURE;
-        }
     }
 
     QString errorMessage;
@@ -161,40 +179,5 @@ int Create::execute(const QStringList& arguments)
     }
 
     out << QObject::tr("Successfully created new database.") << endl;
-    currentDatabase = db;
     return EXIT_SUCCESS;
-}
-
-/**
- * Load a key file from disk. When the path specified does not exist a
- * new file will be generated. No folders will be generated so the parent
- * folder of the specified file nees to exist
- *
- * If the key file cannot be loaded or created the function will fail.
- *
- * @param path Path to the key file to be loaded
- * @param fileKey Resulting fileKey
- * @return true if the key file was loaded succesfully
- */
-bool Create::loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey)
-{
-    auto& err = Utils::STDERR;
-    QString error;
-    fileKey = QSharedPointer<FileKey>(new FileKey());
-
-    if (!QFileInfo::exists(path)) {
-        fileKey->create(path, &error);
-
-        if (!error.isEmpty()) {
-            err << QObject::tr("Creating KeyFile %1 failed: %2").arg(path, error) << endl;
-            return false;
-        }
-    }
-
-    if (!fileKey->load(path, &error)) {
-        err << QObject::tr("Loading KeyFile %1 failed: %2").arg(path, error) << endl;
-        return false;
-    }
-
-    return true;
 }

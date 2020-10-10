@@ -1057,7 +1057,7 @@ void TestCli::testImport()
     QString databaseFilename = testDir->path() + "/testImport1.kdbx";
 
     setInput({"a", "a"});
-    execCmd(importCmd, {"import", m_xmlFile->fileName(), databaseFilename});
+    execCmd(importCmd, {"import", m_xmlFile->fileName(), databaseFilename, "-p"});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
@@ -1076,12 +1076,67 @@ void TestCli::testImport()
     QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
     QCOMPARE(m_stderr->readAll(), errorMessage.toUtf8());
 
+    // Testing import with non-existing keyfile
+    databaseFilename = testDir->path() + "/testImport2.kdbx";
+    QString keyfilePath = testDir->path() + "/keyfile.txt";
+    setInput({"a", "a"});
+    execCmd(importCmd, {"import", "-p", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
+
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully imported database.\n"));
+
+    db = readDatabase(databaseFilename, "a", keyfilePath);
+    QVERIFY(db);
+
+    // Testing import with existing keyfile
+    databaseFilename = testDir->path() + "/testImport3.kdbx";
+    setInput({"a", "a"});
+    execCmd(importCmd, {"import", "-p", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
+
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully imported database.\n"));
+
+    db = readDatabase(databaseFilename, "a", keyfilePath);
+    QVERIFY(db);
+
+    // Invalid decryption time (format).
+    databaseFilename = testDir->path() + "/testCreate_time.kdbx";
+    execCmd(importCmd, {"import", "-p", "-t", "NAN", m_xmlFile->fileName(), databaseFilename});
+
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QCOMPARE(m_stderr->readAll(), QByteArray("Invalid decryption time NAN.\n"));
+
+    // Invalid decryption time (range).
+    execCmd(importCmd, {"import", "-p", "-t", "10", m_xmlFile->fileName(), databaseFilename});
+
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().contains(QByteArray("Target decryption time must be between")));
+
+    int encryptionTime = 500;
+    // Custom encryption time
+    setInput({"a", "a"});
+    int epochBefore = QDateTime::currentMSecsSinceEpoch();
+    execCmd(importCmd,
+            {"import", "-p", "-t", QString::number(encryptionTime), m_xmlFile->fileName(), databaseFilename});
+    // Removing 100ms to make sure we account for changes in computation time.
+    QVERIFY(QDateTime::currentMSecsSinceEpoch() > (epochBefore + encryptionTime - 100));
+
+    QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Benchmarking key derivation function for 500ms delay.\n"));
+    QVERIFY(m_stdout->readLine().contains(QByteArray("rounds for key derivation function.\n")));
+
+    db = readDatabase(databaseFilename, "a");
+    QVERIFY(db);
+
     // Quiet option
     QScopedPointer<QTemporaryDir> testDirQuiet(new QTemporaryDir());
     QString databaseFilenameQuiet = testDirQuiet->path() + "/testImport2.kdbx";
 
     setInput({"a", "a"});
-    execCmd(importCmd, {"import", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
+    execCmd(importCmd, {"import", "-p", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));

@@ -36,6 +36,7 @@ namespace Utils
     void setDefaultTextStreams();
 
     void setStdinEcho(bool enable);
+    bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey);
     QString getPassword(bool quiet = false);
     QSharedPointer<PasswordKey> getConfirmedPassword();
     int clipText(const QString& text);
