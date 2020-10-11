@@ -1757,4 +1757,14 @@ void MainWindow::initViewMenu()
     connect(m_ui->actionShowPreviewPanel, &QAction::toggled, this, [](bool checked) {
         config()->set(Config::GUI_HidePreviewPanel, !checked);
     });
+
+    connect(m_ui->actionAlwaysOnTop, &QAction::toggled, this, [this](bool checked) {
+        if (checked) {
+            setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+        } else {
+            setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
+        }
+        show();
+    });
+
 }
