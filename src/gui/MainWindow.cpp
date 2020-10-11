@@ -26,6 +26,7 @@
 #include <QShortcut>
 #include <QTimer>
 #include <QWindow>
+#include <QColorDialog>
 
 #include "config-keepassx.h"
 
@@ -110,6 +111,10 @@ MainWindow::MainWindow()
     if (config()->get(Config::GUI_CompactMode).toBool()) {
         m_ui->toolBar->setIconSize({20, 20});
     }
+
+    //setup color change button
+    m_colorButton = new QPushButton("Color", m_ui->centralwidget);
+    connect(m_colorButton, SIGNAL(clicked()), this, SLOT(on_colorButton_clicked()));
 
     // Setup the search widget in the toolbar
     m_searchWidget = new SearchWidget();
@@ -593,6 +598,20 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::on_colorButton_clicked()
+{
+    QColor color;
+    color = QColorDialog::getColor(Qt::white, this);
+    int r = color.red();
+    int g = color.green();
+    int b = color.blue();
+    QString styleString = QString("#centralwidget{background-color: qlineargradient(spread:pad, x1:0.5, y1:0.107, x2:0.5, y2:0.69, stop:0 rgba(%1, %2, %3, 143), stop:1 rgba(255, 255, 255, 255));}").arg(r).arg(g).arg(b);
+    m_ui->centralwidget->setStyleSheet(styleString);
+
+//    QString menuStyleString = QString("#menubar{background-color: qlineargradient(spread:pad, x1:0.5, y1:0.107, x2:0.5, y2:0.69, stop:0 rgba(%1, %2, %3, 143), stop:1 rgba(255, 255, 255, 255));}").arg(r).arg(g).arg(b);
+//    m_ui->menubar->setStyleSheet(menuStyleString);
 }
 
 QList<DatabaseWidget*> MainWindow::getOpenDatabases()

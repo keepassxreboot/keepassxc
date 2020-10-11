@@ -136,6 +136,7 @@ private slots:
     void obtainContextFocusLock();
     void releaseContextFocusLock();
     void agentEnabled(bool enabled);
+    void on_colorButton_clicked();
 
 private slots:
     void updateTrayIcon();
@@ -170,6 +171,7 @@ private:
     QPointer<QSystemTrayIcon> m_trayIcon;
     QPointer<ScreenLockListener> m_screenLockListener;
     QPointer<SearchWidget> m_searchWidget;
+    QPointer<QPushButton> m_colorButton;
 
     Q_DISABLE_COPY(MainWindow)
 
