@@ -332,10 +332,6 @@ MainWindow::MainWindow()
     shortcut = new QShortcut(dbTabModifier + Qt::Key_9, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(m_ui->tabWidget->count() - 1); });
 
-    // Toggle password and username visibility in entry view
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
-
     m_ui->actionDatabaseNew->setIcon(resources()->icon("document-new"));
     m_ui->actionDatabaseOpen->setIcon(resources()->icon("document-open"));
     m_ui->menuRecentDatabases->setIcon(resources()->icon("document-open-recent"));
@@ -1126,22 +1122,6 @@ void MainWindow::databaseTabChanged(int tabIndex)
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
 }
 
-void MainWindow::togglePasswordsHidden()
-{
-    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
-    if (dbWidget) {
-        dbWidget->setPasswordsHidden(!dbWidget->isPasswordsHidden());
-    }
-}
-
-void MainWindow::toggleUsernamesHidden()
-{
-    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
-    if (dbWidget) {
-        dbWidget->setUsernamesHidden(!dbWidget->isUsernamesHidden());
-    }
-}
-
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (m_appExiting) {
@@ -1767,4 +1747,13 @@ void MainWindow::initViewMenu()
         show();
     });
 
+    m_ui->actionHideUsernames->setChecked(config()->get(Config::GUI_HideUsernames).toBool());
+    connect(m_ui->actionHideUsernames, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HideUsernames, checked);
+    });
+
+    m_ui->actionHidePasswords->setChecked(config()->get(Config::GUI_HidePasswords).toBool());
+    connect(m_ui->actionHidePasswords, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HidePasswords, checked);
+    });
 }

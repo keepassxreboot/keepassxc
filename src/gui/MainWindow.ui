@@ -384,6 +384,8 @@
     <addaction name="actionAlwaysOnTop"/>
     <addaction name="actionShowPreviewPanel"/>
     <addaction name="actionShowToolbar"/>
+    <addaction name="actionHideUsernames"/>
+    <addaction name="actionHidePasswords"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEntries"/>
@@ -982,6 +984,31 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+A</string>
+   </property>
+  </action>
+  <action name="actionHideUsernames">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hide Usernames</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+B</string>
+   </property>
+  </action>
+  <action name="actionHidePasswords">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hide Passwords</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+C</string>
    </property>
   </action>
  </widget>
