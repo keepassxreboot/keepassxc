@@ -66,7 +66,7 @@ void ShareObserver::deinitialize()
 
 void ShareObserver::reinitialize()
 {
-    QList<QPair<Group*, KeeShareSettings::Reference>> shares;
+    QList<QPair<QPointer<Group>, KeeShareSettings::Reference>> shares;
     for (Group* group : m_db->rootGroup()->groupsRecursive(true)) {
         auto oldReference = m_groupToReference.value(group);
         auto newReference = KeeShare::referenceOf(group);
@@ -97,6 +97,10 @@ void ShareObserver::reinitialize()
     for (const auto& share : shares) {
         auto group = share.first;
         auto& reference = share.second;
+        // Check group validity, it may have been deleted by a merge action
+        if (!group) {
+            continue;
+        }
 
         if (!reference.path.isEmpty() && reference.type != KeeShareSettings::Inactive) {
             const auto newResolvedPath = resolvePath(reference.path, m_db);
