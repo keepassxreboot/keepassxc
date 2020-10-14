@@ -499,9 +499,6 @@ MainWindow::MainWindow()
 
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
-    if (macUtils()->isDarkMode()) {
-        setStyleSheet("QToolButton {color:white;}");
-    }
 #endif
 
 #ifdef WITH_XC_UPDATECHECK

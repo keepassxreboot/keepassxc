@@ -575,7 +575,7 @@ void TestGui::testSearchEditEntry()
 
     // Check the path in header is "parent-group > entry"
     QCOMPARE(m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget")->findChild<QLabel*>("headerLabel")->text(),
-             QStringLiteral("Good \u2B29 Doggy \u2B29 Edit entry"));
+             QStringLiteral("Good \u2022 Doggy \u2022 Edit entry"));
 }
 
 void TestGui::testAddEntry()

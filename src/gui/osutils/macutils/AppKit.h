@@ -37,6 +37,7 @@ public:
     bool hideProcess(pid_t pid);
     bool isHidden(pid_t pid);
     bool isDarkMode();
+    bool hasDarkMode();
     bool enableAccessibility();
     bool enableScreenRecording();
     void toggleForegroundApp(bool foreground);
