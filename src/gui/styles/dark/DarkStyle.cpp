@@ -23,6 +23,14 @@
 #include <QMenuBar>
 #include <QToolBar>
 
+DarkStyle::DarkStyle()
+    : BaseStyle()
+{
+#ifdef Q_OS_MACOS
+    m_drawNativeMacOsToolBar = osUtils->isDarkMode();
+#endif
+}
+
 QPalette DarkStyle::standardPalette() const
 {
     auto palette = BaseStyle::standardPalette();
@@ -105,13 +113,10 @@ void DarkStyle::polish(QWidget* widget)
         || qobject_cast<QToolBar*>(widget)) {
         auto palette = widget->palette();
 #if defined(Q_OS_MACOS)
-        if (osUtils->isDarkMode()) {
-            // Let the Cocoa platform plugin draw its own background
-            palette.setColor(QPalette::All, QPalette::Window, Qt::transparent);
-        } else {
-            palette.setColor(QPalette::Active, QPalette::Window, QRgb(0x2A2A2A));
-            palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0x2D2D2D));
-            palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0x2A2A2A));
+        if (!osUtils->isDarkMode()) {
+            palette.setColor(QPalette::Active, QPalette::Window, QRgb(0x252525));
+            palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0x282828));
+            palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0x252525));
         }
 #elif defined(Q_OS_WIN)
         // Register event filter for better dark mode support

@@ -800,12 +800,12 @@ void EditEntryWidget::loadEntry(Entry* entry,
     connect(m_entry, &Entry::entryModified, this, [this] { m_entryModifiedTimer.start(); });
 
     if (history) {
-        setHeadline(QString("%1 \u2B29 %2").arg(parentName, tr("Entry history")));
+        setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Entry history")));
     } else {
         if (create) {
-            setHeadline(QString("%1 \u2B29 %2").arg(parentName, tr("Add entry")));
+            setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Add entry")));
         } else {
-            setHeadline(QString("%1 \u2B29 %2 \u2B29 %3").arg(parentName, entry->title(), tr("Edit entry")));
+            setHeadline(QString("%1 \u2022 %2 \u2022 %3").arg(parentName, entry->title(), tr("Edit entry")));
         }
     }
 
