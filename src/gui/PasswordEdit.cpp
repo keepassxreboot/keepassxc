@@ -180,7 +180,9 @@ void PasswordEdit::autocompletePassword(const QString& password)
 
 bool PasswordEdit::event(QEvent* event)
 {
-    if (isVisible()) {
+    if (isVisible()
+        && (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease
+            || event->type() == QEvent::FocusIn)) {
         checkCapslockState();
     }
     return QLineEdit::event(event);
@@ -204,7 +206,9 @@ void PasswordEdit::checkCapslockState()
 
         if (newCapslockState) {
             QTimer::singleShot(
-                150, [this]() { QToolTip::showText(mapToGlobal(rect().bottomLeft()), m_capslockAction->text()); });
+                150, [this] { QToolTip::showText(mapToGlobal(rect().bottomLeft()), m_capslockAction->text()); });
+        } else if (QToolTip::isVisible()) {
+            QToolTip::hideText();
         }
     }
 }
