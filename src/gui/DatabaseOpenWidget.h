@@ -66,7 +66,6 @@ protected slots:
 private slots:
     void browseKeyFile();
     void clearKeyFileText();
-    void keyFileTextChanged();
     void pollHardwareKey();
     void hardwareKeyResponse(bool found);
     void openHardwareKeyHelp();

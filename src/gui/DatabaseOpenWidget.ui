@@ -416,6 +416,9 @@
                       <property name="accessibleName">
                        <string>Key file to unlock the database</string>
                       </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -575,16 +578,14 @@
     </spacer>
    </item>
   </layout>
-  <action name="keyFileClearIcon">
-   <property name="text">
-    <string>Clear</string>
-   </property>
-   <property name="toolTip">
-    <string>Clear Key File</string>
-   </property>
-  </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PasswordEdit</class>
+   <extends>QLineEdit</extends>
+   <header>gui/PasswordEdit.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>MessageWidget</class>
    <extends>QWidget</extends>
@@ -595,11 +596,6 @@
    <class>ElidedLabel</class>
    <extends>QLabel</extends>
    <header>gui/widgets/ElidedLabel.h</header>
-  </customwidget>
-  <customwidget>
-   <class>PasswordEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

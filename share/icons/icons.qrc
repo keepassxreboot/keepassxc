@@ -8,6 +8,8 @@
         <file>application/scalable/actions/application-exit.svg</file>
         <file>application/scalable/actions/auto-type.svg</file>
         <file>application/scalable/actions/bugreport.svg</file>
+        <file>application/scalable/actions/chevron-double-down.svg</file>
+        <file>application/scalable/actions/chevron-double-right.svg</file>
         <file>application/scalable/actions/chronometer.svg</file>
         <file>application/scalable/actions/clipboard-text.svg</file>
         <file>application/scalable/actions/configure.svg</file>

@@ -574,7 +574,7 @@ void TestGui::testSearchEditEntry()
 
     // Check the path in header is "parent-group > entry"
     QCOMPARE(m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget")->findChild<QLabel*>("headerLabel")->text(),
-             QStringLiteral("Good \u2B29 Doggy \u2B29 Edit entry"));
+             QStringLiteral("Good \u2022 Doggy \u2022 Edit entry"));
 }
 
 void TestGui::testAddEntry()
@@ -854,8 +854,7 @@ void TestGui::testSearch()
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QVERIFY(entryView->isVisible());
 
-    auto* clearButton = searchWidget->findChild<QAction*>("clearIcon");
-    QVERIFY(!clearButton->isVisible());
+    QVERIFY(searchTextEdit->isClearButtonEnabled());
 
     auto* helpButton = searchWidget->findChild<QAction*>("helpIcon");
     auto* helpPanel = searchWidget->findChild<QWidget*>("SearchHelpWidget");
@@ -865,7 +864,6 @@ void TestGui::testSearch()
     // Enter search
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    QTRY_VERIFY(!clearButton->isVisible());
     // Show/Hide search help
     helpButton->trigger();
     QTRY_VERIFY(helpPanel->isVisible());
@@ -876,14 +874,12 @@ void TestGui::testSearch()
     // Search for "ZZZ"
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
-    QTRY_VERIFY(clearButton->isVisible());
     QTRY_VERIFY(m_dbWidget->isSearchActive());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
     // Press the search clear button
-    clearButton->trigger();
+    searchTextEdit->clear();
     QTRY_VERIFY(searchTextEdit->text().isEmpty());
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    QTRY_VERIFY(!clearButton->isVisible());
     // Escape clears searchedit and retains focus
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTest::keyClick(searchTextEdit, Qt::Key_Escape);

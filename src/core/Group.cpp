@@ -37,9 +37,7 @@ const int Group::RecycleBinIconNumber = 43;
 const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
 
 Group::CloneFlags Group::DefaultCloneFlags =
-    static_cast<Group::CloneFlags>(Group::CloneNewUuid | Group::CloneResetTimeInfo | Group::CloneIncludeEntries);
-Entry::CloneFlags Group::DefaultEntryCloneFlags =
-    static_cast<Entry::CloneFlags>(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
+    Group::CloneNewUuid | Group::CloneResetTimeInfo | Group::CloneIncludeEntries;
 
 Group::Group()
     : m_customData(new CustomData(this))

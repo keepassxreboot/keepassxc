@@ -338,10 +338,6 @@ MainWindow::MainWindow()
     shortcut = new QShortcut(dbTabModifier + Qt::Key_9, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(m_ui->tabWidget->count() - 1); });
 
-    // Toggle password and username visibility in entry view
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
-
     m_ui->actionDatabaseNew->setIcon(icons()->icon("document-new"));
     m_ui->actionDatabaseOpen->setIcon(icons()->icon("document-open"));
     m_ui->menuRecentDatabases->setIcon(icons()->icon("document-open-recent"));
@@ -509,9 +505,6 @@ MainWindow::MainWindow()
 
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
-    if (macUtils()->isDarkMode()) {
-        setStyleSheet("QToolButton {color:white;}");
-    }
 #endif
 
 #ifdef WITH_XC_UPDATECHECK
@@ -1165,22 +1158,6 @@ void MainWindow::databaseTabChanged(int tabIndex)
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
 }
 
-void MainWindow::togglePasswordsHidden()
-{
-    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
-    if (dbWidget) {
-        dbWidget->setPasswordsHidden(!dbWidget->isPasswordsHidden());
-    }
-}
-
-void MainWindow::toggleUsernamesHidden()
-{
-    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
-    if (dbWidget) {
-        dbWidget->setUsernamesHidden(!dbWidget->isUsernamesHidden());
-    }
-}
-
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (m_appExiting) {
@@ -1800,5 +1777,24 @@ void MainWindow::initViewMenu()
     m_ui->actionShowPreviewPanel->setChecked(!config()->get(Config::GUI_HidePreviewPanel).toBool());
     connect(m_ui->actionShowPreviewPanel, &QAction::toggled, this, [](bool checked) {
         config()->set(Config::GUI_HidePreviewPanel, !checked);
+    });
+
+    connect(m_ui->actionAlwaysOnTop, &QAction::toggled, this, [this](bool checked) {
+        if (checked) {
+            setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+        } else {
+            setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
+        }
+        show();
+    });
+
+    m_ui->actionHideUsernames->setChecked(config()->get(Config::GUI_HideUsernames).toBool());
+    connect(m_ui->actionHideUsernames, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HideUsernames, checked);
+    });
+
+    m_ui->actionHidePasswords->setChecked(config()->get(Config::GUI_HidePasswords).toBool());
+    connect(m_ui->actionHidePasswords, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HidePasswords, checked);
     });
 }

@@ -32,7 +32,7 @@ EntryView::EntryView(QWidget* parent)
     , m_sortModel(new SortFilterHideProxyModel(this))
     , m_lastIndex(-1)
     , m_lastOrder(Qt::AscendingOrder)
-    , m_inSearchMode(false)
+    , m_headerMenu(new QMenu(this))
 {
     m_sortModel->setSourceModel(m_model);
     m_sortModel->setDynamicSortFilter(true);
@@ -55,21 +55,9 @@ EntryView::EntryView(QWidget* parent)
     // clang-format off
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(emitEntrySelectionChanged()));
-    connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
-    connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
     // clang-format on
 
     new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
-
-    m_headerMenu = new QMenu(this);
-    m_headerMenu->setTitle(tr("Customize View"));
-    m_headerMenu->addSection(tr("Customize View"));
-
-    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), this, SLOT(setUsernamesHidden(bool)));
-    m_hideUsernamesAction->setCheckable(true);
-    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), this, SLOT(setPasswordsHidden(bool)));
-    m_hidePasswordsAction->setCheckable(true);
-    m_headerMenu->addSeparator();
 
     resetViewToDefaults();
 
@@ -293,50 +281,6 @@ int EntryView::currentEntryIndex()
 }
 
 /**
- * Get current state of 'Hide Usernames' setting (NOTE: just pass-through for
- * m_model)
- */
-bool EntryView::isUsernamesHidden() const
-{
-    return m_model->isUsernamesHidden();
-}
-
-/**
- * Set state of 'Hide Usernames' setting (NOTE: just pass-through for m_model)
- */
-void EntryView::setUsernamesHidden(bool hide)
-{
-    bool block = m_hideUsernamesAction->signalsBlocked();
-    m_hideUsernamesAction->blockSignals(true);
-    m_hideUsernamesAction->setChecked(hide);
-    m_hideUsernamesAction->blockSignals(block);
-
-    m_model->setUsernamesHidden(hide);
-}
-
-/**
- * Get current state of 'Hide Passwords' setting (NOTE: just pass-through for
- * m_model)
- */
-bool EntryView::isPasswordsHidden() const
-{
-    return m_model->isPasswordsHidden();
-}
-
-/**
- * Set state of 'Hide Passwords' setting (NOTE: just pass-through for m_model)
- */
-void EntryView::setPasswordsHidden(bool hide)
-{
-    bool block = m_hidePasswordsAction->signalsBlocked();
-    m_hidePasswordsAction->blockSignals(true);
-    m_hidePasswordsAction->setChecked(hide);
-    m_hidePasswordsAction->blockSignals(block);
-
-    m_model->setPasswordsHidden(hide);
-}
-
-/**
  * Get current view state
  */
 QByteArray EntryView::viewState() const
@@ -363,8 +307,6 @@ bool EntryView::setViewState(const QByteArray& state)
  */
 void EntryView::showHeaderMenu(const QPoint& position)
 {
-    m_hideUsernamesAction->setChecked(m_model->isUsernamesHidden());
-    m_hidePasswordsAction->setChecked(m_model->isPasswordsHidden());
     const QList<QAction*> actions = m_columnActions->actions();
     for (auto& action : actions) {
         Q_ASSERT(static_cast<QMetaType::Type>(action->data().type()) == QMetaType::Int);
@@ -469,9 +411,6 @@ void EntryView::resetFixedColumns()
  */
 void EntryView::resetViewToDefaults()
 {
-    m_model->setUsernamesHidden(false);
-    m_model->setPasswordsHidden(true);
-
     // Reduce number of columns that are shown by default
     if (m_inSearchMode) {
         header()->showSection(EntryModel::ParentGroup);

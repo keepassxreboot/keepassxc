@@ -104,10 +104,6 @@ public:
 
     QStringList customEntryAttributes() const;
     bool isEditWidgetModified() const;
-    bool isUsernamesHidden() const;
-    void setUsernamesHidden(bool hide);
-    bool isPasswordsHidden() const;
-    void setPasswordsHidden(bool hide);
     void clearAllWidgets();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();

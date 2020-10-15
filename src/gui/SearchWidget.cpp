@@ -45,7 +45,6 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_clearSearchTimer->setSingleShot(true);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
-    connect(m_ui->clearIcon, SIGNAL(triggered(bool)), m_ui->searchEdit, SLOT(clear()));
     connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
     connect(m_ui->searchIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
     connect(m_searchTimer, SIGNAL(timeout()), SLOT(startSearch()));
@@ -74,10 +73,6 @@ SearchWidget::SearchWidget(QWidget* parent)
 
     m_ui->helpIcon->setIcon(icons()->icon("system-help"));
     m_ui->searchEdit->addAction(m_ui->helpIcon, QLineEdit::TrailingPosition);
-
-    m_ui->clearIcon->setIcon(icons()->icon("edit-clear-locationbar-rtl"));
-    m_ui->clearIcon->setVisible(false);
-    m_ui->searchEdit->addAction(m_ui->clearIcon, QLineEdit::TrailingPosition);
 
     // Fix initial visibility of actions (bug in Qt)
     for (QToolButton* toolButton : m_ui->searchEdit->findChildren<QToolButton*>()) {
@@ -171,9 +166,6 @@ void SearchWidget::startSearch()
     if (!m_searchTimer->isActive()) {
         m_searchTimer->stop();
     }
-
-    bool hasText = m_ui->searchEdit->text().length() > 0;
-    m_ui->clearIcon->setVisible(hasText);
 
     search(m_ui->searchEdit->text());
 }

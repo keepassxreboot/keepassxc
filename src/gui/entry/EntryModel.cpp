@@ -37,11 +37,10 @@
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(nullptr)
-    , m_hideUsernames(false)
-    , m_hidePasswords(true)
     , HiddenContentDisplay(QString("\u25cf").repeated(6))
     , DateFormat(Qt::DefaultLocaleShortDate)
 {
+    connect(config(), &Config::changed, this, &EntryModel::onConfigChanged);
 }
 
 Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
@@ -156,7 +155,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             return result;
         case Username:
-            if (m_hideUsernames) {
+            if (config()->get(Config::GUI_HideUsernames).toBool()) {
                 result = EntryModel::HiddenContentDisplay;
             } else {
                 result = entry->resolveMultiplePlaceholders(entry->username());
@@ -164,9 +163,12 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             if (attr->isReference(EntryAttributes::UserNameKey)) {
                 result.prepend(tr("Ref: ", "Reference abbreviation"));
             }
+            if (entry->username().isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
+                result = "";
+            }
             return result;
         case Password:
-            if (m_hidePasswords) {
+            if (config()->get(Config::GUI_HidePasswords).toBool()) {
                 result = EntryModel::HiddenContentDisplay;
             } else {
                 result = entry->resolveMultiplePlaceholders(entry->password());
@@ -537,6 +539,20 @@ void EntryModel::entryDataChanged(Entry* entry)
     emit dataChanged(index(row, 0), index(row, columnCount() - 1));
 }
 
+void EntryModel::onConfigChanged(Config::ConfigKey key)
+{
+    switch (key) {
+    case Config::GUI_HideUsernames:
+        emit dataChanged(index(0, Username), index(rowCount() - 1, Username), {Qt::DisplayRole});
+        break;
+    case Config::GUI_HidePasswords:
+        emit dataChanged(index(0, Password), index(rowCount() - 1, Password), {Qt::DisplayRole});
+        break;
+    default:
+        break;
+    }
+}
+
 void EntryModel::severConnections()
 {
     if (m_group) {
@@ -559,40 +575,4 @@ void EntryModel::makeConnections(const Group* group)
     connect(group, SIGNAL(entryAboutToMoveDown(int)), SLOT(entryAboutToMoveDown(int)));
     connect(group, SIGNAL(entryMovedDown()), SLOT(entryMovedDown()));
     connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
-}
-
-/**
- * Get current state of 'Hide Usernames' setting
- */
-bool EntryModel::isUsernamesHidden() const
-{
-    return m_hideUsernames;
-}
-
-/**
- * Set state of 'Hide Usernames' setting and signal change
- */
-void EntryModel::setUsernamesHidden(bool hide)
-{
-    m_hideUsernames = hide;
-    emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
-    emit usernamesHiddenChanged();
-}
-
-/**
- * Get current state of 'Hide Passwords' setting
- */
-bool EntryModel::isPasswordsHidden() const
-{
-    return m_hidePasswords;
-}
-
-/**
- * Set state of 'Hide Passwords' setting and signal change
- */
-void EntryModel::setPasswordsHidden(bool hide)
-{
-    m_hidePasswords = hide;
-    emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
-    emit passwordsHiddenChanged();
 }

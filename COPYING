@@ -140,7 +140,9 @@ Files: share/icons/badges/2_Expired.svg
 Copyright: 2020 KeePassXC Team <team@keepassxc.org>
 License: MIT
 
-Files: share/icons/application/scalable/actions/document-close.svg
+Files: share/icons/application/scalable/actions/chevron-double-down.svg
+       share/icons/application/scalable/actions/chevron-double-right.svg
+       share/icons/application/scalable/actions/document-close.svg
        share/icons/application/scalable/actions/document-edit.svg
        share/icons/application/scalable/actions/document-export.svg
        share/icons/application/scalable/actions/document-import.svg

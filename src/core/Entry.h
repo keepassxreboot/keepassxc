@@ -125,11 +125,6 @@ public:
     CustomData* customData();
     const CustomData* customData() const;
 
-    static const int DefaultIconNumber;
-    static const int ResolveMaximumDepth;
-    static const QString AutoTypeSequenceUsername;
-    static const QString AutoTypeSequencePassword;
-
     void setUuid(const QUuid& uuid);
     void setIcon(int iconNumber);
     void setIcon(const QUuid& uuid);
@@ -210,13 +205,19 @@ public:
         DbDir
     };
 
+    static const int DefaultIconNumber;
+    static const int ResolveMaximumDepth;
+    static const QString AutoTypeSequenceUsername;
+    static const QString AutoTypeSequencePassword;
+    static CloneFlags DefaultCloneFlags;
+
     /**
      * Creates a duplicate of this entry except that the returned entry isn't
      * part of any group.
      * Note that you need to copy the custom icons manually when inserting the
      * new entry into another database.
      */
-    Entry* clone(CloneFlags flags) const;
+    Entry* clone(CloneFlags flags = DefaultCloneFlags) const;
     void copyDataFrom(const Entry* other);
     QString maskPasswordPlaceholders(const QString& str) const;
     Entry* resolveReference(const QString& str) const;

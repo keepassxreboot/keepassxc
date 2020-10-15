@@ -132,8 +132,6 @@ private slots:
     void selectNextDatabaseTab();
     void selectPreviousDatabaseTab();
     void selectDatabaseTab(int tabIndex, bool wrap = false);
-    void togglePasswordsHidden();
-    void toggleUsernamesHidden();
     void obtainContextFocusLock();
     void releaseContextFocusLock();
     void agentEnabled(bool enabled);

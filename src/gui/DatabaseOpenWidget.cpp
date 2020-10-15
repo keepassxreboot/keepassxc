@@ -76,12 +76,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->keyFileLabelHelp->setIcon(icons()->icon("system-help").pixmap(QSize(12, 12)));
     connect(m_ui->keyFileLabelHelp, SIGNAL(clicked(bool)), SLOT(openKeyFileHelp()));
 
-    connect(m_ui->keyFileLineEdit, SIGNAL(textChanged(QString)), SLOT(keyFileTextChanged()));
-    m_ui->keyFileLineEdit->addAction(m_ui->keyFileClearIcon, QLineEdit::TrailingPosition);
-    m_ui->keyFileClearIcon->setIcon(icons()->icon("edit-clear-locationbar-rtl"));
-    m_ui->keyFileClearIcon->setVisible(false);
-    connect(m_ui->keyFileClearIcon, SIGNAL(triggered(bool)), SLOT(clearKeyFileText()));
-
 #ifdef WITH_XC_YUBIKEY
     m_ui->hardwareKeyProgress->setVisible(false);
     QSizePolicy sp = m_ui->hardwareKeyProgress->sizePolicy();
@@ -144,8 +138,6 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     m_filename = filename;
     m_ui->fileNameLabel->setRawText(m_filename);
-
-    m_ui->keyFileClearIcon->setVisible(false);
 
     if (config()->get(Config::RememberLastKeyFiles).toBool()) {
         auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();
@@ -386,11 +378,6 @@ void DatabaseOpenWidget::browseKeyFile()
 void DatabaseOpenWidget::clearKeyFileText()
 {
     m_ui->keyFileLineEdit->clear();
-}
-
-void DatabaseOpenWidget::keyFileTextChanged()
-{
-    m_ui->keyFileClearIcon->setVisible(!m_ui->keyFileLineEdit->text().isEmpty());
 }
 
 void DatabaseOpenWidget::pollHardwareKey()

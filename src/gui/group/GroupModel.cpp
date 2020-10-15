@@ -252,19 +252,23 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             row--;
         }
 
-        Group* group;
-        if (action == Qt::MoveAction) {
-            group = dragGroup;
-        } else {
-            group = dragGroup->clone();
-        }
-
         Database* sourceDb = dragGroup->database();
         Database* targetDb = parentGroup->database();
+
+        Group* group = dragGroup;
 
         if (sourceDb != targetDb) {
             QSet<QUuid> customIcons = group->customIconsRecursive();
             targetDb->metadata()->copyCustomIcons(customIcons, sourceDb->metadata());
+
+            // Always clone the group across db's to reset UUIDs
+            group = dragGroup->clone();
+            if (action == Qt::MoveAction) {
+                // Remove the original group from the sourceDb
+                delete dragGroup;
+            }
+        } else if (action == Qt::CopyAction) {
+            group = dragGroup->clone();
         }
 
         group->setParent(parentGroup, row);
@@ -288,19 +292,24 @@ bool GroupModel::dropMimeData(const QMimeData* data,
                 continue;
             }
 
-            Entry* entry;
-            if (action == Qt::MoveAction) {
-                entry = dragEntry;
-            } else {
-                entry = dragEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
-            }
-
             Database* sourceDb = dragEntry->group()->database();
             Database* targetDb = parentGroup->database();
-            QUuid customIcon = entry->iconUuid();
 
-            if (sourceDb != targetDb && !customIcon.isNull() && !targetDb->metadata()->hasCustomIcon(customIcon)) {
-                targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon));
+            Entry* entry = dragEntry;
+
+            if (sourceDb != targetDb) {
+                QUuid customIcon = entry->iconUuid();
+                if (!customIcon.isNull() && !targetDb->metadata()->hasCustomIcon(customIcon)) {
+                    targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon));
+                }
+
+                // Always clone the entry across db's to reset the UUID
+                entry = dragEntry->clone();
+                if (action == Qt::MoveAction) {
+                    delete dragEntry;
+                }
+            } else if (action == Qt::CopyAction) {
+                entry = dragEntry->clone();
             }
 
             entry->setGroup(parentGroup);
