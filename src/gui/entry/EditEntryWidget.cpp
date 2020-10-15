@@ -997,6 +997,11 @@ bool EditEntryWidget::commitEntry()
         return true;
     }
 
+    // Check Auto-Type validity early
+    if (!AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
+        return false;
+    }
+
     if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
         QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
         m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(), m_entryAttributes->isProtected(key));
@@ -1095,7 +1100,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setAutoTypeEnabled(m_autoTypeUi->enableButton->isChecked());
     if (m_autoTypeUi->inheritSequenceButton->isChecked()) {
         entry->setDefaultAutoTypeSequence(QString());
-    } else if (AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
+    } else {
         entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
     }
 
@@ -1364,6 +1369,7 @@ void EditEntryWidget::removeAutoTypeAssoc()
 
 void EditEntryWidget::loadCurrentAssoc(const QModelIndex& current)
 {
+    bool modified = isModified();
     if (current.isValid() && current.row() < m_autoTypeAssoc->size()) {
         AutoTypeAssociations::Association assoc = m_autoTypeAssoc->get(current.row());
         m_autoTypeUi->windowTitleCombo->setEditText(assoc.window);
@@ -1379,6 +1385,7 @@ void EditEntryWidget::loadCurrentAssoc(const QModelIndex& current)
     } else {
         clearCurrentAssoc();
     }
+    setModified(modified);
 }
 
 void EditEntryWidget::clearCurrentAssoc()

@@ -330,38 +330,6 @@ void DatabaseWidget::setPreviewSplitterSizes(const QList<int>& sizes)
 }
 
 /**
- * Get current state of entry view 'Hide Usernames' setting
- */
-bool DatabaseWidget::isUsernamesHidden() const
-{
-    return m_entryView->isUsernamesHidden();
-}
-
-/**
- * Set state of entry view 'Hide Usernames' setting
- */
-void DatabaseWidget::setUsernamesHidden(bool hide)
-{
-    m_entryView->setUsernamesHidden(hide);
-}
-
-/**
- * Get current state of entry view 'Hide Passwords' setting
- */
-bool DatabaseWidget::isPasswordsHidden() const
-{
-    return m_entryView->isPasswordsHidden();
-}
-
-/**
- * Set state of entry view 'Hide Passwords' setting
- */
-void DatabaseWidget::setPasswordsHidden(bool hide)
-{
-    m_entryView->setPasswordsHidden(hide);
-}
-
-/**
  * Get current view state of entry view
  */
 QByteArray DatabaseWidget::entryViewState() const
@@ -890,7 +858,8 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
 
         // otherwise ask user
         if (!launch && cmdString.length() > 6) {
-            QString cmdTruncated = cmdString.mid(6);
+            QString cmdTruncated = entry->resolveMultiplePlaceholders(entry->maskPasswordPlaceholders(entry->url()));
+            cmdTruncated = cmdTruncated.mid(6);
             if (cmdTruncated.length() > 400) {
                 cmdTruncated = cmdTruncated.left(400) + " […]";
             }
