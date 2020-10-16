@@ -26,16 +26,8 @@ NewDatabaseWizardPageDatabaseKey::NewDatabaseWizardPageDatabaseKey(QWidget* pare
 
     setTitle(tr("Database Credentials"));
     setSubTitle(tr("A set of credentials known only to you that protects your database."));
-
-    connect(pageWidget(), SIGNAL(sizeChanged()), SLOT(updateWindowSize()));
 }
 
 NewDatabaseWizardPageDatabaseKey::~NewDatabaseWizardPageDatabaseKey()
 {
-}
-
-void NewDatabaseWizardPageDatabaseKey::updateWindowSize()
-{
-    // ugly workaround for QWizard not managing to react to size changes automatically
-    window()->adjustSize();
 }
