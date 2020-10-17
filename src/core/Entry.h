@@ -109,6 +109,7 @@ public:
     QString totpSettingsString() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
     int size() const;
+    QString path() const;
 
     bool hasTotp() const;
     bool isExpired() const;

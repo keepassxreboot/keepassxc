@@ -1009,8 +1009,10 @@ bool BrowserService::removeFirstDomain(QString& hostname)
 bool BrowserService::handleEntry(Entry* entry, const QString& url, const QString& submitUrl)
 {
     // Use this special scheme to find entries by UUID
-    if (url.startsWith("keepassxc://")) {
-        return ("keepassxc://by-uuid/" + entry->uuidToHex()) == url;
+    if (url.startsWith("keepassxc://by-uuid/")) {
+        return url.endsWith("by-uuid/" + entry->uuidToHex());
+    } else if (url.startsWith("keepassxc://by-path/")) {
+        return url.endsWith("by-path/" + entry->path());
     }
     return handleURL(entry->url(), url, submitUrl);
 }

@@ -503,6 +503,13 @@ QString Entry::totpSettingsString() const
     return {};
 }
 
+QString Entry::path() const
+{
+    auto path = group()->hierarchy();
+    path << title();
+    return path.mid(1).join("/");
+}
+
 void Entry::setUuid(const QUuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
