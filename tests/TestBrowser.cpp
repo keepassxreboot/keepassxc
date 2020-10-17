@@ -216,6 +216,43 @@ void TestBrowser::testSearchEntries()
     QCOMPARE(result[3]->url(), QString("github.com/login"));
 }
 
+void TestBrowser::testSearchEntriesByPath()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    QStringList urlsRoot = {"https://root.example.com/", "root.example.com/login"};
+    auto entriesRoot = createEntries(urlsRoot, root);
+
+    auto* groupLevel1 = new Group();
+    groupLevel1->setParent(root);
+    groupLevel1->setName("TestGroup1");
+    QStringList urlsLevel1 = {"https://1.example.com/", "1.example.com/login"};
+    auto entriesLevel1 = createEntries(urlsLevel1, groupLevel1);
+
+    auto* groupLevel2 = new Group();
+    groupLevel2->setParent(groupLevel1);
+    groupLevel2->setName("TestGroup2");
+    QStringList urlsLevel2 = {"https://2.example.com/", "2.example.com/login"};
+    auto entriesLevel2 = createEntries(urlsLevel2, groupLevel2);
+
+    compareEntriesByPath(db, entriesRoot, "");
+    compareEntriesByPath(db, entriesLevel1, "TestGroup1/");
+    compareEntriesByPath(db, entriesLevel2, "TestGroup1/TestGroup2/");
+}
+
+void TestBrowser::compareEntriesByPath(QSharedPointer<Database> db, QList<Entry*> entries, QString path)
+{
+    for (Entry* entry : entries) {
+        QString testUrl = "keepassxc://by-path/" + path + entry->title();
+        /* Look for an entry with that path. First using handleEntry, then through the search */
+        QCOMPARE(m_browserService->handleEntry(entry, testUrl, ""), true);
+        auto result = m_browserService->searchEntries(db, testUrl, "");
+        QCOMPARE(result.length(), 1);
+        QCOMPARE(result[0], entry);
+    }
+}
+
 void TestBrowser::testSearchEntriesByUUID()
 {
     auto db = QSharedPointer<Database>::create();
@@ -461,6 +498,7 @@ QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
         entry->setUrl(urls[i]);
         entry->setUsername(QString("User %1").arg(i));
         entry->setUuid(QUuid::createUuid());
+        entry->setTitle(QString("Name_%1").arg(entry->uuidToHex()));
         entry->endUpdate();
         entries.push_back(entry);
     }
