@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Colorido</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Debe reiniciar la aplicación para establecer el nuevo lenguage. ¿Desea reiniciar ahora?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Guardar automáticamente después de cada cambio</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Guardar automáticamente al salir</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>Inicie automáticamente KeePassXC al inicio del sistema</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Marcar la base de datos como modificada cuando los cambios no afecten a los datos (ej. expandir grupos)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Guardar los archivos de base de datos con seguridad (puede ser incompatible con Dropbox, etcétera)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Retardo de inicio de autoescritura:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Guardar automáticamente al bloquear la base de datos</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Guardar automáticamente cambios sin datos al bloquear la base de datos</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Tipo de icono en la bandeja</translation>
     </message>
 </context>
 <context>
@@ -4657,7 +4665,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>&amp;Editar apunte</translation>
+        <translation>&amp;Editar apunte...</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
@@ -4665,7 +4673,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>&amp;Nuevo grupo</translation>
+        <translation>&amp;Nuevo grupo...</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
@@ -4789,7 +4797,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     </message>
     <message>
         <source>Save Database Backup...</source>
-        <translation>Guardar copia de seguridad de la base de datos..</translation>
+        <translation>Guardar copia de seguridad de la base de datos...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -4838,6 +4846,26 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Debe reiniciar la aplicación para aplicar esta configuración. ¿Desea reiniciar ahora?</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Realizar secuencia de autoescritura</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>{USUARIO}</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>{USUARIO}{ENTER}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>{CONTRASEÑA}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>{CONTRASEÑA}{ENTER}</translation>
     </message>
 </context>
 <context>
@@ -5324,10 +5352,6 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
         <translation>Excelente</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>ASCII extendido</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Cambiar a modo avanzado</translation>
     </message>
@@ -5336,56 +5360,20 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
         <translation>Avanzado</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Llaves</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Puntuación</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Comillas</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!? =</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logogramas</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5506,6 +5494,10 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Regenerar contraseña (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Caracteres especiales</translation>
     </message>
 </context>
 <context>

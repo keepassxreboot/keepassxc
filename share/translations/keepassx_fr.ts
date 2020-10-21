@@ -121,7 +121,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Voulez-vous vraiment réinitialiser tous les paramètres généraux et de sécurité à leur valeur par défaut ?</translation>
+        <translation>Souhaitez-vous vraiment réinitialiser tous les paramètres généraux et de sécurité à leur valeur par défaut ?</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
@@ -134,6 +134,10 @@
     <message>
         <source>Colorful</source>
         <translation>Multicolore</translation>
+    </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Pour appliquer la nouvelle langue, vous devez redémarrer l’application. Souhaitez-vous la démarrer maintenant ?</translation>
     </message>
 </context>
 <context>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Enregistrer automatiquement après chaque changement</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Enregistrer automatiquement en sortant</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>Lancer automatiquement KeepassXC au démarrage du système.</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Considérer la base de données comme modifiée lors des modifications hors-données (par exemple : groupes développés)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Enregistrer en toute sécurité les fichiers de base de données (désactiver en cas de problèmes avec Dropbox, etc.)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Délai de démarrage de la saisie automatique :</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Enregistrer automatiquement en verrouillant la base de données</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Enregistrer automatiquement les changements qui ne sont pas relatifs aux données en verrouillant la base de données</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Type d’icône de la zone de notification</translation>
     </message>
 </context>
 <context>
@@ -462,15 +470,15 @@
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Cette commande de saisie automatique contient un délai très long. Voulez-vous vraiment continuer ?</translation>
+        <translation>Cette commande de saisie automatique contient un délai très long. Souhaitez-vous vraiment continuer ?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Cette commande de saisie automatique contient des touches très lentes. Voulez-vous vraiment continuer ?</translation>
+        <translation>Cette commande de saisie automatique contient des touches très lentes. Souhaitez-vous vraiment continuer ?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Cette commande de saisie automatique contient des arguments répétés très souvent. Voulez-vous vraiment continuer ?</translation>
+        <translation>Cette commande de saisie automatique contient des arguments répétés très souvent. Souhaitez-vous vraiment continuer ?</translation>
     </message>
     <message>
         <source>Permission Required</source>
@@ -626,7 +634,7 @@ Veuillez sélectionner la base de données souhaitée pour enregistrer les ident
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Une clé de chiffrement partagée nommée « %1 » existe déjà.
-Voulez-vous la remplacer ?</translation>
+Souhaitez-vous la remplacer ?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -634,7 +642,7 @@ Voulez-vous la remplacer ?</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>Voulez-vous mettre à jour les renseignements dans %1 - %2 ?</translation>
+        <translation>Souhaitez-vous mettre à jour les renseignements dans %1 - %2 ?</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -679,7 +687,7 @@ Moved %2 keys to custom data.</source>
 Do you want to create this group?
 </source>
         <translation>Une demande de création d’un nouveau groupe « %1 » a été reçue.
-Voulez-vous créer ce groupe ?
+Souhaitez-vous créer ce groupe ?
 </translation>
     </message>
     <message>
@@ -1293,7 +1301,7 @@ Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
         <translation>Le déverrouillage de la base de données a échoué et vous n’avez pas saisi de mot de passe.
-Voulez-vous plutôt ressayer sans mot de passe ?
+Souhaitez-vous plutôt ressayer sans mot de passe ?
 
 Afin d’empêcher que cette erreur survienne, vous devez accéder à « Paramètres de la base de données » et réinitialiser votre mot de passe.</translation>
     </message>
@@ -1409,7 +1417,7 @@ Si vous n’avez pas de fichier clé, veuillez laisser le champ vide.</translati
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
-        <translation>Voulez-vous vraiment supprimer la clé sélectionnée ?
+        <translation>Souhaitez-vous vraiment supprimer la clé sélectionnée ?
 Cela pourrait empêcher la connexion l’extension pour navigateurs.</translation>
     </message>
     <message>
@@ -1431,7 +1439,7 @@ Cela pourrait empêcher la connexion l’extension pour navigateurs.</translatio
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation>Voulez-vous vraiment déconnecter tous les navigateurs ?
+        <translation>Souhaitez-vous vraiment déconnecter tous les navigateurs ?
 Cela pourrait empêcher la connexion avec l’extension pour navigateurs.</translation>
     </message>
     <message>
@@ -1457,7 +1465,7 @@ Cela pourrait empêcher la connexion avec l’extension pour navigateurs.</trans
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>Voulez-vous vraiment oublier tous les paramètres propres aux sites pour toutes les entrées ? Les autorisations d’accès aux entrées seront révoquées.</translation>
+        <translation>Souhaitez-vous vraiment oublier tous les paramètres propres aux sites pour toutes les entrées ? Les autorisations d’accès aux entrées seront révoquées.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -1490,7 +1498,7 @@ Permissions to access entries will be revoked.</source>
     <message>
         <source>Do you really want to move all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Voulez-vous vraiment convertir toutes les données d’intégration au navigateur héritées à la norme la plus récente ?
+        <translation>Souhaitez-vous vraiment convertir toutes les données d’intégration au navigateur héritées à la norme la plus récente ?
 Cela est nécessaire pour assurer la compatibilité avec l’extension pour navigateurs.</translation>
     </message>
     <message>
@@ -1520,7 +1528,7 @@ Cela est nécessaire pour assurer la compatibilité avec l’extension pour navi
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Voulez-vous vraiment actualiser l&apos;ID de la base de données ?
+        <translation>Souhaitez-vous vraiment actualiser l&apos;ID de la base de données ?
 Ceci est seulement nécessaire si votre base de données est une copie d&apos;une autre et que l&apos;extension du navigateur ne peut se connecter.</translation>
     </message>
 </context>
@@ -1540,7 +1548,7 @@ Ceci est seulement nécessaire si votre base de données est une copie d&apos;un
 Are you sure you want to continue without a password?</source>
         <translation>AVERTISSEMENT : Vous n’avez pas défini de mot de passe. Il est fortement découragé d’utiliser une base de données sans mot de passe.
 
-Voulez-vous vraiment poursuivre sans mot de passe ?</translation>
+Souhaitez-vous vraiment poursuivre sans mot de passe ?</translation>
     </message>
     <message>
         <source>Continue without password</source>
@@ -1811,7 +1819,7 @@ Si vous gardez ce nombre, votre base de données pourrait être craquée trop fa
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation>Voulez-vous supprimer la corbeille actuelle et tout son contenu ?
+        <translation>Souhaitez-vous supprimer la corbeille actuelle et tout son contenu ?
 Cette action est irréversible.</translation>
     </message>
     <message>
@@ -1967,7 +1975,7 @@ C’est très certainement un bogue, veuillez le signaler aux développeurs.</tr
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Vous êtes sur le point d’exporter votre base de données vers un fichier non chiffré. Vos mots de passe et renseignements délicats seront vulnérables. Voulez-vous vraiment poursuivre ?</translation>
+        <translation>Vous êtes sur le point d’exporter votre base de données vers un fichier non chiffré. Vos mots de passe et renseignements délicats seront vulnérables. Souhaitez-vous vraiment poursuivre ?</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -1982,15 +1990,15 @@ C’est très certainement un bogue, veuillez le signaler aux développeurs.</tr
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Voulez-vous vraiment supprimer définitivement l’entrée « %1 » ?</translation>
+        <translation>Souhaitez-vous vraiment supprimer définitivement l’entrée « %1 » ?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Voulez-vous vraiment déplacer l’entrée « %1 » vers la corbeille ?</translation>
+        <translation>Souhaitez-vous vraiment déplacer l’entrée « %1 » vers la corbeille ?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Voulez-vous vraiment déplacer %n entrée vers la corbeille ?</numerusform><numerusform>Voulez-vous vraiment déplacer %n entrées vers la corbeille ?</numerusform></translation>
+        <translation><numerusform>Souhaitez-vous vraiment déplacer %n entrée vers la corbeille ?</numerusform><numerusform>Souhaitez-vous vraiment déplacer %n entrées vers la corbeille ?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1998,7 +2006,7 @@ C’est très certainement un bogue, veuillez le signaler aux développeurs.</tr
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>Voulez-vous vraiment exécuter la commande suivante ?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Souhaitez-vous vraiment exécuter la commande suivante ?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
@@ -2006,7 +2014,7 @@ C’est très certainement un bogue, veuillez le signaler aux développeurs.</tr
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Voulez-vous vraiment supprimer définitivement le groupe « %1 » ?</translation>
+        <translation>Souhaitez-vous vraiment supprimer définitivement le groupe « %1 » ?</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2030,7 +2038,7 @@ C’est très certainement un bogue, veuillez le signaler aux développeurs.</tr
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>Le fichier de la base de données a été modifiée. Voulez-vous charger les changements ?</translation>
+        <translation>Le fichier de la base de données a été modifiée. Souhaitez-vous charger les changements ?</translation>
     </message>
     <message>
         <source>Merge Request</source>
@@ -2040,7 +2048,7 @@ C’est très certainement un bogue, veuillez le signaler aux développeurs.</tr
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
         <translation>Le fichier de la base de données a été modifiée et vos changements ne sont pas enregistrés.
-Voulez-vous fusionner vos changements ?</translation>
+Souhaitez-vous fusionner vos changements ?</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
@@ -2048,11 +2056,11 @@ Voulez-vous fusionner vos changements ?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Voulez-vous vraiment vider définitivement la corbeille ?</translation>
+        <translation>Souhaitez-vous vraiment vider définitivement la corbeille ?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Voulez-vous vraiment supprimer %n entrée irrémédiablement ?</numerusform><numerusform>Voulez-vous vraiment supprimer %n entrées irrémédiablement ?</numerusform></translation>
+        <translation><numerusform>Souhaitez-vous vraiment supprimer %n entrée irrémédiablement ?</numerusform><numerusform>Souhaitez-vous vraiment supprimer %n entrées irrémédiablement ?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
@@ -2120,7 +2128,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>L’entrée « %1 » à %2 référence. Voulez-vous remplacer les références par les valeurs, ignorer cette entrée ou supprimer quand même ?</numerusform><numerusform>L’entrée « %1 » à %2 références. Voulez-vous remplacer les références par les valeurs, ignorer cette entrée ou supprimer quand même ?</numerusform></translation>
+        <translation><numerusform>L’entrée « %1 » à %2 référence. Souhaitez-vous remplacer les références par les valeurs, ignorer cette entrée ou supprimer quand même ?</numerusform><numerusform>L’entrée « %1 » à %2 références. Souhaitez-vous remplacer les références par les valeurs, ignorer cette entrée ou supprimer quand même ?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -2132,7 +2140,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Voulez-vous vraiment déplacer le groupe « %1 » vers la corbeille ?</translation>
+        <translation>Souhaitez-vous vraiment déplacer le groupe « %1 » vers la corbeille ?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
@@ -2223,7 +2231,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Voulez-vous vraiment supprimer cet attribut ?</translation>
+        <translation>Souhaitez-vous vraiment supprimer cet attribut ?</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -2263,7 +2271,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>Voulez-vous vraiment supprimer cette URL ?</translation>
+        <translation>Souhaitez-vous vraiment supprimer cette URL ?</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -2279,7 +2287,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>Voulez-vous enregistrer les modifications de cette entrée ?</translation>
+        <translation>Souhaitez-vous enregistrer les modifications de cette entrée ?</translation>
     </message>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
@@ -2956,7 +2964,7 @@ Supported extensions are: %1.</source>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>Cette icône est utilisée par %1 entrée et sera remplacée par l’icône par défaut. Voulez-vous vraiment la supprimer ?</numerusform><numerusform>Cette icône est utilisée par %1 entrées et sera remplacée par l’icône par défaut. Voulez-vous vraiment la supprimer ?</numerusform></translation>
+        <translation><numerusform>Cette icône est utilisée par %1 entrée et sera remplacée par l’icône par défaut. Souhaitez-vous vraiment la supprimer ?</numerusform><numerusform>Cette icône est utilisée par %1 entrées et sera remplacée par l’icône par défaut. Souhaitez-vous vraiment la supprimer ?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -3036,7 +3044,7 @@ Supported extensions are: %1.</source>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>Voulez-vous vraiment supprimer les données d’extension sélectionnées ? Cela pourrait entraîner un mauvais fonctionnement des extensions touchées.</translation>
+        <translation>Souhaitez-vous vraiment supprimer les données d’extension sélectionnées ? Cela pourrait entraîner un mauvais fonctionnement des extensions touchées.</translation>
     </message>
     <message>
         <source>Key</source>
@@ -3117,7 +3125,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Voulez-vous vraiment supprimer %n fichier joint ?</numerusform><numerusform>Voulez-vous vraiment supprimer %n fichiers joints ?</numerusform></translation>
+        <translation><numerusform>Souhaitez-vous vraiment supprimer %n fichier joint ?</numerusform><numerusform>Souhaitez-vous vraiment supprimer %n fichiers joints ?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3131,7 +3139,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Voulez-vous vraiment remplacer le fichier existant « %1 » par le fichier joint ?</translation>
+        <translation>Souhaitez-vous vraiment remplacer le fichier existant « %1 » par le fichier joint ?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -4382,7 +4390,7 @@ Message : %2</translation>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
         <translation>Le fichier clé sélectionné semble être un fichier de base de données de mots de passe. Un fichier clé doit être un fichier statique qui ne change jamais, ou vous perdrez irrémédiablement l’accès à votre base de données.
-Voulez-vous vraiment poursuivre avec ce fichier ?</translation>
+Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
@@ -4562,7 +4570,7 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>Voulez-vous que KeePassXC vérifie la présence de mises à jour au démarrage ?</translation>
+        <translation>Souhaitez-vous que KeePassXC vérifie la présence de mises à jour au démarrage ?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
@@ -4835,6 +4843,26 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Pour appliquer ce paramètre, vous devez redémarrer l’application. Souhaitez-vous la démarrer maintenant ?</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Effectuer une séquence de saisie automatique</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>{NOMD’UTILISATEUR}</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>{NOMD’UTILISATEUR}{ENTRÉE}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>{MOTDEPASSE}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>{MOTDEPASSE}{ENTRÉE}</translation>
     </message>
 </context>
 <context>
@@ -5321,10 +5349,6 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
         <translation>Excellent</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>ASCII étendu</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Basculer vers le mode avancé</translation>
     </message>
@@ -5333,56 +5357,20 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
         <translation>Avancé</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Accolades</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Ponctuation</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Guillemets</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; ’</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logogramme</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5503,6 +5491,10 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Régénérer le mot de passe (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Caractères spéciaux</translation>
     </message>
 </context>
 <context>
@@ -6702,7 +6694,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation>Voulez-vous créer une base de données avec un mot de passe vide ? [o/N] :</translation>
+        <translation>Souhaitez-vous créer une base de données avec un mot de passe vide ? [o/N] :</translation>
     </message>
     <message>
         <source>Repeat password: </source>
@@ -7365,7 +7357,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation>Le certificat exporté est différent de celui en cours d’utilisation. Voulez-vous exporter le certificat actuel ?</translation>
+        <translation>Le certificat exporté est différent de celui en cours d’utilisation. Souhaitez-vous exporter le certificat actuel ?</translation>
     </message>
     <message>
         <source>Signer:</source>
@@ -7471,7 +7463,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation>Nous ne pouvons vérifier la source du conteneur partagé, car il n’est pas signé. Voulez-vous vraiment importer de %1 ?</translation>
+        <translation>Nous ne pouvons vérifier la source du conteneur partagé, car il n’est pas signé. Souhaitez-vous vraiment importer de %1 ?</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
@@ -7479,7 +7471,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation>Voulez-vous autoriser %1 avec l’empreinte de %2 à %3 ? {1 ?} {2 ?}</translation>
+        <translation>Souhaitez-vous autoriser %1 avec l’empreinte de %2 à %3 ? {1 ?} {2 ?}</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -7683,7 +7675,7 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>Voulez-vous vraiment supprimer les paramètres TOTP pour cette entrée ?</translation>
+        <translation>Souhaitez-vous vraiment supprimer les paramètres TOTP pour cette entrée ?</translation>
     </message>
 </context>
 <context>

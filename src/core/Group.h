@@ -109,7 +109,6 @@ public:
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
     static CloneFlags DefaultCloneFlags;
-    static Entry::CloneFlags DefaultEntryCloneFlags;
     static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
@@ -158,7 +157,7 @@ public:
     QSet<QUuid> customIconsRecursive() const;
     QList<QString> usernamesRecursive(int topN = -1) const;
 
-    Group* clone(Entry::CloneFlags entryFlags = DefaultEntryCloneFlags,
+    Group* clone(Entry::CloneFlags entryFlags = Entry::DefaultCloneFlags,
                  CloneFlags groupFlags = DefaultCloneFlags) const;
 
     void copyDataFrom(const Group* other);

@@ -63,8 +63,8 @@ public:
     void addEntry(const QString& dbid,
                   const QString& login,
                   const QString& password,
-                  const QString& url,
-                  const QString& submitUrl,
+                  const QString& siteUrlStr,
+                  const QString& formUrlStr,
                   const QString& realm,
                   const QString& group,
                   const QString& groupUuid,
@@ -73,12 +73,12 @@ public:
                      const QString& uuid,
                      const QString& login,
                      const QString& password,
-                     const QString& url,
-                     const QString& submitUrl);
+                     const QString& siteUrlStr,
+                     const QString& formUrlStr);
 
     QJsonArray findMatchingEntries(const QString& dbid,
-                                   const QString& url,
-                                   const QString& submitUrl,
+                                   const QString& siteUrlStr,
+                                   const QString& formUrlStr,
                                    const QString& realm,
                                    const StringPairList& keyList,
                                    const bool httpAuth = false);
@@ -118,35 +118,31 @@ private:
         Hidden
     };
 
-    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl);
-    QList<Entry*> searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList);
     QList<Entry*>
-    sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& submitUrl, const QString& fullUrl);
+    searchEntries(const QSharedPointer<Database>& db, const QString& siteUrlStr, const QString& formUrlStr);
+    QList<Entry*> searchEntries(const QString& siteUrlStr, const QString& formUrlStr, const StringPairList& keyList);
+    QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& siteUrlStr, const QString& formUrlStr);
     QList<Entry*> confirmEntries(QList<Entry*>& pwEntriesToConfirm,
-                                 const QString& url,
-                                 const QString& host,
-                                 const QString& submitUrl,
+                                 const QString& siteUrlStr,
+                                 const QString& siteHost,
+                                 const QString& formUrlStr,
                                  const QString& realm,
                                  const bool httpAuth);
     QJsonObject prepareEntry(const Entry* entry);
     QJsonArray getChildrenFromGroup(Group* group);
-    Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
+    Access checkAccess(const Entry* entry, const QString& siteHost, const QString& formHost, const QString& realm);
     Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});
-    int sortPriority(const Entry* entry,
-                     const QString& host,
-                     const QString& submitUrl,
-                     const QString& baseSubmitUrl,
-                     const QString& fullUrl) const;
+    int sortPriority(const QStringList& urls, const QString& siteUrlStr, const QString& formUrlStr);
     bool schemeFound(const QString& url);
     bool removeFirstDomain(QString& hostname);
-    bool handleURL(const QString& entryUrl, const QString& url, const QString& submitUrl);
+    bool handleURL(const QString& entryUrl, const QString& siteUrlStr, const QString& formUrlStr);
     QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
-
     bool checkLegacySettings(QSharedPointer<Database> db);
+    QStringList getEntryURLs(const Entry* entry);
 
     void hideWindow() const;
     void raiseWindow(const bool force = false);

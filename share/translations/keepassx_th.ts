@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>สีสดใส</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>บันทึกอัตโนมัติทุกครั้งที่มีการเปลี่ยนแปลง</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>บันทึกอัตโนมัติตอนออก</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>เรียกให้ KeePassXC โดยอัตโนมัติเมื่อเริ่มระบบ</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation type="unfinished"/>
     </message>
@@ -342,6 +338,18 @@
     </message>
     <message>
         <source>Auto-Type start delay:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tray icon type</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4809,6 +4817,26 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5294,10 +5322,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>ดีมาก</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>ExtendedASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>เปลี่ยนเป็นโหมดใช้งานขั้นสูง</translation>
     </message>
@@ -5306,56 +5330,20 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>ขั้นสูง</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>วงเล็บปีกกา</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>วรรคตอน</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>คำพูด</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>สัญลักษณ์หรือตัวอักษรที่ใช้แทนคำ</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5476,6 +5464,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Regenerate password (%1)</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>อักขระพิเศษ</translation>
     </message>
 </context>
 <context>

@@ -50,6 +50,41 @@
     </screenshots>
 
     <releases>
+        <release version="2.6.2" date="2020-10-21">
+            <description>
+                <ul>
+                    <li>Add option to keep window always on top to view menu [#5542]</li>
+                    <li>Move show/hide usernames and passwords to view menu [#5542]</li>
+                    <li>Add command line options and environment variables for changing the config locations [#5452]</li>
+                    <li>Include TOTP settings in CSV import/export and add support for ISO datetimes [#5346]</li>
+                    <li>Mask sensitive information in command execution confirmation prompt [#5542]</li>
+                    <li>SSH Agent: Avoid shortcut conflict on macOS by changing "Add key" to Ctrl+H on all platforms [#5484]</li>
+                    <li>Prevent data loss with drag and drop between databases [#5536]</li>
+                    <li>Fix crash when toggling Capslock rapidly [#5545]</li>
+                    <li>Don't mark URL references as invalid URL [#5380]</li>
+                    <li>Reset entry preview after search [#5483]</li>
+                    <li>Set Qt::Dialog flag on database open dialog [#5356]</li>
+                    <li>Fix sorting of database report columns [#5426]</li>
+                    <li>Fix IfDevice matching logic [#5344]</li>
+                    <li>Fix layout issues and a stray scrollbar appearing on top of the entry edit screen [#5424]</li>
+                    <li>Fix tabbing into the notes field [#5424]</li>
+                    <li>Fix password generator ignoring settings on load [#5340]</li>
+                    <li>Restore natural entry sort order on application load [#5438]</li>
+                    <li>Fix paperclip and TOTP columns not saving state [#5327]</li>
+                    <li>Enforce fixed password font in entry preview [#5454]</li>
+                    <li>Add scrollbar when new database wizard exceeds screen size [#5560]</li>
+                    <li>Do not mark database as modified when viewing Auto-Type associations [#5542]</li>
+                    <li>CLI: Fix two heap-use-after-free crashes [#5368,#5470]</li>
+                    <li>Browser: Fix key exchange not working with multiple simultaneous users on Windows [#5485]</li>
+                    <li>Browser: Fix entry retrieval when "only best matching" is enabled [#5316]</li>
+                    <li>Browser: Ignore recycle bin on KeePassHTTP migration [#5481]</li>
+                    <li>KeeShare: Fix import crash [#5542]</li>
+                    <li>macOS: Fix toolbar theming and breadcrumb display issues [#5482]</li>
+                    <li>macOS: Fix file dialog randomly closing [#5479]</li>
+                    <li>macOS: Fix being unable to select OPVault files for import [#5341]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.6.1" date="2020-08-19">
             <description>
                 <ul>

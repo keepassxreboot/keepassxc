@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Kolorowy</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Musisz zrestartować aplikację, aby ustawić nowy język. Czy chcesz teraz zrestartować?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Automatycznie zapisz po każdej zmianie</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Automatycznie zapisz przy wyjściu</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>Automatycznie uruchom KeePassXC podczas uruchamiania systemu</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Oznacz bazę danych jako zmodyfikowaną dla zmian innych niż dane (np. rozwijanie grup)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Bezpiecznie zapisuj pliki bazy danych (wyłącz, jeśli występują problemy z Dropboksem itp.)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Opóźnienie rozpoczęcia autowpisywania:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Automatycznie zapisuj podczas blokowania bazy danych</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Automatycznie zapisuj zmiany niezwiązane z danymi podczas blokowania bazy danych</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Typ ikony zasobnika</translation>
     </message>
 </context>
 <context>
@@ -4842,6 +4850,26 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Musisz zrestartować aplikację, aby zastosować to ustawienie. Czy chcesz teraz zrestartować?</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Wykonaj sekwencję autowpisywania</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>{UŻYTKOWNIK}</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>{UŻYTKOWNIK}{ENTER}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>{HASŁO}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>{HASŁO}{ENTER}</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5327,10 +5355,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Znakomita</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>Rozszerzony ASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Zmień na tryb zaawansowany</translation>
     </message>
@@ -5339,56 +5363,20 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Zaawansowane</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Nawiasy klamrowe</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Interpunkcja</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Cudzysłowy</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logogramy</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5509,6 +5497,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Wygeneruj ponownie hasło (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Znaki specjalne</translation>
     </message>
 </context>
 <context>

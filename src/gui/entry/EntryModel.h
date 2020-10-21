@@ -21,6 +21,8 @@
 #include <QAbstractTableModel>
 #include <QPixmap>
 
+#include "core/Config.h"
+
 class Entry;
 class Group;
 
@@ -64,15 +66,6 @@ public:
     void setGroup(Group* group);
     void setEntries(const QList<Entry*>& entries);
 
-    bool isUsernamesHidden() const;
-    void setUsernamesHidden(bool hide);
-    bool isPasswordsHidden() const;
-    void setPasswordsHidden(bool hide);
-
-signals:
-    void usernamesHiddenChanged();
-    void passwordsHiddenChanged();
-
 private slots:
     void entryAboutToAdd(Entry* entry);
     void entryAdded(Entry* entry);
@@ -84,6 +77,8 @@ private slots:
     void entryMovedDown();
     void entryDataChanged(Entry* entry);
 
+    void onConfigChanged(Config::ConfigKey key);
+
 private:
     void severConnections();
     void makeConnections(const Group* group);
@@ -92,9 +87,6 @@ private:
     QList<Entry*> m_entries;
     QList<Entry*> m_orgEntries;
     QList<const Group*> m_allGroups;
-
-    bool m_hideUsernames;
-    bool m_hidePasswords;
 
     const QString HiddenContentDisplay;
     const Qt::DateFormat DateFormat;

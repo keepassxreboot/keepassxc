@@ -258,8 +258,15 @@ MainWindow::MainWindow()
     m_ui->actionEntryAutoType->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
-    m_ui->actionEntryAddToAgent->setShortcut(Qt::CTRL + Qt::Key_H);
-    m_ui->actionEntryRemoveFromAgent->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_H);
+
+    // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
+#ifdef Q_OS_MAC
+    auto modifier = Qt::META;
+#else
+    auto modifier = Qt::CTRL;
+#endif
+    m_ui->actionEntryAddToAgent->setShortcut(modifier + Qt::Key_H);
+    m_ui->actionEntryRemoveFromAgent->setShortcut(modifier + Qt::SHIFT + Qt::Key_H);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
@@ -324,10 +331,6 @@ MainWindow::MainWindow()
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(7); });
     shortcut = new QShortcut(dbTabModifier + Qt::Key_9, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(m_ui->tabWidget->count() - 1); });
-
-    // Toggle password and username visibility in entry view
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
 
     m_ui->actionDatabaseNew->setIcon(resources()->icon("document-new"));
     m_ui->actionDatabaseOpen->setIcon(resources()->icon("document-open"));
@@ -496,9 +499,6 @@ MainWindow::MainWindow()
 
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
-    if (macUtils()->isDarkMode()) {
-        setStyleSheet("QToolButton {color:white;}");
-    }
 #endif
 
 #ifdef WITH_XC_UPDATECHECK
@@ -1119,22 +1119,6 @@ void MainWindow::databaseTabChanged(int tabIndex)
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
 }
 
-void MainWindow::togglePasswordsHidden()
-{
-    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
-    if (dbWidget) {
-        dbWidget->setPasswordsHidden(!dbWidget->isPasswordsHidden());
-    }
-}
-
-void MainWindow::toggleUsernamesHidden()
-{
-    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
-    if (dbWidget) {
-        dbWidget->setUsernamesHidden(!dbWidget->isUsernamesHidden());
-    }
-}
-
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (m_appExiting) {
@@ -1269,6 +1253,8 @@ bool MainWindow::saveLastDatabases()
 void MainWindow::updateTrayIcon()
 {
     if (isTrayIconEnabled()) {
+        QApplication::setQuitOnLastWindowClosed(false);
+
         if (!m_trayIcon) {
             m_trayIcon = new QSystemTrayIcon(this);
             auto* menu = new QMenu(this);
@@ -1307,6 +1293,8 @@ void MainWindow::updateTrayIcon()
             m_trayIcon->setIcon(resources()->trayIconLocked());
         }
     } else {
+        QApplication::setQuitOnLastWindowClosed(true);
+
         if (m_trayIcon) {
             m_trayIcon->hide();
             delete m_trayIcon;
@@ -1745,5 +1733,24 @@ void MainWindow::initViewMenu()
     m_ui->actionShowPreviewPanel->setChecked(!config()->get(Config::GUI_HidePreviewPanel).toBool());
     connect(m_ui->actionShowPreviewPanel, &QAction::toggled, this, [](bool checked) {
         config()->set(Config::GUI_HidePreviewPanel, !checked);
+    });
+
+    connect(m_ui->actionAlwaysOnTop, &QAction::toggled, this, [this](bool checked) {
+        if (checked) {
+            setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+        } else {
+            setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
+        }
+        show();
+    });
+
+    m_ui->actionHideUsernames->setChecked(config()->get(Config::GUI_HideUsernames).toBool());
+    connect(m_ui->actionHideUsernames, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HideUsernames, checked);
+    });
+
+    m_ui->actionHidePasswords->setChecked(config()->get(Config::GUI_HidePasswords).toBool());
+    connect(m_ui->actionHidePasswords, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_HidePasswords, checked);
     });
 }

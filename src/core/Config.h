@@ -81,6 +81,7 @@ public:
         GUI_MinimizeOnStartup,
         GUI_MinimizeOnClose,
         GUI_HideUsernames,
+        GUI_HidePasswords,
         GUI_AdvancedSettings,
         GUI_MonospaceNotes,
         GUI_ApplicationTheme,
@@ -198,17 +199,18 @@ public:
     void resetToDefaults();
 
     static Config* instance();
-    static void createConfigFromFile(const QString& file);
+    static void createConfigFromFile(const QString& configFileName, const QString& localConfigFileName = {});
     static void createTempFileInstance();
 
 signals:
     void changed(ConfigKey key);
 
 private:
-    Config(const QString& fileName, QObject* parent = nullptr);
+    Config(const QString& configFileName, const QString& localConfigFileName, QObject* parent);
     explicit Config(QObject* parent);
-    void init(const QString& configFileName, const QString& localConfigFileName = "");
+    void init(const QString& configFileName, const QString& localConfigFileName);
     void migrate();
+    static QPair<QString, QString> defaultConfigFiles();
 
     static QPointer<Config> m_instance;
 

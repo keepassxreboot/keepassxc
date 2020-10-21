@@ -47,11 +47,7 @@ NewDatabaseWizardPage::~NewDatabaseWizardPage()
 void NewDatabaseWizardPage::setPageWidget(DatabaseSettingsWidget* page)
 {
     m_pageWidget = page;
-    if (!m_ui->pageContentLayout->isEmpty()) {
-        delete m_ui->pageContentLayout->takeAt(0);
-    }
-    m_ui->pageContentLayout->addWidget(m_pageWidget);
-    m_ui->pageContentLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    m_ui->pageContent->setWidget(m_pageWidget);
     m_ui->advancedSettingsButton->setVisible(m_pageWidget->hasAdvancedMode());
 }
 

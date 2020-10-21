@@ -330,38 +330,6 @@ void DatabaseWidget::setPreviewSplitterSizes(const QList<int>& sizes)
 }
 
 /**
- * Get current state of entry view 'Hide Usernames' setting
- */
-bool DatabaseWidget::isUsernamesHidden() const
-{
-    return m_entryView->isUsernamesHidden();
-}
-
-/**
- * Set state of entry view 'Hide Usernames' setting
- */
-void DatabaseWidget::setUsernamesHidden(bool hide)
-{
-    m_entryView->setUsernamesHidden(hide);
-}
-
-/**
- * Get current state of entry view 'Hide Passwords' setting
- */
-bool DatabaseWidget::isPasswordsHidden() const
-{
-    return m_entryView->isPasswordsHidden();
-}
-
-/**
- * Set state of entry view 'Hide Passwords' setting
- */
-void DatabaseWidget::setPasswordsHidden(bool hide)
-{
-    m_entryView->setPasswordsHidden(hide);
-}
-
-/**
  * Get current view state of entry view
  */
 QByteArray DatabaseWidget::entryViewState() const
@@ -890,7 +858,8 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
 
         // otherwise ask user
         if (!launch && cmdString.length() > 6) {
-            QString cmdTruncated = cmdString.mid(6);
+            QString cmdTruncated = entry->resolveMultiplePlaceholders(entry->maskPasswordPlaceholders(entry->url()));
+            cmdTruncated = cmdTruncated.mid(6);
             if (cmdTruncated.length() > 400) {
                 cmdTruncated = cmdTruncated.left(400) + " […]";
             }
@@ -1458,6 +1427,8 @@ void DatabaseWidget::endSearch()
         m_entryView->displayGroup(currentGroup());
         emit listModeActivated();
         m_entryView->setFirstEntryActive();
+        // Enforce preview view update (prevents stale information if focus group is empty)
+        m_previewView->setEntry(currentSelectedEntry());
     }
 
     m_searchingLabel->setVisible(false);
@@ -2061,7 +2032,7 @@ void DatabaseWidget::processAutoOpen()
         // negated using '!'
         auto ifDevice = entry->attribute("IfDevice");
         if (!ifDevice.isEmpty()) {
-            bool loadDb = true;
+            bool loadDb = false;
             auto hostName = QHostInfo::localHostName();
             for (auto& device : ifDevice.split(",")) {
                 device = device.trimmed();
@@ -2070,12 +2041,13 @@ void DatabaseWidget::processAutoOpen()
                         // Machine name matched an exclusion, don't load this database
                         loadDb = false;
                         break;
+                    } else {
+                        // Not matching an exclusion allows loading on all machines
+                        loadDb = true;
                     }
                 } else if (device.compare(hostName, Qt::CaseInsensitive) == 0) {
+                    // Explicitly named for loading
                     loadDb = true;
-                } else {
-                    // Don't load the database if there are devices not starting with '!'
-                    loadDb = false;
                 }
             }
             if (!loadDb) {

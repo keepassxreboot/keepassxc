@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Färgstark</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Du måste starta om programmet för att tillämpa det nya språket. Vill du starta om nu?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Spara automatiskt efter varje ändring</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Spara automatiskt när programmet avslutas</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>Starta KeePassXC automatiskt vid systemstart</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Markera databasen som ändrad för icke dataändringar (t.ex. expanderande grupper)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Spara databasfiler säkert (inaktivera vid problem med Dropbox etc)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Autoskriv startfördröjning:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Spara automatiskt när databasen låses</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Spara icke-dataändringar automatiskt när databasen låses</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Typ av systemfältsikon</translation>
     </message>
 </context>
 <context>
@@ -3931,11 +3939,11 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt värde för EnableAutoType</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt värde för EnableSearching</translation>
     </message>
     <message>
         <source>No group uuid found</source>
@@ -3947,7 +3955,7 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation type="unfinished"/>
+        <translation>Saknar DeletedObject uuid eller tid</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
@@ -3983,7 +3991,7 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation type="unfinished"/>
+        <translation>Auto-skrivassociationsfönster eller sekvens saknas</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -4118,7 +4126,7 @@ Rad %2, kolumn: %3</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek för grupp</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
@@ -4166,35 +4174,35 @@ Rad %2, kolumn: %3</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>Inläst data stämmer inte med fältstorleken</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek för uuid</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek för grupp-id</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek för ikon</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek för skapandedatum</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek för ändringsdatum</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek för utgångsdatum</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
@@ -4840,6 +4848,26 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Du måste starta om programmet för att tillämpa den här inställningen. Vill du starta om nu?</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Utför auto-skrivsekvens</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5325,10 +5353,6 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
         <translation>Utmärkt</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>Utökad ASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Växla till avancerat läge</translation>
     </message>
@@ -5337,56 +5361,20 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
         <translation>Avancerat</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Klammerparenteser</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Skiljetecken</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Citationstecken</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logogram</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5508,6 +5496,10 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
         <source>Regenerate password (%1)</source>
         <translation>Generera om lösenordet (%1)</translation>
     </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Specialtecken</translation>
+    </message>
 </context>
 <context>
     <name>QApplication</name>
@@ -5588,7 +5580,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Empty</source>
-        <translation>Tom</translation>
+        <translation>Töm</translation>
     </message>
     <message>
         <source>Remove</source>

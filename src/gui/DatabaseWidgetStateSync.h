@@ -51,9 +51,6 @@ private:
     QList<int> m_mainSplitterSizes;
     QList<int> m_previewSplitterSizes;
 
-    bool m_hideUsernames;
-    bool m_hidePasswords;
-
     QByteArray m_listViewState;
     QByteArray m_searchViewState;
 };
