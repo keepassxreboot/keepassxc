@@ -1,5 +1,45 @@
 # Changelog
 
+## 2.6.2 (2020-10-21)
+
+### Added
+
+- Add option to keep window always on top to view menu [#5542]
+- Move show/hide usernames and passwords to view menu [#5542]
+- Add command line options and environment variables for changing the config locations [#5452]
+- Include TOTP settings in CSV import/export and add support for ISO datetimes [#5346]
+
+### Changed
+
+- Mask sensitive information in command execution confirmation prompt [#5542]
+- SSH Agent: Avoid shortcut conflict on macOS by changing "Add key" to Ctrl+H on all platforms [#5484]
+
+### Fixed
+
+- Prevent data loss with drag and drop between databases [#5536]
+- Fix crash when toggling Capslock rapidly [#5545]
+- Don't mark URL references as invalid URL [#5380]
+- Reset entry preview after search [#5483]
+- Set Qt::Dialog flag on database open dialog [#5356]
+- Fix sorting of database report columns [#5426]
+- Fix IfDevice matching logic [#5344]
+- Fix layout issues and a stray scrollbar appearing on top of the entry edit screen [#5424]
+- Fix tabbing into the notes field [#5424]
+- Fix password generator ignoring settings on load [#5340]
+- Restore natural entry sort order on application load [#5438]
+- Fix paperclip and TOTP columns not saving state [#5327]
+- Enforce fixed password font in entry preview [#5454]
+- Add scrollbar when new database wizard exceeds screen size [#5560]
+- Do not mark database as modified when viewing Auto-Type associations [#5542]
+- CLI: Fix two heap-use-after-free crashes [#5368,#5470]
+- Browser: Fix key exchange not working with multiple simultaneous users on Windows [#5485]
+- Browser: Fix entry retrieval when "only best matching" is enabled [#5316]
+- Browser: Ignore recycle bin on KeePassHTTP migration [#5481]
+- KeeShare: Fix import crash [#5542]
+- macOS: Fix toolbar theming and breadcrumb display issues [#5482]
+- macOS: Fix file dialog randomly closing [#5479]
+- macOS: Fix being unable to select OPVault files for import [#5341]
+
 ## 2.6.1 (2020-08-19)
 
 ### Added

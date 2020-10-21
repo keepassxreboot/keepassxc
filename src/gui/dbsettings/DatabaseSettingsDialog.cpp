@@ -38,6 +38,8 @@
 #include "gui/Icons.h"
 #include "touchid/TouchID.h"
 
+#include <QScrollArea>
+
 class DatabaseSettingsDialog::ExtraPage
 {
 public:
@@ -81,7 +83,16 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     m_ui->stackedWidget->addWidget(m_generalWidget);
 
     m_ui->stackedWidget->addWidget(m_securityTabWidget);
-    m_securityTabWidget->addTab(m_databaseKeyWidget, tr("Database Credentials"));
+
+    auto* scrollArea = new QScrollArea(parent);
+    scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setFrameShadow(QFrame::Plain);
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    scrollArea->setSizeAdjustPolicy(QScrollArea::AdjustToContents);
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(m_databaseKeyWidget);
+    m_securityTabWidget->addTab(scrollArea, tr("Database Credentials"));
+
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
 
 #if defined(WITH_XC_KEESHARE)

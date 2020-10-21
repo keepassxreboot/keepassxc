@@ -1293,14 +1293,6 @@ Please consider generating a new key file.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation type="unfinished">Clear</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unlock failed and no password given</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2651,6 +2643,10 @@ Disable safe saves and try again?</translation>
         <source>Expires:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2948,6 +2944,10 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3499,18 +3499,6 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Customize View</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Hide Usernames</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Hide Passwords</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Fit to window</translation>
@@ -4919,6 +4907,18 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>{PASSWORD}{ENTER}</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Always on Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation type="unfinished">Hide Usernames</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation type="unfinished">Hide Passwords</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5537,10 +5537,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished">Clear</translation>
     </message>
     <message>
         <source>Regenerate password (%1)</source>
@@ -6283,10 +6279,6 @@ Available commands:
         <translation>read password of the database from stdin</translation>
     </message>
     <message>
-        <source>Parent window handle</source>
-        <translation>Parent window handle</translation>
-    </message>
-    <message>
         <source>Another instance of KeePassXC is already running.</source>
         <translation>Another instance of KeePassXC is already running.</translation>
     </message>
@@ -6808,6 +6800,10 @@ Kernel: %3 %4</source>
             <numerusform>%1 s</numerusform>
         </translation>
     </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7230,10 +7226,6 @@ Kernel: %3 %4</source>
     <message>
         <source>Search</source>
         <translation>Search</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Clear</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>

@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Berwarna</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Anda harus memulai ulang aplikasi untuk menerapkan bahasa. Apakah anda ingin memulai ulang sekarang?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Otomatis simpan setelah setiap perubahan</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Otomatis simpan ketika keluar</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>Otomatis jalankan KeePassXC pada saat perangkat dinyalakan</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Tandai basisdata telah diubah untuk perubahan non-data (mis. melebarkan grup)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Simpan berkas basisdata secara aman (nonaktifkan jika anda mengalami masalah dengan Dropbox, dll.)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Tundaan mulai Ketik-Otomatis:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Otomatis simpan saat mengunci basisdata</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Otomatis simpan perubahan non-data saat mengunci basisdata</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Tipe ikon baki</translation>
     </message>
 </context>
 <context>
@@ -1335,7 +1343,7 @@ Jika anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation type="unfinished"/>
+        <translation>Berkas kunci untuk membuka basisdata</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
@@ -3002,7 +3010,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
-        <translation type="unfinished"/>
+        <translation>Hanya terapkan ke grup ini</translation>
     </message>
 </context>
 <context>
@@ -4837,6 +4845,26 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Anda harus memulai ulang aplikasi untuk menerapkan pengaturan ini. Apakah anda ingin memulai ulang sekarang?</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5321,10 +5349,6 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
         <translation>Sempurna</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>ASCIILanjutan</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Beralih ke mode lanjutan</translation>
     </message>
@@ -5333,56 +5357,20 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
         <translation>Tingkat Lanjut</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Tanda Kurung</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Tanda Baca</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Tanda Petik</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logogram</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5503,6 +5491,10 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Buat ulang sandi (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Karakter Spesial</translation>
     </message>
 </context>
 <context>

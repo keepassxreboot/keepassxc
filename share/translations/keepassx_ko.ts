@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>컬러풀</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>항목을 변경할 때 자동 저장</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>끝낼 때 자동 저장</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>시스템 시작 시 KeePassXC 자동 시작</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>데이터가 변경되지 않았을 때 데이터베이스를 수정된 것으로 표시하지 않음(예: 그룹 확장)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>데이터베이스 파일 안전 저장(Dropbox 등에서 문제 발생 시 비활성화)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>자동 입력 시작 지연 시간:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4839,6 +4847,26 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>이 설정을 적용하려면 프로그램을 다시 시작해야 합니다. 지금 다시 시작하시겠습니까?</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5324,10 +5352,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>매우 좋음</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>확장 ASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>고급 모드로 전환</translation>
     </message>
@@ -5336,56 +5360,20 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>고급</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>괄호</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>구두점</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>따옴표</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>로고그램</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5506,6 +5494,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Regenerate password (%1)</source>
         <translation>암호 다시 생성(%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>특수 문자</translation>
     </message>
 </context>
 <context>

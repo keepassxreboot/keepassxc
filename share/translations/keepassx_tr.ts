@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Renkli</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Yeni dili ayarlamak için uygulamayı yeniden başlatmalısınız. Şimdi yeniden başlamak ister misin?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Her değişiklik sonrası otomatik kaydet</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Çıkışta otomatik kaydet</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>Sistem başlangıcında KeePassXC&apos;yi otomatik olarak başlat</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Veritabanında veri olmayan değişiklikler için değiştirilmiş olarak işaretleme (ör. genişleyen gruplar)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Veritabanı dosyalarını güvenle kaydet (Dropbox, vb. İle ilgili sorun olursa devre dışı bırak)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Otomatik Yazım başlangıç gecikmesi:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Veritabanını kilitlerken otomatik kaydet</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Veritabanını kilitlerken veri dışı değişiklikleri otomatik olarak kaydet</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Tepsi simgesi türü</translation>
     </message>
 </context>
 <context>
@@ -4517,7 +4525,7 @@ Keepassxc indirme sayfasında mevcut Appımage kullanmanızı öneririz.</transl
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation>&amp;İçe aktar</translation>
+        <translation>&amp;İçe Aktar</translation>
     </message>
     <message>
         <source>Create a new database</source>
@@ -4541,7 +4549,7 @@ Keepassxc indirme sayfasında mevcut Appımage kullanmanızı öneririz.</transl
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>&amp;Otomatik Yazım gerçekleştir</translation>
+        <translation>&amp;Otomatik Yazım Gerçekleştir</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -4575,7 +4583,7 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>Dışa &amp;aktar</translation>
+        <translation>Dışa &amp;Aktar</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -4803,7 +4811,7 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
     </message>
     <message>
         <source>Compact Mode</source>
-        <translation>Küçültülmüş kip</translation>
+        <translation>Küçültülmüş Kip</translation>
     </message>
     <message>
         <source>Automatic</source>
@@ -4819,7 +4827,7 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation>Klasik (Platform-doğal)</translation>
+        <translation>Klasik (Doğal sistem)</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -4840,6 +4848,26 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Bu ayarı uygulamak için uygulamayı yeniden başlatmalısınız. Şimdi uygulamayı yeniden başlatmak ister misiniz ?</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Otomatik Yazım Sırası</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>{KULLANICI ADI}</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>{KULLANICI ADI}{ENTER}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>{PAROLA}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>{PAROLA}{ENTER}</translation>
     </message>
 </context>
 <context>
@@ -5326,10 +5354,6 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
         <translation>Harika</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>GenişletilmişASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Gelişmiş kipe geç</translation>
     </message>
@@ -5338,56 +5362,20 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
         <translation>Gelişmiş</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Ayraç</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Noktalama</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Tırnak</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logogramlar</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5508,6 +5496,10 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Parolayı tekrar üret (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Özel Karakterler</translation>
     </message>
 </context>
 <context>
