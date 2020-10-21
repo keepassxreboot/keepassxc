@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>カラフル</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>新しい言語を設定するには、このアプリケーションを再起動する必要があります。今すぐ再起動しますか？</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>変更するたびに自動的に保存する</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>終了時に自動的に保存する</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>システム起動時に KeePassXC を自動的に起動する</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>データ以外の変更 (例えばグループの展開) に対して、データベースを変更済みとしてマークする</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>データベースファイルを安全に保存する (Dropbox などで問題が発生した場合は無効にしてください)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>自動入力開始までの遅延:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>データベースロック時に自動的に保存する</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>データベースロック時にデータ以外の変更を自動的に保存する</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>トレイアイコンの種類</translation>
     </message>
 </context>
 <context>
@@ -4839,6 +4847,26 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>設定を適用するには、このアプリケーションを再起動する必要があります。今すぐ再起動しますか？</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>自動入力シーケンスを実行</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>{USERNAME}</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>{USERNAME}{ENTER}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>{PASSWORD}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>{PASSWORD}{ENTER}</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5324,10 +5352,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>すばらしい</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>拡張 ASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>詳細モードに切り替え</translation>
     </message>
@@ -5336,56 +5360,20 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>詳細設定</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>括弧</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>句読点</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>引用符</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>表語文字</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5506,6 +5494,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Regenerate password (%1)</source>
         <translation>パスワードを再生成 (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>特殊文字</translation>
     </message>
 </context>
 <context>

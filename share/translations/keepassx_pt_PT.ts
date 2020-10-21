@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Colorido</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Tem que reiniciar a aplicação para aplicar o novo idioma. Reiniciar agora?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Guardar automaticamente a cada alteração</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Guardar automaticamente ao fechar</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>Iniciar KeePassXC ao arrancar o sistema</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Marcar base de dados como alterada para modificações não efetuadas em dados (ex.: expansão de grupos)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Guardar bases de dados em segurança (desative se ocorrerem erros com Dropbox e outros serviços)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Atraso para iniciar a escrita automática:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Guardar alterações ao bloquear a base de dados</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Guardar alterações a não-dados ao bloquear a base de dados</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Tipo de ícone na bandeja</translation>
     </message>
 </context>
 <context>
@@ -1992,7 +2000,7 @@ Existe aqui um erro que deve ser reportado aos programadores.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Deseja mesmo mover %n entrada para a reciclagem?</numerusform><numerusform>Deseja mesmo mover %n entradas para a reciclagem?</numerusform></translation>
+        <translation><numerusform>Tem a certeza de que deseja mover %n entrada para a reciclagem?</numerusform><numerusform>Tem a certeza de que deseja mover %n entradas para a reciclagem?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -4841,6 +4849,26 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Tem que reiniciar a aplicação para aplicar as alterações. Gostaria de o fazer agora?</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Executar sequência de escrita automática</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>{NomeDeUtilizador}</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>{NomeDeUtilizador}{ENTER}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>{Palavra-passe}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>{Palavra-passe}{ENTER}</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5326,10 +5354,6 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
         <translation>Excelente</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>ASCII expandido</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Ativar modo avançado</translation>
     </message>
@@ -5338,56 +5362,20 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
         <translation>Avançado</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Parênteses</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Pontuação</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Aspas</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logo-gramas</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5508,6 +5496,10 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Recriar palavra-passe (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Caracteres especiais</translation>
     </message>
 </context>
 <context>
@@ -6118,7 +6110,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation>A entrada %1 foi movida para a reciclagem.</translation>
+        <translation>Entrada %1 movida para a reciclagem.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
@@ -7223,7 +7215,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se ativar a Reciclagem para esta base de dados, as entradas apagadas serão movidas mas não apagadas. Se não a utilizar, as entradas serão apagadas sem qualquer confirmação.&lt;/p&gt;&lt;p&gt;Contudo, se as entradas apagadas forem referenciadas por outras, será mostrado um aviso.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se ativar a reciclagem para esta base de dados, as entradas serão movidas diretamente para a reciclagem. Se não a utilizar, as entradas serão apagadas sem qualquer confirmação.&lt;/p&gt;&lt;p&gt;Contudo, se as entradas apagadas forem referenciadas por outras, será mostrado um aviso.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>

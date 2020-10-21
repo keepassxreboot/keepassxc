@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Colorato</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>È necessario riavviare l&apos;applicazione per impostare la nuova lingua. Vuoi riavviare ora?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Salva automaticamente dopo ogni modifica</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Salva automaticamente all&apos;uscita</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -290,23 +290,19 @@
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>Scorciatoia globale di tipo automatico</translation>
+        <translation>Scorciatoia globale per il completamento automatico</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>Ritardo in millisecondi di digitazione automatica dei caratteri</translation>
+        <translation>Ritardo in millisecondi del completamento automatico dei caratteri</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>Ritardo di avvio in millisecondi della digitazione automatica</translation>
+        <translation>Ritardo di avvio in millisecondi dell completamento automatico</translation>
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
         <translation>Avvia automaticamente KeePassXC all&apos;avvio del sistema</translation>
-    </message>
-    <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Contrassegnare il database come modificato per modifiche non riguardanti i dati (ad es. espansione dei gruppi)</translation>
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
@@ -334,7 +330,7 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Ritardo di digitazione automatica:</translation>
+        <translation>Ritardo del completamento automatico:</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Ritardo avvio auto-completamento:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Salva automaticamente durante il blocco del database</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Salva automaticamente le modifiche non apportate ai dati durante il blocco del database</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Tipo di icona vassoio</translation>
     </message>
 </context>
 <context>
@@ -478,7 +486,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC richiede il permesso di Accessibilità per effettuare l&apos;Auto-Type di livello base. Se hai già concesso il permesso, riavvia KeePassXC.</translation>
+        <translation>KeePassXC richiede il permesso di Accessibilità per effettuare l&apos;auto-completamento di livello base. Se hai già concesso il permesso, riavvia KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -534,7 +542,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePasssXC richiede il permesso di Accessibilità e di Registrazione Schermo per effettuare l&apos;Auto-Type globale. La registrazione dello schermo è necessaria per usare il titolo della finestra al fine di trovare le voci corrispondenti. Se hai già concesso il permesso, riavvia KeePassXC.</translation>
+        <translation>KeePasssXC richiede il permesso di Accessibilità e di Registrazione Schermo per effettuare l&apos;auto-completamento globale. La registrazione dello schermo è necessaria per usare il titolo della finestra al fine di trovare le voci corrispondenti. Se hai già concesso il permesso, riavvia KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -2398,11 +2406,11 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation>Sequenza di tipo automatico personalizzata</translation>
+        <translation>Sequenza personalizzata di completamento automatico</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation>Aprire la pagina Web di aiuto per le sequenze automatiche</translation>
+        <translation>Aprire la pagina Web di aiuto per i completamenti automatici</translation>
     </message>
     <message>
         <source>Existing window associations</source>
@@ -2430,15 +2438,15 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation>Sequenza di tipo automatico personalizzata per questa finestra</translation>
+        <translation>Sequenza personalizzata del completamento automatico per questa finestra</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Eredita la sequenza predefinita di Auto-Type dal gruppo</translation>
+        <translation>Eredita la sequenza predefinita di auto-completamento dal gruppo</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Usa sequenza personalizzata di Auto-Type:</translation>
+        <translation>Usa sequenza personalizzata di auto-completamento:</translation>
     </message>
 </context>
 <context>
@@ -2875,7 +2883,7 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation>Campo di sequenza di tipo automatico predefinito</translation>
+        <translation>Campo della sequenza del completamento automatico predefinito</translation>
     </message>
     <message>
         <source>Expires:</source>
@@ -2887,7 +2895,7 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation>Digitazione automatica:</translation>
+        <translation>Completamento automatico:</translation>
     </message>
     <message>
         <source>Search:</source>
@@ -2903,7 +2911,7 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
-        <translation>Impostare la sequenza di tipo automatico predefinita</translation>
+        <translation>Impostare la sequenza predefinita del completamento automatico</translation>
     </message>
 </context>
 <context>
@@ -4540,7 +4548,7 @@ Si consiglia di utilizzare l&apos;AppImage disponibile sulla nostra pagina di do
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Eseguire compilazione &amp;automatica</translation>
+        <translation>Eseguire completamento &amp;automatico</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -4839,6 +4847,26 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>È necessario riavviare l&apos;applicazione per applicare questa impostazione. Vuoi riavviare ora?</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Esegui la sequenza di completamento automatico</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>{NOMEUSER)</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>{NOMEUSER}{ENTER}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>{PASSWORD}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>{PASSWORD}{ENTER}</translation>
     </message>
 </context>
 <context>
@@ -5325,10 +5353,6 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
         <translation>Eccellente</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>ASCII esteso</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Passare alla modalità avanzata</translation>
     </message>
@@ -5337,56 +5361,20 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
         <translation>Avanzate</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Parentesi graffe</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Punteggiatura</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Citazioni</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logogrammi</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5507,6 +5495,10 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Rigenera password (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Caratteri speciali</translation>
     </message>
 </context>
 <context>

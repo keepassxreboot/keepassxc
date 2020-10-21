@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Farebné</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Automaticky uložiť po každej zmene</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Automaticky uložiť pri ukončení</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>Automaticky spustiť KeePassXC pri štarte systému</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Označovať databázu za zmenenú pri nedátových zmenách (napr. rozbalenie skupiny)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Bezpečne uložiť súbory databáz  (vypnite pri problémoch s Dropbox, apod)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Oneskorenia spustenia Automatického vypĺňania:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4844,6 +4852,26 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Musíte reštartovať aplikáciu, aby sa tieto zmeny prejavili. Chcete ju reštartovať teraz?</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5329,10 +5357,6 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
         <translation>Výbroné</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>Rozšírené ASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Prepnúť na pokročilý režim</translation>
     </message>
@@ -5341,56 +5365,20 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
         <translation>Pokročilé</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Ž</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-ž</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Zátvorky</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Interpunkcia</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Úvodzovky</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Zástupné znaky</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5511,6 +5499,10 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Obnoviť heslo (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Špeciálne znaky</translation>
     </message>
 </context>
 <context>

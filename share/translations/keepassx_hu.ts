@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Színes</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Az új nyelv beállításának az érvényre kerüléséhez újra kell indítani az alkalmazást. Legyen azonnal újraindítva?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Automatikus mentés minden módosítás után</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Automatikus mentés kilépéskor</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>KeePassXC automatikus indítása a rendszer indulásakor</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Nem adatjellegű változások (pl. csoport lenyitása) esetén az adatbázis megjelölése módosítottként</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Adatbázisok biztonságos mentése (Dropbox-szal és hasonlókkal való probléma esetén letiltandó)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Automatikus beírás kezdésének késleltetése:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Automatikus mentés adatbázis zárolásakor</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Nem adatváltozások automatikus mentése adatbázis zárolásakor</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Tálcaikon stílusa</translation>
     </message>
 </context>
 <context>
@@ -4837,6 +4845,26 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Ennek a beállításnak az érvényre kerüléséhez újra kell indítani az alkalmazást. Legyen azonnal újraindítva?</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Automatikus beírási sorrend végrehajtása</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5322,10 +5350,6 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
         <translation>Kiváló</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>Bővített ASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Váltás speciális módba</translation>
     </message>
@@ -5334,56 +5358,20 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
         <translation>Speciális</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Zárójelek</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Központozás</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Idézőjelek</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Logogramok</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5504,6 +5492,10 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Jelszó újraelőállítása (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Speciális karakterek</translation>
     </message>
 </context>
 <context>

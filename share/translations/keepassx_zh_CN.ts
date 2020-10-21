@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>彩色</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>您必须重新启动应用程序才能应用此设置。要现在重新启动吗？</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>修改后自动保存</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>离开后自动保存</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -290,7 +290,7 @@
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>全局自动键入快捷方式</translation>
+        <translation>全局自动输入快捷键</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
@@ -303,10 +303,6 @@
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
         <translation>系统启动时自动启动 KeePassXC</translation>
-    </message>
-    <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>将数据库标记为已修改的非数据更改（例如，展开组）</translation>
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
@@ -326,7 +322,7 @@
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>托盘图标类型：</translation>
+        <translation>任务栏图标类型：</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
@@ -334,15 +330,27 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>自动键入延迟：</translation>
+        <translation>自动输入延迟：</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>全局自动类型快捷方式：</translation>
+        <translation>全局自动输入快捷键：</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation>自动类型启动延迟：</translation>
+        <translation>自动输入启动延迟：</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>锁定数据库时自动保存</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>锁定数据库时自动保存</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>任务栏图标类型</translation>
     </message>
 </context>
 <context>
@@ -390,7 +398,7 @@
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>执行自动类型后重新锁定先前锁定的数据库</translation>
+        <translation>执行自动输入后重新锁定先前锁定的数据库</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
@@ -2882,11 +2890,11 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation>使用父组的默认自动类型序列</translation>
+        <translation>使用父组的默认自动输入序列</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation>自动类型：</translation>
+        <translation>自动输入：</translation>
     </message>
     <message>
         <source>Search:</source>
@@ -2902,7 +2910,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
-        <translation>设置默认的自动类型序列</translation>
+        <translation>设置默认的自动输入序列</translation>
     </message>
 </context>
 <context>
@@ -3119,7 +3127,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>您确定要删除％n个附件吗？</numerusform></translation>
+        <translation><numerusform>您确定要删除 ％n 个附件吗？</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3371,7 +3379,7 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>自动填充</translation>
+        <translation>自动输入</translation>
     </message>
     <message>
         <source>Window</source>
@@ -4836,6 +4844,26 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>您必须重新启动应用程序才能应用此设置。现在要重新启动吗？</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>执行自动输入</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>仅用户名</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>用户名并回车</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>仅密码</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>密码并回车</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5321,10 +5349,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>非常好</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>扩展 ASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>切换到高级模式</translation>
     </message>
@@ -5333,56 +5357,20 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>高级</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>括弧</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>标点</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>引号</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>语标符号</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5503,6 +5491,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Regenerate password (%1)</source>
         <translation>重新生成密码  (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>特殊字符</translation>
     </message>
 </context>
 <context>

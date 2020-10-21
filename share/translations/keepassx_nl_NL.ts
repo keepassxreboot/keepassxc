@@ -135,6 +135,10 @@
         <source>Colorful</source>
         <translation>Kleurrijk</translation>
     </message>
+    <message>
+        <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation>Je moet de toepassing opnieuw starten om de nieuwe taal in te stellen. Wil je dat nu doen?</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -165,10 +169,6 @@
     <message>
         <source>Automatically save after every change</source>
         <translation>Automatisch opslaan na iedere wijziging</translation>
-    </message>
-    <message>
-        <source>Automatically save on exit</source>
-        <translation>Automatisch opslaan bij afsluiten</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -305,10 +305,6 @@
         <translation>KeePassXC automatisch opstarten met het systeem</translation>
     </message>
     <message>
-        <source>Mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Database markeren als gewijzigd voor niet-inhoudelijke aanpassingen (bijv. uitbreiding van groepen)</translation>
-    </message>
-    <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
         <translation>Databasebestanden veilig opslaan (uitschakelen bij problemen met Dropbox, enz.)</translation>
     </message>
@@ -343,6 +339,18 @@
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Auto-type startvertraging:</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Automatisch opslaan bij het vergrendelen van de database</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Automatisch niet-gegevens wijzigingen opslaan bij het vergrendelen van de database</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1303,7 +1311,7 @@ Om deze fout te voorkomen ga je naar &quot;Database instellingen.../Beveiliging&
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation>Voer eventueel additionele inloggegevens in:</translation>
+        <translation>Voer eventuele aanvullende inloggegevens in:</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
@@ -1528,7 +1536,7 @@ Dit is alleen nodig als je database een kopie is van een andere en de browserext
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
         <source>Add additional protection...</source>
-        <translation>Extra beveiliging toevoegen...</translation>
+        <translation>Aanvullende beveiliging toevoegen...</translation>
     </message>
     <message>
         <source>No password set</source>
@@ -1782,7 +1790,7 @@ Als je dit aantal aanhoudt is het mogelijk heel gemakkelijk om de database te kr
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Extra database-instellingen</translation>
+        <translation>Aanvullende database-instellingen</translation>
     </message>
     <message>
         <source>Database name field</source>
@@ -2290,7 +2298,7 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Extra kenmerken</translation>
+        <translation>Aanvullende kenmerken</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2460,7 +2468,7 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation>Extra URLs</translation>
+        <translation>Aanvullende URLs</translation>
     </message>
     <message>
         <source>Add</source>
@@ -4838,6 +4846,26 @@ Houd rekening met fouten en kleine problemen. Deze versie is niet bedoeld voor r
         <translation>Je moet de applicatie opnieuw opstarten om deze instelling toe te passen. 
 Wil je KeePassXC nu opnieuw opstarten?</translation>
     </message>
+    <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Auto-type tekenreeks uitvoeren</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5323,10 +5351,6 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
         <translation>Uitstekend</translation>
     </message>
     <message>
-        <source>ExtendedASCII</source>
-        <translation>Uitgebreid ASCII</translation>
-    </message>
-    <message>
         <source>Switch to advanced mode</source>
         <translation>Overschakelen naar de geavanceerde modus</translation>
     </message>
@@ -5335,56 +5359,20 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
         <translation>Geavanceerd</translation>
     </message>
     <message>
-        <source>A-Z</source>
-        <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>a-z</source>
-        <translation>a-z</translation>
-    </message>
-    <message>
-        <source>0-9</source>
-        <translation>0-9</translation>
-    </message>
-    <message>
         <source>Braces</source>
         <translation>Haakjes</translation>
-    </message>
-    <message>
-        <source>{[(</source>
-        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
         <translation>Leestekens</translation>
     </message>
     <message>
-        <source>.,:;</source>
-        <translation>.,:;</translation>
-    </message>
-    <message>
         <source>Quotes</source>
         <translation>Aanhalingstekens</translation>
     </message>
     <message>
-        <source>&quot; &apos;</source>
-        <translation>&quot; &apos;</translation>
-    </message>
-    <message>
-        <source>&lt;*+!?=</source>
-        <translation>&lt;*+!? =</translation>
-    </message>
-    <message>
-        <source>\_|-/</source>
-        <translation>\_|-/</translation>
-    </message>
-    <message>
         <source>Logograms</source>
         <translation>Special tekens</translation>
-    </message>
-    <message>
-        <source>#$%&amp;&amp;@^`~</source>
-        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5505,6 +5493,10 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     <message>
         <source>Regenerate password (%1)</source>
         <translation>Òpnieuw genereren (%1)</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Speciale tekens</translation>
     </message>
 </context>
 <context>
