@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.7.0 (in development)
+
+### Added
+
+### Changed
+
+### Fixed
+
 ## 2.6.2 (2020-10-21)
 
 ### Added
