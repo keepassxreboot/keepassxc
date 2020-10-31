@@ -55,6 +55,6 @@ if(WITH_XC_BROWSER)
     endif()
 
     if(MINGW)
-      target_link_libraries(keepassxc-proxy Wtsapi32.lib Ws2_32.lib)
+      target_link_libraries(keepassxc-proxy wtsapi32.lib ws2_32.lib)
     endif()
 endif()

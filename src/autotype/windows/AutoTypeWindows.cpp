@@ -19,7 +19,7 @@
 #include "AutoTypeWindows.h"
 #include "gui/osutils/OSUtils.h"
 
-#include <VersionHelpers.h>
+#include <versionhelpers.h>
 
 #define HOTKEY_ID 1
 #define MAX_WINDOW_TITLE_LENGTH 1024

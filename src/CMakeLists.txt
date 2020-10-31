@@ -356,7 +356,7 @@ if(UNIX AND NOT APPLE)
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
 if(MINGW)
-    target_link_libraries(keepassx_core Wtsapi32.lib Ws2_32.lib)
+    target_link_libraries(keepassx_core wtsapi32.lib ws2_32.lib)
 endif()
 
 if(MINGW)
