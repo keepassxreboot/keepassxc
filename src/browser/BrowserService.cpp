@@ -745,7 +745,7 @@ BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& siteUrlStr,
         // Sort same priority entries by Title or UserName
         auto entries = priorities.values(key);
         std::sort(entries.begin(), entries.end(), [&sortField](Entry* left, Entry* right) {
-            return QString::localeAwareCompare(left->attribute(sortField), right->attribute(sortField));
+            return QString::localeAwareCompare(left->attribute(sortField), right->attribute(sortField)) < 0;
         });
         results << entries;
         if (browserSettings()->bestMatchOnly() && !results.isEmpty()) {
