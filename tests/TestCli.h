@@ -45,6 +45,7 @@ private slots:
     void initTestCase();
     void init();
     void cleanup();
+    void cleanupTestCase();
 
     void testBatchCommands();
     void testAdd();
@@ -81,6 +82,7 @@ private slots:
     void testYubiKeyOption();
 
 private:
+    QScopedPointer<QFile> m_devNull;
     QScopedPointer<TemporaryFile> m_dbFile;
     QScopedPointer<TemporaryFile> m_dbFile2;
     QScopedPointer<TemporaryFile> m_dbFileMulti;
