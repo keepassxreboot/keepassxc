@@ -303,6 +303,8 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
 void EntryPreviewWidget::updateEntryAutotypeTab()
 {
     Q_ASSERT(m_currentEntry);
+
+    m_ui->entrySequenceLabel->setText(m_currentEntry->effectiveAutoTypeSequence());
     m_ui->entryAutotypeTree->clear();
     QList<QTreeWidgetItem*> items;
     const AutoTypeAssociations* autotypeAssociations = m_currentEntry->autoTypeAssociations();
@@ -314,7 +316,7 @@ void EntryPreviewWidget::updateEntryAutotypeTab()
     }
 
     m_ui->entryAutotypeTree->addTopLevelItems(items);
-    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAutotypeTab, !items.isEmpty());
+    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAutotypeTab, m_currentEntry->autoTypeEnabled());
 }
 
 void EntryPreviewWidget::updateGroupHeaderLine()
