@@ -38,7 +38,7 @@ namespace FdoSecrets
     }
 
     Session::Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
-        : DBusObject(parent)
+        : DBusObjectHelper(parent)
         , m_cipher(std::move(cipher))
         , m_peer(peer)
         , m_id(QUuid::createUuid())
@@ -48,7 +48,7 @@ namespace FdoSecrets
     bool Session::registerSelf()
     {
         auto path = QStringLiteral(DBUS_PATH_TEMPLATE_SESSION).arg(p()->objectPath().path(), id());
-        bool ok = registerWithPath(path, new SessionAdaptor(this));
+        bool ok = registerWithPath(path);
         if (!ok) {
             service()->plugin()->emitError(tr("Failed to register session on DBus at path '%1'").arg(path));
         }

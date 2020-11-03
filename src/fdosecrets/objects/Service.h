@@ -45,7 +45,7 @@ namespace FdoSecrets
     class ServiceAdaptor;
     class Session;
 
-    class Service : public DBusObject // clazy: exclude=ctor-missing-parent-argument
+    class Service : public DBusObjectHelper<Service, ServiceAdaptor> // clazy: exclude=ctor-missing-parent-argument
     {
         Q_OBJECT
 

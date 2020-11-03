@@ -60,7 +60,7 @@ namespace FdoSecrets
     }
 
     Item::Item(Collection* parent, Entry* backend)
-        : DBusObject(parent)
+        : DBusObjectHelper(parent)
         , m_backend(backend)
     {
         Q_ASSERT(!p()->objectPath().path().isEmpty());
@@ -71,7 +71,7 @@ namespace FdoSecrets
     bool Item::registerSelf()
     {
         auto path = QStringLiteral(DBUS_PATH_TEMPLATE_ITEM).arg(p()->objectPath().path(), m_backend->uuidToHex());
-        bool ok = registerWithPath(path, new ItemAdaptor(this));
+        bool ok = registerWithPath(path);
         if (!ok) {
             service()->plugin()->emitError(tr("Failed to register item on DBus at path '%1'").arg(path));
         }
@@ -340,7 +340,7 @@ namespace FdoSecrets
         // Unregister current path early, do not rely on deleteLater's call to destructor
         // as in case of Entry moving between groups, new Item will be created at the same DBus path
         // before the current Item is deleted in the event loop.
-        unregisterCurrentPath();
+        unregisterPrimaryPath();
 
         m_backend = nullptr;
         deleteLater();

@@ -38,7 +38,7 @@ namespace FdoSecrets
     class Collection;
     class PromptBase;
 
-    class Item : public DBusObject
+    class Item : public DBusObjectHelper<Item, ItemAdaptor>
     {
         Q_OBJECT
 
@@ -100,7 +100,6 @@ namespace FdoSecrets
     public slots:
         void doDelete();
 
-    private:
         /**
          * @brief Register self on DBus
          * @return

@@ -104,6 +104,7 @@ void FdoSecretsPlugin::emitRequestShowNotification(const QString& msg, const QSt
 void FdoSecretsPlugin::emitError(const QString& msg)
 {
     emit error(tr("<b>Fdo Secret Service:</b> %1").arg(msg));
+    qDebug() << msg;
 }
 
 QString FdoSecretsPlugin::reportExistingService() const

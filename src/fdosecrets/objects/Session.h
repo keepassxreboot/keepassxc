@@ -34,7 +34,7 @@ namespace FdoSecrets
 {
 
     class CipherPair;
-    class Session : public DBusObject
+    class Session : public DBusObjectHelper<Session, SessionAdaptor>
     {
         Q_OBJECT
 

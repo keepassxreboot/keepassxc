@@ -51,7 +51,7 @@ namespace FdoSecrets
 
     Service::Service(FdoSecretsPlugin* plugin,
                      QPointer<DatabaseTabWidget> dbTabs) // clazy: exclude=ctor-missing-parent-argument
-        : DBusObject(nullptr)
+        : DBusObjectHelper(nullptr)
         , m_plugin(plugin)
         , m_databases(std::move(dbTabs))
         , m_insideEnsureDefaultAlias(false)
@@ -74,7 +74,7 @@ namespace FdoSecrets
             return false;
         }
 
-        if (!registerWithPath(QStringLiteral(DBUS_PATH_SECRETS), new ServiceAdaptor(this))) {
+        if (!registerWithPath(QStringLiteral(DBUS_PATH_SECRETS))) {
             plugin()->emitError(tr("Failed to register DBus path %1.<br/>").arg(QStringLiteral(DBUS_PATH_SECRETS)));
             return false;
         }
@@ -112,12 +112,12 @@ namespace FdoSecrets
         // When the Collection finds that no exposed group, it will delete itself.
         // Thus the service also needs to monitor it and recreate the collection if the user changes
         // from no exposed to exposed something.
+        connect(dbWidget, &DatabaseWidget::databaseReplaced, this, [this, dbWidget]() {
+            monitorDatabaseExposedGroup(dbWidget);
+        });
         if (!dbWidget->isLocked()) {
             monitorDatabaseExposedGroup(dbWidget);
         }
-        connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [this, dbWidget]() {
-            monitorDatabaseExposedGroup(dbWidget);
-        });
 
         auto coll = Collection::Create(this, dbWidget);
         if (!coll) {
@@ -129,7 +129,7 @@ namespace FdoSecrets
         m_collections << coll;
         m_dbToCollection[dbWidget] = coll;
 
-        // handle alias
+        // keep record of alias
         connect(coll, &Collection::aliasAboutToAdd, this, &Service::onCollectionAliasAboutToAdd);
         connect(coll, &Collection::aliasAdded, this, &Service::onCollectionAliasAdded);
         connect(coll, &Collection::aliasRemoved, this, &Service::onCollectionAliasRemoved);

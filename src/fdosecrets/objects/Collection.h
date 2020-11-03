@@ -36,7 +36,7 @@ namespace FdoSecrets
     class Item;
     class PromptBase;
     class Service;
-    class Collection : public DBusObject
+    class Collection : public DBusObjectHelper<Collection, CollectionAdaptor>
     {
         Q_OBJECT
 
@@ -124,8 +124,12 @@ namespace FdoSecrets
     private slots:
         void onDatabaseLockChanged();
         void onDatabaseExposedGroupChanged();
+
         // force reload info from backend, potentially delete self
         bool reloadBackend();
+
+        // calls reloadBackend, delete self when error
+        void reloadBackendOrDelete();
 
     private:
         friend class DeleteCollectionPrompt;
@@ -165,8 +169,6 @@ namespace FdoSecrets
         QSet<QString> m_aliases;
         QList<Item*> m_items;
         QMap<const Entry*, Item*> m_entryToItem;
-
-        bool m_registered;
     };
 
 } // namespace FdoSecrets

@@ -32,7 +32,7 @@ namespace FdoSecrets
 
     class Service;
 
-    class PromptBase : public DBusObject
+    class PromptBase : public DBusObjectHelper<PromptBase, PromptAdaptor>
     {
         Q_OBJECT
     public:
