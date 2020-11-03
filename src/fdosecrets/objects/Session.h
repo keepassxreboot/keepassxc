@@ -42,7 +42,7 @@ namespace FdoSecrets
     public:
         static std::unique_ptr<CipherPair> CreateCiphers(const QString& peer,
                                                          const QString& algorithm,
-                                                         const QVariant& intpu,
+                                                         const QVariant& input,
                                                          QVariant& output,
                                                          bool& incomplete);
         static void CleanupNegotiation(const QString& peer);
@@ -99,7 +99,7 @@ namespace FdoSecrets
         QString m_peer;
         QUuid m_id;
 
-        static QHash<QString, QVariant> negoniationState;
+        static QHash<QString, QVariant> negotiationState;
     };
 
 } // namespace FdoSecrets

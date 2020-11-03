@@ -159,7 +159,7 @@ namespace FdoSecrets
         QList<Session*> m_sessions;
         QHash<QString, Session*> m_peerToSession;
 
-        bool m_insdieEnsureDefaultAlias;
+        bool m_insideEnsureDefaultAlias;
 
         std::unique_ptr<QDBusServiceWatcher> m_serviceWatcher;
     };

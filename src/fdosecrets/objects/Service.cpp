@@ -54,7 +54,7 @@ namespace FdoSecrets
         : DBusObject(nullptr)
         , m_plugin(plugin)
         , m_databases(std::move(dbTabs))
-        , m_insdieEnsureDefaultAlias(false)
+        , m_insideEnsureDefaultAlias(false)
         , m_serviceWatcher(nullptr)
     {
         connect(
@@ -176,11 +176,11 @@ namespace FdoSecrets
 
     void Service::ensureDefaultAlias()
     {
-        if (m_insdieEnsureDefaultAlias) {
+        if (m_insideEnsureDefaultAlias) {
             return;
         }
 
-        m_insdieEnsureDefaultAlias = true;
+        m_insideEnsureDefaultAlias = true;
 
         auto coll = findCollection(m_databases->currentDatabaseWidget());
         if (coll) {
@@ -188,7 +188,7 @@ namespace FdoSecrets
             coll->addAlias(DEFAULT_ALIAS).okOrDie();
         }
 
-        m_insdieEnsureDefaultAlias = false;
+        m_insideEnsureDefaultAlias = false;
     }
 
     void Service::dbusServiceUnregistered(const QString& service)

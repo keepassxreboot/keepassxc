@@ -24,7 +24,7 @@
 namespace FdoSecrets
 {
 
-    QHash<QString, QVariant> Session::negoniationState;
+    QHash<QString, QVariant> Session::negotiationState;
 
     Session* Session::Create(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
     {
@@ -57,7 +57,7 @@ namespace FdoSecrets
 
     void Session::CleanupNegotiation(const QString& peer)
     {
-        negoniationState.remove(peer);
+        negotiationState.remove(peer);
     }
 
     DBusReturn<void> Session::close()

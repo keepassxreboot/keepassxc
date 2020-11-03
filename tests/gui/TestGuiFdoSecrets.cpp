@@ -267,7 +267,7 @@ void TestGuiFdoSecrets::init()
     m_dbWidget = m_tabWidget->currentDatabaseWidget();
     m_db = m_dbWidget->database();
 
-    // by default expsoe the root group
+    // by default expose the root group
     FdoSecrets::settings()->setExposedGroup(m_db, m_db->rootGroup()->uuid());
     QVERIFY(m_dbWidget->save());
 }
@@ -1047,7 +1047,7 @@ void TestGuiFdoSecrets::testExposeSubgroup()
     QCOMPARE(exposedEntries, subgroup->entries());
 }
 
-void TestGuiFdoSecrets::testModifiyingExposedGroup()
+void TestGuiFdoSecrets::testModifyingExposedGroup()
 {
     // test when exposed group is removed the collection is not exposed anymore
     auto subgroup = m_db->rootGroup()->findGroupByPath("/Homebanking");

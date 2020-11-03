@@ -25,7 +25,6 @@
 #include "fdosecrets/objects/Session.h"
 
 #include "core/Config.h"
-#include "core/Database.h"
 #include "core/Tools.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
@@ -330,12 +329,12 @@ namespace FdoSecrets
             itemPath = attributes.value(ItemAttributes::PathKey);
 
             // check existing item using attributes
-            auto existings = searchItems(attributes);
-            if (existings.isError()) {
-                return existings;
+            auto existing = searchItems(attributes);
+            if (existing.isError()) {
+                return existing;
             }
-            if (!existings.value().isEmpty() && replace) {
-                item = existings.value().front();
+            if (!existing.value().isEmpty() && replace) {
+                item = existing.value().front();
                 newlyCreated = false;
             }
         }
