@@ -24,8 +24,9 @@
 #include <QHash>
 #include <QObject>
 #include <QPointer>
-#include <QScopedPointer>
 #include <QVariant>
+
+#include <memory>
 
 class QDBusServiceWatcher;
 
@@ -47,11 +48,17 @@ namespace FdoSecrets
     class Service : public DBusObject // clazy: exclude=ctor-missing-parent-argument
     {
         Q_OBJECT
-    public:
-        explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs);
-        ~Service() override;
 
-        bool initialize();
+        explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs);
+    public:
+        /**
+         * @brief Create a new instance of `Service`. Its parent is set to `null`
+         * @return pointer to newly created Service, or nullptr if error
+         * This may be caused by
+         *   - failed initialization
+         */
+        static std::unique_ptr<Service> Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs);
+        ~Service() override;
 
         DBusReturn<QVariant> openSession(const QString& algorithm, const QVariant& input, Session*& result);
         DBusReturn<Collection*>
@@ -81,12 +88,6 @@ namespace FdoSecrets
 
         void sessionOpened(Session* sess);
         void sessionClosed(Session* sess);
-
-        /**
-         * Report error message to the GUI
-         * @param msg
-         */
-        void error(const QString& msg);
 
         /**
          * Finish signal for async action doUnlockDatabaseInDialog
@@ -131,6 +132,8 @@ namespace FdoSecrets
         void onCollectionAliasRemoved(const QString& alias);
 
     private:
+        bool initialize();
+
         /**
          * Find collection by alias name
          * @param alias
@@ -158,7 +161,7 @@ namespace FdoSecrets
 
         bool m_insdieEnsureDefaultAlias;
 
-        QScopedPointer<QDBusServiceWatcher> m_serviceWatcher;
+        std::unique_ptr<QDBusServiceWatcher> m_serviceWatcher;
     };
 
 } // namespace FdoSecrets

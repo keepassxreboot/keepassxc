@@ -17,6 +17,7 @@
 
 #include "Collection.h"
 
+#include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
@@ -34,6 +35,18 @@
 
 namespace FdoSecrets
 {
+    Collection* Collection::Create(Service* parent, DatabaseWidget* backend)
+    {
+        std::unique_ptr<Collection> coll{new Collection(parent, backend)};
+        if (!coll->reloadBackend()) {
+            return nullptr;
+        }
+        if (!coll->backend()) {
+            // no exposed group on this db
+            return nullptr;
+        }
+        return coll.release();
+    }
 
     Collection::Collection(Service* parent, DatabaseWidget* backend)
         : DBusObject(parent)
@@ -56,11 +69,9 @@ namespace FdoSecrets
             }
             emit doneUnlockCollection(accepted);
         });
-
-        reloadBackend();
     }
 
-    void Collection::reloadBackend()
+    bool Collection::reloadBackend()
     {
         if (m_registered) {
             // delete all items
@@ -83,9 +94,11 @@ namespace FdoSecrets
         // the database may not have a name (derived from filePath) yet, which may happen if it's newly created.
         // defer the registration to next time a file path change happens.
         if (!name().isEmpty()) {
-            registerWithPath(
-                QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(p()->objectPath().path(), encodePath(name())),
-                new CollectionAdaptor(this));
+            auto path = QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(p()->objectPath().path(), encodePath(name()));
+            if (!registerWithPath(path, new CollectionAdaptor(this))) {
+                service()->plugin()->emitError(tr("Failed to register database on DBus under the name '%1'").arg(name()));
+                return false;
+            }
             m_registered = true;
         }
 
@@ -95,6 +108,8 @@ namespace FdoSecrets
         } else {
             cleanupConnections();
         }
+
+        return true;
     }
 
     DBusReturn<void> Collection::ensureBackend() const
@@ -197,7 +212,11 @@ namespace FdoSecrets
         }
 
         // Delete means close database
-        auto prompt = new DeleteCollectionPrompt(service(), this);
+        auto dpret = DeleteCollectionPrompt::Create(service(), this);
+        if (dpret.isError()) {
+            return dpret;
+        }
+        auto prompt = dpret.value();
         if (backendLocked()) {
             // this won't raise a dialog, immediate execute
             auto pret = prompt->prompt({});
@@ -405,6 +424,8 @@ namespace FdoSecrets
         if (ok) {
             m_aliases.insert(alias);
             emit aliasAdded(alias);
+        } else {
+            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
         }
 
         return {};
@@ -558,7 +579,7 @@ namespace FdoSecrets
             return;
         }
 
-        auto item = new Item(this, entry);
+        auto item = Item::Create(this, entry);
         m_items << item;
         m_entryToItem[entry] = item;
 

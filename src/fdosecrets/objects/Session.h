@@ -37,6 +37,8 @@ namespace FdoSecrets
     class Session : public DBusObject
     {
         Q_OBJECT
+
+        explicit Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent);
     public:
         static std::unique_ptr<CipherPair> CreateCiphers(const QString& peer,
                                                          const QString& algorithm,
@@ -45,7 +47,16 @@ namespace FdoSecrets
                                                          bool& incomplete);
         static void CleanupNegotiation(const QString& peer);
 
-        explicit Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent);
+        /**
+         * @brief Create a new instance of `Session`.
+         * @param cipher the negotiated cipher
+         * @param peer connecting peer
+         * @param parent the owning Service
+         * @return pointer to newly created Session, or nullptr if error
+         * This may be caused by
+         *   - DBus path registration error
+         */
+        static Session* Create(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent);
 
         DBusReturn<void> close();
 
@@ -71,12 +82,17 @@ namespace FdoSecrets
 
         QString id() const;
 
+        Service* service() const;
+
     signals:
         /**
          * The session is going to be closed
          * @param sess
          */
         void aboutToClose();
+
+    private:
+        bool registerSelf();
 
     private:
         std::unique_ptr<CipherPair> m_cipher;

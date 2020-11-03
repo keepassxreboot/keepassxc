@@ -31,6 +31,8 @@
 #include <QDBusServiceWatcher>
 #include <QDebug>
 
+#include <utility>
+
 namespace
 {
     constexpr auto DEFAULT_ALIAS = "default";
@@ -38,6 +40,14 @@ namespace
 
 namespace FdoSecrets
 {
+    std::unique_ptr<Service> Service::Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs)
+    {
+        std::unique_ptr<Service> res{new Service(plugin, std::move(dbTabs))};
+        if (!res->initialize()) {
+            return {};
+        }
+        return res;
+    }
 
     Service::Service(FdoSecretsPlugin* plugin,
                      QPointer<DatabaseTabWidget> dbTabs) // clazy: exclude=ctor-missing-parent-argument
@@ -59,16 +69,19 @@ namespace FdoSecrets
     bool Service::initialize()
     {
         if (!QDBusConnection::sessionBus().registerService(QStringLiteral(DBUS_SERVICE_SECRET))) {
-            emit error(tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET))
+            plugin()->emitError(tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET))
                        + m_plugin->reportExistingService());
             return false;
         }
 
-        registerWithPath(QStringLiteral(DBUS_PATH_SECRETS), new ServiceAdaptor(this));
+        if (!registerWithPath(QStringLiteral(DBUS_PATH_SECRETS), new ServiceAdaptor(this))) {
+            plugin()->emitError(tr("Failed to register DBus path %1.<br/>").arg(QStringLiteral(DBUS_PATH_SECRETS)));
+            return false;
+        }
 
         // Connect to service unregistered signal
         m_serviceWatcher.reset(new QDBusServiceWatcher());
-        connect(m_serviceWatcher.data(),
+        connect(m_serviceWatcher.get(),
                 &QDBusServiceWatcher::serviceUnregistered,
                 this,
                 &Service::dbusServiceUnregistered);
@@ -106,11 +119,10 @@ namespace FdoSecrets
             monitorDatabaseExposedGroup(dbWidget);
         });
 
-        auto coll = new Collection(this, dbWidget);
-        // Creation may fail if the database is not exposed.
-        // This is okay, because we monitor the expose settings above
-        if (!coll->isValid()) {
-            coll->deleteLater();
+        auto coll = Collection::Create(this, dbWidget);
+        if (!coll) {
+            // The creation may fail if the database is not exposed.
+            // This is okay, because we monitor the expose settings above
             return;
         }
 
@@ -184,8 +196,9 @@ namespace FdoSecrets
         Q_ASSERT(m_serviceWatcher);
 
         auto removed = m_serviceWatcher->removeWatchedService(service);
-        Q_UNUSED(removed);
-        Q_ASSERT(removed);
+        if (!removed) {
+            qDebug("FdoSecrets: Failed to remove service watcher");
+        }
 
         Session::CleanupNegotiation(service);
         auto sess = m_peerToSession.value(service, nullptr);
@@ -218,7 +231,10 @@ namespace FdoSecrets
         if (!ciphers) {
             return DBusReturn<>::Error(QDBusError::NotSupported);
         }
-        result = new Session(std::move(ciphers), callingPeerName(), this);
+        result = Session::Create(std::move(ciphers), callingPeerName(), this);
+        if (!result) {
+            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
+        }
 
         m_sessions.append(result);
         m_peerToSession[peer] = result;
@@ -240,12 +256,15 @@ namespace FdoSecrets
         // return existing collection if alias is non-empty and exists.
         auto collection = findCollection(alias);
         if (!collection) {
-            auto cp = new CreateCollectionPrompt(this);
-            prompt = cp;
+            auto cp = CreateCollectionPrompt::Create(this);
+            if (cp.isError()) {
+                return cp;
+            }
+            prompt = cp.value();
 
-            // collection will be created when the prompt complets.
+            // collection will be created when the prompt completes.
             // once it's done, we set additional properties on the collection
-            connect(cp, &CreateCollectionPrompt::collectionCreated, cp, [alias, properties](Collection* coll) {
+            connect(cp.value(), &CreateCollectionPrompt::collectionCreated, cp.value(), [alias, properties](Collection* coll) {
                 coll->setProperties(properties).okOrDie();
                 if (!alias.isEmpty()) {
                     coll->addAlias(alias).okOrDie();
@@ -314,7 +333,11 @@ namespace FdoSecrets
             }
         }
         if (!toUnlock.isEmpty()) {
-            prompt = new UnlockCollectionsPrompt(this, toUnlock);
+            auto up = UnlockCollectionsPrompt::Create(this, toUnlock);
+            if (up.isError()) {
+                return up;
+            }
+            prompt = up.value();
         }
         return unlocked;
     }
@@ -352,7 +375,11 @@ namespace FdoSecrets
             }
         }
         if (!toLock.isEmpty()) {
-            prompt = new LockCollectionsPrompt(this, toLock);
+            auto lp = LockCollectionsPrompt::Create(this, toLock);
+            if (lp.isError()) {
+                return lp;
+            }
+            prompt = lp.value();
         }
         return locked;
     }

@@ -31,17 +31,18 @@ namespace FdoSecrets
 
     DBusObject::DBusObject(DBusObject* parent)
         : QObject(parent)
+        , m_dbusAdaptor(nullptr)
     {
     }
 
-    void DBusObject::registerWithPath(const QString& path, QDBusAbstractAdaptor* adaptor)
+    bool DBusObject::registerWithPath(const QString& path, QDBusAbstractAdaptor* adaptor)
     {
+        Q_ASSERT(!m_dbusAdaptor);
+
         m_objectPath.setPath(path);
         m_dbusAdaptor = adaptor;
         adaptor->setParent(this);
-        auto ok = QDBusConnection::sessionBus().registerObject(m_objectPath.path(), this);
-        Q_UNUSED(ok);
-        Q_ASSERT(ok);
+        return QDBusConnection::sessionBus().registerObject(m_objectPath.path(), this);
     }
 
     QString DBusObject::callingPeerName() const

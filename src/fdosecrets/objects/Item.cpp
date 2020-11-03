@@ -48,16 +48,34 @@ namespace FdoSecrets
         constexpr auto FDO_SECRETS_CONTENT_TYPE = "FDO_SECRETS_CONTENT_TYPE";
     } // namespace
 
+    Item* Item::Create(Collection* parent, Entry* backend)
+    {
+        std::unique_ptr<Item> res{new Item(parent, backend)};
+
+        if (!res->registerSelf()) {
+            return nullptr;
+        }
+
+        return res.release();
+    }
+
     Item::Item(Collection* parent, Entry* backend)
         : DBusObject(parent)
         , m_backend(backend)
     {
         Q_ASSERT(!p()->objectPath().path().isEmpty());
 
-        registerWithPath(QStringLiteral(DBUS_PATH_TEMPLATE_ITEM).arg(p()->objectPath().path(), m_backend->uuidToHex()),
-                         new ItemAdaptor(this));
-
         connect(m_backend.data(), &Entry::entryModified, this, &Item::itemChanged);
+    }
+
+    bool Item::registerSelf()
+    {
+        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_ITEM).arg(p()->objectPath().path(), m_backend->uuidToHex());
+        bool ok = registerWithPath(path, new ItemAdaptor(this));
+        if (!ok) {
+            service()->plugin()->emitError(tr("Failed to register item on DBus at path '%1'").arg(path));
+        }
+        return ok;
     }
 
     DBusReturn<bool> Item::locked() const
@@ -206,8 +224,8 @@ namespace FdoSecrets
         if (ret.isError()) {
             return ret;
         }
-        auto prompt = new DeleteItemPrompt(service(), this);
-        return prompt;
+        auto prompt = DeleteItemPrompt::Create(service(), this);
+        return prompt.value();
     }
 
     DBusReturn<SecretStruct> Item::getSecret(Session* session)

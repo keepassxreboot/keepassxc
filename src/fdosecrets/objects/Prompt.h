@@ -36,8 +36,6 @@ namespace FdoSecrets
     {
         Q_OBJECT
     public:
-        explicit PromptBase(Service* parent);
-
         virtual DBusReturn<void> prompt(const QString& windowId) = 0;
 
         virtual DBusReturn<void> dismiss();
@@ -46,6 +44,9 @@ namespace FdoSecrets
         void completed(bool dismissed, const QVariant& result);
 
     protected:
+        explicit PromptBase(Service* parent);
+
+        bool registerSelf();
         QWindow* findWindow(const QString& windowId);
         Service* service() const;
     };
@@ -56,8 +57,9 @@ namespace FdoSecrets
     {
         Q_OBJECT
 
-    public:
         explicit DeleteCollectionPrompt(Service* parent, Collection* coll);
+    public:
+        static DBusReturn<DeleteCollectionPrompt*> Create(Service* parent, Collection* coll);
 
         DBusReturn<void> prompt(const QString& windowId) override;
 
@@ -69,8 +71,9 @@ namespace FdoSecrets
     {
         Q_OBJECT
 
-    public:
         explicit CreateCollectionPrompt(Service* parent);
+    public:
+        static DBusReturn<CreateCollectionPrompt*> Create(Service* parent);
 
         DBusReturn<void> prompt(const QString& windowId) override;
         DBusReturn<void> dismiss() override;
@@ -82,8 +85,10 @@ namespace FdoSecrets
     class LockCollectionsPrompt : public PromptBase
     {
         Q_OBJECT
-    public:
+
         explicit LockCollectionsPrompt(Service* parent, const QList<Collection*>& colls);
+    public:
+        static DBusReturn<LockCollectionsPrompt*> Create(Service* parent, const QList<Collection*>& colls);
 
         DBusReturn<void> prompt(const QString& windowId) override;
         DBusReturn<void> dismiss() override;
@@ -96,8 +101,10 @@ namespace FdoSecrets
     class UnlockCollectionsPrompt : public PromptBase
     {
         Q_OBJECT
-    public:
+
         explicit UnlockCollectionsPrompt(Service* parent, const QList<Collection*>& coll);
+    public:
+        static DBusReturn<UnlockCollectionsPrompt*> Create(Service* parent, const QList<Collection*>& coll);
 
         DBusReturn<void> prompt(const QString& windowId) override;
         DBusReturn<void> dismiss() override;
@@ -116,8 +123,9 @@ namespace FdoSecrets
     {
         Q_OBJECT
 
-    public:
         explicit DeleteItemPrompt(Service* parent, Item* item);
+    public:
+        static DBusReturn<DeleteItemPrompt*> Create(Service* parent, Item* item);
 
         DBusReturn<void> prompt(const QString& windowId) override;
 

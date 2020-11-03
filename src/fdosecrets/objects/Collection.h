@@ -39,8 +39,19 @@ namespace FdoSecrets
     class Collection : public DBusObject
     {
         Q_OBJECT
-    public:
+
         explicit Collection(Service* parent, DatabaseWidget* backend);
+    public:
+        /**
+         * @brief Create a new instance of `Collection`
+         * @param parent the owning Service
+         * @param backend the widget containing the database
+         * @return pointer to created instance, or nullptr when error happens.
+         * This may be caused by
+         *   - DBus path registration error
+         *   - database has no exposed group
+         */
+        static Collection* Create(Service* parent, DatabaseWidget* backend);
 
         DBusReturn<const QList<Item*>> items() const;
 
@@ -101,7 +112,7 @@ namespace FdoSecrets
         static EntrySearcher::SearchTerm attributeToTerm(const QString& key, const QString& value);
 
     public slots:
-        // expose some methods for Prmopt to use
+        // expose some methods for Prompt to use
         bool doLock();
         void doUnlock();
         // will remove self
@@ -114,7 +125,7 @@ namespace FdoSecrets
         void onDatabaseLockChanged();
         void onDatabaseExposedGroupChanged();
         // force reload info from backend, potentially delete self
-        void reloadBackend();
+        bool reloadBackend();
 
     private:
         friend class DeleteCollectionPrompt;

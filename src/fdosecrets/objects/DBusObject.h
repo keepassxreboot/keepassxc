@@ -57,7 +57,7 @@ namespace FdoSecrets
         }
 
     protected:
-        void registerWithPath(const QString& path, QDBusAbstractAdaptor* adaptor);
+        bool registerWithPath(const QString& path, QDBusAbstractAdaptor* adaptor);
 
         void unregisterCurrentPath()
         {
