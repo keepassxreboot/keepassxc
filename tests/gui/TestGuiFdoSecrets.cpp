@@ -48,6 +48,7 @@
 #include <QLineEdit>
 #include <QPointer>
 #include <QSignalSpy>
+#include <QTemporaryDir>
 #include <QXmlStreamReader>
 
 #include <memory>
@@ -759,6 +760,50 @@ void TestGuiFdoSecrets::testCollectionDelete()
         QCOMPARE(args.size(), 1);
         QCOMPARE(args.at(0).value<Collection*>(), rawColl);
     }
+}
+
+void TestGuiFdoSecrets::testHiddenFilename()
+{
+    // when file name contains leading dot, all parts excepting the last should be used
+    // for collection name, and the registration should success
+    QVERIFY(m_dbFile->rename(QFileInfo(*m_dbFile).path() + "/.Name.kdbx"));
+
+    // reset is necessary to not hold database longer and cause connections
+    // not cleaned up when the database tab is closed.
+    m_db.reset();
+    QVERIFY(m_tabWidget->closeAllDatabaseTabs());
+    m_tabWidget->addDatabaseTab(m_dbFile->fileName(), false, "a");
+    m_dbWidget = m_tabWidget->currentDatabaseWidget();
+    m_db = m_dbWidget->database();
+
+    // enable the service
+    auto service = enableService();
+    QVERIFY(service);
+
+    // collection is properly registered
+    auto coll = getDefaultCollection(service);
+    QVERIFY(coll->objectPath().path() != "/");
+    QCOMPARE(coll->name(), QStringLiteral(".Name"));
+}
+
+void TestGuiFdoSecrets::testDuplicateName()
+{
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    // create another file under different path but with the same filename
+    QString anotherFile = dir.path() + "/" + QFileInfo(*m_dbFile).fileName();
+    m_dbFile->copy(anotherFile);
+    m_tabWidget->addDatabaseTab(anotherFile, false, "a");
+
+    auto service = enableService();
+    QVERIFY(service);
+
+    // when two databases have the same name, one of it will have part of its uuid suffixed
+    const auto pathNoSuffix = QStringLiteral("/org/freedesktop/secrets/collection/KeePassXC");
+    CHECKED_DBUS_LOCAL_CALL(colls, service->collections());
+    QCOMPARE(colls.size(), 2);
+    QCOMPARE(colls[0]->objectPath().path(), pathNoSuffix);
+    QVERIFY(colls[1]->objectPath().path() != pathNoSuffix);
 }
 
 void TestGuiFdoSecrets::testItemCreate()

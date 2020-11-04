@@ -84,6 +84,9 @@ private slots:
     void testExposeSubgroup();
     void testModifyingExposedGroup();
 
+    void testHiddenFilename();
+    void testDuplicateName();
+
 protected slots:
     void createDatabaseCallback();
 

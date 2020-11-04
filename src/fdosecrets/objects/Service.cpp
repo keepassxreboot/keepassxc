@@ -30,8 +30,7 @@
 #include <QDBusConnection>
 #include <QDBusServiceWatcher>
 #include <QDebug>
-
-#include <utility>
+#include <QSharedPointer>
 
 namespace
 {
@@ -40,9 +39,9 @@ namespace
 
 namespace FdoSecrets
 {
-    std::unique_ptr<Service> Service::Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs)
+    QSharedPointer<Service> Service::Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs)
     {
-        std::unique_ptr<Service> res{new Service(plugin, std::move(dbTabs))};
+        QSharedPointer<Service> res{new Service(plugin, std::move(dbTabs))};
         if (!res->initialize()) {
             return {};
         }
@@ -121,20 +120,22 @@ namespace FdoSecrets
 
         auto coll = Collection::Create(this, dbWidget);
         if (!coll) {
-            // The creation may fail if the database is not exposed.
-            // This is okay, because we monitor the expose settings above
             return;
         }
 
         m_collections << coll;
         m_dbToCollection[dbWidget] = coll;
 
+        // keep record of the collection existence
+        connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() {
+            m_collections.removeAll(coll);
+            m_dbToCollection.remove(coll->backend());
+        });
+
         // keep record of alias
         connect(coll, &Collection::aliasAboutToAdd, this, &Service::onCollectionAliasAboutToAdd);
         connect(coll, &Collection::aliasAdded, this, &Service::onCollectionAliasAdded);
         connect(coll, &Collection::aliasRemoved, this, &Service::onCollectionAliasRemoved);
-
-        ensureDefaultAlias();
 
         // Forward delete signal, we have to rely on filepath to identify the database being closed,
         // but we can not access m_backend safely because during the databaseClosed signal,
@@ -150,14 +151,24 @@ namespace FdoSecrets
             }
         });
 
-        // relay signals
+        // actual load, must after updates to m_collections, because the reload may trigger
+        // another onDatabaseTabOpen, and m_collections will be used to prevent recursion.
+        if (!coll->reloadBackend()) {
+            // error in dbus
+            return;
+        }
+        if (!coll->backend()) {
+            // no exposed group on this db
+            return;
+        }
+
+        ensureDefaultAlias();
+
+        // only start relay signals when the collection is fully setup
         connect(coll, &Collection::collectionChanged, this, [this, coll]() { emit collectionChanged(coll); });
         connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() {
-            m_collections.removeAll(coll);
-            m_dbToCollection.remove(coll->backend());
             emit collectionDeleted(coll);
         });
-
         if (emitSignal) {
             emit collectionCreated(coll);
         }

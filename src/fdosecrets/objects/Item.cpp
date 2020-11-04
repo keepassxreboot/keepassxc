@@ -27,10 +27,10 @@
 #include "core/EntryAttributes.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 
 #include <QMimeDatabase>
 #include <QRegularExpression>
+#include <QScopedPointer>
 #include <QSet>
 #include <QTextCodec>
 
@@ -50,13 +50,13 @@ namespace FdoSecrets
 
     Item* Item::Create(Collection* parent, Entry* backend)
     {
-        std::unique_ptr<Item> res{new Item(parent, backend)};
+        QScopedPointer<Item> res{new Item(parent, backend)};
 
         if (!res->registerSelf()) {
             return nullptr;
         }
 
-        return res.release();
+        return res.take();
     }
 
     Item::Item(Collection* parent, Entry* backend)

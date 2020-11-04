@@ -78,11 +78,11 @@ namespace FdoSecrets
 
     DBusReturn<DeleteCollectionPrompt*> DeleteCollectionPrompt::Create(Service* parent, Collection* coll)
     {
-        std::unique_ptr<DeleteCollectionPrompt> res{new DeleteCollectionPrompt(parent, coll)};
+        QScopedPointer<DeleteCollectionPrompt> res{new DeleteCollectionPrompt(parent, coll)};
         if (!res->registerSelf()) {
             return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
         }
-        return res.release();
+        return res.take();
     }
 
     DeleteCollectionPrompt::DeleteCollectionPrompt(Service* parent, Collection* coll)
@@ -118,11 +118,11 @@ namespace FdoSecrets
 
     DBusReturn<CreateCollectionPrompt*> CreateCollectionPrompt::Create(Service* parent)
     {
-        std::unique_ptr<CreateCollectionPrompt> res{new CreateCollectionPrompt(parent)};
+        QScopedPointer<CreateCollectionPrompt> res{new CreateCollectionPrompt(parent)};
         if (!res->registerSelf()) {
             return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
         }
-        return res.release();
+        return res.take();
     }
 
     CreateCollectionPrompt::CreateCollectionPrompt(Service* parent)
@@ -163,11 +163,11 @@ namespace FdoSecrets
 
     DBusReturn<LockCollectionsPrompt*> LockCollectionsPrompt::Create(Service* parent, const QList<Collection*>& colls)
     {
-        std::unique_ptr<LockCollectionsPrompt> res{new LockCollectionsPrompt(parent, colls)};
+        QScopedPointer<LockCollectionsPrompt> res{new LockCollectionsPrompt(parent, colls)};
         if (!res->registerSelf()) {
             return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
         }
-        return res.release();
+        return res.take();
     }
 
     LockCollectionsPrompt::LockCollectionsPrompt(Service* parent, const QList<Collection*>& colls)
@@ -215,11 +215,11 @@ namespace FdoSecrets
 
     DBusReturn<UnlockCollectionsPrompt*> UnlockCollectionsPrompt::Create(Service* parent, const QList<Collection*>& coll)
     {
-        std::unique_ptr<UnlockCollectionsPrompt> res{new UnlockCollectionsPrompt(parent, coll)};
+        QScopedPointer<UnlockCollectionsPrompt> res{new UnlockCollectionsPrompt(parent, coll)};
         if (!res->registerSelf()) {
             return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
         }
-        return res.release();
+        return res.take();
     }
 
     UnlockCollectionsPrompt::UnlockCollectionsPrompt(Service* parent, const QList<Collection*>& colls)
@@ -291,11 +291,11 @@ namespace FdoSecrets
 
     DBusReturn<DeleteItemPrompt*> DeleteItemPrompt::Create(Service* parent, Item* item)
     {
-        std::unique_ptr<DeleteItemPrompt> res{new DeleteItemPrompt(parent, item)};
+        QScopedPointer<DeleteItemPrompt> res{new DeleteItemPrompt(parent, item)};
         if (!res->registerSelf()) {
             return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
         }
-        return res.release();
+        return res.take();
     }
 
     DeleteItemPrompt::DeleteItemPrompt(Service* parent, Item* item)

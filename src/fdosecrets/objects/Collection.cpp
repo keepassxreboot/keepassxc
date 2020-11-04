@@ -36,15 +36,7 @@ namespace FdoSecrets
 {
     Collection* Collection::Create(Service* parent, DatabaseWidget* backend)
     {
-        std::unique_ptr<Collection> coll{new Collection(parent, backend)};
-        if (!coll->reloadBackend()) {
-            return nullptr;
-        }
-        if (!coll->backend()) {
-            // no exposed group on this db
-            return nullptr;
-        }
-        return coll.release();
+        return new Collection(parent, backend);
     }
 
     Collection::Collection(Service* parent, DatabaseWidget* backend)
@@ -83,12 +75,20 @@ namespace FdoSecrets
         unregisterPrimaryPath();
 
         // make sure we have updated copy of the filepath, which is used to identify the database.
-        m_backendPath = m_backend->database()->filePath();
+        m_backendPath = m_backend->database()->canonicalFilePath();
 
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(p()->objectPath().path(), encodePath(name()));
+        // register the object, handling potentially duplicated name
+        auto name = encodePath(this->name());
+        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(p()->objectPath().path(), name);
         if (!registerWithPath(path)) {
-            service()->plugin()->emitError(tr("Failed to register database on DBus under the name '%1'").arg(name()));
-            return false;
+            // try again with a suffix
+            name += QStringLiteral("_%1").arg(Tools::uuidToHex(QUuid::createUuid()).left(4));
+            path = QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(p()->objectPath().path(), name);
+
+            if (!registerWithPath(path)) {
+                service()->plugin()->emitError(tr("Failed to register database on DBus under the name '%1'").arg(name));
+                return false;
+            }
         }
 
         // populate contents after expose on dbus, because items rely on parent's dbus object path
@@ -450,18 +450,16 @@ namespace FdoSecrets
 
     QString Collection::name() const
     {
-        // todo: make sure the name is never empty
         if (m_backendPath.isEmpty()) {
-            // This is a newly created db without saving to file.
-            // This name is also used to register dbus path.
-            // For simplicity, we don't monitor the name change.
-            // So the dbus object path is not updated if the db name
-            // changes. This should not be a problem because once the database
-            // gets saved, the dbus path will be updated to use filename and
-            // everything back to normal.
+            // This is a newly created db without saving to file,
+            // but we have to give a name, which is used to register dbus path.
+            // We use database name for this purpose. For simplicity, we don't monitor the name change.
+            // So the dbus object path is not updated if the db name changes.
+            // This should not be a problem because once the database gets saved,
+            // the dbus path will be updated to use filename and everything back to normal.
             return m_backend->database()->metadata()->name();
         }
-        return QFileInfo(m_backendPath).baseName();
+        return QFileInfo(m_backendPath).completeBaseName();
     }
 
     DatabaseWidget* Collection::backend() const

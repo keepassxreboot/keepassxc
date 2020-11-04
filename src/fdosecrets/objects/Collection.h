@@ -121,12 +121,12 @@ namespace FdoSecrets
         // delete the Entry in backend from this collection
         void doDeleteEntries(QList<Entry*> entries);
 
+        // force reload info from backend, potentially delete self
+        bool reloadBackend();
+
     private slots:
         void onDatabaseLockChanged();
         void onDatabaseExposedGroupChanged();
-
-        // force reload info from backend, potentially delete self
-        bool reloadBackend();
 
         // calls reloadBackend, delete self when error
         void reloadBackendOrDelete();

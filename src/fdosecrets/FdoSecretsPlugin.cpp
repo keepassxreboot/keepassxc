@@ -80,7 +80,7 @@ void FdoSecretsPlugin::updateServiceState()
 
 Service* FdoSecretsPlugin::serviceInstance() const
 {
-    return m_secretService.get();
+    return m_secretService.data();
 }
 
 DatabaseTabWidget* FdoSecretsPlugin::dbTabs() const

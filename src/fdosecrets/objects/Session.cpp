@@ -28,13 +28,13 @@ namespace FdoSecrets
 
     Session* Session::Create(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
     {
-        std::unique_ptr<Session> res{new Session(std::move(cipher), peer, parent)};
+        QScopedPointer<Session> res{new Session(std::move(cipher), peer, parent)};
 
         if (!res->registerSelf()) {
             return nullptr;
         }
 
-        return res.release();
+        return res.take();
     }
 
     Session::Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)

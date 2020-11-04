@@ -57,7 +57,7 @@ namespace FdoSecrets
          * This may be caused by
          *   - failed initialization
          */
-        static std::unique_ptr<Service> Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs);
+        static QSharedPointer<Service> Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs);
         ~Service() override;
 
         DBusReturn<QVariant> openSession(const QString& algorithm, const QVariant& input, Session*& result);

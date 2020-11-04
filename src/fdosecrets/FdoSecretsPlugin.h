@@ -93,7 +93,7 @@ signals:
 
 private:
     QPointer<DatabaseTabWidget> m_dbTabs;
-    std::unique_ptr<FdoSecrets::Service> m_secretService;
+    QSharedPointer<FdoSecrets::Service> m_secretService;
 };
 
 #endif // KEEPASSXC_FDOSECRETSPLUGIN_H
