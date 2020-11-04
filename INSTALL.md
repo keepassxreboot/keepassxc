@@ -26,7 +26,8 @@ The following libraries are required:
 * libsodium (>= 1.0.12)
 * libargon2
 * qrencode
-* yubikey ykpers (optional to support YubiKey)
+* yubikey ykpers (optional for YubiKey support)
+* quazip (optional for KeeShare signed containers support)
 
 Prepare the Building Environment
 ================================
