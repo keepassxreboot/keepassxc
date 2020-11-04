@@ -68,8 +68,9 @@ namespace FdoSecrets
     bool Service::initialize()
     {
         if (!QDBusConnection::sessionBus().registerService(QStringLiteral(DBUS_SERVICE_SECRET))) {
-            plugin()->emitError(tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET))
-                       + m_plugin->reportExistingService());
+            plugin()->emitError(
+                tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET))
+                + m_plugin->reportExistingService());
             return false;
         }
 
@@ -80,10 +81,8 @@ namespace FdoSecrets
 
         // Connect to service unregistered signal
         m_serviceWatcher.reset(new QDBusServiceWatcher());
-        connect(m_serviceWatcher.get(),
-                &QDBusServiceWatcher::serviceUnregistered,
-                this,
-                &Service::dbusServiceUnregistered);
+        connect(
+            m_serviceWatcher.get(), &QDBusServiceWatcher::serviceUnregistered, this, &Service::dbusServiceUnregistered);
 
         m_serviceWatcher->setConnection(QDBusConnection::sessionBus());
 
@@ -166,9 +165,7 @@ namespace FdoSecrets
 
         // only start relay signals when the collection is fully setup
         connect(coll, &Collection::collectionChanged, this, [this, coll]() { emit collectionChanged(coll); });
-        connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() {
-            emit collectionDeleted(coll);
-        });
+        connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() { emit collectionDeleted(coll); });
         if (emitSignal) {
             emit collectionCreated(coll);
         }
@@ -275,12 +272,15 @@ namespace FdoSecrets
 
             // collection will be created when the prompt completes.
             // once it's done, we set additional properties on the collection
-            connect(cp.value(), &CreateCollectionPrompt::collectionCreated, cp.value(), [alias, properties](Collection* coll) {
-                coll->setProperties(properties).okOrDie();
-                if (!alias.isEmpty()) {
-                    coll->addAlias(alias).okOrDie();
-                }
-            });
+            connect(cp.value(),
+                    &CreateCollectionPrompt::collectionCreated,
+                    cp.value(),
+                    [alias, properties](Collection* coll) {
+                        coll->setProperties(properties).okOrDie();
+                        if (!alias.isEmpty()) {
+                            coll->addAlias(alias).okOrDie();
+                        }
+                    });
         }
         return collection;
     }

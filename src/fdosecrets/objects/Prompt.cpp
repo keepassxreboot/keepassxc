@@ -41,7 +41,8 @@ namespace FdoSecrets
 
     bool PromptBase::registerSelf()
     {
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_PROMPT).arg(p()->objectPath().path(), Tools::uuidToHex(QUuid::createUuid()));
+        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_PROMPT)
+                        .arg(p()->objectPath().path(), Tools::uuidToHex(QUuid::createUuid()));
         bool ok = registerWithPath(path);
         if (!ok) {
             service()->plugin()->emitError(tr("Failed to register item on DBus at path '%1'").arg(path));
@@ -213,7 +214,8 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusReturn<UnlockCollectionsPrompt*> UnlockCollectionsPrompt::Create(Service* parent, const QList<Collection*>& coll)
+    DBusReturn<UnlockCollectionsPrompt*> UnlockCollectionsPrompt::Create(Service* parent,
+                                                                         const QList<Collection*>& coll)
     {
         QScopedPointer<UnlockCollectionsPrompt> res{new UnlockCollectionsPrompt(parent, coll)};
         if (!res->registerSelf()) {

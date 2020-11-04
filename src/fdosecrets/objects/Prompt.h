@@ -58,6 +58,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit DeleteCollectionPrompt(Service* parent, Collection* coll);
+
     public:
         static DBusReturn<DeleteCollectionPrompt*> Create(Service* parent, Collection* coll);
 
@@ -72,6 +73,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit CreateCollectionPrompt(Service* parent);
+
     public:
         static DBusReturn<CreateCollectionPrompt*> Create(Service* parent);
 
@@ -87,6 +89,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit LockCollectionsPrompt(Service* parent, const QList<Collection*>& colls);
+
     public:
         static DBusReturn<LockCollectionsPrompt*> Create(Service* parent, const QList<Collection*>& colls);
 
@@ -103,6 +106,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit UnlockCollectionsPrompt(Service* parent, const QList<Collection*>& coll);
+
     public:
         static DBusReturn<UnlockCollectionsPrompt*> Create(Service* parent, const QList<Collection*>& coll);
 
@@ -124,6 +128,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit DeleteItemPrompt(Service* parent, Item* item);
+
     public:
         static DBusReturn<DeleteItemPrompt*> Create(Service* parent, Item* item);
 

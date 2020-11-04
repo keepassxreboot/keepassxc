@@ -41,6 +41,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit Collection(Service* parent, DatabaseWidget* backend);
+
     public:
         /**
          * @brief Create a new instance of `Collection`

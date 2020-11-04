@@ -415,7 +415,8 @@ namespace FdoSecrets
 
         emit aliasAboutToAdd(alias);
 
-        bool ok = registerWithPath(QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(p()->objectPath().path(), alias), false);
+        bool ok =
+            registerWithPath(QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(p()->objectPath().path(), alias), false);
         if (ok) {
             m_aliases.insert(alias);
             emit aliasAdded(alias);

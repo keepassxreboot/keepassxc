@@ -43,6 +43,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit Item(Collection* parent, Entry* backend);
+
     public:
         /**
          * @brief Create a new instance of `Item`.

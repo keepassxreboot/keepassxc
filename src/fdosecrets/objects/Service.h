@@ -50,6 +50,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs);
+
     public:
         /**
          * @brief Create a new instance of `Service`. Its parent is set to `null`

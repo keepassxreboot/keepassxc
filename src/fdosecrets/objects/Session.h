@@ -39,6 +39,7 @@ namespace FdoSecrets
         Q_OBJECT
 
         explicit Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent);
+
     public:
         static std::unique_ptr<CipherPair> CreateCiphers(const QString& peer,
                                                          const QString& algorithm,
