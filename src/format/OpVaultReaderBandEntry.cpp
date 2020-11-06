@@ -182,9 +182,13 @@ Entry* OpVaultReader::processBandEntry(const QJsonObject& bandEntry, const QDir&
         entry->setNotes(data.value("notesPlain").toString());
     }
 
+    bool usernameFound = false;
+    bool passwordFound = false;
+
     // it seems sometimes the password is a top-level field, and not in "fields" themselves
     if (data.contains("password")) {
         entry->setPassword(data.value("password").toString());
+        passwordFound = true;
     }
 
     for (const auto fieldValue : data.value("fields").toArray()) {
@@ -195,11 +199,32 @@ Entry* OpVaultReader::processBandEntry(const QJsonObject& bandEntry, const QDir&
         auto field = fieldValue.toObject();
         auto designation = field["designation"].toString();
         auto value = field["value"].toString();
-        if (designation == "password") {
+        if (designation == "password" && !passwordFound) {
             entry->setPassword(value);
-        } else if (designation == "username") {
+            passwordFound = true;
+        } else if (designation == "username" && !usernameFound) {
             entry->setUsername(value);
+            usernameFound = true;
+        } else {
+            auto id = field["id"].toString();
+            bool protect = field["type"].toString() == "P";
+            entry->attributes()->set(id, value, protect);
         }
+    }
+
+    for (const auto historyItemValue : data.value("passwordHistory").toArray()) {
+        auto historyItem = historyItemValue.toObject();
+        auto value = historyItem["value"].toString();
+        const QDateTime& time = Clock::datetimeUtc(historyItem["time"].toInt() * 1000);
+        TimeInfo timeInfo;
+        timeInfo.setLastModificationTime(time);
+        timeInfo.setCreationTime(time);
+        timeInfo.setLastAccessTime(time);
+
+        auto historyEntry = entry->clone();
+        historyEntry->setPassword(value);
+        historyEntry->setTimeInfo(timeInfo);
+        entry->addHistoryItem(historyEntry);
     }
 
     const QJsonArray& sectionsArray = data["sections"].toArray();

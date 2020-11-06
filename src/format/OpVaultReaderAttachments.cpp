@@ -105,7 +105,7 @@ bool OpVaultReader::readAttachment(const QString& filePath,
     OpData01 icon01;
     if (!icon01.decode(iconBytes, itemKey, itemHmacKey)) {
         qCritical() << "Unable to decipher attachment icon in " << filePath << ": " << icon01.errorString();
-        return false;
+        // return false;
     }
 
     QJsonParseError jsError;
