@@ -77,9 +77,11 @@ void TestOpVaultReader::testReadIntoDatabase()
     QVERIFY(entry);
     QCOMPARE(entry->title(), QStringLiteral("KeePassXC"));
     QCOMPARE(entry->username(), QStringLiteral("keepassxc"));
-    QCOMPARE(entry->password(), QStringLiteral("opvault"));
+    QCOMPARE(entry->password(), QStringLiteral("_opvault_"));
     QCOMPARE(entry->url(), QStringLiteral("https://www.keepassxc.org"));
     QCOMPARE(entry->notes(), QStringLiteral("KeePassXC Account"));
+    // Check attributes
+    QCOMPARE(entry->attributes()->value("custom_field"), QStringLiteral("field_value"));
     // Check extra URL's
     QCOMPARE(entry->attribute("KP2A_URL_1"), QStringLiteral("https://snapshot.keepassxc.org"));
     // Check TOTP
@@ -88,6 +90,10 @@ void TestOpVaultReader::testReadIntoDatabase()
     auto attachments = entry->attachments();
     QCOMPARE(attachments->keys().count(), 1);
     QCOMPARE(*attachments->values().begin(), QByteArray("attachment"));
+    // Check password history
+    auto historyItems = entry->historyItems();
+    QCOMPARE(historyItems.count(), 1);
+    QCOMPARE(historyItems[0]->password(), QByteArray("opvault"));
 
     // Confirm expired entries
     entry = db->rootGroup()->findEntryByPath("/Login/Expired Login");
