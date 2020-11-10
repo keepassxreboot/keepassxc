@@ -49,6 +49,8 @@ We are always looking for suggestions on how to improve KeePassXC. If you find a
 
 You may directly contribute your own code by submitting a pull request. Please read the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.
 
+Contributors are required to adhere to the project's [Code of Conduct](CODE-OF-CONDUCT.md).
+
 ## License
 
 KeePassXC code is licensed under GPL-2 or GPL-3. Additional licensing for third-party files is detailed in [COPYING](./COPYING).
