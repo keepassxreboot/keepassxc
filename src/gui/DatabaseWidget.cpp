@@ -759,44 +759,44 @@ void DatabaseWidget::removeFromAgent()
 }
 #endif
 
-void DatabaseWidget::performAutoType()
+void DatabaseWidget::performAutoType(const QString& sequence)
 {
     auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
-        autoType()->performAutoType(currentEntry, window());
+        // TODO: Include name of previously active window in confirmation question
+        if (config()->get(Config::Security_AutoTypeAsk).toBool()
+            && MessageBox::question(
+                   this, tr("Confirm Auto-Type"), tr("Perform Auto-Type into the previously active window?"))
+                   != MessageBox::Yes) {
+            return;
+        }
+
+        if (sequence.isEmpty()) {
+            autoType()->performAutoType(currentEntry, window());
+        } else {
+            autoType()->performAutoTypeWithSequence(currentEntry, sequence, window());
+        }
     }
 }
 
 void DatabaseWidget::performAutoTypeUsername()
 {
-    auto currentEntry = currentSelectedEntry();
-    if (currentEntry) {
-        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{USERNAME}"), window());
-    }
+    performAutoType(QStringLiteral("{USERNAME}"));
 }
 
 void DatabaseWidget::performAutoTypeUsernameEnter()
 {
-    auto currentEntry = currentSelectedEntry();
-    if (currentEntry) {
-        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{USERNAME}{ENTER}"), window());
-    }
+    performAutoType(QStringLiteral("{USERNAME}{ENTER}"));
 }
 
 void DatabaseWidget::performAutoTypePassword()
 {
-    auto currentEntry = currentSelectedEntry();
-    if (currentEntry) {
-        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{PASSWORD}"), window());
-    }
+    performAutoType(QStringLiteral("{PASSWORD}"));
 }
 
 void DatabaseWidget::performAutoTypePasswordEnter()
 {
-    auto currentEntry = currentSelectedEntry();
-    if (currentEntry) {
-        autoType()->performAutoTypeWithSequence(currentEntry, QStringLiteral("{PASSWORD}{ENTER}"), window());
-    }
+    performAutoType(QStringLiteral("{PASSWORD}{ENTER}"));
 }
 
 void DatabaseWidget::openUrl()

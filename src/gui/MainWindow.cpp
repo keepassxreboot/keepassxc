@@ -25,6 +25,7 @@
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
+#include <QToolButton>
 #include <QWindow>
 
 #include "config-keepassx.h"
@@ -128,7 +129,6 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
-    m_entryContextMenu->addAction(m_ui->menuEntryAutoTypeWithSequence->menuAction());
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryEdit);
     m_entryContextMenu->addAction(m_ui->actionEntryClone);
@@ -143,6 +143,20 @@ MainWindow::MainWindow()
 
     m_entryNewContextMenu = new QMenu(this);
     m_entryNewContextMenu->addAction(m_ui->actionEntryNew);
+
+    // Build Entry Level Auto-Type menu
+    auto autotypeMenu = new QMenu({}, this);
+    autotypeMenu->addAction(m_ui->actionEntryAutoTypeSequence);
+    autotypeMenu->addSeparator();
+    autotypeMenu->addAction(m_ui->actionEntryAutoTypeUsername);
+    autotypeMenu->addAction(m_ui->actionEntryAutoTypeUsernameEnter);
+    autotypeMenu->addAction(m_ui->actionEntryAutoTypePassword);
+    autotypeMenu->addAction(m_ui->actionEntryAutoTypePasswordEnter);
+    m_ui->actionEntryAutoType->setMenu(autotypeMenu);
+    auto autoTypeButton = qobject_cast<QToolButton*>(m_ui->toolBar->widgetForAction(m_ui->actionEntryAutoType));
+    if (autoTypeButton) {
+        autoTypeButton->setPopupMode(QToolButton::MenuButtonPopup);
+    }
 
     restoreGeometry(config()->get(Config::GUI_MainWindowGeometry).toByteArray());
     restoreState(config()->get(Config::GUI_MainWindowState).toByteArray());
@@ -223,12 +237,7 @@ MainWindow::MainWindow()
     m_ui->toolbarSeparator->setVisible(false);
     m_showToolbarSeparator = config()->get(Config::GUI_ApplicationTheme).toString() != "classic";
 
-    bool isAutoTypeAvailable = autoType()->isAvailable();
-    m_ui->actionEntryAutoType->setVisible(isAutoTypeAvailable);
-    m_ui->actionEntryAutoTypeUsername->setVisible(isAutoTypeAvailable);
-    m_ui->actionEntryAutoTypeUsernameEnter->setVisible(isAutoTypeAvailable);
-    m_ui->actionEntryAutoTypePassword->setVisible(isAutoTypeAvailable);
-    m_ui->actionEntryAutoTypePasswordEnter->setVisible(isAutoTypeAvailable);
+    m_ui->actionEntryAutoType->setVisible(autoType()->isAvailable());
 
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
@@ -257,7 +266,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Down);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
-    m_ui->actionEntryAutoType->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    m_ui->actionEntryAutoTypeSequence->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
 
@@ -284,7 +293,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryMoveDown->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyPassword->setShortcutVisibleInContextMenu(true);
-    m_ui->actionEntryAutoType->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryAutoTypeSequence->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryAddToAgent->setShortcutVisibleInContextMenu(true);
@@ -360,7 +369,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryEdit->setIcon(icons()->icon("entry-edit"));
     m_ui->actionEntryDelete->setIcon(icons()->icon("entry-delete"));
     m_ui->actionEntryAutoType->setIcon(icons()->icon("auto-type"));
-    m_ui->menuEntryAutoTypeWithSequence->setIcon(icons()->icon("auto-type"));
+    m_ui->actionEntryAutoTypeSequence->setIcon(icons()->icon("auto-type"));
     m_ui->actionEntryAutoTypeUsername->setIcon(icons()->icon("auto-type"));
     m_ui->actionEntryAutoTypeUsernameEnter->setIcon(icons()->icon("auto-type"));
     m_ui->actionEntryAutoTypePassword->setIcon(icons()->icon("auto-type"));
@@ -458,6 +467,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryCopyURL, SIGNAL(triggered()), SLOT(copyURL()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyNotes, SIGNAL(triggered()), SLOT(copyNotes()));
     m_actionMultiplexer.connect(m_ui->actionEntryAutoType, SIGNAL(triggered()), SLOT(performAutoType()));
+    m_actionMultiplexer.connect(m_ui->actionEntryAutoTypeSequence, SIGNAL(triggered()), SLOT(performAutoType()));
     m_actionMultiplexer.connect(
         m_ui->actionEntryAutoTypeUsername, SIGNAL(triggered()), SLOT(performAutoTypeUsername()));
     m_actionMultiplexer.connect(
@@ -782,7 +792,11 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
             m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
-            m_ui->menuEntryAutoTypeWithSequence->setEnabled(singleEntrySelected);
+            m_ui->actionEntryAutoType->menu()->setEnabled(singleEntrySelected);
+            m_ui->actionEntryAutoTypeSequence->setText(
+                singleEntrySelected ? dbWidget->currentSelectedEntry()->effectiveAutoTypeSequence()
+                                    : Group::RootAutoTypeSequence);
+            m_ui->actionEntryAutoTypeSequence->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoTypeUsername->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUsername());
             m_ui->actionEntryAutoTypeUsernameEnter->setEnabled(singleEntrySelected
                                                                && dbWidget->currentEntryHasUsername());
@@ -841,7 +855,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                                                                m_ui->actionEntryCopyURL,
                                                                m_ui->actionEntryOpenUrl,
                                                                m_ui->actionEntryAutoType,
-                                                               m_ui->menuEntryAutoTypeWithSequence->menuAction(),
                                                                m_ui->actionEntryDownloadIcon,
                                                                m_ui->actionEntryCopyNotes,
                                                                m_ui->actionEntryCopyTitle,
