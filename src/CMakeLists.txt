@@ -124,6 +124,7 @@ set(keepassx_SOURCES
         gui/OpVaultOpenWidget.cpp
         gui/PasswordEdit.cpp
         gui/PasswordGeneratorWidget.cpp
+        gui/PasswordCharacterPickerWidget.cpp
         gui/ApplicationSettingsWidget.cpp
         gui/Icons.cpp
         gui/SearchWidget.cpp

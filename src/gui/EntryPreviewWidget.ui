@@ -233,6 +233,13 @@
                  </widget>
                 </item>
                 <item>
+                 <widget class="QToolButton" name="passwordCharacterPickerButton">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLineEdit" name="entryPasswordLabel">
                   <property name="minimumSize">
                    <size>

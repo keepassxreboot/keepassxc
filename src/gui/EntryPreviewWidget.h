@@ -54,6 +54,7 @@ private slots:
     void updateEntryAdvancedTab();
     void updateEntryAutotypeTab();
     void setPasswordVisible(bool state);
+    void showCharacterPicker();
     void setEntryNotesVisible(bool state);
     void setGroupNotesVisible(bool state);
     void setNotesVisible(QTextEdit* notesWidget, const QString& notes, bool state);

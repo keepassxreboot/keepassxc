@@ -27,6 +27,7 @@
 #include "entry/EntryAttachmentsModel.h"
 #include "gui/Clipboard.h"
 #include "gui/Icons.h"
+#include "gui/PasswordCharacterPickerWidget.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #endif
@@ -71,6 +72,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
+    connect(m_ui->passwordCharacterPickerButton, SIGNAL(clicked()), SLOT(showCharacterPicker()));
     connect(m_ui->toggleEntryNotesButton, SIGNAL(clicked(bool)), SLOT(setEntryNotesVisible(bool)));
     connect(m_ui->toggleGroupNotesButton, SIGNAL(clicked(bool)), SLOT(setGroupNotesVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
@@ -199,6 +201,12 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
     } else {
         m_ui->entryPasswordLabel->setText(QString("\u25cf").repeated(6));
     }
+}
+
+void EntryPreviewWidget::showCharacterPicker()
+{
+    const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
+    PasswordCharacterPickerWidget::popupPicker(nullptr, password);
 }
 
 void EntryPreviewWidget::setEntryNotesVisible(bool state)
