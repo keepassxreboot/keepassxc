@@ -174,18 +174,10 @@ namespace
 
 using namespace FdoSecrets;
 
-// for use in QSignalSpy
-Q_DECLARE_METATYPE(Collection*);
-Q_DECLARE_METATYPE(Item*);
-
 TestGuiFdoSecrets::~TestGuiFdoSecrets() = default;
 
 void TestGuiFdoSecrets::initTestCase()
 {
-    // for use in QSignalSpy
-    qRegisterMetaType<Collection*>();
-    qRegisterMetaType<Item*>();
-
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
     config()->set(Config::AutoSaveAfterEveryChange, false);
@@ -458,11 +450,11 @@ void TestGuiFdoSecrets::testServiceUnlock()
     auto coll = getDefaultCollection(service);
     QVERIFY(coll);
 
-    QSignalSpy spyCollectionCreated(service, SIGNAL(collectionCreated(Collection*)));
+    QSignalSpy spyCollectionCreated(&service->dbusAdaptor(), SIGNAL(CollectionCreated(QDBusObjectPath)));
     QVERIFY(spyCollectionCreated.isValid());
-    QSignalSpy spyCollectionDeleted(service, SIGNAL(collectionDeleted(Collection*)));
+    QSignalSpy spyCollectionDeleted(&service->dbusAdaptor(), SIGNAL(CollectionDeleted(QDBusObjectPath)));
     QVERIFY(spyCollectionDeleted.isValid());
-    QSignalSpy spyCollectionChanged(service, SIGNAL(collectionChanged(Collection*)));
+    QSignalSpy spyCollectionChanged(&service->dbusAdaptor(), SIGNAL(CollectionChanged(QDBusObjectPath)));
     QVERIFY(spyCollectionChanged.isValid());
 
     PromptBase* prompt = nullptr;
@@ -472,7 +464,7 @@ void TestGuiFdoSecrets::testServiceUnlock()
         QVERIFY(unlocked.isEmpty());
     }
     QVERIFY(prompt);
-    QSignalSpy spyPromptCompleted(prompt, SIGNAL(completed(bool, QVariant)));
+    QSignalSpy spyPromptCompleted(&prompt->dbusAdaptor(), SIGNAL(Completed(bool, QDBusVariant)));
     QVERIFY(spyPromptCompleted.isValid());
 
     // nothing is unlocked yet
@@ -510,14 +502,14 @@ void TestGuiFdoSecrets::testServiceUnlock()
         auto args = spyPromptCompleted.takeFirst();
         QCOMPARE(args.size(), 2);
         QCOMPARE(args.at(0).toBool(), false);
-        QCOMPARE(args.at(1).value<QList<QDBusObjectPath>>(), {coll->objectPath()});
+        QCOMPARE(args.at(1).value<QDBusVariant>().variant().value<QList<QDBusObjectPath>>(), {coll->objectPath()});
     }
     QCOMPARE(spyCollectionCreated.count(), 0);
     QCOMPARE(spyCollectionChanged.count(), 1);
     {
         auto args = spyCollectionChanged.takeFirst();
         QCOMPARE(args.size(), 1);
-        QCOMPARE(args.at(0).value<Collection*>(), coll.data());
+        QCOMPARE(args.at(0).value<QDBusObjectPath>(), coll->objectPath());
     }
     QCOMPARE(spyCollectionDeleted.count(), 0);
 }
@@ -529,11 +521,11 @@ void TestGuiFdoSecrets::testServiceLock()
     auto coll = getDefaultCollection(service);
     QVERIFY(coll);
 
-    QSignalSpy spyCollectionCreated(service, SIGNAL(collectionCreated(Collection*)));
+    QSignalSpy spyCollectionCreated(&service->dbusAdaptor(), SIGNAL(CollectionCreated(QDBusObjectPath)));
     QVERIFY(spyCollectionCreated.isValid());
-    QSignalSpy spyCollectionDeleted(service, SIGNAL(collectionDeleted(Collection*)));
+    QSignalSpy spyCollectionDeleted(&service->dbusAdaptor(), SIGNAL(CollectionDeleted(QDBusObjectPath)));
     QVERIFY(spyCollectionDeleted.isValid());
-    QSignalSpy spyCollectionChanged(service, SIGNAL(collectionChanged(Collection*)));
+    QSignalSpy spyCollectionChanged(&service->dbusAdaptor(), SIGNAL(CollectionChanged(QDBusObjectPath)));
     QVERIFY(spyCollectionChanged.isValid());
 
     // if the db is modified, prompt user
@@ -543,7 +535,7 @@ void TestGuiFdoSecrets::testServiceLock()
         CHECKED_DBUS_LOCAL_CALL(locked, service->lock({coll}, prompt));
         QCOMPARE(locked.size(), 0);
         QVERIFY(prompt);
-        QSignalSpy spyPromptCompleted(prompt, SIGNAL(completed(bool, QVariant)));
+        QSignalSpy spyPromptCompleted(&prompt->dbusAdaptor(), SIGNAL(Completed(bool, QDBusVariant)));
         QVERIFY(spyPromptCompleted.isValid());
 
         // prompt and click cancel
@@ -564,7 +556,7 @@ void TestGuiFdoSecrets::testServiceLock()
         CHECKED_DBUS_LOCAL_CALL(locked, service->lock({coll}, prompt));
         QCOMPARE(locked.size(), 0);
         QVERIFY(prompt);
-        QSignalSpy spyPromptCompleted(prompt, SIGNAL(completed(bool, QVariant)));
+        QSignalSpy spyPromptCompleted(&prompt->dbusAdaptor(), SIGNAL(Completed(bool, QDBusVariant)));
         QVERIFY(spyPromptCompleted.isValid());
 
         // prompt and click save
@@ -578,7 +570,7 @@ void TestGuiFdoSecrets::testServiceLock()
         auto args = spyPromptCompleted.takeFirst();
         QCOMPARE(args.count(), 2);
         QCOMPARE(args.at(0).toBool(), false);
-        QCOMPARE(args.at(1).value<QList<QDBusObjectPath>>(), {coll->objectPath()});
+        QCOMPARE(args.at(1).value<QDBusVariant>().variant().value<QList<QDBusObjectPath>>(), {coll->objectPath()});
     }
 
     QCOMPARE(spyCollectionCreated.count(), 0);
@@ -586,7 +578,7 @@ void TestGuiFdoSecrets::testServiceLock()
     {
         auto args = spyCollectionChanged.takeFirst();
         QCOMPARE(args.size(), 1);
-        QCOMPARE(args.at(0).value<Collection*>(), coll.data());
+        QCOMPARE(args.at(0).value<QDBusObjectPath>(), coll->objectPath());
     }
     QCOMPARE(spyCollectionDeleted.count(), 0);
 
@@ -642,7 +634,7 @@ void TestGuiFdoSecrets::testCollectionCreate()
     auto service = enableService();
     QVERIFY(service);
 
-    QSignalSpy spyCollectionCreated(service, SIGNAL(collectionCreated(Collection*)));
+    QSignalSpy spyCollectionCreated(&service->dbusAdaptor(), SIGNAL(CollectionCreated(QDBusObjectPath)));
     QVERIFY(spyCollectionCreated.isValid());
 
     // returns existing if alias is nonempty and exists
@@ -664,7 +656,7 @@ void TestGuiFdoSecrets::testCollectionCreate()
         QVERIFY(!created);
         QVERIFY(prompt);
 
-        QSignalSpy spyPromptCompleted(prompt, SIGNAL(completed(bool, QVariant)));
+        QSignalSpy spyPromptCompleted(&prompt->dbusAdaptor(), SIGNAL(Completed(bool, QDBusVariant)));
         QVERIFY(spyPromptCompleted.isValid());
 
         QTimer::singleShot(50, this, SLOT(createDatabaseCallback()));
@@ -675,7 +667,8 @@ void TestGuiFdoSecrets::testCollectionCreate()
         auto args = spyPromptCompleted.takeFirst();
         QCOMPARE(args.size(), 2);
         QCOMPARE(args.at(0).toBool(), false);
-        auto coll = FdoSecrets::pathToObject<Collection>(args.at(1).value<QDBusObjectPath>());
+        auto coll =
+            FdoSecrets::pathToObject<Collection>(args.at(1).value<QDBusVariant>().variant().value<QDBusObjectPath>());
         QVERIFY(coll);
 
         QCOMPARE(coll->backend()->database()->metadata()->name(), QStringLiteral("Test NewDB"));
@@ -684,7 +677,7 @@ void TestGuiFdoSecrets::testCollectionCreate()
         {
             args = spyCollectionCreated.takeFirst();
             QCOMPARE(args.size(), 1);
-            QCOMPARE(args.at(0).value<Collection*>(), coll);
+            QCOMPARE(args.at(0).value<QDBusObjectPath>(), coll->objectPath());
         }
     }
 }
@@ -723,18 +716,16 @@ void TestGuiFdoSecrets::testCollectionDelete()
     QVERIFY(service);
     auto coll = getDefaultCollection(service);
     QVERIFY(coll);
-    // closing the tab calls coll->deleteLater()
-    // but deleteLater is not processed in QApplication::processEvent
-    // see https://doc.qt.io/qt-5/qcoreapplication.html#processEvents
-    auto rawColl = coll.data();
+    // save the path which will be gone after the deletion.
+    auto collPath = coll->objectPath();
 
-    QSignalSpy spyCollectionDeleted(service, SIGNAL(collectionDeleted(Collection*)));
+    QSignalSpy spyCollectionDeleted(&service->dbusAdaptor(), SIGNAL(CollectionDeleted(QDBusObjectPath)));
     QVERIFY(spyCollectionDeleted.isValid());
 
     m_db->markAsModified();
     CHECKED_DBUS_LOCAL_CALL(prompt, coll->deleteCollection());
     QVERIFY(prompt);
-    QSignalSpy spyPromptCompleted(prompt, SIGNAL(completed(bool, QVariant)));
+    QSignalSpy spyPromptCompleted(&prompt->dbusAdaptor(), SIGNAL(Completed(bool, QDBusVariant)));
     QVERIFY(spyPromptCompleted.isValid());
 
     // prompt and click save
@@ -752,13 +743,13 @@ void TestGuiFdoSecrets::testCollectionDelete()
     auto args = spyPromptCompleted.takeFirst();
     QCOMPARE(args.count(), 2);
     QCOMPARE(args.at(0).toBool(), false);
-    QCOMPARE(args.at(1).toString(), QStringLiteral(""));
+    QCOMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
 
     QCOMPARE(spyCollectionDeleted.count(), 1);
     {
         args = spyCollectionDeleted.takeFirst();
         QCOMPARE(args.size(), 1);
-        QCOMPARE(args.at(0).value<Collection*>(), rawColl);
+        QCOMPARE(args.at(0).value<QDBusObjectPath>(), collPath);
     }
 }
 
@@ -815,6 +806,9 @@ void TestGuiFdoSecrets::testItemCreate()
     auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
     QVERIFY(sess);
 
+    QSignalSpy spyItemCreated(&coll->dbusAdaptor(), SIGNAL(ItemCreated(QDBusObjectPath)));
+    QVERIFY(spyItemCreated.isValid());
+
     // create item
     StringStringMap attributes{
         {"application", "fdosecrets-test"},
@@ -823,6 +817,14 @@ void TestGuiFdoSecrets::testItemCreate()
 
     auto item = createItem(sess, coll, "abc", "Password", attributes, false);
     QVERIFY(item);
+
+    // signals
+    {
+        QCOMPARE(spyItemCreated.count(), 1);
+        auto args = spyItemCreated.takeFirst();
+        QCOMPARE(args.size(), 1);
+        QCOMPARE(args.at(0).value<QDBusObjectPath>(), item->objectPath());
+    }
 
     // attributes
     {
@@ -888,28 +890,56 @@ void TestGuiFdoSecrets::testItemReplace()
         QCOMPARE(unlocked.size(), 2);
     }
 
+    QSignalSpy spyItemCreated(&coll->dbusAdaptor(), SIGNAL(ItemCreated(QDBusObjectPath)));
+    QVERIFY(spyItemCreated.isValid());
+    QSignalSpy spyItemChanged(&coll->dbusAdaptor(), SIGNAL(ItemChanged(QDBusObjectPath)));
+    QVERIFY(spyItemChanged.isValid());
+
     {
         // when replace, existing item with matching attr is updated
         auto item3 = createItem(sess, coll, "abc3", "Password", attr2, true);
         QVERIFY(item3);
         QCOMPARE(item2, item3);
         COMPARE_DBUS_LOCAL_CALL(item3->label(), QStringLiteral("abc3"));
-        // there is still 2 entries
+        // there are still 2 entries
         QList<Item*> locked;
         CHECKED_DBUS_LOCAL_CALL(unlocked, service->searchItems({{"application", "fdosecrets-test"}}, locked));
         QCOMPARE(unlocked.size(), 2);
+
+        QCOMPARE(spyItemCreated.count(), 0);
+        // there may be multiple changed signals, due to each item attribute is set separately
+        QVERIFY(!spyItemChanged.isEmpty());
+        for (const auto& args : spyItemChanged) {
+            QCOMPARE(args.size(), 1);
+            QCOMPARE(args.at(0).value<QDBusObjectPath>(), item3->objectPath());
+        }
     }
 
+    spyItemCreated.clear();
+    spyItemChanged.clear();
     {
         // when NOT replace, another entry is created
         auto item4 = createItem(sess, coll, "abc4", "Password", attr2, false);
         QVERIFY(item4);
         COMPARE_DBUS_LOCAL_CALL(item2->label(), QStringLiteral("abc3"));
         COMPARE_DBUS_LOCAL_CALL(item4->label(), QStringLiteral("abc4"));
-        // there is 3 entries
+        // there are 3 entries
         QList<Item*> locked;
         CHECKED_DBUS_LOCAL_CALL(unlocked, service->searchItems({{"application", "fdosecrets-test"}}, locked));
         QCOMPARE(unlocked.size(), 3);
+
+        QCOMPARE(spyItemCreated.count(), 1);
+        {
+            auto args = spyItemCreated.takeFirst();
+            QCOMPARE(args.size(), 1);
+            QCOMPARE(args.at(0).value<QDBusObjectPath>(), item4->objectPath());
+        }
+        // there may be multiple changed signals, due to each item attribute is set separately
+        QVERIFY(!spyItemChanged.isEmpty());
+        for (const auto& args : spyItemChanged) {
+            QCOMPARE(args.size(), 1);
+            QCOMPARE(args.at(0).value<QDBusObjectPath>(), item4->objectPath());
+        }
     }
 }
 
@@ -994,15 +1024,16 @@ void TestGuiFdoSecrets::testItemDelete()
     QVERIFY(coll);
     auto item = getFirstItem(coll);
     QVERIFY(item);
-    auto rawItem = item.data();
+    // save the path which will be gone after the deletion.
+    auto itemPath = item->objectPath();
 
-    QSignalSpy spyItemDeleted(coll, SIGNAL(itemDeleted(Item*)));
+    QSignalSpy spyItemDeleted(&coll->dbusAdaptor(), SIGNAL(ItemDeleted(QDBusObjectPath)));
     QVERIFY(spyItemDeleted.isValid());
 
     CHECKED_DBUS_LOCAL_CALL(prompt, item->deleteItem());
     QVERIFY(prompt);
 
-    QSignalSpy spyPromptCompleted(prompt, SIGNAL(completed(bool, QVariant)));
+    QSignalSpy spyPromptCompleted(&prompt->dbusAdaptor(), SIGNAL(Completed(bool, QDBusVariant)));
     QVERIFY(spyPromptCompleted.isValid());
 
     // prompt and click save
@@ -1025,7 +1056,7 @@ void TestGuiFdoSecrets::testItemDelete()
     {
         args = spyItemDeleted.takeFirst();
         QCOMPARE(args.size(), 1);
-        QCOMPARE(args.at(0).value<Item*>(), rawItem);
+        QCOMPARE(args.at(0).value<QDBusObjectPath>(), itemPath);
     }
 }
 

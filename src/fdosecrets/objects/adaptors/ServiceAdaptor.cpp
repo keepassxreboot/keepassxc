@@ -29,13 +29,14 @@ namespace FdoSecrets
     ServiceAdaptor::ServiceAdaptor(Service* parent)
         : DBusAdaptor(parent)
     {
-        connect(p(), &Service::collectionCreated, this, [this](Collection* coll) {
+        // p() isn't ready yet as this is called in Parent's constructor
+        connect(parent, &Service::collectionCreated, this, [this](Collection* coll) {
             emit CollectionCreated(objectPathSafe(coll));
         });
-        connect(p(), &Service::collectionDeleted, this, [this](Collection* coll) {
+        connect(parent, &Service::collectionDeleted, this, [this](Collection* coll) {
             emit CollectionDeleted(objectPathSafe(coll));
         });
-        connect(p(), &Service::collectionChanged, this, [this](Collection* coll) {
+        connect(parent, &Service::collectionChanged, this, [this](Collection* coll) {
             emit CollectionChanged(objectPathSafe(coll));
         });
     }
