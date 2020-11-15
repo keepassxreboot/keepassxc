@@ -37,7 +37,7 @@ YkChallengeResponseKeyCLI::YkChallengeResponseKeyCLI(YubiKeySlot keySlot, QStrin
 
 void YkChallengeResponseKeyCLI::showInteractionMessage()
 {
-    m_out << m_interactionMessage << "\n\n" << flush;
+    m_out << m_interactionMessage << "\n" << flush;
 }
 
 QByteArray YkChallengeResponseKeyCLI::rawKey() const
