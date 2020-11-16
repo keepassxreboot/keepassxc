@@ -63,7 +63,8 @@ void MessageBox::initializeButtonDefs()
         {Skip, {QMessageBox::tr("Skip"), QMessageBox::ButtonRole::AcceptRole}},
         {Disable, {QMessageBox::tr("Disable"), QMessageBox::ButtonRole::AcceptRole}},
         {Merge, {QMessageBox::tr("Merge"), QMessageBox::ButtonRole::AcceptRole}},
-        {Continue, {QMessageBox::tr("Continue"), QMessageBox::ButtonRole::AcceptRole}},
+        {Allow, {QMessageBox::tr("Allow"), QMessageBox::ButtonRole::AcceptRole}},
+        {Deny, {QMessageBox::tr("Deny"), QMessageBox::ButtonRole::RejectRole}},
     };
 }
 

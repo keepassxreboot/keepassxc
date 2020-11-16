@@ -41,6 +41,9 @@ namespace FdoSecrets
         bool noConfirmDeleteItem() const;
         void setNoConfirmDeleteItem(bool noConfirm);
 
+        bool confirmAccessItem() const;
+        void setConfirmAccessItem(bool confirmAccessItem);
+
         // Per db settings
 
         QUuid exposedGroup(const QSharedPointer<Database>& db) const;

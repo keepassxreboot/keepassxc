@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2018 Aetf <aetf@unlimitedcodeworks.xyz>
+ *  Copyright (C) 2020 Intika <intika@librefox.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +27,7 @@
 
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/MessageBox.h"
 
 #include <QDBusConnection>
 #include <QDBusServiceWatcher>
@@ -411,6 +413,25 @@ namespace FdoSecrets
             res[item] = std::move(ret).value();
         }
         if (calledFromDBus()) {
+            if (FdoSecrets::settings()->confirmAccessItem()) {
+                QString promptText =
+                    tr("\nAn application is requesting access to an entry of KeepassXC database \n\nApplication: \n%1 %2 \n\nEntry: \n%1")
+                        .arg(QChar(0x2022), callingPeerName());
+                for (const auto& i : items) {
+                    if (i) {
+                        promptText += QStringLiteral(" %1 ").arg(i->backend()->title());
+	                 }
+                }
+                auto promptDialog = MessageBox::question(nullptr,
+                                                         tr("KeePassXC: secret-service access request"),
+                                                         promptText,
+                                                         MessageBox::Allow | MessageBox::Deny,
+                                                         MessageBox::Allow,
+                                                         MessageBox::Raise);
+                if (promptDialog != MessageBox::Allow)
+                    return {};
+            }
+
             plugin()->emitRequestShowNotification(
                 tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", res.size())
                     .arg(callingPeerName()));

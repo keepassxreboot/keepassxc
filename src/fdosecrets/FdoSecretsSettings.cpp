@@ -74,6 +74,16 @@ namespace FdoSecrets
         config()->set(Config::FdoSecrets_NoConfirmDeleteItem, noConfirm);
     }
 
+    bool FdoSecretsSettings::confirmAccessItem() const
+    {
+        return config()->get(Config::FdoSecrets_ConfirmAccessItem).toBool();
+    }
+
+    void FdoSecretsSettings::setConfirmAccessItem(bool confirmAccessItem)
+    {
+        config()->set(Config::FdoSecrets_ConfirmAccessItem, confirmAccessItem);
+    }
+
     QUuid FdoSecretsSettings::exposedGroup(const QSharedPointer<Database>& db) const
     {
         return exposedGroup(db.data());
