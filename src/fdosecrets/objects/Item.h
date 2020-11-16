@@ -38,11 +38,22 @@ namespace FdoSecrets
     class Collection;
     class PromptBase;
 
-    class Item : public DBusObject
+    class Item : public DBusObjectHelper<Item, ItemAdaptor>
     {
         Q_OBJECT
-    public:
+
         explicit Item(Collection* parent, Entry* backend);
+
+    public:
+        /**
+         * @brief Create a new instance of `Item`.
+         * @param parent the owning `Collection`
+         * @param backend the `Entry` containing the data
+         * @return pointer to newly created Item, or nullptr if error
+         * This may be caused by
+         *   - DBus path registration error
+         */
+        static Item* Create(Collection* parent, Entry* backend);
 
         DBusReturn<bool> locked() const;
 
@@ -90,7 +101,12 @@ namespace FdoSecrets
     public slots:
         void doDelete();
 
-    private:
+        /**
+         * @brief Register self on DBus
+         * @return
+         */
+        bool registerSelf();
+
         /**
          * Check if the backend is a valid object, send error reply if not.
          * @return No error if the backend is valid.

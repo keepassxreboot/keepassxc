@@ -82,7 +82,10 @@ private slots:
     void testDefaultAliasAlwaysPresent();
 
     void testExposeSubgroup();
-    void testModifiyingExposedGroup();
+    void testModifyingExposedGroup();
+
+    void testHiddenFilename();
+    void testDuplicateName();
 
 protected slots:
     void createDatabaseCallback();

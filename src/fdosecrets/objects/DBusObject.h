@@ -21,6 +21,7 @@
 #include "fdosecrets/objects/DBusReturn.h"
 #include "fdosecrets/objects/DBusTypes.h"
 
+#include <QDBusAbstractAdaptor>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDBusContext>
@@ -31,21 +32,19 @@
 #include <QObject>
 #include <QScopedPointer>
 
-class QDBusAbstractAdaptor;
-
 namespace FdoSecrets
 {
     class Service;
 
     /**
-     * @brief A common base class for all dbus-exposed objects
+     * @brief A common base class for all dbus-exposed objects.
+     * However, derived class should inherit from `DBusObjectHelper`, which is
+     * the only way to set DBus adaptor and enforces correct adaptor creation.
      */
     class DBusObject : public QObject, public QDBusContext
     {
         Q_OBJECT
     public:
-        explicit DBusObject(DBusObject* parent = nullptr);
-
         const QDBusObjectPath& objectPath() const
         {
             return m_objectPath;
@@ -57,12 +56,21 @@ namespace FdoSecrets
         }
 
     protected:
-        void registerWithPath(const QString& path, QDBusAbstractAdaptor* adaptor);
+        /**
+         * @brief Register this object at given DBus path
+         * @param path DBus path to register at
+         * @param primary whether this path to be considered primary. The primary path is the one to be returned by
+         * `DBusObject::objectPath`.
+         * @return true on success
+         */
+        bool registerWithPath(const QString& path, bool primary = true);
 
-        void unregisterCurrentPath()
+        void unregisterPrimaryPath()
         {
+            if (m_objectPath.path() == QStringLiteral("/")) {
+                return;
+            }
             QDBusConnection::sessionBus().unregisterObject(m_objectPath.path());
-            m_dbusAdaptor = nullptr;
             m_objectPath.setPath(QStringLiteral("/"));
         }
 
@@ -85,6 +93,8 @@ namespace FdoSecrets
         }
 
     private:
+        explicit DBusObject(DBusObject* parent);
+
         /**
          * Derived class should not directly use sendErrorReply.
          * Instead, use raiseError
@@ -92,10 +102,24 @@ namespace FdoSecrets
         using QDBusContext::sendErrorReply;
 
         template <typename U> friend class DBusReturn;
+        template <typename Object, typename Adaptor> friend class DBusObjectHelper;
 
-    private:
         QDBusAbstractAdaptor* m_dbusAdaptor;
         QDBusObjectPath m_objectPath;
+    };
+
+    template <typename Object, typename Adaptor> class DBusObjectHelper : public DBusObject
+    {
+    protected:
+        explicit DBusObjectHelper(DBusObject* parent)
+            : DBusObject(parent)
+        {
+            // creating new Adaptor has to be delayed into constructor's body,
+            // and can't be simply moved to initializer list, because at that
+            // point the base QObject class hasn't been initialized and will sigfault.
+            m_dbusAdaptor = new Adaptor(static_cast<Object*>(this));
+            m_dbusAdaptor->setParent(this);
+        }
     };
 
     /**

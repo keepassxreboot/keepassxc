@@ -25,7 +25,8 @@ namespace FdoSecrets
     PromptAdaptor::PromptAdaptor(PromptBase* parent)
         : DBusAdaptor(parent)
     {
-        connect(p(), &PromptBase::completed, this, [this](bool dismissed, QVariant result) {
+        // p() isn't ready yet as this is called in Parent's constructor
+        connect(parent, &PromptBase::completed, this, [this](bool dismissed, QVariant result) {
             // make sure the result contains a valid value, otherwise QDBusVariant refuses to marshall it.
             if (!result.isValid()) {
                 result = QString{};

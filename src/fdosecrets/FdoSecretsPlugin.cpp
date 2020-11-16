@@ -26,8 +26,6 @@
 
 #include <QFile>
 
-#include <utility>
-
 using FdoSecrets::Service;
 
 // TODO: Only used for testing. Need to split service functions away from settings page.
@@ -65,12 +63,8 @@ void FdoSecretsPlugin::updateServiceState()
 {
     if (FdoSecrets::settings()->isEnabled()) {
         if (!m_secretService && m_dbTabs) {
-            m_secretService.reset(new Service(this, m_dbTabs));
-            connect(m_secretService.data(), &Service::error, this, [this](const QString& msg) {
-                emit error(tr("<b>Fdo Secret Service:</b> %1").arg(msg));
-            });
-            if (!m_secretService->initialize()) {
-                m_secretService.reset();
+            m_secretService = Service::Create(this, m_dbTabs);
+            if (!m_secretService) {
                 FdoSecrets::settings()->setEnabled(false);
                 return;
             }
@@ -105,6 +99,12 @@ void FdoSecretsPlugin::emitRequestShowNotification(const QString& msg, const QSt
         return;
     }
     emit requestShowNotification(msg, title, 10000);
+}
+
+void FdoSecretsPlugin::emitError(const QString& msg)
+{
+    emit error(tr("<b>Fdo Secret Service:</b> %1").arg(msg));
+    qDebug() << msg;
 }
 
 QString FdoSecretsPlugin::reportExistingService() const

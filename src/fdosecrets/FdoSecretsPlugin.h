@@ -22,7 +22,8 @@
 #include "gui/Icons.h"
 
 #include <QPointer>
-#include <QScopedPointer>
+
+#include <memory>
 
 class DatabaseTabWidget;
 
@@ -77,6 +78,12 @@ public slots:
     void emitRequestSwitchToDatabases();
     void emitRequestShowNotification(const QString& msg, const QString& title = {});
 
+    /**
+     * @brief Show error in the GUI
+     * @param msg
+     */
+    void emitError(const QString& msg);
+
 signals:
     void error(const QString& msg);
     void requestSwitchToDatabases();
@@ -86,7 +93,7 @@ signals:
 
 private:
     QPointer<DatabaseTabWidget> m_dbTabs;
-    QScopedPointer<FdoSecrets::Service> m_secretService;
+    QSharedPointer<FdoSecrets::Service> m_secretService;
 };
 
 #endif // KEEPASSXC_FDOSECRETSPLUGIN_H

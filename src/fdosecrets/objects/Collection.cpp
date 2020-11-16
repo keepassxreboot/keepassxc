@@ -17,6 +17,7 @@
 
 #include "Collection.h"
 
+#include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
@@ -24,7 +25,6 @@
 #include "fdosecrets/objects/Session.h"
 
 #include "core/Config.h"
-#include "core/Database.h"
 #include "core/Tools.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
@@ -34,16 +34,19 @@
 
 namespace FdoSecrets
 {
+    Collection* Collection::Create(Service* parent, DatabaseWidget* backend)
+    {
+        return new Collection(parent, backend);
+    }
 
     Collection::Collection(Service* parent, DatabaseWidget* backend)
-        : DBusObject(parent)
+        : DBusObjectHelper(parent)
         , m_backend(backend)
         , m_exposedGroup(nullptr)
-        , m_registered(false)
     {
         // whenever the file path or the database object itself change, we do a full reload.
-        connect(backend, &DatabaseWidget::databaseFilePathChanged, this, &Collection::reloadBackend);
-        connect(backend, &DatabaseWidget::databaseReplaced, this, &Collection::reloadBackend);
+        connect(backend, &DatabaseWidget::databaseFilePathChanged, this, &Collection::reloadBackendOrDelete);
+        connect(backend, &DatabaseWidget::databaseReplaced, this, &Collection::reloadBackendOrDelete);
 
         // also remember to clear/populate the database when lock state changes.
         connect(backend, &DatabaseWidget::databaseUnlocked, this, &Collection::onDatabaseLockChanged);
@@ -56,37 +59,36 @@ namespace FdoSecrets
             }
             emit doneUnlockCollection(accepted);
         });
-
-        reloadBackend();
     }
 
-    void Collection::reloadBackend()
+    bool Collection::reloadBackend()
     {
-        if (m_registered) {
-            // delete all items
-            // this has to be done because the backend is actually still there, just we don't expose them
-            // NOTE: Do NOT use a for loop, because Item::doDelete will remove itself from m_items.
-            while (!m_items.isEmpty()) {
-                m_items.first()->doDelete();
-            }
-            cleanupConnections();
-
-            unregisterCurrentPath();
-            m_registered = false;
-        }
-
         Q_ASSERT(m_backend);
 
-        // make sure we have updated copy of the filepath, which is used to identify the database.
-        m_backendPath = m_backend->database()->filePath();
+        // delete all items
+        // this has to be done because the backend is actually still there, just we don't expose them
+        // NOTE: Do NOT use a for loop, because Item::doDelete will remove itself from m_items.
+        while (!m_items.isEmpty()) {
+            m_items.first()->doDelete();
+        }
+        cleanupConnections();
+        unregisterPrimaryPath();
 
-        // the database may not have a name (derived from filePath) yet, which may happen if it's newly created.
-        // defer the registration to next time a file path change happens.
-        if (!name().isEmpty()) {
-            registerWithPath(
-                QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(p()->objectPath().path(), encodePath(name())),
-                new CollectionAdaptor(this));
-            m_registered = true;
+        // make sure we have updated copy of the filepath, which is used to identify the database.
+        m_backendPath = m_backend->database()->canonicalFilePath();
+
+        // register the object, handling potentially duplicated name
+        auto name = encodePath(this->name());
+        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(p()->objectPath().path(), name);
+        if (!registerWithPath(path)) {
+            // try again with a suffix
+            name += QStringLiteral("_%1").arg(Tools::uuidToHex(QUuid::createUuid()).left(4));
+            path = QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(p()->objectPath().path(), name);
+
+            if (!registerWithPath(path)) {
+                service()->plugin()->emitError(tr("Failed to register database on DBus under the name '%1'").arg(name));
+                return false;
+            }
         }
 
         // populate contents after expose on dbus, because items rely on parent's dbus object path
@@ -94,6 +96,15 @@ namespace FdoSecrets
             populateContents();
         } else {
             cleanupConnections();
+        }
+
+        return true;
+    }
+
+    void Collection::reloadBackendOrDelete()
+    {
+        if (!reloadBackend()) {
+            doDelete();
         }
     }
 
@@ -197,7 +208,11 @@ namespace FdoSecrets
         }
 
         // Delete means close database
-        auto prompt = new DeleteCollectionPrompt(service(), this);
+        auto dpret = DeleteCollectionPrompt::Create(service(), this);
+        if (dpret.isError()) {
+            return dpret;
+        }
+        auto prompt = dpret.value();
         if (backendLocked()) {
             // this won't raise a dialog, immediate execute
             auto pret = prompt->prompt({});
@@ -311,12 +326,12 @@ namespace FdoSecrets
             itemPath = attributes.value(ItemAttributes::PathKey);
 
             // check existing item using attributes
-            auto existings = searchItems(attributes);
-            if (existings.isError()) {
-                return existings;
+            auto existing = searchItems(attributes);
+            if (existing.isError()) {
+                return existing;
             }
-            if (!existings.value().isEmpty() && replace) {
-                item = existings.value().front();
+            if (!existing.value().isEmpty() && replace) {
+                item = existing.value().front();
                 newlyCreated = false;
             }
         }
@@ -400,11 +415,13 @@ namespace FdoSecrets
 
         emit aliasAboutToAdd(alias);
 
-        bool ok = QDBusConnection::sessionBus().registerObject(
-            QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(p()->objectPath().path(), alias), this);
+        bool ok =
+            registerWithPath(QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(p()->objectPath().path(), alias), false);
         if (ok) {
             m_aliases.insert(alias);
             emit aliasAdded(alias);
+        } else {
+            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
         }
 
         return {};
@@ -435,16 +452,15 @@ namespace FdoSecrets
     QString Collection::name() const
     {
         if (m_backendPath.isEmpty()) {
-            // This is a newly created db without saving to file.
-            // This name is also used to register dbus path.
-            // For simplicity, we don't monitor the name change.
-            // So the dbus object path is not updated if the db name
-            // changes. This should not be a problem because once the database
-            // gets saved, the dbus path will be updated to use filename and
-            // everything back to normal.
+            // This is a newly created db without saving to file,
+            // but we have to give a name, which is used to register dbus path.
+            // We use database name for this purpose. For simplicity, we don't monitor the name change.
+            // So the dbus object path is not updated if the db name changes.
+            // This should not be a problem because once the database gets saved,
+            // the dbus path will be updated to use filename and everything back to normal.
             return m_backend->database()->metadata()->name();
         }
-        return QFileInfo(m_backendPath).baseName();
+        return QFileInfo(m_backendPath).completeBaseName();
     }
 
     DatabaseWidget* Collection::backend() const
@@ -466,7 +482,7 @@ namespace FdoSecrets
 
     void Collection::populateContents()
     {
-        if (!m_registered) {
+        if (!m_backend) {
             return;
         }
 
@@ -558,7 +574,7 @@ namespace FdoSecrets
             return;
         }
 
-        auto item = new Item(this, entry);
+        auto item = Item::Create(this, entry);
         m_items << item;
         m_entryToItem[entry] = item;
 
@@ -625,7 +641,7 @@ namespace FdoSecrets
 
         emit collectionAboutToDelete();
 
-        unregisterCurrentPath();
+        unregisterPrimaryPath();
 
         // remove alias manually to trigger signal
         for (const auto& a : aliases()) {
@@ -643,6 +659,8 @@ namespace FdoSecrets
         // reset backend and delete self
         m_backend = nullptr;
         deleteLater();
+
+        // items will be removed automatically as they are children objects
     }
 
     void Collection::cleanupConnections()

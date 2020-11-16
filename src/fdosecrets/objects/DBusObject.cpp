@@ -17,31 +17,28 @@
 
 #include "DBusObject.h"
 
-#include <QDBusAbstractAdaptor>
 #include <QFile>
 #include <QRegularExpression>
 #include <QTextStream>
 #include <QUrl>
 #include <QUuid>
 
-#include <utility>
-
 namespace FdoSecrets
 {
 
     DBusObject::DBusObject(DBusObject* parent)
         : QObject(parent)
+        , m_dbusAdaptor(nullptr)
     {
     }
 
-    void DBusObject::registerWithPath(const QString& path, QDBusAbstractAdaptor* adaptor)
+    bool DBusObject::registerWithPath(const QString& path, bool primary)
     {
-        m_objectPath.setPath(path);
-        m_dbusAdaptor = adaptor;
-        adaptor->setParent(this);
-        auto ok = QDBusConnection::sessionBus().registerObject(m_objectPath.path(), this);
-        Q_UNUSED(ok);
-        Q_ASSERT(ok);
+        if (primary) {
+            m_objectPath.setPath(path);
+        }
+
+        return QDBusConnection::sessionBus().registerObject(path, this);
     }
 
     QString DBusObject::callingPeerName() const
@@ -57,7 +54,10 @@ namespace FdoSecrets
 
     QString encodePath(const QString& value)
     {
-        // force "-.~_" to be encoded
+        // toPercentEncoding encodes everything except those in the unreserved group:
+        // ALPHA / DIGIT / "-" / "." / "_" / "~"
+        // we want only ALPHA / DIGIT / "_", with "_" as the escape character
+        // so force "-.~_" to be encoded
         return QUrl::toPercentEncoding(value, "", "-.~_").replace('%', '_');
     }
 

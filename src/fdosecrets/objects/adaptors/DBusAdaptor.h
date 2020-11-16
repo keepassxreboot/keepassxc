@@ -32,7 +32,7 @@ namespace FdoSecrets
     template <typename Parent> class DBusAdaptor : public QDBusAbstractAdaptor
     {
     public:
-        explicit DBusAdaptor(QObject* parent = nullptr)
+        explicit DBusAdaptor(Parent* parent = nullptr)
             : QDBusAbstractAdaptor(parent)
         {
         }

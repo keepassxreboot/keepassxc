@@ -16,6 +16,7 @@
  */
 #include "Session.h"
 
+#include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
 #include "core/Tools.h"
@@ -23,21 +24,40 @@
 namespace FdoSecrets
 {
 
-    QHash<QString, QVariant> Session::negoniationState;
+    QHash<QString, QVariant> Session::negotiationState;
+
+    Session* Session::Create(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
+    {
+        QScopedPointer<Session> res{new Session(std::move(cipher), peer, parent)};
+
+        if (!res->registerSelf()) {
+            return nullptr;
+        }
+
+        return res.take();
+    }
 
     Session::Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
-        : DBusObject(parent)
+        : DBusObjectHelper(parent)
         , m_cipher(std::move(cipher))
         , m_peer(peer)
         , m_id(QUuid::createUuid())
     {
-        registerWithPath(QStringLiteral(DBUS_PATH_TEMPLATE_SESSION).arg(p()->objectPath().path(), id()),
-                         new SessionAdaptor(this));
+    }
+
+    bool Session::registerSelf()
+    {
+        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_SESSION).arg(p()->objectPath().path(), id());
+        bool ok = registerWithPath(path);
+        if (!ok) {
+            service()->plugin()->emitError(tr("Failed to register session on DBus at path '%1'").arg(path));
+        }
+        return ok;
     }
 
     void Session::CleanupNegotiation(const QString& peer)
     {
-        negoniationState.remove(peer);
+        negotiationState.remove(peer);
     }
 
     DBusReturn<void> Session::close()
@@ -56,6 +76,11 @@ namespace FdoSecrets
     QString Session::id() const
     {
         return Tools::uuidToHex(m_id);
+    }
+
+    Service* Session::service() const
+    {
+        return qobject_cast<Service*>(parent());
     }
 
     std::unique_ptr<CipherPair> Session::CreateCiphers(const QString& peer,

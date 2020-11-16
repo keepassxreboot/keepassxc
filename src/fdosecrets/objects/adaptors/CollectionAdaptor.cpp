@@ -27,12 +27,16 @@ namespace FdoSecrets
     CollectionAdaptor::CollectionAdaptor(Collection* parent)
         : DBusAdaptor(parent)
     {
-        connect(
-            p(), &Collection::itemCreated, this, [this](const Item* item) { emit ItemCreated(objectPathSafe(item)); });
-        connect(
-            p(), &Collection::itemDeleted, this, [this](const Item* item) { emit ItemDeleted(objectPathSafe(item)); });
-        connect(
-            p(), &Collection::itemChanged, this, [this](const Item* item) { emit ItemChanged(objectPathSafe(item)); });
+        // p() isn't ready yet as this is called in Parent's constructor
+        connect(parent, &Collection::itemCreated, this, [this](const Item* item) {
+            emit ItemCreated(objectPathSafe(item));
+        });
+        connect(parent, &Collection::itemDeleted, this, [this](const Item* item) {
+            emit ItemDeleted(objectPathSafe(item));
+        });
+        connect(parent, &Collection::itemChanged, this, [this](const Item* item) {
+            emit ItemChanged(objectPathSafe(item));
+        });
     }
 
     const QList<QDBusObjectPath> CollectionAdaptor::items() const

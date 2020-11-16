@@ -43,6 +43,7 @@
 #define DBUS_PATH_TEMPLATE_SESSION "%1/session/%2"
 #define DBUS_PATH_TEMPLATE_COLLECTION "%1/collection/%2"
 #define DBUS_PATH_TEMPLATE_ITEM "%1/%2"
+#define DBUS_PATH_TEMPLATE_PROMPT "%1/prompt/%2"
 
 namespace FdoSecrets
 {
