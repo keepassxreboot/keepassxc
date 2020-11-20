@@ -42,8 +42,8 @@ int main(int argc, char* argv[])
 
 void TestKdbx4Argon2::initTestCaseImpl()
 {
-    m_xmlDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
-    m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
+    m_xmlDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D)));
+    m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D)));
 }
 
 QSharedPointer<Database>
@@ -108,7 +108,7 @@ void TestKdbx4Argon2::readKdbx(const QString& path,
 void TestKdbx4Argon2::writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString)
 {
     if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
-        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D)));
     }
     KeePass2Writer writer;
     hasError = writer.writeDatabase(device, db);
@@ -213,26 +213,32 @@ void TestKdbx4Argon2::testFormat400Upgrade_data()
     auto constexpr kdbx3 = KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK;
     auto constexpr kdbx4 = KeePass2::FILE_VERSION_4   & KeePass2::FILE_VERSION_CRITICAL_MASK;
 
-    QTest::newRow("Argon2           + AES")                   << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES256       << false << kdbx4;
-    QTest::newRow("AES-KDF          + AES")                   << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES256       << false << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + AES")                   << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES256       << false << kdbx3;
-    QTest::newRow("Argon2           + AES     + CustomData")  << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES256       << true  << kdbx4;
-    QTest::newRow("AES-KDF          + AES     + CustomData")  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES256       << true  << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + AES     + CustomData")  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES256       << true  << kdbx4;
+    QTest::newRow("Argon2d          + AES")                  << KeePass2::KDF_ARGON2D   << KeePass2::CIPHER_AES256  << false << kdbx4;
+    QTest::newRow("Argon2id         + AES")                  << KeePass2::KDF_ARGON2ID  << KeePass2::CIPHER_AES256  << false << kdbx4;
+    QTest::newRow("AES-KDF          + AES")                  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES256  << false << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + AES")                  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES256  << false << kdbx3;
+    QTest::newRow("Argon2d          + AES     + CustomData") << KeePass2::KDF_ARGON2D   << KeePass2::CIPHER_AES256  << true  << kdbx4;
+    QTest::newRow("Argon2id         + AES     + CustomData") << KeePass2::KDF_ARGON2ID  << KeePass2::CIPHER_AES256  << true  << kdbx4;
+    QTest::newRow("AES-KDF          + AES     + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES256  << true  << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + AES     + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES256  << true  << kdbx4;
 
-    QTest::newRow("Argon2           + ChaCha20")              << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_CHACHA20  << false << kdbx4;
-    QTest::newRow("AES-KDF          + ChaCha20")              << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20  << false << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + ChaCha20")              << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_CHACHA20  << false << kdbx3;
-    QTest::newRow("Argon2           + ChaCha20 + CustomData") << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_CHACHA20  << true  << kdbx4;
-    QTest::newRow("AES-KDF          + ChaCha20 + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20  << true  << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + ChaCha20 + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_CHACHA20  << true  << kdbx4;
+    QTest::newRow("Argon2d          + ChaCha20")              << KeePass2::KDF_ARGON2D   << KeePass2::CIPHER_CHACHA20 << false << kdbx4;
+    QTest::newRow("Argon2id         + ChaCha20")              << KeePass2::KDF_ARGON2ID  << KeePass2::CIPHER_CHACHA20 << false << kdbx4;
+    QTest::newRow("AES-KDF          + ChaCha20")              << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20 << false << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + ChaCha20")              << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_CHACHA20 << false << kdbx3;
+    QTest::newRow("Argon2d          + ChaCha20 + CustomData") << KeePass2::KDF_ARGON2D   << KeePass2::CIPHER_CHACHA20 << true  << kdbx4;
+    QTest::newRow("Argon2id         + ChaCha20 + CustomData") << KeePass2::KDF_ARGON2ID  << KeePass2::CIPHER_CHACHA20 << true  << kdbx4;
+    QTest::newRow("AES-KDF          + ChaCha20 + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20 << true  << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + ChaCha20 + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_CHACHA20 << true  << kdbx4;
 
-    QTest::newRow("Argon2           + Twofish")               << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_TWOFISH   << false << kdbx4;
-    QTest::newRow("AES-KDF          + Twofish")               << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH   << false << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + Twofish")               << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << false << kdbx3;
-    QTest::newRow("Argon2           + Twofish  + CustomData") << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
-    QTest::newRow("AES-KDF          + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
+    QTest::newRow("Argon2d          + Twofish")               << KeePass2::KDF_ARGON2D   << KeePass2::CIPHER_TWOFISH  << false << kdbx4;
+    QTest::newRow("Argon2id         + Twofish")               << KeePass2::KDF_ARGON2ID  << KeePass2::CIPHER_TWOFISH  << false << kdbx4;
+    QTest::newRow("AES-KDF          + Twofish")               << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH  << false << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + Twofish")               << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH  << false << kdbx3;
+    QTest::newRow("Argon2d          + Twofish  + CustomData") << KeePass2::KDF_ARGON2D   << KeePass2::CIPHER_TWOFISH  << true  << kdbx4;
+    QTest::newRow("Argon2id         + Twofish  + CustomData") << KeePass2::KDF_ARGON2ID  << KeePass2::CIPHER_TWOFISH  << true  << kdbx4;
+    QTest::newRow("AES-KDF          + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH  << true  << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH  << true  << kdbx4;
 }
 // clang-format on
 
@@ -270,7 +276,7 @@ void TestKdbx4Argon2::testUpgradeMasterKeyIntegrity()
     } else if (upgradeAction == "kdf-aes-kdbx3") {
         db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3)));
     } else if (upgradeAction == "kdf-argon2") {
-        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D)));
     } else if (upgradeAction == "kdf-aes-kdbx4") {
         db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4)));
     } else if (upgradeAction == "public-customdata") {
