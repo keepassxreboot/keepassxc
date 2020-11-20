@@ -301,7 +301,7 @@ void TestGui::testCreateDatabase()
     // check key and encryption
     QCOMPARE(m_db->key()->keys().size(), 2);
     QCOMPARE(m_db->kdf()->rounds(), 2);
-    QCOMPARE(m_db->kdf()->uuid(), KeePass2::KDF_ARGON2);
+    QCOMPARE(m_db->kdf()->uuid(), KeePass2::KDF_ARGON2D);
     QCOMPARE(m_db->cipher(), KeePass2::CIPHER_AES256);
     auto compositeKey = QSharedPointer<CompositeKey>::create();
     compositeKey->addKey(QSharedPointer<PasswordKey>::create("test"));

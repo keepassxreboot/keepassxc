@@ -30,7 +30,8 @@ const QUuid KeePass2::CIPHER_CHACHA20 = QUuid("d6038a2b-8b6f-4cb5-a524-339a31dbb
 
 const QUuid KeePass2::KDF_AES_KDBX3 = QUuid("c9d9f39a-628a-4460-bf74-0d08c18a4fea");
 const QUuid KeePass2::KDF_AES_KDBX4 = QUuid("7c02bb82-79a7-4ac0-927d-114a00648238");
-const QUuid KeePass2::KDF_ARGON2 = QUuid("ef636ddf-8c29-444b-91f7-a9a403e30a0c");
+const QUuid KeePass2::KDF_ARGON2D = QUuid("ef636ddf-8c29-444b-91f7-a9a403e30a0c");
+const QUuid KeePass2::KDF_ARGON2ID = QUuid("9e298b19-56db-4773-b23d-fc3ec6f0a1e6");
 
 const QByteArray KeePass2::INNER_STREAM_SALSA20_IV("\xe8\x30\x09\x4b\x97\x20\x5d\x2a");
 
@@ -53,7 +54,8 @@ const QList<QPair<QUuid, QString>> KeePass2::CIPHERS{
     qMakePair(KeePass2::CIPHER_CHACHA20, QObject::tr("ChaCha20 256-bit"))};
 
 const QList<QPair<QUuid, QString>> KeePass2::KDFS{
-    qMakePair(KeePass2::KDF_ARGON2, QObject::tr("Argon2 (KDBX 4 – recommended)")),
+    qMakePair(KeePass2::KDF_ARGON2D, QObject::tr("Argon2d (KDBX 4 – recommended)")),
+    qMakePair(KeePass2::KDF_ARGON2ID, QObject::tr("Argon2id (KDBX 4)")),
     qMakePair(KeePass2::KDF_AES_KDBX4, QObject::tr("AES-KDF (KDBX 4)")),
     qMakePair(KeePass2::KDF_AES_KDBX3, QObject::tr("AES-KDF (KDBX 3.1)"))};
 
@@ -109,8 +111,11 @@ QSharedPointer<Kdf> KeePass2::uuidToKdf(const QUuid& uuid)
     if (uuid == KDF_AES_KDBX4) {
         return QSharedPointer<AesKdf>::create();
     }
-    if (uuid == KDF_ARGON2) {
-        return QSharedPointer<Argon2Kdf>::create();
+    if (uuid == KDF_ARGON2D) {
+        return QSharedPointer<Argon2Kdf>::create(Argon2Kdf::Type::Argon2d);
+    }
+    if (uuid == KDF_ARGON2ID) {
+        return QSharedPointer<Argon2Kdf>::create(Argon2Kdf::Type::Argon2id);
     }
 
     return {};
