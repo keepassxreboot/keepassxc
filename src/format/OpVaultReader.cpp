@@ -72,7 +72,7 @@ Database* OpVaultReader::readDatabase(QDir& opdataDir, const QString& password)
     key->addKey(QSharedPointer<PasswordKey>::create(password));
 
     QScopedPointer<Database> db(new Database());
-    db->setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+    db->setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D));
     db->setCipher(KeePass2::CIPHER_AES256);
     db->setKey(key, true, false);
     db->metadata()->setName(vaultName);

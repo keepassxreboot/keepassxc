@@ -809,7 +809,7 @@ QSharedPointer<Kdf> TestKeePass2Format::fastKdf(QSharedPointer<Kdf> kdf) const
 {
     kdf->setRounds(1);
 
-    if (kdf->uuid() == KeePass2::KDF_ARGON2) {
+    if (kdf->uuid() == KeePass2::KDF_ARGON2D) {
         kdf->processParameters({{KeePass2::KDFPARAM_ARGON2_MEMORY, 1024}, {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}});
     }
 
