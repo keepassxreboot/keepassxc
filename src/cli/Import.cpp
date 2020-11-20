@@ -83,7 +83,7 @@ int Import::execute(const QStringList& arguments)
 
     QString errorMessage;
     Database db;
-    db.setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+    db.setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D));
     db.setKey(key);
 
     if (!db.import(xmlExportPath, &errorMessage)) {
