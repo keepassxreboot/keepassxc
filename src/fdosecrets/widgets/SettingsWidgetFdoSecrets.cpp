@@ -178,7 +178,7 @@ namespace
             m_disconnectAct->setToolTip(tr("Disconnect this application"));
             connect(m_disconnectAct, &QAction::triggered, this, [this]() {
                 if (m_session) {
-                    m_session->close();
+                    m_session->close().okOrDie();
                 }
             });
             addAction(m_disconnectAct);

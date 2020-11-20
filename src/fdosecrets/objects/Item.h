@@ -18,8 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_ITEM_H
 #define KEEPASSXC_FDOSECRETS_ITEM_H
 
-#include "fdosecrets/objects/DBusObject.h"
-#include "fdosecrets/objects/adaptors/ItemAdaptor.h"
+#include "fdosecrets/dbus/DBusObject.h"
 
 #include <QPointer>
 
@@ -38,9 +37,10 @@ namespace FdoSecrets
     class Collection;
     class PromptBase;
 
-    class Item : public DBusObjectHelper<Item, ItemAdaptor>
+    class Item : public DBusObject
     {
         Q_OBJECT
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_ITEM)
 
         explicit Item(Collection* parent, Entry* backend);
 
@@ -55,21 +55,21 @@ namespace FdoSecrets
          */
         static Item* Create(Collection* parent, Entry* backend);
 
-        DBusReturn<bool> locked() const;
+        Q_INVOKABLE DBusResult locked(bool& locked) const;
 
-        DBusReturn<const StringStringMap> attributes() const;
-        DBusReturn<void> setAttributes(const StringStringMap& attrs);
+        Q_INVOKABLE DBusResult attributes(StringStringMap& attrs) const;
+        Q_INVOKABLE DBusResult setAttributes(const StringStringMap& attrs);
 
-        DBusReturn<QString> label() const;
-        DBusReturn<void> setLabel(const QString& label);
+        Q_INVOKABLE DBusResult label(QString& label) const;
+        Q_INVOKABLE DBusResult setLabel(const QString& label);
 
-        DBusReturn<qulonglong> created() const;
+        Q_INVOKABLE DBusResult created(qulonglong& created) const;
 
-        DBusReturn<qulonglong> modified() const;
+        Q_INVOKABLE DBusResult modified(qulonglong& modified) const;
 
-        DBusReturn<PromptBase*> deleteItem();
-        DBusReturn<SecretStruct> getSecret(Session* session);
-        DBusReturn<void> setSecret(const SecretStruct& secret);
+        Q_INVOKABLE DBusResult deleteItem(PromptBase*& prompt);
+        Q_INVOKABLE DBusResult getSecret(Session* session, Secret& secret);
+        Q_INVOKABLE DBusResult setSecret(const Secret& secret);
 
     signals:
         void itemChanged();
@@ -78,7 +78,7 @@ namespace FdoSecrets
     public:
         static const QSet<QString> ReadOnlyAttributes;
 
-        DBusReturn<void> setProperties(const QVariantMap& properties);
+        DBusResult setProperties(const QVariantMap& properties);
 
         Entry* backend() const;
         Collection* collection() const;
@@ -102,27 +102,22 @@ namespace FdoSecrets
         void doDelete();
 
         /**
-         * @brief Register self on DBus
-         * @return
-         */
-        bool registerSelf();
-
-        /**
          * Check if the backend is a valid object, send error reply if not.
          * @return No error if the backend is valid.
          */
-        DBusReturn<void> ensureBackend() const;
+        DBusResult ensureBackend() const;
 
         /**
          * Ensure the database is unlocked, send error reply if locked.
          * @return true if the database is locked
          */
-        DBusReturn<void> ensureUnlocked() const;
+        DBusResult ensureUnlocked() const;
 
     private:
         QPointer<Entry> m_backend;
     };
 
 } // namespace FdoSecrets
+Q_DECLARE_METATYPE(FdoSecrets::ItemSecretMap);
 
 #endif // KEEPASSXC_FDOSECRETS_ITEM_H

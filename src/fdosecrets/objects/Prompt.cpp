@@ -29,25 +29,15 @@
 
 #include <QThread>
 #include <QWindow>
+#include <utility>
 
 namespace FdoSecrets
 {
 
     PromptBase::PromptBase(Service* parent)
-        : DBusObjectHelper(parent)
+        : DBusObject(parent)
     {
         connect(this, &PromptBase::completed, this, &PromptBase::deleteLater);
-    }
-
-    bool PromptBase::registerSelf()
-    {
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_PROMPT)
-                        .arg(p()->objectPath().path(), Tools::uuidToHex(QUuid::createUuid()));
-        bool ok = registerWithPath(path);
-        if (!ok) {
-            service()->plugin()->emitError(tr("Failed to register item on DBus at path '%1'").arg(path));
-        }
-        return ok;
     }
 
     QWindow* PromptBase::findWindow(const QString& windowId)
@@ -71,19 +61,10 @@ namespace FdoSecrets
         return qobject_cast<Service*>(parent());
     }
 
-    DBusReturn<void> PromptBase::dismiss()
+    DBusResult PromptBase::dismiss()
     {
         emit completed(true, "");
         return {};
-    }
-
-    DBusReturn<DeleteCollectionPrompt*> DeleteCollectionPrompt::Create(Service* parent, Collection* coll)
-    {
-        QScopedPointer<DeleteCollectionPrompt> res{new DeleteCollectionPrompt(parent, coll)};
-        if (!res->registerSelf()) {
-            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
-        }
-        return res.take();
     }
 
     DeleteCollectionPrompt::DeleteCollectionPrompt(Service* parent, Collection* coll)
@@ -92,20 +73,20 @@ namespace FdoSecrets
     {
     }
 
-    DBusReturn<void> DeleteCollectionPrompt::prompt(const QString& windowId)
+    DBusResult DeleteCollectionPrompt::prompt(const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
-            DBusReturn<void> ret;
+            DBusResult ret;
             QMetaObject::invokeMethod(this,
                                       "prompt",
                                       Qt::BlockingQueuedConnection,
                                       Q_ARG(QString, windowId),
-                                      Q_RETURN_ARG(DBusReturn<void>, ret));
+                                      Q_RETURN_ARG(DBusResult, ret));
             return ret;
         }
 
         if (!m_collection) {
-            return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
         }
 
         MessageBox::OverrideParent override(findWindow(windowId));
@@ -117,29 +98,22 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusReturn<CreateCollectionPrompt*> CreateCollectionPrompt::Create(Service* parent)
-    {
-        QScopedPointer<CreateCollectionPrompt> res{new CreateCollectionPrompt(parent)};
-        if (!res->registerSelf()) {
-            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
-        }
-        return res.take();
-    }
-
-    CreateCollectionPrompt::CreateCollectionPrompt(Service* parent)
+    CreateCollectionPrompt::CreateCollectionPrompt(Service* parent, QVariantMap properties, QString alias)
         : PromptBase(parent)
+        , m_properties(std::move(properties))
+        , m_alias(std::move(alias))
     {
     }
 
-    DBusReturn<void> CreateCollectionPrompt::prompt(const QString& windowId)
+    DBusResult CreateCollectionPrompt::prompt(const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
-            DBusReturn<void> ret;
+            DBusResult ret;
             QMetaObject::invokeMethod(this,
                                       "prompt",
                                       Qt::BlockingQueuedConnection,
                                       Q_ARG(QString, windowId),
-                                      Q_RETURN_ARG(DBusReturn<void>, ret));
+                                      Q_RETURN_ARG(DBusResult, ret));
             return ret;
         }
 
@@ -150,25 +124,28 @@ namespace FdoSecrets
             return dismiss();
         }
 
-        emit collectionCreated(coll);
+        auto ret = coll->setProperties(m_properties);
+        if (ret.err()) {
+            coll->doDelete();
+            return dismiss();
+        }
+        if (!m_alias.isEmpty()) {
+            ret = coll->addAlias(m_alias);
+            if (ret.err()) {
+                coll->doDelete();
+                return dismiss();
+            }
+        }
+
         emit completed(false, QVariant::fromValue(coll->objectPath()));
 
         return {};
     }
 
-    DBusReturn<void> CreateCollectionPrompt::dismiss()
+    DBusResult CreateCollectionPrompt::dismiss()
     {
         emit completed(true, QVariant::fromValue(QDBusObjectPath{"/"}));
         return {};
-    }
-
-    DBusReturn<LockCollectionsPrompt*> LockCollectionsPrompt::Create(Service* parent, const QList<Collection*>& colls)
-    {
-        QScopedPointer<LockCollectionsPrompt> res{new LockCollectionsPrompt(parent, colls)};
-        if (!res->registerSelf()) {
-            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
-        }
-        return res.take();
     }
 
     LockCollectionsPrompt::LockCollectionsPrompt(Service* parent, const QList<Collection*>& colls)
@@ -180,15 +157,15 @@ namespace FdoSecrets
         }
     }
 
-    DBusReturn<void> LockCollectionsPrompt::prompt(const QString& windowId)
+    DBusResult LockCollectionsPrompt::prompt(const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
-            DBusReturn<void> ret;
+            DBusResult ret;
             QMetaObject::invokeMethod(this,
                                       "prompt",
                                       Qt::BlockingQueuedConnection,
                                       Q_ARG(QString, windowId),
-                                      Q_RETURN_ARG(DBusReturn<void>, ret));
+                                      Q_RETURN_ARG(DBusResult, ret));
             return ret;
         }
 
@@ -208,20 +185,10 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusReturn<void> LockCollectionsPrompt::dismiss()
+    DBusResult LockCollectionsPrompt::dismiss()
     {
         emit completed(true, QVariant::fromValue(m_locked));
         return {};
-    }
-
-    DBusReturn<UnlockCollectionsPrompt*> UnlockCollectionsPrompt::Create(Service* parent,
-                                                                         const QList<Collection*>& coll)
-    {
-        QScopedPointer<UnlockCollectionsPrompt> res{new UnlockCollectionsPrompt(parent, coll)};
-        if (!res->registerSelf()) {
-            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
-        }
-        return res.take();
     }
 
     UnlockCollectionsPrompt::UnlockCollectionsPrompt(Service* parent, const QList<Collection*>& colls)
@@ -233,15 +200,15 @@ namespace FdoSecrets
         }
     }
 
-    DBusReturn<void> UnlockCollectionsPrompt::prompt(const QString& windowId)
+    DBusResult UnlockCollectionsPrompt::prompt(const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
-            DBusReturn<void> ret;
+            DBusResult ret;
             QMetaObject::invokeMethod(this,
                                       "prompt",
                                       Qt::BlockingQueuedConnection,
                                       Q_ARG(QString, windowId),
-                                      Q_RETURN_ARG(DBusReturn<void>, ret));
+                                      Q_RETURN_ARG(DBusResult, ret));
             return ret;
         }
 
@@ -285,19 +252,11 @@ namespace FdoSecrets
             emit completed(m_unlocked.isEmpty(), QVariant::fromValue(m_unlocked));
         }
     }
-    DBusReturn<void> UnlockCollectionsPrompt::dismiss()
+
+    DBusResult UnlockCollectionsPrompt::dismiss()
     {
         emit completed(true, QVariant::fromValue(m_unlocked));
         return {};
-    }
-
-    DBusReturn<DeleteItemPrompt*> DeleteItemPrompt::Create(Service* parent, Item* item)
-    {
-        QScopedPointer<DeleteItemPrompt> res{new DeleteItemPrompt(parent, item)};
-        if (!res->registerSelf()) {
-            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
-        }
-        return res.take();
     }
 
     DeleteItemPrompt::DeleteItemPrompt(Service* parent, Item* item)
@@ -306,15 +265,15 @@ namespace FdoSecrets
     {
     }
 
-    DBusReturn<void> DeleteItemPrompt::prompt(const QString& windowId)
+    DBusResult DeleteItemPrompt::prompt(const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
-            DBusReturn<void> ret;
+            DBusResult ret;
             QMetaObject::invokeMethod(this,
                                       "prompt",
                                       Qt::BlockingQueuedConnection,
                                       Q_ARG(QString, windowId),
-                                      Q_RETURN_ARG(DBusReturn<void>, ret));
+                                      Q_RETURN_ARG(DBusResult, ret));
             return ret;
         }
 

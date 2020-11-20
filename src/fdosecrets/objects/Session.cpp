@@ -29,8 +29,7 @@ namespace FdoSecrets
     Session* Session::Create(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
     {
         QScopedPointer<Session> res{new Session(std::move(cipher), peer, parent)};
-
-        if (!res->registerSelf()) {
+        if (!res->dbus().registerObject(res.data())) {
             return nullptr;
         }
 
@@ -38,21 +37,11 @@ namespace FdoSecrets
     }
 
     Session::Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
-        : DBusObjectHelper(parent)
+        : DBusObject(parent)
         , m_cipher(std::move(cipher))
         , m_peer(peer)
         , m_id(QUuid::createUuid())
     {
-    }
-
-    bool Session::registerSelf()
-    {
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_SESSION).arg(p()->objectPath().path(), id());
-        bool ok = registerWithPath(path);
-        if (!ok) {
-            service()->plugin()->emitError(tr("Failed to register session on DBus at path '%1'").arg(path));
-        }
-        return ok;
     }
 
     void Session::CleanupNegotiation(const QString& peer)
@@ -60,7 +49,7 @@ namespace FdoSecrets
         negotiationState.remove(peer);
     }
 
-    DBusReturn<void> Session::close()
+    DBusResult Session::close()
     {
         emit aboutToClose();
         deleteLater();
@@ -115,15 +104,16 @@ namespace FdoSecrets
         return cipher;
     }
 
-    SecretStruct Session::encode(const SecretStruct& input) const
+    Secret Session::encode(const Secret& input) const
     {
         auto output = m_cipher->encrypt(input);
-        output.session = objectPath();
+        output.session = this;
         return output;
     }
 
-    SecretStruct Session::decode(const SecretStruct& input) const
+    Secret Session::decode(const Secret& input) const
     {
+        Q_ASSERT(input.session == this);
         return m_cipher->decrypt(input);
     }
 

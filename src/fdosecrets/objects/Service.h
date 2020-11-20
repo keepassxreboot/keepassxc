@@ -18,8 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_SERVICE_H
 #define KEEPASSXC_FDOSECRETS_SERVICE_H
 
-#include "fdosecrets/objects/DBusObject.h"
-#include "fdosecrets/objects/adaptors/ServiceAdaptor.h"
+#include "fdosecrets/dbus/DBusObject.h"
 
 #include <QHash>
 #include <QObject>
@@ -45,11 +44,12 @@ namespace FdoSecrets
     class ServiceAdaptor;
     class Session;
 
-    class Service : public DBusObjectHelper<Service, ServiceAdaptor> // clazy: exclude=ctor-missing-parent-argument
+    class Service : public DBusObject // clazy: exclude=ctor-missing-parent-argument
     {
         Q_OBJECT
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SERVICE)
 
-        explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs);
+        explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus);
 
     public:
         /**
@@ -58,29 +58,29 @@ namespace FdoSecrets
          * This may be caused by
          *   - failed initialization
          */
-        static QSharedPointer<Service> Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs);
+        static QSharedPointer<Service> Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus);
         ~Service() override;
 
-        DBusReturn<QVariant> openSession(const QString& algorithm, const QVariant& input, Session*& result);
-        DBusReturn<Collection*>
-        createCollection(const QVariantMap& properties, const QString& alias, PromptBase*& prompt);
-        DBusReturn<const QList<Item*>> searchItems(const StringStringMap& attributes, QList<Item*>& locked);
+        Q_INVOKABLE DBusResult openSession(const QString& algorithm, const QVariant& input, QVariant& output, Session*& result);
+        Q_INVOKABLE DBusResult
+        createCollection(const QVariantMap& properties, const QString& alias, Collection*& collection, PromptBase*& prompt);
+        Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes, QList<Item*>& unlocked, QList<Item*>& locked) const;
 
-        DBusReturn<const QList<DBusObject*>> unlock(const QList<DBusObject*>& objects, PromptBase*& prompt);
+        Q_INVOKABLE DBusResult unlock(const QList<DBusObject*>& objects, QList<DBusObject*>& unlocked, PromptBase*& prompt);
 
-        DBusReturn<const QList<DBusObject*>> lock(const QList<DBusObject*>& objects, PromptBase*& prompt);
+        Q_INVOKABLE DBusResult lock(const QList<DBusObject*>& objects, QList<DBusObject*>& locked, PromptBase*& prompt);
 
-        DBusReturn<const QHash<Item*, SecretStruct>> getSecrets(const QList<Item*>& items, Session* session);
+        Q_INVOKABLE DBusResult getSecrets(const QList<Item*>& items, Session* session, ItemSecretMap& secrets) const;
 
-        DBusReturn<Collection*> readAlias(const QString& name);
+        Q_INVOKABLE DBusResult readAlias(const QString& name, Collection*& collection) const;
 
-        DBusReturn<void> setAlias(const QString& name, Collection* collection);
+        Q_INVOKABLE DBusResult setAlias(const QString& name, Collection* collection);
 
         /**
          * List of collections
          * @return
          */
-        DBusReturn<const QList<Collection*>> collections() const;
+        Q_INVOKABLE DBusResult collections(QList<Collection*>& collections) const;
 
     signals:
         void collectionCreated(Collection* collection);

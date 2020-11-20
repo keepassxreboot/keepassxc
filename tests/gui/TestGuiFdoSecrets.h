@@ -26,7 +26,7 @@
 #include <QString>
 
 #include "fdosecrets/GcryptMPI.h"
-#include "fdosecrets/objects/DBusTypes.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 
 class MainWindow;
 class Database;

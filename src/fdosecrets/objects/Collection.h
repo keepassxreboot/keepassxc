@@ -18,9 +18,8 @@
 #ifndef KEEPASSXC_FDOSECRETS_COLLECTION_H
 #define KEEPASSXC_FDOSECRETS_COLLECTION_H
 
-#include "DBusObject.h"
+#include "fdosecrets/dbus/DBusObject.h"
 
-#include "adaptors/CollectionAdaptor.h"
 #include "core/EntrySearcher.h"
 
 #include <QPointer>
@@ -36,9 +35,10 @@ namespace FdoSecrets
     class Item;
     class PromptBase;
     class Service;
-    class Collection : public DBusObjectHelper<Collection, CollectionAdaptor>
+    class Collection : public DBusObject
     {
         Q_OBJECT
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_COLLECTION)
 
         explicit Collection(Service* parent, DatabaseWidget* backend);
 
@@ -54,21 +54,21 @@ namespace FdoSecrets
          */
         static Collection* Create(Service* parent, DatabaseWidget* backend);
 
-        DBusReturn<const QList<Item*>> items() const;
+        Q_INVOKABLE DBusResult items(QList<Item*>& items) const;
 
-        DBusReturn<QString> label() const;
-        DBusReturn<void> setLabel(const QString& label);
+        Q_INVOKABLE DBusResult label(QString& label) const;
+        Q_INVOKABLE DBusResult setLabel(const QString& label);
 
-        DBusReturn<bool> locked() const;
+        Q_INVOKABLE DBusResult locked(bool& locked) const;
 
-        DBusReturn<qulonglong> created() const;
+        Q_INVOKABLE DBusResult created(qulonglong& created) const;
 
-        DBusReturn<qulonglong> modified() const;
+        Q_INVOKABLE DBusResult modified(qulonglong& modified) const;
 
-        DBusReturn<PromptBase*> deleteCollection();
-        DBusReturn<const QList<Item*>> searchItems(const StringStringMap& attributes);
-        DBusReturn<Item*>
-        createItem(const QVariantMap& properties, const SecretStruct& secret, bool replace, PromptBase*& prompt);
+        Q_INVOKABLE DBusResult deleteCollection(PromptBase*& deleteCollection);
+        Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes, QList<Item*>& items);
+        Q_INVOKABLE DBusResult
+        createItem(const QVariantMap& properties, const Secret& secret, bool replace, Item*& item, PromptBase*& prompt);
 
     signals:
         void itemCreated(Item* item);
@@ -86,15 +86,15 @@ namespace FdoSecrets
         void doneUnlockCollection(bool accepted);
 
     public:
-        DBusReturn<void> setProperties(const QVariantMap& properties);
+        DBusResult setProperties(const QVariantMap& properties);
 
         bool isValid() const
         {
             return backend();
         }
 
-        DBusReturn<void> removeAlias(QString alias);
-        DBusReturn<void> addAlias(QString alias);
+        DBusResult removeAlias(QString alias);
+        DBusResult addAlias(QString alias);
         const QSet<QString> aliases() const;
 
         /**
@@ -147,13 +147,13 @@ namespace FdoSecrets
          * Check if the backend is a valid object, send error reply if not.
          * @return true if the backend is valid.
          */
-        DBusReturn<void> ensureBackend() const;
+        DBusResult ensureBackend() const;
 
         /**
          * Ensure the database is unlocked, send error reply if locked.
          * @return true if the database is locked
          */
-        DBusReturn<void> ensureUnlocked() const;
+        DBusResult ensureUnlocked() const;
 
         /**
          * Like mkdir -p, find or create the group by path, under m_exposedGroup

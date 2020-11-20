@@ -33,8 +33,8 @@ namespace FdoSecrets
     public:
         CipherPair() = default;
         virtual ~CipherPair() = default;
-        virtual SecretStruct encrypt(const SecretStruct& input) = 0;
-        virtual SecretStruct decrypt(const SecretStruct& input) = 0;
+        virtual Secret encrypt(const Secret& input) = 0;
+        virtual Secret decrypt(const Secret& input) = 0;
         virtual bool isValid() const = 0;
         virtual QVariant negotiationOutput() const = 0;
     };
@@ -46,12 +46,12 @@ namespace FdoSecrets
         static constexpr const char Algorithm[] = "plain";
 
         PlainCipher() = default;
-        SecretStruct encrypt(const SecretStruct& input) override
+        Secret encrypt(const Secret& input) override
         {
             return input;
         }
 
-        SecretStruct decrypt(const SecretStruct& input) override
+        Secret decrypt(const Secret& input) override
         {
             return input;
         }
@@ -120,9 +120,9 @@ namespace FdoSecrets
 
         explicit DhIetf1024Sha256Aes128CbcPkcs7(const QByteArray& clientPublicKeyBytes);
 
-        SecretStruct encrypt(const SecretStruct& input) override;
+        Secret encrypt(const Secret& input) override;
 
-        SecretStruct decrypt(const SecretStruct& input) override;
+        Secret decrypt(const Secret& input) override;
 
         bool isValid() const override;
 

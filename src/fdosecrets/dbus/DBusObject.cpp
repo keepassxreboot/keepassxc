@@ -28,28 +28,22 @@ namespace FdoSecrets
 
     DBusObject::DBusObject(DBusObject* parent)
         : QObject(parent)
-        , m_dbusAdaptor(nullptr)
+        , m_dbus(parent->dbus())
+    {}
+
+    DBusObject::DBusObject(DBusObject* parent, DBusMgr& dbus)
+        : QObject(parent)
+        , m_dbus(dbus)
+    {}
+
+    DBusObject::~DBusObject()
     {
+        emit destroyed(this);
     }
 
-    bool DBusObject::registerWithPath(const QString& path, bool primary)
+    void DBusObject::setObjectPath(const QString& path)
     {
-        if (primary) {
-            m_objectPath.setPath(path);
-        }
-
-        return QDBusConnection::sessionBus().registerObject(path, this);
-    }
-
-    QString DBusObject::callingPeerName() const
-    {
-        auto pid = callingPeerPid();
-        QFile proc(QStringLiteral("/proc/%1/comm").arg(pid));
-        if (!proc.open(QFile::ReadOnly)) {
-            return callingPeer();
-        }
-        QTextStream stream(&proc);
-        return stream.readAll().trimmed();
+        m_objectPath.setPath(path);
     }
 
     QString encodePath(const QString& value)

@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETSPLUGIN_H
 #define KEEPASSXC_FDOSECRETSPLUGIN_H
 
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/Icons.h"
 
@@ -66,6 +67,12 @@ public:
     DatabaseTabWidget* dbTabs() const;
 
     /**
+     * @brief The dbus manager instance
+     * @return
+     */
+    const FdoSecrets::DBusMgr& dbus() const;
+
+    /**
      * Check the running secret service and returns info about it
      * @return html string suitable to be shown in the UI
      */
@@ -93,6 +100,7 @@ signals:
 
 private:
     QPointer<DatabaseTabWidget> m_dbTabs;
+    FdoSecrets::DBusMgr m_dbus;
     QSharedPointer<FdoSecrets::Service> m_secretService;
 };
 

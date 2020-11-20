@@ -18,10 +18,9 @@
 #ifndef KEEPASSXC_FDOSECRETS_SESSION_H
 #define KEEPASSXC_FDOSECRETS_SESSION_H
 
-#include "fdosecrets/objects/DBusObject.h"
+#include "fdosecrets/dbus/DBusObject.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/SessionCipher.h"
-#include "fdosecrets/objects/adaptors/SessionAdaptor.h"
 
 #include <QByteArray>
 #include <QHash>
@@ -34,9 +33,10 @@ namespace FdoSecrets
 {
 
     class CipherPair;
-    class Session : public DBusObjectHelper<Session, SessionAdaptor>
+    class Session : public DBusObject
     {
         Q_OBJECT
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SESSION)
 
         explicit Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent);
 
@@ -59,21 +59,21 @@ namespace FdoSecrets
          */
         static Session* Create(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent);
 
-        DBusReturn<void> close();
+        Q_INVOKABLE DBusResult close();
 
         /**
          * Encode the secret struct. Note only the value field is encoded.
          * @param input
          * @return
          */
-        SecretStruct encode(const SecretStruct& input) const;
+        Secret encode(const Secret& input) const;
 
         /**
          * Decode the secret struct.
          * @param input
          * @return
          */
-        SecretStruct decode(const SecretStruct& input) const;
+        Secret decode(const Secret& input) const;
 
         /**
          * The peer application that opened this session
