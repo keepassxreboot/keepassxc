@@ -30,6 +30,14 @@ WinUtils* WinUtils::instance()
 {
     if (!m_instance) {
         m_instance = new WinUtils(qApp);
+
+#ifdef QT_DEBUG
+        // Attach console to enable debug output
+        if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+            freopen("CONOUT$", "w", stdout);
+            freopen("CONOUT$", "w", stderr);
+        }
+#endif
     }
 
     return m_instance;
