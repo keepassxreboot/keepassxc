@@ -65,7 +65,7 @@ namespace FdoSecrets
 
         Q_INVOKABLE DBusResult modified(qulonglong& modified) const;
 
-        Q_INVOKABLE DBusResult deleteCollection(PromptBase*& deleteCollection);
+        Q_INVOKABLE DBusResult remove(PromptBase*& prompt);
         Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes, QList<Item*>& items);
         Q_INVOKABLE DBusResult
         createItem(const QVariantMap& properties, const Secret& secret, bool replace, Item*& item, PromptBase*& prompt);

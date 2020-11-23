@@ -67,7 +67,7 @@ namespace FdoSecrets
 
         Q_INVOKABLE DBusResult modified(qulonglong& modified) const;
 
-        Q_INVOKABLE DBusResult deleteItem(PromptBase*& prompt);
+        Q_INVOKABLE DBusResult remove(PromptBase*& prompt);
         Q_INVOKABLE DBusResult getSecret(Session* session, Secret& secret);
         Q_INVOKABLE DBusResult setSecret(const Secret& secret);
 

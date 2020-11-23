@@ -198,7 +198,7 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Collection::deleteCollection(PromptBase*& prompt)
+    DBusResult Collection::remove(PromptBase*& prompt)
     {
         auto ret = ensureBackend();
         if (ret.err()) {

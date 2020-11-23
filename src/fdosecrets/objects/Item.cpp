@@ -210,7 +210,7 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Item::deleteItem(PromptBase*& prompt)
+    DBusResult Item::remove(PromptBase*& prompt)
     {
         auto ret = ensureBackend();
         if (ret.err()) {

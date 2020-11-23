@@ -197,7 +197,7 @@ namespace FdoSecrets {
 
         auto iface = message.interface();
         auto member = message.member();
-        // introspect is handled by returning false
+        // introspection is handled by returning false
         // but we need to handle properties ourselves like regular functions
         if (iface == QLatin1String("org.freedesktop.DBus.Properties")) {
             iface = message.arguments().at(0).toString();
@@ -206,7 +206,12 @@ namespace FdoSecrets {
                 member = member + message.arguments().at(1).toString();
             }
         }
+        // mapping from dbus member name to function names on the object
         member = pascalToCamel(member);
+        // also "delete" => "remove" due to c++ keyword
+        if (member == QLatin1Literal("delete")) {
+            member = QLatin1Literal("remove");
+        }
 
         // from now on we may call into dbus objects, so setup client first
         struct ContextSetter

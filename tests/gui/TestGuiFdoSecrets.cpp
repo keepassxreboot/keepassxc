@@ -325,7 +325,7 @@ void TestGuiFdoSecrets::testDBusSpec()
     FdoSecrets::settings()->setNoConfirmDeleteItem(true);
     PromptBase* prompt = nullptr;
     {
-        auto rep = item->deleteItem();
+        auto rep = item->remove();
         QVERIFY(!rep.isError());
         prompt = rep.value();
     }
@@ -723,7 +723,7 @@ void TestGuiFdoSecrets::testCollectionDelete()
     QVERIFY(spyCollectionDeleted.isValid());
 
     m_db->markAsModified();
-    CHECKED_DBUS_LOCAL_CALL(prompt, coll->deleteCollection());
+    CHECKED_DBUS_LOCAL_CALL(prompt, coll->remove());
     QVERIFY(prompt);
     QSignalSpy spyPromptCompleted(&prompt->dbusAdaptor(), SIGNAL(Completed(bool, QDBusVariant)));
     QVERIFY(spyPromptCompleted.isValid());
@@ -1030,7 +1030,7 @@ void TestGuiFdoSecrets::testItemDelete()
     QSignalSpy spyItemDeleted(&coll->dbusAdaptor(), SIGNAL(ItemDeleted(QDBusObjectPath)));
     QVERIFY(spyItemDeleted.isValid());
 
-    CHECKED_DBUS_LOCAL_CALL(prompt, item->deleteItem());
+    CHECKED_DBUS_LOCAL_CALL(prompt, item->remove());
     QVERIFY(prompt);
 
     QSignalSpy spyPromptCompleted(&prompt->dbusAdaptor(), SIGNAL(Completed(bool, QDBusVariant)));
