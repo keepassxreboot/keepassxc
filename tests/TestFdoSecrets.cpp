@@ -21,8 +21,8 @@
 
 #include "core/EntrySearcher.h"
 #include "crypto/Crypto.h"
-#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/GcryptMPI.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/SessionCipher.h"

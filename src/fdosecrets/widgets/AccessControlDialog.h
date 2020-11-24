@@ -58,7 +58,7 @@ private:
 
 class AccessControlDialog::EntryModel : public QAbstractTableModel
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     explicit EntryModel(QList<Entry*> entries, QObject* parent = nullptr);
 

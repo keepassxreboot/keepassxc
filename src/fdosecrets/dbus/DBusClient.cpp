@@ -71,9 +71,9 @@ namespace FdoSecrets
         incomplete = false;
 
         QSharedPointer<CipherPair> cipher{};
-        if (algorithm == QLatin1String(PlainCipher::Algorithm)) {
+        if (algorithm == PlainCipher::Algorithm) {
             cipher.reset(new PlainCipher);
-        } else if (algorithm == QLatin1String(DhIetf1024Sha256Aes128CbcPkcs7::Algorithm)) {
+        } else if (algorithm == DhIetf1024Sha256Aes128CbcPkcs7::Algorithm) {
             QByteArray clientPublicKey = input.toByteArray();
             cipher.reset(new DhIetf1024Sha256Aes128CbcPkcs7(clientPublicKey));
         } else {

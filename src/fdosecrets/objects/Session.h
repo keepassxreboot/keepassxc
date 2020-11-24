@@ -21,9 +21,9 @@
 #include "fdosecrets/dbus/DBusObject.h"
 #include "fdosecrets/objects/Service.h"
 
+#include <QSharedPointer>
 #include <QUuid>
 #include <QVariant>
-#include <QSharedPointer>
 
 namespace FdoSecrets
 {

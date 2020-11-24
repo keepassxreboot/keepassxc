@@ -20,8 +20,8 @@
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusClient.h"
-#include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Collection.h"
+#include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/SessionCipher.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
 
@@ -38,8 +38,8 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/wizard/NewDatabaseWizard.h"
-#include "util/TemporaryFile.h"
 #include "util/FdoSecretsProxy.h"
+#include "util/TemporaryFile.h"
 
 #include <QLineEdit>
 #include <QSignalSpy>
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
             return {};                                                                                                 \
     } while (false)
 
-#define COMPARE_RET(actual, expected)                                                                                      \
+#define COMPARE_RET(actual, expected)                                                                                  \
     do {                                                                                                               \
         if (!QTest::qCompare(actual, expected, #actual, #expected, __FILE__, __LINE__))                                \
             return {};                                                                                                 \
@@ -86,35 +86,35 @@ int main(int argc, char* argv[])
 #define COMPARE QCOMPARE
 #define VERIFY2 QVERIFY2
 
-#define DBUS_COMPARE(actual, expected) \
-    do {                               \
-        auto reply = (actual); \
-        VERIFY2(reply.isValid(), reply.error().name().toLocal8Bit()); \
-        COMPARE(reply.value(), (expected)); \
-    } while (false)
-
-#define DBUS_VERIFY(stmt) \
-    do {                               \
-        auto reply = (stmt); \
-        VERIFY2(reply.isValid(), reply.error().name().toLocal8Bit()); \
-    } while (false)
-
-#define DBUS_GET(var, stmt) \
-std::remove_cv<decltype((stmt).argumentAt<0>())>::type var;                                                             \
+#define DBUS_COMPARE(actual, expected)                                                                                 \
     do {                                                                                                               \
-        const auto rep = (stmt);                                                                                         \
-        VERIFY2(rep.isValid(), rep.error().name().toLocal8Bit());                                                                                       \
-        var = rep.argumentAt<0>();                                                                                            \
+        auto reply = (actual);                                                                                         \
+        VERIFY2(reply.isValid(), reply.error().name().toLocal8Bit());                                                  \
+        COMPARE(reply.value(), (expected));                                                                            \
     } while (false)
 
-#define DBUS_GET2(name1, name2, stmt) \
-std::remove_cv<decltype((stmt).argumentAt<0>())>::type name1;                                                             \
-std::remove_cv<decltype((stmt).argumentAt<1>())>::type name2;                                                             \
+#define DBUS_VERIFY(stmt)                                                                                              \
     do {                                                                                                               \
-        const auto rep = (stmt);                                                                                         \
-        VERIFY2(rep.isValid(), rep.error().name().toLocal8Bit());                                                                                       \
-        name1 = rep.argumentAt<0>();                                                                                            \
-        name2 = rep.argumentAt<1>();                                                                                            \
+        auto reply = (stmt);                                                                                           \
+        VERIFY2(reply.isValid(), reply.error().name().toLocal8Bit());                                                  \
+    } while (false)
+
+#define DBUS_GET(var, stmt)                                                                                            \
+    std::remove_cv<decltype((stmt).argumentAt<0>())>::type var;                                                        \
+    do {                                                                                                               \
+        const auto rep = (stmt);                                                                                       \
+        VERIFY2(rep.isValid(), rep.error().name().toLocal8Bit());                                                      \
+        var = rep.argumentAt<0>();                                                                                     \
+    } while (false)
+
+#define DBUS_GET2(name1, name2, stmt)                                                                                  \
+    std::remove_cv<decltype((stmt).argumentAt<0>())>::type name1;                                                      \
+    std::remove_cv<decltype((stmt).argumentAt<1>())>::type name2;                                                      \
+    do {                                                                                                               \
+        const auto rep = (stmt);                                                                                       \
+        VERIFY2(rep.isValid(), rep.error().name().toLocal8Bit());                                                      \
+        name1 = rep.argumentAt<0>();                                                                                   \
+        name2 = rep.argumentAt<1>();                                                                                   \
     } while (false)
 
 using namespace FdoSecrets;
@@ -122,11 +122,14 @@ using namespace FdoSecrets;
 class FakeClient : public DBusClient
 {
 public:
-    explicit FakeClient(DBusMgr& dbus) : DBusClient(dbus, QStringLiteral("local"), 0, "fake-client") {}
+    explicit FakeClient(DBusMgr& dbus)
+        : DBusClient(dbus, QStringLiteral("local"), 0, "fake-client")
+    {
+    }
 };
 
 // pretty print QDBusObjectPath in QCOMPARE
-char *toString(const QDBusObjectPath &path)
+char* toString(const QDBusObjectPath& path)
 {
     return QTest::toString("ObjectPath(" + path.path() + ")");
 }
@@ -181,22 +184,22 @@ void TestGuiFdoSecrets::initTestCase()
     // use the same cipher to do the client side encryption, but exchange the position of client/server keys
     m_cipher.reset(new DhIetf1024Sha256Aes128CbcPkcs7);
     VERIFY(m_cipher->initialize(MpiFromBytes(MpiToBytes(m_serverPublic)),
-                                 MpiFromHex("30d18c6b328bac970c05bda6af2e708b9"
-                                            "d6bbbb6dc136c1a2d96e870fabc86ad74"
-                                            "1846a26a4197f32f65ea2e7580ad2afe3"
-                                            "dd5d6c1224b8368b0df2cd75d520a9ff9"
-                                            "7fe894cc7da71b7bd285b4633359c16c8"
-                                            "d341f822fa4f0fdf59b5d3448658c46a2"
-                                            "a86dbb14ff85823873f8a259ccc52bbb8"
-                                            "2b5a4c2a75447982553b42221"),
-                                 MpiFromHex("84aafe9c9f356f7762307f4d791acb59e"
-                                            "8e3fd562abdbb481d0587f8400ad6c51d"
-                                            "af561a1beb9a22c8cd4d2807367c5787b"
-                                            "2e06d631ccbb5194b6bb32211583ce688"
-                                            "f9c2cebc22a9e4d494d12ebdd570c61a1"
-                                            "62a94e88561d25ccd0415339d1f59e1b0"
-                                            "6bc6b6b5fde46e23b2410eb034be390d3"
-                                            "2407ec7ae90f0831f24afd5ac")));
+                                MpiFromHex("30d18c6b328bac970c05bda6af2e708b9"
+                                           "d6bbbb6dc136c1a2d96e870fabc86ad74"
+                                           "1846a26a4197f32f65ea2e7580ad2afe3"
+                                           "dd5d6c1224b8368b0df2cd75d520a9ff9"
+                                           "7fe894cc7da71b7bd285b4633359c16c8"
+                                           "d341f822fa4f0fdf59b5d3448658c46a2"
+                                           "a86dbb14ff85823873f8a259ccc52bbb8"
+                                           "2b5a4c2a75447982553b42221"),
+                                MpiFromHex("84aafe9c9f356f7762307f4d791acb59e"
+                                           "8e3fd562abdbb481d0587f8400ad6c51d"
+                                           "af561a1beb9a22c8cd4d2807367c5787b"
+                                           "2e06d631ccbb5194b6bb32211583ce688"
+                                           "f9c2cebc22a9e4d494d12ebdd570c61a1"
+                                           "62a94e88561d25ccd0415339d1f59e1b0"
+                                           "6bc6b6b5fde46e23b2410eb034be390d3"
+                                           "2407ec7ae90f0831f24afd5ac")));
 
     // set a fake dbus client all the time so we can freely access DBusMgr anywhere
     m_client.reset(new FakeClient(m_plugin->dbus()));
@@ -290,8 +293,9 @@ void TestGuiFdoSecrets::testServiceEnable()
     DBUS_COMPARE(coll->label(), m_db->metadata()->name());
 
     DBUS_COMPARE(coll->created(),
-        static_cast<qulonglong>(m_db->rootGroup()->timeInfo().creationTime().toMSecsSinceEpoch() / 1000));
-    DBUS_COMPARE(coll->modified(),
+                 static_cast<qulonglong>(m_db->rootGroup()->timeInfo().creationTime().toMSecsSinceEpoch() / 1000));
+    DBUS_COMPARE(
+        coll->modified(),
         static_cast<qulonglong>(m_db->rootGroup()->timeInfo().lastModificationTime().toMSecsSinceEpoch() / 1000));
 }
 
@@ -424,7 +428,7 @@ void TestGuiFdoSecrets::testServiceUnlock()
     }
     QTRY_COMPARE(spyCollectionCreated.count(), 0);
     QTRY_VERIFY(!spyCollectionChanged.isEmpty());
-    for (const auto& args : spyCollectionChanged){
+    for (const auto& args : spyCollectionChanged) {
         COMPARE(args.size(), 1);
         COMPARE(args.at(0).value<QDBusObjectPath>().path(), coll->path());
     }
@@ -458,14 +462,17 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
     {
         // FIXME: the dialog is shown and blocks the method from returning
         // this is a hack to click away the dialog, remove after fix the prompt method
-        struct Filter : QObject {
+        struct Filter : QObject
+        {
             QWidgetList exclude = QApplication::topLevelWidgets();
-            Filter() {
+            Filter()
+            {
                 qApp->installEventFilter(this);
             }
-            bool eventFilter(QObject *obj, QEvent *ev) override {
+            bool eventFilter(QObject* obj, QEvent* ev) override
+            {
                 if (ev->type() == QEvent::WindowActivate) {
-                    if (auto *w = qobject_cast<AccessControlDialog*>(obj)) {
+                    if (auto* w = qobject_cast<AccessControlDialog*>(obj)) {
                         if (w->isWindow() && !exclude.contains(w)) {
                             QTest::keyClick(w, Qt::Key_Enter);
                         }
@@ -473,7 +480,8 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
                 }
                 return false;
             }
-            ~Filter() override {
+            ~Filter() override
+            {
                 qApp->removeEventFilter(this);
             }
         } filter{};
@@ -488,9 +496,9 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
     QTRY_COMPARE(spyPromptCompleted.count(), 1);
     {
         auto args = spyPromptCompleted.takeFirst();
-            COMPARE(args.size(), 2);
-            COMPARE(args.at(0).toBool(), false);
-            COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(item->path())});
+        COMPARE(args.size(), 2);
+        COMPARE(args.at(0).toBool(), false);
+        COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(item->path())});
     }
 }
 
@@ -612,7 +620,9 @@ void TestGuiFdoSecrets::testCollectionCreate()
     // returns existing if alias is nonempty and exists
     {
         auto existing = getDefaultCollection(service);
-        DBUS_GET2(collPath, promptPath, service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION ".Label", "NewDB"}}, "default"));
+        DBUS_GET2(collPath,
+                  promptPath,
+                  service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION ".Label", "NewDB"}}, "default"));
         COMPARE(promptPath, QDBusObjectPath("/"));
         COMPARE(collPath.path(), existing->path());
     }
@@ -620,7 +630,9 @@ void TestGuiFdoSecrets::testCollectionCreate()
 
     // create new one and set properties
     {
-        DBUS_GET2(collPath, promptPath, service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION ".Label", "Test NewDB"}}, "mydatadb"));
+        DBUS_GET2(collPath,
+                  promptPath,
+                  service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION ".Label", "Test NewDB"}}, "mydatadb"));
         COMPARE(collPath, QDBusObjectPath("/"));
         auto prompt = getProxy<PromptProxy>(promptPath);
         VERIFY(prompt);
@@ -825,7 +837,6 @@ void TestGuiFdoSecrets::testItemCreate()
     {
         DBUS_GET(actual, item->attributes());
         for (const auto& key : attributes.keys()) {
-//            VERIFY(actual.contains(key));
             COMPARE(actual[key], attributes[key]);
         }
     }
@@ -872,8 +883,8 @@ void TestGuiFdoSecrets::testItemChange()
     COMPARE(entry->title(), QStringLiteral("anotherLabel"));
     QTRY_VERIFY(!spyItemChanged.isEmpty());
     for (const auto& args : spyItemChanged) {
-            COMPARE(args.size(), 1);
-            COMPARE(args.at(0).value<QDBusObjectPath>().path(), item->path());
+        COMPARE(args.size(), 1);
+        COMPARE(args.at(0).value<QDBusObjectPath>().path(), item->path());
     }
 
     spyItemChanged.clear();
@@ -883,8 +894,8 @@ void TestGuiFdoSecrets::testItemChange()
     COMPARE(entry->attributes()->value("abc"), QStringLiteral("def"));
     QTRY_VERIFY(!spyItemChanged.isEmpty());
     for (const auto& args : spyItemChanged) {
-            COMPARE(args.size(), 1);
-            COMPARE(args.at(0).value<QDBusObjectPath>().path(), item->path());
+        COMPARE(args.size(), 1);
+        COMPARE(args.at(0).value<QDBusObjectPath>().path(), item->path());
     }
 }
 
@@ -1115,12 +1126,15 @@ void TestGuiFdoSecrets::testItemLockState()
     auto entry = itemObj->backend();
     VERIFY(entry);
 
-    auto encrypted = m_cipher->encrypt(wire::Secret{
-        QDBusObjectPath(sess->path()),
-        {},
-        "NewPassword",
-        "text/plain",
-    }.to()).to();
+    auto secret =
+        wire::Secret{
+            QDBusObjectPath(sess->path()),
+            {},
+            "NewPassword",
+            "text/plain",
+        }
+            .to();
+    auto encrypted = m_cipher->encrypt(secret).to();
 
     // when access confirmation is disabled, item is unlocked when the collection is unlocked
     FdoSecrets::settings()->setConfirmAccessItem(false);
@@ -1279,7 +1293,8 @@ QSharedPointer<ServiceProxy> TestGuiFdoSecrets::enableService()
     return getProxy<ServiceProxy>(QDBusObjectPath(DBUS_PATH_SECRETS));
 }
 
-QSharedPointer<SessionProxy> TestGuiFdoSecrets::openSession(const QSharedPointer<ServiceProxy>& service, const QString& algo)
+QSharedPointer<SessionProxy> TestGuiFdoSecrets::openSession(const QSharedPointer<ServiceProxy>& service,
+                                                            const QString& algo)
 {
     VERIFY(service);
 

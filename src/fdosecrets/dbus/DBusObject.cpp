@@ -19,7 +19,6 @@
 
 #include <QFile>
 #include <QRegularExpression>
-#include <QTextStream>
 #include <QUrl>
 #include <QUuid>
 
@@ -27,7 +26,8 @@ namespace FdoSecrets
 {
 
     DBusObject::DBusObject(DBusObject* parent)
-        : DBusObject(parent, parent->dbus())
+        : QObject(parent)
+        , m_dbus(parent->dbus())
     {
     }
 
@@ -35,7 +35,8 @@ namespace FdoSecrets
         : QObject(parent)
         , m_objectPath("/")
         , m_dbus(dbus)
-    {}
+    {
+    }
 
     DBusObject::~DBusObject()
     {

@@ -25,8 +25,6 @@
 #include <QPointer>
 #include <QVariant>
 
-#include <memory>
-
 class DatabaseTabWidget;
 class DatabaseWidget;
 class Group;
@@ -55,15 +53,25 @@ namespace FdoSecrets
          * This may be caused by
          *   - failed initialization
          */
-        static QSharedPointer<Service> Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus);
+        static QSharedPointer<Service>
+        Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus);
         ~Service() override;
 
-        Q_INVOKABLE DBusResult openSession(const QString& algorithm, const QVariant& input, QVariant& output, Session*& result);
-        Q_INVOKABLE DBusResult
-        createCollection(const QVariantMap& properties, const QString& alias, Collection*& collection, PromptBase*& prompt);
-        Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes, QList<Item*>& unlocked, QList<Item*>& locked) const;
+        Q_INVOKABLE DBusResult openSession(const QString& algorithm,
+                                           const QVariant& input,
+                                           QVariant& output,
+                                           Session*& result);
+        Q_INVOKABLE DBusResult createCollection(const QVariantMap& properties,
+                                                const QString& alias,
+                                                Collection*& collection,
+                                                PromptBase*& prompt);
+        Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes,
+                                           QList<Item*>& unlocked,
+                                           QList<Item*>& locked) const;
 
-        Q_INVOKABLE DBusResult unlock(const QList<DBusObject*>& objects, QList<DBusObject*>& unlocked, PromptBase*& prompt);
+        Q_INVOKABLE DBusResult unlock(const QList<DBusObject*>& objects,
+                                      QList<DBusObject*>& unlocked,
+                                      PromptBase*& prompt);
 
         Q_INVOKABLE DBusResult lock(const QList<DBusObject*>& objects, QList<DBusObject*>& locked, PromptBase*& prompt);
 

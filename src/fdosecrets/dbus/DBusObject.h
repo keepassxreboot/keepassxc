@@ -18,8 +18,8 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSOBJECT_H
 #define KEEPASSXC_FDOSECRETS_DBUSOBJECT_H
 
-#include "DBusConstants.h"
-#include "DBusTypes.h"
+#include "fdosecrets/dbus/DBusConstants.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 
 #include <QDBusAbstractAdaptor>
 #include <QDBusConnection>
@@ -34,7 +34,7 @@
 
 #ifndef Q_MOC_RUN
 // define the tag text as empty, so the compiler doesn't see it
-#  define DBUS_PROPERTY
+#define DBUS_PROPERTY
 #endif // #ifndef Q_MOC_RUN
 
 namespace FdoSecrets
@@ -89,16 +89,27 @@ namespace FdoSecrets
         DBusResult() = default;
         explicit DBusResult(QString error)
             : QString(std::move(error))
-        {}
+        {
+        }
 
         // Implicitly convert from QDBusError
         DBusResult(QDBusError::ErrorType error) // NOLINT(google-explicit-constructor)
             : QString(QDBusError::errorString(error))
-        { }
+        {
+        }
 
-        bool ok() const { return isEmpty(); }
-        bool err() const { return !isEmpty(); }
-        void okOrDie() const { Q_ASSERT(ok()); }
+        bool ok() const
+        {
+            return isEmpty();
+        }
+        bool err() const
+        {
+            return !isEmpty();
+        }
+        void okOrDie() const
+        {
+            Q_ASSERT(ok());
+        }
     };
 
     /**

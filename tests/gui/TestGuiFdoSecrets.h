@@ -95,7 +95,6 @@ private slots:
     void testHiddenFilename();
     void testDuplicateName();
 
-
 protected slots:
     void driveNewDatabaseWizard();
 
@@ -108,22 +107,21 @@ private:
     QSharedPointer<ItemProxy> getFirstItem(const QSharedPointer<CollectionProxy>& coll);
     QSharedPointer<ItemProxy> createItem(const QSharedPointer<SessionProxy>& sess,
                                          const QSharedPointer<CollectionProxy>& coll,
-                                          const QString& label,
-                                          const QString& pass,
-                                          const FdoSecrets::wire::StringStringMap& attr,
-                                          bool replace);
-    template<typename Proxy>
-    QSharedPointer<Proxy> getProxy(const QDBusObjectPath& path) const
+                                         const QString& label,
+                                         const QString& pass,
+                                         const FdoSecrets::wire::StringStringMap& attr,
+                                         bool replace);
+    template <typename Proxy> QSharedPointer<Proxy> getProxy(const QDBusObjectPath& path) const
     {
-        auto ret = QSharedPointer<Proxy>{new Proxy(QStringLiteral("org.freedesktop.secrets"), path.path(), QDBusConnection::sessionBus())};
+        auto ret = QSharedPointer<Proxy>{
+            new Proxy(QStringLiteral("org.freedesktop.secrets"), path.path(), QDBusConnection::sessionBus())};
         if (!ret->isValid()) {
             return {};
         }
         return ret;
     }
 
-    template<typename T>
-    T getSignalVariantArgument(const QVariant& arg)
+    template <typename T> T getSignalVariantArgument(const QVariant& arg)
     {
         T res{};
         const auto& in = arg.value<QDBusVariant>().variant();

@@ -22,8 +22,6 @@
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
 
-#include "core/Database.h"
-#include "core/DatabaseIcons.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/Icons.h"
@@ -341,7 +339,8 @@ namespace FdoSecrets
 
         // connect signals
         connect(&m_dbus, &DBusMgr::clientConnected, this, [this](const DBusClientPtr& client) {
-            clientConnected(client, true); });
+            clientConnected(client, true);
+        });
         connect(&m_dbus, &DBusMgr::clientDisconnected, this, &SettingsClientModel::clientDisconnected);
 
         endResetModel();

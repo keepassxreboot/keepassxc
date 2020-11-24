@@ -23,7 +23,6 @@
 #include "core/Entry.h"
 
 #include <QWindow>
-#include <QAbstractTableModel>
 
 #include <utility>
 
@@ -69,7 +68,7 @@ QList<int> AccessControlDialog::getEntryIndices() const
 
 AccessControlDialog::EntryModel::EntryModel(QList<Entry*> entries, QObject* parent)
     : QAbstractTableModel(parent)
-      , m_entries(std::move(entries))
+    , m_entries(std::move(entries))
 {
     for (int i = 0; i != m_entries.count(); ++i) {
         m_selected.insert(i);
@@ -86,7 +85,8 @@ int AccessControlDialog::EntryModel::columnCount(const QModelIndex& parent) cons
     return isValid(parent) ? 0 : 2;
 }
 
-bool AccessControlDialog::EntryModel::isValid(const QModelIndex& index) const {
+bool AccessControlDialog::EntryModel::isValid(const QModelIndex& index) const
+{
     return index.isValid() && index.row() < rowCount({}) && index.column() < columnCount({});
 }
 

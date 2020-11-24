@@ -18,14 +18,14 @@
 
 #include "DBusTypes.h"
 
-#include <QDBusMetaType>
-
-#include "DBusMgr.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
+
+#include <QDBusMetaType>
 
 namespace FdoSecrets
 {
@@ -47,12 +47,10 @@ namespace FdoSecrets
             [](const QList<T*> objs) { return DBusMgr::objectsToPath(objs); });
 
         // the opposite
-        QMetaType::registerConverter<QDBusObjectPath, T*>([](const QDBusObjectPath& path) -> T* {
-            return DBusMgr::pathToObject<T>(path);
-        });
-        QMetaType::registerConverter<QList<QDBusObjectPath>, QList<T*>>([](const QList<QDBusObjectPath>& paths) {
-            return DBusMgr::pathsToObject<T>(paths);
-        });
+        QMetaType::registerConverter<QDBusObjectPath, T*>(
+            [](const QDBusObjectPath& path) -> T* { return DBusMgr::pathToObject<T>(path); });
+        QMetaType::registerConverter<QList<QDBusObjectPath>, QList<T*>>(
+            [](const QList<QDBusObjectPath>& paths) { return DBusMgr::pathsToObject<T>(paths); });
     }
 
     void registerDBusTypes()
@@ -77,7 +75,9 @@ namespace FdoSecrets
         // the partial-namespace/non-namespace name should also be registered as alias
         // otherwise all those usages in Q_INVOKABLE methods without FQN won't be included
         // in the meta type system.
-#define REG_METATYPE(type) qRegisterMetaType<type>(); qRegisterMetaType<type>(#type)
+#define REG_METATYPE(type)                                                                                             \
+    qRegisterMetaType<type>();                                                                                         \
+    qRegisterMetaType<type>(#type)
 
         // register on-the-wire types
         // Qt container types for builtin types don't need registration
@@ -95,7 +95,9 @@ namespace FdoSecrets
         REG_METATYPE(ItemSecretMap);
         REG_METATYPE(DBusResult);
 
-#define REG_DBUS_OBJ(name) REG_METATYPE(name *); REG_METATYPE(QList<name *>)
+#define REG_DBUS_OBJ(name)                                                                                             \
+    REG_METATYPE(name*);                                                                                               \
+    REG_METATYPE(QList<name*>)
         REG_DBUS_OBJ(DBusObject);
         REG_DBUS_OBJ(Service);
         REG_DBUS_OBJ(Collection);
@@ -146,8 +148,7 @@ namespace FdoSecrets
 
     ParamData typeToWireType(int id)
     {
-        switch (id)
-        {
+        switch (id) {
         case QMetaType::QString:
             return {QByteArrayLiteral("s"), QMetaType::QString};
         case QMetaType::QVariant:

@@ -1,11 +1,24 @@
-//
-// Created by aetf on 11/15/20.
-//
+/*
+ *  Copyright (C) 2020 Aetf <aetf@unlimitedcode.works>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "DBusMgr.h"
 
-#include "DBusConstants.h"
-#include "DBusTypes.h"
+#include "fdosecrets/dbus/DBusConstants.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
@@ -221,8 +234,7 @@ namespace FdoSecrets
             const auto existing = reportExistingService();
             qDebug() << "Failed to register DBus service at " << DBUS_SERVICE_SECRET;
             qDebug() << existing;
-            emit error(tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET))
-                       + existing);
+            emit error(tr("Failed to register DBus service at %1.<br/>").arg(DBUS_SERVICE_SECRET) + existing);
             return false;
         }
         connect(service, &DBusObject::destroyed, this, [this]() {
@@ -289,8 +301,8 @@ namespace FdoSecrets
 
     bool DBusMgr::registerObject(PromptBase* prompt)
     {
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_PROMPT)
-                        .arg(DBUS_PATH_SECRETS, Tools::uuidToHex(QUuid::createUuid()));
+        auto path =
+            QStringLiteral(DBUS_PATH_TEMPLATE_PROMPT).arg(DBUS_PATH_SECRETS, Tools::uuidToHex(QUuid::createUuid()));
         if (!registerObject(path, prompt)) {
             emit error(tr("Failed to register prompt object on DBus at path '%1'").arg(path));
             return false;
@@ -320,9 +332,7 @@ namespace FdoSecrets
         }
         // alias signals are handled together with collections' primary path in emitCollection*
         // but we need to handle object destroy here
-        connect(coll, &DBusObject::destroyed, this, [this, alias]() {
-            unregisterAlias(alias);
-        });
+        connect(coll, &DBusObject::destroyed, this, [this, alias]() { unregisterAlias(alias); });
         return true;
     }
 
@@ -463,7 +473,8 @@ namespace FdoSecrets
             return {};
         }
 
-        auto client = DBusClientPtr(new DBusClient(*this, addr, info.pid, info.exePath.isEmpty() ? addr : info.exePath));
+        auto client =
+            DBusClientPtr(new DBusClient(*this, addr, info.pid, info.exePath.isEmpty() ? addr : info.exePath));
 
         emit clientConnected(client);
         m_watcher.addWatchedService(addr);

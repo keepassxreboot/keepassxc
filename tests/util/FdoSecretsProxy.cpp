@@ -17,11 +17,13 @@
 
 #include "FdoSecretsProxy.h"
 
-#define IMPL_PROXY(name) \
-name ## Proxy:: name ## Proxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent) \
-    : QDBusAbstractInterface(service, path, staticInterfaceName(), connection, parent) \
-{ } \
-name ## Proxy::~ name ## Proxy() = default;
+#define IMPL_PROXY(name)                                                                                               \
+    name##Proxy::name##Proxy(                                                                                          \
+        const QString& service, const QString& path, const QDBusConnection& connection, QObject* parent)               \
+        : QDBusAbstractInterface(service, path, staticInterfaceName(), connection, parent)                             \
+    {                                                                                                                  \
+    }                                                                                                                  \
+    name##Proxy::~name##Proxy() = default;
 
 IMPL_PROXY(Service)
 IMPL_PROXY(Collection)

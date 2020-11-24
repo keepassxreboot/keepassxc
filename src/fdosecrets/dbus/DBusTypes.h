@@ -60,7 +60,7 @@ namespace FdoSecrets
 
         using StringStringMap = QMap<QString, QString>;
         using ObjectPathSecretMap = QMap<QDBusObjectPath, Secret>;
-    }
+    } // namespace wire
 
     // types used in method parameters
     class Session;

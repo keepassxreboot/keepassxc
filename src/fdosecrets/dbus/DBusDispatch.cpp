@@ -1,18 +1,31 @@
-//
-// Created by aetf on 11/21/20.
-//
+/*
+ *  Copyright (C) 2020 Aetf <aetf@unlimitedcode.works>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "DBusMgr.h"
 
-#include "DBusObject.h"
-#include "DBusTypes.h"
+#include "fdosecrets/dbus/DBusObject.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Service.h"
 
 #include "core/Global.h"
 
-#include <QThread>
 #include <QDBusMetaType>
+#include <QThread>
 
 namespace FdoSecrets
 {
@@ -50,7 +63,8 @@ namespace FdoSecrets
 
                 const auto& in = arg.value<QDBusArgument>();
                 if (!QDBusMetaType::demarshall(in, wireId, out.data())) {
-                    qDebug() << "Internal error: failed QDBusArgument conversion from" << arg << "to type" << QMetaType::typeName(wireId) << wireId;
+                    qDebug() << "Internal error: failed QDBusArgument conversion from" << arg << "to type"
+                             << QMetaType::typeName(wireId) << wireId;
                     return false;
                 }
             } else {
@@ -59,7 +73,8 @@ namespace FdoSecrets
             }
             // other conversions are handled here
             if (!out.convert(id)) {
-                qDebug() << "Internal error: failed conversion from" << arg << "to type" << QMetaType::typeName(id) << id;
+                qDebug() << "Internal error: failed conversion from" << arg << "to type" << QMetaType::typeName(id)
+                         << id;
                 return false;
             }
             // good to go
@@ -145,7 +160,7 @@ namespace FdoSecrets
 
     bool DBusMgr::handleMessage(const QDBusMessage& message, const QDBusConnection&)
     {
-//        qDebug() << "DBusMgr::handleMessage: " << message;
+        //        qDebug() << "DBusMgr::handleMessage: " << message;
 
         // save a mutable copy of the message, as we may modify it to unify property access
         // and method call
@@ -157,10 +172,10 @@ namespace FdoSecrets
             false,
         };
 
-        if (req.interface == QLatin1String("org.freedesktop.DBus.Introspectable")) {
+        if (req.interface == "org.freedesktop.DBus.Introspectable") {
             // introspection can be handled by Qt, just return false
             return false;
-        } else if (req.interface == QLatin1String("org.freedesktop.DBus.Properties")) {
+        } else if (req.interface == "org.freedesktop.DBus.Properties") {
             // but we need to handle properties ourselves like regular functions
             if (!rewriteRequestForProperty(req)) {
                 // invalid message
@@ -212,7 +227,7 @@ namespace FdoSecrets
             req.args = {arg};
             if (arg.userType() == qMetaTypeId<QDBusArgument>()) {
                 req.signature = arg.value<QDBusArgument>().currentSignature();
-            } else if (arg.userType() == QMetaType::QString){
+            } else if (arg.userType() == QMetaType::QString) {
                 req.signature = "s";
             } else {
                 qDebug() << "Unhandled SetProperty value type" << QMetaType::typeName(arg.userType()) << arg.userType();
@@ -224,7 +239,7 @@ namespace FdoSecrets
             req.member = req.args.at(1).toString();
             req.signature = "";
             req.args = {};
-        } else if (req.member == "GetAll" && req.signature == "s"){
+        } else if (req.member == "GetAll" && req.signature == "s") {
             // special handled in activateObject
             req.interface = req.args.at(0).toString();
             req.member = "";
@@ -249,8 +264,9 @@ namespace FdoSecrets
                    "function called for an object that is in another thread!!");
 
         auto mo = obj->metaObject();
-        // check if interface matches
-        if (req.interface != mo->classInfo(mo->indexOfClassInfo("D-Bus Interface")).value()) {
+        // either interface matches, or interface is empty if req is property get all
+        QString interface = mo->classInfo(mo->indexOfClassInfo("D-Bus Interface")).value();
+        if (req.interface != interface && !(req.isGetAll && req.interface.isEmpty())) {
             qDebug() << "DBusMgr::handleMessage with mismatch interface" << msg;
             return false;
         }
@@ -271,7 +287,8 @@ namespace FdoSecrets
         // requested signature is verified by Qt to match the content of arguments,
         // but this list of arguments itself is untrusted
         if (it->signature != req.signature || it->inputTypes.size() != req.args.size()) {
-            qDebug() << "Message signature does not match, expected" << it->signature << it->inputTypes.size() << "got" << req.signature << req.args.size();
+            qDebug() << "Message signature does not match, expected" << it->signature << it->inputTypes.size() << "got"
+                     << req.signature << req.args.size();
             return false;
         }
 
@@ -322,7 +339,11 @@ namespace FdoSecrets
         return sendDBus(msg.createReply(QVariantList{result}));
     }
 
-    bool DBusMgr::deliverMethod(DBusObject* obj, const MethodData& method, const QVariantList& args, DBusResult& ret, QVariantList& outputArgs)
+    bool DBusMgr::deliverMethod(DBusObject* obj,
+                                const MethodData& method,
+                                const QVariantList& args,
+                                DBusResult& ret,
+                                QVariantList& outputArgs)
     {
         QVarLengthArray<void*, 10> params;
         QVariantList auxParams;
@@ -360,7 +381,8 @@ namespace FdoSecrets
         for (int i = 0; i != outputArgs.size(); ++i) {
             auto& outputArg = outputArgs[i];
             if (!outputArg.convert(method.outputTargetTypes.at(i))) {
-                qWarning() << "Internal error: Failed to convert message output to type" << method.outputTargetTypes.at(i);
+                qWarning() << "Internal error: Failed to convert message output to type"
+                           << method.outputTargetTypes.at(i);
                 return false;
             }
         }
