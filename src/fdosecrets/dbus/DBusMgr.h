@@ -190,6 +190,13 @@ namespace FdoSecrets
     private:
         QDBusConnection m_conn;
 
+        struct ProcessInfo
+        {
+            uint pid;
+            QString exePath;
+        };
+        bool serviceInfo(const QString& addr, ProcessInfo& info) const;
+
         bool sendDBusSignal(const QString& path,
                             const QString& interface,
                             const QString& name,
@@ -243,6 +250,7 @@ namespace FdoSecrets
 
         DBusClientPtr findClient(const QString& addr);
         DBusClientPtr createClient(const QString& addr);
+
         /**
          * @brief This gets called from DBusClient::disconnectDBus
          * @param client

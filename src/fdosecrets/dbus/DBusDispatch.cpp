@@ -225,6 +225,12 @@ namespace FdoSecrets
         }
 
         // from now on we may call into dbus objects, so setup client first
+        auto client = findClient(message.service());
+        if (!client) {
+            // the client already died
+            return false;
+        }
+
         struct ContextSetter
         {
             explicit ContextSetter(DBusClientPtr client)
@@ -237,7 +243,7 @@ namespace FdoSecrets
                 Context = nullptr;
             }
         };
-        ContextSetter s(findClient(message.service()));
+        ContextSetter s(std::move(client));
 
         // activate the target object
         return activateObject(message.path(), iface, member, message);

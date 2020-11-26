@@ -56,6 +56,21 @@ namespace FdoSecrets
         return m_clients.values();
     }
 
+    bool DBusMgr::serviceInfo(const QString& addr, ProcessInfo& info) const
+    {
+        auto pid = m_conn.interface()->servicePid(addr);
+        if (!pid.isValid()) {
+            return false;
+        }
+        info.pid = pid.value();
+        // The /proc/pid/exe link is more reliable than /proc/pid/cmdline
+        // It's still weak and if the application does a prctl(PR_SET_DUMPABLE, 0) this link cannot be accessed.
+        QFileInfo proc(QStringLiteral("/proc/%1/exe").arg(pid.value()));
+        info.exePath = proc.canonicalFilePath();
+
+        return true;
+    }
+
     bool DBusMgr::sendDBusSignal(const QString& path,
                                  const QString& interface,
                                  const QString& name,
@@ -159,19 +174,14 @@ namespace FdoSecrets
         auto pidStr = tr("Unknown", "Unknown PID");
         auto exeStr = tr("Unknown", "Unknown executable path");
 
-        // try get pid
-        auto pid = m_conn.interface()->servicePid(DBUS_SERVICE_SECRET);
-        if (pid.isValid()) {
-            pidStr = QString::number(pid.value());
-
-            // The /proc/pid/exe link is unforgeable by the application AFAICT.
-            // It's still weak and if the application does a prctl(PR_SET_DUMPABLE, 0) this link cannot be accessed.
-            QFileInfo proc(QStringLiteral("/proc/%1/exe").arg(pid.value()));
-            auto exePath = proc.canonicalFilePath();
-            if (!exePath.isEmpty()) {
-                exeStr = exePath;
+        ProcessInfo info{};
+        if (serviceInfo(QStringLiteral(DBUS_SERVICE_SECRET), info)) {
+            pidStr = QString::number(info.pid);
+            if (!info.exePath.isEmpty()) {
+                exeStr = info.exePath;
             }
         }
+
         auto otherService = tr("<i>PID: %1, Executable: %2</i>", "<i>PID: 1234, Executable: /path/to/exe</i>")
                                 .arg(pidStr, exeStr.toHtmlEscaped());
         return tr("Another secret service is running (%1).<br/>"
@@ -411,26 +421,29 @@ namespace FdoSecrets
     {
         auto it = m_clients.find(addr);
         if (it == m_clients.end()) {
-            it = m_clients.insert(addr, createClient(addr));
+            auto client = createClient(addr);
+            if (!client) {
+                return nullptr;
+            }
+            it = m_clients.insert(addr, client);
+        }
+        // double check the client
+        ProcessInfo info{};
+        if (!serviceInfo(addr, info) || info.pid != it.value()->pid()) {
+            dbusServiceUnregistered(addr);
+            return nullptr;
         }
         return it.value();
     }
 
     DBusClientPtr DBusMgr::createClient(const QString& addr)
     {
-        auto pid = m_conn.interface()->servicePid(addr);
-        auto name = addr;
-        if (pid.isValid()) {
-            // The /proc/pid/exe link is unforgeable by the application AFAICT.
-            // It's still weak and if the application does a prctl(PR_SET_DUMPABLE, 0) this link cannot be accessed.
-            QFileInfo proc(QStringLiteral("/proc/%1/exe").arg(pid.value()));
-            auto exePath = proc.canonicalFilePath();
-            if (!exePath.isEmpty()) {
-                name = exePath;
-            }
+        ProcessInfo info{};
+        if (!serviceInfo(addr, info)) {
+            return nullptr;
         }
 
-        auto client = DBusClientPtr(new DBusClient(*this, addr, pid.value(), name));
+        auto client = DBusClientPtr(new DBusClient(*this, addr, info.pid, info.exePath.isEmpty() ? addr : info.exePath));
 
         emit clientConnected(client);
         m_watcher.addWatchedService(addr);
