@@ -431,7 +431,7 @@ void Database::releaseData()
 
     setEmitModified(false);
     m_modified = false;
-    m_modifiedTimer.stop();
+    stopModifiedTimer();
 
     s_uuidMap.remove(m_uuid);
     m_uuid = QUuid();
@@ -842,7 +842,7 @@ void Database::emptyRecycleBin()
 void Database::setEmitModified(bool value)
 {
     if (m_emitModified && !value) {
-        m_modifiedTimer.stop();
+        stopModifiedTimer();
     }
 
     m_emitModified = value;
@@ -863,7 +863,7 @@ void Database::markAsModified()
     m_modified = true;
     if (m_emitModified && !m_modifiedTimer.isActive()) {
         // Small time delay prevents numerous consecutive saves due to repeated signals
-        m_modifiedTimer.start(150);
+        startModifiedTimer();
     }
 }
 
@@ -871,7 +871,7 @@ void Database::markAsClean()
 {
     bool emitSignal = m_modified;
     m_modified = false;
-    m_modifiedTimer.stop();
+    stopModifiedTimer();
     m_hasNonDataChange = false;
     if (emitSignal) {
         emit databaseSaved();
@@ -926,4 +926,14 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
     markAsModified();
 
     return true;
+}
+
+void Database::startModifiedTimer()
+{
+    QMetaObject::invokeMethod(&m_modifiedTimer, "start", Q_ARG(int, 150));
+}
+
+void Database::stopModifiedTimer()
+{
+    QMetaObject::invokeMethod(&m_modifiedTimer, "stop");
 }
