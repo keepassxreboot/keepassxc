@@ -24,6 +24,7 @@ namespace FdoSecrets
     class Session;
     class Item;
     class DBusObject;
+    class DBusResult;
 
     /**
      * DBusMgr takes care of the interaction between dbus and business logic objects (DBusObject). It handles the
@@ -239,11 +240,25 @@ namespace FdoSecrets
             QVector<int> inputTypes{};
             QVector<int> outputTypes{};
             QVector<int> outputTargetTypes{};
+            bool isProperty{false};
         };
         QHash<QString, MethodData> m_cachedMethods{};
         void populateMethodCache(const QMetaObject& mo);
         bool
         activateObject(const QString& path, const QString& interface, const QString& member, const QDBusMessage& msg);
+
+        struct RequestedMethod
+        {
+            QString interface;
+            QString member;
+            QString signature;
+            QVariantList args;
+            bool isGetAll;
+        };
+        static bool rewriteRequestForProperty(RequestedMethod& req);
+        bool activateObject(const QString& path, const RequestedMethod& req, const QDBusMessage& msg);
+        bool objectPropertyGetAll(DBusObject* obj, const QString& interface, const QDBusMessage& msg);
+        static bool deliverMethod(DBusObject* obj, const MethodData& method, const QVariantList& args, DBusResult& ret, QVariantList& outputArgs);
 
         // client management
         friend class DBusClient;

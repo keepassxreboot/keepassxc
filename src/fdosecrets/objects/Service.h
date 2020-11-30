@@ -77,7 +77,7 @@ namespace FdoSecrets
          * List of collections
          * @return
          */
-        Q_INVOKABLE DBusResult collections(QList<Collection*>& collections) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult collections(QList<Collection*>& collections) const;
 
     signals:
         void collectionCreated(Collection* collection);

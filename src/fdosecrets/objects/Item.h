@@ -55,17 +55,17 @@ namespace FdoSecrets
          */
         static Item* Create(Collection* parent, Entry* backend);
 
-        Q_INVOKABLE DBusResult locked(bool& locked) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult locked(bool& locked) const;
 
-        Q_INVOKABLE DBusResult attributes(StringStringMap& attrs) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult attributes(StringStringMap& attrs) const;
         Q_INVOKABLE DBusResult setAttributes(const StringStringMap& attrs);
 
-        Q_INVOKABLE DBusResult label(QString& label) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult label(QString& label) const;
         Q_INVOKABLE DBusResult setLabel(const QString& label);
 
-        Q_INVOKABLE DBusResult created(qulonglong& created) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult created(qulonglong& created) const;
 
-        Q_INVOKABLE DBusResult modified(qulonglong& modified) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult modified(qulonglong& modified) const;
 
         Q_INVOKABLE DBusResult remove(PromptBase*& prompt);
         Q_INVOKABLE DBusResult getSecret(Session* session, Secret& secret);

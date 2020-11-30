@@ -32,6 +32,11 @@
 #include <QObject>
 #include <QScopedPointer>
 
+#ifndef Q_MOC_RUN
+// define the tag text as empty, so the compiler doesn't see it
+#  define DBUS_PROPERTY
+#endif // #ifndef Q_MOC_RUN
+
 namespace FdoSecrets
 {
     class Service;

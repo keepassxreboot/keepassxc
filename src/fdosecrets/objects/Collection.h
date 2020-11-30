@@ -54,16 +54,16 @@ namespace FdoSecrets
          */
         static Collection* Create(Service* parent, DatabaseWidget* backend);
 
-        Q_INVOKABLE DBusResult items(QList<Item*>& items) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult items(QList<Item*>& items) const;
 
-        Q_INVOKABLE DBusResult label(QString& label) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult label(QString& label) const;
         Q_INVOKABLE DBusResult setLabel(const QString& label);
 
-        Q_INVOKABLE DBusResult locked(bool& locked) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult locked(bool& locked) const;
 
-        Q_INVOKABLE DBusResult created(qulonglong& created) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult created(qulonglong& created) const;
 
-        Q_INVOKABLE DBusResult modified(qulonglong& modified) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult modified(qulonglong& modified) const;
 
         Q_INVOKABLE DBusResult remove(PromptBase*& prompt);
         Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes, QList<Item*>& items);
