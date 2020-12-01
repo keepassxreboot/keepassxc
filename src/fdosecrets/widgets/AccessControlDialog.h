@@ -1,6 +1,7 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 Aetf <aetf@unlimitedcodeworks.xyz>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,11 +20,12 @@
 #ifndef KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H
 #define KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H
 
+#include <QAbstractTableModel>
 #include <QDialog>
 #include <QScopedPointer>
+#include <QSet>
 
 class Entry;
-class QTableWidgetItem;
 
 namespace Ui
 {
@@ -38,7 +40,7 @@ public:
     explicit AccessControlDialog(QWindow* parent, const QList<Entry*>& items, const QString& name, uint pid);
     ~AccessControlDialog() override;
 
-    QList<int> getEntryIndices(bool selected = true) const;
+    QList<int> getEntryIndices() const;
 
     enum DialogCode
     {
@@ -47,13 +49,33 @@ public:
         AllowAll,
     };
 
-signals:
-    void disableAccess(Entry* entry);
-
 private:
-    void disableButtonPressed(QTableWidgetItem* item);
+    class EntryModel;
 
     QScopedPointer<Ui::AccessControlDialog> m_ui;
+    QScopedPointer<EntryModel> m_model;
+};
+
+class AccessControlDialog::EntryModel : public QAbstractTableModel
+{
+Q_OBJECT
+public:
+    explicit EntryModel(QList<Entry*> entries, QObject* parent = nullptr);
+
+    int rowCount(const QModelIndex& parent) const override;
+    int columnCount(const QModelIndex& parent) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
+
+    QList<int> selectedIndices() const;
+
+public slots:
+    void toggleCheckState(const QModelIndex& index);
+
+private:
+    bool isValid(const QModelIndex& index) const;
+
+    QList<Entry*> m_entries;
+    QSet<int> m_selected;
 };
 
 #endif // KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H
