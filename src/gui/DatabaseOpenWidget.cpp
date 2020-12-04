@@ -165,6 +165,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->editPassword->setText("");
     m_ui->editPassword->setShowPassword(false);
     m_ui->keyFileLineEdit->clear();
+    m_ui->keyFileLineEdit->setShowPassword(false);
     m_ui->checkTouchID->setChecked(false);
     m_ui->challengeResponseCombo->clear();
     m_db.reset();
@@ -378,6 +379,7 @@ void DatabaseOpenWidget::browseKeyFile()
 void DatabaseOpenWidget::clearKeyFileText()
 {
     m_ui->keyFileLineEdit->clear();
+    m_ui->keyFileLineEdit->setShowPassword(false);
 }
 
 void DatabaseOpenWidget::pollHardwareKey()
