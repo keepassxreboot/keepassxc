@@ -92,12 +92,17 @@ namespace FdoSecrets
         /**
          * Authorize client to access item identified by @a uuid.
          */
-        void setItemAuthorized(const QUuid& uuid);
+        void setItemAuthorized(const QUuid& uuid, bool authorized = true);
 
         /**
          * Authorize client to access all items.
          */
         void setAllAuthorized(bool authorized = true);
+
+        /**
+         * Forget all previous authorization.
+         */
+        void clearAuthorization();
 
         /**
          * Forcefully disconnect the client.

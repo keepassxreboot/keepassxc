@@ -89,6 +89,7 @@ namespace FdoSecrets
             cleanupConnections();
         }
 
+        emit collectionChanged();
         return true;
     }
 
@@ -320,6 +321,10 @@ namespace FdoSecrets
 
         auto iterAttr = properties.find(QStringLiteral(DBUS_INTERFACE_SECRET_ITEM ".Attributes"));
         if (iterAttr != properties.end()) {
+            // the actual value in iterAttr.value() is QDBusArgument, which represents a structure
+            // and qt has no idea what this corresponds to.
+            // we thus force a conversion to StringStringMap here. The conversion is registered in
+            // DBusTypes.cpp
             attributes = iterAttr.value().value<StringStringMap>();
 
             itemPath = attributes.value(ItemAttributes::PathKey);
@@ -491,14 +496,11 @@ namespace FdoSecrets
 
     void Collection::onDatabaseLockChanged()
     {
-        auto locked = backendLocked();
-        if (!locked) {
-            populateContents();
-        } else {
-            cleanupConnections();
+        if (!reloadBackend()) {
+            doDelete();
+            return;
         }
-        emit collectionLockChanged(locked);
-        emit collectionChanged();
+        emit collectionLockChanged(backendLocked());
     }
 
     void Collection::populateContents()
@@ -571,6 +573,8 @@ namespace FdoSecrets
             onEntryAdded(entry, false);
         }
 
+        // Do not connect to databaseModified signal because we only want signals for the subset under m_exposedGroup
+        connect(m_backend->database()->metadata(), &Metadata::metadataModified, this, &Collection::collectionChanged);
         connectGroupSignalRecursive(m_exposedGroup);
     }
 

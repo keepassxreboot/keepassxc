@@ -200,8 +200,8 @@ namespace
         }
 
     private:
-        DBusClientPtr m_client = nullptr;
-        QAction* m_disconnectAct = nullptr;
+        DBusClientPtr m_client{};
+        QAction* m_disconnectAct{};
     };
 
     template <typename T> class Creator : public QItemEditorCreatorBase

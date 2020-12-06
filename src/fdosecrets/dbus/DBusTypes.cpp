@@ -29,11 +29,18 @@
 
 namespace FdoSecrets
 {
+    bool inherits(const QMetaObject* derived, const QMetaObject* base)
+    {
+        for (auto super = derived; super; super = super->superClass()) {
+            if (super == base) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     template <typename T> void registerConverter()
     {
-        qRegisterMetaType<T*>();
-        qRegisterMetaType<QList<T*>>();
-
         // from parameter type to on-the-wire type
         QMetaType::registerConverter<T*, QDBusObjectPath>([](const T* obj) { return DBusMgr::objectPathSafe(obj); });
         QMetaType::registerConverter<QList<T*>, QList<QDBusObjectPath>>(
@@ -66,22 +73,38 @@ namespace FdoSecrets
         // - DBusObject* (and derived classes)
         // - QList<DBusObject*>
 
+        // NOTE: when registering, in additional to the class' fully qualified name,
+        // the partial-namespace/non-namespace name should also be registered as alias
+        // otherwise all those usages in Q_INVOKABLE methods without FQN won't be included
+        // in the meta type system.
+#define REG_METATYPE(type) qRegisterMetaType<type>(); qRegisterMetaType<type>(#type)
+
         // register on-the-wire types
         // Qt container types for builtin types don't need registration
-        qRegisterMetaType<wire::Secret>();
-        qRegisterMetaType<wire::StringStringMap>();
-        qRegisterMetaType<wire::ObjectPathSecretMap>();
+        REG_METATYPE(wire::Secret);
+        REG_METATYPE(wire::StringStringMap);
+        REG_METATYPE(wire::ObjectPathSecretMap);
 
         qDBusRegisterMetaType<wire::Secret>();
         qDBusRegisterMetaType<wire::StringStringMap>();
         qDBusRegisterMetaType<wire::ObjectPathSecretMap>();
 
         // register parameter types
-        qRegisterMetaType<Secret>();
-        qRegisterMetaType<StringStringMap>();
-        qRegisterMetaType<ItemSecretMap>();
-        // DBusObject* types are registered in the converter below
-        qRegisterMetaType<DBusResult>();
+        REG_METATYPE(Secret);
+        REG_METATYPE(StringStringMap);
+        REG_METATYPE(ItemSecretMap);
+        REG_METATYPE(DBusResult);
+
+#define REG_DBUS_OBJ(name) REG_METATYPE(name *); REG_METATYPE(QList<name *>)
+        REG_DBUS_OBJ(DBusObject);
+        REG_DBUS_OBJ(Service);
+        REG_DBUS_OBJ(Collection);
+        REG_DBUS_OBJ(Item);
+        REG_DBUS_OBJ(Session);
+        REG_DBUS_OBJ(PromptBase);
+#undef REG_DBUS_OBJ
+
+#undef REG_METATYPE
 
         // register converter between on-the-wire types and parameter types
         // some pairs are missing because that particular direction isn't used
@@ -91,22 +114,34 @@ namespace FdoSecrets
         registerConverter<Item>();
         registerConverter<Session>();
         registerConverter<PromptBase>();
+
         QMetaType::registerConverter(&wire::Secret::to);
         QMetaType::registerConverter(&Secret::to);
 
-        QMetaType::registerConverter<ItemSecretMap, wire::ObjectPathSecretMap>(
-            [](const ItemSecretMap& map) {
-                wire::ObjectPathSecretMap ret;
-                auto it = map.constKeyValueBegin();
-                auto end = map.constKeyValueEnd();
-                for (; it != end; ++it) {
-                    ret.insert(it->first->objectPath(), it->second.to());
-                }
-                return ret;
-            });
+        QMetaType::registerConverter<ItemSecretMap, wire::ObjectPathSecretMap>([](const ItemSecretMap& map) {
+            wire::ObjectPathSecretMap ret;
+            for (auto it = map.constBegin(); it != map.constEnd(); ++it) {
+                ret.insert(it.key()->objectPath(), it.value().to());
+            }
+            return ret;
+        });
 
         QMetaType::registerConverter<QDBusVariant, QVariant>([](const QDBusVariant& obj) { return obj.variant(); });
         QMetaType::registerConverter<QVariant, QDBusVariant>([](const QVariant& obj) { return QDBusVariant(obj); });
+
+        // structural types are received as QDBusArgument,
+        // top level QDBusArgument in method parameters are directly handled
+        // in prepareInputParams.
+        // But in Collection::createItem, we need to convert a inner QDBusArgument to StringStringMap
+        QMetaType::registerConverter<QDBusArgument, StringStringMap>([](const QDBusArgument& arg) {
+            if (arg.currentSignature() != "a{ss}") {
+                return StringStringMap{};
+            }
+            // QDBusArgument is COW and qdbus_cast modifies it by detaching even it is const.
+            // we don't want to modify the instance (arg) stored in the qvariant so we create a copy
+            const auto copy = arg; // NOLINT(performance-unnecessary-copy-initialization)
+            return qdbus_cast<StringStringMap>(copy);
+        });
     }
 
     ParamData typeToWireType(int id)
@@ -116,7 +151,7 @@ namespace FdoSecrets
         case QMetaType::QString:
             return {QByteArrayLiteral("s"), QMetaType::QString};
         case QMetaType::QVariant:
-            return {QByteArrayLiteral("v"), QMetaType::QVariant};
+            return {QByteArrayLiteral("v"), qMetaTypeId<QDBusVariant>()};
         case QMetaType::QVariantMap:
             return {QByteArrayLiteral("a{sv}"), QMetaType::QVariantMap};
         case QMetaType::Bool:
@@ -142,11 +177,11 @@ namespace FdoSecrets
         if (!mt.isValid()) {
             return {};
         }
-        if (mt.name().startsWith("QList")) {
+        if (QByteArray(QMetaType::typeName(id)).startsWith("QList")) {
             // QList<Object*>
             return {QByteArrayLiteral("ao"), qMetaTypeId<QList<QDBusObjectPath>>()};
         }
-        if (!mt.metaObject()->inherits(&DBusObject::staticMetaObject)) {
+        if (!inherits(mt.metaObject(), &DBusObject::staticMetaObject)) {
             return {};
         }
         // DBusObjects

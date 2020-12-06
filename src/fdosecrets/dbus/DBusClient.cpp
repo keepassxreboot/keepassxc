@@ -38,9 +38,13 @@ namespace FdoSecrets
                || m_authorizedEntries.find(uuid) != m_authorizedEntries.end();
     }
 
-    void DBusClient::setItemAuthorized(const QUuid& uuid)
+    void DBusClient::setItemAuthorized(const QUuid& uuid, bool authorized)
     {
-        m_authorizedEntries.insert(uuid);
+        if (authorized) {
+            m_authorizedEntries.insert(uuid);
+        } else {
+            m_authorizedEntries.remove(uuid);
+        }
     }
 
     void DBusClient::setAllAuthorized(bool authorized)
@@ -48,11 +52,15 @@ namespace FdoSecrets
         m_authorizedAll = authorized;
     }
 
-    void DBusClient::disconnectDBus()
+    void DBusClient::clearAuthorization()
     {
-        // clear authorization
         m_authorizedAll = false;
         m_authorizedEntries.clear();
+    }
+
+    void DBusClient::disconnectDBus()
+    {
+        clearAuthorization();
         // notify DBusMgr about the removal
         m_dbus.removeClient(this);
     }

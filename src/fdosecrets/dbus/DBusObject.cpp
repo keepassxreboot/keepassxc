@@ -27,12 +27,13 @@ namespace FdoSecrets
 {
 
     DBusObject::DBusObject(DBusObject* parent)
-        : QObject(parent)
-        , m_dbus(parent->dbus())
-    {}
+        : DBusObject(parent, parent->dbus())
+    {
+    }
 
     DBusObject::DBusObject(DBusObject* parent, DBusMgr& dbus)
         : QObject(parent)
+        , m_objectPath("/")
         , m_dbus(dbus)
     {}
 

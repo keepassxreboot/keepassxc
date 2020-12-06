@@ -7,10 +7,12 @@
 #include "DBusObject.h"
 #include "DBusTypes.h"
 #include "fdosecrets/objects/Item.h"
+#include "fdosecrets/objects/Service.h"
 
 #include "core/Global.h"
 
 #include <QThread>
+#include <QDBusMetaType>
 
 namespace FdoSecrets
 {
@@ -30,31 +32,45 @@ namespace FdoSecrets
         // prepare params
         for (int count = 0; count != inputTypes.size(); ++count) {
             const auto& id = inputTypes.at(count);
-            const auto& arg = msg.arguments().at(count);
+            const auto& arg = args.at(count);
 
             if (arg.userType() == id) {
-                // no conversion needed
+                // shortcut for no conversion
                 params.append(const_cast<void*>(arg.constData()));
-            } else if (arg.canConvert(id)) {
-                // make a copy to store the converted value
-                auxParams.append(arg);
-                auto& out = auxParams.last();
-                if (!out.convert(id)) {
-                    qDebug() << "Internal error: failed conversion from" << arg << "to type id" << id;
+                continue;
+            }
+
+            // we need at least one conversion, allocate a slot in auxParams
+            auxParams.append(QVariant(id, nullptr));
+            auto& out = auxParams.last();
+            // first handle QDBusArgument to wire types
+            if (arg.userType() == qMetaTypeId<QDBusArgument>()) {
+                auto wireId = typeToWireType(id).dbusTypeId;
+                out = QVariant(wireId, nullptr);
+
+                const auto& in = arg.value<QDBusArgument>();
+                if (!QDBusMetaType::demarshall(in, wireId, out.data())) {
+                    qDebug() << "Internal error: failed QDBusArgument conversion from" << arg << "to type" << QMetaType::typeName(wireId) << wireId;
                     return false;
                 }
-                params.append(const_cast<void*>(out.constData()));
             } else {
-                qDebug() << "Internal error: unhandled new parameter type id" << id << "and arg" << arg;
+                // make a copy to store the converted value
+                out = arg;
+            }
+            // other conversions are handled here
+            if (!out.convert(id)) {
+                qDebug() << "Internal error: failed conversion from" << arg << "to type" << QMetaType::typeName(id) << id;
                 return false;
             }
+            // good to go
+            params.append(const_cast<void*>(out.constData()));
         }
         return true;
     }
 
     void DBusMgr::populateMethodCache(const QMetaObject& mo)
     {
-        for (int i = 0; i != mo.methodOffset(); ++i) {
+        for (int i = mo.methodOffset(); i != mo.methodCount(); ++i) {
             auto mm = mo.method(i);
 
             // only register public Q_INVOKABLE methods
@@ -94,7 +110,7 @@ namespace FdoSecrets
             for (const auto& paramType : mm.parameterTypes()) {
                 if (paramType.endsWith('&')) {
                     outputBegin = true;
-                    auto id = QMetaType::type(paramType.chopped(1));
+                    auto id = QMetaType::type(paramType.left(paramType.length() - 1));
                     md.outputTypes.append(id);
                     auto paramData = typeToWireType(id);
                     if (paramData.signature.isEmpty()) {
@@ -127,10 +143,7 @@ namespace FdoSecrets
         }
     }
 
-    bool DBusMgr::activateObject(const QString& path,
-                                 const QString& interface,
-                                 const QString& member,
-                                 const QDBusMessage& msg)
+    bool DBusMgr::handleMessage(const QDBusMessage& message, const QDBusConnection&)
     {
 //        qDebug() << "DBusMgr::handleMessage: " << message;
 
@@ -228,7 +241,7 @@ namespace FdoSecrets
     {
         auto obj = m_objects.value(path, nullptr);
         if (!obj) {
-            qDebug() << "DBusMgr::handleMessage with unknown path";
+            qDebug() << "DBusMgr::handleMessage with unknown path" << msg;
             return false;
         }
         Q_ASSERT_X(QThread::currentThread() == obj->thread(),
@@ -236,10 +249,8 @@ namespace FdoSecrets
                    "function called for an object that is in another thread!!");
 
         auto mo = obj->metaObject();
-        // either interface matches, or interface is empty if req is property get all
-        QString interface = mo->classInfo(mo->indexOfClassInfo("D-Bus Interface")).value();
-        if (req.interface != interface
-            && !(req.isGetAll && req.interface.isEmpty())) {
+        // check if interface matches
+        if (req.interface != mo->classInfo(mo->indexOfClassInfo("D-Bus Interface")).value()) {
             qDebug() << "DBusMgr::handleMessage with mismatch interface" << msg;
             return false;
         }
@@ -250,10 +261,10 @@ namespace FdoSecrets
         }
 
         // find the slot to call
-        auto cacheKey = QStringLiteral("%1.%2").arg(interface, member);
+        auto cacheKey = QStringLiteral("%1.%2").arg(req.interface, req.member);
         auto it = m_cachedMethods.find(cacheKey);
         if (it == m_cachedMethods.end()) {
-            qDebug() << "DBusMgr::handleMessage with nonexisting method";
+            qDebug() << "DBusMgr::handleMessage with nonexisting method" << cacheKey;
             return false;
         }
 
@@ -355,52 +366,5 @@ namespace FdoSecrets
         }
 
         return true;
-    }
-
-    bool DBusMgr::handleMessage(const QDBusMessage& message, const QDBusConnection&)
-    {
-        qDebug() << "DBusMgr::handleMessage: " << message;
-
-        auto iface = message.interface();
-        auto member = message.member();
-        // introspection is handled by returning false
-        // but we need to handle properties ourselves like regular functions
-        if (iface == QLatin1String("org.freedesktop.DBus.Properties")) {
-            iface = message.arguments().at(0).toString();
-            // Set + Name
-            if (member == QLatin1String("Set")) {
-                member = member + message.arguments().at(1).toString();
-            }
-        }
-        // mapping from dbus member name to function names on the object
-        member = pascalToCamel(member);
-        // also "delete" => "remove" due to c++ keyword
-        if (member == QLatin1Literal("delete")) {
-            member = QLatin1Literal("remove");
-        }
-
-        // from now on we may call into dbus objects, so setup client first
-        auto client = findClient(message.service());
-        if (!client) {
-            // the client already died
-            return false;
-        }
-
-        struct ContextSetter
-        {
-            explicit ContextSetter(DBusClientPtr client)
-            {
-                Q_ASSERT(Context == nullptr);
-                Context = std::move(client);
-            }
-            ~ContextSetter()
-            {
-                Context = nullptr;
-            }
-        };
-        ContextSetter s(std::move(client));
-
-        // activate the target object
-        return activateObject(message.path(), iface, member, message);
     }
 } // namespace FdoSecrets

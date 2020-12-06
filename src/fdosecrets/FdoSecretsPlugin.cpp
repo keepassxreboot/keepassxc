@@ -18,7 +18,6 @@
 #include "FdoSecretsPlugin.h"
 
 #include "fdosecrets/FdoSecretsSettings.h"
-#include "fdosecrets/dbus/DBusTypes.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/widgets/SettingsWidgetFdoSecrets.h"
 
@@ -36,7 +35,6 @@ FdoSecretsPlugin::FdoSecretsPlugin(DatabaseTabWidget* tabWidget)
 {
     connect(&m_dbus, &DBusMgr::error, this, &FdoSecretsPlugin::emitError);
     g_fdoSecretsPlugin = this;
-    FdoSecrets::registerDBusTypes();
 }
 
 FdoSecretsPlugin* FdoSecretsPlugin::getPlugin()

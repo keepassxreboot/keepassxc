@@ -245,6 +245,9 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
+        if (!dbus().callingClient()->itemAuthorized(backend()->uuid())) {
+            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
+        }
 
         if (!session) {
             return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
@@ -267,6 +270,9 @@ namespace FdoSecrets
         ret = ensureUnlocked();
         if (ret.err()) {
             return ret;
+        }
+        if (!dbus().callingClient()->itemAuthorized(backend()->uuid())) {
+            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
         }
 
         if (!secret.session) {
@@ -319,7 +325,7 @@ namespace FdoSecrets
     DBusResult Item::ensureUnlocked() const
     {
         bool l;
-        auto ret = locked(l);
+        auto ret = collection()->locked(l);
         if (ret.err()) {
             return ret;
         }

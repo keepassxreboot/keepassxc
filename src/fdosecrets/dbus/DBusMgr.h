@@ -7,15 +7,19 @@
 
 #include "fdosecrets/dbus/DBusClient.h"
 
+#include <QByteArray>
 #include <QDBusConnection>
 #include <QDBusObjectPath>
 #include <QDBusServiceWatcher>
 #include <QDBusVirtualObject>
+#include <QDebug>
 #include <QHash>
 #include <QPointer>
+#include <QVector>
 
 #include <utility>
 
+class TestFdoSecrets;
 namespace FdoSecrets
 {
     class Collection;
@@ -140,12 +144,18 @@ namespace FdoSecrets
         template <typename T> static T* pathToObject(const QDBusObjectPath& path)
         {
             if (!Context) {
+                qDebug() << "No context when looking up path" << path.path();
                 return nullptr;
             }
             if (path.path() == QStringLiteral("/")) {
                 return nullptr;
             }
-            return qobject_cast<T*>(Context->dbus().m_objects.value(path.path(), nullptr));
+            auto obj = qobject_cast<T*>(Context->dbus().m_objects.value(path.path(), nullptr));
+            if (!obj) {
+                qDebug() << "object not found at path" << path.path();
+                qDebug() << Context->dbus().m_objects;
+            }
+            return obj;
         }
 
         /**
@@ -171,6 +181,12 @@ namespace FdoSecrets
             }
             return res;
         }
+
+        /**
+         * @brief Used in unit test
+         * @param fake
+         */
+        void overrideClient(const DBusClientPtr& fake) const;
 
     signals:
         void clientConnected(const DBusClientPtr& client);
@@ -229,8 +245,8 @@ namespace FdoSecrets
             {
             }
         };
-        ParsedPath parsePath(const QString& path) const;
-        bool registerObject(const QString& path, DBusObject* obj);
+        static ParsedPath parsePath(const QString& path);
+        bool registerObject(const QString& path, DBusObject* obj, bool primary = true);
 
         // method dispatching
         struct MethodData
@@ -244,8 +260,6 @@ namespace FdoSecrets
         };
         QHash<QString, MethodData> m_cachedMethods{};
         void populateMethodCache(const QMetaObject& mo);
-        bool
-        activateObject(const QString& path, const QString& interface, const QString& member, const QDBusMessage& msg);
 
         struct RequestedMethod
         {
@@ -277,6 +291,8 @@ namespace FdoSecrets
         QHash<QString, DBusClientPtr> m_clients{};
 
         static thread_local DBusClientPtr Context;
+
+        friend class ::TestFdoSecrets;
     };
 } // namespace FdoSecrets
 

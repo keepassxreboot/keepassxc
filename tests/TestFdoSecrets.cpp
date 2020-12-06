@@ -20,12 +20,12 @@
 #include "TestGlobal.h"
 
 #include "core/EntrySearcher.h"
+#include "crypto/Crypto.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/GcryptMPI.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/SessionCipher.h"
-
-#include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestFdoSecrets)
 
@@ -143,4 +143,40 @@ void TestFdoSecrets::testSpecialCharsInAttributeValue()
         QCOMPARE(res.count(), 1);
         QCOMPARE(res[0]->title(), QStringLiteral("titleB"));
     }
+}
+
+void TestFdoSecrets::testDBusPathParse()
+{
+    using FdoSecrets::DBusMgr;
+    using PathType = FdoSecrets::DBusMgr::PathType;
+
+    auto parsed = DBusMgr::parsePath(QStringLiteral("/org/freedesktop/secrets"));
+    QCOMPARE(parsed.type, PathType::Service);
+
+    parsed = DBusMgr::parsePath(QStringLiteral("/org/freedesktop/secrets/collection/xxx"));
+    QCOMPARE(parsed.type, PathType::Collection);
+    QCOMPARE(parsed.id, QStringLiteral("xxx"));
+
+    parsed = DBusMgr::parsePath(QStringLiteral("/org/freedesktop/secrets/collection/xxx/yyy"));
+    QCOMPARE(parsed.type, PathType::Item);
+    QCOMPARE(parsed.id, QStringLiteral("yyy"));
+    QCOMPARE(parsed.parentId, QStringLiteral("xxx"));
+
+    parsed = DBusMgr::parsePath(QStringLiteral("/org/freedesktop/secrets/aliases/xxx"));
+    QCOMPARE(parsed.type, PathType::Aliases);
+    QCOMPARE(parsed.id, QStringLiteral("xxx"));
+
+    parsed = DBusMgr::parsePath(QStringLiteral("/org/freedesktop/secrets/session/xxx"));
+    QCOMPARE(parsed.type, PathType::Session);
+    QCOMPARE(parsed.id, QStringLiteral("xxx"));
+
+    parsed = DBusMgr::parsePath(QStringLiteral("/org/freedesktop/secrets/prompt/xxx"));
+    QCOMPARE(parsed.type, PathType::Prompt);
+    QCOMPARE(parsed.id, QStringLiteral("xxx"));
+
+    parsed = DBusMgr::parsePath(QStringLiteral("/org/freedesktop/other/prompt/xxx"));
+    QCOMPARE(parsed.type, PathType::Unknown);
+
+    parsed = DBusMgr::parsePath(QStringLiteral("/org"));
+    QCOMPARE(parsed.type, PathType::Unknown);
 }

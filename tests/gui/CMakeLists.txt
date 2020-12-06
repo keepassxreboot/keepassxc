@@ -24,7 +24,7 @@ endif()
 
 if(WITH_XC_FDOSECRETS)
     add_unit_test(NAME testguifdosecrets
-                  SOURCES TestGuiFdoSecrets.cpp ../util/TemporaryFile.cpp
+                  SOURCES TestGuiFdoSecrets.cpp ../util/TemporaryFile.cpp ../util/FdoSecretsProxy.cpp
                   LIBS ${TEST_LIBRARIES}
                   # The following doesn't work because dbus-run-session expects execname to be in PATH
                   # dbus-run-session -- execname

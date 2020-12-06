@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 Aetf <aetf@unlimitedcodeworks.xyz>
+ *  Copyright (C) 2020 Aetf <aetf@unlimitedcodeworks.xyz>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,24 +15,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTFDOSECRETS_H
-#define KEEPASSXC_TESTFDOSECRETS_H
+#include "FdoSecretsProxy.h"
 
-#include <QObject>
+#define IMPL_PROXY(name) \
+name ## Proxy:: name ## Proxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent) \
+    : QDBusAbstractInterface(service, path, staticInterfaceName(), connection, parent) \
+{ } \
+name ## Proxy::~ name ## Proxy() = default;
 
-class TestFdoSecrets : public QObject
-{
-    Q_OBJECT
+IMPL_PROXY(Service)
+IMPL_PROXY(Collection)
+IMPL_PROXY(Item)
+IMPL_PROXY(Session)
+IMPL_PROXY(Prompt)
 
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
-
-    void testGcryptMPI();
-    void testDhIetf1024Sha256Aes128CbcPkcs7();
-    void testCrazyAttributeKey();
-    void testSpecialCharsInAttributeValue();
-    void testDBusPathParse();
-};
-
-#endif // KEEPASSXC_TESTFDOSECRETS_H
+#undef IMPL_PROXY

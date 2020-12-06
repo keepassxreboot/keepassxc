@@ -367,7 +367,6 @@ namespace FdoSecrets
             if (m_clients[i] == client) {
                 beginRemoveRows({}, i, i);
 
-                m_clients[i]->disconnectDBus();
                 m_clients.removeAt(i);
 
                 endRemoveRows();
