@@ -18,6 +18,7 @@
 
 #include "DBusClient.h"
 
+#include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
@@ -33,8 +34,8 @@ namespace FdoSecrets
 
     bool DBusClient::itemAuthorized(const QUuid& uuid) const
     {
-        return m_authorizedAll || m_authorizedEntries.find(uuid) != m_authorizedEntries.end();
-
+        return !FdoSecrets::settings()->confirmAccessItem() || m_authorizedAll
+               || m_authorizedEntries.find(uuid) != m_authorizedEntries.end();
     }
 
     void DBusClient::setItemAuthorized(const QUuid& uuid)
@@ -56,7 +57,8 @@ namespace FdoSecrets
         m_dbus.removeClient(this);
     }
 
-    QSharedPointer<CipherPair> DBusClient::negotiateCipher(const QString& algorithm, const QVariant& input, QVariant& output, bool& incomplete)
+    QSharedPointer<CipherPair>
+    DBusClient::negotiateCipher(const QString& algorithm, const QVariant& input, QVariant& output, bool& incomplete)
     {
         incomplete = false;
 

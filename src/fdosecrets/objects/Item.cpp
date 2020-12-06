@@ -75,6 +75,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
+        locked = locked || !dbus().callingClient()->itemAuthorized(m_backend->uuid());
         return {};
     }
 
@@ -229,7 +230,7 @@ namespace FdoSecrets
         if (ret.ok()) {
             service()->plugin()->emitRequestShowNotification(
                 tr(R"(Entry "%1" from database "%2" was used by %3)")
-                    .arg(m_backend->title(), collection()->name(), dbus().callingClient().name()));
+                    .arg(m_backend->title(), collection()->name(), dbus().callingClient()->name()));
         }
         return ret;
     }
@@ -317,12 +318,12 @@ namespace FdoSecrets
 
     DBusResult Item::ensureUnlocked() const
     {
-        bool locked;
-        auto ret = collection()->locked(locked);
+        bool l;
+        auto ret = locked(l);
         if (ret.err()) {
             return ret;
         }
-        if (locked) {
+        if (l) {
             return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
         }
         return {};

@@ -20,6 +20,7 @@
 
 #include "fdosecrets/dbus/DBusObject.h"
 
+#include <QHash>
 #include <QPointer>
 
 class QWindow;
@@ -40,8 +41,7 @@ namespace FdoSecrets
 
         Q_INVOKABLE virtual DBusResult dismiss();
 
-        template<typename PROMPT, typename ...ARGS>
-        static PromptBase* Create(Service* parent, ARGS&&... args)
+        template <typename PROMPT, typename... ARGS> static PromptBase* Create(Service* parent, ARGS&&... args)
         {
             QScopedPointer<PROMPT> res{new PROMPT(parent, std::forward<ARGS>(args)...)};
             if (res->dbus().registerObject(res.data())) {
@@ -112,11 +112,12 @@ namespace FdoSecrets
         QList<QDBusObjectPath> m_locked;
     };
 
-    class UnlockCollectionsPrompt : public PromptBase
+    class DBusClient;
+    class UnlockPrompt : public PromptBase
     {
         Q_OBJECT
 
-        explicit UnlockCollectionsPrompt(Service* parent, const QList<Collection*>& coll);
+        explicit UnlockPrompt(Service* parent, const QSet<Collection*>& colls, const QSet<Item*>& items);
 
     public:
         DBusResult prompt(const QString& windowId) override;
@@ -126,11 +127,18 @@ namespace FdoSecrets
         void collectionUnlockFinished(bool accepted);
 
     private:
+        void unlockItems();
+
         friend class PromptBase;
 
         QList<QPointer<Collection>> m_collections;
+        QHash<Collection*, QList<QPointer<Item>>> m_items;
         QList<QDBusObjectPath> m_unlocked;
         int m_numRejected = 0;
+
+        // info about calling client
+        QWeakPointer<DBusClient> m_client;
+        QString m_windowId;
     };
 
     class Item;

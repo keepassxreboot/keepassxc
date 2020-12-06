@@ -19,10 +19,10 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 #define KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 
-#include <QString>
-#include <QUuid>
 #include <QSet>
 #include <QSharedPointer>
+#include <QString>
+#include <QUuid>
 
 namespace FdoSecrets
 {
@@ -40,12 +40,6 @@ namespace FdoSecrets
      * One client may have multiple `Session`s with our service, and this class
      * manages the negotiation state (if any) of ciphers and per-client authorization
      * status.
-     *
-     * TODO: better design to enforce the following
-     * Note: the DBus model does not have any notion of a connection between client
-     * and service. This implies that we cannot disconnect a client but every
-     * request handler must check the connected() property if a request should
-     * be handled or not.
      */
     class DBusClient
     {
@@ -87,7 +81,8 @@ namespace FdoSecrets
             return m_pid;
         }
 
-        QSharedPointer<CipherPair> negotiateCipher(const QString& algorithm, const QVariant& input, QVariant& output, bool& incomplete);
+        QSharedPointer<CipherPair>
+        negotiateCipher(const QString& algorithm, const QVariant& input, QVariant& output, bool& incomplete);
 
         /**
          * Check if client may access item identified by @a uuid.

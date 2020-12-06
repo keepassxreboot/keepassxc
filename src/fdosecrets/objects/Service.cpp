@@ -188,11 +188,11 @@ namespace FdoSecrets
 
     DBusResult Service::openSession(const QString& algorithm, const QVariant& input, QVariant& output, Session*& result)
     {
-        auto& client = dbus().callingClient();
+        const auto& client = dbus().callingClient();
 
         // negotiate cipher
         bool incomplete = false;
-        auto ciphers = client.negotiateCipher(algorithm, input, output, incomplete);
+        auto ciphers = client->negotiateCipher(algorithm, input, output, incomplete);
         if (incomplete) {
             result = nullptr;
             return {};
@@ -202,29 +202,29 @@ namespace FdoSecrets
         }
 
         // create session using the negotiated cipher
-        result = Session::Create(std::move(ciphers), client.name(), this);
+        result = Session::Create(std::move(ciphers), client->name(), this);
         if (!result) {
             return QDBusError::InternalError;
         }
 
         // remove session when the client disconnects
-        connect(&dbus(), &DBusMgr::clientDisconnected, result, [result, &client](const DBusClientPtr& toRemove) {
-            if (toRemove == &client) {
+        connect(&dbus(), &DBusMgr::clientDisconnected, result, [result, client](const DBusClientPtr& toRemove) {
+            if (toRemove == client) {
                 result->close().okOrDie();
             }
         });
 
         // keep a list of sessions
         m_sessions.append(result);
-        connect(result, &Session::aboutToClose, this, [this, result]() {
-            m_sessions.removeAll(result);
-        });
+        connect(result, &Session::aboutToClose, this, [this, result]() { m_sessions.removeAll(result); });
 
         return {};
     }
 
-    DBusResult
-    Service::createCollection(const QVariantMap& properties, const QString& alias, Collection*& collection, PromptBase*& prompt)
+    DBusResult Service::createCollection(const QVariantMap& properties,
+                                         const QString& alias,
+                                         Collection*& collection,
+                                         PromptBase*& prompt)
     {
         prompt = nullptr;
 
@@ -239,7 +239,8 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Service::searchItems(const StringStringMap& attributes, QList<Item*>& unlocked, QList<Item*>& locked) const
+    DBusResult
+    Service::searchItems(const StringStringMap& attributes, QList<Item*>& unlocked, QList<Item*>& locked) const
     {
         QList<Collection*> colls;
         auto ret = collections(colls);
@@ -253,15 +254,18 @@ namespace FdoSecrets
             if (ret.err()) {
                 return ret;
             }
-            bool l;
-            ret = coll->locked(l);
-            if (ret.err()) {
-                return ret;
-            }
-            if (l) {
-                locked.append(items);
-            } else {
-                unlocked.append(items);
+            // item locked state already covers its collection's locked state
+            for (const auto& item : asConst(items)) {
+                bool l;
+                ret = item->locked(l);
+                if (ret.err()) {
+                    return ret;
+                }
+                if (l) {
+                    locked.append(item);
+                } else {
+                    unlocked.append(item);
+                }
             }
         }
         return {};
@@ -269,38 +273,49 @@ namespace FdoSecrets
 
     DBusResult Service::unlock(const QList<DBusObject*>& objects, QList<DBusObject*>& unlocked, PromptBase*& prompt)
     {
-        QSet<Collection*> needUnlock;
-        needUnlock.reserve(objects.size());
-        for (const auto& obj : asConst(objects)) {
-            auto coll = qobject_cast<Collection*>(obj);
-            if (coll) {
-                needUnlock << coll;
-            } else {
-                auto item = qobject_cast<Item*>(obj);
-                if (!item) {
-                    continue;
-                }
-                // we lock the whole collection for item
-                needUnlock << item->collection();
-            }
-        }
+        QSet<Collection*> collectionsToUnlock;
+        QSet<Item*> itemsToUnlock;
+        collectionsToUnlock.reserve(objects.size());
+        itemsToUnlock.reserve(objects.size());
 
-        // return anything already unlocked
-        QList<Collection*> toUnlock;
-        for (const auto& coll : asConst(needUnlock)) {
-            bool l;
-            auto ret = coll->locked(l);
+        for (const auto& obj : asConst(objects)) {
+            // the object is either an item or an collection
+            auto item = qobject_cast<Item*>(obj);
+            auto coll = item ? item->collection() : qobject_cast<Collection*>(obj);
+            // either way there should be a collection
+            if (!coll) {
+                continue;
+            }
+
+            bool collLocked{false}, itemLocked{false};
+            // if the collection needs unlock
+            auto ret = coll->locked(collLocked);
             if (ret.err()) {
                 return ret;
             }
-            if (l) {
-                toUnlock << coll;
-            } else {
-                unlocked << coll;
+            if (collLocked) {
+                collectionsToUnlock << coll;
+            }
+
+            if (item) {
+                // item may also need unlock
+                ret = item->locked(itemLocked);
+                if (ret.err()) {
+                    return ret;
+                }
+                if (itemLocked) {
+                    itemsToUnlock << item;
+                }
+            }
+
+            // both collection and item are not locked
+            if (!collLocked && !itemLocked) {
+                unlocked << obj;
             }
         }
-        if (!toUnlock.isEmpty()) {
-            prompt = PromptBase::Create<UnlockCollectionsPrompt>(this, toUnlock);
+
+        if (!collectionsToUnlock.isEmpty() || !itemsToUnlock.isEmpty()) {
+            prompt = PromptBase::Create<UnlockPrompt>(this, collectionsToUnlock, itemsToUnlock);
             if (!prompt) {
                 return QDBusError::InternalError;
             }
@@ -363,7 +378,7 @@ namespace FdoSecrets
         }
         plugin()->emitRequestShowNotification(
             tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", secrets.size())
-                .arg(dbus().callingClient().name()));
+                .arg(dbus().callingClient()->name()));
         return {};
     }
 

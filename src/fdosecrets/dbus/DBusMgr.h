@@ -7,16 +7,17 @@
 
 #include "fdosecrets/dbus/DBusClient.h"
 
-#include <QDBusVirtualObject>
 #include <QDBusConnection>
 #include <QDBusObjectPath>
 #include <QDBusServiceWatcher>
-#include <QPointer>
+#include <QDBusVirtualObject>
 #include <QHash>
+#include <QPointer>
 
 #include <utility>
 
-namespace FdoSecrets {
+namespace FdoSecrets
+{
     class Collection;
     class Service;
     class PromptBase;
@@ -25,7 +26,8 @@ namespace FdoSecrets {
     class DBusObject;
 
     /**
-     * DBusMgr takes care of the interaction between dbus and business logic objects (DBusObject). It handles the following
+     * DBusMgr takes care of the interaction between dbus and business logic objects (DBusObject). It handles the
+     * following
      * - Registering/unregistering service name
      * - Registering/unregistering paths
      * - Relay signals from DBusObject to dbus
@@ -36,22 +38,23 @@ namespace FdoSecrets {
      * There are two sets of vocabulary classes in use for method delivery.
      * The Qt DBus system uses QDBusVariant/QDBusObjectPath and other primitive types in QDBusMessage::arguments(),
      * i.e. the on-the-wire types.
-     * The DBusObject invokable methods uses QVariant/DBusObject* and other primitive types in parameters (parameter types).
-     * FdoSecrets::typeToWireType establishes the mapping from parameter types to on-the-wire types.
-     * The conversion between types is done with the help of QMetaType convert.
+     * The DBusObject invokable methods uses QVariant/DBusObject* and other primitive types in parameters (parameter
+     * types). FdoSecrets::typeToWireType establishes the mapping from parameter types to on-the-wire types. The
+     * conversion between types is done with the help of QMetaType convert.
      *
      * The method delivery sequence:
      * - DBusMgr::handleMessage unifies method call and property access into the same form
      * - DBusMgr::activateObject finds the target object and calls the method by doing the following
      *   * check the object exists and the interface matches
      *   * find the cached method information MethodData
-     *   * DBusMgr::prepareInputParams check and convert input arguments in QDBusMessage::arguments() to types expected by DBusObject
+     *   * DBusMgr::prepareInputParams check and convert input arguments in QDBusMessage::arguments() to types expected
+     * by DBusObject
      *   * prepare output argument storage
      *   * call the method
      *   * convert types to what Qt DBus expects
      *
-     * The MethodData is pre-computed using Qt meta object system by finding methods with signature matching a certain pattern:
-     * Q_INVOKABLE DBusResult methodName(const X& input1, const Y& input2, Z& output1, ZZ& output2)
+     * The MethodData is pre-computed using Qt meta object system by finding methods with signature matching a certain
+     * pattern: Q_INVOKABLE DBusResult methodName(const X& input1, const Y& input2, Z& output1, ZZ& output2)
      */
     class DBusMgr : public QDBusVirtualObject
     {
@@ -60,13 +63,13 @@ namespace FdoSecrets {
         explicit DBusMgr(QDBusConnection conn);
         ~DBusMgr() override;
 
-        QString introspect(const QString &path) const override;
+        QString introspect(const QString& path) const override;
         bool handleMessage(const QDBusMessage& message, const QDBusConnection& connection) override;
 
         /**
          * @return information about the calling client. Should not be called outside of dbus methods.
          */
-        DBusClient& callingClient() const;
+        const DBusClientPtr& callingClient() const;
 
         /**
          * @return current connected clients
@@ -187,12 +190,16 @@ namespace FdoSecrets {
     private:
         QDBusConnection m_conn;
 
-        bool sendDBusSignal(const QString& path, const QString& interface, const QString& name, const QVariantList& arguments);
+        bool sendDBusSignal(const QString& path,
+                            const QString& interface,
+                            const QString& name,
+                            const QVariantList& arguments);
         bool sendDBus(const QDBusMessage& reply);
 
         // object path registration
         QHash<QString, QPointer<DBusObject>> m_objects{};
-        enum class PathType {
+        enum class PathType
+        {
             Service,
             Collection,
             Aliases,
@@ -201,13 +208,18 @@ namespace FdoSecrets {
             Item,
             Unknown,
         };
-        struct ParsedPath {
+        struct ParsedPath
+        {
             PathType type;
             QString id;
             // only used when type == Item
             QString parentId;
             explicit ParsedPath(PathType type = PathType::Unknown, QString id = "", QString parentId = "")
-                : type(type), id(std::move(id)), parentId(std::move(parentId)) {}
+                : type(type)
+                , id(std::move(id))
+                , parentId(std::move(parentId))
+            {
+            }
         };
         ParsedPath parsePath(const QString& path) const;
         bool registerObject(const QString& path, DBusObject* obj);
@@ -223,7 +235,8 @@ namespace FdoSecrets {
         };
         QHash<QString, MethodData> m_cachedMethods{};
         void populateMethodCache(const QMetaObject& mo);
-        bool activateObject(const QString& path, const QString& interface, const QString& member, const QDBusMessage& msg);
+        bool
+        activateObject(const QString& path, const QString& interface, const QString& member, const QDBusMessage& msg);
 
         // client management
         friend class DBusClient;
@@ -240,7 +253,7 @@ namespace FdoSecrets {
         // mapping from the unique dbus peer address to client object
         QHash<QString, DBusClientPtr> m_clients{};
 
-        static thread_local DBusClient* Context;
+        static thread_local DBusClientPtr Context;
     };
 } // namespace FdoSecrets
 

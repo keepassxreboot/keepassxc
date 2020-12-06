@@ -12,7 +12,8 @@
 
 #include <QThread>
 
-namespace FdoSecrets {
+namespace FdoSecrets
+{
     QString pascalToCamel(const QString& pascal)
     {
         if (pascal.isEmpty()) {
@@ -22,7 +23,11 @@ namespace FdoSecrets {
         return pascal.at(0).toLower() + pascal.mid(1);
     }
 
-    bool prepareInputParams(const QString& signature, const QVector<int>& inputTypes, const QDBusMessage& msg, QVarLengthArray<void*, 10> &params, QVariantList &auxParams)
+    bool prepareInputParams(const QString& signature,
+                            const QVector<int>& inputTypes,
+                            const QDBusMessage& msg,
+                            QVarLengthArray<void*, 10>& params,
+                            QVariantList& auxParams)
     {
         // msg.signature() is verified by Qt to match msg.arguments(), but the content itself is untrusted,
         // so they need to be validated
@@ -37,7 +42,7 @@ namespace FdoSecrets {
 
             if (arg.userType() == id) {
                 // no conversion needed
-                params.append(const_cast<void *>(arg.constData()));
+                params.append(const_cast<void*>(arg.constData()));
             } else if (arg.canConvert(id)) {
                 // make a copy to store the converted value
                 auxParams.append(arg);
@@ -101,7 +106,8 @@ namespace FdoSecrets {
                     continue;
                 }
                 if (outputBegin) {
-                    qDebug() << "Internal error: invalid method parameter order, no input parameter after output ones" << mm.name();
+                    qDebug() << "Internal error: invalid method parameter order, no input parameter after output ones"
+                             << mm.name();
                     valid = false;
                     break;
                 }
@@ -121,7 +127,10 @@ namespace FdoSecrets {
         }
     }
 
-    bool DBusMgr::activateObject(const QString& path, const QString& interface, const QString& member, const QDBusMessage& msg)
+    bool DBusMgr::activateObject(const QString& path,
+                                 const QString& interface,
+                                 const QString& member,
+                                 const QDBusMessage& msg)
     {
         auto obj = m_objects.value(path, nullptr);
         if (!obj) {
@@ -172,7 +181,8 @@ namespace FdoSecrets {
         if (fail) {
             // generate internal error
             qWarning() << "Internal error: Failed to deliver message";
-            return sendDBus(msg.createErrorReply(QDBusError::InternalError, QLatin1String("Failed to deliver message")));
+            return sendDBus(
+                msg.createErrorReply(QDBusError::InternalError, QLatin1String("Failed to deliver message")));
         }
 
         if (!ret.ok()) {
@@ -185,7 +195,8 @@ namespace FdoSecrets {
             auto& outputArg = outputArgs[i];
             if (!outputArg.convert(it->outputTargetTypes.at(i))) {
                 qWarning() << "Internal error: Failed to convert message output to type" << it->outputTargetTypes.at(i);
-                return sendDBus(msg.createErrorReply(QDBusError::InternalError, QLatin1String("Failed to deliver message")));
+                return sendDBus(
+                    msg.createErrorReply(QDBusError::InternalError, QLatin1String("Failed to deliver message")));
             }
         }
         return sendDBus(msg.createReply(outputArgs));
@@ -216,15 +227,17 @@ namespace FdoSecrets {
         // from now on we may call into dbus objects, so setup client first
         struct ContextSetter
         {
-            explicit ContextSetter(DBusClient* client) {
+            explicit ContextSetter(DBusClientPtr client)
+            {
                 Q_ASSERT(Context == nullptr);
-                Context = client;
+                Context = std::move(client);
             }
-            ~ContextSetter() {
+            ~ContextSetter()
+            {
                 Context = nullptr;
             }
         };
-        ContextSetter s(findClient(message.service()).data());
+        ContextSetter s(findClient(message.service()));
 
         // activate the target object
         return activateObject(message.path(), iface, member, message);

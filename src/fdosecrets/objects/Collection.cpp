@@ -175,8 +175,8 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        created = static_cast<qulonglong>(m_backend->database()->rootGroup()->timeInfo().creationTime().toMSecsSinceEpoch()
-                                       / 1000);
+        created = static_cast<qulonglong>(
+            m_backend->database()->rootGroup()->timeInfo().creationTime().toMSecsSinceEpoch() / 1000);
 
         return {};
     }
@@ -292,8 +292,11 @@ namespace FdoSecrets
         return term;
     }
 
-    DBusResult
-    Collection::createItem(const QVariantMap& properties, const Secret& secret, bool replace, Item*& item, PromptBase*& prompt)
+    DBusResult Collection::createItem(const QVariantMap& properties,
+                                      const Secret& secret,
+                                      bool replace,
+                                      Item*& item,
+                                      PromptBase*& prompt)
     {
         auto ret = ensureBackend();
         if (ret.err()) {
@@ -360,23 +363,48 @@ namespace FdoSecrets
                 // may happen if entry somehow ends up in recycle bin
                 return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
             }
+
+            // the item was just created so there is no point in having it not authorized
+            dbus().callingClient()->setItemAuthorized(entry->uuid());
         }
 
-        ret = item->setProperties(properties);
-        if (ret.err()) {
-            if (newlyCreated) {
-                item->doDelete();
+        auto updateItem = [item, properties, secret, newlyCreated](bool dismissed) -> DBusResult {
+            if (dismissed) {
+                return {};
             }
-            return ret;
-        }
-        ret = item->setSecret(secret);
-        if (ret.err()) {
-            if (newlyCreated) {
-                item->doDelete();
+            auto res = item->setProperties(properties);
+            if (res.err()) {
+                if (newlyCreated) {
+                    item->doDelete();
+                }
+                return res;
             }
-            return ret;
+            res = item->setSecret(secret);
+            if (res.err()) {
+                if (newlyCreated) {
+                    item->doDelete();
+                }
+                return res;
+            }
+            return {};
+        };
+
+        bool locked = false;
+        ret = item->locked(locked);
+        if (locked) {
+            // give the user a chance to unlock the item
+            prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{}, QSet<Item*>{item});
+            if (!prompt) {
+                return QDBusError::InternalError;
+            }
+            // postpone anything after the confirmation
+            connect(prompt, &PromptBase::completed, item, updateItem);
+            return {};
         }
 
+        if (!prompt) {
+            return updateItem(false);
+        }
         return {};
     }
 

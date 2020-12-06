@@ -27,7 +27,6 @@
 #include "gui/Icons.h"
 
 #include <QAction>
-#include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QHeaderView>
 #include <QItemEditorFactory>
@@ -36,8 +35,8 @@
 #include <QVariant>
 
 using FdoSecrets::DBusClientPtr;
-using FdoSecrets::SettingsDatabaseModel;
 using FdoSecrets::SettingsClientModel;
+using FdoSecrets::SettingsDatabaseModel;
 
 namespace
 {

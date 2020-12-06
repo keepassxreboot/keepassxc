@@ -11,6 +11,9 @@ if(WITH_XC_FDOSECRETS)
         DatabaseSettingsPageFdoSecrets.cpp
         widgets/DatabaseSettingsWidgetFdoSecrets.cpp
 
+        # prompt dialog
+        widgets/AccessControlDialog.cpp
+
         # setting storage
         FdoSecretsSettings.cpp
 

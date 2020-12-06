@@ -12,15 +12,15 @@
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
 
-#include "core/Tools.h"
 #include "core/Entry.h"
 #include "core/Global.h"
+#include "core/Tools.h"
 
+#include <QCoreApplication>
 #include <QDBusMessage>
 #include <QDebug>
 #include <QFileInfo>
 #include <QThread>
-#include <QCoreApplication>
 
 #include <utility>
 
@@ -44,11 +44,11 @@ namespace FdoSecrets
 
     DBusMgr::~DBusMgr() = default;
 
-    thread_local DBusClient* DBusMgr::Context = nullptr;
-    DBusClient& DBusMgr::callingClient() const
+    thread_local DBusClientPtr DBusMgr::Context = nullptr;
+    const DBusClientPtr& DBusMgr::callingClient() const
     {
         Q_ASSERT(Context);
-        return *Context;
+        return Context;
     }
 
     QList<DBusClientPtr> DBusMgr::clients() const
@@ -196,8 +196,8 @@ namespace FdoSecrets
             const auto existing = reportExistingService();
             qDebug() << "Failed to register DBus service at " << DBUS_SERVICE_SECRET;
             qDebug() << existing;
-            emit error(
-                tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET)) + existing);
+            emit error(tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET))
+                       + existing);
             return false;
         }
         connect(service, &DBusObject::destroyed, this, [this]() {
@@ -206,8 +206,7 @@ namespace FdoSecrets
 
         if (!registerObject(QLatin1Literal(DBUS_PATH_SECRETS), service)) {
             qDebug() << "Failed to register service on DBus at path" << DBUS_PATH_SECRETS;
-            emit error(
-                tr("Failed to register service on DBus at path '%1'").arg(QLatin1Literal(DBUS_PATH_SECRETS)));
+            emit error(tr("Failed to register service on DBus at path '%1'").arg(QLatin1Literal(DBUS_PATH_SECRETS)));
             return false;
         }
 
