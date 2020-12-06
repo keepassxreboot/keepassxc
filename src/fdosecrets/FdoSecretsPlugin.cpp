@@ -89,7 +89,7 @@ DatabaseTabWidget* FdoSecretsPlugin::dbTabs() const
     return m_dbTabs;
 }
 
-const FdoSecrets::DBusMgr& FdoSecretsPlugin::dbus() const
+FdoSecrets::DBusMgr& FdoSecretsPlugin::dbus()
 {
     return m_dbus;
 }
@@ -111,9 +111,4 @@ void FdoSecretsPlugin::emitError(const QString& msg)
 {
     emit error(tr("<b>Fdo Secret Service:</b> %1").arg(msg));
     qDebug() << msg;
-}
-
-QString FdoSecretsPlugin::reportExistingService() const
-{
-    return m_dbus.reportExistingService();
 }

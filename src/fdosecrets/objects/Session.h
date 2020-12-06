@@ -20,34 +20,22 @@
 
 #include "fdosecrets/dbus/DBusObject.h"
 #include "fdosecrets/objects/Service.h"
-#include "fdosecrets/objects/SessionCipher.h"
 
-#include <QByteArray>
-#include <QHash>
 #include <QUuid>
 #include <QVariant>
-
-#include <memory>
+#include <QSharedPointer>
 
 namespace FdoSecrets
 {
-
     class CipherPair;
     class Session : public DBusObject
     {
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SESSION)
 
-        explicit Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent);
+        explicit Session(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent);
 
     public:
-        static std::unique_ptr<CipherPair> CreateCiphers(const QString& peer,
-                                                         const QString& algorithm,
-                                                         const QVariant& input,
-                                                         QVariant& output,
-                                                         bool& incomplete);
-        static void CleanupNegotiation(const QString& peer);
-
         /**
          * @brief Create a new instance of `Session`.
          * @param cipher the negotiated cipher
@@ -57,7 +45,7 @@ namespace FdoSecrets
          * This may be caused by
          *   - DBus path registration error
          */
-        static Session* Create(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent);
+        static Session* Create(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent);
 
         Q_INVOKABLE DBusResult close();
 
@@ -93,14 +81,9 @@ namespace FdoSecrets
         void aboutToClose();
 
     private:
-        bool registerSelf();
-
-    private:
-        std::unique_ptr<CipherPair> m_cipher;
+        QSharedPointer<CipherPair> m_cipher;
         QString m_peer;
         QUuid m_id;
-
-        static QHash<QString, QVariant> negotiationState;
     };
 
 } // namespace FdoSecrets

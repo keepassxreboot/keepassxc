@@ -225,6 +225,17 @@ namespace FdoSecrets
 
     DBusResult Item::getSecret(Session* session, Secret& secret)
     {
+        auto ret = getSecretNoNotification(session, secret);
+        if (ret.ok()) {
+            service()->plugin()->emitRequestShowNotification(
+                tr(R"(Entry "%1" from database "%2" was used by %3)")
+                    .arg(m_backend->title(), collection()->name(), dbus().callingClient().name()));
+        }
+        return ret;
+    }
+
+    DBusResult Item::getSecretNoNotification(Session* session, Secret& secret) const
+    {
         auto ret = ensureBackend();
         if (ret.err()) {
             return ret;
@@ -243,16 +254,6 @@ namespace FdoSecrets
         // encode using session
         secret = session->encode(secret);
 
-        // show notification is this was directly called from DBus
-        // TODO: use client
-//        if (calledFromDBus()) {
-        if (false) {
-            service()->plugin()->emitRequestShowNotification(
-                tr(R"(Entry "%1" from database "%2" was used by %3)")
-//                    .arg(m_backend->title(), collection()->name(), callingPeerName()));
-                // TODO: use client
-                    .arg(m_backend->title(), collection()->name(), ""));
-        }
         return {};
     }
 

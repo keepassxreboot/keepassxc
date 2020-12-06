@@ -28,14 +28,6 @@ class QAbstractItemView;
 class QItemEditorCreatorBase;
 class QItemEditorFactory;
 
-namespace FdoSecrets
-{
-
-    class Session;
-    class Collection;
-
-} // namespace FdoSecrets
-
 class FdoSecretsPlugin;
 
 namespace Ui

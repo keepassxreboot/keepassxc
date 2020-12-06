@@ -209,27 +209,19 @@ namespace FdoSecrets {
         member = pascalToCamel(member);
 
         // from now on we may call into dbus objects, so setup client first
-        // TODO: lookup client
-
-        struct LocalInstanceSetter
+        struct ContextSetter
         {
-            explicit LocalInstanceSetter(DBusMgr* inst) {
-                Q_ASSERT(ThreadLocalInstance == nullptr);
-                DBusMgr::ThreadLocalInstance = inst;
+            explicit ContextSetter(DBusClient* client) {
+                Q_ASSERT(Context == nullptr);
+                Context = client;
             }
-            ~LocalInstanceSetter() {
-                DBusMgr::ThreadLocalInstance = nullptr; }
+            ~ContextSetter() {
+                Context = nullptr;
+            }
         };
-        LocalInstanceSetter s(this);
-        // get target object from path & interface
-        auto msgSent = activateObject(message.path(), iface, member, message);
-        if (!msgSent) {
-            qDebug() << "DBusMgr::handleMessage with unknown interface or path";
-            return false;
-        }
+        ContextSetter s(findClient(message.service()).data());
 
-        // TODO: cleanup client
-
-        return false;
+        // activate the target object
+        return activateObject(message.path(), iface, member, message);
     }
 } // namespace FdoSecrets

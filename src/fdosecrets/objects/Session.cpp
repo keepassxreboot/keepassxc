@@ -23,10 +23,7 @@
 
 namespace FdoSecrets
 {
-
-    QHash<QString, QVariant> Session::negotiationState;
-
-    Session* Session::Create(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
+    Session* Session::Create(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent)
     {
         QScopedPointer<Session> res{new Session(std::move(cipher), peer, parent)};
         if (!res->dbus().registerObject(res.data())) {
@@ -36,17 +33,12 @@ namespace FdoSecrets
         return res.take();
     }
 
-    Session::Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
+    Session::Session(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent)
         : DBusObject(parent)
         , m_cipher(std::move(cipher))
         , m_peer(peer)
         , m_id(QUuid::createUuid())
     {
-    }
-
-    void Session::CleanupNegotiation(const QString& peer)
-    {
-        negotiationState.remove(peer);
     }
 
     DBusResult Session::close()
@@ -72,38 +64,6 @@ namespace FdoSecrets
         return qobject_cast<Service*>(parent());
     }
 
-    std::unique_ptr<CipherPair> Session::CreateCiphers(const QString& peer,
-                                                       const QString& algorithm,
-                                                       const QVariant& input,
-                                                       QVariant& output,
-                                                       bool& incomplete)
-    {
-        Q_UNUSED(peer);
-        incomplete = false;
-
-        std::unique_ptr<CipherPair> cipher{};
-        if (algorithm == QLatin1String(PlainCipher::Algorithm)) {
-            cipher.reset(new PlainCipher);
-        } else if (algorithm == QLatin1String(DhIetf1024Sha256Aes128CbcPkcs7::Algorithm)) {
-            QByteArray clientPublicKey = input.toByteArray();
-            cipher.reset(new DhIetf1024Sha256Aes128CbcPkcs7(clientPublicKey));
-        } else {
-            // error notSupported
-        }
-
-        if (!cipher) {
-            return {};
-        }
-
-        if (!cipher->isValid()) {
-            qWarning() << "FdoSecrets: Error creating cipher";
-            return {};
-        }
-
-        output = cipher->negotiationOutput();
-        return cipher;
-    }
-
     Secret Session::encode(const Secret& input) const
     {
         auto output = m_cipher->encrypt(input);
@@ -116,5 +76,4 @@ namespace FdoSecrets
         Q_ASSERT(input.session == this);
         return m_cipher->decrypt(input);
     }
-
 } // namespace FdoSecrets

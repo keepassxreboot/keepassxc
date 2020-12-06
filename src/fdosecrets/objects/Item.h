@@ -78,6 +78,7 @@ namespace FdoSecrets
     public:
         static const QSet<QString> ReadOnlyAttributes;
 
+        DBusResult getSecretNoNotification(Session* session, Secret& secret) const;
         DBusResult setProperties(const QVariantMap& properties);
 
         Entry* backend() const;

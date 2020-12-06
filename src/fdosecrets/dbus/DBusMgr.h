@@ -5,15 +5,17 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSMGR_H
 #define KEEPASSXC_FDOSECRETS_DBUSMGR_H
 
+#include "fdosecrets/dbus/DBusClient.h"
+
 #include <QDBusVirtualObject>
 #include <QDBusConnection>
 #include <QDBusObjectPath>
+#include <QDBusServiceWatcher>
 #include <QPointer>
 #include <QHash>
 
 #include <utility>
 
-class FdoSecretsPlugin;
 namespace FdoSecrets {
     class Collection;
     class Service;
@@ -62,10 +64,19 @@ namespace FdoSecrets {
         bool handleMessage(const QDBusMessage& message, const QDBusConnection& connection) override;
 
         /**
-         * @brief A thread local instance, only set during handleMessage
-         * @return
+         * @return information about the calling client. Should not be called outside of dbus methods.
          */
-        static DBusMgr* currentContext();
+        DBusClient& callingClient() const;
+
+        /**
+         * @return current connected clients
+         */
+        QList<DBusClientPtr> clients() const;
+
+        /**
+         * @return whether the org.freedesktop.secrets service is owned by others
+         */
+        bool serviceOccupied() const;
 
         /**
          * Check the running secret service and return info about it
@@ -124,13 +135,13 @@ namespace FdoSecrets {
          */
         template <typename T> static T* pathToObject(const QDBusObjectPath& path)
         {
-            if (!ThreadLocalInstance) {
+            if (!Context) {
                 return nullptr;
             }
             if (path.path() == QStringLiteral("/")) {
                 return nullptr;
             }
-            return qobject_cast<T*>(ThreadLocalInstance->m_objects.value(path.path(), nullptr));
+            return qobject_cast<T*>(Context->dbus().m_objects.value(path.path(), nullptr));
         }
 
         /**
@@ -142,7 +153,7 @@ namespace FdoSecrets {
          */
         template <typename T> QList<T*> static pathsToObject(const QList<QDBusObjectPath>& paths)
         {
-            if (!ThreadLocalInstance) {
+            if (!Context) {
                 return {};
             }
 
@@ -158,6 +169,8 @@ namespace FdoSecrets {
         }
 
     signals:
+        void clientConnected(const DBusClientPtr& client);
+        void clientDisconnected(const DBusClientPtr& client);
         void error(const QString& msg);
 
     private slots:
@@ -169,9 +182,16 @@ namespace FdoSecrets {
         void emitItemDeleted(Item* item);
         void emitPromptCompleted(bool dismissed, QVariant result);
 
-    private:
-        bool registerObject(const QString& path, DBusObject* obj);
+        void dbusServiceUnregistered(const QString& service);
 
+    private:
+        QDBusConnection m_conn;
+
+        bool sendDBusSignal(const QString& path, const QString& interface, const QString& name, const QVariantList& arguments);
+        bool sendDBus(const QDBusMessage& reply);
+
+        // object path registration
+        QHash<QString, QPointer<DBusObject>> m_objects{};
         enum class PathType {
             Service,
             Collection,
@@ -190,11 +210,8 @@ namespace FdoSecrets {
                 : type(type), id(std::move(id)), parentId(std::move(parentId)) {}
         };
         ParsedPath parsePath(const QString& path) const;
+        bool registerObject(const QString& path, DBusObject* obj);
 
-        bool sendDBusSignal(const QString& path, const QString& interface, const QString& name, const QVariantList& arguments);
-        bool sendDBus(const QDBusMessage& reply);
-
-    private:
         // method dispatching
         struct MethodData
         {
@@ -204,16 +221,26 @@ namespace FdoSecrets {
             QVector<int> outputTypes{};
             QVector<int> outputTargetTypes{};
         };
-        QHash<QString, MethodData> m_cachedMethods;
+        QHash<QString, MethodData> m_cachedMethods{};
         void populateMethodCache(const QMetaObject& mo);
         bool activateObject(const QString& path, const QString& interface, const QString& member, const QDBusMessage& msg);
 
-    private:
-        QDBusConnection m_conn;
+        // client management
+        friend class DBusClient;
 
-        QHash<QString, QPointer<DBusObject>> m_objects{};
+        DBusClientPtr findClient(const QString& addr);
+        DBusClientPtr createClient(const QString& addr);
+        /**
+         * @brief This gets called from DBusClient::disconnectDBus
+         * @param client
+         */
+        void removeClient(DBusClient* client);
 
-        static thread_local DBusMgr* ThreadLocalInstance;
+        QDBusServiceWatcher m_watcher{};
+        // mapping from the unique dbus peer address to client object
+        QHash<QString, DBusClientPtr> m_clients{};
+
+        static thread_local DBusClient* Context;
     };
 } // namespace FdoSecrets
 

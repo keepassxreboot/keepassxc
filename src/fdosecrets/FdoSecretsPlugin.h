@@ -70,13 +70,7 @@ public:
      * @brief The dbus manager instance
      * @return
      */
-    const FdoSecrets::DBusMgr& dbus() const;
-
-    /**
-     * Check the running secret service and returns info about it
-     * @return html string suitable to be shown in the UI
-     */
-    QString reportExistingService() const;
+    FdoSecrets::DBusMgr& dbus();
 
     // TODO: Only used for testing. Need to split service functions away from settings page.
     static FdoSecretsPlugin* getPlugin();

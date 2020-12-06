@@ -18,6 +18,7 @@ if(WITH_XC_FDOSECRETS)
         GcryptMPI.cpp
 
         # dbus objects
+        dbus/DBusClient.cpp
         dbus/DBusMgr.cpp
         dbus/DBusDispatch.cpp
         dbus/DBusObject.cpp

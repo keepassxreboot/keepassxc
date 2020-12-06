@@ -35,9 +35,9 @@
 #include <QToolBar>
 #include <QVariant>
 
-using FdoSecrets::Session;
+using FdoSecrets::DBusClientPtr;
 using FdoSecrets::SettingsDatabaseModel;
-using FdoSecrets::SettingsSessionModel;
+using FdoSecrets::SettingsClientModel;
 
 namespace
 {
@@ -158,7 +158,7 @@ namespace
     {
         Q_OBJECT
 
-        Q_PROPERTY(Session* session READ session WRITE setSession USER true)
+        Q_PROPERTY(const DBusClientPtr& client READ client WRITE setClient USER true)
 
     public:
         explicit ManageSession(FdoSecretsPlugin*, QWidget* parent = nullptr)
@@ -177,8 +177,8 @@ namespace
             m_disconnectAct->setIcon(icons()->icon(QStringLiteral("dialog-close")));
             m_disconnectAct->setToolTip(tr("Disconnect this application"));
             connect(m_disconnectAct, &QAction::triggered, this, [this]() {
-                if (m_session) {
-                    m_session->close().okOrDie();
+                if (m_client) {
+                    m_client->disconnectDBus();
                 }
             });
             addAction(m_disconnectAct);
@@ -190,18 +190,18 @@ namespace
             addWidget(spacer);
         }
 
-        Session* session()
+        const DBusClientPtr& client() const
         {
-            return m_session;
+            return m_client;
         }
 
-        void setSession(Session* sess)
+        void setClient(DBusClientPtr client)
         {
-            m_session = sess;
+            m_client = std::move(client);
         }
 
     private:
-        Session* m_session = nullptr;
+        DBusClientPtr m_client = nullptr;
         QAction* m_disconnectAct = nullptr;
     };
 
@@ -241,16 +241,16 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     m_ui->warningMsg->setHidden(true);
     m_ui->warningMsg->setCloseButtonVisible(false);
 
-    auto sessModel = new SettingsSessionModel(plugin, this);
-    m_ui->tableSessions->setModel(sessModel);
-    setupView(m_ui->tableSessions, 1, qMetaTypeId<Session*>(), new Creator<ManageSession>(m_plugin));
+    auto clientModel = new SettingsClientModel(plugin->dbus(), this);
+    m_ui->tableClients->setModel(clientModel);
+    setupView(m_ui->tableClients, 1, qMetaTypeId<DBusClientPtr>(), new Creator<ManageSession>(m_plugin));
 
     // config header after setting model, otherwise the header doesn't have enough sections
-    auto sessViewHeader = m_ui->tableSessions->horizontalHeader();
-    sessViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
-    sessViewHeader->setSectionsClickable(false);
-    sessViewHeader->setSectionResizeMode(0, QHeaderView::Stretch); // application
-    sessViewHeader->setSectionResizeMode(1, QHeaderView::ResizeToContents); // disconnect button
+    auto clientViewHeader = m_ui->tableClients->horizontalHeader();
+    clientViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
+    clientViewHeader->setSectionsClickable(false);
+    clientViewHeader->setSectionResizeMode(0, QHeaderView::Stretch); // application
+    clientViewHeader->setSectionResizeMode(1, QHeaderView::ResizeToContents); // disconnect button
 
     auto dbModel = new SettingsDatabaseModel(plugin->dbTabs(), this);
     m_ui->tableDatabases->setModel(dbModel);
@@ -304,6 +304,7 @@ void SettingsWidgetFdoSecrets::loadSettings()
     m_ui->enableFdoSecretService->setChecked(FdoSecrets::settings()->isEnabled());
     m_ui->showNotification->setChecked(FdoSecrets::settings()->showNotification());
     m_ui->noConfirmDeleteItem->setChecked(FdoSecrets::settings()->noConfirmDeleteItem());
+    m_ui->confirmAccessItem->setChecked(FdoSecrets::settings()->confirmAccessItem());
 }
 
 void SettingsWidgetFdoSecrets::saveSettings()
@@ -311,6 +312,7 @@ void SettingsWidgetFdoSecrets::saveSettings()
     FdoSecrets::settings()->setEnabled(m_ui->enableFdoSecretService->isChecked());
     FdoSecrets::settings()->setShowNotification(m_ui->showNotification->isChecked());
     FdoSecrets::settings()->setNoConfirmDeleteItem(m_ui->noConfirmDeleteItem->isChecked());
+    FdoSecrets::settings()->setConfirmAccessItem(m_ui->confirmAccessItem->isChecked());
 }
 
 void SettingsWidgetFdoSecrets::showEvent(QShowEvent* event)
@@ -333,17 +335,9 @@ void SettingsWidgetFdoSecrets::checkDBusName()
         return;
     }
 
-    auto reply = QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral(DBUS_SERVICE_SECRET));
-    if (!reply.isValid()) {
+    if (m_plugin->dbus().serviceOccupied()) {
         m_ui->warningMsg->showMessage(
-            tr("<b>Error:</b> Failed to connect to DBus. Please check your DBus setup."), MessageWidget::Error, -1);
-        m_ui->enableFdoSecretService->setChecked(false);
-        m_ui->enableFdoSecretService->setEnabled(false);
-        return;
-    }
-    if (reply.value()) {
-        m_ui->warningMsg->showMessage(
-            tr("<b>Warning:</b> ") + m_plugin->reportExistingService(), MessageWidget::Warning, -1);
+            tr("<b>Warning:</b> ") + m_plugin->dbus().reportExistingService(), MessageWidget::Warning, -1);
         m_ui->enableFdoSecretService->setChecked(false);
         m_ui->enableFdoSecretService->setEnabled(false);
         return;

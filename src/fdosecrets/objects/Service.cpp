@@ -28,7 +28,6 @@
 #include "gui/DatabaseWidget.h"
 
 #include <QDBusConnection>
-#include <QDBusServiceWatcher>
 #include <QDebug>
 #include <QSharedPointer>
 
@@ -55,7 +54,6 @@ namespace FdoSecrets
         , m_plugin(plugin)
         , m_databases(std::move(dbTabs))
         , m_insideEnsureDefaultAlias(false)
-        , m_serviceWatcher(nullptr)
     {
         connect(
             m_databases, &DatabaseTabWidget::databaseUnlockDialogFinished, this, &Service::doneUnlockDatabaseInDialog);
@@ -68,13 +66,6 @@ namespace FdoSecrets
         if (!dbus().registerObject(this)) {
             return false;
         }
-
-        // Connect to service unregistered signal
-        m_serviceWatcher.reset(new QDBusServiceWatcher());
-        connect(
-            m_serviceWatcher.get(), &QDBusServiceWatcher::serviceUnregistered, this, &Service::dbusServiceUnregistered);
-
-        m_serviceWatcher->setConnection(QDBusConnection::sessionBus());
 
         // Add existing database tabs
         for (int idx = 0; idx != m_databases->count(); ++idx) {
@@ -189,22 +180,6 @@ namespace FdoSecrets
         m_insideEnsureDefaultAlias = false;
     }
 
-    void Service::dbusServiceUnregistered(const QString& service)
-    {
-        Q_ASSERT(m_serviceWatcher);
-
-        auto removed = m_serviceWatcher->removeWatchedService(service);
-        if (!removed) {
-            qDebug("FdoSecrets: Failed to remove service watcher");
-        }
-
-        Session::CleanupNegotiation(service);
-        auto sess = m_peerToSession.value(service, nullptr);
-        if (sess) {
-            sess->close().okOrDie();
-        }
-    }
-
     DBusResult Service::collections(QList<Collection*>& collections) const
     {
         collections = m_collections;
@@ -213,17 +188,11 @@ namespace FdoSecrets
 
     DBusResult Service::openSession(const QString& algorithm, const QVariant& input, QVariant& output, Session*& result)
     {
-        bool incomplete = false;
-        // TODO: use client
-//        auto peer = callingPeer();
-        QString peer;
-
-        // watch for service unregister to cleanup
-        Q_ASSERT(m_serviceWatcher);
-        m_serviceWatcher->addWatchedService(peer);
+        auto& client = dbus().callingClient();
 
         // negotiate cipher
-        auto ciphers = Session::CreateCiphers(peer, algorithm, input, output, incomplete);
+        bool incomplete = false;
+        auto ciphers = client.negotiateCipher(algorithm, input, output, incomplete);
         if (incomplete) {
             result = nullptr;
             return {};
@@ -231,21 +200,25 @@ namespace FdoSecrets
         if (!ciphers) {
             return QDBusError::NotSupported;
         }
-//        result = Session::Create(std::move(ciphers), callingPeerName(), this);
-        // TODO: use client
-        result = Session::Create(std::move(ciphers), "", this);
+
+        // create session using the negotiated cipher
+        result = Session::Create(std::move(ciphers), client.name(), this);
         if (!result) {
-            return QDBusError::InvalidObjectPath;
+            return QDBusError::InternalError;
         }
 
-        m_sessions.append(result);
-        m_peerToSession[peer] = result;
-        connect(result, &Session::aboutToClose, this, [this, peer, result]() {
-            emit sessionClosed(result);
-            m_sessions.removeAll(result);
-            m_peerToSession.remove(peer);
+        // remove session when the client disconnects
+        connect(&dbus(), &DBusMgr::clientDisconnected, result, [result, &client](const DBusClientPtr& toRemove) {
+            if (toRemove == &client) {
+                result->close().okOrDie();
+            }
         });
-        emit sessionOpened(result);
+
+        // keep a list of sessions
+        m_sessions.append(result);
+        connect(result, &Session::aboutToClose, this, [this, result]() {
+            m_sessions.removeAll(result);
+        });
 
         return {};
     }
@@ -383,20 +356,14 @@ namespace FdoSecrets
         }
 
         for (const auto& item : asConst(items)) {
-            auto ret = item->getSecret(session, secrets[item]);
+            auto ret = item->getSecretNoNotification(session, secrets[item]);
             if (ret.err()) {
                 return ret;
             }
         }
-        // TODO: use client
-//        if (calledFromDBus()) {
-        if (false) {
-            plugin()->emitRequestShowNotification(
-                tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", secrets.size())
-//                    .arg(callingPeerName()));
-                    // TODO: use client
-                    .arg(""));
-        }
+        plugin()->emitRequestShowNotification(
+            tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", secrets.size())
+                .arg(dbus().callingClient().name()));
         return {};
     }
 

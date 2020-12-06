@@ -27,8 +27,6 @@
 
 #include <memory>
 
-class QDBusServiceWatcher;
-
 class DatabaseTabWidget;
 class DatabaseWidget;
 class Group;
@@ -41,7 +39,6 @@ namespace FdoSecrets
     class Collection;
     class Item;
     class PromptBase;
-    class ServiceAdaptor;
     class Session;
 
     class Service : public DBusObject // clazy: exclude=ctor-missing-parent-argument
@@ -87,9 +84,6 @@ namespace FdoSecrets
         void collectionDeleted(Collection* collection);
         void collectionChanged(Collection* collection);
 
-        void sessionOpened(Session* sess);
-        void sessionClosed(Session* sess);
-
         /**
          * Finish signal for async action doUnlockDatabaseInDialog
          * @param accepted If false, the action is canceled by the user
@@ -121,7 +115,6 @@ namespace FdoSecrets
         void doUnlockDatabaseInDialog(DatabaseWidget* dbWidget);
 
     private slots:
-        void dbusServiceUnregistered(const QString& service);
         void ensureDefaultAlias();
 
         void onDatabaseTabOpened(DatabaseWidget* dbWidget, bool emitSignal);
@@ -158,11 +151,8 @@ namespace FdoSecrets
         QHash<const DatabaseWidget*, Collection*> m_dbToCollection;
 
         QList<Session*> m_sessions;
-        QHash<QString, Session*> m_peerToSession;
 
         bool m_insideEnsureDefaultAlias;
-
-        std::unique_ptr<QDBusServiceWatcher> m_serviceWatcher;
     };
 
 } // namespace FdoSecrets

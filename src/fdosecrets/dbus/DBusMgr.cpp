@@ -6,7 +6,6 @@
 
 #include "DBusConstants.h"
 #include "DBusTypes.h"
-#include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
@@ -21,17 +20,12 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QThread>
+#include <QCoreApplication>
 
 #include <utility>
 
 namespace FdoSecrets
 {
-    thread_local DBusMgr* DBusMgr::ThreadLocalInstance = nullptr;
-    DBusMgr* DBusMgr::currentContext()
-    {
-        return ThreadLocalInstance;
-    }
-
     DBusMgr::DBusMgr(QDBusConnection conn)
         : m_conn(std::move(conn))
     {
@@ -41,9 +35,26 @@ namespace FdoSecrets
         populateMethodCache(Item::staticMetaObject);
         populateMethodCache(PromptBase::staticMetaObject);
         populateMethodCache(Session::staticMetaObject);
+
+        // remove client when it disappears on the bus
+        m_watcher.setWatchMode(QDBusServiceWatcher::WatchForUnregistration);
+        connect(&m_watcher, &QDBusServiceWatcher::serviceUnregistered, this, &DBusMgr::dbusServiceUnregistered);
+        m_watcher.setConnection(m_conn);
     }
 
     DBusMgr::~DBusMgr() = default;
+
+    thread_local DBusClient* DBusMgr::Context = nullptr;
+    DBusClient& DBusMgr::callingClient() const
+    {
+        Q_ASSERT(Context);
+        return *Context;
+    }
+
+    QList<DBusClientPtr> DBusMgr::clients() const
+    {
+        return m_clients.values();
+    }
 
     bool DBusMgr::sendDBusSignal(const QString& path,
                                  const QString& interface,
@@ -126,6 +137,21 @@ namespace FdoSecrets
         default:
             return "";
         }
+    }
+
+    bool DBusMgr::serviceOccupied() const
+    {
+        auto reply = m_conn.interface()->isServiceRegistered(QStringLiteral(DBUS_SERVICE_SECRET));
+        if (!reply.isValid()) {
+            return false;
+        }
+        if (reply.value()) {
+            auto pid = m_conn.interface()->servicePid(DBUS_SERVICE_SECRET);
+            if (pid.isValid() && pid.value() != qApp->applicationPid()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     QString DBusMgr::reportExistingService() const
@@ -381,4 +407,66 @@ namespace FdoSecrets
                        QLatin1Literal("Completed"),
                        args);
     }
-}
+
+    DBusClientPtr DBusMgr::findClient(const QString& addr)
+    {
+        auto it = m_clients.find(addr);
+        if (it == m_clients.end()) {
+            it = m_clients.insert(addr, createClient(addr));
+        }
+        return it.value();
+    }
+
+    DBusClientPtr DBusMgr::createClient(const QString& addr)
+    {
+        auto pid = m_conn.interface()->servicePid(addr);
+        auto name = addr;
+        if (pid.isValid()) {
+            // The /proc/pid/exe link is unforgeable by the application AFAICT.
+            // It's still weak and if the application does a prctl(PR_SET_DUMPABLE, 0) this link cannot be accessed.
+            QFileInfo proc(QStringLiteral("/proc/%1/exe").arg(pid.value()));
+            auto exePath = proc.canonicalFilePath();
+            if (!exePath.isEmpty()) {
+                name = exePath;
+            }
+        }
+
+        auto client = DBusClientPtr(new DBusClient(*this, addr, pid.value(), name));
+
+        emit clientConnected(client);
+        m_watcher.addWatchedService(addr);
+
+        return client;
+    }
+
+    void DBusMgr::removeClient(DBusClient* client)
+    {
+        if (!client) {
+            return;
+        }
+
+        auto it = m_clients.find(client->address());
+        if (it == m_clients.end()) {
+            return;
+        }
+
+        emit clientDisconnected(*it);
+        m_clients.erase(it);
+    }
+
+    void DBusMgr::dbusServiceUnregistered(const QString& service)
+    {
+        auto removed = m_watcher.removeWatchedService(service);
+        if (!removed) {
+            qDebug("FdoSecrets: Failed to remove service watcher");
+        }
+
+        auto it = m_clients.find(service);
+        if (it == m_clients.end()) {
+            return;
+        }
+        auto client = it.value();
+
+        client->disconnectDBus();
+    }
+} // namespace FdoSecrets
