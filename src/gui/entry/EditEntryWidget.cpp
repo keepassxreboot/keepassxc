@@ -178,9 +178,6 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
-
-    // HACK: Align username text with other line edits. Qt does not let you do this with an application stylesheet.
-    m_mainUi->usernameComboBox->lineEdit()->setStyleSheet("padding-left: 8px;");
 }
 
 void EditEntryWidget::setupAdvanced()
