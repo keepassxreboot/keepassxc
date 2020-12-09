@@ -43,6 +43,8 @@ namespace FdoSecrets
         : m_conn(std::move(conn))
     {
         registerDBusTypes();
+        qRegisterMetaType<DBusClientPtr>();
+        qRegisterMetaType<DBusClientPtr>("DBusClientPtr");
 
         // these are the methods we expose on DBus
         populateMethodCache(Service::staticMetaObject);
