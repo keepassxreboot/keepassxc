@@ -32,18 +32,64 @@ namespace FdoSecrets
     {
     }
 
-    bool DBusClient::itemAuthorized(const QUuid& uuid) const
+    bool DBusClient::itemKnown(const QUuid& uuid) const
     {
-        return !FdoSecrets::settings()->confirmAccessItem() || m_authorizedAll
-               || m_authorizedEntries.find(uuid) != m_authorizedEntries.end();
+        return m_authorizedAll || m_allowed.contains(uuid) || m_allowedOnce.contains(uuid) || m_denied.contains(uuid)
+               || m_deniedOnce.contains(uuid);
     }
 
-    void DBusClient::setItemAuthorized(const QUuid& uuid, bool authorized)
+    bool DBusClient::itemAuthorized(const QUuid& uuid) const
     {
-        if (authorized) {
-            m_authorizedEntries.insert(uuid);
-        } else {
-            m_authorizedEntries.remove(uuid);
+        if (!FdoSecrets::settings()->confirmAccessItem()) {
+            // everyone is authorized if this is not enabled
+            return true;
+        }
+        if (m_authorizedAll) {
+            // this client is trusted
+            return true;
+        }
+        if (m_deniedOnce.contains(uuid) || m_denied.contains(uuid)) {
+            // explicitly denied
+            return false;
+        }
+        if (m_allowedOnce.contains(uuid) || m_allowed.contains(uuid)) {
+            // explicitly allowed
+            return true;
+        }
+        // haven't asked, not authorized by default
+        return false;
+    }
+
+    bool DBusClient::itemAuthorizedResetOnce(const QUuid& uuid)
+    {
+        auto auth = itemAuthorized(uuid);
+        m_deniedOnce.remove(uuid);
+        m_allowedOnce.remove(uuid);
+        return auth;
+    }
+
+    void DBusClient::setItemAuthorized(const QUuid& uuid, AuthDecision auth)
+    {
+        // uuid should only be in exactly one set at any time
+        m_allowed.remove(uuid);
+        m_allowedOnce.remove(uuid);
+        m_denied.remove(uuid);
+        m_deniedOnce.remove(uuid);
+        switch (auth) {
+        case AuthDecision::Allowed:
+            m_allowed.insert(uuid);
+            break;
+        case AuthDecision::AllowedOnce:
+            m_allowedOnce.insert(uuid);
+            break;
+        case AuthDecision::Denied:
+            m_denied.insert(uuid);
+            break;
+        case AuthDecision::DeniedOnce:
+            m_deniedOnce.insert(uuid);
+            break;
+        default:
+            break;
         }
     }
 
@@ -55,7 +101,10 @@ namespace FdoSecrets
     void DBusClient::clearAuthorization()
     {
         m_authorizedAll = false;
-        m_authorizedEntries.clear();
+        m_allowed.clear();
+        m_allowedOnce.clear();
+        m_denied.clear();
+        m_deniedOnce.clear();
     }
 
     void DBusClient::disconnectDBus()

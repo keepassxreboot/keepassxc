@@ -1163,7 +1163,7 @@ void TestGuiFdoSecrets::testItemLockState()
     }
 
     // item is unlocked if the client is authorized
-    m_client->setItemAuthorized(entry->uuid(), ItemAuth::Allowed);
+    m_client->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
     DBUS_COMPARE(item->locked(), false);
     DBUS_VERIFY(item->GetSecret(QDBusObjectPath(sess->path())));
     DBUS_VERIFY(item->SetSecret(encrypted));

@@ -24,6 +24,8 @@
 #include <QString>
 #include <QUuid>
 
+#include "core/Global.h"
+
 namespace FdoSecrets
 {
     class DBusMgr;
@@ -85,14 +87,24 @@ namespace FdoSecrets
         negotiateCipher(const QString& algorithm, const QVariant& input, QVariant& output, bool& incomplete);
 
         /**
+         * Check if the item is known in this client's auth list
+         */
+        bool itemKnown(const QUuid& uuid) const;
+
+        /**
          * Check if client may access item identified by @a uuid.
          */
         bool itemAuthorized(const QUuid& uuid) const;
 
         /**
+         * Check if client may access item identified by @a uuid, and also reset any once auth.
+         */
+        bool itemAuthorizedResetOnce(const QUuid& uuid);
+
+        /**
          * Authorize client to access item identified by @a uuid.
          */
-        void setItemAuthorized(const QUuid& uuid, bool authorized = true);
+        void setItemAuthorized(const QUuid& uuid, AuthDecision auth);
 
         /**
          * Authorize client to access all items.
@@ -118,7 +130,12 @@ namespace FdoSecrets
         QString m_name{};
 
         bool m_authorizedAll{false};
-        QSet<QUuid> m_authorizedEntries{};
+
+        QSet<QUuid> m_allowed{};
+        QSet<QUuid> m_denied{};
+
+        QSet<QUuid> m_allowedOnce{};
+        QSet<QUuid> m_deniedOnce{};
     };
 
     using DBusClientPtr = QSharedPointer<DBusClient>;

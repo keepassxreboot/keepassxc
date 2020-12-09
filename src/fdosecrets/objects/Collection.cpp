@@ -370,7 +370,7 @@ namespace FdoSecrets
             }
 
             // the item was just created so there is no point in having it not authorized
-            dbus().callingClient()->setItemAuthorized(entry->uuid());
+            dbus().callingClient()->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
         }
 
         auto updateItem = [item, properties, secret, newlyCreated](bool dismissed) -> DBusResult {

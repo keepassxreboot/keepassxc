@@ -245,7 +245,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        if (!dbus().callingClient()->itemAuthorized(backend()->uuid())) {
+        if (!dbus().callingClient()->itemAuthorizedResetOnce(backend()->uuid())) {
             return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
         }
 
@@ -271,7 +271,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        if (!dbus().callingClient()->itemAuthorized(backend()->uuid())) {
+        if (!dbus().callingClient()->itemAuthorizedResetOnce(backend()->uuid())) {
             return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
         }
 

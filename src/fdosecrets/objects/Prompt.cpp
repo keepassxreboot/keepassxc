@@ -269,43 +269,53 @@ namespace FdoSecrets
             return;
         }
 
-        // flatten to list of items
-        QList<Item*> items;
+        constexpr auto FdoSecretsBackend = "FdoSecretsBackend";
+        // flatten to list of entries
+        QList<Entry*> entries;
         for (const auto& itemsPerColl : m_items.values()) {
             for (const auto& item : itemsPerColl) {
-                if (item) {
-                    items << item;
+                if (!item) {
+                    m_numRejected += 1;
+                    continue;
                 }
+                auto entry = item->backend();
+                if (client->itemKnown(entry->uuid())) {
+                    if (!client->itemAuthorized(entry->uuid())) {
+                        m_numRejected += 1;
+                    }
+                    continue;
+                }
+                // attach a temporary property so later we can get the item
+                // back from the dialog's result
+                entry->setProperty(FdoSecretsBackend, QVariant::fromValue(item.data()));
+                entries << entry;
             }
-        }
-        QList<Entry*> entries;
-        entries.reserve(m_items.size());
-        for (const auto& item : asConst(items)) {
-            entries << item->backend();
         }
         if (!entries.isEmpty()) {
-            AccessControlDialog ac(findWindow(m_windowId), entries, client->name(), client->pid());
-            switch (ac.exec()) {
-            case AccessControlDialog::AllowAll:
-                client->setAllAuthorized(true);
-                for (const auto& item : asConst(items)) {
-                    m_unlocked << item->objectPath();
+            QString app = tr("%1 (PID: %2)").arg(client->name()).arg(client->pid());
+            AccessControlDialog ac(findWindow(m_windowId), entries, app, AuthOption::Remember);
+            ac.exec();
+            auto decisions = ac.decisions();
+            for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
+                auto entry = it.key();
+                // get back the corresponding item
+                auto item = entry->property(FdoSecretsBackend).value<Item*>();
+                entry->setProperty(FdoSecretsBackend, {});
+                Q_ASSERT(item);
+
+                // set auth
+                client->setItemAuthorized(entry->uuid(), it.value());
+
+                if (client->itemAuthorized(entry->uuid())) {
+                    m_unlocked += item->objectPath();
+                } else {
+                    m_numRejected += 1;
                 }
-                break;
-            case AccessControlDialog::AllowSelected:
-                for (const auto& idx : ac.getEntryIndices()) {
-                    const auto& item = items.at(idx);
-                    client->setItemAuthorized(item->backend()->uuid());
-                    m_unlocked << item->objectPath();
-                }
-                break;
-            case AccessControlDialog::DenyAll:
-            default:
-                dismiss();
-                return;
             }
         }
-        emit completed(m_unlocked.isEmpty(), QVariant::fromValue(m_unlocked));
+        // if anything is not unlocked, treat the whole prompt as dismissed
+        // so the client has a chance to handle the error
+        emit completed(m_numRejected > 0, QVariant::fromValue(m_unlocked));
     }
 
     DBusResult UnlockPrompt::dismiss()

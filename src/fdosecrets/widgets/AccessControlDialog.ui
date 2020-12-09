@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>405</width>
-    <height>200</height>
+    <height>252</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,15 +18,15 @@
     <widget class="QLabel" name="appLabel">
      <property name="font">
       <font>
-       <weight>75</weight>
-       <bold>true</bold>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="text">
-      <string>%1 (PID: %2) is requesting access to the following entries:</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -59,14 +59,14 @@
     </widget>
    </item>
    <item>
+    <widget class="MessageWidget" name="rememberMsg" native="true">
+     <property name="text" stdset="0">
+      <string>Your decision will be remembered for the duration the program is running.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="allowAllButton">
-       <property name="text">
-        <string>Allow all future accesses</string>
-       </property>
-      </widget>
-     </item>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -79,6 +79,16 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="rememberCheck">
+       <property name="text">
+        <string>Remember</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="allowButton">
@@ -110,6 +120,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

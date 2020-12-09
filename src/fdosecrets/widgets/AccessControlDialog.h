@@ -22,8 +22,12 @@
 
 #include <QAbstractTableModel>
 #include <QDialog>
+#include <QPointer>
+#include <QPushButton>
 #include <QScopedPointer>
 #include <QSet>
+
+#include "core/Global.h"
 
 class Entry;
 
@@ -32,28 +36,47 @@ namespace Ui
     class AccessControlDialog;
 }
 
+enum class AuthOption
+{
+    None = 0,
+    Remember = 1 << 1,
+    PerEntryDeny = 1 << 2,
+};
+Q_DECLARE_FLAGS(AuthOptions, AuthOption);
+Q_DECLARE_OPERATORS_FOR_FLAGS(AuthOptions);
+
 class AccessControlDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit AccessControlDialog(QWindow* parent, const QList<Entry*>& items, const QString& name, uint pid);
+    explicit AccessControlDialog(QWindow* parent,
+                                 const QList<Entry*>& entries,
+                                 const QString& app,
+                                 AuthOptions authOptions = AuthOption::Remember | AuthOption::PerEntryDeny);
     ~AccessControlDialog() override;
-
-    QList<int> getEntryIndices() const;
 
     enum DialogCode
     {
-        DenyAll = QDialog::Rejected,
-        AllowSelected = QDialog::Accepted,
-        AllowAll,
+        Rejected,
+        AllowSelected,
+        DenyAll,
     };
+
+    QHash<Entry*, AuthDecision> decisions() const;
+
+private slots:
+    void rememberChecked(bool checked);
+    void denyEntryClicked(Entry* entry, const QModelIndex& index);
+    void dialogFinished(int result);
 
 private:
     class EntryModel;
+    class DenyButton;
 
     QScopedPointer<Ui::AccessControlDialog> m_ui;
     QScopedPointer<EntryModel> m_model;
+    QHash<Entry*, AuthDecision> m_decisions;
 };
 
 class AccessControlDialog::EntryModel : public QAbstractTableModel
@@ -65,8 +88,7 @@ public:
     int rowCount(const QModelIndex& parent) const override;
     int columnCount(const QModelIndex& parent) const override;
     QVariant data(const QModelIndex& index, int role) const override;
-
-    QList<int> selectedIndices() const;
+    bool removeRows(int row, int count, const QModelIndex& parent) override;
 
 public slots:
     void toggleCheckState(const QModelIndex& index);
@@ -75,7 +97,26 @@ private:
     bool isValid(const QModelIndex& index) const;
 
     QList<Entry*> m_entries;
-    QSet<int> m_selected;
+    QSet<Entry*> m_selected;
+};
+
+class AccessControlDialog::DenyButton : public QPushButton
+{
+    Q_OBJECT
+
+    Q_PROPERTY(Entry* entry READ entry WRITE setEntry USER true)
+
+    QPersistentModelIndex m_index;
+    QPointer<Entry> m_entry;
+
+public:
+    explicit DenyButton(QWidget* p, const QModelIndex& idx);
+
+    void setEntry(Entry* e);
+    Entry* entry() const;
+
+signals:
+    void clicked(Entry*, const QModelIndex& idx);
 };
 
 #endif // KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H

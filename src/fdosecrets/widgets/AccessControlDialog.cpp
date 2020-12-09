@@ -20,15 +20,20 @@
 #include "AccessControlDialog.h"
 #include "ui_AccessControlDialog.h"
 
+#include "fdosecrets/widgets/RowButtonHelper.h"
+
 #include "core/Entry.h"
 
 #include <QWindow>
 
 #include <utility>
 
-AccessControlDialog::AccessControlDialog(QWindow* parent, const QList<Entry*>& items, const QString& name, uint pid)
+AccessControlDialog::AccessControlDialog(QWindow* parent,
+                                         const QList<Entry*>& entries,
+                                         const QString& app,
+                                         AuthOptions authOptions)
     : m_ui(new Ui::AccessControlDialog())
-    , m_model(new EntryModel(items))
+    , m_model(new EntryModel(entries))
 {
     if (parent) {
         // Force the creation of the QWindow, without this windowHandle() will return nullptr
@@ -37,42 +42,101 @@ AccessControlDialog::AccessControlDialog(QWindow* parent, const QList<Entry*>& i
         Q_ASSERT(window);
         window->setTransientParent(parent);
     }
-
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     m_ui->setupUi(this);
 
-    connect(m_ui->cancelButton, &QPushButton::clicked, this, &AccessControlDialog::reject);
-    connect(m_ui->allowButton, &QPushButton::clicked, this, &AccessControlDialog::accept);
-    connect(m_ui->allowAllButton, &QPushButton::clicked, this, [this]() { this->done(AccessControlDialog::AllowAll); });
-    // click anywhere in the row to check/uncheck the item
+    connect(m_ui->cancelButton, &QPushButton::clicked, this, [this]() { done(DenyAll); });
+    connect(m_ui->allowButton, &QPushButton::clicked, this, [this]() { done(AllowSelected); });
     connect(m_ui->itemsTable, &QTableView::clicked, m_model.data(), &EntryModel::toggleCheckState);
+    connect(m_ui->rememberCheck, &QCheckBox::clicked, this, &AccessControlDialog::rememberChecked);
+    connect(this, &QDialog::finished, this, &AccessControlDialog::dialogFinished);
 
-    m_ui->appLabel->setText(m_ui->appLabel->text().arg(name).arg(pid));
+    m_ui->rememberMsg->setCloseButtonVisible(false);
+    m_ui->rememberMsg->setMessageType(MessageWidget::Information);
+
+    m_ui->appLabel->setText(m_ui->appLabel->text().arg(app));
+
     m_ui->itemsTable->setModel(m_model.data());
-
-    // resize table columns
+    installWidgetItemDelegate<DenyButton>(m_ui->itemsTable, 2, [this](QWidget* p, const QModelIndex& idx) {
+        auto btn = new DenyButton(p, idx);
+        connect(btn, &DenyButton::clicked, this, &AccessControlDialog::denyEntryClicked);
+        return btn;
+    });
     m_ui->itemsTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     m_ui->itemsTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    m_ui->itemsTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     m_ui->itemsTable->resizeColumnsToContents();
+
+    if (!authOptions.testFlag(AuthOption::Remember)) {
+        m_ui->rememberCheck->setHidden(true);
+        m_ui->rememberCheck->setChecked(false);
+    }
+    if (!authOptions.testFlag(AuthOption::PerEntryDeny)) {
+        m_ui->itemsTable->horizontalHeader()->setSectionHidden(2, true);
+    }
 
     m_ui->allowButton->setFocus();
 }
 
 AccessControlDialog::~AccessControlDialog() = default;
 
-QList<int> AccessControlDialog::getEntryIndices() const
+void AccessControlDialog::rememberChecked(bool checked)
 {
-    return m_model->selectedIndices();
+    if (checked) {
+        m_ui->rememberMsg->animatedShow();
+    } else {
+        m_ui->rememberMsg->animatedHide();
+    }
+}
+
+void AccessControlDialog::denyEntryClicked(Entry* entry, const QModelIndex& index)
+{
+    m_decisions.insert(entry, AuthDecision::Denied);
+    m_model->removeRow(index.row());
+    if (m_model->rowCount({}) == 0) {
+        reject();
+    }
+}
+
+void AccessControlDialog::dialogFinished(int result)
+{
+    auto allow = m_ui->rememberCheck->isChecked() ? AuthDecision::Allowed : AuthDecision::AllowedOnce;
+    auto deny = m_ui->rememberCheck->isChecked() ? AuthDecision::Denied : AuthDecision::DeniedOnce;
+
+    for (int row = 0; row != m_model->rowCount({}); ++row) {
+        auto entry = m_model->data(m_model->index(row, 2), Qt::EditRole).value<Entry*>();
+        auto selected = m_model->data(m_model->index(row, 0), Qt::CheckStateRole).value<Qt::CheckState>();
+        Q_ASSERT(entry);
+        switch (result) {
+        case AllowSelected:
+            if (selected) {
+                m_decisions.insert(entry, allow);
+            } else {
+                m_decisions.insert(entry, AuthDecision::Undecided);
+            }
+            break;
+        case DenyAll:
+            m_decisions.insert(entry, deny);
+            break;
+        case Rejected:
+        default:
+            m_decisions.insert(entry, AuthDecision::Undecided);
+            break;
+        }
+    }
+}
+
+QHash<Entry*, AuthDecision> AccessControlDialog::decisions() const
+{
+    return m_decisions;
 }
 
 AccessControlDialog::EntryModel::EntryModel(QList<Entry*> entries, QObject* parent)
     : QAbstractTableModel(parent)
     , m_entries(std::move(entries))
+    , m_selected(QSet<Entry*>::fromList(m_entries))
 {
-    for (int i = 0; i != m_entries.count(); ++i) {
-        m_selected.insert(i);
-    }
 }
 
 int AccessControlDialog::EntryModel::rowCount(const QModelIndex& parent) const
@@ -82,7 +146,7 @@ int AccessControlDialog::EntryModel::rowCount(const QModelIndex& parent) const
 
 int AccessControlDialog::EntryModel::columnCount(const QModelIndex& parent) const
 {
-    return isValid(parent) ? 0 : 2;
+    return isValid(parent) ? 0 : 3;
 }
 
 bool AccessControlDialog::EntryModel::isValid(const QModelIndex& index) const
@@ -90,19 +154,16 @@ bool AccessControlDialog::EntryModel::isValid(const QModelIndex& index) const
     return index.isValid() && index.row() < rowCount({}) && index.column() < columnCount({});
 }
 
-QList<int> AccessControlDialog::EntryModel::selectedIndices() const
-{
-    return m_selected.toList();
-}
-
 void AccessControlDialog::EntryModel::toggleCheckState(const QModelIndex& index)
 {
     if (!isValid(index)) {
         return;
     }
-    auto it = m_selected.find(index.row());
+    auto entry = m_entries.at(index.row());
+    // click anywhere in the row to check/uncheck the item
+    auto it = m_selected.find(entry);
     if (it == m_selected.end()) {
-        m_selected.insert(index.row());
+        m_selected.insert(entry);
     } else {
         m_selected.erase(it);
     }
@@ -125,7 +186,7 @@ QVariant AccessControlDialog::EntryModel::data(const QModelIndex& index, int rol
         case Qt::DecorationRole:
             return entry->icon();
         case Qt::CheckStateRole:
-            return m_selected.contains(index.row()) ? Qt::Checked : Qt::Unchecked;
+            return QVariant::fromValue(m_selected.contains(entry) ? Qt::Checked : Qt::Unchecked);
         default:
             return {};
         }
@@ -136,7 +197,43 @@ QVariant AccessControlDialog::EntryModel::data(const QModelIndex& index, int rol
         default:
             return {};
         }
+    case 2:
+        switch (role) {
+        case Qt::EditRole:
+            return QVariant::fromValue(entry);
+        default:
+            return {};
+        }
     default:
         return {};
     }
+}
+
+bool AccessControlDialog::EntryModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+    beginRemoveRows(parent, row, row + count - 1);
+    while (count--) {
+        m_entries.removeAt(row);
+    }
+    endRemoveRows();
+    return true;
+}
+
+AccessControlDialog::DenyButton::DenyButton(QWidget* p, const QModelIndex& idx)
+    : QPushButton(p)
+    , m_index(idx)
+    , m_entry()
+{
+    setText(tr("Deny for this program"));
+    connect(this, &QPushButton::clicked, [this]() { emit clicked(entry(), m_index); });
+}
+
+void AccessControlDialog::DenyButton::setEntry(Entry* e)
+{
+    m_entry = e;
+}
+
+Entry* AccessControlDialog::DenyButton::entry() const
+{
+    return m_entry;
 }
