@@ -123,14 +123,8 @@ private:
 
     template <typename T> T getSignalVariantArgument(const QVariant& arg)
     {
-        T res{};
         const auto& in = arg.value<QDBusVariant>().variant();
-        if (in.userType() == qMetaTypeId<QDBusArgument>()) {
-            in.value<QDBusArgument>() >> res;
-        } else {
-            res = in.value<T>();
-        }
-        return res;
+        return qdbus_cast<T>(in);
     }
 
 private:

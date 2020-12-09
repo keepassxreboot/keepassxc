@@ -169,7 +169,7 @@ namespace FdoSecrets
             message.member(),
             message.signature(),
             message.arguments(),
-            false,
+            RequestType::Method,
         };
 
         if (req.interface == "org.freedesktop.DBus.Introspectable") {
@@ -239,13 +239,14 @@ namespace FdoSecrets
             req.member = req.args.at(1).toString();
             req.signature = "";
             req.args = {};
+            req.type = RequestType::PropertyGet;
         } else if (req.member == "GetAll" && req.signature == "s") {
             // special handled in activateObject
             req.interface = req.args.at(0).toString();
             req.member = "";
             req.signature = "";
             req.args = {};
-            req.isGetAll = true;
+            req.type = RequestType::PropertyGetAll;
         } else {
             return false;
         }
@@ -266,13 +267,13 @@ namespace FdoSecrets
         auto mo = obj->metaObject();
         // either interface matches, or interface is empty if req is property get all
         QString interface = mo->classInfo(mo->indexOfClassInfo("D-Bus Interface")).value();
-        if (req.interface != interface && !(req.isGetAll && req.interface.isEmpty())) {
+        if (req.interface != interface && !(req.type == RequestType::PropertyGetAll && req.interface.isEmpty())) {
             qDebug() << "DBusMgr::handleMessage with mismatch interface" << msg;
             return false;
         }
 
         // special handle of property getall
-        if (req.isGetAll) {
+        if (req.type == RequestType::PropertyGetAll) {
             return objectPropertyGetAll(obj, interface, msg);
         }
 
@@ -302,6 +303,10 @@ namespace FdoSecrets
 
         if (!ret.ok()) {
             return sendDBus(msg.createErrorReply(ret, ""));
+        }
+        if (req.type == RequestType::PropertyGet) {
+            // property get need the reply wrapped in QDBusVariant
+            outputArgs[0] = QVariant::fromValue(QDBusVariant(outputArgs.first()));
         }
         return sendDBus(msg.createReply(outputArgs));
     }

@@ -29,6 +29,46 @@
 #include <QVariant>
 #include <QtDBus>
 
+#include <QDebug>
+
+/**
+ * Mimic the interface of QDBusPendingReply so the same code can be used in test
+ */
+template <typename T> class PropertyReply
+{
+    QDBusPendingReply<QDBusVariant> m_reply;
+
+public:
+    /*implicit*/ PropertyReply(const QDBusMessage& reply)
+        : m_reply(reply)
+    {
+    }
+    bool isFinished() const
+    {
+        return m_reply.isFinished();
+    }
+    bool isValid() const
+    {
+        return m_reply.isValid();
+    }
+    bool isError() const
+    {
+        return m_reply.isError();
+    }
+    QDBusError error() const
+    {
+        return m_reply.error();
+    }
+    T value() const
+    {
+        return qdbus_cast<T>(m_reply.value().variant());
+    }
+    template <int> T argumentAt() const
+    {
+        return value();
+    }
+};
+
 #define IMPL_GET_PROPERTY(name)                                                                                        \
     QDBusMessage msg = QDBusMessage::createMethodCall(                                                                 \
         service(), path(), QStringLiteral("org.freedesktop.DBus.Properties"), QStringLiteral("Get"));                  \
@@ -67,7 +107,7 @@ public:
 
     ~ServiceProxy() override;
 
-    inline QDBusPendingReply<QList<QDBusObjectPath>> collections() const
+    inline PropertyReply<QList<QDBusObjectPath>> collections() const
     {
         IMPL_GET_PROPERTY(Collections);
     }
@@ -155,17 +195,17 @@ public:
 
     ~CollectionProxy() override;
 
-    inline QDBusPendingReply<qulonglong> created() const
+    inline PropertyReply<qulonglong> created() const
     {
         IMPL_GET_PROPERTY(Created);
     }
 
-    inline QDBusPendingReply<QList<QDBusObjectPath>> items() const
+    inline PropertyReply<QList<QDBusObjectPath>> items() const
     {
         IMPL_GET_PROPERTY(Items);
     }
 
-    inline QDBusPendingReply<QString> label() const
+    inline PropertyReply<QString> label() const
     {
         IMPL_GET_PROPERTY(Label);
     }
@@ -174,12 +214,12 @@ public:
         IMPL_SET_PROPERTY(Label, value);
     }
 
-    inline QDBusPendingReply<bool> locked() const
+    inline PropertyReply<bool> locked() const
     {
         IMPL_GET_PROPERTY(Locked);
     }
 
-    inline QDBusPendingReply<qulonglong> modified() const
+    inline PropertyReply<qulonglong> modified() const
     {
         IMPL_GET_PROPERTY(Modified);
     }
@@ -231,7 +271,7 @@ public:
 
     ~ItemProxy() override;
 
-    inline QDBusPendingReply<FdoSecrets::wire::StringStringMap> attributes() const
+    inline PropertyReply<FdoSecrets::wire::StringStringMap> attributes() const
     {
         IMPL_GET_PROPERTY(Attributes);
     }
@@ -240,12 +280,12 @@ public:
         IMPL_SET_PROPERTY(Attributes, value);
     }
 
-    inline QDBusPendingReply<qulonglong> created() const
+    inline PropertyReply<qulonglong> created() const
     {
         IMPL_GET_PROPERTY(Created);
     }
 
-    inline QDBusPendingReply<QString> label() const
+    inline PropertyReply<QString> label() const
     {
         IMPL_GET_PROPERTY(Label);
     }
@@ -254,12 +294,12 @@ public:
         IMPL_SET_PROPERTY(Label, value);
     }
 
-    inline QDBusPendingReply<bool> locked() const
+    inline PropertyReply<bool> locked() const
     {
         IMPL_GET_PROPERTY(Locked);
     }
 
-    inline QDBusPendingReply<qulonglong> modified() const
+    inline PropertyReply<qulonglong> modified() const
     {
         IMPL_GET_PROPERTY(Modified);
     }

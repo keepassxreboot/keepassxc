@@ -274,13 +274,19 @@ namespace FdoSecrets
         QHash<QString, MethodData> m_cachedMethods{};
         void populateMethodCache(const QMetaObject& mo);
 
+        enum class RequestType
+        {
+            Method,
+            PropertyGet,
+            PropertyGetAll,
+        };
         struct RequestedMethod
         {
             QString interface;
             QString member;
             QString signature;
             QVariantList args;
-            bool isGetAll;
+            RequestType type;
         };
         static bool rewriteRequestForProperty(RequestedMethod& req);
         bool activateObject(const QString& path, const RequestedMethod& req, const QDBusMessage& msg);
