@@ -6,6 +6,7 @@ if(WITH_XC_FDOSECRETS)
         FdoSecretsPlugin.cpp
         widgets/SettingsModels.cpp
         widgets/SettingsWidgetFdoSecrets.cpp
+        widgets/RowButtonHelper.cpp
 
         # per database settings page
         DatabaseSettingsPageFdoSecrets.cpp

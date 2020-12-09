@@ -21,18 +21,15 @@
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Session.h"
+#include "fdosecrets/widgets/RowButtonHelper.h"
 #include "fdosecrets/widgets/SettingsModels.h"
 
 #include "gui/DatabaseWidget.h"
 #include "gui/Icons.h"
 
 #include <QAction>
-#include <QDBusConnectionInterface>
 #include <QHeaderView>
-#include <QItemEditorFactory>
-#include <QStyledItemDelegate>
 #include <QToolBar>
-#include <QVariant>
 
 using FdoSecrets::DBusClientPtr;
 using FdoSecrets::SettingsClientModel;
@@ -160,7 +157,7 @@ namespace
         Q_PROPERTY(const DBusClientPtr& client READ client WRITE setClient USER true)
 
     public:
-        explicit ManageSession(FdoSecretsPlugin*, QWidget* parent = nullptr)
+        explicit ManageSession(QWidget* parent = nullptr)
             : QToolBar(parent)
         {
             setFloatable(false);
@@ -172,15 +169,15 @@ namespace
             spacer->setVisible(true);
             addWidget(spacer);
 
-            m_disconnectAct = new QAction(tr("Disconnect"), this);
-            m_disconnectAct->setIcon(icons()->icon(QStringLiteral("dialog-close")));
-            m_disconnectAct->setToolTip(tr("Disconnect this application"));
-            connect(m_disconnectAct, &QAction::triggered, this, [this]() {
+            auto disconnectAct = new QAction(tr("Disconnect"), this);
+            disconnectAct->setIcon(icons()->icon(QStringLiteral("dialog-close")));
+            disconnectAct->setToolTip(tr("Disconnect this application"));
+            connect(disconnectAct, &QAction::triggered, this, [this]() {
                 if (m_client) {
                     m_client->disconnectDBus();
                 }
             });
-            addAction(m_disconnectAct);
+            addAction(disconnectAct);
 
             // use a dummy widget to center the buttons
             spacer = new QWidget(this);
@@ -201,39 +198,12 @@ namespace
 
     private:
         DBusClientPtr m_client{};
-        QAction* m_disconnectAct{};
-    };
-
-    template <typename T> class Creator : public QItemEditorCreatorBase
-    {
-    public:
-        inline explicit Creator(FdoSecretsPlugin* plugin)
-            : QItemEditorCreatorBase()
-            , m_plugin(plugin)
-            , m_propertyName(T::staticMetaObject.userProperty().name())
-        {
-        }
-
-        inline QWidget* createWidget(QWidget* parent) const override
-        {
-            return new T(m_plugin, parent);
-        }
-
-        inline QByteArray valuePropertyName() const override
-        {
-            return m_propertyName;
-        }
-
-    private:
-        FdoSecretsPlugin* m_plugin;
-        QByteArray m_propertyName;
     };
 } // namespace
 
 SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::SettingsWidgetFdoSecrets())
-    , m_factory(new QItemEditorFactory)
     , m_plugin(plugin)
 {
     m_ui->setupUi(this);
@@ -242,7 +212,8 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
 
     auto clientModel = new SettingsClientModel(plugin->dbus(), this);
     m_ui->tableClients->setModel(clientModel);
-    setupView(m_ui->tableClients, 1, qMetaTypeId<DBusClientPtr>(), new Creator<ManageSession>(m_plugin));
+    installWidgetItemDelegate<ManageSession>(
+        m_ui->tableClients, 1, [](QWidget* p, const QModelIndex&) { return new ManageSession(p); });
 
     // config header after setting model, otherwise the header doesn't have enough sections
     auto clientViewHeader = m_ui->tableClients->horizontalHeader();
@@ -253,7 +224,8 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
 
     auto dbModel = new SettingsDatabaseModel(plugin->dbTabs(), this);
     m_ui->tableDatabases->setModel(dbModel);
-    setupView(m_ui->tableDatabases, 2, qMetaTypeId<DatabaseWidget*>(), new Creator<ManageDatabase>(m_plugin));
+    installWidgetItemDelegate<ManageDatabase>(
+        m_ui->tableDatabases, 2, [plugin](QWidget* p, const QModelIndex&) { return new ManageDatabase(plugin, p); });
 
     // config header after setting model, otherwise the header doesn't have enough sections
     auto dbViewHeader = m_ui->tableDatabases->horizontalHeader();
@@ -274,26 +246,6 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     connect(&m_checkTimer, &QTimer::timeout, this, &SettingsWidgetFdoSecrets::checkDBusName);
     connect(m_plugin, &FdoSecretsPlugin::secretServiceStarted, &m_checkTimer, &QTimer::stop);
     connect(m_plugin, SIGNAL(secretServiceStopped()), &m_checkTimer, SLOT(start()));
-}
-
-void SettingsWidgetFdoSecrets::setupView(QAbstractItemView* view,
-                                         int manageColumn,
-                                         int editorTypeId,
-                                         QItemEditorCreatorBase* creator)
-{
-    auto manageButtonDelegate = new QStyledItemDelegate(this);
-    m_factory->registerEditor(editorTypeId, creator);
-    manageButtonDelegate->setItemEditorFactory(m_factory.data());
-    view->setItemDelegateForColumn(manageColumn, manageButtonDelegate);
-    connect(view->model(),
-            &QAbstractItemModel::rowsInserted,
-            this,
-            [view, manageColumn](const QModelIndex&, int first, int last) {
-                for (int i = first; i <= last; ++i) {
-                    auto idx = view->model()->index(i, manageColumn);
-                    view->openPersistentEditor(idx);
-                }
-            });
 }
 
 SettingsWidgetFdoSecrets::~SettingsWidgetFdoSecrets() = default;
