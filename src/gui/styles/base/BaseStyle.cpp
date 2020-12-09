@@ -4775,7 +4775,11 @@ QRect BaseStyle::subElementRect(SubElement sr, const QStyleOption* opt, const QW
     }
     case SE_LineEditContents: {
         QRect r = QCommonStyle::subElementRect(sr, opt, w);
-        int pad = Phantom::dpiScaled(Phantom::LineEdit_ContentsHPad);
+        int pad = Phantom::LineEdit_ContentsHPad;
+        if (w && qobject_cast<const QComboBox*>(w->parentWidget())) {
+            pad += 3;
+        }
+        pad = Phantom::dpiScaled(pad);
         return r.adjusted(pad, 0, -pad, 0);
     }
     default:
