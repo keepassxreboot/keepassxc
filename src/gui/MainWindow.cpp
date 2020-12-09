@@ -519,6 +519,11 @@ MainWindow::MainWindow()
     m_ui->actionGroupDownloadFavicons->setVisible(false);
     m_ui->actionEntryDownloadIcon->setVisible(false);
 #endif
+#ifndef WITH_XC_DOCS
+    m_ui->actionGettingStarted->setVisible(false);
+    m_ui->actionUserGuide->setVisible(false);
+    m_ui->actionKeyboardShortcuts->setVisible(false);
+#endif
 
     // clang-format off
     connect(m_ui->tabWidget, SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
@@ -743,7 +748,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupSortDesc->setEnabled(groupSelected && currentGroupHasChildren);
             m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
+#ifdef WITH_XC_NETWORKING
             m_ui->actionGroupDownloadFavicons->setVisible(!recycleBinSelected);
+#endif
             m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && currentGroupHasEntries
                                                           && !recycleBinSelected);
             m_ui->actionDatabaseSecurity->setEnabled(true);
