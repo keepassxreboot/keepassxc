@@ -132,9 +132,9 @@ namespace Utils
                 return {};
             }
 
-            if (fileKey->type() != FileKey::Hashed) {
-                err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
-                                   "unsupported in the future.\n\n"
+            if (fileKey->type() != FileKey::KeePass2XMLv2 && fileKey->type() != FileKey::Hashed) {
+                err << QObject::tr("WARNING: You are using an old key file format which KeePassXC may\n"
+                                   "stop supporting in the future.\n\n"
                                    "Please consider generating a new key file.")
                     << endl;
             }
