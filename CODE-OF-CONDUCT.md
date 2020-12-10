@@ -2,7 +2,7 @@
 
 KeePassXC is an open project that welcomes everybody no matter their ethnicity, sex,
 sexual identity or orientation, age, socio-economic status, nationality, or religion.
-Irregardless of what background you come from, feel encouraged to participate in
+Regardless of what background you come from, feel encouraged to participate in
 the project and express your views as long you are respectful to others.
 
 We value all members of our community and so in order to ensure a harassment-free
