@@ -1022,7 +1022,8 @@ void TestGui::testDeleteEntry()
         QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
     } else {
         // no confirm dialog
-        QCOMPARE(entryView->model()->rowCount(), 1);
+        QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+        QCOMPARE(entryView->model()->rowCount(), 3);
         QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
     }
 
@@ -1042,6 +1043,7 @@ void TestGui::testDeleteEntry()
         QCOMPARE(entryView->model()->rowCount(), 1);
         QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
     } else {
+        QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
         QCOMPARE(entryView->model()->rowCount(), 1);
         QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
     }
