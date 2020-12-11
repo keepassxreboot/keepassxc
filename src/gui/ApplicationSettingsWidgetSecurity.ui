@@ -257,6 +257,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="NoConfirmMoveEntryToRecycleBinCheckBox">
+        <property name="text">
+         <string>Move entries to recycle bin without confirmation</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
