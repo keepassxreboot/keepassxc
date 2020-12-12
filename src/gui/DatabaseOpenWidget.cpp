@@ -138,13 +138,12 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     m_filename = filename;
     if (m_filename.contains(".old.")) {
-        QMessageBox msgBox;
+        auto* msgBox = new QMessageBox();
         msgBox->setWindowTitle(tr("Opening a backup file"));
-        msgBox.setText(tr("You are opening a database backup.
-        Please be aware that it could contain old entries."));
+        msgBox->setText(tr("You are opening a database backup.Please be aware that it could contain old entries."));
         msgBox->setIcon(QMessageBox::Warning);
         msgBox->setStandardButtons(QMessageBox::Ok);
-        msgBox.exec();
+        msgBox->exec();
     }
     m_ui->fileNameLabel->setRawText(m_filename);
 
