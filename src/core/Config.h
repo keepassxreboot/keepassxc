@@ -119,6 +119,7 @@ public:
         Security_ResetTouchId,
         Security_ResetTouchIdTimeout,
         Security_ResetTouchIdScreenlock,
+        Security_NoConfirmMoveEntryToRecycleBin,
 
         Browser_Enabled,
         Browser_ShowNotification,

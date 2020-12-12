@@ -1013,26 +1013,40 @@ void TestGui::testDeleteEntry()
     QVERIFY(entryDeleteWidget->isEnabled());
     QVERIFY(!m_db->metadata()->recycleBin());
 
-    MessageBox::setNextAnswer(MessageBox::Move);
-    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+    // Test with confirmation dialog
+    if (!config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool()) {
+        MessageBox::setNextAnswer(MessageBox::Move);
+        QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
 
-    QCOMPARE(entryView->model()->rowCount(), 3);
-    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
+        QCOMPARE(entryView->model()->rowCount(), 3);
+        QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
+    } else {
+        // no confirm dialog
+        QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+        QCOMPARE(entryView->model()->rowCount(), 3);
+        QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
+    }
 
     // Select multiple entries and move them to the recycling bin
     clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton);
     clickIndex(entryView->model()->index(2, 1), entryView, Qt::LeftButton, Qt::ControlModifier);
     QCOMPARE(entryView->selectionModel()->selectedRows().size(), 2);
 
-    MessageBox::setNextAnswer(MessageBox::Cancel);
-    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
-    QCOMPARE(entryView->model()->rowCount(), 3);
-    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
+    if (!config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool()) {
+        MessageBox::setNextAnswer(MessageBox::Cancel);
+        QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+        QCOMPARE(entryView->model()->rowCount(), 3);
+        QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
 
-    MessageBox::setNextAnswer(MessageBox::Move);
-    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
-    QCOMPARE(entryView->model()->rowCount(), 1);
-    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
+        MessageBox::setNextAnswer(MessageBox::Move);
+        QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+        QCOMPARE(entryView->model()->rowCount(), 1);
+        QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
+    } else {
+        QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+        QCOMPARE(entryView->model()->rowCount(), 1);
+        QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
+    }
 
     // Go to the recycling bin
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
