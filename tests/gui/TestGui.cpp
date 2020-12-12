@@ -1155,24 +1155,45 @@ void TestGui::testEntryPlaceholders()
 
 void TestGui::testDragAndDropEntry()
 {
-    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
-    auto* groupView = m_dbWidget->findChild<GroupView*>("groupView");
-    QAbstractItemModel* groupModel = groupView->model();
+    auto entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    auto groupView = m_dbWidget->findChild<GroupView*>("groupView");
+    auto groupModel = qobject_cast<GroupModel*>(groupView->model());
 
     QModelIndex sourceIndex = entryView->model()->index(0, 1);
     QModelIndex targetIndex = groupModel->index(0, 0, groupModel->index(0, 0));
     QVERIFY(sourceIndex.isValid());
     QVERIFY(targetIndex.isValid());
+    auto targetGroup = groupModel->groupFromIndex(targetIndex);
 
     QMimeData mimeData;
     QByteArray encoded;
     QDataStream stream(&encoded, QIODevice::WriteOnly);
-    Entry* entry = entryView->entryFromIndex(sourceIndex);
+
+    auto entry = entryView->entryFromIndex(sourceIndex);
     stream << entry->group()->database()->uuid() << entry->uuid();
     mimeData.setData("application/x-keepassx-entry", encoded);
 
+    // Test Copy, UUID should change, history remain
+    QVERIFY(groupModel->dropMimeData(&mimeData, Qt::CopyAction, -1, 0, targetIndex));
+    // Find the copied entry
+    auto newEntry = targetGroup->findEntryByPath(entry->title());
+    QVERIFY(newEntry);
+    QVERIFY(entry->uuid() != newEntry->uuid());
+    QCOMPARE(entry->historyItems().count(), newEntry->historyItems().count());
+
+    encoded.clear();
+    entry = entryView->entryFromIndex(sourceIndex);
+    auto history = entry->historyItems().count();
+    auto uuid = entry->uuid();
+    stream << entry->group()->database()->uuid() << entry->uuid();
+    mimeData.setData("application/x-keepassx-entry", encoded);
+
+    // Test Move, entry pointer should remain the same
+    QCOMPARE(entry->group()->name(), QString("NewDatabase"));
     QVERIFY(groupModel->dropMimeData(&mimeData, Qt::MoveAction, -1, 0, targetIndex));
     QCOMPARE(entry->group()->name(), QString("General"));
+    QCOMPARE(entry->uuid(), uuid);
+    QCOMPARE(entry->historyItems().count(), history);
 }
 
 void TestGui::testDragAndDropGroup()

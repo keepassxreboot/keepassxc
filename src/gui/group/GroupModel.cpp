@@ -262,13 +262,13 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             targetDb->metadata()->copyCustomIcons(customIcons, sourceDb->metadata());
 
             // Always clone the group across db's to reset UUIDs
-            group = dragGroup->clone();
+            group = dragGroup->clone(Entry::CloneDefault | Entry::CloneIncludeHistory);
             if (action == Qt::MoveAction) {
                 // Remove the original group from the sourceDb
                 delete dragGroup;
             }
         } else if (action == Qt::CopyAction) {
-            group = dragGroup->clone();
+            group = dragGroup->clone(Entry::CloneCopy);
         }
 
         group->setParent(parentGroup, row);
@@ -303,13 +303,13 @@ bool GroupModel::dropMimeData(const QMimeData* data,
                     targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon));
                 }
 
-                // Always clone the entry across db's to reset the UUID
-                entry = dragEntry->clone();
+                // Reset the UUID when moving across db boundary
+                entry = dragEntry->clone(Entry::CloneDefault | Entry::CloneIncludeHistory);
                 if (action == Qt::MoveAction) {
                     delete dragEntry;
                 }
             } else if (action == Qt::CopyAction) {
-                entry = dragEntry->clone();
+                entry = dragEntry->clone(Entry::CloneCopy);
             }
 
             entry->setGroup(parentGroup);
