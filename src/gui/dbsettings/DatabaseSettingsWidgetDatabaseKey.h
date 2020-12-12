@@ -30,6 +30,7 @@ class ChallengeResponseKey;
 class KeyComponentWidget;
 class PasswordEditWidget;
 class KeyFileEditWidget;
+class LedgerKeyEditWidget;
 class YubiKeyEditWidget;
 class QPushButton;
 
@@ -79,6 +80,9 @@ private:
     const QPointer<KeyFileEditWidget> m_keyFileEditWidget;
 #ifdef WITH_XC_YUBIKEY
     const QPointer<YubiKeyEditWidget> m_yubiKeyEditWidget;
+#endif
+#ifdef WITH_XC_LEDGER
+    const QPointer<LedgerKeyEditWidget> m_ledgerKeyEditWidget;
 #endif
 };
 

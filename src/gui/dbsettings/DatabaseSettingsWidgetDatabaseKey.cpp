@@ -20,9 +20,11 @@
 #include "core/Database.h"
 #include "gui/MessageBox.h"
 #include "gui/databasekey/KeyFileEditWidget.h"
+#include "gui/databasekey/LedgerKeyEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
 #include "gui/databasekey/YubiKeyEditWidget.h"
 #include "keys/FileKey.h"
+#include "keys/LedgerKey.h"
 #include "keys/PasswordKey.h"
 #include "keys/YkChallengeResponseKey.h"
 
@@ -39,6 +41,9 @@ DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* pa
 #ifdef WITH_XC_YUBIKEY
     , m_yubiKeyEditWidget(new YubiKeyEditWidget(this))
 #endif
+#ifdef WITH_XC_LEDGER
+    , m_ledgerKeyEditWidget(new LedgerKeyEditWidget(this))
+#endif
 {
     auto* vbox = new QVBoxLayout(this);
     vbox->setSizeConstraint(QLayout::SetMinimumSize);
@@ -53,6 +58,9 @@ DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* pa
     vbox->setSizeConstraint(QLayout::SetMinimumSize);
     m_additionalKeyOptions->setLayout(new QVBoxLayout());
     m_additionalKeyOptions->layout()->setMargin(0);
+#ifdef WITH_XC_LEDGER
+    m_additionalKeyOptions->layout()->addWidget(m_ledgerKeyEditWidget);
+#endif
     m_additionalKeyOptions->layout()->addWidget(m_keyFileEditWidget);
 #ifdef WITH_XC_YUBIKEY
     m_additionalKeyOptions->layout()->addWidget(m_yubiKeyEditWidget);
@@ -105,6 +113,9 @@ void DatabaseSettingsWidgetDatabaseKey::load(QSharedPointer<Database> db)
 #ifdef WITH_XC_YUBIKEY
     connect(m_yubiKeyEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
 #endif
+#ifdef WITH_XC_LEDGER
+    connect(m_ledgerKeyEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
+#endif
 }
 
 void DatabaseSettingsWidgetDatabaseKey::initialize()
@@ -114,6 +125,9 @@ void DatabaseSettingsWidgetDatabaseKey::initialize()
     m_keyFileEditWidget->setComponentAdded(false);
 #ifdef WITH_XC_YUBIKEY
     m_yubiKeyEditWidget->setComponentAdded(false);
+#endif
+#ifdef WITH_XC_LEDGER
+    m_ledgerKeyEditWidget->setComponentAdded(false);
 #endif
     blockSignals(blocked);
 }
@@ -129,6 +143,9 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
 #ifdef WITH_XC_YUBIKEY
     m_isDirty |= (m_yubiKeyEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
 #endif
+#ifdef WITH_XC_LEDGER
+    m_isDirty |= (m_ledgerKeyEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
+#endif
 
     if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
         // key unchanged
@@ -140,12 +157,15 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
     QSharedPointer<Key> oldPasswordKey;
     QSharedPointer<Key> oldFileKey;
     QSharedPointer<ChallengeResponseKey> oldChallengeResponse;
+    QSharedPointer<Key> oldLedgerKey;
 
     for (const auto& key : m_db->key()->keys()) {
         if (key->uuid() == PasswordKey::UUID) {
             oldPasswordKey = key;
         } else if (key->uuid() == FileKey::UUID) {
             oldFileKey = key;
+        } else if (key->uuid() == LedgerKey::UUID) {
+            oldLedgerKey = key;
         }
     }
 
@@ -172,6 +192,12 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
     } else if (!addToCompositeKey(m_passwordEditWidget, newKey, oldPasswordKey)) {
         return false;
     }
+
+#ifdef WITH_XC_LEDGER
+    if (!addToCompositeKey(m_ledgerKeyEditWidget, newKey, oldLedgerKey)) {
+        return false;
+    }
+#endif
 
     if (!addToCompositeKey(m_keyFileEditWidget, newKey, oldFileKey)) {
         return false;

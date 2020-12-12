@@ -19,6 +19,7 @@
 #include "DatabaseOpenWidget.h"
 #include "ui_DatabaseOpenWidget.h"
 
+#include "core/AsyncTask.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "crypto/Random.h"
@@ -37,6 +38,13 @@
 #include <QDesktopServices>
 #include <QFont>
 #include <QSharedPointer>
+
+#ifdef WITH_XC_LEDGER
+#include "keys/LedgerKey.h"
+#include "keys/drivers/LedgerHardwareKey.h"
+#define LEDGER_COMBO_TYPE_NAME_IDX 0
+#define LEDGER_COMBO_TYPE_SLOT_IDX 1
+#endif
 
 namespace
 {
@@ -102,6 +110,50 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->hardwareKeyProgress->setVisible(false);
 #endif
 
+#ifdef WITH_XC_LEDGER
+    m_ui->ledgerKeyLineEdit->setMaxLength(LedgerHardwareKey::maxNameSize());
+    updateLedgerWidget();
+
+    connect(m_ui->buttonRedetectLedger, SIGNAL(clicked()), SLOT(pollLedgerKey()));
+    connect(&LedgerHardwareKey::instance(),
+            SIGNAL(detectComplete(int, int, int)),
+            this,
+            SLOT(hardwareLedgerKeyResponse(int, int, int)),
+            Qt::QueuedConnection);
+
+    connect(m_ui->ledgerKeyTypeCombo, QOverload<int>::of(&QComboBox::activated), this, [this](int) {
+        this->updateLedgerWidget();
+    });
+
+    connect(
+        &LedgerHardwareKey::instance(),
+        &LedgerHardwareKey::userInteractionRequest,
+        this,
+        [this] {
+            m_ui->messageWidget->showMessage(tr("Please accept accessing the database key on your Ledger device."),
+                                             MessageWidget::Information,
+                                             MessageWidget::DisableAutoHide);
+        },
+        Qt::UniqueConnection);
+    connect(
+        &LedgerHardwareKey::instance(),
+        &LedgerHardwareKey::userInteractionDone,
+        this,
+        [this](bool Accepted) {
+            if (!Accepted) {
+                m_ui->messageWidget->showMessage(
+                    tr("Unable to access the hardware key."), MessageWidget::Warning, 2000);
+            } else {
+                m_ui->messageWidget->hide();
+            }
+        },
+        Qt::UniqueConnection);
+#else
+    m_ui->buttonRedetectLedger->setVisible(false);
+    m_ui->ledgerKeyLineEdit->setVisible(false);
+    m_ui->ledgerKeyTypeCombo->setVisible(false);
+#endif
+
 #ifndef WITH_XC_TOUCHID
     m_ui->touchIDContainer->setVisible(false);
 #else
@@ -113,6 +165,25 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
 DatabaseOpenWidget::~DatabaseOpenWidget()
 {
+}
+
+void DatabaseOpenWidget::updateLedgerWidget()
+{
+#ifdef WITH_XC_LEDGER
+    const int idx = m_ui->ledgerKeyTypeCombo->currentIndex();
+    switch (idx) {
+    case LEDGER_COMBO_TYPE_SLOT_IDX:
+        m_ui->ledgerKeyLineEdit->setVisible(false);
+        m_ui->ledgerKeySlotCombo->setVisible(true);
+        break;
+    case LEDGER_COMBO_TYPE_NAME_IDX:
+        m_ui->ledgerKeyLineEdit->setVisible(true);
+        m_ui->ledgerKeySlotCombo->setVisible(false);
+        break;
+    default:
+        break;
+    }
+#endif
 }
 
 void DatabaseOpenWidget::showEvent(QShowEvent* event)
@@ -345,6 +416,29 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
     }
 #endif
 
+#ifdef WITH_XC_LEDGER
+    if (LedgerHardwareKey::instance().isInitialized()) {
+        const auto Type = m_ui->ledgerKeyTypeCombo->currentIndex();
+        QSharedPointer<LedgerKey> Key;
+        if (Type == LEDGER_COMBO_TYPE_NAME_IDX) {
+            QString SKey = m_ui->ledgerKeyLineEdit->text();
+            if (!SKey.isEmpty()) {
+                Key = LedgerKey::fromDeviceDeriveName(SKey);
+            }
+        } else {
+            assert(Type == LEDGER_COMBO_TYPE_SLOT_IDX);
+            const int idx = m_ui->ledgerKeySlotCombo->currentIndex();
+            if (idx > 0) {
+                QVariant Slot = m_ui->ledgerKeySlotCombo->itemData(idx);
+                Key = LedgerKey::fromDeviceSlot(Slot.toUInt());
+            }
+        }
+        if (!Key.isNull()) {
+            databaseKey->addKey(Key);
+        }
+    }
+#endif
+
     return databaseKey;
 }
 
@@ -436,6 +530,53 @@ void DatabaseOpenWidget::hardwareKeyResponse(bool found)
 
     m_ui->challengeResponseCombo->setCurrentIndex(selectedIndex);
     m_ui->challengeResponseCombo->setEnabled(true);
+}
+
+void DatabaseOpenWidget::pollLedgerKey()
+{
+#ifdef WITH_XC_LEDGER
+    if (m_pollingLedgerKey) {
+        return;
+    }
+    m_pollingLedgerKey = true;
+    m_ui->ledgerKeyLineEdit->setEnabled(false);
+    m_ui->ledgerKeyTypeCombo->setEnabled(false);
+    m_ui->ledgerKeySlotCombo->setEnabled(false);
+    m_ui->buttonRedetectLedger->setEnabled(false);
+    m_ui->buttonRedetectLedger->setText(QObject::tr("Searching..."));
+    LedgerHardwareKey::instance().findFirstDevice();
+#endif
+}
+
+void DatabaseOpenWidget::hardwareLedgerKeyResponse(int res, int appProto, int libProto)
+{
+#ifdef WITH_XC_LEDGER
+    const bool found = (res == LedgerHardwareKey::Found);
+    m_ui->ledgerKeyLineEdit->setEnabled(found);
+    m_ui->ledgerKeySlotCombo->setEnabled(found);
+    m_ui->ledgerKeyTypeCombo->setEnabled(found);
+    m_ui->buttonRedetectLedger->setEnabled(true);
+    m_ui->buttonRedetectLedger->setText(QObject::tr("Refresh"));
+
+    QComboBox* slotCombo = m_ui->ledgerKeySlotCombo;
+    slotCombo->clear();
+    slotCombo->insertItem(0, "None");
+    if (found) {
+        auto Slots = LedgerHardwareKey::instance().getValidKeySlots();
+        for (uint8_t S : Slots) {
+            slotCombo->insertItem(slotCombo->count(), QString("# %1").arg(S), QVariant(S));
+        }
+    } else if (res == LedgerHardwareKey::ProtocolMismatch) {
+        QString Msg = LedgerHardwareKey::protocolErrorMsg(appProto, libProto);
+        m_ui->messageWidget->showMessage(Msg, MessageWidget::Warning, 20000);
+    }
+
+    m_pollingLedgerKey = false;
+#else
+    Q_UNUSED(res);
+    Q_UNUSED(appProto);
+    Q_UNUSED(libProto);
+#endif
 }
 
 void DatabaseOpenWidget::openHardwareKeyHelp()

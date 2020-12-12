@@ -21,6 +21,7 @@
 
 #include <QScopedPointer>
 #include <QTimer>
+#include <memory>
 
 #include "gui/DialogyWidget.h"
 #include "keys/CompositeKey.h"
@@ -67,12 +68,17 @@ private slots:
     void browseKeyFile();
     void clearKeyFileText();
     void pollHardwareKey();
+    void pollLedgerKey();
     void hardwareKeyResponse(bool found);
+    void hardwareLedgerKeyResponse(int res, int appProto, int libProto);
     void openHardwareKeyHelp();
     void openKeyFileHelp();
 
 private:
+    void updateLedgerWidget();
+
     bool m_pollingHardwareKey = false;
+    bool m_pollingLedgerKey = false;
     QTimer m_hideTimer;
 
     Q_DISABLE_COPY(DatabaseOpenWidget)
