@@ -59,7 +59,6 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
     connect(m_buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_buttonBox, SIGNAL(accepted()), SLOT(copyToClipboard()));
     connect(m_timer, SIGNAL(timeout()), SLOT(autoClose()));
-    connect(parent, SIGNAL(lockedDatabase()), SLOT(close()));
 
     new QShortcut(QKeySequence(QKeySequence::Copy), this, SLOT(copyToClipboard()));
 
