@@ -997,6 +997,15 @@ bool EditEntryWidget::commitEntry()
         return true;
     }
 
+    // HACK: Check that entry pointer is still valid, see https://github.com/keepassxreboot/keepassxc/issues/5722
+    if (!m_entry) {
+        QMessageBox::information(this,
+                                 tr("Invalid Entry"),
+                                 tr("An external merge operation has invalidated this entry.\n"
+                                    "Unfortunately, any changes made have been lost."));
+        return true;
+    }
+
     // Check Auto-Type validity early
     if (!AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
         return false;

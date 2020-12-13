@@ -83,6 +83,7 @@ private:
     QMap<QPointer<Group>, KeeShareSettings::Reference> m_groupToReference;
     QMap<QString, QPointer<Group>> m_shareToGroup;
     QMap<QString, QSharedPointer<FileWatcher>> m_fileWatchers;
+    bool m_inFileUpdate = false;
 };
 
 #endif // KEEPASSXC_SHAREOBSERVER_H
