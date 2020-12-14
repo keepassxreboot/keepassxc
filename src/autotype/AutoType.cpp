@@ -37,18 +37,13 @@
 #include "core/Tools.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
-
-#ifdef Q_OS_MAC
-#include "gui/osutils/macutils/MacUtils.h"
-#endif
+#include "gui/osutils/OSUtils.h"
 
 AutoType* AutoType::m_instance = nullptr;
 
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_autoTypeDelay(0)
-    , m_currentGlobalKey(static_cast<Qt::Key>(0))
-    , m_currentGlobalModifiers(nullptr)
     , m_pluginLoader(new QPluginLoader(this))
     , m_plugin(nullptr)
     , m_executor(nullptr)
@@ -96,7 +91,11 @@ void AutoType::loadPlugin(const QString& pluginPath)
         if (m_plugin) {
             if (m_plugin->isAvailable()) {
                 m_executor = m_plugin->createExecutor();
-                connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SLOT(startGlobalAutoType()));
+                connect(osUtils, &OSUtilsBase::globalShortcutTriggered, this, [this](QString name) {
+                    if (name == "autotype") {
+                        startGlobalAutoType();
+                    }
+                });
             } else {
                 unloadPlugin();
             }
@@ -153,44 +152,18 @@ void AutoType::raiseWindow()
 #endif
 }
 
-bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
+bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)
 {
-    Q_ASSERT(key);
-    Q_ASSERT(modifiers);
-
     if (!m_plugin) {
         return false;
     }
 
-    if (key != m_currentGlobalKey || modifiers != m_currentGlobalModifiers) {
-        if (m_currentGlobalKey && m_currentGlobalModifiers) {
-            m_plugin->unregisterGlobalShortcut(m_currentGlobalKey, m_currentGlobalModifiers);
-        }
-
-        if (m_plugin->registerGlobalShortcut(key, modifiers)) {
-            m_currentGlobalKey = key;
-            m_currentGlobalModifiers = modifiers;
-            return true;
-        }
-        return false;
-    }
-    return true;
+    return osUtils->registerGlobalShortcut("autotype", key, modifiers, error);
 }
 
 void AutoType::unregisterGlobalShortcut()
 {
-    if (m_plugin && m_currentGlobalKey && m_currentGlobalModifiers) {
-        m_plugin->unregisterGlobalShortcut(m_currentGlobalKey, m_currentGlobalModifiers);
-    }
-}
-
-int AutoType::callEventFilter(void* event)
-{
-    if (!m_plugin) {
-        return -1;
-    }
-
-    return m_plugin->platformEventFilter(event);
+    osUtils->unregisterGlobalShortcut("autotype");
 }
 
 /**
@@ -303,6 +276,23 @@ void AutoType::startGlobalAutoType()
     m_windowForGlobal = m_plugin->activeWindow();
     m_windowTitleForGlobal = m_plugin->activeWindowTitle();
 #ifdef Q_OS_MACOS
+    // Determine if the user has given proper permissions to KeePassXC to perform Auto-Type
+    static bool accessibilityChecked = false;
+    if (!accessibilityChecked) {
+        if (macUtils()->enableAccessibility() && macUtils()->enableScreenRecording()) {
+            accessibilityChecked = true;
+        } else if (getMainWindow()) {
+            // Does not have required permissions to Auto-Type, ignore the event
+            MessageBox::information(
+                nullptr,
+                tr("Permission Required"),
+                tr("KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global "
+                   "Auto-Type. Screen Recording is necessary to use the window title to find entries. If you "
+                   "already granted permission, you may have to restart KeePassXC."));
+            return;
+        }
+    }
+
     m_windowState = WindowState::Normal;
     if (getMainWindow()) {
         if (getMainWindow()->isMinimized()) {

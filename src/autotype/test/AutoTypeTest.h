@@ -37,9 +37,6 @@ public:
     QStringList windowTitles() override;
     WId activeWindow() override;
     QString activeWindowTitle() override;
-    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
-    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
-    int platformEventFilter(void* event) override;
     bool raiseWindow(WId window) override;
     AutoTypeExecutor* createExecutor() override;
 
@@ -48,7 +45,6 @@ public:
     bool raiseOwnWindow() override;
 #endif
 
-    void triggerGlobalAutoType() override;
     void setActiveWindowTitle(const QString& title) override;
 
     QString actionChars() override;
@@ -57,9 +53,6 @@ public:
 
     void addActionChar(AutoTypeChar* action);
     void addActionKey(AutoTypeKey* action);
-
-signals:
-    void globalShortcutTriggered();
 
 private:
     QString m_activeWindowTitle;

@@ -70,13 +70,13 @@ void TestCli::initTestCase()
     Config::createTempFileInstance();
     Bootstrap::bootstrap();
 
-    auto fd = new QFile();
+    m_devNull.reset(new QFile());
 #ifdef Q_OS_WIN
-    fd->open(fopen("nul", "w"), QIODevice::WriteOnly);
+    m_devNull->open(fopen("nul", "w"), QIODevice::WriteOnly);
 #else
-    fd->open(fopen("/dev/null", "w"), QIODevice::WriteOnly);
+    m_devNull->open(fopen("/dev/null", "w"), QIODevice::WriteOnly);
 #endif
-    Utils::DEVNULL.setDevice(fd);
+    Utils::DEVNULL.setDevice(m_devNull.data());
 }
 
 void TestCli::init()
@@ -129,6 +129,11 @@ void TestCli::cleanup()
     Utils::STDOUT.setDevice(nullptr);
     Utils::STDERR.setDevice(nullptr);
     Utils::STDIN.setDevice(nullptr);
+}
+
+void TestCli::cleanupTestCase()
+{
+    m_devNull.reset();
 }
 
 QSharedPointer<Database> TestCli::readDatabase(const QString& filename, const QString& pw, const QString& keyfile)
@@ -520,8 +525,7 @@ void TestCli::testClip()
 
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "-a", "TESTAttribute1", "/Sample Entry"});
-    QVERIFY(m_stderr->readAll().contains(
-        "ERROR: attribute TESTAttribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
+    QVERIFY(m_stderr->readAll().contains("ERROR: attribute TESTAttribute1 is ambiguous"));
 
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry"});
@@ -1776,8 +1780,7 @@ void TestCli::testShow()
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-a", "Testattribute1", "/Sample Entry"});
     QCOMPARE(m_stdout->readAll(), QByteArray());
-    QVERIFY(m_stderr->readAll().contains(
-        "ERROR: attribute Testattribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
+    QVERIFY(m_stderr->readAll().contains("ERROR: attribute Testattribute1 is ambiguous"));
 }
 
 void TestCli::testInvalidDbFiles()

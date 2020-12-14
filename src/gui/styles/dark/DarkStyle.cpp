@@ -119,8 +119,6 @@ void DarkStyle::polish(QWidget* widget)
             palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0x252525));
         }
 #elif defined(Q_OS_WIN)
-        // Register event filter for better dark mode support
-        WinUtils::registerEventFilters();
         palette.setColor(QPalette::All, QPalette::Window, QRgb(0x2F2F30));
 #else
         palette.setColor(QPalette::Active, QPalette::Window, QRgb(0x2F2F30));

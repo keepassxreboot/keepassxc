@@ -62,11 +62,11 @@ print("""/*
  */
 """)
 
-print("const int AutoTypePlatformX11::m_unicodeToKeysymLen = {0};".format(len(keysymMap)))
+print("const int unicodeToKeysymLen = {0};".format(len(keysymMap)))
 
 print()
 
-print("const uint AutoTypePlatformX11::m_unicodeToKeysymKeys[] = {")
+print("const uint unicodeToKeysymKeys[] = {")
 keys = keysymMap.keys()
 keyLen = len(keys)
 for idx, val in enumerate(keys, start=1):
@@ -84,7 +84,7 @@ print("};")
 
 print()
 
-print("const uint AutoTypePlatformX11::m_unicodeToKeysymValues[] = {")
+print("const uint unicodeToKeysymValues[] = {")
 values = keysymMap.values()
 valuesLen = len(values)
 for idx, val in enumerate(values, start=1):

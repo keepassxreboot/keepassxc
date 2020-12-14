@@ -18,6 +18,7 @@
 #include "ShortcutWidget.h"
 
 #include <QKeyEvent>
+#include <QToolTip>
 
 #include "autotype/AutoType.h"
 
@@ -48,9 +49,11 @@ void ShortcutWidget::setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 
     displayShortcut(m_key, m_modifiers);
 
-    if (autoType()->registerGlobalShortcut(m_key, m_modifiers)) {
+    QString error;
+    if (autoType()->registerGlobalShortcut(m_key, m_modifiers, &error)) {
         setStyleSheet("");
     } else {
+        QToolTip::showText(mapToGlobal(rect().bottomLeft()), error);
         setStyleSheet("background-color: #FF9696;");
     }
 }

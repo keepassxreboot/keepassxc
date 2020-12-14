@@ -36,10 +36,6 @@
 #include <QStandardPaths>
 #include <QtNetwork/QLocalSocket>
 
-#if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
-#include "gui/osutils/OSEventFilter.h"
-#endif
-
 #if defined(Q_OS_UNIX)
 #include <signal.h>
 #include <sys/socket.h>
@@ -60,9 +56,7 @@ Application::Application(int& argc, char** argv)
     , m_alreadyRunning(false)
     , m_lockFile(nullptr)
 #if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
-    , m_osEventFilter(new OSEventFilter())
 {
-    installNativeEventFilter(m_osEventFilter.data());
 #else
 {
 #endif
@@ -160,6 +154,7 @@ void Application::bootstrap()
     QApplication::setFont(QApplication::font("QMessageBox"));
 #endif
 
+    osUtils->registerNativeEventFilter();
     MessageBox::initializeButtonDefs();
 
 #ifdef Q_OS_MACOS

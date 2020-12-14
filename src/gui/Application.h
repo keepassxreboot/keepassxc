@@ -81,9 +81,6 @@ private:
     QLockFile* m_lockFile;
     QLocalServer m_lockServer;
     QString m_socketName;
-#if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
-    QScopedPointer<OSEventFilter> m_osEventFilter;
-#endif
 };
 
 #define kpxcApp qobject_cast<Application*>(Application::instance())

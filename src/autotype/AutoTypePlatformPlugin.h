@@ -32,9 +32,6 @@ public:
     virtual QStringList windowTitles() = 0;
     virtual WId activeWindow() = 0;
     virtual QString activeWindowTitle() = 0;
-    virtual bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) = 0;
-    virtual void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) = 0;
-    virtual int platformEventFilter(void* event) = 0;
     virtual bool raiseWindow(WId window) = 0;
     virtual void unload()
     {

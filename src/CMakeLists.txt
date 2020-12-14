@@ -206,18 +206,14 @@ if(UNIX AND NOT APPLE)
             ${keepassx_SOURCES}
             gui/MainWindowAdaptor.cpp
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
-            gui/osutils/nixutils/NixUtils.cpp)
+            gui/osutils/nixutils/NixUtils.cpp
+            gui/osutils/nixutils/X11Funcs.cpp)
 endif()
 if(MINGW)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
             gui/osutils/winutils/ScreenLockListenerWin.cpp
             gui/osutils/winutils/WinUtils.cpp)
-endif()
-if(MINGW OR (UNIX AND NOT APPLE))
-    set(keepassx_SOURCES
-            ${keepassx_SOURCES}
-            gui/osutils/OSEventFilter.cpp)
 endif()
 
 set(keepassx_SOURCES ${keepassx_SOURCES}
@@ -343,7 +339,7 @@ if(WITH_XC_KEESHARE)
 endif()
 
 if(APPLE)
-    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit")
+    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit -framework Carbon")
     if(Qt5MacExtras_FOUND)
         target_link_libraries(keepassx_core Qt5::MacExtras)
     endif()
@@ -356,7 +352,7 @@ if(HAIKU)
     target_link_libraries(keepassx_core network)
 endif()
 if(UNIX AND NOT APPLE)
-    target_link_libraries(keepassx_core Qt5::DBus X11)
+    target_link_libraries(keepassx_core Qt5::DBus Qt5::X11Extras X11)
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
 if(MINGW)

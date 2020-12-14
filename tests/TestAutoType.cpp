@@ -28,6 +28,7 @@
 #include "core/Resources.h"
 #include "crypto/Crypto.h"
 #include "gui/MessageBox.h"
+#include "gui/osutils/OSUtils.h"
 
 QTEST_GUILESS_MAIN(TestAutoType)
 
@@ -157,7 +158,7 @@ void TestAutoType::testGlobalAutoTypeWithNoMatch()
 void TestAutoType::testGlobalAutoTypeWithOneMatch()
 {
     m_test->setActiveWindowTitle("custom window");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
 
     QCOMPARE(m_test->actionChars(), QString("%1association%2").arg(m_entry1->username()).arg(m_entry1->password()));
@@ -168,7 +169,7 @@ void TestAutoType::testGlobalAutoTypeTitleMatch()
     config()->set(Config::AutoTypeEntryTitleMatch, true);
 
     m_test->setActiveWindowTitle("An Entry Title!");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
 
     QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
@@ -179,7 +180,7 @@ void TestAutoType::testGlobalAutoTypeUrlMatch()
     config()->set(Config::AutoTypeEntryTitleMatch, true);
 
     m_test->setActiveWindowTitle("Dummy - http://example.org/ - <My Browser>");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
 
     QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
@@ -190,7 +191,7 @@ void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
     config()->set(Config::AutoTypeEntryTitleMatch, true);
 
     m_test->setActiveWindowTitle("Dummy - http://sub.example.org/ - <My Browser>");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
 
     QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
@@ -199,7 +200,7 @@ void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
 void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()
 {
     m_test->setActiveWindowTitle("An Entry Title!");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     MessageBox::setNextAnswer(MessageBox::Ok);
     m_autoType->performGlobalAutoType(m_dbList);
 
@@ -210,68 +211,68 @@ void TestAutoType::testGlobalAutoTypeRegExp()
 {
     // substring matches are ok
     m_test->setActiveWindowTitle("lorem REGEX1 ipsum");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("regex1"));
     m_test->clearActions();
 
     // should be case-insensitive
     m_test->setActiveWindowTitle("lorem regex1 ipsum");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("regex1"));
     m_test->clearActions();
 
     // exact match
     m_test->setActiveWindowTitle("REGEX2");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("regex2"));
     m_test->clearActions();
 
     // a bit more complicated regex
     m_test->setActiveWindowTitle("REGEX3-R2D2");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("regex3"));
     m_test->clearActions();
 
     // with custom attributes
     m_test->setActiveWindowTitle("CustomAttr1");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("custom_attr:Attribute"));
     m_test->clearActions();
 
     // with (non uppercase) undefined custom attributes
     m_test->setActiveWindowTitle("CustomAttr2");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString(""));
     m_test->clearActions();
 
     // with mixedcase default attributes
     m_test->setActiveWindowTitle("CustomAttr3");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("custom_attr"));
     m_test->clearActions();
 
     // with resolve placeholders in window association title
     m_test->setActiveWindowTitle("AttrValueFirst");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("custom_attr_first"));
     m_test->clearActions();
 
     m_test->setActiveWindowTitle("lorem AttrValueFirstAndAttrValueSecond ipsum");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("custom_attr_first_and_second"));
     m_test->clearActions();
 
     m_test->setActiveWindowTitle("lorem AttrValueThird ipsum");
-    m_test->triggerGlobalAutoType();
+    emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("custom_attr_third"));
     m_test->clearActions();
