@@ -26,12 +26,16 @@
 #include <QX11Info>
 #include <QtPlugin>
 
+#include "autotype/AutoTypeAction.h"
+#include "autotype/AutoTypePlatformPlugin.h"
+#include "core/Tools.h"
+#include "gui/osutils/OSUtils.h"
+#include "gui/osutils/nixutils/X11Funcs.h"
+
 #include <X11/XKBlib.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/XTest.h>
-
-#include "autotype/AutoTypeAction.h"
-#include "autotype/AutoTypePlatformPlugin.h"
+#include <xcb/xcb.h>
 
 #define N_MOD_INDICES (Mod5MapIndex + 1)
 
@@ -48,19 +52,10 @@ public:
     QStringList windowTitles() override;
     WId activeWindow() override;
     QString activeWindowTitle() override;
-    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
-    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
-    int platformEventFilter(void* event) override;
     bool raiseWindow(WId window) override;
     AutoTypeExecutor* createExecutor() override;
 
-    KeySym charToKeySym(const QChar& ch);
-    KeySym keyToKeySym(Qt::Key key);
-
-    void SendKey(KeySym keysym, unsigned int modifiers = 0);
-
-signals:
-    void globalShortcutTriggered();
+    void sendKey(KeySym keysym, unsigned int modifiers = 0);
 
 private:
     QString windowTitle(Window window, bool useBlacklist);
@@ -68,10 +63,6 @@ private:
     QString windowClassName(Window window);
     QList<Window> widgetsToX11Windows(const QWidgetList& widgetList);
     bool isTopLevelWindow(Window window);
-    uint qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
-    void startCatchXErrors();
-    void stopCatchXErrors();
-    static int x11ErrorHandler(Display* display, XErrorEvent* error);
 
     XkbDescPtr getKeyboard();
     void updateKeymap();
@@ -94,18 +85,6 @@ private:
     Atom m_atomUtf8String;
     Atom m_atomNetActiveWindow;
     QSet<QString> m_classBlacklist;
-    Qt::Key m_currentGlobalKey;
-    Qt::KeyboardModifiers m_currentGlobalModifiers;
-    uint m_currentGlobalKeycode;
-    uint m_currentGlobalNativeModifiers;
-    int m_modifierMask;
-    static bool m_catchXErrors;
-    static bool m_xErrorOccurred;
-    static int (*m_oldXErrorHandler)(Display*, XErrorEvent*);
-
-    static const int m_unicodeToKeysymLen;
-    static const uint m_unicodeToKeysymKeys[];
-    static const uint m_unicodeToKeysymValues[];
 
     XkbDescPtr m_xkb;
     KeySym* m_keysymTable;

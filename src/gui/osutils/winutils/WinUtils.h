@@ -23,14 +23,16 @@
 #include <QAbstractNativeEventFilter>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QSharedPointer>
 
-class WinUtils : public OSUtilsBase
+#include <windef.h>
+
+class WinUtils : public OSUtilsBase, QAbstractNativeEventFilter
 {
     Q_OBJECT
 
 public:
     static WinUtils* instance();
-    static void registerEventFilters();
 
     bool isDarkMode() const override;
     bool isLaunchAtStartupEnabled() const override;
@@ -38,19 +40,36 @@ public:
     bool isCapslockEnabled() override;
     bool isHighContrastMode() const;
 
+    void registerNativeEventFilter() override;
+
+    bool registerGlobalShortcut(const QString& name,
+                                Qt::Key key,
+                                Qt::KeyboardModifiers modifiers,
+                                QString* error = nullptr) override;
+    bool unregisterGlobalShortcut(const QString& name) override;
+
+    DWORD qtToNativeKeyCode(Qt::Key key);
+    DWORD qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
+
 protected:
     explicit WinUtils(QObject* parent = nullptr);
-    ~WinUtils() override;
+    ~WinUtils() override = default;
+
+    bool nativeEventFilter(const QByteArray& eventType, void* message, long*) override;
+    void triggerGlobalShortcut(int id);
 
 private:
-    class DWMEventFilter : public QAbstractNativeEventFilter
+    static QPointer<WinUtils> m_instance;
+
+    struct globalShortcut
     {
-    public:
-        bool nativeEventFilter(const QByteArray& eventType, void* message, long*) override;
+        int id;
+        DWORD nativeKeyCode;
+        DWORD nativeModifiers;
     };
 
-    static QPointer<WinUtils> m_instance;
-    static QScopedPointer<DWMEventFilter> m_eventFilter;
+    int m_nextShortcutId = 1;
+    QHash<QString, QSharedPointer<globalShortcut>> m_globalShortcuts;
 
     Q_DISABLE_COPY(WinUtils)
 };

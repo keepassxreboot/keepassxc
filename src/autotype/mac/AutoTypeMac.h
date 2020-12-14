@@ -38,9 +38,6 @@ public:
     QStringList windowTitles() override;
     WId activeWindow() override;
     QString activeWindowTitle() override;
-    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
-    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
-    int platformEventFilter(void* event) override;
     bool raiseWindow(WId pid) override;
     AutoTypeExecutor* createExecutor() override;
 
@@ -50,18 +47,9 @@ public:
     void sendChar(const QChar& ch, bool isKeyDown);
     void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers);
 
-signals:
-    void globalShortcutTriggered();
-
 private:
-    EventHotKeyRef m_hotkeyRef;
-    EventHotKeyID m_hotkeyId;
-
-    static uint16 qtToNativeKeyCode(Qt::Key key);
-    static CGEventFlags qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native);
     static int windowLayer(CFDictionaryRef window);
     static QString windowTitle(CFDictionaryRef window);
-    static OSStatus hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
 };
 
 class AutoTypeExecutorMac : public AutoTypeExecutor

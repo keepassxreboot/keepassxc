@@ -42,35 +42,9 @@ QString AutoTypePlatformTest::activeWindowTitle()
     return m_activeWindowTitle;
 }
 
-bool AutoTypePlatformTest::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
-{
-    Q_UNUSED(key);
-    Q_UNUSED(modifiers);
-
-    return true;
-}
-
-void AutoTypePlatformTest::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
-{
-    Q_UNUSED(key);
-    Q_UNUSED(modifiers);
-}
-
-int AutoTypePlatformTest::platformEventFilter(void* event)
-{
-    Q_UNUSED(event);
-
-    return -1;
-}
-
 AutoTypeExecutor* AutoTypePlatformTest::createExecutor()
 {
     return new AutoTypeExecutorTest(this);
-}
-
-void AutoTypePlatformTest::triggerGlobalAutoType()
-{
-    emit globalShortcutTriggered();
 }
 
 void AutoTypePlatformTest::setActiveWindowTitle(const QString& title)

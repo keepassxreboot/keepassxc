@@ -520,8 +520,7 @@ void TestCli::testClip()
 
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "-a", "TESTAttribute1", "/Sample Entry"});
-    QVERIFY(m_stderr->readAll().contains(
-        "ERROR: attribute TESTAttribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
+    QVERIFY(m_stderr->readAll().contains("ERROR: attribute TESTAttribute1 is ambiguous"));
 
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry"});
@@ -1776,8 +1775,7 @@ void TestCli::testShow()
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-a", "Testattribute1", "/Sample Entry"});
     QCOMPARE(m_stdout->readAll(), QByteArray());
-    QVERIFY(m_stderr->readAll().contains(
-        "ERROR: attribute Testattribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
+    QVERIFY(m_stderr->readAll().contains("ERROR: attribute Testattribute1 is ambiguous"));
 }
 
 void TestCli::testInvalidDbFiles()
