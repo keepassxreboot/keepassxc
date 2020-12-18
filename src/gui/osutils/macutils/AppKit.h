@@ -20,6 +20,7 @@
 #define KEEPASSX_APPKIT_H
 
 #include <QObject>
+#include <QColor>
 #include <unistd.h>
 
 class AppKit : public QObject
@@ -37,12 +38,14 @@ public:
     bool hideProcess(pid_t pid);
     bool isHidden(pid_t pid);
     bool isDarkMode();
+    bool isStatusBarDark();
     bool enableAccessibility();
     bool enableScreenRecording();
     void toggleForegroundApp(bool foreground);
 
 signals:
     void lockDatabases();
+    void interfaceThemeChanged();
 
 private:
     void* self;

@@ -40,6 +40,7 @@
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
+#include "gui/osutils/OSUtils.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
@@ -503,6 +504,8 @@ MainWindow::MainWindow()
     connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
     connect(m_ui->actionKeyboardShortcuts, SIGNAL(triggered()), SLOT(openKeyboardShortcuts()));
 
+    connect(osUtils, &OSUtilsBase::statusbarThemeChanged, this, &MainWindow::updateTrayIcon);
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     // Install event filter for empty-area drag
     auto* eventFilter = new MainWindowEventFilter(this);
@@ -599,10 +602,10 @@ MainWindow::MainWindow()
     }
 #endif
 
-    QObject::connect(qApp, SIGNAL(anotherInstanceStarted()), this, SLOT(bringToFront()));
-    QObject::connect(qApp, SIGNAL(applicationActivated()), this, SLOT(bringToFront()));
-    QObject::connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
-    QObject::connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
+    connect(qApp, SIGNAL(anotherInstanceStarted()), this, SLOT(bringToFront()));
+    connect(qApp, SIGNAL(applicationActivated()), this, SLOT(bringToFront()));
+    connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
+    connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
 
     restoreConfigState();
 }
@@ -1757,8 +1760,10 @@ void MainWindow::initViewMenu()
 
     connect(themeActions, &QActionGroup::triggered, this, [this, theme](QAction* action) {
         config()->set(Config::GUI_ApplicationTheme, action->data());
-        if (action->data() != theme) {
+        if ((action->data() == "classic" || theme == "classic") && action->data() != theme) {
             restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
+        } else {
+            kpxcApp->applyTheme();
         }
     });
 

@@ -87,6 +87,12 @@ bool WinUtils::isDarkMode() const
     return settings.value("AppsUseLightTheme", 1).toInt() == 0;
 }
 
+bool WinUtils::isStatusBarDark() const
+{
+    // TODO: implement
+    return isDarkMode();
+}
+
 bool WinUtils::isLaunchAtStartupEnabled() const
 {
     return QSettings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)", QSettings::NativeFormat)

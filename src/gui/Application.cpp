@@ -23,6 +23,7 @@
 #include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Global.h"
+#include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
@@ -127,6 +128,12 @@ Application::Application(int& argc, char** argv)
         qWarning()
             << QObject::tr("The lock file could not be created. Single-instance mode disabled.").toUtf8().constData();
     }
+
+    connect(osUtils, &OSUtilsBase::interfaceThemeChanged, this, [this]() {
+        if (config()->get(Config::GUI_ApplicationTheme).toString() != "classic") {
+            applyTheme();
+        }
+    });
 }
 
 Application::~Application()
@@ -174,15 +181,15 @@ void Application::applyTheme()
         }
 #endif
     }
-
+    QPixmapCache::clear();
     if (appTheme == "light") {
-        setStyle(new LightStyle);
-        // Workaround Qt 5.15+ bug
-        setPalette(style()->standardPalette());
+        auto* s = new LightStyle;
+        setPalette(s->standardPalette());
+        setStyle(s);
     } else if (appTheme == "dark") {
-        setStyle(new DarkStyle);
-        // Workaround Qt 5.15+ bug
-        setPalette(style()->standardPalette());
+        auto* s = new DarkStyle;
+        setPalette(s->standardPalette());
+        setStyle(s);
         m_darkTheme = true;
     } else {
         // Classic mode, don't check for dark theme on Windows

@@ -52,6 +52,10 @@
 #include <QtMath>
 #include <qdrawutil.h>
 
+#ifdef Q_OS_MACOS
+#include <QOperatingSystemVersion>
+#endif
+
 #include <cmath>
 
 #include "gui/Icons.h"
@@ -288,10 +292,16 @@ namespace Phantom
 #ifdef Q_OS_MACOS
             QColor tabBarBase(const QPalette& pal)
             {
-                return hack_isLightPalette(pal) ? QRgb(0xD1D1D1) : QRgb(0x252525);
+                if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::MacOSBigSur) {
+                    return hack_isLightPalette(pal) ? QRgb(0xD4D4D4) : QRgb(0x2A2A2A);
+                }
+                return hack_isLightPalette(pal) ? QRgb(0xDD1D1D1) : QRgb(0x252525);
             }
             QColor tabBarBaseInactive(const QPalette& pal)
             {
+                if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::MacOSBigSur) {
+                    return hack_isLightPalette(pal) ? QRgb(0xF5F5F5) : QRgb(0x2D2D2D);
+                }
                 return hack_isLightPalette(pal) ? QRgb(0xF4F4F4) : QRgb(0x282828);
             }
 #endif
@@ -4569,27 +4579,6 @@ QStyle::SubControl BaseStyle::hitTestComplexControl(ComplexControl cc,
                                                     const QWidget* w) const
 {
     return QCommonStyle::hitTestComplexControl(cc, opt, pt, w);
-}
-
-QPixmap BaseStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap& pixmap, const QStyleOption* opt) const
-{
-    // Default icon highlight is way too subtle
-    if (iconMode == QIcon::Selected) {
-        QImage img = pixmap.toImage().convertToFormat(QImage::Format_ARGB32_Premultiplied);
-        QPainter painter(&img);
-
-        painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
-
-        QColor color =
-            Phantom::DeriveColors::adjustLightness(opt->palette.color(QPalette::Normal, QPalette::Highlight), .25);
-        color.setAlphaF(0.25);
-        painter.fillRect(0, 0, img.width(), img.height(), color);
-
-        painter.end();
-
-        return QPixmap::fromImage(img);
-    }
-    return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
 }
 
 int BaseStyle::styleHint(StyleHint hint,

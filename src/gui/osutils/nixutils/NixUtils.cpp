@@ -79,6 +79,12 @@ bool NixUtils::isDarkMode() const
     return qApp->style()->standardPalette().color(QPalette::Window).toHsl().lightness() < 110;
 }
 
+bool NixUtils::isStatusBarDark() const
+{
+    // TODO: implement
+    return isDarkMode();
+}
+
 QString NixUtils::getAutostartDesktopFilename(bool createDirs) const
 {
     QDir autostartDir;
