@@ -251,8 +251,12 @@ void ApplicationSettingsWidget::loadSettings()
     }
 
     m_generalUi->trayIconAppearance->clear();
+#ifdef Q_OS_MACOS
+    m_generalUi->trayIconAppearance->addItem(tr("Monochrome"), "monochrome");
+#else
     m_generalUi->trayIconAppearance->addItem(tr("Monochrome (light)"), "monochrome-light");
     m_generalUi->trayIconAppearance->addItem(tr("Monochrome (dark)"), "monochrome-dark");
+#endif
     m_generalUi->trayIconAppearance->addItem(tr("Colorful"), "colorful");
     int trayIconIndex = m_generalUi->trayIconAppearance->findData(icons()->trayIconAppearance());
     if (trayIconIndex > 0) {

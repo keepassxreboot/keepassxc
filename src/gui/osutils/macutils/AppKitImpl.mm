@@ -17,7 +17,11 @@
  */
 
 #import "AppKitImpl.h"
+#include "AppKit.h"
 
+#import <AppKit/NSStatusBar.h>
+#import <AppKit/NSStatusItem.h>
+#import <AppKit/NSStatusBarButton.h>
 #import <AppKit/NSWorkspace.h>
 #import <CoreVideo/CVPixelBuffer.h>
 
@@ -26,17 +30,31 @@
 - (id) initWithObject:(AppKit*)appkit
 {
     self = [super init];
+
     if (self) {
         m_appkit = appkit;
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:static_cast<id>(self)
+        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
                                                            selector:@selector(didDeactivateApplicationObserver:)
                                                                name:NSWorkspaceDidDeactivateApplicationNotification
                                                              object:nil];
     
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:static_cast<id>(self)
+        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
                                                             selector:@selector(userSwitchHandler:)
                                                                 name:NSWorkspaceSessionDidResignActiveNotification
                                                                 object:nil];
+
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self
+                                                            selector:@selector(interfaceThemeChanged:)
+                                                                name:@"AppleInterfaceThemeChangedNotification"
+                                                              object:nil];
+
+        // Unfortunately, there is no notification for a wallpaper change, which affects
+        // the status bar colour on macOS Big Sur, but we can at least subscribe to this.
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self
+                                                            selector:@selector(interfaceThemeChanged:)
+                                                                name:@"AppleColorPreferencesChangedNotification"
+                                                              object:nil];
+
     }
     return self;
 }
@@ -53,6 +71,18 @@
         self.lastActiveApplication = app;
     }
 }
+
+//
+// Light / dark theme toggled
+//
+- (void) interfaceThemeChanged:(NSNotification*) notification
+{
+    Q_UNUSED(notification);
+    if (m_appkit) {
+        emit m_appkit->interfaceThemeChanged();
+    }
+}
+
 
 //
 // Get process id of frontmost application (-> keyboard input)
@@ -106,6 +136,23 @@
     id style = [dict objectForKey:@"AppleInterfaceStyle"];
     return ( style && [style isKindOfClass:[NSString class]]
              && NSOrderedSame == [style caseInsensitiveCompare:@"dark"] );
+}
+
+
+//
+// Get global menu bar theme state
+//
+- (bool) isStatusBarDark
+{
+    if (@available(macOS 10.17, *)) {
+        // This is an ugly hack, but I couldn't find a way to access QTrayIcon's NSStatusItem.
+        NSStatusItem* dummy = [[NSStatusBar systemStatusBar] statusItemWithLength:0];
+        NSString* appearance = [dummy.button.effectiveAppearance.name lowercaseString];
+        [[NSStatusBar systemStatusBar] removeStatusItem:dummy];
+        return [appearance containsString:@"dark"];
+    }
+
+    return [self isDarkMode];
 }
 
 //
@@ -170,7 +217,8 @@
 // ------------------------- C++ Trampolines -------------------------
 //
 
-AppKit::AppKit(QObject* parent) : QObject(parent)
+AppKit::AppKit(QObject* parent)
+    : QObject(parent)
 {
     self = [[AppKitImpl alloc] initWithObject:this];
 }
@@ -178,6 +226,7 @@ AppKit::AppKit(QObject* parent) : QObject(parent)
 AppKit::~AppKit()
 {
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:static_cast<id>(self)];
+    [[NSDistributedNotificationCenter defaultCenter] removeObserver:static_cast<id>(self)];
     [static_cast<id>(self) dealloc];
 }
 
@@ -215,6 +264,12 @@ bool AppKit::isDarkMode()
 {
     return [static_cast<id>(self) isDarkMode];
 }
+
+bool AppKit::isStatusBarDark()
+{
+    return [static_cast<id>(self) isStatusBarDark];
+}
+
 
 bool AppKit::enableAccessibility()
 {

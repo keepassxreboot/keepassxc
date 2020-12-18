@@ -28,7 +28,7 @@ class Icons
 {
 public:
     QIcon applicationIcon();
-    QIcon trayIcon();
+    QIcon trayIcon(QString style = "unlocked");
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
     QString trayIconAppearance() const;
