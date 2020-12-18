@@ -31,7 +31,7 @@ public:
     QString pluginPath(const QString& name) const;
     QString wordlistPath(const QString& name) const;
     QIcon applicationIcon();
-    QIcon trayIcon();
+    QIcon trayIcon(QString style = "unlocked");
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
     QString trayIconAppearance() const;

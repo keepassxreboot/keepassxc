@@ -22,6 +22,7 @@
 #include "gui/osutils/OSUtilsBase.h"
 #include "AppKit.h"
 
+#include <QColor>
 #include <QPointer>
 #include <QScopedPointer>
 #include <qwindowdefs.h>
@@ -34,6 +35,7 @@ public:
     static MacUtils* instance();
 
     bool isDarkMode() const override;
+    bool isStatusBarDark() const override;
     bool isLaunchAtStartupEnabled() const override;
     void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
