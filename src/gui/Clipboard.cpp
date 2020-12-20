@@ -59,7 +59,12 @@ void Clipboard::setText(const QString& text, bool clear)
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 #else
     mime->setText(text);
+#ifdef Q_OS_LINUX
     mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
+#endif
+#ifdef Q_OS_WIN
+    mime->setData("ExcludeClipboardContentFromMonitorProcessing", QByteArrayLiteral("1"));
+#endif
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 
     if (clipboard->supportsSelection()) {
