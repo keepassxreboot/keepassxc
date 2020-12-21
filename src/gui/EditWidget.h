@@ -42,6 +42,7 @@ public:
     ~EditWidget();
 
     void addPage(const QString& labelText, const QIcon& icon, QWidget* widget);
+    bool hasPage(QWidget* widget);
     void setPageHidden(QWidget* widget, bool hidden);
     void setCurrentPage(int index);
     void setHeadline(const QString& text);
