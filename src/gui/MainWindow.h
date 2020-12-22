@@ -35,6 +35,7 @@ namespace Ui
 
 class InactivityTimer;
 class SearchWidget;
+class MainWindowEventFilter;
 
 class MainWindow : public QMainWindow
 {
@@ -182,7 +183,20 @@ private:
     QTimer m_updateCheckTimer;
     QTimer m_trayIconTriggerTimer;
     QSystemTrayIcon::ActivationReason m_trayIconTriggerReason;
+
+    friend class MainWindowEventFilter;
 };
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+class MainWindowEventFilter : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit MainWindowEventFilter(QObject* parent);
+    bool eventFilter(QObject* watched, QEvent* event) override;
+};
+#endif
 
 /**
  * Return instance of MainWindow created on app load
