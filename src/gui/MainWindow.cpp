@@ -503,6 +503,14 @@ MainWindow::MainWindow()
     connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
     connect(m_ui->actionKeyboardShortcuts, SIGNAL(triggered()), SLOT(openKeyboardShortcuts()));
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    // Install event filter for empty-area drag
+    auto* eventFilter = new MainWindowEventFilter(this);
+    m_ui->menubar->installEventFilter(eventFilter);
+    m_ui->toolBar->installEventFilter(eventFilter);
+    m_ui->tabWidget->tabBar()->installEventFilter(eventFilter);
+#endif
+
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
@@ -1798,3 +1806,44 @@ void MainWindow::initViewMenu()
         config()->set(Config::GUI_HidePasswords, checked);
     });
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+
+MainWindowEventFilter::MainWindowEventFilter(QObject* parent)
+    : QObject(parent)
+{
+}
+
+/**
+ * MainWindow event filter to initiate empty-area drag on the toolbar, menubar, and tabbar.
+ */
+bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
+{
+    auto* mainWindow = getMainWindow();
+    if (!mainWindow || !mainWindow->m_ui) {
+        return QObject::eventFilter(watched, event);
+    }
+
+    if (event->type() == QEvent::MouseButtonPress) {
+        if (watched == mainWindow->m_ui->menubar) {
+            mainWindow->windowHandle()->startSystemMove();
+            // Continue processing events, so menus keep working.
+            return false;
+        } else if (watched == mainWindow->m_ui->toolBar) {
+            if (!mainWindow->m_ui->toolBar->isMovable() || mainWindow->m_ui->toolBar->cursor() != Qt::SizeAllCursor) {
+                mainWindow->windowHandle()->startSystemMove();
+                return false;
+            }
+        } else if (watched == mainWindow->m_ui->tabWidget->tabBar()) {
+            auto* m = static_cast<QMouseEvent*>(event);
+            if (mainWindow->m_ui->tabWidget->tabBar()->tabAt(m->pos()) == -1) {
+                mainWindow->windowHandle()->startSystemMove();
+                return true;
+            }
+        }
+    }
+
+    return QObject::eventFilter(watched, event);
+}
+
+#endif
