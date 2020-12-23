@@ -29,6 +29,8 @@ WinUtils* WinUtils::instance()
 {
     if (!m_instance) {
         m_instance = new WinUtils(qApp);
+        m_instance->m_darkAppThemeActive = m_instance->isDarkMode();
+        m_instance->m_darkSystemThemeActive = m_instance->isStatusBarDark();
 
 #ifdef QT_DEBUG
         // Attach console to enable debug output
@@ -63,15 +65,17 @@ bool WinUtils::nativeEventFilter(const QByteArray& eventType, void* message, lon
 
     auto* msg = static_cast<MSG*>(message);
     switch (msg->message) {
-    /* TODO: indicate dark mode support for black title bar
-    case WM_CREATE:
-    case WM_INITDIALOG: {
-        if (msg->hwnd && winUtils()->isDarkMode()) {
+    case WM_SETTINGCHANGE:
+        if (m_darkAppThemeActive != isDarkMode()) {
+            m_darkAppThemeActive = !m_darkAppThemeActive;
+            emit interfaceThemeChanged();
+        }
 
+        if (m_darkSystemThemeActive != isStatusBarDark()) {
+            m_darkSystemThemeActive = !m_darkSystemThemeActive;
+            emit statusbarThemeChanged();
         }
         break;
-    }
-    */
     case WM_HOTKEY:
         triggerGlobalShortcut(msg->wParam);
         break;
@@ -89,8 +93,9 @@ bool WinUtils::isDarkMode() const
 
 bool WinUtils::isStatusBarDark() const
 {
-    // TODO: implement
-    return isDarkMode();
+    QSettings settings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)",
+                       QSettings::NativeFormat);
+    return settings.value("SystemUsesLightTheme", 0).toInt() == 0;
 }
 
 bool WinUtils::isLaunchAtStartupEnabled() const
