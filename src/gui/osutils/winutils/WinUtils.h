@@ -72,6 +72,9 @@ private:
     int m_nextShortcutId = 1;
     QHash<QString, QSharedPointer<globalShortcut>> m_globalShortcuts;
 
+    bool m_darkAppThemeActive;
+    bool m_darkSystemThemeActive;
+
     Q_DISABLE_COPY(WinUtils)
 };
 

@@ -251,7 +251,7 @@ void ApplicationSettingsWidget::loadSettings()
     }
 
     m_generalUi->trayIconAppearance->clear();
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
     m_generalUi->trayIconAppearance->addItem(tr("Monochrome"), "monochrome");
 #else
     m_generalUi->trayIconAppearance->addItem(tr("Monochrome (light)"), "monochrome-light");
