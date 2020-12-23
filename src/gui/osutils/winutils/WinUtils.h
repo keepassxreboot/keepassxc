@@ -53,6 +53,9 @@ private:
     static QPointer<WinUtils> m_instance;
     static QScopedPointer<DWMEventFilter> m_eventFilter;
 
+    bool m_darkAppThemeActive;
+    bool m_darkSystemThemeActive;
+
     Q_DISABLE_COPY(WinUtils)
 };
 

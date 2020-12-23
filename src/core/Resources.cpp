@@ -142,7 +142,7 @@ QIcon Resources::trayIcon(QString style)
     }
 
     QIcon i;
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
     if (osUtils->isStatusBarDark()) {
         i = icon(QString("keepassxc-monochrome-light%1").arg(style), false);
     } else {
@@ -170,7 +170,6 @@ QIcon Resources::trayIconUnlocked()
 {
     return trayIcon("unlocked");
 }
-
 
 AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon)
     : QIconEngine()
