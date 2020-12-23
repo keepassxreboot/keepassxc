@@ -58,7 +58,8 @@ namespace
         // Get average password length
         int averagePwdLength() const
         {
-            return m_passwords.empty() ? 0 : pwdTotalLen / m_passwords.size();
+            const auto nPwds = nPwdsUnique + nPwdsReused;
+            return nPwds == 0 ? 0 : std::round(pwdTotalLen / double(nPwds));
         }
 
         // Get max number of password reuse (=how many entries
