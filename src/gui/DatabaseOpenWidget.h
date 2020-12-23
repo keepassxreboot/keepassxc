@@ -68,14 +68,15 @@ private slots:
     void browseKeyFile();
     void clearKeyFileText();
     void pollHardwareKey();
-    void pollLedgerKey();
     void hardwareKeyResponse(bool found);
-    void hardwareLedgerKeyResponse(int res, int appProto, int libProto);
     void openHardwareKeyHelp();
     void openKeyFileHelp();
+    void hardwareKeySelected(int index);
 
 private:
-    void updateLedgerWidget();
+    void updateLedgerWidgets();
+    void showLedgerWidgets(bool show);
+    void showHardwareWidgets(bool show);
 
     bool m_pollingHardwareKey = false;
     bool m_pollingLedgerKey = false;

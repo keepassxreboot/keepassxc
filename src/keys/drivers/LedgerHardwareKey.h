@@ -2,19 +2,28 @@
 #define KEEPASSX_LEDGER_HARDWARE_H
 
 #include <QFuture>
+#include <QList>
 #include <QMutex>
 #include <QObject>
+#include <QSharedPointer>
 #include <QVector>
 
 #include "config-keepassx.h"
 
-#ifdef WITH_XC_LEDGER
 namespace kpl
 {
     class KPL;
     class LedgerDevice;
 }
-#endif
+
+struct LedgerKeyIdentifier
+{
+    QSharedPointer<kpl::LedgerDevice> Dev;
+    QString Name;
+};
+
+Q_DECLARE_OPAQUE_POINTER(kpl::LedgerDevice*);
+Q_DECLARE_METATYPE(QSharedPointer<kpl::LedgerDevice>);
 
 /**
  * Singleton class to manage the interface to hardware Ledger key(s)
@@ -33,33 +42,29 @@ public:
 
     ~LedgerHardwareKey() override;
     static LedgerHardwareKey& instance();
-    QFuture<bool> findFirstDevice();
 
-    bool isInitialized();
+    QFuture<bool> findDevices();
+    QList<LedgerKeyIdentifier> foundDevices();
 
-    bool fromDeviceSlot(unsigned Slot, uint8_t* Key, const size_t KeyLen);
-    bool fromDeviceDeriveName(QString const& Name, uint8_t* Key, const size_t KeyLen);
+    bool fromDeviceSlot(kpl::LedgerDevice& Dev, unsigned Slot, uint8_t* Key, const size_t KeyLen, QString& Err);
+    bool
+    fromDeviceDeriveName(kpl::LedgerDevice& Dev, QString const& Name, uint8_t* Key, const size_t KeyLen, QString& Err);
+    bool getValidKeySlots(kpl::LedgerDevice& Dev, QVector<uint8_t>& Ret, QString& Err);
 
-    QVector<uint8_t> getValidKeySlots();
-
-    static QString protocolErrorMsg(uint8_t appProto, uint8_t libProto);
     static size_t maxNameSize();
 
 signals:
-    // Res is of type DetectResult
-    void detectComplete(int Res, int AppProtocol, int LibProtocol);
+    void detectComplete(bool found);
     void userInteractionRequest();
-    void userInteractionDone(bool Accepted);
+    void userInteractionDone(bool Accepted, QString Err);
 
 private:
     explicit LedgerHardwareKey();
     void fillValidKeySlots();
 
 #ifdef WITH_XC_LEDGER
-    QVector<uint8_t> Slots_;
     QMutex Mutex_;
-    std::unique_ptr<kpl::KPL> KPL_;
-    std::unique_ptr<kpl::LedgerDevice> Dev_;
+    QList<QSharedPointer<kpl::LedgerDevice>> Devices_;
 #endif
 };
 

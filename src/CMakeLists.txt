@@ -152,7 +152,6 @@ set(keepassx_SOURCES
         gui/group/GroupModel.cpp
         gui/group/GroupView.cpp
         gui/databasekey/KeyComponentWidget.cpp
-        gui/databasekey/LedgerKeyEditWidget.cpp
         gui/databasekey/PasswordEditWidget.cpp
         gui/databasekey/YubiKeyEditWidget.cpp
         gui/databasekey/KeyFileEditWidget.cpp

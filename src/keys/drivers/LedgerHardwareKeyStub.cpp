@@ -16,38 +16,50 @@ LedgerHardwareKey& LedgerHardwareKey::instance()
     return *Instance_;
 }
 
-QFuture<bool> LedgerHardwareKey::findFirstDevice()
+QFuture<bool> LedgerHardwareKey::findDevices()
 {
     return QtConcurrent::run([] { return false; });
 }
 
-bool LedgerHardwareKey::isInitialized()
-{
-    return false;
-}
-
-bool LedgerHardwareKey::fromDeviceSlot(unsigned, uint8_t*, const size_t)
-{
-    return false;
-}
-
-bool LedgerHardwareKey::fromDeviceDeriveName(QString const&, uint8_t*, const size_t)
-{
-    return false;
-}
-
-QVector<uint8_t> LedgerHardwareKey::getValidKeySlots()
+QList<LedgerKeyIdentifier> LedgerHardwareKey::foundDevices()
 {
     return {};
 }
 
-void LedgerHardwareKey::fillValidKeySlots()
+bool LedgerHardwareKey::fromDeviceSlot(kpl::LedgerDevice& Dev,
+                                       unsigned Slot,
+                                       uint8_t* Key,
+                                       const size_t KeyLen,
+                                       QString& Err)
 {
+    Q_UNUSED(Dev);
+    Q_UNUSED(Slot);
+    Q_UNUSED(Key);
+    Q_UNUSED(KeyLen);
+    Q_UNUSED(Err);
+    return false;
 }
 
-QString LedgerHardwareKey::protocolErrorMsg(uint8_t, uint8_t)
+bool LedgerHardwareKey::fromDeviceDeriveName(kpl::LedgerDevice& Dev,
+                                             QString const& Name,
+                                             uint8_t* Key,
+                                             const size_t KeyLen,
+                                             QString& Err)
 {
-    return {};
+    Q_UNUSED(Dev);
+    Q_UNUSED(Name);
+    Q_UNUSED(Key);
+    Q_UNUSED(KeyLen);
+    Q_UNUSED(Err);
+    return false;
+}
+
+bool LedgerHardwareKey::getValidKeySlots(kpl::LedgerDevice& Dev, QVector<uint8_t>& Ret, QString& Err)
+{
+    Q_UNUSED(Dev);
+    Q_UNUSED(Err);
+    Ret.clear();
+    return false;
 }
 
 size_t LedgerHardwareKey::maxNameSize()

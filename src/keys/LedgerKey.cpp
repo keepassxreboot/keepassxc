@@ -28,28 +28,32 @@ QByteArray LedgerKey::rawKey() const
     return QByteArray::fromRawData(reinterpret_cast<const char*>(RawKey_), sizeof(RawKey_));
 }
 
-QSharedPointer<LedgerKey> LedgerKey::fromDeviceSlot(unsigned Slot)
+QSharedPointer<LedgerKey> LedgerKey::fromDeviceSlot(kpl::LedgerDevice& Dev, unsigned Slot, QString& Err)
 {
     auto Ret = QSharedPointer<LedgerKey>::create();
     if (!Ret) {
+        Err = QObject::tr("out of memory");
         return Ret;
     }
-    bool Res = AsyncTask::runAndWaitForFuture(
-        [&] { return LedgerHardwareKey::instance().fromDeviceSlot(Slot, Ret->RawKey_, sizeof(Ret->RawKey_)); });
+    bool Res = AsyncTask::runAndWaitForFuture([&] {
+        return LedgerHardwareKey::instance().fromDeviceSlot(Dev, Slot, Ret->RawKey_, sizeof(Ret->RawKey_), Err);
+    });
     if (!Res) {
         return {};
     }
     return Ret;
 }
 
-QSharedPointer<LedgerKey> LedgerKey::fromDeviceDeriveName(QString const& Name)
+QSharedPointer<LedgerKey> LedgerKey::fromDeviceDeriveName(kpl::LedgerDevice& Dev, QString const& Name, QString& Err)
 {
     auto Key = QSharedPointer<LedgerKey>::create();
     if (!Key) {
+        Err = QObject::tr("out of memory");
         return Key;
     }
-    bool Res = AsyncTask::runAndWaitForFuture(
-        [&] { return LedgerHardwareKey::instance().fromDeviceDeriveName(Name, Key->RawKey_, sizeof(Key->RawKey_)); });
+    bool Res = AsyncTask::runAndWaitForFuture([&] {
+        return LedgerHardwareKey::instance().fromDeviceDeriveName(Dev, Name, Key->RawKey_, sizeof(Key->RawKey_), Err);
+    });
     if (!Res) {
         return {};
     }

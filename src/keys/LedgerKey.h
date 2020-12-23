@@ -9,6 +9,7 @@
 namespace kpl
 {
     class KPL;
+    class LedgerDevice;
 } // namespace kpl
 
 class LedgerKey : public Key
@@ -21,8 +22,8 @@ public:
     ~LedgerKey() override;
     QByteArray rawKey() const override;
 
-    static QSharedPointer<LedgerKey> fromDeviceSlot(unsigned Slot);
-    static QSharedPointer<LedgerKey> fromDeviceDeriveName(QString const& Name);
+    static QSharedPointer<LedgerKey> fromDeviceSlot(kpl::LedgerDevice& Dev, unsigned Slot, QString& Err);
+    static QSharedPointer<LedgerKey> fromDeviceDeriveName(kpl::LedgerDevice& Dev, QString const& Name, QString& Err);
 
 private:
     uint8_t RawKey_[32];

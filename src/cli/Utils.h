@@ -52,7 +52,7 @@ namespace Utils
                                             bool quiet = false);
 
 #ifdef WITH_XC_LEDGER
-    bool loadLedgerKey(const QString& ledgerKey, QSharedPointer<LedgerKey>& out);
+    bool loadLedgerKey(const QString& ledgerKey, QSharedPointer<LedgerKey>& out, QString& errMsg, bool quiet);
 #endif
 
     QStringList splitCommandString(const QString& command);

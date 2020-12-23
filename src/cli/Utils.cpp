@@ -182,8 +182,9 @@ namespace Utils
 #ifdef WITH_XC_LEDGER
         if (!ledgerKey.isEmpty()) {
             QSharedPointer<LedgerKey> key;
-            if (!loadLedgerKey(ledgerKey, key)) {
-                err << QObject::tr("unable to load key from ledger device") << endl;
+            QString errMsg;
+            if (!loadLedgerKey(ledgerKey, key, errMsg, quiet)) {
+                err << QObject::tr("Unable to load key from ledger device: ") << errMsg << "." << endl;
                 return {};
             }
             compositeKey->addKey(key);
@@ -428,19 +429,17 @@ namespace Utils
     bool initLedgerKey()
     {
         auto& Hardware = LedgerHardwareKey::instance();
-        if (Hardware.isInitialized()) {
-            return true;
-        }
-        QFuture<bool> Res = Hardware.findFirstDevice();
-        Res.waitForFinished();
-        return Res.result();
+        QFuture<bool> Ret = Hardware.findDevices();
+        Ret.waitForFinished();
+        return Ret.result();
     }
 
-    bool loadLedgerKey(const QString& ledgerKey, QSharedPointer<LedgerKey>& out)
+    bool loadLedgerKey(const QString& ledgerKey, QSharedPointer<LedgerKey>& out, QString& errMsg, bool quiet)
     {
         // Format:
         // * slot:XX, to use a key on a slot
         // * name:str, to derive the key from a user-given name
+        auto& err = quiet ? DEVNULL : STDERR;
         QStringList Parts = ledgerKey.split(':');
         if (Parts.size() != 2) {
             return false;
@@ -448,19 +447,29 @@ namespace Utils
         if (!initLedgerKey()) {
             return false;
         }
+        auto Devices = LedgerHardwareKey::instance().foundDevices();
+        if (Devices.size() == 0) {
+            return false;
+        }
+        auto& DevInfo = Devices[0];
+        auto& Dev = *DevInfo.Dev;
         QString Type = Parts[0];
         QString Value = Parts[1];
+        QString AcceptMsg =
+            QObject::tr("Please accept accessing the database key on the Ledger device '%1'").arg(DevInfo.Name);
         if (Type == "slot") {
             bool ok;
             int Slot = Value.toInt(&ok);
             if (!ok || Slot < 0) {
                 return false;
             }
-            out = LedgerKey::fromDeviceSlot(Slot);
+            err << AcceptMsg << "\n" << flush;
+            out = LedgerKey::fromDeviceSlot(Dev, Slot, errMsg);
             return !out.isNull();
         }
         if (Type == "name") {
-            out = LedgerKey::fromDeviceDeriveName(Value);
+            err << AcceptMsg << "\n" << flush;
+            out = LedgerKey::fromDeviceDeriveName(Dev, Value, errMsg);
             return !out.isNull();
         }
         return false;

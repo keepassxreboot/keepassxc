@@ -74,7 +74,8 @@ QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPoin
         return {};
     }
 
-    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    const bool quiet = parser->isSet(Command::QuietOption);
+    auto& out = quiet ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
     // Validate the decryption time before asking for a password.
@@ -121,8 +122,9 @@ QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPoin
 #ifdef WITH_XC_LEDGER
     if (parser->isSet(Create::SetLedgerOption)) {
         QSharedPointer<LedgerKey> ledgerKey;
-        if (!Utils::loadLedgerKey(parser->value(Create::SetLedgerOption), ledgerKey)) {
-            err << QObject::tr("Loading the ledger key failed") << endl;
+        QString errMsg;
+        if (!Utils::loadLedgerKey(parser->value(Create::SetLedgerOption), ledgerKey, errMsg, quiet)) {
+            err << QObject::tr("Loading the ledger key failed: ") << errMsg << endl;
             return {};
         }
         key->addKey(ledgerKey);
