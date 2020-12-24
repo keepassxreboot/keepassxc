@@ -31,27 +31,9 @@ To configure Auto-Type sequences for your entries, perform the following steps:
 .Auto-Type entry sequences
 image::autotype_entry_sequences.png[]
 
-2. _(Optional)_ Define a custom auto-type sequence for each window title match by selecting the _Use specific sequence for this association_ checkbox. Sequence action codes and field placeholders are detailed in the following table. A complete list of supported actions and placeholders can be found at https://keepass.info/help/base/autotype.html#autoseq[KeePass Auto-Type Action Codes] and https://keepass.info/help/base/placeholders.html[KeePass Placeholders]. Action codes and placeholders are not case sensitive.
+2. _(Optional)_ Define a custom Auto-Type sequence for each window title match by selecting the _Use specific sequence for this association_ checkbox. Sequence action codes and field placeholders are detailed in the following table. Beyond the most important ones detailed below, there are additional action codes and placeholders available: https://keepass.info/help/base/autotype.html#autoseq[KeePass Auto-Type Action Codes, window=_blank] and https://keepass.info/help/base/placeholders.html[KeePass Placeholders, window=_blank]. Action codes and placeholders are not case sensitive.
 +
-[grid=rows, frame=none, width=70%]
-|===
-|Action Code |Description
-
-|{TAB}, {ENTER}, {SPACE}, {INSERT}, {DELETE}, {HOME}, {END}, {PGUP}, {PGDN}, {BACKSPACE}, {CAPSLOCK}, {ESC}
-|Press the corresponding keyboard key
-
-|{UP}, {DOWN}, {LEFT}, {RIGHT}  |Press the corresponding arrow key
-|{F1}, {F2}, ..., {F16}         |Press F1, F2, etc.
-|{LEFTBRACE}, {RIGHTBRACE}      |Press `{` or `}`, respectively
-|{DELAY=X}     |Set key press delay to X milliseconds
-|{DELAY X}     |Delay typing start by X milliseconds
-|{CLEARFIELD}  |Clear the input field before typing
-|{TOTP}        |Insert calculated TOTP value (if configured)
-|{PICKCHARS}   |Pick specific password characters from a dialog
-|{<ACTION> X}  |Repeat <ACTION> X times (e.g., {SPACE 5} inserts five spaces)
-|===
-+
-[grid=rows, frame=none, width=70%]
+[grid=rows, frame=none, width=90%]
 |===
 |Placeholder |Description
 
@@ -64,8 +46,33 @@ image::autotype_entry_sequences.png[]
 |{DT_SIMPLE} |Current date-time
 |{DB_DIR}   |Absolute directory path for database file
 |{S:<ATTRIBUTE_NAME>}   |Value for the given attribute name
-|{REF:<FIELD>@<SEARCH_IN>:<SEARCH_TEXT>} |Search for a field in another entry using the reference syntax.
+|{REF:<FIELD>@<SEARCH_IN>:<SEARCH_TEXT>} |Search for a field in another entry using the reference syntax. https://keepass.info/help/base/fieldrefs.html[Read more…, window=_blank]
 |===
++
+[grid=rows, frame=none, width=90%]
+|===
+|Action Code |Description
+
+|{TAB}, {ENTER}, {SPACE}, {INSERT}, {DELETE}, {HOME}, {END}, {PGUP}, {PGDN}, {BACKSPACE}, {CAPSLOCK}, {ESC}
+|Press the corresponding keyboard key
+
+|{UP}, {DOWN}, {LEFT}, {RIGHT}  |Press the corresponding arrow key
+|{F1}, {F2}, ..., {F16}         |Press F1, F2, etc.
+|{LEFTBRACE}, {RIGHTBRACE}      |Press `{` or `}`, respectively
+|{<KEY> X}  |Repeat <KEY> X times (e.g., {SPACE 5} inserts five spaces)
+|{DELAY=X}     |Set delay between key presses to X milliseconds
+|{DELAY X}     |Pause typing for X milliseconds
+|{CLEARFIELD}  |Clear the input field
+|{PICKCHARS}   |Pick specific password characters from a dialog
+|===
++
+*Text Conversions:*
++
+*{T-CONV:/<PLACEHOLDER>/<METHOD>/}* +
+Convert resolved placeholder (e.g., {USERNAME}, {PASSWORD}, etc.) using the following methods: UPPER, LOWER, BASE64, HEX, URI, URI-DEC. https://keepass.info/help/base/placeholders.html#conv[Read more…, window=_blank]
++
+*{T-REPLACE-RX:/<PLACEHOLDER>/<SEARCH>/<REPLACE>/}* +
+Use regular expressions to find and replace data from a resolved placeholder. Refer to match groups using $1, $2, etc. https://keepass.info/help/base/placeholders.html#replacerx[Read more…, window=_blank]
 
 === Performing Global Auto-Type
 The global Auto-Type keyboard shortcut is used when you have focus on the window you want to type into. To make use of this feature, you must have previously configured an Auto-Type hotkey.

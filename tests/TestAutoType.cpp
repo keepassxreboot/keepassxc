@@ -278,6 +278,43 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     m_test->clearActions();
 }
 
+void TestAutoType::testAutoTypeResults()
+{
+    QScopedPointer<Entry> entry(new Entry());
+    entry->setUsername("Username");
+    entry->setPassword("Password@1");
+    entry->setUrl("https://example.com");
+    entry->attributes()->set("attr1", "value1");
+    entry->attributes()->set("attr2", "decode%20me");
+
+    QFETCH(QString, sequence);
+    QFETCH(QString, expectedResult);
+
+    m_autoType->performAutoTypeWithSequence(entry.data(), sequence);
+    QCOMPARE(m_test->actionChars(), expectedResult);
+}
+
+void TestAutoType::testAutoTypeResults_data()
+{
+    QTest::addColumn<QString>("sequence");
+    QTest::addColumn<QString>("expectedResult");
+
+    // Normal Sequences
+    QTest::newRow("Sequence with Attributes") << QString("{USERNAME} {PASSWORD} {URL} {S:attr1}")
+                                              << QString("Username Password@1 https://example.com value1");
+    QTest::newRow("Sequence with Comment") << QString("{USERNAME}{TAB}{C:Extra Tab}{TAB}{S:attr1}")
+                                           << QString("Username[Key0x1000001][Key0x1000001]value1");
+
+    // Conversions and Replacements
+    QTest::newRow("T-CONV UPPER") << QString("{T-CONV:/{USERNAME}/UPPER/}") << QString("USERNAME");
+    QTest::newRow("T-CONV LOWER") << QString("{T-CONV:/{USERNAME}/LOWER/}") << QString("username");
+    QTest::newRow("T-CONV BASE64") << QString("{T-CONV:/{USERNAME}/BASE64/}") << QString("VXNlcm5hbWU=");
+    QTest::newRow("T-CONV HEX") << QString("{T-CONV:/{USERNAME}/HEX/}") << QString("557365726e616d65");
+    QTest::newRow("T-CONV URI ENCODE") << QString("{T-CONV:/{URL}/URI/}") << QString("https%3A%2F%2Fexample.com");
+    QTest::newRow("T-CONV URI DECODE") << QString("{T-CONV:/{S:attr2}/URI-DEC/}") << QString("decode me");
+    QTest::newRow("T-REPLACE-RX") << QString("{T-REPLACE-RX:/{USERNAME}/User/Pass/}") << QString("Passname");
+}
+
 void TestAutoType::testAutoTypeSyntaxChecks()
 {
     auto entry = new Entry();
@@ -321,6 +358,13 @@ void TestAutoType::testAutoTypeSyntaxChecks()
     QVERIFY2(!AutoType::verifyAutoTypeSyntax("{LEFT 50000000}", entry, error), error.toLatin1());
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{SPACE 10}{TAB 3}{RIGHT 50}", entry, error), error.toLatin1());
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{delay 5000000000}", entry, error), error.toLatin1());
+    // Conversion and Regex
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{T-CONV:/{USERNAME}/base64/}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{T-CONV:/{USERNAME}/junk/}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{T-CONV:}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{T-REPLACE-RX:/{USERNAME}/a/b/}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{T-REPLACE-RX:/{USERNAME}/a/}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{T-REPLACE-RX:}", entry, error), error.toLatin1());
 }
 
 void TestAutoType::testAutoTypeEffectiveSequences()
