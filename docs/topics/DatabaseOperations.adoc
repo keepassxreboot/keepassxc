@@ -101,7 +101,7 @@ NOTE: You can disable the recycle bin within the Database Settings. If the recyc
 Creating a clone of an entry provides you a ready-to-use template for creating new entries with similar details of a master entry.
 
 To create a clone of an existing entry, perform the following steps:
- 
+
 1.	Right-click on the entry for which you want to create a clone and select _Clone Entry_. Alternatively, select the desired entry and press `Ctrl+K`.
 +
 .Clone entry from context menu
@@ -127,7 +127,7 @@ image::clone_entry_references.png[]
 Where `<UUID>` is the Unique Identifier of the entry to pull data from and `<ShortCode>` is from the following:
 +
  * T - Title
- * U - Username  
+ * U - Username
  * P - Password
  * A - URL
  * N - Notes
@@ -288,6 +288,8 @@ image::database_security.png[]
 .Database credentials
 image::database_security_credentials.png[]
 
+WARNING: Consider creating a backup of your YubiKey. Please refer to <<Creating a YubiKey backup>>
+
 5. Encryption settings allows you to change the average time it takes to encrypt and decrypt the database. The longer time that is chosen, the harder it will be to brute force attack your database. *We recommend a setting of one second.*
 +
 .Database encryption
@@ -305,6 +307,23 @@ The following key derivation functions are supported:
  * AES-KDF (KDBX 4 and KDBX 3.1): This key derivation function is based on iterating AES. Users can change the number of iterations. The more iterations, the harder are dictionary and guessing attacks, but also database loading/saving takes more time (linearly). KDBX 3.1 only supports AES-KDF; any other key derivation function, like for instance Argon2, requires KDBX 4.
 
  * Argon2 (KDBX 4 - recommended): KDBX 4, the Argon2 key derivation function can be used for transforming the composite master key (as protection against dictionary attacks). The main advantage of Argon2 over AES-KDF is that it provides a better resistance against GPU/ASIC attacks (due to being a memory-hard function). The number of iterations scales linearly with the required time. By increasing the memory parameter, GPU/ASIC attacks become harder (and the required time increases). The parallelism parameter can be used to specify how many threads should be used.
+
+=== Creating a YubiKey backup
+It is advisable to have a backup replica YubiKey In case your main YubiKey gets damaged, lost, or stolen. The same HMAC key will need to be written to both keys. To do this you can either use the YubiKey Personalization Tool GUI or the ykpersonalize CLI tool. The steps for the CLI tool are shown:
+
+1. Create a 20 byte HMAC key:
++
+```
+dd status=none if=/dev/random bs=20 count=1 | xxd -p -c 40
+```
+
+2. Write the HMAC key to slot 2 _(Set through the first switch. Out of the box the YubiKey OTP resides in slot 1)_:
++
+```
+ykpersonalize -2 -a -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible -oallow-update
+```
+
+You will be asked to enter the HMAC key you created earlier, copy/paste they key output in the first step. Repeat both steps for your second YubiKey. We recommend storing your HMAC key in a safe place (e.g., printed on paper) in case you need to recreate another key.
 // end::advanced[]
 
 == Storing a Database File
