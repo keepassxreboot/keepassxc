@@ -72,7 +72,7 @@
 #endif
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
-#include "gui/MainWindowAdaptor.h"
+#include "mainwindowadaptor.h"
 #endif
 
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
