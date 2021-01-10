@@ -8,6 +8,7 @@ description: |
   published under the terms of the GNU General Public License.
 confinement: strict
 base: core18
+compression: lzo
 
 plugs: # plugs for theming, font settings, cursor and to use gtk3 file chooser
   gtk-3-themes:
