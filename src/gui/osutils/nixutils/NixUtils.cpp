@@ -104,7 +104,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
                << QStringLiteral("StartupNotify=true") << '\n'
                << QStringLiteral("Terminal=false") << '\n'
                << QStringLiteral("Type=Application") << '\n'
-               << QStringLiteral("Version=1.0") << "true" << '\n'
+               << QStringLiteral("Version=1.0") << '\n'
                << QStringLiteral("Categories=Utility;Security;Qt;") << '\n'
                << QStringLiteral("MimeType=application/x-keepass2;") << '\n'
                << QStringLiteral("X-GNOME-Autostart-enabled=true") << '\n'
