@@ -3032,7 +3032,7 @@ Támogatott kiterjesztések: %1.</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>Beépülő adati</translation>
+        <translation>Beépülő adatai</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -3085,7 +3085,7 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 – Klónozás</translation>
+        <translation>%1 – Klón</translation>
     </message>
 </context>
 <context>
@@ -4851,19 +4851,19 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>{FELHASZNÁLÓNÉV}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{FELHASZNÁLÓNÉV}{ENTER}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>{JELSZÓ}</translation>
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{JELSZÓ}{ENTER}</translation>
     </message>
 </context>
 <context>
@@ -5510,7 +5510,7 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
     </message>
     <message>
         <source>Very weak password</source>
-        <translation>Nagy gyenge jelszó</translation>
+        <translation>Nagyon gyenge jelszó</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>

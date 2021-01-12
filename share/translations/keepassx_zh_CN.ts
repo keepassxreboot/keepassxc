@@ -3127,7 +3127,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>您确定要删除 ％n 个附件吗？</numerusform></translation>
+        <translation><numerusform>您确定要删除所选附件吗？</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>

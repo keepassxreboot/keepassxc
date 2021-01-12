@@ -330,15 +330,15 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Vitesse de remplissage de la saisie automatique :</translation>
+        <translation>Vitesse de remplissage de la saisie automatique :</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>Raccourci de la saisie automatique :</translation>
+        <translation>Raccourci de la saisie automatique :</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation>Délai de démarrage de la saisie automatique :</translation>
+        <translation>Délai de démarrage de la saisie automatique :</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
@@ -439,11 +439,11 @@
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
-        <translation>Demander de confirmer le mot de passe lorsque celui-ci est visible</translation>
+        <translation>Exiger la confirmation du mot de passe s’il est visible</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation>Cacher les mots de passe pendant leur modification</translation>
+        <translation>Cacher les mots de passe lors de leur modification</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
@@ -564,11 +564,11 @@
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>Requiert l’accès à KeePassXC-Browser</translation>
+        <translation>KeePassXC-Browser - Requête d&apos;accès au navigateur</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
-        <translation>%1 demande l’accès aux entrées suivantes :</translation>
+        <translation>%1 demande l’accès aux entrées suivantes :</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
@@ -892,7 +892,7 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation>Type de navigateur :</translation>
+        <translation>Type de navigateur :</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -900,7 +900,7 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>Config Location:</source>
-        <translation>Emplacement de configuration :</translation>
+        <translation>Emplacement de configuration :</translation>
     </message>
     <message>
         <source>Custom browser location field</source>
@@ -2764,7 +2764,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation>Conteneur KeeShare non signé</translation>
+        <translation>Conteneur KeeShare non signé</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
@@ -4135,7 +4135,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>Taille du champ &quot;date du la création du groupe&quot; incorrect.</translation>
+        <translation>Taille du champ « date du la création du groupe » incorrect.</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
@@ -4151,7 +4151,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation>Taille du champ &quot;icône du groupe&quot; incorrect.</translation>
+        <translation>Taille du champ « icône du groupe » incorrect.</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
@@ -4911,11 +4911,11 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation>Écrasement de %1 [%2]</translation>
+        <translation>Remplacement de %1 [%2]</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>ancienne entrée fusionnée de la base de données &quot;%1&quot;</translation>
+        <translation>ancienne entrée fusionnée de la base de données « %1 »</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
@@ -5065,7 +5065,7 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation>Impossible d’activer le traitement de ClearText</translation>
+        <translation>Impossible d’appliquer l&apos;amélioration ClearText</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
@@ -5282,7 +5282,7 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Types de caractères:</translation>
+        <translation>Types de caractères</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -5326,7 +5326,7 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Qualité du mot de passe : %1</translation>
+        <translation>Qualité du mot de passe : %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -5382,7 +5382,7 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>Ajouter les lettres non-hexadécimales à la liste &quot;Ne pas inclure&quot;</translation>
+        <translation>Ajouter les lettres non-hexadécimales à la liste « Ne pas inclure »</translation>
     </message>
     <message>
         <source>Hex</source>
@@ -5815,7 +5815,7 @@ Commandes proposées :
     </message>
     <message>
         <source>malformed string</source>
-        <translation>chaîne de caractères malformée</translation>
+        <translation>chaîne de caractères incorrecte</translation>
     </message>
     <message>
         <source>missing closing quote</source>
@@ -5889,7 +5889,7 @@ Commandes proposées :
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation>Ajouté avec succès l’entrée %1.</translation>
+        <translation>L’entrée %1 a bien été ajoutée.</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
@@ -6091,7 +6091,7 @@ Commandes proposées :
     <message>
         <source>Error reading merge file:
 %1</source>
-        <translation>Erreur lors de la lecture du fichier fusionner :
+        <translation>Erreur lors de la lecture du fichier à fusionner :
 %1</translation>
     </message>
     <message>
@@ -6104,11 +6104,11 @@ Commandes proposées :
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation>Entrée %1 recyclée avec succès.</translation>
+        <translation>L&apos;entrée %1 a bien été recyclée.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation>Supprimé l’entrée %1 avec succès.</translation>
+        <translation>L’entrée %1 a bien été supprimée.</translation>
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
@@ -6128,7 +6128,7 @@ Commandes proposées :
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
-        <translation>%1: (ligne,colonne) %2,%3</translation>
+        <translation>%1 : (ligne, colonne) %2, %3</translation>
     </message>
     <message>
         <source>Argon2 (KDBX 4 – recommended)</source>
@@ -6174,7 +6174,7 @@ Commandes proposées :
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation>Aucune clé définie. Abandon de la création de la base de données.</translation>
+        <translation>Aucune clé définie. La création de la base de données a été abandonnée.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
@@ -6186,11 +6186,11 @@ Commandes proposées :
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation>Creation du fichier clé %1 échoué : %2 </translation>
+        <translation>Impossible de créer le fichier clé %1 : %2 </translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation>Chargement du fichier clé %1 échoué : %2</translation>
+        <translation>Impossible de charger le fichier clé %1 : %2</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
@@ -6366,7 +6366,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation>Échec de l’ouverture du fichier HIBP %1 : %2</translation>
+        <translation>Impossible d&apos;ouvrir le fichier HIBP %1 : %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while...</source>
@@ -6728,7 +6728,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation>ChaCha20 : 256 bits {20 256 à ?}</translation>
+        <translation>ChaCha20 : 256 bits {20 256 à ?}</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
@@ -7272,7 +7272,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Key:</source>
-        <translation>Clé :</translation>
+        <translation>Clé :</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -7357,7 +7357,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation>Le certificat exporté est différent de celui en cours d’utilisation. Souhaitez-vous exporter le certificat actuel ?</translation>
+        <translation>Le certificat exporté est différent de celui en cours d’utilisation. Souhaitez-vous exporter le certificat actuel  ?</translation>
     </message>
     <message>
         <source>Signer:</source>
@@ -7565,7 +7565,7 @@ Noyau : %3 %4</translation>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation>Mot de passe programmé</translation>
+        <translation>Mot de passe planifié</translation>
     </message>
     <message>
         <source>000000</source>
@@ -7633,7 +7633,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>Taille du code :</translation>
+        <translation>Taille du code :</translation>
     </message>
     <message>
         <source>Secret Key:</source>
@@ -7701,7 +7701,7 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Update Error!</source>
-        <translation>Erreur de mise à jour !</translation>
+        <translation>Erreur lors de mise à jour !</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
@@ -7729,7 +7729,7 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation>Votre version est à jour !</translation>
+        <translation>Votre version est à jour !</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>

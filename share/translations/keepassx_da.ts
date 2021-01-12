@@ -245,7 +245,7 @@
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation type="unfinished"/>
+        <translation>(genstart program for at aktivere)</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>

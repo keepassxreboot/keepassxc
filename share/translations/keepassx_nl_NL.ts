@@ -350,7 +350,7 @@
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation type="unfinished"/>
+        <translation>Systeemvak-pictogram</translation>
     </message>
 </context>
 <context>
@@ -4852,19 +4852,19 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>{GEBRUIKERSNAAM}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{GEBRUIKERSNAAM}{ENTER}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>{WACHTWOORD}</translation>
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{WACHTWOORD}{ENTER}</translation>
     </message>
 </context>
 <context>
