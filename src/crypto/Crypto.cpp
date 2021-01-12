@@ -73,7 +73,7 @@ QString Crypto::debugInfo()
     Q_ASSERT(Crypto::initialized());
 
     QString debugInfo = QObject::tr("Cryptographic libraries:").append("\n");
-    debugInfo.append(" libgcrypt ").append(m_backendVersion).append("\n");
+    debugInfo.append("- libgcrypt ").append(m_backendVersion).append("\n");
     return debugInfo;
 }
 

@@ -13,3 +13,7 @@ DatabaseWidget #SearchBanner, DatabaseWidget #KeeShareBanner {
     border: 1px solid rgb(190, 190, 190);
     padding: 2px;
 }
+
+QLineEdit {
+    padding-left: 2px;
+}

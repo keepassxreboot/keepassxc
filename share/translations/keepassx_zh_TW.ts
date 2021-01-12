@@ -4853,19 +4853,19 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>{USERNAME}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{USERNAME}{ENTER}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>{PASSWORD}</translation>
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{PASSWORD}{ENTER}</translation>
     </message>
 </context>
 <context>

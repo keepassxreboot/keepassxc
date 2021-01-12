@@ -497,6 +497,14 @@ MainWindow::MainWindow()
     connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
     connect(m_ui->actionKeyboardShortcuts, SIGNAL(triggered()), SLOT(openKeyboardShortcuts()));
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    // Install event filter for empty-area drag
+    auto* eventFilter = new MainWindowEventFilter(this);
+    m_ui->menubar->installEventFilter(eventFilter);
+    m_ui->toolBar->installEventFilter(eventFilter);
+    m_ui->tabWidget->tabBar()->installEventFilter(eventFilter);
+#endif
+
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
@@ -518,6 +526,11 @@ MainWindow::MainWindow()
 #ifndef WITH_XC_NETWORKING
     m_ui->actionGroupDownloadFavicons->setVisible(false);
     m_ui->actionEntryDownloadIcon->setVisible(false);
+#endif
+#ifndef WITH_XC_DOCS
+    m_ui->actionGettingStarted->setVisible(false);
+    m_ui->actionUserGuide->setVisible(false);
+    m_ui->actionKeyboardShortcuts->setVisible(false);
 #endif
 
     // clang-format off
@@ -743,7 +756,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupSortDesc->setEnabled(groupSelected && currentGroupHasChildren);
             m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
+#ifdef WITH_XC_NETWORKING
             m_ui->actionGroupDownloadFavicons->setVisible(!recycleBinSelected);
+#endif
             m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && currentGroupHasEntries
                                                           && !recycleBinSelected);
             m_ui->actionDatabaseSecurity->setEnabled(true);
@@ -1529,11 +1544,6 @@ void MainWindow::toggleWindow()
 
 void MainWindow::lockDatabasesAfterInactivity()
 {
-    // ignore event if a modal dialog is open (such as a message box or file dialog)
-    if (QApplication::activeModalWidget()) {
-        return;
-    }
-
     m_ui->tabWidget->lockDatabases();
 }
 
@@ -1754,3 +1764,44 @@ void MainWindow::initViewMenu()
         config()->set(Config::GUI_HidePasswords, checked);
     });
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+
+MainWindowEventFilter::MainWindowEventFilter(QObject* parent)
+    : QObject(parent)
+{
+}
+
+/**
+ * MainWindow event filter to initiate empty-area drag on the toolbar, menubar, and tabbar.
+ */
+bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
+{
+    auto* mainWindow = getMainWindow();
+    if (!mainWindow || !mainWindow->m_ui) {
+        return QObject::eventFilter(watched, event);
+    }
+
+    if (event->type() == QEvent::MouseButtonPress) {
+        if (watched == mainWindow->m_ui->menubar) {
+            mainWindow->windowHandle()->startSystemMove();
+            // Continue processing events, so menus keep working.
+            return false;
+        } else if (watched == mainWindow->m_ui->toolBar) {
+            if (!mainWindow->m_ui->toolBar->isMovable() || mainWindow->m_ui->toolBar->cursor() != Qt::SizeAllCursor) {
+                mainWindow->windowHandle()->startSystemMove();
+                return false;
+            }
+        } else if (watched == mainWindow->m_ui->tabWidget->tabBar()) {
+            auto* m = static_cast<QMouseEvent*>(event);
+            if (mainWindow->m_ui->tabWidget->tabBar()->tabAt(m->pos()) == -1) {
+                mainWindow->windowHandle()->startSystemMove();
+                return true;
+            }
+        }
+    }
+
+    return QObject::eventFilter(watched, event);
+}
+
+#endif

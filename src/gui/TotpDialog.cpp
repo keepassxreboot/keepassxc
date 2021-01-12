@@ -31,10 +31,7 @@ TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     , m_ui(new Ui::TotpDialog())
     , m_entry(entry)
 {
-    if (!m_entry->hasTotp()) {
-        close();
-        return;
-    }
+    setAttribute(Qt::WA_DeleteOnClose);
 
     m_ui->setupUi(this);
 
@@ -42,13 +39,10 @@ TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     resetCounter();
     updateProgressBar();
 
-    connect(parent, SIGNAL(databaseLocked()), SLOT(close()));
     connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
     m_totpUpdateTimer.start(m_step * 10);
     updateTotp();
-
-    setAttribute(Qt::WA_DeleteOnClose);
 
     new QShortcut(QKeySequence(QKeySequence::Copy), this, SLOT(copyToClipboard()));
 

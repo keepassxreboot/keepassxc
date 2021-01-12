@@ -229,7 +229,7 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Recordar los últimos ficheros claves y los «dongle» de seguridad</translation>
+        <translation>Recuerde los archivos de clave de la base de datos y los «dongle» de seguridad</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -1177,7 +1177,7 @@ Copia de seguridad de base de datos ubicada en %2</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
-        <translation>Papelera</translation>
+        <translation>Papelera de reciclaje</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1204,7 +1204,7 @@ Copia de seguridad de base de datos ubicada en %2</translation>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Key File:</source>
-        <translation>Fichero clave:</translation>
+        <translation>Fichero Clave:</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -1258,7 +1258,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Selección de ranura de clave hardware</translation>
+        <translation>Selección de ranura de llave por hardware</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -1274,11 +1274,11 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation>Clave hardware:</translation>
+        <translation>Llave por hardware:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation>Ayuda de clave hardware</translation>
+        <translation>Ayuda de la llave por hardware</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
@@ -1317,7 +1317,7 @@ Para prevenir que aparezca este error, debe ir a «Configuración de base de dat
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Puede usar una clave de seguridad hardware como &lt;strong&gt;YubiKey&lt;/strong&gt; o &lt;strong&gt;OnlyKey&lt;/strong&gt; con ranuras configuradas para HMAC-SHA1.&lt;/p&gt;
+        <translation>&lt;p&gt;Puede usar una llave de seguridad por hardware como &lt;strong&gt;YubiKey&lt;/strong&gt; o &lt;strong&gt;OnlyKey&lt;/strong&gt; con ranuras configuradas para HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Clic para más información...&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1352,15 +1352,15 @@ Si no tiene un fichero clave, deje el campo vacío.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Detectando claves hardware...</translation>
+        <translation>Detectando llaves por hardware...</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>No se detectaron claves hardware</translation>
+        <translation>No se detectaron llaves por hardware</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>Seleccionar clave hardware...</translation>
+        <translation>Seleccionar llave por hardware...</translation>
     </message>
 </context>
 <context>
@@ -1589,7 +1589,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation>Función de derivación de la llave:</translation>
+        <translation>Función de derivación de la clave:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -1670,7 +1670,7 @@ Si conserva este número, ¡su base de datos puede tardar horas o días (o inclu
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database may be too easy to crack!</source>
-        <translation>Está utilizando una cantidad muy baja de rondas de transformación de llave con AES-KDF.
+        <translation>Está utilizando un número muy bajo de rondas de transformación de clave con AES-KDF.
 
 Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!</translation>
     </message>
@@ -1680,7 +1680,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>Error al transformar la llave con nuevos parámetros KDF; KDF sin cambios.</translation>
+        <translation>Error al transformar la clave con nuevos parámetros KDF; KDF sin cambios.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
@@ -1710,7 +1710,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation>Función de derivación de la llave</translation>
+        <translation>Función de derivación de la clave</translation>
     </message>
     <message>
         <source>Transform rounds</source>
@@ -2000,7 +2000,7 @@ Esto es definitivamente un error, por favor repórtelo a los desarrolladores.</t
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>¿Desea mover %n apunte a la papelera?</numerusform><numerusform>¿Desea mover %n apuntes a la papelera?</numerusform></translation>
+        <translation><numerusform>¿Desea mover %n apunte a la papelera?</numerusform><numerusform>¿Desea mover %n apuntes a la papelera de reciclaje?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -2137,11 +2137,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation>¿Mover grupo a la papelera?</translation>
+        <translation>¿Mover grupo a la papelera de reciclaje?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>¿Desea mover el grupo «%1» a la papelera?</translation>
+        <translation>¿Desea mover el grupo «%1» a la papelera de reciclaje?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
@@ -2642,7 +2642,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Añadir llave al agente cuando la base de datos se abre/desbloquea</translation>
+        <translation>Añadir clave al agente cuando la base de datos se abre/desbloquea</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -2687,7 +2687,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation>Requiere confirmación del usuario cuando se usa esta llave</translation>
+        <translation>Requiere confirmación del usuario cuando se usa esta clave</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
@@ -2958,7 +2958,7 @@ Las extensiones soportadas son: %1.</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>El icono %n ya existe en la base de datos</numerusform><numerusform>Los %n iconos ya existen en la base de datos</numerusform></translation>
+        <translation><numerusform>El icono %n ya existe en la base de datos</numerusform><numerusform>Los %n icono(s) ya existe(n) en la base de datos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
@@ -2966,7 +2966,7 @@ Las extensiones soportadas son: %1.</translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>Este icono es usado en %1 apunte, y será remplazado por el icono por defecto. ¿Está seguro que desea eliminarlo?</numerusform><numerusform>Este icono es usado en %1 apuntes, y será remplazado por el icono predeterminado. ¿Está seguro que desea eliminarlo?</numerusform></translation>
+        <translation><numerusform>Este icono es usado en %1 apunte, y será remplazado por el icono por defecto. ¿Está seguro que desea eliminarlo?</numerusform><numerusform>Este icono es usado en %n apunte(s), y será remplazado por el icono predeterminado. ¿Está seguro que desea eliminarlo?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -3203,9 +3203,9 @@ Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
         <translation>%1 es un fichero grande (%2 MB).
-Tu base de datos puede vovlerse muy grande y reducir el rendimiento.
+Su base de datos puede vovlerse muy grande y reducir el rendimiento.
 
-¿Estás seguro de añadir este fichero?</translation>
+¿Está seguro de añadir este fichero?</translation>
     </message>
     <message>
         <source>Confirm Attachment</source>
@@ -3724,7 +3724,7 @@ Si ocurre nuevamente entonces su archivo de base de datos puede estar corrupto.<
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation>Función de derivación de cerradura no admitida (KDF) o parámetros no válidos</translation>
+        <translation>Función de derivación de clave no admitida (KDF) o parámetros no válidos</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
@@ -4118,7 +4118,7 @@ Linea %2, columna %3</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>Error en la transformación de la llave</translation>
+        <translation>Error en la transformación de la clave</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
@@ -4317,7 +4317,7 @@ Si ocurre nuevamente entonces su archivo de base de datos puede estar corrupto.<
     </message>
     <message>
         <source>Key File</source>
-        <translation>Fichero clave</translation>
+        <translation>Fichero Clave</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
@@ -4325,7 +4325,7 @@ Si ocurre nuevamente entonces su archivo de base de datos puede estar corrupto.<
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>Formato de archivo llave heredado</translation>
+        <translation>Formato de archivo fichero clave heredado</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -4355,7 +4355,7 @@ Mensaje: %2</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Seleccione un archivo llave</translation>
+        <translation>Seleccionar un fichero clave</translation>
     </message>
     <message>
         <source>Key file selection</source>
@@ -4829,11 +4829,11 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation>Mostrar barra de herrameintas</translation>
+        <translation>Mostrar barra de herramientas</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation>Mostrar panel de previsualizción</translation>
+        <translation>Mostrar panel de previsualización</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
@@ -5115,7 +5115,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Archivo llave no válido, esperando una llave de OpenSSH</translation>
+        <translation>Fichero clave no válido, esperando una clave de OpenSSH</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
@@ -5579,7 +5579,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     </message>
     <message>
         <source>Empty</source>
-        <translation>Vacío</translation>
+        <translation>Vaciar</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -6791,7 +6791,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation>Pasar por encima de la razón para mostrar detalles adicionales. Doble clic para editar.</translation>
+        <translation>Pasar por encima del motivo para mostrar detalles adicionales. Doble clic para editar.</translation>
     </message>
     <message>
         <source>Bad</source>
@@ -6850,7 +6850,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Reason</source>
-        <translation>Razón</translation>
+        <translation>Motivo</translation>
     </message>
     <message>
         <source>Edit Entry...</source>
@@ -7087,7 +7087,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation>El agente rechazó esta identidad. Las posibles razones incluyen:</translation>
+        <translation>El agente rechazó esta identidad. Los posibles motivos incluyen:</translation>
     </message>
     <message>
         <source>The key has already been added.</source>
@@ -7569,7 +7569,7 @@ Núcleo: %3 %4</translation>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation>Contraseña cronometrada</translation>
+        <translation>Contraseña temporizada</translation>
     </message>
     <message>
         <source>000000</source>
@@ -7581,7 +7581,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Caduca en &lt;b&gt;%n&lt;/b&gt; segundo(s)</numerusform><numerusform>Caduca en &lt;b&gt;%n&lt;/b&gt; segundo (s)</numerusform></translation>
+        <translation><numerusform>Caduca en &lt;b&gt;%n&lt;/b&gt; segundo</numerusform><numerusform>Caduca en &lt;b&gt;%n&lt;/b&gt; segundos</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7601,7 +7601,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation>Cernado en %1 segundos.</translation>
+        <translation>Cerrando en %1 segundos.</translation>
     </message>
 </context>
 <context>
@@ -7807,19 +7807,19 @@ Ejemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation>La clave hardware está actualmente en uso.</translation>
+        <translation>La llave por hardware está actualmente en uso.</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation>No se puede encontrar hardware con número de serie %1. Conéctelo para continuar.</translation>
+        <translation>No se puede encontrar llave por hardware con número de serie %1. Conéctelo para continuar.</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation>La clave hardware expiró esperando interacción del usuario.</translation>
+        <translation>La llave por hardware expiró esperando interacción del usuario.</translation>
     </message>
     <message>
         <source>A USB error ocurred when accessing the hardware key: %1</source>
-        <translation>Ha ocurrido un error USB  al acceder a la clave hardware: %1</translation>
+        <translation>Ha ocurrido un error USB  al acceder a la llave por hardware: %1</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
@@ -7846,23 +7846,23 @@ Ejemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Selección de ranura de clave hardware</translation>
+        <translation>Selección de ranura de llave por hardware</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
-        <translation>¡No se puede encontrar ninguna clave hardware!</translation>
+        <translation>¡No se puede encontrar ninguna llave por hardware!</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>¡La ranura de la clave hardware seleccionada no soporta reto-respuesta!</translation>
+        <translation>¡La ranura de la llave por hardware seleccionada no soporta reto-respuesta!</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Detectando claves hardware...</translation>
+        <translation>Detectando llaves por hardware...</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>No se detectaron claves hardware</translation>
+        <translation>No se detectaron llaves por hardware</translation>
     </message>
 </context>
 </TS>

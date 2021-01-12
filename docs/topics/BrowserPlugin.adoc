@@ -23,6 +23,10 @@ You can download the KeePassXC-Browser extension from your web browser. To downl
 
 2. Click the button to install/add the extension to the browser. Accept any confirmation dialogs.
 
+// tag::advanced[]
+NOTE: When Microsoft Edge is installed as a managed application, system administrators are required to deploy a custom native messaging configuration. Instructions for this are found in the advanced section below.
+// end::advanced[]
+
 === Configure KeePassXC-Browser
 To start using KeePassXC-Browser, you must configure it so that it can communicate with the KeePassXC application on your desktop.
 
@@ -104,5 +108,38 @@ WARNING: We do not recommend changing any of these settings as they may break th
 
 .Advanced browser settings
 image::browser_advanced_settings.png[]
+
+=== Advanced Setup
+==== Managed Microsoft Edge on Windows
+1. Deploy *org.keepassxc.keepassxc_browser_edge.json* to, for example, `C:\ProgramData\KeepassXC` on all managed platforms.
++
+----
+{
+    "allowed_origins": [
+        "chrome-extension://pdffhmdngciaglkoonimfcmckehcpafo/"
+    ],
+    "description": "KeePassXC integration with native messaging support",
+    "name": "org.keepassxc.keepassxc_browser",
+    "path": "C:\\Program Files\\KeePassXC\\keepassxc-proxy.exe",
+    "type": "stdio"
+}
+----
+
+2. Configure GPO options (registry result):
++
+----
+Windows Registry Editor Version 5.00
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Edge\NativeMessagingHosts\org.keepassxc.keepassxc_browser]
+@="C:\ProgramData\KeepassXC\org.keepassxc.keepassxc_browser_edge.json"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+"NativeMessagingUserLevelHosts"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallAllowlist]
+"1"="pdffhmdngciaglkoonimfcmckehcpafo"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\NativeMessagingAllowlist]
+"1"="org.keepassxc.keepassxc_browser"
+----
 // end::advanced[]
 // end::content[]

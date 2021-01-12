@@ -35,25 +35,25 @@ public:
         None,
         Hashed,
         KeePass2XML,
+        KeePass2XMLv2,
         FixedBinary,
         FixedBinaryHex
     };
 
     FileKey();
     ~FileKey() override;
-    bool load(QIODevice* device);
+    bool load(QIODevice* device, QString* errorMsg = nullptr);
     bool load(const QString& fileName, QString* errorMsg = nullptr);
     QByteArray rawKey() const override;
     Type type() const;
-    static void create(QIODevice* device, int size = 128);
-    static bool create(const QString& fileName, QString* errorMsg = nullptr, int size = 128);
+    static void createRandom(QIODevice* device, int size = 128);
+    static void createXMLv2(QIODevice* device, int size = 32);
+    static bool create(const QString& fileName, QString* errorMsg = nullptr);
 
 private:
     static constexpr int SHA256_SIZE = 32;
 
-    bool loadXml(QIODevice* device);
-    bool loadXmlMeta(QXmlStreamReader& xmlReader);
-    QByteArray loadXmlKey(QXmlStreamReader& xmlReader);
+    bool loadXml(QIODevice* device, QString* errorMsg = nullptr);
     bool loadBinary(QIODevice* device);
     bool loadHex(QIODevice* device);
     bool loadHashed(QIODevice* device);

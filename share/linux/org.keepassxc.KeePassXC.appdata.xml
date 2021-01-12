@@ -50,6 +50,33 @@
     </screenshots>
 
     <releases>
+        <release version="2.6.3" date="2021-01-12">
+            <description>
+                <ul>
+                    <li>Support Argon2id KDF [#5778]</li>
+                    <li>Support XMLv2 key files [#5798]</li>
+                    <li>Improve CSV Import/Export, include time fields and TOTP [#5346]</li>
+                    <li>Support empty area dragging of the application window [#5860]</li>
+                    <li>Display default Auto-Type sequence in preview pane [#5654]</li>
+                    <li>Remove strict length limit on generated passwords [#5748]</li>
+                    <li>Hide key file path by default when unlocking database [#5779]</li>
+                    <li>Document browser extension use with Edge in managed mode [#5692]</li>
+                    <li>Windows: Prevent clipboard history and cloud sync [#5853]</li>
+                    <li>macOS: Update the application icon to Big Sur styling [#5851]</li>
+                    <li>Re-select previously selected entry on database unlock [#5559]</li>
+                    <li>Properly save special character choice in password generator [#5610]</li>
+                    <li>Fix crash in browser integration with multiple similar entries [#5653]</li>
+                    <li>Remove offset on username field in classic theme [#5788]</li>
+                    <li>Ensure entry history is copied when drag/dropping entries and groups [#5817]</li>
+                    <li>Close modal dialogs when database is locked [#5820]</li>
+                    <li>Prevent crash when KeeShare modifies an entry that is currently being edited [#5827]</li>
+                    <li>Improve preview of entry attributes [#5834]</li>
+                    <li>Always activate/focus database open dialog preventing mistype [#5878]</li>
+                    <li>Reports: fix calculation of average password length [#5862]</li>
+                    <li>Linux: Delay startup on login to correct tray icon issues [#5724]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.6.2" date="2020-10-21">
             <description>
                 <ul>

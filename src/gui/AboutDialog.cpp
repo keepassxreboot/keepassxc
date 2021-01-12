@@ -59,6 +59,7 @@ static const QString aboutContributors = R"(
     <li>Kernellinux</li>
     <li>Micha Ober</li>
     <li>PublicByte</li>
+    <li>Clayton Casciato</li>
 </ul>
 <h3>Notable Code Contributions:</h3>
 <ul>
@@ -86,7 +87,6 @@ static const QString aboutContributors = R"(
 </ul>
 <h3>Patreon Supporters:</h3>
 <ul>
-    <li>Igor Zinovik</li>
     <li>Alexanderjb</li>
     <li>Richard Ames</li>
     <li>SLmanDR</li>
@@ -94,7 +94,7 @@ static const QString aboutContributors = R"(
     <li>Tyler Gass</li>
     <li>Nuutti Toivola</li>
     <li>Gregory Werbin</li>
-    <li>Lionel LaskÃ©</li>
+    <li>Lionel Laské</li>
     <li>Ivar</li>
     <li>Darren</li>
     <li>Brad</li>

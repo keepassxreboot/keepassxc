@@ -47,12 +47,12 @@ bool KeyFileEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
         return false;
     }
 
-    if (fileKey->type() != FileKey::Hashed) {
+    if (fileKey->type() != FileKey::KeePass2XMLv2 && fileKey->type() != FileKey::Hashed) {
         QMessageBox::warning(getMainWindow(),
-                             tr("Legacy key file format"),
-                             tr("You are using a legacy key file format which may become\n"
-                                "unsupported in the future.\n\n"
-                                "Generate a new key file in the database security settings."),
+                             tr("Old key file format"),
+                             tr("You selected a key file in an old format which KeePassXC<br>"
+                                "may stop supporting in the future.<br><br>"
+                                "Please consider generating a new key file instead."),
                              QMessageBox::Ok);
     }
 
@@ -96,7 +96,7 @@ void KeyFileEditWidget::createKeyFile()
     if (!m_compEditWidget) {
         return;
     }
-    QString filters = QString("%1 (*.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
+    QString filters = QString("%1 (*.keyx; *.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
     QString fileName = fileDialog()->getSaveFileName(this, tr("Create Key File..."), QString(), filters);
 
     if (!fileName.isEmpty()) {
@@ -119,7 +119,7 @@ void KeyFileEditWidget::browseKeyFile()
     if (!m_compEditWidget) {
         return;
     }
-    QString filters = QString("%1 (*.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
+    QString filters = QString("%1 (*.keyx; *.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(this, tr("Select a key file"), QString(), filters);
 
     if (QFileInfo(fileName).canonicalFilePath() == m_parent->getDatabase()->canonicalFilePath()) {

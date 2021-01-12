@@ -178,9 +178,6 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
-
-    // HACK: Align username text with other line edits. Qt does not let you do this with an application stylesheet.
-    m_mainUi->usernameComboBox->lineEdit()->setStyleSheet("padding-left: 8px;");
 }
 
 void EditEntryWidget::setupAdvanced()
@@ -268,9 +265,8 @@ void EditEntryWidget::setupAutoType()
 #ifdef WITH_XC_BROWSER
 void EditEntryWidget::setupBrowser()
 {
-    m_browserUi->setupUi(m_browserWidget);
-
     if (config()->get(Config::Browser_Enabled).toBool()) {
+        m_browserUi->setupUi(m_browserWidget);
         addPage(tr("Browser Integration"), Resources::instance()->icon("internet-web-browser"), m_browserWidget);
         m_additionalURLsDataModel->setEntryAttributes(m_entryAttributes);
         m_browserUi->additionalURLsView->setModel(m_additionalURLsDataModel);
@@ -935,35 +931,44 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 #endif
 
 #ifdef WITH_XC_BROWSER
-    if (m_customData->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
-        // clang-format off
-        m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == TRUE_STR);
-        // clang-format on
-    } else {
-        m_browserUi->skipAutoSubmitCheckbox->setChecked(false);
+    if (config()->get(Config::Browser_Enabled).toBool()) {
+        if (!hasPage(m_browserWidget)) {
+            setupBrowser();
+        }
+
+        if (m_customData->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
+            // clang-format off
+            m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == TRUE_STR);
+            // clang-format on
+        } else {
+            m_browserUi->skipAutoSubmitCheckbox->setChecked(false);
+        }
+
+        if (m_customData->contains(BrowserService::OPTION_HIDE_ENTRY)) {
+            m_browserUi->hideEntryCheckbox->setChecked(m_customData->value(BrowserService::OPTION_HIDE_ENTRY)
+                                                       == TRUE_STR);
+        } else {
+            m_browserUi->hideEntryCheckbox->setChecked(false);
+        }
+
+        if (m_customData->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)) {
+            m_browserUi->onlyHttpAuthCheckbox->setChecked(m_customData->value(BrowserService::OPTION_ONLY_HTTP_AUTH)
+                                                          == TRUE_STR);
+        } else {
+            m_browserUi->onlyHttpAuthCheckbox->setChecked(false);
+        }
+
+        m_browserUi->addURLButton->setEnabled(!m_history);
+        m_browserUi->removeURLButton->setEnabled(false);
+        m_browserUi->editURLButton->setEnabled(false);
+        m_browserUi->additionalURLsView->setEditTriggers(editTriggers);
+
+        if (m_additionalURLsDataModel->rowCount() != 0) {
+            m_browserUi->additionalURLsView->setCurrentIndex(m_additionalURLsDataModel->index(0, 0));
+        }
     }
 
-    if (m_customData->contains(BrowserService::OPTION_HIDE_ENTRY)) {
-        m_browserUi->hideEntryCheckbox->setChecked(m_customData->value(BrowserService::OPTION_HIDE_ENTRY) == TRUE_STR);
-    } else {
-        m_browserUi->hideEntryCheckbox->setChecked(false);
-    }
-
-    if (m_customData->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)) {
-        m_browserUi->onlyHttpAuthCheckbox->setChecked(m_customData->value(BrowserService::OPTION_ONLY_HTTP_AUTH)
-                                                      == TRUE_STR);
-    } else {
-        m_browserUi->onlyHttpAuthCheckbox->setChecked(false);
-    }
-
-    m_browserUi->addURLButton->setEnabled(!m_history);
-    m_browserUi->removeURLButton->setEnabled(false);
-    m_browserUi->editURLButton->setEnabled(false);
-    m_browserUi->additionalURLsView->setEditTriggers(editTriggers);
-
-    if (m_additionalURLsDataModel->rowCount() != 0) {
-        m_browserUi->additionalURLsView->setCurrentIndex(m_additionalURLsDataModel->index(0, 0));
-    }
+    setPageHidden(m_browserWidget, !config()->get(Config::Browser_Enabled).toBool());
 #endif
 
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
@@ -994,6 +999,15 @@ bool EditEntryWidget::commitEntry()
         clear();
         hideMessage();
         emit editFinished(false);
+        return true;
+    }
+
+    // HACK: Check that entry pointer is still valid, see https://github.com/keepassxreboot/keepassxc/issues/5722
+    if (!m_entry) {
+        QMessageBox::information(this,
+                                 tr("Invalid Entry"),
+                                 tr("An external merge operation has invalidated this entry.\n"
+                                    "Unfortunately, any changes made have been lost."));
         return true;
     }
 

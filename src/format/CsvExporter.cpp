@@ -67,6 +67,10 @@ QString CsvExporter::exportHeader()
     addColumn(header, "Password");
     addColumn(header, "URL");
     addColumn(header, "Notes");
+    addColumn(header, "TOTP");
+    addColumn(header, "Icon");
+    addColumn(header, "Last Modified");
+    addColumn(header, "Created");
     return header + QString("\n");
 }
 
@@ -88,6 +92,10 @@ QString CsvExporter::exportGroup(const Group* group, QString groupPath)
         addColumn(line, entry->password());
         addColumn(line, entry->url());
         addColumn(line, entry->notes());
+        addColumn(line, entry->totpSettingsString());
+        addColumn(line, QString::number(entry->iconNumber()));
+        addColumn(line, entry->timeInfo().lastModificationTime().toString(Qt::ISODate));
+        addColumn(line, entry->timeInfo().creationTime().toString(Qt::ISODate));
 
         line.append("\n");
         response.append(line);

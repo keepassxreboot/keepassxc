@@ -321,7 +321,7 @@ QString BrowserService::storeKey(const QString& key)
 
     do {
         QInputDialog keyDialog;
-        connect(m_currentDatabaseWidget, SIGNAL(databaseLocked()), &keyDialog, SLOT(reject()));
+        connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &keyDialog, SLOT(reject()));
         keyDialog.setWindowTitle(tr("KeePassXC: New key association request"));
         keyDialog.setLabelText(tr("You have received an association request for the following database:\n%1\n\n"
                                   "Give the connection a unique name or ID, for example:\nchrome-laptop.")
@@ -745,7 +745,7 @@ BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& siteUrlStr,
         // Sort same priority entries by Title or UserName
         auto entries = priorities.values(key);
         std::sort(entries.begin(), entries.end(), [&sortField](Entry* left, Entry* right) {
-            return QString::localeAwareCompare(left->attribute(sortField), right->attribute(sortField));
+            return QString::localeAwareCompare(left->attribute(sortField), right->attribute(sortField)) < 0;
         });
         results << entries;
         if (browserSettings()->bestMatchOnly() && !results.isEmpty()) {
@@ -772,7 +772,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     updateWindowState();
     BrowserAccessControlDialog accessControlDialog;
 
-    connect(m_currentDatabaseWidget, SIGNAL(databaseLocked()), &accessControlDialog, SLOT(reject()));
+    connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &accessControlDialog, SLOT(reject()));
 
     connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
         auto entry = pwEntriesToConfirm[item->row()];
