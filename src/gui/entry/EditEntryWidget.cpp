@@ -968,16 +968,16 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
         }
 
         if (m_customData->contains(BrowserService::OPTION_NOT_HTTP_AUTH)) {
-        m_browserUi->notHttpAuthCheckbox->setChecked(m_customData->value(BrowserService::OPTION_NOT_HTTP_AUTH)
-                                                     == TRUE_STR);
-    } else {
-        m_browserUi->notHttpAuthCheckbox->setChecked(false);
-    }
+            m_browserUi->notHttpAuthCheckbox->setChecked(m_customData->value(BrowserService::OPTION_NOT_HTTP_AUTH)
+                                                         == TRUE_STR);
+        } else {
+            m_browserUi->notHttpAuthCheckbox->setChecked(false);
+        }
 
-    m_browserUi->addURLButton->setEnabled(!m_history);
-    m_browserUi->removeURLButton->setEnabled(false);
-    m_browserUi->editURLButton->setEnabled(false);
-    m_browserUi->additionalURLsView->setEditTriggers(editTriggers);
+        m_browserUi->addURLButton->setEnabled(!m_history);
+        m_browserUi->removeURLButton->setEnabled(false);
+        m_browserUi->editURLButton->setEnabled(false);
+        m_browserUi->additionalURLsView->setEditTriggers(editTriggers);
 
         if (m_additionalURLsDataModel->rowCount() != 0) {
             m_browserUi->additionalURLsView->setCurrentIndex(m_additionalURLsDataModel->index(0, 0));
