@@ -410,8 +410,6 @@ void DatabaseOpenWidget::hardwareKeyResponse(bool found)
         m_ui->challengeResponseCombo->addItem(tr("No hardware keys detected"));
         m_ui->challengeResponseCombo->setEnabled(false);
         return;
-    } else {
-        m_ui->challengeResponseCombo->addItem(tr("Select hardware key…"));
     }
 
     YubiKeySlot lastUsedSlot;
