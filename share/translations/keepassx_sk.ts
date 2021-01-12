@@ -137,7 +137,7 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>Musíte reštartovať aplikáciu, aby sa tieto zmeny prejavili. Chcete ju reštartovať teraz?</translation>
     </message>
 </context>
 <context>
@@ -342,15 +342,15 @@
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Pri zamknutí databázy automaticky uložiť</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Pri zamknutí databázy automaticky uložiť nedátové zmeny</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation type="unfinished"/>
+        <translation>Typ ikona oznamovacej oblasti</translation>
     </message>
 </context>
 <context>
@@ -956,7 +956,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
-        <translation type="unfinished"/>
+        <translation>Vyberte umiestnenie zložky hostiteľa správe medzi prehliadačom a KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -4854,23 +4854,23 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
     </message>
     <message>
         <source>Perform Auto-Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Vykonať Automatické vypĺňanie</translation>
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>{POUŽÍVATEĽ}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{POUŽÍVATEĽ}{ENTER}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>{HESLO}</translation>
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{HESLO}{ENTER}</translation>
     </message>
 </context>
 <context>
@@ -6571,7 +6571,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno uložiť súbor skriptu správ medzi prehliadačom a KeePassXC (native messaging) pre %1.</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>

@@ -186,23 +186,29 @@ void ShareObserver::handleDatabaseChanged()
 
 void ShareObserver::handleFileUpdated(const QString& path)
 {
-    const Result result = importShare(path);
-    if (!result.isValid()) {
-        return;
+    if (!m_inFileUpdate) {
+        QTimer::singleShot(100, this, [this, path] {
+            const Result result = importShare(path);
+            m_inFileUpdate = false;
+            if (!result.isValid()) {
+                return;
+            }
+            QStringList success;
+            QStringList warning;
+            QStringList error;
+            if (result.isError()) {
+                error << tr("Import from %1 failed (%2)").arg(result.path, result.message);
+            } else if (result.isWarning()) {
+                warning << tr("Import from %1 failed (%2)").arg(result.path, result.message);
+            } else if (result.isInfo()) {
+                success << tr("Import from %1 successful (%2)").arg(result.path, result.message);
+            } else {
+                success << tr("Imported from %1").arg(result.path);
+            }
+            notifyAbout(success, warning, error);
+        });
+        m_inFileUpdate = true;
     }
-    QStringList success;
-    QStringList warning;
-    QStringList error;
-    if (result.isError()) {
-        error << tr("Import from %1 failed (%2)").arg(result.path, result.message);
-    } else if (result.isWarning()) {
-        warning << tr("Import from %1 failed (%2)").arg(result.path, result.message);
-    } else if (result.isInfo()) {
-        success << tr("Import from %1 successful (%2)").arg(result.path, result.message);
-    } else {
-        success << tr("Imported from %1").arg(result.path);
-    }
-    notifyAbout(success, warning, error);
 }
 
 ShareObserver::Result ShareObserver::importShare(const QString& path)

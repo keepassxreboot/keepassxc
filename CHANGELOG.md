@@ -1,12 +1,36 @@
 # Changelog
 
-## 2.7.0 (in development)
+## 2.6.3 (2020-01-12)
 
 ### Added
 
+- Support Argon2id KDF [#5778]
+- Support XMLv2 key files [#5798]
+
 ### Changed
 
+- Improve CSV Import/Export, include time fields and TOTP [#5346]
+- Support empty area dragging of the application window [#5860]
+- Display default Auto-Type sequence in preview pane [#5654]
+- Remove strict length limit on generated passwords [#5748]
+- Hide key file path by default when unlocking database [#5779]
+- Document browser extension use with Edge in managed mode [#5692]
+- Windows: Prevent clipboard history and cloud sync [#5853]
+- macOS: Update the application icon to Big Sur styling [#5851]
+
 ### Fixed
+
+- Re-select previously selected entry on database unlock [#5559]
+- Properly save special character choice in password generator [#5610]
+- Fix crash in browser integration with multiple similar entries [#5653]
+- Remove offset on username field in classic theme [#5788]
+- Ensure entry history is copied when drag/dropping entries and groups [#5817]
+- Close modal dialogs when database is locked [#5820]
+- Prevent crash when KeeShare modifies an entry that is currently being edited [#5827]
+- Improve preview of entry attributes [#5834]
+- Always activate/focus database open dialog preventing mistype [#5878]
+- Reports: fix calculation of average password length [#5862]
+- Linux: Delay startup on login to correct tray icon issues [#5724]
 
 ## 2.6.2 (2020-10-21)
 

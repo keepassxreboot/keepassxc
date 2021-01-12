@@ -174,9 +174,9 @@ void PasswordGeneratorWidget::saveSettings()
 
     config()->set(Config::PasswordGenerator_AdvancedMode, m_ui->buttonAdvancedMode->isChecked());
     if (m_ui->buttonAdvancedMode->isChecked()) {
-        config()->set(Config::PasswordGenerator_SpecialChars, m_ui->checkBoxSpecialChars->isChecked());
-    } else {
         config()->set(Config::PasswordGenerator_Logograms, m_ui->checkBoxSpecialChars->isChecked());
+    } else {
+        config()->set(Config::PasswordGenerator_SpecialChars, m_ui->checkBoxSpecialChars->isChecked());
     }
     config()->set(Config::PasswordGenerator_Braces, m_ui->checkBoxBraces->isChecked());
     config()->set(Config::PasswordGenerator_Punctuation, m_ui->checkBoxPunctuation->isChecked());

@@ -322,7 +322,7 @@ QString BrowserService::storeKey(const QString& key)
 
     do {
         QInputDialog keyDialog;
-        connect(m_currentDatabaseWidget, SIGNAL(databaseLocked()), &keyDialog, SLOT(reject()));
+        connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &keyDialog, SLOT(reject()));
         keyDialog.setWindowTitle(tr("KeePassXC: New key association request"));
         keyDialog.setLabelText(tr("You have received an association request for the following database:\n%1\n\n"
                                   "Give the connection a unique name or ID, for example:\nchrome-laptop.")
@@ -778,7 +778,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     updateWindowState();
     BrowserAccessControlDialog accessControlDialog;
 
-    connect(m_currentDatabaseWidget, SIGNAL(databaseLocked()), &accessControlDialog, SLOT(reject()));
+    connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &accessControlDialog, SLOT(reject()));
 
     connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
         auto entry = pwEntriesToConfirm[item->row()];

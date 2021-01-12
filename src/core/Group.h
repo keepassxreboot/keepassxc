@@ -56,6 +56,7 @@ public:
         CloneNewUuid = 1, // generate a random uuid for the clone
         CloneResetTimeInfo = 2, // set all TimeInfo attributes to the current time
         CloneIncludeEntries = 4, // clone the group entries
+        CloneDefault = CloneNewUuid | CloneResetTimeInfo | CloneIncludeEntries,
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
@@ -108,7 +109,6 @@ public:
 
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
-    static CloneFlags DefaultCloneFlags;
     static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
@@ -157,8 +157,8 @@ public:
     QSet<QUuid> customIconsRecursive() const;
     QList<QString> usernamesRecursive(int topN = -1) const;
 
-    Group* clone(Entry::CloneFlags entryFlags = Entry::DefaultCloneFlags,
-                 CloneFlags groupFlags = DefaultCloneFlags) const;
+    Group* clone(Entry::CloneFlags entryFlags = Entry::CloneDefault,
+                 Group::CloneFlags groupFlags = Group::CloneDefault) const;
 
     void copyDataFrom(const Group* other);
     QString print(bool recursive = false, bool flatten = false, int depth = 0);

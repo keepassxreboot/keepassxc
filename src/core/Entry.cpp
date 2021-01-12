@@ -36,8 +36,6 @@ const int Entry::ResolveMaximumDepth = 10;
 const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
 const QString Entry::AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
 
-Entry::CloneFlags Entry::DefaultCloneFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo;
-
 Entry::Entry()
     : m_attributes(new EntryAttributes(this))
     , m_attachments(new EntryAttachments(this))

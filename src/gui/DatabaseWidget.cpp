@@ -216,7 +216,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
 #ifdef WITH_XC_SSHAGENT
     if (sshAgent()->isEnabled()) {
-        connect(this, SIGNAL(databaseLockRequested()), sshAgent(), SLOT(databaseLocked()));
+        connect(this, SIGNAL(databaseLocked()), sshAgent(), SLOT(databaseLocked()));
         connect(this, SIGNAL(databaseUnlocked()), sshAgent(), SLOT(databaseUnlocked()));
     }
 #endif
@@ -437,6 +437,7 @@ void DatabaseWidget::showTotp()
     }
 
     auto totpDialog = new TotpDialog(this, currentEntry);
+    connect(this, &DatabaseWidget::databaseLockRequested, totpDialog, &TotpDialog::close);
     totpDialog->open();
 }
 
@@ -460,6 +461,7 @@ void DatabaseWidget::setupTotp()
 
     auto setupTotpDialog = new TotpSetupDialog(this, currentEntry);
     connect(setupTotpDialog, SIGNAL(totpUpdated()), SIGNAL(entrySelectionChanged()));
+    connect(this, &DatabaseWidget::databaseLockRequested, setupTotpDialog, &TotpSetupDialog::close);
     setupTotpDialog->open();
 }
 
@@ -703,6 +705,7 @@ void DatabaseWidget::showTotpKeyQrCode()
     auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         auto totpDisplayDialog = new TotpExportSettingsDialog(this, currentEntry);
+        connect(this, &DatabaseWidget::databaseLockRequested, totpDisplayDialog, &TotpExportSettingsDialog::close);
         totpDisplayDialog->open();
     }
 }
@@ -1532,6 +1535,11 @@ bool DatabaseWidget::lock()
     }
 
     emit databaseLockRequested();
+
+    // ignore event if we are active and a modal dialog is still open (such as a message box or file dialog)
+    if (isVisible() && QApplication::activeModalWidget()) {
+        return false;
+    }
 
     clipboard()->clearCopiedText();
 

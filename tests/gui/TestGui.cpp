@@ -29,14 +29,18 @@
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QLineEdit>
+#include <QListWidgetItem>
 #include <QMimeData>
 #include <QPlainTextEdit>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QSignalSpy>
 #include <QSpinBox>
+#include <QTest>
 #include <QTimer>
 #include <QToolBar>
 #include <QToolButton>
+#include <QTreeWidgetItem>
 
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
@@ -141,6 +145,9 @@ void TestGui::init()
     fileDialog()->setNextFileName(m_dbFilePath);
     triggerAction("actionDatabaseOpen");
 
+    QApplication::processEvents();
+
+    m_dbWidget = m_tabWidget->currentDatabaseWidget();
     auto* databaseOpenWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("databaseOpenWidget");
     QVERIFY(databaseOpenWidget);
     auto* editPassword = databaseOpenWidget->findChild<QLineEdit*>("editPassword");
@@ -150,8 +157,10 @@ void TestGui::init()
     QTest::keyClicks(editPassword, "a");
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
-    m_dbWidget = m_tabWidget->currentDatabaseWidget();
+    QTRY_VERIFY(!m_dbWidget->isLocked());
     m_db = m_dbWidget->database();
+
+    QApplication::processEvents();
 }
 
 // Every test ends with closing the temp database without saving
@@ -1159,24 +1168,45 @@ void TestGui::testEntryPlaceholders()
 
 void TestGui::testDragAndDropEntry()
 {
-    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
-    auto* groupView = m_dbWidget->findChild<GroupView*>("groupView");
-    QAbstractItemModel* groupModel = groupView->model();
+    auto entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    auto groupView = m_dbWidget->findChild<GroupView*>("groupView");
+    auto groupModel = qobject_cast<GroupModel*>(groupView->model());
 
     QModelIndex sourceIndex = entryView->model()->index(0, 1);
     QModelIndex targetIndex = groupModel->index(0, 0, groupModel->index(0, 0));
     QVERIFY(sourceIndex.isValid());
     QVERIFY(targetIndex.isValid());
+    auto targetGroup = groupModel->groupFromIndex(targetIndex);
 
     QMimeData mimeData;
     QByteArray encoded;
     QDataStream stream(&encoded, QIODevice::WriteOnly);
-    Entry* entry = entryView->entryFromIndex(sourceIndex);
+
+    auto entry = entryView->entryFromIndex(sourceIndex);
     stream << entry->group()->database()->uuid() << entry->uuid();
     mimeData.setData("application/x-keepassx-entry", encoded);
 
+    // Test Copy, UUID should change, history remain
+    QVERIFY(groupModel->dropMimeData(&mimeData, Qt::CopyAction, -1, 0, targetIndex));
+    // Find the copied entry
+    auto newEntry = targetGroup->findEntryByPath(entry->title());
+    QVERIFY(newEntry);
+    QVERIFY(entry->uuid() != newEntry->uuid());
+    QCOMPARE(entry->historyItems().count(), newEntry->historyItems().count());
+
+    encoded.clear();
+    entry = entryView->entryFromIndex(sourceIndex);
+    auto history = entry->historyItems().count();
+    auto uuid = entry->uuid();
+    stream << entry->group()->database()->uuid() << entry->uuid();
+    mimeData.setData("application/x-keepassx-entry", encoded);
+
+    // Test Move, entry pointer should remain the same
+    QCOMPARE(entry->group()->name(), QString("NewDatabase"));
     QVERIFY(groupModel->dropMimeData(&mimeData, Qt::MoveAction, -1, 0, targetIndex));
     QCOMPARE(entry->group()->name(), QString("General"));
+    QCOMPARE(entry->uuid(), uuid);
+    QCOMPARE(entry->historyItems().count(), history);
 }
 
 void TestGui::testDragAndDropGroup()
@@ -1497,6 +1527,163 @@ void TestGui::testTrayRestoreHide()
 
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(!m_mainWindow->isVisible());
+
+    // Ensure window is visible at the end
+    trayIcon->activated(QSystemTrayIcon::DoubleClick);
+    QTRY_VERIFY(m_mainWindow->isVisible());
+}
+
+void TestGui::testAutoType()
+{
+    // Clear entries from root group to guarantee order
+    for (Entry* entry : m_db->rootGroup()->entries()) {
+        m_db->rootGroup()->removeEntry(entry);
+    }
+    Tools::wait(150);
+
+    // 1. Create an entry with Auto-Type disabled
+
+    // 1.a) Click the new entry button and set the title
+    auto* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+
+    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QVERIFY(toolBar);
+
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+    QVERIFY(entryNewWidget->isVisible());
+    QVERIFY(entryNewWidget->isEnabled());
+
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QVERIFY(editEntryWidget);
+
+    auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QVERIFY(titleEdit);
+
+    QTest::keyClicks(titleEdit, "1. Entry With Disabled Auto-Type");
+
+    auto* usernameComboBox = editEntryWidget->findChild<QComboBox*>("usernameComboBox");
+    QVERIFY(usernameComboBox);
+
+    QTest::mouseClick(usernameComboBox, Qt::LeftButton);
+    QTest::keyClicks(usernameComboBox, "AutocompletionUsername");
+
+    // 1.b) Uncheck Auto-Type checkbox
+    editEntryWidget->setCurrentPage(3);
+    auto* enableAutoTypeButton = editEntryWidget->findChild<QCheckBox*>("enableButton");
+    QVERIFY(enableAutoTypeButton);
+    QVERIFY(enableAutoTypeButton->isVisible());
+    QVERIFY(enableAutoTypeButton->isEnabled());
+
+    enableAutoTypeButton->click();
+    QVERIFY(!enableAutoTypeButton->isChecked());
+
+    // 1.c) Save changes
+    editEntryWidget->setCurrentPage(0);
+    auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // 2. Create an entry with default/inherited Auto-Type sequence
+
+    // 2.a) Click the new entry button and set the title
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    QTest::keyClicks(titleEdit, "2. Entry With Default Auto-Type Sequence");
+    QTest::mouseClick(usernameComboBox, Qt::LeftButton);
+    QTest::keyClicks(usernameComboBox, "AutocompletionUsername");
+
+    // 2.b) Confirm AutoType is enabled and default
+    editEntryWidget->setCurrentPage(3);
+    QVERIFY(enableAutoTypeButton->isChecked());
+    auto* inheritSequenceButton = editEntryWidget->findChild<QRadioButton*>("inheritSequenceButton");
+    QVERIFY(inheritSequenceButton->isChecked());
+
+    // 2.c) Save changes
+    editEntryWidget->setCurrentPage(0);
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // 3. Create an entry with custom Auto-Type sequence
+
+    // 3.a) Click the new entry button and set the title
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    QTest::keyClicks(titleEdit, "3. Entry With Custom Auto-Type Sequence");
+    QTest::mouseClick(usernameComboBox, Qt::LeftButton);
+    QTest::keyClicks(usernameComboBox, "AutocompletionUsername");
+
+    // 3.b) Confirm AutoType is enabled and set custom sequence
+    editEntryWidget->setCurrentPage(3);
+    QVERIFY(enableAutoTypeButton->isChecked());
+    auto* customSequenceButton = editEntryWidget->findChild<QRadioButton*>("customSequenceButton");
+    QTest::mouseClick(customSequenceButton, Qt::LeftButton);
+    QVERIFY(customSequenceButton->isChecked());
+    QVERIFY(!inheritSequenceButton->isChecked());
+    auto* sequenceEdit = editEntryWidget->findChild<QLineEdit*>("sequenceEdit");
+    QVERIFY(sequenceEdit);
+    sequenceEdit->setFocus();
+    QTRY_VERIFY(sequenceEdit->hasFocus());
+    QTest::keyClicks(sequenceEdit, "{USERNAME}{TAB}{TAB}{PASSWORD}{ENTER}");
+
+    // 3.c) Save changes
+    editEntryWidget->setCurrentPage(0);
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QApplication::processEvents();
+
+    // Check total number of entries matches expected
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    QVERIFY(entryView);
+    QTRY_COMPARE(entryView->model()->rowCount(), 3);
+
+    // Sort entries by title
+    entryView->sortByColumn(1, Qt::AscendingOrder);
+
+    // Select first entry
+    entryView->selectionModel()->clearSelection();
+    QModelIndex entryIndex = entryView->model()->index(0, 0);
+    entryView->selectionModel()->select(entryIndex, QItemSelectionModel::Rows | QItemSelectionModel::Select);
+
+    auto* entryPreviewWidget = m_dbWidget->findChild<EntryPreviewWidget*>("previewWidget");
+    QVERIFY(entryPreviewWidget->isVisible());
+
+    // Check that the Autotype tab in entry preview pane is disabled for entry with disabled Auto-Type
+    auto* entryAutotypeTab = entryPreviewWidget->findChild<QWidget*>("entryAutotypeTab");
+    QVERIFY(!entryAutotypeTab->isEnabled());
+
+    // Check that Auto-Type is disabled in the actual entry model as well
+    Entry* entry = entryView->entryFromIndex(entryIndex);
+    QVERIFY(!entry->autoTypeEnabled());
+
+    // Select second entry
+    entryView->selectionModel()->clearSelection();
+    entryIndex = entryView->model()->index(1, 0);
+    entryView->selectionModel()->select(entryIndex, QItemSelectionModel::Rows | QItemSelectionModel::Select);
+    QVERIFY(entryPreviewWidget->isVisible());
+
+    // Check that the Autotype tab in entry preview pane is enabled for entry with default Auto-Type sequence;
+    QVERIFY(entryAutotypeTab->isEnabled());
+
+    // Check that Auto-Type is enabled in the actual entry model as well
+    entry = entryView->entryFromIndex(entryIndex);
+    QVERIFY(entry->autoTypeEnabled());
+
+    // Select third entry
+    entryView->selectionModel()->clearSelection();
+    entryIndex = entryView->model()->index(2, 0);
+    entryView->selectionModel()->select(entryIndex, QItemSelectionModel::Rows | QItemSelectionModel::Select);
+    QVERIFY(entryPreviewWidget->isVisible());
+
+    // Check that the Autotype tab in entry preview pane is enabled for entry with custom Auto-Type sequence
+    QVERIFY(entryAutotypeTab->isEnabled());
+
+    // Check that Auto-Type is enabled in the actual entry model as well
+    entry = entryView->entryFromIndex(entryIndex);
+    QVERIFY(entry->autoTypeEnabled());
+
+    // De-select third entry
+    entryView->selectionModel()->clearSelection();
 }
 
 int TestGui::addCannedEntries()
