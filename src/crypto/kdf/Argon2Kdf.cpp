@@ -30,8 +30,7 @@
  * or associated data. KeePass uses the latest version of Argon2, v1.3.
  */
 Argon2Kdf::Argon2Kdf(Type type)
-    : Kdf::Kdf(KeePass2::KDF_ARGON2D)
-    , m_type(type)
+    : Kdf::Kdf(type == Type::Argon2d ? KeePass2::KDF_ARGON2D : KeePass2::KDF_ARGON2ID)
     , m_version(0x13)
     , m_memory(1 << 16)
     , m_parallelism(static_cast<quint32>(QThread::idealThreadCount()))
@@ -57,12 +56,7 @@ bool Argon2Kdf::setVersion(quint32 version)
 
 Argon2Kdf::Type Argon2Kdf::type() const
 {
-    return m_type;
-}
-
-void Argon2Kdf::setType(Type type)
-{
-    m_type = type;
+    return uuid() == KeePass2::KDF_ARGON2D ? Type::Argon2d : Type::Argon2id;
 }
 
 quint64 Argon2Kdf::memory() const
@@ -144,11 +138,7 @@ bool Argon2Kdf::processParameters(const QVariantMap& p)
 QVariantMap Argon2Kdf::writeParameters()
 {
     QVariantMap p;
-    if (type() == Type::Argon2d) {
-        p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_ARGON2D.toRfc4122());
-    } else {
-        p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_ARGON2ID.toRfc4122());
-    }
+    p.insert(KeePass2::KDFPARAM_UUID, uuid().toRfc4122());
     p.insert(KeePass2::KDFPARAM_ARGON2_VERSION, version());
     p.insert(KeePass2::KDFPARAM_ARGON2_PARALLELISM, parallelism());
     p.insert(KeePass2::KDFPARAM_ARGON2_MEMORY, memory() * 1024);
