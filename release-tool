@@ -44,6 +44,7 @@ ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
 MACOSX_DEPLOYMENT_TARGET=10.12
 GREP="grep"
+TIMESTAMP_SERVER="http://timestamp.sectigo.com"
 
 # -----------------------------------------------------------------------
 #                          helper functions
@@ -113,6 +114,7 @@ Options:
       --appimage          Build a Linux AppImage after compilation.
                           If this option is set, --install-prefix has no effect
       --appsign           Perform platform specific App Signing before packaging
+      --timestamp         Explicitly set the timestamp server to use for appsign (default: '${TIMESTAMP_SERVER}')
   -k, --key               Specify the App Signing Key/Identity
   -c, --cmake-options     Additional CMake options for compiling the sources
       --compiler          Compiler to use (default: '${COMPILER}')
@@ -144,6 +146,7 @@ Options:
   -f, --files        Files to sign (required)
   -k, --key, -i, --identity
                      Signing Key or Apple Developer ID (required)
+      --timestamp    Explicitly set the timestamp server to use for appsign (default: '${TIMESTAMP_SERVER}')
   -u, --username     Apple username for notarization (required on macOS)
   -c, --keychain     Apple keychain entry name storing the notarization
                      app password (default: 'AC_PASSWORD')
@@ -484,6 +487,10 @@ merge() {
                 GPG_GIT_KEY="$2"
                 shift ;;
 
+            --timestamp)
+                TIMESTAMP_SERVER="$2"
+                shift ;;
+
             -r|--release-branch)
                 SOURCE_BRANCH="$2"
                 shift ;;
@@ -799,6 +806,10 @@ build() {
 
             --appsign)
                 build_appsign=true ;;
+
+            --timestamp)
+                TIMESTAMP_SERVER="$2"
+                shift ;;
 
             -k|--key)
                 build_key="$2"
@@ -1301,7 +1312,7 @@ appsign() {
                 # osslsigncode does not succeed at signing MSI files at this time...
                 logInfo "Signing file '${f}' using Microsoft signtool..."
                 signtool sign -f "${key}" -p "${password}" -d "KeePassXC" -td sha256 \
-                    -fd sha256 -tr "http://timestamp.comodoca.com/authenticode" "${f}"
+                    -fd sha256 -tr "${TIMESTAMP_SERVER}" "${f}"
 
                 if [ 0 -ne $? ]; then
                     exitError "Signing failed!"
