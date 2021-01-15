@@ -601,6 +601,9 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
+#ifdef WITH_XC_SSHAGENT
+    sshAgent()->removeAllIdentities();
+#endif
 }
 
 QList<DatabaseWidget*> MainWindow::getOpenDatabases()
