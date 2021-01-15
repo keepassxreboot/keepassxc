@@ -24,7 +24,6 @@
 #include <QtCore>
 
 #include "crypto/ssh/OpenSSHKey.h"
-#include "gui/DatabaseWidget.h"
 #include "sshagent/KeeAgentSettings.h"
 
 class SSHAgent : public QObject
@@ -32,7 +31,7 @@ class SSHAgent : public QObject
     Q_OBJECT
 
 public:
-    ~SSHAgent() override;
+    ~SSHAgent() override = default;
     static SSHAgent* instance();
 
     bool isEnabled() const;
@@ -59,8 +58,8 @@ signals:
     void enabledChanged(bool enabled);
 
 public slots:
-    void databaseLocked();
-    void databaseUnlocked();
+    void databaseLocked(QSharedPointer<Database> db);
+    void databaseUnlocked(QSharedPointer<Database> db);
 
 private:
     const quint8 SSH_AGENT_FAILURE = 5;
