@@ -931,6 +931,13 @@ void MainWindow::updateWindowTitle()
 void MainWindow::showAboutDialog()
 {
     auto* aboutDialog = new AboutDialog(this);
+    // Auto close the about dialog before attempting database locks
+    if (m_ui->tabWidget->currentDatabaseWidget()) {
+        connect(m_ui->tabWidget->currentDatabaseWidget(),
+                &DatabaseWidget::databaseLockRequested,
+                aboutDialog,
+                &AboutDialog::close);
+    }
     aboutDialog->open();
 }
 
