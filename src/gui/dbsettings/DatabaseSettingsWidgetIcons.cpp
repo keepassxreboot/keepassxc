@@ -48,6 +48,7 @@ void DatabaseSettingsWidgetIcons::populateIcons(QSharedPointer<Database> db)
 {
     m_customIconModel->setIcons(db->metadata()->customIconsPixmaps(IconSize::Default),
                                 db->metadata()->customIconsOrder());
+    m_ui->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));
 }
 
 void DatabaseSettingsWidgetIcons::initialize()
