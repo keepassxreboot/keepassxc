@@ -46,6 +46,9 @@
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
         </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::MultiSelection</enum>
+        </property>
         <property name="movement">
          <enum>QListView::Static</enum>
         </property>
@@ -71,7 +74,7 @@
         <item>
          <widget class="QPushButton" name="deleteButton">
           <property name="text">
-           <string>Delete selected icon</string>
+           <string>Delete selected icon(s)</string>
           </property>
          </widget>
         </item>

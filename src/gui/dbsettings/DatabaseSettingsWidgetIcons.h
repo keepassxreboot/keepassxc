@@ -22,6 +22,7 @@
 
 #include <QScopedPointer>
 
+class QItemSelection;
 class CustomIconModel;
 class Database;
 namespace Ui
@@ -46,17 +47,20 @@ public slots:
     inline bool save() override { return true; };
 
 private slots:
+    void selectionChanged();
     void removeCustomIcon();
     void purgeUnusedCustomIcons();
 
 private:
     void populateIcons(QSharedPointer<Database> db);
+    void removeSingleCustomIcon(QSharedPointer<Database> database, QModelIndex index);
 
 protected:
     const QScopedPointer<Ui::DatabaseSettingsWidgetIcons> m_ui;
 
 private:
     CustomIconModel* const m_customIconModel;
+    uint64_t m_deletionDecision;
 };
 
 #endif // KEEPASSXC_DATABASESETTINGSWIDGETICONS_H

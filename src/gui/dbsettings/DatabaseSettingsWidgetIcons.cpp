@@ -31,6 +31,7 @@ DatabaseSettingsWidgetIcons::DatabaseSettingsWidgetIcons(QWidget* parent)
     : DatabaseSettingsWidget(parent)
     , m_ui(new Ui::DatabaseSettingsWidgetIcons())
     , m_customIconModel(new CustomIconModel(this))
+    , m_deletionDecision(MessageBox::NoButton)
 {
     m_ui->setupUi(this);
 
@@ -38,6 +39,8 @@ DatabaseSettingsWidgetIcons::DatabaseSettingsWidgetIcons(QWidget* parent)
 
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->purgeButton, SIGNAL(clicked()), SLOT(purgeUnusedCustomIcons()));
+    connect(m_ui->customIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            this, SLOT(selectionChanged()));
 }
 
 DatabaseSettingsWidgetIcons::~DatabaseSettingsWidgetIcons()
@@ -48,7 +51,7 @@ void DatabaseSettingsWidgetIcons::populateIcons(QSharedPointer<Database> db)
 {
     m_customIconModel->setIcons(db->metadata()->customIconsPixmaps(IconSize::Default),
                                 db->metadata()->customIconsOrder());
-    m_ui->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));
+    m_ui->deleteButton->setEnabled(false);
 }
 
 void DatabaseSettingsWidgetIcons::initialize()
@@ -58,14 +61,33 @@ void DatabaseSettingsWidgetIcons::initialize()
     populateIcons(database);
 }
 
+void DatabaseSettingsWidgetIcons::selectionChanged()
+{
+    QList<QModelIndex> indexes = m_ui->customIconsView->selectionModel()->selectedIndexes();
+    if(indexes.isEmpty()) {
+        m_ui->deleteButton->setEnabled(false);
+    } else {
+        m_ui->deleteButton->setEnabled(true);
+    }
+}
+
 void DatabaseSettingsWidgetIcons::removeCustomIcon()
 {
     auto database = DatabaseSettingsWidget::getDatabase();
     if(!database) { return; }
 
-    QModelIndex index = m_ui->customIconsView->currentIndex();
-    if (!index.isValid()) { return; }
+    m_deletionDecision = MessageBox::NoButton;
 
+    QList<QModelIndex> indexes = m_ui->customIconsView->selectionModel()->selectedIndexes();
+    for (auto index : indexes) {
+      removeSingleCustomIcon(database, index);
+    }
+
+    populateIcons(database);
+}
+
+void DatabaseSettingsWidgetIcons::removeSingleCustomIcon(QSharedPointer<Database> database, QModelIndex index)
+{
     QUuid iconUuid = m_customIconModel->uuidFromIndex(index);
 
     const QList<Entry*> allEntries = database->rootGroup()->entriesRecursive(true);
@@ -94,16 +116,19 @@ void DatabaseSettingsWidgetIcons::removeCustomIcon()
 
     int iconUseCount = entriesWithSelectedIcon.size() + groupsWithSameIcon.size();
     if (iconUseCount > 0) {
-        auto result = MessageBox::question(this,
-                                           tr("Confirm Delete"),
-                                           tr("This icon is used by %n entry(s), and will be replaced "
-                                              "by the default icon. Are you sure you want to delete it?",
-                                              "",
-                                              iconUseCount),
-                                           MessageBox::Delete | MessageBox::Cancel,
-                                           MessageBox::Cancel);
+        if(m_deletionDecision == MessageBox::NoButton) {
+            m_deletionDecision = MessageBox::question(
+                    this,
+                    tr("Confirm Deletion"),
+                    tr("At least one of the selected icons is currently in use by at least one entry or group. "
+                       "The icons of all affected entries and groups will be replaced by the default icon. "
+                       "Are you sure you want to delete icons that are currently in use?"),
+                    MessageBox::Delete | MessageBox::Skip,
+                    MessageBox::Skip
+            );
+        }
 
-        if (result == MessageBox::Cancel) {
+        if (m_deletionDecision == MessageBox::Skip) {
             // Early out, nothing is changed
             return;
         } else {
@@ -128,7 +153,6 @@ void DatabaseSettingsWidgetIcons::removeCustomIcon()
 
     // Remove the icon from the database
     database->metadata()->removeCustomIcon(iconUuid);
-    populateIcons(database);
 }
 
 void DatabaseSettingsWidgetIcons::purgeUnusedCustomIcons()
