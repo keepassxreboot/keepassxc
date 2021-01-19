@@ -113,13 +113,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="deleteButton">
-       <property name="text">
-        <string>Delete custom icon</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="faviconButton">
        <property name="toolTip">
         <string>Download favicon for URL</string>
@@ -181,7 +174,6 @@
   <tabstop>customIconsRadio</tabstop>
   <tabstop>customIconsView</tabstop>
   <tabstop>addButton</tabstop>
-  <tabstop>deleteButton</tabstop>
   <tabstop>faviconButton</tabstop>
   <tabstop>applyIconToPushButton</tabstop>
  </tabstops>

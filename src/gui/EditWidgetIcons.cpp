@@ -63,7 +63,6 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SLOT(updateWidgetsDefaultIcons(bool)));
     connect(m_ui->customIconsRadio, SIGNAL(toggled(bool)), this, SLOT(updateWidgetsCustomIcons(bool)));
     connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIconFromFile()));
-    connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
     connect(m_ui->applyIconToPushButton->menu(), SIGNAL(triggered(QAction*)), SLOT(confirmApplyIconTo(QAction*)));
 
@@ -310,91 +309,6 @@ bool EditWidgetIcons::addCustomIcon(const QImage& icon)
     return added;
 }
 
-void EditWidgetIcons::removeCustomIcon()
-{
-    if (m_db) {
-        QModelIndex index = m_ui->customIconsView->currentIndex();
-        if (index.isValid()) {
-            QUuid iconUuid = m_customIconModel->uuidFromIndex(index);
-
-            const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
-            QList<Entry*> entriesWithSameIcon;
-            QList<Entry*> historyEntriesWithSameIcon;
-
-            for (Entry* entry : allEntries) {
-                if (iconUuid == entry->iconUuid()) {
-                    // Check if this is a history entry (no assigned group)
-                    if (!entry->group()) {
-                        historyEntriesWithSameIcon << entry;
-                    } else if (m_currentUuid != entry->uuid()) {
-                        entriesWithSameIcon << entry;
-                    }
-                }
-            }
-
-            const QList<Group*> allGroups = m_db->rootGroup()->groupsRecursive(true);
-            QList<Group*> groupsWithSameIcon;
-
-            for (Group* group : allGroups) {
-                if (iconUuid == group->iconUuid() && m_currentUuid != group->uuid()) {
-                    groupsWithSameIcon << group;
-                }
-            }
-
-            int iconUseCount = entriesWithSameIcon.size() + groupsWithSameIcon.size();
-            if (iconUseCount > 0) {
-
-                auto result = MessageBox::question(this,
-                                                   tr("Confirm Delete"),
-                                                   tr("This icon is used by %n entry(s), and will be replaced "
-                                                      "by the default icon. Are you sure you want to delete it?",
-                                                      "",
-                                                      iconUseCount),
-                                                   MessageBox::Delete | MessageBox::Cancel,
-                                                   MessageBox::Cancel);
-
-                if (result == MessageBox::Cancel) {
-                    // Early out, nothing is changed
-                    return;
-                } else {
-                    // Revert matched entries to the default entry icon
-                    for (Entry* entry : asConst(entriesWithSameIcon)) {
-                        entry->setIcon(Entry::DefaultIconNumber);
-                    }
-
-                    // Revert matched groups to the default group icon
-                    for (Group* group : asConst(groupsWithSameIcon)) {
-                        group->setIcon(Group::DefaultIconNumber);
-                    }
-                }
-            }
-
-            // Remove the icon from history entries
-            for (Entry* entry : asConst(historyEntriesWithSameIcon)) {
-                entry->setUpdateTimeinfo(false);
-                entry->setIcon(0);
-                entry->setUpdateTimeinfo(true);
-            }
-
-            // Remove the icon from the database
-            m_db->metadata()->removeCustomIcon(iconUuid);
-            m_customIconModel->setIcons(m_db->metadata()->customIconsPixmaps(IconSize::Default),
-                                        m_db->metadata()->customIconsOrder());
-
-            // Reset the current icon view
-            updateRadioButtonDefaultIcons();
-
-            if (m_db->rootGroup()->findEntryByUuid(m_currentUuid) != nullptr) {
-                m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Entry::DefaultIconNumber));
-            } else {
-                m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Group::DefaultIconNumber));
-            }
-
-            emit widgetUpdated();
-        }
-    }
-}
-
 void EditWidgetIcons::updateWidgetsDefaultIcons(bool check)
 {
     if (check) {
@@ -405,7 +319,6 @@ void EditWidgetIcons::updateWidgetsDefaultIcons(bool check)
             m_ui->defaultIconsView->setCurrentIndex(index);
         }
         m_ui->customIconsView->selectionModel()->clearSelection();
-        m_ui->deleteButton->setEnabled(false);
     }
 }
 
@@ -419,7 +332,6 @@ void EditWidgetIcons::updateWidgetsCustomIcons(bool check)
             m_ui->customIconsView->setCurrentIndex(index);
         }
         m_ui->defaultIconsView->selectionModel()->clearSelection();
-        m_ui->deleteButton->setEnabled(true);
     }
 }
 
