@@ -44,16 +44,90 @@ DatabaseSettingsWidgetIcons::~DatabaseSettingsWidgetIcons()
 {
 }
 
+void DatabaseSettingsWidgetIcons::populateIcons(QSharedPointer<Database> db)
+{
+    m_customIconModel->setIcons(db->metadata()->customIconsPixmaps(IconSize::Default),
+                                db->metadata()->customIconsOrder());
+}
+
 void DatabaseSettingsWidgetIcons::initialize()
 {
     auto database = DatabaseSettingsWidget::getDatabase();
     if(!database) { return; }
-    m_customIconModel->setIcons(database->metadata()->customIconsPixmaps(IconSize::Default),
-                                database->metadata()->customIconsOrder());
+    populateIcons(database);
 }
 
 void DatabaseSettingsWidgetIcons::removeCustomIcon()
 {
+    auto database = DatabaseSettingsWidget::getDatabase();
+    if(!database) { return; }
+
+    QModelIndex index = m_ui->customIconsView->currentIndex();
+    if (!index.isValid()) { return; }
+
+    QUuid iconUuid = m_customIconModel->uuidFromIndex(index);
+
+    const QList<Entry*> allEntries = database->rootGroup()->entriesRecursive(true);
+    QList<Entry*> entriesWithSelectedIcon;
+    QList<Entry*> historicEntriesWithSelectedIcon;
+
+    for (Entry* entry : allEntries) {
+        if (iconUuid == entry->iconUuid()) {
+            // Check if this is a history entry (no assigned group)
+            if (!entry->group()) {
+                historicEntriesWithSelectedIcon << entry;
+            } else {
+                entriesWithSelectedIcon << entry;
+            }
+        }
+    }
+
+    const QList<Group*> allGroups = database->rootGroup()->groupsRecursive(true);
+    QList<Group*> groupsWithSameIcon;
+
+    for (Group* group : allGroups) {
+        if (iconUuid == group->iconUuid()) {
+            groupsWithSameIcon << group;
+        }
+    }
+
+    int iconUseCount = entriesWithSelectedIcon.size() + groupsWithSameIcon.size();
+    if (iconUseCount > 0) {
+        auto result = MessageBox::question(this,
+                                           tr("Confirm Delete"),
+                                           tr("This icon is used by %n entry(s), and will be replaced "
+                                              "by the default icon. Are you sure you want to delete it?",
+                                              "",
+                                              iconUseCount),
+                                           MessageBox::Delete | MessageBox::Cancel,
+                                           MessageBox::Cancel);
+
+        if (result == MessageBox::Cancel) {
+            // Early out, nothing is changed
+            return;
+        } else {
+            // Revert matched entries to the default entry icon
+            for (Entry* entry : asConst(entriesWithSelectedIcon)) {
+                entry->setIcon(Entry::DefaultIconNumber);
+            }
+
+            // Revert matched groups to the default group icon
+            for (Group* group : asConst(groupsWithSameIcon)) {
+                group->setIcon(Group::DefaultIconNumber);
+            }
+        }
+    }
+
+    // Remove the icon from history entries
+    for (Entry* entry : asConst(historicEntriesWithSelectedIcon)) {
+        entry->setUpdateTimeinfo(false);
+        entry->setIcon(0);
+        entry->setUpdateTimeinfo(true);
+    }
+
+    // Remove the icon from the database
+    database->metadata()->removeCustomIcon(iconUuid);
+    populateIcons(database);
 }
 
 void DatabaseSettingsWidgetIcons::purgeUnusedCustomIcons()
@@ -109,8 +183,7 @@ void DatabaseSettingsWidgetIcons::purgeUnusedCustomIcons()
         return;
     }
 
-    // update the list of icons
-    initialize();
+    populateIcons(database);
 
     MessageBox::information(this,
             tr("Purged Unused Icons"),

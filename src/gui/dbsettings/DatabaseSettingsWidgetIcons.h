@@ -49,6 +49,9 @@ private slots:
     void removeCustomIcon();
     void purgeUnusedCustomIcons();
 
+private:
+    void populateIcons(QSharedPointer<Database> db);
+
 protected:
     const QScopedPointer<Ui::DatabaseSettingsWidgetIcons> m_ui;
 
