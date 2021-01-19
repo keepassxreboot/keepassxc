@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
+    <width>437</width>
     <height>316</height>
    </rect>
   </property>
@@ -113,13 +113,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="deleteButton">
-       <property name="text">
-        <string>Delete custom icon</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="faviconButton">
        <property name="toolTip">
         <string>Download favicon for URL</string>
@@ -129,19 +122,6 @@
        </property>
        <property name="text">
         <string>Download favicon</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="purgeButton">
-       <property name="toolTip">
-        <string>Delete all custom icons not in use by any entry or group</string>
-       </property>
-       <property name="accessibleName">
-        <string>Delete all custom icons not in use by any entry or group</string>
-       </property>
-       <property name="text">
-        <string>Purge unused icons</string>
        </property>
       </widget>
      </item>
