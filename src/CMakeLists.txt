@@ -155,6 +155,7 @@ set(keepassx_SOURCES
         gui/dbsettings/DatabaseSettingsWidget.cpp
         gui/dbsettings/DatabaseSettingsDialog.cpp
         gui/dbsettings/DatabaseSettingsWidgetGeneral.cpp
+        gui/dbsettings/DatabaseSettingsWidgetMaintenance.cpp
         gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.cpp
         gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
         gui/dbsettings/DatabaseSettingsWidgetDatabaseKey.cpp

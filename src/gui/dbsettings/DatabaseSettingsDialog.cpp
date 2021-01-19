@@ -25,6 +25,7 @@
 #ifdef WITH_XC_BROWSER
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
+#include "DatabaseSettingsWidgetMaintenance.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/DatabaseSettingsPageKeeShare.h"
 #endif
@@ -72,6 +73,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 #ifdef WITH_XC_BROWSER
     , m_browserWidget(new DatabaseSettingsWidgetBrowser(this))
 #endif
+    , m_maintenanceWidget(new DatabaseSettingsWidgetMaintenance(this))
 {
     m_ui->setupUi(this);
 
@@ -115,6 +117,9 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     m_ui->stackedWidget->addWidget(m_browserWidget);
 #endif
 
+    m_ui->categoryList->addCategory(tr("Maintenance"), icons()->icon("hammer-wrench"));
+    m_ui->stackedWidget->addWidget(m_maintenanceWidget);
+
     pageChanged();
 }
 
@@ -131,6 +136,7 @@ void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
 #ifdef WITH_XC_BROWSER
     m_browserWidget->load(db);
 #endif
+    m_maintenanceWidget->load(db);
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings(db);
     }
