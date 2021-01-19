@@ -64,6 +64,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->customIconsRadio, SIGNAL(toggled(bool)), this, SLOT(updateWidgetsCustomIcons(bool)));
     connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIconFromFile()));
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
+    connect(m_ui->purgeButton, SIGNAL(clicked()), SLOT(purgeUnusedCustomIcons()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
     connect(m_ui->applyIconToPushButton->menu(), SIGNAL(triggered(QAction*)), SLOT(confirmApplyIconTo(QAction*)));
 
@@ -393,6 +394,43 @@ void EditWidgetIcons::removeCustomIcon()
             emit widgetUpdated();
         }
     }
+}
+
+void EditWidgetIcons::purgeUnusedCustomIcons()
+{
+    if (!m_db) { return; }
+
+    QSet<QUuid> iconsInUse;
+
+    const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
+    for (Entry* entry : allEntries) {
+        iconsInUse.insert(entry->iconUuid());
+    }
+
+    const QList<Group*> allGroups = m_db->rootGroup()->groupsRecursive(true);
+    for (Group* group : allGroups) {
+        iconsInUse.insert(group->iconUuid());
+    }
+
+    int purgeCounter = 0;
+    QList<QUuid> customIcons = m_db->metadata()->customIconsOrder();
+    for (QUuid iconUuid : customIcons) {
+        if (iconsInUse.contains(iconUuid)) { continue; }
+        ++purgeCounter;
+        m_db->metadata()->removeCustomIcon(iconUuid);
+    }
+
+    if (0 == purgeCounter) {
+        MessageBox::information(this,
+                tr("Custom icons are in use"),
+                tr("All custom icons are in use by at least one entry or group."),
+                MessageBox::Ok);
+        return;
+    }
+
+    m_customIconModel->setIcons(m_db->metadata()->customIconsPixmaps(IconSize::Default),
+                                m_db->metadata()->customIconsOrder());
+    emit widgetUpdated();
 }
 
 void EditWidgetIcons::updateWidgetsDefaultIcons(bool check)

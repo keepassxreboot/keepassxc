@@ -91,6 +91,7 @@ private slots:
     void addCustomIconFromFile();
     bool addCustomIcon(const QImage& icon);
     void removeCustomIcon();
+    void purgeUnusedCustomIcons();
     void updateWidgetsDefaultIcons(bool checked);
     void updateWidgetsCustomIcons(bool checked);
     void updateRadioButtonDefaultIcons();
