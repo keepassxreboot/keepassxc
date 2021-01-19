@@ -22,6 +22,7 @@
 
 #include <QScopedPointer>
 
+class CustomIconModel;
 class Database;
 namespace Ui
 {
@@ -52,6 +53,7 @@ protected:
     const QScopedPointer<Ui::DatabaseSettingsWidgetIcons> m_ui;
 
 private:
+    CustomIconModel* const m_customIconModel;
 };
 
 #endif // KEEPASSXC_DATABASESETTINGSWIDGETICONS_H
