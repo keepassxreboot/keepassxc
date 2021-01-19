@@ -400,6 +400,14 @@ void EditWidgetIcons::purgeUnusedCustomIcons()
 {
     if (!m_db) { return; }
 
+    // reselect the custom icon last selected when purge
+    // button was clicked, iff a custom icon was selected
+    QUuid selectedCustomIconUuid;
+    QModelIndex index = m_ui->customIconsView->currentIndex();
+    if (index.isValid()) {
+        selectedCustomIconUuid = m_customIconModel->uuidFromIndex(index);
+    }
+
     QList<Entry*> historyEntries;
     QSet<QUuid> historicIcons;
     QSet<QUuid> iconsInUse;
@@ -450,6 +458,28 @@ void EditWidgetIcons::purgeUnusedCustomIcons()
 
     m_customIconModel->setIcons(m_db->metadata()->customIconsPixmaps(IconSize::Default),
                                 m_db->metadata()->customIconsOrder());
+
+    if (!selectedCustomIconUuid.isNull()) {
+        index = m_customIconModel->indexFromUuid(selectedCustomIconUuid);
+        if (index.isValid()) {
+            // the previously selected icon survived the purge, restore selection
+            m_ui->customIconsView->setCurrentIndex(index);
+        } else {
+            // the previously selected icon was purged, because it was only
+            // selected but not saved to be the icon of the current entry/group,
+            // and it was not used by any other entry/group. restore current icon.
+            auto currEntry = m_db->rootGroup()->findEntryByUuid(m_currentUuid);
+            auto currGroup = m_db->rootGroup()->findGroupByUuid(m_currentUuid);
+            if (currEntry) {
+                index = m_customIconModel->indexFromUuid(currEntry->iconUuid());
+                m_ui->customIconsView->setCurrentIndex(index);
+            } else if (currGroup) {
+                index = m_customIconModel->indexFromUuid(currGroup->iconUuid());
+                m_ui->customIconsView->setCurrentIndex(index);
+            }
+        }
+    }
+
     emit widgetUpdated();
 }
 
