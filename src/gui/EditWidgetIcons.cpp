@@ -400,11 +400,20 @@ void EditWidgetIcons::purgeUnusedCustomIcons()
 {
     if (!m_db) { return; }
 
+    QList<Entry*> historyEntries;
+    QSet<QUuid> historicIcons;
     QSet<QUuid> iconsInUse;
 
     const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
     for (Entry* entry : allEntries) {
-        iconsInUse.insert(entry->iconUuid());
+        if (!entry->group()) {
+            // Icons exclusively in use by historic entries (no
+            // group assigned) are also purged from the database
+            historyEntries << entry;
+            historicIcons << entry->iconUuid();
+        } else {
+            iconsInUse << entry->iconUuid();
+        }
     }
 
     const QList<Group*> allGroups = m_db->rootGroup()->groupsRecursive(true);
@@ -416,6 +425,17 @@ void EditWidgetIcons::purgeUnusedCustomIcons()
     QList<QUuid> customIcons = m_db->metadata()->customIconsOrder();
     for (QUuid iconUuid : customIcons) {
         if (iconsInUse.contains(iconUuid)) { continue; }
+
+        if (historicIcons.contains(iconUuid)) {
+            // Remove the icon from history entries using this icon
+            for (Entry* historicEntry : asConst(historyEntries)) {
+                if (historicEntry->iconUuid() != iconUuid) { continue; }
+                historicEntry->setUpdateTimeinfo(false);
+                historicEntry->setIcon(0);
+                historicEntry->setUpdateTimeinfo(true);
+            }
+        }
+
         ++purgeCounter;
         m_db->metadata()->removeCustomIcon(iconUuid);
     }
