@@ -1784,9 +1784,11 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
 
     if (event->type() == QEvent::MouseButtonPress) {
         if (watched == mainWindow->m_ui->menubar) {
-            mainWindow->windowHandle()->startSystemMove();
-            // Continue processing events, so menus keep working.
-            return false;
+            auto* m = static_cast<QMouseEvent*>(event);
+            if (!mainWindow->m_ui->menubar->actionAt(m->pos())) {
+                mainWindow->windowHandle()->startSystemMove();
+                return false;
+            }
         } else if (watched == mainWindow->m_ui->toolBar) {
             if (!mainWindow->m_ui->toolBar->isMovable() || mainWindow->m_ui->toolBar->cursor() != Qt::SizeAllCursor) {
                 mainWindow->windowHandle()->startSystemMove();
