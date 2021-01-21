@@ -142,6 +142,10 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->faviconTimeoutSpinBox->setVisible(false);
 #endif
 
+#ifndef WITH_XC_AUTOTYPE
+    m_secUi->relockDatabaseAutoTypeCheckBox->setVisible(false);
+#endif
+
 #ifndef WITH_XC_TOUCHID
     bool hideTouchID = true;
 #else

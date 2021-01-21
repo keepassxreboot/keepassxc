@@ -532,6 +532,9 @@ MainWindow::MainWindow()
     m_ui->actionCheckForUpdates->setVisible(false);
 #endif
 
+#ifndef WITH_XC_AUTOTYPE
+    m_ui->menuEntryAutoTypeWithSequence->menuAction()->setVisible(false);
+#endif
 #ifndef WITH_XC_NETWORKING
     m_ui->actionGroupDownloadFavicons->setVisible(false);
     m_ui->actionEntryDownloadIcon->setVisible(false);

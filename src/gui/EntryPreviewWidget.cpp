@@ -92,6 +92,9 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
 #if !defined(WITH_XC_KEESHARE)
     removeTab(m_ui->groupTabWidget, m_ui->groupShareTab);
 #endif
+#if !defined(WITH_XC_AUTOTYPE)
+    removeTab(m_ui->entryTabWidget, m_ui->entryAutotypeTab);
+#endif
 }
 
 EntryPreviewWidget::~EntryPreviewWidget()
