@@ -155,7 +155,7 @@ QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
     } else {
         XTextProperty textProp;
         retVal = XGetTextProperty(m_dpy, window, &textProp, m_atomWmName);
-        if ((retVal != 0) && textProp.value) {
+        if ((retVal == 0) && textProp.value) {
             char** textList = nullptr;
             int count;
 
