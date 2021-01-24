@@ -117,16 +117,8 @@ AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon)
 
 void AdaptiveIconEngine::paint(QPainter* painter, const QRect& rect, QIcon::Mode mode, QIcon::State state)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
-    double dpr = !kpxcApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? 1.0 : painter->device()->devicePixelRatioF();
-#else
-    double dpr = !kpxcApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? 1.0 : painter->device()->devicePixelRatio();
-#endif
-    QSize pixmapSize = rect.size() * dpr;
-
     painter->save();
-    painter->drawPixmap(rect, m_baseIcon.pixmap(pixmapSize, mode, state));
-
+    m_baseIcon.paint(painter, rect, Qt::AlignCenter, mode, state);
     if (getMainWindow()) {
         QPalette palette = getMainWindow()->palette();
         painter->setCompositionMode(QPainter::CompositionMode_SourceAtop);
