@@ -22,6 +22,14 @@
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 
+#include <QDialog>
+
+#include "config-keepassx.h"
+
+#ifdef WITH_XC_WINDOWSHELLO
+#include "winhello/WindowsHello.h"
+#endif
+
 PasswordEditWidget::PasswordEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)
     , m_compUi(new Ui::PasswordEditWidget())
@@ -66,10 +74,23 @@ bool PasswordEditWidget::isEmpty() const
 
 QWidget* PasswordEditWidget::componentEditWidget()
 {
-    m_compEditWidget = new QWidget();
+    m_compEditWidget = new QWidget(this);
     m_compUi->setupUi(m_compEditWidget);
     m_compUi->enterPasswordEdit->enablePasswordGenerator();
     m_compUi->enterPasswordEdit->setRepeatPartner(m_compUi->repeatPasswordEdit);
+
+#ifdef WITH_XC_WINDOWSHELLO
+    if (WindowsHello::isAvailable()) {
+        auto checkOsStoreKey = new QCheckBox(m_checkOsStoreKey->text(), m_compEditWidget);
+        connect(checkOsStoreKey, &QCheckBox::toggled, [this](bool checked){
+            m_checkOsStoreKey->setChecked(checked);
+        });
+
+        checkOsStoreKey->setChecked(true); // Set checked by default
+        m_compUi->formLayout->addWidget(checkOsStoreKey);
+    }
+#endif
+
     return m_compEditWidget;
 }
 
@@ -92,6 +113,17 @@ void PasswordEditWidget::initComponent()
     m_ui->componentDescription->setText(
         tr("<p>A password is the primary method for securing your database.</p>"
            "<p>Good passwords are long and unique. KeePassXC can generate one for you.</p>"));
+
+    m_checkOsStoreKey = new QCheckBox(this);
+    m_checkOsStoreKey->setVisible(false);
+    findChild<QWidget*>("changeOrRemovePage")->layout()->addWidget(m_checkOsStoreKey);
+
+#ifdef WITH_XC_WINDOWSHELLO
+    if (WindowsHello::isAvailable()) {
+        m_checkOsStoreKey->setVisible(true);
+        m_checkOsStoreKey->setText(tr("Use Windows Hello to store and retrieve database password"));
+    }
+#endif
 }
 
 void PasswordEditWidget::hideEvent(QHideEvent* event)

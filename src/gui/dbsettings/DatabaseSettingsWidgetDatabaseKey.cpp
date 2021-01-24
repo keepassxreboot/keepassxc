@@ -29,6 +29,12 @@
 #include <QLayout>
 #include <QPushButton>
 
+#include "config-keepassx.h"
+
+#ifdef WITH_XC_WINDOWSHELLO
+#include "winhello/WindowsHello.h"
+#endif
+
 DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* parent)
     : DatabaseSettingsWidget(parent)
     , m_additionalKeyOptionsToggle(new QPushButton(tr("Add additional protection…"), this))
@@ -82,6 +88,15 @@ void DatabaseSettingsWidgetDatabaseKey::load(QSharedPointer<Database> db)
     for (const auto& key : m_db->key()->keys()) {
         if (key->uuid() == PasswordKey::UUID) {
             m_passwordEditWidget->setComponentAdded(true);
+#ifdef WITH_XC_WINDOWSHELLO
+            if (WindowsHello::isAvailable()
+                && WindowsHello::containsKey(db->filePath())) {
+                m_passwordEditWidget->osStoreKey()->setChecked(true);
+            }
+            else {
+                m_passwordEditWidget->osStoreKey()->setChecked(false);
+            }
+#endif
         } else if (key->uuid() == FileKey::UUID) {
             m_keyFileEditWidget->setComponentAdded(true);
             hasAdditionalKeys = true;
@@ -131,6 +146,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
 
     if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
         // key unchanged
+        updateOsStore();
         return true;
     }
 
@@ -192,6 +208,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
     }
 
     m_db->setKey(newKey, true, false, false);
+    updateOsStore();
 
     emit editFinished(true);
     if (m_isDirty) {
@@ -204,6 +221,28 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
 void DatabaseSettingsWidgetDatabaseKey::discard()
 {
     emit editFinished(false);
+}
+
+void DatabaseSettingsWidgetDatabaseKey::updateOsStore()
+{
+#ifdef WITH_XC_WINDOWSHELLO
+    if (WindowsHello::isAvailable()) {
+        const bool pwdStored = [this]() {
+            if (m_passwordEditWidget->osStoreKey()->isChecked()) {
+                for (const auto& key : m_db->key()->keys()) {
+                    if (key->uuid() == PasswordKey::UUID) {
+                        return WindowsHello(this)
+                            .storeKey(m_db->filePath(), key->rawKey());
+                    }
+                }
+            }
+            return false;
+        }();
+        if (!pwdStored) { // Remove, any stored password key for DB
+            WindowsHello(this).removeKey(m_db->filePath());
+        }
+    }
+#endif
 }
 
 void DatabaseSettingsWidgetDatabaseKey::showAdditionalKeyOptions()
