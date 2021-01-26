@@ -61,7 +61,7 @@
    <item>
     <widget class="MessageWidget" name="rememberMsg" native="true">
      <property name="text" stdset="0">
-      <string>Your decision will be remembered for the duration the program is running.</string>
+      <string>Your decision will be remembered for the duration the requesting client is running.</string>
      </property>
     </widget>
    </item>
