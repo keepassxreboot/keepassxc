@@ -555,6 +555,9 @@ MainWindow::MainWindow()
                                                MessageWidget::Error);
     }
 
+    // Properly shutdown on logoff, restart, and shutdown
+    connect(qApp, &QGuiApplication::commitDataRequest, this, [this] { m_appExitCalled = true; });
+
 #if defined(KEEPASSXC_BUILD_TYPE_SNAPSHOT) || defined(KEEPASSXC_BUILD_TYPE_PRE_RELEASE)
     auto* hidePreRelWarn = new QAction(tr("Don't show again for this version"), m_ui->globalMessageWidget);
     m_ui->globalMessageWidget->addAction(hidePreRelWarn);
