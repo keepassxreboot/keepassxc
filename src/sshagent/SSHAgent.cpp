@@ -402,13 +402,11 @@ void SSHAgent::removeAllIdentities()
 {
     auto it = m_addedKeys.begin();
     while (it != m_addedKeys.end()) {
-        // Remove key if requested to remove on lock
-        if (it.value().second) {
-            OpenSSHKey key = it.key();
-            removeIdentity(key);
-        }
-        it = m_addedKeys.erase(it);
+        auto key = it.key();
+        removeIdentity(key);
+        ++it;
     }
+    m_addedKeys.clear();
 }
 
 /**
@@ -439,11 +437,13 @@ void SSHAgent::databaseLocked(QSharedPointer<Database> db)
         }
         OpenSSHKey key = it.key();
         if (it.value().second) {
-            if (!removeIdentity(key)) {
+            if (removeIdentity(key)) {
+                m_addedKeys.erase(it);
+            } else {
                 emit error(m_error);
             }
         }
-        it = m_addedKeys.erase(it);
+        ++it;
     }
 }
 
