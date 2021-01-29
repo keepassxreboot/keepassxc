@@ -37,7 +37,7 @@ DOCKER_CONTAINER_NAME="keepassxc-build-container"
 CMAKE_OPTIONS=""
 CPACK_GENERATORS="WIX;ZIP"
 COMPILER="g++"
-MAKE_OPTIONS="-j8"
+MAKE_OPTIONS="-j$(getconf _NPROCESSORS_ONLN)"
 BUILD_PLUGINS="all"
 INSTALL_PREFIX="/usr/local"
 ORIG_BRANCH=""
@@ -53,7 +53,7 @@ printUsage() {
     if [ "" == "$1" ] || [ "help" == "$1" ]; then
         cmd="COMMAND"
     elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] \
-        || [ "gpgsign" == "$1" ] || [ "appsign" == "$1" ] || [ "appimage" == "$1" ]; then
+        || [ "gpgsign" == "$1" ] || [ "appsign" == "$1" ] || [ "notarize" == "$1" ] || [ "appimage" == "$1" ]; then
         cmd="$1"
     else
         logError "Unknown command: '$1'\n"
@@ -71,6 +71,7 @@ Commands:
   build      Build and package binary release from sources
   gpgsign    Sign previously compiled release packages with GPG
   appsign    Sign binaries with code signing certificates on Windows and macOS
+  notarize   Submit macOS application DMG for notarization
   help       Show help for the given command
 EOF
     elif [ "merge" == "$cmd" ]; then
@@ -144,7 +145,16 @@ Options:
   -f, --files        Files to sign (required)
   -k, --key, -i, --identity
                      Signing Key or Apple Developer ID (required)
-  -u, --username     Apple username for notarization (required on macOS)
+  -h, --help         Show this help
+EOF
+    elif [ "notarize" == "$cmd" ]; then
+        cat << EOF
+
+Submit macOS application DMG for notarization
+
+Options:
+  -f, --files        Files to notarize (required)
+  -u, --username     Apple username for notarization (required)
   -c, --keychain     Apple keychain entry name storing the notarization
                      app password (default: 'AC_PASSWORD')
   -h, --help         Show this help
@@ -401,7 +411,7 @@ performChecks() {
     checkTargetBranchExists
 
     logInfo "Checking out '${SOURCE_BRANCH}'..."
-    git checkout "$SOURCE_BRANCH"
+    git checkout "$SOURCE_BRANCH" > /dev/null 2>&1
 
     logInfo "Attempting to find '${RELEASE_NAME}' in various files..."
 
@@ -534,7 +544,7 @@ merge() {
     COMMIT_MSG="Release ${RELEASE_NAME}"
 
     logInfo "Checking out target branch '${TARGET_BRANCH}'..."
-    git checkout "$TARGET_BRANCH"
+    git checkout "$TARGET_BRANCH" > /dev/null 2>&1
 
     logInfo "Merging '${SOURCE_BRANCH}' into '${TARGET_BRANCH}'..."
 
@@ -877,7 +887,7 @@ build() {
             CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Release"
             logInfo "Checking out release tag '${TAG_NAME}'..."
         fi
-        git checkout "$TAG_NAME"
+        git checkout "$TAG_NAME" > /dev/null 2>&1
     fi
 
     logInfo "Creating output directory..."
@@ -949,8 +959,8 @@ build() {
 
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-              -DCMAKE_PREFIX_PATH="/usr/local/opt/qt/lib/cmake" \
+              -DCMAKE_OSX_ARCHITECTURES="$(uname -m)" -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+              -DCMAKE_PREFIX_PATH="/opt/homebrew/opt/qt/lib/cmake;/usr/local/opt/qt/lib/cmake" \
               ${CMAKE_OPTIONS} "$SRC_DIR"
 
             logInfo "Compiling and packaging sources..."
@@ -962,7 +972,7 @@ build() {
                 appsign "-f" "./${APP_NAME}-${RELEASE_NAME}.dmg" "-k" "${build_key}"
             fi
 
-            mv "./${APP_NAME}-${RELEASE_NAME}.dmg" ../
+            mv "./${APP_NAME}-${RELEASE_NAME}.dmg" "../${APP_NAME}-${RELEASE_NAME}-$(uname -m).dmg"
         elif [ "$(uname -o)" == "Msys" ]; then
             # Building on Windows with Msys2
             logInfo "Configuring build..."
@@ -1130,8 +1140,6 @@ gpgsign() {
 appsign() {
     local sign_files=()
     local key
-    local ac_username
-    local ac_keychain="AC_PASSWORD"
 
     while [ $# -ge 1 ]; do
         local arg="$1"
@@ -1144,14 +1152,6 @@ appsign() {
 
             -k|--key|-i|--identity)
                 key="$2"
-                shift ;;
-
-            -u|--username)
-                ac_username="$2"
-                shift ;;
-
-            -c|--keychain)
-                ac_keychain="$2"
                 shift ;;
 
             -h|--help)
@@ -1179,16 +1179,12 @@ appsign() {
     fi
 
     for f in "${sign_files[@]}"; do
-        if [ ! -f "${f}" ]; then
-            exitError "File '${f}' does not exist or is not a file!"
+        if [ ! -e "${f}" ]; then
+            exitError "File '${f}' does not exist!"
         fi
     done
 
     if [ "$(uname -s)" == "Darwin" ]; then
-        if [ "$ac_username" == "" ]; then
-            exitError "Missing arguments, --username is required!"
-        fi
-
         checkXcodeSetup
         checkGrepCompat
 
@@ -1199,30 +1195,45 @@ appsign() {
                 logInfo "Unpacking disk image '${f}'..."
                 local tmp_dir="/tmp/KeePassXC_${RANDOM}"
                 mkdir -p ${tmp_dir}/mnt
-                hdiutil attach -quiet -noautoopen -mountpoint ${tmp_dir}/mnt "${f}"
+                if ! hdiutil attach -quiet -noautoopen -mountpoint ${tmp_dir}/mnt "${f}"; then
+                    exitError "DMG mount failed!"
+                fi
                 cd ${tmp_dir}
                 cp -a ./mnt ./app
                 hdiutil detach -quiet ${tmp_dir}/mnt
+                local app_dir_tmp="./app/KeePassXC.app"
 
-                if [ ! -d ./app/KeePassXC.app ]; then
+                if [ ! -d "$app_dir_tmp" ]; then
                     cd "${orig_dir}"
                     exitError "Unpacking failed!"
                 fi
+            elif [[ ${f: -4} == '.app' ]]; then
+                local app_dir_tmp="$f"
+            else
+                logWarn "Skipping non-app file '${f}'..."
+                continue
+            fi
 
-                logInfo "Signing app bundle..."
-                xcrun codesign --sign "${key}" --verbose --deep --options runtime ./app/KeePassXC.app
+            logInfo "Signing libraries and frameworks..."
+            if ! find "$app_dir_tmp" \( -name '*.dylib' -o -name '*.framework' \) -print0 | xargs -0 \
+                xcrun codesign --sign "${key}" --verbose --force --options runtime; then
+                cd "${orig_dir}"
+                exitError "Signing failed!"
+            fi
+            logInfo "Signing executables..."
+            if ! find "${app_dir_tmp}/Contents/MacOS" \( -type f -not -name KeePassXC \) -print0  | xargs -0 \
+                xcrun codesign --sign "${key}" --verbose --force --options runtime; then
+                cd "${orig_dir}"
+                exitError "Signing failed!"
+            fi
+            # Sign main executable with additional entitlements
+            if ! xcrun codesign --sign "${key}" --verbose --force --options runtime --entitlements \
+                "${real_src_dir}/share/macosx/keepassxc.entitlements" "${app_dir_tmp}/Contents/MacOS/KeePassXC"; then
+                cd "${orig_dir}"
+                exitError "Signing failed!"
+            fi
 
-                # Sign main binary and libraries independently so we can keep using the convenient --deep
-                # option while avoiding adding entitlements recursively
-                logInfo "Signing main binary..."
-                xcrun codesign --sign "${key}" --verbose --force --options runtime --entitlements \
-                    "${real_src_dir}/share/macosx/keepassxc.entitlements" ./app/KeePassXC.app/Contents/MacOS/KeePassXC
-
-                if [ 0 -ne $? ]; then
-                    cd "${orig_dir}"
-                    exitError "Signing failed!"
-                fi
-
+            if [[ ${f: -4} == '.dmg' ]]; then
                 logInfo "Repacking disk image..."
                 hdiutil create \
                     -volname "KeePassXC" \
@@ -1236,52 +1247,9 @@ appsign() {
                 cd "${orig_dir}"
                 cp -f "${tmp_dir}/$(basename "${f}")" "${f}"
                 rm -Rf ${tmp_dir}
-
-                logInfo "Submitting disk image for notarization..."
-                local status="$(xcrun altool --notarize-app \
-                    --primary-bundle-id "org.keepassxc.keepassxc" \
-                    --username "${ac_username}" \
-                    --password "@keychain:${ac_keychain}" \
-                    --file "${f}")"
-
-                if [ 0 -ne $? ]; then
-                    logError "Submission failed!"
-                    exitError "Error message:\n${status}"
-                fi
-
-                local ticket="$(echo "${status}" | $GREP -oP "[a-f0-9-]+$")"
-                logInfo "Submission successful. Ticket ID: ${ticket}."
-
-                logInfo "Waiting for notarization to finish (this may take a while)..."
-                while true; do
-                    echo -n "."
-
-                    status="$(xcrun altool --notarization-info "${ticket}" \
-                        --username "${ac_username}" \
-                        --password "@keychain:${ac_keychain}")"
-
-                    if echo "$status" | $GREP -q "Status Code: 0"; then
-                        logInfo "\nNotarization successful."
-                        break
-                    elif echo "$status" | $GREP -q "Status Code"; then
-                        logError "\nNotarization failed!"
-                        exitError "Error message:\n${status}"
-                    fi
-
-                    sleep 5
-                done
-
-                logInfo "Stapling ticket to disk image..."
-                xcrun stapler staple "${f}"
-
-                if [ 0 -ne $? ]; then
-                    exitError "Stapling failed!"
-                fi
-
-                logInfo "Disk image successfully signed and notarized."
-            else
-                logWarn "Skipping non-DMG file '${f}'..."
             fi
+
+            logInfo "File '${f}' successfully signed."
         done
 
     elif [ "$(uname -o)" == "Msys" ]; then
@@ -1300,10 +1268,8 @@ appsign() {
 
                 # osslsigncode does not succeed at signing MSI files at this time...
                 logInfo "Signing file '${f}' using Microsoft signtool..."
-                signtool sign -f "${key}" -p "${password}" -d "KeePassXC" -td sha256 \
-                    -fd sha256 -tr "http://timestamp.comodoca.com/authenticode" "${f}"
-
-                if [ 0 -ne $? ]; then
+                if ! signtool sign -f "${key}" -p "${password}" -d "KeePassXC" -td sha256 \
+                    -fd sha256 -tr "http://timestamp.comodoca.com/authenticode" "${f}"; then
                     exitError "Signing failed!"
                 fi
             else
@@ -1316,6 +1282,112 @@ appsign() {
     fi
 
     logInfo "All done!"
+}
+
+
+# -----------------------------------------------------------------------
+#                           notarize command
+# -----------------------------------------------------------------------
+notarize() {
+    local notarize_files=()
+    local ac_username
+    local ac_keychain="AC_PASSWORD"
+
+    while [ $# -ge 1 ]; do
+        local arg="$1"
+        case "$arg" in
+            -f|--files)
+                while [ "${2:0:1}" != "-" ] && [ $# -ge 2 ]; do
+                    notarize_files+=("$2")
+                    shift
+                done ;;
+
+            -u|--username)
+                ac_username="$2"
+                shift ;;
+
+            -c|--keychain)
+                ac_keychain="$2"
+                shift ;;
+
+            -h|--help)
+                printUsage "notarize"
+                exit ;;
+
+            *)
+                logError "Unknown option '$arg'\n"
+                printUsage "notarize"
+                exit 1 ;;
+        esac
+        shift
+    done
+
+    if [ "$(uname -s)" != "Darwin" ]; then
+        exitError "Notarization is only supported on macOS!"
+    fi
+
+    if [ -z "${notarize_files}" ]; then
+        logError "Missing arguments, --files is required!\n"
+        printUsage "notarize"
+        exit 1
+    fi
+
+    if [ "$ac_username" == "" ]; then
+        logError "Missing arguments, --username is required!"
+        printUsage "notarize"
+        exit 1
+    fi
+
+    for f in "${notarize_files[@]}"; do
+        if [[ ${f: -4} != '.dmg' ]]; then
+            logWarn "Skipping non-DMG file '${f}'..."
+            continue
+        fi
+
+        logInfo "Submitting disk image '${f}' for notarization..."
+        local status
+        status="$(xcrun altool --notarize-app \
+            --primary-bundle-id "org.keepassxc.keepassxc" \
+            --username "${ac_username}" \
+            --password "@keychain:${ac_keychain}" \
+            --file "${f}" 2> /dev/null)"
+
+        if [ 0 -ne $? ]; then
+            logError "Submission failed!"
+            exitError "Error message:\n${status}"
+        fi
+
+        local ticket="$(echo "${status}" | $GREP -oP "[a-f0-9-]+$")"
+        logInfo "Submission successful. Ticket ID: ${ticket}."
+
+        logInfo "Waiting for notarization to finish (this may take a while)..."
+        while true; do
+            echo -n "."
+
+            status="$(xcrun altool --notarization-info "${ticket}" \
+                --username "${ac_username}" \
+                --password "@keychain:${ac_keychain}" 2> /dev/null)"
+
+            if echo "$status" | $GREP -q "Status Code: 0"; then
+                logInfo "\nNotarization successful."
+                break
+            elif echo "$status" | $GREP -q "Status Code"; then
+                logError "\nNotarization failed!"
+                exitError "Error message:\n${status}"
+            fi
+
+            sleep 5
+        done
+
+        logInfo "Stapling ticket to disk image..."
+        xcrun stapler staple "${f}"
+
+        if [ 0 -ne $? ]; then
+            exitError "Stapling failed!"
+        fi
+
+        logInfo "Disk image successfully notarized."
+    done
 }
 
 # -----------------------------------------------------------------------
@@ -1331,7 +1403,8 @@ elif [ "help" == "$MODE" ]; then
     printUsage "$1"
     exit
 elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] \
-    || [ "gpgsign" == "$MODE" ] || [ "appsign" == "$MODE" ] || [ "appimage" == "$MODE" ]; then
+    || [ "gpgsign" == "$MODE" ] || [ "appsign" == "$MODE" ]|| [ "notarize" == "$MODE" ] \
+    || [ "appimage" == "$MODE" ]; then
     ${MODE} "$@"
 else
     printUsage "$MODE"
