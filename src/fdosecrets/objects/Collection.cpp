@@ -718,7 +718,7 @@ namespace FdoSecrets
 
     void Collection::doDeleteEntries(QList<Entry*> entries)
     {
-        m_backend->deleteEntries(std::move(entries));
+        m_backend->deleteEntries(std::move(entries), FdoSecrets::settings()->confirmDeleteItem());
     }
 
     Group* Collection::findCreateGroupByPath(const QString& groupPath)

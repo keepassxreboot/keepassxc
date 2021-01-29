@@ -343,14 +343,6 @@ namespace FdoSecrets
 
         // delete item's backend. Item will be notified after the backend is deleted.
         if (m_item) {
-            if (FdoSecrets::settings()->noConfirmDeleteItem()) {
-                // based on permanent or not, different button is used
-                if (m_item->isDeletePermanent()) {
-                    MessageBox::setNextAnswer(MessageBox::Delete);
-                } else {
-                    MessageBox::setNextAnswer(MessageBox::Move);
-                }
-            }
             m_item->collection()->doDeleteEntries({m_item->backend()});
         }
 

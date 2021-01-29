@@ -38,8 +38,8 @@ namespace FdoSecrets
         bool showNotification() const;
         void setShowNotification(bool show);
 
-        bool noConfirmDeleteItem() const;
-        void setNoConfirmDeleteItem(bool noConfirm);
+        bool confirmDeleteItem() const;
+        void setConfirmDeleteItem(bool confirm);
 
         bool confirmAccessItem() const;
         void setConfirmAccessItem(bool confirmAccessItem);

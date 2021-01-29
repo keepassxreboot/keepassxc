@@ -376,13 +376,6 @@ namespace FdoSecrets
         return pathComponents.join('/');
     }
 
-    bool Item::isDeletePermanent() const
-    {
-        auto recycleBin = backend()->database()->metadata()->recycleBin();
-        return (recycleBin && recycleBin->findEntryByUuid(backend()->uuid()))
-               || !backend()->database()->metadata()->recycleBinEnabled();
-    }
-
     void setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType)
     {
         auto mimeName = contentType.split(';').takeFirst().trimmed();

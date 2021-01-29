@@ -151,7 +151,7 @@ public:
 
         FdoSecrets_Enabled,
         FdoSecrets_ShowNotification,
-        FdoSecrets_NoConfirmDeleteItem,
+        FdoSecrets_ConfirmDeleteItem,
         FdoSecrets_ConfirmAccessItem,
 
         KeeShare_QuietSuccess,

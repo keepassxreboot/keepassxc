@@ -1067,7 +1067,7 @@ void TestGuiFdoSecrets::testItemSecret()
 
 void TestGuiFdoSecrets::testItemDelete()
 {
-    FdoSecrets::settings()->setNoConfirmDeleteItem(false);
+    FdoSecrets::settings()->setConfirmDeleteItem(true);
 
     auto service = enableService();
     VERIFY(service);
@@ -1091,11 +1091,7 @@ void TestGuiFdoSecrets::testItemDelete()
     // prompt and click save
     auto itemObj = DBusMgr::pathToObject<Item>(QDBusObjectPath(item->path()));
     VERIFY(itemObj);
-    if (itemObj->isDeletePermanent()) {
-        MessageBox::setNextAnswer(MessageBox::Delete);
-    } else {
-        MessageBox::setNextAnswer(MessageBox::Move);
-    }
+    MessageBox::setNextAnswer(MessageBox::Delete);
     DBUS_VERIFY(prompt->Prompt(""));
     QApplication::processEvents();
 

@@ -481,20 +481,20 @@ void DatabaseWidget::deleteSelectedEntries()
     deleteEntries(std::move(selectedEntries));
 }
 
-void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries)
+void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries, bool confirm)
 {
     // Confirm entry removal before moving forward
     auto* recycleBin = m_db->metadata()->recycleBin();
     bool permanent = (recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid()))
                      || !m_db->metadata()->recycleBinEnabled();
 
-    if (!confirmDeleteEntries(selectedEntries, permanent)) {
+    if (confirm && !confirmDeleteEntries(selectedEntries, permanent)) {
         return;
     }
 
     // Find references to selected entries and prompt for direction if necessary
     auto it = selectedEntries.begin();
-    while (it != selectedEntries.end()) {
+    while (confirm && it != selectedEntries.end()) {
         auto references = m_db->rootGroup()->referencesRecursive(*it);
         if (!references.isEmpty()) {
             // Ignore references that are selected for deletion

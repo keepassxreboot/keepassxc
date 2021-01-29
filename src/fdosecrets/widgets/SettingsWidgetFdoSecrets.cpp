@@ -254,7 +254,7 @@ void SettingsWidgetFdoSecrets::loadSettings()
 {
     m_ui->enableFdoSecretService->setChecked(FdoSecrets::settings()->isEnabled());
     m_ui->showNotification->setChecked(FdoSecrets::settings()->showNotification());
-    m_ui->noConfirmDeleteItem->setChecked(FdoSecrets::settings()->noConfirmDeleteItem());
+    m_ui->confirmDeleteItem->setChecked(FdoSecrets::settings()->confirmDeleteItem());
     m_ui->confirmAccessItem->setChecked(FdoSecrets::settings()->confirmAccessItem());
 }
 
@@ -262,7 +262,7 @@ void SettingsWidgetFdoSecrets::saveSettings()
 {
     FdoSecrets::settings()->setEnabled(m_ui->enableFdoSecretService->isChecked());
     FdoSecrets::settings()->setShowNotification(m_ui->showNotification->isChecked());
-    FdoSecrets::settings()->setNoConfirmDeleteItem(m_ui->noConfirmDeleteItem->isChecked());
+    FdoSecrets::settings()->setConfirmDeleteItem(m_ui->confirmDeleteItem->isChecked());
     FdoSecrets::settings()->setConfirmAccessItem(m_ui->confirmAccessItem->isChecked());
 }
 
