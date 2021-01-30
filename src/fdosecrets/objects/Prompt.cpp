@@ -21,6 +21,7 @@
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Service.h"
+#include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
 
 #include "core/Tools.h"
@@ -138,7 +139,7 @@ namespace FdoSecrets
 
     DBusResult CreateCollectionPrompt::dismiss()
     {
-        emit completed(true, QVariant::fromValue(QDBusObjectPath{"/"}));
+        emit completed(true, QVariant::fromValue(DBusMgr::objectPathSafe(nullptr)));
         return {};
     }
 
@@ -359,6 +360,114 @@ namespace FdoSecrets
 
         emit completed(false, "");
 
+        return {};
+    }
+
+    CreateItemPrompt::CreateItemPrompt(Service* parent,
+                                       Collection* coll,
+                                       QVariantMap properties,
+                                       Secret secret,
+                                       QString itemPath,
+                                       Item* existing)
+        : PromptBase(parent)
+        , m_coll(coll)
+        , m_properties(std::move(properties))
+        , m_secret(std::move(secret))
+        , m_itemPath(std::move(itemPath))
+        , m_item(existing)
+        // session aliveness also need to be tracked, for potential use later in updateItem
+        , m_sess(m_secret.session)
+    {
+    }
+
+    DBusResult CreateItemPrompt::prompt(const QString& windowId)
+    {
+        if (thread() != QThread::currentThread()) {
+            DBusResult ret;
+            QMetaObject::invokeMethod(
+                this, "prompt", Qt::BlockingQueuedConnection, Q_ARG(QString, windowId), Q_RETURN_ARG(DBusResult, ret));
+            return ret;
+        }
+
+        MessageBox::OverrideParent override(findWindow(windowId));
+
+        if (!m_coll) {
+            return dismiss();
+        }
+
+        // the item doesn't exists yet, create it
+        if (!m_item) {
+            Item* item = nullptr;
+            auto ret = m_coll->doNewItem(m_itemPath, item);
+            if (ret.err()) {
+                return ret;
+            }
+            m_item = item;
+            ret = updateItem();
+            if (ret.err()) {
+                item->doDelete();
+                return ret;
+            }
+            emit completed(false, QVariant::fromValue(m_item->objectPath()));
+        } else {
+            bool locked = false;
+            auto ret = m_item->locked(locked);
+            if (ret.err()) {
+                return ret;
+            }
+            if (locked) {
+                // give the user a chance to unlock the item
+                auto prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{}, QSet<Item*>{m_item});
+                if (!prompt) {
+                    return QDBusError::InternalError;
+                }
+                // postpone anything after the confirmation
+                connect(prompt, &PromptBase::completed, this, &CreateItemPrompt::itemUnlocked);
+                return prompt->prompt(windowId);
+            } else {
+                ret = updateItem();
+                if (ret.err()) {
+                    return ret;
+                }
+                emit completed(false, QVariant::fromValue(m_item->objectPath()));
+            }
+        }
+        return {};
+    }
+
+    DBusResult CreateItemPrompt::dismiss()
+    {
+        emit completed(true, QVariant::fromValue(DBusMgr::objectPathSafe(nullptr)));
+        return {};
+    }
+
+    void CreateItemPrompt::itemUnlocked(bool dismissed, const QVariant& result)
+    {
+        auto unlocked = result.value<QList<QDBusObjectPath>>();
+        if (!unlocked.isEmpty()) {
+            // in theory we should check if the object path matches m_item, but a mismatch should not happen,
+            // because we control the unlock prompt ourselves
+            updateItem();
+        }
+        emit completed(dismissed, QVariant::fromValue(DBusMgr::objectPathSafe(m_item)));
+    }
+
+    DBusResult CreateItemPrompt::updateItem()
+    {
+        if (!m_sess || m_sess != m_secret.session) {
+            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+        }
+        if (!m_item) {
+            return {};
+        }
+        auto ret = m_item->setProperties(m_properties);
+        if (ret.err()) {
+            return ret;
+        }
+        ret = m_item->setSecret(m_secret);
+        if (ret.err()) {
+            return ret;
+        }
         return {};
     }
 } // namespace FdoSecrets

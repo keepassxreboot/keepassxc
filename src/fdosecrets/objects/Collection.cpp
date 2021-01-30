@@ -308,16 +308,8 @@ namespace FdoSecrets
             return ret;
         }
 
-        if (!secret.session) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
-        }
-
-        prompt = nullptr;
-
-        bool newlyCreated = true;
         item = nullptr;
         QString itemPath;
-        StringStringMap attributes;
 
         auto iterAttr = properties.find(QStringLiteral(DBUS_INTERFACE_SECRET_ITEM ".Attributes"));
         if (iterAttr != properties.end()) {
@@ -325,7 +317,7 @@ namespace FdoSecrets
             // and qt has no idea what this corresponds to.
             // we thus force a conversion to StringStringMap here. The conversion is registered in
             // DBusTypes.cpp
-            attributes = iterAttr.value().value<StringStringMap>();
+            auto attributes = iterAttr.value().value<StringStringMap>();
 
             itemPath = attributes.value(ItemAttributes::PathKey);
 
@@ -337,78 +329,12 @@ namespace FdoSecrets
             }
             if (!existing.isEmpty() && replace) {
                 item = existing.front();
-                newlyCreated = false;
             }
         }
 
-        if (!item) {
-            // normalize itemPath
-            itemPath = itemPath.startsWith('/') ? QString{} : QStringLiteral("/") + itemPath;
-
-            // split itemPath to groupPath and itemName
-            auto components = itemPath.split('/');
-            Q_ASSERT(components.size() >= 2);
-
-            auto itemName = components.takeLast();
-            Group* group = findCreateGroupByPath(components.join('/'));
-
-            // create new Entry in backend
-            auto* entry = new Entry();
-            entry->setUuid(QUuid::createUuid());
-            entry->setTitle(itemName);
-            entry->setUsername(m_backend->database()->metadata()->defaultUserName());
-            group->applyGroupIconOnCreateTo(entry);
-
-            entry->setGroup(group);
-
-            // when creation finishes in backend, we will already have item
-            item = m_entryToItem.value(entry, nullptr);
-
-            if (!item) {
-                // may happen if entry somehow ends up in recycle bin
-                return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
-            }
-
-            // the item was just created so there is no point in having it not authorized
-            dbus().callingClient()->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
-        }
-
-        auto updateItem = [item, properties, secret, newlyCreated](bool dismissed) -> DBusResult {
-            if (dismissed) {
-                return {};
-            }
-            auto res = item->setProperties(properties);
-            if (res.err()) {
-                if (newlyCreated) {
-                    item->doDelete();
-                }
-                return res;
-            }
-            res = item->setSecret(secret);
-            if (res.err()) {
-                if (newlyCreated) {
-                    item->doDelete();
-                }
-                return res;
-            }
-            return {};
-        };
-
-        bool locked = false;
-        ret = item->locked(locked);
-        if (locked) {
-            // give the user a chance to unlock the item
-            prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{}, QSet<Item*>{item});
-            if (!prompt) {
-                return QDBusError::InternalError;
-            }
-            // postpone anything after the confirmation
-            connect(prompt, &PromptBase::completed, item, updateItem);
-            return {};
-        }
-
+        prompt = PromptBase::Create<CreateItemPrompt>(service(), this, properties, secret, itemPath, item);
         if (!prompt) {
-            return updateItem(false);
+            return QDBusError::InternalError;
         }
         return {};
     }
@@ -772,6 +698,44 @@ namespace FdoSecrets
     {
         Q_ASSERT(entry);
         return inRecycleBin(entry->group());
+    }
+
+    DBusResult Collection::doNewItem(QString itemPath, Item*& created)
+    {
+        Q_ASSERT(m_backend);
+        created = nullptr;
+
+        // normalize itemPath
+        itemPath = (itemPath.startsWith('/') ? QString{} : QStringLiteral("/")) + itemPath;
+
+        // split itemPath to groupPath and itemName
+        auto components = itemPath.split('/');
+        Q_ASSERT(components.size() >= 2);
+
+        auto itemName = components.takeLast();
+        Group* group = findCreateGroupByPath(components.join('/'));
+
+        // create new Entry in backend
+        auto* entry = new Entry();
+        entry->setUuid(QUuid::createUuid());
+        entry->setTitle(itemName);
+        entry->setUsername(m_backend->database()->metadata()->defaultUserName());
+        group->applyGroupIconOnCreateTo(entry);
+
+        entry->setGroup(group);
+
+        // when creation finishes in backend, we will already have item
+        created = m_entryToItem.value(entry, nullptr);
+
+        if (!created) {
+            // may happen if entry somehow ends up in recycle bin
+            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+        }
+
+        // the item was just created so there is no point in having it not authorized
+        dbus().callingClient()->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
+
+        return {};
     }
 
 } // namespace FdoSecrets

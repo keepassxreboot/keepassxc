@@ -131,6 +131,14 @@ namespace FdoSecrets
             }
             return QDBusObjectPath(QStringLiteral("/"));
         }
+        template <typename T> static QDBusObjectPath objectPathSafe(QPointer<T> object)
+        {
+            return objectPathSafe(object.data());
+        }
+        static QDBusObjectPath objectPathSafe(nullptr_t)
+        {
+            return QDBusObjectPath(QStringLiteral("/"));
+        }
 
         /**
          * Convert a list of DBusObjects to object path

@@ -621,7 +621,7 @@ void TestGuiFdoSecrets::testCollectionCreate()
         auto args = spyPromptCompleted.takeFirst();
         COMPARE(args.size(), 2);
         COMPARE(args.at(0).toBool(), false);
-        auto coll = getProxy<CollectionProxy>(args.at(1).value<QDBusVariant>().variant().value<QDBusObjectPath>());
+        auto coll = getProxy<CollectionProxy>(getSignalVariantArgument<QDBusObjectPath>(args.at(1)));
         VERIFY(coll);
 
         DBUS_COMPARE(coll->label(), QStringLiteral("Test NewDB"));
@@ -834,6 +834,17 @@ void TestGuiFdoSecrets::testItemCreate()
         DBUS_GET(unlocked, coll->SearchItems(attributes));
         VERIFY(unlocked.contains(QDBusObjectPath(item->path())));
     }
+
+    // create when the item exists but is locked
+    auto itemObj = DBusMgr::pathToObject<Item>(QDBusObjectPath(item->path()));
+    VERIFY(itemObj);
+    auto entry = itemObj->backend();
+    VERIFY(entry);
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+    m_client->setItemAuthorized(entry->uuid(), AuthDecision::Undecided);
+    item = createItem(sess, coll, "abcUpdateWhenLocked", "Password", attributes, true, true);
+    VERIFY(item);
+    DBUS_COMPARE(item->label(), QStringLiteral("abcUpdateWhenLocked"));
 }
 
 void TestGuiFdoSecrets::testItemChange()

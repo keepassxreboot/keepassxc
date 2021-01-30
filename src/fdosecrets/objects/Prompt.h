@@ -162,6 +162,37 @@ namespace FdoSecrets
         QPointer<Item> m_item;
     };
 
+    class CreateItemPrompt : public PromptBase
+    {
+        Q_OBJECT
+
+        explicit CreateItemPrompt(Service* parent,
+                                  Collection* coll,
+                                  QVariantMap properties,
+                                  Secret secret,
+                                  QString itemPath,
+                                  Item* existing);
+
+    public:
+        DBusResult prompt(const QString& windowId) override;
+        DBusResult dismiss() override;
+    private slots:
+        void itemUnlocked(bool dismissed, const QVariant& result);
+
+    private:
+        DBusResult updateItem();
+
+        friend class PromptBase;
+
+        QPointer<Collection> m_coll;
+        QVariantMap m_properties;
+        Secret m_secret;
+        QString m_itemPath;
+        QPointer<Item> m_item;
+
+        QPointer<const Session> m_sess;
+    };
+
 } // namespace FdoSecrets
 
 #endif // KEEPASSXC_FDOSECRETS_PROMPT_H
