@@ -125,6 +125,8 @@ void AccessControlDialog::dialogFinished(int result)
             break;
         }
     }
+
+    emit finished(m_decisions);
 }
 
 QHash<Entry*, AuthDecision> AccessControlDialog::decisions() const

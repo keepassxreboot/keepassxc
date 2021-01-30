@@ -97,6 +97,7 @@ private slots:
 
 protected slots:
     void driveNewDatabaseWizard();
+    bool driveAccessControlDialog();
 
 private:
     void lockDatabaseInBackend();
@@ -110,7 +111,8 @@ private:
                                          const QString& label,
                                          const QString& pass,
                                          const FdoSecrets::wire::StringStringMap& attr,
-                                         bool replace);
+                                         bool replace,
+                                         bool expectPrompt = false);
     template <typename Proxy> QSharedPointer<Proxy> getProxy(const QDBusObjectPath& path) const
     {
         auto ret = QSharedPointer<Proxy>{

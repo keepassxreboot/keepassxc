@@ -459,36 +459,9 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
     QTRY_COMPARE(spyPromptCompleted.count(), 0);
     DBUS_COMPARE(item->locked(), true);
 
-    {
-        // FIXME: the dialog is shown and blocks the method from returning
-        // this is a hack to click away the dialog, remove after fix the prompt method
-        struct Filter : QObject
-        {
-            QWidgetList exclude = QApplication::topLevelWidgets();
-            Filter()
-            {
-                qApp->installEventFilter(this);
-            }
-            bool eventFilter(QObject* obj, QEvent* ev) override
-            {
-                if (ev->type() == QEvent::WindowActivate) {
-                    if (auto* w = qobject_cast<AccessControlDialog*>(obj)) {
-                        if (w->isWindow() && !exclude.contains(w)) {
-                            QTest::keyClick(w, Qt::Key_Enter);
-                        }
-                    }
-                }
-                return false;
-            }
-            ~Filter() override
-            {
-                qApp->removeEventFilter(this);
-            }
-        } filter{};
-
-        // drive the prompt
-        DBUS_VERIFY(prompt->Prompt(""));
-    }
+    // drive the prompt
+    DBUS_VERIFY(prompt->Prompt(""));
+    VERIFY(driveAccessControlDialog());
 
     // unlocked
     DBUS_COMPARE(item->locked(), false);
@@ -1273,7 +1246,7 @@ void TestGuiFdoSecrets::unlockDatabaseInBackend()
     QApplication::processEvents();
 }
 
-// the following functions have return value, switch macros to version supporting that
+// the following functions have return value, switch macros to the version supporting that
 #undef VERIFY
 #undef VERIFY2
 #undef COMPARE
@@ -1332,7 +1305,8 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
                                                         const QString& label,
                                                         const QString& pass,
                                                         const StringStringMap& attr,
-                                                        bool replace)
+                                                        bool replace,
+                                                        bool expectPrompt)
 {
     VERIFY(sess);
     VERIFY(coll);
@@ -1349,9 +1323,43 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
     auto encrypted = m_cipher->encrypt(ss.to()).to();
 
     DBUS_GET2(itemPath, promptPath, coll->CreateItem(properties, encrypted, replace));
-    // creating item does not have a prompt to show
-    COMPARE(promptPath, QDBusObjectPath("/"));
+
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+
+    // drive the prompt
+    DBUS_VERIFY(prompt->Prompt(""));
+    bool found = driveAccessControlDialog();
+    COMPARE(found, expectPrompt);
+
+    // wait for signal
+    VERIFY(spyPromptCompleted.wait());
+    COMPARE(spyPromptCompleted.count(), 1);
+    auto args = spyPromptCompleted.takeFirst();
+    COMPARE(args.size(), 2);
+    COMPARE(args.at(0).toBool(), false);
+    itemPath = getSignalVariantArgument<QDBusObjectPath>(args.at(1));
+
     return getProxy<ItemProxy>(itemPath);
+}
+
+bool TestGuiFdoSecrets::driveAccessControlDialog()
+{
+    QApplication::processEvents();
+    for (auto w : qApp->allWidgets()) {
+        if (!w->isWindow()) {
+            continue;
+        }
+        auto dlg = qobject_cast<AccessControlDialog*>(w);
+        if (dlg) {
+            QTest::keyClick(dlg, Qt::Key_Enter);
+            QApplication::processEvents();
+            return true;
+        }
+    }
+    return false;
 }
 
 #undef VERIFY

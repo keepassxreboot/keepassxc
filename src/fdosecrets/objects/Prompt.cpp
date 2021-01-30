@@ -18,7 +18,6 @@
 #include "Prompt.h"
 
 #include "fdosecrets/FdoSecretsPlugin.h"
-#include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Service.h"
@@ -224,7 +223,8 @@ namespace FdoSecrets
         // unlock items directly if no collection unlocking pending
         // o.w. do it in collectionUnlockFinished
         if (!waitingForCollections) {
-            unlockItems();
+            // do not block the current method
+            QTimer::singleShot(0, this, &UnlockPrompt::unlockItems);
         }
 
         return {};
@@ -269,7 +269,6 @@ namespace FdoSecrets
             return;
         }
 
-        constexpr auto FdoSecretsBackend = "FdoSecretsBackend";
         // flatten to list of entries
         QList<Entry*> entries;
         for (const auto& itemsPerColl : m_items.values()) {
@@ -293,24 +292,36 @@ namespace FdoSecrets
         }
         if (!entries.isEmpty()) {
             QString app = tr("%1 (PID: %2)").arg(client->name()).arg(client->pid());
-            AccessControlDialog ac(findWindow(m_windowId), entries, app, AuthOption::Remember);
-            ac.exec();
-            auto decisions = ac.decisions();
-            for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
-                auto entry = it.key();
-                // get back the corresponding item
-                auto item = entry->property(FdoSecretsBackend).value<Item*>();
-                entry->setProperty(FdoSecretsBackend, {});
-                Q_ASSERT(item);
+            auto ac = new AccessControlDialog(findWindow(m_windowId), entries, app, AuthOption::Remember);
+            connect(ac, &AccessControlDialog::finished, this, &UnlockPrompt::itemUnlockFinished);
+            connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
+            ac->open();
+        } else {
+            itemUnlockFinished({});
+        }
+    }
 
-                // set auth
-                client->setItemAuthorized(entry->uuid(), it.value());
+    void UnlockPrompt::itemUnlockFinished(const QHash<Entry*, AuthDecision>& decisions)
+    {
+        auto client = m_client.lock();
+        if (!client) {
+            // client already gone
+            return;
+        }
+        for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
+            auto entry = it.key();
+            // get back the corresponding item
+            auto item = entry->property(FdoSecretsBackend).value<Item*>();
+            entry->setProperty(FdoSecretsBackend, {});
+            Q_ASSERT(item);
 
-                if (client->itemAuthorized(entry->uuid())) {
-                    m_unlocked += item->objectPath();
-                } else {
-                    m_numRejected += 1;
-                }
+            // set auth
+            client->setItemAuthorized(entry->uuid(), it.value());
+
+            if (client->itemAuthorized(entry->uuid())) {
+                m_unlocked += item->objectPath();
+            } else {
+                m_numRejected += 1;
             }
         }
         // if anything is not unlocked, treat the whole prompt as dismissed

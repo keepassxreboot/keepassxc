@@ -65,6 +65,9 @@ public:
 
     QHash<Entry*, AuthDecision> decisions() const;
 
+signals:
+    void finished(const QHash<Entry*, AuthDecision>& results);
+
 private slots:
     void rememberChecked(bool checked);
     void denyEntryClicked(Entry* entry, const QModelIndex& index);

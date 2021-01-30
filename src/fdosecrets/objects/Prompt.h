@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_PROMPT_H
 #define KEEPASSXC_FDOSECRETS_PROMPT_H
 
+#include "core/Global.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
 #include <QHash>
@@ -26,6 +27,7 @@
 class QWindow;
 
 class DatabaseWidget;
+class Entry;
 
 namespace FdoSecrets
 {
@@ -125,11 +127,14 @@ namespace FdoSecrets
 
     private slots:
         void collectionUnlockFinished(bool accepted);
+        void itemUnlockFinished(const QHash<Entry*, AuthDecision>& results);
 
     private:
         void unlockItems();
 
         friend class PromptBase;
+
+        static constexpr auto FdoSecretsBackend = "FdoSecretsBackend";
 
         QList<QPointer<Collection>> m_collections;
         QHash<Collection*, QList<QPointer<Item>>> m_items;
