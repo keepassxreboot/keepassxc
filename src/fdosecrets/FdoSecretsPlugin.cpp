@@ -31,7 +31,6 @@ QPointer<FdoSecretsPlugin> g_fdoSecretsPlugin;
 
 FdoSecretsPlugin::FdoSecretsPlugin(DatabaseTabWidget* tabWidget)
     : m_dbTabs(tabWidget)
-    , m_dbus(QDBusConnection::sessionBus())
 {
     connect(&m_dbus, &DBusMgr::error, this, &FdoSecretsPlugin::emitError);
     g_fdoSecretsPlugin = this;

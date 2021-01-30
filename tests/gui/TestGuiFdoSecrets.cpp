@@ -595,7 +595,7 @@ void TestGuiFdoSecrets::testCollectionCreate()
         auto existing = getDefaultCollection(service);
         DBUS_GET2(collPath,
                   promptPath,
-                  service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION ".Label", "NewDB"}}, "default"));
+                  service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION + ".Label", "NewDB"}}, "default"));
         COMPARE(promptPath, QDBusObjectPath("/"));
         COMPARE(collPath.path(), existing->path());
     }
@@ -605,7 +605,7 @@ void TestGuiFdoSecrets::testCollectionCreate()
     {
         DBUS_GET2(collPath,
                   promptPath,
-                  service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION ".Label", "Test NewDB"}}, "mydatadb"));
+                  service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION + ".Label", "Test NewDB"}}, "mydatadb"));
         COMPARE(collPath, QDBusObjectPath("/"));
         auto prompt = getProxy<PromptProxy>(promptPath);
         VERIFY(prompt);
@@ -1134,12 +1134,12 @@ void TestGuiFdoSecrets::testItemLockState()
     {
         auto reply = item->GetSecret(QDBusObjectPath(sess->path()));
         VERIFY(reply.isError());
-        COMPARE(reply.error().name(), QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
+        COMPARE(reply.error().name(), DBUS_ERROR_SECRET_IS_LOCKED);
     }
     {
         auto reply = item->SetSecret(encrypted);
         VERIFY(reply.isError());
-        COMPARE(reply.error().name(), QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
+        COMPARE(reply.error().name(), DBUS_ERROR_SECRET_IS_LOCKED);
     }
 
     // item is unlocked if the client is authorized
@@ -1323,8 +1323,8 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
     VERIFY(coll);
 
     QVariantMap properties{
-        {DBUS_INTERFACE_SECRET_ITEM ".Label", QVariant::fromValue(label)},
-        {DBUS_INTERFACE_SECRET_ITEM ".Attributes", QVariant::fromValue(attr)},
+        {DBUS_INTERFACE_SECRET_ITEM + ".Label", QVariant::fromValue(label)},
+        {DBUS_INTERFACE_SECRET_ITEM + ".Attributes", QVariant::fromValue(attr)},
     };
 
     wire::Secret ss;

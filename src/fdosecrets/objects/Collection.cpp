@@ -103,7 +103,7 @@ namespace FdoSecrets
     DBusResult Collection::ensureBackend() const
     {
         if (!m_backend) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
         }
         return {};
     }
@@ -111,7 +111,7 @@ namespace FdoSecrets
     DBusResult Collection::ensureUnlocked() const
     {
         if (backendLocked()) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
+            return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
         return {};
     }
@@ -311,7 +311,7 @@ namespace FdoSecrets
         item = nullptr;
         QString itemPath;
 
-        auto iterAttr = properties.find(QStringLiteral(DBUS_INTERFACE_SECRET_ITEM ".Attributes"));
+        auto iterAttr = properties.find(DBUS_INTERFACE_SECRET_ITEM + ".Attributes");
         if (iterAttr != properties.end()) {
             // the actual value in iterAttr.value() is QDBusArgument, which represents a structure
             // and qt has no idea what this corresponds to.
@@ -341,7 +341,7 @@ namespace FdoSecrets
 
     DBusResult Collection::setProperties(const QVariantMap& properties)
     {
-        auto label = properties.value(QStringLiteral(DBUS_INTERFACE_SECRET_COLLECTION ".Label")).toString();
+        auto label = properties.value(DBUS_INTERFACE_SECRET_COLLECTION + ".Label").toString();
 
         auto ret = setLabel(label);
         if (ret.err()) {
@@ -729,7 +729,7 @@ namespace FdoSecrets
 
         if (!created) {
             // may happen if entry somehow ends up in recycle bin
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
         }
 
         // the item was just created so there is no point in having it not authorized

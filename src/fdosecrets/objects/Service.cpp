@@ -367,7 +367,7 @@ namespace FdoSecrets
     DBusResult Service::getSecrets(const QList<Item*>& items, Session* session, ItemSecretMap& secrets) const
     {
         if (!session) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SESSION);
         }
 
         for (const auto& item : asConst(items)) {
@@ -394,7 +394,7 @@ namespace FdoSecrets
             // remove alias name from its collection
             collection = findCollection(name);
             if (!collection) {
-                return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+                return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
             }
             return collection->removeAlias(name);
         }

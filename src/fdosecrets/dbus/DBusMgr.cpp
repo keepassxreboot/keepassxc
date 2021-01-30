@@ -26,21 +26,155 @@
 #include "fdosecrets/objects/Session.h"
 
 #include "core/Entry.h"
-#include "core/Global.h"
 #include "core/Tools.h"
 
 #include <QCoreApplication>
-#include <QDBusMessage>
-#include <QDebug>
 #include <QFileInfo>
 #include <QThread>
 
-#include <utility>
-
 namespace FdoSecrets
 {
-    DBusMgr::DBusMgr(QDBusConnection conn)
-        : m_conn(std::move(conn))
+    static const auto IntrospectionService = R"xml(
+<interface name="org.freedesktop.Secret.Service">
+    <property name="Collections" type="ao" access="read"/>
+    <signal name="CollectionCreated">
+        <arg name="collection" type="o" direction="out"/>
+    </signal>
+    <signal name="CollectionDeleted">
+        <arg name="collection" type="o" direction="out"/>
+    </signal>
+    <signal name="CollectionChanged">
+        <arg name="collection" type="o" direction="out"/>
+    </signal>
+    <method name="OpenSession">
+        <arg type="v" direction="out"/>
+        <arg name="algorithm" type="s" direction="in"/>
+        <arg name="input" type="v" direction="in"/>
+        <arg name="result" type="o" direction="out"/>
+    </method>
+    <method name="CreateCollection">
+        <arg type="o" direction="out"/>
+        <arg name="properties" type="a{sv}" direction="in"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+        <arg name="alias" type="s" direction="in"/>
+        <arg name="prompt" type="o" direction="out"/>
+    </method>
+    <method name="SearchItems">
+        <arg type="ao" direction="out"/>
+        <arg name="attributes" type="a{ss}" direction="in"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="StringStringMap"/>
+        <arg name="locked" type="ao" direction="out"/>
+    </method>
+    <method name="Unlock">
+        <arg type="ao" direction="out"/>
+        <arg name="paths" type="ao" direction="in"/>
+        <arg name="prompt" type="o" direction="out"/>
+    </method>
+    <method name="Lock">
+        <arg type="ao" direction="out"/>
+        <arg name="paths" type="ao" direction="in"/>
+        <arg name="prompt" type="o" direction="out"/>
+    </method>
+    <method name="GetSecrets">
+        <arg type="a{o(oayays)}" direction="out"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="ObjectPathSecretMap"/>
+        <arg name="items" type="ao" direction="in"/>
+        <arg name="session" type="o" direction="in"/>
+    </method>
+    <method name="ReadAlias">
+        <arg type="o" direction="out"/>
+        <arg name="name" type="s" direction="in"/>
+    </method>
+    <method name="SetAlias">
+        <arg name="name" type="s" direction="in"/>
+        <arg name="collection" type="o" direction="in"/>
+    </method>
+</interface>
+)xml";
+
+    static const auto IntrospectionCollection = R"xml(
+<interface name="org.freedesktop.Secret.Collection">
+    <property name="Items" type="ao" access="read"/>
+    <property name="Label" type="s" access="readwrite"/>
+    <property name="Locked" type="b" access="read"/>
+    <property name="Created" type="t" access="read"/>
+    <property name="Modified" type="t" access="read"/>
+    <signal name="ItemCreated">
+        <arg name="item" type="o" direction="out"/>
+    </signal>
+    <signal name="ItemDeleted">
+        <arg name="item" type="o" direction="out"/>
+    </signal>
+    <signal name="ItemChanged">
+        <arg name="item" type="o" direction="out"/>
+    </signal>
+    <method name="Delete">
+        <arg type="o" direction="out"/>
+    </method>
+    <method name="SearchItems">
+        <arg type="ao" direction="out"/>
+        <arg name="attributes" type="a{ss}" direction="in"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="StringStringMap"/>
+    </method>
+    <method name="CreateItem">
+        <arg type="o" direction="out"/>
+        <arg name="properties" type="a{sv}" direction="in"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+        <arg name="secret" type="(oayays)" direction="in"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="FdoSecrets::wire::Secret"/>
+        <arg name="replace" type="b" direction="in"/>
+        <arg name="prompt" type="o" direction="out"/>
+    </method>
+</interface>
+)xml";
+
+    static const auto IntrospectionItem = R"xml(
+<interface name="org.freedesktop.Secret.Item">
+    <property name="Locked" type="b" access="read"/>
+    <property name="Attributes" type="a{ss}" access="readwrite">
+        <annotation name="org.qtproject.QtDBus.QtTypeName" value="StringStringMap"/>
+    </property>
+    <property name="Label" type="s" access="readwrite"/>
+    <property name="Created" type="t" access="read"/>
+    <property name="Modified" type="t" access="read"/>
+    <method name="Delete">
+        <arg type="o" direction="out"/>
+    </method>
+    <method name="GetSecret">
+        <arg type="(oayays)" direction="out"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="FdoSecrets::wire::Secret"/>
+        <arg name="session" type="o" direction="in"/>
+    </method>
+    <method name="SetSecret">
+        <arg name="secret" type="(oayays)" direction="in"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="FdoSecrets::wire::Secret"/>
+    </method>
+</interface>
+)xml";
+
+    static const auto IntrospectionSession = R"xml(
+<interface name="org.freedesktop.Secret.Session">
+    <method name="Close">
+    </method>
+</interface>
+)xml";
+
+    static const auto IntrospectionPrompt = R"xml(
+<interface name="org.freedesktop.Secret.Prompt">
+    <signal name="Completed">
+        <arg name="dismissed" type="b" direction="out"/>
+        <arg name="result" type="v" direction="out"/>
+    </signal>
+    <method name="Prompt">
+        <arg name="windowId" type="s" direction="in"/>
+    </method>
+    <method name="Dismiss">
+    </method>
+</interface>
+)xml";
+
+    DBusMgr::DBusMgr()
+        : m_conn(QDBusConnection::sessionBus())
     {
         registerDBusTypes();
         qRegisterMetaType<DBusClientPtr>();
@@ -61,16 +195,17 @@ namespace FdoSecrets
 
     DBusMgr::~DBusMgr() = default;
 
-    thread_local DBusClientPtr DBusMgr::Context{};
+    thread_local DBusClientPtr DBusMgr::m_currentContext{};
     const DBusClientPtr& DBusMgr::callingClient() const
     {
-        Q_ASSERT(Context);
-        return Context;
+        Q_ASSERT(m_currentContext);
+        return m_currentContext;
     }
 
-    void DBusMgr::overrideClient(const DBusClientPtr& fake) const
+    void DBusMgr::overrideClient(const DBusClientPtr& fake)
     {
-        Context = fake;
+        m_currentContext = fake;
+        m_contextOverride = true;
     }
 
     QList<DBusClientPtr> DBusMgr::clients() const
@@ -128,7 +263,7 @@ namespace FdoSecrets
         Q_ASSERT(path.startsWith('/'));
         Q_ASSERT(path == "/" || !path.endsWith('/'));
 
-        static const QString DBusPathSecrets = QStringLiteral(DBUS_PATH_SECRETS);
+        static const QString DBusPathSecrets = DBUS_PATH_SECRETS;
 
         if (!path.startsWith(DBusPathSecrets)) {
             return ParsedPath{};
@@ -183,7 +318,7 @@ namespace FdoSecrets
 
     bool DBusMgr::serviceOccupied() const
     {
-        auto reply = m_conn.interface()->isServiceRegistered(QStringLiteral(DBUS_SERVICE_SECRET));
+        auto reply = m_conn.interface()->isServiceRegistered(DBUS_SERVICE_SECRET);
         if (!reply.isValid()) {
             return false;
         }
@@ -202,7 +337,7 @@ namespace FdoSecrets
         auto exeStr = tr("Unknown", "Unknown executable path");
 
         ProcessInfo info{};
-        if (serviceInfo(QStringLiteral(DBUS_SERVICE_SECRET), info)) {
+        if (serviceInfo(DBUS_SERVICE_SECRET, info)) {
             pidStr = QString::number(info.pid);
             if (!info.exePath.isEmpty()) {
                 exeStr = info.exePath;
@@ -232,18 +367,16 @@ namespace FdoSecrets
 
     bool DBusMgr::registerObject(Service* service)
     {
-        if (!m_conn.registerService(QStringLiteral(DBUS_SERVICE_SECRET))) {
+        if (!m_conn.registerService(DBUS_SERVICE_SECRET)) {
             const auto existing = reportExistingService();
             qDebug() << "Failed to register DBus service at " << DBUS_SERVICE_SECRET;
             qDebug() << existing;
             emit error(tr("Failed to register DBus service at %1.<br/>").arg(DBUS_SERVICE_SECRET) + existing);
             return false;
         }
-        connect(service, &DBusObject::destroyed, this, [this]() {
-            m_conn.unregisterService(QStringLiteral(DBUS_SERVICE_SECRET));
-        });
+        connect(service, &DBusObject::destroyed, this, [this]() { m_conn.unregisterService(DBUS_SERVICE_SECRET); });
 
-        if (!registerObject(QStringLiteral(DBUS_PATH_SECRETS), service)) {
+        if (!registerObject(DBUS_PATH_SECRETS, service)) {
             qDebug() << "Failed to register service on DBus at path" << DBUS_PATH_SECRETS;
             emit error(tr("Failed to register service on DBus at path '%1'").arg(DBUS_PATH_SECRETS));
             return false;
@@ -259,12 +392,11 @@ namespace FdoSecrets
     bool DBusMgr::registerObject(Collection* coll)
     {
         auto name = encodePath(coll->name());
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(DBUS_PATH_SECRETS, name);
+        auto path = DBUS_PATH_TEMPLATE_COLLECTION.arg(DBUS_PATH_SECRETS, name);
         if (!registerObject(path, coll)) {
-
             // try again with a suffix
-            name += QStringLiteral("_%1").arg(Tools::uuidToHex(QUuid::createUuid()).left(4));
-            path = QStringLiteral(DBUS_PATH_TEMPLATE_COLLECTION).arg(DBUS_PATH_SECRETS, name);
+            name.append(QString("_%1").arg(Tools::uuidToHex(QUuid::createUuid()).left(4)));
+            path = DBUS_PATH_TEMPLATE_COLLECTION.arg(DBUS_PATH_SECRETS, name);
 
             if (!registerObject(path, coll)) {
                 qDebug() << "Failed to register database on DBus under name" << name;
@@ -282,7 +414,7 @@ namespace FdoSecrets
 
     bool DBusMgr::registerObject(Session* sess)
     {
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_SESSION).arg(DBUS_PATH_SECRETS, sess->id());
+        auto path = DBUS_PATH_TEMPLATE_SESSION.arg(DBUS_PATH_SECRETS, sess->id());
         if (!registerObject(path, sess)) {
             emit error(tr("Failed to register session on DBus at path '%1'").arg(path));
             return false;
@@ -292,8 +424,7 @@ namespace FdoSecrets
 
     bool DBusMgr::registerObject(Item* item)
     {
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_ITEM)
-                        .arg(item->collection()->objectPath().path(), item->backend()->uuidToHex());
+        auto path = DBUS_PATH_TEMPLATE_ITEM.arg(item->collection()->objectPath().path(), item->backend()->uuidToHex());
         if (!registerObject(path, item)) {
             emit error(tr("Failed to register item on DBus at path '%1'").arg(path));
             return false;
@@ -303,8 +434,7 @@ namespace FdoSecrets
 
     bool DBusMgr::registerObject(PromptBase* prompt)
     {
-        auto path =
-            QStringLiteral(DBUS_PATH_TEMPLATE_PROMPT).arg(DBUS_PATH_SECRETS, Tools::uuidToHex(QUuid::createUuid()));
+        auto path = DBUS_PATH_TEMPLATE_PROMPT.arg(DBUS_PATH_SECRETS, Tools::uuidToHex(QUuid::createUuid()));
         if (!registerObject(path, prompt)) {
             emit error(tr("Failed to register prompt object on DBus at path '%1'").arg(path));
             return false;
@@ -320,13 +450,13 @@ namespace FdoSecrets
         auto count = m_objects.remove(obj->objectPath().path());
         if (count > 0) {
             m_conn.unregisterObject(obj->objectPath().path());
-            obj->setObjectPath(QStringLiteral("/"));
+            obj->setObjectPath("/");
         }
     }
 
     bool DBusMgr::registerAlias(Collection* coll, const QString& alias)
     {
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(QStringLiteral(DBUS_PATH_SECRETS), alias);
+        auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
         if (!registerObject(path, coll, false)) {
             qDebug() << "Failed to register database on DBus under alias" << alias;
             // usually this is reported back directly on dbus, so no need to show in UI
@@ -340,7 +470,7 @@ namespace FdoSecrets
 
     void DBusMgr::unregisterAlias(const QString& alias)
     {
-        auto path = QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(DBUS_PATH_SECRETS, alias);
+        auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
         // DBusMgr::unregisterObject only handles primary path
         m_objects.remove(path);
         m_conn.unregisterObject(path);
@@ -350,30 +480,21 @@ namespace FdoSecrets
     {
         QVariantList args;
         args += QVariant::fromValue(coll->objectPath());
-        sendDBusSignal(QStringLiteral(DBUS_PATH_SECRETS),
-                       QStringLiteral(DBUS_INTERFACE_SECRET_SERVICE),
-                       QStringLiteral("CollectionCreated"),
-                       args);
+        sendDBusSignal(DBUS_PATH_SECRETS, DBUS_INTERFACE_SECRET_SERVICE, QStringLiteral("CollectionCreated"), args);
     }
 
     void DBusMgr::emitCollectionChanged(Collection* coll)
     {
         QVariantList args;
         args += QVariant::fromValue(coll->objectPath());
-        sendDBusSignal(QStringLiteral(DBUS_PATH_SECRETS),
-                       QStringLiteral(DBUS_INTERFACE_SECRET_SERVICE),
-                       "CollectionChanged",
-                       args);
+        sendDBusSignal(DBUS_PATH_SECRETS, DBUS_INTERFACE_SECRET_SERVICE, "CollectionChanged", args);
     }
 
     void DBusMgr::emitCollectionDeleted(Collection* coll)
     {
         QVariantList args;
         args += QVariant::fromValue(coll->objectPath());
-        sendDBusSignal(QStringLiteral(DBUS_PATH_SECRETS),
-                       QStringLiteral(DBUS_INTERFACE_SECRET_SERVICE),
-                       QStringLiteral("CollectionDeleted"),
-                       args);
+        sendDBusSignal(DBUS_PATH_SECRETS, DBUS_INTERFACE_SECRET_SERVICE, QStringLiteral("CollectionDeleted"), args);
     }
 
     void DBusMgr::emitItemCreated(Item* item)
@@ -382,14 +503,12 @@ namespace FdoSecrets
         QVariantList args;
         args += QVariant::fromValue(item->objectPath());
         // send on primary path
-        sendDBusSignal(coll->objectPath().path(),
-                       QStringLiteral(DBUS_INTERFACE_SECRET_COLLECTION),
-                       QStringLiteral("ItemCreated"),
-                       args);
+        sendDBusSignal(
+            coll->objectPath().path(), DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemCreated"), args);
         // also send on all alias path
         for (const auto& alias : coll->aliases()) {
-            auto path = QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(DBUS_PATH_SECRETS, alias);
-            sendDBusSignal(path, QStringLiteral(DBUS_INTERFACE_SECRET_COLLECTION), QStringLiteral("ItemCreated"), args);
+            auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
+            sendDBusSignal(path, DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemCreated"), args);
         }
     }
 
@@ -399,14 +518,12 @@ namespace FdoSecrets
         QVariantList args;
         args += QVariant::fromValue(item->objectPath());
         // send on primary path
-        sendDBusSignal(coll->objectPath().path(),
-                       QStringLiteral(DBUS_INTERFACE_SECRET_COLLECTION),
-                       QStringLiteral("ItemChanged"),
-                       args);
+        sendDBusSignal(
+            coll->objectPath().path(), DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemChanged"), args);
         // also send on all alias path
         for (const auto& alias : coll->aliases()) {
-            auto path = QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(DBUS_PATH_SECRETS, alias);
-            sendDBusSignal(path, QStringLiteral(DBUS_INTERFACE_SECRET_COLLECTION), QStringLiteral("ItemChanged"), args);
+            auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
+            sendDBusSignal(path, DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemChanged"), args);
         }
     }
 
@@ -416,14 +533,12 @@ namespace FdoSecrets
         QVariantList args;
         args += QVariant::fromValue(item->objectPath());
         // send on primary path
-        sendDBusSignal(coll->objectPath().path(),
-                       QStringLiteral(DBUS_INTERFACE_SECRET_COLLECTION),
-                       QStringLiteral("ItemDeleted"),
-                       args);
+        sendDBusSignal(
+            coll->objectPath().path(), DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemDeleted"), args);
         // also send on all alias path
         for (const auto& alias : coll->aliases()) {
-            auto path = QStringLiteral(DBUS_PATH_TEMPLATE_ALIAS).arg(DBUS_PATH_SECRETS, alias);
-            sendDBusSignal(path, QStringLiteral(DBUS_INTERFACE_SECRET_COLLECTION), QStringLiteral("ItemDeleted"), args);
+            auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
+            sendDBusSignal(path, DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemDeleted"), args);
         }
     }
 
@@ -443,10 +558,7 @@ namespace FdoSecrets
         QVariantList args;
         args += QVariant::fromValue(dismissed);
         args += QVariant::fromValue(QDBusVariant(result));
-        sendDBusSignal(prompt->objectPath().path(),
-                       QStringLiteral(DBUS_INTERFACE_SECRET_PROMPT),
-                       QStringLiteral("Completed"),
-                       args);
+        sendDBusSignal(prompt->objectPath().path(), DBUS_INTERFACE_SECRET_PROMPT, QStringLiteral("Completed"), args);
     }
 
     DBusClientPtr DBusMgr::findClient(const QString& addr)

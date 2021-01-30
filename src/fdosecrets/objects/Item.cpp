@@ -246,11 +246,11 @@ namespace FdoSecrets
             return ret;
         }
         if (!dbus().callingClient()->itemAuthorizedResetOnce(backend()->uuid())) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
+            return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
 
         if (!session) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SESSION);
         }
 
         secret = getEntrySecret(m_backend);
@@ -272,11 +272,11 @@ namespace FdoSecrets
             return ret;
         }
         if (!dbus().callingClient()->itemAuthorizedResetOnce(backend()->uuid())) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
+            return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
 
         if (!secret.session) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SESSION);
         }
 
         // decode using session
@@ -292,7 +292,7 @@ namespace FdoSecrets
 
     DBusResult Item::setProperties(const QVariantMap& properties)
     {
-        auto label = properties.value(QStringLiteral(DBUS_INTERFACE_SECRET_ITEM ".Label")).toString();
+        auto label = properties.value(DBUS_INTERFACE_SECRET_ITEM + ".Label").toString();
 
         auto ret = setLabel(label);
         if (ret.err()) {
@@ -300,7 +300,7 @@ namespace FdoSecrets
         }
 
         auto attributes =
-            properties.value(QStringLiteral(DBUS_INTERFACE_SECRET_ITEM ".Attributes")).value<StringStringMap>();
+            properties.value(DBUS_INTERFACE_SECRET_ITEM + ".Attributes").value<StringStringMap>();
         ret = setAttributes(attributes);
         if (ret.err()) {
             return ret;
@@ -317,7 +317,7 @@ namespace FdoSecrets
     DBusResult Item::ensureBackend() const
     {
         if (!m_backend) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
         }
         return {};
     }
@@ -330,7 +330,7 @@ namespace FdoSecrets
             return ret;
         }
         if (l) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
+            return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
         return {};
     }

@@ -160,8 +160,6 @@ namespace FdoSecrets
 
     bool DBusMgr::handleMessage(const QDBusMessage& message, const QDBusConnection&)
     {
-        //        qDebug() << "DBusMgr::handleMessage: " << message;
-
         // save a mutable copy of the message, as we may modify it to unify property access
         // and method call
         RequestedMethod req{
@@ -191,26 +189,9 @@ namespace FdoSecrets
             return false;
         }
 
-        struct ContextSetter
-        {
-            explicit ContextSetter(DBusClientPtr client)
-            {
-                if (Context) {
-                    // override by unit test
-                    return;
-                }
-                own = true;
-                Context = std::move(client);
-            }
-            ~ContextSetter()
-            {
-                if (own) {
-                    Context.reset();
-                }
-            }
-            bool own{false};
-        };
-        ContextSetter s(std::move(client));
+        if (!m_contextOverride) {
+            m_currentContext = client;
+        }
 
         // activate the target object
         return activateObject(message.path(), req, message);
@@ -297,8 +278,7 @@ namespace FdoSecrets
         QVariantList outputArgs;
         if (!deliverMethod(obj, *it, req.args, ret, outputArgs)) {
             qDebug() << "Failed to deliver method" << msg;
-            return sendDBus(
-                msg.createErrorReply(QDBusError::InternalError, QStringLiteral("Failed to deliver message")));
+            return sendDBus(msg.createErrorReply(QDBusError::InternalError, tr("Failed to deliver message")));
         }
 
         if (!ret.ok()) {

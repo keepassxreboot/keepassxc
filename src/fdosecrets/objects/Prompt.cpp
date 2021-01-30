@@ -84,7 +84,7 @@ namespace FdoSecrets
         }
 
         if (!m_collection) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
         }
 
         MessageBox::OverrideParent override(findWindow(windowId));
@@ -455,7 +455,7 @@ namespace FdoSecrets
     DBusResult CreateItemPrompt::updateItem()
     {
         if (!m_sess || m_sess != m_secret.session) {
-            return DBusResult(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SESSION);
         }
         if (!m_item) {
             return {};

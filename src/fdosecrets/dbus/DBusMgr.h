@@ -78,7 +78,7 @@ namespace FdoSecrets
     {
         Q_OBJECT
     public:
-        explicit DBusMgr(QDBusConnection conn);
+        explicit DBusMgr();
         ~DBusMgr() override;
 
         QString introspect(const QString& path) const override;
@@ -164,17 +164,17 @@ namespace FdoSecrets
          */
         template <typename T> static T* pathToObject(const QDBusObjectPath& path)
         {
-            if (!Context) {
+            if (!m_currentContext) {
                 qDebug() << "No context when looking up path" << path.path();
                 return nullptr;
             }
             if (path.path() == QStringLiteral("/")) {
                 return nullptr;
             }
-            auto obj = qobject_cast<T*>(Context->dbus().m_objects.value(path.path(), nullptr));
+            auto obj = qobject_cast<T*>(m_currentContext->dbus().m_objects.value(path.path(), nullptr));
             if (!obj) {
                 qDebug() << "object not found at path" << path.path();
-                qDebug() << Context->dbus().m_objects;
+                qDebug() << m_currentContext->dbus().m_objects;
             }
             return obj;
         }
@@ -188,7 +188,7 @@ namespace FdoSecrets
          */
         template <typename T> QList<T*> static pathsToObject(const QList<QDBusObjectPath>& paths)
         {
-            if (!Context) {
+            if (!m_currentContext) {
                 return {};
             }
 
@@ -203,11 +203,8 @@ namespace FdoSecrets
             return res;
         }
 
-        /**
-         * @brief Used in unit test
-         * @param fake
-         */
-        void overrideClient(const DBusClientPtr& fake) const;
+        // Force client to be a specific object, used for testing
+        void overrideClient(const DBusClientPtr& fake);
 
     signals:
         void clientConnected(const DBusClientPtr& client);
@@ -321,7 +318,8 @@ namespace FdoSecrets
         // mapping from the unique dbus peer address to client object
         QHash<QString, DBusClientPtr> m_clients{};
 
-        static thread_local DBusClientPtr Context;
+        static thread_local DBusClientPtr m_currentContext;
+        bool m_contextOverride = false;
 
         friend class ::TestFdoSecrets;
     };
