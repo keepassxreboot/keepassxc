@@ -1114,6 +1114,14 @@ chrome-на-ноутбуці.</translation>
         <source>Column %1</source>
         <translation>Стовпчик %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>ТОП</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Значок</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1211,20 +1219,6 @@ Backup database located at %2</source>
         <translation>Оновити</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Застарілий формат файлового ключа</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Ви використовуєте застарілий формат файлового ключа, підтримку якого
-може бути скасовано у майбутньому.
-
-Бажано створити новий файловий ключ.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Більше не показувати це попередження</translation>
     </message>
@@ -1283,14 +1277,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID для швидкого розблокування</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Очистити</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Очистити файловий ключ</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1361,6 +1347,14 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>Вибрати ключ апаратного захисту...</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2295,6 +2289,15 @@ Disable safe saves and try again?</source>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2614,6 +2617,10 @@ Disable safe saves and try again?</source>
         <source>Expires:</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2912,6 +2919,10 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Group</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3416,11 +3427,6 @@ Are you sure to add this file?</source>
         <translation>[ЗАХИЩЕНО]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Увімкнено</translation>
     </message>
@@ -3440,6 +3446,15 @@ Are you sure to add this file?</source>
         <source>Advanced</source>
         <translation>Розширене</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3450,18 +3465,6 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Налаштувати перегляд</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Приховувати імена користувача</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Приховувати паролі</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Припасовувати до вікна</translation>
@@ -3494,14 +3497,14 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation type="unfinished"/>
+    </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4327,10 +4330,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation>&lt;p&gt;Ви можете додати файловий ключ, що містить випадкові байти для покращення безпеки.&lt;/p&gt;&lt;p&gt;Ви мусите зберігати його таємно і не губити, інакше Ви не зможете відкрити сховище.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Застарілий формат файлового ключа</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Помилка завантаження файлового ключа &apos;%1&apos;
@@ -4399,10 +4398,11 @@ Are you sure you want to continue with this file?</source>
 Ви певні, що хочете продовжити з цим файлом?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
+        <source>Old key file format</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4866,6 +4866,18 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Приховувати імена користувача</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Приховувати паролі</translation>
     </message>
 </context>
 <context>
@@ -5488,10 +5500,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Очистити</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Створити пароль знову (%1)</translation>
     </message>
@@ -5736,16 +5744,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>Виконати поглиблений аналіз пароля.</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Попередження: Ви використовуєте застарілий формат файлового ключа, підтримка якого
- може незабаром закінчитись.
-
- Бажано створити новий файловий ключ.</translation>
     </message>
     <message>
         <source>
@@ -6135,10 +6133,6 @@ Available commands:
         <translation>%1: (рядок, позиція) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – рекомендовано)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6227,10 +6221,6 @@ Available commands:
     <message>
         <source>read password of the database from stdin</source>
         <translation>отримати пароль до сховища із stdin</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Логічний номер батьківського вікна</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6718,10 +6708,6 @@ Kernel: %3 %4</source>
         <translation>AES (%1 раундів)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 раундів, %2 КБ)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-біт</translation>
     </message>
@@ -6746,6 +6732,49 @@ Kernel: %3 %4</source>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 с</numerusform><numerusform>%1 с</numerusform><numerusform>%1 с</numerusform><numerusform>%1 с</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>ТОП</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Значок</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7169,10 +7198,6 @@ Kernel: %3 %4</source>
     <message>
         <source>Search</source>
         <translation>Пошук</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Очистити</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
