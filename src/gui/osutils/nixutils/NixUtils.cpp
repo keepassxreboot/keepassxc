@@ -115,13 +115,18 @@ void NixUtils::setLaunchAtStartup(bool enable)
             qWarning("Failed to create autostart desktop file.");
             return;
         }
+
+        const QString appImagePath = QString::fromLocal8Bit(qgetenv("APPIMAGE"));
+        const bool isAppImage = !appImagePath.isNull() && QFile::exists(appImagePath);
+        const QString executeablePath = isAppImage ? appImagePath : QApplication::applicationFilePath();
+
         QTextStream stream(&desktopFile);
         stream.setCodec("UTF-8");
         stream << QStringLiteral("[Desktop Entry]") << '\n'
                << QStringLiteral("Name=") << QApplication::applicationDisplayName() << '\n'
                << QStringLiteral("GenericName=") << tr("Password Manager") << '\n'
-               << QStringLiteral("Exec=") << QApplication::applicationFilePath() << '\n'
-               << QStringLiteral("TryExec=") << QApplication::applicationFilePath() << '\n'
+               << QStringLiteral("Exec=") << executeablePath << '\n'
+               << QStringLiteral("TryExec=") << executeablePath << '\n'
                << QStringLiteral("Icon=") << QApplication::applicationName().toLower() << '\n'
                << QStringLiteral("StartupWMClass=keepassxc") << '\n'
                << QStringLiteral("StartupNotify=true") << '\n'

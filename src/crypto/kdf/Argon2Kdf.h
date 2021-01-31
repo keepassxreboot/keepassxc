@@ -39,7 +39,6 @@ public:
     quint32 version() const;
     bool setVersion(quint32 version);
     Type type() const;
-    void setType(Type type);
     quint64 memory() const;
     bool setMemory(quint64 kibibytes);
     quint32 parallelism() const;
@@ -49,7 +48,6 @@ public:
 protected:
     int benchmarkImpl(int msec) const override;
 
-    Type m_type;
     quint32 m_version;
     quint64 m_memory;
     quint32 m_parallelism;

@@ -411,7 +411,6 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(databaseTabChanged(int)));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
-    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateTrayIcon()));
     connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), SLOT(databaseStatusChanged(DatabaseWidget*)));
     connect(m_ui->tabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), SLOT(databaseStatusChanged(DatabaseWidget*)));
     connect(m_ui->tabWidget, SIGNAL(tabVisibilityChanged(bool)), SLOT(updateToolbarSeparatorVisibility()));
@@ -565,6 +564,9 @@ MainWindow::MainWindow()
                                                MessageWidget::Error);
     }
 
+    // Properly shutdown on logoff, restart, and shutdown
+    connect(qApp, &QGuiApplication::commitDataRequest, this, [this] { m_appExitCalled = true; });
+
 #if defined(KEEPASSXC_BUILD_TYPE_SNAPSHOT) || defined(KEEPASSXC_BUILD_TYPE_PRE_RELEASE)
     auto* hidePreRelWarn = new QAction(tr("Don't show again for this version"), m_ui->globalMessageWidget);
     m_ui->globalMessageWidget->addAction(hidePreRelWarn);
@@ -617,6 +619,9 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
+#ifdef WITH_XC_SSHAGENT
+    sshAgent()->removeAllIdentities();
+#endif
 }
 
 /**
@@ -968,11 +973,20 @@ void MainWindow::updateWindowTitle()
 
     setWindowTitle(windowTitle);
     setWindowModified(isModified);
+
+    updateTrayIcon();
 }
 
 void MainWindow::showAboutDialog()
 {
     auto* aboutDialog = new AboutDialog(this);
+    // Auto close the about dialog before attempting database locks
+    if (m_ui->tabWidget->currentDatabaseWidget()) {
+        connect(m_ui->tabWidget->currentDatabaseWidget(),
+                &DatabaseWidget::databaseLockRequested,
+                aboutDialog,
+                &AboutDialog::close);
+    }
     aboutDialog->open();
 }
 
@@ -1208,8 +1222,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::changeEvent(QEvent* event)
 {
     if ((event->type() == QEvent::WindowStateChange) && isMinimized()) {
-        if (isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
-            && config()->get(Config::GUI_MinimizeToTray).toBool()) {
+        if (isTrayIconEnabled() && config()->get(Config::GUI_MinimizeToTray).toBool()) {
             event->ignore();
             hide();
         }
@@ -1309,9 +1322,7 @@ bool MainWindow::saveLastDatabases()
 
 void MainWindow::updateTrayIcon()
 {
-    if (isTrayIconEnabled()) {
-        QApplication::setQuitOnLastWindowClosed(false);
-
+    if (config()->get(Config::GUI_ShowTrayIcon).toBool()) {
         if (!m_trayIcon) {
             m_trayIcon = new QSystemTrayIcon(this);
             auto* menu = new QMenu(this);
@@ -1323,40 +1334,46 @@ void MainWindow::updateTrayIcon()
             menu->addAction(m_ui->actionLockDatabases);
 
 #ifdef Q_OS_MACOS
-            QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
-            menu->addAction(actionQuit);
-
+            auto actionQuit = new QAction(tr("Quit KeePassXC"), menu);
             connect(actionQuit, SIGNAL(triggered()), SLOT(appExit()));
+            menu->addAction(actionQuit);
 #else
             menu->addAction(m_ui->actionQuit);
-
 #endif
+            m_trayIcon->setContextMenu(menu);
+
             connect(m_trayIcon,
                     SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
-
-            m_trayIcon->setContextMenu(menu);
-
-            m_trayIcon->setIcon(icons()->trayIcon());
-            m_trayIcon->show();
         }
 
-        if (m_ui->tabWidget->count() == 0) {
-            m_trayIcon->setIcon(icons()->trayIcon());
-        } else if (m_ui->tabWidget->hasLockableDatabases()) {
+        if (m_ui->tabWidget->hasLockableDatabases()) {
             m_trayIcon->setIcon(icons()->trayIconUnlocked());
         } else {
             m_trayIcon->setIcon(icons()->trayIconLocked());
         }
-    } else {
-        QApplication::setQuitOnLastWindowClosed(true);
 
+        m_trayIcon->setToolTip(windowTitle().replace("[*]", isWindowModified() ? "*" : ""));
+        m_trayIcon->show();
+
+        if (!isTrayIconEnabled() || !QSystemTrayIcon::isSystemTrayAvailable()) {
+            // Try to show tray icon after 5 seconds, try 5 times
+            // This can happen if KeePassXC starts before the system tray is available
+            static int trayIconAttempts = 0;
+            if (trayIconAttempts < 5) {
+                QTimer::singleShot(5000, this, &MainWindow::updateTrayIcon);
+                ++trayIconAttempts;
+            }
+        }
+    } else {
         if (m_trayIcon) {
             m_trayIcon->hide();
             delete m_trayIcon;
         }
     }
+
+    QApplication::setQuitOnLastWindowClosed(!isTrayIconEnabled());
 }
 
 void MainWindow::obtainContextFocusLock()
@@ -1598,7 +1615,7 @@ void MainWindow::forgetTouchIDAfterInactivity()
 
 bool MainWindow::isTrayIconEnabled() const
 {
-    return config()->get(Config::GUI_ShowTrayIcon).toBool() && QSystemTrayIcon::isSystemTrayAvailable();
+    return m_trayIcon && m_trayIcon->isVisible();
 }
 
 void MainWindow::displayGlobalMessage(const QString& text,
@@ -1833,9 +1850,11 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
 
     if (event->type() == QEvent::MouseButtonPress) {
         if (watched == mainWindow->m_ui->menubar) {
-            mainWindow->windowHandle()->startSystemMove();
-            // Continue processing events, so menus keep working.
-            return false;
+            auto* m = static_cast<QMouseEvent*>(event);
+            if (!mainWindow->m_ui->menubar->actionAt(m->pos())) {
+                mainWindow->windowHandle()->startSystemMove();
+                return false;
+            }
         } else if (watched == mainWindow->m_ui->toolBar) {
             if (!mainWindow->m_ui->toolBar->isMovable() || mainWindow->m_ui->toolBar->cursor() != Qt::SizeAllCursor) {
                 mainWindow->windowHandle()->startSystemMove();
