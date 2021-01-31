@@ -50,6 +50,23 @@
     </screenshots>
 
     <releases>
+        <release version="2.6.4" date="2021-01-31">
+            <description>
+                <ul>
+                    <li>Automatically adapt to light/dark system theme changes (Windows/macOS only) [#6034]</li>
+                    <li>Show window title as tooltip on system tray [#5948]</li>
+                    <li>Compress Snap release as LZO for faster initial startup [#5877]</li>
+                    <li>Password generator: Set maximum selectable password length to 999 [#5937]</li>
+                    <li>Fix crash on app close when using SSH agent [#5935]</li>
+                    <li>Fix KDF selection showing wrong item when using Argon2id [#5923]</li>
+                    <li>Automatically close About dialog on database lock if it is still open [#5947]</li>
+                    <li>Linux: Fix automatic launch at system startup with AppImages [#5901]</li>
+                    <li>Linux: Fix click-to-move on empty area activating when using menus [#5971]</li>
+                    <li>Linux: Try multiple times to show tray icon if tray is not ready yet [#5948]</li>
+                    <li>macOS: Fix KeePassXC blocking clean shutdown [#6002]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.6.3" date="2021-01-12">
             <description>
                 <ul>
