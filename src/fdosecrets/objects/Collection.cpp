@@ -700,10 +700,9 @@ namespace FdoSecrets
         return inRecycleBin(entry->group());
     }
 
-    DBusResult Collection::doNewItem(QString itemPath, Item*& created)
+    Item* Collection::doNewItem(QString itemPath)
     {
         Q_ASSERT(m_backend);
-        created = nullptr;
 
         // normalize itemPath
         itemPath = (itemPath.startsWith('/') ? QString{} : QStringLiteral("/")) + itemPath;
@@ -724,18 +723,13 @@ namespace FdoSecrets
 
         entry->setGroup(group);
 
-        // when creation finishes in backend, we will already have item
-        created = m_entryToItem.value(entry, nullptr);
-
-        if (!created) {
-            // may happen if entry somehow ends up in recycle bin
-            return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
-        }
-
         // the item was just created so there is no point in having it not authorized
         dbus().callingClient()->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
 
-        return {};
+        // when creation finishes in backend, we will already have item
+        auto created = m_entryToItem.value(entry, nullptr);
+
+        return created;
     }
 
 } // namespace FdoSecrets

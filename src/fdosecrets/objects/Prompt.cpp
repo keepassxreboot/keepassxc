@@ -397,15 +397,15 @@ namespace FdoSecrets
 
         // the item doesn't exists yet, create it
         if (!m_item) {
-            Item* item = nullptr;
-            auto ret = m_coll->doNewItem(m_itemPath, item);
-            if (ret.err()) {
-                return ret;
+            m_item = m_coll->doNewItem(m_itemPath);
+            if (!m_item) {
+                // may happen if entry somehow ends up in recycle bin
+                return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
             }
-            m_item = item;
-            ret = updateItem();
+
+            auto ret = updateItem();
             if (ret.err()) {
-                item->doDelete();
+                m_item->doDelete();
                 return ret;
             }
             emit completed(false, QVariant::fromValue(m_item->objectPath()));

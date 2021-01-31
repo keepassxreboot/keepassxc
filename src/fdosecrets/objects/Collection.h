@@ -116,7 +116,7 @@ namespace FdoSecrets
         // expose some methods for Prompt to use
         bool doLock();
         void doUnlock();
-        DBusResult doNewItem(QString itemPath, Item*& created);
+        Item* doNewItem(QString itemPath);
         // will remove self
         void doDelete();
 
