@@ -115,9 +115,9 @@ void LightStyle::polish(QWidget* widget)
         auto palette = widget->palette();
 #if defined(Q_OS_MACOS)
         if (osUtils->isDarkMode()) {
-            palette.setColor(QPalette::Active, QPalette::Window, QRgb(0xD1D1D1));
-            palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0xF4F4F4));
-            palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0xD1D1D1));
+            palette.setColor(QPalette::Active, QPalette::Window, QRgb(0xD4D4D4));
+            palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0xF5F5F5));
+            palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0xF5F5F5));
         }
 #elif defined(Q_OS_WIN)
         palette.setColor(QPalette::All, QPalette::Window, QRgb(0xFFFFFF));

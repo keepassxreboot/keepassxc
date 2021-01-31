@@ -70,7 +70,6 @@ public:
                          const QStyleOptionComplex* opt,
                          SubControl sc,
                          const QWidget* widget) const override;
-    QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap& pixmap, const QStyleOption* opt) const override;
     int styleHint(StyleHint hint,
                   const QStyleOption* option = nullptr,
                   const QWidget* widget = nullptr,
