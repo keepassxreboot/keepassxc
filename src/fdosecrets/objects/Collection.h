@@ -38,7 +38,7 @@ namespace FdoSecrets
     class Collection : public DBusObject
     {
         Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_COLLECTION)
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_COLLECTION_LITERAL)
 
         explicit Collection(Service* parent, DatabaseWidget* backend);
 

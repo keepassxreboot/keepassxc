@@ -42,7 +42,7 @@ namespace FdoSecrets
     class Service : public DBusObject // clazy: exclude=ctor-missing-parent-argument
     {
         Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SERVICE)
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SERVICE_LITERAL)
 
         explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus);
 

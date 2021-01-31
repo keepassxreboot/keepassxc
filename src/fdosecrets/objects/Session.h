@@ -31,7 +31,7 @@ namespace FdoSecrets
     class Session : public DBusObject
     {
         Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SESSION)
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SESSION_LITERAL)
 
         explicit Session(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent);
 

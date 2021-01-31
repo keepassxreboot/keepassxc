@@ -22,11 +22,17 @@
 
 static const auto DBUS_SERVICE_SECRET = QStringLiteral("org.freedesktop.secrets");
 
-static const auto DBUS_INTERFACE_SECRET_SERVICE = QStringLiteral("org.freedesktop.Secret.Service");
-static const auto DBUS_INTERFACE_SECRET_SESSION = QStringLiteral("org.freedesktop.Secret.Session");
-static const auto DBUS_INTERFACE_SECRET_COLLECTION = QStringLiteral("org.freedesktop.Secret.Collection");
-static const auto DBUS_INTERFACE_SECRET_ITEM = QStringLiteral("org.freedesktop.Secret.Item");
-static const auto DBUS_INTERFACE_SECRET_PROMPT = QStringLiteral("org.freedesktop.Secret.Prompt");
+#define DBUS_INTERFACE_SECRET_SERVICE_LITERAL "org.freedesktop.Secret.Service"
+#define DBUS_INTERFACE_SECRET_SESSION_LITERAL "org.freedesktop.Secret.Session"
+#define DBUS_INTERFACE_SECRET_COLLECTION_LITERAL "org.freedesktop.Secret.Collection"
+#define DBUS_INTERFACE_SECRET_ITEM_LITERAL "org.freedesktop.Secret.Item"
+#define DBUS_INTERFACE_SECRET_PROMPT_LITERAL "org.freedesktop.Secret.Prompt"
+
+static const auto DBUS_INTERFACE_SECRET_SERVICE = QStringLiteral(DBUS_INTERFACE_SECRET_SERVICE_LITERAL);
+static const auto DBUS_INTERFACE_SECRET_SESSION = QStringLiteral(DBUS_INTERFACE_SECRET_SESSION_LITERAL);
+static const auto DBUS_INTERFACE_SECRET_COLLECTION = QStringLiteral(DBUS_INTERFACE_SECRET_COLLECTION_LITERAL);
+static const auto DBUS_INTERFACE_SECRET_ITEM = QStringLiteral(DBUS_INTERFACE_SECRET_ITEM_LITERAL);
+static const auto DBUS_INTERFACE_SECRET_PROMPT = QStringLiteral(DBUS_INTERFACE_SECRET_PROMPT_LITERAL);
 
 static const auto DBUS_ERROR_SECRET_NO_SESSION = QStringLiteral("org.freedesktop.Secret.Error.NoSession");
 static const auto DBUS_ERROR_SECRET_NO_SUCH_OBJECT = QStringLiteral("org.freedesktop.Secret.Error.NoSuchObject");

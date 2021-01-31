@@ -37,7 +37,7 @@ namespace FdoSecrets
     class PromptBase : public DBusObject
     {
         Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_PROMPT)
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_PROMPT_LITERAL)
     public:
         Q_INVOKABLE virtual DBusResult prompt(const QString& windowId) = 0;
 

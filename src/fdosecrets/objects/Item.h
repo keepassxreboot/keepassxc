@@ -40,7 +40,7 @@ namespace FdoSecrets
     class Item : public DBusObject
     {
         Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_ITEM)
+        Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_ITEM_LITERAL)
 
         explicit Item(Collection* parent, Entry* backend);
 
