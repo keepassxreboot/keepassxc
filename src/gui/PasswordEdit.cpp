@@ -58,7 +58,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
 #endif
 
     m_toggleVisibleAction = new QAction(
-        icons()->icon("password-show-off"),
+        icons()->onOffIcon("password-show", false),
         tr("Toggle Password (%1)").arg(QKeySequence(modifier + Qt::Key_H).toString(QKeySequence::NativeText)),
         this);
     m_toggleVisibleAction->setCheckable(true);
@@ -113,7 +113,7 @@ void PasswordEdit::enablePasswordGenerator()
 void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-    m_toggleVisibleAction->setIcon(icons()->icon(show ? "password-show-on" : "password-show-off"));
+    m_toggleVisibleAction->setIcon(icons()->onOffIcon("password-show", show));
     m_toggleVisibleAction->setChecked(show);
 
     if (m_repeatPasswordEdit) {

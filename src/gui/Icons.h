@@ -33,7 +33,7 @@ public:
     QIcon trayIconUnlocked();
     QString trayIconAppearance() const;
     QIcon icon(const QString& name, bool recolor = true, const QColor& overrideColor = QColor::Invalid);
-    QIcon onOffIcon(const QString& name, bool recolor = true);
+    QIcon onOffIcon(const QString& name, bool on, bool recolor = true);
 
     static Icons* instance();
 
