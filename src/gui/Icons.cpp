@@ -194,30 +194,9 @@ QIcon Icons::icon(const QString& name, bool recolor, const QColor& overrideColor
     return icon;
 }
 
-QIcon Icons::onOffIcon(const QString& name, bool recolor)
+QIcon Icons::onOffIcon(const QString& name, bool on, bool recolor)
 {
-    QString cacheName = "onoff/" + name;
-
-    QIcon icon = m_iconCache.value(cacheName);
-
-    if (!icon.isNull()) {
-        return icon;
-    }
-
-    const QSize size(48, 48);
-    QIcon on = Icons::icon(name + "-on", recolor);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::On);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::On);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::On);
-
-    QIcon off = Icons::icon(name + "-off", recolor);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::Off);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::Off);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::Off);
-
-    m_iconCache.insert(cacheName, icon);
-
-    return icon;
+    return icon(name + (on ? "-on" : "-off"), recolor);
 }
 
 Icons* Icons::instance()
