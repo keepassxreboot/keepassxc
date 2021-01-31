@@ -179,24 +179,29 @@ AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon)
 
 void AdaptiveIconEngine::paint(QPainter* painter, const QRect& rect, QIcon::Mode mode, QIcon::State state)
 {
-    painter->save();
-    m_baseIcon.paint(painter, rect, Qt::AlignCenter, mode, state);
+    // Temporary image canvas to ensure that the background is transparent and alpha blending works.
+    QImage img(rect.size(), QImage::Format_ARGB32_Premultiplied);
+    img.fill(0);
+    QPainter p(&img);
+
+    m_baseIcon.paint(&p, img.rect(), Qt::AlignCenter, mode, state);
 
     if (getMainWindow()) {
         QPalette palette = getMainWindow()->palette();
-        painter->setCompositionMode(QPainter::CompositionMode_SourceAtop);
+        p.setCompositionMode(QPainter::CompositionMode_SourceIn);
 
         if (mode == QIcon::Active) {
-            painter->fillRect(rect, palette.color(QPalette::Active, QPalette::ButtonText));
+            p.fillRect(img.rect(), palette.color(QPalette::Active, QPalette::ButtonText));
         } else if (mode == QIcon::Selected) {
-            painter->fillRect(rect, palette.color(QPalette::Active, QPalette::HighlightedText));
+            p.fillRect(img.rect(), palette.color(QPalette::Active, QPalette::HighlightedText));
         } else if (mode == QIcon::Disabled) {
-            painter->fillRect(rect, palette.color(QPalette::Disabled, QPalette::WindowText));
+            p.fillRect(img.rect(), palette.color(QPalette::Disabled, QPalette::WindowText));
         } else {
-            painter->fillRect(rect, palette.color(QPalette::Normal, QPalette::WindowText));
+            p.fillRect(img.rect(), palette.color(QPalette::Normal, QPalette::WindowText));
         }
     }
-    painter->restore();
+
+    painter->drawImage(rect, img);
 }
 
 QPixmap AdaptiveIconEngine::pixmap(const QSize& size, QIcon::Mode mode, QIcon::State state)
@@ -205,7 +210,7 @@ QPixmap AdaptiveIconEngine::pixmap(const QSize& size, QIcon::Mode mode, QIcon::S
     img.fill(0);
     QPainter painter(&img);
     paint(&painter, QRect(0, 0, size.width(), size.height()), mode, state);
-    return QPixmap::fromImage(img, Qt::NoFormatConversion);
+    return QPixmap::fromImage(img, Qt::ImageConversionFlag::NoFormatConversion);
 }
 
 QIconEngine* AdaptiveIconEngine::clone() const
