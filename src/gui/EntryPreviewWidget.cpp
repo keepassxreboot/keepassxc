@@ -50,9 +50,9 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     // Entry
     m_ui->entryTotpButton->setIcon(resources()->icon("chronometer"));
     m_ui->entryCloseButton->setIcon(resources()->icon("dialog-close"));
-    m_ui->togglePasswordButton->setIcon(resources()->onOffIcon("password-show"));
-    m_ui->toggleEntryNotesButton->setIcon(resources()->onOffIcon("password-show"));
-    m_ui->toggleGroupNotesButton->setIcon(resources()->onOffIcon("password-show"));
+    m_ui->togglePasswordButton->setIcon(resources()->onOffIcon("password-show", true));
+    m_ui->toggleEntryNotesButton->setIcon(resources()->onOffIcon("password-show", true));
+    m_ui->toggleGroupNotesButton->setIcon(resources()->onOffIcon("password-show", true));
 
     m_ui->entryAttachmentsWidget->setReadOnly(true);
     m_ui->entryAttachmentsWidget->setButtonsVisible(false);
@@ -199,16 +199,19 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
     } else {
         m_ui->entryPasswordLabel->setText(QString("\u25cf").repeated(6));
     }
+    m_ui->togglePasswordButton->setIcon(resources()->onOffIcon("password-show", state));
 }
 
 void EntryPreviewWidget::setEntryNotesVisible(bool state)
 {
     setNotesVisible(m_ui->entryNotesTextEdit, m_currentEntry->notes(), state);
+    m_ui->toggleEntryNotesButton->setIcon(resources()->onOffIcon("password-show", state));
 }
 
 void EntryPreviewWidget::setGroupNotesVisible(bool state)
 {
     setNotesVisible(m_ui->groupNotesTextEdit, m_currentGroup->notes(), state);
+    m_ui->toggleGroupNotesButton->setIcon(resources()->onOffIcon("password-show", state));
 }
 
 void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& notes, bool state)

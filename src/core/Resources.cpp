@@ -180,7 +180,12 @@ AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon)
 void AdaptiveIconEngine::paint(QPainter* painter, const QRect& rect, QIcon::Mode mode, QIcon::State state)
 {
     // Temporary image canvas to ensure that the background is transparent and alpha blending works.
-    QImage img(rect.size(), QImage::Format_ARGB32_Premultiplied);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    auto scale = painter->device()->devicePixelRatioF();
+#else
+    auto scale = painter->device()->devicePixelRatio();
+#endif
+    QImage img(rect.size() * scale, QImage::Format_ARGB32_Premultiplied);
     img.fill(0);
     QPainter p(&img);
 
@@ -251,30 +256,9 @@ QIcon Resources::icon(const QString& name, bool recolor, const QColor& overrideC
     return icon;
 }
 
-QIcon Resources::onOffIcon(const QString& name, bool recolor)
+QIcon Resources::onOffIcon(const QString& name, bool on, bool recolor)
 {
-    QString cacheName = "onoff/" + name;
-
-    QIcon icon = m_iconCache.value(cacheName);
-
-    if (!icon.isNull()) {
-        return icon;
-    }
-
-    const QSize size(48, 48);
-    QIcon on = Resources::icon(name + "-on", recolor);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::On);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::On);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::On);
-
-    QIcon off = Resources::icon(name + "-off", recolor);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::Off);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::Off);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::Off);
-
-    m_iconCache.insert(cacheName, icon);
-
-    return icon;
+    return icon(name + (on ? "-on" : "-off"), recolor);
 }
 
 Resources::Resources()

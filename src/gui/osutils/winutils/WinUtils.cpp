@@ -69,18 +69,15 @@ bool WinUtils::DWMEventFilter::nativeEventFilter(const QByteArray& eventType, vo
     }
     switch (msg->message) {
     case WM_SETTINGCHANGE:
-        if (m_darkAppThemeActive != isDarkMode()) {
-            m_darkAppThemeActive = !m_darkAppThemeActive;
-            emit interfaceThemeChanged();
+        if (m_instance->m_darkAppThemeActive != m_instance->isDarkMode()) {
+            m_instance->m_darkAppThemeActive = !m_instance->m_darkAppThemeActive;
+            emit m_instance->interfaceThemeChanged();
         }
 
-        if (m_darkSystemThemeActive != isStatusBarDark()) {
-            m_darkSystemThemeActive = !m_darkSystemThemeActive;
-            emit statusbarThemeChanged();
+        if (m_instance->m_darkSystemThemeActive != m_instance->isStatusBarDark()) {
+            m_instance->m_darkSystemThemeActive = !m_instance->m_darkSystemThemeActive;
+            emit m_instance->statusbarThemeChanged();
         }
-        break;
-    case WM_HOTKEY:
-        triggerGlobalShortcut(msg->wParam);
         break;
     }
 
