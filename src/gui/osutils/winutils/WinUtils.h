@@ -33,6 +33,7 @@ public:
     static void registerEventFilters();
 
     bool isDarkMode() const override;
+    bool isStatusBarDark() const override;
     bool isLaunchAtStartupEnabled() const override;
     void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
@@ -51,6 +52,9 @@ private:
 
     static QPointer<WinUtils> m_instance;
     static QScopedPointer<DWMEventFilter> m_eventFilter;
+
+    bool m_darkAppThemeActive;
+    bool m_darkSystemThemeActive;
 
     Q_DISABLE_COPY(WinUtils)
 };

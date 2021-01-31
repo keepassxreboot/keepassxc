@@ -214,13 +214,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_EntrySearcher = new EntrySearcher(false);
     m_searchLimitGroup = config()->get(Config::SearchLimitGroup).toBool();
 
-#ifdef WITH_XC_SSHAGENT
-    if (sshAgent()->isEnabled()) {
-        connect(this, SIGNAL(databaseLocked()), sshAgent(), SLOT(databaseLocked()));
-        connect(this, SIGNAL(databaseUnlocked()), sshAgent(), SLOT(databaseUnlocked()));
-    }
-#endif
-
 #ifdef WITH_XC_KEESHARE
     // We need to reregister the database to allow exports
     // from a newly created database
@@ -1089,6 +1082,9 @@ void DatabaseWidget::loadDatabase(bool accepted)
         m_entryBeforeLock = QUuid();
         m_saveAttempts = 0;
         emit databaseUnlocked();
+#ifdef WITH_XC_SSHAGENT
+        sshAgent()->databaseUnlocked(m_db);
+#endif
         if (config()->get(Config::MinimizeAfterUnlock).toBool()) {
             getMainWindow()->minimizeOrHide();
         }
@@ -1175,6 +1171,10 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     switchToMainView();
     processAutoOpen();
     emit databaseUnlocked();
+
+#ifdef WITH_XC_SSHAGENT
+    sshAgent()->databaseUnlocked(m_db);
+#endif
 
     if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::AutoType) {
         QList<QSharedPointer<Database>> dbList;
@@ -1596,6 +1596,10 @@ bool DatabaseWidget::lock()
     if (currentEntry) {
         m_entryBeforeLock = currentEntry->uuid();
     }
+
+#ifdef WITH_XC_SSHAGENT
+    sshAgent()->databaseLocked(m_db);
+#endif
 
     endSearch();
     clearAllWidgets();

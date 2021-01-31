@@ -22,6 +22,7 @@
 #include <QFile>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QTimer>
 
 #include <CoreGraphics/CGEventSource.h>
 
@@ -33,6 +34,14 @@ MacUtils::MacUtils(QObject* parent)
     , m_appkit(new AppKit())
 {
     connect(m_appkit.data(), SIGNAL(lockDatabases()), SIGNAL(lockDatabases()));
+    connect(m_appkit.data(), SIGNAL(interfaceThemeChanged()), SIGNAL(interfaceThemeChanged()));
+    connect(m_appkit.data(), &AppKit::interfaceThemeChanged, this, [this]() {
+        // Emit with delay, since isStatusBarDark() still returns the old value
+        // if we call it too fast after a theme change.
+        QTimer::singleShot(100, [this]() {
+            emit statusbarThemeChanged();
+        });
+    });
 }
 
 MacUtils::~MacUtils()
@@ -91,6 +100,11 @@ bool MacUtils::enableScreenRecording()
 bool MacUtils::isDarkMode() const
 {
     return m_appkit->isDarkMode();
+}
+
+bool MacUtils::isStatusBarDark() const
+{
+    return m_appkit->isStatusBarDark();
 }
 
 QString MacUtils::getLaunchAgentFilename() const

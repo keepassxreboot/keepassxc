@@ -141,6 +141,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>

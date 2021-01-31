@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.6.3
+version: 2.6.4
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -8,6 +8,7 @@ description: |
   published under the terms of the GNU General Public License.
 confinement: strict
 base: core18
+compression: lzo
 
 plugs: # plugs for theming, font settings, cursor and to use gtk3 file chooser
   gtk-3-themes:

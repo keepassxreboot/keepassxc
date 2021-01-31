@@ -1114,6 +1114,14 @@ chrome-laptop.</translation>
         <source>Column %1</source>
         <translation>Kolumn %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikon</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1211,20 +1219,6 @@ Säkerhetskopierad databas hittad i %2</translation>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Äldre nyckelfilsformat</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Du använder ett äldre nyckelfilsformat, som stödet kan
-komma att tas bort för i framtiden.
-
-Överväg att generera en ny nyckelfil.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Visa inte denna varning igen</translation>
     </message>
@@ -1283,14 +1277,6 @@ komma att tas bort för i framtiden.
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID för snabb upplåsning</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Rensa</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Töm nyckelfilen</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1361,6 +1347,14 @@ Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Välj hårdvarunyckel...</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Gammalt nyckelfilsformat</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Du använder ett äldre nyckelfilsformat som kanske&lt;br&gt;inte kommer att stödjas i framtiden.&lt;br&gt;&lt;br&gt;Överväg att generera en ny nyckelfil genom att gå till: &lt;br&gt;&lt;strong&gt;Databas / Databassäkerhet / Ändra nyckelfil.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2295,6 +2289,16 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[SKYDDAD] Tryck &quot;Visa&quot; för att visa eller redigera</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Ogiltig post</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>En extern sammanslagningsåtgärd har ogiltigförklarat denna post.
+Alla genomförda ändringar kan tyvärr ha förlorats.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2614,6 +2618,10 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
         <source>Expires:</source>
         <translation>Förfaller:</translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Redigera post</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2913,6 +2921,10 @@ Filtyper som stöds är: %1.</translation>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>Ange standard autoskrivsekvens</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Redigera grupp</translation>
     </message>
 </context>
 <context>
@@ -3413,11 +3425,6 @@ Vill du verkligen lägga till den här filen?</translation>
         <translation>[SKYDDAD]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Aktiverad</translation>
     </message>
@@ -3437,6 +3444,15 @@ Vill du verkligen lägga till den här filen?</translation>
         <source>Advanced</source>
         <translation>Avancerat</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>Standardsekvens</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3447,18 +3463,6 @@ Vill du verkligen lägga till den här filen?</translation>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Anpassa vyn</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Dölj användarnamn</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Dölj lösenord</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Anpassa till fönster</translation>
@@ -3491,14 +3495,14 @@ Vill du verkligen lägga till den här filen?</translation>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation>Kunde inte registrera DBus-tjänsten på %1.&lt;br/&gt;</translation>
+    </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
         <translation><numerusform>%n post användes av %1</numerusform><numerusform>%n poster användes av %1</numerusform></translation>
-    </message>
-    <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation>Kunde inte registrera DBus-tjänsten på %1.&lt;br/&gt;</translation>
     </message>
 </context>
 <context>
@@ -4324,10 +4328,6 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
         <translation>&lt;p&gt;Du kan lägga till en nyckelfil innehållande slumpmässiga byte för ytterligare säkerhet.&lt;/p&gt;&lt;p&gt;Du måste lagra den säkert och aldrig förlora den, för att inte bli utestängd&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Äldre nyckelfilsformat</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Kunde inte läsa in nyckelfilen &quot;%1&quot;
@@ -4396,14 +4396,12 @@ Are you sure you want to continue with this file?</source>
 Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>Du använder ett äldre nyckelfilsformat som kanske inte
-kommer att stödjas i framtiden.
-
-Generera en ny nyckelfil i databasens säkerhetsinställningar.</translation>
+        <source>Old key file format</source>
+        <translation>Gammalt nyckelfilsformat</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4867,6 +4865,18 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Dölj användarnamn</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Dölj lösenord</translation>
     </message>
 </context>
 <context>
@@ -5489,10 +5499,6 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Rensa</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Generera om lösenordet (%1)</translation>
     </message>
@@ -5737,16 +5743,6 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>Utföra avancerad analys av lösenordet.</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>VARNING! Du använder ett äldre nyckelfilsformat som kanske
-inte kommer att stödjas i framtiden.
-
-Överväg att generera en ny nyckelfil.</translation>
     </message>
     <message>
         <source>
@@ -6136,10 +6132,6 @@ Tillgängliga kommandon:
         <translation>%1: (rad, kolumn) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – rekommenderas)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6228,10 +6220,6 @@ Tillgängliga kommandon:
     <message>
         <source>read password of the database from stdin</source>
         <translation>hämta databaslösenordet från stdin</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Hanterare för överordnat fönster</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6720,10 +6708,6 @@ Kärna: %3 %4</translation>
         <translation>AES (%1 rundor)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 rundor, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-bit</translation>
     </message>
@@ -6748,6 +6732,49 @@ Kärna: %3 %4</translation>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikon</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7171,10 +7198,6 @@ Kärna: %3 %4</translation>
     <message>
         <source>Search</source>
         <translation>Sök</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Rensa</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>

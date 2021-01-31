@@ -173,12 +173,14 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
             if (health->score() > 60) {
                 health->setScore(60);
             }
+            // clang-format off
             health->adjustScore((30 - days) * -2);
             health->addScoreReason(days <= 2 ? QApplication::tr("Password is about to expire")
                                              : days <= 10 ? QApplication::tr("Password expires in %1 days").arg(days)
                                                           : QApplication::tr("Password will expire soon"));
             health->addScoreDetails(QApplication::tr("Password expires on %1")
                                         .arg(entry->timeInfo().expiryTime().toString(Qt::DefaultLocaleShortDate)));
+            //clang-format on
         }
     }
 

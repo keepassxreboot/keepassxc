@@ -30,6 +30,8 @@ WinUtils* WinUtils::instance()
 {
     if (!m_instance) {
         m_instance = new WinUtils(qApp);
+        m_instance->m_darkAppThemeActive = m_instance->isDarkMode();
+        m_instance->m_darkSystemThemeActive = m_instance->isStatusBarDark();
     }
 
     return m_instance;
@@ -66,13 +68,17 @@ bool WinUtils::DWMEventFilter::nativeEventFilter(const QByteArray& eventType, vo
         return false;
     }
     switch (msg->message) {
-    case WM_CREATE:
-    case WM_INITDIALOG: {
-        if (winUtils()->isDarkMode()) {
-            // TODO: indicate dark mode support for black title bar
+    case WM_SETTINGCHANGE:
+        if (m_instance->m_darkAppThemeActive != m_instance->isDarkMode()) {
+            m_instance->m_darkAppThemeActive = !m_instance->m_darkAppThemeActive;
+            emit m_instance->interfaceThemeChanged();
+        }
+
+        if (m_instance->m_darkSystemThemeActive != m_instance->isStatusBarDark()) {
+            m_instance->m_darkSystemThemeActive = !m_instance->m_darkSystemThemeActive;
+            emit m_instance->statusbarThemeChanged();
         }
         break;
-    }
     }
 
     return false;
@@ -83,6 +89,13 @@ bool WinUtils::isDarkMode() const
     QSettings settings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)",
                        QSettings::NativeFormat);
     return settings.value("AppsUseLightTheme", 1).toInt() == 0;
+}
+
+bool WinUtils::isStatusBarDark() const
+{
+    QSettings settings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)",
+                       QSettings::NativeFormat);
+    return settings.value("SystemUsesLightTheme", 0).toInt() == 0;
 }
 
 bool WinUtils::isLaunchAtStartupEnabled() const

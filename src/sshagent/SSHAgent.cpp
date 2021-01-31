@@ -19,6 +19,9 @@
 #include "SSHAgent.h"
 
 #include "core/Config.h"
+#include "core/Database.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
 #include "crypto/ssh/BinaryStream.h"
 #include "crypto/ssh/OpenSSHKey.h"
 #include "sshagent/KeeAgentSettings.h"
@@ -30,11 +33,6 @@
 #endif
 
 Q_GLOBAL_STATIC(SSHAgent, s_sshAgent);
-
-SSHAgent::~SSHAgent()
-{
-    removeAllIdentities();
-}
 
 SSHAgent* SSHAgent::instance()
 {
@@ -427,18 +425,15 @@ void SSHAgent::setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove)
     }
 }
 
-void SSHAgent::databaseLocked()
+void SSHAgent::databaseLocked(QSharedPointer<Database> db)
 {
-    auto* widget = qobject_cast<DatabaseWidget*>(sender());
-    if (!widget) {
+    if (!db) {
         return;
     }
 
-    QUuid databaseUuid = widget->database()->uuid();
-
     auto it = m_addedKeys.begin();
     while (it != m_addedKeys.end()) {
-        if (it.value().first != databaseUuid) {
+        if (it.value().first != db->uuid()) {
             ++it;
             continue;
         }
@@ -452,16 +447,14 @@ void SSHAgent::databaseLocked()
     }
 }
 
-void SSHAgent::databaseUnlocked()
+void SSHAgent::databaseUnlocked(QSharedPointer<Database> db)
 {
-    auto* widget = qobject_cast<DatabaseWidget*>(sender());
-    if (!widget) {
+    if (!db || !isEnabled()) {
         return;
     }
 
-    for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
-        if (widget->database()->metadata()->recycleBinEnabled()
-            && e->group() == widget->database()->metadata()->recycleBin()) {
+    for (Entry* e : db->rootGroup()->entriesRecursive()) {
+        if (db->metadata()->recycleBinEnabled() && e->group() == db->metadata()->recycleBin()) {
             continue;
         }
 
@@ -483,7 +476,7 @@ void SSHAgent::databaseUnlocked()
 
         // Add key to agent; ignore errors if we have previously added the key
         bool known_key = m_addedKeys.contains(key);
-        if (!addIdentity(key, settings, widget->database()->uuid()) && !known_key) {
+        if (!addIdentity(key, settings, db->uuid()) && !known_key) {
             emit error(m_error);
         }
     }

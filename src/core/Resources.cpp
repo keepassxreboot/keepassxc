@@ -20,6 +20,7 @@
 
 #include <QBitmap>
 #include <QDir>
+#include <QIconEngine>
 #include <QLibrary>
 #include <QPainter>
 #include <QStyle>
@@ -29,6 +30,18 @@
 #include "core/Global.h"
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
+
+class AdaptiveIconEngine : public QIconEngine
+{
+public:
+    explicit AdaptiveIconEngine(QIcon baseIcon);
+    void paint(QPainter* painter, const QRect& rect, QIcon::Mode mode, QIcon::State state) override;
+    QPixmap pixmap(const QSize& size, QIcon::Mode mode, QIcon::State state) override;
+    QIconEngine* clone() const override;
+
+private:
+    QIcon m_baseIcon;
+};
 
 Resources* Resources::m_instance(nullptr);
 
@@ -114,45 +127,105 @@ QString Resources::trayIconAppearance() const
     return iconAppearance;
 }
 
-QIcon Resources::trayIcon()
+QIcon Resources::trayIcon(QString style)
 {
-    return trayIconUnlocked();
+    if (style == "unlocked") {
+        style.clear();
+    }
+    if (!style.isEmpty()) {
+        style = "-" + style;
+    }
+
+    auto iconApperance = trayIconAppearance();
+    if (!iconApperance.startsWith("monochrome")) {
+        return icon(QString("keepassxc%1").arg(style), false);
+    }
+
+    QIcon i;
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
+    if (osUtils->isStatusBarDark()) {
+        i = icon(QString("keepassxc-monochrome-light%1").arg(style), false);
+    } else {
+        i = icon(QString("keepassxc-monochrome-dark%1").arg(style), false);
+    }
+#else
+    i = icon(QString("keepassxc-%1%2").arg(iconApperance, style), false);
+#endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    // Set as mask to allow the operating system to recolour the tray icon. This may look weird
+    // if we failed to detect the status bar background colour correctly, but it is certainly
+    // better than a barely visible icon and even if we did guess correctly, it allows for better
+    // integration should the system's preferred colours not be 100% black or white.
+    i.setIsMask(true);
+#endif
+    return i;
 }
 
 QIcon Resources::trayIconLocked()
 {
-    auto iconApperance = trayIconAppearance();
-
-    if (iconApperance == "monochrome-light") {
-        return icon("keepassxc-monochrome-light-locked", false);
-    }
-    if (iconApperance == "monochrome-dark") {
-        return icon("keepassxc-monochrome-dark-locked", false);
-    }
-    return icon("keepassxc-locked", false);
+    return trayIcon("locked");
 }
 
 QIcon Resources::trayIconUnlocked()
 {
-    auto iconApperance = trayIconAppearance();
+    return trayIcon("unlocked");
+}
 
-    if (iconApperance == "monochrome-light") {
-        return icon("keepassxc-monochrome-light", false);
+AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon)
+    : QIconEngine()
+    , m_baseIcon(std::move(baseIcon))
+{
+}
+
+void AdaptiveIconEngine::paint(QPainter* painter, const QRect& rect, QIcon::Mode mode, QIcon::State state)
+{
+    // Temporary image canvas to ensure that the background is transparent and alpha blending works.
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    auto scale = painter->device()->devicePixelRatioF();
+#else
+    auto scale = painter->device()->devicePixelRatio();
+#endif
+    QImage img(rect.size() * scale, QImage::Format_ARGB32_Premultiplied);
+    img.fill(0);
+    QPainter p(&img);
+
+    m_baseIcon.paint(&p, img.rect(), Qt::AlignCenter, mode, state);
+
+    if (getMainWindow()) {
+        QPalette palette = getMainWindow()->palette();
+        p.setCompositionMode(QPainter::CompositionMode_SourceIn);
+
+        if (mode == QIcon::Active) {
+            p.fillRect(img.rect(), palette.color(QPalette::Active, QPalette::ButtonText));
+        } else if (mode == QIcon::Selected) {
+            p.fillRect(img.rect(), palette.color(QPalette::Active, QPalette::HighlightedText));
+        } else if (mode == QIcon::Disabled) {
+            p.fillRect(img.rect(), palette.color(QPalette::Disabled, QPalette::WindowText));
+        } else {
+            p.fillRect(img.rect(), palette.color(QPalette::Normal, QPalette::WindowText));
+        }
     }
-    if (iconApperance == "monochrome-dark") {
-        return icon("keepassxc-monochrome-dark", false);
-    }
-    return icon("keepassxc", false);
+
+    painter->drawImage(rect, img);
+}
+
+QPixmap AdaptiveIconEngine::pixmap(const QSize& size, QIcon::Mode mode, QIcon::State state)
+{
+    QImage img(size, QImage::Format_ARGB32_Premultiplied);
+    img.fill(0);
+    QPainter painter(&img);
+    paint(&painter, QRect(0, 0, size.width(), size.height()), mode, state);
+    return QPixmap::fromImage(img, Qt::ImageConversionFlag::NoFormatConversion);
+}
+
+QIconEngine* AdaptiveIconEngine::clone() const
+{
+    return new AdaptiveIconEngine(m_baseIcon);
 }
 
 QIcon Resources::icon(const QString& name, bool recolor, const QColor& overrideColor)
 {
-    QIcon icon = m_iconCache.value(name);
-
-    if (!icon.isNull() && !overrideColor.isValid()) {
-        return icon;
-    }
-
+#ifdef Q_OS_LINUX
     // Resetting the application theme name before calling QIcon::fromTheme() is required for hacky
     // QPA platform themes such as qt5ct, which randomly mess with the configured icon theme.
     // If we do not reset the theme name here, it will become empty at some point, causing
@@ -161,71 +234,31 @@ QIcon Resources::icon(const QString& name, bool recolor, const QColor& overrideC
     // See issue #4963: https://github.com/keepassxreboot/keepassxc/issues/4963
     // and qt5ct issue #80: https://sourceforge.net/p/qt5ct/tickets/80/
     QIcon::setThemeName("application");
+#endif
+
+    QString cacheName =
+        QString("%1:%2:%3").arg(recolor ? "1" : "0", overrideColor.isValid() ? overrideColor.name() : "#", name);
+    QIcon icon = m_iconCache.value(cacheName);
+
+    if (!icon.isNull() && !overrideColor.isValid()) {
+        return icon;
+    }
 
     icon = QIcon::fromTheme(name);
-    if (getMainWindow() && recolor) {
-        const QRect rect(0, 0, 48, 48);
-        QImage img = icon.pixmap(rect.width(), rect.height()).toImage();
-        img = img.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-        icon = {};
-
-        QPainter painter(&img);
-        painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
-
-        if (!overrideColor.isValid()) {
-            QPalette palette = getMainWindow()->palette();
-            painter.fillRect(rect, palette.color(QPalette::Normal, QPalette::WindowText));
-            icon.addPixmap(QPixmap::fromImage(img), QIcon::Normal);
-
-            painter.fillRect(rect, palette.color(QPalette::Active, QPalette::ButtonText));
-            icon.addPixmap(QPixmap::fromImage(img), QIcon::Active);
-
-            painter.fillRect(rect, palette.color(QPalette::Active, QPalette::HighlightedText));
-            icon.addPixmap(QPixmap::fromImage(img), QIcon::Selected);
-
-            painter.fillRect(rect, palette.color(QPalette::Disabled, QPalette::WindowText));
-            icon.addPixmap(QPixmap::fromImage(img), QIcon::Disabled);
-        } else {
-            painter.fillRect(rect, overrideColor);
-            icon.addPixmap(QPixmap::fromImage(img), QIcon::Normal);
-        }
-
+    if (recolor) {
+        icon = QIcon(new AdaptiveIconEngine(icon));
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
         icon.setIsMask(true);
 #endif
     }
 
-    if (!overrideColor.isValid()) {
-        m_iconCache.insert(name, icon);
-    }
-
+    m_iconCache.insert(cacheName, icon);
     return icon;
 }
 
-QIcon Resources::onOffIcon(const QString& name, bool recolor)
+QIcon Resources::onOffIcon(const QString& name, bool on, bool recolor)
 {
-    QString cacheName = "onoff/" + name;
-
-    QIcon icon = m_iconCache.value(cacheName);
-
-    if (!icon.isNull()) {
-        return icon;
-    }
-
-    const QSize size(48, 48);
-    QIcon on = Resources::icon(name + "-on", recolor);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::On);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::On);
-    icon.addPixmap(on.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::On);
-
-    QIcon off = Resources::icon(name + "-off", recolor);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::Off);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::Off);
-    icon.addPixmap(off.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::Off);
-
-    m_iconCache.insert(cacheName, icon);
-
-    return icon;
+    return icon(name + (on ? "-on" : "-off"), recolor);
 }
 
 Resources::Resources()
