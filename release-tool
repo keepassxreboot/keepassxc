@@ -1227,7 +1227,7 @@ appsign() {
             fi
 
             logInfo "Signing libraries and frameworks..."
-            if ! find "$app_dir_tmp" \( -name '*.dylib' -o -name '*.framework' \) -print0 | xargs -0 \
+            if ! find "$app_dir_tmp" \( -name '*.dylib' -o -name '*.so' -o -name '*.framework' \) -print0 | xargs -0 \
                 xcrun codesign --sign "${key}" --verbose --force --options runtime; then
                 cd "${orig_dir}"
                 exitError "Signing failed!"
