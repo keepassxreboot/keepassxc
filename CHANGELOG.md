@@ -1,6 +1,28 @@
 # Changelog
 
-## 2.6.3 (2020-01-12)
+## 2.6.4 (2021-01-31)
+
+### Added
+
+- Automatically adapt to light/dark system theme changes (Windows/macOS only) [#6034]
+
+### Changed
+
+- Show window title as tooltip on system tray [#5948]
+- Compress Snap release as LZO for faster initial startup [#5877]
+- Password generator: Set maximum selectable password length to 999 [#5937]
+
+### Fixed
+
+- Fix crash on app close when using SSH agent [#5935]
+- Fix KDF selection showing wrong item when using Argon2id [#5923]
+- Automatically close About dialog on database lock if it is still open [#5947]
+- Linux: Fix automatic launch at system startup with AppImages [#5901]
+- Linux: Fix click-to-move on empty area activating when using menus [#5971]
+- Linux: Try multiple times to show tray icon if tray is not ready yet [#5948]
+- macOS: Fix KeePassXC blocking clean shutdown [#6002]
+
+## 2.6.3 (2021-01-12)
 
 ### Added
 
