@@ -7,8 +7,8 @@ target_link_libraries(keepassx-autotype-cocoa ${PROGNAME} Qt5::Core Qt5::Widgets
 if(WITH_APP_BUNDLE)
     add_custom_command(TARGET keepassx-autotype-cocoa
             POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/libkeepassx-autotype-cocoa.so ${PLUGIN_INSTALL_DIR}
-            COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app -executable=${PLUGIN_INSTALL_DIR}/libkeepassx-autotype-cocoa.so -no-plugins
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/libkeepassx-autotype-cocoa.so ${PLUGIN_INSTALL_DIR}/libkeepassx-autotype-cocoa.so
+            COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app -executable=${PLUGIN_INSTALL_DIR}/libkeepassx-autotype-cocoa.so -no-plugins 2> /dev/null
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
             COMMENT "Deploying autotype plugin")
 else()
