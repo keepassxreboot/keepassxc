@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_COLLECTION_H
 #define KEEPASSXC_FDOSECRETS_COLLECTION_H
 
+#include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
 #include "core/EntrySearcher.h"
@@ -65,7 +66,7 @@ namespace FdoSecrets
 
         Q_INVOKABLE DBUS_PROPERTY DBusResult modified(qulonglong& modified) const;
 
-        Q_INVOKABLE DBusResult remove(PromptBase*& prompt);
+        Q_INVOKABLE DBusResult remove(const DBusClientPtr& client, PromptBase*& prompt);
         Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes, QList<Item*>& items);
         Q_INVOKABLE DBusResult
         createItem(const QVariantMap& properties, const Secret& secret, bool replace, Item*& item, PromptBase*& prompt);
@@ -116,7 +117,7 @@ namespace FdoSecrets
         // expose some methods for Prompt to use
         bool doLock();
         void doUnlock();
-        Item* doNewItem(QString itemPath);
+        Item* doNewItem(const DBusClientPtr& client, QString itemPath);
         // will remove self
         void doDelete();
 

@@ -19,6 +19,7 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
@@ -199,7 +200,7 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Collection::remove(PromptBase*& prompt)
+    DBusResult Collection::remove(const DBusClientPtr& client, PromptBase*& prompt)
     {
         auto ret = ensureBackend();
         if (ret.err()) {
@@ -213,7 +214,7 @@ namespace FdoSecrets
         }
         if (backendLocked()) {
             // this won't raise a dialog, immediate execute
-            ret = prompt->prompt({});
+            ret = prompt->prompt(client, {});
             if (ret.err()) {
                 return ret;
             }
@@ -700,7 +701,7 @@ namespace FdoSecrets
         return inRecycleBin(entry->group());
     }
 
-    Item* Collection::doNewItem(QString itemPath)
+    Item* Collection::doNewItem(const DBusClientPtr& client, QString itemPath)
     {
         Q_ASSERT(m_backend);
 
@@ -724,7 +725,7 @@ namespace FdoSecrets
         entry->setGroup(group);
 
         // the item was just created so there is no point in having it not authorized
-        dbus().callingClient()->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
+        client->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
 
         // when creation finishes in backend, we will already have item
         auto created = m_entryToItem.value(entry, nullptr);

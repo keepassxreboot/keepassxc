@@ -176,36 +176,27 @@ namespace FdoSecrets
     DBusMgr::DBusMgr()
         : m_conn(QDBusConnection::sessionBus())
     {
-        registerDBusTypes();
-        qRegisterMetaType<DBusClientPtr>();
-        qRegisterMetaType<DBusClientPtr>("DBusClientPtr");
-
-        // these are the methods we expose on DBus
-        populateMethodCache(Service::staticMetaObject);
-        populateMethodCache(Collection::staticMetaObject);
-        populateMethodCache(Item::staticMetaObject);
-        populateMethodCache(PromptBase::staticMetaObject);
-        populateMethodCache(Session::staticMetaObject);
-
         // remove client when it disappears on the bus
         m_watcher.setWatchMode(QDBusServiceWatcher::WatchForUnregistration);
         connect(&m_watcher, &QDBusServiceWatcher::serviceUnregistered, this, &DBusMgr::dbusServiceUnregistered);
         m_watcher.setConnection(m_conn);
     }
 
-    DBusMgr::~DBusMgr() = default;
-
-    thread_local DBusClientPtr DBusMgr::m_currentContext{};
-    const DBusClientPtr& DBusMgr::callingClient() const
+    void DBusMgr::populateMethodCache()
     {
-        Q_ASSERT(m_currentContext);
-        return m_currentContext;
+        // these are the methods we expose on DBus
+        populateMethodCache(Service::staticMetaObject);
+        populateMethodCache(Collection::staticMetaObject);
+        populateMethodCache(Item::staticMetaObject);
+        populateMethodCache(PromptBase::staticMetaObject);
+        populateMethodCache(Session::staticMetaObject);
     }
+
+    DBusMgr::~DBusMgr() = default;
 
     void DBusMgr::overrideClient(const DBusClientPtr& fake)
     {
-        m_currentContext = fake;
-        m_contextOverride = true;
+        m_overrideClient = fake;
     }
 
     QList<DBusClientPtr> DBusMgr::clients() const
@@ -563,6 +554,10 @@ namespace FdoSecrets
 
     DBusClientPtr DBusMgr::findClient(const QString& addr)
     {
+        if (m_overrideClient) {
+            return m_overrideClient;
+        }
+
         auto it = m_clients.find(addr);
         if (it == m_clients.end()) {
             auto client = createClient(addr);

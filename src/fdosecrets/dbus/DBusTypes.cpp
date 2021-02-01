@@ -39,7 +39,7 @@ namespace FdoSecrets
         return false;
     }
 
-    template <typename T> void registerConverter()
+    template <typename T> void registerConverter(const QWeakPointer<DBusMgr>& weak)
     {
         // from parameter type to on-the-wire type
         QMetaType::registerConverter<T*, QDBusObjectPath>([](const T* obj) { return DBusMgr::objectPathSafe(obj); });
@@ -47,13 +47,23 @@ namespace FdoSecrets
             [](const QList<T*> objs) { return DBusMgr::objectsToPath(objs); });
 
         // the opposite
-        QMetaType::registerConverter<QDBusObjectPath, T*>(
-            [](const QDBusObjectPath& path) -> T* { return DBusMgr::pathToObject<T>(path); });
-        QMetaType::registerConverter<QList<QDBusObjectPath>, QList<T*>>(
-            [](const QList<QDBusObjectPath>& paths) { return DBusMgr::pathsToObject<T>(paths); });
+        QMetaType::registerConverter<QDBusObjectPath, T*>([weak](const QDBusObjectPath& path) -> T* {
+            if (auto dbus = weak.lock()) {
+                return dbus->pathToObject<T>(path);
+            }
+            qDebug() << "No DBusMgr when looking up path" << path.path();
+            return nullptr;
+        });
+        QMetaType::registerConverter<QList<QDBusObjectPath>, QList<T*>>([weak](const QList<QDBusObjectPath>& paths) {
+            if (auto dbus = weak.lock()) {
+                return dbus->pathsToObject<T>(paths);
+            }
+            qDebug() << "No DBusMgr when looking up paths" << paths;
+            return QList<T*>{};
+        });
     }
 
-    void registerDBusTypes()
+    void registerDBusTypes(const QSharedPointer<DBusMgr>& dbus)
     {
         // On the wire types:
         // - various primary types
@@ -94,6 +104,7 @@ namespace FdoSecrets
         REG_METATYPE(StringStringMap);
         REG_METATYPE(ItemSecretMap);
         REG_METATYPE(DBusResult);
+        REG_METATYPE(DBusClientPtr);
 
 #define REG_DBUS_OBJ(name)                                                                                             \
     REG_METATYPE(name*);                                                                                               \
@@ -108,22 +119,24 @@ namespace FdoSecrets
 
 #undef REG_METATYPE
 
+        QWeakPointer<DBusMgr> weak = dbus;
         // register converter between on-the-wire types and parameter types
         // some pairs are missing because that particular direction isn't used
-        registerConverter<DBusObject>();
-        registerConverter<Service>();
-        registerConverter<Collection>();
-        registerConverter<Item>();
-        registerConverter<Session>();
-        registerConverter<PromptBase>();
+        registerConverter<DBusObject>(weak);
+        registerConverter<Service>(weak);
+        registerConverter<Collection>(weak);
+        registerConverter<Item>(weak);
+        registerConverter<Session>(weak);
+        registerConverter<PromptBase>(weak);
 
-        QMetaType::registerConverter(&wire::Secret::to);
-        QMetaType::registerConverter(&Secret::to);
+        QMetaType::registerConverter<wire::Secret, Secret>(
+            [weak](const wire::Secret& from) { return from.unmarshal(weak); });
+        QMetaType::registerConverter(&Secret::marshal);
 
         QMetaType::registerConverter<ItemSecretMap, wire::ObjectPathSecretMap>([](const ItemSecretMap& map) {
             wire::ObjectPathSecretMap ret;
             for (auto it = map.constBegin(); it != map.constEnd(); ++it) {
-                ret.insert(it.key()->objectPath(), it.value().to());
+                ret.insert(it.key()->objectPath(), it.value().marshal());
             }
             return ret;
         });
@@ -189,12 +202,16 @@ namespace FdoSecrets
         return {QByteArrayLiteral("o"), qMetaTypeId<QDBusObjectPath>()};
     }
 
-    ::FdoSecrets::Secret wire::Secret::to() const
+    ::FdoSecrets::Secret wire::Secret::unmarshal(const QWeakPointer<DBusMgr>& weak) const
     {
-        return {DBusMgr::pathToObject<Session>(session), parameters, value, contentType};
+        if (auto dbus = weak.lock()) {
+            return {dbus->pathToObject<Session>(session), parameters, value, contentType};
+        }
+        qDebug() << "No DBusMgr when converting wire::Secret";
+        return {nullptr, parameters, value, contentType};
     }
 
-    wire::Secret Secret::to() const
+    wire::Secret Secret::marshal() const
     {
         return {DBusMgr::objectPathSafe(session), parameters, value, contentType};
     }

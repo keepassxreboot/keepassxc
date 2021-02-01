@@ -18,7 +18,6 @@
 #ifndef KEEPASSXC_FDOSECRETSPLUGIN_H
 #define KEEPASSXC_FDOSECRETSPLUGIN_H
 
-#include "fdosecrets/dbus/DBusMgr.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/Icons.h"
 
@@ -31,6 +30,7 @@ class DatabaseTabWidget;
 namespace FdoSecrets
 {
     class Service;
+    class DBusMgr;
 } // namespace FdoSecrets
 
 class FdoSecretsPlugin : public QObject, public ISettingsPage
@@ -70,7 +70,7 @@ public:
      * @brief The dbus manager instance
      * @return
      */
-    FdoSecrets::DBusMgr& dbus();
+    const QSharedPointer<FdoSecrets::DBusMgr>& dbus() const;
 
     // TODO: Only used for testing. Need to split service functions away from settings page.
     static FdoSecretsPlugin* getPlugin();
@@ -94,7 +94,7 @@ signals:
 
 private:
     QPointer<DatabaseTabWidget> m_dbTabs;
-    FdoSecrets::DBusMgr m_dbus;
+    QSharedPointer<FdoSecrets::DBusMgr> m_dbus;
     QSharedPointer<FdoSecrets::Service> m_secretService;
 };
 

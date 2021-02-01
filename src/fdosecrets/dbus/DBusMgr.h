@@ -72,22 +72,24 @@ namespace FdoSecrets
      *   * convert types to what Qt DBus expects
      *
      * The MethodData is pre-computed using Qt meta object system by finding methods with signature matching a certain
-     * pattern: Q_INVOKABLE DBusResult methodName(const X& input1, const Y& input2, Z& output1, ZZ& output2)
+     * pattern: Q_INVOKABLE DBusResult methodName(const DBusClientPtr& client, const X& input1, const Y& input2, Z& output1, ZZ& output2)
+     * Note that the first parameter of client is optional.
      */
     class DBusMgr : public QDBusVirtualObject
     {
         Q_OBJECT
     public:
         explicit DBusMgr();
+
+        /**
+         * @brief Must be called after all dbus types are registered
+         */
+        void populateMethodCache();
+
         ~DBusMgr() override;
 
         QString introspect(const QString& path) const override;
         bool handleMessage(const QDBusMessage& message, const QDBusConnection& connection) override;
-
-        /**
-         * @return information about the calling client. Should not be called outside of dbus methods.
-         */
-        const DBusClientPtr& callingClient() const;
 
         /**
          * @return current connected clients
@@ -135,7 +137,7 @@ namespace FdoSecrets
         {
             return objectPathSafe(object.data());
         }
-        static QDBusObjectPath objectPathSafe(nullptr_t)
+        static QDBusObjectPath objectPathSafe(std::nullptr_t)
         {
             return QDBusObjectPath(QStringLiteral("/"));
         }
@@ -162,19 +164,15 @@ namespace FdoSecrets
          * @param path
          * @return the pointer of the object, or nullptr if path is "/"
          */
-        template <typename T> static T* pathToObject(const QDBusObjectPath& path)
+        template <typename T> T* pathToObject(const QDBusObjectPath& path) const
         {
-            if (!m_currentContext) {
-                qDebug() << "No context when looking up path" << path.path();
-                return nullptr;
-            }
             if (path.path() == QStringLiteral("/")) {
                 return nullptr;
             }
-            auto obj = qobject_cast<T*>(m_currentContext->dbus().m_objects.value(path.path(), nullptr));
+            auto obj = qobject_cast<T*>(m_objects.value(path.path(), nullptr));
             if (!obj) {
                 qDebug() << "object not found at path" << path.path();
-                qDebug() << m_currentContext->dbus().m_objects;
+                qDebug() << m_objects;
             }
             return obj;
         }
@@ -186,12 +184,8 @@ namespace FdoSecrets
          * @param paths
          * @return
          */
-        template <typename T> QList<T*> static pathsToObject(const QList<QDBusObjectPath>& paths)
+        template <typename T> QList<T*> pathsToObject(const QList<QDBusObjectPath>& paths) const
         {
-            if (!m_currentContext) {
-                return {};
-            }
-
             QList<T*> res;
             res.reserve(paths.size());
             for (const auto& path : paths) {
@@ -275,6 +269,7 @@ namespace FdoSecrets
             QVector<int> outputTypes{};
             QVector<int> outputTargetTypes{};
             bool isProperty{false};
+            bool needsCallingClient{false};
         };
         QHash<QString, MethodData> m_cachedMethods{};
         void populateMethodCache(const QMetaObject& mo);
@@ -294,9 +289,16 @@ namespace FdoSecrets
             RequestType type;
         };
         static bool rewriteRequestForProperty(RequestedMethod& req);
-        bool activateObject(const QString& path, const RequestedMethod& req, const QDBusMessage& msg);
-        bool objectPropertyGetAll(DBusObject* obj, const QString& interface, const QDBusMessage& msg);
-        static bool deliverMethod(DBusObject* obj,
+        bool activateObject(const DBusClientPtr& client,
+                            const QString& path,
+                            const RequestedMethod& req,
+                            const QDBusMessage& msg);
+        bool objectPropertyGetAll(const DBusClientPtr& client,
+                                  DBusObject* obj,
+                                  const QString& interface,
+                                  const QDBusMessage& msg);
+        static bool deliverMethod(const DBusClientPtr& client,
+                                  DBusObject* obj,
                                   const MethodData& method,
                                   const QVariantList& args,
                                   DBusResult& ret,
@@ -318,8 +320,7 @@ namespace FdoSecrets
         // mapping from the unique dbus peer address to client object
         QHash<QString, DBusClientPtr> m_clients{};
 
-        static thread_local DBusClientPtr m_currentContext;
-        bool m_contextOverride = false;
+        DBusClientPtr m_overrideClient;
 
         friend class ::TestFdoSecrets;
     };

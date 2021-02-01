@@ -18,6 +18,7 @@
 #include "Prompt.h"
 
 #include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Service.h"
@@ -74,7 +75,7 @@ namespace FdoSecrets
     {
     }
 
-    DBusResult DeleteCollectionPrompt::prompt(const QString& windowId)
+    DBusResult DeleteCollectionPrompt::prompt(const DBusClientPtr&, const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
             DBusResult ret;
@@ -103,7 +104,7 @@ namespace FdoSecrets
     {
     }
 
-    DBusResult CreateCollectionPrompt::prompt(const QString& windowId)
+    DBusResult CreateCollectionPrompt::prompt(const DBusClientPtr&, const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
             DBusResult ret;
@@ -152,7 +153,7 @@ namespace FdoSecrets
         }
     }
 
-    DBusResult LockCollectionsPrompt::prompt(const QString& windowId)
+    DBusResult LockCollectionsPrompt::prompt(const DBusClientPtr&, const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
             DBusResult ret;
@@ -196,7 +197,7 @@ namespace FdoSecrets
         }
     }
 
-    DBusResult UnlockPrompt::prompt(const QString& windowId)
+    DBusResult UnlockPrompt::prompt(const DBusClientPtr& client, const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
             DBusResult ret;
@@ -209,7 +210,7 @@ namespace FdoSecrets
 
         // for use in unlockItems
         m_windowId = windowId;
-        m_client = dbus().callingClient();
+        m_client = client;
 
         // first unlock any collections
         bool waitingForCollections = false;
@@ -342,7 +343,7 @@ namespace FdoSecrets
     {
     }
 
-    DBusResult DeleteItemPrompt::prompt(const QString& windowId)
+    DBusResult DeleteItemPrompt::prompt(const DBusClientPtr&, const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
             DBusResult ret;
@@ -380,7 +381,7 @@ namespace FdoSecrets
     {
     }
 
-    DBusResult CreateItemPrompt::prompt(const QString& windowId)
+    DBusResult CreateItemPrompt::prompt(const DBusClientPtr& client, const QString& windowId)
     {
         if (thread() != QThread::currentThread()) {
             DBusResult ret;
@@ -395,9 +396,12 @@ namespace FdoSecrets
             return dismiss();
         }
 
+        // save a weak reference to the client which may be used asynchronously later
+        m_client = client;
+
         // the item doesn't exists yet, create it
         if (!m_item) {
-            m_item = m_coll->doNewItem(m_itemPath);
+            m_item = m_coll->doNewItem(client, m_itemPath);
             if (!m_item) {
                 // may happen if entry somehow ends up in recycle bin
                 return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
@@ -411,7 +415,7 @@ namespace FdoSecrets
             emit completed(false, QVariant::fromValue(m_item->objectPath()));
         } else {
             bool locked = false;
-            auto ret = m_item->locked(locked);
+            auto ret = m_item->locked(client, locked);
             if (ret.err()) {
                 return ret;
             }
@@ -423,7 +427,7 @@ namespace FdoSecrets
                 }
                 // postpone anything after the confirmation
                 connect(prompt, &PromptBase::completed, this, &CreateItemPrompt::itemUnlocked);
-                return prompt->prompt(windowId);
+                return prompt->prompt(client, windowId);
             } else {
                 ret = updateItem();
                 if (ret.err()) {
@@ -454,6 +458,12 @@ namespace FdoSecrets
 
     DBusResult CreateItemPrompt::updateItem()
     {
+        auto client = m_client.lock();
+        if (!client) {
+            // client already gone
+            return {};
+        }
+
         if (!m_sess || m_sess != m_secret.session) {
             return DBusResult(DBUS_ERROR_SECRET_NO_SESSION);
         }
@@ -464,7 +474,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        ret = m_item->setSecret(m_secret);
+        ret = m_item->setSecret(client, m_secret);
         if (ret.err()) {
             return ret;
         }

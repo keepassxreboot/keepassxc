@@ -28,6 +28,7 @@
 namespace FdoSecrets
 {
     struct Secret;
+    class DBusMgr;
 
     // types used directly in Qt DBus system
     namespace wire
@@ -39,7 +40,7 @@ namespace FdoSecrets
             QByteArray value;
             QString contentType;
 
-            ::FdoSecrets::Secret to() const;
+            ::FdoSecrets::Secret unmarshal(const QWeakPointer<DBusMgr>& weak) const;
         };
 
         inline QDBusArgument& operator<<(QDBusArgument& argument, const Secret& secret)
@@ -72,7 +73,7 @@ namespace FdoSecrets
         QByteArray value;
         QString contentType;
 
-        wire::Secret to() const;
+        wire::Secret marshal() const;
     };
     using wire::StringStringMap;
     using ItemSecretMap = QHash<Item*, Secret>;
@@ -80,7 +81,7 @@ namespace FdoSecrets
     /**
      * Register the types needed for the fd.o Secrets D-Bus interface.
      */
-    void registerDBusTypes();
+    void registerDBusTypes(const QSharedPointer<DBusMgr>& dbus);
 
     struct ParamData
     {

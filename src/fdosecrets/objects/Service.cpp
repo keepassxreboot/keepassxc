@@ -19,6 +19,7 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
@@ -186,10 +187,12 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Service::openSession(const QString& algorithm, const QVariant& input, QVariant& output, Session*& result)
+    DBusResult Service::openSession(const DBusClientPtr& client,
+                                    const QString& algorithm,
+                                    const QVariant& input,
+                                    QVariant& output,
+                                    Session*& result)
     {
-        const auto& client = dbus().callingClient();
-
         // negotiate cipher
         bool incomplete = false;
         auto ciphers = client->negotiateCipher(algorithm, input, output, incomplete);
@@ -239,8 +242,10 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult
-    Service::searchItems(const StringStringMap& attributes, QList<Item*>& unlocked, QList<Item*>& locked) const
+    DBusResult Service::searchItems(const DBusClientPtr& client,
+                                    const StringStringMap& attributes,
+                                    QList<Item*>& unlocked,
+                                    QList<Item*>& locked) const
     {
         QList<Collection*> colls;
         auto ret = collections(colls);
@@ -257,7 +262,7 @@ namespace FdoSecrets
             // item locked state already covers its collection's locked state
             for (const auto& item : asConst(items)) {
                 bool l;
-                ret = item->locked(l);
+                ret = item->locked(client, l);
                 if (ret.err()) {
                     return ret;
                 }
@@ -271,7 +276,10 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Service::unlock(const QList<DBusObject*>& objects, QList<DBusObject*>& unlocked, PromptBase*& prompt)
+    DBusResult Service::unlock(const DBusClientPtr& client,
+                               const QList<DBusObject*>& objects,
+                               QList<DBusObject*>& unlocked,
+                               PromptBase*& prompt)
     {
         QSet<Collection*> collectionsToUnlock;
         QSet<Item*> itemsToUnlock;
@@ -299,7 +307,7 @@ namespace FdoSecrets
 
             if (item) {
                 // item may also need unlock
-                ret = item->locked(itemLocked);
+                ret = item->locked(client, itemLocked);
                 if (ret.err()) {
                     return ret;
                 }
@@ -364,21 +372,24 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Service::getSecrets(const QList<Item*>& items, Session* session, ItemSecretMap& secrets) const
+    DBusResult Service::getSecrets(const DBusClientPtr& client,
+                                   const QList<Item*>& items,
+                                   Session* session,
+                                   ItemSecretMap& secrets) const
     {
         if (!session) {
             return DBusResult(DBUS_ERROR_SECRET_NO_SESSION);
         }
 
         for (const auto& item : asConst(items)) {
-            auto ret = item->getSecretNoNotification(session, secrets[item]);
+            auto ret = item->getSecretNoNotification(client, session, secrets[item]);
             if (ret.err()) {
                 return ret;
             }
         }
         plugin()->emitRequestShowNotification(
             tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", secrets.size())
-                .arg(dbus().callingClient()->name()));
+                .arg(client->name()));
         return {};
     }
 

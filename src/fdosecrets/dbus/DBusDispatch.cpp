@@ -123,9 +123,18 @@ namespace FdoSecrets
             // assumes output params (reference parameter) all follows input params
             bool outputBegin = false;
             for (const auto& paramType : mm.parameterTypes()) {
+                auto id = QMetaType::type(paramType);
+
+                // handle the first optional calling client param
+                if (id == qMetaTypeId<DBusClientPtr>()) {
+                    md.needsCallingClient = true;
+                    continue;
+                }
+
+                // handle output types
                 if (paramType.endsWith('&')) {
                     outputBegin = true;
-                    auto id = QMetaType::type(paramType.left(paramType.length() - 1));
+                    id = QMetaType::type(paramType.left(paramType.length() - 1));
                     md.outputTypes.append(id);
                     auto paramData = typeToWireType(id);
                     if (paramData.signature.isEmpty()) {
@@ -136,13 +145,14 @@ namespace FdoSecrets
                     md.outputTargetTypes.append(paramData.dbusTypeId);
                     continue;
                 }
+
+                // handle input types
                 if (outputBegin) {
                     qDebug() << "Internal error: invalid method parameter order, no input parameter after output ones"
                              << mm.name();
                     valid = false;
                     break;
                 }
-                auto id = QMetaType::type(paramType);
                 auto sig = typeToWireType(id).signature;
                 if (sig.isEmpty()) {
                     qDebug() << "Internal error: unhandled new parameter type for dbus signature" << paramType;
@@ -182,19 +192,15 @@ namespace FdoSecrets
             }
         }
 
-        // from now on we may call into dbus objects, so setup client first
-        auto client = findClient(message.service());
+        // who's calling?
+        const auto& client = findClient(message.service());
         if (!client) {
             // the client already died
             return false;
         }
 
-        if (!m_contextOverride) {
-            m_currentContext = client;
-        }
-
         // activate the target object
-        return activateObject(message.path(), req, message);
+        return activateObject(client, message.path(), req, message);
     }
 
     bool DBusMgr::rewriteRequestForProperty(RequestedMethod& req)
@@ -234,7 +240,10 @@ namespace FdoSecrets
         return true;
     }
 
-    bool DBusMgr::activateObject(const QString& path, const RequestedMethod& req, const QDBusMessage& msg)
+    bool DBusMgr::activateObject(const DBusClientPtr& client,
+                                 const QString& path,
+                                 const RequestedMethod& req,
+                                 const QDBusMessage& msg)
     {
         auto obj = m_objects.value(path, nullptr);
         if (!obj) {
@@ -255,7 +264,7 @@ namespace FdoSecrets
 
         // special handle of property getall
         if (req.type == RequestType::PropertyGetAll) {
-            return objectPropertyGetAll(obj, interface, msg);
+            return objectPropertyGetAll(client, obj, interface, msg);
         }
 
         // find the slot to call
@@ -276,7 +285,7 @@ namespace FdoSecrets
 
         DBusResult ret;
         QVariantList outputArgs;
-        if (!deliverMethod(obj, *it, req.args, ret, outputArgs)) {
+        if (!deliverMethod(client, obj, *it, req.args, ret, outputArgs)) {
             qDebug() << "Failed to deliver method" << msg;
             return sendDBus(msg.createErrorReply(QDBusError::InternalError, tr("Failed to deliver message")));
         }
@@ -291,7 +300,10 @@ namespace FdoSecrets
         return sendDBus(msg.createReply(outputArgs));
     }
 
-    bool DBusMgr::objectPropertyGetAll(DBusObject* obj, const QString& interface, const QDBusMessage& msg)
+    bool DBusMgr::objectPropertyGetAll(const DBusClientPtr& client,
+                                       DBusObject* obj,
+                                       const QString& interface,
+                                       const QDBusMessage& msg)
     {
         QVariantMap result;
 
@@ -308,7 +320,7 @@ namespace FdoSecrets
 
             DBusResult ret;
             QVariantList outputArgs;
-            if (!deliverMethod(obj, it.value(), {}, ret, outputArgs)) {
+            if (!deliverMethod(client, obj, it.value(), {}, ret, outputArgs)) {
                 // ignore any error per spec
                 continue;
             }
@@ -324,7 +336,8 @@ namespace FdoSecrets
         return sendDBus(msg.createReply(QVariantList{result}));
     }
 
-    bool DBusMgr::deliverMethod(DBusObject* obj,
+    bool DBusMgr::deliverMethod(const DBusClientPtr& client,
+                                DBusObject* obj,
                                 const MethodData& method,
                                 const QVariantList& args,
                                 DBusResult& ret,
@@ -335,6 +348,11 @@ namespace FdoSecrets
 
         // the first one is for return type
         params.append(&ret);
+
+        if (method.needsCallingClient) {
+            auxParams.append(QVariant::fromValue(client));
+            params.append(const_cast<void*>(auxParams.last().constData()));
+        }
 
         // prepare input
         if (!prepareInputParams(method.inputTypes, args, params, auxParams)) {

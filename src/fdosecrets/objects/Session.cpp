@@ -18,6 +18,7 @@
 #include "Session.h"
 
 #include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
 #include "core/Tools.h"

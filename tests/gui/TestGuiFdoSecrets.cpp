@@ -20,6 +20,7 @@
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusClient.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/SessionCipher.h"
@@ -202,8 +203,8 @@ void TestGuiFdoSecrets::initTestCase()
                                            "2407ec7ae90f0831f24afd5ac")));
 
     // set a fake dbus client all the time so we can freely access DBusMgr anywhere
-    m_client.reset(new FakeClient(m_plugin->dbus()));
-    m_plugin->dbus().overrideClient(m_client);
+    m_client.reset(new FakeClient(*m_plugin->dbus()));
+    m_plugin->dbus()->overrideClient(m_client);
 }
 
 // Every test starts with opening the temp database
@@ -256,7 +257,7 @@ void TestGuiFdoSecrets::cleanup()
 
 void TestGuiFdoSecrets::cleanupTestCase()
 {
-    m_plugin->dbus().overrideClient({});
+    m_plugin->dbus()->overrideClient({});
     if (m_dbFile) {
         m_dbFile->remove();
     }
@@ -752,7 +753,7 @@ void TestGuiFdoSecrets::testHiddenFilename()
 
     // collection is properly registered
     auto coll = getDefaultCollection(service);
-    auto collObj = DBusMgr::pathToObject<Collection>(QDBusObjectPath(coll->path()));
+    auto collObj = m_plugin->dbus()->pathToObject<Collection>(QDBusObjectPath(coll->path()));
     VERIFY(collObj);
     COMPARE(collObj->name(), QStringLiteral(".Name"));
 }
@@ -820,7 +821,7 @@ void TestGuiFdoSecrets::testItemCreate()
     // secrets
     {
         DBUS_GET(ss, item->GetSecret(QDBusObjectPath(sess->path())));
-        auto decrypted = m_cipher->decrypt(ss.to());
+        auto decrypted = m_cipher->decrypt(ss.unmarshal(m_plugin->dbus()));
         COMPARE(decrypted.value, QByteArrayLiteral("Password"));
     }
 
@@ -835,16 +836,6 @@ void TestGuiFdoSecrets::testItemCreate()
         VERIFY(unlocked.contains(QDBusObjectPath(item->path())));
     }
 
-    // create when the item exists but is locked
-    auto itemObj = DBusMgr::pathToObject<Item>(QDBusObjectPath(item->path()));
-    VERIFY(itemObj);
-    auto entry = itemObj->backend();
-    VERIFY(entry);
-    FdoSecrets::settings()->setConfirmAccessItem(true);
-    m_client->setItemAuthorized(entry->uuid(), AuthDecision::Undecided);
-    item = createItem(sess, coll, "abcUpdateWhenLocked", "Password", attributes, true, true);
-    VERIFY(item);
-    DBUS_COMPARE(item->label(), QStringLiteral("abcUpdateWhenLocked"));
 }
 
 void TestGuiFdoSecrets::testItemChange()
@@ -855,7 +846,7 @@ void TestGuiFdoSecrets::testItemChange()
     VERIFY(coll);
     auto item = getFirstItem(coll);
     VERIFY(item);
-    auto itemObj = DBusMgr::pathToObject<Item>(QDBusObjectPath(item->path()));
+    auto itemObj = m_plugin->dbus()->pathToObject<Item>(QDBusObjectPath(item->path()));
     VERIFY(itemObj);
     auto entry = itemObj->backend();
     VERIFY(entry);
@@ -972,6 +963,43 @@ void TestGuiFdoSecrets::testItemReplace()
     }
 }
 
+void TestGuiFdoSecrets::testItemReplaceExistingLocked()
+{
+    auto service = enableService();
+        VERIFY(service);
+    auto coll = getDefaultCollection(service);
+        VERIFY(coll);
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+        VERIFY(sess);
+
+    // create item
+    StringStringMap attr1{
+        {"application", "fdosecrets-test"},
+        {"attr-i[bute]", "![some] -value*"},
+        {"fdosecrets-attr", "1"},
+    };
+
+    auto item = createItem(sess, coll, "abc1", "Password", attr1, false);
+    VERIFY(item);
+
+    // make sure the item is locked
+    {
+        auto itemObj = m_plugin->dbus()->pathToObject<Item>(QDBusObjectPath(item->path()));
+        VERIFY(itemObj);
+        auto entry = itemObj->backend();
+        VERIFY(entry);
+        FdoSecrets::settings()->setConfirmAccessItem(true);
+        m_client->setItemAuthorized(entry->uuid(), AuthDecision::Undecided);
+        DBUS_COMPARE(item->locked(), true);
+    }
+
+    // when replace with a locked item, there will be an prompt
+    auto item2 = createItem(sess, coll, "abc2", "PasswordUpdated", attr1, true, true);
+    VERIFY(item2);
+    COMPARE(item2->path(), item->path());
+    DBUS_COMPARE(item2->label(), QStringLiteral("abc2"));
+}
+
 void TestGuiFdoSecrets::testItemSecret()
 {
     const QString TEXT_PLAIN = "text/plain";
@@ -986,7 +1014,7 @@ void TestGuiFdoSecrets::testItemSecret()
     auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
     VERIFY(sess);
 
-    auto itemObj = DBusMgr::pathToObject<Item>(QDBusObjectPath(item->path()));
+    auto itemObj = m_plugin->dbus()->pathToObject<Item>(QDBusObjectPath(item->path()));
     VERIFY(itemObj);
     auto entry = itemObj->backend();
     VERIFY(entry);
@@ -994,7 +1022,7 @@ void TestGuiFdoSecrets::testItemSecret()
     // plain text secret
     {
         DBUS_GET(encrypted, item->GetSecret(QDBusObjectPath(sess->path())));
-        auto ss = m_cipher->decrypt(encrypted.to());
+        auto ss = m_cipher->decrypt(encrypted.unmarshal(m_plugin->dbus()));
         COMPARE(ss.contentType, TEXT_PLAIN);
         COMPARE(ss.value, entry->password().toUtf8());
     }
@@ -1006,7 +1034,7 @@ void TestGuiFdoSecrets::testItemSecret()
         VERIFY(spyShowNotification.isValid());
 
         DBUS_GET(encrypted, item->GetSecret(QDBusObjectPath(sess->path())));
-        auto ss = m_cipher->decrypt(encrypted.to());
+        auto ss = m_cipher->decrypt(encrypted.unmarshal(m_plugin->dbus()));
         COMPARE(ss.contentType, TEXT_PLAIN);
         COMPARE(ss.value, entry->password().toUtf8());
 
@@ -1026,8 +1054,8 @@ void TestGuiFdoSecrets::testItemSecret()
         ss.contentType = TEXT_PLAIN;
         ss.value = "NewPassword";
         ss.session = QDBusObjectPath(sess->path());
-        auto encrypted = m_cipher->encrypt(ss.to());
-        DBUS_VERIFY(item->SetSecret(encrypted.to()));
+        auto encrypted = m_cipher->encrypt(ss.unmarshal(m_plugin->dbus()));
+        DBUS_VERIFY(item->SetSecret(encrypted.marshal()));
 
         COMPARE(entry->password().toUtf8(), ss.value);
     }
@@ -1038,12 +1066,12 @@ void TestGuiFdoSecrets::testItemSecret()
         expected.contentType = APPLICATION_OCTET_STREAM;
         expected.value = QByteArrayLiteral("NewPasswordBinary");
         expected.session = QDBusObjectPath(sess->path());
-        DBUS_VERIFY(item->SetSecret(m_cipher->encrypt(expected.to()).to()));
+        DBUS_VERIFY(item->SetSecret(m_cipher->encrypt(expected.unmarshal(m_plugin->dbus())).marshal()));
 
         COMPARE(entry->password(), QStringLiteral(""));
 
         DBUS_GET(encrypted, item->GetSecret(QDBusObjectPath(sess->path())));
-        auto ss = m_cipher->decrypt(encrypted.to());
+        auto ss = m_cipher->decrypt(encrypted.unmarshal(m_plugin->dbus()));
         COMPARE(ss.contentType, expected.contentType);
         COMPARE(ss.value, expected.value);
     }
@@ -1073,7 +1101,7 @@ void TestGuiFdoSecrets::testItemDelete()
     VERIFY(spyPromptCompleted.isValid());
 
     // prompt and click save
-    auto itemObj = DBusMgr::pathToObject<Item>(QDBusObjectPath(item->path()));
+    auto itemObj = m_plugin->dbus()->pathToObject<Item>(QDBusObjectPath(item->path()));
     VERIFY(itemObj);
     MessageBox::setNextAnswer(MessageBox::Delete);
     DBUS_VERIFY(prompt->Prompt(""));
@@ -1101,7 +1129,7 @@ void TestGuiFdoSecrets::testItemLockState()
     VERIFY(item);
     auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
     VERIFY(sess);
-    auto itemObj = DBusMgr::pathToObject<Item>(QDBusObjectPath(item->path()));
+    auto itemObj = m_plugin->dbus()->pathToObject<Item>(QDBusObjectPath(item->path()));
     VERIFY(itemObj);
     auto entry = itemObj->backend();
     VERIFY(entry);
@@ -1113,8 +1141,8 @@ void TestGuiFdoSecrets::testItemLockState()
             "NewPassword",
             "text/plain",
         }
-            .to();
-    auto encrypted = m_cipher->encrypt(secret).to();
+            .unmarshal(m_plugin->dbus());
+    auto encrypted = m_cipher->encrypt(secret).marshal();
 
     // when access confirmation is disabled, item is unlocked when the collection is unlocked
     FdoSecrets::settings()->setConfirmAccessItem(false);
@@ -1206,7 +1234,7 @@ void TestGuiFdoSecrets::testExposeSubgroup()
     DBUS_GET(itemPaths, coll->items());
     QSet<Entry*> exposedEntries;
     for (const auto& itemPath : itemPaths) {
-        exposedEntries << DBusMgr::pathToObject<Item>(itemPath)->backend();
+        exposedEntries << m_plugin->dbus()->pathToObject<Item>(itemPath)->backend();
     }
     COMPARE(exposedEntries, QSet<Entry*>::fromList(subgroup->entries()));
 }
@@ -1331,7 +1359,7 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
     ss.session = QDBusObjectPath(sess->path());
     ss.value = pass.toLocal8Bit();
     ss.contentType = "plain/text";
-    auto encrypted = m_cipher->encrypt(ss.to()).to();
+    auto encrypted = m_cipher->encrypt(ss.unmarshal(m_plugin->dbus())).marshal();
 
     DBUS_GET2(itemPath, promptPath, coll->CreateItem(properties, encrypted, replace));
 

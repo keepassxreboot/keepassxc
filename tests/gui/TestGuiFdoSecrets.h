@@ -82,6 +82,7 @@ private slots:
     void testItemCreate();
     void testItemChange();
     void testItemReplace();
+    void testItemReplaceExistingLocked();
     void testItemSecret();
     void testItemDelete();
     void testItemLockState();

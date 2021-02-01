@@ -18,6 +18,7 @@
 #include "Item.h"
 
 #include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
@@ -65,7 +66,7 @@ namespace FdoSecrets
         connect(m_backend.data(), &Entry::entryModified, this, &Item::itemChanged);
     }
 
-    DBusResult Item::locked(bool& locked) const
+    DBusResult Item::locked(const DBusClientPtr& client, bool& locked) const
     {
         auto ret = ensureBackend();
         if (ret.err()) {
@@ -75,7 +76,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        locked = locked || !dbus().callingClient()->itemAuthorized(m_backend->uuid());
+        locked = locked || !client->itemAuthorized(m_backend->uuid());
         return {};
     }
 
@@ -224,18 +225,18 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Item::getSecret(Session* session, Secret& secret)
+    DBusResult Item::getSecret(const DBusClientPtr& client, Session* session, Secret& secret)
     {
-        auto ret = getSecretNoNotification(session, secret);
+        auto ret = getSecretNoNotification(client, session, secret);
         if (ret.ok()) {
             service()->plugin()->emitRequestShowNotification(
                 tr(R"(Entry "%1" from database "%2" was used by %3)")
-                    .arg(m_backend->title(), collection()->name(), dbus().callingClient()->name()));
+                    .arg(m_backend->title(), collection()->name(), client->name()));
         }
         return ret;
     }
 
-    DBusResult Item::getSecretNoNotification(Session* session, Secret& secret) const
+    DBusResult Item::getSecretNoNotification(const DBusClientPtr& client, Session* session, Secret& secret) const
     {
         auto ret = ensureBackend();
         if (ret.err()) {
@@ -245,7 +246,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        if (!dbus().callingClient()->itemAuthorizedResetOnce(backend()->uuid())) {
+        if (!client->itemAuthorizedResetOnce(backend()->uuid())) {
             return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
 
@@ -261,7 +262,7 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult Item::setSecret(const Secret& secret)
+    DBusResult Item::setSecret(const DBusClientPtr& client, const Secret& secret)
     {
         auto ret = ensureBackend();
         if (ret.err()) {
@@ -271,7 +272,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        if (!dbus().callingClient()->itemAuthorizedResetOnce(backend()->uuid())) {
+        if (!client->itemAuthorizedResetOnce(backend()->uuid())) {
             return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
 
@@ -299,8 +300,7 @@ namespace FdoSecrets
             return ret;
         }
 
-        auto attributes =
-            properties.value(DBUS_INTERFACE_SECRET_ITEM + ".Attributes").value<StringStringMap>();
+        auto attributes = properties.value(DBUS_INTERFACE_SECRET_ITEM + ".Attributes").value<StringStringMap>();
         ret = setAttributes(attributes);
         if (ret.err()) {
             return ret;

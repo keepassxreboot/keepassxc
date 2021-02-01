@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_SERVICE_H
 #define KEEPASSXC_FDOSECRETS_SERVICE_H
 
+#include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
 #include <QHash>
@@ -57,7 +58,8 @@ namespace FdoSecrets
         Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus);
         ~Service() override;
 
-        Q_INVOKABLE DBusResult openSession(const QString& algorithm,
+        Q_INVOKABLE DBusResult openSession(const DBusClientPtr& client,
+                                           const QString& algorithm,
                                            const QVariant& input,
                                            QVariant& output,
                                            Session*& result);
@@ -65,17 +67,22 @@ namespace FdoSecrets
                                                 const QString& alias,
                                                 Collection*& collection,
                                                 PromptBase*& prompt);
-        Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes,
+        Q_INVOKABLE DBusResult searchItems(const DBusClientPtr& client,
+                                           const StringStringMap& attributes,
                                            QList<Item*>& unlocked,
                                            QList<Item*>& locked) const;
 
-        Q_INVOKABLE DBusResult unlock(const QList<DBusObject*>& objects,
+        Q_INVOKABLE DBusResult unlock(const DBusClientPtr& client,
+                                      const QList<DBusObject*>& objects,
                                       QList<DBusObject*>& unlocked,
                                       PromptBase*& prompt);
 
         Q_INVOKABLE DBusResult lock(const QList<DBusObject*>& objects, QList<DBusObject*>& locked, PromptBase*& prompt);
 
-        Q_INVOKABLE DBusResult getSecrets(const QList<Item*>& items, Session* session, ItemSecretMap& secrets) const;
+        Q_INVOKABLE DBusResult getSecrets(const DBusClientPtr& client,
+                                          const QList<Item*>& items,
+                                          Session* session,
+                                          ItemSecretMap& secrets) const;
 
         Q_INVOKABLE DBusResult readAlias(const QString& name, Collection*& collection) const;
 

@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_ITEM_H
 #define KEEPASSXC_FDOSECRETS_ITEM_H
 
+#include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
 #include <QPointer>
@@ -55,7 +56,7 @@ namespace FdoSecrets
          */
         static Item* Create(Collection* parent, Entry* backend);
 
-        Q_INVOKABLE DBUS_PROPERTY DBusResult locked(bool& locked) const;
+        Q_INVOKABLE DBUS_PROPERTY DBusResult locked(const DBusClientPtr& client, bool& locked) const;
 
         Q_INVOKABLE DBUS_PROPERTY DBusResult attributes(StringStringMap& attrs) const;
         Q_INVOKABLE DBusResult setAttributes(const StringStringMap& attrs);
@@ -68,8 +69,8 @@ namespace FdoSecrets
         Q_INVOKABLE DBUS_PROPERTY DBusResult modified(qulonglong& modified) const;
 
         Q_INVOKABLE DBusResult remove(PromptBase*& prompt);
-        Q_INVOKABLE DBusResult getSecret(Session* session, Secret& secret);
-        Q_INVOKABLE DBusResult setSecret(const Secret& secret);
+        Q_INVOKABLE DBusResult getSecret(const DBusClientPtr& client, Session* session, Secret& secret);
+        Q_INVOKABLE DBusResult setSecret(const DBusClientPtr& client, const Secret& secret);
 
     signals:
         void itemChanged();
@@ -78,7 +79,7 @@ namespace FdoSecrets
     public:
         static const QSet<QString> ReadOnlyAttributes;
 
-        DBusResult getSecretNoNotification(Session* session, Secret& secret) const;
+        DBusResult getSecretNoNotification(const DBusClientPtr& client, Session* session, Secret& secret) const;
         DBusResult setProperties(const QVariantMap& properties);
 
         Entry* backend() const;

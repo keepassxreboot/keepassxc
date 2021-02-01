@@ -20,6 +20,7 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/RowButtonHelper.h"
 #include "fdosecrets/widgets/SettingsModels.h"
@@ -210,7 +211,7 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     m_ui->warningMsg->setHidden(true);
     m_ui->warningMsg->setCloseButtonVisible(false);
 
-    auto clientModel = new SettingsClientModel(plugin->dbus(), this);
+    auto clientModel = new SettingsClientModel(*plugin->dbus(), this);
     m_ui->tableClients->setModel(clientModel);
     installWidgetItemDelegate<ManageSession>(
         m_ui->tableClients, 1, [](QWidget* p, const QModelIndex&) { return new ManageSession(p); });
@@ -286,9 +287,9 @@ void SettingsWidgetFdoSecrets::checkDBusName()
         return;
     }
 
-    if (m_plugin->dbus().serviceOccupied()) {
+    if (m_plugin->dbus()->serviceOccupied()) {
         m_ui->warningMsg->showMessage(
-            tr("<b>Warning:</b> ") + m_plugin->dbus().reportExistingService(), MessageWidget::Warning, -1);
+            tr("<b>Warning:</b> ") + m_plugin->dbus()->reportExistingService(), MessageWidget::Warning, -1);
         m_ui->enableFdoSecretService->setChecked(false);
         m_ui->enableFdoSecretService->setEnabled(false);
         return;

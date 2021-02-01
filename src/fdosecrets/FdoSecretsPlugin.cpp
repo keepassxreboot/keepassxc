@@ -18,6 +18,8 @@
 #include "FdoSecretsPlugin.h"
 
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/dbus/DBusMgr.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/widgets/SettingsWidgetFdoSecrets.h"
 
@@ -31,8 +33,12 @@ QPointer<FdoSecretsPlugin> g_fdoSecretsPlugin;
 
 FdoSecretsPlugin::FdoSecretsPlugin(DatabaseTabWidget* tabWidget)
     : m_dbTabs(tabWidget)
+    , m_dbus(new DBusMgr())
 {
-    connect(&m_dbus, &DBusMgr::error, this, &FdoSecretsPlugin::emitError);
+    registerDBusTypes(m_dbus);
+    m_dbus->populateMethodCache();
+
+    connect(m_dbus.data(), &DBusMgr::error, this, &FdoSecretsPlugin::emitError);
     g_fdoSecretsPlugin = this;
 }
 
@@ -61,7 +67,7 @@ void FdoSecretsPlugin::updateServiceState()
 {
     if (FdoSecrets::settings()->isEnabled()) {
         if (!m_secretService && m_dbTabs) {
-            m_secretService = Service::Create(this, m_dbTabs, m_dbus);
+            m_secretService = Service::Create(this, m_dbTabs, *m_dbus);
             if (!m_secretService) {
                 FdoSecrets::settings()->setEnabled(false);
                 return;
@@ -86,7 +92,7 @@ DatabaseTabWidget* FdoSecretsPlugin::dbTabs() const
     return m_dbTabs;
 }
 
-FdoSecrets::DBusMgr& FdoSecretsPlugin::dbus()
+const QSharedPointer<FdoSecrets::DBusMgr>& FdoSecretsPlugin::dbus() const
 {
     return m_dbus;
 }
