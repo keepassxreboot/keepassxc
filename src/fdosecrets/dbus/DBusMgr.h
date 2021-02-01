@@ -72,7 +72,12 @@ namespace FdoSecrets
      *   * convert types to what Qt DBus expects
      *
      * The MethodData is pre-computed using Qt meta object system by finding methods with signature matching a certain
-     * pattern: Q_INVOKABLE DBusResult methodName(const DBusClientPtr& client, const X& input1, const Y& input2, Z& output1, ZZ& output2)
+     * pattern:
+     * Q_INVOKABLE DBusResult methodName(const DBusClientPtr& client,
+     *                                   const X& input1,
+     *                                   const Y& input2,
+     *                                   Z& output1,
+     *                                   ZZ& output2)
      * Note that the first parameter of client is optional.
      */
     class DBusMgr : public QDBusVirtualObject

@@ -42,6 +42,7 @@
 #include "util/FdoSecretsProxy.h"
 #include "util/TemporaryFile.h"
 
+#include <QCheckBox>
 #include <QLineEdit>
 #include <QSignalSpy>
 #include <QTemporaryDir>
@@ -446,34 +447,87 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
     VERIFY(coll);
     auto item = getFirstItem(coll);
     VERIFY(item);
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+    VERIFY(sess);
 
-    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
-    // nothing is unlocked immediately without user's action
-    COMPARE(unlocked, {});
-
-    auto prompt = getProxy<PromptProxy>(promptPath);
-    VERIFY(prompt);
-    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
-    VERIFY(spyPromptCompleted.isValid());
-
-    // nothing is unlocked yet
-    QTRY_COMPARE(spyPromptCompleted.count(), 0);
     DBUS_COMPARE(item->locked(), true);
 
-    // drive the prompt
-    DBUS_VERIFY(prompt->Prompt(""));
-    VERIFY(driveAccessControlDialog());
-
-    // unlocked
-    DBUS_COMPARE(item->locked(), false);
-
-    QTRY_COMPARE(spyPromptCompleted.count(), 1);
     {
-        auto args = spyPromptCompleted.takeFirst();
-        COMPARE(args.size(), 2);
-        COMPARE(args.at(0).toBool(), false);
-        COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(item->path())});
+        DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+        // nothing is unlocked immediately without user's action
+        COMPARE(unlocked, {});
+
+        auto prompt = getProxy<PromptProxy>(promptPath);
+        VERIFY(prompt);
+        QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+        VERIFY(spyPromptCompleted.isValid());
+
+        // nothing is unlocked yet
+        COMPARE(spyPromptCompleted.count(), 0);
+        DBUS_COMPARE(item->locked(), true);
+
+        // drive the prompt
+        DBUS_VERIFY(prompt->Prompt(""));
+        // only allow once
+        VERIFY(driveAccessControlDialog(false));
+
+        // unlocked
+        DBUS_COMPARE(item->locked(), false);
+
+        VERIFY(spyPromptCompleted.wait());
+        COMPARE(spyPromptCompleted.count(), 1);
+        {
+            auto args = spyPromptCompleted.takeFirst();
+            COMPARE(args.size(), 2);
+            COMPARE(args.at(0).toBool(), false);
+            COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(item->path())});
+        }
     }
+
+    // access the secret should reset the locking state
+    {
+        DBUS_GET(ss, item->GetSecret(QDBusObjectPath(sess->path())));
+    }
+    DBUS_COMPARE(item->locked(), true);
+
+    // unlock again with remember
+    {
+        DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+        // nothing is unlocked immediately without user's action
+        COMPARE(unlocked, {});
+
+        auto prompt = getProxy<PromptProxy>(promptPath);
+        VERIFY(prompt);
+        QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+        VERIFY(spyPromptCompleted.isValid());
+
+        // nothing is unlocked yet
+        COMPARE(spyPromptCompleted.count(), 0);
+        DBUS_COMPARE(item->locked(), true);
+
+        // drive the prompt
+        DBUS_VERIFY(prompt->Prompt(""));
+        // only allow and remember
+        VERIFY(driveAccessControlDialog(true));
+
+        // unlocked
+        DBUS_COMPARE(item->locked(), false);
+
+        VERIFY(spyPromptCompleted.wait());
+        COMPARE(spyPromptCompleted.count(), 1);
+        {
+            auto args = spyPromptCompleted.takeFirst();
+            COMPARE(args.size(), 2);
+            COMPARE(args.at(0).toBool(), false);
+            COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(item->path())});
+        }
+    }
+
+    // access the secret does not reset the locking state
+    {
+        DBUS_GET(ss, item->GetSecret(QDBusObjectPath(sess->path())));
+    }
+    DBUS_COMPARE(item->locked(), false);
 }
 
 void TestGuiFdoSecrets::testServiceLock()
@@ -835,7 +889,6 @@ void TestGuiFdoSecrets::testItemCreate()
         DBUS_GET(unlocked, coll->SearchItems(attributes));
         VERIFY(unlocked.contains(QDBusObjectPath(item->path())));
     }
-
 }
 
 void TestGuiFdoSecrets::testItemChange()
@@ -966,11 +1019,11 @@ void TestGuiFdoSecrets::testItemReplace()
 void TestGuiFdoSecrets::testItemReplaceExistingLocked()
 {
     auto service = enableService();
-        VERIFY(service);
+    VERIFY(service);
     auto coll = getDefaultCollection(service);
-        VERIFY(coll);
+    VERIFY(coll);
     auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
-        VERIFY(sess);
+    VERIFY(sess);
 
     // create item
     StringStringMap attr1{
@@ -1384,7 +1437,7 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
     return getProxy<ItemProxy>(itemPath);
 }
 
-bool TestGuiFdoSecrets::driveAccessControlDialog()
+bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember)
 {
     QApplication::processEvents();
     for (auto w : qApp->allWidgets()) {
@@ -1393,6 +1446,9 @@ bool TestGuiFdoSecrets::driveAccessControlDialog()
         }
         auto dlg = qobject_cast<AccessControlDialog*>(w);
         if (dlg) {
+            auto rememberCheck = dlg->findChild<QCheckBox*>("rememberCheck");
+            VERIFY(rememberCheck);
+            rememberCheck->setChecked(remember);
             QTest::keyClick(dlg, Qt::Key_Enter);
             QApplication::processEvents();
             return true;

@@ -58,7 +58,7 @@ namespace FdoSecrets
             if (auto dbus = weak.lock()) {
                 return dbus->pathsToObject<T>(paths);
             }
-            qDebug() << "No DBusMgr when looking up paths" << paths;
+            qDebug() << "No DBusMgr when looking up paths";
             return QList<T*>{};
         });
     }

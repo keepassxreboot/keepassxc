@@ -98,7 +98,7 @@ private slots:
 
 protected slots:
     void driveNewDatabaseWizard();
-    bool driveAccessControlDialog();
+    bool driveAccessControlDialog(bool remember = true);
 
 private:
     void lockDatabaseInBackend();
