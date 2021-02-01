@@ -406,7 +406,7 @@ if(APPLE AND WITH_APP_BUNDLE)
 
     add_custom_command(TARGET ${PROGNAME}
             POST_BUILD
-            COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app
+            COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app 2> /dev/null
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
             COMMENT "Deploying app bundle")
 endif()

@@ -401,8 +401,16 @@ set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools)
 if(UNIX AND NOT APPLE)
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus X11Extras REQUIRED)
 elseif(APPLE)
-    find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED HINTS /usr/local/opt/qt/lib/cmake /usr/local/Cellar/qt/*/lib/cmake ENV PATH)
-    find_package(Qt5 COMPONENTS MacExtras HINTS /usr/local/opt/qt/lib/cmake /usr/local/Cellar/qt/*/lib/cmake ENV PATH)
+    find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED HINTS
+            /usr/local/opt/qt/lib/cmake
+            /usr/local/Cellar/qt/*/lib/cmake
+            /opt/homebrew/opt/qt/lib/cmake
+            ENV PATH)
+    find_package(Qt5 COMPONENTS MacExtras HINTS
+            /usr/local/opt/qt/lib/cmake
+            /usr/local/Cellar/qt/*/lib/cmake
+            /opt/homebrew/opt/qt/lib/cmake
+            ENV PATH)
 else()
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED)
 endif()

@@ -30,28 +30,13 @@ if(WITH_XC_BROWSER)
             RUNTIME DESTINATION ${PROXY_INSTALL_DIR} COMPONENT Runtime)
 
     if(APPLE AND WITH_APP_BUNDLE)
-        add_custom_command(TARGET keepassxc-proxy
-                           POST_BUILD
-                           COMMAND ${CMAKE_INSTALL_NAME_TOOL}
-                                -change ${Qt5_PREFIX}/lib/QtCore.framework/Versions/5/QtCore
-                                    "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore"
-                                -change /usr/local/opt/qt/lib/QtCore.framework/Versions/5/QtCore
-                                    "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore"
-                                -change ${Qt5_PREFIX}/lib/QtNetwork.framework/Versions/5/QtNetwork
-                                    "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
-                                -change /usr/local/opt/qt/lib/QtNetwork.framework/Versions/5/QtNetwork
-                                    "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
-                                -change /usr/local/opt/libsodium/lib/libsodium.23.dylib
-                                    "@executable_path/../Frameworks/libsodium.23.dylib"
-                           keepassxc-proxy
-                           COMMENT "Changing linking of keepassxc-proxy")
-
-        # Copy app to staging directory for pre-install testing
         set(PROXY_APP_DIR "${CMAKE_BINARY_DIR}/src/${PROXY_INSTALL_DIR}")
         add_custom_command(TARGET keepassxc-proxy
-                           POST_BUILD
-                           COMMAND ${CMAKE_COMMAND} -E copy keepassxc-proxy ${PROXY_APP_DIR}/keepassxc-proxy
-                           COMMENT "Copying keepassxc-proxy inside the application")
+                POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/keepassxc-proxy ${PROXY_APP_DIR}/keepassxc-proxy
+                COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app -executable=${PROXY_APP_DIR}/keepassxc-proxy -no-plugins 2> /dev/null
+                WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+                COMMENT "Deploying keepassxc-proxy")
     endif()
 
     if(MINGW)

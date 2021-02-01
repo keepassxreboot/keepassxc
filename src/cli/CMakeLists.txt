@@ -73,48 +73,11 @@ if(MINGW)
 endif()
 
 if(APPLE AND WITH_APP_BUNDLE)
-    add_custom_command(TARGET keepassxc-cli
-                       POST_BUILD
-                       COMMAND ${CMAKE_INSTALL_NAME_TOOL}
-                            -change /usr/local/opt/qt/lib/QtCore.framework/Versions/5/QtCore
-                                "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore"
-                            -change /usr/local/opt/qt/lib/QtGui.framework/Versions/5/QtGui
-                                "@executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui"
-                            -change /usr/local/opt/qt/lib/QtMacExtras.framework/Versions/5/QtMacExtras
-                                "@executable_path/../Frameworks/QtMacExtras.framework/Versions/5/QtMacExtras"
-                            -change /usr/local/opt/qt/lib/QtConcurrent.framework/Versions/5/QtConcurrent
-                                "@executable_path/../Frameworks/QtConcurrent.framework/Versions/5/QtConcurrent"
-                            -change /usr/local/opt/qt/lib/QtCore.framework/Versions/5/QtCore
-                                "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore"
-                            -change /usr/local/opt/qt/lib/QtNetwork.framework/Versions/5/QtNetwork
-                                "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
-                            -change /usr/local/opt/qt/lib/QtWidgets.framework/Versions/5/QtWidgets
-                                "@executable_path/../Frameworks/QtWidgets.framework/Versions/5/QtWidgets"
-                            -change /usr/local/opt/qt/lib/QtSvg.framework/Versions/5/QtSvg
-                                "@executable_path/../Frameworks/QtSvg.framework/Versions/5/QtSvg"
-                            -change /usr/local/opt/libgcrypt/lib/libgcrypt.20.dylib
-                                "@executable_path/../Frameworks/libgcrypt.20.dylib"
-                            -change /usr/local/opt/argon2/lib/libargon2.1.dylib
-                                "@executable_path/../Frameworks/libargon2.1.dylib"
-                            -change /usr/local/opt/libgpg-error/lib/libgpg-error.0.dylib
-                                "@executable_path/../Frameworks/libgpg-error.0.dylib"
-                            -change /usr/local/opt/libsodium/lib/libsodium.23.dylib
-                                "@executable_path/../Frameworks/libsodium.23.dylib"
-                            -change /usr/local/opt/qrencode/lib/libqrencode.4.dylib
-                                "@executable_path/../Frameworks/libqrencode.4.dylib"
-                            -change /usr/local/opt/libyubikey/lib/libyubikey.0.dylib
-                                "@executable_path/../Frameworks/libyubikey.0.dylib"
-                            -change /usr/local/opt/ykpers/lib/libykpers-1.1.dylib
-                                "@executable_path/../Frameworks/libykpers-1.1.dylib"
-                            -change /usr/local/opt/quazip/lib/libquazip.1.dylib
-                                "@executable_path/../Frameworks/libquazip.1.dylib"
-                       keepassxc-cli
-                       COMMENT "Changing linking of keepassxc-cli")
-
-    # Copy app to staging directory for pre-install testing
     set(CLI_APP_DIR "${CMAKE_BINARY_DIR}/src/${CLI_INSTALL_DIR}")
     add_custom_command(TARGET keepassxc-cli
-                       POST_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E copy keepassxc-cli ${CLI_APP_DIR}/keepassxc-cli
-                       COMMENT "Copying keepassxc-cli inside the application")
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/keepassxc-cli ${CLI_APP_DIR}/keepassxc-cli
+            COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app -executable=${CLI_APP_DIR}/keepassxc-cli -no-plugins 2> /dev/null
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+            COMMENT "Deploying keepassxc-cli")
 endif()
