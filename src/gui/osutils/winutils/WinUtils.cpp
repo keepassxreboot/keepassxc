@@ -16,12 +16,14 @@
  */
 
 #include "WinUtils.h"
-#include <QAbstractNativeEventFilter>
+
 #include <QApplication>
 #include <QDir>
 #include <QSettings>
+#include <QWindow>
 
-#include <windows.h>
+#include <Windows.h>
+#undef MessageBox
 
 QPointer<WinUtils> WinUtils::m_instance = nullptr;
 
@@ -47,6 +49,20 @@ WinUtils* WinUtils::instance()
 WinUtils::WinUtils(QObject* parent)
     : OSUtilsBase(parent)
 {
+}
+
+bool WinUtils::canPreventScreenCapture() const
+{
+    return true;
+}
+
+bool WinUtils::setPreventScreenCapture(QWindow* window, bool prevent) const
+{
+    if (window) {
+        HWND handle = reinterpret_cast<HWND>(window->winId());
+        return SetWindowDisplayAffinity(handle, prevent ? WDA_EXCLUDEFROMCAPTURE : WDA_NONE);
+    }
+    return false;
 }
 
 /**

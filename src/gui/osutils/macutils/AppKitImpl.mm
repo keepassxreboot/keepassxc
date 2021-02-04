@@ -18,11 +18,14 @@
 
 #import "AppKitImpl.h"
 #include "AppKit.h"
+#include <QWindow>
 
 #import <AppKit/NSStatusBar.h>
 #import <AppKit/NSStatusItem.h>
 #import <AppKit/NSStatusBarButton.h>
 #import <AppKit/NSWorkspace.h>
+#import <AppKit/NSWindow.h>
+#import <AppKit/NSView.h>
 #import <CoreVideo/CVPixelBuffer.h>
 
 @implementation AppKitImpl
@@ -211,6 +214,11 @@
     }
 }
 
+- (void) setWindowSecurity:(NSWindow*) window state:(bool) state
+{
+    [window setSharingType: state ? NSWindowSharingNone : NSWindowSharingReadOnly];
+}
+
 @end
 
 //
@@ -284,4 +292,10 @@ bool AppKit::enableScreenRecording()
 void AppKit::toggleForegroundApp(bool foreground)
 {
     [static_cast<id>(self) toggleForegroundApp:foreground];
+}
+
+void AppKit::setWindowSecurity(QWindow* window, bool state)
+{
+    auto view = reinterpret_cast<NSView*>(window->winId());
+    [static_cast<id>(self) setWindowSecurity:view.window state:state];
 }
