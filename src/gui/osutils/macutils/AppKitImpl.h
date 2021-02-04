@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/NSRunningApplication.h>
+#import <AppKit/NSWindow.h>
 
 @interface AppKitImpl : NSObject
 {
@@ -40,5 +41,6 @@
 - (bool) enableAccessibility;
 - (bool) enableScreenRecording;
 - (void) toggleForegroundApp:(bool) foreground;
+- (void) setWindowSecurity:(NSWindow*) window state:(bool) state;
 
 @end

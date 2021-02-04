@@ -52,6 +52,9 @@ public:
     DWORD qtToNativeKeyCode(Qt::Key key);
     DWORD qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
 
+    bool canPreventScreenCapture() const override;
+    bool setPreventScreenCapture(QWindow* window, bool prevent) const override;
+
 protected:
     explicit WinUtils(QObject* parent = nullptr);
     ~WinUtils() override = default;

@@ -21,6 +21,8 @@
 #include <QObject>
 #include <QPointer>
 
+class QWindow;
+
 /**
  * Abstract base class for generic OS-specific functionality
  * which can be reasonably expected to be available on all platforms.
@@ -62,6 +64,9 @@ public:
                                         Qt::KeyboardModifiers modifiers,
                                         QString* error = nullptr) = 0;
     virtual bool unregisterGlobalShortcut(const QString& name) = 0;
+
+    virtual bool canPreventScreenCapture() const = 0;
+    virtual bool setPreventScreenCapture(QWindow* window, bool allow) const;
 
 signals:
     void globalShortcutTriggered(const QString& name);

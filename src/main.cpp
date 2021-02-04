@@ -19,6 +19,7 @@
 #include <QCommandLineParser>
 #include <QFile>
 #include <QTextStream>
+#include <QWindow>
 
 #include "cli/Utils.h"
 #include "config-keepassx.h"
@@ -28,6 +29,7 @@
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
+#include "gui/osutils/OSUtils.h"
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
 #include <sanitizer/lsan_interface.h>
@@ -65,6 +67,8 @@ int main(int argc, char** argv)
         "localconfig", QObject::tr("path to a custom local config file"), "localconfig");
     QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
+    QCommandLineOption allowScreenCaptureOption("allow-screencapture",
+                                                QObject::tr("allow app screen recordering and screenshots"));
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
@@ -74,6 +78,10 @@ int main(int argc, char** argv)
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
     parser.addOption(debugInfoOption);
+
+    if (osUtils->canPreventScreenCapture()) {
+        parser.addOption(allowScreenCaptureOption);
+    }
 
     Application app(argc, argv);
     // don't set organizationName as that changes the return value of
@@ -131,6 +139,22 @@ int main(int argc, char** argv)
     }
 
     MainWindow mainWindow;
+
+#ifndef QT_DEBUG
+    // Disable screen capture if capable and not explicitly allowed
+    if (osUtils->canPreventScreenCapture() && !parser.isSet(allowScreenCaptureOption)) {
+        // This ensures any top-level windows (Main Window, Modal Dialogs, etc.) are excluded from screenshots
+        QObject::connect(&app, &QGuiApplication::focusWindowChanged, &mainWindow, [&](QWindow* window) {
+            if (window) {
+                if (!osUtils->setPreventScreenCapture(window, true)) {
+                    mainWindow.displayGlobalMessage(
+                        QObject::tr("Warning: Failed to prevent screenshots on a top level window!"),
+                        MessageWidget::Error);
+                }
+            }
+        });
+    }
+#endif
 
     const bool pwstdin = parser.isSet(pwstdinOption);
     for (const QString& filename : fileNames) {

@@ -23,6 +23,8 @@
 #include <QColor>
 #include <unistd.h>
 
+class QWindow;
+
 class AppKit : public QObject
 {
     Q_OBJECT
@@ -42,6 +44,7 @@ public:
     bool enableAccessibility();
     bool enableScreenRecording();
     void toggleForegroundApp(bool foreground);
+    void setWindowSecurity(QWindow* window, bool state);
 
 signals:
     void lockDatabases();

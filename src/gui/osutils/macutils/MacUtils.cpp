@@ -23,6 +23,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QTimer>
+#include <QWindow>
 
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreGraphics/CGEventSource.h>
@@ -40,9 +41,7 @@ MacUtils::MacUtils(QObject* parent)
     connect(m_appkit.data(), &AppKit::interfaceThemeChanged, this, [this]() {
         // Emit with delay, since isStatusBarDark() still returns the old value
         // if we call it too fast after a theme change.
-        QTimer::singleShot(100, [this]() {
-            emit statusbarThemeChanged();
-        });
+        QTimer::singleShot(100, [this]() { emit statusbarThemeChanged(); });
     });
 }
 
@@ -150,6 +149,21 @@ bool MacUtils::isCapslockEnabled()
 void MacUtils::toggleForegroundApp(bool foreground)
 {
     m_appkit->toggleForegroundApp(foreground);
+}
+
+bool MacUtils::canPreventScreenCapture() const
+{
+    return true;
+}
+
+bool MacUtils::setPreventScreenCapture(QWindow* window, bool prevent) const
+{
+    if (!window) {
+        return false;
+    }
+
+    m_appkit->setWindowSecurity(window, prevent);
+    return true;
 }
 
 void MacUtils::registerNativeEventFilter()

@@ -43,6 +43,11 @@ public:
                                 QString* error = nullptr) override;
     bool unregisterGlobalShortcut(const QString& name) override;
 
+    bool canPreventScreenCapture() const override
+    {
+        return false;
+    }
+
 signals:
     void keymapChanged();
 
