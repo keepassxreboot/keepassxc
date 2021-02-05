@@ -19,14 +19,14 @@
 #define KEEPASSXC_TESTGUIFDOSECRETS_H
 
 #include <QByteArray>
-#include <QObject>
+#include <QDBusConnection>
 #include <QPointer>
 #include <QScopedPointer>
 #include <QSharedPointer>
 #include <QString>
 
 #include "fdosecrets/GcryptMPI.h"
-#include "fdosecrets/objects/DBusTypes.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 
 class MainWindow;
 class Database;
@@ -42,7 +42,13 @@ namespace FdoSecrets
     class Item;
     class Prompt;
     class DhIetf1024Sha256Aes128CbcPkcs7;
+    class DBusClient;
 } // namespace FdoSecrets
+class ServiceProxy;
+class CollectionProxy;
+class ItemProxy;
+class SessionProxy;
+class PromptProxy;
 
 class QAbstractItemView;
 
@@ -59,12 +65,11 @@ private slots:
     void cleanup();
     void cleanupTestCase();
 
-    void testDBusSpec();
-
     void testServiceEnable();
     void testServiceEnableNoExposedDatabase();
     void testServiceSearch();
     void testServiceUnlock();
+    void testServiceUnlockItems();
     void testServiceLock();
 
     void testSessionOpen();
@@ -72,11 +77,15 @@ private slots:
 
     void testCollectionCreate();
     void testCollectionDelete();
+    void testCollectionChange();
 
     void testItemCreate();
+    void testItemChange();
     void testItemReplace();
+    void testItemReplaceExistingLocked();
     void testItemSecret();
     void testItemDelete();
+    void testItemLockState();
 
     void testAlias();
     void testDefaultAliasAlwaysPresent();
@@ -88,21 +97,38 @@ private slots:
     void testDuplicateName();
 
 protected slots:
-    void createDatabaseCallback();
+    void driveNewDatabaseWizard();
+    bool driveAccessControlDialog(bool remember = true);
 
 private:
     void lockDatabaseInBackend();
     void unlockDatabaseInBackend();
-    QPointer<FdoSecrets::Service> enableService();
-    QPointer<FdoSecrets::Session> openSession(FdoSecrets::Service* service, const QString& algo);
-    QPointer<FdoSecrets::Collection> getDefaultCollection(FdoSecrets::Service* service);
-    QPointer<FdoSecrets::Item> getFirstItem(FdoSecrets::Collection* coll);
-    QPointer<FdoSecrets::Item> createItem(FdoSecrets::Session* sess,
-                                          FdoSecrets::Collection* coll,
-                                          const QString& label,
-                                          const QString& pass,
-                                          const StringStringMap& attr,
-                                          bool replace);
+    QSharedPointer<ServiceProxy> enableService();
+    QSharedPointer<SessionProxy> openSession(const QSharedPointer<ServiceProxy>& service, const QString& algo);
+    QSharedPointer<CollectionProxy> getDefaultCollection(const QSharedPointer<ServiceProxy>& service);
+    QSharedPointer<ItemProxy> getFirstItem(const QSharedPointer<CollectionProxy>& coll);
+    QSharedPointer<ItemProxy> createItem(const QSharedPointer<SessionProxy>& sess,
+                                         const QSharedPointer<CollectionProxy>& coll,
+                                         const QString& label,
+                                         const QString& pass,
+                                         const FdoSecrets::wire::StringStringMap& attr,
+                                         bool replace,
+                                         bool expectPrompt = false);
+    template <typename Proxy> QSharedPointer<Proxy> getProxy(const QDBusObjectPath& path) const
+    {
+        auto ret = QSharedPointer<Proxy>{
+            new Proxy(QStringLiteral("org.freedesktop.secrets"), path.path(), QDBusConnection::sessionBus())};
+        if (!ret->isValid()) {
+            return {};
+        }
+        return ret;
+    }
+
+    template <typename T> T getSignalVariantArgument(const QVariant& arg)
+    {
+        const auto& in = arg.value<QDBusVariant>().variant();
+        return qdbus_cast<T>(in);
+    }
 
 private:
     QScopedPointer<MainWindow> m_mainWindow;
@@ -111,6 +137,7 @@ private:
     QSharedPointer<Database> m_db;
 
     QPointer<FdoSecretsPlugin> m_plugin;
+    QSharedPointer<FdoSecrets::DBusClient> m_client;
 
     // For DH session tests
     GcryptMPI m_serverPrivate;

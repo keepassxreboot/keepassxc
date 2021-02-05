@@ -53,6 +53,15 @@ enum IconSize
     Large
 };
 
+enum class AuthDecision
+{
+    Undecided,
+    Allowed,
+    AllowedOnce,
+    Denied,
+    DeniedOnce,
+};
+
 template <typename T> struct AddConst
 {
     typedef const T Type;

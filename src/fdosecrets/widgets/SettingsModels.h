@@ -18,12 +18,13 @@
 #ifndef KEEPASSXC_FDOSECRETS_SETTINGSMODELS_H
 #define KEEPASSXC_FDOSECRETS_SETTINGSMODELS_H
 
+#include "fdosecrets/dbus/DBusClient.h"
+
 #include <QAbstractTableModel>
 #include <QPointer>
 
 class DatabaseTabWidget;
 class DatabaseWidget;
-class FdoSecretsPlugin;
 
 namespace FdoSecrets
 {
@@ -58,14 +59,13 @@ namespace FdoSecrets
         QList<QPointer<DatabaseWidget>> m_dbs;
     };
 
-    class Service;
-    class Session;
+    class DBusMgr;
 
-    class SettingsSessionModel : public QAbstractTableModel
+    class SettingsClientModel : public QAbstractTableModel
     {
         Q_OBJECT
     public:
-        explicit SettingsSessionModel(FdoSecretsPlugin* plugin, QObject* parent = nullptr);
+        explicit SettingsClientModel(DBusMgr& dbus, QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent) const override;
         int columnCount(const QModelIndex& parent) const override;
@@ -73,22 +73,20 @@ namespace FdoSecrets
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
     private:
-        void setService(Service* service);
-
-        QVariant dataForApplication(Session* sess, int role) const;
-        QVariant dataForManage(Session* sess, int role) const;
+        QVariant dataForApplication(const DBusClientPtr& client, int role) const;
+        QVariant dataForManage(const DBusClientPtr& client, int role) const;
 
     private slots:
         void populateModel();
-        void sessionAdded(Session* sess, bool emitSignals);
-        void sessionRemoved(Session* sess);
+        void clientConnected(const DBusClientPtr& client, bool emitSignals);
+        void clientDisconnected(const DBusClientPtr& client);
 
     private:
         // source
-        QPointer<Service> m_service;
+        DBusMgr& m_dbus;
 
         // internal copy, so we can emit with changed index
-        QList<Session*> m_sessions;
+        QList<DBusClientPtr> m_clients;
     };
 
 } // namespace FdoSecrets

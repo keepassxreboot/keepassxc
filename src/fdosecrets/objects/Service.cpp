@@ -19,6 +19,7 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
@@ -28,7 +29,6 @@
 #include "gui/DatabaseWidget.h"
 
 #include <QDBusConnection>
-#include <QDBusServiceWatcher>
 #include <QDebug>
 #include <QSharedPointer>
 
@@ -39,9 +39,10 @@ namespace
 
 namespace FdoSecrets
 {
-    QSharedPointer<Service> Service::Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs)
+    QSharedPointer<Service>
+    Service::Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, QSharedPointer<DBusMgr> dbus)
     {
-        QSharedPointer<Service> res{new Service(plugin, std::move(dbTabs))};
+        QSharedPointer<Service> res{new Service(plugin, std::move(dbTabs), std::move(dbus))};
         if (!res->initialize()) {
             return {};
         }
@@ -49,42 +50,24 @@ namespace FdoSecrets
     }
 
     Service::Service(FdoSecretsPlugin* plugin,
-                     QPointer<DatabaseTabWidget> dbTabs) // clazy: exclude=ctor-missing-parent-argument
-        : DBusObjectHelper(nullptr)
+                     QPointer<DatabaseTabWidget> dbTabs,
+                     QSharedPointer<DBusMgr> dbus) // clazy: exclude=ctor-missing-parent-argument
+        : DBusObject(std::move(dbus))
         , m_plugin(plugin)
         , m_databases(std::move(dbTabs))
         , m_insideEnsureDefaultAlias(false)
-        , m_serviceWatcher(nullptr)
     {
         connect(
             m_databases, &DatabaseTabWidget::databaseUnlockDialogFinished, this, &Service::doneUnlockDatabaseInDialog);
     }
 
-    Service::~Service()
-    {
-        QDBusConnection::sessionBus().unregisterService(QStringLiteral(DBUS_SERVICE_SECRET));
-    }
+    Service::~Service() = default;
 
     bool Service::initialize()
     {
-        if (!QDBusConnection::sessionBus().registerService(QStringLiteral(DBUS_SERVICE_SECRET))) {
-            plugin()->emitError(
-                tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET))
-                + m_plugin->reportExistingService());
+        if (!dbus()->registerObject(this)) {
             return false;
         }
-
-        if (!registerWithPath(QStringLiteral(DBUS_PATH_SECRETS))) {
-            plugin()->emitError(tr("Failed to register DBus path %1.<br/>").arg(QStringLiteral(DBUS_PATH_SECRETS)));
-            return false;
-        }
-
-        // Connect to service unregistered signal
-        m_serviceWatcher.reset(new QDBusServiceWatcher());
-        connect(
-            m_serviceWatcher.get(), &QDBusServiceWatcher::serviceUnregistered, this, &Service::dbusServiceUnregistered);
-
-        m_serviceWatcher->setConnection(QDBusConnection::sessionBus());
 
         // Add existing database tabs
         for (int idx = 0; idx != m_databases->count(); ++idx) {
@@ -199,161 +182,157 @@ namespace FdoSecrets
         m_insideEnsureDefaultAlias = false;
     }
 
-    void Service::dbusServiceUnregistered(const QString& service)
+    DBusResult Service::collections(QList<Collection*>& collections) const
     {
-        Q_ASSERT(m_serviceWatcher);
-
-        auto removed = m_serviceWatcher->removeWatchedService(service);
-        if (!removed) {
-            qDebug("FdoSecrets: Failed to remove service watcher");
-        }
-
-        Session::CleanupNegotiation(service);
-        auto sess = m_peerToSession.value(service, nullptr);
-        if (sess) {
-            sess->close().okOrDie();
-        }
+        collections = m_collections;
+        return {};
     }
 
-    DBusReturn<const QList<Collection*>> Service::collections() const
+    DBusResult Service::openSession(const DBusClientPtr& client,
+                                    const QString& algorithm,
+                                    const QVariant& input,
+                                    QVariant& output,
+                                    Session*& result)
     {
-        return m_collections;
-    }
-
-    DBusReturn<QVariant> Service::openSession(const QString& algorithm, const QVariant& input, Session*& result)
-    {
-        QVariant output;
-        bool incomplete = false;
-        auto peer = callingPeer();
-
-        // watch for service unregister to cleanup
-        Q_ASSERT(m_serviceWatcher);
-        m_serviceWatcher->addWatchedService(peer);
-
         // negotiate cipher
-        auto ciphers = Session::CreateCiphers(peer, algorithm, input, output, incomplete);
+        bool incomplete = false;
+        auto ciphers = client->negotiateCipher(algorithm, input, output, incomplete);
         if (incomplete) {
             result = nullptr;
-            return output;
+            return {};
         }
         if (!ciphers) {
-            return DBusReturn<>::Error(QDBusError::NotSupported);
+            return QDBusError::NotSupported;
         }
-        result = Session::Create(std::move(ciphers), callingPeerName(), this);
+
+        // create session using the negotiated cipher
+        result = Session::Create(std::move(ciphers), client->name(), this);
         if (!result) {
-            return DBusReturn<>::Error(QDBusError::InvalidObjectPath);
+            return QDBusError::InternalError;
         }
 
-        m_sessions.append(result);
-        m_peerToSession[peer] = result;
-        connect(result, &Session::aboutToClose, this, [this, peer, result]() {
-            emit sessionClosed(result);
-            m_sessions.removeAll(result);
-            m_peerToSession.remove(peer);
+        // remove session when the client disconnects
+        connect(dbus().data(), &DBusMgr::clientDisconnected, result, [result, client](const DBusClientPtr& toRemove) {
+            if (toRemove == client) {
+                result->close().okOrDie();
+            }
         });
-        emit sessionOpened(result);
 
-        return output;
+        // keep a list of sessions
+        m_sessions.append(result);
+        connect(result, &Session::aboutToClose, this, [this, result]() { m_sessions.removeAll(result); });
+
+        return {};
     }
 
-    DBusReturn<Collection*>
-    Service::createCollection(const QVariantMap& properties, const QString& alias, PromptBase*& prompt)
+    DBusResult Service::createCollection(const QVariantMap& properties,
+                                         const QString& alias,
+                                         Collection*& collection,
+                                         PromptBase*& prompt)
     {
         prompt = nullptr;
 
         // return existing collection if alias is non-empty and exists.
-        auto collection = findCollection(alias);
+        collection = findCollection(alias);
         if (!collection) {
-            auto cp = CreateCollectionPrompt::Create(this);
-            if (cp.isError()) {
-                return cp;
+            prompt = PromptBase::Create<CreateCollectionPrompt>(this, properties, alias);
+            if (!prompt) {
+                return QDBusError::InternalError;
             }
-            prompt = cp.value();
-
-            // collection will be created when the prompt completes.
-            // once it's done, we set additional properties on the collection
-            connect(cp.value(),
-                    &CreateCollectionPrompt::collectionCreated,
-                    cp.value(),
-                    [alias, properties](Collection* coll) {
-                        coll->setProperties(properties).okOrDie();
-                        if (!alias.isEmpty()) {
-                            coll->addAlias(alias).okOrDie();
-                        }
-                    });
         }
-        return collection;
+        return {};
     }
 
-    DBusReturn<const QList<Item*>> Service::searchItems(const StringStringMap& attributes, QList<Item*>& locked)
+    DBusResult Service::searchItems(const DBusClientPtr& client,
+                                    const StringStringMap& attributes,
+                                    QList<Item*>& unlocked,
+                                    QList<Item*>& locked) const
     {
-        auto ret = collections();
-        if (ret.isError()) {
+        QList<Collection*> colls;
+        auto ret = collections(colls);
+        if (ret.err()) {
             return ret;
         }
 
-        QList<Item*> unlocked;
-        for (const auto& coll : ret.value()) {
-            auto items = coll->searchItems(attributes);
-            if (items.isError()) {
-                return items;
+        for (const auto& coll : asConst(colls)) {
+            QList<Item*> items;
+            ret = coll->searchItems(attributes, items);
+            if (ret.err()) {
+                return ret;
             }
-            auto l = coll->locked();
-            if (l.isError()) {
-                return l;
-            }
-            if (l.value()) {
-                locked.append(items.value());
-            } else {
-                unlocked.append(items.value());
-            }
-        }
-        return unlocked;
-    }
-
-    DBusReturn<const QList<DBusObject*>> Service::unlock(const QList<DBusObject*>& objects, PromptBase*& prompt)
-    {
-        QSet<Collection*> needUnlock;
-        needUnlock.reserve(objects.size());
-        for (const auto& obj : asConst(objects)) {
-            auto coll = qobject_cast<Collection*>(obj);
-            if (coll) {
-                needUnlock << coll;
-            } else {
-                auto item = qobject_cast<Item*>(obj);
-                if (!item) {
-                    continue;
+            // item locked state already covers its collection's locked state
+            for (const auto& item : asConst(items)) {
+                bool l;
+                ret = item->locked(client, l);
+                if (ret.err()) {
+                    return ret;
                 }
-                // we lock the whole collection for item
-                needUnlock << item->collection();
+                if (l) {
+                    locked.append(item);
+                } else {
+                    unlocked.append(item);
+                }
             }
         }
-
-        // return anything already unlocked
-        QList<DBusObject*> unlocked;
-        QList<Collection*> toUnlock;
-        for (const auto& coll : asConst(needUnlock)) {
-            auto l = coll->locked();
-            if (l.isError()) {
-                return l;
-            }
-            if (!l.value()) {
-                unlocked << coll;
-            } else {
-                toUnlock << coll;
-            }
-        }
-        if (!toUnlock.isEmpty()) {
-            auto up = UnlockCollectionsPrompt::Create(this, toUnlock);
-            if (up.isError()) {
-                return up;
-            }
-            prompt = up.value();
-        }
-        return unlocked;
+        return {};
     }
 
-    DBusReturn<const QList<DBusObject*>> Service::lock(const QList<DBusObject*>& objects, PromptBase*& prompt)
+    DBusResult Service::unlock(const DBusClientPtr& client,
+                               const QList<DBusObject*>& objects,
+                               QList<DBusObject*>& unlocked,
+                               PromptBase*& prompt)
+    {
+        QSet<Collection*> collectionsToUnlock;
+        QSet<Item*> itemsToUnlock;
+        collectionsToUnlock.reserve(objects.size());
+        itemsToUnlock.reserve(objects.size());
+
+        for (const auto& obj : asConst(objects)) {
+            // the object is either an item or an collection
+            auto item = qobject_cast<Item*>(obj);
+            auto coll = item ? item->collection() : qobject_cast<Collection*>(obj);
+            // either way there should be a collection
+            if (!coll) {
+                continue;
+            }
+
+            bool collLocked{false}, itemLocked{false};
+            // if the collection needs unlock
+            auto ret = coll->locked(collLocked);
+            if (ret.err()) {
+                return ret;
+            }
+            if (collLocked) {
+                collectionsToUnlock << coll;
+            }
+
+            if (item) {
+                // item may also need unlock
+                ret = item->locked(client, itemLocked);
+                if (ret.err()) {
+                    return ret;
+                }
+                if (itemLocked) {
+                    itemsToUnlock << item;
+                }
+            }
+
+            // both collection and item are not locked
+            if (!collLocked && !itemLocked) {
+                unlocked << obj;
+            }
+        }
+
+        if (!collectionsToUnlock.isEmpty() || !itemsToUnlock.isEmpty()) {
+            prompt = PromptBase::Create<UnlockPrompt>(this, collectionsToUnlock, itemsToUnlock);
+            if (!prompt) {
+                return QDBusError::InternalError;
+            }
+        }
+        return {};
+    }
+
+    DBusResult Service::lock(const QList<DBusObject*>& objects, QList<DBusObject*>& locked, PromptBase*& prompt)
     {
         QSet<Collection*> needLock;
         needLock.reserve(objects.size());
@@ -372,64 +351,62 @@ namespace FdoSecrets
         }
 
         // return anything already locked
-        QList<DBusObject*> locked;
         QList<Collection*> toLock;
         for (const auto& coll : asConst(needLock)) {
-            auto l = coll->locked();
-            if (l.isError()) {
-                return l;
+            bool l;
+            auto ret = coll->locked(l);
+            if (ret.err()) {
+                return ret;
             }
-            if (l.value()) {
+            if (l) {
                 locked << coll;
             } else {
                 toLock << coll;
             }
         }
         if (!toLock.isEmpty()) {
-            auto lp = LockCollectionsPrompt::Create(this, toLock);
-            if (lp.isError()) {
-                return lp;
+            prompt = PromptBase::Create<LockCollectionsPrompt>(this, toLock);
+            if (!prompt) {
+                return QDBusError::InternalError;
             }
-            prompt = lp.value();
         }
-        return locked;
+        return {};
     }
 
-    DBusReturn<const QHash<Item*, SecretStruct>> Service::getSecrets(const QList<Item*>& items, Session* session)
+    DBusResult Service::getSecrets(const DBusClientPtr& client,
+                                   const QList<Item*>& items,
+                                   Session* session,
+                                   ItemSecretMap& secrets) const
     {
         if (!session) {
-            return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+            return DBusResult(DBUS_ERROR_SECRET_NO_SESSION);
         }
-
-        QHash<Item*, SecretStruct> res;
 
         for (const auto& item : asConst(items)) {
-            auto ret = item->getSecret(session);
-            if (ret.isError()) {
+            auto ret = item->getSecretNoNotification(client, session, secrets[item]);
+            if (ret.err()) {
                 return ret;
             }
-            res[item] = std::move(ret).value();
         }
-        if (calledFromDBus()) {
-            plugin()->emitRequestShowNotification(
-                tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", res.size())
-                    .arg(callingPeerName()));
-        }
-        return res;
+        plugin()->emitRequestShowNotification(
+            tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", secrets.size())
+                .arg(client->name()));
+        return {};
     }
 
-    DBusReturn<Collection*> Service::readAlias(const QString& name)
+    DBusResult Service::readAlias(const QString& name, Collection*& collection) const
     {
-        return findCollection(name);
+        collection = findCollection(name);
+        return {};
     }
 
-    DBusReturn<void> Service::setAlias(const QString& name, Collection* collection)
+    DBusResult Service::setAlias(const QString& name, Collection* collection)
     {
         if (!collection) {
             // remove alias name from its collection
             collection = findCollection(name);
             if (!collection) {
-                return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+                return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
             }
             return collection->removeAlias(name);
         }
@@ -481,7 +458,7 @@ namespace FdoSecrets
         return m_dbToCollection.value(db, nullptr);
     }
 
-    const QList<Session*> Service::sessions() const
+    QList<Session*> Service::sessions() const
     {
         return m_sessions;
     }

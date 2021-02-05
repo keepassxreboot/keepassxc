@@ -173,7 +173,8 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     // FdoSecrets
     {Config::FdoSecrets_Enabled, {QS("FdoSecrets/Enabled"), Roaming, false}},
     {Config::FdoSecrets_ShowNotification, {QS("FdoSecrets/ShowNotification"), Roaming, true}},
-    {Config::FdoSecrets_NoConfirmDeleteItem, {QS("FdoSecrets/NoConfirmDeleteItem"), Roaming, false}},
+    {Config::FdoSecrets_ConfirmDeleteItem, {QS("FdoSecrets/ConfirmDeleteItem"), Roaming, true}},
+    {Config::FdoSecrets_ConfirmAccessItem, {QS("FdoSecrets/ConfirmAccessItem"), Roaming, true}},
 
     // KeeShare
     {Config::KeeShare_QuietSuccess, {QS("KeeShare/QuietSuccess"), Roaming, false}},

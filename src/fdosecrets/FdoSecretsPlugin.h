@@ -30,6 +30,7 @@ class DatabaseTabWidget;
 namespace FdoSecrets
 {
     class Service;
+    class DBusMgr;
 } // namespace FdoSecrets
 
 class FdoSecretsPlugin : public QObject, public ISettingsPage
@@ -66,10 +67,10 @@ public:
     DatabaseTabWidget* dbTabs() const;
 
     /**
-     * Check the running secret service and returns info about it
-     * @return html string suitable to be shown in the UI
+     * @brief The dbus manager instance
+     * @return
      */
-    QString reportExistingService() const;
+    const QSharedPointer<FdoSecrets::DBusMgr>& dbus() const;
 
     // TODO: Only used for testing. Need to split service functions away from settings page.
     static FdoSecretsPlugin* getPlugin();
@@ -93,6 +94,7 @@ signals:
 
 private:
     QPointer<DatabaseTabWidget> m_dbTabs;
+    QSharedPointer<FdoSecrets::DBusMgr> m_dbus;
     QSharedPointer<FdoSecrets::Service> m_secretService;
 };
 

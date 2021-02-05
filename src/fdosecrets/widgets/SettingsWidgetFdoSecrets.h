@@ -25,16 +25,6 @@
 #include <QWidget>
 
 class QAbstractItemView;
-class QItemEditorCreatorBase;
-class QItemEditorFactory;
-
-namespace FdoSecrets
-{
-
-    class Session;
-    class Collection;
-
-} // namespace FdoSecrets
 
 class FdoSecretsPlugin;
 
@@ -62,11 +52,7 @@ protected:
     void hideEvent(QHideEvent* event) override;
 
 private:
-    void setupView(QAbstractItemView* view, int manageColumn, int editorTypeId, QItemEditorCreatorBase* creator);
-
-private:
     QScopedPointer<Ui::SettingsWidgetFdoSecrets> m_ui;
-    QScopedPointer<QItemEditorFactory> m_factory;
     FdoSecretsPlugin* m_plugin;
     QTimer m_checkTimer;
 };

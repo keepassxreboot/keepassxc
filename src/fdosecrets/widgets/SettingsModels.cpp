@@ -19,11 +19,10 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
 
-#include "core/Database.h"
-#include "core/DatabaseIcons.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/Icons.h"
@@ -244,35 +243,22 @@ namespace FdoSecrets
         }
     }
 
-    SettingsSessionModel::SettingsSessionModel(FdoSecretsPlugin* plugin, QObject* parent)
+    SettingsClientModel::SettingsClientModel(DBusMgr& dbus, QObject* parent)
         : QAbstractTableModel(parent)
-        , m_service(nullptr)
+        , m_dbus(dbus)
     {
-        setService(plugin->serviceInstance());
-        connect(plugin, &FdoSecretsPlugin::secretServiceStarted, this, [plugin, this]() {
-            setService(plugin->serviceInstance());
-        });
-        connect(plugin, &FdoSecretsPlugin::secretServiceStopped, this, [this]() { setService(nullptr); });
+        populateModel();
     }
 
-    void SettingsSessionModel::setService(Service* service)
-    {
-        auto old = m_service;
-        m_service = service;
-        if (old != m_service) {
-            populateModel();
-        }
-    }
-
-    int SettingsSessionModel::rowCount(const QModelIndex& parent) const
+    int SettingsClientModel::rowCount(const QModelIndex& parent) const
     {
         if (parent.isValid()) {
             return 0;
         }
-        return m_sessions.size();
+        return m_clients.size();
     }
 
-    int SettingsSessionModel::columnCount(const QModelIndex& parent) const
+    int SettingsClientModel::columnCount(const QModelIndex& parent) const
     {
         if (parent.isValid()) {
             return 0;
@@ -280,7 +266,7 @@ namespace FdoSecrets
         return 2;
     }
 
-    QVariant SettingsSessionModel::headerData(int section, Qt::Orientation orientation, int role) const
+    QVariant SettingsClientModel::headerData(int section, Qt::Orientation orientation, int role) const
     {
         if (orientation != Qt::Horizontal) {
             return {};
@@ -300,89 +286,88 @@ namespace FdoSecrets
         }
     }
 
-    QVariant SettingsSessionModel::data(const QModelIndex& index, int role) const
+    QVariant SettingsClientModel::data(const QModelIndex& index, int role) const
     {
         if (!index.isValid()) {
             return {};
         }
-        const auto& sess = m_sessions[index.row()];
-        if (!sess) {
+        const auto& client = m_clients[index.row()];
+        if (!client) {
             return {};
         }
 
         switch (index.column()) {
         case 0:
-            return dataForApplication(sess, role);
+            return dataForApplication(client, role);
         case 1:
-            return dataForManage(sess, role);
+            return dataForManage(client, role);
         default:
             return {};
         }
     }
 
-    QVariant SettingsSessionModel::dataForApplication(Session* sess, int role) const
+    QVariant SettingsClientModel::dataForApplication(const DBusClientPtr& client, int role) const
     {
         switch (role) {
         case Qt::DisplayRole:
-            return sess->peer();
+            return client->name();
         default:
             return {};
         }
     }
 
-    QVariant SettingsSessionModel::dataForManage(Session* sess, int role) const
+    QVariant SettingsClientModel::dataForManage(const DBusClientPtr& client, int role) const
     {
         switch (role) {
         case Qt::EditRole: {
-            return QVariant::fromValue(sess);
+            return QVariant::fromValue(client);
         }
         default:
             return {};
         }
     }
 
-    void SettingsSessionModel::populateModel()
+    void SettingsClientModel::populateModel()
     {
         beginResetModel();
 
-        m_sessions.clear();
+        m_clients.clear();
 
-        if (m_service) {
-            // Add existing database tabs
-            for (const auto& sess : m_service->sessions()) {
-                sessionAdded(sess, false);
-            }
-
-            // connect signals
-            connect(m_service, &Service::sessionOpened, this, [this](Session* sess) { sessionAdded(sess, true); });
-            connect(m_service, &Service::sessionClosed, this, &SettingsSessionModel::sessionRemoved);
+        // Add existing database tabs
+        for (const auto& client : m_dbus.clients()) {
+            clientConnected(client, false);
         }
+
+        // connect signals
+        connect(&m_dbus, &DBusMgr::clientConnected, this, [this](const DBusClientPtr& client) {
+            clientConnected(client, true);
+        });
+        connect(&m_dbus, &DBusMgr::clientDisconnected, this, &SettingsClientModel::clientDisconnected);
 
         endResetModel();
     }
 
-    void SettingsSessionModel::sessionAdded(Session* sess, bool emitSignals)
+    void SettingsClientModel::clientConnected(const DBusClientPtr& client, bool emitSignals)
     {
-        int row = m_sessions.size();
+        int row = m_clients.size();
         if (emitSignals) {
             beginInsertRows({}, row, row);
         }
 
-        m_sessions.append(sess);
+        m_clients.append(client);
 
         if (emitSignals) {
             endInsertRows();
         }
     }
 
-    void SettingsSessionModel::sessionRemoved(Session* sess)
+    void SettingsClientModel::clientDisconnected(const DBusClientPtr& client)
     {
-        for (int i = 0; i != m_sessions.size(); i++) {
-            if (m_sessions[i] == sess) {
+        for (int i = 0; i != m_clients.size(); i++) {
+            if (m_clients[i] == client) {
                 beginRemoveRows({}, i, i);
 
-                m_sessions[i]->disconnect(this);
-                m_sessions.removeAt(i);
+                m_clients.removeAt(i);
 
                 endRemoveRows();
                 break;

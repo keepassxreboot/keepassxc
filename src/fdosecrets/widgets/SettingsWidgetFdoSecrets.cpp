@@ -20,24 +20,21 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Session.h"
+#include "fdosecrets/widgets/RowButtonHelper.h"
 #include "fdosecrets/widgets/SettingsModels.h"
 
 #include "gui/DatabaseWidget.h"
 #include "gui/Icons.h"
 
 #include <QAction>
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
 #include <QHeaderView>
-#include <QItemEditorFactory>
-#include <QStyledItemDelegate>
 #include <QToolBar>
-#include <QVariant>
 
-using FdoSecrets::Session;
+using FdoSecrets::DBusClientPtr;
+using FdoSecrets::SettingsClientModel;
 using FdoSecrets::SettingsDatabaseModel;
-using FdoSecrets::SettingsSessionModel;
 
 namespace
 {
@@ -158,10 +155,10 @@ namespace
     {
         Q_OBJECT
 
-        Q_PROPERTY(Session* session READ session WRITE setSession USER true)
+        Q_PROPERTY(const DBusClientPtr& client READ client WRITE setClient USER true)
 
     public:
-        explicit ManageSession(FdoSecretsPlugin*, QWidget* parent = nullptr)
+        explicit ManageSession(QWidget* parent = nullptr)
             : QToolBar(parent)
         {
             setFloatable(false);
@@ -173,15 +170,15 @@ namespace
             spacer->setVisible(true);
             addWidget(spacer);
 
-            m_disconnectAct = new QAction(tr("Disconnect"), this);
-            m_disconnectAct->setIcon(icons()->icon(QStringLiteral("dialog-close")));
-            m_disconnectAct->setToolTip(tr("Disconnect this application"));
-            connect(m_disconnectAct, &QAction::triggered, this, [this]() {
-                if (m_session) {
-                    m_session->close();
+            auto disconnectAct = new QAction(tr("Disconnect"), this);
+            disconnectAct->setIcon(icons()->icon(QStringLiteral("dialog-close")));
+            disconnectAct->setToolTip(tr("Disconnect this application"));
+            connect(disconnectAct, &QAction::triggered, this, [this]() {
+                if (m_client) {
+                    m_client->disconnectDBus();
                 }
             });
-            addAction(m_disconnectAct);
+            addAction(disconnectAct);
 
             // use a dummy widget to center the buttons
             spacer = new QWidget(this);
@@ -190,71 +187,46 @@ namespace
             addWidget(spacer);
         }
 
-        Session* session()
+        const DBusClientPtr& client() const
         {
-            return m_session;
+            return m_client;
         }
 
-        void setSession(Session* sess)
+        void setClient(DBusClientPtr client)
         {
-            m_session = sess;
-        }
-
-    private:
-        Session* m_session = nullptr;
-        QAction* m_disconnectAct = nullptr;
-    };
-
-    template <typename T> class Creator : public QItemEditorCreatorBase
-    {
-    public:
-        inline explicit Creator(FdoSecretsPlugin* plugin)
-            : QItemEditorCreatorBase()
-            , m_plugin(plugin)
-            , m_propertyName(T::staticMetaObject.userProperty().name())
-        {
-        }
-
-        inline QWidget* createWidget(QWidget* parent) const override
-        {
-            return new T(m_plugin, parent);
-        }
-
-        inline QByteArray valuePropertyName() const override
-        {
-            return m_propertyName;
+            m_client = std::move(client);
         }
 
     private:
-        FdoSecretsPlugin* m_plugin;
-        QByteArray m_propertyName;
+        DBusClientPtr m_client{};
     };
 } // namespace
 
 SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::SettingsWidgetFdoSecrets())
-    , m_factory(new QItemEditorFactory)
     , m_plugin(plugin)
 {
     m_ui->setupUi(this);
     m_ui->warningMsg->setHidden(true);
     m_ui->warningMsg->setCloseButtonVisible(false);
 
-    auto sessModel = new SettingsSessionModel(plugin, this);
-    m_ui->tableSessions->setModel(sessModel);
-    setupView(m_ui->tableSessions, 1, qMetaTypeId<Session*>(), new Creator<ManageSession>(m_plugin));
+    auto clientModel = new SettingsClientModel(*plugin->dbus(), this);
+    m_ui->tableClients->setModel(clientModel);
+    installWidgetItemDelegate<ManageSession>(
+        m_ui->tableClients, 1, [](QWidget* p, const QModelIndex&) { return new ManageSession(p); });
 
     // config header after setting model, otherwise the header doesn't have enough sections
-    auto sessViewHeader = m_ui->tableSessions->horizontalHeader();
-    sessViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
-    sessViewHeader->setSectionsClickable(false);
-    sessViewHeader->setSectionResizeMode(0, QHeaderView::Stretch); // application
-    sessViewHeader->setSectionResizeMode(1, QHeaderView::ResizeToContents); // disconnect button
+    auto clientViewHeader = m_ui->tableClients->horizontalHeader();
+    clientViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
+    clientViewHeader->setSectionsClickable(false);
+    clientViewHeader->setSectionResizeMode(0, QHeaderView::Stretch); // application
+    clientViewHeader->setSectionResizeMode(1, QHeaderView::ResizeToContents); // disconnect button
 
     auto dbModel = new SettingsDatabaseModel(plugin->dbTabs(), this);
     m_ui->tableDatabases->setModel(dbModel);
-    setupView(m_ui->tableDatabases, 2, qMetaTypeId<DatabaseWidget*>(), new Creator<ManageDatabase>(m_plugin));
+    installWidgetItemDelegate<ManageDatabase>(
+        m_ui->tableDatabases, 2, [plugin](QWidget* p, const QModelIndex&) { return new ManageDatabase(plugin, p); });
 
     // config header after setting model, otherwise the header doesn't have enough sections
     auto dbViewHeader = m_ui->tableDatabases->horizontalHeader();
@@ -277,40 +249,22 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     connect(m_plugin, SIGNAL(secretServiceStopped()), &m_checkTimer, SLOT(start()));
 }
 
-void SettingsWidgetFdoSecrets::setupView(QAbstractItemView* view,
-                                         int manageColumn,
-                                         int editorTypeId,
-                                         QItemEditorCreatorBase* creator)
-{
-    auto manageButtonDelegate = new QStyledItemDelegate(this);
-    m_factory->registerEditor(editorTypeId, creator);
-    manageButtonDelegate->setItemEditorFactory(m_factory.data());
-    view->setItemDelegateForColumn(manageColumn, manageButtonDelegate);
-    connect(view->model(),
-            &QAbstractItemModel::rowsInserted,
-            this,
-            [view, manageColumn](const QModelIndex&, int first, int last) {
-                for (int i = first; i <= last; ++i) {
-                    auto idx = view->model()->index(i, manageColumn);
-                    view->openPersistentEditor(idx);
-                }
-            });
-}
-
 SettingsWidgetFdoSecrets::~SettingsWidgetFdoSecrets() = default;
 
 void SettingsWidgetFdoSecrets::loadSettings()
 {
     m_ui->enableFdoSecretService->setChecked(FdoSecrets::settings()->isEnabled());
     m_ui->showNotification->setChecked(FdoSecrets::settings()->showNotification());
-    m_ui->noConfirmDeleteItem->setChecked(FdoSecrets::settings()->noConfirmDeleteItem());
+    m_ui->confirmDeleteItem->setChecked(FdoSecrets::settings()->confirmDeleteItem());
+    m_ui->confirmAccessItem->setChecked(FdoSecrets::settings()->confirmAccessItem());
 }
 
 void SettingsWidgetFdoSecrets::saveSettings()
 {
     FdoSecrets::settings()->setEnabled(m_ui->enableFdoSecretService->isChecked());
     FdoSecrets::settings()->setShowNotification(m_ui->showNotification->isChecked());
-    FdoSecrets::settings()->setNoConfirmDeleteItem(m_ui->noConfirmDeleteItem->isChecked());
+    FdoSecrets::settings()->setConfirmDeleteItem(m_ui->confirmDeleteItem->isChecked());
+    FdoSecrets::settings()->setConfirmAccessItem(m_ui->confirmAccessItem->isChecked());
 }
 
 void SettingsWidgetFdoSecrets::showEvent(QShowEvent* event)
@@ -333,17 +287,9 @@ void SettingsWidgetFdoSecrets::checkDBusName()
         return;
     }
 
-    auto reply = QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral(DBUS_SERVICE_SECRET));
-    if (!reply.isValid()) {
+    if (m_plugin->dbus()->serviceOccupied()) {
         m_ui->warningMsg->showMessage(
-            tr("<b>Error:</b> Failed to connect to DBus. Please check your DBus setup."), MessageWidget::Error, -1);
-        m_ui->enableFdoSecretService->setChecked(false);
-        m_ui->enableFdoSecretService->setEnabled(false);
-        return;
-    }
-    if (reply.value()) {
-        m_ui->warningMsg->showMessage(
-            tr("<b>Warning:</b> ") + m_plugin->reportExistingService(), MessageWidget::Warning, -1);
+            tr("<b>Warning:</b> ") + m_plugin->dbus()->reportExistingService(), MessageWidget::Warning, -1);
         m_ui->enableFdoSecretService->setChecked(false);
         m_ui->enableFdoSecretService->setEnabled(false);
         return;

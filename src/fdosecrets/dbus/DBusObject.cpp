@@ -19,37 +19,32 @@
 
 #include <QFile>
 #include <QRegularExpression>
-#include <QTextStream>
 #include <QUrl>
-#include <QUuid>
 
 namespace FdoSecrets
 {
 
     DBusObject::DBusObject(DBusObject* parent)
         : QObject(parent)
-        , m_dbusAdaptor(nullptr)
+        , m_dbus(parent->dbus())
     {
     }
 
-    bool DBusObject::registerWithPath(const QString& path, bool primary)
+    DBusObject::DBusObject(QSharedPointer<DBusMgr> dbus)
+        : QObject(nullptr)
+        , m_objectPath("/")
+        , m_dbus(std::move(dbus))
     {
-        if (primary) {
-            m_objectPath.setPath(path);
-        }
-
-        return QDBusConnection::sessionBus().registerObject(path, this);
     }
 
-    QString DBusObject::callingPeerName() const
+    DBusObject::~DBusObject()
     {
-        auto pid = callingPeerPid();
-        QFile proc(QStringLiteral("/proc/%1/comm").arg(pid));
-        if (!proc.open(QFile::ReadOnly)) {
-            return callingPeer();
-        }
-        QTextStream stream(&proc);
-        return stream.readAll().trimmed();
+        emit destroyed(this);
+    }
+
+    void DBusObject::setObjectPath(const QString& path)
+    {
+        m_objectPath.setPath(path);
     }
 
     QString encodePath(const QString& value)

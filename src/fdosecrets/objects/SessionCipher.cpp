@@ -149,9 +149,9 @@ namespace FdoSecrets
         return OKM;
     }
 
-    SecretStruct DhIetf1024Sha256Aes128CbcPkcs7::encrypt(const SecretStruct& input)
+    Secret DhIetf1024Sha256Aes128CbcPkcs7::encrypt(const Secret& input)
     {
-        SecretStruct output = input;
+        Secret output = input;
         output.value.clear();
         output.parameters.clear();
 
@@ -187,7 +187,7 @@ namespace FdoSecrets
         return input;
     }
 
-    SecretStruct DhIetf1024Sha256Aes128CbcPkcs7::decrypt(const SecretStruct& input)
+    Secret DhIetf1024Sha256Aes128CbcPkcs7::decrypt(const Secret& input)
     {
         auto IV = input.parameters;
         SymmetricCipher decrypter(SymmetricCipher::Aes128, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
@@ -196,7 +196,7 @@ namespace FdoSecrets
             return input;
         }
         bool ok;
-        SecretStruct output = input;
+        Secret output = input;
         output.parameters.clear();
         output.value = decrypter.process(input.value, &ok);
 
