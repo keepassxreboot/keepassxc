@@ -73,13 +73,13 @@ namespace FdoSecrets
             m_items.first()->doDelete();
         }
         cleanupConnections();
-        dbus().unregisterObject(this);
+        dbus()->unregisterObject(this);
 
         // make sure we have updated copy of the filepath, which is used to identify the database.
         m_backendPath = m_backend->database()->canonicalFilePath();
 
         // register the object, handling potentially duplicated name
-        if (!dbus().registerObject(this)) {
+        if (!dbus()->registerObject(this)) {
             return false;
         }
 
@@ -372,7 +372,7 @@ namespace FdoSecrets
 
         emit aliasAboutToAdd(alias);
 
-        if (dbus().registerAlias(this, alias)) {
+        if (dbus()->registerAlias(this, alias)) {
             m_aliases.insert(alias);
             emit aliasAdded(alias);
         } else {
@@ -395,7 +395,7 @@ namespace FdoSecrets
             return {};
         }
 
-        dbus().unregisterAlias(alias);
+        dbus()->unregisterAlias(alias);
         m_aliases.remove(alias);
         emit aliasRemoved(alias);
 
@@ -594,7 +594,7 @@ namespace FdoSecrets
         emit collectionAboutToDelete();
 
         // remove from dbus early
-        dbus().unregisterObject(this);
+        dbus()->unregisterObject(this);
 
         // remove alias manually to trigger signal
         for (const auto& a : aliases()) {

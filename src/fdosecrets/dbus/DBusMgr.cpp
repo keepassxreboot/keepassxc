@@ -582,8 +582,7 @@ namespace FdoSecrets
             return {};
         }
 
-        auto client =
-            DBusClientPtr(new DBusClient(*this, addr, info.pid, info.exePath.isEmpty() ? addr : info.exePath));
+        auto client = DBusClientPtr(new DBusClient(this, addr, info.pid, info.exePath.isEmpty() ? addr : info.exePath));
 
         emit clientConnected(client);
         m_watcher.addWatchedService(addr);

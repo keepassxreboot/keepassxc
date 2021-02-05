@@ -24,7 +24,7 @@
 
 namespace FdoSecrets
 {
-    DBusClient::DBusClient(DBusMgr& dbus, const QString& address, uint pid, const QString& name)
+    DBusClient::DBusClient(DBusMgr* dbus, const QString& address, uint pid, const QString& name)
         : m_dbus(dbus)
         , m_address(address)
         , m_pid(pid)
@@ -111,7 +111,7 @@ namespace FdoSecrets
     {
         clearAuthorization();
         // notify DBusMgr about the removal
-        m_dbus.removeClient(this);
+        m_dbus->removeClient(this);
     }
 
     QSharedPointer<CipherPair>

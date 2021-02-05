@@ -19,6 +19,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 #define KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 
+#include <QPointer>
 #include <QSet>
 #include <QSharedPointer>
 #include <QString>
@@ -52,9 +53,9 @@ namespace FdoSecrets
          * @param pid the process PID
          * @param name the process name
          */
-        explicit DBusClient(DBusMgr& dbus, const QString& address, uint pid, const QString& name);
+        explicit DBusClient(DBusMgr* dbus, const QString& address, uint pid, const QString& name);
 
-        DBusMgr& dbus() const
+        DBusMgr* dbus() const
         {
             return m_dbus;
         }
@@ -123,7 +124,7 @@ namespace FdoSecrets
         void disconnectDBus();
 
     private:
-        DBusMgr& m_dbus;
+        QPointer<DBusMgr> m_dbus;
         QString m_address;
 
         uint m_pid{0};

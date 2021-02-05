@@ -33,7 +33,7 @@ namespace FdoSecrets
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SESSION_LITERAL)
 
-        explicit Session(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent);
+        explicit Session(QSharedPointer<CipherPair> cipher, const QString& peer, Service* parent);
 
     public:
         /**
@@ -45,7 +45,7 @@ namespace FdoSecrets
          * This may be caused by
          *   - DBus path registration error
          */
-        static Session* Create(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent);
+        static Session* Create(QSharedPointer<CipherPair> cipher, const QString& peer, Service* parent);
 
         Q_INVOKABLE DBusResult close();
 

@@ -67,7 +67,7 @@ void FdoSecretsPlugin::updateServiceState()
 {
     if (FdoSecrets::settings()->isEnabled()) {
         if (!m_secretService && m_dbTabs) {
-            m_secretService = Service::Create(this, m_dbTabs, *m_dbus);
+            m_secretService = Service::Create(this, m_dbTabs, m_dbus);
             if (!m_secretService) {
                 FdoSecrets::settings()->setEnabled(false);
                 return;

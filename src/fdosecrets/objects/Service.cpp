@@ -39,9 +39,10 @@ namespace
 
 namespace FdoSecrets
 {
-    QSharedPointer<Service> Service::Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus)
+    QSharedPointer<Service>
+    Service::Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, QSharedPointer<DBusMgr> dbus)
     {
-        QSharedPointer<Service> res{new Service(plugin, std::move(dbTabs), dbus)};
+        QSharedPointer<Service> res{new Service(plugin, std::move(dbTabs), std::move(dbus))};
         if (!res->initialize()) {
             return {};
         }
@@ -50,8 +51,8 @@ namespace FdoSecrets
 
     Service::Service(FdoSecretsPlugin* plugin,
                      QPointer<DatabaseTabWidget> dbTabs,
-                     DBusMgr& dbus) // clazy: exclude=ctor-missing-parent-argument
-        : DBusObject(nullptr, dbus)
+                     QSharedPointer<DBusMgr> dbus) // clazy: exclude=ctor-missing-parent-argument
+        : DBusObject(std::move(dbus))
         , m_plugin(plugin)
         , m_databases(std::move(dbTabs))
         , m_insideEnsureDefaultAlias(false)
@@ -64,7 +65,7 @@ namespace FdoSecrets
 
     bool Service::initialize()
     {
-        if (!dbus().registerObject(this)) {
+        if (!dbus()->registerObject(this)) {
             return false;
         }
 
@@ -211,7 +212,7 @@ namespace FdoSecrets
         }
 
         // remove session when the client disconnects
-        connect(&dbus(), &DBusMgr::clientDisconnected, result, [result, client](const DBusClientPtr& toRemove) {
+        connect(dbus().data(), &DBusMgr::clientDisconnected, result, [result, client](const DBusClientPtr& toRemove) {
             if (toRemove == client) {
                 result->close().okOrDie();
             }
@@ -457,7 +458,7 @@ namespace FdoSecrets
         return m_dbToCollection.value(db, nullptr);
     }
 
-    const QList<Session*> Service::sessions() const
+    QList<Session*> Service::sessions() const
     {
         return m_sessions;
     }

@@ -33,6 +33,7 @@
 #include <utility>
 
 class TestFdoSecrets;
+
 namespace FdoSecrets
 {
     class Collection;

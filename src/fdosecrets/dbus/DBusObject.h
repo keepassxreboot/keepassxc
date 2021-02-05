@@ -18,8 +18,9 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSOBJECT_H
 #define KEEPASSXC_FDOSECRETS_DBUSOBJECT_H
 
-#include "fdosecrets/dbus/DBusConstants.h"
-#include "fdosecrets/dbus/DBusTypes.h"
+#include "DBusConstants.h"
+#include "DBusMgr.h"
+#include "DBusTypes.h"
 
 #include <QDBusAbstractAdaptor>
 #include <QDBusConnection>
@@ -30,7 +31,7 @@
 #include <QList>
 #include <QMetaProperty>
 #include <QObject>
-#include <QScopedPointer>
+#include <QSharedPointer>
 
 #ifndef Q_MOC_RUN
 // define the tag text as empty, so the compiler doesn't see it
@@ -40,7 +41,6 @@
 namespace FdoSecrets
 {
     class Service;
-    class DBusMgr;
 
     /**
      * @brief A common base class for all dbus-exposed objects.
@@ -56,7 +56,7 @@ namespace FdoSecrets
             return m_objectPath;
         }
 
-        DBusMgr& dbus() const
+        const QSharedPointer<DBusMgr>& dbus() const
         {
             return m_dbus;
         }
@@ -70,14 +70,14 @@ namespace FdoSecrets
 
     protected:
         explicit DBusObject(DBusObject* parent);
-        explicit DBusObject(DBusObject* parent, DBusMgr& dbus);
+        explicit DBusObject(QSharedPointer<DBusMgr> dbus);
 
     private:
         friend class DBusMgr;
         void setObjectPath(const QString& path);
 
         QDBusObjectPath m_objectPath;
-        DBusMgr& m_dbus;
+        QSharedPointer<DBusMgr> m_dbus;
     };
 
     /**

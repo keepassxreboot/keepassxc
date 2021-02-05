@@ -25,17 +25,17 @@
 
 namespace FdoSecrets
 {
-    Session* Session::Create(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent)
+    Session* Session::Create(QSharedPointer<CipherPair> cipher, const QString& peer, Service* parent)
     {
         QScopedPointer<Session> res{new Session(std::move(cipher), peer, parent)};
-        if (!res->dbus().registerObject(res.data())) {
+        if (!res->dbus()->registerObject(res.data())) {
             return nullptr;
         }
 
         return res.take();
     }
 
-    Session::Session(QSharedPointer<CipherPair>&& cipher, const QString& peer, Service* parent)
+    Session::Session(QSharedPointer<CipherPair> cipher, const QString& peer, Service* parent)
         : DBusObject(parent)
         , m_cipher(std::move(cipher))
         , m_peer(peer)

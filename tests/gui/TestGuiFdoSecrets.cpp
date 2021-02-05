@@ -124,7 +124,7 @@ using namespace FdoSecrets;
 class FakeClient : public DBusClient
 {
 public:
-    explicit FakeClient(DBusMgr& dbus)
+    explicit FakeClient(DBusMgr* dbus)
         : DBusClient(dbus, QStringLiteral("local"), 0, "fake-client")
     {
     }
@@ -204,7 +204,7 @@ void TestGuiFdoSecrets::initTestCase()
                                            "2407ec7ae90f0831f24afd5ac")));
 
     // set a fake dbus client all the time so we can freely access DBusMgr anywhere
-    m_client.reset(new FakeClient(*m_plugin->dbus()));
+    m_client.reset(new FakeClient(m_plugin->dbus().data()));
     m_plugin->dbus()->overrideClient(m_client);
 }
 

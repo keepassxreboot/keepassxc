@@ -47,7 +47,7 @@ namespace FdoSecrets
         template <typename PROMPT, typename... ARGS> static PromptBase* Create(Service* parent, ARGS&&... args)
         {
             QScopedPointer<PROMPT> res{new PROMPT(parent, std::forward<ARGS>(args)...)};
-            if (!res->dbus().registerObject(res.data())) {
+            if (!res->dbus()->registerObject(res.data())) {
                 // internal error;
                 return nullptr;
             }

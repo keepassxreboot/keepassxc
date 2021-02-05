@@ -45,7 +45,7 @@ namespace FdoSecrets
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SERVICE_LITERAL)
 
-        explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus);
+        explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, QSharedPointer<DBusMgr> dbus);
 
     public:
         /**
@@ -55,7 +55,7 @@ namespace FdoSecrets
          *   - failed initialization
          */
         static QSharedPointer<Service>
-        Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, DBusMgr& dbus);
+        Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, QSharedPointer<DBusMgr> dbus);
         ~Service() override;
 
         Q_INVOKABLE DBusResult openSession(const DBusClientPtr& client,
@@ -111,7 +111,7 @@ namespace FdoSecrets
          * List of sessions
          * @return
          */
-        const QList<Session*> sessions() const;
+        QList<Session*> sessions() const;
 
         FdoSecretsPlugin* plugin() const
         {

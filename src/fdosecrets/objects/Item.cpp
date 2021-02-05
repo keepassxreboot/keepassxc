@@ -52,7 +52,7 @@ namespace FdoSecrets
     Item* Item::Create(Collection* parent, Entry* backend)
     {
         QScopedPointer<Item> res{new Item(parent, backend)};
-        if (!res->dbus().registerObject(res.data())) {
+        if (!res->dbus()->registerObject(res.data())) {
             return nullptr;
         }
 
@@ -347,7 +347,7 @@ namespace FdoSecrets
         // Unregister current path early, do not rely on deleteLater's call to destructor
         // as in case of Entry moving between groups, new Item will be created at the same DBus path
         // before the current Item is deleted in the event loop.
-        dbus().unregisterObject(this);
+        dbus()->unregisterObject(this);
 
         m_backend = nullptr;
         deleteLater();

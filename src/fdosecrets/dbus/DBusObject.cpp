@@ -20,7 +20,6 @@
 #include <QFile>
 #include <QRegularExpression>
 #include <QUrl>
-#include <QUuid>
 
 namespace FdoSecrets
 {
@@ -31,10 +30,10 @@ namespace FdoSecrets
     {
     }
 
-    DBusObject::DBusObject(DBusObject* parent, DBusMgr& dbus)
-        : QObject(parent)
+    DBusObject::DBusObject(QSharedPointer<DBusMgr> dbus)
+        : QObject(nullptr)
         , m_objectPath("/")
-        , m_dbus(dbus)
+        , m_dbus(std::move(dbus))
     {
     }
 
