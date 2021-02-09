@@ -250,8 +250,8 @@ void EditGroupWidget::cancel()
             return;
         }
         if (result == MessageBox::Save) {
-            apply();
-            setModified(false);
+            save();
+            return;
         }
     }
 
