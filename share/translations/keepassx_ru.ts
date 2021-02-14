@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Минимизировать окно после разблокирования базы данных</translation>
+        <translation>Минимизировать окно после разблокировки базы данных</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
@@ -302,7 +302,7 @@
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Автоматически запуск KeePassXC при запуске системы</translation>
+        <translation>Автоматический запуск KeePassXC при входе в систему</translation>
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
@@ -443,7 +443,7 @@
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation>Скрыть пароли при их редактировании</translation>
+        <translation>Скрывать пароли при их редактировании</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
@@ -4691,7 +4691,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>&amp;Безопаснось базы данных…</translation>
+        <translation>&amp;Безопасность базы данных…</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
@@ -4864,6 +4864,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation>{PASSWORD}{ENTER}</translation>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>Поверх всех окон</translation>
     </message>
 </context>
 <context>
