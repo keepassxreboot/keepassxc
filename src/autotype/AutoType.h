@@ -41,13 +41,10 @@ public:
     QStringList windowTitles();
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error = nullptr);
     void unregisterGlobalShortcut();
-    static bool checkSyntax(const QString& string);
-    static bool checkHighRepetition(const QString& string);
-    static bool checkSlowKeypress(const QString& string);
-    static bool checkHighDelay(const QString& string);
-    static bool verifyAutoTypeSyntax(const QString& sequence);
     void performAutoType(const Entry* entry, QWidget* hideWindow = nullptr);
     void performAutoTypeWithSequence(const Entry* entry, const QString& sequence, QWidget* hideWindow = nullptr);
+
+    static bool verifyAutoTypeSyntax(const QString& sequence, const Entry* entry, QString& error);
 
     inline bool isAvailable()
     {
@@ -85,14 +82,14 @@ private:
                                 QWidget* hideWindow = nullptr,
                                 const QString& customSequence = QString(),
                                 WId window = 0);
-    bool parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions);
-    QList<AutoTypeAction*> createActionFromTemplate(const QString& tmpl, const Entry* entry);
     void restoreWindowState();
     void resetAutoTypeState();
 
+    static QList<QSharedPointer<AutoTypeAction>>
+    parseActions(const QString& entrySequence, const Entry* entry, QString* error = nullptr);
+
     QMutex m_inAutoType;
     QMutex m_inGlobalAutoTypeDialog;
-    int m_autoTypeDelay;
     QPluginLoader* m_pluginLoader;
     AutoTypePlatformInterface* m_plugin;
     AutoTypeExecutor* m_executor;

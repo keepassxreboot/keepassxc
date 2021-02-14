@@ -1613,6 +1613,13 @@ void MainWindow::toggleWindow()
     }
 }
 
+void MainWindow::closeModalWindow()
+{
+    if (qApp->modalWindow()) {
+        qApp->modalWindow()->close();
+    }
+}
+
 void MainWindow::lockDatabasesAfterInactivity()
 {
     m_ui->tabWidget->lockDatabases();

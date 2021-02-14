@@ -87,6 +87,7 @@ public slots:
     void bringToFront();
     void closeAllDatabases();
     void lockAllDatabases();
+    void closeModalWindow();
     void displayDesktopNotification(const QString& msg, QString title = "", int msTimeoutHint = 10000);
     void restartApp(const QString& message);
 

@@ -280,43 +280,47 @@ void TestAutoType::testGlobalAutoTypeRegExp()
 
 void TestAutoType::testAutoTypeSyntaxChecks()
 {
+    auto entry = new Entry();
+    QString error;
+
     // Huge sequence
-    QVERIFY(AutoType::checkSyntax(
-        "{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax(
+                 "{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring", entry, error),
+             error.toLatin1());
 
-    QVERIFY(AutoType::checkSyntax("{NUMPAD1 3}"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{NUMPAD1 3}", entry, error), error.toLatin1());
 
-    QVERIFY(AutoType::checkSyntax("{S:SPECIALTOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL TOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL_TOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL-TOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL:TOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL_TOKEN}{ENTER}"));
-    QVERIFY(AutoType::checkSyntax("{S:FOO}{S:HELLO WORLD}"));
-    QVERIFY(!AutoType::checkSyntax("{S:SPECIAL_TOKEN{}}"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIALTOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL TOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL_TOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL-TOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL:TOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL_TOKEN}{ENTER}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:FOO}{S:HELLO WORLD}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{S:SPECIAL_TOKEN{}}", entry, error), error.toLatin1());
 
-    QVERIFY(AutoType::checkSyntax("{BEEP 3 3}"));
-    QVERIFY(!AutoType::checkSyntax("{BEEP 3}"));
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{BEEP 3 3}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{BEEP 3}", entry, error), error.toLatin1());
 
-    QVERIFY(AutoType::checkSyntax("{VKEY 0x01}"));
-    QVERIFY(AutoType::checkSyntax("{VKEY VK_LBUTTON}"));
-    QVERIFY(AutoType::checkSyntax("{VKEY-EX 0x01}"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{VKEY 0x01}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{VKEY VK_LBUTTON}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{VKEY-EX 0x01}", entry, error), error.toLatin1());
     // Bad sequence
-    QVERIFY(!AutoType::checkSyntax("{{{}}{}{}}{{}}"));
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{{{}}{}{}}{{}}", entry, error), error.toLatin1());
     // Good sequence
-    QVERIFY(AutoType::checkSyntax("{{}{}}{}}{{}"));
-    QVERIFY(AutoType::checkSyntax("{]}{[}{[}{]}"));
-    QVERIFY(AutoType::checkSyntax("{)}{(}{(}{)}"));
-    // High DelAY / low delay
-    QVERIFY(AutoType::checkHighDelay("{DelAY 50000}"));
-    QVERIFY(!AutoType::checkHighDelay("{delay 50}"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{{}{}}{}}{{}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{]}{[}{[}{]}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{)}{(}{(}{)}", entry, error), error.toLatin1());
+    // High delay
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{DELAY 50000}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{delay 50}", entry, error), error.toLatin1());
     // Slow typing
-    QVERIFY(AutoType::checkSlowKeypress("{DelAY=50000}"));
-    QVERIFY(!AutoType::checkSlowKeypress("{delay=50}"));
-    // Many repetition / few repetition / delay not repetition
-    QVERIFY(AutoType::checkHighRepetition("{LEFT 50000000}"));
-    QVERIFY(!AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
-    QVERIFY(!AutoType::checkHighRepetition("{delay 5000000000}"));
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{DELAY=50000}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{delay=50}", entry, error), error.toLatin1());
+    // Many repetition
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{LEFT 50000000}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{SPACE 10}{TAB 3}{RIGHT 50}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{delay 5000000000}", entry, error), error.toLatin1());
 }
 
 void TestAutoType::testAutoTypeEffectiveSequences()

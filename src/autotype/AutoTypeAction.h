@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2021 Team KeePassXC <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,69 +20,55 @@
 #define KEEPASSX_AUTOTYPEACTION_H
 
 #include <QChar>
-#include <QObject>
-#include <Qt>
 
 #include "core/Global.h"
 
 class AutoTypeExecutor;
 
-class KEEPASSX_EXPORT AutoTypeAction
+class KEEPASSXC_EXPORT AutoTypeAction
 {
 public:
-    virtual AutoTypeAction* clone() = 0;
-    virtual void accept(AutoTypeExecutor* executor) = 0;
-    virtual ~AutoTypeAction();
+    AutoTypeAction() = default;
+    virtual void exec(AutoTypeExecutor* executor) const = 0;
+    virtual ~AutoTypeAction() = default;
 };
 
-class KEEPASSX_EXPORT AutoTypeChar : public AutoTypeAction
+class KEEPASSXC_EXPORT AutoTypeKey : public AutoTypeAction
 {
 public:
-    explicit AutoTypeChar(const QChar& character);
-    AutoTypeAction* clone() override;
-    void accept(AutoTypeExecutor* executor) override;
+    explicit AutoTypeKey(const QChar& character, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+    explicit AutoTypeKey(Qt::Key key, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+    void exec(AutoTypeExecutor* executor) const override;
 
     const QChar character;
+    const Qt::Key key = Qt::Key_unknown;
+    const Qt::KeyboardModifiers modifiers;
 };
 
-class KEEPASSX_EXPORT AutoTypeKey : public AutoTypeAction
+class KEEPASSXC_EXPORT AutoTypeDelay : public AutoTypeAction
 {
 public:
-    explicit AutoTypeKey(Qt::Key key);
-    AutoTypeAction* clone() override;
-    void accept(AutoTypeExecutor* executor) override;
-
-    const Qt::Key key;
-};
-
-class KEEPASSX_EXPORT AutoTypeDelay : public AutoTypeAction
-{
-public:
-    explicit AutoTypeDelay(int delayMs);
-    AutoTypeAction* clone() override;
-    void accept(AutoTypeExecutor* executor) override;
+    explicit AutoTypeDelay(int delayMs, bool setExecDelay = false);
+    void exec(AutoTypeExecutor* executor) const override;
 
     const int delayMs;
+    const bool setExecDelay;
 };
 
-class KEEPASSX_EXPORT AutoTypeClearField : public AutoTypeAction
+class KEEPASSXC_EXPORT AutoTypeClearField : public AutoTypeAction
 {
 public:
-    AutoTypeClearField();
-    AutoTypeAction* clone() override;
-    void accept(AutoTypeExecutor* executor) override;
+    void exec(AutoTypeExecutor* executor) const override;
 };
 
-class KEEPASSX_EXPORT AutoTypeExecutor
+class KEEPASSXC_EXPORT AutoTypeExecutor
 {
 public:
-    virtual ~AutoTypeExecutor()
-    {
-    }
-    virtual void execChar(AutoTypeChar* action) = 0;
-    virtual void execKey(AutoTypeKey* action) = 0;
-    virtual void execDelay(AutoTypeDelay* action);
-    virtual void execClearField(AutoTypeClearField* action);
+    virtual ~AutoTypeExecutor() = default;
+    virtual void execType(const AutoTypeKey* action) = 0;
+    virtual void execClearField(const AutoTypeClearField* action) = 0;
+
+    int execDelayMs = 25;
 };
 
 #endif // KEEPASSX_AUTOTYPEACTION_H

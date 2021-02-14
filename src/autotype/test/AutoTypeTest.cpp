@@ -59,27 +59,23 @@ QString AutoTypePlatformTest::actionChars()
 
 int AutoTypePlatformTest::actionCount()
 {
-    return m_actionList.size();
+    return m_actionCount;
 }
 
 void AutoTypePlatformTest::clearActions()
 {
-    qDeleteAll(m_actionList);
-    m_actionList.clear();
-
     m_actionChars.clear();
+    m_actionCount = 0;
 }
 
-void AutoTypePlatformTest::addActionChar(AutoTypeChar* action)
+void AutoTypePlatformTest::addAction(const AutoTypeKey* action)
 {
-    m_actionList.append(action->clone());
-    m_actionChars += action->character;
-}
-
-void AutoTypePlatformTest::addActionKey(AutoTypeKey* action)
-{
-    m_actionList.append(action->clone());
-    m_actionChars.append(keyToString(action->key));
+    ++m_actionCount;
+    if (action->key != Qt::Key_unknown) {
+        m_actionChars += keyToString(action->key);
+    } else {
+        m_actionChars += action->character;
+    }
 }
 
 bool AutoTypePlatformTest::raiseWindow(WId window)
@@ -106,12 +102,12 @@ AutoTypeExecutorTest::AutoTypeExecutorTest(AutoTypePlatformTest* platform)
 {
 }
 
-void AutoTypeExecutorTest::execChar(AutoTypeChar* action)
+void AutoTypeExecutorTest::execType(const AutoTypeKey* action)
 {
-    m_platform->addActionChar(action);
+    m_platform->addAction(action);
 }
 
-void AutoTypeExecutorTest::execKey(AutoTypeKey* action)
+void AutoTypeExecutorTest::execClearField(const AutoTypeClearField* action)
 {
-    m_platform->addActionKey(action);
+    Q_UNUSED(action);
 }

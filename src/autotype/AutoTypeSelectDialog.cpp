@@ -57,7 +57,6 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
         }
     });
 
-
     m_ui->search->setFocus();
     m_ui->search->installEventFilter(this);
 

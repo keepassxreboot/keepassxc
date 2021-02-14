@@ -103,9 +103,8 @@ class AutoTypeExecutorX11 : public AutoTypeExecutor
 public:
     explicit AutoTypeExecutorX11(AutoTypePlatformX11* platform);
 
-    void execChar(AutoTypeChar* action) override;
-    void execKey(AutoTypeKey* action) override;
-    void execClearField(AutoTypeClearField* action) override;
+    void execType(const AutoTypeKey* action) override;
+    void execClearField(const AutoTypeClearField* action) override;
 
 private:
     AutoTypePlatformX11* const m_platform;

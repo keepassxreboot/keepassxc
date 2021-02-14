@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2021 Team KeePassXC <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,77 +20,41 @@
 
 #include "core/Tools.h"
 
-AutoTypeChar::AutoTypeChar(const QChar& character)
-    : character(character)
-{
-}
-
-AutoTypeAction* AutoTypeChar::clone()
-{
-    return new AutoTypeChar(character);
-}
-
-void AutoTypeChar::accept(AutoTypeExecutor* executor)
-{
-    executor->execChar(this);
-}
-
-AutoTypeKey::AutoTypeKey(Qt::Key key)
+AutoTypeKey::AutoTypeKey(Qt::Key key, Qt::KeyboardModifiers modifiers)
     : key(key)
+    , modifiers(modifiers)
 {
 }
 
-AutoTypeAction* AutoTypeKey::clone()
+AutoTypeKey::AutoTypeKey(const QChar& character, Qt::KeyboardModifiers modifiers)
+    : character(character)
+    , modifiers(modifiers)
 {
-    return new AutoTypeKey(key);
 }
 
-void AutoTypeKey::accept(AutoTypeExecutor* executor)
+void AutoTypeKey::exec(AutoTypeExecutor* executor) const
 {
-    executor->execKey(this);
+    executor->execType(this);
 }
 
-AutoTypeDelay::AutoTypeDelay(int delayMs)
+AutoTypeDelay::AutoTypeDelay(int delayMs, bool setExecDelay)
     : delayMs(delayMs)
+    , setExecDelay(setExecDelay)
 {
 }
 
-AutoTypeAction* AutoTypeDelay::clone()
+void AutoTypeDelay::exec(AutoTypeExecutor* executor) const
 {
-    return new AutoTypeDelay(delayMs);
+    if (setExecDelay) {
+        // Change the delay between actions
+        executor->execDelayMs = delayMs;
+    } else {
+        // Pause execution
+        Tools::wait(delayMs);
+    }
 }
 
-void AutoTypeDelay::accept(AutoTypeExecutor* executor)
-{
-    executor->execDelay(this);
-}
-
-AutoTypeClearField::AutoTypeClearField()
-{
-}
-
-AutoTypeAction* AutoTypeClearField::clone()
-{
-    return new AutoTypeClearField();
-}
-
-void AutoTypeClearField::accept(AutoTypeExecutor* executor)
+void AutoTypeClearField::exec(AutoTypeExecutor* executor) const
 {
     executor->execClearField(this);
-}
-
-void AutoTypeExecutor::execDelay(AutoTypeDelay* action)
-{
-    Tools::wait(action->delayMs);
-}
-
-void AutoTypeExecutor::execClearField(AutoTypeClearField* action)
-{
-    Q_UNUSED(action);
-}
-
-AutoTypeAction::~AutoTypeAction()
-{
-    // This makes sure that AutoTypeAction's vtable is placed
-    // in this translation unit.
 }
