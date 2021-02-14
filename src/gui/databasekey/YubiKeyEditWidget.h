@@ -43,6 +43,7 @@ public:
 protected:
     QWidget* componentEditWidget() override;
     void initComponentEditWidget(QWidget* widget) override;
+    void initComponent() override;
 
 private slots:
     void hardwareKeyResponse(bool found);

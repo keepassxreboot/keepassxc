@@ -16,12 +16,11 @@
  */
 
 #include "YubiKeyEditWidget.h"
+#include "ui_KeyComponentWidget.h"
 #include "ui_YubiKeyEditWidget.h"
 
 #include "config-keepassx.h"
 #include "core/AsyncTask.h"
-#include "gui/MainWindow.h"
-#include "gui/MessageBox.h"
 #include "keys/CompositeKey.h"
 #include "keys/YkChallengeResponseKey.h"
 
@@ -29,12 +28,7 @@ YubiKeyEditWidget::YubiKeyEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)
     , m_compUi(new Ui::YubiKeyEditWidget())
 {
-    setComponentName(tr("YubiKey Challenge-Response"));
-    setComponentDescription(
-        tr("<p>If you own a <a href=\"https://www.yubico.com/\">YubiKey</a>, you can use it "
-           "for additional security.</p><p>The YubiKey requires one of its slots to be programmed as "
-           "<a href=\"https://www.yubico.com/products/services-software/personalization-tools/challenge-response/\">"
-           "HMAC-SHA1 Challenge-Response</a>.</p>"));
+    initComponent();
 
     connect(YubiKey::instance(), SIGNAL(detectComplete(bool)), SLOT(hardwareKeyResponse(bool)), Qt::QueuedConnection);
 }
@@ -95,6 +89,23 @@ void YubiKeyEditWidget::initComponentEditWidget(QWidget* widget)
     Q_UNUSED(widget);
     Q_ASSERT(m_compEditWidget);
     m_compUi->comboChallengeResponse->setFocus();
+}
+
+void YubiKeyEditWidget::initComponent()
+{
+    // These need to be set in total for each credential type for translation purposes
+    m_ui->groupBox->setTitle(tr("Challenge-Response"));
+    m_ui->addButton->setText(tr("Add Challenge-Response"));
+    m_ui->changeButton->setText(tr("Change Challenge-Response"));
+    m_ui->removeButton->setText(tr("Remove Challenge-Response"));
+    m_ui->changeOrRemoveLabel->setText(tr("Challenge-Response set, click to change or remove"));
+
+    m_ui->componentDescription->setText(
+        tr("<p>If you own a <a href=\"https://www.yubico.com/\">YubiKey</a> or "
+           "<a href=\"https://onlykey.io\">OnlyKey</a>, you can use it for additional security.</p>"
+           "<p>The key requires one of its slots to be programmed as "
+           "<a href=\"https://www.yubico.com/products/services-software/challenge-response/\">"
+           "HMAC-SHA1 Challenge-Response</a>.</p>"));
 }
 
 void YubiKeyEditWidget::pollYubikey()
