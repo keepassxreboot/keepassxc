@@ -22,11 +22,6 @@
 #include <QTimer>
 
 KeyComponentWidget::KeyComponentWidget(QWidget* parent)
-    : KeyComponentWidget({}, parent)
-{
-}
-
-KeyComponentWidget::KeyComponentWidget(const QString& name, QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::KeyComponentWidget())
 {
@@ -39,60 +34,18 @@ KeyComponentWidget::KeyComponentWidget(const QString& name, QWidget* parent)
 
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(resetComponentEditWidget()));
 
-    connect(this, SIGNAL(nameChanged(QString)), SLOT(updateComponentName(QString)));
-    connect(this, SIGNAL(descriptionChanged(QString)), SLOT(updateComponentDescription(QString)));
     connect(this, SIGNAL(componentAddRequested()), SLOT(doAdd()));
     connect(this, SIGNAL(componentEditRequested()), SLOT(doEdit()));
     connect(this, SIGNAL(componentRemovalRequested()), SLOT(doRemove()));
     connect(this, SIGNAL(componentAddChanged(bool)), SLOT(updateAddStatus(bool)));
 
-    bool prev = blockSignals(true);
-    setComponentName(name);
-    blockSignals(prev);
-
-    prev = m_ui->stackedWidget->blockSignals(true);
+    bool prev = m_ui->stackedWidget->blockSignals(true);
     m_ui->stackedWidget->setCurrentIndex(Page::AddNew);
     m_ui->stackedWidget->blockSignals(prev);
 }
 
 KeyComponentWidget::~KeyComponentWidget()
 {
-}
-
-/**
- * @param name display name for the key component
- */
-void KeyComponentWidget::setComponentName(const QString& name)
-{
-    if (name == m_componentName) {
-        return;
-    }
-
-    m_componentName = name;
-    emit nameChanged(name);
-}
-
-/**
- * @return The key component's display name
- */
-QString KeyComponentWidget::componentName() const
-{
-    return m_componentName;
-}
-
-void KeyComponentWidget::setComponentDescription(const QString& description)
-{
-    if (description == m_componentDescription) {
-        return;
-    }
-
-    m_componentDescription = description;
-    emit descriptionChanged(description);
-}
-
-QString KeyComponentWidget::componentDescription() const
-{
-    return m_componentDescription;
 }
 
 void KeyComponentWidget::setComponentAdded(bool added)
@@ -119,21 +72,6 @@ void KeyComponentWidget::changeVisiblePage(KeyComponentWidget::Page page)
 KeyComponentWidget::Page KeyComponentWidget::visiblePage() const
 {
     return static_cast<Page>(m_ui->stackedWidget->currentIndex());
-}
-
-void KeyComponentWidget::updateComponentName(const QString& name)
-{
-    m_ui->groupBox->setTitle(name);
-    m_ui->addButton->setText(tr("Add %1", "Add a key component").arg(name));
-    m_ui->changeButton->setText(tr("Change %1", "Change a key component").arg(name));
-    m_ui->removeButton->setText(tr("Remove %1", "Remove a key component").arg(name));
-    m_ui->changeOrRemoveLabel->setText(
-        tr("%1 set, click to change or remove", "Change or remove a key component").arg(name));
-}
-
-void KeyComponentWidget::updateComponentDescription(const QString& description)
-{
-    m_ui->componentDescription->setText(description);
 }
 
 void KeyComponentWidget::updateAddStatus(bool added)

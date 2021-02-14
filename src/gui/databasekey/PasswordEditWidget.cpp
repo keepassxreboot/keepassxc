@@ -16,22 +16,18 @@
  */
 
 #include "PasswordEditWidget.h"
+#include "ui_KeyComponentWidget.h"
 #include "ui_PasswordEditWidget.h"
 
-#include "core/Resources.h"
 #include "gui/PasswordGeneratorWidget.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
-
-#include <QDialog>
 
 PasswordEditWidget::PasswordEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)
     , m_compUi(new Ui::PasswordEditWidget())
 {
-    setComponentName(tr("Password"));
-    setComponentDescription(tr("<p>A password is the primary method for securing your database.</p>"
-                               "<p>Good passwords are long and unique. KeePassXC can generate one for you.</p>"));
+    initComponent();
 }
 
 PasswordEditWidget::~PasswordEditWidget()
@@ -83,6 +79,20 @@ void PasswordEditWidget::initComponentEditWidget(QWidget* widget)
     Q_UNUSED(widget);
     Q_ASSERT(m_compEditWidget);
     m_compUi->enterPasswordEdit->setFocus();
+}
+
+void PasswordEditWidget::initComponent()
+{
+    // These need to be set in total for each credential type for translation purposes
+    m_ui->groupBox->setTitle(tr("Password"));
+    m_ui->addButton->setText(tr("Add Password"));
+    m_ui->changeButton->setText(tr("Change Password"));
+    m_ui->removeButton->setText(tr("Remove Password"));
+    m_ui->changeOrRemoveLabel->setText(tr("Password set, click to change or remove"));
+
+    m_ui->componentDescription->setText(
+        tr("<p>A password is the primary method for securing your database.</p>"
+           "<p>Good passwords are long and unique. KeePassXC can generate one for you.</p>"));
 }
 
 void PasswordEditWidget::hideEvent(QHideEvent* event)

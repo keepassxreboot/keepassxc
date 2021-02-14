@@ -33,10 +33,6 @@ class KeyComponentWidget : public QWidget
 {
     Q_OBJECT
     // clang-format off
-    Q_PROPERTY(QString componentName READ m_componentName READ componentName
-                   WRITE setComponentName NOTIFY nameChanged)
-    Q_PROPERTY(QString componentDescription READ m_componentDescription READ componentDescription
-                   WRITE setComponentDescription NOTIFY descriptionChanged)
     Q_PROPERTY(bool componentAdded READ m_isComponentAdded READ componentAdded
                    WRITE setComponentAdded NOTIFY componentAddChanged)
     // clang-format on
@@ -50,8 +46,6 @@ public:
     };
 
     explicit KeyComponentWidget(QWidget* parent = nullptr);
-    explicit KeyComponentWidget(const QString& name, QWidget* parent = nullptr);
-    Q_DISABLE_COPY(KeyComponentWidget);
     ~KeyComponentWidget() override;
 
     /**
@@ -73,10 +67,6 @@ public:
      */
     virtual bool validate(QString& errorMessage) const = 0;
 
-    void setComponentName(const QString& name);
-    QString componentName() const;
-    void setComponentDescription(const QString& name);
-    QString componentDescription() const;
     void setComponentAdded(bool added);
     bool componentAdded() const;
     void changeVisiblePage(Page page);
@@ -101,9 +91,14 @@ protected:
      */
     virtual void initComponentEditWidget(QWidget* widget) = 0;
 
+    /**
+     * Initialize component-specific labels, buttons, and description
+     */
+    virtual void initComponent() = 0;
+
+    const QScopedPointer<Ui::KeyComponentWidget> m_ui;
+
 signals:
-    void nameChanged(const QString& newName);
-    void descriptionChanged(const QString& newDescription);
     void componentAddChanged(bool added);
     void componentAddRequested();
     void componentEditRequested();
@@ -114,8 +109,6 @@ protected:
     void showEvent(QShowEvent* event) override;
 
 private slots:
-    void updateComponentName(const QString& name);
-    void updateComponentDescription(const QString& decription);
     void updateAddStatus(bool added);
     void doAdd();
     void doEdit();
@@ -127,11 +120,9 @@ private slots:
 private:
     bool m_isComponentAdded = false;
     Page m_previousPage = Page::AddNew;
-    QString m_componentName;
-    QString m_componentDescription;
     QPointer<QWidget> m_componentWidget;
 
-    const QScopedPointer<Ui::KeyComponentWidget> m_ui;
+    Q_DISABLE_COPY(KeyComponentWidget);
 };
 
 #endif // KEEPASSXC_KEYCOMPONENTWIDGET_H
