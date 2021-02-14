@@ -27,6 +27,7 @@
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
+#include "autotype/PickcharsDialog.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -563,6 +564,27 @@ AutoType::parseActions(const QString& entrySequence, const Entry* entry, QString
                 QString totp = entry->totp();
                 for (const auto& ch : totp) {
                     actions << QSharedPointer<AutoTypeKey>::create(ch);
+                }
+            } else if (placeholder == "pickchars") {
+                if (error) {
+                    // Ignore this if we are syntax checking
+                    continue;
+                }
+                // Show pickchars dialog for entry's password
+                auto password = entry->resolvePlaceholder(entry->password());
+                if (!password.isEmpty()) {
+                    PickcharsDialog pickcharsDialog(password);
+                    if (pickcharsDialog.exec() == QDialog::Accepted && !pickcharsDialog.selectedChars().isEmpty()) {
+                        auto chars = pickcharsDialog.selectedChars();
+                        auto iter = chars.begin();
+                        while (iter != chars.end()) {
+                            actions << QSharedPointer<AutoTypeKey>::create(*iter);
+                            ++iter;
+                            if (pickcharsDialog.pressTab() && iter != chars.end()) {
+                                actions << QSharedPointer<AutoTypeKey>::create(g_placeholderToKey["tab"]);
+                            }
+                        }
+                    }
                 }
             } else if (placeholder == "beep" || placeholder.startsWith("vkey")
                        || placeholder.startsWith("appactivate")) {

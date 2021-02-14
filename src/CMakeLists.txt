@@ -273,6 +273,7 @@ set(autotype_SOURCES
         autotype/AutoTypeMatchModel.cpp
         autotype/AutoTypeMatchView.cpp
         autotype/AutoTypeSelectDialog.cpp
+        autotype/PickcharsDialog.cpp
         autotype/ShortcutWidget.cpp
         autotype/WindowSelectComboBox.cpp)
 

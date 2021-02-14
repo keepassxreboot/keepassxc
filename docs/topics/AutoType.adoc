@@ -47,6 +47,7 @@ image::autotype_entry_sequences.png[]
 |{DELAY X}     |Delay typing start by X milliseconds
 |{CLEARFIELD}  |Clear the input field before typing
 |{TOTP}        |Insert calculated TOTP value (if configured)
+|{PICKCHARS}   |Pick specific password characters from a dialog
 |{<ACTION> X}  |Repeat <ACTION> X times (e.g., {SPACE 5} inserts five spaces)
 |===
 +
