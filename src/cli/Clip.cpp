@@ -31,7 +31,8 @@
 const QCommandLineOption Clip::AttributeOption = QCommandLineOption(
     QStringList() << "a"
                   << "attribute",
-    QObject::tr("Copy the given attribute to the clipboard. Defaults to \"password\" if not specified."),
+    QObject::tr("Copy the given attribute to the clipboard. Defaults to \"password\" if not specified.",
+                "Don't translate \"password\", it refers to the attribute."),
     "attr",
     "password");
 
@@ -40,10 +41,10 @@ const QCommandLineOption Clip::TotpOption =
                                      << "totp",
                        QObject::tr("Copy the current TOTP to the clipboard (equivalent to \"-a totp\")."));
 
-const QCommandLineOption Clip::BestMatchOption = QCommandLineOption(
-    QStringList() << "b"
-                  << "best-match",
-    QObject::tr("Try to find the unique entry matching, will fail and display the list of matches otherwise."));
+const QCommandLineOption Clip::BestMatchOption =
+    QCommandLineOption(QStringList() << "b"
+                                     << "best-match",
+                       QObject::tr("Must match only one entry, otherwise a list of possible matches is shown."));
 
 Clip::Clip()
 {
@@ -81,7 +82,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             return EXIT_FAILURE;
         } else {
             bestEntryPath = (results.isEmpty()) ? args.at(1) : results[0];
-            out << QObject::tr("Matching \"%1\" entry used.").arg(bestEntryPath) << endl;
+            out << QObject::tr("Used matching entry: %1").arg(bestEntryPath) << endl;
         }
     } else {
         bestEntryPath = args.at(1);
@@ -152,7 +153,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     QString lastLine = "";
     while (timeoutSeconds > 0) {
         out << '\r' << QString(lastLine.size(), ' ') << '\r';
-        lastLine = QObject::tr("Clearing the clipboard in %1 second(s)...", "", timeoutSeconds).arg(timeoutSeconds);
+        lastLine = QObject::tr("Clearing the clipboard in %1 second(s)…", "", timeoutSeconds).arg(timeoutSeconds);
         out << lastLine << flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         --timeoutSeconds;

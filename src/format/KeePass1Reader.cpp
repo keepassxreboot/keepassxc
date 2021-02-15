@@ -590,7 +590,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             break;
         case 0x0001:
             if (fieldSize != 16) {
-                raiseError(tr("Invalid entry uuid field size"));
+                raiseError(tr("Invalid entry UUID field size"));
                 return nullptr;
             }
             m_entryUuids.insert(fieldData, entry.data());

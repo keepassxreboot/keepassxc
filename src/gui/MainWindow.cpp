@@ -584,7 +584,7 @@ MainWindow::MainWindow()
 #if defined(KEEPASSXC_BUILD_TYPE_SNAPSHOT)
     if (config()->get(Config::Messages_HidePreReleaseWarning) != KEEPASSXC_VERSION) {
         m_ui->globalMessageWidget->showMessage(
-            tr("WARNING: You are using an unstable build of KeePassXC!\n"
+            tr("WARNING: You are using an unstable build of KeePassXC.\n"
                "There is a high risk of corruption, maintain a backup of your databases.\n"
                "This version is not meant for production use."),
             MessageWidget::Warning,
@@ -593,15 +593,15 @@ MainWindow::MainWindow()
 #elif defined(KEEPASSXC_BUILD_TYPE_PRE_RELEASE)
     if (config()->get(Config::Messages_HidePreReleaseWarning) != KEEPASSXC_VERSION) {
         m_ui->globalMessageWidget->showMessage(
-            tr("NOTE: You are using a pre-release version of KeePassXC!\n"
-               "Expect some bugs and minor issues, this version is not meant for production use."),
+            tr("NOTE: You are using a pre-release version of KeePassXC.\n"
+               "Expect some bugs and minor issues, this version is meant for testing purposes."),
             MessageWidget::Information,
             -1);
     }
 #elif (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0) && QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
     if (!config()->get(Config::Messages_Qt55CompatibilityWarning).toBool()) {
         m_ui->globalMessageWidget->showMessage(
-            tr("WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!\n"
+            tr("WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.\n"
                "We recommend you use the AppImage available on our downloads page."),
             MessageWidget::Warning,
             -1);

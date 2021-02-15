@@ -29,7 +29,7 @@ ReportsPageHibp::ReportsPageHibp()
 
 QString ReportsPageHibp::name()
 {
-    return QApplication::tr("HIBP");
+    return QObject::tr("HIBP");
 }
 
 QIcon ReportsPageHibp::icon()

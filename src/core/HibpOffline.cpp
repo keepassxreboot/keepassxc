@@ -115,7 +115,7 @@ namespace HibpOffline
                     QString* error)
     {
         if (!okonDatabase.endsWith(".okon")) {
-            *error = QObject::tr("To use okon you must provide a post-processed file (e.g. file.okon)");
+            *error = QObject::tr("To use okon, you must provide a post-processed file (e.g. file.okon)");
             return false;
         }
 

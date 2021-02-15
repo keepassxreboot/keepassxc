@@ -29,7 +29,7 @@ EditGroupPageKeeShare::EditGroupPageKeeShare(EditGroupWidget* widget)
 
 QString EditGroupPageKeeShare::name()
 {
-    return QApplication::tr("KeeShare");
+    return "KeeShare";
 }
 
 QIcon EditGroupPageKeeShare::icon()

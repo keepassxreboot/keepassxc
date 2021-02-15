@@ -32,7 +32,7 @@
 
 DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* parent)
     : DatabaseSettingsWidget(parent)
-    , m_additionalKeyOptionsToggle(new QPushButton(tr("Add additional protection..."), this))
+    , m_additionalKeyOptionsToggle(new QPushButton(tr("Add additional protection…"), this))
     , m_additionalKeyOptions(new QWidget(this))
     , m_passwordEditWidget(new PasswordEditWidget(this))
     , m_keyFileEditWidget(new KeyFileEditWidget(this))

@@ -83,7 +83,7 @@ int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<Q
 
     // Cannot use those 2 options at the same time!
     if (parser->isSet(Add::GenerateOption) && parser->isSet(Add::PasswordPromptOption)) {
-        err << QObject::tr("Cannot generate a password and prompt at the same time!") << endl;
+        err << QObject::tr("Cannot generate a password and prompt at the same time.") << endl;
         return EXIT_FAILURE;
     }
 

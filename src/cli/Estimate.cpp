@@ -59,12 +59,12 @@ static void estimate(const char* pwd, bool advanced)
             << QObject::tr("Log10 %1").arg(e * 0.301029996, 0, 'f', 3) << endl;
         // clang-format on
     } else {
-        int ChkLen = 0;
+        int pwdLen = 0;
         ZxcMatch_t *info, *p;
         double m = 0.0;
         const auto e = ZxcvbnMatch(pwd, nullptr, &info);
         for (p = info; p; p = p->Next) {
-            m += p->Entrpy;
+            m += p->Entropy;
         }
         m = e - m;
         // clang-format off
@@ -74,7 +74,7 @@ static void estimate(const char* pwd, bool advanced)
             << QObject::tr("Multi-word extra bits %1").arg(m, 0, 'f', 1) << endl;
         // clang-format on
         p = info;
-        ChkLen = 0;
+        pwdLen = 0;
         while (p) {
             int n;
             switch (static_cast<int>(p->Type)) {
@@ -134,14 +134,13 @@ static void estimate(const char* pwd, bool advanced)
                 break;
 
             default:
-                out << "  " << QObject::tr("Type: Unknown%1").arg(p->Type) << "        ";
+                out << "  " << QObject::tr("Type: Unknown (%1)").arg(p->Type) << "        ";
                 break;
             }
-            ChkLen += p->Length;
-            // clang-format off
+            pwdLen += p->Length;
             out << QObject::tr("Length %1").arg(p->Length) << '\t'
-                << QObject::tr("Entropy %1 (%2)").arg(p->Entrpy, 6, 'f', 3).arg(p->Entrpy * 0.301029996, 0, 'f', 2) << '\t';
-            // clang-format on
+                << QObject::tr("Entropy %1 (%2)").arg(p->Entropy, 6, 'f', 3).arg(p->Entropy * 0.301029996, 0, 'f', 2)
+                << '\t';
             for (n = 0; n < p->Length; ++n, ++pwd) {
                 out << *pwd;
             }
@@ -149,8 +148,8 @@ static void estimate(const char* pwd, bool advanced)
             p = p->Next;
         }
         ZxcvbnFreeInfo(info);
-        if (ChkLen != len) {
-            out << QObject::tr("*** Password length (%1) != sum of length of parts (%2) ***").arg(len).arg(ChkLen)
+        if (pwdLen != len) {
+            out << QObject::tr("*** Password length (%1) != sum of length of parts (%2) ***").arg(len).arg(pwdLen)
                 << endl;
         }
     }

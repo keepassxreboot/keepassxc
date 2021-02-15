@@ -109,7 +109,7 @@ void KeyFileEditWidget::createKeyFile()
         return;
     }
     QString filters = QString("%1 (*.keyx; *.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
-    QString fileName = fileDialog()->getSaveFileName(this, tr("Create Key File..."), QString(), filters);
+    QString fileName = fileDialog()->getSaveFileName(this, tr("Create Key File…"), QString(), filters);
 
     if (!fileName.isEmpty()) {
         QString errorMsg;

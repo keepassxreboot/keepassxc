@@ -17,15 +17,10 @@
  */
 
 #include "EntryPreviewWidget.h"
-#include "Font.h"
 #include "ui_EntryPreviewWidget.h"
 
-#include <QDesktopServices>
-#include <QDir>
-
-#include "core/Config.h"
+#include "Font.h"
 #include "entry/EntryAttachmentsModel.h"
-#include "gui/Clipboard.h"
 #include "gui/Icons.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
@@ -296,9 +291,9 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
                 value = "<i>" + tr("[PROTECTED]") + "</i>";
             } else {
                 value = m_currentEntry->attributes()->value(key).toHtmlEscaped();
-                value.replace('\n', QLatin1String("<br/>"));
+                value.replace('\n', "<br/>");
             }
-            attributesText.append(tr("<tr><td><b>%1</b>:</td><td>%2</td></tr>", "attributes line").arg(key, value));
+            attributesText.append(QString("<tr><td><b>%1</b>:</td><td>%2</td></tr>").arg(key, value));
         }
         attributesText.append("</table>");
         m_ui->entryAttributesEdit->setText(attributesText);
@@ -417,5 +412,5 @@ void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, b
 QString EntryPreviewWidget::hierarchy(const Group* group, const QString& title)
 {
     QString groupList = QString("%1").arg(group->hierarchy().join(" / "));
-    return title.isEmpty() ? groupList : QStringLiteral("%1 / %2").arg(groupList, title);
+    return title.isEmpty() ? groupList : QString("%1 / %2").arg(groupList, title);
 }

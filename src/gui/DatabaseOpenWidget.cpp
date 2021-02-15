@@ -309,7 +309,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
             legacyWarning.setText(tr("You are using an old key file format which KeePassXC may<br>"
                                      "stop supporting in the future.<br><br>"
                                      "Please consider generating a new key file by going to:<br>"
-                                     "<strong>Database / Database Security / Change Key File.</strong><br>"));
+                                     "<strong>Database &gt; Database Security &gt; Change Key File.</strong><br>"));
             legacyWarning.setIcon(QMessageBox::Icon::Warning);
             legacyWarning.addButton(QMessageBox::Ok);
             legacyWarning.setDefaultButton(QMessageBox::Ok);

@@ -297,22 +297,22 @@ void ReportsWidgetHibp::startValidation()
 QString ReportsWidgetHibp::countToText(int count)
 {
     if (count == 1) {
-        return tr("once");
+        return tr("once", "Password exposure amount");
     } else if (count <= 10) {
-        return tr("up to 10 times");
+        return tr("up to 10 times", "Password exposure amount");
     } else if (count <= 100) {
-        return tr("up to 100 times");
+        return tr("up to 100 times", "Password exposure amount");
     } else if (count <= 1000) {
-        return tr("up to 1000 times");
+        return tr("up to 1000 times", "Password exposure amount");
     } else if (count <= 10000) {
-        return tr("up to 10,000 times");
+        return tr("up to 10,000 times", "Password exposure amount");
     } else if (count <= 100000) {
-        return tr("up to 100,000 times");
+        return tr("up to 100,000 times", "Password exposure amount");
     } else if (count <= 1000000) {
-        return tr("up to a million times");
+        return tr("up to a million times", "Password exposure amount");
     }
 
-    return tr("millions of times");
+    return tr("millions of times", "Password exposure amount");
 }
 
 /*
@@ -387,7 +387,7 @@ void ReportsWidgetHibp::customMenuRequested(QPoint pos)
     const auto menu = new QMenu(this);
 
     // Create the "edit entry" menu item
-    const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry..."), this);
+    const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
     menu->addAction(edit);
     connect(edit, SIGNAL(triggered()), SLOT(editFromContextmenu()));
 

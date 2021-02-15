@@ -142,13 +142,13 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     // Add a notification for when we are searching
     m_searchingLabel->setObjectName("SearchBanner");
-    m_searchingLabel->setText(tr("Searching..."));
+    m_searchingLabel->setText(tr("Searching…"));
     m_searchingLabel->setAlignment(Qt::AlignCenter);
     m_searchingLabel->setVisible(false);
 
 #ifdef WITH_XC_KEESHARE
     m_shareLabel->setObjectName("KeeShareBanner");
-    m_shareLabel->setText(tr("Shared group..."));
+    m_shareLabel->setText(tr("Shared group…"));
     m_shareLabel->setAlignment(Qt::AlignCenter);
     m_shareLabel->setVisible(false);
 #endif
@@ -1440,7 +1440,7 @@ void DatabaseWidget::endSearch()
     }
 
     m_searchingLabel->setVisible(false);
-    m_searchingLabel->setText(tr("Searching..."));
+    m_searchingLabel->setText(tr("Searching…"));
 
     m_lastSearchText.clear();
 

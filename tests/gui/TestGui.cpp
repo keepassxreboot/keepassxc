@@ -1501,7 +1501,7 @@ void TestGui::testSortGroups()
 void TestGui::testTrayRestoreHide()
 {
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-        QSKIP("QSystemTrayIcon::isSystemTrayAvailable() = false, skipping tray restore/hide test...");
+        QSKIP("QSystemTrayIcon::isSystemTrayAvailable() = false, skipping tray restore/hide test…");
     }
 
     m_mainWindow->hideWindow();

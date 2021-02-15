@@ -131,7 +131,7 @@
          <string>Browser for key file</string>
         </property>
         <property name="text">
-         <string extracomment="Button for opening file dialog">Browse...</string>
+         <string extracomment="Button for opening file dialog">Browse…</string>
         </property>
        </widget>
       </item>

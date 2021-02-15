@@ -595,7 +595,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Database &amp;Reports...</string>
+    <string>Database &amp;Reports…</string>
    </property>
    <property name="toolTip">
     <string>Statistics, health check, etc.</string>
@@ -702,7 +702,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>{USERNAME}</string>
+    <string notr="true">{USERNAME}</string>
    </property>
   </action>
   <action name="actionEntryAutoTypeUsernameEnter">
@@ -710,7 +710,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>{USERNAME}{ENTER}</string>
+    <string notr="true">{USERNAME}{ENTER}</string>
    </property>
   </action>
   <action name="actionEntryAutoTypePassword">
@@ -718,7 +718,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>{PASSWORD}</string>
+    <string notr="true">{PASSWORD}</string>
    </property>
   </action>
   <action name="actionEntryAutoTypePasswordEnter">
@@ -726,7 +726,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>{PASSWORD}{ENTER}</string>
+    <string notr="true">{PASSWORD}{ENTER}</string>
    </property>
   </action>
   <action name="actionEntryDownloadIcon">
@@ -898,7 +898,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Save Database Backup...</string>
+    <string>Save Database Backup…</string>
    </property>
   </action>
   <action name="actionEntryAddToAgent">

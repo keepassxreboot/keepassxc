@@ -193,7 +193,7 @@ void ReportsWidgetStatistics::loadSettings(QSharedPointer<Database> db)
     m_db = std::move(db);
     m_statsCalculated = false;
     m_referencesModel->clear();
-    addStatsRow(tr("Please wait, database statistics are being calculated..."), "");
+    addStatsRow(tr("Please wait, database statistics are being calculated…"), "");
 }
 
 void ReportsWidgetStatistics::showEvent(QShowEvent* event)

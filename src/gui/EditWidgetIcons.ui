@@ -167,7 +167,7 @@
         <string notr="true">padding: 4px 10px</string>
        </property>
        <property name="text">
-        <string>Apply icon to...</string>
+        <string>Apply icon to…</string>
        </property>
       </widget>
      </item>

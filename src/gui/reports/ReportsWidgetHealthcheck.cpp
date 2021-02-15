@@ -235,7 +235,7 @@ void ReportsWidgetHealthcheck::loadSettings(QSharedPointer<Database> db)
     m_rowToEntry.clear();
 
     auto row = QList<QStandardItem*>();
-    row << new QStandardItem(tr("Please wait, health data is being calculated..."));
+    row << new QStandardItem(tr("Please wait, health data is being calculated…"));
     m_referencesModel->appendRow(row);
 }
 
@@ -325,7 +325,7 @@ void ReportsWidgetHealthcheck::customMenuRequested(QPoint pos)
     const auto menu = new QMenu(this);
 
     // Create the "edit entry" menu item
-    const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry..."), this);
+    const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
     menu->addAction(edit);
     connect(edit, SIGNAL(triggered()), SLOT(editFromContextmenu()));
 

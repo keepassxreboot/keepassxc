@@ -180,12 +180,12 @@ static void AddResult(ZxcMatch_t **HeadRef, ZxcMatch_t *Nu, int MaxLen)
     if (Nu->Begin)
     {
         if (Nu->Length >= MaxLen)
-            Nu->MltEnpy = Nu->Entrpy + MULTI_END_ADDITION * log(2.0);
+            Nu->MltEnpy = Nu->Entropy + MULTI_END_ADDITION * log(2.0);
         else
-            Nu->MltEnpy = Nu->Entrpy + MULTI_MID_ADDITION * log(2.0);
+            Nu->MltEnpy = Nu->Entropy + MULTI_MID_ADDITION * log(2.0);
     }
     else
-        Nu->MltEnpy = Nu->Entrpy;
+        Nu->MltEnpy = Nu->Entropy;
 
     /* Find the correct insert point */
     while(*HeadRef && ((*HeadRef)->Length < Nu->Length))
@@ -231,7 +231,7 @@ static void AddMatchRepeats(ZxcMatch_t **Result, ZxcMatch_t *Match, const uint8_
         {
             /* Found a repeat */
             ZxcMatch_t *p = AllocMatch();
-            p->Entrpy = Match->Entrpy + log(RepeatCount);
+            p->Entropy = Match->Entropy + log(RepeatCount);
             p->Type = (ZxcTypeMatch_t)(Match->Type + MULTIPLE_MATCH);
             p->Length = Len * RepeatCount;
             p->Begin = Match->Begin;
@@ -616,7 +616,7 @@ static void DictionaryEntropy(ZxcMatch_t *m, DictMatchInfo_t *Extra, const uint8
     }
     /* Add entropy due to word's rank */
     e += log((double)Extra->Rank);
-    m->Entrpy = e;
+    m->Entropy = e;
 }
 
 /**********************************************************************************
@@ -877,7 +877,7 @@ static void UserMatch(ZxcMatch_t **Result, const char *Words[], const uint8_t *P
                 p->Type = USER_LEET_MATCH;
             p->Length = Len;
             p->Begin = Start;
-            /* Add Entrpy */
+            /* Add Entropy */
             Extra.Caps = Caps;
             Extra.Lower = Lowers;
             Extra.NumLeet = Leets;
@@ -1206,7 +1206,7 @@ static void SpatialMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, 
                 p = AllocMatch();
                 p->Type = SPATIAL_MATCH;
                 p->Begin = Start;
-                p->Entrpy = Entropy;
+                p->Entropy = Entropy;
                 p->Length = Len;
                 AddMatchRepeats(Result, p, Passwd, MaxLen);
                 AddResult(Result, p, MaxLen);
@@ -1345,7 +1345,7 @@ static void DateMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, int
                 e = log(31 * 12 * 100.0);
             if (Sep)
                 e += log(4.0);  /* Extra 2 bits for separator */
-            p->Entrpy = e;
+            p->Entropy = e;
             p->Type = DATE_MATCH;
             p->Length = Len;
             p->Begin = Start;
@@ -1390,7 +1390,7 @@ static void RepeatMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, i
             p->Type = REPEATS_MATCH;
             p->Begin = Start;
             p->Length = i;
-            p->Entrpy = log(Card * i);
+            p->Entropy = log(Card * i);
             AddResult(Result, p, MaxLen);
         }
     }
@@ -1407,7 +1407,7 @@ static void RepeatMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, i
                 /* Found a repeat */
                 int c = Cardinality(Passwd, Len);
                 ZxcMatch_t *p = AllocMatch();
-                p->Entrpy = log((double)c) * Len + log(RepeatCount);
+                p->Entropy = log((double)c) * Len + log(RepeatCount);
                 p->Type = (ZxcTypeMatch_t)(BRUTE_MATCH + MULTIPLE_MATCH);
                 p->Length = Len * RepeatCount;
                 p->Begin = Start;
@@ -1525,7 +1525,7 @@ static void SequenceMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start,
             p->Type = SEQUENCE_MATCH;
             p->Begin = Start;
             p->Length = i;
-            p->Entrpy = e + log((double)i);
+            p->Entropy = e + log((double)i);
             AddMatchRepeats(Result, p, Pwd, MaxLen);
             AddResult(Result, p, MaxLen);
         }
@@ -1654,7 +1654,7 @@ double ZxcvbnMatch(const char *Pwd, const char *UserDict[], ZxcMatch_t **Info)
                 Zp->Type = BRUTE_MATCH;
                 Zp->Begin = i;
                 Zp->Length = j - i;
-                Zp->Entrpy = e * (j - i);
+                Zp->Entropy = e * (j - i);
                 AddResult(&(Nodes[i].Paths), Zp, MaxLen);
             }
         }
@@ -1723,7 +1723,7 @@ double ZxcvbnMatch(const char *Pwd, const char *UserDict[], ZxcMatch_t **Info)
                 if (Xp == Zp)
                 {
                     /* Adjust the entropy to log to base 2 */
-                    Xp->Entrpy /= log(2.0);
+                    Xp->Entropy /= log(2.0);
                     Xp->MltEnpy /= log(2.0);
 
                     /* Put previous part at head of info list */

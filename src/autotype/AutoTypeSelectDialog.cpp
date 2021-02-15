@@ -92,7 +92,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_filterLineEdit, SIGNAL(keyDownPressed()), SLOT(moveSelectionDown()));
     connect(m_filterLineEdit, SIGNAL(escapeReleased()), SLOT(reject()));
 
-    m_filterLineEdit->setPlaceholderText(tr("Search..."));
+    m_filterLineEdit->setPlaceholderText(tr("Search…"));
     layout->addWidget(m_filterLineEdit);
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel, Qt::Horizontal, this);

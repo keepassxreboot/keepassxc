@@ -63,7 +63,7 @@ bool CsvParser::reparse()
 bool CsvParser::parse(QFile* device)
 {
     clear();
-    if (nullptr == device) {
+    if (!device) {
         appendStatusMsg(QObject::tr("NULL device"), true);
         return false;
     }
@@ -88,7 +88,7 @@ bool CsvParser::readFile(QFile* device)
 
         m_array.replace("\r\n", "\n");
         m_array.replace("\r", "\n");
-        if (0 == m_array.size()) {
+        if (m_array.isEmpty()) {
             appendStatusMsg(QObject::tr("file empty").append("\n"));
         }
         m_isFileLoaded = true;
@@ -196,7 +196,6 @@ void CsvParser::parseQuoted(QString& s)
     // read and discard initial qualifier (e.g. quote)
     getChar(m_ch);
     parseEscaped(s);
-    // getChar(m_ch);
     if (!isQualifier(m_ch)) {
         appendStatusMsg(QObject::tr("missing closing quote"), true);
     }

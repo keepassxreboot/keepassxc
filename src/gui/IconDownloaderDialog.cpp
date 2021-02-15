@@ -80,13 +80,13 @@ void IconDownloaderDialog::downloadFavicons(const QSharedPointer<Database>& data
         Tools::wait(100);
 #endif
         showFallbackMessage(false);
-        m_ui->progressLabel->setText(tr("Please wait, processing entry list..."));
+        m_ui->progressLabel->setText(tr("Please wait, processing entry list…"));
         open();
         QApplication::processEvents();
 
         for (const auto& url : m_urlToEntries.uniqueKeys()) {
             m_dataModel->appendRow(QList<QStandardItem*>()
-                                   << new QStandardItem(url) << new QStandardItem(tr("Downloading...")));
+                                   << new QStandardItem(url) << new QStandardItem(tr("Downloading…")));
             m_activeDownloaders.append(createDownloader(url));
         }
 
@@ -170,7 +170,7 @@ void IconDownloaderDialog::updateProgressBar()
     m_ui->progressBar->setValue(value);
     m_ui->progressBar->setMaximum(total);
     m_ui->progressLabel->setText(
-        tr("Downloading favicons (%1/%2)...").arg(QString::number(value), QString::number(total)));
+        tr("Downloading favicons (%1/%2)…").arg(QString::number(value), QString::number(total)));
 }
 
 void IconDownloaderDialog::updateCancelButton()
