@@ -826,6 +826,19 @@ void DatabaseWidget::createGroup()
     switchToGroupEdit(m_newGroup.data(), true);
 }
 
+void DatabaseWidget::cloneGroup()
+{
+    Group* currentGroup = m_groupView->currentGroup();
+    Q_ASSERT(currentGroup && canCloneCurrentGroup());
+    if (!currentGroup || !canCloneCurrentGroup()) {
+        return;
+    }
+
+    m_newGroup.reset(currentGroup->clone(Entry::CloneCopy, Group::CloneDefault | Group::CloneRenameTitle));
+    m_newParent = currentGroup->parentGroup();
+    switchToGroupEdit(m_newGroup.data(), true);
+}
+
 void DatabaseWidget::deleteGroup()
 {
     Group* currentGroup = m_groupView->currentGroup();
@@ -1373,6 +1386,14 @@ void DatabaseWidget::onEntryChanged(Entry* entry)
     }
 
     emit entrySelectionChanged();
+}
+
+bool DatabaseWidget::canCloneCurrentGroup() const
+{
+    bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
+    // bool isRecycleBin = isRecycleBinSelected();
+
+    return !isRootGroup;
 }
 
 bool DatabaseWidget::canDeleteCurrentGroup() const

@@ -94,6 +94,7 @@ public:
     EntryView* entryView();
 
     Group* currentGroup() const;
+    bool canCloneCurrentGroup() const;
     bool canDeleteCurrentGroup() const;
     bool isGroupSelected() const;
     bool isRecycleBinSelected() const;
@@ -190,6 +191,7 @@ public slots:
     void downloadAllFavicons();
     void openUrlForEntry(Entry* entry);
     void createGroup();
+    void cloneGroup();
     void deleteGroup();
     void switchToMainView(bool previousDialogAccepted = false);
     void switchToEntryEdit();
