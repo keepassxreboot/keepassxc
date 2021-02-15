@@ -60,3 +60,5 @@ To install the KeePassXC app on macOS, double click on the downloaded DMG file a
 image::macos_install.png[,80%]
 
 // end::content[]
+// tag::advanced[]
+// end::advanced[]

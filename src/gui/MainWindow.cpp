@@ -160,14 +160,13 @@ MainWindow::MainWindow()
 
     restoreGeometry(config()->get(Config::GUI_MainWindowGeometry).toByteArray());
     restoreState(config()->get(Config::GUI_MainWindowState).toByteArray());
+
+    connect(m_ui->tabWidget, &DatabaseTabWidget::databaseLocked, this, &MainWindow::databaseLocked);
+    connect(m_ui->tabWidget, &DatabaseTabWidget::databaseUnlocked, this, &MainWindow::databaseUnlocked);
+    connect(m_ui->tabWidget, &DatabaseTabWidget::activeDatabaseChanged, this, &MainWindow::activeDatabaseChanged);
+
 #ifdef WITH_XC_BROWSER
     m_ui->settingsWidget->addSettingsPage(new BrowserSettingsPage());
-    connect(m_ui->tabWidget, &DatabaseTabWidget::databaseLocked, browserService(), &BrowserService::databaseLocked);
-    connect(m_ui->tabWidget, &DatabaseTabWidget::databaseUnlocked, browserService(), &BrowserService::databaseUnlocked);
-    connect(m_ui->tabWidget,
-            &DatabaseTabWidget::activateDatabaseChanged,
-            browserService(),
-            &BrowserService::activeDatabaseChanged);
     connect(
         browserService(), &BrowserService::requestUnlock, m_ui->tabWidget, &DatabaseTabWidget::performBrowserUnlock);
 #endif
@@ -411,7 +410,7 @@ MainWindow::MainWindow()
 
     // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget,
-            SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
+            SIGNAL(activeDatabaseChanged(DatabaseWidget*)),
             m_searchWidget,
             SLOT(databaseChanged(DatabaseWidget*)));
     connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), m_searchWidget, SLOT(databaseChanged()));

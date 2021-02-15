@@ -21,7 +21,7 @@
 
 #include <QAbstractTableModel>
 
-#include "core/AutoTypeMatch.h"
+#include "autotype/AutoTypeMatch.h"
 
 class Entry;
 class Group;

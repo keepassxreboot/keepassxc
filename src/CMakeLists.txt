@@ -33,7 +33,6 @@ endif(NOT ZXCVBN_LIBRARIES)
 set(keepassx_SOURCES
         core/Alloc.cpp
         core/AutoTypeAssociations.cpp
-        core/AutoTypeMatch.cpp
         core/Base32.cpp
         core/Bootstrap.cpp
         core/Clock.cpp
@@ -139,8 +138,6 @@ set(keepassx_SOURCES
         gui/csvImport/CsvImportWizard.cpp
         gui/csvImport/CsvParserModel.cpp
         gui/entry/AutoTypeAssociationsModel.cpp
-        gui/entry/AutoTypeMatchModel.cpp
-        gui/entry/AutoTypeMatchView.cpp
         gui/entry/EditEntryWidget.cpp
         gui/entry/EntryAttachmentsModel.cpp
         gui/entry/EntryAttachmentsWidget.cpp
@@ -273,11 +270,10 @@ set(autotype_SOURCES
         core/Tools.cpp
         autotype/AutoType.cpp
         autotype/AutoTypeAction.cpp
-        autotype/AutoTypeFilterLineEdit.cpp
+        autotype/AutoTypeMatchModel.cpp
+        autotype/AutoTypeMatchView.cpp
         autotype/AutoTypeSelectDialog.cpp
-        autotype/AutoTypeSelectView.cpp
         autotype/ShortcutWidget.cpp
-        autotype/WildcardMatcher.cpp
         autotype/WindowSelectComboBox.cpp)
 
 if(MINGW)

@@ -69,12 +69,22 @@ image::autotype_entry_sequences.png[]
 === Performing Global Auto-Type
 The global Auto-Type keyboard shortcut is used when you have focus on the window you want to type into. To make use of this feature, you must have previously configured an Auto-Type hotkey.
 
-Pressing the global Auto-Type hotkey cause KeePassXC to search the database for entries that match the window title. Multiple matches may be returned and will cause the sequence selection dialog to appear. Click on a sequence line will immediately execute the Auto-Type action. A search box is also available in case numerous matches are returned.
+When you press the global Auto-Type hotkey, KeePassXC searches all unlocked databases for entries that match the focused window title. The Auto-Type selection dialog will appear in the following circumstances: there are no matches found, there are multiple matches found, or the setting "Always ask before performing Auto-Type" is enabled.
 
 .Auto-Type sequence selection
 image::autotype_selection_dialog.png[,70%]
 
-TIP: The _Sequence_ column will only appear when there are different sequences defined by one or more entries displayed in the selection dialog.
+Perform the selected Auto-Type sequence by double clicking the desired row or pressing _Enter_. Press the up and down arrows to navigate the list. Sequences can be filtered through the text edit field.
+
+.Auto-Type search database
+image::autotype_selection_dialog_search.png[,70%]
+
+Search the unlocked databases by activating Search Database radio button. Use the text edit field to issue search queries using the same syntax as database searching.
+
+.Additional Auto-Type choices
+image::autotype_selection_dialog_type_menu.png[,70%]
+
+The option to type just the username, password, or current TOTP value is available by right clicking the desired row or expanding the Type Sequence button options. 
 
 === Performing Entry-Level Auto-Type
 You can quickly activate the default Auto-Type sequence for a particular entry using Entry-Level Auto-Type. For this operation, the KeePassXC window will be minimized and the Auto-Type sequence occurs in the previously selected window. You can perform Entry-Level Auto-Type from the toolbar icon *(A)*, entry context menu *(B)*, or by pressing `Ctrl+Shift+V`.

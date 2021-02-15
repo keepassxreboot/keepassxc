@@ -21,13 +21,12 @@
 #include <QApplication>
 #include <QPluginLoader>
 #include <QRegularExpression>
+#include <QWindow>
 
 #include "config-keepassx.h"
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
-#include "autotype/WildcardMatcher.h"
-#include "core/AutoTypeMatch.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -250,12 +249,10 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
         return;
     }
 
-    QList<QString> sequences = autoTypeSequences(entry);
-    if (sequences.isEmpty()) {
-        return;
+    auto sequences = entry->autoTypeSequences();
+    if (!sequences.isEmpty()) {
+        executeAutoTypeActions(entry, hideWindow, sequences.first());
     }
-
-    executeAutoTypeActions(entry, hideWindow, sequences.first());
 }
 
 /**
@@ -273,6 +270,11 @@ void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& se
 
 void AutoType::startGlobalAutoType()
 {
+    // Never Auto-Type into KeePassXC itself
+    if (qApp->focusWindow()) {
+        return;
+    }
+
     m_windowForGlobal = m_plugin->activeWindow();
     m_windowTitleForGlobal = m_plugin->activeWindowTitle();
 #ifdef Q_OS_MACOS
@@ -331,58 +333,62 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
 
     for (const auto& db : dbList) {
         const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
-        for (Entry* entry : dbEntries) {
+        for (auto entry : dbEntries) {
+            auto group = entry->group();
+            if (!group || !group->resolveAutoTypeEnabled() || !entry->autoTypeEnabled()) {
+                continue;
+            }
+
             if (hideExpired && entry->isExpired()) {
                 continue;
             }
-            const QSet<QString> sequences = autoTypeSequences(entry, m_windowTitleForGlobal).toSet();
-            for (const QString& sequence : sequences) {
-                if (!sequence.isEmpty()) {
-                    matchList << AutoTypeMatch(entry, sequence);
-                }
+            auto sequences = entry->autoTypeSequences(m_windowTitleForGlobal).toSet();
+            for (const auto& sequence : sequences) {
+                matchList << AutoTypeMatch(entry, sequence);
             }
         }
     }
 
-    if (matchList.isEmpty()) {
-        if (qobject_cast<QApplication*>(QCoreApplication::instance())) {
-            auto* msgBox = new QMessageBox();
-            msgBox->setAttribute(Qt::WA_DeleteOnClose);
-            msgBox->setWindowTitle(tr("Auto-Type - KeePassXC"));
-            msgBox->setText(tr("Couldn't find an entry that matches the window title:")
-                                .append("\n\n")
-                                .append(m_windowTitleForGlobal));
-            msgBox->setIcon(QMessageBox::Information);
-            msgBox->setStandardButtons(QMessageBox::Ok);
-#ifdef Q_OS_MACOS
-            m_plugin->raiseOwnWindow();
-            Tools::wait(200);
-#endif
-            msgBox->exec();
-            restoreWindowState();
+    // Show the selection dialog if we always ask, have multiple matches, or no matches
+    if (config()->get(Config::Security_AutoTypeAsk).toBool() || matchList.size() > 1 || matchList.isEmpty()) {
+        // Close any open modal windows that would interfere with the process
+        if (qApp->modalWindow()) {
+            qApp->modalWindow()->close();
         }
 
-        m_inGlobalAutoTypeDialog.unlock();
-        emit autotypeRejected();
-    } else if ((matchList.size() == 1) && !config()->get(Config::Security_AutoTypeAsk).toBool()) {
-        executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence, m_windowForGlobal);
-        m_inGlobalAutoTypeDialog.unlock();
-    } else {
         auto* selectDialog = new AutoTypeSelectDialog();
+        selectDialog->setMatches(matchList, dbList);
 
-        // connect slots, both of which must unlock the m_inGlobalAutoTypeDialog mutex
-        connect(selectDialog, SIGNAL(matchActivated(AutoTypeMatch)), SLOT(performAutoTypeFromGlobal(AutoTypeMatch)));
-        connect(selectDialog, SIGNAL(rejected()), SLOT(autoTypeRejectedFromGlobal()));
+        connect(getMainWindow(), &MainWindow::databaseLocked, selectDialog, &AutoTypeSelectDialog::reject);
+        connect(selectDialog, &AutoTypeSelectDialog::matchActivated, this, [this](AutoTypeMatch match) {
+            restoreWindowState();
+            QApplication::processEvents();
+            m_plugin->raiseWindow(m_windowForGlobal);
+            executeAutoTypeActions(match.first, nullptr, match.second, m_windowForGlobal);
+            resetAutoTypeState();
+        });
+        connect(selectDialog, &QDialog::rejected, this, [this] {
+            restoreWindowState();
+            resetAutoTypeState();
+            emit autotypeRejected();
+        });
 
-        selectDialog->setMatchList(matchList);
 #ifdef Q_OS_MACOS
         m_plugin->raiseOwnWindow();
         Tools::wait(200);
 #endif
         selectDialog->show();
         selectDialog->raise();
-        // necessary when the main window is minimized
         selectDialog->activateWindow();
+    } else if (!matchList.isEmpty()) {
+        // Only one match and not asking, do it!
+        executeAutoTypeActions(matchList.first().first, nullptr, matchList.first().second, m_windowForGlobal);
+        resetAutoTypeState();
+    } else {
+        // We should never get here
+        Q_ASSERT(false);
+        resetAutoTypeState();
+        emit autotypeRejected();
     }
 }
 
@@ -399,29 +405,12 @@ void AutoType::restoreWindowState()
 #endif
 }
 
-void AutoType::performAutoTypeFromGlobal(AutoTypeMatch match)
+void AutoType::resetAutoTypeState()
 {
-    restoreWindowState();
-
-    m_plugin->raiseWindow(m_windowForGlobal);
-    executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowForGlobal);
-
-    // make sure the mutex is definitely locked before we unlock it
-    Q_UNUSED(m_inGlobalAutoTypeDialog.tryLock());
-    m_inGlobalAutoTypeDialog.unlock();
-}
-
-void AutoType::autoTypeRejectedFromGlobal()
-{
-    // this slot can be called twice when the selection dialog is deleted,
-    // so make sure the mutex is locked before we try unlocking it
-    Q_UNUSED(m_inGlobalAutoTypeDialog.tryLock());
-    m_inGlobalAutoTypeDialog.unlock();
     m_windowForGlobal = 0;
     m_windowTitleForGlobal.clear();
-
-    restoreWindowState();
-    emit autotypeRejected();
+    Q_UNUSED(m_inGlobalAutoTypeDialog.tryLock());
+    m_inGlobalAutoTypeDialog.unlock();
 }
 
 /**
@@ -620,101 +609,6 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     }
 
     return list;
-}
-
-/**
- * Retrive the autotype sequences matches for a given windowTitle
- * This returns a list with priority ordering. If you don't want duplicates call .toSet() on it.
- */
-QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& windowTitle)
-{
-    QList<QString> sequenceList;
-    const Group* group = entry->group();
-
-    if (!group || !entry->autoTypeEnabled()) {
-        return sequenceList;
-    }
-
-    do {
-        if (group->autoTypeEnabled() == Group::Disable) {
-            return sequenceList;
-        } else if (group->autoTypeEnabled() == Group::Enable) {
-            break;
-        }
-        group = group->parentGroup();
-
-    } while (group);
-
-    if (!windowTitle.isEmpty()) {
-        const QList<AutoTypeAssociations::Association> assocList = entry->autoTypeAssociations()->getAll();
-        for (const AutoTypeAssociations::Association& assoc : assocList) {
-            const QString window = entry->resolveMultiplePlaceholders(assoc.window);
-            if (windowMatches(windowTitle, window)) {
-                if (!assoc.sequence.isEmpty()) {
-                    sequenceList.append(assoc.sequence);
-                } else {
-                    sequenceList.append(entry->effectiveAutoTypeSequence());
-                }
-            }
-        }
-
-        if (config()->get(Config::AutoTypeEntryTitleMatch).toBool()
-            && windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))) {
-            sequenceList.append(entry->effectiveAutoTypeSequence());
-        }
-
-        if (config()->get(Config::AutoTypeEntryURLMatch).toBool()
-            && windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url()))) {
-            sequenceList.append(entry->effectiveAutoTypeSequence());
-        }
-
-        if (sequenceList.isEmpty()) {
-            return sequenceList;
-        }
-    } else {
-        sequenceList.append(entry->effectiveAutoTypeSequence());
-    }
-
-    return sequenceList;
-}
-
-/**
- * Checks if a window title matches a pattern
- */
-bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPattern)
-{
-    if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
-        QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
-        return (regExp.indexIn(windowTitle) != -1);
-    }
-    return WildcardMatcher(windowTitle).match(windowPattern);
-}
-
-/**
- * Checks if a window title matches an entry Title
- * The entry title should be Spr-compiled by the caller
- */
-bool AutoType::windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle)
-{
-    return !resolvedTitle.isEmpty() && windowTitle.contains(resolvedTitle, Qt::CaseInsensitive);
-}
-
-/**
- * Checks if a window title matches an entry URL
- * The entry URL should be Spr-compiled by the caller
- */
-bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl)
-{
-    if (!resolvedUrl.isEmpty() && windowTitle.contains(resolvedUrl, Qt::CaseInsensitive)) {
-        return true;
-    }
-
-    QUrl url(resolvedUrl);
-    if (url.isValid() && !url.host().isEmpty()) {
-        return windowTitle.contains(url.host(), Qt::CaseInsensitive);
-    }
-
-    return false;
 }
 
 /**

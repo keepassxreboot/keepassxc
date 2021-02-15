@@ -95,6 +95,7 @@ public:
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
     QString effectiveNewAutoTypeSequence() const;
+    QList<QString> autoTypeSequences(const QString& pattern = {}) const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;

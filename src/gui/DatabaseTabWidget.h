@@ -89,7 +89,7 @@ signals:
     void databaseClosed(const QString& filePath);
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);
-    void activateDatabaseChanged(DatabaseWidget* dbWidget);
+    void activeDatabaseChanged(DatabaseWidget* dbWidget);
     void tabNameChanged();
     void tabVisibilityChanged(bool tabsVisible);
     void messageGlobal(const QString&, MessageWidget::MessageType type);
@@ -98,7 +98,7 @@ signals:
 
 private slots:
     void toggleTabbar();
-    void emitActivateDatabaseChanged();
+    void emitActiveDatabaseChanged();
     void emitDatabaseLockChanged();
 
 private:

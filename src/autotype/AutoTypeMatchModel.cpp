@@ -56,7 +56,7 @@ void AutoTypeMatchModel::setMatchList(const QList<AutoTypeMatch>& matches)
     QSet<Database*> databases;
 
     for (AutoTypeMatch& match : m_matches) {
-        databases.insert(match.entry->group()->database());
+        databases.insert(match.first->group()->database());
     }
 
     for (Database* db : asConst(databases)) {
@@ -88,7 +88,6 @@ int AutoTypeMatchModel::rowCount(const QModelIndex& parent) const
 int AutoTypeMatchModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
-
     return 4;
 }
 
@@ -103,30 +102,30 @@ QVariant AutoTypeMatchModel::data(const QModelIndex& index, int role) const
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
         case ParentGroup:
-            if (match.entry->group()) {
-                return match.entry->group()->name();
+            if (match.first->group()) {
+                return match.first->group()->name();
             }
             break;
         case Title:
-            return match.entry->resolveMultiplePlaceholders(match.entry->title());
+            return match.first->resolveMultiplePlaceholders(match.first->title());
         case Username:
-            return match.entry->resolveMultiplePlaceholders(match.entry->username());
+            return match.first->resolveMultiplePlaceholders(match.first->username());
         case Sequence:
-            return match.sequence;
+            return match.second;
         }
     } else if (role == Qt::DecorationRole) {
         switch (index.column()) {
         case ParentGroup:
-            if (match.entry->group()) {
-                return match.entry->group()->iconPixmap();
+            if (match.first->group()) {
+                return match.first->group()->iconPixmap();
             }
             break;
         case Title:
-            return match.entry->iconPixmap();
+            return match.first->iconPixmap();
         }
     } else if (role == Qt::FontRole) {
         QFont font;
-        if (match.entry->isExpired()) {
+        if (match.first->isExpired()) {
             font.setStrikeOut(true);
         }
         return font;
@@ -157,7 +156,7 @@ void AutoTypeMatchModel::entryDataChanged(Entry* entry)
 {
     for (int row = 0; row < m_matches.size(); ++row) {
         AutoTypeMatch match = m_matches[row];
-        if (match.entry == entry) {
+        if (match.first == entry) {
             emit dataChanged(index(row, 0), index(row, columnCount() - 1));
         }
     }
@@ -167,7 +166,7 @@ void AutoTypeMatchModel::entryAboutToRemove(Entry* entry)
 {
     for (int row = 0; row < m_matches.size(); ++row) {
         AutoTypeMatch match = m_matches[row];
-        if (match.entry == entry) {
+        if (match.first == entry) {
             beginRemoveRows(QModelIndex(), row, row);
             m_matches.removeAt(row);
             endRemoveRows();
