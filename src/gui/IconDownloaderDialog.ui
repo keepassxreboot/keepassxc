@@ -29,7 +29,7 @@
       </font>
      </property>
      <property name="text">
-      <string notr="true">Downloading favicon 0/0...</string>
+      <string notr="true">Downloading favicon 0/0…</string>
      </property>
     </widget>
    </item>

@@ -70,7 +70,7 @@ struct ZxcMatch
 {
     int             Begin;   /* Char position of begining of match */
     int             Length;  /* Number of chars in the match */
-    double          Entrpy;  /* The entropy of the match */
+    double          Entropy;  /* The entropy of the match */
     double          MltEnpy; /* Entropy with additional allowance for multipart password */
     ZxcTypeMatch_t  Type;    /* Type of match (Spatial/Dictionary/Order/Repeat) */
     struct ZxcMatch *Next;

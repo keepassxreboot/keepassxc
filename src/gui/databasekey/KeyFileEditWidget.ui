@@ -45,7 +45,7 @@
       <string>Browse for key file</string>
      </property>
      <property name="text">
-      <string>Browse...</string>
+      <string>Browse…</string>
      </property>
     </widget>
    </item>

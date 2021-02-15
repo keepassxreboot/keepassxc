@@ -63,7 +63,7 @@ int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPoint
 
     auto okon = parser->value(Analyze::OkonOption);
     if (!okon.isEmpty()) {
-        out << QObject::tr("Evaluating database entries using okon...") << endl;
+        out << QObject::tr("Evaluating database entries using okon…") << endl;
 
         if (!HibpOffline::okonReport(database, okon, hibpDatabase, findings, &error)) {
             err << error << endl;
@@ -76,7 +76,7 @@ int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPoint
             return EXIT_FAILURE;
         }
 
-        out << QObject::tr("Evaluating database entries against HIBP file, this will take a while...") << endl;
+        out << QObject::tr("Evaluating database entries against HIBP file, this will take a while…") << endl;
 
         if (!HibpOffline::report(database, hibpFile, findings, &error)) {
             err << error << endl;

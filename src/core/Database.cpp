@@ -371,7 +371,7 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
     Q_ASSERT(newKey != oldTransformedKey.rawKey());
     if (newKey.isEmpty() || newKey == oldTransformedKey.rawKey()) {
         if (error) {
-            *error = tr("Key not transformed. This is a bug, please report it to the developers!");
+            *error = tr("Key not transformed. This is a bug, please report it to the developers.");
         }
         return false;
     }

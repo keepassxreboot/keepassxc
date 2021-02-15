@@ -132,7 +132,7 @@
           <string>Browse for share file</string>
          </property>
          <property name="text">
-          <string>Browse...</string>
+          <string>Browse…</string>
          </property>
         </widget>
        </item>

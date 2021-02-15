@@ -209,10 +209,10 @@
        <item>
         <widget class="QCheckBox" name="matchUrlScheme">
          <property name="toolTip">
-          <string>Only entries with the same scheme (http://, https://, ...) are returned.</string>
+          <string>Only entries with the same scheme (http://, https://, …) are returned.</string>
          </property>
          <property name="text">
-          <string>Match URL scheme (e.g., https://...)</string>
+          <string>Match URL scheme (e.g., https://example.com)</string>
          </property>
         </widget>
        </item>
@@ -400,7 +400,7 @@
             <string>Browser for custom proxy file</string>
            </property>
            <property name="text">
-            <string extracomment="Button for opening file dialog">Browse...</string>
+            <string extracomment="Button for opening file dialog">Browse…</string>
            </property>
           </widget>
          </item>
@@ -539,7 +539,7 @@
                <string>Browse for custom browser path</string>
               </property>
               <property name="text">
-               <string extracomment="Button for opening file dialog">Browse...</string>
+               <string extracomment="Button for opening file dialog">Browse…</string>
               </property>
              </widget>
             </item>

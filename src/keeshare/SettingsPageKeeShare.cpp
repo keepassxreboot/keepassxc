@@ -34,7 +34,7 @@ SettingsPageKeeShare::SettingsPageKeeShare(DatabaseTabWidget* tabWidget)
 
 QString SettingsPageKeeShare::name()
 {
-    return QApplication::tr("KeeShare");
+    return "KeeShare";
 }
 
 QIcon SettingsPageKeeShare::icon()

@@ -71,7 +71,7 @@
       <item>
        <widget class="QRadioButton" name="radioDefault">
         <property name="text">
-         <string>Default RFC 6238 token settings</string>
+         <string>Default settings (RFC 6238)</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -84,7 +84,7 @@
       <item>
        <widget class="QRadioButton" name="radioSteam">
         <property name="text">
-         <string>Steam token settings</string>
+         <string>Steam® settings</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">settingsButtonGroup</string>
@@ -94,7 +94,7 @@
       <item>
        <widget class="QRadioButton" name="radioCustom">
         <property name="text">
-         <string>Use custom settings</string>
+         <string>Custom settings:</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">settingsButtonGroup</string>

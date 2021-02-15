@@ -188,11 +188,13 @@ void YubiKey::findValidKeys()
                                            .arg(vender, QString::number(serial), QString::number(slot));
                         ykSlots.append({slot, display});
                     } else if (performTestChallenge(yk_key, slot, &wouldBlock)) {
-                        auto display = tr("%1 [%2] Challenge Response - Slot %3 - %4")
-                                           .arg(vender,
-                                                QString::number(serial),
-                                                QString::number(slot),
-                                                wouldBlock ? tr("Press") : tr("Passive"));
+                        auto display =
+                            tr("%1 [%2] Challenge-Response - Slot %3 - %4")
+                                .arg(vender,
+                                     QString::number(serial),
+                                     QString::number(slot),
+                                     wouldBlock ? tr("Press", "Challenge-Response Key interaction request")
+                                                : tr("Passive", "Challenge-Response Key no interaction required"));
                         ykSlots.append({slot, display});
                     }
                 }
@@ -356,7 +358,7 @@ YubiKey::performChallenge(void* key, int slot, bool mayBlock, const QByteArray& 
             if (yk_errno == YK_ETIMEOUT) {
                 m_error = tr("Hardware key timed out waiting for user interaction.");
             } else if (yk_errno == YK_EUSBERR) {
-                m_error = tr("A USB error ocurred when accessing the hardware key: %1").arg(yk_usb_strerror());
+                m_error = tr("A USB error occurred when accessing the hardware key: %1").arg(yk_usb_strerror());
             } else {
                 m_error = tr("Failed to complete a challenge-response, the specific error was: %1")
                               .arg(yk_strerror(yk_errno));

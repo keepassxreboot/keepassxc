@@ -40,7 +40,7 @@ public:
     ~UpdateCheckDialog() override;
 
 public slots:
-    void showUpdateCheckResponse(bool status, const QString& version);
+    void showUpdateCheckResponse(bool hasUpdate, const QString& version);
 
 private:
     QScopedPointer<Ui::UpdateCheckDialog> m_ui;

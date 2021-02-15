@@ -71,7 +71,7 @@ bool KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const Compos
 
     if (signature1 == KeePass1::SIGNATURE_1 && signature2 == KeePass1::SIGNATURE_2) {
         raiseError(tr("The selected file is an old KeePass 1 database (.kdb).\n\n"
-                      "You can import it by clicking on Database > 'Import KeePass 1 database...'.\n"
+                      "You can import it by clicking on Database > 'Import KeePass 1 database…'.\n"
                       "This is a one-way migration. You won't be able to open the imported "
                       "database with the old KeePassX 0.4 version."));
         return false;

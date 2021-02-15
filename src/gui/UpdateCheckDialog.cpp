@@ -16,9 +16,9 @@
  */
 
 #include "UpdateCheckDialog.h"
-#include "gui/Icons.h"
 #include "ui_UpdateCheckDialog.h"
-#include "updatecheck/UpdateChecker.h"
+
+#include "gui/Icons.h"
 
 UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
     : QDialog(parent)
@@ -36,29 +36,23 @@ UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
             SLOT(showUpdateCheckResponse(bool, QString)));
 }
 
-void UpdateCheckDialog::showUpdateCheckResponse(bool status, const QString& version)
+void UpdateCheckDialog::showUpdateCheckResponse(bool hasUpdate, const QString& version)
 {
     m_ui->progressBar->setVisible(false);
     m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
 
-    if (version == QString("error")) {
-        setWindowTitle(tr("Update Error!"));
+    setWindowTitle(tr("Software Update"));
 
-        m_ui->statusLabel->setText("<strong>" + tr("Update Error!") + "</strong><br><br>"
-                                   + tr("An error occurred in retrieving update information.") + "<br>"
-                                   + tr("Please try again later."));
-        return;
-    }
-
-    if (status) {
-        setWindowTitle(tr("Software Update"));
-        m_ui->statusLabel->setText("<strong>" + tr("A new version of KeePassXC is available!") + "</strong><br><br>"
-                                   + tr("KeePassXC %1 is now available — you have %2.").arg(version, KEEPASSXC_VERSION)
-                                   + "<br><br>" + "<a href='https://keepassxc.org/download/'>"
-                                   + tr("Download it at keepassxc.org") + "</a>");
+    if (version == UpdateChecker::ErrorVersion) {
+        m_ui->statusLabel->setText(
+            tr("An error occurred when trying to retrieve update information, please try again later."));
+    } else if (hasUpdate) {
+        m_ui->statusLabel->setText(
+            tr("<strong>A new version is available.</strong><br/>"
+               "KeePassXC %1 can be <a href=\"https://keepassxc.org/download/\">downloaded here</a>.")
+                .arg(version, KEEPASSXC_VERSION));
     } else {
-        setWindowTitle(tr("You're up-to-date!"));
-        m_ui->statusLabel->setText(tr("KeePassXC %1 is currently the newest version available").arg(KEEPASSXC_VERSION));
+        m_ui->statusLabel->setText(tr("You have the latest version of KeePassXC"));
     }
 }
 

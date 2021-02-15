@@ -27,7 +27,7 @@
 
 QString DatabaseSettingsPageKeeShare::name()
 {
-    return QApplication::tr("KeeShare");
+    return "KeeShare";
 }
 
 QIcon DatabaseSettingsPageKeeShare::icon()

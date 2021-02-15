@@ -33,6 +33,8 @@ public:
     static bool compareVersions(const QString& localVersion, const QString& remoteVersion);
     static UpdateChecker* instance();
 
+    static const QString ErrorVersion;
+
 signals:
     void updateCheckFinished(bool hasNewVersion, QString version, bool isManuallyRequested);
 

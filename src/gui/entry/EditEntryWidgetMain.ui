@@ -199,7 +199,7 @@
          <string>Url field</string>
         </property>
         <property name="placeholderText">
-         <string>https://example.com</string>
+         <string notr="true">https://example.com</string>
         </property>
        </widget>
       </item>

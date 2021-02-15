@@ -27,6 +27,7 @@
 #include <QJsonObject>
 #include <QRegularExpression>
 
+const QString UpdateChecker::ErrorVersion("error");
 UpdateChecker* UpdateChecker::m_instance(nullptr);
 
 UpdateChecker::UpdateChecker(QObject* parent)
@@ -104,7 +105,7 @@ void UpdateChecker::fetchFinished()
         // TODO: change to toSecsSinceEpoch() when min Qt >= 5.8
         config()->set(Config::GUI_CheckForUpdatesNextCheck, Clock::currentDateTime().addDays(7).toTime_t());
     } else {
-        version = "error";
+        version = ErrorVersion;
     }
 
     emit updateCheckFinished(hasNewVersion, version, m_isManuallyRequested);

@@ -24,7 +24,7 @@
 
 QString ReportsPageStatistics::name()
 {
-    return QApplication::tr("Statistics");
+    return QObject::tr("Statistics");
 }
 
 QIcon ReportsPageStatistics::icon()

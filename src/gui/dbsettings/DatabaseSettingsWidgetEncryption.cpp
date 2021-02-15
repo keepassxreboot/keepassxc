@@ -258,7 +258,7 @@ bool DatabaseSettingsWidgetEncryption::save()
         warning.setIcon(QMessageBox::Warning);
         warning.setWindowTitle(tr("Number of rounds too high", "Key transformation rounds"));
         warning.setText(tr("You are using a very high number of key transform rounds with Argon2.\n\n"
-                           "If you keep this number, your database may take hours or days (or even longer) to open!"));
+                           "If you keep this number, your database may take hours, days, or even longer to open."));
         auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
         auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
         warning.setDefaultButton(cancel);
@@ -271,7 +271,7 @@ bool DatabaseSettingsWidgetEncryption::save()
         warning.setIcon(QMessageBox::Warning);
         warning.setWindowTitle(tr("Number of rounds too low", "Key transformation rounds"));
         warning.setText(tr("You are using a very low number of key transform rounds with AES-KDF.\n\n"
-                           "If you keep this number, your database may be too easy to crack!"));
+                           "If you keep this number, your database will not be protected from brute force attacks."));
         auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
         auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
         warning.setDefaultButton(cancel);

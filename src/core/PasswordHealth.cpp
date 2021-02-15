@@ -34,13 +34,13 @@ PasswordHealth::PasswordHealth(double entropy)
     switch (quality()) {
     case Quality::Bad:
     case Quality::Poor:
-        m_scoreReasons << QApplication::tr("Very weak password");
-        m_scoreDetails << QApplication::tr("Password entropy is %1 bits").arg(QString::number(m_entropy, 'f', 2));
+        m_scoreReasons << QObject::tr("Very weak password");
+        m_scoreDetails << QObject::tr("Password entropy is %1 bits").arg(QString::number(m_entropy, 'f', 2));
         break;
 
     case Quality::Weak:
-        m_scoreReasons << QApplication::tr("Weak password");
-        m_scoreDetails << QApplication::tr("Password entropy is %1 bits").arg(QString::number(m_entropy, 'f', 2));
+        m_scoreReasons << QObject::tr("Weak password");
+        m_scoreDetails << QObject::tr("Password entropy is %1 bits").arg(QString::number(m_entropy, 'f', 2));
         break;
 
     default:
@@ -108,7 +108,7 @@ HealthChecker::HealthChecker(QSharedPointer<Database> db)
     for (const auto* entry : db->rootGroup()->entriesRecursive()) {
         if (!entry->isRecycled() && !entry->isAttributeReference("Password")) {
             m_reuse[entry->password()]
-                << QApplication::tr("Used in %1/%2").arg(entry->group()->hierarchy().join('/'), entry->title());
+                << QObject::tr("Used in %1/%2").arg(entry->group()->hierarchy().join('/'), entry->title());
         }
     }
 }
@@ -137,7 +137,7 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
     if (count > 1) {
         constexpr auto penalty = 15;
         health->adjustScore(-penalty * (count - 1));
-        health->addScoreReason(QApplication::tr("Password is used %1 times").arg(QString::number(count)));
+        health->addScoreReason(QObject::tr("Password is used %1 time(s)", "", count).arg(QString::number(count)));
         // Add the first 20 uses of the password to prevent the details display from growing too large
         for (int i = 0; i < used.size(); ++i) {
             health->addScoreDetails(used[i]);
@@ -159,11 +159,11 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
     // reduce score by 2 points per day.
     if (entry->isExpired()) {
         health->setScore(0);
-        health->addScoreReason(QApplication::tr("Password has expired"));
-        health->addScoreDetails(QApplication::tr("Password expiry was %1")
+        health->addScoreReason(QObject::tr("Password has expired"));
+        health->addScoreDetails(QObject::tr("Password expiry was %1")
                                     .arg(entry->timeInfo().expiryTime().toString(Qt::DefaultLocaleShortDate)));
     } else if (entry->timeInfo().expires()) {
-        const auto days = QDateTime::currentDateTime().daysTo(entry->timeInfo().expiryTime());
+        const int days = QDateTime::currentDateTime().daysTo(entry->timeInfo().expiryTime());
         if (days <= 30) {
             // First bring the score down into the "weak" range
             // so that the entry appears in Health Check. Then
@@ -173,14 +173,17 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
             if (health->score() > 60) {
                 health->setScore(60);
             }
-            // clang-format off
+
             health->adjustScore((30 - days) * -2);
-            health->addScoreReason(days <= 2 ? QApplication::tr("Password is about to expire")
-                                             : days <= 10 ? QApplication::tr("Password expires in %1 days").arg(days)
-                                                          : QApplication::tr("Password will expire soon"));
-            health->addScoreDetails(QApplication::tr("Password expires on %1")
+            health->addScoreDetails(QObject::tr("Password expires on %1")
                                         .arg(entry->timeInfo().expiryTime().toString(Qt::DefaultLocaleShortDate)));
-            //clang-format on
+            if (days <= 2) {
+                health->addScoreReason(QObject::tr("Password is about to expire"));
+            } else if (days <= 10) {
+                health->addScoreReason(QObject::tr("Password expires in %1 day(s)", "", days).arg(days));
+            } else {
+                health->addScoreReason(QObject::tr("Password will expire soon"));
+            }
         }
     }
 

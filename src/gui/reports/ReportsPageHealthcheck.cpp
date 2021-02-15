@@ -29,7 +29,7 @@ ReportsPageHealthcheck::ReportsPageHealthcheck()
 
 QString ReportsPageHealthcheck::name()
 {
-    return QApplication::tr("Health Check");
+    return QObject::tr("Health Check");
 }
 
 QIcon ReportsPageHealthcheck::icon()
