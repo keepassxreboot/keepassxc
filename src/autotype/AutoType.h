@@ -86,7 +86,7 @@ private:
     void resetAutoTypeState();
 
     static QList<QSharedPointer<AutoTypeAction>>
-    parseActions(const QString& entrySequence, const Entry* entry, QString* error = nullptr);
+    parseSequence(const QString& entrySequence, const Entry* entry, QString& error, bool syntaxOnly = false);
 
     QMutex m_inAutoType;
     QMutex m_inGlobalAutoTypeDialog;

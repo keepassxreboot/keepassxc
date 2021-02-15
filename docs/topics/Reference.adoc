@@ -1,0 +1,94 @@
+= KeePassXC - Reference
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== Reference
+This section contains full details on advanced features available in KeePassXC.
+
+=== Entry Placeholders
+[grid=rows, frame=none, width=90%]
+|===
+|Placeholder |Description
+
+|{TITLE}         |Entry Title
+|{USERNAME}      |Username
+|{PASSWORD}      |Password
+|{URL}           |URL
+|{NOTES}         |Notes
+|{TOTP}          |Current TOTP value (if configured)
+|{S:<ATTRIBUTE_NAME>}   |Value for the given attribute (case sensitive)
+|{URL:RMVSCM}	        |URL without scheme (e.g., https)
+|{URL:WITHOUTSCHEME}	|URL without scheme
+|{URL:SCM}	     |URL Scheme
+|{URL:SCHEME}	 |URL Scheme
+|{URL:HOST}	     |URL Host (e.g., example.com)
+|{URL:PORT}	     |URL Port
+|{URL:PATH}	     |URL Path (e.g., /path/to/page.html)
+|{URL:QUERY}	 |URL Query String
+|{URL:FRAGMENT}	 |URL Fragment
+|{URL:USERINFO}	 |URL Username:Password
+|{URL:USERNAME}	 |URL Username
+|{URL:PASSWORD}	 |URL Password
+|{DT_SIMPLE}	 |Current Date-Time (yyyyMMddhhmmss)
+|{DT_YEAR}	     |Current Year (yyyy)
+|{DT_MONTH}	     |Current Month (MM)
+|{DT_DAY}	     |Current Day (dd)
+|{DT_HOUR}	     |Current Hour (hh)
+|{DT_MINUTE}	 |Current Minutes (mm)
+|{DT_SECOND}	 |Current Seconds (ss)
+|{DT_UTC_SIMPLE} |Current UTC Date-Time (yyyyMMddhhmmss)
+|{DT_UTC_YEAR}	 |Current UTC Year (yyyy)
+|{DT_UTC_MONTH}	 |Current UTC Month (MM)
+|{DT_UTC_DAY}	 |Current UTC Day (dd)
+|{DT_UTC_HOUR}	 |Current UTC Hour (hh)
+|{DT_UTC_MINUTE} |Current UTC Minutes (mm)
+|{DT_UTC_SECOND} |Current UTC Seconds (ss)
+|{DB_DIR}	     |Absolute directory path of database file
+|===
+
+=== Entry Cross-Reference
+A reference to another entry's field is possible using the short-hand syntax:  
+`{REF:<FIELD>@<SEARCH_IN>:<SEARCH_TEXT>}`
+
+`<FIELD>` and `<SEARCH_IN>` can be one of following:
+
+* T - Title
+* U - Username
+* P - Password
+* A - URL
+* N - Notes
+* I - UUID (found on entry properties page)
+* O - Custom Attribute _(SEARCH_IN only)_
+
+Examples: +
+`{REF:U@I:033054D445C648C59092CC1D661B1B71}` +
+`{REF:P@T:Other Entry}` +
+`{REF:A@O:Attribute 1}`
+
+=== Auto-Type Actions
+[grid=rows, frame=none, width=90%]
+|===
+|Action Code |Description
+
+|{TAB}, {ENTER}, {SPACE}, {INSERT}, {DELETE}, {HOME}, {END}, {PGUP}, {PGDN}, {BACKSPACE}, {CAPSLOCK}, {ESC}
+|Press the corresponding keyboard key
+
+|{UP}, {DOWN}, {LEFT}, {RIGHT}  |Press the corresponding arrow key
+|{F1}, {F2}, ..., {F16}         |Press F1, F2, etc.
+|{LEFTBRACE}, {RIGHTBRACE}      |Press `{` or `}`, respectively
+|{<KEY> X}  |Repeat <KEY> X times (e.g., {SPACE 5} inserts five spaces)
+|{DELAY=X}     |Set delay between key presses to X milliseconds
+|{DELAY X}     |Pause typing for X milliseconds
+|{CLEARFIELD}  |Clear the input field
+|{PICKCHARS}   |Pick specific password characters from a dialog
+|===
+
+*Text Conversions:*
+
+*{T-CONV:/<PLACEHOLDER>/<METHOD>/}* +
+Convert resolved placeholder (e.g., {USERNAME}, {PASSWORD}, etc.) using the following methods: UPPER, LOWER, BASE64, HEX, URI, URI-DEC.
+
+*{T-REPLACE-RX:/<PLACEHOLDER>/<SEARCH>/<REPLACE>/}* +
+Use regular expressions to find and replace data from a resolved placeholder. Refer to match groups using $1, $2, etc.
+// end::content[]

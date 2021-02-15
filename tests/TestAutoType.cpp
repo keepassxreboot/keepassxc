@@ -40,7 +40,7 @@ void TestAutoType::initTestCase()
     config()->set(Config::Security_AutoTypeAsk, false);
     AutoType::createTestInstance();
 
-    QPluginLoader loader(resources()->pluginPath("keepassx-autotype-test"));
+    QPluginLoader loader(resources()->pluginPath("keepassxc-autotype-test"));
     loader.setLoadHints(QLibrary::ResolveAllSymbolsHint);
     QVERIFY(loader.instance());
 
@@ -312,7 +312,7 @@ void TestAutoType::testAutoTypeResults_data()
     QTest::newRow("T-CONV HEX") << QString("{T-CONV:/{USERNAME}/HEX/}") << QString("557365726e616d65");
     QTest::newRow("T-CONV URI ENCODE") << QString("{T-CONV:/{URL}/URI/}") << QString("https%3A%2F%2Fexample.com");
     QTest::newRow("T-CONV URI DECODE") << QString("{T-CONV:/{S:attr2}/URI-DEC/}") << QString("decode me");
-    QTest::newRow("T-REPLACE-RX") << QString("{T-REPLACE-RX:/{USERNAME}/User/Pass/}") << QString("Passname");
+    QTest::newRow("T-REPLACE-RX") << QString("{T-REPLACE-RX:/{USERNAME}/(User)/$1Pass/}") << QString("UserPassname");
 }
 
 void TestAutoType::testAutoTypeSyntaxChecks()
