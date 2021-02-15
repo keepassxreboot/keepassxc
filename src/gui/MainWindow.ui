@@ -337,6 +337,7 @@
     </property>
     <addaction name="actionGroupNew"/>
     <addaction name="actionGroupEdit"/>
+    <addaction name="actionGroupClone"/>
     <addaction name="actionGroupDelete"/>
     <addaction name="actionGroupEmptyRecycleBin"/>
     <addaction name="separator"/>
@@ -1043,6 +1044,14 @@
    </property>
    <property name="toolTip">
     <string notr="true">{USERNAME}{TAB}{PASSWORD}{ENTER}</string>
+   </property>
+  </action>
+  <action name="actionGroupClone">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Clone Group...</string>
    </property>
   </action>
  </widget>

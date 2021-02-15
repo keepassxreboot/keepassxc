@@ -905,6 +905,10 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
         clonedGroup->m_data.timeInfo.setLocationChanged(now);
     }
 
+    if (groupFlags & Group::CloneRenameTitle) {
+        clonedGroup->setName(tr("%1 - Clone").arg(name()));
+    }
+
     return clonedGroup;
 }
 

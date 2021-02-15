@@ -164,6 +164,7 @@ Files: share/icons/application/scalable/actions/chevron-double-down.svg
        share/icons/application/scalable/actions/entry-edit.svg
        share/icons/application/scalable/actions/entry-new.svg
        share/icons/application/scalable/actions/favicon-download.svg
+       share/icons/application/scalable/actions/group-clone.svg
        share/icons/application/scalable/actions/group-delete.svg
        share/icons/application/scalable/actions/group-edit.svg
        share/icons/application/scalable/actions/group-empty-trash.svg

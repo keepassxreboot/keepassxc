@@ -53,6 +53,7 @@ public:
         CloneResetTimeInfo = 2, // set all TimeInfo attributes to the current time
         CloneIncludeEntries = 4, // clone the group entries
         CloneDefault = CloneNewUuid | CloneResetTimeInfo | CloneIncludeEntries,
+        CloneRenameTitle = 8, // add "- Clone" after the original title
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
