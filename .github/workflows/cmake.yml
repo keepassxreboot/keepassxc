@@ -54,6 +54,9 @@ jobs:
     runs-on: windows-2019
 
     steps:
+    - name: Version
+      run: ver
+
     - uses: actions/checkout@v2
 
     - uses: msys2/setup-msys2@v2
@@ -77,7 +80,7 @@ jobs:
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
-      shell: bash
+      shell: msys2 {0}
       working-directory: ${{github.workspace}}/build
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
@@ -86,7 +89,7 @@ jobs:
 
     - name: Build
       working-directory: ${{github.workspace}}/build
-      shell: bash
+      shell: msys2 {0}
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
 
