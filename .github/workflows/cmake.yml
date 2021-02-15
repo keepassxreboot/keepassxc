@@ -18,8 +18,9 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install Dependencies
-      run: sudo apt update
-      run: sudo scripts/install_deps_debian10.sh
+      run: |
+        sudo apt update
+        sudo scripts/install_deps_debian10.sh
 
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
