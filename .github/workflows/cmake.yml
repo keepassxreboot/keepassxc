@@ -57,7 +57,6 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install Dependencies
-    - uses: msys2/setup-msys2@v2
     - shell: msys2 {0}
       run: |
         pacman -S git make mingw-w64-$(uname -m)-gcc mingw-w64-$(uname -m)-binutils mingw-w64-$(uname -m)-cmake
