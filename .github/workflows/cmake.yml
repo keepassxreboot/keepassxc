@@ -55,7 +55,7 @@ jobs:
 
     steps:
     - name: Version
-      run: ver
+      run: [System.Environment]::OSVersion.Version
 
     - uses: actions/checkout@v2
 
