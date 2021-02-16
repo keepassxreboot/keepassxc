@@ -79,7 +79,8 @@ jobs:
           mingw-w64-$(uname -m)-libgpg-error \
           mingw-w64-$(uname -m)-asciidoctor
 
-    - name: Create Build Environment 
+    - name: Create Build Environment
+      shell: bash
       # Some projects don't allow in-source building, so create a separate build directory
       # We'll use this as our working directory for all subsequent commands
       run: cmake -E make_directory ${{github.workspace}}/build
@@ -87,7 +88,7 @@ jobs:
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
-      shell: msys2 {0}
+      shell: bash
       working-directory: ${{github.workspace}}/build
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
@@ -96,7 +97,7 @@ jobs:
 
     - name: Build
       working-directory: ${{github.workspace}}/build
-      shell: msys2 {0}
+      shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
 
