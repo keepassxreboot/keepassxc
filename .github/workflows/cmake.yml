@@ -65,13 +65,19 @@ jobs:
     - name: Install Dependencies
       shell: msys2 {0}
       run: |
-        pacman -S --noconfirm git make mingw-w64-$(uname -m)-gcc mingw-w64-$(uname -m)-binutils mingw-w64-$(uname -m)-cmake
-        pacman -S --noconfirm mingw-w64-$(uname -m)-toolchain
-        pacman -S --noconfirm mingw-w64-$(uname -m)-qt5 \
+        pacman -S --noconfirm \
+          git \
+          make \
+          mingw-w64-$(uname -m)-binutils \
+          mingw-w64-$(uname -m)-cmake \
+          mingw-w64-$(uname -m)-gcc \
+          mingw-w64-$(uname -m)-qt5 \
+          mingw-w64-$(uname -m)-toolchain \
           mingw-w64-$(uname -m)-libgcrypt mingw-w64-$(uname -m)-zlib \
           mingw-w64-$(uname -m)-argon2 mingw-w64-$(uname -m)-libsodium \
           mingw-w64-$(uname -m)-qrencode mingw-w64-$(uname -m)-quazip \
-          mingw-w64-$(uname -m)-asciidoctor        
+          mingw-w64-$(uname -m)-libgpg-error \
+          mingw-w64-$(uname -m)-asciidoctor
 
     - name: Create Build Environment 
       # Some projects don't allow in-source building, so create a separate build directory
