@@ -88,6 +88,9 @@ jobs:
     - run: pacman --noconfirm -S mingw-w64-i686-clang
       if: ${{ (matrix.msystem == 'MINGW32') && (matrix.compiler == 'clang') }}
     - run: ${{ matrix.compiler }} --version
+    - run: cmake -E make_directory ${{github.workspace}}/build
+    - run: cd ${{github.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+    - run: cd ${{github.workspace}}/build && cmake --build . --config $BUILD_TYPE
 
 
 
