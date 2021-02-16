@@ -106,3 +106,16 @@ jobs:
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C $BUILD_TYPE
+
+  build-macos-10-15:
+    runs-on: macos-10.15
+
+    steps:
+    - name: Version
+      run: uname -a
+
+    - uses: actions/checkout@v2
+
+    - name: Install Dependencies
+      run: |
+        sudo scripts/install_deps_macos_10.15.sh
