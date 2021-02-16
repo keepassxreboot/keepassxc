@@ -67,19 +67,19 @@ jobs:
         update: true
         install: >-
           make
-          mingw-w64-$(uname -m)-binutils
-          mingw-w64-$(uname -m)-cmake
-          mingw-w64-$(uname -m)-gcc
-          mingw-w64-$(uname -m)-qt5
-          mingw-w64-$(uname -m)-toolchain
-          mingw-w64-$(uname -m)-libgcrypt
-          mingw-w64-$(uname -m)-zlib
-          mingw-w64-$(uname -m)-argon2
-          mingw-w64-$(uname -m)-libsodium
-          mingw-w64-$(uname -m)-qrencode
-          mingw-w64-$(uname -m)-quazip
-          mingw-w64-$(uname -m)-libgpg-error
-          mingw-w64-$(uname -m)-asciidoctor
+          mingw-w64-x86_64-binutils
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-qt5
+          mingw-w64-x86_64-toolchain
+          mingw-w64-x86_64-libgcrypt
+          mingw-w64-x86_64-zlib
+          mingw-w64-x86_64-argon2
+          mingw-w64-x86_64-libsodium
+          mingw-w64-x86_64-qrencode
+          mingw-w64-x86_64-quazip
+          mingw-w64-x86_64-libgpg-error
+          mingw-w64-x86_64-asciidoctor
 
     - run: pacman --noconfirm -S gcc
       if: ${{ matrix.compiler == 'gcc' }}
