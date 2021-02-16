@@ -65,6 +65,19 @@ jobs:
       with:
         msystem: ${{ matrix.msystem }}
         install: make
+          git \
+          make \
+          mingw-w64-$(uname -m)-binutils \
+          mingw-w64-$(uname -m)-cmake \
+          mingw-w64-$(uname -m)-gcc \
+          mingw-w64-$(uname -m)-qt5 \
+          mingw-w64-$(uname -m)-toolchain \
+          mingw-w64-$(uname -m)-libgcrypt mingw-w64-$(uname -m)-zlib \
+          mingw-w64-$(uname -m)-argon2 mingw-w64-$(uname -m)-libsodium \
+          mingw-w64-$(uname -m)-qrencode mingw-w64-$(uname -m)-quazip \
+          mingw-w64-$(uname -m)-libgpg-error \
+          mingw-w64-$(uname -m)-asciidoctor
+
     - run: pacman --noconfirm -S gcc
       if: ${{ matrix.compiler == 'gcc' }}
     - run: pacman --noconfirm -S mingw-w64-x86_64-clang
@@ -72,9 +85,7 @@ jobs:
     - run: pacman --noconfirm -S mingw-w64-i686-clang
       if: ${{ (matrix.msystem == 'MINGW32') && (matrix.compiler == 'clang') }}
     - run: ${{ matrix.compiler }} --version
-    - run: make CC=${{ matrix.compiler }}
-    - run: file ./hello.exe
-    - run: ./hello
+
 
 
   build-macos-10-15:
