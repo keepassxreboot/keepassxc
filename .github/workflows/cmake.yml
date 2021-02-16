@@ -52,61 +52,30 @@ jobs:
 
   build-windows-10-xxxx:
     runs-on: windows-2019
-
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+        msystem: [MINGW32, MINGW64]
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
-    - name: Version
-      run: |
-        [System.Environment]::OSVersion.Version
-
     - uses: actions/checkout@v2
-
     - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        install: make
+    - run: pacman --noconfirm -S gcc
+      if: ${{ matrix.compiler == 'gcc' }}
+    - run: pacman --noconfirm -S mingw-w64-x86_64-clang
+      if: ${{ (matrix.msystem == 'MINGW64') && (matrix.compiler == 'clang') }}
+    - run: pacman --noconfirm -S mingw-w64-i686-clang
+      if: ${{ (matrix.msystem == 'MINGW32') && (matrix.compiler == 'clang') }}
+    - run: ${{ matrix.compiler }} --version
+    - run: make CC=${{ matrix.compiler }}
+    - run: file ./hello.exe
+    - run: ./hello
 
-    - name: Install Dependencies
-      shell: msys2 {0}
-      run: |
-        pacman -S --noconfirm \
-          git \
-          make \
-          mingw-w64-$(uname -m)-binutils \
-          mingw-w64-$(uname -m)-cmake \
-          mingw-w64-$(uname -m)-gcc \
-          mingw-w64-$(uname -m)-qt5 \
-          mingw-w64-$(uname -m)-toolchain \
-          mingw-w64-$(uname -m)-libgcrypt mingw-w64-$(uname -m)-zlib \
-          mingw-w64-$(uname -m)-argon2 mingw-w64-$(uname -m)-libsodium \
-          mingw-w64-$(uname -m)-qrencode mingw-w64-$(uname -m)-quazip \
-          mingw-w64-$(uname -m)-libgpg-error \
-          mingw-w64-$(uname -m)-asciidoctor
-
-    - name: Create Build Environment
-      shell: bash
-      # Some projects don't allow in-source building, so create a separate build directory
-      # We'll use this as our working directory for all subsequent commands
-      run: cmake -E make_directory ${{github.workspace}}/build
-
-    - name: Configure CMake
-      # Use a bash shell so we can use the same syntax for environment variable
-      # access regardless of the host operating system
-      shell: bash
-      working-directory: ${{github.workspace}}/build
-      # Note the current convention is to use the -S and -B options here to specify source 
-      # and build directories, but this is only available with CMake 3.13 and higher.  
-      # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-
-    - name: Build
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build . --config $BUILD_TYPE
-
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C $BUILD_TYPE
 
   build-macos-10-15:
     runs-on: macos-10.15
