@@ -10,13 +10,13 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>800</width>
-    <height>0</height>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,9 +31,6 @@
      <number>0</number>
     </property>
     <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
      <number>0</number>
     </property>
     <property name="rightMargin">
