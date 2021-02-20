@@ -15,20 +15,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>
-#include <memory>
-
 #include <QCommandLineParser>
-#include <QCoreApplication>
-#include <QDir>
-#include <QScopedPointer>
+#include <QFileInfo>
 #include <QStringList>
 
-#include "cli/TextStream.h"
-#include <cli/Command.h>
-
+#include "Command.h"
 #include "DatabaseCommand.h"
 #include "Open.h"
+#include "TextStream.h"
 #include "Utils.h"
 #include "config-keepassx.h"
 #include "core/Bootstrap.h"
@@ -165,10 +159,9 @@ void enterInteractiveMode(const QStringList& arguments)
             break;
         }
 
-        cmd->currentDatabase = currentDatabase;
+        cmd->currentDatabase.swap(currentDatabase);
         cmd->execute(args);
-        currentDatabase = cmd->currentDatabase;
-        cmd->currentDatabase.reset();
+        currentDatabase.swap(cmd->currentDatabase);
     }
 
     if (currentDatabase) {
@@ -179,7 +172,7 @@ void enterInteractiveMode(const QStringList& arguments)
 int main(int argc, char** argv)
 {
     if (!Crypto::init()) {
-        qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
+        qWarning("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
         return EXIT_FAILURE;
     }
 

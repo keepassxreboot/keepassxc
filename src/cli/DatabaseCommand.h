@@ -18,11 +18,7 @@
 #ifndef KEEPASSXC_DATABASECOMMAND_H
 #define KEEPASSXC_DATABASECOMMAND_H
 
-#include <QCommandLineOption>
-
 #include "Command.h"
-#include "Utils.h"
-#include "core/Database.h"
 
 class DatabaseCommand : public Command
 {

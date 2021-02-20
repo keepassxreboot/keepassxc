@@ -17,13 +17,6 @@
 
 #include "Close.h"
 
-#include <QCommandLineParser>
-#include <QtGlobal>
-
-#include "DatabaseCommand.h"
-#include "TextStream.h"
-#include "Utils.h"
-
 Close::Close()
 {
     name = QString("close");

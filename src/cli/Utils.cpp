@@ -17,6 +17,11 @@
 
 #include "Utils.h"
 
+#include "core/Database.h"
+#include "core/EntryAttributes.h"
+#include "keys/CompositeKey.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 #ifdef WITH_XC_YUBIKEY
 #include "keys/YkChallengeResponseKey.h"
 #endif
@@ -30,7 +35,7 @@
 
 #include <QFileInfo>
 #include <QProcess>
-#include <QScopedPointer>
+#include <QTextStream>
 
 namespace Utils
 {
@@ -91,7 +96,7 @@ namespace Utils
     }
 
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
-                                            const bool isPasswordProtected,
+                                            bool isPasswordProtected,
                                             const QString& keyFilename,
                                             const QString& yubiKeySlot,
                                             bool quiet)
@@ -289,7 +294,7 @@ namespace Utils
 
         QStringList failedProgramNames;
 
-        for (auto prog : clipPrograms) {
+        for (const auto& prog : clipPrograms) {
             QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
 
             // Skip empty parts, otherwise the program may clip the empty string

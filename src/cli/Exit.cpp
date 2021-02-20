@@ -17,10 +17,6 @@
 
 #include "Exit.h"
 
-#include <QCommandLineParser>
-#include <QObject>
-#include <QtGlobal>
-
 Exit::Exit(const QString& name)
 {
     this->name = name;

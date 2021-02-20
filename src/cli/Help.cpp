@@ -17,8 +17,6 @@
 
 #include "Help.h"
 
-#include "Command.h"
-#include "TextStream.h"
 #include "Utils.h"
 
 Help::Help()

@@ -16,7 +16,6 @@
  */
 
 #include "DatabaseCommand.h"
-
 #include "Utils.h"
 
 DatabaseCommand::DatabaseCommand()

@@ -18,13 +18,13 @@
 #ifndef KEEPASSXC_UTILS_H
 #define KEEPASSXC_UTILS_H
 
-#include "cli/TextStream.h"
-#include "core/Database.h"
-#include "core/EntryAttributes.h"
-#include "keys/CompositeKey.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
-#include <QtCore/qglobal.h>
+#include <QTextStream>
+
+class CompositeKey;
+class Database;
+class EntryAttributes;
+class FileKey;
+class PasswordKey;
 
 namespace Utils
 {
@@ -41,7 +41,7 @@ namespace Utils
     QSharedPointer<PasswordKey> getConfirmedPassword();
     int clipText(const QString& text);
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
-                                            const bool isPasswordProtected = true,
+                                            bool isPasswordProtected = true,
                                             const QString& keyFilename = {},
                                             const QString& yubiKeySlot = {},
                                             bool quiet = false);

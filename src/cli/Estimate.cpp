@@ -16,21 +16,11 @@
  */
 
 #include "Estimate.h"
-#include "cli/Utils.h"
 
-#include "cli/TextStream.h"
+#include "Utils.h"
 #include "core/PasswordHealth.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <zxcvbn.h>
 
-/* For pre-compiled headers under windows */
-#ifdef _WIN32
-#ifndef __MINGW32__
-#include "stdafx.h"
-#endif
-#endif
+#include <zxcvbn.h>
 
 const QCommandLineOption Estimate::AdvancedOption =
     QCommandLineOption(QStringList() << "a"

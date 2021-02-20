@@ -15,21 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>
-#include <stdio.h>
+#include "Create.h"
+
+#include "Utils.h"
+#include "keys/FileKey.h"
 
 #include <QFileInfo>
-#include <QString>
-#include <QTextStream>
-
-#include "Create.h"
-#include "Utils.h"
-
-#include "core/Database.h"
-
-#include "keys/CompositeKey.h"
-#include "keys/FileKey.h"
-#include "keys/Key.h"
 
 const QCommandLineOption Create::DecryptionTimeOption =
     QCommandLineOption(QStringList() << "t"

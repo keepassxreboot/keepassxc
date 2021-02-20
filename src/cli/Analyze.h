@@ -28,9 +28,6 @@ public:
 
     static const QCommandLineOption HIBPDatabaseOption;
     static const QCommandLineOption OkonOption;
-
-private:
-    void printHibpFinding(const Entry* entry, int count, QTextStream& out);
 };
 
 #endif // KEEPASSXC_HIBP_H

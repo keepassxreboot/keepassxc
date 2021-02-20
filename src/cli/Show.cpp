@@ -17,17 +17,8 @@
 
 #include "Show.h"
 
-#include <cstdlib>
-#include <stdio.h>
-
 #include "Utils.h"
-#include "cli/TextStream.h"
-#include "core/Database.h"
-#include "core/Entry.h"
-#include "core/Global.h"
 #include "core/Group.h"
-
-#include <QLocale>
 
 const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
                                                                              << "totp",

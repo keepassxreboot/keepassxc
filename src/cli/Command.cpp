@@ -15,13 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdio>
-#include <cstdlib>
-#include <utility>
-
-#include <QFileInfo>
-#include <QMap>
-
 #include "Command.h"
 
 #include "Add.h"
@@ -47,8 +40,10 @@
 #include "Remove.h"
 #include "RemoveGroup.h"
 #include "Show.h"
-#include "TextStream.h"
 #include "Utils.h"
+
+#include <QFileInfo>
+#include <QRegularExpression>
 
 const QCommandLineOption Command::HelpOption = QCommandLineOption(QStringList()
 #ifdef Q_OS_WIN
