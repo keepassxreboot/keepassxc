@@ -32,7 +32,6 @@ public:
     static const QCommandLineOption NotesOption;
     static const QCommandLineOption PasswordPromptOption;
     static const QCommandLineOption GenerateOption;
-    static const QCommandLineOption PasswordLengthOption;
 };
 
 #endif // KEEPASSXC_ADD_H

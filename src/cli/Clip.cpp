@@ -15,18 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <chrono>
-#include <cstdlib>
-#include <thread>
-
 #include "Clip.h"
 
-#include "cli/TextStream.h"
-#include "cli/Utils.h"
-#include "core/Database.h"
+#include "Utils.h"
 #include "core/Entry.h"
-#include "core/Global.h"
 #include "core/Group.h"
+#include "core/Tools.h"
 
 const QCommandLineOption Clip::AttributeOption = QCommandLineOption(
     QStringList() << "a"
@@ -155,7 +149,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         out << '\r' << QString(lastLine.size(), ' ') << '\r';
         lastLine = QObject::tr("Clearing the clipboard in %1 second(s)…", "", timeoutSeconds).arg(timeoutSeconds);
         out << lastLine << flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        Tools::sleep(1000);
         --timeoutSeconds;
     }
     Utils::clipText("");

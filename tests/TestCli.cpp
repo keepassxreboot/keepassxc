@@ -21,18 +21,17 @@
 #include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Entry.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "keys/FileKey.h"
 #include "keys/drivers/YubiKey.h"
 
 #include "cli/Add.h"
 #include "cli/AddGroup.h"
 #include "cli/Analyze.h"
 #include "cli/Clip.h"
-#include "cli/Command.h"
 #include "cli/Create.h"
 #include "cli/Diceware.h"
 #include "cli/Edit.h"
@@ -53,15 +52,10 @@
 #include "cli/Utils.h"
 
 #include <QClipboard>
-#include <QFuture>
-#include <QSet>
 #include <QSignalSpy>
-#include <QTextStream>
 #include <QtConcurrent>
 
 QTEST_MAIN(TestCli)
-
-QSharedPointer<Database> globalCurrentDatabase;
 
 void TestCli::initTestCase()
 {

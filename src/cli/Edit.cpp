@@ -15,19 +15,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>
-#include <stdio.h>
-
 #include "Edit.h"
 
-#include "cli/Add.h"
-#include "cli/Generate.h"
-#include "cli/TextStream.h"
-#include "cli/Utils.h"
-#include "core/Database.h"
+#include "Add.h"
+#include "Generate.h"
+#include "Utils.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "core/PasswordGenerator.h"
 
 const QCommandLineOption Edit::TitleOption = QCommandLineOption(QStringList() << "t"
                                                                               << "title",

@@ -15,13 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>
-#include <stdio.h>
-
 #include "Generate.h"
 
-#include "cli/TextStream.h"
-#include "cli/Utils.h"
+#include "TextStream.h"
+#include "Utils.h"
 
 const QCommandLineOption Generate::PasswordLengthOption =
     QCommandLineOption(QStringList() << "L"

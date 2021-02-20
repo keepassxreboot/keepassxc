@@ -15,22 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>
-#include <stdio.h>
-
-#include <QFileInfo>
-#include <QString>
-#include <QTextStream>
-
-#include "Create.h"
 #include "Import.h"
 
-#include "cli/TextStream.h"
-#include "cli/Utils.h"
-#include "core/Database.h"
-#include "keys/CompositeKey.h"
-#include "keys/FileKey.h"
-#include "keys/Key.h"
+#include "Create.h"
+#include "Utils.h"
+
+#include <QFileInfo>
 
 /**
  * Create a database file from an XML export of another database.

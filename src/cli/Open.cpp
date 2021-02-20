@@ -17,12 +17,6 @@
 
 #include "Open.h"
 
-#include <QCommandLineParser>
-
-#include "DatabaseCommand.h"
-#include "TextStream.h"
-#include "Utils.h"
-
 Open::Open()
 {
     name = QString("open");

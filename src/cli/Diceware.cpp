@@ -15,13 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>
-#include <stdio.h>
-
 #include "Diceware.h"
 
 #include "Utils.h"
-#include "cli/TextStream.h"
 #include "core/PassphraseGenerator.h"
 
 const QCommandLineOption Diceware::WordCountOption =

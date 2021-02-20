@@ -21,7 +21,6 @@
 #include <QCommandLineOption>
 #include <QCommandLineParser>
 #include <QList>
-#include <QObject>
 #include <QString>
 #include <QStringList>
 

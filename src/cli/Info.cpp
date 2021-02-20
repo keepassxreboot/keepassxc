@@ -14,16 +14,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <cstdlib>
-#include <stdio.h>
 
 #include "Info.h"
-#include "Utils.h"
 
-#include "core/Database.h"
+#include "Utils.h"
 #include "core/Global.h"
 #include "core/Metadata.h"
-#include "format/KeePass2.h"
 
 Info::Info()
 {
