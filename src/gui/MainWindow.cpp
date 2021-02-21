@@ -120,6 +120,17 @@ MainWindow::MainWindow()
     m_searchWidgetAction = m_ui->toolBar->addWidget(m_searchWidget);
     m_searchWidgetAction->setEnabled(false);
 
+    new QShortcut(QKeySequence::Find, this, SLOT(focusSearchWidget()));
+
+    connect(m_searchWidget, &SearchWidget::searchCanceled, this, [this] {
+        m_ui->toolBar->setExpanded(false);
+        m_ui->toolBar->setVisible(!config()->get(Config::GUI_HideToolbar).toBool());
+    });
+    connect(m_searchWidget, &SearchWidget::lostFocus, this, [this] {
+        m_ui->toolBar->setExpanded(false);
+        m_ui->toolBar->setVisible(!config()->get(Config::GUI_HideToolbar).toBool());
+    });
+
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     m_entryContextMenu = new QMenu(this);
@@ -1273,7 +1284,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 dbWidget->focusOnEntries(true);
                 return;
             } else if (event->key() == Qt::Key_F3) {
-                m_searchWidget->searchFocus();
+                focusSearchWidget();
+                return;
+            } else if (event->key() == Qt::Key_Escape && dbWidget->isSearchActive()) {
+                m_searchWidget->clearSearch();
                 return;
             }
         }
@@ -1294,13 +1308,13 @@ bool MainWindow::focusNextPrevChild(bool next)
             } else if (m_ui->tabWidget->hasFocus()) {
                 dbWidget->setFocus(Qt::TabFocusReason);
             } else {
-                m_searchWidget->setFocus(Qt::TabFocusReason);
+                focusSearchWidget();
             }
         } else {
             if (m_searchWidget->hasFocus()) {
                 dbWidget->setFocus(Qt::BacktabFocusReason);
             } else if (m_ui->tabWidget->hasFocus()) {
-                m_searchWidget->setFocus(Qt::BacktabFocusReason);
+                focusSearchWidget();
             } else {
                 m_ui->tabWidget->setFocus(Qt::BacktabFocusReason);
             }
@@ -1310,6 +1324,15 @@ bool MainWindow::focusNextPrevChild(bool next)
 
     // Defer to Qt to make a decision, this maintains normal behavior
     return QMainWindow::focusNextPrevChild(next);
+}
+
+void MainWindow::focusSearchWidget()
+{
+    if (m_searchWidgetAction->isEnabled()) {
+        m_ui->toolBar->setVisible(true);
+        m_ui->toolBar->setExpanded(true);
+        m_searchWidget->focusSearch();
+    }
 }
 
 void MainWindow::saveWindowInformation()

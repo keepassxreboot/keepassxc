@@ -382,7 +382,7 @@
    <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QToolBar" name="toolBar">
+  <widget class="KPToolBar" name="toolBar">
    <property name="contextMenuPolicy">
     <enum>Qt::PreventContextMenu</enum>
    </property>
@@ -1076,6 +1076,11 @@
    <extends>QWidget</extends>
    <header>gui/WelcomeWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KPToolBar</class>
+   <extends>QToolBar</extends>
+   <header>gui/widgets/KPToolBar.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
