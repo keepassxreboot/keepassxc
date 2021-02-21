@@ -48,11 +48,8 @@ SearchWidget::SearchWidget(QWidget* parent)
     connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
     connect(m_ui->searchIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
     connect(m_searchTimer, SIGNAL(timeout()), SLOT(startSearch()));
-    connect(m_clearSearchTimer, SIGNAL(timeout()), m_ui->searchEdit, SLOT(clear()));
-    connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
-
-    new QShortcut(QKeySequence::Find, this, SLOT(searchFocus()));
-    new QShortcut(Qt::Key_Escape, m_ui->searchEdit, SLOT(clear()));
+    connect(m_clearSearchTimer, SIGNAL(timeout()), SLOT(clearSearch()));
+    connect(this, SIGNAL(escapePressed()), SLOT(clearSearch()));
 
     m_ui->searchEdit->setPlaceholderText(tr("Search (%1)…", "Search placeholder text, %1 is the keyboard shortcut")
                                              .arg(QKeySequence(QKeySequence::Find).toString(QKeySequence::NativeText)));
@@ -109,7 +106,7 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
                 return true;
             }
         }
-    } else if (event->type() == QEvent::FocusOut && !m_ui->searchEdit->text().isEmpty()) {
+    } else if (event->type() == QEvent::FocusOut) {
         if (config()->get(Config::Security_ClearSearch).toBool()) {
             int timeout = config()->get(Config::Security_ClearSearchTimeout).toInt();
             if (timeout > 0) {
@@ -117,6 +114,7 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
                 m_clearSearchTimer->start(timeout * 60000); // 60 sec * 1000 ms
             }
         }
+        emit lostFocus();
     } else if (event->type() == QEvent::FocusIn) {
         // Never clear the search if we are using it
         m_clearSearchTimer->stop();
@@ -133,10 +131,10 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
     mx.connect(this, SIGNAL(downPressed()), SLOT(focusOnEntries()));
-    mx.connect(SIGNAL(clearSearch()), m_ui->searchEdit, SLOT(clear()));
+    mx.connect(SIGNAL(clearSearch()), this, SLOT(clearSearch()));
     mx.connect(SIGNAL(entrySelectionChanged()), this, SLOT(resetSearchClearTimer()));
     mx.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)), this, SLOT(resetSearchClearTimer()));
-    mx.connect(SIGNAL(databaseUnlocked()), this, SLOT(searchFocus()));
+    mx.connect(SIGNAL(databaseUnlocked()), this, SLOT(focusSearch()));
     mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
 }
 
@@ -149,7 +147,7 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
         emit limitGroupChanged(m_actionLimitGroup->isChecked());
     } else {
-        m_ui->searchEdit->clear();
+        clearSearch();
     }
 }
 
@@ -201,10 +199,16 @@ void SearchWidget::setLimitGroup(bool state)
     updateLimitGroup();
 }
 
-void SearchWidget::searchFocus()
+void SearchWidget::focusSearch()
 {
     m_ui->searchEdit->setFocus();
     m_ui->searchEdit->selectAll();
+}
+
+void SearchWidget::clearSearch()
+{
+    m_ui->searchEdit->clear();
+    emit searchCanceled();
 }
 
 void SearchWidget::toggleHelp()

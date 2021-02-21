@@ -1401,9 +1401,8 @@ void DatabaseWidget::onGroupChanged()
     // Intercept group changes if in search mode
     if (isSearchActive() && m_searchLimitGroup) {
         search(m_lastSearchText);
-    } else if (isSearchActive()) {
-        endSearch();
     } else {
+        endSearch();
         m_entryView->displayGroup(group);
     }
 

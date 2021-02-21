@@ -171,6 +171,7 @@ set(keepassx_SOURCES
         gui/osutils/ScreenLockListenerPrivate.cpp
         gui/settings/SettingsWidget.cpp
         gui/widgets/ElidedLabel.cpp
+        gui/widgets/KPToolBar.cpp
         gui/widgets/PopupHelpWidget.cpp
         gui/wizard/NewDatabaseWizard.cpp
         gui/wizard/NewDatabaseWizardPage.cpp

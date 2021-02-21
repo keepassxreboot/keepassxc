@@ -148,6 +148,7 @@ private slots:
     void agentEnabled(bool enabled);
     void updateTrayIcon();
     void updateProgressBar(int percentage, QString message);
+    void focusSearchWidget();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
