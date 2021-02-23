@@ -44,3 +44,5 @@ KeePassXC has numerous features for novice and power users alike. This guide wil
  ** FreeDesktop.org Secret Service (replace Gnome keyring, etc.)
  ** Additional encryption choices: Twofish and ChaCha20
 // end::content[]
+// tag::advanced[]
+// end::advanced[]

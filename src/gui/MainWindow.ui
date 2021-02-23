@@ -310,18 +310,6 @@
      <addaction name="actionEntryTotpQRCode"/>
      <addaction name="actionEntrySetupTotp"/>
     </widget>
-    <widget class="QMenu" name="menuEntryAutoTypeWithSequence">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="title">
-      <string>Perform Auto-Type Sequence</string>
-     </property>
-     <addaction name="actionEntryAutoTypeUsername"/>
-     <addaction name="actionEntryAutoTypeUsernameEnter"/>
-     <addaction name="actionEntryAutoTypePassword"/>
-     <addaction name="actionEntryAutoTypePasswordEnter"/>
-    </widget>
     <addaction name="actionEntryNew"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryClone"/>
@@ -336,7 +324,6 @@
     <addaction name="menuEntryTotp"/>
     <addaction name="separator"/>
     <addaction name="actionEntryAutoType"/>
-    <addaction name="menuEntryAutoTypeWithSequence"/>
     <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryDownloadIcon"/>
@@ -704,12 +691,24 @@
    <property name="text">
     <string notr="true">{USERNAME}</string>
    </property>
+   <property name="iconText">
+    <string notr="true">{USERNAME}</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">{USERNAME}</string>
+   </property>
   </action>
   <action name="actionEntryAutoTypeUsernameEnter">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="text">
+    <string notr="true">{USERNAME}{ENTER}</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">{USERNAME}{ENTER}</string>
+   </property>
+   <property name="toolTip">
     <string notr="true">{USERNAME}{ENTER}</string>
    </property>
   </action>
@@ -720,12 +719,24 @@
    <property name="text">
     <string notr="true">{PASSWORD}</string>
    </property>
+   <property name="iconText">
+    <string notr="true">{PASSWORD}</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">{PASSWORD}</string>
+   </property>
   </action>
   <action name="actionEntryAutoTypePasswordEnter">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="text">
+    <string notr="true">{PASSWORD}{ENTER}</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">{PASSWORD}{ENTER}</string>
+   </property>
+   <property name="toolTip">
     <string notr="true">{PASSWORD}{ENTER}</string>
    </property>
   </action>
@@ -1021,6 +1032,17 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+C</string>
+   </property>
+  </action>
+  <action name="actionEntryAutoTypeSequence">
+   <property name="text">
+    <string notr="true">{USERNAME}{TAB}{PASSWORD}{ENTER}</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">{USERNAME}{TAB}{PASSWORD}{ENTER}</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">{USERNAME}{TAB}{PASSWORD}{ENTER}</string>
    </property>
   </action>
  </widget>

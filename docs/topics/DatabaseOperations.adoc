@@ -120,18 +120,7 @@ image::clone_entry_dialog.png[,70%]
 .References in a cloned entry
 image::clone_entry_references.png[]
 
-4. You can create your own references using the following syntax:
-+
-`{REF:<ShortCode>@I:<UUID>}`
-+
-Where `<UUID>` is the Unique Identifier of the entry to pull data from and `<ShortCode>` is from the following:
-+
- * T - Title
- * U - Username
- * P - Password
- * A - URL
- * N - Notes
- * I - UUID
+4. You can create your own references using the xref:UserGuide.adoc#_entry_cross_reference[Entry Reference Syntax]
 
 == Searching the Database
 KeePassXC provides an enhanced and granular search features the enables you to search for specific entries in the databases using the different modifiers, wild card characters, and logical operators.
@@ -287,7 +276,7 @@ image::database_security.png[]
 +
 .Database credentials
 image::database_security_credentials.png[]
-
++
 WARNING: Consider creating a backup of your YubiKey. Please refer to <<Creating a YubiKey backup>>
 
 5. Encryption settings allows you to change the average time it takes to encrypt and decrypt the database. The longer time that is chosen, the harder it will be to brute force attack your database. *We recommend a setting of one second.*

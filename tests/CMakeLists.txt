@@ -149,9 +149,6 @@ add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
 add_unit_test(NAME testopvaultreader SOURCES TestOpVaultReader.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp
-        LIBS ${TEST_LIBRARIES})
-
 if(WITH_XC_NETWORKING)
     add_unit_test(NAME testupdatecheck SOURCES TestUpdateCheck.cpp
             LIBS ${TEST_LIBRARIES})

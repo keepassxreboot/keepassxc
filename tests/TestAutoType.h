@@ -47,6 +47,8 @@ private slots:
     void testGlobalAutoTypeUrlSubdomainMatch();
     void testGlobalAutoTypeTitleMatchDisabled();
     void testGlobalAutoTypeRegExp();
+    void testAutoTypeResults();
+    void testAutoTypeResults_data();
     void testAutoTypeSyntaxChecks();
     void testAutoTypeEffectiveSequences();
 

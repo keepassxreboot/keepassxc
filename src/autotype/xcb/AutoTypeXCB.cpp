@@ -569,32 +569,23 @@ AutoTypeExecutorX11::AutoTypeExecutorX11(AutoTypePlatformX11* platform)
 {
 }
 
-void AutoTypeExecutorX11::execChar(AutoTypeChar* action)
+void AutoTypeExecutorX11::execType(const AutoTypeKey* action)
 {
-    m_platform->sendKey(qcharToNativeKeyCode(action->character));
+    if (action->key != Qt::Key_unknown) {
+        m_platform->sendKey(qtToNativeKeyCode(action->key), qtToNativeModifiers(action->modifiers));
+    } else {
+        m_platform->sendKey(qcharToNativeKeyCode(action->character), qtToNativeModifiers(action->modifiers));
+    }
+
+    Tools::sleep(execDelayMs);
 }
 
-void AutoTypeExecutorX11::execKey(AutoTypeKey* action)
-{
-    m_platform->sendKey(qtToNativeKeyCode(action->key));
-}
-
-void AutoTypeExecutorX11::execClearField(AutoTypeClearField* action = nullptr)
+void AutoTypeExecutorX11::execClearField(const AutoTypeClearField* action)
 {
     Q_UNUSED(action);
-
-    timespec ts;
-    ts.tv_sec = 0;
-    ts.tv_nsec = 25 * 1000 * 1000;
-
-    m_platform->sendKey(qtToNativeKeyCode(Qt::Key_Home), static_cast<unsigned int>(ControlMask));
-    nanosleep(&ts, nullptr);
-
-    m_platform->sendKey(qtToNativeKeyCode(Qt::Key_End), static_cast<unsigned int>(ControlMask | ShiftMask));
-    nanosleep(&ts, nullptr);
-
-    m_platform->sendKey(qtToNativeKeyCode(Qt::Key_Backspace));
-    nanosleep(&ts, nullptr);
+    execType(new AutoTypeKey(Qt::Key_Home, Qt::ControlModifier));
+    execType(new AutoTypeKey(Qt::Key_End, Qt::ControlModifier | Qt::ShiftModifier));
+    execType(new AutoTypeKey(Qt::Key_Backspace));
 }
 
 bool AutoTypePlatformX11::raiseWindow(WId window)

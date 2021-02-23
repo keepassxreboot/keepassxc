@@ -57,8 +57,8 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
 
     // clang-format off
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabaseTab(int)));
-    connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
-    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
+    connect(this, SIGNAL(currentChanged(int)), SLOT(emitActiveDatabaseChanged()));
+    connect(this, SIGNAL(activeDatabaseChanged(DatabaseWidget*)),
             m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalAutoTypeTriggered()), SLOT(performGlobalAutoType()));
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
@@ -715,9 +715,9 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
     }
 }
 
-void DatabaseTabWidget::emitActivateDatabaseChanged()
+void DatabaseTabWidget::emitActiveDatabaseChanged()
 {
-    emit activateDatabaseChanged(currentDatabaseWidget());
+    emit activeDatabaseChanged(currentDatabaseWidget());
 }
 
 void DatabaseTabWidget::emitDatabaseLockChanged()

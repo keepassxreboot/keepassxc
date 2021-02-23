@@ -60,6 +60,11 @@ public:
         PasswordGeneratorScreen = 3
     };
 
+signals:
+    void databaseUnlocked(DatabaseWidget* dbWidget);
+    void databaseLocked(DatabaseWidget* dbWidget);
+    void activeDatabaseChanged(DatabaseWidget* dbWidget);
+
 public slots:
     void openDatabase(const QString& filePath, const QString& password = {}, const QString& keyfile = {});
     void appExit();
@@ -82,6 +87,7 @@ public slots:
     void bringToFront();
     void closeAllDatabases();
     void lockAllDatabases();
+    void closeModalWindow();
     void displayDesktopNotification(const QString& msg, QString title = "", int msTimeoutHint = 10000);
     void restartApp(const QString& message);
 
@@ -136,8 +142,6 @@ private slots:
     void obtainContextFocusLock();
     void releaseContextFocusLock();
     void agentEnabled(bool enabled);
-
-private slots:
     void updateTrayIcon();
 
 private:

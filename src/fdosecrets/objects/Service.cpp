@@ -82,7 +82,7 @@ namespace FdoSecrets
         });
 
         // make default alias track current activated database
-        connect(m_databases.data(), &DatabaseTabWidget::activateDatabaseChanged, this, &Service::ensureDefaultAlias);
+        connect(m_databases.data(), &DatabaseTabWidget::activeDatabaseChanged, this, &Service::ensureDefaultAlias);
 
         return true;
     }

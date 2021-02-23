@@ -105,6 +105,7 @@ public:
     QStringList customEntryAttributes() const;
     bool isEditWidgetModified() const;
     void clearAllWidgets();
+    Entry* currentSelectedEntry();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
     bool currentEntryHasPassword();
@@ -181,7 +182,7 @@ public slots:
     void addToAgent();
     void removeFromAgent();
 #endif
-    void performAutoType();
+    void performAutoType(const QString& sequence = {});
     void performAutoTypeUsername();
     void performAutoTypeUsernameEnter();
     void performAutoTypePassword();
@@ -257,7 +258,6 @@ private:
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false);
     bool performSave(QString& errorMessage, const QString& fileName = {});
-    Entry* currentSelectedEntry();
 
     QSharedPointer<Database> m_db;
 

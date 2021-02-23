@@ -40,7 +40,7 @@ void TestAutoType::initTestCase()
     config()->set(Config::Security_AutoTypeAsk, false);
     AutoType::createTestInstance();
 
-    QPluginLoader loader(resources()->pluginPath("keepassx-autotype-test"));
+    QPluginLoader loader(resources()->pluginPath("keepassxc-autotype-test"));
     loader.setLoadHints(QLibrary::ResolveAllSymbolsHint);
     QVERIFY(loader.instance());
 
@@ -278,45 +278,93 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     m_test->clearActions();
 }
 
+void TestAutoType::testAutoTypeResults()
+{
+    QScopedPointer<Entry> entry(new Entry());
+    entry->setUsername("Username");
+    entry->setPassword("Password@1");
+    entry->setUrl("https://example.com");
+    entry->attributes()->set("attr1", "value1");
+    entry->attributes()->set("attr2", "decode%20me");
+
+    QFETCH(QString, sequence);
+    QFETCH(QString, expectedResult);
+
+    m_autoType->performAutoTypeWithSequence(entry.data(), sequence);
+    QCOMPARE(m_test->actionChars(), expectedResult);
+}
+
+void TestAutoType::testAutoTypeResults_data()
+{
+    QTest::addColumn<QString>("sequence");
+    QTest::addColumn<QString>("expectedResult");
+
+    // Normal Sequences
+    QTest::newRow("Sequence with Attributes") << QString("{USERNAME} {PASSWORD} {URL} {S:attr1}")
+                                              << QString("Username Password@1 https://example.com value1");
+    QTest::newRow("Sequence with Comment") << QString("{USERNAME}{TAB}{C:Extra Tab}{TAB}{S:attr1}")
+                                           << QString("Username[Key0x1000001][Key0x1000001]value1");
+
+    // Conversions and Replacements
+    QTest::newRow("T-CONV UPPER") << QString("{T-CONV:/{USERNAME}/UPPER/}") << QString("USERNAME");
+    QTest::newRow("T-CONV LOWER") << QString("{T-CONV:/{USERNAME}/LOWER/}") << QString("username");
+    QTest::newRow("T-CONV BASE64") << QString("{T-CONV:/{USERNAME}/BASE64/}") << QString("VXNlcm5hbWU=");
+    QTest::newRow("T-CONV HEX") << QString("{T-CONV:/{USERNAME}/HEX/}") << QString("557365726e616d65");
+    QTest::newRow("T-CONV URI ENCODE") << QString("{T-CONV:/{URL}/URI/}") << QString("https%3A%2F%2Fexample.com");
+    QTest::newRow("T-CONV URI DECODE") << QString("{T-CONV:/{S:attr2}/URI-DEC/}") << QString("decode me");
+    QTest::newRow("T-REPLACE-RX") << QString("{T-REPLACE-RX:/{USERNAME}/(User)/$1Pass/}") << QString("UserPassname");
+}
+
 void TestAutoType::testAutoTypeSyntaxChecks()
 {
+    auto entry = new Entry();
+    QString error;
+
     // Huge sequence
-    QVERIFY(AutoType::checkSyntax(
-        "{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax(
+                 "{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring", entry, error),
+             error.toLatin1());
 
-    QVERIFY(AutoType::checkSyntax("{NUMPAD1 3}"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{NUMPAD1 3}", entry, error), error.toLatin1());
 
-    QVERIFY(AutoType::checkSyntax("{S:SPECIALTOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL TOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL_TOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL-TOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL:TOKEN}"));
-    QVERIFY(AutoType::checkSyntax("{S:SPECIAL_TOKEN}{ENTER}"));
-    QVERIFY(AutoType::checkSyntax("{S:FOO}{S:HELLO WORLD}"));
-    QVERIFY(!AutoType::checkSyntax("{S:SPECIAL_TOKEN{}}"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIALTOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL TOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL_TOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL-TOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL:TOKEN}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL_TOKEN}{ENTER}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:FOO}{S:HELLO WORLD}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{S:SPECIAL_TOKEN{}}", entry, error), error.toLatin1());
 
-    QVERIFY(AutoType::checkSyntax("{BEEP 3 3}"));
-    QVERIFY(!AutoType::checkSyntax("{BEEP 3}"));
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{BEEP 3 3}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{BEEP 3}", entry, error), error.toLatin1());
 
-    QVERIFY(AutoType::checkSyntax("{VKEY 0x01}"));
-    QVERIFY(AutoType::checkSyntax("{VKEY VK_LBUTTON}"));
-    QVERIFY(AutoType::checkSyntax("{VKEY-EX 0x01}"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{VKEY 0x01}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{VKEY VK_LBUTTON}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{VKEY-EX 0x01}", entry, error), error.toLatin1());
     // Bad sequence
-    QVERIFY(!AutoType::checkSyntax("{{{}}{}{}}{{}}"));
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{{{}}{}{}}{{}}", entry, error), error.toLatin1());
     // Good sequence
-    QVERIFY(AutoType::checkSyntax("{{}{}}{}}{{}"));
-    QVERIFY(AutoType::checkSyntax("{]}{[}{[}{]}"));
-    QVERIFY(AutoType::checkSyntax("{)}{(}{(}{)}"));
-    // High DelAY / low delay
-    QVERIFY(AutoType::checkHighDelay("{DelAY 50000}"));
-    QVERIFY(!AutoType::checkHighDelay("{delay 50}"));
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{{}{}}{}}{{}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{]}{[}{[}{]}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{)}{(}{(}{)}", entry, error), error.toLatin1());
+    // High delay
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{DELAY 50000}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{delay 50}", entry, error), error.toLatin1());
     // Slow typing
-    QVERIFY(AutoType::checkSlowKeypress("{DelAY=50000}"));
-    QVERIFY(!AutoType::checkSlowKeypress("{delay=50}"));
-    // Many repetition / few repetition / delay not repetition
-    QVERIFY(AutoType::checkHighRepetition("{LEFT 50000000}"));
-    QVERIFY(!AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
-    QVERIFY(!AutoType::checkHighRepetition("{delay 5000000000}"));
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{DELAY=50000}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{delay=50}", entry, error), error.toLatin1());
+    // Many repetition
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{LEFT 50000000}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{SPACE 10}{TAB 3}{RIGHT 50}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{delay 5000000000}", entry, error), error.toLatin1());
+    // Conversion and Regex
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{T-CONV:/{USERNAME}/base64/}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{T-CONV:/{USERNAME}/junk/}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{T-CONV:}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{T-REPLACE-RX:/{USERNAME}/a/b/}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{T-REPLACE-RX:/{USERNAME}/a/}", entry, error), error.toLatin1());
+    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{T-REPLACE-RX:}", entry, error), error.toLatin1());
 }
 
 void TestAutoType::testAutoTypeEffectiveSequences()

@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2015 David Wu <lightvector@gmail.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,28 +15,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AutoTypeMatch.h"
+#ifndef KPXC_AUTOTYPEMATCH_H
+#define KPXC_AUTOTYPEMATCH_H
 
-#include <utility>
+#include <QPair>
+#include <QPointer>
+#include <QString>
 
-AutoTypeMatch::AutoTypeMatch()
-    : entry(nullptr)
-    , sequence()
-{
-}
+class Entry;
+typedef QPair<QPointer<Entry>, QString> AutoTypeMatch;
 
-AutoTypeMatch::AutoTypeMatch(Entry* entry, QString sequence)
-    : entry(entry)
-    , sequence(std::move(sequence))
-{
-}
-
-bool AutoTypeMatch::operator==(const AutoTypeMatch& other) const
-{
-    return entry == other.entry && sequence == other.sequence;
-}
-
-bool AutoTypeMatch::operator!=(const AutoTypeMatch& other) const
-{
-    return entry != other.entry || sequence != other.sequence;
-}
+#endif // KPXC_AUTOTYPEMATCH_H

@@ -57,9 +57,8 @@ class AutoTypeExecutorMac : public AutoTypeExecutor
 public:
     explicit AutoTypeExecutorMac(AutoTypePlatformMac* platform);
 
-    void execChar(AutoTypeChar* action) override;
-    void execKey(AutoTypeKey* action) override;
-    void execClearField(AutoTypeClearField* action) override;
+    void execType(const AutoTypeKey* action) override;
+    void execClearField(const AutoTypeClearField* action) override;
 
 private:
     AutoTypePlatformMac* const m_platform;

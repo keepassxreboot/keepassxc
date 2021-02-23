@@ -1028,8 +1028,36 @@ bool EditEntryWidget::commitEntry()
     }
 
     // Check Auto-Type validity early
-    if (!AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
-        return false;
+    QString error;
+    if (m_autoTypeUi->customSequenceButton->isChecked()
+        && !AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text(), m_entry, error)) {
+        auto res = MessageBox::question(this,
+                                        tr("Auto-Type Validation Error"),
+                                        tr("An error occurred while validating the custom Auto-Type sequence:\n%1\n"
+                                           "Would you like to correct it?")
+                                            .arg(error),
+                                        MessageBox::Yes | MessageBox::No,
+                                        MessageBox::Yes);
+        if (res == MessageBox::Yes) {
+            setCurrentPage(3);
+            return false;
+        }
+    }
+    for (const auto& assoc : m_autoTypeAssoc->getAll()) {
+        if (!AutoType::verifyAutoTypeSyntax(assoc.sequence, m_entry, error)) {
+            auto res =
+                MessageBox::question(this,
+                                     tr("Auto-Type Validation Error"),
+                                     tr("An error occurred while validating the Auto-Type sequence for \"%1\":\n%2\n"
+                                        "Would you like to correct it?")
+                                         .arg(assoc.window.left(40), error),
+                                     MessageBox::Yes | MessageBox::No,
+                                     MessageBox::Yes);
+            if (res == MessageBox::Yes) {
+                setCurrentPage(3);
+                return false;
+            }
+        }
     }
 
     if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {

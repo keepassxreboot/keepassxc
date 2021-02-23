@@ -70,6 +70,10 @@ BrowserService::BrowserService()
     , m_keepassBrowserUUID(Tools::hexToUuid("de887cc3036343b8974b5911b8816224"))
 {
     connect(m_browserHost, &BrowserHost::clientMessageReceived, this, &BrowserService::processClientMessage);
+    connect(getMainWindow(), &MainWindow::databaseUnlocked, this, &BrowserService::databaseUnlocked);
+    connect(getMainWindow(), &MainWindow::databaseLocked, this, &BrowserService::databaseLocked);
+    connect(getMainWindow(), &MainWindow::activeDatabaseChanged, this, &BrowserService::activeDatabaseChanged);
+
     setEnabled(browserSettings()->isEnabled());
 }
 
