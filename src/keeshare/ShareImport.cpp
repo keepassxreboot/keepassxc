@@ -344,8 +344,5 @@ ShareObserver::Result ShareImport::containerInto(const QString& resolvedPath,
     if (KeeShare::isContainerType(info, KeeShare::signedContainerFileType())) {
         return signedContainerInto(resolvedPath, reference, targetGroup);
     }
-    if (KeeShare::isContainerType(info, KeeShare::unsignedContainerFileType())) {
-        return unsignedContainerInto(resolvedPath, reference, targetGroup);
-    }
-    return {reference.path, ShareObserver::Result::Error, tr("Unknown share container type")};
+    return unsignedContainerInto(resolvedPath, reference, targetGroup);
 }
