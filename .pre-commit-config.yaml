@@ -36,13 +36,6 @@ repos:
     - id: forbid-crlf
     - id: remove-crlf
 
-  # C++ code formatting
-  - repo: https://github.com/pocc/pre-commit-hooks
-    rev: v1.1.1
-    hooks:
-    - id: clang-format
-      args: [-i]
-
   # Python code formatting
   - repo: https://github.com/ambv/black
     rev: 20.8b1
