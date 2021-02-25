@@ -56,6 +56,12 @@ int main(int argc, char** argv)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0) && defined(Q_OS_WIN)
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
+    Application app(argc, argv);
+    // don't set organizationName as that changes the return value of
+    // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
+    Application::setApplicationName("KeePassXC");
+    Application::setApplicationVersion(KEEPASSXC_VERSION);
+    app.setProperty("KPXC_QUALIFIED_APPNAME", "org.keepassxc.KeePassXC");
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QObject::tr("KeePassXC - cross-platform password manager"));
@@ -82,13 +88,6 @@ int main(int argc, char** argv)
     if (osUtils->canPreventScreenCapture()) {
         parser.addOption(allowScreenCaptureOption);
     }
-
-    Application app(argc, argv);
-    // don't set organizationName as that changes the return value of
-    // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
-    Application::setApplicationName("KeePassXC");
-    Application::setApplicationVersion(KEEPASSXC_VERSION);
-    app.setProperty("KPXC_QUALIFIED_APPNAME", "org.keepassxc.KeePassXC");
 
     parser.process(app);
 
