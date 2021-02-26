@@ -150,7 +150,7 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
 
         for (int i = 65; i <= (65 + 25); i++) {
 
-            if ((m_flags & ExcludeLookAlike) && (i == 73 || i == 79)) { // "I" and "O"
+            if ((m_flags & ExcludeLookAlike) && (i == 66 || i == 71 || i == 73 || i == 79)) { //"B", "G", "I" and "O"
                 continue;
             }
 
@@ -163,7 +163,7 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
         PasswordGroup group;
 
         for (int i = 48; i < (48 + 10); i++) {
-            if ((m_flags & ExcludeLookAlike) && (i == 48 || i == 49)) { // "0" and "1"
+            if ((m_flags & ExcludeLookAlike) && (i == 48 || i == 49 || i == 54 || i == 56)) { // "0", "1", "6", and "8"
                 continue;
             }
 
