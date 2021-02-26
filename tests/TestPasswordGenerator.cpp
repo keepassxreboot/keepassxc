@@ -126,18 +126,18 @@ void TestPasswordGenerator::testLookalikeExclusion()
 
     generator.setFlags(PasswordGenerator::GeneratorFlag::ExcludeLookAlike);
     password = generator.generatePassword();
-    QRegularExpression regex("^[^lI0]+$");
+    QRegularExpression regex("^[^lBGIO]+$");
     QVERIFY(regex.match(password).hasMatch());
 
     generator.setCharClasses(PasswordGenerator::CharClass::LowerLetters | PasswordGenerator::CharClass::UpperLetters
                              | PasswordGenerator::CharClass::Numbers);
     password = generator.generatePassword();
-    regex.setPattern("^[^lI01]+$");
+    regex.setPattern("^[^lBGIO0168]+$");
     QVERIFY(regex.match(password).hasMatch());
 
     generator.setCharClasses(PasswordGenerator::CharClass::LowerLetters | PasswordGenerator::CharClass::UpperLetters
                              | PasswordGenerator::CharClass::Numbers | PasswordGenerator::CharClass::EASCII);
     password = generator.generatePassword();
-    regex.setPattern("^[^lI01﹒]+$");
+    regex.setPattern("^[^lBGIO0168﹒]+$");
     QVERIFY(regex.match(password).hasMatch());
 }
