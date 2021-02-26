@@ -109,11 +109,6 @@ EntryView::EntryView(QWidget* parent)
         m_columnActions->addAction(action);
     }
     connect(m_columnActions, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
-    connect(header(), &QHeaderView::sortIndicatorChanged, [this](int index, Qt::SortOrder order) {
-        Q_UNUSED(order)
-        header()->setSortIndicatorShown(index != EntryModel::Paperclip && index != EntryModel::Totp
-                                        && index != EntryModel::PasswordStrength);
-    });
 
     m_headerMenu->addSeparator();
     m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
@@ -121,7 +116,6 @@ EntryView::EntryView(QWidget* parent)
     m_headerMenu->addSeparator();
     m_headerMenu->addAction(tr("Reset to defaults"), this, SLOT(resetViewToDefaults()));
 
-    header()->setMinimumSectionSize(24);
     header()->setDefaultSectionSize(100);
     header()->setStretchLastSection(false);
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -164,6 +158,9 @@ void EntryView::sortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
         emit entrySelectionChanged(currentEntry());
         emit viewStateChanged();
     }
+
+    header()->setSortIndicatorShown(true);
+    resetFixedColumns();
 }
 
 void EntryView::keyPressEvent(QKeyEvent* event)
@@ -421,7 +418,14 @@ void EntryView::resetFixedColumns()
     for (const auto& col : {EntryModel::Paperclip, EntryModel::Totp, EntryModel::PasswordStrength}) {
         if (!isColumnHidden(col)) {
             header()->setSectionResizeMode(col, QHeaderView::Fixed);
-            header()->resizeSection(col, ICON_ONLY_SECTION_SIZE);
+
+            // Increase column width, if sorting, to accommodate icon and arrow
+            auto width = ICON_ONLY_SECTION_SIZE;
+            if (header()->sortIndicatorSection() == col
+                && config()->get(Config::GUI_ApplicationTheme).toString() != "classic") {
+                width += 18;
+            }
+            header()->resizeSection(col, width);
         }
     }
 }
