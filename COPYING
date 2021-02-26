@@ -166,6 +166,7 @@ Files: share/icons/application/scalable/actions/chevron-double-down.svg
        share/icons/application/scalable/actions/group-new.svg
        share/icons/application/scalable/actions/help-about.svg
        share/icons/application/scalable/actions/key-enter.svg
+       share/icons/application/scalable/actions/lock-question.svg
        share/icons/application/scalable/actions/message-close.svg
        share/icons/application/scalable/actions/move-down.svg
        share/icons/application/scalable/actions/move-up.svg

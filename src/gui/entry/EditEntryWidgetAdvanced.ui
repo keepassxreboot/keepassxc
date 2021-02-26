@@ -187,9 +187,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="knownBadCheckBox">
+    <widget class="QCheckBox" name="excludeReportsCheckBox">
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn't match the quality requirements (e. g. password entropy or re-use). You can set the check mark if the password is beyond your control (e. g. if it needs to be a four-digit PIN) to prevent it from cluttering the reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn't match the quality requirements.</string>
      </property>
      <property name="text">
       <string>Exclude from database reports</string>
@@ -327,7 +327,7 @@
   <tabstop>editAttributeButton</tabstop>
   <tabstop>protectAttributeButton</tabstop>
   <tabstop>revealAttributeButton</tabstop>
-  <tabstop>knownBadCheckBox</tabstop>
+  <tabstop>excludeReportsCheckBox</tabstop>
   <tabstop>fgColorCheckBox</tabstop>
   <tabstop>fgColorButton</tabstop>
   <tabstop>bgColorCheckBox</tabstop>

@@ -34,7 +34,7 @@ class PasswordHealth
 {
 public:
     explicit PasswordHealth(double entropy);
-    explicit PasswordHealth(QString pwd);
+    explicit PasswordHealth(const QString& pwd);
 
     /*
      * The password score is defined to be the greater the better
@@ -82,14 +82,6 @@ public:
     {
         return m_entropy;
     }
-
-    /**
-     * Name of custom data field that holds the "this is a known
-     * bad password" flag. Legal values of the field are TRUE_STR
-     * and FALSE_STR, the default (used if the field doesn't exist)
-     * is false.
-     */
-    static const QString OPTION_KNOWN_BAD;
 
 private:
     int m_score = 0;

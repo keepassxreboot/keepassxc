@@ -26,8 +26,6 @@
 #include "core/PasswordHealth.h"
 #include "gui/Icons.h"
 
-#include <QFileInfo>
-#include <QHash>
 #include <QStandardItemModel>
 
 namespace
@@ -37,15 +35,15 @@ namespace
     public:
         // The statistics we collect:
         QDateTime modified; // File modification time
-        int nGroups = 0; // Number of groups in the database
-        int nEntries = 0; // Number of entries (across all groups)
-        int nExpired = 0; // Number of expired entries
-        int nPwdsWeak = 0; // Number of weak or poor passwords
-        int nPwdsShort = 0; // Number of passwords 8 characters or less in size
-        int nPwdsUnique = 0; // Number of unique passwords
-        int nPwdsReused = 0; // Number of non-unique passwords
-        int nKnownBad = 0; // Number of known bad entries
-        int pwdTotalLen = 0; // Total length of all passwords
+        int groupCount = 0; // Number of groups in the database
+        int entryCount = 0; // Number of entries (across all groups)
+        int expiredEntries = 0; // Number of expired entries
+        int excludedEntries = 0; // Number of known bad entries
+        int weakPasswords = 0; // Number of weak or poor passwords
+        int shortPasswords = 0; // Number of passwords 8 characters or less in size
+        int uniquePasswords = 0; // Number of unique passwords
+        int reusedPasswords = 0; // Number of non-unique passwords
+        int totalPasswordLength = 0; // Total length of all passwords
 
         // Ctor does all the work
         explicit Stats(QSharedPointer<Database> db)
@@ -58,8 +56,8 @@ namespace
         // Get average password length
         int averagePwdLength() const
         {
-            const auto nPwds = nPwdsUnique + nPwdsReused;
-            return nPwds == 0 ? 0 : std::round(pwdTotalLen / double(nPwds));
+            const auto passwords = uniquePasswords + reusedPasswords;
+            return passwords == 0 ? 0 : std::round(totalPasswordLength / double(passwords));
         }
 
         // Get max number of password reuse (=how many entries
@@ -77,12 +75,12 @@ namespace
         // following returns true.
         bool isAnyExpired() const
         {
-            return nExpired > 0;
+            return expiredEntries > 0;
         }
 
         bool areTooManyPwdsReused() const
         {
-            return nPwdsReused > nPwdsUnique / 10;
+            return reusedPasswords > uniquePasswords / 10;
         }
 
         bool arePwdsReusedTooOften() const
@@ -109,7 +107,7 @@ namespace
                     continue;
                 }
 
-                ++nGroups;
+                ++groupCount;
 
                 for (const auto* entry : group->entries()) {
                     // Don't count anything in the recycle bin
@@ -117,36 +115,35 @@ namespace
                         continue;
                     }
 
-                    ++nEntries;
+                    ++entryCount;
 
                     if (entry->isExpired()) {
-                        ++nExpired;
+                        ++expiredEntries;
                     }
 
                     // Get password statistics
                     const auto pwd = entry->password();
                     if (!pwd.isEmpty()) {
                         if (!m_passwords.contains(pwd)) {
-                            ++nPwdsUnique;
+                            ++uniquePasswords;
                         } else {
-                            ++nPwdsReused;
+                            ++reusedPasswords;
                         }
 
                         if (pwd.size() < 8) {
-                            ++nPwdsShort;
+                            ++shortPasswords;
                         }
 
                         // Speed up Zxcvbn process by excluding very long passwords and most passphrases
                         if (pwd.size() < 25 && checker.evaluate(entry)->quality() <= PasswordHealth::Quality::Weak) {
-                            ++nPwdsWeak;
+                            ++weakPasswords;
                         }
 
-                        if (entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
-                            && entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD) == TRUE_STR) {
-                            ++nKnownBad;
+                        if (entry->excludeFromReports()) {
+                            ++excludedEntries;
                         }
 
-                        pwdTotalLen += pwd.size();
+                        totalPasswordLength += pwd.size();
                         m_passwords[pwd]++;
                     }
                 }
@@ -220,15 +217,15 @@ void ReportsWidgetStatistics::calculateStats()
                 m_db->isModified() ? tr("yes") : tr("no"),
                 m_db->isModified(),
                 tr("The database was modified, but the changes have not yet been saved to disk."));
-    addStatsRow(tr("Number of groups"), QString::number(stats->nGroups));
-    addStatsRow(tr("Number of entries"), QString::number(stats->nEntries));
+    addStatsRow(tr("Number of groups"), QString::number(stats->groupCount));
+    addStatsRow(tr("Number of entries"), QString::number(stats->entryCount));
     addStatsRow(tr("Number of expired entries"),
-                QString::number(stats->nExpired),
+                QString::number(stats->expiredEntries),
                 stats->isAnyExpired(),
                 tr("The database contains entries that have expired."));
-    addStatsRow(tr("Unique passwords"), QString::number(stats->nPwdsUnique));
+    addStatsRow(tr("Unique passwords"), QString::number(stats->uniquePasswords));
     addStatsRow(tr("Non-unique passwords"),
-                QString::number(stats->nPwdsReused),
+                QString::number(stats->reusedPasswords),
                 stats->areTooManyPwdsReused(),
                 tr("More than 10% of passwords are reused. Use unique passwords when possible."));
     addStatsRow(tr("Maximum password reuse"),
@@ -236,16 +233,16 @@ void ReportsWidgetStatistics::calculateStats()
                 stats->arePwdsReusedTooOften(),
                 tr("Some passwords are used more than three times. Use unique passwords when possible."));
     addStatsRow(tr("Number of short passwords"),
-                QString::number(stats->nPwdsShort),
-                stats->nPwdsShort > 0,
+                QString::number(stats->shortPasswords),
+                stats->shortPasswords > 0,
                 tr("Recommended minimum password length is at least 8 characters."));
     addStatsRow(tr("Number of weak passwords"),
-                QString::number(stats->nPwdsWeak),
-                stats->nPwdsWeak > 0,
+                QString::number(stats->weakPasswords),
+                stats->weakPasswords > 0,
                 tr("Recommend using long, randomized passwords with a rating of 'good' or 'excellent'."));
     addStatsRow(tr("Entries excluded from reports"),
-                QString::number(stats->nKnownBad),
-                stats->nKnownBad > 0,
+                QString::number(stats->excludedEntries),
+                stats->excludedEntries > 0,
                 tr("Excluding entries from reports, e. g. because they are known to have a poor password, isn't "
                    "necessarily a problem but you should keep an eye on them."));
     addStatsRow(tr("Average password length"),

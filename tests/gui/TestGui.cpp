@@ -461,14 +461,13 @@ void TestGui::testEditEntry()
 
     // Test the "known bad" checkbox
     editEntryWidget->setCurrentPage(1);
-    auto knownBadCheckBox = editEntryWidget->findChild<QCheckBox*>("knownBadCheckBox");
-    QVERIFY(knownBadCheckBox);
-    QCOMPARE(knownBadCheckBox->isChecked(), false);
-    knownBadCheckBox->setChecked(true);
+    auto excludeReportsCheckBox = editEntryWidget->findChild<QCheckBox*>("excludeReportsCheckBox");
+    QVERIFY(excludeReportsCheckBox);
+    QCOMPARE(excludeReportsCheckBox->isChecked(), false);
+    excludeReportsCheckBox->setChecked(true);
     QTest::mouseClick(applyButton, Qt::LeftButton);
     QCOMPARE(entry->historyItems().size(), ++editCount);
-    QCOMPARE(entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD), true);
-    QCOMPARE(entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD), TRUE_STR);
+    QVERIFY(entry->excludeFromReports());
 
     // Test entry colors (simulate choosing a color)
     editEntryWidget->setCurrentPage(1);

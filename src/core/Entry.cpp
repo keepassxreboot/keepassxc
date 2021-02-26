@@ -17,14 +17,12 @@
  */
 #include "Entry.h"
 
-#include "config-keepassx.h"
-
-#include "core/Clock.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "totp/totp.h"
 
@@ -243,6 +241,25 @@ int Entry::autoTypeObfuscation() const
 QString Entry::defaultAutoTypeSequence() const
 {
     return m_data.defaultAutoTypeSequence;
+}
+
+const QSharedPointer<PasswordHealth>& Entry::passwordHealth()
+{
+    if (!m_data.passwordHealth) {
+        m_data.passwordHealth.reset(new PasswordHealth(resolvePlaceholder(password())));
+    }
+    return m_data.passwordHealth;
+}
+
+bool Entry::excludeFromReports() const
+{
+    return customData()->contains(CustomData::ExcludeFromReports)
+           && customData()->value(CustomData::ExcludeFromReports) == TRUE_STR;
+}
+
+void Entry::setExcludeFromReports(bool state)
+{
+    customData()->set(CustomData::ExcludeFromReports, state ? TRUE_STR : FALSE_STR);
 }
 
 /**
@@ -673,6 +690,8 @@ void Entry::setUsername(const QString& username)
 
 void Entry::setPassword(const QString& password)
 {
+    // Reset Password Health
+    m_data.passwordHealth.reset();
     m_attributes->set(EntryAttributes::PasswordKey, password, m_attributes->isProtected(EntryAttributes::PasswordKey));
 }
 

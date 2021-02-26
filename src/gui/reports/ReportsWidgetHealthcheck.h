@@ -41,7 +41,7 @@ class ReportsWidgetHealthcheck : public QWidget
     Q_OBJECT
 public:
     explicit ReportsWidgetHealthcheck(QWidget* parent = nullptr);
-    ~ReportsWidgetHealthcheck();
+    ~ReportsWidgetHealthcheck() override;
 
     void loadSettings(QSharedPointer<Database> db);
     void saveSettings();
@@ -57,7 +57,6 @@ public slots:
     void emitEntryActivated(const QModelIndex& index);
     void customMenuRequested(QPoint);
     void editFromContextmenu();
-    void toggleKnownBad(bool);
 
 private:
     void addHealthRow(QSharedPointer<PasswordHealth>, const Group*, const Entry*, bool knownBad);
@@ -65,7 +64,6 @@ private:
     QScopedPointer<Ui::ReportsWidgetHealthcheck> m_ui;
 
     bool m_healthCalculated = false;
-    QIcon m_errorIcon;
     QScopedPointer<QStandardItemModel> m_referencesModel;
     QScopedPointer<QSortFilterProxyModel> m_modelProxy;
     QSharedPointer<Database> m_db;

@@ -62,7 +62,6 @@ public slots:
     void makeHibpTable();
     void customMenuRequested(QPoint);
     void editFromContextmenu();
-    void toggleKnownBad(bool);
 
 private:
     void startValidation();
@@ -78,7 +77,7 @@ private:
     QList<const Entry*> m_rowToEntry; // List index is table row
     QPointer<const Entry> m_editedEntry; // The entry we're currently editing
     QString m_editedPassword; // The old password of the entry we're editing
-    bool m_editedKnownBad; // The old "known bad" flag of the entry we're editing
+    bool m_editedExcluded; // The old "known bad" flag of the entry we're editing
     Entry* m_contextmenuEntry = nullptr; // The entry that was right-clicked
 
 #ifdef WITH_XC_NETWORKING

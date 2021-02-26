@@ -32,20 +32,6 @@
 
 namespace
 {
-    /*
-     * Check if an entry has been marked as "known bad password".
-     * These entries are to be excluded from the HIBP report.
-     *
-     * Question to reviewer: Should this be a member function of Entry?
-     * It's duplicated in EditEntryWidget::setForms, EditEntryWidget::updateEntryData,
-     * ReportsWidgetHealthcheck::customMenuRequested, and Health::Item::Item.
-     */
-    bool isKnownBad(const Entry* entry)
-    {
-        return entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
-               && entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD) == TRUE_STR;
-    }
-
     class ReportSortProxyModel : public QSortFilterProxyModel
     {
     public:
@@ -153,25 +139,23 @@ void ReportsWidgetHibp::makeHibpTable()
     });
 
     // Display entries that are marked as "known bad"?
-    const auto showKnownBad = m_ui->showKnownBadCheckBox->isChecked();
+    const auto showExcluded = m_ui->showKnownBadCheckBox->isChecked();
 
     // The colors for table cells
     const auto red = QBrush("red");
 
     // Build the table
-    bool anyKnownBad = false;
+    bool anyExcluded = false;
     for (const auto& item : items) {
         const auto entry = item.first;
         const auto group = entry->group();
         const auto count = item.second;
         auto title = entry->title();
 
-        // If the entry is marked as known bad, hide it unless the
-        // checkbox is set.
-        bool knownBad = isKnownBad(entry);
-        if (knownBad) {
-            anyKnownBad = true;
-            if (!showKnownBad) {
+        // Hide entry if excluded unless explicitly requested
+        if (entry->excludeFromReports()) {
+            anyExcluded = true;
+            if (!showExcluded) {
                 continue;
             }
 
@@ -183,7 +167,7 @@ void ReportsWidgetHibp::makeHibpTable()
             << new QStandardItem(group->iconPixmap(), group->hierarchy().join("/"))
             << new QStandardItem(countToText(count));
 
-        if (knownBad) {
+        if (entry->excludeFromReports()) {
             row[1]->setToolTip(tr("This entry is being excluded from reports"));
         }
 
@@ -213,7 +197,7 @@ void ReportsWidgetHibp::makeHibpTable()
 
     // Show the "show known bad entries" checkbox if there's any known
     // bad entry in the database.
-    if (anyKnownBad) {
+    if (anyExcluded) {
         m_ui->showKnownBadCheckBox->show();
     } else {
         m_ui->showKnownBadCheckBox->hide();
@@ -331,7 +315,7 @@ void ReportsWidgetHibp::emitEntryActivated(const QModelIndex& index)
         // Found it, invoke entry editor
         m_editedEntry = entry;
         m_editedPassword = entry->password();
-        m_editedKnownBad = isKnownBad(entry);
+        m_editedExcluded = entry->excludeFromReports();
         emit entryActivated(const_cast<Entry*>(entry));
     }
 }
@@ -350,7 +334,7 @@ void ReportsWidgetHibp::refreshAfterEdit()
     // No need to re-validate if there was no change that affects
     // the HIBP result (i. e., change to the password or to the
     // "known bad" flag)
-    if (m_editedEntry->password() == m_editedPassword && isKnownBad(m_editedEntry) == m_editedKnownBad) {
+    if (m_editedEntry->password() == m_editedPassword && m_editedEntry->excludeFromReports() == m_editedExcluded) {
         // Don't go through HIBP but still rebuild the table, the user might
         // have edited the entry title.
         makeHibpTable();
@@ -392,12 +376,16 @@ void ReportsWidgetHibp::customMenuRequested(QPoint pos)
     connect(edit, SIGNAL(triggered()), SLOT(editFromContextmenu()));
 
     // Create the "exclude from reports" menu item
-    const auto knownbad = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
-    knownbad->setCheckable(true);
-    knownbad->setChecked(m_contextmenuEntry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
-                         && m_contextmenuEntry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD) == TRUE_STR);
-    menu->addAction(knownbad);
-    connect(knownbad, SIGNAL(toggled(bool)), SLOT(toggleKnownBad(bool)));
+    const auto exclude = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
+    exclude->setCheckable(true);
+    exclude->setChecked(m_contextmenuEntry->excludeFromReports());
+    menu->addAction(exclude);
+    connect(exclude, &QAction::toggled, exclude, [this](bool state) {
+        if (m_contextmenuEntry) {
+            m_contextmenuEntry->setExcludeFromReports(state);
+            makeHibpTable();
+        }
+    });
 
     // Show the context menu
     menu->popup(m_ui->hibpTableView->viewport()->mapToGlobal(pos));
@@ -408,17 +396,6 @@ void ReportsWidgetHibp::editFromContextmenu()
     if (m_contextmenuEntry) {
         emit entryActivated(m_contextmenuEntry);
     }
-}
-
-void ReportsWidgetHibp::toggleKnownBad(bool isKnownBad)
-{
-    if (!m_contextmenuEntry) {
-        return;
-    }
-
-    m_contextmenuEntry->customData()->set(PasswordHealth::OPTION_KNOWN_BAD, isKnownBad ? TRUE_STR : FALSE_STR);
-
-    makeHibpTable();
 }
 
 void ReportsWidgetHibp::saveSettings()

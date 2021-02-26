@@ -172,6 +172,6 @@ int Estimate::execute(const QStringList& arguments)
         password = in.readLine();
     }
 
-    estimate(password.toLatin1(), parser->isSet(Estimate::AdvancedOption));
+    estimate(password.toUtf8(), parser->isSet(Estimate::AdvancedOption));
     return EXIT_SUCCESS;
 }

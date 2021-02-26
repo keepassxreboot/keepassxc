@@ -51,6 +51,7 @@ public:
     static const QString Created;
     static const QString BrowserKeyPrefix;
     static const QString BrowserLegacyKeyPrefix;
+    static const QString ExcludeFromReports;
 
 signals:
     void customDataModified();
