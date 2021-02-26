@@ -24,6 +24,7 @@ const QString CustomData::LastModified = QStringLiteral("_LAST_MODIFIED");
 const QString CustomData::Created = QStringLiteral("_CREATED");
 const QString CustomData::BrowserKeyPrefix = QStringLiteral("KPXC_BROWSER_");
 const QString CustomData::BrowserLegacyKeyPrefix = QStringLiteral("Public Key: ");
+const QString CustomData::ExcludeFromReports = QStringLiteral("KnownBad");
 
 CustomData::CustomData(QObject* parent)
     : QObject(parent)

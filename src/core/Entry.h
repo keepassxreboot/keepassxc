@@ -36,6 +36,8 @@
 
 class Database;
 class Group;
+class PasswordHealth;
+
 namespace Totp
 {
     struct Settings;
@@ -66,6 +68,7 @@ struct EntryData
     QString defaultAutoTypeSequence;
     TimeInfo timeInfo;
     QSharedPointer<Totp::Settings> totpSettings;
+    QSharedPointer<PasswordHealth> passwordHealth;
 
     bool operator==(const EntryData& other) const;
     bool operator!=(const EntryData& other) const;
@@ -94,7 +97,6 @@ public:
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
-    QString effectiveNewAutoTypeSequence() const;
     QList<QString> autoTypeSequences(const QString& pattern = {}) const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
@@ -111,6 +113,9 @@ public:
     QSharedPointer<Totp::Settings> totpSettings() const;
     int size() const;
     QString path() const;
+    const QSharedPointer<PasswordHealth>& passwordHealth();
+    bool excludeFromReports() const;
+    void setExcludeFromReports(bool state);
 
     bool hasTotp() const;
     bool isExpired() const;

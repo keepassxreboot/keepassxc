@@ -440,7 +440,7 @@ void EditEntryWidget::setupEntryUpdate()
     // Advanced tab
     connect(m_advancedUi->attributesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
-    connect(m_advancedUi->knownBadCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
+    connect(m_advancedUi->excludeReportsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->fgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->bgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->attachmentsWidget, SIGNAL(widgetUpdated()), this, SLOT(setModified()));
@@ -861,9 +861,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
         editTriggers = QAbstractItemView::DoubleClicked;
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
-    m_advancedUi->knownBadCheckBox->setChecked(entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
-                                               && entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD)
-                                                      == TRUE_STR);
+    m_advancedUi->excludeReportsCheckBox->setChecked(entry->excludeFromReports());
     setupColorButton(true, entry->foregroundColor());
     setupColorButton(false, entry->backgroundColor());
     m_iconsWidget->setEnabled(!m_history);
@@ -1126,11 +1124,8 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
 
-    const auto wasKnownBad = entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
-                             && entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD) == TRUE_STR;
-    const auto isKnownBad = m_advancedUi->knownBadCheckBox->isChecked();
-    if (isKnownBad != wasKnownBad) {
-        entry->customData()->set(PasswordHealth::OPTION_KNOWN_BAD, isKnownBad ? TRUE_STR : FALSE_STR);
+    if (entry->excludeFromReports() != m_advancedUi->excludeReportsCheckBox->isChecked()) {
+        entry->setExcludeFromReports(m_advancedUi->excludeReportsCheckBox->isChecked());
     }
 
     if (m_advancedUi->fgColorCheckBox->isChecked() && m_advancedUi->fgColorButton->property("color").isValid()) {

@@ -46,7 +46,8 @@ public:
         Paperclip = 10,
         Attachments = 11,
         Totp = 12,
-        Size = 13
+        Size = 13,
+        PasswordStrength = 14
     };
 
     explicit EntryModel(QObject* parent = nullptr);

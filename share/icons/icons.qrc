@@ -46,6 +46,7 @@
         <file>application/scalable/actions/help-about.svg</file>
         <file>application/scalable/actions/hibp.svg</file>
         <file>application/scalable/actions/key-enter.svg</file>
+        <file>application/scalable/actions/lock-question.svg</file>
         <file>application/scalable/actions/keyboard-shortcuts.svg</file>
         <file>application/scalable/actions/message-close.svg</file>
         <file>application/scalable/actions/move-down.svg</file>

@@ -63,7 +63,6 @@ protected:
 
 private slots:
     void emitEntryActivated(const QModelIndex& index);
-    void emitEntrySelectionChanged();
     void showHeaderMenu(const QPoint& position);
     void toggleColumnVisibility(QAction* action);
     void fitColumnsToWindow();

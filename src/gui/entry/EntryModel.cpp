@@ -18,18 +18,17 @@
 #include "EntryModel.h"
 
 #include <QDateTime>
-#include <QFont>
 #include <QMimeData>
 #include <QPainter>
 #include <QPalette>
 
-#include "core/Config.h"
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/PasswordHealth.h"
 #include "gui/Icons.h"
+#include "gui/styles/StateColorPalette.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -128,7 +127,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
         return 0;
     }
 
-    return 14;
+    return 15;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -249,6 +248,12 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return entry->resolveMultiplePlaceholders(entry->username());
         case Password:
             return entry->resolveMultiplePlaceholders(entry->password());
+        case PasswordStrength: {
+            if (!entry->password().isEmpty() && !entry->excludeFromReports()) {
+                return entry->passwordHealth()->score();
+            }
+            return 0;
+        }
         case Expires:
             // There seems to be no better way of expressing 'infinity'
             return entry->timeInfo().expires() ? entry->timeInfo().expiryTime() : QDateTime(QDate(9999, 1, 1));
@@ -290,6 +295,28 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 return icons()->icon("chronometer");
             }
             break;
+        case PasswordStrength:
+            if (!entry->password().isEmpty() && !entry->excludeFromReports()) {
+                StateColorPalette statePalette;
+                QColor color = statePalette.color(StateColorPalette::Error);
+
+                switch (entry->passwordHealth()->quality()) {
+                case PasswordHealth::Quality::Bad:
+                case PasswordHealth::Quality::Poor:
+                    color = statePalette.color(StateColorPalette::HealthCritical);
+                    break;
+                case PasswordHealth::Quality::Weak:
+                    color = statePalette.color(StateColorPalette::HealthBad);
+                    break;
+                case PasswordHealth::Quality::Good:
+                case PasswordHealth::Quality::Excellent:
+                    color = statePalette.color(StateColorPalette::HealthExcellent);
+                    break;
+                }
+
+                return color;
+            }
+            break;
         }
     } else if (role == Qt::FontRole) {
         QFont font;
@@ -316,9 +343,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         if (backgroundColor.isValid()) {
             return QVariant(backgroundColor);
         }
-    } else if (role == Qt::TextAlignmentRole) {
-        if (index.column() == Paperclip) {
-            return Qt::AlignCenter;
+    } else if (role == Qt::ToolTipRole) {
+        if (index.column() == PasswordStrength && !entry->password().isEmpty() && !entry->excludeFromReports()) {
+            return entry->passwordHealth()->scoreReason();
         }
     }
 
@@ -363,6 +390,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return icons()->icon("paperclip");
         case Totp:
             return icons()->icon("chronometer");
+        case PasswordStrength:
+            return icons()->icon("lock-question");
         }
     } else if (role == Qt::ToolTipRole) {
         switch (section) {
@@ -374,6 +403,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Username");
         case Password:
             return tr("Password");
+        case PasswordStrength:
+            return tr("Password Strength");
         case Url:
             return tr("URL");
         case Notes:
@@ -393,7 +424,7 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
         case Paperclip:
             return tr("Has attachments");
         case Totp:
-            return tr("Has TOTP one-time password");
+            return tr("Has TOTP");
         }
     }
 
