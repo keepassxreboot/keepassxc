@@ -4691,7 +4691,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>&amp;Безопаснось базы данных…</translation>
+        <translation>&amp;Безопасность базы данных…</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
