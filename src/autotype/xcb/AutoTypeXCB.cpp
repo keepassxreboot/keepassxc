@@ -30,6 +30,8 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     m_atomString = XInternAtom(m_dpy, "STRING", True);
     m_atomUtf8String = XInternAtom(m_dpy, "UTF8_STRING", True);
     m_atomNetActiveWindow = XInternAtom(m_dpy, "_NET_ACTIVE_WINDOW", True);
+    m_atomTransientFor = XInternAtom(m_dpy, "WM_TRANSIENT_FOR", True);
+    m_atomWindow = XInternAtom(m_dpy, "WINDOW", True);
 
     m_classBlacklist << "desktop_window"
                      << "gnome-panel"; // Gnome
@@ -262,23 +264,31 @@ QStringList AutoTypePlatformX11::windowTitlesRecursive(Window window)
 
 bool AutoTypePlatformX11::isTopLevelWindow(Window window)
 {
+    bool result = false;
+
     Atom type = None;
     int format;
     unsigned long nitems;
     unsigned long after;
-    unsigned char* data = Q_NULLPTR;
+    unsigned char* data = nullptr;
+
+    // Check if the window has WM_STATE atom and it is not Withdrawn
     int retVal = XGetWindowProperty(
         m_dpy, window, m_atomWmState, 0, 2, False, m_atomWmState, &type, &format, &nitems, &after, &data);
 
-    bool result = false;
-
     if (retVal == 0 && data) {
         if (type == m_atomWmState && format == 32 && nitems > 0) {
-            qint32 state = static_cast<qint32>(*data);
-            result = (state != WithdrawnState);
+            result = (static_cast<quint32>(*data) != WithdrawnState);
         }
-
         XFree(data);
+    } else {
+        // See if this is a transient window without WM_STATE
+        retVal = XGetWindowProperty(
+            m_dpy, window, m_atomTransientFor, 0, 1, False, m_atomWindow, &type, &format, &nitems, &after, &data);
+        if (retVal == 0 && data) {
+            result = true;
+            XFree(data);
+        }
     }
 
     return result;
