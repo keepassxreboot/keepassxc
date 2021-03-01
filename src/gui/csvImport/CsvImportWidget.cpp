@@ -208,8 +208,13 @@ void CsvImportWidget::writeDatabase()
         entry->setUrl(m_parserModel->data(m_parserModel->index(r, 4)).toString());
         entry->setNotes(m_parserModel->data(m_parserModel->index(r, 5)).toString());
 
-        if (m_parserModel->data(m_parserModel->index(r, 6)).isValid()) {
-            auto totp = Totp::parseSettings(m_parserModel->data(m_parserModel->index(r, 6)).toString());
+        auto otpString = m_parserModel->data(m_parserModel->index(r, 6));
+        if (otpString.isValid() && !otpString.toString().isEmpty()) {
+            auto totp = Totp::parseSettings(otpString.toString());
+            if (totp->key.isEmpty()) {
+                // Bare secret, use default TOTP settings
+                totp = Totp::parseSettings({}, otpString.toString());
+            }
             entry->setTotp(totp);
         }
 
