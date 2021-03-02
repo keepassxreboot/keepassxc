@@ -64,7 +64,7 @@ static void estimate(const char* pwd, bool advanced)
         double m = 0.0;
         const auto e = ZxcvbnMatch(pwd, nullptr, &info);
         for (p = info; p; p = p->Next) {
-            m += p->Entropy;
+            m += p->Entrpy;
         }
         m = e - m;
         // clang-format off
@@ -139,7 +139,7 @@ static void estimate(const char* pwd, bool advanced)
             }
             pwdLen += p->Length;
             out << QObject::tr("Length %1").arg(p->Length) << '\t'
-                << QObject::tr("Entropy %1 (%2)").arg(p->Entropy, 6, 'f', 3).arg(p->Entropy * 0.301029996, 0, 'f', 2)
+                << QObject::tr("Entropy %1 (%2)").arg(p->Entrpy, 6, 'f', 3).arg(p->Entrpy * 0.301029996, 0, 'f', 2)
                 << '\t';
             for (n = 0; n < p->Length; ++n, ++pwd) {
                 out << *pwd;
