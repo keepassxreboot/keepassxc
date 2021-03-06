@@ -1831,6 +1831,7 @@ void MainWindow::initViewMenu()
     });
 
     connect(m_ui->actionAlwaysOnTop, &QAction::toggled, this, [this](bool checked) {
+        config()->set(Config::GUI_AlwaysOnTop, checked);
         if (checked) {
             setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
         } else {
@@ -1838,6 +1839,8 @@ void MainWindow::initViewMenu()
         }
         show();
     });
+    // Set checked after connecting to act on a toggle in state (default state is unchecked)
+    m_ui->actionAlwaysOnTop->setChecked(config()->get(Config::GUI_AlwaysOnTop).toBool());
 
     m_ui->actionHideUsernames->setChecked(config()->get(Config::GUI_HideUsernames).toBool());
     connect(m_ui->actionHideUsernames, &QAction::toggled, this, [](bool checked) {
