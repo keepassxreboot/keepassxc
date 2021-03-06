@@ -92,6 +92,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_HideToolbar, {QS("GUI/HideToolbar"), Roaming, false}},
     {Config::GUI_MovableToolbar, {QS("GUI/MovableToolbar"), Roaming, false}},
     {Config::GUI_HidePreviewPanel, {QS("GUI/HidePreviewPanel"), Roaming, false}},
+    {Config::GUI_AlwaysOnTop, {QS("GUI/GUI_AlwaysOnTop"), Roaming, false}},
     {Config::GUI_ToolButtonStyle, {QS("GUI/ToolButtonStyle"), Roaming, Qt::ToolButtonIconOnly}},
     {Config::GUI_ShowTrayIcon, {QS("GUI/ShowTrayIcon"), Roaming, false}},
     {Config::GUI_TrayIconAppearance, {QS("GUI/TrayIconAppearance"), Roaming, {}}},
