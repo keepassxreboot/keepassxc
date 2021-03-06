@@ -76,6 +76,7 @@ public:
         GUI_MovableToolbar,
         GUI_HideGroupsPanel,
         GUI_HidePreviewPanel,
+        GUI_AlwaysOnTop,
         GUI_ToolButtonStyle,
         GUI_ShowTrayIcon,
         GUI_TrayIconAppearance,
