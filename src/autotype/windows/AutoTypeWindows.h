@@ -54,6 +54,7 @@ class AutoTypeExecutorWin : public AutoTypeExecutor
 public:
     explicit AutoTypeExecutorWin(AutoTypePlatformWin* platform);
 
+    void execBegin(const AutoTypeBegin* action) override;
     void execType(const AutoTypeKey* action) override;
     void execClearField(const AutoTypeClearField* action) override;
 

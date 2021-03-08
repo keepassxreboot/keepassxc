@@ -58,3 +58,8 @@ void AutoTypeClearField::exec(AutoTypeExecutor* executor) const
 {
     executor->execClearField(this);
 }
+
+void AutoTypeBegin::exec(AutoTypeExecutor* executor) const
+{
+    executor->execBegin(this);
+}

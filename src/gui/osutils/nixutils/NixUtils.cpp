@@ -16,7 +16,6 @@
  */
 
 #include "NixUtils.h"
-#include "KeySymMap.h"
 #include "core/Tools.h"
 
 #include <QApplication>
@@ -184,25 +183,6 @@ bool NixUtils::nativeEventFilter(const QByteArray& eventType, void* message, lon
         auto* keyPressEvent = static_cast<xcb_key_press_event_t*>(message);
         auto modifierMask = ControlMask | ShiftMask | Mod1Mask | Mod4Mask;
         return triggerGlobalShortcut(keyPressEvent->detail, keyPressEvent->state & modifierMask);
-    } else if (type == XCB_MAPPING_NOTIFY) {
-        auto* mappingNotifyEvent = static_cast<xcb_mapping_notify_event_t*>(message);
-        if (mappingNotifyEvent->request == XCB_MAPPING_KEYBOARD
-            || mappingNotifyEvent->request == XCB_MAPPING_MODIFIER) {
-            XMappingEvent xMappingEvent;
-            memset(&xMappingEvent, 0, sizeof(xMappingEvent));
-            xMappingEvent.type = MappingNotify;
-            xMappingEvent.display = dpy;
-            if (mappingNotifyEvent->request == XCB_MAPPING_KEYBOARD) {
-                xMappingEvent.request = MappingKeyboard;
-            } else {
-                xMappingEvent.request = MappingModifier;
-            }
-            xMappingEvent.first_keycode = mappingNotifyEvent->first_keycode;
-            xMappingEvent.count = mappingNotifyEvent->count;
-            XRefreshKeyboardMapping(&xMappingEvent);
-            // Notify listeners that the keymap has changed
-            emit keymapChanged();
-        }
     }
 
     return false;

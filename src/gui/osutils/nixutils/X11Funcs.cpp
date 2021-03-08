@@ -17,7 +17,6 @@
 
 #include "X11Funcs.h"
 
-#include "KeySymMap.h"
 #include "core/Tools.h"
 
 #include <X11/Xutil.h>
@@ -31,18 +30,9 @@ KeySym qcharToNativeKeyCode(const QChar& ch)
         return unicode;
     }
 
-    /* mapping table generated from keysymdef.h */
-    const uint* match = Tools::binaryFind(unicodeToKeysymKeys, unicodeToKeysymKeys + unicodeToKeysymLen, unicode);
-    int index = match - unicodeToKeysymKeys;
-    if (index != unicodeToKeysymLen) {
-        return unicodeToKeysymValues[index];
-    }
-
-    if (unicode >= 0x0100) {
-        return unicode | 0x01000000;
-    }
-
-    return NoSymbol;
+    /* request other characters from X server */
+    QString ustr = QString("U%1").arg(unicode, 4, 16, QLatin1Char('0'));
+    return XStringToKeysym(ustr.toStdString().c_str());
 }
 
 KeySym qtToNativeKeyCode(Qt::Key key)

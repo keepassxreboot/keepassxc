@@ -61,10 +61,17 @@ public:
     void exec(AutoTypeExecutor* executor) const override;
 };
 
+class KEEPASSXC_EXPORT AutoTypeBegin : public AutoTypeAction
+{
+public:
+    void exec(AutoTypeExecutor* executor) const override;
+};
+
 class KEEPASSXC_EXPORT AutoTypeExecutor
 {
 public:
     virtual ~AutoTypeExecutor() = default;
+    virtual void execBegin(const AutoTypeBegin* action) = 0;
     virtual void execType(const AutoTypeKey* action) = 0;
     virtual void execClearField(const AutoTypeClearField* action) = 0;
 

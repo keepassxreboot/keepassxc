@@ -496,6 +496,7 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
     const int maxRepetition = 100;
 
     QList<QSharedPointer<AutoTypeAction>> actions;
+    actions << QSharedPointer<AutoTypeBegin>::create();
     actions << QSharedPointer<AutoTypeDelay>::create(qMax(0, config()->get(Config::AutoTypeDelay).toInt()), true);
 
     // Replace escaped braces with a template for easier regex

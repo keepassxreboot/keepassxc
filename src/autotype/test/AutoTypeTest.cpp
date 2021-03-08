@@ -102,6 +102,11 @@ AutoTypeExecutorTest::AutoTypeExecutorTest(AutoTypePlatformTest* platform)
 {
 }
 
+void AutoTypeExecutorTest::execBegin(const AutoTypeBegin* action)
+{
+    Q_UNUSED(action);
+}
+
 void AutoTypeExecutorTest::execType(const AutoTypeKey* action)
 {
     m_platform->addAction(action);
