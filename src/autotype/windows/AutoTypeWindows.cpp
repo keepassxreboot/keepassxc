@@ -226,6 +226,11 @@ AutoTypeExecutorWin::AutoTypeExecutorWin(AutoTypePlatformWin* platform)
 {
 }
 
+void AutoTypeExecutorWin::execBegin(const AutoTypeBegin* action)
+{
+    Q_UNUSED(action);
+}
+
 void AutoTypeExecutorWin::execType(const AutoTypeKey* action)
 {
     if (action->modifiers & Qt::ShiftModifier) {

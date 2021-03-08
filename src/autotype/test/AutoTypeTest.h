@@ -64,6 +64,7 @@ class AutoTypeExecutorTest : public AutoTypeExecutor
 public:
     explicit AutoTypeExecutorTest(AutoTypePlatformTest* platform);
 
+    void execBegin(const AutoTypeBegin* action) override;
     void execType(const AutoTypeKey* action) override;
     void execClearField(const AutoTypeClearField* action) override;
 

@@ -48,9 +48,6 @@ public:
         return false;
     }
 
-signals:
-    void keymapChanged();
-
 private:
     explicit NixUtils(QObject* parent = nullptr);
     ~NixUtils() override;

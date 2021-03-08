@@ -215,6 +215,11 @@ AutoTypeExecutorMac::AutoTypeExecutorMac(AutoTypePlatformMac* platform)
 {
 }
 
+void AutoTypeExecutorMac::execBegin(const AutoTypeBegin* action)
+{
+    Q_UNUSED(action);
+}
+
 void AutoTypeExecutorMac::execType(const AutoTypeKey* action)
 {
     if (action->modifiers & Qt::ShiftModifier) {

@@ -54,6 +54,7 @@ public:
     QString activeWindowTitle() override;
     bool raiseWindow(WId window) override;
     AutoTypeExecutor* createExecutor() override;
+    void updateKeymap();
 
     void sendKey(KeySym keysym, unsigned int modifiers = 0);
 
@@ -65,13 +66,10 @@ private:
     bool isTopLevelWindow(Window window);
 
     XkbDescPtr getKeyboard();
-    void updateKeymap();
-    bool isRemapKeycodeValid();
     int AddKeysym(KeySym keysym);
     void SendKeyEvent(unsigned keycode, bool press);
     void SendModifiers(unsigned int mask, bool press);
-    int GetKeycode(KeySym keysym, unsigned int* mask);
-    bool keysymModifiers(KeySym keysym, int keycode, unsigned int* mask);
+    bool GetKeycode(KeySym keysym, int* keycode, int* group, unsigned int* mask);
 
     static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 
@@ -87,14 +85,16 @@ private:
     Atom m_atomWindow;
     QSet<QString> m_classBlacklist;
 
+    typedef struct
+    {
+        KeySym sym;
+        int code;
+        int group;
+        int mask;
+    } KeyDesc;
+
     XkbDescPtr m_xkb;
-    KeySym* m_keysymTable;
-    int m_minKeycode;
-    int m_maxKeycode;
-    int m_keysymPerKeycode;
-    /* dedicated keycode for remapped keys */
-    unsigned int m_remapKeycode;
-    KeySym m_currentRemapKeysym;
+    QList<KeyDesc> m_keymap;
     KeyCode m_modifier_keycode[N_MOD_INDICES];
     bool m_loaded;
 };
@@ -104,6 +104,7 @@ class AutoTypeExecutorX11 : public AutoTypeExecutor
 public:
     explicit AutoTypeExecutorX11(AutoTypePlatformX11* platform);
 
+    void execBegin(const AutoTypeBegin* action) override;
     void execType(const AutoTypeKey* action) override;
     void execClearField(const AutoTypeClearField* action) override;
 
