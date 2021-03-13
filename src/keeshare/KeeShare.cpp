@@ -16,8 +16,11 @@
  */
 
 #include "KeeShare.h"
-#include "core/DatabaseIcons.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
+#include "gui/DatabaseIcons.h"
 #include "keeshare/ShareObserver.h"
 
 namespace

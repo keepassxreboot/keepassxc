@@ -21,6 +21,9 @@
 
 #include <QIcon>
 
+#include <core/Database.h>
+#include <gui/DatabaseIcons.h>
+
 class Icons
 {
 public:
@@ -31,6 +34,14 @@ public:
     QString trayIconAppearance() const;
     QIcon icon(const QString& name, bool recolor = true, const QColor& overrideColor = QColor::Invalid);
     QIcon onOffIcon(const QString& name, bool on, bool recolor = true);
+
+    static QPixmap customIconPixmap(const Database* db, const QUuid& uuid, IconSize size = IconSize::Default);
+    static QHash<QUuid, QPixmap> customIconsPixmaps(const Database* db, IconSize size = IconSize::Default);
+    static QPixmap entryIconPixmap(const Entry* entry, IconSize size = IconSize::Default);
+    static QPixmap groupIconPixmap(const Group* group, IconSize size = IconSize::Default);
+
+    static QByteArray saveToBytes(const QImage& image);
+    static QString imageFormatsFilter();
 
     static Icons* instance();
 

@@ -24,6 +24,7 @@
 #include "fdosecrets/widgets/RowButtonHelper.h"
 
 #include "core/Entry.h"
+#include "gui/Icons.h"
 
 #include <QWindow>
 
@@ -250,7 +251,7 @@ QVariant AccessControlDialog::EntryModel::data(const QModelIndex& index, int rol
         case Qt::DisplayRole:
             return entry->title();
         case Qt::DecorationRole:
-            return entry->icon();
+            return Icons::entryIconPixmap(entry);
         case Qt::CheckStateRole:
             return QVariant::fromValue(m_selected.contains(entry) ? Qt::Checked : Qt::Unchecked);
         default:
