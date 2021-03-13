@@ -16,12 +16,14 @@
  */
 
 #include "TestGuiPixmaps.h"
-#include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
+
+#include <QTest>
 
 #include "core/Group.h"
 #include "crypto/Crypto.h"
-#include <QTest>
+#include "gui/DatabaseIcons.h"
+#include "gui/Icons.h"
 
 void TestGuiPixmaps::initTestCase()
 {
@@ -30,55 +32,53 @@ void TestGuiPixmaps::initTestCase()
 
 void TestGuiPixmaps::testDatabaseIcons()
 {
-    // check if the cache works correctly
-    auto pixmap = databaseIcons()->icon(0);
-    auto pixmapCached = databaseIcons()->icon(0);
-    QCOMPARE(pixmapCached.cacheKey(), pixmap.cacheKey());
+    QVERIFY(!databaseIcons()->icon(0).isNull());
 }
 
 void TestGuiPixmaps::testEntryIcons()
 {
     QScopedPointer<Database> db(new Database());
-    Entry* entry = new Entry();
+    auto entry = new Entry();
     entry->setGroup(db->rootGroup());
 
     // Test setting standard icon
     entry->setIcon(10);
-    auto pixmap = entry->iconPixmap();
-    QCOMPARE(pixmap.cacheKey(), databaseIcons()->icon(10).cacheKey());
+    auto pixmap = Icons::entryIconPixmap(entry);
+    QVERIFY(pixmap.toImage() == databaseIcons()->icon(10).toImage());
 
     // Test setting custom icon
     QUuid iconUuid = QUuid::createUuid();
     QImage icon(2, 1, QImage::Format_RGB32);
     icon.setPixel(0, 0, qRgb(0, 0, 0));
     icon.setPixel(1, 0, qRgb(0, 0, 50));
-    db->metadata()->addCustomIcon(iconUuid, icon);
+    db->metadata()->addCustomIcon(iconUuid, Icons::saveToBytes(icon));
+    QCOMPARE(db->metadata()->customIconsOrder().count(), 1);
 
     entry->setIcon(iconUuid);
-    pixmap = entry->iconPixmap();
-    QCOMPARE(pixmap.cacheKey(), db->metadata()->customIconPixmap(iconUuid).cacheKey());
+    // Confirm the icon is the same as that stored in the database
+    QVERIFY(Icons::entryIconPixmap(entry).toImage() == Icons::customIconPixmap(db.data(), iconUuid).toImage());
 }
 
 void TestGuiPixmaps::testGroupIcons()
 {
     QScopedPointer<Database> db(new Database());
-    Group* group = db->rootGroup();
+    auto group = db->rootGroup();
 
     // Test setting standard icon
     group->setIcon(10);
-    auto pixmap = group->iconPixmap();
-    QCOMPARE(pixmap.cacheKey(), databaseIcons()->icon(10).cacheKey());
+    auto pixmap = Icons::groupIconPixmap(group);
+    QVERIFY(pixmap.toImage() == databaseIcons()->icon(10).toImage());
 
     // Test setting custom icon
     QUuid iconUuid = QUuid::createUuid();
     QImage icon(2, 1, QImage::Format_RGB32);
     icon.setPixel(0, 0, qRgb(0, 0, 0));
     icon.setPixel(1, 0, qRgb(0, 0, 50));
-    db->metadata()->addCustomIcon(iconUuid, icon);
+    db->metadata()->addCustomIcon(iconUuid, Icons::saveToBytes(icon));
 
     group->setIcon(iconUuid);
-    pixmap = group->iconPixmap();
-    QCOMPARE(pixmap.cacheKey(), db->metadata()->customIconPixmap(iconUuid).cacheKey());
+    // Confirm the icon is the same as that stored in the database
+    QVERIFY(Icons::groupIconPixmap(group).toImage() == Icons::customIconPixmap(db.data(), iconUuid).toImage());
 }
 
 QTEST_MAIN(TestGuiPixmaps)

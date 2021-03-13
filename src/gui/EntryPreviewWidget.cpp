@@ -173,7 +173,7 @@ void EntryPreviewWidget::updateEntryHeaderLine()
     Q_ASSERT(m_currentEntry);
     const QString title = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->title());
     m_ui->entryTitleLabel->setRawText(hierarchy(m_currentEntry->group(), title));
-    m_ui->entryIcon->setPixmap(m_currentEntry->iconPixmap(IconSize::Large));
+    m_ui->entryIcon->setPixmap(Icons::entryIconPixmap(m_currentEntry, IconSize::Large));
 }
 
 void EntryPreviewWidget::updateEntryTotp()
@@ -377,7 +377,7 @@ void EntryPreviewWidget::updateGroupHeaderLine()
 {
     Q_ASSERT(m_currentGroup);
     m_ui->groupTitleLabel->setRawText(hierarchy(m_currentGroup, {}));
-    m_ui->groupIcon->setPixmap(m_currentGroup->iconPixmap(IconSize::Large));
+    m_ui->groupIcon->setPixmap(Icons::groupIconPixmap(m_currentGroup, IconSize::Large));
 }
 
 void EntryPreviewWidget::updateGroupGeneralTab()

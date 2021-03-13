@@ -19,8 +19,12 @@
 
 #include <QMimeData>
 
+#include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
+#include "gui/DatabaseIcons.h"
+#include "gui/Icons.h"
 #include "keeshare/KeeShare.h"
 
 GroupModel::GroupModel(Database* db, QObject* parent)
@@ -126,7 +130,7 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
 #endif
         return nameTemplate.arg(group->name());
     } else if (role == Qt::DecorationRole) {
-        return group->iconPixmap();
+        return Icons::groupIconPixmap(group);
     } else if (role == Qt::FontRole) {
         QFont font;
         if (group->isExpired()) {

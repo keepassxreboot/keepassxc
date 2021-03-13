@@ -25,6 +25,8 @@
 #include "core/Tools.h"
 #include "gui/FileDialog.h"
 #include "gui/IconModels.h"
+#include "gui/Icons.h"
+#include "gui/MessageBox.h"
 #ifdef WITH_XC_NETWORKING
 #include "gui/IconDownloader.h"
 #endif
@@ -128,7 +130,7 @@ void EditWidgetIcons::load(const QUuid& currentUuid,
     m_currentUuid = currentUuid;
     setUrl(url);
 
-    m_customIconModel->setIcons(database->metadata()->customIconsPixmaps(IconSize::Default),
+    m_customIconModel->setIcons(Icons::customIconsPixmaps(database.data(), IconSize::Default),
                                 database->metadata()->customIconsOrder());
 
     QUuid iconUuid = iconStruct.uuid;
@@ -231,7 +233,7 @@ void EditWidgetIcons::addCustomIconFromFile()
         return;
     }
 
-    auto filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Tools::imageReaderFilter(), tr("All files"));
+    auto filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Icons::imageFormatsFilter(), tr("All files"));
     auto filenames =
         fileDialog()->getOpenFileNames(this, tr("Select Image(s)"), FileDialog::getLastDir("icons"), filter);
     if (!filenames.empty()) {
@@ -284,16 +286,17 @@ bool EditWidgetIcons::addCustomIcon(const QImage& icon)
     bool added = false;
     if (m_db) {
         // Don't add an icon larger than 128x128, but retain original size if smaller
-        auto scaledicon = icon;
+        auto scaledIcon = icon;
         if (icon.width() > 128 || icon.height() > 128) {
-            scaledicon = icon.scaled(128, 128);
+            scaledIcon = icon.scaled(128, 128);
         }
 
-        QUuid uuid = m_db->metadata()->findCustomIcon(scaledicon);
+        QByteArray serializedIcon = Icons::saveToBytes(scaledIcon);
+        QUuid uuid = m_db->metadata()->findCustomIcon(serializedIcon);
         if (uuid.isNull()) {
             uuid = QUuid::createUuid();
-            m_db->metadata()->addCustomIcon(uuid, scaledicon);
-            m_customIconModel->setIcons(m_db->metadata()->customIconsPixmaps(IconSize::Default),
+            m_db->metadata()->addCustomIcon(uuid, serializedIcon);
+            m_customIconModel->setIcons(Icons::customIconsPixmaps(m_db.data(), IconSize::Default),
                                         m_db->metadata()->customIconsOrder());
             added = true;
         }

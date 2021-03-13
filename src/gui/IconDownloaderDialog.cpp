@@ -24,7 +24,12 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/IconDownloader.h"
+#include "gui/IconModels.h"
+#include "gui/Icons.h"
 #include "osutils/OSUtils.h"
+#ifdef Q_OS_MACOS
+#include "gui/osutils/macutils/MacUtils.h"
+#endif
 
 #include <QStandardItemModel>
 
@@ -126,15 +131,16 @@ void IconDownloaderDialog::downloadFinished(const QString& url, const QImage& ic
 
     if (m_db && !icon.isNull()) {
         // Don't add an icon larger than 128x128, but retain original size if smaller
-        auto scaledicon = icon;
+        auto scaledIcon = icon;
         if (icon.width() > 128 || icon.height() > 128) {
-            scaledicon = icon.scaled(128, 128);
+            scaledIcon = icon.scaled(128, 128);
         }
 
-        QUuid uuid = m_db->metadata()->findCustomIcon(scaledicon);
+        QByteArray serializedIcon = Icons::saveToBytes(scaledIcon);
+        QUuid uuid = m_db->metadata()->findCustomIcon(serializedIcon);
         if (uuid.isNull()) {
             uuid = QUuid::createUuid();
-            m_db->metadata()->addCustomIcon(uuid, scaledicon);
+            m_db->metadata()->addCustomIcon(uuid, serializedIcon);
             updateTable(url, tr("Ok"));
         } else {
             updateTable(url, tr("Already Exists"));
