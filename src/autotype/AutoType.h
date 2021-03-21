@@ -48,9 +48,9 @@ public:
     void performAutoTypeWithSequence(const Entry* entry, const QString& sequence, QWidget* hideWindow = nullptr);
     void performAutoTypeOnExternalPlugin(const Entry* entry,
                                          const QString& pluginName,
-                                         const QString& targetIdentifier);
+                                         const QSharedPointer<AutoTypeTarget>& target);
 
-    TargetMap getExternalPluginTargets(const QString& pluginName);
+    AutoTypeTargetMap getExternalPluginTargets(const QString& pluginName);
 
     static bool verifyAutoTypeSyntax(const QString& sequence, const Entry* entry, QString& error);
 
@@ -104,7 +104,7 @@ private:
                                 WId window = 0);
     void executeAutoTypeActionsOnExternalTarget(const Entry* entry,
                                                 const QString& pluginName,
-                                                const QString& targetIdentifier,
+                                                const QSharedPointer<AutoTypeTarget>& target,
                                                 const QString& customSequence = QString());
     void restoreWindowState();
     void resetAutoTypeState();

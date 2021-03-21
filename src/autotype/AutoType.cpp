@@ -390,7 +390,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
 void AutoType::executeAutoTypeActionsOnExternalTarget(const Entry* entry,
                                                       const QString& pluginName,
-                                                      const QString& targetIdentifier,
+                                                      const QSharedPointer<AutoTypeTarget>& target,
                                                       const QString& sequence)
 {
     if (!m_external_executors.contains(pluginName)) {
@@ -423,7 +423,7 @@ void AutoType::executeAutoTypeActionsOnExternalTarget(const Entry* entry,
     auto pluginExecutor = m_external_executors[pluginName];
 
     for (const auto& action : asConst(actions)) {
-        action->exec(targetIdentifier, pluginExecutor);
+        action->exec(target, pluginExecutor);
         QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
     }
 
@@ -464,7 +464,7 @@ void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& se
 
 void AutoType::performAutoTypeOnExternalPlugin(const Entry* entry,
                                                const QString& pluginName,
-                                               const QString& targetIdentifier)
+                                               const QSharedPointer<AutoTypeTarget>& target)
 {
     if (!m_external_plugins.contains(pluginName)) {
         qWarning("Attempted to auto-type for plugin that is not loaded: %s", qPrintable(pluginName));
@@ -473,15 +473,15 @@ void AutoType::performAutoTypeOnExternalPlugin(const Entry* entry,
 
     auto sequences = entry->autoTypeSequences();
     if (!sequences.isEmpty()) {
-        executeAutoTypeActionsOnExternalTarget(entry, pluginName, targetIdentifier, sequences.first());
+        executeAutoTypeActionsOnExternalTarget(entry, pluginName, target, sequences.first());
     }
 }
 
-TargetMap AutoType::getExternalPluginTargets(const QString& pluginName)
+AutoTypeTargetMap AutoType::getExternalPluginTargets(const QString& pluginName)
 {
     if (!m_external_plugins.contains(pluginName)) {
         qWarning("Attempted to fetch targets for plugin that is not loaded: %s", qPrintable(pluginName));
-        return TargetMap();
+        return AutoTypeTargetMap();
     }
     return m_external_plugins[pluginName]->availableTargets();
 }

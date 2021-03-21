@@ -20,9 +20,11 @@
 #define KEEPASSX_AUTOTYPEACTION_H
 
 #include <QChar>
+#include <QMetaType>
 
 #include "core/Global.h"
 
+class AutoTypeTarget;
 class AutoTypeExecutor;
 class TargetedAutoTypeExecutor;
 
@@ -84,7 +86,7 @@ public:
 
     AutoTypeAction() = default;
     virtual Result exec(AutoTypeExecutor* executor) const = 0;
-    virtual Result exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor) = 0;
+    virtual Result exec(const QSharedPointer<AutoTypeTarget>& target, TargetedAutoTypeExecutor* executor) = 0;
     virtual ~AutoTypeAction() = default;
 };
 
@@ -94,7 +96,7 @@ public:
     explicit AutoTypeKey(const QChar& character, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
     explicit AutoTypeKey(Qt::Key key, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
     Result exec(AutoTypeExecutor* executor) const override;
-    Result exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor) override;
+    Result exec(const QSharedPointer<AutoTypeTarget>& target, TargetedAutoTypeExecutor* executor) override;
 
     const QChar character;
     const Qt::Key key = Qt::Key_unknown;
@@ -106,7 +108,7 @@ class KEEPASSXC_EXPORT AutoTypeDelay : public AutoTypeAction
 public:
     explicit AutoTypeDelay(int delayMs, bool setExecDelay = false);
     Result exec(AutoTypeExecutor* executor) const override;
-    Result exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor) override;
+    Result exec(const QSharedPointer<AutoTypeTarget>& target, TargetedAutoTypeExecutor* executor) override;
 
     const int delayMs;
     const bool setExecDelay;
@@ -116,14 +118,14 @@ class KEEPASSXC_EXPORT AutoTypeClearField : public AutoTypeAction
 {
 public:
     Result exec(AutoTypeExecutor* executor) const override;
-    Result exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor) override;
+    Result exec(const QSharedPointer<AutoTypeTarget>& target, TargetedAutoTypeExecutor* executor) override;
 };
 
 class KEEPASSXC_EXPORT AutoTypeBegin : public AutoTypeAction
 {
 public:
     Result exec(AutoTypeExecutor* executor) const override;
-    Result exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor) override;
+    Result exec(const QSharedPointer<AutoTypeTarget>& target, TargetedAutoTypeExecutor* executor) override;
 };
 
 class KEEPASSXC_EXPORT AutoTypeExecutor
@@ -142,9 +144,9 @@ class KEEPASSXC_EXPORT TargetedAutoTypeExecutor
 {
 public:
     virtual ~TargetedAutoTypeExecutor() = default;
-    virtual AutoTypeAction::Result execBegin(const QString& targetIdentifier, const AutoTypeBegin* action) = 0;
-    virtual AutoTypeAction::Result execType(const QString& targetIdentifier, AutoTypeKey* action) = 0;
-    virtual AutoTypeAction::Result execClearField(const QString& targetIdentifier, AutoTypeClearField* action) = 0;
+    virtual AutoTypeAction::Result execBegin(const QSharedPointer<AutoTypeTarget>& target, const AutoTypeBegin* action) = 0;
+    virtual AutoTypeAction::Result execType(const QSharedPointer<AutoTypeTarget>& target, AutoTypeKey* action) = 0;
+    virtual AutoTypeAction::Result execClearField(const QSharedPointer<AutoTypeTarget>& target, AutoTypeClearField* action) = 0;
 
     int execDelayMs = 25;
     QString error;

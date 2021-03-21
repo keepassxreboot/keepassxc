@@ -59,6 +59,8 @@ public:
         AutoTypeHideExpiredEntry,
         GlobalAutoTypeKey,
         GlobalAutoTypeModifiers,
+        AutoTypeLibvirtDeadKeysWindows,
+        AutoTypeLibvirtDeadKeysOther,
         FaviconDownloadTimeout,
         UpdateCheckMessageShown,
         UseTouchID,

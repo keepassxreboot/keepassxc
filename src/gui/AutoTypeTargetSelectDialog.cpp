@@ -22,21 +22,22 @@
 #include <utility>
 
 AutoTypeTargetSelectDialog::AutoTypeTargetSelectDialog(QString pluginName,
-                                                       TargetMap targetList,
+                                                       const AutoTypeTargetMap& targetList,
                                                        QWidget* parent,
                                                        Entry* entry)
     : QDialog(parent)
     , m_ui(new Ui::AutoTypeTargetSelectDialog())
     , m_entry(entry)
     , m_pluginName(std::move(pluginName))
+    , m_targetList(targetList)
 {
     m_ui->setupUi(this);
     this->setFixedHeight(this->sizeHint().height());
 
     setAttribute(Qt::WA_DeleteOnClose);
 
-    for (const auto& targetIdentifier : targetList.keys()) {
-        m_ui->targetComboBox->addItem(targetList[targetIdentifier], targetIdentifier);
+    for (const QSharedPointer<AutoTypeTarget>& target : m_targetList.values()) {
+        m_ui->targetComboBox->addItem(target->getPresentableName(), target->getIdentifier());
     }
 
     m_ui->targetComboBox->setAutoCompletion(true);
@@ -54,9 +55,7 @@ void AutoTypeTargetSelectDialog::performAutoType()
     }
 
     QString targetIdentifier = m_ui->targetComboBox->currentData().toString();
-    autoType()->performAutoTypeOnExternalPlugin(m_entry, m_pluginName, targetIdentifier);
+    autoType()->performAutoTypeOnExternalPlugin(m_entry, m_pluginName, m_targetList.get(targetIdentifier));
 }
 
-AutoTypeTargetSelectDialog::~AutoTypeTargetSelectDialog()
-{
-}
+AutoTypeTargetSelectDialog::~AutoTypeTargetSelectDialog() = default;

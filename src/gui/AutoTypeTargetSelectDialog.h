@@ -36,7 +36,7 @@ class AutoTypeTargetSelectDialog : public QDialog
 
 public:
     explicit AutoTypeTargetSelectDialog(QString pluginName,
-                                        TargetMap targetList,
+                                        const AutoTypeTargetMap& targetList,
                                         QWidget* parent = nullptr,
                                         Entry* entry = nullptr);
     ~AutoTypeTargetSelectDialog() override;
@@ -48,6 +48,7 @@ private:
     QScopedPointer<Ui::AutoTypeTargetSelectDialog> m_ui;
     Entry* m_entry;
     QString m_pluginName;
+    AutoTypeTargetMap m_targetList;
 
     Q_DISABLE_COPY(AutoTypeTargetSelectDialog)
 };

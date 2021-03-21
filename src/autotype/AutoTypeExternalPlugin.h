@@ -19,56 +19,78 @@
 #define KEEPASSX_AUTOTYPEEXTERNALPLUGIN_H
 
 #include <QWidget>
+
 #include "autotype/AutoTypeAction.h"
 
-class TargetMap
+class AutoTypeTarget
 {
 public:
-    const QString& operator[](const QString& identifier) const
+    AutoTypeTarget(QString identifier, QString presentableName)
+        : m_identifier(std::move(identifier))
+        , m_presentableName(std::move(presentableName))
     {
-        for (const auto& pair : m_targets) {
-            if (pair.first == identifier) {
-                return pair.second;
-            }
-        }
-        qWarning("Did not find item with key %s in TargetMap", qPrintable(identifier));
-        return m_nullString;
     }
 
-    QString& operator[](const QString& identifier)
+    virtual ~AutoTypeTarget() = default;
+
+    virtual const QString& getIdentifier() const
     {
-        for (auto& pair : m_targets) {
-            if (pair.first == identifier) {
-                return pair.second;
-            }
-        }
-        auto pair = QPair<QString, QString>(identifier, "");
-        m_targets.append(pair);
-        return m_targets.last().second;
+        return m_identifier;
+    };
+
+    virtual const QString& getPresentableName() const
+    {
+        return m_presentableName;
+    };
+
+private:
+    const QString m_identifier;
+    const QString m_presentableName;
+};
+
+class AutoTypeTargetMap
+{
+public:
+    AutoTypeTargetMap()
+        : m_targets(QList<QSharedPointer<AutoTypeTarget>>())
+    {
     }
 
-    QList<QString> keys() const
+    ~AutoTypeTargetMap() = default;
+
+    QSharedPointer<AutoTypeTarget> get(const QString& identifier) const
     {
-        QList<QString> keys;
-        for (auto& pair : m_targets) {
-            keys.append(pair.first);
+        for (const auto& target : m_targets) {
+            if (target->getIdentifier() == identifier) {
+                return target;
+            }
         }
-        return keys;
+        qWarning("Did not find item with key %s in AutoTypeTargetMap", qPrintable(identifier));
+        return QSharedPointer<AutoTypeTarget>(nullptr);
+    }
+
+    void append(const QSharedPointer<AutoTypeTarget>& target)
+    {
+        m_targets.append(target);
+    }
+
+    const QList<QSharedPointer<AutoTypeTarget>>& values() const
+    {
+        return m_targets;
     }
 
 private:
-    QString m_nullString;
-    QList<QPair<QString, QString>> m_targets;
+    QList<QSharedPointer<AutoTypeTarget>> m_targets;
 };
 
 class AutoTypeExternalInterface
 {
 public:
-    virtual ~AutoTypeExternalInterface()
-    {
-    }
+    virtual ~AutoTypeExternalInterface() = default;
+
     virtual bool isAvailable() = 0;
-    virtual TargetMap availableTargets() = 0;
+    virtual AutoTypeTargetMap availableTargets() = 0;
+
     virtual void unload()
     {
     }

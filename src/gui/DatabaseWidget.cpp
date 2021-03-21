@@ -808,12 +808,16 @@ void DatabaseWidget::performAutoTypePluginLibvirt()
         return;
     }
 
-    auto targetSelectDialog = new AutoTypeTargetSelectDialog(
-        "libvirt",
-        autoType()->getExternalPluginTargets("libvirt"),
-        this,
-        currentEntry
-    );
+    const AutoTypeTargetMap& targets = autoType()->getExternalPluginTargets("libvirt");
+
+    if (targets.values().isEmpty()) {
+        MessageBox::critical(this,
+                             "No targets available",
+                             "Libvirt did not return any available targets for auto-typing");
+        return;
+    }
+
+    auto targetSelectDialog = new AutoTypeTargetSelectDialog("libvirt", targets, this, currentEntry);
     targetSelectDialog->show();
 }
 

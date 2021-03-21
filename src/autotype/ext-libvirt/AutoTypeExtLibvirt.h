@@ -23,8 +23,35 @@
 #include <QWidget>
 #include <QtPlugin>
 #include <libvirt.h>
+
 #include "autotype/AutoTypeExternalPlugin.h"
 #include "core/Tools.h"
+
+enum class OperatingSystem
+{
+    Unknown,
+    Linux,
+    Windows,
+    MacOSX,
+};
+
+class AutoTypeTargetLibvirt : public AutoTypeTarget
+{
+public:
+    AutoTypeTargetLibvirt(QString identifier,
+                          QString presentableName,
+                          virDomainPtr domain);
+    ~AutoTypeTargetLibvirt();
+
+    virDomainPtr getDomain();
+    OperatingSystem getOperatingSystem();
+
+private:
+    OperatingSystem detectOperatingSystem();
+
+    virDomainPtr m_domain;
+    OperatingSystem m_operatingSystem;
+};
 
 class AutoTypeExtLibvirt : public QObject, public AutoTypeExternalInterface
 {
@@ -37,14 +64,14 @@ public:
     void unload() override;
 
     bool isAvailable() override;
-    TargetMap availableTargets() override;
+    AutoTypeTargetMap availableTargets() override;
 
     TargetedAutoTypeExecutor* createExecutor() override;
 
-    QList<uint> charToKeyCodeGroup(const QChar& ch);
+    QList<uint> charToKeyCodeGroup(const QChar& character, OperatingSystem targetOperatingSystem);
     uint keyToKeyCode(Qt::Key key);
 
-    void sendKeyCodesToDomain(const QString& domainUuid, QList<uint> keyCodes);
+    void sendKeyCodesToTarget(const QSharedPointer<AutoTypeTargetLibvirt>& target, QList<uint> keyCodes);
 
 private:
     virConnectPtr m_libvirtConnection;
@@ -55,9 +82,9 @@ class AutoTypeExecutorLibvirt : public TargetedAutoTypeExecutor
 public:
     explicit AutoTypeExecutorLibvirt(AutoTypeExtLibvirt* plugin);
 
-    AutoTypeAction::Result execBegin(const QString& targetIdentifier, const AutoTypeBegin* action) override;
-    AutoTypeAction::Result execType(const QString& targetIdentifier, AutoTypeKey* action) override;
-    AutoTypeAction::Result execClearField(const QString& targetIdentifier, AutoTypeClearField* action) override;
+    AutoTypeAction::Result execBegin(const QSharedPointer<AutoTypeTarget>& target, const AutoTypeBegin* action) override;
+    AutoTypeAction::Result execType(const QSharedPointer<AutoTypeTarget>& target, AutoTypeKey* action) override;
+    AutoTypeAction::Result execClearField(const QSharedPointer<AutoTypeTarget>& target, AutoTypeClearField* action) override;
 
 private:
     AutoTypeExtLibvirt* const m_plugin;

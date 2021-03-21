@@ -15,13 +15,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <utility>
+
 #include "AutoTypeExtLibvirt.h"
+#include "core/Config.h"
 
 AutoTypeExtLibvirt::AutoTypeExtLibvirt()
 {
-    m_libvirtConnection = virConnectOpen("qemu:///system");
+    m_libvirtConnection = virConnectOpen(nullptr);
     if (m_libvirtConnection == nullptr) {
-        qWarning("Failed connecting to qemu:///system");
+        qWarning("Failed connecting to the default libvirt URI");
     }
 }
 
@@ -36,13 +39,18 @@ bool AutoTypeExtLibvirt::isAvailable()
     return m_libvirtConnection != nullptr;
 }
 
-TargetMap AutoTypeExtLibvirt::availableTargets()
+AutoTypeTargetMap AutoTypeExtLibvirt::availableTargets()
 {
+    auto targetMap = AutoTypeTargetMap();
+
+    if (m_libvirtConnection == nullptr) {
+        qWarning("No open libvirt connection available");
+        return targetMap;
+    }
+
     virDomainPtr* domainList;
 
     int domainCount = virConnectListAllDomains(m_libvirtConnection, &domainList, VIR_CONNECT_LIST_DOMAINS_RUNNING);
-
-    auto targetMap = TargetMap();
 
     for (int i = 0; i < domainCount; i++) {
         virDomainPtr currentDomain = domainList[i];
@@ -57,9 +65,7 @@ TargetMap AutoTypeExtLibvirt::availableTargets()
             continue;
         }
 
-        targetMap[QString(uuidBuffer)] = name;
-
-        virDomainFree(currentDomain);
+        targetMap.append(QSharedPointer<AutoTypeTargetLibvirt>::create(QString(uuidBuffer), name, currentDomain));
     }
 
     return targetMap;
@@ -70,16 +76,19 @@ TargetedAutoTypeExecutor* AutoTypeExtLibvirt::createExecutor()
     return new AutoTypeExecutorLibvirt(this);
 }
 
-void AutoTypeExtLibvirt::sendKeyCodesToDomain(const QString& domainUuid, QList<uint> keyCodes)
+void AutoTypeExtLibvirt::sendKeyCodesToTarget(const QSharedPointer<AutoTypeTargetLibvirt>& target, QList<uint> keyCodes)
 {
+    if (target->getDomain() == nullptr) {
+        qWarning("Target has no domain object set");
+        return;
+    }
+
     uint keyCodeBuffer[keyCodes.size()];
     for (int i = 0; i < keyCodes.size(); i++) {
         keyCodeBuffer[i] = keyCodes[i];
     }
 
-    virDomainPtr targetDomain = virDomainLookupByUUIDString(m_libvirtConnection, domainUuid.toStdString().c_str());
-    virDomainSendKey(targetDomain, VIR_KEYCODE_SET_WIN32, 5, keyCodeBuffer, keyCodes.size(), 0);
-    virDomainFree(targetDomain);
+    virDomainSendKey(target->getDomain(), VIR_KEYCODE_SET_WIN32, 5, keyCodeBuffer, keyCodes.size(), 0);
 }
 
 AutoTypeExecutorLibvirt::AutoTypeExecutorLibvirt(AutoTypeExtLibvirt* plugin)
@@ -87,23 +96,23 @@ AutoTypeExecutorLibvirt::AutoTypeExecutorLibvirt(AutoTypeExtLibvirt* plugin)
 {
 }
 
-QList<uint> AutoTypeExtLibvirt::charToKeyCodeGroup(const QChar& ch)
+QList<uint> AutoTypeExtLibvirt::charToKeyCodeGroup(const QChar& character, OperatingSystem targetOperatingSystem)
 {
-    ushort unicode = ch.unicode();
+    ushort uCharacter = character.unicode();
 
     // Numbers are equally mapped to the Win32 keycode table
-    if (unicode >= 0x30 && unicode <= 0x39) {
-        return {unicode};
+    if (uCharacter >= 0x30 && uCharacter <= 0x39) {
+        return {uCharacter};
     }
 
     // Upper case letters are equally mapped to the Win32 keycode table, but require a LSHIFT prefix
-    if ((unicode >= 0x41 && unicode <= 0x5a)) {
-        return {0xa0, unicode};
+    if ((uCharacter >= 0x41 && uCharacter <= 0x5a)) {
+        return {0xa0, uCharacter};
     }
 
     // Lowercase letters need a -0x20 offset
-    if ((unicode >= 0x61 && unicode <= 0x7a)) {
-        return {unicode - 0x20u};
+    if ((uCharacter >= 0x61 && uCharacter <= 0x7a)) {
+        return {uCharacter - 0x20u};
     }
 
     QMap<uint, uint> specialCharWithoutShiftMapping(
@@ -149,15 +158,47 @@ QList<uint> AutoTypeExtLibvirt::charToKeyCodeGroup(const QChar& ch)
         }
     );
 
-    if (specialCharWithoutShiftMapping.contains(unicode)) {
-        return {specialCharWithoutShiftMapping[unicode]};
+    QList<uint> keyCodes;
+
+    if (specialCharWithoutShiftMapping.contains(uCharacter)) {
+        keyCodes = {specialCharWithoutShiftMapping[uCharacter]};
     }
 
-    if (specialCharWithShiftMapping.contains(unicode)) {
-        return {0xa0, specialCharWithShiftMapping[unicode]};
+    if (specialCharWithShiftMapping.contains(uCharacter)) {
+        // prepend LSHIFT
+        keyCodes = {0xa0, specialCharWithShiftMapping[uCharacter]};
     }
 
-    return {};
+    if (keyCodes.empty()) {
+        return {};
+    }
+
+    QList<uint> deadKeys = {
+        0x27, // '
+        0x22, // "
+        0x5e, // ^
+        0x60, // `
+        0x7e, // ~
+    };
+
+    bool shouldHandleDeadKeys = false;
+
+    if (targetOperatingSystem == OperatingSystem::Windows) {
+        if (config()->get(Config::AutoTypeLibvirtDeadKeysWindows).toBool()) {
+            shouldHandleDeadKeys = true;
+        }
+    } else {
+        if (config()->get(Config::AutoTypeLibvirtDeadKeysOther).toBool()) {
+            shouldHandleDeadKeys = true;
+        }
+    }
+
+    if (shouldHandleDeadKeys && deadKeys.contains(uCharacter)) {
+        // append space
+        keyCodes.append(0x20);
+    }
+
+    return keyCodes;
 }
 
 uint AutoTypeExtLibvirt::keyToKeyCode(Qt::Key key)
@@ -220,30 +261,33 @@ uint AutoTypeExtLibvirt::keyToKeyCode(Qt::Key key)
     }
 }
 
-AutoTypeAction::Result AutoTypeExecutorLibvirt::execBegin(const QString& targetIdentifier, const AutoTypeBegin* action)
+AutoTypeAction::Result AutoTypeExecutorLibvirt::execBegin(const QSharedPointer<AutoTypeTarget>& target,
+                                                          const AutoTypeBegin* action)
 {
-    Q_UNUSED(targetIdentifier);
+    Q_UNUSED(target);
     Q_UNUSED(action);
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(const QString& targetIdentifier, AutoTypeKey* action)
+AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(const QSharedPointer<AutoTypeTarget>& target,
+                                                         AutoTypeKey* action)
 {
     QList<uint> keyCodeGroups;
+    auto libvirtTarget = target.staticCast<AutoTypeTargetLibvirt>();
 
     if (action->key != Qt::Key_unknown) {
         keyCodeGroups = {m_plugin->keyToKeyCode(action->key)};
     } else {
-        keyCodeGroups = m_plugin->charToKeyCodeGroup(action->character);
+        keyCodeGroups = m_plugin->charToKeyCodeGroup(action->character, libvirtTarget->getOperatingSystem());
     }
 
-    m_plugin->sendKeyCodesToDomain(targetIdentifier, keyCodeGroups);
+    m_plugin->sendKeyCodesToTarget(libvirtTarget, keyCodeGroups);
 
     Tools::sleep(execDelayMs);
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeAction::Result AutoTypeExecutorLibvirt::execClearField(const QString& targetIdentifier,
+AutoTypeAction::Result AutoTypeExecutorLibvirt::execClearField(const QSharedPointer<AutoTypeTarget>& target,
                                                                AutoTypeClearField* action)
 {
     Q_UNUSED(action);
@@ -252,17 +296,113 @@ AutoTypeAction::Result AutoTypeExecutorLibvirt::execClearField(const QString& ta
     ts.tv_sec = 0;
     ts.tv_nsec = 25 * 1000 * 1000;
 
-    m_plugin->sendKeyCodesToDomain(targetIdentifier, {m_plugin->keyToKeyCode(Qt::Key_Home)});
+    auto libvirtTarget = target.staticCast<AutoTypeTargetLibvirt>();
+
+    m_plugin->sendKeyCodesToTarget(libvirtTarget, {m_plugin->keyToKeyCode(Qt::Key_Home)});
     nanosleep(&ts, nullptr);
 
-    m_plugin->sendKeyCodesToDomain(
-        targetIdentifier,
+    m_plugin->sendKeyCodesToTarget(
+        libvirtTarget,
         {m_plugin->keyToKeyCode(Qt::Key_Shift), m_plugin->keyToKeyCode(Qt::Key_End)}
     );
     nanosleep(&ts, nullptr);
 
-    m_plugin->sendKeyCodesToDomain(targetIdentifier, {m_plugin->keyToKeyCode(Qt::Key_Backspace)});
+    m_plugin->sendKeyCodesToTarget(libvirtTarget, {m_plugin->keyToKeyCode(Qt::Key_Backspace)});
     nanosleep(&ts, nullptr);
 
     return AutoTypeAction::Result::Ok();
+}
+
+AutoTypeTargetLibvirt::AutoTypeTargetLibvirt(QString identifier, QString presentableName, virDomainPtr domain)
+    : AutoTypeTarget(std::move(identifier), std::move(presentableName))
+    , m_domain(domain)
+{
+    m_operatingSystem = detectOperatingSystem();
+}
+
+AutoTypeTargetLibvirt::~AutoTypeTargetLibvirt()
+{
+    if (m_domain != nullptr) {
+        virDomainFree(m_domain);
+    }
+}
+
+virDomainPtr AutoTypeTargetLibvirt::getDomain()
+{
+    return m_domain;
+}
+
+OperatingSystem AutoTypeTargetLibvirt::getOperatingSystem()
+{
+    return m_operatingSystem;
+}
+
+OperatingSystem AutoTypeTargetLibvirt::detectOperatingSystem()
+{
+    if (m_domain == nullptr) {
+        qWarning("No domain set in AutoTypeTargetLibvirt object");
+        return OperatingSystem::Unknown;
+    }
+
+    // TODO: "os.id" values are mostly educated guesses.
+    // Confirmed os.id values:
+    //  - ubuntu
+
+    QList<QString> linuxBasedOperatingSystems = QList<QString>(
+        {
+           "ubuntu",
+           "debian",
+           "centos",
+           "fedora",
+           "redhat",
+           "opensuse",
+           "archlinux",
+           "alpinelinux",
+           "popos"
+       }
+    );
+
+    int guestInfoParamCount = 0;
+    virTypedParameterPtr guestInfoParams = nullptr;
+
+    if (virDomainGetGuestInfo(m_domain, VIR_DOMAIN_GUEST_INFO_OS, &guestInfoParams, &guestInfoParamCount, 0) >= 0) {
+        virTypedParameterPtr osInfoParam = virTypedParamsGet(guestInfoParams, guestInfoParamCount, "os.id");
+
+        if (osInfoParam != nullptr) {
+            QString osName = QString(osInfoParam->field);
+
+            virTypedParamsFree(guestInfoParams, guestInfoParamCount);
+
+            if (osName == "windows") {
+                return OperatingSystem::Windows;
+            } else if (osName == "macosx") {
+                return OperatingSystem::MacOSX;
+            } else if (linuxBasedOperatingSystems.contains(osName)) {
+                return OperatingSystem::Linux;
+            } else {
+                return OperatingSystem::Unknown;
+            }
+        }
+    }
+
+    virTypedParamsFree(guestInfoParams, guestInfoParamCount);
+
+    QString osInfoXml = QString(virDomainGetMetadata(
+        m_domain,
+        VIR_DOMAIN_METADATA_ELEMENT,
+        "http://libosinfo.org/xmlns/libvirt/domain/1.0",
+        0
+    ));
+
+    QRegExp osPattern = QRegExp("http://(ubuntu|debian|centos|fedora|redhat|opensuse|archlinux|alpinelinux|system76)");
+
+    if (osInfoXml.contains("http://microsoft.com")) {
+        return OperatingSystem::Windows;
+    } else if (osInfoXml.contains("http://apple.com")) {
+        return OperatingSystem::MacOSX;
+    } else if (osInfoXml.contains(osPattern)) {
+        return OperatingSystem::Linux;
+    }
+
+    return OperatingSystem::Unknown;
 }
