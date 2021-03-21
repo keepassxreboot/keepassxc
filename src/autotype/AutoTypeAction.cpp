@@ -37,6 +37,11 @@ AutoTypeAction::Result AutoTypeKey::exec(AutoTypeExecutor* executor) const
     return executor->execType(this);
 }
 
+AutoTypeAction::Result AutoTypeKey::exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor)
+{
+    return executor->execType(targetIdentifier, this);
+}
+
 AutoTypeDelay::AutoTypeDelay(int delayMs, bool setExecDelay)
     : delayMs(delayMs)
     , setExecDelay(setExecDelay)
@@ -56,12 +61,36 @@ AutoTypeAction::Result AutoTypeDelay::exec(AutoTypeExecutor* executor) const
     return AutoTypeAction::Result::Ok();
 }
 
+AutoTypeAction::Result AutoTypeDelay::exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor)
+{
+    Q_UNUSED(targetIdentifier);
+    if (setExecDelay) {
+        // Change the delay between actions
+        executor->execDelayMs = delayMs;
+    } else {
+        // Pause execution
+        Tools::wait(delayMs);
+    }
+
+    return AutoTypeAction::Result::Ok();
+}
+
 AutoTypeAction::Result AutoTypeClearField::exec(AutoTypeExecutor* executor) const
 {
     return executor->execClearField(this);
 }
 
+AutoTypeAction::Result AutoTypeClearField::exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor)
+{
+    return executor->execClearField(targetIdentifier, this);
+}
+
 AutoTypeAction::Result AutoTypeBegin::exec(AutoTypeExecutor* executor) const
 {
     return executor->execBegin(this);
+}
+
+AutoTypeAction::Result AutoTypeBegin::exec(const QString& targetIdentifier, TargetedAutoTypeExecutor* executor)
+{
+    return executor->execBegin(targetIdentifier, this);
 }

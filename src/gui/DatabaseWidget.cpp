@@ -46,6 +46,7 @@
 #include "format/KeePass2Reader.h"
 #include "gui/Clipboard.h"
 #include "gui/CloneDialog.h"
+#include "gui/AutoTypeTargetSelectDialog.h"
 #include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/EntryPreviewWidget.h"
@@ -797,6 +798,23 @@ void DatabaseWidget::performAutoTypePassword()
 void DatabaseWidget::performAutoTypePasswordEnter()
 {
     performAutoType(QStringLiteral("{PASSWORD}{ENTER}"));
+}
+
+void DatabaseWidget::performAutoTypePluginLibvirt()
+{
+    auto currentEntry = currentSelectedEntry();
+    Q_ASSERT(currentEntry);
+    if (!currentEntry) {
+        return;
+    }
+
+    auto targetSelectDialog = new AutoTypeTargetSelectDialog(
+        "libvirt",
+        autoType()->getExternalPluginTargets("libvirt"),
+        this,
+        currentEntry
+    );
+    targetSelectDialog->show();
 }
 
 void DatabaseWidget::openUrl()

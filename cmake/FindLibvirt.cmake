@@ -1,0 +1,7 @@
+find_path(LIBVIRT_INCLUDE_DIR NAMES libvirt.h PATH_SUFFIXES libvirt)
+find_library(LIBVIRT_LIBRARY NAMES virt libvirt)
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(Libvirt DEFAULT_MSG LIBVIRT_LIBRARY LIBVIRT_INCLUDE_DIR)
+
+mark_as_advanced(LIBVIRT_LIBRARY LIBVIRT_INCLUDE_DIR)

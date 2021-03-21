@@ -90,6 +90,9 @@ namespace Tools
 #ifdef WITH_XC_AUTOTYPE
         extensions += "\n- " + QObject::tr("Auto-Type");
 #endif
+#ifdef WITH_XC_AUTOTYPE_EXT_LIBVIRT
+        extensions += "\n- " + QObject::tr("Auto-Type to libvirt");
+#endif
 #ifdef WITH_XC_BROWSER
         extensions += "\n- " + QObject::tr("Browser Integration");
 #endif

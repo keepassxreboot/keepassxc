@@ -310,6 +310,15 @@
      <addaction name="actionEntryTotpQRCode"/>
      <addaction name="actionEntrySetupTotp"/>
     </widget>
+    <widget class="QMenu" name="menuEntryAutoTypeExternal">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Perform Auto-Type To Plugin</string>
+     </property>
+     <addaction name="actionEntryAutoTypePluginLibvirt"/>
+    </widget>
     <addaction name="actionEntryNew"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryClone"/>
@@ -738,6 +747,14 @@
    </property>
    <property name="toolTip">
     <string notr="true">{PASSWORD}{ENTER}</string>
+   </property>
+  </action>
+  <action name="actionEntryAutoTypePluginLibvirt">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Libvirt</string>
    </property>
   </action>
   <action name="actionEntryDownloadIcon">

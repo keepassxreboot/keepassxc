@@ -133,6 +133,7 @@ set(keepassx_SOURCES
         gui/DatabaseOpenDialog.cpp
         gui/URLEdit.cpp
         gui/WelcomeWidget.cpp
+        gui/AutoTypeTargetSelectDialog.cpp
         gui/csvImport/CsvImportWidget.cpp
         gui/csvImport/CsvImportWizard.cpp
         gui/csvImport/CsvParserModel.cpp
@@ -219,6 +220,7 @@ set(keepassx_SOURCES ${keepassx_SOURCES}
 set(keepassx_SOURCES_MAINEXE main.cpp)
 
 add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
+add_feature_info(Auto-Type WITH_XC_AUTOTYPE_EXT_LIBVIRT "Automatic password typing through libvirt's virDomainSendKey")
 add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
 add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")

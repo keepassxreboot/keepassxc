@@ -13,6 +13,7 @@
 #define KEEPASSX_DATA_DIR "@DATA_INSTALL_DIR@"
 
 #cmakedefine WITH_XC_AUTOTYPE
+#cmakedefine WITH_XC_AUTOTYPE_EXT_LIBVIRT
 #cmakedefine WITH_XC_NETWORKING
 #cmakedefine WITH_XC_BROWSER
 #cmakedefine WITH_XC_YUBIKEY
