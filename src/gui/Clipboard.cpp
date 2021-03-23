@@ -33,14 +33,14 @@ QPointer<MacPasteboard> Clipboard::m_pasteboard(nullptr);
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
+    , m_elapsed(new QElapsedTimer())
 {
 #ifdef Q_OS_MACOS
     if (!m_pasteboard) {
         m_pasteboard = new MacPasteboard();
     }
 #endif
-    m_timer->setSingleShot(true);
-    connect(m_timer, SIGNAL(timeout()), SLOT(clearClipboard()));
+    connect(m_timer, SIGNAL(timeout()), SLOT(countdownTick()));
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
 }
 
@@ -77,7 +77,9 @@ void Clipboard::setText(const QString& text, bool clear)
         if (config()->get(Config::Security_ClearClipboard).toBool()) {
             int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
             if (timeout > 0) {
-                m_timer->start(timeout * 1000);
+                m_elapsed->start();
+                m_timer->start(1000);
+                countdownTick();
             }
         }
     }
@@ -106,6 +108,19 @@ void Clipboard::clearClipboard()
     }
 
     m_lastCopied.clear();
+}
+
+void Clipboard::countdownTick()
+{
+    int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
+    int timeLeft = timeout - m_elapsed->elapsed() / 1000;
+    if (timeLeft <= 0) {
+        m_timer->stop();
+        clearClipboard();
+    }
+
+    // Send an event even if the time left is 0, so that the progress bar can be hidden
+    emit updateCountdown(timeLeft, timeout);
 }
 
 Clipboard* Clipboard::instance()

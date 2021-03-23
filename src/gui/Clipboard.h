@@ -20,6 +20,7 @@
 #define KEEPASSX_CLIPBOARD_H
 
 #include <QObject>
+#include <QElapsedTimer>
 #ifdef Q_OS_MACOS
 #include "core/MacPasteboard.h"
 #include <QPointer>
@@ -39,8 +40,12 @@ public:
 public slots:
     void clearCopiedText();
 
+signals:
+    void updateCountdown(int secondsLeft, int timeout);
+
 private slots:
     void clearClipboard();
+    void countdownTick();
 
 private:
     explicit Clipboard(QObject* parent = nullptr);
@@ -48,6 +53,8 @@ private:
     static Clipboard* m_instance;
 
     QTimer* m_timer;
+    QElapsedTimer* m_elapsed;
+
 #ifdef Q_OS_MACOS
     // This object lives for the whole program lifetime and we cannot delete it on exit,
     // so ignore leak warnings. See https://bugreports.qt.io/browse/QTBUG-54832
