@@ -39,6 +39,11 @@ bool AutoTypeExtLibvirt::isAvailable()
     return m_libvirtConnection != nullptr;
 }
 
+bool AutoTypeExtLibvirt::isTargetSelectionRequired()
+{
+    return true;
+}
+
 AutoTypeTargetMap AutoTypeExtLibvirt::availableTargets()
 {
     auto targetMap = AutoTypeTargetMap();
@@ -261,16 +266,15 @@ uint AutoTypeExtLibvirt::keyToKeyCode(Qt::Key key)
     }
 }
 
-AutoTypeAction::Result AutoTypeExecutorLibvirt::execBegin(const QSharedPointer<AutoTypeTarget>& target,
-                                                          const AutoTypeBegin* action)
+AutoTypeAction::Result AutoTypeExecutorLibvirt::execBegin(const AutoTypeBegin* action,
+                                                          const QSharedPointer<AutoTypeTarget>& target)
 {
     Q_UNUSED(target);
     Q_UNUSED(action);
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(const QSharedPointer<AutoTypeTarget>& target,
-                                                         AutoTypeKey* action)
+AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(AutoTypeKey* action, const QSharedPointer<AutoTypeTarget>& target)
 {
     QList<uint> keyCodeGroups;
     auto libvirtTarget = target.staticCast<AutoTypeTargetLibvirt>();
@@ -287,8 +291,7 @@ AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(const QSharedPointer<Au
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeAction::Result AutoTypeExecutorLibvirt::execClearField(const QSharedPointer<AutoTypeTarget>& target,
-                                                               AutoTypeClearField* action)
+AutoTypeAction::Result AutoTypeExecutorLibvirt::execClearField(AutoTypeClearField* action, const QSharedPointer<AutoTypeTarget>& target)
 {
     Q_UNUSED(action);
 

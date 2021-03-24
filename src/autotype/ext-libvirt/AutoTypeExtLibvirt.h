@@ -64,6 +64,7 @@ public:
     void unload() override;
 
     bool isAvailable() override;
+    bool isTargetSelectionRequired() override;
     AutoTypeTargetMap availableTargets() override;
 
     TargetedAutoTypeExecutor* createExecutor() override;
@@ -82,9 +83,9 @@ class AutoTypeExecutorLibvirt : public TargetedAutoTypeExecutor
 public:
     explicit AutoTypeExecutorLibvirt(AutoTypeExtLibvirt* plugin);
 
-    AutoTypeAction::Result execBegin(const QSharedPointer<AutoTypeTarget>& target, const AutoTypeBegin* action) override;
-    AutoTypeAction::Result execType(const QSharedPointer<AutoTypeTarget>& target, AutoTypeKey* action) override;
-    AutoTypeAction::Result execClearField(const QSharedPointer<AutoTypeTarget>& target, AutoTypeClearField* action) override;
+    AutoTypeAction::Result execBegin(const AutoTypeBegin* action, const QSharedPointer<AutoTypeTarget>& target) override;
+    AutoTypeAction::Result execType(AutoTypeKey* action, const QSharedPointer<AutoTypeTarget>& target) override;
+    AutoTypeAction::Result execClearField(AutoTypeClearField* action, const QSharedPointer<AutoTypeTarget>& target) override;
 
 private:
     AutoTypeExtLibvirt* const m_plugin;

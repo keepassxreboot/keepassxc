@@ -38,7 +38,8 @@ private slots:
     void init();
     void cleanup();
 
-    void testSingleAutoType();
+    void testExtAutoType();
+    void testExtAutoTypeNoTargetSelection();
 
 private:
     AutoTypeExternalInterface* m_platform;

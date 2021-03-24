@@ -50,6 +50,7 @@ public:
                                          const QString& pluginName,
                                          const QSharedPointer<AutoTypeTarget>& target);
 
+    bool isExternalPluginTargetSelectionRequired(const QString& pluginName);
     AutoTypeTargetMap getExternalPluginTargets(const QString& pluginName);
 
     static bool verifyAutoTypeSyntax(const QString& sequence, const Entry* entry, QString& error);

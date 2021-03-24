@@ -808,17 +808,7 @@ void DatabaseWidget::performAutoTypePluginLibvirt()
         return;
     }
 
-    const AutoTypeTargetMap& targets = autoType()->getExternalPluginTargets("libvirt");
-
-    if (targets.values().isEmpty()) {
-        MessageBox::critical(this,
-                             "No targets available",
-                             "Libvirt did not return any available targets for auto-typing");
-        return;
-    }
-
-    auto targetSelectDialog = new AutoTypeTargetSelectDialog("libvirt", targets, this, currentEntry);
-    targetSelectDialog->show();
+    performAutoTypeWithPlugin("libvirt", currentEntry);
 }
 
 void DatabaseWidget::openUrl()
@@ -1958,6 +1948,26 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
     }
 
     return ok;
+}
+
+void DatabaseWidget::performAutoTypeWithPlugin(const QString& pluginName, Entry* entry)
+{
+    if (!autoType()->isExternalPluginTargetSelectionRequired(pluginName)) {
+        autoType()->performAutoTypeOnExternalPlugin(entry, pluginName, QSharedPointer<AutoTypeTarget>());
+        return;
+    }
+
+    const AutoTypeTargetMap& targets = autoType()->getExternalPluginTargets(pluginName);
+
+    if (targets.values().isEmpty()) {
+        MessageBox::critical(this,
+                             "No targets available",
+                             QString("Plugin %1 did not return any available targets for auto-typing").arg(pluginName));
+        return;
+    }
+
+    auto targetSelectDialog = new AutoTypeTargetSelectDialog(pluginName, targets, this, entry);
+    targetSelectDialog->show();
 }
 
 /**

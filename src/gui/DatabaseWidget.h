@@ -259,6 +259,7 @@ private:
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false);
     bool performSave(QString& errorMessage, const QString& fileName = {});
+    void performAutoTypeWithPlugin(const QString& pluginName, Entry* entry);
 
     QSharedPointer<Database> m_db;
 

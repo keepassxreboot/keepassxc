@@ -37,10 +37,9 @@ AutoTypeAction::Result AutoTypeKey::exec(AutoTypeExecutor* executor) const
     return executor->execType(this);
 }
 
-AutoTypeAction::Result AutoTypeKey::exec(const QSharedPointer<AutoTypeTarget>& target,
-                                         TargetedAutoTypeExecutor* executor)
+AutoTypeAction::Result AutoTypeKey::exec(TargetedAutoTypeExecutor* executor, const QSharedPointer<AutoTypeTarget>& target)
 {
-    return executor->execType(target, this);
+    return executor->execType(this, target);
 }
 
 AutoTypeDelay::AutoTypeDelay(int delayMs, bool setExecDelay)
@@ -62,8 +61,8 @@ AutoTypeAction::Result AutoTypeDelay::exec(AutoTypeExecutor* executor) const
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeAction::Result AutoTypeDelay::exec(const QSharedPointer<AutoTypeTarget>& target,
-                                           TargetedAutoTypeExecutor* executor)
+AutoTypeAction::Result AutoTypeDelay::exec(TargetedAutoTypeExecutor* executor,
+                                           const QSharedPointer<AutoTypeTarget>& target)
 {
     Q_UNUSED(target);
     if (setExecDelay) {
@@ -82,10 +81,10 @@ AutoTypeAction::Result AutoTypeClearField::exec(AutoTypeExecutor* executor) cons
     return executor->execClearField(this);
 }
 
-AutoTypeAction::Result AutoTypeClearField::exec(const QSharedPointer<AutoTypeTarget>& target,
-                                                TargetedAutoTypeExecutor* executor)
+AutoTypeAction::Result AutoTypeClearField::exec(TargetedAutoTypeExecutor* executor,
+                                                const QSharedPointer<AutoTypeTarget>& target)
 {
-    return executor->execClearField(target, this);
+    return executor->execClearField(this, target);
 }
 
 AutoTypeAction::Result AutoTypeBegin::exec(AutoTypeExecutor* executor) const
@@ -93,8 +92,8 @@ AutoTypeAction::Result AutoTypeBegin::exec(AutoTypeExecutor* executor) const
     return executor->execBegin(this);
 }
 
-AutoTypeAction::Result AutoTypeBegin::exec(const QSharedPointer<AutoTypeTarget>& target,
-                                           TargetedAutoTypeExecutor* executor)
+AutoTypeAction::Result AutoTypeBegin::exec(TargetedAutoTypeExecutor* executor,
+                                           const QSharedPointer<AutoTypeTarget>& target)
 {
-    return executor->execBegin(target, this);
+    return executor->execBegin(this, target);
 }

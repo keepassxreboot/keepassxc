@@ -89,6 +89,7 @@ public:
     virtual ~AutoTypeExternalInterface() = default;
 
     virtual bool isAvailable() = 0;
+    virtual bool isTargetSelectionRequired() = 0;
     virtual AutoTypeTargetMap availableTargets() = 0;
 
     virtual void unload()

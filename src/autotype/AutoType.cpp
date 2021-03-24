@@ -432,7 +432,7 @@ void AutoType::executeAutoTypeActionsOnExternalTarget(const Entry* entry,
     auto pluginExecutor = m_external_executors[pluginName];
 
     for (const auto& action : asConst(actions)) {
-        action->exec(target, pluginExecutor);
+        action->exec(pluginExecutor, target);
         QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
     }
 
@@ -484,6 +484,15 @@ void AutoType::performAutoTypeOnExternalPlugin(const Entry* entry,
     if (!sequences.isEmpty()) {
         executeAutoTypeActionsOnExternalTarget(entry, pluginName, target, sequences.first());
     }
+}
+
+bool AutoType::isExternalPluginTargetSelectionRequired(const QString& pluginName)
+{
+    if (!m_external_plugins.contains(pluginName)) {
+        qWarning("Attempted to fetch targets for plugin that is not loaded: %s", qPrintable(pluginName));
+        return false;
+    }
+    return m_external_plugins[pluginName]->isTargetSelectionRequired();
 }
 
 AutoTypeTargetMap AutoType::getExternalPluginTargets(const QString& pluginName)

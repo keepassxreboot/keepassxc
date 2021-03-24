@@ -30,14 +30,18 @@ public:
     QString keyToString(Qt::Key key) override;
 
     bool isAvailable() override;
+    bool isTargetSelectionRequired() override;
     TargetedAutoTypeExecutor* createExecutor() override;
 
-    void setTargetMap(const AutoTypeTargetMap& targetMap) override;
     AutoTypeTargetMap availableTargets() override;
 
-    QString actionCharsForTarget(const QString& targetIdentifier) override;
-    int actionCountForTarget(const QString& targetIdentifier) override;
+    QString getActionChars() override;
+    QString getActionChars(const QString& targetIdentifier) override;
+    int getActionCount() override;
+    int getActionCount(const QString& targetIdentifier) override;
 
+    void setTargetSelectionRequired(bool value) override;
+    void setTargetMap(const AutoTypeTargetMap& targetMap) override;
     void clearActions() override;
 
     void addAction(const QSharedPointer<AutoTypeTarget>& target, const AutoTypeKey* action);
@@ -45,7 +49,12 @@ public:
 private:
     QHash<QString, int> m_actionCountPerTarget;
     QHash<QString, QString> m_actionCharsPerTarget;
+
+    int m_actionCountTargetless = 0;
+    QString m_actionCharsTargetLess;
+
     AutoTypeTargetMap m_targetMap;
+    bool m_isTargetSelectionRequired;
 };
 
 class AutoTypeExtExecutorTest : public TargetedAutoTypeExecutor
@@ -53,8 +62,9 @@ class AutoTypeExtExecutorTest : public TargetedAutoTypeExecutor
 public:
     explicit AutoTypeExtExecutorTest(AutoTypeExtTest* platform);
 
-    void execType(const QSharedPointer<AutoTypeTarget>& target, AutoTypeKey* action) override;
-    void execClearField(const QSharedPointer<AutoTypeTarget>& target, AutoTypeClearField* action) override;
+    AutoTypeAction::Result execBegin(const AutoTypeBegin* action, const QSharedPointer<AutoTypeTarget>& target) override;
+    AutoTypeAction::Result execType(AutoTypeKey* action, const QSharedPointer<AutoTypeTarget>& target) override;
+    AutoTypeAction::Result execClearField(AutoTypeClearField* action, const QSharedPointer<AutoTypeTarget>& target) override;
 
 private:
     AutoTypeExtTest* const m_platform;

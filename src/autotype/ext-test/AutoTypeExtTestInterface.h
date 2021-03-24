@@ -28,9 +28,13 @@ public:
     {
     }
 
+    virtual QString getActionChars() = 0;
+    virtual QString getActionChars(const QString& targetIdentifier) = 0;
+    virtual int getActionCount() = 0;
+    virtual int getActionCount(const QString& targetIdentifier) = 0;
+
+    virtual void setTargetSelectionRequired(bool value) = 0;
     virtual void setTargetMap(const AutoTypeTargetMap& targetMap) = 0;
-    virtual QString actionCharsForTarget(const QString& targetIdentifier) = 0;
-    virtual int actionCountForTarget(const QString& targetIdentifier) = 0;
     virtual void clearActions() = 0;
 
     virtual QString keyToString(Qt::Key key) = 0;

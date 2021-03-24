@@ -27,14 +27,14 @@ bool AutoTypeExtTest::isAvailable()
     return true;
 }
 
+bool AutoTypeExtTest::isTargetSelectionRequired()
+{
+    return m_isTargetSelectionRequired;
+}
+
 TargetedAutoTypeExecutor* AutoTypeExtTest::createExecutor()
 {
     return new AutoTypeExtExecutorTest(this);
-}
-
-void AutoTypeExtTest::setTargetMap(const AutoTypeTargetMap& targetMap)
-{
-    m_targetMap = targetMap;
 }
 
 AutoTypeTargetMap AutoTypeExtTest::availableTargets()
@@ -42,7 +42,12 @@ AutoTypeTargetMap AutoTypeExtTest::availableTargets()
     return m_targetMap;
 }
 
-QString AutoTypeExtTest::actionCharsForTarget(const QString& targetIdentifier)
+QString AutoTypeExtTest::getActionChars()
+{
+    return m_actionCharsTargetLess;
+}
+
+QString AutoTypeExtTest::getActionChars(const QString& targetIdentifier)
 {
     if (m_actionCharsPerTarget.contains(targetIdentifier)) {
         return m_actionCharsPerTarget[targetIdentifier];
@@ -50,7 +55,12 @@ QString AutoTypeExtTest::actionCharsForTarget(const QString& targetIdentifier)
     return "";
 }
 
-int AutoTypeExtTest::actionCountForTarget(const QString& targetIdentifier)
+int AutoTypeExtTest::getActionCount()
+{
+    return m_actionCountTargetless;
+}
+
+int AutoTypeExtTest::getActionCount(const QString& targetIdentifier)
 {
     if (m_actionCountPerTarget.contains(targetIdentifier)) {
         return m_actionCountPerTarget[targetIdentifier];
@@ -58,26 +68,41 @@ int AutoTypeExtTest::actionCountForTarget(const QString& targetIdentifier)
     return 0;
 }
 
+void AutoTypeExtTest::setTargetSelectionRequired(bool value)
+{
+    m_isTargetSelectionRequired = value;
+}
+
+void AutoTypeExtTest::setTargetMap(const AutoTypeTargetMap& targetMap)
+{
+    m_targetMap = targetMap;
+}
+
 void AutoTypeExtTest::clearActions()
 {
     m_actionCharsPerTarget.clear();
     m_actionCountPerTarget.clear();
+    m_actionCharsTargetLess.clear();
+    m_actionCountTargetless = 0;
 }
 
 void AutoTypeExtTest::addAction(const QSharedPointer<AutoTypeTarget>& target, const AutoTypeKey* action)
 {
+    QString toAppend = (action->key != Qt::Key_unknown) ? keyToString(action->key) : action->character;
+
+    if (!m_isTargetSelectionRequired) {
+        m_actionCountTargetless++;
+        m_actionCharsTargetLess += toAppend;
+        return;
+    }
+
     if (!m_actionCountPerTarget.contains(target->getIdentifier())) {
         m_actionCountPerTarget[target->getIdentifier()] = 0;
         m_actionCharsPerTarget[target->getIdentifier()] = "";
     }
 
     m_actionCountPerTarget[target->getIdentifier()]++;
-
-    if (action->key != Qt::Key_unknown) {
-        m_actionCharsPerTarget[target->getIdentifier()] += keyToString(action->key);
-    } else {
-        m_actionCharsPerTarget[target->getIdentifier()] += action->character;
-    }
+    m_actionCharsPerTarget[target->getIdentifier()] += toAppend;
 }
 
 AutoTypeExtExecutorTest::AutoTypeExtExecutorTest(AutoTypeExtTest* platform)
@@ -85,13 +110,25 @@ AutoTypeExtExecutorTest::AutoTypeExtExecutorTest(AutoTypeExtTest* platform)
 {
 }
 
-void AutoTypeExtExecutorTest::execType(const QSharedPointer<AutoTypeTarget>& target, AutoTypeKey* action)
-{
-    m_platform->addAction(target, action);
-}
-
-void AutoTypeExtExecutorTest::execClearField(const QSharedPointer<AutoTypeTarget>& target, AutoTypeClearField* action)
+AutoTypeAction::Result AutoTypeExtExecutorTest::execBegin(const AutoTypeBegin* action,
+                                                          const QSharedPointer<AutoTypeTarget>& target)
 {
     Q_UNUSED(target);
     Q_UNUSED(action);
+    return AutoTypeAction::Result::Ok();
+}
+
+AutoTypeAction::Result AutoTypeExtExecutorTest::execType(AutoTypeKey* action,
+                                                         const QSharedPointer<AutoTypeTarget>& target)
+{
+    m_platform->addAction(target, action);
+    return AutoTypeAction::Result::Ok();
+}
+
+AutoTypeAction::Result AutoTypeExtExecutorTest::execClearField(AutoTypeClearField* action,
+                                                               const QSharedPointer<AutoTypeTarget>& target)
+{
+    Q_UNUSED(target);
+    Q_UNUSED(action);
+    return AutoTypeAction::Result::Ok();
 }

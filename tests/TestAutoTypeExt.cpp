@@ -82,15 +82,34 @@ void TestAutoTypeExt::cleanup()
 {
 }
 
-void TestAutoTypeExt::testSingleAutoType()
+void TestAutoTypeExt::testExtAutoType()
 {
+    m_test->setTargetSelectionRequired(true);
     m_autoType->performAutoTypeOnExternalPlugin(m_entry1, "ext-test", m_defaultTestMap->get("id2"));
 
-    QCOMPARE(m_test->actionCountForTarget("id1"), 0);
-    QCOMPARE(m_test->actionCountForTarget("id2"), 14);
-    QCOMPARE(m_test->actionCountForTarget("id3"), 0);
-    QCOMPARE(m_test->actionCharsForTarget("id1"), "");
-    QCOMPARE(m_test->actionCharsForTarget("id2"),
+    QCOMPARE(m_test->getActionCount(), 0);
+    QCOMPARE(m_test->getActionCount("id1"), 0);
+    QCOMPARE(m_test->getActionCount("id2"), 14);
+    QCOMPARE(m_test->getActionCount("id3"), 0);
+    QCOMPARE(m_test->getActionChars(), "");
+    QCOMPARE(m_test->getActionChars("id1"), "");
+    QCOMPARE(m_test->getActionChars("id2"),
              QString("myuser%1mypass%2").arg(m_test->keyToString(Qt::Key_Tab)).arg(m_test->keyToString(Qt::Key_Enter)));
-    QCOMPARE(m_test->actionCharsForTarget("id3"), "");
+    QCOMPARE(m_test->getActionChars("id3"), "");
+}
+
+void TestAutoTypeExt::testExtAutoTypeNoTargetSelection()
+{
+    m_test->setTargetSelectionRequired(false);
+    m_autoType->performAutoTypeOnExternalPlugin(m_entry1, "ext-test", QSharedPointer<AutoTypeTarget>());
+
+    QCOMPARE(m_test->getActionCount(), 14);
+    QCOMPARE(m_test->getActionCount("id1"), 0);
+    QCOMPARE(m_test->getActionCount("id2"), 0);
+    QCOMPARE(m_test->getActionCount("id3"), 0);
+    QCOMPARE(m_test->getActionChars(),
+             QString("myuser%1mypass%2").arg(m_test->keyToString(Qt::Key_Tab)).arg(m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->getActionChars("id1"), "");
+    QCOMPARE(m_test->getActionChars("id2"), "");
+    QCOMPARE(m_test->getActionChars("id3"), "");
 }
