@@ -98,7 +98,7 @@ private:
     bool fillAttributes(Entry* entry, const QJsonObject& bandEntry);
 
     void fillFromSection(Entry* entry, const QJsonObject& section);
-    void fillFromSectionField(Entry* entry, const QString& sectionName, QJsonObject& field);
+    void fillFromSectionField(Entry* entry, const QString& sectionName, const QJsonObject& field);
     QString resolveAttributeName(const QString& section, const QString& name, const QString& text);
 
     void populateCategoryGroups(Group* rootGroup);

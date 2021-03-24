@@ -97,10 +97,10 @@ void TestOpVaultReader::testReadIntoDatabase()
     entry = db->rootGroup()->findEntryByPath("/Credit Card/My Credit Card");
     QVERIFY(entry);
     auto attr = entry->attributes();
-    QCOMPARE(attr->value("cardholder"), QStringLiteral("Team KeePassXC"));
-    QVERIFY(!attr->value("validFrom").isEmpty());
-    QCOMPARE(attr->value("details_pin"), QStringLiteral("1234"));
-    QVERIFY(attr->isProtected("details_pin"));
+    QCOMPARE(attr->value("cardholder name"), QStringLiteral("Team KeePassXC"));
+    QVERIFY(!attr->value("valid from").isEmpty());
+    QCOMPARE(attr->value("Additional Details_PIN"), QStringLiteral("1234"));
+    QVERIFY(attr->isProtected("Additional Details_PIN"));
 
     // Confirm address fields
     entry = db->rootGroup()->findEntryByPath("/Identity/Team KeePassXC");
