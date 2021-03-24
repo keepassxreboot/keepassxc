@@ -1178,6 +1178,10 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     sshAgent()->databaseUnlocked(m_db);
 #endif
 
+    if (config()->get(Config::MinimizeAfterUnlock).toBool()) {
+        getMainWindow()->minimizeOrHide();
+    }
+
     if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::AutoType) {
         QList<QSharedPointer<Database>> dbList;
         dbList.append(m_db);
