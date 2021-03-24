@@ -53,12 +53,11 @@ namespace
 void OpVaultReader::fillFromSection(Entry* entry, const QJsonObject& section)
 {
     const auto uuid = entry->uuid();
-    QString sectionName = section["name"].toString();
+    auto sectionTitle = section["title"].toString();
 
     if (!section.contains("fields")) {
-        auto sectionNameLC = sectionName.toLower();
-        auto sectionTitleLC = section["title"].toString("").toLower();
-        if (!(sectionNameLC == "linked items" && sectionTitleLC == "related items")) {
+        auto sectionName = section["name"].toString();
+        if (!(sectionName.toLower() == "linked items" && sectionTitle.toLower() == "related items")) {
             qWarning() << R"(Skipping "fields"-less Section in UUID ")" << uuid << "\": <<" << section << ">>";
         }
         return;
@@ -67,23 +66,17 @@ void OpVaultReader::fillFromSection(Entry* entry, const QJsonObject& section)
         return;
     }
 
-    // If we have a default section name then replace with the section title if not empty
-    if (sectionName.startsWith("Section_") && !section["title"].toString().isEmpty()) {
-        sectionName = section["title"].toString();
-    }
-
     QJsonArray sectionFields = section["fields"].toArray();
     for (const QJsonValue sectionField : sectionFields) {
         if (!sectionField.isObject()) {
             qWarning() << R"(Skipping non-Object "fields" in UUID ")" << uuid << "\": << " << sectionField << ">>";
             continue;
         }
-        QJsonObject field = sectionField.toObject();
-        fillFromSectionField(entry, sectionName, field);
+        fillFromSectionField(entry, sectionTitle, sectionField.toObject());
     }
 }
 
-void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionName, QJsonObject& field)
+void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionName, const QJsonObject& field)
 {
     if (!field.contains("v")) {
         // for our purposes, we don't care if there isn't a value in the field
@@ -161,8 +154,8 @@ QString OpVaultReader::resolveAttributeName(const QString& section, const QStrin
                    || lowName == "website") {
             return EntryAttributes::URLKey;
         }
-        return name;
+        return text;
     }
 
-    return QString("%1_%2").arg(section, name);
+    return QString("%1_%2").arg(section, text);
 }
