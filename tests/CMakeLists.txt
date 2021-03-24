@@ -159,6 +159,10 @@ if(WITH_XC_AUTOTYPE)
     add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
             LIBS ${TEST_LIBRARIES})
     set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
+
+    add_unit_test(NAME testautotypeext SOURCES TestAutoTypeExt.cpp
+            LIBS ${TEST_LIBRARIES})
+    set_target_properties(testautotypeext PROPERTIES ENABLE_EXPORTS ON)
 endif()
 
 if(WITH_XC_SSHAGENT)

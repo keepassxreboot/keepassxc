@@ -48,6 +48,7 @@ QString Resources::pluginPath(const QString& name) const
 
     // for TestAutoType
     pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/test";
+    pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/ext-test";
 
 #if defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE)
     pluginPaths << QCoreApplication::applicationDirPath() + "/../PlugIns";

@@ -139,17 +139,26 @@ AutoType::AutoType(QObject* parent, bool test)
 
     QString pluginPath = resources()->pluginPath(pluginName);
 
-    if (!pluginPath.isEmpty()) {
 #ifdef WITH_XC_AUTOTYPE
+    if (!pluginPath.isEmpty()) {
         loadPlugin(pluginPath);
-#endif
     }
 
+    if (test) {
+        QString externalPluginTestPath = resources()->pluginPath("keepassxc-autotype-ext-test");
+        if (!externalPluginTestPath.isEmpty()) {
+            loadExternalPlugin("ext-test", externalPluginTestPath);
+        }
+    }
 #ifdef WITH_XC_AUTOTYPE_EXT_LIBVIRT
-    QString externalPluginLibvirtPath = resources()->pluginPath("keepassx-autotype-ext-libvirt");
+
+    QString externalPluginLibvirtPath = resources()->pluginPath("keepassxc-autotype-ext-libvirt");
     if (!externalPluginLibvirtPath.isEmpty()) {
         loadExternalPlugin("libvirt", externalPluginLibvirtPath);
     }
+#endif
+#else
+    Q_UNUSED(pluginPath);
 #endif
 
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(unloadPlugin()));
