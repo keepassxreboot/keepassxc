@@ -120,7 +120,7 @@ void Clipboard::countdownTick()
         emit updateCountdown(-1, "");
     } else {
         emit updateCountdown(100 * timeLeft / timeout,
-            QObject::tr("Clearing the clipboard in %1 second(s)…", "", timeLeft).arg(timeLeft));
+                             QObject::tr("Clearing the clipboard in %1 second(s)…", "", timeLeft).arg(timeLeft));
     }
 }
 
