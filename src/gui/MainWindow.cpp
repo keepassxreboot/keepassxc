@@ -623,6 +623,7 @@ MainWindow::MainWindow()
     connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
     connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
 
+    statusBar()->setFixedHeight(24);
     m_progressBarLabel = new QLabel(statusBar());
     m_progressBarLabel->setVisible(false);
     statusBar()->addPermanentWidget(m_progressBarLabel);
@@ -630,6 +631,7 @@ MainWindow::MainWindow()
     m_progressBar->setVisible(false);
     m_progressBar->setTextVisible(false);
     m_progressBar->setMaximumWidth(100);
+    m_progressBar->setFixedHeight(15);
     statusBar()->addPermanentWidget(m_progressBar);
     connect(clipboard(), SIGNAL(updateCountdown(int, int)), this, SLOT(updateClearClipboardTimer(int, int)));
 
