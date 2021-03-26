@@ -20,6 +20,111 @@
 #include "AutoTypeExtLibvirt.h"
 #include "core/Config.h"
 
+const QHash<uint, uint> AutoTypeExtLibvirt::m_lowerSymbolKeyMapping = {
+    {0x20, 0x20}, // space
+    {0x27, 0xde}, // '
+    {0x2c, 0xbc}, // ,
+    {0x2d, 0xbd}, // -
+    {0x2e, 0xbe}, // .
+    {0x2f, 0xbf}, // /
+    {0x3b, 0xba}, // ;
+    {0x3d, 0xbb}, // =
+    {0x5b, 0xdb}, // [
+    {0x5c, 0xdc}, // backslash
+    {0x5d, 0xdd}, // ]
+    {0x60, 0xc0}, // `
+};
+
+const QHash<uint, uint> AutoTypeExtLibvirt::m_upperSymbolKeyMapping = {
+    {0x21, 0x31}, // !
+    {0x22, 0xde}, // "
+    {0x23, 0x33}, // #
+    {0x24, 0x34}, // $
+    {0x25, 0x35}, // %
+    {0x26, 0x37}, // &
+    {0x28, 0x39}, // (
+    {0x29, 0x30}, // )
+    {0x2a, 0x38}, // *
+    {0x2b, 0xbb}, // +
+    {0x3a, 0xba}, // :
+    {0x3c, 0xbc}, // <
+    {0x3e, 0xbe}, // >
+    {0x3f, 0xbf}, // ?
+    {0x40, 0x32}, // @
+    {0x5e, 0x36}, // ^
+    {0x5f, 0xbd}, // _
+    {0x7b, 0xdb}, // {
+    {0x7c, 0xdc}, // |
+    {0x7d, 0xdd}, // }
+    {0x7e, 0xc0}, // ~
+};
+
+const QHash<Qt::Key, uint> AutoTypeExtLibvirt::m_keyToKeyCodeMapping = {
+    {Qt::Key_Tab,        0x09},
+    {Qt::Key_Enter,      0x0d},
+    {Qt::Key_Space,      0x20},
+    {Qt::Key_Left,       0x25},
+    {Qt::Key_Up,         0x26},
+    {Qt::Key_Right,      0x27},
+    {Qt::Key_Down,       0x28},
+    {Qt::Key_Insert,     0x2d},
+    {Qt::Key_Delete,     0x2e},
+    {Qt::Key_Home,       0x24},
+    {Qt::Key_End,        0x23},
+    {Qt::Key_PageUp,     0x21},
+    {Qt::Key_PageDown,   0x22},
+    {Qt::Key_Backspace,  0x08},
+    {Qt::Key_Pause,      0x13},
+    {Qt::Key_CapsLock,   0x14},
+    {Qt::Key_Escape,     0x1b},
+    {Qt::Key_Help,       0x2f},
+    {Qt::Key_NumLock,    0x90},
+    {Qt::Key_Print,      0x2a},
+    {Qt::Key_ScrollLock, 0x91},
+    {Qt::Key_Shift,      0xa0},
+    {Qt::Key_Control,    0xa2},
+    {Qt::Key_Alt,        0xa4},
+    {Qt::Key_F1,         0x70},
+    {Qt::Key_F2,         0x71},
+    {Qt::Key_F3,         0x72},
+    {Qt::Key_F4,         0x73},
+    {Qt::Key_F5,         0x74},
+    {Qt::Key_F6,         0x75},
+    {Qt::Key_F7,         0x76},
+    {Qt::Key_F8,         0x77},
+    {Qt::Key_F9,         0x78},
+    {Qt::Key_F10,        0x79},
+    {Qt::Key_F11,        0x7a},
+    {Qt::Key_F12,        0x7b},
+    {Qt::Key_F13,        0x7c},
+    {Qt::Key_F14,        0x7d},
+    {Qt::Key_F15,        0x7e},
+    {Qt::Key_F16,        0x7f},
+};
+
+const QHash<Qt::KeyboardModifier, uint> AutoTypeExtLibvirt::m_modifierToKeyCodeMapping = {
+    {Qt::KeyboardModifier::ShiftModifier,   0xa0},
+    {Qt::KeyboardModifier::ControlModifier, 0x11},
+    {Qt::KeyboardModifier::AltModifier,     0xa4},
+    {Qt::KeyboardModifier::MetaModifier,    0x5b},
+};
+
+const QVector<uint> AutoTypeExtLibvirt::m_deadKeys = {
+    0x27, // '
+    0x22, // "
+    0x5e, // ^
+    0x60, // `
+    0x7e, // ~
+};
+
+const QRegExp AutoTypeTargetLibvirt::m_patternLinuxOperatingSystemId = QRegExp(
+    "^(ubuntu|debian|centos|fedora|redhat|opensuse|archlinux|alpinelinux|system76)$"
+);
+
+const QRegExp AutoTypeTargetLibvirt::m_patternLinuxOperatingSystemUrl = QRegExp(
+    "http://(ubuntu|debian|centos|fedora|redhat|opensuse|archlinux|alpinelinux|system76)"
+);
+
 AutoTypeExtLibvirt::AutoTypeExtLibvirt()
 {
     m_libvirtConnection = virConnectOpen(nullptr);
@@ -81,7 +186,71 @@ TargetedAutoTypeExecutor* AutoTypeExtLibvirt::createExecutor()
     return new AutoTypeExecutorLibvirt(this);
 }
 
-void AutoTypeExtLibvirt::sendKeyCodesToTarget(const QSharedPointer<AutoTypeTargetLibvirt>& target, QList<uint> keyCodes)
+QVector<uint> AutoTypeExtLibvirt::charToKeyCodes(const QChar& character, OperatingSystem targetOperatingSystem)
+{
+    ushort unicodeChar = character.unicode();
+
+    // Numbers are equally mapped to the Win32 keycode table
+    if (unicodeChar >= 0x30 && unicodeChar <= 0x39) {
+        return {unicodeChar};
+    }
+
+    // Upper case letters are equally mapped to the Win32 keycode table, but require a LSHIFT prefix
+    if ((unicodeChar >= 0x41 && unicodeChar <= 0x5a)) {
+        return {0xa0, unicodeChar};
+    }
+
+    // Lowercase letters need a -0x20 offset
+    if ((unicodeChar >= 0x61 && unicodeChar <= 0x7a)) {
+        return {unicodeChar - 0x20u};
+    }
+
+    QVector<uint> keyCodes;
+
+    if (m_lowerSymbolKeyMapping.contains(unicodeChar)) {
+        keyCodes = {m_lowerSymbolKeyMapping[unicodeChar]};
+    }
+
+    if (m_upperSymbolKeyMapping.contains(unicodeChar)) {
+        // prepend LSHIFT
+        keyCodes = {0xa0, m_upperSymbolKeyMapping[unicodeChar]};
+    }
+
+    if (keyCodes.empty()) {
+        return {};
+    }
+
+    if (shouldHandleDeadKeys(targetOperatingSystem) && m_deadKeys.contains(unicodeChar)) {
+        // append space
+        keyCodes += 0x20;
+    }
+
+    return keyCodes;
+}
+
+QVector<uint> AutoTypeExtLibvirt::keyToKeyCodes(Qt::Key key)
+{
+    if (m_keyToKeyCodeMapping.contains(key)) {
+        return {m_keyToKeyCodeMapping[key]};
+    }
+    return {};
+}
+
+QVector<uint> AutoTypeExtLibvirt::modifiersToKeyCodes(Qt::KeyboardModifiers modifiers)
+{
+    QVector<uint> keyCodes;
+
+    for (Qt::KeyboardModifier modifier : m_modifierToKeyCodeMapping.keys()) {
+        if (modifiers.testFlag(modifier)) {
+            keyCodes += m_modifierToKeyCodeMapping[modifier];
+        }
+    }
+
+    return keyCodes;
+}
+
+void AutoTypeExtLibvirt::sendKeyCodesToTarget(const QSharedPointer<AutoTypeTargetLibvirt>& target,
+                                              QVector<uint> keyCodes)
 {
     if (target->getDomain() == nullptr) {
         qWarning("Target has no domain object set");
@@ -96,174 +265,20 @@ void AutoTypeExtLibvirt::sendKeyCodesToTarget(const QSharedPointer<AutoTypeTarge
     virDomainSendKey(target->getDomain(), VIR_KEYCODE_SET_WIN32, 5, keyCodeBuffer, keyCodes.size(), 0);
 }
 
+bool AutoTypeExtLibvirt::shouldHandleDeadKeys(OperatingSystem operatingSystem)
+{
+    if (operatingSystem == OperatingSystem::Windows && config()->get(Config::AutoTypeLibvirtDeadKeysWindows).toBool()) {
+        return true;
+    }
+    if (config()->get(Config::AutoTypeLibvirtDeadKeysOther).toBool()) {
+        return true;
+    }
+    return false;
+}
+
 AutoTypeExecutorLibvirt::AutoTypeExecutorLibvirt(AutoTypeExtLibvirt* plugin)
     : m_plugin(plugin)
 {
-}
-
-QList<uint> AutoTypeExtLibvirt::charToKeyCodeGroup(const QChar& character, OperatingSystem targetOperatingSystem)
-{
-    ushort uCharacter = character.unicode();
-
-    // Numbers are equally mapped to the Win32 keycode table
-    if (uCharacter >= 0x30 && uCharacter <= 0x39) {
-        return {uCharacter};
-    }
-
-    // Upper case letters are equally mapped to the Win32 keycode table, but require a LSHIFT prefix
-    if ((uCharacter >= 0x41 && uCharacter <= 0x5a)) {
-        return {0xa0, uCharacter};
-    }
-
-    // Lowercase letters need a -0x20 offset
-    if ((uCharacter >= 0x61 && uCharacter <= 0x7a)) {
-        return {uCharacter - 0x20u};
-    }
-
-    QMap<uint, uint> specialCharWithoutShiftMapping(
-        {
-            {0x20, 0x20}, // space
-            {0x27, 0xde}, // '
-            {0x2c, 0xbc}, // ,
-            {0x2d, 0xbd}, // -
-            {0x2e, 0xbe}, // .
-            {0x2f, 0xbf}, // /
-            {0x3b, 0xba}, // ;
-            {0x3d, 0xbb}, // =
-            {0x5b, 0xdb}, // [
-            {0x5c, 0xdc}, // backslash
-            {0x5d, 0xdd}, // ]
-            {0x60, 0xc0}, // `
-        }
-    );
-
-    QMap<uint, uint> specialCharWithShiftMapping(
-        {
-            {0x21, 0x31}, // !
-            {0x22, 0xde}, // "
-            {0x23, 0x33}, // #
-            {0x24, 0x34}, // $
-            {0x25, 0x35}, // %
-            {0x26, 0x37}, // &
-            {0x28, 0x39}, // (
-            {0x29, 0x30}, // )
-            {0x2a, 0x38}, // *
-            {0x2b, 0xbb}, // +
-            {0x3a, 0xba}, // :
-            {0x3c, 0xbc}, // <
-            {0x3e, 0xbe}, // >
-            {0x3f, 0xbf}, // ?
-            {0x40, 0x32}, // @
-            {0x5e, 0x36}, // ^
-            {0x5f, 0xbd}, // _
-            {0x7b, 0xdb}, // {
-            {0x7c, 0xdc}, // |
-            {0x7d, 0xdd}, // }
-            {0x7e, 0xc0}, // ~
-        }
-    );
-
-    QList<uint> keyCodes;
-
-    if (specialCharWithoutShiftMapping.contains(uCharacter)) {
-        keyCodes = {specialCharWithoutShiftMapping[uCharacter]};
-    }
-
-    if (specialCharWithShiftMapping.contains(uCharacter)) {
-        // prepend LSHIFT
-        keyCodes = {0xa0, specialCharWithShiftMapping[uCharacter]};
-    }
-
-    if (keyCodes.empty()) {
-        return {};
-    }
-
-    QList<uint> deadKeys = {
-        0x27, // '
-        0x22, // "
-        0x5e, // ^
-        0x60, // `
-        0x7e, // ~
-    };
-
-    bool shouldHandleDeadKeys = false;
-
-    if (targetOperatingSystem == OperatingSystem::Windows) {
-        if (config()->get(Config::AutoTypeLibvirtDeadKeysWindows).toBool()) {
-            shouldHandleDeadKeys = true;
-        }
-    } else {
-        if (config()->get(Config::AutoTypeLibvirtDeadKeysOther).toBool()) {
-            shouldHandleDeadKeys = true;
-        }
-    }
-
-    if (shouldHandleDeadKeys && deadKeys.contains(uCharacter)) {
-        // append space
-        keyCodes.append(0x20);
-    }
-
-    return keyCodes;
-}
-
-uint AutoTypeExtLibvirt::keyToKeyCode(Qt::Key key)
-{
-    switch (key) {
-    case Qt::Key_Tab:
-        return 0x09;
-    case Qt::Key_Enter:
-        return 0x0d;
-    case Qt::Key_Space:
-        return 0x20;
-    case Qt::Key_Left:
-        return 0x25;
-    case Qt::Key_Up:
-        return 0x26;
-    case Qt::Key_Right:
-        return 0x27;
-    case Qt::Key_Down:
-        return 0x28;
-    case Qt::Key_Insert:
-        return 0x2d;
-    case Qt::Key_Delete:
-        return 0x2e;
-    case Qt::Key_Home:
-        return 0x24;
-    case Qt::Key_End:
-        return 0x23;
-    case Qt::Key_PageUp:
-        return 0x21;
-    case Qt::Key_PageDown:
-        return 0x22;
-    case Qt::Key_Backspace:
-        return 0x08;
-    case Qt::Key_Pause:
-        return 0x13;
-    case Qt::Key_CapsLock:
-        return 0x14;
-    case Qt::Key_Escape:
-        return 0x1b;
-    case Qt::Key_Help:
-        return 0x2f;
-    case Qt::Key_NumLock:
-        return 0x90;
-    case Qt::Key_Print:
-        return 0x2a;
-    case Qt::Key_ScrollLock:
-        return 0x91;
-    case Qt::Key_Shift:
-        return 0xa0;
-    case Qt::Key_Control:
-        return 0xa2;
-    case Qt::Key_Alt:
-        return 0xa4;
-    default:
-        if (key >= Qt::Key_F1 && key <= Qt::Key_F16) {
-            return 0x70 + (key - Qt::Key_F1);
-        } else {
-            return 0;
-        }
-    }
 }
 
 AutoTypeAction::Result AutoTypeExecutorLibvirt::execBegin(const AutoTypeBegin* action,
@@ -276,16 +291,17 @@ AutoTypeAction::Result AutoTypeExecutorLibvirt::execBegin(const AutoTypeBegin* a
 
 AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(AutoTypeKey* action, const QSharedPointer<AutoTypeTarget>& target)
 {
-    QList<uint> keyCodeGroups;
     auto libvirtTarget = target.staticCast<AutoTypeTargetLibvirt>();
 
+    QVector<uint> keycodes = m_plugin->modifiersToKeyCodes(action->modifiers);
+
     if (action->key != Qt::Key_unknown) {
-        keyCodeGroups = {m_plugin->keyToKeyCode(action->key)};
+        keycodes += m_plugin->keyToKeyCodes(action->key);
     } else {
-        keyCodeGroups = m_plugin->charToKeyCodeGroup(action->character, libvirtTarget->getOperatingSystem());
+        keycodes += m_plugin->charToKeyCodes(action->character, libvirtTarget->getOperatingSystem());
     }
 
-    m_plugin->sendKeyCodesToTarget(libvirtTarget, keyCodeGroups);
+    m_plugin->sendKeyCodesToTarget(libvirtTarget, keycodes);
 
     Tools::sleep(execDelayMs);
     return AutoTypeAction::Result::Ok();
@@ -294,24 +310,9 @@ AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(AutoTypeKey* action, co
 AutoTypeAction::Result AutoTypeExecutorLibvirt::execClearField(AutoTypeClearField* action, const QSharedPointer<AutoTypeTarget>& target)
 {
     Q_UNUSED(action);
-
-    timespec ts;
-    ts.tv_sec = 0;
-    ts.tv_nsec = 25 * 1000 * 1000;
-
-    auto libvirtTarget = target.staticCast<AutoTypeTargetLibvirt>();
-
-    m_plugin->sendKeyCodesToTarget(libvirtTarget, {m_plugin->keyToKeyCode(Qt::Key_Home)});
-    nanosleep(&ts, nullptr);
-
-    m_plugin->sendKeyCodesToTarget(
-        libvirtTarget,
-        {m_plugin->keyToKeyCode(Qt::Key_Shift), m_plugin->keyToKeyCode(Qt::Key_End)}
-    );
-    nanosleep(&ts, nullptr);
-
-    m_plugin->sendKeyCodesToTarget(libvirtTarget, {m_plugin->keyToKeyCode(Qt::Key_Backspace)});
-    nanosleep(&ts, nullptr);
+    execType(new AutoTypeKey(Qt::Key_Home, Qt::ControlModifier), target);
+    execType(new AutoTypeKey(Qt::Key_End, Qt::ControlModifier | Qt::ShiftModifier), target);
+    execType(new AutoTypeKey(Qt::Key_Backspace), target);
 
     return AutoTypeAction::Result::Ok();
 }
@@ -351,22 +352,10 @@ OperatingSystem AutoTypeTargetLibvirt::detectOperatingSystem()
     // Confirmed os.id values:
     //  - ubuntu
 
-    QList<QString> linuxBasedOperatingSystems = QList<QString>(
-        {
-           "ubuntu",
-           "debian",
-           "centos",
-           "fedora",
-           "redhat",
-           "opensuse",
-           "archlinux",
-           "alpinelinux",
-           "popos"
-       }
-    );
-
     int guestInfoParamCount = 0;
     virTypedParameterPtr guestInfoParams = nullptr;
+
+    // Primary attempt through qemu-guest-agent provided data (if available)
 
     if (virDomainGetGuestInfo(m_domain, VIR_DOMAIN_GUEST_INFO_OS, &guestInfoParams, &guestInfoParamCount, 0) >= 0) {
         virTypedParameterPtr osInfoParam = virTypedParamsGet(guestInfoParams, guestInfoParamCount, "os.id");
@@ -380,7 +369,7 @@ OperatingSystem AutoTypeTargetLibvirt::detectOperatingSystem()
                 return OperatingSystem::Windows;
             } else if (osName == "macosx") {
                 return OperatingSystem::MacOSX;
-            } else if (linuxBasedOperatingSystems.contains(osName)) {
+            } else if (osName.contains(m_patternLinuxOperatingSystemId)) {
                 return OperatingSystem::Linux;
             } else {
                 return OperatingSystem::Unknown;
@@ -390,6 +379,8 @@ OperatingSystem AutoTypeTargetLibvirt::detectOperatingSystem()
 
     virTypedParamsFree(guestInfoParams, guestInfoParamCount);
 
+    // Fallback using metadata in the domain XML
+
     QString osInfoXml = QString(virDomainGetMetadata(
         m_domain,
         VIR_DOMAIN_METADATA_ELEMENT,
@@ -397,13 +388,11 @@ OperatingSystem AutoTypeTargetLibvirt::detectOperatingSystem()
         0
     ));
 
-    QRegExp osPattern = QRegExp("http://(ubuntu|debian|centos|fedora|redhat|opensuse|archlinux|alpinelinux|system76)");
-
     if (osInfoXml.contains("http://microsoft.com")) {
         return OperatingSystem::Windows;
     } else if (osInfoXml.contains("http://apple.com")) {
         return OperatingSystem::MacOSX;
-    } else if (osInfoXml.contains(osPattern)) {
+    } else if (osInfoXml.contains(m_patternLinuxOperatingSystemUrl)) {
         return OperatingSystem::Linux;
     }
 

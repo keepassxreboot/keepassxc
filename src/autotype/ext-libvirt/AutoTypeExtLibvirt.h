@@ -51,6 +51,9 @@ private:
 
     virDomainPtr m_domain;
     OperatingSystem m_operatingSystem;
+
+    static const QRegExp m_patternLinuxOperatingSystemId;
+    static const QRegExp m_patternLinuxOperatingSystemUrl;
 };
 
 class AutoTypeExtLibvirt : public QObject, public AutoTypeExternalInterface
@@ -69,13 +72,22 @@ public:
 
     TargetedAutoTypeExecutor* createExecutor() override;
 
-    QList<uint> charToKeyCodeGroup(const QChar& character, OperatingSystem targetOperatingSystem);
-    uint keyToKeyCode(Qt::Key key);
+    QVector<uint> charToKeyCodes(const QChar& character, OperatingSystem targetOperatingSystem);
+    QVector<uint> keyToKeyCodes(Qt::Key key);
+    QVector<uint> modifiersToKeyCodes(Qt::KeyboardModifiers modifiers);
 
-    void sendKeyCodesToTarget(const QSharedPointer<AutoTypeTargetLibvirt>& target, QList<uint> keyCodes);
+    void sendKeyCodesToTarget(const QSharedPointer<AutoTypeTargetLibvirt>& target, QVector<uint> keyCodes);
 
 private:
+    bool shouldHandleDeadKeys(OperatingSystem operatingSystem);
+
     virConnectPtr m_libvirtConnection;
+
+    static const QHash<uint, uint> m_lowerSymbolKeyMapping;
+    static const QHash<uint, uint> m_upperSymbolKeyMapping;
+    static const QHash<Qt::Key, uint> m_keyToKeyCodeMapping;
+    static const QHash<Qt::KeyboardModifier, uint> m_modifierToKeyCodeMapping;
+    static const QVector<uint> m_deadKeys;
 };
 
 class AutoTypeExecutorLibvirt : public TargetedAutoTypeExecutor
