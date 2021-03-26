@@ -33,7 +33,6 @@ QPointer<MacPasteboard> Clipboard::m_pasteboard(nullptr);
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
-    , m_elapsed(new QElapsedTimer())
 {
 #ifdef Q_OS_MACOS
     if (!m_pasteboard) {
@@ -77,9 +76,9 @@ void Clipboard::setText(const QString& text, bool clear)
         if (config()->get(Config::Security_ClearClipboard).toBool()) {
             int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
             if (timeout > 0) {
-                m_elapsed->start();
-                m_timer->start(1000);
+                m_secondsElapsed = -1;
                 countdownTick();
+                m_timer->start(1000);
             }
         }
     }
@@ -112,8 +111,9 @@ void Clipboard::clearClipboard()
 
 void Clipboard::countdownTick()
 {
+    m_secondsElapsed++;
     int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
-    int timeLeft = timeout - m_elapsed->elapsed() / 1000;
+    int timeLeft = timeout - m_secondsElapsed;
     if (timeLeft <= 0) {
         m_timer->stop();
         clearClipboard();

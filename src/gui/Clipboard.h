@@ -53,7 +53,7 @@ private:
     static Clipboard* m_instance;
 
     QTimer* m_timer;
-    QElapsedTimer* m_elapsed;
+    int m_secondsElapsed = 0;
 
 #ifdef Q_OS_MACOS
     // This object lives for the whole program lifetime and we cannot delete it on exit,
