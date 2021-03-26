@@ -147,7 +147,7 @@ private slots:
     void releaseContextFocusLock();
     void agentEnabled(bool enabled);
     void updateTrayIcon();
-    void updateClearClipboardTimer(int secondsLeft, int timeout);
+    void updateProgressBar(int percentage, QString message);
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

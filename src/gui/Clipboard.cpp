@@ -117,10 +117,11 @@ void Clipboard::countdownTick()
     if (timeLeft <= 0) {
         m_timer->stop();
         clearClipboard();
+        emit updateCountdown(-1, "");
+    } else {
+        emit updateCountdown(100 * timeLeft / timeout,
+            QObject::tr("Clearing the clipboard in %1 second(s)…", "", timeLeft).arg(timeLeft));
     }
-
-    // Send an event even if the time left is 0, so that the progress bar can be hidden
-    emit updateCountdown(timeLeft, timeout);
 }
 
 Clipboard* Clipboard::instance()

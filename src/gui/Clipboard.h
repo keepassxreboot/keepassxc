@@ -41,7 +41,7 @@ public slots:
     void clearCopiedText();
 
 signals:
-    void updateCountdown(int secondsLeft, int timeout);
+    void updateCountdown(int percentage, QString message);
 
 private slots:
     void clearClipboard();

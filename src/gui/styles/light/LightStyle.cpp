@@ -22,8 +22,8 @@
 #include <QDialog>
 #include <QMainWindow>
 #include <QMenuBar>
-#include <QToolBar>
 #include <QStatusBar>
+#include <QToolBar>
 
 LightStyle::LightStyle()
     : BaseStyle()

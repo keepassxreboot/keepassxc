@@ -632,8 +632,9 @@ MainWindow::MainWindow()
     m_progressBar->setTextVisible(false);
     m_progressBar->setMaximumWidth(100);
     m_progressBar->setFixedHeight(15);
+    m_progressBar->setMaximum(100);
     statusBar()->addPermanentWidget(m_progressBar);
-    connect(clipboard(), SIGNAL(updateCountdown(int, int)), this, SLOT(updateClearClipboardTimer(int, int)));
+    connect(clipboard(), SIGNAL(updateCountdown(int, QString)), this, SLOT(updateProgressBar(int, QString)));
 
     restoreConfigState();
 }
@@ -1400,17 +1401,15 @@ void MainWindow::updateTrayIcon()
     QApplication::setQuitOnLastWindowClosed(!isTrayIconEnabled());
 }
 
-void MainWindow::updateClearClipboardTimer(int secondsLeft, int timeout)
+void MainWindow::updateProgressBar(int percentage, QString message)
 {
-    if (secondsLeft <= 0) {
+    if (percentage < 0) {
         m_progressBar->setVisible(false);
         m_progressBarLabel->setVisible(false);
     } else {
-        m_progressBar->setMaximum(timeout);
-        m_progressBar->setValue(secondsLeft);
+        m_progressBar->setValue(percentage);
         m_progressBar->setVisible(true);
-        m_progressBarLabel->setText(
-            QObject::tr("Clearing the clipboard in %1 second(s)…", "", secondsLeft).arg(secondsLeft));
+        m_progressBarLabel->setText(message);
         m_progressBarLabel->setVisible(true);
     }
 }
