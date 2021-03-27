@@ -45,8 +45,17 @@ Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
 
+#if defined(Q_OS_UNIX)
+#include <sys/stat.h>
+#endif
+
 int main(int argc, char** argv)
 {
+#if defined(Q_OS_UNIX)
+    // Ensure that saved attachments and other files created are private to the current user
+    umask(0077);
+#endif
+
     QT_REQUIRE_VERSION(argc, argv, QT_VERSION_STR)
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
