@@ -82,26 +82,6 @@ void BrowserSettings::setMatchUrlScheme(bool matchUrlScheme)
     config()->set(Config::Browser_MatchUrlScheme, matchUrlScheme);
 }
 
-bool BrowserSettings::sortByUsername()
-{
-    return config()->get(Config::Browser_SortByUsername).toBool();
-}
-
-void BrowserSettings::setSortByUsername(bool sortByUsername)
-{
-    config()->set(Config::Browser_SortByUsername, sortByUsername);
-}
-
-bool BrowserSettings::sortByTitle()
-{
-    return !sortByUsername();
-}
-
-void BrowserSettings::setSortByTitle(bool sortByUsertitle)
-{
-    setSortByUsername(!sortByUsertitle);
-}
-
 bool BrowserSettings::alwaysAllowAccess()
 {
     return config()->get(Config::Browser_AlwaysAllowAccess).toBool();

@@ -750,14 +750,10 @@ BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& siteUrlStr,
     std::sort(keys.begin(), keys.end(), [](int l, int r) { return l > r; });
 
     QList<Entry*> results;
-    auto sortField = browserSettings()->sortByTitle() ? EntryAttributes::TitleKey : EntryAttributes::UserNameKey;
     for (auto key : keys) {
-        // Sort same priority entries by Title or UserName
         auto entries = priorities.values(key);
-        std::sort(entries.begin(), entries.end(), [&sortField](Entry* left, Entry* right) {
-            return QString::localeAwareCompare(left->attribute(sortField), right->attribute(sortField)) < 0;
-        });
         results << entries;
+
         if (browserSettings()->bestMatchOnly() && !results.isEmpty()) {
             // Early out once we find the highest batch of matches
             break;

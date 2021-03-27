@@ -247,20 +247,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="sortByTitle">
-         <property name="text">
-          <string extracomment="Credentials mean login data requested via browser extension">Sort matching credentials by title</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="sortByUsername">
-         <property name="text">
-          <string extracomment="Credentials mean login data requested via browser extension">Sort matching credentials by username</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

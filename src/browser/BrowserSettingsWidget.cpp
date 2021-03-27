@@ -117,12 +117,6 @@ void BrowserSettingsWidget::loadSettings()
     // TODO: fix this
     m_ui->showNotification->hide();
 
-    if (settings->sortByUsername()) {
-        m_ui->sortByUsername->setChecked(true);
-    } else {
-        m_ui->sortByTitle->setChecked(true);
-    }
-
     m_ui->alwaysAllowAccess->setChecked(settings->alwaysAllowAccess());
     m_ui->alwaysAllowUpdate->setChecked(settings->alwaysAllowUpdate());
     m_ui->httpAuthPermission->setChecked(settings->httpAuthPermission());
@@ -212,7 +206,6 @@ void BrowserSettingsWidget::saveSettings()
     settings->setBestMatchOnly(m_ui->bestMatchOnly->isChecked());
     settings->setUnlockDatabase(m_ui->unlockDatabase->isChecked());
     settings->setMatchUrlScheme(m_ui->matchUrlScheme->isChecked());
-    settings->setSortByUsername(m_ui->sortByUsername->isChecked());
 
     settings->setUseCustomProxy(m_ui->useCustomProxy->isChecked());
     settings->setCustomProxyLocation(m_ui->customProxyLocation->text());

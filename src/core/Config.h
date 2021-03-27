@@ -127,7 +127,6 @@ public:
         Browser_BestMatchOnly,
         Browser_UnlockDatabase,
         Browser_MatchUrlScheme,
-        Browser_SortByUsername,
         Browser_SupportBrowserProxy,
         Browser_UseCustomProxy,
         Browser_CustomProxyLocation,
