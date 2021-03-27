@@ -751,8 +751,7 @@ BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& siteUrlStr,
 
     QList<Entry*> results;
     for (auto key : keys) {
-        auto entries = priorities.values(key);
-        results << entries;
+        results << priorities.values(key);
 
         if (browserSettings()->bestMatchOnly() && !results.isEmpty()) {
             // Early out once we find the highest batch of matches
