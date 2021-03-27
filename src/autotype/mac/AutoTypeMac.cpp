@@ -215,12 +215,13 @@ AutoTypeExecutorMac::AutoTypeExecutorMac(AutoTypePlatformMac* platform)
 {
 }
 
-void AutoTypeExecutorMac::execBegin(const AutoTypeBegin* action)
+AutoTypeAction::Result AutoTypeExecutorMac::execBegin(const AutoTypeBegin* action)
 {
     Q_UNUSED(action);
+    return AutoTypeAction::Result::Ok();
 }
 
-void AutoTypeExecutorMac::execType(const AutoTypeKey* action)
+AutoTypeAction::Result AutoTypeExecutorMac::execType(const AutoTypeKey* action)
 {
     if (action->modifiers & Qt::ShiftModifier) {
         m_platform->sendKey(Qt::Key_Shift, true);
@@ -251,12 +252,14 @@ void AutoTypeExecutorMac::execType(const AutoTypeKey* action)
     }
 
     Tools::sleep(execDelayMs);
+    return AutoTypeAction::Result::Ok();
 }
 
-void AutoTypeExecutorMac::execClearField(const AutoTypeClearField* action)
+AutoTypeAction::Result AutoTypeExecutorMac::execClearField(const AutoTypeClearField* action)
 {
     Q_UNUSED(action);
     execType(new AutoTypeKey(Qt::Key_Up, Qt::ControlModifier));
     execType(new AutoTypeKey(Qt::Key_Down, Qt::ControlModifier | Qt::ShiftModifier));
     execType(new AutoTypeKey(Qt::Key_Backspace));
+    return AutoTypeAction::Result::Ok();
 }

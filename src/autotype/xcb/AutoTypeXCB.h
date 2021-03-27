@@ -56,7 +56,7 @@ public:
     AutoTypeExecutor* createExecutor() override;
     void updateKeymap();
 
-    void sendKey(KeySym keysym, unsigned int modifiers = 0);
+    AutoTypeAction::Result sendKey(KeySym keysym, unsigned int modifiers = 0);
 
 private:
     QString windowTitle(Window window, bool useBlacklist);
@@ -104,9 +104,9 @@ class AutoTypeExecutorX11 : public AutoTypeExecutor
 public:
     explicit AutoTypeExecutorX11(AutoTypePlatformX11* platform);
 
-    void execBegin(const AutoTypeBegin* action) override;
-    void execType(const AutoTypeKey* action) override;
-    void execClearField(const AutoTypeClearField* action) override;
+    AutoTypeAction::Result execBegin(const AutoTypeBegin* action) override;
+    AutoTypeAction::Result execType(const AutoTypeKey* action) override;
+    AutoTypeAction::Result execClearField(const AutoTypeClearField* action) override;
 
 private:
     AutoTypePlatformX11* const m_platform;
