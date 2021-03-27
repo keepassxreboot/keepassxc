@@ -309,6 +309,11 @@ void AutoTypePlatformX11::updateKeymap()
                     }
                 }
 
+                /* explicitly disallow requiring lock modifiers (Caps Lock and Num Lock) */
+                if (mask & (LockMask | Mod2Mask)) {
+                    continue;
+                }
+
                 m_keymap.append(AutoTypePlatformX11::KeyDesc{sym, ckeycode, cgroup, mask});
             }
         }
@@ -411,7 +416,7 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
     XkbGetState(m_dpy, XkbUseCoreKbd, &state);
     group_active = state.group;
 
-    /* tell GeyKeycode we would prefer a key from active group */
+    /* tell GetKeycode we would prefer a key from active group */
     group = group_active;
 
     /* determine keycode, group and mask for the given keysym */
@@ -429,42 +434,18 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
     XSync(m_dpy, False);
     XQueryPointer(m_dpy, m_rootWindow, &root, &child, &root_x, &root_y, &x, &y, &original_mask);
 
-    // modifiers that need to be pressed but aren't
-    unsigned int press_mask = wanted_mask & ~original_mask;
-
-    // modifiers that are pressed but maybe shouldn't
-    unsigned int release_check_mask = original_mask & ~wanted_mask;
-
-    // modifiers we need to release before sending the keycode
-    unsigned int release_mask = 0;
-
-    if (!modifiers) {
-        // check every release_check_mask individually if it affects the keysym we would generate
-        // if it doesn't we probably don't need to release it
-        for (int mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index++) {
-            if (release_check_mask & (1 << mod_index)) {
-                unsigned int mods_rtrn;
-                KeySym keysym_rtrn;
-                XkbTranslateKeyCode(m_xkb, keycode, wanted_mask | (1 << mod_index), &mods_rtrn, &keysym_rtrn);
-
-                if (keysym_rtrn != keysym) {
-                    release_mask |= (1 << mod_index);
-                }
-            }
-        }
-
-        // finally check if the combination of pressed modifiers that we chose to ignore affects the keysym
-        unsigned int mods_rtrn;
-        KeySym keysym_rtrn;
-        XkbTranslateKeyCode(
-            m_xkb, keycode, wanted_mask | (release_check_mask & ~release_mask), &mods_rtrn, &keysym_rtrn);
-        if (keysym_rtrn != keysym) {
-            // oh well, release all the modifiers we don't want
-            release_mask = release_check_mask;
-        }
-    } else {
-        release_mask = release_check_mask;
+    /* fail permanently if Caps Lock is on */
+    if (original_mask & LockMask) {
+        return AutoTypeAction::Result::Failed(tr("Sequence aborted: Caps Lock is on"));
     }
+
+    /* retry if keysym affecting modifier is held except Num Lock (Mod2Mask) */
+    if (original_mask & (ShiftMask | ControlMask | Mod1Mask | Mod3Mask | Mod4Mask | Mod5Mask)) {
+        return AutoTypeAction::Result::Retry(tr("Sequence aborted: Modifier keys held by user"));
+    }
+
+    /* modifiers that need to be held but aren't */
+    unsigned int press_mask = wanted_mask & ~original_mask;
 
     /* change layout group if necessary */
     if (group_active != group) {
@@ -472,25 +453,13 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
         XFlush(m_dpy);
     }
 
-    /* set modifiers mask */
-    if ((release_mask | press_mask) & LockMask) {
-        SendModifiers(LockMask, true);
-        SendModifiers(LockMask, false);
-    }
-    SendModifiers(release_mask & ~LockMask, false);
-    SendModifiers(press_mask & ~LockMask, true);
-
-    /* press and release release key */
+    /* hold modifiers and press key */
+    SendModifiers(press_mask, true);
     SendKeyEvent(keycode, true);
-    SendKeyEvent(keycode, false);
 
-    /* restore previous modifiers mask */
-    SendModifiers(press_mask & ~LockMask, false);
-    SendModifiers(release_mask & ~LockMask, true);
-    if ((release_mask | press_mask) & LockMask) {
-        SendModifiers(LockMask, true);
-        SendModifiers(LockMask, false);
-    }
+    /* release key and release modifiers */
+    SendKeyEvent(keycode, false);
+    SendModifiers(press_mask, false);
 
     /* reset layout group if necessary */
     if (group_active != group) {
