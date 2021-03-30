@@ -86,19 +86,9 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QRadioButton" name="filterRadio">
+       <widget class="QCheckBox" name="searchCheckBox">
         <property name="text">
-         <string>&amp;Filter Matches</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="searchRadio">
-        <property name="text">
-         <string>&amp;Search Database</string>
+         <string>Search from all entries instead of matches only</string>
         </property>
        </widget>
       </item>
@@ -133,7 +123,7 @@
       </size>
      </property>
      <property name="placeholderText">
-      <string>Filter or Search…</string>
+      <string>Search…</string>
      </property>
      <property name="clearButtonEnabled">
       <bool>true</bool>
@@ -188,8 +178,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>view</tabstop>
-  <tabstop>filterRadio</tabstop>
-  <tabstop>searchRadio</tabstop>
+  <tabstop>searchCheckBox</tabstop>
   <tabstop>search</tabstop>
  </tabstops>
  <resources/>

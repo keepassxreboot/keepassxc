@@ -67,16 +67,14 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_ui->search, SIGNAL(returnPressed()), SLOT(activateCurrentMatch()));
     connect(&m_searchTimer, SIGNAL(timeout()), SLOT(performSearch()));
 
-    connect(m_ui->filterRadio, &QRadioButton::toggled, this, [this](bool checked) {
+    m_ui->searchCheckBox->setShortcut(Qt::CTRL + Qt::Key_F);
+    connect(m_ui->searchCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
         if (checked) {
-            // Reset to original match list
-            m_ui->view->setMatchList(m_matches);
             performSearch();
             m_ui->search->setFocus();
-        }
-    });
-    connect(m_ui->searchRadio, &QRadioButton::toggled, this, [this](bool checked) {
-        if (checked) {
+        } else {
+            // Reset to original match list
+            m_ui->view->setMatchList(m_matches);
             performSearch();
             m_ui->search->setFocus();
         }
@@ -101,11 +99,7 @@ void AutoTypeSelectDialog::setMatches(const QList<AutoTypeMatch>& matches, const
     m_dbs = dbs;
 
     m_ui->view->setMatchList(m_matches);
-    if (m_matches.isEmpty()) {
-        m_ui->searchRadio->setChecked(true);
-    } else {
-        m_ui->filterRadio->setChecked(true);
-    }
+    m_ui->searchCheckBox->setChecked(m_matches.isEmpty());
 }
 
 void AutoTypeSelectDialog::submitAutoTypeMatch(AutoTypeMatch match)
@@ -117,7 +111,7 @@ void AutoTypeSelectDialog::submitAutoTypeMatch(AutoTypeMatch match)
 
 void AutoTypeSelectDialog::performSearch()
 {
-    if (m_ui->filterRadio->isChecked()) {
+    if (!m_ui->searchCheckBox->isChecked()) {
         m_ui->view->filterList(m_ui->search->text());
         return;
     }
