@@ -78,14 +78,20 @@ void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)
     QTableView::keyPressEvent(event);
 }
 
-void AutoTypeMatchView::setMatchList(const QList<AutoTypeMatch>& matches)
+void AutoTypeMatchView::setMatchList(const QList<AutoTypeMatch>& matches, bool selectFirst)
 {
     m_model->setMatchList(matches);
     m_sortModel->setFilterWildcard({});
 
     horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
-    selectionModel()->setCurrentIndex(m_sortModel->index(0, 0),
-                                      QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+
+    if (selectFirst) {
+        selectionModel()->setCurrentIndex(m_sortModel->index(0, 0),
+                                          QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    } else {
+        selectionModel()->clear();
+    }
+
     emit currentMatchChanged(currentMatch());
 }
 

@@ -74,7 +74,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
             m_ui->search->setFocus();
         } else {
             // Reset to original match list
-            m_ui->view->setMatchList(m_matches);
+            m_ui->view->setMatchList(m_matches, true);
             performSearch();
             m_ui->search->setFocus();
         }
@@ -98,7 +98,7 @@ void AutoTypeSelectDialog::setMatches(const QList<AutoTypeMatch>& matches, const
     m_matches = matches;
     m_dbs = dbs;
 
-    m_ui->view->setMatchList(m_matches);
+    m_ui->view->setMatchList(m_matches, !m_matches.isEmpty() || !m_ui->search->text().isEmpty());
     m_ui->searchCheckBox->setChecked(m_matches.isEmpty());
 }
 
@@ -142,7 +142,7 @@ void AutoTypeSelectDialog::performSearch()
         }
     }
 
-    m_ui->view->setMatchList(matches);
+    m_ui->view->setMatchList(matches, !m_ui->search->text().isEmpty());
 }
 
 void AutoTypeSelectDialog::moveSelectionUp()
@@ -158,6 +158,13 @@ void AutoTypeSelectDialog::moveSelectionUp()
 void AutoTypeSelectDialog::moveSelectionDown()
 {
     auto current = m_ui->view->currentIndex();
+
+    // special case where we have no default selection (empty search)
+    if (!current.isValid()) {
+        m_ui->view->setCurrentIndex(m_ui->view->indexAt({0, 0}));
+        return;
+    }
+
     auto next = current.sibling(current.row() + 1, 0);
 
     if (next.isValid()) {
