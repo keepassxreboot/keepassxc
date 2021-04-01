@@ -491,6 +491,11 @@ void AutoType::resetAutoTypeState()
 QList<QSharedPointer<AutoTypeAction>>
 AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QString& error, bool syntaxOnly)
 {
+    if (!entry) {
+        error = tr("Invalid entry provided");
+        return {};
+    }
+
     const int maxTypeDelay = 100;
     const int maxWaitDelay = 10000;
     const int maxRepetition = 100;

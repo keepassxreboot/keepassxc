@@ -104,9 +104,11 @@ void AutoTypeSelectDialog::setMatches(const QList<AutoTypeMatch>& matches, const
 
 void AutoTypeSelectDialog::submitAutoTypeMatch(AutoTypeMatch match)
 {
-    m_accepted = true;
-    accept();
-    emit matchActivated(std::move(match));
+    if (match.first) {
+        m_accepted = true;
+        accept();
+        emit matchActivated(std::move(match));
+    }
 }
 
 void AutoTypeSelectDialog::performSearch()
@@ -275,16 +277,24 @@ void AutoTypeSelectDialog::buildActionMenu()
     m_actionMenu->addAction(copyPasswordAction);
     m_actionMenu->addAction(copyTotpAction);
 
+    auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_1, this);
+    connect(shortcut, &QShortcut::activated, typeUsernameAction, &QAction::trigger);
     connect(typeUsernameAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{USERNAME}";
         submitAutoTypeMatch(match);
     });
+
+    shortcut = new QShortcut(Qt::CTRL + Qt::Key_2, this);
+    connect(shortcut, &QShortcut::activated, typePasswordAction, &QAction::trigger);
     connect(typePasswordAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{PASSWORD}";
         submitAutoTypeMatch(match);
     });
+
+    shortcut = new QShortcut(Qt::CTRL + Qt::Key_3, this);
+    connect(shortcut, &QShortcut::activated, typeTotpAction, &QAction::trigger);
     connect(typeTotpAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{TOTP}";
