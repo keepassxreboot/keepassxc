@@ -448,46 +448,6 @@ void TestBrowser::testSubdomainsAndPaths()
     QCOMPARE(result.length(), 1);
 }
 
-void TestBrowser::testSortEntries()
-{
-    auto db = QSharedPointer<Database>::create();
-    auto* root = db->rootGroup();
-
-    QStringList urls = {"https://github.com/login_page",
-                        "https://github.com/login",
-                        "https://github.com/",
-                        "github.com/login",
-                        "http://github.com",
-                        "http://github.com/login",
-                        "github.com",
-                        "github.com/login?test=test",
-                        "https://github", // Invalid URL
-                        "github.com"};
-
-    auto entries = createEntries(urls, root);
-
-    browserSettings()->setBestMatchOnly(false);
-    browserSettings()->setSortByUsername(true);
-    auto result = m_browserService->sortEntries(entries, "https://github.com/login", "https://github.com/session");
-    QCOMPARE(result.size(), 10);
-    QCOMPARE(result[0]->username(), QString("User 1"));
-    QCOMPARE(result[0]->url(), urls[1]);
-    QCOMPARE(result[1]->username(), QString("User 3"));
-    QCOMPARE(result[1]->url(), urls[3]);
-    QCOMPARE(result[2]->username(), QString("User 7"));
-    QCOMPARE(result[2]->url(), urls[7]);
-    QCOMPARE(result[3]->username(), QString("User 0"));
-    QCOMPARE(result[3]->url(), urls[0]);
-
-    // Test with a perfect match. That should be first in the list.
-    result = m_browserService->sortEntries(entries, "https://github.com/login_page", "https://github.com/session");
-    QCOMPARE(result.size(), 10);
-    QCOMPARE(result[0]->username(), QString("User 0"));
-    QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
-    QCOMPARE(result[1]->username(), QString("User 1"));
-    QCOMPARE(result[1]->url(), QString("https://github.com/login"));
-}
-
 QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
 {
     QList<Entry*> entries;
@@ -598,8 +558,8 @@ void TestBrowser::testBestMatchingCredentials()
     result = m_browserService->searchEntries(db, siteUrl, siteUrl);
     sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
     QCOMPARE(sorted.size(), 2);
-    QCOMPARE(sorted[0]->url(), QString("https://subdomain.example.com/"));
-    QCOMPARE(sorted[1]->url(), QString("https://subdomain.example.com"));
+    QCOMPARE(sorted[0]->url(), QString("https://subdomain.example.com"));
+    QCOMPARE(sorted[1]->url(), QString("https://subdomain.example.com/"));
 
     // Entries with https://example.com should be still returned even if the site URL has a subdomain. Those have the
     // best match.

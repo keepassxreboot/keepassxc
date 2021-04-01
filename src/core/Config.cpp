@@ -147,7 +147,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Browser_BestMatchOnly, {QS("Browser/BestMatchOnly"), Roaming, false}},
     {Config::Browser_UnlockDatabase, {QS("Browser/UnlockDatabase"), Roaming, true}},
     {Config::Browser_MatchUrlScheme, {QS("Browser/MatchUrlScheme"), Roaming, true}},
-    {Config::Browser_SortByUsername, {QS("Browser/SortByUsername"), Roaming, false}},
     {Config::Browser_SupportBrowserProxy, {QS("Browser/SupportBrowserProxy"), Roaming, true}},
     {Config::Browser_UseCustomProxy, {QS("Browser/UseCustomProxy"), Roaming, false}},
     {Config::Browser_CustomProxyLocation, {QS("Browser/CustomProxyLocation"), Roaming, {}}},

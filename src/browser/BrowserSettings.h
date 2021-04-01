@@ -42,10 +42,6 @@ public:
     void setUnlockDatabase(bool unlockDatabase);
     bool matchUrlScheme();
     void setMatchUrlScheme(bool matchUrlScheme);
-    bool sortByUsername();
-    void setSortByUsername(bool sortByUsername = true);
-    bool sortByTitle();
-    void setSortByTitle(bool sortByUsertitle = true);
     bool alwaysAllowAccess();
     void setAlwaysAllowAccess(bool alwaysAllowAccess);
     bool alwaysAllowUpdate();
