@@ -44,7 +44,6 @@ signals:
     void updateCountdown(int percentage, QString message);
 
 private slots:
-    void clearClipboard();
     void countdownTick();
 
 private:
