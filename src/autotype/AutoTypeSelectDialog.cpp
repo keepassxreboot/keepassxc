@@ -67,16 +67,14 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_ui->search, SIGNAL(returnPressed()), SLOT(activateCurrentMatch()));
     connect(&m_searchTimer, SIGNAL(timeout()), SLOT(performSearch()));
 
-    connect(m_ui->filterRadio, &QRadioButton::toggled, this, [this](bool checked) {
+    m_ui->searchCheckBox->setShortcut(Qt::CTRL + Qt::Key_F);
+    connect(m_ui->searchCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
         if (checked) {
-            // Reset to original match list
-            m_ui->view->setMatchList(m_matches);
             performSearch();
             m_ui->search->setFocus();
-        }
-    });
-    connect(m_ui->searchRadio, &QRadioButton::toggled, this, [this](bool checked) {
-        if (checked) {
+        } else {
+            // Reset to original match list
+            m_ui->view->setMatchList(m_matches, true);
             performSearch();
             m_ui->search->setFocus();
         }
@@ -100,24 +98,22 @@ void AutoTypeSelectDialog::setMatches(const QList<AutoTypeMatch>& matches, const
     m_matches = matches;
     m_dbs = dbs;
 
-    m_ui->view->setMatchList(m_matches);
-    if (m_matches.isEmpty()) {
-        m_ui->searchRadio->setChecked(true);
-    } else {
-        m_ui->filterRadio->setChecked(true);
-    }
+    m_ui->view->setMatchList(m_matches, !m_matches.isEmpty() || !m_ui->search->text().isEmpty());
+    m_ui->searchCheckBox->setChecked(m_matches.isEmpty());
 }
 
 void AutoTypeSelectDialog::submitAutoTypeMatch(AutoTypeMatch match)
 {
-    m_accepted = true;
-    accept();
-    emit matchActivated(std::move(match));
+    if (match.first) {
+        m_accepted = true;
+        accept();
+        emit matchActivated(std::move(match));
+    }
 }
 
 void AutoTypeSelectDialog::performSearch()
 {
-    if (m_ui->filterRadio->isChecked()) {
+    if (!m_ui->searchCheckBox->isChecked()) {
         m_ui->view->filterList(m_ui->search->text());
         return;
     }
@@ -148,7 +144,7 @@ void AutoTypeSelectDialog::performSearch()
         }
     }
 
-    m_ui->view->setMatchList(matches);
+    m_ui->view->setMatchList(matches, !m_ui->search->text().isEmpty());
 }
 
 void AutoTypeSelectDialog::moveSelectionUp()
@@ -164,6 +160,13 @@ void AutoTypeSelectDialog::moveSelectionUp()
 void AutoTypeSelectDialog::moveSelectionDown()
 {
     auto current = m_ui->view->currentIndex();
+
+    // special case where we have no default selection (empty search)
+    if (!current.isValid()) {
+        m_ui->view->setCurrentIndex(m_ui->view->indexAt({0, 0}));
+        return;
+    }
+
     auto next = current.sibling(current.row() + 1, 0);
 
     if (next.isValid()) {
@@ -274,16 +277,24 @@ void AutoTypeSelectDialog::buildActionMenu()
     m_actionMenu->addAction(copyPasswordAction);
     m_actionMenu->addAction(copyTotpAction);
 
+    auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_1, this);
+    connect(shortcut, &QShortcut::activated, typeUsernameAction, &QAction::trigger);
     connect(typeUsernameAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{USERNAME}";
         submitAutoTypeMatch(match);
     });
+
+    shortcut = new QShortcut(Qt::CTRL + Qt::Key_2, this);
+    connect(shortcut, &QShortcut::activated, typePasswordAction, &QAction::trigger);
     connect(typePasswordAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{PASSWORD}";
         submitAutoTypeMatch(match);
     });
+
+    shortcut = new QShortcut(Qt::CTRL + Qt::Key_3, this);
+    connect(shortcut, &QShortcut::activated, typeTotpAction, &QAction::trigger);
     connect(typeTotpAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{TOTP}";

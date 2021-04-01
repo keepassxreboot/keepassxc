@@ -7,19 +7,74 @@
     <x>0</x>
     <y>0</y>
     <width>418</width>
-    <height>295</height>
+    <height>303</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Auto-Type - KeePassXC</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>6</number>
+   </property>
    <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Double click a row to perform Auto-Type or find an entry using the search:</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Double click a row to perform Auto-Type or find an entry using the search:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>14</width>
+         <height>14</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
+Ctrl+F - Toggle database search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;/p&gt;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../../share/icons/icons.qrc">:/icons/application/scalable/actions/system-help.svg</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="AutoTypeMatchView" name="view">
@@ -86,19 +141,9 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QRadioButton" name="filterRadio">
+       <widget class="QCheckBox" name="searchCheckBox">
         <property name="text">
-         <string>&amp;Filter Matches</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="searchRadio">
-        <property name="text">
-         <string>&amp;Search Database</string>
+         <string>Search all open databases</string>
         </property>
        </widget>
       </item>
@@ -133,7 +178,7 @@
       </size>
      </property>
      <property name="placeholderText">
-      <string>Filter or Search…</string>
+      <string>Search…</string>
      </property>
      <property name="clearButtonEnabled">
       <bool>true</bool>
@@ -188,10 +233,11 @@
  </customwidgets>
  <tabstops>
   <tabstop>view</tabstop>
-  <tabstop>filterRadio</tabstop>
-  <tabstop>searchRadio</tabstop>
+  <tabstop>searchCheckBox</tabstop>
   <tabstop>search</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../share/icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
