@@ -623,6 +623,19 @@ MainWindow::MainWindow()
     connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
     connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
 
+    statusBar()->setFixedHeight(24);
+    m_progressBarLabel = new QLabel(statusBar());
+    m_progressBarLabel->setVisible(false);
+    statusBar()->addPermanentWidget(m_progressBarLabel);
+    m_progressBar = new QProgressBar(statusBar());
+    m_progressBar->setVisible(false);
+    m_progressBar->setTextVisible(false);
+    m_progressBar->setMaximumWidth(100);
+    m_progressBar->setFixedHeight(15);
+    m_progressBar->setMaximum(100);
+    statusBar()->addPermanentWidget(m_progressBar);
+    connect(clipboard(), SIGNAL(updateCountdown(int, QString)), this, SLOT(updateProgressBar(int, QString)));
+
     restoreConfigState();
 }
 
@@ -1386,6 +1399,19 @@ void MainWindow::updateTrayIcon()
     }
 
     QApplication::setQuitOnLastWindowClosed(!isTrayIconEnabled());
+}
+
+void MainWindow::updateProgressBar(int percentage, QString message)
+{
+    if (percentage < 0) {
+        m_progressBar->setVisible(false);
+        m_progressBarLabel->setVisible(false);
+    } else {
+        m_progressBar->setValue(percentage);
+        m_progressBar->setVisible(true);
+        m_progressBarLabel->setText(message);
+        m_progressBarLabel->setVisible(true);
+    }
 }
 
 void MainWindow::obtainContextFocusLock()
