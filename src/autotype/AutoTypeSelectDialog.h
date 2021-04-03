@@ -52,8 +52,6 @@ protected:
 private slots:
     void submitAutoTypeMatch(AutoTypeMatch match);
     void performSearch();
-    void moveSelectionUp();
-    void moveSelectionDown();
     void activateCurrentMatch();
     void updateActionMenu(const AutoTypeMatch& match);
 

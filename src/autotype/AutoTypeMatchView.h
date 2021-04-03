@@ -36,6 +36,7 @@ public:
     AutoTypeMatch matchFromIndex(const QModelIndex& index);
     void setMatchList(const QList<AutoTypeMatch>& matches, bool selectFirst);
     void filterList(const QString& filter);
+    void moveSelection(int offset);
 
 signals:
     void currentMatchChanged(AutoTypeMatch match);
