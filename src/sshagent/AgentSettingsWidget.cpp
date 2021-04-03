@@ -26,6 +26,7 @@ AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 #ifndef Q_OS_WIN
+    m_ui->usePageantCheckBox->setVisible(false);
     m_ui->useOpenSSHCheckBox->setVisible(false);
 #else
     m_ui->sshAuthSockWidget->setVisible(false);
@@ -46,7 +47,9 @@ void AgentSettingsWidget::loadSettings()
 
     m_ui->enableSSHAgentCheckBox->setChecked(sshAgentEnabled);
 #ifdef Q_OS_WIN
+    m_ui->usePageantCheckBox->setChecked(sshAgent()->usePageant());
     m_ui->useOpenSSHCheckBox->setChecked(sshAgent()->useOpenSSH());
+    sshAgentEnabled = sshAgentEnabled && (sshAgent()->usePageant() || sshAgent()->useOpenSSH());
 #else
     auto sshAuthSock = sshAgent()->socketPath(false);
     auto sshAuthSockOverride = sshAgent()->authSockOverride();
@@ -83,6 +86,7 @@ void AgentSettingsWidget::saveSettings()
     auto sshAuthSockOverride = m_ui->sshAuthSockOverrideEdit->text();
     sshAgent()->setAuthSockOverride(sshAuthSockOverride);
 #ifdef Q_OS_WIN
+    sshAgent()->setUsePageant(m_ui->usePageantCheckBox->isChecked());
     sshAgent()->setUseOpenSSH(m_ui->useOpenSSHCheckBox->isChecked());
 #endif
     sshAgent()->setEnabled(m_ui->enableSSHAgentCheckBox->isChecked());
