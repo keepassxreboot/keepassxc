@@ -146,6 +146,7 @@ public:
 
         SSHAgent_Enabled,
         SSHAgent_UseOpenSSH,
+        SSHAgent_UsePageant,
         SSHAgent_AuthSockOverride,
 
         FdoSecrets_Enabled,
