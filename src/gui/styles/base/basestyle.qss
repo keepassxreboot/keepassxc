@@ -69,3 +69,7 @@ QPlainTextEdit, QTextEdit {
     background-color: palette(base);
     padding-left: 4px;
 }
+
+QStatusBar {
+    background-color: palette(window);
+}
