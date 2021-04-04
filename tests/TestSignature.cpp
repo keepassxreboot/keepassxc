@@ -22,8 +22,12 @@
 #include <QBuffer>
 
 #include "crypto/Crypto.h"
-#include "crypto/ssh/OpenSSHKey.h"
+#include "crypto/Random.h"
 #include "keeshare/Signature.h"
+
+#include <botan/pem.h>
+#include <botan/pkcs8.h>
+#include <botan/rsa.h>
 
 QTEST_GUILESS_MAIN(TestSignature)
 static const char* rsa_2_private = "-----BEGIN RSA PRIVATE KEY-----\n"
@@ -107,6 +111,35 @@ static const char* rsa_1_public = "-----BEGIN RSA PUBLIC KEY-----\n"
 
 static QByteArray data("Some trivial test with a longer .... ................................. longer text");
 
+QSharedPointer<Botan::Private_Key> loadPrivateKey(const QString& pem)
+{
+    try {
+        std::string label;
+        auto der = Botan::PEM_Code::decode(pem.toStdString(), label);
+        auto key = new Botan::RSA_PrivateKey(
+            Botan::AlgorithmIdentifier("RSA", Botan::AlgorithmIdentifier::USE_NULL_PARAM), der);
+        return QSharedPointer<Botan::Private_Key>(key);
+    } catch (std::exception& e) {
+        qWarning("Failed to load key: %s", e.what());
+        return {};
+    }
+}
+
+QSharedPointer<Botan::Public_Key> loadPublicKey(const QString& pem)
+{
+    try {
+        std::string label;
+        auto der = Botan::PEM_Code::decode(pem.toStdString(), label);
+        auto key =
+            new Botan::RSA_PublicKey(Botan::AlgorithmIdentifier("RSA", Botan::AlgorithmIdentifier::USE_NULL_PARAM),
+                                     std::vector<uint8_t>(der.begin(), der.end()));
+        return QSharedPointer<Botan::Public_Key>(key);
+    } catch (std::exception& e) {
+        qWarning("Failed to load key: %s", e.what());
+        return {};
+    }
+}
+
 void TestSignature::initTestCase()
 {
     QVERIFY(Crypto::init());
@@ -114,85 +147,70 @@ void TestSignature::initTestCase()
 
 void TestSignature::testSigningOpenSSH_RSA_PrivateOnly()
 {
-    OpenSSHKey privateKey;
-    privateKey.parsePKCS1PEM(rsa_2_private);
-    privateKey.openKey(QString());
-    QCOMPARE(privateKey.fingerprint(), QString("SHA256:ZAQ/W1QdW59OaIh/0hs3ePl2og5TjXnGX5L0iN7WtNA"));
-    Signature signer;
-    const QString sign = signer.create(data, privateKey);
-    QVERIFY(!sign.isEmpty());
+    auto rsaKey = loadPrivateKey(rsa_2_private);
+    QVERIFY(rsaKey);
 
+    QString sign;
+    Signature::create(data, rsaKey, sign);
     QCOMPARE(sign, QString("rsa|%1").arg(QString::fromLatin1(rsa_2_sign)));
 
-    Signature verifier;
-    const bool verified = verifier.verify(data, sign, privateKey);
+    const bool verified = Signature::verify(data, rsaKey, sign);
     QCOMPARE(verified, true);
 }
 
 void TestSignature::testSigningOpenSSH_RSA()
 {
-    OpenSSHKey privateKey;
-    privateKey.parsePKCS1PEM(rsa_2_private);
-    privateKey.openKey(QString());
-    QCOMPARE(privateKey.fingerprint(), QString("SHA256:ZAQ/W1QdW59OaIh/0hs3ePl2og5TjXnGX5L0iN7WtNA"));
-    Signature signer;
-    const QString sign = signer.create(data, privateKey);
+    auto privateKey = loadPrivateKey(rsa_2_private);
+    QVERIFY(privateKey);
+
+    QString sign;
+    Signature::create(data, privateKey, sign);
     QVERIFY(!sign.isEmpty());
 
-    OpenSSHKey publicKey;
-    publicKey.parsePKCS1PEM(rsa_2_public);
-    publicKey.openKey(QString());
-    QCOMPARE(publicKey.fingerprint(), QString("SHA256:ZAQ/W1QdW59OaIh/0hs3ePl2og5TjXnGX5L0iN7WtNA"));
+    auto publicKey = loadPublicKey(rsa_2_public);
+    QVERIFY(publicKey);
 
-    Signature verifier;
-    const bool verified = verifier.verify(data, sign, publicKey);
+    const bool verified = Signature::verify(data, publicKey, sign);
     QCOMPARE(verified, true);
 }
 
 void TestSignature::testSigningGenerated_RSA_PrivateOnly()
 {
-    OpenSSHKey privateKey = OpenSSHKey::generate(false);
-    privateKey.openKey(QString());
+    QSharedPointer<Botan::Private_Key> key(new Botan::RSA_PrivateKey(*randomGen()->getRng(), 2048));
 
-    Signature signer;
-    const QString sign = signer.create(data, privateKey);
+    QString sign;
+    Signature::create(data, key, sign);
     QVERIFY(!sign.isEmpty());
 
-    Signature verifier;
-    const bool verified = verifier.verify(data, sign, privateKey);
+    const bool verified = Signature::verify(data, key, sign);
     QCOMPARE(verified, true);
 }
 
 void TestSignature::testSigningTest_RSA_PrivateOnly()
 {
-    OpenSSHKey privateKey;
-    privateKey.parsePKCS1PEM(rsa_1_private);
-    privateKey.openKey(QString());
-    QCOMPARE(privateKey.fingerprint(), QString("SHA256:DYdaZciYNxCejr+/8x+OKYxeTU1D5UsuIFUG4PWRFkk"));
-    Signature signer;
-    const QString sign = signer.create(data, privateKey);
+    auto rsaKey = loadPrivateKey(rsa_2_private);
+    QVERIFY(rsaKey);
+
+    QString sign;
+    Signature::create(data, rsaKey, sign);
     QVERIFY(!sign.isEmpty());
 
-    Signature verifier;
-    const bool verified = verifier.verify(data, sign, privateKey);
+    const bool verified = Signature::verify(data, rsaKey, sign);
     QCOMPARE(verified, true);
 }
 
 void TestSignature::testSigningTest_RSA()
 {
-    OpenSSHKey privateKey;
-    privateKey.parsePKCS1PEM(rsa_1_private);
-    privateKey.openKey(QString());
-    QCOMPARE(privateKey.fingerprint(), QString("SHA256:DYdaZciYNxCejr+/8x+OKYxeTU1D5UsuIFUG4PWRFkk"));
-    Signature signer;
-    const QString sign = signer.create(data, privateKey);
+    auto privateKey = loadPrivateKey(rsa_1_private);
+    QVERIFY(privateKey);
+
+    QString sign;
+    Signature::create(data, privateKey, sign);
     QVERIFY(!sign.isEmpty());
 
-    OpenSSHKey publicKey;
-    publicKey.parsePKCS1PEM(rsa_1_public);
-    publicKey.openKey(QString());
-    QCOMPARE(publicKey.fingerprint(), QString("SHA256:DYdaZciYNxCejr+/8x+OKYxeTU1D5UsuIFUG4PWRFkk"));
-    Signature verifier;
-    const bool verified = verifier.verify(data, sign, publicKey);
+    auto publicKey = loadPublicKey(rsa_1_public);
+    QVERIFY(publicKey);
+
+    const bool verified = Signature::verify(data, publicKey, sign);
     QCOMPARE(verified, true);
 }

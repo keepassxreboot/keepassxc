@@ -17,64 +17,46 @@
 
 #include "TestRandomGenerator.h"
 #include "TestGlobal.h"
+
 #include "core/Endian.h"
 #include "core/Global.h"
-#include "stub/TestRandom.h"
+#include "crypto/Random.h"
 
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestRandomGenerator)
 
-void TestRandomGenerator::initTestCase()
+void TestRandomGenerator::testArray()
 {
-    m_backend = new RandomBackendPreset();
+    auto ba = randomGen()->randomArray(10);
+    QCOMPARE(ba.size(), 10);
+    QVERIFY(ba != QByteArray(10, '\0'));
 
-    TestRandom::setup(m_backend);
-}
-
-void TestRandomGenerator::cleanupTestCase()
-{
-    TestRandom::teardown();
-
-    m_backend = nullptr;
+    auto ba2 = ba;
+    randomGen()->randomize(ba2);
+    QVERIFY(ba2 != ba);
 }
 
 void TestRandomGenerator::testUInt()
 {
-    QByteArray nextBytes;
+    QVERIFY(randomGen()->randomUInt(0) == 0);
+    QVERIFY(randomGen()->randomUInt(1) == 0);
 
-    nextBytes = Endian::sizedIntToBytes(42, QSysInfo::ByteOrder);
-    m_backend->setNextBytes(nextBytes);
-    QCOMPARE(randomGen()->randomUInt(100), 42U);
-
-    nextBytes = Endian::sizedIntToBytes(117, QSysInfo::ByteOrder);
-    m_backend->setNextBytes(nextBytes);
-    QCOMPARE(randomGen()->randomUInt(100), 17U);
-
-    nextBytes = Endian::sizedIntToBytes(1001, QSysInfo::ByteOrder);
-    m_backend->setNextBytes(nextBytes);
-    QCOMPARE(randomGen()->randomUInt(1), 0U);
-
-    nextBytes.clear();
-    nextBytes.append(Endian::sizedIntToBytes(QUINT32_MAX, QSysInfo::ByteOrder));
-    nextBytes.append(Endian::sizedIntToBytes(QUINT32_MAX - 70000U, QSysInfo::ByteOrder));
-    m_backend->setNextBytes(nextBytes);
-    QCOMPARE(randomGen()->randomUInt(100000U), (QUINT32_MAX - 70000U) % 100000U);
-
-    nextBytes.clear();
-    for (int i = 0; i < 10000; i++) {
-        nextBytes.append(Endian::sizedIntToBytes((QUINT32_MAX / 2U) + 1U + i, QSysInfo::ByteOrder));
+    // Run a bunch of trials creating random numbers to ensure we meet the standard
+    for (int i = 0; i < 100; ++i) {
+        QVERIFY(randomGen()->randomUInt(5) < 5);
+        QVERIFY(randomGen()->randomUInt(100) < 100);
+        QVERIFY(randomGen()->randomUInt(100000U) < 100000U);
+        QVERIFY(randomGen()->randomUInt((QUINT32_MAX / 2U) + 1U) < QUINT32_MAX / 2U + 1U);
     }
-    nextBytes.append(Endian::sizedIntToBytes(QUINT32_MAX / 2U, QSysInfo::ByteOrder));
-    m_backend->setNextBytes(nextBytes);
-    QCOMPARE(randomGen()->randomUInt((QUINT32_MAX / 2U) + 1U), QUINT32_MAX / 2U);
 }
 
 void TestRandomGenerator::testUIntRange()
 {
-    QByteArray nextBytes;
-
-    nextBytes = Endian::sizedIntToBytes(42, QSysInfo::ByteOrder);
-    m_backend->setNextBytes(nextBytes);
-    QCOMPARE(randomGen()->randomUIntRange(100, 200), 142U);
+    // Run a bunch of trials to ensure we stay within the range
+    for (int i = 0; i < 100; ++i) {
+        auto rand = randomGen()->randomUIntRange(100, 200);
+        QVERIFY(rand >= 100);
+        QVERIFY(rand < 200);
+    }
 }

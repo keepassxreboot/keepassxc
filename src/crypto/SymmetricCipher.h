@@ -23,29 +23,26 @@
 #include <QString>
 #include <QUuid>
 
-#include "crypto/SymmetricCipherBackend.h"
 #include "format/KeePass2.h"
+
+namespace Botan
+{
+    class Cipher_Mode;
+}
 
 class SymmetricCipher
 {
 public:
-    enum Algorithm
-    {
-        Aes128,
-        Aes256,
-        Twofish,
-        Salsa20,
-        ChaCha20,
-        InvalidAlgorithm = -1
-    };
-
     enum Mode
     {
-        Cbc,
-        Ctr,
-        Ecb,
-        Stream,
-        InvalidMode = -1
+        Aes128_CBC,
+        Aes256_CBC,
+        Aes128_CTR,
+        Aes256_CTR,
+        Twofish_CBC,
+        ChaCha20,
+        Salsa20,
+        InvalidMode = -1,
     };
 
     enum Direction
@@ -54,46 +51,36 @@ public:
         Encrypt
     };
 
-    SymmetricCipher(Algorithm algo, Mode mode, Direction direction);
-    ~SymmetricCipher();
-    Q_DISABLE_COPY(SymmetricCipher)
+    explicit SymmetricCipher() = default;
+    ~SymmetricCipher() = default;
 
-    bool init(const QByteArray& key, const QByteArray& iv);
     bool isInitalized() const;
+    Q_REQUIRED_RESULT bool init(Mode mode, Direction direction, const QByteArray& key, const QByteArray& iv);
+    Q_REQUIRED_RESULT bool process(char* data, int len);
+    Q_REQUIRED_RESULT bool process(QByteArray& data);
+    Q_REQUIRED_RESULT bool finish(QByteArray& data);
 
-    inline QByteArray process(const QByteArray& data, bool* ok)
-    {
-        return m_backend->process(data, ok);
-    }
+    static bool aesKdf(const QByteArray& key, int rounds, QByteArray& data);
 
-    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data)
-    {
-        return m_backend->processInPlace(data);
-    }
+    void reset();
+    Mode mode();
 
-    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data, quint64 rounds)
-    {
-        Q_ASSERT(rounds > 0);
-        return m_backend->processInPlace(data, rounds);
-    }
-
-    bool reset();
-    int keySize() const;
-    int blockSize() const;
     QString errorString() const;
-    Algorithm algorithm() const;
 
-    static Algorithm cipherToAlgorithm(const QUuid& cipher);
-    static QUuid algorithmToCipher(Algorithm algo);
-    static int algorithmIvSize(Algorithm algo);
-    static Mode algorithmMode(Algorithm algo);
+    static Mode cipherUuidToMode(const QUuid& uuid);
+    static Mode stringToMode(const QString& cipher);
+    static int defaultIvSize(Mode mode);
+    static int keySize(Mode mode);
+    static int blockSize(Mode mode);
 
 private:
-    static SymmetricCipherBackend* createBackend(Algorithm algo, Mode mode, Direction direction);
+    static QString modeToString(const Mode mode);
 
-    const QScopedPointer<SymmetricCipherBackend> m_backend;
-    bool m_initialized;
-    Algorithm m_algo;
+    QString m_error;
+    Mode m_mode;
+    QSharedPointer<Botan::Cipher_Mode> m_cipher;
+
+    Q_DISABLE_COPY(SymmetricCipher)
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHER_H

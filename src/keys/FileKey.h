@@ -20,6 +20,7 @@
 #define KEEPASSX_FILEKEY_H
 
 #include <QXmlStreamReader>
+#include <botan/secmem.h>
 
 #include "keys/Key.h"
 
@@ -41,7 +42,7 @@ public:
     };
 
     FileKey();
-    ~FileKey() override;
+    ~FileKey() override = default;
     bool load(QIODevice* device, QString* errorMsg = nullptr);
     bool load(const QString& fileName, QString* errorMsg = nullptr);
     QByteArray rawKey() const override;
@@ -58,7 +59,7 @@ private:
     bool loadHex(QIODevice* device);
     bool loadHashed(QIODevice* device);
 
-    char* m_key = nullptr;
+    Botan::secure_vector<char> m_key;
     Type m_type = None;
 };
 

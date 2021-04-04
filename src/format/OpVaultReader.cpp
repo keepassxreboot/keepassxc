@@ -28,7 +28,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QUuid>
-#include <gcrypt.h>
+
+#include <botan/pwdhash.h>
 
 OpVaultReader::OpVaultReader(QObject* parent)
     : QObject(parent)
@@ -366,30 +367,12 @@ OpVaultReader::decodeB64CompositeKeys(const QString& b64, const QByteArray& encK
  */
 OpVaultReader::DerivedKeyHMAC* OpVaultReader::decodeCompositeKeys(const QByteArray& keyKey)
 {
-    const int encKeySize = 256 / 8;
-    const int hmacKeySize = 256 / 8;
-    const int digestSize = encKeySize + hmacKeySize;
-
     auto result = new DerivedKeyHMAC;
     result->error = false;
 
-    result->encrypt = QByteArray(encKeySize, '\0');
-    result->hmac = QByteArray(hmacKeySize, '\0');
-
-    const char* buffer_vp = keyKey.data();
-    auto buf_len = size_t(keyKey.size());
-
-    const int algo = GCRY_MD_SHA512;
-    unsigned char digest[digestSize];
-    gcry_md_hash_buffer(algo, digest, buffer_vp, buf_len);
-
-    unsigned char* cp = digest;
-    for (int i = 0, len = encKeySize; i < len; ++i) {
-        result->encrypt[i] = *(cp++);
-    }
-    for (int i = 0, len = hmacKeySize; i < len; ++i) {
-        result->hmac[i] = *(cp++);
-    }
+    auto digest = CryptoHash::hash(keyKey, CryptoHash::Sha512);
+    result->encrypt = digest.left(32);
+    result->hmac = digest.right(32);
 
     return result;
 }
@@ -403,43 +386,27 @@ OpVaultReader::DerivedKeyHMAC* OpVaultReader::decodeCompositeKeys(const QByteArr
 OpVaultReader::DerivedKeyHMAC*
 OpVaultReader::deriveKeysFromPassPhrase(QByteArray& salt, const QString& password, unsigned long iterations)
 {
-    const int derivedEncKeySize = 256 / 8;
-    const int derivedMACSize = 256 / 8;
-    const int keysize = derivedEncKeySize + derivedMACSize;
-
     auto result = new DerivedKeyHMAC;
     result->error = false;
 
-    QByteArray keybuffer(keysize, '\0');
-    auto err = gcry_kdf_derive(password.toUtf8().constData(),
-                               password.size(),
-                               GCRY_KDF_PBKDF2,
-                               GCRY_MD_SHA512,
-                               salt.constData(),
-                               salt.size(),
-                               iterations,
-                               keysize,
-                               keybuffer.data());
-    if (err != 0) {
+    QByteArray out(64, '\0');
+    try {
+        auto pwhash = Botan::PasswordHashFamily::create_or_throw("PBKDF2(SHA-512)")->from_iterations(iterations);
+        pwhash->derive_key(reinterpret_cast<uint8_t*>(out.data()),
+                           out.size(),
+                           password.toUtf8().constData(),
+                           password.size(),
+                           reinterpret_cast<const uint8_t*>(salt.constData()),
+                           salt.size());
+    } catch (std::exception& e) {
         result->error = true;
-        result->errorStr = tr("Unable to derive master key: %1").arg(gcry_strerror(err));
+        result->errorStr = tr("Unable to derive master key: %1").arg(e.what());
         return result;
     }
-    if (keysize != keybuffer.size()) {
-        qWarning() << "Calling PBKDF2(keysize=" << keysize << "yielded" << keybuffer.size() << "bytes";
-    }
 
-    QByteArray::const_iterator it = keybuffer.cbegin();
+    result->encrypt = out.left(32);
+    result->hmac = out.right(32);
 
-    result->encrypt = QByteArray(derivedEncKeySize, '\0');
-    for (int i = 0, len = derivedEncKeySize; i < len && it != keybuffer.cend(); ++i, ++it) {
-        result->encrypt[i] = *it;
-    }
-
-    result->hmac = QByteArray(derivedMACSize, '\0');
-    for (int i = 0; i < derivedMACSize && it != keybuffer.cend(); ++i, ++it) {
-        result->hmac[i] = *it;
-    }
     return result;
 }
 

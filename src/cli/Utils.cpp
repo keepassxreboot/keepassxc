@@ -18,7 +18,7 @@
 #include "Utils.h"
 
 #ifdef WITH_XC_YUBIKEY
-#include "keys/YkChallengeResponseKeyCLI.h"
+#include "keys/YkChallengeResponseKey.h"
 #endif
 
 #ifdef Q_OS_WIN
@@ -165,9 +165,14 @@ namespace Utils
                 }
             }
 
-            auto key = QSharedPointer<YkChallengeResponseKeyCLI>(new YkChallengeResponseKeyCLI(
-                {serial, slot}, QObject::tr("Please touch the button on your YubiKey to continue…"), err));
+            auto conn = QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
+                err << QObject::tr("Please touch the button on your YubiKey to continue…") << "\n\n" << flush;
+            });
+
+            auto key = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey({serial, slot}));
             compositeKey->addChallengeResponseKey(key);
+
+            QObject::disconnect(conn);
         }
 #else
         Q_UNUSED(yubiKeySlot);

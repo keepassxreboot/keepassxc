@@ -57,28 +57,25 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
     }
 
     // generate random AES 256bit key and IV
-    Random* random = randomGen();
-    QByteArray randomKey = random->randomArray(32);
-    QByteArray randomIV = random->randomArray(16);
+    QByteArray randomKey = randomGen()->randomArray(32);
+    QByteArray randomIV = randomGen()->randomArray(16);
 
-    bool ok;
-    SymmetricCipher aes256Encrypt(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt);
-
-    if (!aes256Encrypt.init(randomKey, randomIV)) {
+    SymmetricCipher aes256Encrypt;
+    if (!aes256Encrypt.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Encrypt, randomKey, randomIV)) {
         debug("TouchID::storeKey - Error initializing encryption: %s",
               aes256Encrypt.errorString().toUtf8().constData());
         return false;
     }
 
     // encrypt and keep result in memory
-    QByteArray encryptedMasterKey = aes256Encrypt.process(passwordKey, &ok);
-    if (!ok) {
+    QByteArray encryptedMasterKey = passwordKey;
+    if (!aes256Encrypt.process(encryptedMasterKey)) {
         debug("TouchID::storeKey - Error encrypting: %s", aes256Encrypt.errorString().toUtf8().constData());
         return false;
     }
 
     // memorize which database the stored key is for
-    this->m_encryptedMasterKeys.insert(databasePath, encryptedMasterKey);
+    m_encryptedMasterKeys.insert(databasePath, encryptedMasterKey);
 
     NSString* accountName = (SECURITY_ACCOUNT_PREFIX + hash(databasePath)).toNSString(); // autoreleased
 
@@ -145,18 +142,19 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
  * Checks if an encrypted PasswordKey is available for the given database, tries to
  * decrypt it using the KeyChain and if successful, returns it.
  */
-QSharedPointer <QByteArray> TouchID::getKey(const QString& databasePath) const
+bool TouchID::getKey(const QString& databasePath, QByteArray& passwordKey) const
 {
+    passwordKey.clear();
     if (databasePath.isEmpty()) {
         // illegal arguments
         debug("TouchID::storeKey - Illegal argument: databasePath = %s", databasePath.toUtf8().constData());
-        return NULL;
+        return false;
     }
 
     // checks if encrypted PasswordKey is available and is stored for the given database
     if (!this->m_encryptedMasterKeys.contains(databasePath)) {
         debug("TouchID::getKey - No stored key found");
-        return NULL;
+        return false;
     }
 
     // query the KeyChain for the AES key
@@ -179,12 +177,12 @@ QSharedPointer <QByteArray> TouchID::getKey(const QString& databasePath) const
     CFRelease(query);
 
     if (status == errSecUserCanceled) {
-        // user canceled the authentication, need special return value
+        // user canceled the authentication, return true with empty key
         debug("TouchID::getKey - User canceled authentication");
-        return QSharedPointer<QByteArray>::create();
+        return true;
     } else if (status != errSecSuccess || dataTypeRef == NULL) {
         debug("TouchID::getKey - Error retrieving result: %d", status);
-        return NULL;
+        return false;
     }
 
     CFDataRef valueData = static_cast<CFDataRef>(dataTypeRef);
@@ -196,22 +194,20 @@ QSharedPointer <QByteArray> TouchID::getKey(const QString& databasePath) const
     QByteArray key = dataBytes.left(32);
     QByteArray iv = dataBytes.right(16);
 
-    bool ok;
-    SymmetricCipher aes256Decrypt(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
-
-    if (!aes256Decrypt.init(key, iv)) {
+    SymmetricCipher aes256Decrypt;
+    if (!aes256Decrypt.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Decrypt, key, iv)) {
         debug("TouchID::getKey - Error initializing decryption: %s", aes256Decrypt.errorString().toUtf8().constData());
-        return NULL;
+        return false;
     }
 
     // decrypt PasswordKey from memory using AES
-    QByteArray result = aes256Decrypt.process(this->m_encryptedMasterKeys[databasePath], &ok);
-    if (!ok) {
+    passwordKey = m_encryptedMasterKeys[databasePath];
+    if (!aes256Decrypt.process(passwordKey)) {
         debug("TouchID::getKey - Error decryption: %s", aes256Decrypt.errorString().toUtf8().constData());
-        return NULL;
+        return false;
     }
 
-    return QSharedPointer<QByteArray>::create(result);
+    return true;
 }
 
 /**

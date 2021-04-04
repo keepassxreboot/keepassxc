@@ -27,13 +27,13 @@ MockChallengeResponseKey::~MockChallengeResponseKey()
 {
 }
 
-QByteArray MockChallengeResponseKey::rawKey() const
-{
-    return m_challenge + m_secret;
-}
-
 bool MockChallengeResponseKey::challenge(const QByteArray& challenge)
 {
     m_challenge = challenge;
+
+    auto response = m_challenge + m_secret;
+    m_key.resize(response.size());
+    std::copy(response.begin(), response.end(), m_key.data());
+
     return true;
 }

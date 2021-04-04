@@ -18,17 +18,14 @@
 #ifndef KEEPASSXC_SIGNATURE_H
 #define KEEPASSXC_SIGNATURE_H
 
+#include <QSharedPointer>
 #include <QString>
-#include <gcrypt.h>
+#include <botan/pubkey.h>
 
-class QByteArray;
-class OpenSSHKey;
-
-class Signature
+namespace Signature
 {
-public:
-    static QString create(const QByteArray& data, const OpenSSHKey& key);
-    static bool verify(const QByteArray& data, const QString& signature, const OpenSSHKey& key);
-};
+    bool create(const QByteArray& data, QSharedPointer<Botan::Private_Key> key, QString& signature);
+    bool verify(const QByteArray& data, QSharedPointer<Botan::Public_Key> key, const QString& signature);
+}; // namespace Signature
 
 #endif // KEEPASSXC_SIGNATURE_H

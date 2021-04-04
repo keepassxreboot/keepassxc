@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,36 +16,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CRYPTO_H
-#define KEEPASSX_CRYPTO_H
+#ifndef KEEPASSXC_CRYPTO_H
+#define KEEPASSXC_CRYPTO_H
 
 #include <QString>
 
-class Crypto
+namespace Crypto
 {
-public:
-    static bool init();
-    static bool initialized();
-    static bool backendSelfTest();
-    static QString errorString();
-    static QString debugInfo();
+    bool init();
+    QString errorString();
+    QString debugInfo();
+}; // namespace Crypto
 
-private:
-    Crypto();
-    static bool checkAlgorithms();
-    static bool selfTest();
-    static void raiseError(const QString& str);
-    static bool testSha256();
-    static bool testSha512();
-    static bool testAes256Cbc();
-    static bool testAes256Ecb();
-    static bool testTwofish();
-    static bool testSalsa20();
-    static bool testChaCha20();
-
-    static bool m_initialized;
-    static QString m_errorStr;
-    static QString m_backendVersion;
-};
-
-#endif // KEEPASSX_CRYPTO_H
+#endif // KEEPASSXC_CRYPTO_H

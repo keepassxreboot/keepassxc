@@ -27,13 +27,12 @@ class TestSymmetricCipher : public QObject
 
 private slots:
     void initTestCase();
-    void testAlgorithmToCipher();
+    void testCipherUuidToMode();
     void testEncryptionDecryption_data();
     void testEncryptionDecryption();
     void testAesCbcPadding_data();
     void testAesCbcPadding();
-    void testInplaceEcb_data();
-    void testInplaceEcb();
+    void testAesKdf();
     void testTwofish256CbcEncryption();
     void testTwofish256CbcDecryption();
     void testSalsa20();

@@ -22,8 +22,10 @@
 #include "keeshare/Signature.h"
 #include "keys/PasswordKey.h"
 
+#include <QBuffer>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QTextStream>
 
 #if defined(WITH_XC_KEESHARE_SECURE)
 #include <quazip.h>
@@ -52,55 +54,43 @@ namespace
         KeeShareSettings::Certificate certificate;
         if (!sign.signature.isEmpty()) {
             certificate = sign.certificate;
-            auto key = sign.certificate.sshKey();
-            key.openKey(QString());
-            const auto signer = Signature();
-            if (!signer.verify(data, sign.signature, key)) {
+            if (!Signature::verify(data, sign.certificate.key, sign.signature)) {
                 qCritical("Invalid signature for shared container %s.", qPrintable(reference.path));
                 return {Invalid, KeeShareSettings::Certificate()};
             }
 
-            if (ownCertificate.key == sign.certificate.key) {
+            // Automatically trust your own certificate
+            if (ownCertificate == sign.certificate) {
                 return {Own, ownCertificate};
             }
         }
-        enum Scope
-        {
-            Invalid,
-            Global,
-            Local
-        };
-        Scope scope = Invalid;
-        KeeShareSettings::Trust trusted = KeeShareSettings::Trust::Ask;
+
         for (const auto& scopedCertificate : knownCertificates) {
-            if (scopedCertificate.certificate.key == certificate.key && scopedCertificate.path == reference.path) {
-                // Global scope is overwritten by local scope
-                scope = Global;
-                trusted = scopedCertificate.trust;
-            }
-            if (scopedCertificate.certificate.key == certificate.key && scopedCertificate.path == reference.path) {
-                scope = Local;
-                trusted = scopedCertificate.trust;
+            if (scopedCertificate.certificate == certificate && scopedCertificate.path == reference.path) {
+                if (scopedCertificate.trust == KeeShareSettings::Trust::Trusted) {
+                    return {TrustedForever, certificate};
+                } else if (scopedCertificate.trust == KeeShareSettings::Trust::Untrusted) {
+                    return {UntrustedForever, certificate};
+                }
+                // Default to ask
                 break;
             }
         }
-        if (scope != Invalid && trusted != KeeShareSettings::Trust::Ask) {
-            // we introduce now scopes if there is a global
-            return {trusted == KeeShareSettings::Trust::Trusted ? TrustedForever : UntrustedForever, certificate};
-        }
 
+        // Ask the user if they want to trust the certificate
         QMessageBox warning;
+        warning.setWindowTitle(ShareImport::tr("KeeShare Import"));
         if (sign.signature.isEmpty()) {
             warning.setIcon(QMessageBox::Warning);
-            warning.setWindowTitle(ShareImport::tr("Import from container without signature"));
-            warning.setText(ShareImport::tr("We cannot verify the source of the shared container because it is not "
+            warning.setText(ShareImport::tr("The source of the shared container cannot be verified because it is not "
                                             "signed. Do you really want to import from %1?")
                                 .arg(reference.path));
         } else {
             warning.setIcon(QMessageBox::Question);
-            warning.setWindowTitle(ShareImport::tr("Import from container with certificate"));
-            warning.setText(ShareImport::tr("Do you want to trust %1 with the fingerprint of %2 from %3?")
-                                .arg(certificate.signer, certificate.fingerprint(), reference.path));
+            warning.setText(ShareImport::tr("Do you want to trust %1 with certificate fingerprint:\n%2\n%3")
+                                .arg(reference.path)
+                                .arg(certificate.signer)
+                                .arg(certificate.fingerprint()));
         }
         auto untrustedOnce = warning.addButton(ShareImport::tr("Not this time"), QMessageBox::ButtonRole::NoRole);
         auto untrustedForever = warning.addButton(ShareImport::tr("Never"), QMessageBox::ButtonRole::NoRole);
@@ -188,7 +178,7 @@ namespace
             const auto trusted =
                 trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
             for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
-                if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
+                if (scopedCertificate.certificate == trust.second && scopedCertificate.path == reference.path) {
                     scopedCertificate.certificate.signer = trust.second.signer;
                     scopedCertificate.path = reference.path;
                     scopedCertificate.trust = trusted;
@@ -279,7 +269,7 @@ namespace
             const auto trusted =
                 trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
             for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
-                if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
+                if (scopedCertificate.certificate == trust.second && scopedCertificate.path == reference.path) {
                     scopedCertificate.certificate.signer = trust.second.signer;
                     scopedCertificate.path = reference.path;
                     scopedCertificate.trust = trusted;

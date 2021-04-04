@@ -83,13 +83,13 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
         return false;
     }
 
-    SymmetricCipher::Algorithm cipher = SymmetricCipher::cipherToAlgorithm(db->cipher());
-    if (cipher == SymmetricCipher::InvalidAlgorithm) {
+    auto mode = SymmetricCipher::cipherUuidToMode(db->cipher());
+    if (mode == SymmetricCipher::InvalidMode) {
         raiseError(tr("Unknown cipher"));
         return false;
     }
-    SymmetricCipherStream cipherStream(&hmacStream, cipher, SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
-    if (!cipherStream.init(finalKey, m_encryptionIV)) {
+    SymmetricCipherStream cipherStream(&hmacStream);
+    if (!cipherStream.init(mode, SymmetricCipher::Decrypt, finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
         return false;
     }
@@ -121,8 +121,20 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
         return false;
     }
 
-    KeePass2RandomStream randomStream(m_irsAlgo);
-    if (!randomStream.init(m_protectedStreamKey)) {
+    // TODO: Convert m_irsAlgo to Mode
+    switch (m_irsAlgo) {
+    case KeePass2::ProtectedStreamAlgo::Salsa20:
+        mode = SymmetricCipher::Salsa20;
+        break;
+    case KeePass2::ProtectedStreamAlgo::ChaCha20:
+        mode = SymmetricCipher::ChaCha20;
+        break;
+    default:
+        mode = SymmetricCipher::InvalidMode;
+    }
+
+    KeePass2RandomStream randomStream;
+    if (!randomStream.init(mode, m_protectedStreamKey)) {
         raiseError(randomStream.errorString());
         return false;
     }

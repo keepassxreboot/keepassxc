@@ -46,6 +46,10 @@ Files: cmake/FindYubiKey.cmake
 Copyright: 2014 Kyle Manna <kyle@kylemanna.com>
 License: GPL-2 or GPL-3
 
+Files: cmake/FindBotan2.cmake
+Copyright: 2018 Ribose Inc.
+License: BSD-2-clause
+
 Files: cmake/GenerateProductVersion.cmake
 Copyright: 2015 halex2005 <akharlov@gmail.com>
 License: MIT

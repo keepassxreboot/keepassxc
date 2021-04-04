@@ -25,6 +25,8 @@
 #include "keeshare/ShareExport.h"
 #include "keeshare/ShareImport.h"
 
+#include <QDir>
+
 namespace
 {
     QString resolvePath(const QString& path, QSharedPointer<Database> database)

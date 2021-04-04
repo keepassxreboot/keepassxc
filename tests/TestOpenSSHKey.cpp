@@ -18,8 +18,8 @@
 #include "TestOpenSSHKey.h"
 #include "TestGlobal.h"
 #include "crypto/Crypto.h"
-#include "crypto/ssh/BinaryStream.h"
-#include "crypto/ssh/OpenSSHKey.h"
+#include "sshagent/BinaryStream.h"
+#include "sshagent/OpenSSHKey.h"
 
 QTEST_GUILESS_MAIN(TestOpenSSHKey)
 
@@ -433,13 +433,4 @@ void TestOpenSSHKey::testDecryptUTF8()
     QCOMPARE(key.fingerprint(), QString("SHA256:EfUXwvH4rOoys+AlbznCqjMwzIVW8KuhoWu9uT03FYA"));
     QCOMPARE(key.type(), QString("ssh-ed25519"));
     QCOMPARE(key.comment(), QString("opensshkey-test-utf8@keepassxc"));
-}
-
-void TestOpenSSHKey::testGenerateRSA()
-{
-    OpenSSHKey key = OpenSSHKey::generate(false);
-    QVERIFY(!key.encrypted());
-    QCOMPARE(key.cipherName(), QString("none"));
-    QCOMPARE(key.type(), QString("ssh-rsa"));
-    QCOMPARE(key.comment(), QString(""));
 }

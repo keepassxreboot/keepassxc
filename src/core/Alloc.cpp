@@ -16,9 +16,9 @@
  */
 
 #include <QtGlobal>
+#include <botan/mem_ops.h>
 #include <cstdint>
 #include <cstdlib>
-#include <sodium.h>
 #if defined(Q_OS_MACOS)
 #include <malloc/malloc.h>
 #elif defined(Q_OS_FREEBSD)
@@ -43,7 +43,7 @@ void operator delete(void* ptr, std::size_t size) noexcept
         return;
     }
 
-    sodium_memzero(ptr, size);
+    Botan::secure_scrub_memory(ptr, size);
     std::free(ptr);
 }
 

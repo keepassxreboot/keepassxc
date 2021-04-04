@@ -332,15 +332,14 @@ KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData,
         if (finalKey.isEmpty()) {
             return nullptr;
         }
-        if (m_encryptionFlags & KeePass1::Rijndael) {
-            cipherStream.reset(new SymmetricCipherStream(
-                m_device, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
-        } else {
-            cipherStream.reset(new SymmetricCipherStream(
-                m_device, SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
-        }
 
-        if (!cipherStream->init(finalKey, m_encryptionIV)) {
+        cipherStream.reset(new SymmetricCipherStream(m_device));
+
+        auto mode = SymmetricCipher::Aes256_CBC;
+        if (m_encryptionFlags & KeePass1::Twofish) {
+            mode = SymmetricCipher::Twofish_CBC;
+        }
+        if (!cipherStream->init(mode, SymmetricCipher::Decrypt, finalKey, m_encryptionIV)) {
             raiseError(cipherStream->errorString());
             return nullptr;
         }
@@ -362,9 +361,13 @@ KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData,
 
             return nullptr;
         }
-        cipherStream->open(QIODevice::ReadOnly);
 
         if (success) {
+            if (!cipherStream->init(mode, SymmetricCipher::Decrypt, finalKey, m_encryptionIV)) {
+                raiseError(cipherStream->errorString());
+                return nullptr;
+            }
+            cipherStream->open(QIODevice::ReadOnly);
             break;
         } else {
             cipherStream.reset();

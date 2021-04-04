@@ -22,24 +22,17 @@
 #include "keys/ChallengeResponseKey.h"
 #include "keys/drivers/YubiKey.h"
 
-#include <QObject>
-
-class YkChallengeResponseKey : public QObject, public ChallengeResponseKey
+class YkChallengeResponseKey : public ChallengeResponseKey
 {
-    Q_OBJECT
-
 public:
     static QUuid UUID;
 
     explicit YkChallengeResponseKey(YubiKeySlot keySlot = {});
-    ~YkChallengeResponseKey() override;
+    ~YkChallengeResponseKey() override = default;
 
-    QByteArray rawKey() const override;
     bool challenge(const QByteArray& challenge) override;
 
 private:
-    char* m_key = nullptr;
-    std::size_t m_keySize = 0;
     YubiKeySlot m_keySlot;
 };
 

@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_KEESHARE_H
 #define KEEPASSXC_KEESHARE_H
 
+#include <QFileInfo>
 #include <QMap>
 #include <QUuid>
 

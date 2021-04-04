@@ -22,16 +22,13 @@
 #include <QScopedPointer>
 #include <QSharedPointer>
 
-class RandomBackend
-{
-public:
-    virtual void randomize(void* data, int len) = 0;
-    virtual ~RandomBackend();
-};
+#include <botan/rng.h>
 
 class Random
 {
 public:
+    static QSharedPointer<Random> instance();
+
     void randomize(QByteArray& ba);
     QByteArray randomArray(int len);
 
@@ -45,23 +42,17 @@ public:
      */
     quint32 randomUIntRange(quint32 min, quint32 max);
 
-    static Random* instance();
-
-protected:
-    static void resetInstance();
-    static void setInstance(RandomBackend* backend);
+    QSharedPointer<Botan::RandomNumberGenerator> getRng();
 
 private:
+    explicit Random();
+    Q_DISABLE_COPY(Random);
+
     static QSharedPointer<Random> m_instance;
-
-    explicit Random(RandomBackend* backend);
-
-    QScopedPointer<RandomBackend> m_backend;
-
-    Q_DISABLE_COPY(Random)
+    QSharedPointer<Botan::RandomNumberGenerator> m_rng;
 };
 
-inline Random* randomGen()
+static inline QSharedPointer<Random> randomGen()
 {
     return Random::instance();
 }

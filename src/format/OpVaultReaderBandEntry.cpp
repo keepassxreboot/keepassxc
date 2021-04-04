@@ -80,12 +80,12 @@ bool OpVaultReader::decryptBandEntry(const QJsonObject& bandEntry,
 
     QByteArray iv = kBA.mid(0, 16);
     QByteArray keyAndMacKey = kBA.mid(iv.size(), 64);
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
-    if (!cipher.init(m_masterKey, iv)) {
+    SymmetricCipher cipher;
+    if (!cipher.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Decrypt, m_masterKey, iv)) {
         qCritical() << "Unable to init cipher using masterKey in UUID " << uuid;
         return false;
     }
-    if (!cipher.processInPlace(keyAndMacKey)) {
+    if (!cipher.process(keyAndMacKey)) {
         qCritical() << "Unable to decipher \"k\"(key+hmac) in UUID " << uuid;
         return false;
     }

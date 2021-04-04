@@ -32,8 +32,7 @@ public:
     QSharedPointer<Kdf> clone() const override;
     QString toString() const override;
 
-protected:
-    int benchmarkImpl(int msec) const override;
+    int benchmark(int msec) const override;
 
 private:
     Q_REQUIRED_RESULT static bool

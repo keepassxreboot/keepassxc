@@ -19,9 +19,9 @@
 #ifndef KEEAGENTSETTINGS_H
 #define KEEAGENTSETTINGS_H
 
+#include "OpenSSHKey.h"
 #include "core/Entry.h"
 #include "core/EntryAttachments.h"
-#include "crypto/ssh/OpenSSHKey.h"
 #include <QXmlStreamReader>
 #include <QtCore>
 

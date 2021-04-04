@@ -1837,7 +1837,7 @@ void TestCli::testYubiKeyOption()
 
     bool wouldBlock = false;
     QByteArray challenge("CLITest");
-    QByteArray response;
+    Botan::secure_vector<char> response;
     QByteArray expected("\xA2\x3B\x94\x00\xBE\x47\x9A\x30\xA9\xEB\x50\x9B\x85\x56\x5B\x6B\x30\x25\xB4\x8E", 20);
 
     // Find a key that as configured for this test
@@ -1845,7 +1845,7 @@ void TestCli::testYubiKeyOption()
     for (auto key : keys) {
         if (YubiKey::instance()->testChallenge(key, &wouldBlock) && !wouldBlock) {
             YubiKey::instance()->challenge(key, challenge, response);
-            if (response == expected) {
+            if (std::memcmp(response.data(), expected.data(), expected.size())) {
                 pKey = key;
                 break;
             }

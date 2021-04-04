@@ -65,10 +65,9 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
     hash.addData(db->transformedDatabaseKey());
     QByteArray finalKey = hash.result();
 
-    SymmetricCipher::Algorithm cipher = SymmetricCipher::cipherToAlgorithm(db->cipher());
-    SymmetricCipherStream cipherStream(
-        device, cipher, SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
-    if (!cipherStream.init(finalKey, m_encryptionIV)) {
+    auto mode = SymmetricCipher::cipherUuidToMode(db->cipher());
+    SymmetricCipherStream cipherStream(device);
+    if (!cipherStream.init(mode, SymmetricCipher::Decrypt, finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
         return false;
     }
@@ -106,8 +105,8 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
         xmlDevice = ioCompressor.data();
     }
 
-    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
-    if (!randomStream.init(m_protectedStreamKey)) {
+    KeePass2RandomStream randomStream;
+    if (!randomStream.init(SymmetricCipher::Salsa20, m_protectedStreamKey)) {
         raiseError(randomStream.errorString());
         return false;
     }

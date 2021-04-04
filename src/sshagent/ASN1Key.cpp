@@ -17,9 +17,7 @@
  */
 
 #include "ASN1Key.h"
-#include "crypto/ssh/BinaryStream.h"
-
-#include <gcrypt.h>
+#include "BinaryStream.h"
 
 namespace
 {
@@ -53,16 +51,6 @@ namespace
         }
 
         return true;
-    }
-
-    bool parsePublicHeader(BinaryStream& stream)
-    {
-        quint8 tag;
-        quint32 len;
-
-        nextTag(stream, tag, len);
-
-        return (tag == TAG_SEQUENCE);
     }
 
     bool parsePrivateHeader(BinaryStream& stream, quint8 wantedType)
@@ -103,27 +91,6 @@ namespace
         stream.read(target);
         return true;
     }
-
-    QByteArray calculateIqmp(QByteArray& bap, QByteArray& baq)
-    {
-        gcry_mpi_t u, p, q;
-        QByteArray iqmp_hex;
-
-        u = gcry_mpi_snew(bap.length() * 8);
-        gcry_mpi_scan(&p, GCRYMPI_FMT_HEX, bap.toHex().data(), 0, nullptr);
-        gcry_mpi_scan(&q, GCRYMPI_FMT_HEX, baq.toHex().data(), 0, nullptr);
-
-        mpi_invm(u, q, p);
-
-        iqmp_hex.resize(bap.length() * 2);
-        gcry_mpi_print(GCRYMPI_FMT_HEX, reinterpret_cast<unsigned char*>(iqmp_hex.data()), iqmp_hex.size(), nullptr, u);
-
-        gcry_mpi_release(u);
-        gcry_mpi_release(p);
-        gcry_mpi_release(q);
-
-        return QByteArray::fromHex(QString(iqmp_hex).toLatin1());
-    }
 } // namespace
 
 bool ASN1Key::parseDSA(QByteArray& ba, OpenSSHKey& key)
@@ -161,34 +128,7 @@ bool ASN1Key::parseDSA(QByteArray& ba, OpenSSHKey& key)
     return true;
 }
 
-bool ASN1Key::parsePublicRSA(QByteArray& ba, OpenSSHKey& key)
-{
-    BinaryStream stream(&ba);
-
-    if (!parsePublicHeader(stream)) {
-        return false;
-    }
-
-    QByteArray n, e;
-    readInt(stream, n);
-    readInt(stream, e);
-
-    QList<QByteArray> publicData;
-    publicData.append(e);
-    publicData.append(n);
-
-    QList<QByteArray> privateData;
-    privateData.append(n);
-    privateData.append(e);
-
-    key.setType("ssh-rsa");
-    key.setPublicData(publicData);
-    key.setPrivateData(privateData);
-    key.setComment("");
-    return true;
-}
-
-bool ASN1Key::parsePrivateRSA(QByteArray& ba, OpenSSHKey& key)
+bool ASN1Key::parseRSA(QByteArray& ba, OpenSSHKey& key)
 {
     BinaryStream stream(&ba);
 
@@ -206,6 +146,7 @@ bool ASN1Key::parsePrivateRSA(QByteArray& ba, OpenSSHKey& key)
     readInt(stream, dq);
     readInt(stream, qinv);
 
+    // Note: To properly calculate the key fingerprint, e and n are reversed per RFC 4253
     QList<QByteArray> publicData;
     publicData.append(e);
     publicData.append(n);
@@ -214,7 +155,7 @@ bool ASN1Key::parsePrivateRSA(QByteArray& ba, OpenSSHKey& key)
     privateData.append(n);
     privateData.append(e);
     privateData.append(d);
-    privateData.append(calculateIqmp(p, q));
+    privateData.append(qinv);
     privateData.append(p);
     privateData.append(q);
 

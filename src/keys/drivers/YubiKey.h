@@ -23,6 +23,7 @@
 #include <QMutex>
 #include <QObject>
 #include <QTimer>
+#include <botan/secmem.h>
 
 typedef QPair<unsigned int, int> YubiKeySlot;
 Q_DECLARE_METATYPE(YubiKeySlot);
@@ -50,7 +51,7 @@ public:
     QList<YubiKeySlot> foundKeys();
     QString getDisplayName(YubiKeySlot slot);
 
-    ChallengeResult challenge(YubiKeySlot slot, const QByteArray& challenge, QByteArray& response);
+    ChallengeResult challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response);
     bool testChallenge(YubiKeySlot slot, bool* wouldBlock = nullptr);
 
     QString errorMessage();
@@ -86,8 +87,11 @@ private:
 
     static YubiKey* m_instance;
 
-    ChallengeResult
-    performChallenge(void* key, int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response);
+    ChallengeResult performChallenge(void* key,
+                                     int slot,
+                                     bool mayBlock,
+                                     const QByteArray& challenge,
+                                     Botan::secure_vector<char>& response);
     bool performTestChallenge(void* key, int slot, bool* wouldBlock);
 
     QHash<unsigned int, QList<QPair<int, QString>>> m_foundKeys;
