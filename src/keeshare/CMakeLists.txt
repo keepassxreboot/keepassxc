@@ -19,7 +19,7 @@ if(WITH_XC_KEESHARE)
     )
 
     add_library(keeshare STATIC ${keeshare_SOURCES})
-    target_link_libraries(keeshare PUBLIC Qt5::Core Qt5::Widgets ${GCRYPT_LIBRARIES} ${crypto_ssh_LIB})
+    target_link_libraries(keeshare PUBLIC Qt5::Core Qt5::Widgets ${BOTAN2_LIBRARIES})
 
     # Try to find libquazip5, if found, enable secure sharing
     find_package(QuaZip)

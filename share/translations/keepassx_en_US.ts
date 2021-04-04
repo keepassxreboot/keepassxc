@@ -7477,7 +7477,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation>Do you want to trust %1 with the fingerprint of %2 from %3? {1 ?} {2 ?}</translation>
+        <translation>Do you want to trust %1 with the fingerprint of %2 from %3?</translation>
     </message>
     <message>
         <source>Not this time</source>

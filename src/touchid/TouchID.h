@@ -33,7 +33,7 @@ public:
 
     bool storeKey(const QString& databasePath, const QByteArray& passwordKey);
 
-    QSharedPointer<QByteArray> getKey(const QString& databasePath) const;
+    bool getKey(const QString& databasePath, QByteArray& passwordKey) const;
 
     bool isAvailable();
 

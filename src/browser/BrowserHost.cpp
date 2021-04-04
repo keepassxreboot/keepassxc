@@ -25,7 +25,6 @@
 #include <QMutexLocker>
 #include <QtNetwork>
 
-#include "sodium.h"
 #include <iostream>
 
 #ifdef Q_OS_WIN
@@ -53,11 +52,6 @@ BrowserHost::~BrowserHost()
 
 void BrowserHost::start()
 {
-    if (sodium_init() == -1) {
-        qWarning() << "Failed to start browser service: libsodium failed to initialize!";
-        return;
-    }
-
     if (!m_localServer->isListening()) {
         m_localServer->listen(BrowserShared::localServerPath());
     }

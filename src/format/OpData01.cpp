@@ -69,8 +69,8 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
         return false;
     }
 
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
-    if (!cipher.init(key, iv)) {
+    SymmetricCipher cipher;
+    if (!cipher.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Decrypt, key, iv)) {
         m_errorStr = tr("Unable to init cipher for opdata01: %1").arg(cipher.errorString());
         return false;
     }
@@ -82,7 +82,7 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
      * to the plaintext. Otherwise, between 1 and 15 (inclusive) bytes of random data are prepended to the plaintext
      * to achieve an even multiple of blocks.
      */
-    const int blockSize = cipher.blockSize();
+    const int blockSize = cipher.blockSize(cipher.mode());
     int randomBytes = blockSize - (len % blockSize);
     if (randomBytes == 0) {
         // add random block
@@ -111,7 +111,7 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
         return false;
     }
 
-    if (!cipher.processInPlace(qbaCT)) {
+    if (!cipher.process(qbaCT)) {
         m_errorStr = tr("Unable to process clearText in place");
         return false;
     }

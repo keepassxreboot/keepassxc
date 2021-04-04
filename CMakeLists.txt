@@ -86,12 +86,6 @@ if(WITH_XC_ALL)
     endif()
 endif()
 
-if(WITH_XC_SSHAGENT OR WITH_XC_KEESHARE)
-  set(WITH_XC_CRYPTO_SSH ON)
-else()
-  set(WITH_XC_CRYPTO_SSH OFF)
-endif()
-
 # Prefer WITH_XC_NETWORKING setting over WITH_XC_UPDATECHECK
 if(NOT WITH_XC_NETWORKING AND WITH_XC_UPDATECHECK)
     message(STATUS "Disabling WITH_XC_UPDATECHECK because WITH_XC_NETWORKING is disabled")
@@ -250,6 +244,7 @@ if(WITH_APP_BUNDLE)
 endif()
 
 add_gcc_compiler_flags("-fno-common")
+check_add_gcc_compiler_flag("-fopenmp")
 add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
@@ -269,7 +264,6 @@ else()
 endif()
 endif()
 
-add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
 add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
 add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
 
@@ -324,7 +318,7 @@ if(APPLE AND CMAKE_COMPILER_IS_CLANGXX)
 endif()
 
 if(WITH_DEV_BUILD)
-    add_definitions(-DQT_DEPRECATED_WARNINGS -DGCRYPT_NO_DEPRECATED)
+    add_definitions(-DQT_DEPRECATED_WARNINGS)
 else()
     add_definitions(-DQT_NO_DEPRECATED_WARNINGS)
     add_gcc_compiler_cxxflags("-Wno-deprecated-declarations")
@@ -447,20 +441,22 @@ endif()
 # Make sure we don't enable asserts there.
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 
-find_package(LibGPGError REQUIRED)
-find_package(Gcrypt 1.7.0 REQUIRED)
-find_package(Argon2 REQUIRED)
+# Find Botan2
+find_package(Botan2 REQUIRED)
+if(BOTAN2_VERSION VERSION_LESS "2.11.0")
+    message(FATAL_ERROR "Botan2 2.11.0 or higher is required")
+endif()
+include_directories(SYSTEM ${BOTAN2_INCLUDE_DIR})
+
+# Find zlib
 find_package(ZLIB REQUIRED)
-find_package(QREncode REQUIRED)
-find_package(sodium 1.0.12 REQUIRED)
-
-set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
-
 if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
     message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
 endif()
+include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 
-include_directories(SYSTEM ${ARGON2_INCLUDE_DIR} ${sodium_INCLUDE_DIR})
+# QREncode required for TOTP
+find_package(QREncode REQUIRED)
 
 # Optional
 if(WITH_XC_YUBIKEY)
@@ -499,7 +495,7 @@ if(UNIX)
     endif()
 endif()
 
-include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(share)

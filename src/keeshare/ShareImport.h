@@ -17,6 +17,8 @@
 #ifndef KEEPASSXC_SHAREIMPORT_H
 #define KEEPASSXC_SHAREIMPORT_H
 
+#include <QCoreApplication>
+
 #include "keeshare/ShareObserver.h"
 
 class ShareImport

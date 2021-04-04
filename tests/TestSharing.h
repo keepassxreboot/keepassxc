@@ -21,16 +21,16 @@
 #include <QObject>
 #include <QSharedPointer>
 
-class OpenSSHKey;
-
+namespace Botan
+{
+    class RSA_PrivateKey;
+}
 class TestSharing : public QObject
 {
     Q_OBJECT
 
 private slots:
     void initTestCase();
-    void cleanupTestCase();
-    void testIdempotentDatabaseWriting();
     void testNullObjects();
     void testCertificateSerialization();
     void testCertificateSerialization_data();
@@ -41,7 +41,7 @@ private slots:
     void testSettingsSerialization_data();
 
 private:
-    const OpenSSHKey& stubkey(int iIndex = 0);
+    const QSharedPointer<Botan::RSA_PrivateKey> stubkey(int index = 0);
 };
 
 #endif // KEEPASSXC_TESTSHARING_H

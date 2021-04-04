@@ -88,5 +88,5 @@ void TestYubiKeyChallengeResponse::testKeyChallenge()
 
     QByteArray ba("UnitTest");
     QVERIFY(key->challenge(ba));
-    QCOMPARE(key->rawKey().size(), 20);
+    QCOMPARE(key->rawKey().size(), 20UL);
 }

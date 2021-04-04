@@ -280,13 +280,14 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
         databaseKey->clear();
 
         // try to get, decrypt and use PasswordKey
-        QSharedPointer<QByteArray> passwordKey = TouchID::getInstance().getKey(m_filename);
-        if (passwordKey != NULL) {
+        QByteArray passwordKey;
+        if (TouchID::getInstance().getKey(m_filename, passwordKey)) {
             // check if the user cancelled the operation
-            if (passwordKey.isNull())
+            if (passwordKey.isNull()) {
                 return QSharedPointer<CompositeKey>();
+            }
 
-            databaseKey->addKey(PasswordKey::fromRawKey(*passwordKey));
+            databaseKey->addKey(PasswordKey::fromRawKey(passwordKey));
         }
     }
 #endif

@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -17,15 +18,17 @@
 
 #include "CryptoHash.h"
 
-#include <gcrypt.h>
-
 #include "crypto/Crypto.h"
+
+#include <QScopedPointer>
+#include <botan/hash.h>
+#include <botan/mac.h>
 
 class CryptoHashPrivate
 {
 public:
-    gcry_md_hd_t ctx;
-    int hashLen;
+    QScopedPointer<Botan::HashFunction> hashFunction;
+    QScopedPointer<Botan::MessageAuthenticationCode> hmacFunction;
 };
 
 CryptoHash::CryptoHash(Algorithm algo, bool hmac)
@@ -33,45 +36,31 @@ CryptoHash::CryptoHash(Algorithm algo, bool hmac)
 {
     Q_D(CryptoHash);
 
-    Q_ASSERT(Crypto::initialized());
-
-    int algoGcrypt = -1;
-    unsigned int flagsGcrypt = GCRY_MD_FLAG_SECURE;
-
     switch (algo) {
     case CryptoHash::Sha256:
-        algoGcrypt = GCRY_MD_SHA256;
+        if (hmac) {
+            d->hmacFunction.reset(Botan::MessageAuthenticationCode::create("HMAC(SHA-256)").release());
+        } else {
+            d->hashFunction.reset(Botan::HashFunction::create("SHA-256").release());
+        }
         break;
-
     case CryptoHash::Sha512:
-        algoGcrypt = GCRY_MD_SHA512;
+        if (hmac) {
+            d->hmacFunction.reset(Botan::MessageAuthenticationCode::create("HMAC(SHA-512)").release());
+        } else {
+            d->hashFunction.reset(Botan::HashFunction::create("SHA-512").release());
+        }
         break;
-
     default:
         Q_ASSERT(false);
         break;
     }
-
-    if (hmac) {
-        flagsGcrypt |= GCRY_MD_FLAG_HMAC;
-    }
-
-    gcry_error_t error = gcry_md_open(&d->ctx, algoGcrypt, flagsGcrypt);
-    if (error != GPG_ERR_NO_ERROR) {
-        qWarning("Gcrypt error (ctor): %s\n                     %s", gcry_strerror(error), gcry_strsource(error));
-    }
-    Q_ASSERT(error == 0); // TODO: error handling
-
-    d->hashLen = gcry_md_get_algo_dlen(algoGcrypt);
 }
 
 CryptoHash::~CryptoHash()
 {
     Q_D(CryptoHash);
-
-    gcry_md_close(d->ctx);
-
-    delete d_ptr;
+    delete d;
 }
 
 void CryptoHash::addData(const QByteArray& data)
@@ -82,31 +71,47 @@ void CryptoHash::addData(const QByteArray& data)
         return;
     }
 
-    gcry_md_write(d->ctx, data.constData(), static_cast<size_t>(data.size()));
+    try {
+        if (d->hmacFunction) {
+            d->hmacFunction->update(reinterpret_cast<const uint8_t*>(data.data()), data.size());
+        } else if (d->hashFunction) {
+            d->hashFunction->update(reinterpret_cast<const uint8_t*>(data.data()), data.size());
+        }
+    } catch (std::exception& e) {
+        qWarning("CryptoHash::update failed to add data: %s", e.what());
+        Q_ASSERT(false);
+    }
 }
 
 void CryptoHash::setKey(const QByteArray& data)
 {
     Q_D(CryptoHash);
 
-    gcry_error_t error = gcry_md_setkey(d->ctx, data.constData(), static_cast<size_t>(data.size()));
-    if (error) {
-        qWarning("Gcrypt error (setKey): %s\n                       %s", gcry_strerror(error), gcry_strsource(error));
+    if (d->hmacFunction) {
+        try {
+            d->hmacFunction->set_key(reinterpret_cast<const uint8_t*>(data.data()), data.size());
+        } catch (std::exception& e) {
+            qWarning("CryptoHash::setKey failed to set HMAC key: %s", e.what());
+            Q_ASSERT(false);
+        }
     }
-    Q_ASSERT(error == 0);
 }
 
 QByteArray CryptoHash::result() const
 {
     Q_D(const CryptoHash);
 
-    const auto result = reinterpret_cast<const char*>(gcry_md_read(d->ctx, 0));
-    return QByteArray(result, d->hashLen);
+    Botan::secure_vector<uint8_t> result;
+    if (d->hmacFunction) {
+        result = d->hmacFunction->final();
+    } else if (d->hashFunction) {
+        result = d->hashFunction->final();
+    }
+    return QByteArray(reinterpret_cast<const char*>(result.data()), result.size());
 }
 
 QByteArray CryptoHash::hash(const QByteArray& data, Algorithm algo)
 {
-    // replace with gcry_md_hash_buffer()?
     CryptoHash cryptoHash(algo);
     cryptoHash.addData(data);
     return cryptoHash.result();
@@ -114,7 +119,6 @@ QByteArray CryptoHash::hash(const QByteArray& data, Algorithm algo)
 
 QByteArray CryptoHash::hmac(const QByteArray& data, const QByteArray& key, Algorithm algo)
 {
-    // replace with gcry_md_hash_buffer()?
     CryptoHash cryptoHash(algo, true);
     cryptoHash.setKey(key);
     cryptoHash.addData(data);

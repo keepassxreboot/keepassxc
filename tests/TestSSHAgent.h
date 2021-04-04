@@ -18,10 +18,11 @@
 #ifndef TESTSSHAGENT_H
 #define TESTSSHAGENT_H
 
-#include "crypto/ssh/OpenSSHKey.h"
+#include "sshagent/OpenSSHKey.h"
 #include <QObject>
 #include <QProcess>
 #include <QTemporaryFile>
+#include <QUuid>
 
 class TestSSHAgent : public QObject
 {

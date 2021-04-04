@@ -26,9 +26,9 @@
 class KeePass2RandomStream
 {
 public:
-    KeePass2RandomStream(KeePass2::ProtectedStreamAlgo algo);
+    KeePass2RandomStream() = default;
 
-    bool init(const QByteArray& key);
+    bool init(SymmetricCipher::Mode mode, const QByteArray& key);
     QByteArray randomBytes(int size, bool* ok);
     QByteArray process(const QByteArray& data, bool* ok);
     Q_REQUIRED_RESULT bool processInPlace(QByteArray& data);
@@ -39,9 +39,7 @@ private:
 
     SymmetricCipher m_cipher;
     QByteArray m_buffer;
-    int m_offset;
-
-    static SymmetricCipher::Algorithm mapAlgo(KeePass2::ProtectedStreamAlgo algo);
+    int m_offset = 0;
 };
 
 #endif // KEEPASSX_KEEPASS2RANDOMSTREAM_H

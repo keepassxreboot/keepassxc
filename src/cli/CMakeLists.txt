@@ -54,13 +54,7 @@ add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
         ${GPGERROR_LIBRARIES}
         cli
-        keepassx_core
-        Qt5::Core
-        ${GCRYPT_LIBRARIES}
-        ${sodium_LIBRARY_RELEASE}
-        ${ARGON2_LIBRARIES}
-        ${ZLIB_LIBRARIES}
-        ${ZXCVBN_LIBRARIES})
+        keepassx_core)
 
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime

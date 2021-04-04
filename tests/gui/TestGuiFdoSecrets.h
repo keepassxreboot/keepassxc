@@ -25,7 +25,6 @@
 #include <QSharedPointer>
 #include <QString>
 
-#include "fdosecrets/GcryptMPI.h"
 #include "fdosecrets/dbus/DBusTypes.h"
 
 class MainWindow;
@@ -139,10 +138,7 @@ private:
     QPointer<FdoSecretsPlugin> m_plugin;
     QSharedPointer<FdoSecrets::DBusClient> m_client;
 
-    // For DH session tests
-    GcryptMPI m_serverPrivate;
-    GcryptMPI m_serverPublic;
-    std::unique_ptr<FdoSecrets::DhIetf1024Sha256Aes128CbcPkcs7> m_cipher;
+    QScopedPointer<FdoSecrets::DhIetf1024Sha256Aes128CbcPkcs7> m_clientCipher;
 
     QByteArray m_dbData;
     QScopedPointer<TemporaryFile> m_dbFile;

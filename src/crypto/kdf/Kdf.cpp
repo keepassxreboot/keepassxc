@@ -16,7 +16,6 @@
  */
 
 #include "Kdf.h"
-#include "Kdf_p.h"
 
 #include <QtConcurrent>
 
@@ -67,38 +66,4 @@ bool Kdf::setSeed(const QByteArray& seed)
 void Kdf::randomizeSeed()
 {
     setSeed(randomGen()->randomArray(m_seed.size()));
-}
-
-int Kdf::benchmark(int msec) const
-{
-    // Run the benchmark twice using half the time for each run
-    BenchmarkThread thread(msec / 2, this);
-    int rounds = 0;
-
-    thread.start();
-    thread.wait();
-    rounds += thread.rounds();
-
-    thread.start();
-    thread.wait();
-    rounds += thread.rounds();
-
-    return qMax(1, rounds);
-}
-
-Kdf::BenchmarkThread::BenchmarkThread(int msec, const Kdf* kdf)
-    : m_rounds(1)
-    , m_msec(msec)
-    , m_kdf(kdf)
-{
-}
-
-int Kdf::BenchmarkThread::rounds()
-{
-    return m_rounds;
-}
-
-void Kdf::BenchmarkThread::run()
-{
-    m_rounds = m_kdf->benchmarkImpl(m_msec);
 }

@@ -17,6 +17,8 @@
 #ifndef KEEPASSXC_SHAREEXPORT_H
 #define KEEPASSXC_SHAREEXPORT_H
 
+#include <QCoreApplication>
+
 #include "keeshare/KeeShareSettings.h"
 #include "keeshare/ShareObserver.h"
 

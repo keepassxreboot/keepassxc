@@ -21,6 +21,7 @@
 
 #include <QByteArray>
 #include <QUuid>
+#include <botan/secmem.h>
 
 class ChallengeResponseKey
 {
@@ -31,9 +32,13 @@ public:
     }
     virtual ~ChallengeResponseKey() = default;
 
-    virtual QByteArray rawKey() const = 0;
     virtual bool challenge(const QByteArray& challenge) = 0;
-    virtual QUuid uuid() const
+
+    Botan::secure_vector<char>& rawKey()
+    {
+        return m_key;
+    }
+    QUuid uuid() const
     {
         return m_uuid;
     }
@@ -44,6 +49,7 @@ public:
 
 protected:
     QString m_error;
+    Botan::secure_vector<char> m_key;
 
 private:
     Q_DISABLE_COPY(ChallengeResponseKey);

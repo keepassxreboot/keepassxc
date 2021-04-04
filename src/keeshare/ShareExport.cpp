@@ -23,6 +23,9 @@
 #include "keeshare/Signature.h"
 #include "keys/PasswordKey.h"
 
+#include <QBuffer>
+#include <QTextStream>
+
 #if defined(WITH_XC_KEESHARE_SECURE)
 #include <quazip.h>
 #include <quazipfile.h>
@@ -147,9 +150,8 @@ namespace
             }
             QTextStream stream(&file);
             KeeShareSettings::Sign sign;
-            auto sshKey = own.key.sshKey();
-            sshKey.openKey(QString());
-            sign.signature = Signature::create(bytes, sshKey);
+            // TODO: check for false return
+            Signature::create(bytes, own.key.key, sign.signature);
             sign.certificate = own.certificate;
             stream << KeeShareSettings::Sign::serialize(sign);
             stream.flush();

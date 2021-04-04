@@ -129,7 +129,7 @@ void KdbxReader::setCipher(const QByteArray& data)
         return;
     }
 
-    if (SymmetricCipher::cipherToAlgorithm(uuid) == SymmetricCipher::InvalidAlgorithm) {
+    if (SymmetricCipher::cipherUuidToMode(uuid) == SymmetricCipher::InvalidMode) {
         raiseError(tr("Unsupported cipher"));
         return;
     }

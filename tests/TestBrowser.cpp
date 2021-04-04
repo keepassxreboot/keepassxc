@@ -21,9 +21,11 @@
 #include "browser/BrowserSettings.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "sodium/crypto_box.h"
 
 #include <QString>
+#include <botan/sodium.h>
+
+using namespace Botan::Sodium;
 
 QTEST_GUILESS_MAIN(TestBrowser)
 

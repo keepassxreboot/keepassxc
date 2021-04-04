@@ -24,9 +24,9 @@
 
 #include <QJsonDocument>
 #include <QJsonParseError>
-#include <sodium.h>
-#include <sodium/crypto_box.h>
-#include <sodium/randombytes.h>
+#include <botan/sodium.h>
+
+using namespace Botan::Sodium;
 
 namespace
 {
@@ -283,7 +283,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     const QString id = decrypted.value("id").toString();
     const QString formUrl = decrypted.value("submitUrl").toString();
     const QString auth = decrypted.value("httpAuth").toString();
-    const bool httpAuth = auth.compare(TRUE_STR, Qt::CaseSensitive) == 0 ? true : false;
+    const bool httpAuth = auth.compare(TRUE_STR, Qt::CaseSensitive) == 0;
     const QJsonArray users = browserService()->findMatchingEntries(id, siteUrl, formUrl, "", keyList, httpAuth);
 
     if (users.isEmpty()) {

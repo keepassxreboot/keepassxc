@@ -265,7 +265,7 @@ bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)
 bool YubiKey::performTestChallenge(void* key, int slot, bool* wouldBlock)
 {
     auto chall = randomGen()->randomArray(1);
-    QByteArray resp;
+    Botan::secure_vector<char> resp;
     auto ret = performChallenge(static_cast<YK_KEY*>(key), slot, false, chall, resp);
     if (ret == SUCCESS || ret == WOULDBLOCK) {
         if (wouldBlock) {
@@ -285,7 +285,8 @@ bool YubiKey::performTestChallenge(void* key, int slot, bool* wouldBlock)
  * @param response response output from YubiKey
  * @return challenge result
  */
-YubiKey::ChallengeResult YubiKey::challenge(YubiKeySlot slot, const QByteArray& challenge, QByteArray& response)
+YubiKey::ChallengeResult
+YubiKey::challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response)
 {
     m_error.clear();
     if (!m_initialized) {
@@ -318,8 +319,11 @@ YubiKey::ChallengeResult YubiKey::challenge(YubiKeySlot slot, const QByteArray& 
     return ret;
 }
 
-YubiKey::ChallengeResult
-YubiKey::performChallenge(void* key, int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response)
+YubiKey::ChallengeResult YubiKey::performChallenge(void* key,
+                                                   int slot,
+                                                   bool mayBlock,
+                                                   const QByteArray& challenge,
+                                                   Botan::secure_vector<char>& response)
 {
     m_error.clear();
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;

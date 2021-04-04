@@ -23,7 +23,7 @@
 #include <QList>
 #include <QtCore>
 
-#include "crypto/ssh/OpenSSHKey.h"
+#include "OpenSSHKey.h"
 #include "sshagent/KeeAgentSettings.h"
 
 class SSHAgent : public QObject

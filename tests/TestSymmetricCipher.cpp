@@ -26,7 +26,6 @@
 #include "streams/SymmetricCipherStream.h"
 
 QTEST_GUILESS_MAIN(TestSymmetricCipher)
-Q_DECLARE_METATYPE(SymmetricCipher::Algorithm);
 Q_DECLARE_METATYPE(SymmetricCipher::Mode);
 Q_DECLARE_METATYPE(SymmetricCipher::Direction);
 
@@ -35,19 +34,18 @@ void TestSymmetricCipher::initTestCase()
     QVERIFY(Crypto::init());
 }
 
-void TestSymmetricCipher::testAlgorithmToCipher()
+void TestSymmetricCipher::testCipherUuidToMode()
 {
-    QCOMPARE(SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm::Aes128), KeePass2::CIPHER_AES128);
-    QCOMPARE(SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm::Aes256), KeePass2::CIPHER_AES256);
-    QCOMPARE(SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm::Twofish), KeePass2::CIPHER_TWOFISH);
-    QCOMPARE(SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm::ChaCha20), KeePass2::CIPHER_CHACHA20);
-    QCOMPARE(SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm::InvalidAlgorithm), QUuid());
+    QCOMPARE(SymmetricCipher::cipherUuidToMode(KeePass2::CIPHER_AES128), SymmetricCipher::Aes128_CBC);
+    QCOMPARE(SymmetricCipher::cipherUuidToMode(KeePass2::CIPHER_AES256), SymmetricCipher::Aes256_CBC);
+    QCOMPARE(SymmetricCipher::cipherUuidToMode(KeePass2::CIPHER_TWOFISH), SymmetricCipher::Twofish_CBC);
+    QCOMPARE(SymmetricCipher::cipherUuidToMode(KeePass2::CIPHER_CHACHA20), SymmetricCipher::ChaCha20);
+    QCOMPARE(SymmetricCipher::cipherUuidToMode(QUuid()), SymmetricCipher::InvalidMode);
 }
 
 // clang-format off
 void TestSymmetricCipher::testEncryptionDecryption_data()
 {
-    QTest::addColumn<SymmetricCipher::Algorithm>("algorithm");
     QTest::addColumn<SymmetricCipher::Mode>("mode");
     QTest::addColumn<SymmetricCipher::Direction>("direction");
     QTest::addColumn<QByteArray>("key");
@@ -57,64 +55,57 @@ void TestSymmetricCipher::testEncryptionDecryption_data()
 
     // http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf
     QTest::newRow("AES128-CBC Encryption")
-        << SymmetricCipher::Aes128
-        << SymmetricCipher::Cbc
+        << SymmetricCipher::Aes128_CBC
         << SymmetricCipher::Encrypt
         << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
         << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
+        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a")
         << QByteArray::fromHex("7649abac8119b246cee98e9b12e9197d5086cb9b507219ee95db113a917678b2");
 
     QTest::newRow("AES128-CBC Decryption")
-        << SymmetricCipher::Aes128
-        << SymmetricCipher::Cbc
+        << SymmetricCipher::Aes128_CBC
         << SymmetricCipher::Decrypt
         << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
         << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
         << QByteArray::fromHex("7649abac8119b246cee98e9b12e9197d5086cb9b507219ee95db113a917678b2")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51");
+        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
 
     QTest::newRow("AES256-CBC Encryption")
-        << SymmetricCipher::Aes256
-        << SymmetricCipher::Cbc
+        << SymmetricCipher::Aes256_CBC
         << SymmetricCipher::Encrypt
         << QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
         << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
+        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a")
         << QByteArray::fromHex("f58c4c04d6e5f1ba779eabfb5f7bfbd69cfc4e967edb808d679f777bc6702c7d");
 
     QTest::newRow("AES256-CBC Decryption")
-        << SymmetricCipher::Aes256
-        << SymmetricCipher::Cbc
+        << SymmetricCipher::Aes256_CBC
         << SymmetricCipher::Decrypt
         << QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
         << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
         << QByteArray::fromHex("f58c4c04d6e5f1ba779eabfb5f7bfbd69cfc4e967edb808d679f777bc6702c7d")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51");
+        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
 
     QTest::newRow("AES256-CTR Encryption")
-        << SymmetricCipher::Aes256
-        << SymmetricCipher::Ctr
+        << SymmetricCipher::Aes256_CTR
         << SymmetricCipher::Encrypt
         << QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
         << QByteArray::fromHex("f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
+        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a")
         << QByteArray::fromHex("601ec313775789a5b7a7f504bbf3d228f443e3ca4d62b59aca84e990cacaf5c5");
 
     QTest::newRow("AES256-CTR Decryption")
-        << SymmetricCipher::Aes256
-        << SymmetricCipher::Ctr
+        << SymmetricCipher::Aes256_CTR
         << SymmetricCipher::Decrypt
         << QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
         << QByteArray::fromHex("f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff")
         << QByteArray::fromHex("601ec313775789a5b7a7f504bbf3d228f443e3ca4d62b59aca84e990cacaf5c5")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51");
+        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
 }
 // clang-format on
 
 void TestSymmetricCipher::testEncryptionDecryption()
 {
-    QFETCH(SymmetricCipher::Algorithm, algorithm);
     QFETCH(SymmetricCipher::Mode, mode);
     QFETCH(SymmetricCipher::Direction, direction);
     QFETCH(QByteArray, key);
@@ -122,66 +113,51 @@ void TestSymmetricCipher::testEncryptionDecryption()
     QFETCH(QByteArray, plainText);
     QFETCH(QByteArray, cipherText);
 
-    bool ok;
-    SymmetricCipher cipher(algorithm, mode, direction);
-    QVERIFY(cipher.init(key, iv));
-    QCOMPARE(cipher.blockSize(), 16);
-    QCOMPARE(cipher.process(plainText, &ok), cipherText);
-    QVERIFY(ok);
+    QByteArray data = plainText;
+    SymmetricCipher cipher;
+    QVERIFY(cipher.init(mode, direction, key, iv));
+    QVERIFY(cipher.process(data));
+    QCOMPARE(data.left(16), cipherText.left(16));
 
-    if (mode == SymmetricCipher::Cbc) {
-        QBuffer buffer;
-        SymmetricCipherStream stream(&buffer, algorithm, mode, direction);
-        QVERIFY(stream.init(key, iv));
-        buffer.open(QIODevice::WriteOnly);
-        QVERIFY(stream.open(QIODevice::WriteOnly));
-        QVERIFY(stream.reset());
-
-        buffer.reset();
-        buffer.buffer().clear();
-        QCOMPARE(stream.write(plainText.left(16)), qint64(16));
-        QCOMPARE(buffer.data(), cipherText.left(16));
-        QVERIFY(stream.reset());
-        // make sure padding is written
-        QCOMPARE(buffer.data().size(), 32);
-
-        buffer.reset();
-        buffer.buffer().clear();
-        QCOMPARE(stream.write(plainText.left(10)), qint64(10));
-        QVERIFY(buffer.data().isEmpty());
-
-        QVERIFY(stream.reset());
-        buffer.reset();
-        buffer.buffer().clear();
-        QCOMPARE(stream.write(plainText.left(10)), qint64(10));
-        stream.close();
-        QCOMPARE(buffer.data().size(), 16);
-    }
+    QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
+    SymmetricCipherStream stream(&buffer);
+    QVERIFY(stream.init(mode, direction, key, iv));
+    QVERIFY(stream.open(QIODevice::WriteOnly));
+    QCOMPARE(stream.write(plainText.left(16)), qint64(16));
+    stream.close();
+    QCOMPARE(buffer.data().left(16), cipherText.left(16));
 }
 
 void TestSymmetricCipher::testAesCbcPadding_data()
 {
+    QTest::addColumn<SymmetricCipher::Mode>("mode");
     QTest::addColumn<QByteArray>("key");
     QTest::addColumn<QByteArray>("iv");
     QTest::addColumn<QByteArray>("cipherText");
     QTest::addColumn<QByteArray>("plainText");
     QTest::addColumn<QByteArray>("padding");
 
-    QTest::newRow("AES128") << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
+    // clang-format off
+    QTest::newRow("AES128") << SymmetricCipher::Aes128_CBC
+                            << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
                             << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
                             << QByteArray::fromHex("7649abac8119b246cee98e9b12e9197d5086cb9b507219ee95db113a917678b2")
                             << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
                             << QByteArray::fromHex("55e21d7100b988ffec32feeafaf23538");
 
-    QTest::newRow("AES256") << QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
+    QTest::newRow("AES256") << SymmetricCipher::Aes256_CBC
+                            << QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
                             << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
                             << QByteArray::fromHex("f58c4c04d6e5f1ba779eabfb5f7bfbd69cfc4e967edb808d679f777bc6702c7d")
                             << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
                             << QByteArray::fromHex("3a3aa5e0213db1a9901f9036cf5102d2");
+    // clang-format on
 }
 
 void TestSymmetricCipher::testAesCbcPadding()
 {
+    QFETCH(SymmetricCipher::Mode, mode);
     QFETCH(QByteArray, key);
     QFETCH(QByteArray, iv);
     QFETCH(QByteArray, cipherText);
@@ -192,64 +168,36 @@ void TestSymmetricCipher::testAesCbcPadding()
     QByteArray cipherTextPadded = cipherText + padding;
 
     QBuffer buffer(&cipherTextPadded);
-    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes128, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
-    QVERIFY(stream.init(key, iv));
+    SymmetricCipherStream stream(&buffer);
+    QVERIFY(stream.init(mode, SymmetricCipher::Decrypt, key, iv));
     buffer.open(QIODevice::ReadOnly);
     QVERIFY(stream.open(QIODevice::ReadOnly));
 
     QCOMPARE(stream.read(10), plainText.left(10));
     buffer.reset();
     QVERIFY(stream.reset());
+    QVERIFY(stream.init(mode, SymmetricCipher::Decrypt, key, iv));
     QCOMPARE(stream.read(20), plainText.left(20));
     buffer.reset();
     QVERIFY(stream.reset());
+    QVERIFY(stream.init(mode, SymmetricCipher::Decrypt, key, iv));
     QCOMPARE(stream.read(16), plainText.left(16));
     buffer.reset();
     QVERIFY(stream.reset());
+    QVERIFY(stream.init(mode, SymmetricCipher::Decrypt, key, iv));
     QCOMPARE(stream.read(100), plainText);
 }
 
-void TestSymmetricCipher::testInplaceEcb_data()
+void TestSymmetricCipher::testAesKdf()
 {
-    QTest::addColumn<QByteArray>("key");
-    QTest::addColumn<QByteArray>("plainText");
-    QTest::addColumn<QByteArray>("cipherText");
+    auto key = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+    auto data = QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
+    auto result = QByteArray::fromHex("f3eed1bdb5d2a03c064b5a7e3db181f8");
 
-    QTest::newRow("AES128") << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
-                            << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a")
-                            << QByteArray::fromHex("3ad77bb40d7a3660a89ecaf32466ef97");
-}
+    QVERIFY(SymmetricCipher::aesKdf(key, 1, data));
+    QCOMPARE(data, result);
 
-void TestSymmetricCipher::testInplaceEcb()
-{
-    QFETCH(QByteArray, key);
-    QFETCH(QByteArray, plainText);
-    QFETCH(QByteArray, cipherText);
-
-    SymmetricCipher cipherInPlaceEnc(SymmetricCipher::Aes128, SymmetricCipher::Ecb, SymmetricCipher::Encrypt);
-    QVERIFY(cipherInPlaceEnc.init(key, QByteArray(16, 0)));
-    QCOMPARE(cipherInPlaceEnc.blockSize(), 16);
-    auto data = QByteArray(plainText);
-    QVERIFY(cipherInPlaceEnc.processInPlace(data));
-    QCOMPARE(data, cipherText);
-
-    SymmetricCipher cipherInPlaceDec(SymmetricCipher::Aes128, SymmetricCipher::Ecb, SymmetricCipher::Decrypt);
-    QVERIFY(cipherInPlaceDec.init(key, QByteArray(16, 0)));
-    QCOMPARE(cipherInPlaceDec.blockSize(), 16);
-    QVERIFY(cipherInPlaceDec.processInPlace(data));
-    QCOMPARE(data, plainText);
-
-    SymmetricCipher cipherInPlaceEnc2(SymmetricCipher::Aes128, SymmetricCipher::Ecb, SymmetricCipher::Encrypt);
-    QVERIFY(cipherInPlaceEnc2.init(key, QByteArray(16, 0)));
-    QCOMPARE(cipherInPlaceEnc2.blockSize(), 16);
-    data = QByteArray(plainText);
-    QVERIFY(cipherInPlaceEnc2.processInPlace(data, 100));
-
-    SymmetricCipher cipherInPlaceDec2(SymmetricCipher::Aes128, SymmetricCipher::Ecb, SymmetricCipher::Decrypt);
-    QVERIFY(cipherInPlaceDec2.init(key, QByteArray(16, 0)));
-    QCOMPARE(cipherInPlaceDec2.blockSize(), 16);
-    QVERIFY(cipherInPlaceDec2.processInPlace(data, 100));
-    QCOMPARE(data, plainText);
+    // TODO: Test multiple rounds of AES KDF
 }
 
 void TestSymmetricCipher::testTwofish256CbcEncryption()
@@ -278,32 +226,30 @@ void TestSymmetricCipher::testTwofish256CbcEncryption()
                                     QByteArray::fromHex("957108025BFD57125B40057BC2DE4FE2"),
                                     QByteArray::fromHex("6F725C5950133F82EF021A94CADC8508")};
 
-    SymmetricCipher cipher(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Encrypt);
+    SymmetricCipher cipher;
 
     for (int i = 0; i < keys.size(); ++i) {
-        QVERIFY(cipher.init(keys[i], ivs[i]));
+        QVERIFY(cipher.init(SymmetricCipher::Twofish_CBC, SymmetricCipher::Encrypt, keys[i], ivs[i]));
         QByteArray ptNext = plainTexts[i];
         QByteArray ctPrev = ivs[i];
         QByteArray ctCur;
-        QCOMPARE(cipher.blockSize(), 16);
-        bool ok = false;
+        QCOMPARE(cipher.blockSize(cipher.mode()), 16);
         for (int j = 0; j < 5000; ++j) {
-            ctCur = cipher.process(ptNext, &ok);
-            if (!ok) {
+            if (!cipher.process(ptNext)) {
                 break;
             }
+            ctCur = ptNext;
             ptNext = ctPrev;
             ctPrev = ctCur;
 
-            ctCur = cipher.process(ptNext, &ok);
-            if (!ok) {
+            if (!cipher.process(ptNext)) {
                 break;
             }
+            ctCur = ptNext;
             ptNext = ctPrev;
             ctPrev = ctCur;
         }
 
-        QVERIFY(ok);
         QCOMPARE(ctCur, cipherTexts[i]);
     }
 }
@@ -334,30 +280,24 @@ void TestSymmetricCipher::testTwofish256CbcDecryption()
                                     QByteArray::fromHex("A792AC61E7110C434BC2BBCAB6E53CAE"),
                                     QByteArray::fromHex("4C81F5BDC1081170FF96F50B1F76A566")};
 
-    SymmetricCipher cipher(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
+    SymmetricCipher cipher;
 
     for (int i = 0; i < keys.size(); ++i) {
-        cipher.init(keys[i], ivs[i]);
+        QVERIFY(cipher.init(SymmetricCipher::Twofish_CBC, SymmetricCipher::Decrypt, keys[i], ivs[i]));
         QByteArray ctNext = cipherTexts[i];
         QByteArray ptCur;
-        QCOMPARE(cipher.blockSize(), 16);
-        bool ok = false;
+        QCOMPARE(cipher.blockSize(cipher.mode()), 16);
         for (int j = 0; j < 5000; ++j) {
-            ptCur = cipher.process(ctNext, &ok);
-            if (!ok) {
+            if (!cipher.process(ctNext)) {
                 break;
             }
-            ctNext = ptCur;
 
-            ptCur = cipher.process(ctNext, &ok);
-            if (!ok) {
+            if (!cipher.process(ctNext)) {
                 break;
             }
-            ctNext = ptCur;
         }
 
-        QVERIFY(ok);
-        QCOMPARE(ptCur, plainTexts[i]);
+        QCOMPARE(ctNext, plainTexts[i]);
     }
 }
 
@@ -367,20 +307,22 @@ void TestSymmetricCipher::testSalsa20()
 
     QByteArray key = QByteArray::fromHex("F3F4F5F6F7F8F9FAFBFCFDFEFF000102030405060708090A0B0C0D0E0F101112");
     QByteArray iv = QByteArray::fromHex("0000000000000000");
-    bool ok;
 
-    SymmetricCipher cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
-    QVERIFY(cipher.init(key, iv));
+    SymmetricCipher cipher;
+    QVERIFY(cipher.init(SymmetricCipher::Salsa20, SymmetricCipher::Encrypt, key, iv));
 
     QByteArray cipherTextA;
     for (int i = 0; i < 8; i++) {
-        cipherTextA.append(cipher.process(QByteArray(64, '\0'), &ok));
-        QVERIFY(ok);
+        QByteArray data(64, '\0');
+        QVERIFY(cipher.process(data));
+        cipherTextA.append(data);
     }
-    cipher.reset();
 
-    QByteArray cipherTextB = cipher.process(QByteArray(512, '\0'), &ok);
-    QVERIFY(ok);
+    // Re-initialize
+    QVERIFY(cipher.init(SymmetricCipher::Salsa20, SymmetricCipher::Encrypt, key, iv));
+
+    QByteArray cipherTextB(512, '\0');
+    QVERIFY(cipher.process(cipherTextB));
     cipher.reset();
 
     QByteArray expectedCipherText1;
@@ -421,50 +363,52 @@ void TestSymmetricCipher::testSalsa20()
 void TestSymmetricCipher::testChaCha20()
 {
     // https://tools.ietf.org/html/draft-agl-tls-chacha20poly1305-04#section-7
-    bool ok;
-
     {
         QByteArray key = QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000");
         QByteArray iv = QByteArray::fromHex("0000000000000000");
-        SymmetricCipher cipher(SymmetricCipher::ChaCha20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
-        QVERIFY(cipher.init(key, iv));
-        QCOMPARE(cipher.process(QByteArray(64, 0), &ok),
+        SymmetricCipher cipher;
+        QByteArray data(64, 0);
+        QVERIFY(cipher.init(SymmetricCipher::ChaCha20, SymmetricCipher::Encrypt, key, iv));
+        QVERIFY(cipher.process(data));
+        QCOMPARE(data,
                  QByteArray::fromHex("76b8e0ada0f13d90405d6ae55386bd28bdd219b8a08ded1aa836efcc8b770dc7da41597c5157488d7"
                                      "724e03fb8d84a376a43b8f41518a11cc387b669b2ee6586"));
-        QVERIFY(ok);
     }
 
     {
         QByteArray key = QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000001");
         QByteArray iv = QByteArray::fromHex("0000000000000000");
-        SymmetricCipher cipher(SymmetricCipher::ChaCha20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
-        QVERIFY(cipher.init(key, iv));
-        QCOMPARE(cipher.process(QByteArray(64, 0), &ok),
+        SymmetricCipher cipher;
+        QByteArray data(64, 0);
+        QVERIFY(cipher.init(SymmetricCipher::ChaCha20, SymmetricCipher::Encrypt, key, iv));
+        QVERIFY(cipher.process(data));
+        QCOMPARE(data,
                  QByteArray::fromHex("4540f05a9f1fb296d7736e7b208e3c96eb4fe1834688d2604f450952ed432d41bbe2a0b6ea7566d2a"
                                      "5d1e7e20d42af2c53d792b1c43fea817e9ad275ae546963"));
-        QVERIFY(ok);
     }
 
     {
         QByteArray key = QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000");
         QByteArray iv = QByteArray::fromHex("0000000000000001");
-        SymmetricCipher cipher(SymmetricCipher::ChaCha20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
-        QVERIFY(cipher.init(key, iv));
-        QCOMPARE(cipher.process(QByteArray(60, 0), &ok),
+        SymmetricCipher cipher;
+        QByteArray data(60, 0);
+        QVERIFY(cipher.init(SymmetricCipher::ChaCha20, SymmetricCipher::Encrypt, key, iv));
+        QVERIFY(cipher.process(data));
+        QCOMPARE(data,
                  QByteArray::fromHex("de9cba7bf3d69ef5e786dc63973f653a0b49e015adbff7134fcb7df137821031e85a050278a708452"
                                      "7214f73efc7fa5b5277062eb7a0433e445f41e3"));
-        QVERIFY(ok);
     }
 
     {
         QByteArray key = QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000");
         QByteArray iv = QByteArray::fromHex("0100000000000000");
-        SymmetricCipher cipher(SymmetricCipher::ChaCha20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
-        QVERIFY(cipher.init(key, iv));
-        QCOMPARE(cipher.process(QByteArray(64, 0), &ok),
+        SymmetricCipher cipher;
+        QByteArray data(64, 0);
+        QVERIFY(cipher.init(SymmetricCipher::ChaCha20, SymmetricCipher::Encrypt, key, iv));
+        QVERIFY(cipher.process(data));
+        QCOMPARE(data,
                  QByteArray::fromHex("ef3fdfd6c61578fbf5cf35bd3dd33b8009631634d21e42ac33960bd138e50d32111e4caf237ee53ca"
                                      "8ad6426194a88545ddc497a0b466e7d6bbdb0041b2f586b"));
-        QVERIFY(ok);
     }
 }
 
@@ -477,8 +421,8 @@ void TestSymmetricCipher::testPadding()
     QBuffer buffer;
     buffer.open(QIODevice::ReadWrite);
 
-    SymmetricCipherStream streamEnc(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt);
-    QVERIFY(streamEnc.init(key, iv));
+    SymmetricCipherStream streamEnc(&buffer);
+    QVERIFY(streamEnc.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Encrypt, key, iv));
     streamEnc.open(QIODevice::WriteOnly);
     streamEnc.write(plainText);
     streamEnc.close();
@@ -486,8 +430,8 @@ void TestSymmetricCipher::testPadding()
     // make sure padding is written
     QCOMPARE(buffer.buffer().size(), 16);
 
-    SymmetricCipherStream streamDec(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
-    QVERIFY(streamDec.init(key, iv));
+    SymmetricCipherStream streamDec(&buffer);
+    QVERIFY(streamDec.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Decrypt, key, iv));
     streamDec.open(QIODevice::ReadOnly);
     QByteArray decrypted = streamDec.readAll();
     QCOMPARE(decrypted, plainText);
@@ -500,8 +444,8 @@ void TestSymmetricCipher::testStreamReset()
 
     QBuffer buffer;
     QVERIFY(buffer.open(QIODevice::WriteOnly));
-    SymmetricCipherStream writer(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt);
-    QVERIFY(writer.init(key, iv));
+    SymmetricCipherStream writer(&buffer);
+    QVERIFY(writer.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Encrypt, key, iv));
     QVERIFY(writer.open(QIODevice::WriteOnly));
     QCOMPARE(writer.write(QByteArray(4, 'Z')), qint64(4));
     // test if reset() and close() write only one block

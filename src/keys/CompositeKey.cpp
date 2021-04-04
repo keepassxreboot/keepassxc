@@ -143,7 +143,7 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result, QString
             qWarning() << "Failed to issue challenge: " << key->error();
             return false;
         }
-        cryptoHash.addData(key->rawKey());
+        cryptoHash.addData(key->rawKey().data());
     }
 
     result = cryptoHash.result();

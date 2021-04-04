@@ -20,23 +20,21 @@
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2.h"
 
-KeePass2RandomStream::KeePass2RandomStream(KeePass2::ProtectedStreamAlgo algo)
-    : m_cipher(mapAlgo(algo), SymmetricCipher::Stream, SymmetricCipher::Encrypt)
-    , m_offset(0)
+bool KeePass2RandomStream::init(SymmetricCipher::Mode mode, const QByteArray& key)
 {
-}
-
-bool KeePass2RandomStream::init(const QByteArray& key)
-{
-    switch (m_cipher.algorithm()) {
-    case SymmetricCipher::Salsa20:
-        return m_cipher.init(CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV);
+    switch (mode) {
+    case SymmetricCipher::Salsa20: {
+        return m_cipher.init(mode,
+                             SymmetricCipher::Encrypt,
+                             CryptoHash::hash(key, CryptoHash::Sha256),
+                             KeePass2::INNER_STREAM_SALSA20_IV);
+    }
     case SymmetricCipher::ChaCha20: {
         QByteArray keyIv = CryptoHash::hash(key, CryptoHash::Sha512);
-        return m_cipher.init(keyIv.left(32), keyIv.mid(32, 12));
+        return m_cipher.init(mode, SymmetricCipher::Encrypt, keyIv.left(32), keyIv.mid(32, 12));
     }
     default:
-        qWarning("Invalid stream algorithm (%d)", m_cipher.algorithm());
+        qWarning("Invalid stream cipher mode (%d)", mode);
         break;
     }
     return false;
@@ -111,23 +109,11 @@ bool KeePass2RandomStream::loadBlock()
 {
     Q_ASSERT(m_offset == m_buffer.size());
 
-    m_buffer.fill('\0', m_cipher.blockSize());
-    if (!m_cipher.processInPlace(m_buffer)) {
+    m_buffer.fill('\0', m_cipher.blockSize(m_cipher.mode()));
+    if (!m_cipher.process(m_buffer)) {
         return false;
     }
     m_offset = 0;
 
     return true;
-}
-
-SymmetricCipher::Algorithm KeePass2RandomStream::mapAlgo(KeePass2::ProtectedStreamAlgo algo)
-{
-    switch (algo) {
-    case KeePass2::ProtectedStreamAlgo::ChaCha20:
-        return SymmetricCipher::ChaCha20;
-    case KeePass2::ProtectedStreamAlgo::Salsa20:
-        return SymmetricCipher::Salsa20;
-    default:
-        return SymmetricCipher::InvalidAlgorithm;
-    }
 }

@@ -18,8 +18,8 @@
 #include "Argon2Kdf.h"
 
 #include <QtConcurrent>
+#include <botan/pwdhash.h>
 
-#include "crypto/argon2/argon2.h"
 #include "format/KeePass2.h"
 
 /**
@@ -163,39 +163,20 @@ bool Argon2Kdf::transform(const QByteArray& raw, QByteArray& result) const
 {
     result.clear();
     result.resize(32);
-    return transformKeyRaw(raw, seed(), version(), type(), rounds(), memory(), parallelism(), result);
-}
-
-bool Argon2Kdf::transformKeyRaw(const QByteArray& key,
-                                const QByteArray& seed,
-                                quint32 version,
-                                Type type,
-                                quint32 rounds,
-                                quint64 memory,
-                                quint32 parallelism,
-                                QByteArray& result)
-{
-    // Time Cost, Mem Cost, Threads/Lanes, Password, length, Salt, length, out, length
-
-    int rc = argon2_hash(rounds,
-                         memory,
-                         parallelism,
-                         key.data(),
-                         key.size(),
-                         seed.data(),
-                         seed.size(),
-                         result.data(),
-                         result.size(),
-                         nullptr,
-                         0,
-                         type == Type::Argon2d ? Argon2_d : Argon2_id,
-                         version);
-    if (rc != ARGON2_OK) {
-        qWarning("Argon2 error: %s", argon2_error_message(rc));
+    try {
+        auto algo = type() == Type::Argon2d ? "Argon2d" : "Argon2id";
+        auto pwhash = Botan::PasswordHashFamily::create_or_throw(algo)->from_params(memory(), rounds(), parallelism());
+        pwhash->derive_key(reinterpret_cast<uint8_t*>(result.data()),
+                           result.size(),
+                           raw.constData(),
+                           raw.size(),
+                           reinterpret_cast<const uint8_t*>(seed().constData()),
+                           seed().size());
+        return true;
+    } catch (std::exception& e) {
+        qWarning("Argon2 error: %s", e.what());
         return false;
     }
-
-    return true;
 }
 
 QSharedPointer<Kdf> Argon2Kdf::clone() const
@@ -203,20 +184,16 @@ QSharedPointer<Kdf> Argon2Kdf::clone() const
     return QSharedPointer<Argon2Kdf>::create(*this);
 }
 
-int Argon2Kdf::benchmarkImpl(int msec) const
+int Argon2Kdf::benchmark(int msec) const
 {
-    QByteArray key = QByteArray(16, '\x7E');
-    QByteArray seed = QByteArray(32, '\x4B');
-
-    QElapsedTimer timer;
-    timer.start();
-
-    int rounds = 4;
-    if (transformKeyRaw(key, seed, version(), type(), rounds, memory(), parallelism(), key)) {
-        return static_cast<int>(rounds * (static_cast<float>(msec) / timer.elapsed()));
+    try {
+        auto algo = type() == Type::Argon2d ? "Argon2d" : "Argon2id";
+        auto pwhash = Botan::PasswordHashFamily::create_or_throw(algo)->tune(
+            32, std::chrono::milliseconds(msec), memory() / 1024);
+        return qMax(static_cast<size_t>(1), pwhash->iterations());
+    } catch (std::exception& e) {
+        return 1;
     }
-
-    return 1;
 }
 
 QString Argon2Kdf::toString() const

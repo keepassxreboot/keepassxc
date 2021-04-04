@@ -67,7 +67,6 @@ set(keepassx_SOURCES
         crypto/CryptoHash.cpp
         crypto/Random.cpp
         crypto/SymmetricCipher.cpp
-        crypto/SymmetricCipherGcrypt.cpp
         crypto/kdf/Kdf.cpp
         crypto/kdf/AesKdf.cpp
         crypto/kdf/Argon2Kdf.cpp
@@ -182,7 +181,6 @@ set(keepassx_SOURCES
         keys/FileKey.cpp
         keys/PasswordKey.cpp
         keys/YkChallengeResponseKey.cpp
-        keys/YkChallengeResponseKeyCLI.cpp
         streams/HashedBlockStream.cpp
         streams/HmacBlockStream.cpp
         streams/LayeredStream.cpp
@@ -246,11 +244,6 @@ add_subdirectory(autotype)
 add_subdirectory(cli)
 add_subdirectory(qrcode)
 set(qrcode_LIB qrcode)
-
-add_subdirectory(crypto/ssh)
-if(WITH_XC_CRYPTO_SSH)
-    set(crypto_ssh_LIB crypto_ssh)
-endif()
 
 add_subdirectory(keeshare)
 if(WITH_XC_KEESHARE)
@@ -322,10 +315,9 @@ target_link_libraries(keepassx_core
         Qt5::Concurrent
         Qt5::Network
         Qt5::Widgets
-        ${sodium_LIBRARY_RELEASE}
+        ${BOTAN2_LIBRARIES}
         ${YUBIKEY_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
-        ${ARGON2_LIBRARIES}
         ${ZLIB_LIBRARIES}
 	)
 
@@ -370,7 +362,6 @@ if(MINGW)
 endif()
 
 add_executable(${PROGNAME} WIN32 ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
-target_link_libraries(keepassx_core ${GCRYPT_LIBRARIES} ${GPGERROR_LIBRARIES})
 target_link_libraries(${PROGNAME} keepassx_core)
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
@@ -497,7 +488,7 @@ if(MINGW)
 
         find_file(CRYPTO_DLL NAMES libcrypto-1_1.dll libcrypto-1_1-x64.dll)
         if (NOT CRYPTO_DLL)
-            message(FATAL_ERROR "Cannot find libcrypto dll, ensure libgcrypt is properly installed.")
+            message(FATAL_ERROR "Cannot find libcrypto dll, ensure openssl is properly installed.")
         endif()
 
         install(FILES ${OPENSSL_DLL} ${CRYPTO_DLL} DESTINATION ".")

@@ -17,46 +17,64 @@
 
 #include "Random.h"
 
-#include <gcrypt.h>
-
 #include "core/Global.h"
 #include "crypto/Crypto.h"
 
-class RandomBackendGcrypt : public RandomBackend
-{
-public:
-    void randomize(void* data, int len) override;
-};
+#include <QPointer>
+#include <QSharedPointer>
+
+#include <botan/auto_rng.h>
+#include <botan/system_rng.h>
 
 QSharedPointer<Random> Random::m_instance;
 
+QSharedPointer<Random> Random::instance()
+{
+    if (!m_instance) {
+        m_instance.reset(new Random());
+    }
+    return m_instance;
+}
+
+Random::Random()
+{
+#ifdef BOTAN_HAS_SYSTEM_RNG
+    m_rng.reset(new Botan::System_RNG);
+#else
+    m_rng.reset(new Botan::Autoseeded_RNG);
+#endif
+}
+
+QSharedPointer<Botan::RandomNumberGenerator> Random::getRng()
+{
+    return m_rng;
+}
+
 void Random::randomize(QByteArray& ba)
 {
-    m_backend->randomize(ba.data(), ba.size());
+    m_rng->randomize(reinterpret_cast<uint8_t*>(ba.data()), ba.size());
 }
 
 QByteArray Random::randomArray(int len)
 {
-    QByteArray ba;
-    ba.resize(len);
-
+    QByteArray ba(len, '\0');
     randomize(ba);
-
     return ba;
 }
 
 quint32 Random::randomUInt(quint32 limit)
 {
-    Q_ASSERT(limit != 0);
     Q_ASSERT(limit <= QUINT32_MAX);
+    if (limit == 0) {
+        return 0;
+    }
 
     quint32 rand;
     const quint32 ceil = QUINT32_MAX - (QUINT32_MAX % limit) - 1;
 
-    // To avoid modulo bias:
-    // Make sure rand is below the largest number where rand%limit==0
+    // To avoid modulo bias make sure rand is below the largest number where rand%limit==0
     do {
-        m_backend->randomize(&rand, 4);
+        m_rng->randomize(reinterpret_cast<uint8_t*>(&rand), 4);
     } while (rand > ceil);
 
     return (rand % limit);
@@ -65,39 +83,4 @@ quint32 Random::randomUInt(quint32 limit)
 quint32 Random::randomUIntRange(quint32 min, quint32 max)
 {
     return min + randomUInt(max - min);
-}
-
-Random* Random::instance()
-{
-    if (!m_instance) {
-        m_instance.reset(new Random(new RandomBackendGcrypt()));
-    }
-
-    return m_instance.data();
-}
-
-void Random::resetInstance()
-{
-    m_instance.reset();
-}
-
-void Random::setInstance(RandomBackend* backend)
-{
-    m_instance.reset(new Random(backend));
-}
-
-Random::Random(RandomBackend* backend)
-    : m_backend(backend)
-{
-}
-
-void RandomBackendGcrypt::randomize(void* data, int len)
-{
-    Q_ASSERT(Crypto::initialized());
-
-    gcry_randomize(data, len, GCRY_STRONG_RANDOM);
-}
-
-RandomBackend::~RandomBackend()
-{
 }

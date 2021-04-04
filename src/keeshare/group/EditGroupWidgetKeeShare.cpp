@@ -23,7 +23,6 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Resources.h"
-#include "crypto/ssh/OpenSSHKey.h"
 #include "gui/FileDialog.h"
 #include "keeshare/KeeShare.h"
 
