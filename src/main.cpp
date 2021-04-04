@@ -96,6 +96,14 @@ int main(int argc, char** argv)
         return EXIT_SUCCESS;
     }
 
+    // Show debug information and then exit
+    if (parser.isSet(debugInfoOption)) {
+        QTextStream out(stdout, QIODevice::WriteOnly);
+        QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
+        out << debugInfo << endl;
+        return EXIT_SUCCESS;
+    }
+
     // Process config file options early
     if (parser.isSet(configOption) || parser.isSet(localConfigOption)) {
         Config::createConfigFromFile(parser.value(configOption), parser.value(localConfigOption));
@@ -111,15 +119,6 @@ int main(int argc, char** argv)
         return EXIT_SUCCESS;
     }
 
-    // Apply the configured theme before creating any GUI elements
-    app.applyTheme();
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-    QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
-#endif
-
-    Application::bootstrap();
-
     if (!Crypto::init()) {
         QString error = QObject::tr("Fatal error while testing the cryptographic functions.");
         error.append("\n");
@@ -128,14 +127,14 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    // Displaying the debugging informations must be done after Crypto::init,
-    // to make sure we know which libgcrypt version is used.
-    if (parser.isSet(debugInfoOption)) {
-        QTextStream out(stdout, QIODevice::WriteOnly);
-        QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
-        out << debugInfo << endl;
-        return EXIT_SUCCESS;
-    }
+    // Apply the configured theme before creating any GUI elements
+    app.applyTheme();
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+    QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
+#endif
+
+    Application::bootstrap();
 
     MainWindow mainWindow;
 
