@@ -701,6 +701,7 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
 
     if (!settings.toOpenSSHKey(m_mainUi->usernameComboBox->lineEdit()->text(),
                                m_mainUi->passwordEdit->text(),
+                               m_db->filePath(),
                                m_advancedUi->attachmentsWidget->entryAttachments(),
                                key,
                                decrypt)) {

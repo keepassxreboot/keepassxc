@@ -44,6 +44,7 @@ public:
     bool toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool decrypt);
     bool toOpenSSHKey(const QString& username,
                       const QString& password,
+                      const QString& databasePath,
                       const EntryAttachments* attachments,
                       OpenSSHKey& key,
                       bool decrypt);
