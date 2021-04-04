@@ -17,6 +17,7 @@
  */
 
 #include "KeeAgentSettings.h"
+#include "core/Database.h"
 #include "core/Tools.h"
 
 KeeAgentSettings::KeeAgentSettings()
@@ -389,7 +390,8 @@ bool KeeAgentSettings::keyConfigured() const
  */
 bool KeeAgentSettings::toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool decrypt)
 {
-    return toOpenSSHKey(entry->username(), entry->password(), entry->attachments(), key, decrypt);
+    return toOpenSSHKey(
+        entry->username(), entry->password(), entry->database()->filePath(), entry->attachments(), key, decrypt);
 }
 
 /**
@@ -399,6 +401,7 @@ bool KeeAgentSettings::toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool de
  *
  * @param username username to set on key if empty
  * @param password password to decrypt key if needed
+ * @param databasePath path to database file this key is loaded from
  * @param attachments attachments to read an attachment key from
  * @param key output key object
  * @param decrypt avoid private key decryption if possible (old RSA keys are always decrypted)
@@ -406,6 +409,7 @@ bool KeeAgentSettings::toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool de
  */
 bool KeeAgentSettings::toOpenSSHKey(const QString& username,
                                     const QString& password,
+                                    const QString& databasePath,
                                     const EntryAttachments* attachments,
                                     OpenSSHKey& key,
                                     bool decrypt)
@@ -423,9 +427,18 @@ bool KeeAgentSettings::toOpenSSHKey(const QString& username,
         fileName = m_attachmentName;
         privateKeyData = attachments->value(fileName);
     } else {
-        QFile localFile(fileNameEnvSubst());
-        QFileInfo localFileInfo(localFile);
+        QString fileNameSubst = fileNameEnvSubst();
+        QFileInfo localFileInfo(fileNameSubst);
+
+        // resolve relative private key path from database location
+        if (localFileInfo.isRelative()) {
+            QFileInfo databaseFileInfo(databasePath);
+            localFileInfo = QFileInfo(databaseFileInfo.absolutePath() + QDir::separator() + fileNameSubst);
+        }
+
         fileName = localFileInfo.fileName();
+
+        QFile localFile(localFileInfo.absoluteFilePath());
 
         if (localFile.fileName().isEmpty()) {
             m_error = QCoreApplication::translate("KeeAgentSettings", "Private key is empty");
