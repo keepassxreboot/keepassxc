@@ -62,7 +62,7 @@ QString YubiKey::errorMessage()
     return {};
 }
 
-YubiKey::ChallengeResult YubiKey::challenge(YubiKeySlot slot, const QByteArray& chal, QByteArray& resp)
+YubiKey::ChallengeResult YubiKey::challenge(YubiKeySlot slot, const QByteArray& chal, Botan::secure_vector<char>& resp)
 {
     Q_UNUSED(slot);
     Q_UNUSED(chal);
