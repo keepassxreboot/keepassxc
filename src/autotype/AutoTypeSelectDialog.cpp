@@ -281,16 +281,25 @@ void AutoTypeSelectDialog::buildActionMenu()
     });
 
     connect(copyUsernameAction, &QAction::triggered, this, [&] {
-        clipboard()->setText(m_ui->view->currentMatch().first->username());
-        reject();
+        auto entry = m_ui->view->currentMatch().first;
+        if (entry) {
+            clipboard()->setText(entry->resolvePlaceholder(entry->username()));
+            reject();
+        }
     });
     connect(copyPasswordAction, &QAction::triggered, this, [&] {
-        clipboard()->setText(m_ui->view->currentMatch().first->password());
-        reject();
+        auto entry = m_ui->view->currentMatch().first;
+        if (entry) {
+            clipboard()->setText(entry->resolvePlaceholder(entry->password()));
+            reject();
+        }
     });
     connect(copyTotpAction, &QAction::triggered, this, [&] {
-        clipboard()->setText(m_ui->view->currentMatch().first->totp());
-        reject();
+        auto entry = m_ui->view->currentMatch().first;
+        if (entry) {
+            clipboard()->setText(entry->totp());
+            reject();
+        }
     });
 }
 
