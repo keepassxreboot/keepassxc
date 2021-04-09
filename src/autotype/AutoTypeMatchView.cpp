@@ -73,9 +73,13 @@ void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)
 {
     if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && currentIndex().isValid()) {
         emit matchActivated(matchFromIndex(currentIndex()));
+    } else if (event->key() == Qt::Key_PageUp) {
+        moveSelection(-5);
+    } else if (event->key() == Qt::Key_PageDown) {
+        moveSelection(5);
+    } else {
+        QTableView::keyPressEvent(event);
     }
-
-    QTableView::keyPressEvent(event);
 }
 
 void AutoTypeMatchView::setMatchList(const QList<AutoTypeMatch>& matches, bool selectFirst)
@@ -99,6 +103,13 @@ void AutoTypeMatchView::filterList(const QString& filter)
 {
     m_sortModel->setFilterWildcard(filter);
     setCurrentIndex(m_sortModel->index(0, 0));
+}
+
+void AutoTypeMatchView::moveSelection(int offset)
+{
+    auto index = currentIndex();
+    auto row = index.isValid() ? index.row() : -1;
+    selectRow(qBound(0, row + offset, model()->rowCount() - 1));
 }
 
 AutoTypeMatch AutoTypeMatchView::currentMatch()

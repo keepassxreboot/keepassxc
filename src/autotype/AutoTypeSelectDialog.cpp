@@ -147,33 +147,6 @@ void AutoTypeSelectDialog::performSearch()
     m_ui->view->setMatchList(matches, !m_ui->search->text().isEmpty());
 }
 
-void AutoTypeSelectDialog::moveSelectionUp()
-{
-    auto current = m_ui->view->currentIndex();
-    auto previous = current.sibling(current.row() - 1, 0);
-
-    if (previous.isValid()) {
-        m_ui->view->setCurrentIndex(previous);
-    }
-}
-
-void AutoTypeSelectDialog::moveSelectionDown()
-{
-    auto current = m_ui->view->currentIndex();
-
-    // special case where we have no default selection (empty search)
-    if (!current.isValid()) {
-        m_ui->view->setCurrentIndex(m_ui->view->indexAt({0, 0}));
-        return;
-    }
-
-    auto next = current.sibling(current.row() + 1, 0);
-
-    if (next.isValid()) {
-        m_ui->view->setCurrentIndex(next);
-    }
-}
-
 void AutoTypeSelectDialog::activateCurrentMatch()
 {
     submitAutoTypeMatch(m_ui->view->currentMatch());
@@ -217,10 +190,16 @@ bool AutoTypeSelectDialog::eventFilter(QObject* obj, QEvent* event)
             auto* keyEvent = static_cast<QKeyEvent*>(event);
             switch (keyEvent->key()) {
             case Qt::Key_Up:
-                moveSelectionUp();
+                m_ui->view->moveSelection(-1);
                 return true;
             case Qt::Key_Down:
-                moveSelectionDown();
+                m_ui->view->moveSelection(1);
+                return true;
+            case Qt::Key_PageUp:
+                m_ui->view->moveSelection(-5);
+                return true;
+            case Qt::Key_PageDown:
+                m_ui->view->moveSelection(5);
                 return true;
             case Qt::Key_Escape:
                 if (m_ui->search->text().isEmpty()) {
