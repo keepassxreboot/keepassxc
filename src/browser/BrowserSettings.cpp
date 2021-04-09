@@ -452,25 +452,25 @@ PasswordGenerator::CharClasses BrowserSettings::passwordCharClasses()
     if (passwordUseNumbers()) {
         classes |= PasswordGenerator::Numbers;
     }
-    if (passwordUseSpecial()) {
+    if (passwordUseSpecial() && !advancedMode()) {
         classes |= PasswordGenerator::SpecialCharacters;
     }
-    if (passwordUseBraces()) {
+    if (passwordUseBraces() && advancedMode()) {
         classes |= PasswordGenerator::Braces;
     }
-    if (passwordUsePunctuation()) {
+    if (passwordUsePunctuation() && advancedMode()) {
         classes |= PasswordGenerator::Punctuation;
     }
-    if (passwordUseQuotes()) {
+    if (passwordUseQuotes() && advancedMode()) {
         classes |= PasswordGenerator::Quotes;
     }
-    if (passwordUseDashes()) {
+    if (passwordUseDashes() && advancedMode()) {
         classes |= PasswordGenerator::Dashes;
     }
-    if (passwordUseMath()) {
+    if (passwordUseMath() && advancedMode()) {
         classes |= PasswordGenerator::Math;
     }
-    if (passwordUseLogograms()) {
+    if (passwordUseLogograms() && advancedMode()) {
         classes |= PasswordGenerator::Logograms;
     }
     if (passwordUseEASCII()) {
@@ -497,6 +497,10 @@ QJsonObject BrowserSettings::generatePassword()
     if (generatorType() == 0) {
         m_passwordGenerator.setLength(passwordLength());
         m_passwordGenerator.setCharClasses(passwordCharClasses());
+        if (advancedMode()) {
+            m_passwordGenerator.setAdditionalChars(passwordAdditionalChars());
+            m_passwordGenerator.setExcludedChars(passwordExcludedChars());
+        }
         m_passwordGenerator.setFlags(passwordGeneratorFlags());
         const QString pw = m_passwordGenerator.generatePassword();
         password["entropy"] = PasswordHealth(pw).entropy();
