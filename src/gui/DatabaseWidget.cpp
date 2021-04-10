@@ -237,7 +237,7 @@ DatabaseWidget::~DatabaseWidget()
     delete m_EntrySearcher;
 }
 
-QSharedPointer<Database> DatabaseWidget::database() const
+const QSharedPointer<Database> &DatabaseWidget::database() const
 {
     return m_db;
 }

@@ -78,7 +78,7 @@ public:
 
     void setFocus(Qt::FocusReason reason);
 
-    QSharedPointer<Database> database() const;
+    const QSharedPointer<Database> &database() const;
 
     DatabaseWidget::Mode currentMode() const;
     bool isLocked() const;
