@@ -278,15 +278,15 @@ void TestGui::testCreateDatabase()
         QTRY_VERIFY(!additionalOptionsButton->isVisible());
         QCOMPARE(passwordWidget->visiblePage(), KeyFileEditWidget::Page::Edit);
         QTest::mouseClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::MouseButton::LeftButton);
-        auto* fileCombo = keyFileWidget->findChild<QComboBox*>("keyFileCombo");
-        QTRY_VERIFY(fileCombo);
-        QTRY_VERIFY(fileCombo->isVisible());
+        auto* fileEdit = keyFileWidget->findChild<QLineEdit*>("keyFileLineEdit");
+        QTRY_VERIFY(fileEdit);
+        QTRY_VERIFY(fileEdit->isVisible());
         fileDialog()->setNextFileName(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
         QTest::keyClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::Key::Key_Enter);
-        QVERIFY(fileCombo->hasFocus());
+        QVERIFY(fileEdit->hasFocus());
         auto* browseButton = keyFileWidget->findChild<QPushButton*>("browseKeyFileButton");
         QTest::keyClick(browseButton, Qt::Key::Key_Enter);
-        QCOMPARE(fileCombo->currentText(), QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
+        QCOMPARE(fileEdit->text(), QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
 
         // save database to temporary file
         TemporaryFile tmpFile;
@@ -294,7 +294,7 @@ void TestGui::testCreateDatabase()
         tmpFile.close();
         fileDialog()->setNextFileName(tmpFile.fileName());
 
-        QTest::keyClick(fileCombo, Qt::Key::Key_Enter);
+        QTest::keyClick(fileEdit, Qt::Key::Key_Enter);
         tmpFile.remove(););
 
     triggerAction("actionDatabaseNew");
