@@ -514,7 +514,7 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
         return {};
     }
 
-    const int maxTypeDelay = 100;
+    const int maxTypeDelay = 500;
     const int maxWaitDelay = 10000;
     const int maxRepetition = 100;
 
