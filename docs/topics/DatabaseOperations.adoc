@@ -171,6 +171,9 @@ The following tables lists a few samples search queries for your reference:
 
 |`+user:johnsmith -url:www.google.com *notes:"secret note \d"`
 |Search the username field for exactly johnsmith, the URL must not contain www.google.com, and notes contains secret note [digit].
+
+|`+attr:mystring123`
+|Searches all Additional Attributes for any name OR value equal to mystring123.
 |===
 
 == Advanced Entry Options
