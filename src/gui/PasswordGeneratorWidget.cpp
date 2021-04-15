@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QKeyEvent>
 #include <QLineEdit>
+#include <QShortcut>
 #include <QTimer>
 
 #include "core/Config.h"
@@ -45,6 +46,12 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
         tr("Regenerate password (%1)").arg(m_ui->buttonGenerate->shortcut().toString(QKeySequence::NativeText)));
     m_ui->buttonCopy->setIcon(icons()->icon("clipboard-text"));
     m_ui->buttonClose->setShortcut(Qt::Key_Escape);
+
+    // Add two shortcuts to save the form CTRL+Enter and CTRL+S
+    auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_Return, this);
+    connect(shortcut, &QShortcut::activated, this, [this] { applyPassword(); });
+    shortcut = new QShortcut(Qt::CTRL + Qt::Key_S, this);
+    connect(shortcut, &QShortcut::activated, this, [this] { applyPassword(); });
 
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateButtonsEnabled(QString)));
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
