@@ -96,7 +96,7 @@ EntryView::EntryView(QWidget* parent)
     // column index as data
     m_columnActions = new QActionGroup(this);
     m_columnActions->setExclusive(false);
-    for (int visualIndex = 1; visualIndex < header()->count(); ++visualIndex) {
+    for (int visualIndex = 0; visualIndex < header()->count(); ++visualIndex) {
         int logicalIndex = header()->logicalIndex(visualIndex);
         QString caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::DisplayRole).toString();
         if (caption.isEmpty()) {
