@@ -76,7 +76,7 @@ public:
     QVector<uint> keyToKeyCodes(Qt::Key key);
     QVector<uint> modifiersToKeyCodes(Qt::KeyboardModifiers modifiers);
 
-    void sendKeyCodesToTarget(const QSharedPointer<AutoTypeTargetLibvirt>& target, QVector<uint> keyCodes);
+    void sendKeyCodesToTarget(QSharedPointer<AutoTypeTargetLibvirt> target, QVector<uint> keyCodes);
 
 private:
     bool shouldHandleDeadKeys(OperatingSystem operatingSystem);
@@ -95,9 +95,9 @@ class AutoTypeExecutorLibvirt : public TargetedAutoTypeExecutor
 public:
     explicit AutoTypeExecutorLibvirt(AutoTypeExtLibvirt* plugin);
 
-    AutoTypeAction::Result execBegin(const AutoTypeBegin* action, const QSharedPointer<AutoTypeTarget>& target) override;
-    AutoTypeAction::Result execType(AutoTypeKey* action, const QSharedPointer<AutoTypeTarget>& target) override;
-    AutoTypeAction::Result execClearField(AutoTypeClearField* action, const QSharedPointer<AutoTypeTarget>& target) override;
+    AutoTypeAction::Result execBegin(const AutoTypeBegin* action, QSharedPointer<AutoTypeTarget> target) override;
+    AutoTypeAction::Result execType(AutoTypeKey* action, QSharedPointer<AutoTypeTarget> target) override;
+    AutoTypeAction::Result execClearField(AutoTypeClearField* action, QSharedPointer<AutoTypeTarget> target) override;
 
 private:
     AutoTypeExtLibvirt* const m_plugin;

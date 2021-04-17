@@ -44,7 +44,7 @@ public:
     void setTargetMap(const AutoTypeTargetMap& targetMap) override;
     void clearActions() override;
 
-    void addAction(const QSharedPointer<AutoTypeTarget>& target, const AutoTypeKey* action);
+    void addAction(QSharedPointer<AutoTypeTarget> target, const AutoTypeKey* action);
 
 private:
     QHash<QString, int> m_actionCountPerTarget;
@@ -62,9 +62,9 @@ class AutoTypeExtExecutorTest : public TargetedAutoTypeExecutor
 public:
     explicit AutoTypeExtExecutorTest(AutoTypeExtTest* platform);
 
-    AutoTypeAction::Result execBegin(const AutoTypeBegin* action, const QSharedPointer<AutoTypeTarget>& target) override;
-    AutoTypeAction::Result execType(AutoTypeKey* action, const QSharedPointer<AutoTypeTarget>& target) override;
-    AutoTypeAction::Result execClearField(AutoTypeClearField* action, const QSharedPointer<AutoTypeTarget>& target) override;
+    AutoTypeAction::Result execBegin(const AutoTypeBegin* action, QSharedPointer<AutoTypeTarget> target) override;
+    AutoTypeAction::Result execType(AutoTypeKey* action, QSharedPointer<AutoTypeTarget> target) override;
+    AutoTypeAction::Result execClearField(AutoTypeClearField* action, QSharedPointer<AutoTypeTarget> target) override;
 
 private:
     AutoTypeExtTest* const m_platform;

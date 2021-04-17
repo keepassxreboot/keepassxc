@@ -86,7 +86,7 @@ void AutoTypeExtTest::clearActions()
     m_actionCountTargetless = 0;
 }
 
-void AutoTypeExtTest::addAction(const QSharedPointer<AutoTypeTarget>& target, const AutoTypeKey* action)
+void AutoTypeExtTest::addAction(QSharedPointer<AutoTypeTarget> target, const AutoTypeKey* action)
 {
     QString toAppend = (action->key != Qt::Key_unknown) ? keyToString(action->key) : action->character;
 
@@ -111,22 +111,21 @@ AutoTypeExtExecutorTest::AutoTypeExtExecutorTest(AutoTypeExtTest* platform)
 }
 
 AutoTypeAction::Result AutoTypeExtExecutorTest::execBegin(const AutoTypeBegin* action,
-                                                          const QSharedPointer<AutoTypeTarget>& target)
+                                                          QSharedPointer<AutoTypeTarget> target)
 {
     Q_UNUSED(target);
     Q_UNUSED(action);
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeAction::Result AutoTypeExtExecutorTest::execType(AutoTypeKey* action,
-                                                         const QSharedPointer<AutoTypeTarget>& target)
+AutoTypeAction::Result AutoTypeExtExecutorTest::execType(AutoTypeKey* action, QSharedPointer<AutoTypeTarget> target)
 {
     m_platform->addAction(target, action);
     return AutoTypeAction::Result::Ok();
 }
 
 AutoTypeAction::Result AutoTypeExtExecutorTest::execClearField(AutoTypeClearField* action,
-                                                               const QSharedPointer<AutoTypeTarget>& target)
+                                                               QSharedPointer<AutoTypeTarget> target)
 {
     Q_UNUSED(target);
     Q_UNUSED(action);

@@ -399,7 +399,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
 void AutoType::executeAutoTypeActionsOnExternalTarget(const Entry* entry,
                                                       const QString& pluginName,
-                                                      const QSharedPointer<AutoTypeTarget>& target,
+                                                      QSharedPointer<AutoTypeTarget> target,
                                                       const QString& sequence)
 {
     if (!m_external_executors.contains(pluginName)) {
@@ -473,7 +473,7 @@ void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& se
 
 void AutoType::performAutoTypeOnExternalPlugin(const Entry* entry,
                                                const QString& pluginName,
-                                               const QSharedPointer<AutoTypeTarget>& target)
+                                               QSharedPointer<AutoTypeTarget> target)
 {
     if (!m_external_plugins.contains(pluginName)) {
         qWarning("Attempted to auto-type for plugin that is not loaded: %s", qPrintable(pluginName));

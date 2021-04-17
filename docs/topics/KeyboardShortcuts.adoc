@@ -27,6 +27,7 @@ NOTE: On macOS please substitute `Ctrl` with `Cmd` (aka `⌘`).
 |Copy TOTP                    | Ctrl + T
 |Show TOTP                    | Ctrl + Shift + T
 |Trigger AutoType             | Ctrl + Shift + V
+|Trigger Libvirt AutoType     | Ctrl + Shift + L
 |Add key to SSH Agent         | Ctrl + H
 |Remove key from SSH Agent    | Ctrl + Shift + H
 |Minimize Window              | Ctrl + M

@@ -249,7 +249,7 @@ QVector<uint> AutoTypeExtLibvirt::modifiersToKeyCodes(Qt::KeyboardModifiers modi
     return keyCodes;
 }
 
-void AutoTypeExtLibvirt::sendKeyCodesToTarget(const QSharedPointer<AutoTypeTargetLibvirt>& target,
+void AutoTypeExtLibvirt::sendKeyCodesToTarget(QSharedPointer<AutoTypeTargetLibvirt> target,
                                               QVector<uint> keyCodes)
 {
     if (target->getDomain() == nullptr) {
@@ -282,14 +282,14 @@ AutoTypeExecutorLibvirt::AutoTypeExecutorLibvirt(AutoTypeExtLibvirt* plugin)
 }
 
 AutoTypeAction::Result AutoTypeExecutorLibvirt::execBegin(const AutoTypeBegin* action,
-                                                          const QSharedPointer<AutoTypeTarget>& target)
+                                                          QSharedPointer<AutoTypeTarget> target)
 {
     Q_UNUSED(target);
     Q_UNUSED(action);
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(AutoTypeKey* action, const QSharedPointer<AutoTypeTarget>& target)
+AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(AutoTypeKey* action, QSharedPointer<AutoTypeTarget> target)
 {
     auto libvirtTarget = target.staticCast<AutoTypeTargetLibvirt>();
 
@@ -307,7 +307,8 @@ AutoTypeAction::Result AutoTypeExecutorLibvirt::execType(AutoTypeKey* action, co
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeAction::Result AutoTypeExecutorLibvirt::execClearField(AutoTypeClearField* action, const QSharedPointer<AutoTypeTarget>& target)
+AutoTypeAction::Result AutoTypeExecutorLibvirt::execClearField(AutoTypeClearField* action,
+                                                               QSharedPointer<AutoTypeTarget> target)
 {
     Q_UNUSED(action);
     execType(new AutoTypeKey(Qt::Key_Home, Qt::ControlModifier), target);

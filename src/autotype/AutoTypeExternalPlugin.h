@@ -69,7 +69,7 @@ public:
         return QSharedPointer<AutoTypeTarget>(nullptr);
     }
 
-    void append(const QSharedPointer<AutoTypeTarget>& target)
+    void append(QSharedPointer<AutoTypeTarget> target)
     {
         m_targets.append(target);
     }

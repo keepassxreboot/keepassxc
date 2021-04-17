@@ -129,7 +129,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
-    m_entryContextMenu->addAction(m_ui->menuEntryAutoTypeExternal->menuAction());
+    m_entryContextMenu->addAction(m_ui->actionEntryAutoTypeExternal);
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryEdit);
     m_entryContextMenu->addAction(m_ui->actionEntryClone);
@@ -158,6 +158,11 @@ MainWindow::MainWindow()
     if (autoTypeButton) {
         autoTypeButton->setPopupMode(QToolButton::MenuButtonPopup);
     }
+
+    // Build Entry Level Auto-Type menu
+    auto autotypeExternalMenu = new QMenu({}, this);
+    autotypeExternalMenu->addAction(m_ui->actionEntryAutoTypeExternalLibvirt);
+    m_ui->actionEntryAutoTypeExternal->setMenu(autotypeExternalMenu);
 
     restoreGeometry(config()->get(Config::GUI_MainWindowGeometry).toByteArray());
     restoreState(config()->get(Config::GUI_MainWindowState).toByteArray());
@@ -238,8 +243,8 @@ MainWindow::MainWindow()
     m_showToolbarSeparator = config()->get(Config::GUI_ApplicationTheme).toString() != "classic";
 
     m_ui->actionEntryAutoType->setVisible(autoType()->isAvailable());
-    m_ui->menuEntryAutoTypeExternal->setVisible(autoType()->isAnyExternalPluginAvailable());
-    m_ui->actionEntryAutoTypePluginLibvirt->setVisible(autoType()->isExternalPluginAvailable("libvirt"));
+    m_ui->actionEntryAutoTypeExternal->setVisible(autoType()->isAnyExternalPluginAvailable());
+    m_ui->actionEntryAutoTypeExternalLibvirt->setVisible(autoType()->isExternalPluginAvailable("libvirt"));
 
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
@@ -269,6 +274,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
     m_ui->actionEntryAutoTypeSequence->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    m_ui->actionEntryAutoTypeExternalLibvirt->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
 
@@ -376,8 +382,8 @@ MainWindow::MainWindow()
     m_ui->actionEntryAutoTypeUsernameEnter->setIcon(icons()->icon("auto-type"));
     m_ui->actionEntryAutoTypePassword->setIcon(icons()->icon("auto-type"));
     m_ui->actionEntryAutoTypePasswordEnter->setIcon(icons()->icon("auto-type"));
-    m_ui->menuEntryAutoTypeExternal->setIcon(icons()->icon("auto-type"));
-    m_ui->actionEntryAutoTypePluginLibvirt->setIcon(icons()->icon("auto-type"));
+    m_ui->actionEntryAutoTypeExternal->setIcon(icons()->icon("auto-type"));
+    m_ui->actionEntryAutoTypeExternalLibvirt->setIcon(icons()->icon("auto-type"));
     m_ui->actionEntryMoveUp->setIcon(icons()->icon("move-up"));
     m_ui->actionEntryMoveDown->setIcon(icons()->icon("move-down"));
     m_ui->actionEntryCopyUsername->setIcon(icons()->icon("username-copy"));
@@ -481,7 +487,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(
         m_ui->actionEntryAutoTypePasswordEnter, SIGNAL(triggered()), SLOT(performAutoTypePasswordEnter()));
     m_actionMultiplexer.connect(
-        m_ui->actionEntryAutoTypePluginLibvirt, SIGNAL(triggered()), SLOT(performAutoTypePluginLibvirt()));
+        m_ui->actionEntryAutoTypeExternalLibvirt, SIGNAL(triggered()), SLOT(performAutoTypePluginLibvirt()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()), SLOT(openUrl()));
     m_actionMultiplexer.connect(m_ui->actionEntryDownloadIcon, SIGNAL(triggered()), SLOT(downloadSelectedFavicons()));
 #ifdef WITH_XC_SSHAGENT
@@ -812,18 +818,19 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->menu()->setEnabled(singleEntrySelected);
+            m_ui->actionEntryAutoTypeExternal->setEnabled(singleEntrySelected);
+            m_ui->actionEntryAutoTypeExternal->menu()->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoTypeSequence->setText(
                 singleEntrySelected ? dbWidget->currentSelectedEntry()->effectiveAutoTypeSequence()
                                     : Group::RootAutoTypeSequence);
             m_ui->actionEntryAutoTypeSequence->setEnabled(singleEntrySelected);
-            m_ui->menuEntryAutoTypeExternal->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoTypeUsername->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUsername());
             m_ui->actionEntryAutoTypeUsernameEnter->setEnabled(singleEntrySelected
                                                                && dbWidget->currentEntryHasUsername());
             m_ui->actionEntryAutoTypePassword->setEnabled(singleEntrySelected && dbWidget->currentEntryHasPassword());
             m_ui->actionEntryAutoTypePasswordEnter->setEnabled(singleEntrySelected
                                                                && dbWidget->currentEntryHasPassword());
-            m_ui->actionEntryAutoTypePluginLibvirt->setEnabled(singleEntrySelected
+            m_ui->actionEntryAutoTypeExternalLibvirt->setEnabled(singleEntrySelected
                                                                && autoType()->isExternalPluginAvailable("libvirt"));
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
@@ -877,7 +884,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                                                                m_ui->actionEntryCopyURL,
                                                                m_ui->actionEntryOpenUrl,
                                                                m_ui->actionEntryAutoType,
-                                                               m_ui->menuEntryAutoTypeExternal->menuAction(),
+                                                               m_ui->actionEntryAutoTypeExternal,
                                                                m_ui->actionEntryDownloadIcon,
                                                                m_ui->actionEntryCopyNotes,
                                                                m_ui->actionEntryCopyTitle,
