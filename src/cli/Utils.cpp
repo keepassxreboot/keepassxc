@@ -308,7 +308,14 @@ namespace Utils
                 continue;
             }
 
-            if (clipProcess->write(text.toLatin1()) == -1) {
+#ifdef Q_OS_WIN
+            // Windows clip command only understands Unicode written as UTF-16
+            auto data = QByteArray::fromRawData(reinterpret_cast<const char*>(text.utf16()), text.size() * 2);
+            if (clipProcess->write(data) == -1) {
+#else
+            // Other platforms understand UTF-8
+            if (clipProcess->write(text.toUtf8()) == -1) {
+#endif
                 qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
             }
             clipProcess->waitForBytesWritten();
