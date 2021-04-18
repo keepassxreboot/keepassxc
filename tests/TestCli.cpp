@@ -284,7 +284,7 @@ void TestCli::testAdd()
              "-g",
              "-L",
              "20",
-             "-n",
+             "--notes",
              "some notes",
              m_dbFile->fileName(),
              "/newuser-entry"});
@@ -360,7 +360,7 @@ void TestCli::testAdd()
     QVERIFY(!defaultPasswordClassesRegex.match(entry->password()).hasMatch());
 
     setInput("a");
-    execCmd(addCmd, {"add", "-u", "newuser5", "-n", "test\\nnew line", m_dbFile->fileName(), "/newuser-entry5"});
+    execCmd(addCmd, {"add", "-u", "newuser5", "--notes", "test\\nnew line", m_dbFile->fileName(), "/newuser-entry5"});
     m_stderr->readLine(); // skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray(""));
     QCOMPARE(m_stdout->readAll(), QByteArray("Successfully added entry newuser-entry5.\n"));
@@ -446,7 +446,7 @@ void TestCli::testClip()
 
     // Password
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry"});
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0"});
     QString errorOutput(m_stderr->readAll());
 
     if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
@@ -465,21 +465,25 @@ void TestCli::testClip()
 
     // Quiet option
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "-q"});
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-q"});
     QCOMPARE(m_stderr->readAll(), QByteArray());
     QCOMPARE(m_stdout->readAll(), QByteArray());
     QTRY_COMPARE(clipboard->text(), QString("Password"));
 
     // Username
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "-a", "username"});
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-a", "username"});
     QTRY_COMPARE(clipboard->text(), QString("User Name"));
 
     // TOTP
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "--totp"});
-
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "--totp"});
     QTRY_VERIFY(isTotp(clipboard->text()));
+
+    // Test Unicode
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "/General/Unicode", "0", "-a", "username"});
+    QTRY_COMPARE(clipboard->text(), QString(R"(¯\_(ツ)_/¯)"));
 
     // Password with timeout
     setInput("a");
@@ -506,34 +510,30 @@ void TestCli::testClip()
     future.waitForFinished();
 
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "0"});
-    QVERIFY(m_stderr->readAll().contains("Invalid timeout value 0.\n"));
-
-    setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "bleuh"});
     QVERIFY(m_stderr->readAll().contains("Invalid timeout value bleuh.\n"));
 
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
+    execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry", "0"});
     QVERIFY(m_stderr->readAll().contains("Entry with path /Sample Entry has no TOTP set up.\n"));
 
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "-a", "TESTAttribute1", "/Sample Entry"});
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "-a", "TESTAttribute1", "/Sample Entry", "0"});
     QVERIFY(m_stderr->readAll().contains("ERROR: attribute TESTAttribute1 is ambiguous"));
 
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry"});
+    execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry", "0"});
     QVERIFY(m_stderr->readAll().contains("ERROR: Please specify one of --attribute or --totp, not both.\n"));
 
     // Best option
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFileMulti->fileName(), "Multi", "-b"});
+    execCmd(clipCmd, {"clip", m_dbFileMulti->fileName(), "Multi", "0", "-b"});
     QByteArray errorChoices = m_stderr->readAll();
     QVERIFY(errorChoices.contains("Multi Entry 1"));
     QVERIFY(errorChoices.contains("Multi Entry 2"));
 
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFileMulti->fileName(), "Entry 2", "-b"});
+    execCmd(clipCmd, {"clip", m_dbFileMulti->fileName(), "Entry 2", "0", "-b"});
     QTRY_COMPARE(clipboard->text(), QString("Password2"));
 }
 
@@ -750,7 +750,7 @@ void TestCli::testEdit()
              "newuser",
              "--url",
              "https://otherurl.example.com/",
-             "-n",
+             "--notes",
              "newnotes",
              "-t",
              "newtitle",
@@ -825,7 +825,7 @@ void TestCli::testEdit()
 
     // with line break in notes
     setInput("a");
-    execCmd(editCmd, {"edit", m_dbFile->fileName(), "-n", "testing\\nline breaks", "/evennewertitle"});
+    execCmd(editCmd, {"edit", m_dbFile->fileName(), "--notes", "testing\\nline breaks", "/evennewertitle"});
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
