@@ -306,14 +306,29 @@ void Application::socketReadyRead()
         return;
     }
 
+    //used iff command ID is 1
     QStringList fileNames;
-    in >> fileNames;
-    for (const QString& fileName : asConst(fileNames)) {
-        const QFileInfo fInfo(fileName);
-        if (fInfo.isFile() && fInfo.suffix().toLower() == "kdbx") {
-            emit openFile(fileName);
+
+    //read command ID and act accordingly
+    quint32 id;
+    in >> id;
+
+    //TODO: put these in an enum
+    switch (id) {
+    case 1:
+        in >> fileNames;
+        for (const QString& fileName : asConst(fileNames)) {
+            const QFileInfo fInfo(fileName);
+            if (fInfo.isFile() && fInfo.suffix().toLower() == "kdbx") {
+                emit openFile(fileName);
+            }
         }
+
+        break;
+    case 2:
+        getMainWindow()->lockAllDatabases();
     }
+
     socket->deleteLater();
 }
 
@@ -326,7 +341,17 @@ bool Application::isAlreadyRunning() const
     return config()->get(Config::SingleInstance).toBool() && m_alreadyRunning;
 }
 
-bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
+/**
+ * Send data to the running UI instance; currently used to lock databases via the CLI or send new files to open.
+ *
+ * Right now nullptr fileNames is sent as long as it is not empty. This is not sustainable; the sent data (if any)
+ * should be as flexible enough to enable future changes as much room to breathe as possible. For now, though, I just
+ * want both file names and locking to work, and for that, this is sufficient. --wundrweapon
+ * @param id - command ID to send. Right now, 1 opens files and 2 locks databases (ignoring the fileNames param)
+ * @param fileNames - list of file names to open
+ * @return true if all operations succeeded (connection made, data sent, connection closed)
+ */
+bool Application::sendToRunningInstance(quint32 id, const QStringList& fileNames)
 {
     QLocalSocket client;
     client.connectToServer(m_socketName);
@@ -338,13 +363,15 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_0);
-    out << quint32(0) << fileNames;
+    out << quint32(0); //reserve space for block size
+    out << id; //send command ID: 1 for file open, 2 for db lock
+    if (id == 1) out << fileNames; //send file names to be opened, if that is the command. TODO: make this not suck
     out.device()->seek(0);
-    out << quint32(data.size() - sizeof(quint32));
+    out << quint32(data.size() - sizeof(quint32)); //replace the previous constant 0 with block size
 
     const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
     client.disconnectFromServer();
-    const bool disconnected = client.waitForDisconnected(WaitTimeoutMSec);
+    const bool disconnected = client.state() == QLocalSocket::UnconnectedState || client.waitForDisconnected(WaitTimeoutMSec);
     return writeOk && disconnected;
 }
 
