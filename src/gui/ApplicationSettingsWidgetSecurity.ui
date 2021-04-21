@@ -267,7 +267,7 @@
       <item>
        <widget class="QCheckBox" name="EnableCopyOnDoubleClickCheckBox">
         <property name="text">
-         <string>Enable double click to copy some entry columns</string>
+         <string>Enable double click to copy the username/password entry columns</string>
         </property>
        </widget>
       </item>
