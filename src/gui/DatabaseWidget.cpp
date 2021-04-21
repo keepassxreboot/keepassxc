@@ -1192,41 +1192,45 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
         return;
     }
 
-    // Implement 'copy-on-doubleclick' functionality for certain columns
-    switch (column) {
-    case EntryModel::Username:
-        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
-        break;
-    case EntryModel::Password:
-        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
-        break;
-    case EntryModel::Url:
-        if (!entry->url().isEmpty()) {
-            openUrlForEntry(entry);
-        }
-        break;
-    case EntryModel::Totp:
-        if (entry->hasTotp()) {
-            setClipboardTextAndMinimize(entry->totp());
-        } else {
-            setupTotp();
-        }
-        break;
-    case EntryModel::ParentGroup:
-        // Call this first to clear out of search mode, otherwise
-        // the desired entry is not properly selected
-        endSearch();
-        m_groupView->setCurrentGroup(entry->group());
-        m_entryView->setCurrentEntry(entry);
-        break;
-    // TODO: switch to 'Notes' tab in details view/pane
-    // case EntryModel::Notes:
-    //    break;
-    // TODO: switch to 'Attachments' tab in details view/pane
-    // case EntryModel::Attachments:
-    //    break;
-    default:
+    if (!config()->get(Config::Security_EnableCopyOnDoubleClick).toBool()) {
         switchToEntryEdit(entry);
+    } else {
+        // Implement 'copy-on-doubleclick' functionality for certain columns
+        switch (column) {
+        case EntryModel::Username:
+            setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
+            break;
+        case EntryModel::Password:
+            setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
+            break;
+        case EntryModel::Url:
+            if (!entry->url().isEmpty()) {
+                openUrlForEntry(entry);
+            }
+            break;
+        case EntryModel::Totp:
+            if (entry->hasTotp()) {
+                setClipboardTextAndMinimize(entry->totp());
+            } else {
+                setupTotp();
+            }
+            break;
+        case EntryModel::ParentGroup:
+            // Call this first to clear out of search mode, otherwise
+            // the desired entry is not properly selected
+            endSearch();
+            m_groupView->setCurrentGroup(entry->group());
+            m_entryView->setCurrentEntry(entry);
+            break;
+        // TODO: switch to 'Notes' tab in details view/pane
+        // case EntryModel::Notes:
+        //    break;
+        // TODO: switch to 'Attachments' tab in details view/pane
+        // case EntryModel::Attachments:
+        //    break;
+        default:
+            switchToEntryEdit(entry);
+        }
     }
 }
 
