@@ -1192,7 +1192,8 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
         return;
     }
 
-    if (!config()->get(Config::Security_EnableCopyOnDoubleClick).toBool()) {
+    if ((column == EntryModel::Username || column == EntryModel::Password)
+        && !config()->get(Config::Security_EnableCopyOnDoubleClick).toBool()) {
         switchToEntryEdit(entry);
     } else {
         // Implement 'copy-on-doubleclick' functionality for certain columns
