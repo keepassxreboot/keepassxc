@@ -148,7 +148,7 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
     m_modelProxy->setSortLocaleAware(true);
     m_ui->healthcheckTableView->setModel(m_modelProxy.data());
     m_ui->healthcheckTableView->setSelectionMode(QAbstractItemView::NoSelection);
-    m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     m_ui->healthcheckTableView->setSortingEnabled(true);
 
     connect(m_ui->healthcheckTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
