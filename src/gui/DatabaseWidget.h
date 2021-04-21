@@ -290,7 +290,7 @@ private:
     int m_saveAttempts;
 
     // Search state
-    EntrySearcher* m_EntrySearcher;
+    QScopedPointer<EntrySearcher> m_entrySearcher;
     QString m_lastSearchText;
     bool m_searchLimitGroup;
 

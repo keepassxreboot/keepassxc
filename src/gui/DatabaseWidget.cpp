@@ -99,6 +99,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_opVaultOpenWidget(new OpVaultOpenWidget(this))
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_saveAttempts(0)
+    , m_entrySearcher(new EntrySearcher(false))
 {
     Q_ASSERT(m_db);
 
@@ -211,7 +212,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     m_blockAutoSave = false;
 
-    m_EntrySearcher = new EntrySearcher(false);
     m_searchLimitGroup = config()->get(Config::SearchLimitGroup).toBool();
 
 #ifdef WITH_XC_KEESHARE
@@ -234,7 +234,6 @@ DatabaseWidget::DatabaseWidget(const QString& filePath, QWidget* parent)
 
 DatabaseWidget::~DatabaseWidget()
 {
-    delete m_EntrySearcher;
 }
 
 QSharedPointer<Database> DatabaseWidget::database() const
@@ -1362,7 +1361,7 @@ void DatabaseWidget::search(const QString& searchtext)
 
     Group* searchGroup = m_searchLimitGroup ? currentGroup() : m_db->rootGroup();
 
-    QList<Entry*> searchResult = m_EntrySearcher->search(searchtext, searchGroup);
+    QList<Entry*> searchResult = m_entrySearcher->search(searchtext, searchGroup);
 
     m_entryView->displaySearch(searchResult);
     m_lastSearchText = searchtext;
@@ -1384,7 +1383,7 @@ void DatabaseWidget::search(const QString& searchtext)
 
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
-    m_EntrySearcher->setCaseSensitive(state);
+    m_entrySearcher->setCaseSensitive(state);
     refreshSearch();
 }
 
