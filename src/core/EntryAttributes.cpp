@@ -35,7 +35,7 @@ const QString EntryAttributes::SearchTextGroupName = "SearchText";
 const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
 
 EntryAttributes::EntryAttributes(QObject* parent)
-    : QObject(parent)
+    : ModifiableObject(parent)
 {
     clear();
 }
@@ -104,7 +104,7 @@ bool EntryAttributes::isReference(const QString& key) const
 
 void EntryAttributes::set(const QString& key, const QString& value, bool protect)
 {
-    bool emitModified = false;
+    bool shouldEmitModified = false;
 
     bool addAttribute = !m_attributes.contains(key);
     bool changeValue = !addAttribute && (m_attributes.value(key) != value);
@@ -116,27 +116,27 @@ void EntryAttributes::set(const QString& key, const QString& value, bool protect
 
     if (addAttribute || changeValue) {
         m_attributes.insert(key, value);
-        emitModified = true;
+        shouldEmitModified = true;
     }
 
     if (protect) {
         if (!m_protectedAttributes.contains(key)) {
-            emitModified = true;
+            shouldEmitModified = true;
         }
         m_protectedAttributes.insert(key);
     } else if (m_protectedAttributes.remove(key)) {
-        emitModified = true;
+        shouldEmitModified = true;
     }
 
-    if (emitModified) {
-        emit entryAttributesModified();
+    if (shouldEmitModified) {
+        emitModified();
     }
 
     if (defaultAttribute && changeValue) {
         emit defaultKeyModified();
     } else if (addAttribute) {
         emit added(key);
-    } else if (emitModified) {
+    } else if (shouldEmitModified) {
         emit customKeyModified(key);
     }
 }
@@ -155,7 +155,7 @@ void EntryAttributes::remove(const QString& key)
     m_protectedAttributes.remove(key);
 
     emit removed(key);
-    emit entryAttributesModified();
+    emitModified();
 }
 
 void EntryAttributes::rename(const QString& oldKey, const QString& newKey)
@@ -185,7 +185,7 @@ void EntryAttributes::rename(const QString& oldKey, const QString& newKey)
         m_protectedAttributes.insert(newKey);
     }
 
-    emit entryAttributesModified();
+    emitModified();
     emit renamed(oldKey, newKey);
 }
 
@@ -217,7 +217,7 @@ void EntryAttributes::copyCustomKeysFrom(const EntryAttributes* other)
     }
 
     emit reset();
-    emit entryAttributesModified();
+    emitModified();
 }
 
 bool EntryAttributes::areCustomKeysDifferent(const EntryAttributes* other)
@@ -250,7 +250,7 @@ void EntryAttributes::copyDataFrom(const EntryAttributes* other)
         m_protectedAttributes = other->m_protectedAttributes;
 
         emit reset();
-        emit entryAttributesModified();
+        emitModified();
     }
 }
 
@@ -303,7 +303,7 @@ void EntryAttributes::clear()
     }
 
     emit reset();
-    emit entryAttributesModified();
+    emitModified();
 }
 
 int EntryAttributes::attributesSize() const

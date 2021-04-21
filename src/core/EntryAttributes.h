@@ -26,7 +26,9 @@
 #include <QStringList>
 #include <QUuid>
 
-class EntryAttributes : public QObject
+#include "core/ModifiableObject.h"
+
+class EntryAttributes : public ModifiableObject
 {
     Q_OBJECT
 
@@ -69,7 +71,6 @@ public:
     static const QString SearchTextGroupName;
 
 signals:
-    void entryAttributesModified();
     void defaultKeyModified();
     void customKeyModified(const QString& key);
     void aboutToBeAdded(const QString& key);

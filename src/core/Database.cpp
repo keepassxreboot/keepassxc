@@ -44,9 +44,10 @@ Database::Database()
     , m_data()
     , m_rootGroup(nullptr)
     , m_fileWatcher(new FileWatcher(this))
-    , m_emitModified(false)
     , m_uuid(QUuid::createUuid())
 {
+    ModifiableObject::setEmitModified(false);
+
     setRootGroup(new Group());
     rootGroup()->setUuid(QUuid::createUuid());
     rootGroup()->setName(tr("Passwords", "Root group name"));
@@ -54,14 +55,14 @@ Database::Database()
 
     s_uuidMap.insert(m_uuid, this);
 
-    connect(m_metadata, SIGNAL(metadataModified()), SLOT(markAsModified()));
-    connect(&m_modifiedTimer, SIGNAL(timeout()), SIGNAL(databaseModified()));
+    connect(m_metadata, &Metadata::modified, this, &Database::markAsModified);
+    connect(&m_modifiedTimer, &QTimer::timeout, this, &Database::emitModified);
     connect(this, SIGNAL(databaseOpened()), SLOT(updateCommonUsernames()));
     connect(this, SIGNAL(databaseSaved()), SLOT(updateCommonUsernames()));
     connect(m_fileWatcher, &FileWatcher::fileChanged, this, &Database::databaseFileChanged);
 
     m_modified = false;
-    m_emitModified = true;
+    ModifiableObject::setEmitModified(true);
 }
 
 Database::Database(const QString& filePath)
@@ -439,7 +440,10 @@ void Database::releaseData()
     m_data.clear();
     m_metadata->clear();
 
+    auto oldGroup = rootGroup();
     setRootGroup(new Group());
+    // explicitly delete old group, otherwise it is only deleted when the database object is destructed
+    delete oldGroup;
 
     m_fileWatcher->stop();
 
@@ -841,11 +845,11 @@ void Database::emptyRecycleBin()
 
 void Database::setEmitModified(bool value)
 {
-    if (m_emitModified && !value) {
+    if (!value) {
         stopModifiedTimer();
     }
 
-    m_emitModified = value;
+    ModifiableObject::setEmitModified(value);
 }
 
 bool Database::isModified() const
@@ -861,7 +865,7 @@ bool Database::hasNonDataChanges() const
 void Database::markAsModified()
 {
     m_modified = true;
-    if (m_emitModified && !m_modifiedTimer.isActive()) {
+    if (!m_modifiedTimer.isActive()) {
         // Small time delay prevents numerous consecutive saves due to repeated signals
         startModifiedTimer();
     }

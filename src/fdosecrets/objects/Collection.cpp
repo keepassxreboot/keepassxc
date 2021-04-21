@@ -475,7 +475,7 @@ namespace FdoSecrets
             }
         });
         // Another possibility is the group being moved to recycle bin.
-        connect(m_exposedGroup.data(), &Group::groupModified, this, [this]() {
+        connect(m_exposedGroup.data(), &Group::modified, this, [this]() {
             if (inRecycleBin(m_exposedGroup->parentGroup())) {
                 // reset the exposed group to none
                 FdoSecrets::settings()->setExposedGroup(m_backend->database().data(), {});
@@ -483,7 +483,7 @@ namespace FdoSecrets
         });
 
         // Monitor exposed group settings
-        connect(m_backend->database()->metadata()->customData(), &CustomData::customDataModified, this, [this]() {
+        connect(m_backend->database()->metadata()->customData(), &CustomData::modified, this, [this]() {
             if (!m_exposedGroup || backendLocked()) {
                 return;
             }
@@ -500,8 +500,8 @@ namespace FdoSecrets
             onEntryAdded(entry, false);
         }
 
-        // Do not connect to databaseModified signal because we only want signals for the subset under m_exposedGroup
-        connect(m_backend->database()->metadata(), &Metadata::metadataModified, this, &Collection::collectionChanged);
+        // Do not connect to Database::modified signal because we only want signals for the subset under m_exposedGroup
+        connect(m_backend->database()->metadata(), &Metadata::modified, this, &Collection::collectionChanged);
         connectGroupSignalRecursive(m_exposedGroup);
     }
 
@@ -556,7 +556,7 @@ namespace FdoSecrets
             return;
         }
 
-        connect(group, &Group::groupModified, this, &Collection::collectionChanged);
+        connect(group, &Group::modified, this, &Collection::collectionChanged);
         connect(group, &Group::entryAdded, this, [this](Entry* entry) { onEntryAdded(entry, true); });
 
         const auto children = group->children();

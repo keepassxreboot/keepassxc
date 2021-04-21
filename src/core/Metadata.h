@@ -30,11 +30,12 @@
 
 #include "core/CustomData.h"
 #include "core/Global.h"
+#include "core/ModifiableObject.h"
 
 class Database;
 class Group;
 
-class Metadata : public QObject
+class Metadata : public ModifiableObject
 {
     Q_OBJECT
 
@@ -148,9 +149,6 @@ public:
      * - Settings changed date
      */
     void copyAttributesFrom(const Metadata* other);
-
-signals:
-    void metadataModified();
 
 private:
     template <class P, class V> bool set(P& property, const V& value);

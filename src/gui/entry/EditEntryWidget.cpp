@@ -532,6 +532,7 @@ void EditEntryWidget::setupSSHAgent()
     m_sshAgentUi->commentTextLabel->setFont(fixedFont);
     m_sshAgentUi->publicKeyEdit->setFont(fixedFont);
 
+    // clang-format off
     connect(m_sshAgentUi->attachmentRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
     connect(m_sshAgentUi->attachmentComboBox, SIGNAL(currentIndexChanged(int)), SLOT(updateSSHAgentAttachment()));
     connect(m_sshAgentUi->externalFileRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
@@ -542,9 +543,9 @@ void EditEntryWidget::setupSSHAgent()
     connect(m_sshAgentUi->decryptButton, SIGNAL(clicked()), SLOT(decryptPrivateKey()));
     connect(m_sshAgentUi->copyToClipboardButton, SIGNAL(clicked()), SLOT(copyPublicKey()));
 
-    connect(m_advancedUi->attachmentsWidget->entryAttachments(),
-            SIGNAL(entryAttachmentsModified()),
-            SLOT(updateSSHAgentAttachments()));
+    connect(m_advancedUi->attachmentsWidget->entryAttachments(), &EntryAttachments::modified,
+            this, &EditEntryWidget::updateSSHAgentAttachments);
+    // clang-format on
 
     addPage(tr("SSH Agent"), icons()->icon("utilities-terminal"), m_sshAgentWidget);
 }
@@ -803,7 +804,7 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_create = create;
     m_history = history;
 
-    connect(m_entry, &Entry::entryModified, this, [this] { m_entryModifiedTimer.start(); });
+    connect(m_entry, &Entry::modified, this, [this] { m_entryModifiedTimer.start(); });
 
     if (history) {
         setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Entry history")));

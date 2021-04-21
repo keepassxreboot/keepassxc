@@ -157,12 +157,11 @@ namespace FdoSecrets
     void Service::monitorDatabaseExposedGroup(DatabaseWidget* dbWidget)
     {
         Q_ASSERT(dbWidget);
-        connect(
-            dbWidget->database()->metadata()->customData(), &CustomData::customDataModified, this, [this, dbWidget]() {
-                if (!FdoSecrets::settings()->exposedGroup(dbWidget->database()).isNull() && !findCollection(dbWidget)) {
-                    onDatabaseTabOpened(dbWidget, true);
-                }
-            });
+        connect(dbWidget->database()->metadata()->customData(), &CustomData::modified, this, [this, dbWidget]() {
+            if (!FdoSecrets::settings()->exposedGroup(dbWidget->database()).isNull() && !findCollection(dbWidget)) {
+                onDatabaseTabOpened(dbWidget, true);
+            }
+        });
     }
 
     void Service::ensureDefaultAlias()

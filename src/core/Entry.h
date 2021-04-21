@@ -32,6 +32,7 @@
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/Global.h"
+#include "core/ModifiableObject.h"
 #include "core/TimeInfo.h"
 
 class Database;
@@ -75,7 +76,7 @@ struct EntryData
     bool equals(const EntryData& other, CompareItemOptions options) const;
 };
 
-class Entry : public QObject
+class Entry : public ModifiableObject
 {
     Q_OBJECT
 
@@ -260,7 +261,6 @@ signals:
      * Emitted when a default attribute has been changed.
      */
     void entryDataChanged(Entry* entry);
-    void entryModified();
 
 private slots:
     void emitDataChanged();

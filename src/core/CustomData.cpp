@@ -27,7 +27,7 @@ const QString CustomData::BrowserLegacyKeyPrefix = QStringLiteral("Public Key: "
 const QString CustomData::ExcludeFromReports = QStringLiteral("KnownBad");
 
 CustomData::CustomData(QObject* parent)
-    : QObject(parent)
+    : ModifiableObject(parent)
 {
 }
 
@@ -68,7 +68,7 @@ void CustomData::set(const QString& key, const QString& value)
     if (addAttribute || changeValue) {
         m_data.insert(key, value);
         updateLastModified();
-        emit customDataModified();
+        emitModified();
     }
 
     if (addAttribute) {
@@ -84,7 +84,7 @@ void CustomData::remove(const QString& key)
 
     updateLastModified();
     emit removed(key);
-    emit customDataModified();
+    emitModified();
 }
 
 void CustomData::rename(const QString& oldKey, const QString& newKey)
@@ -104,7 +104,7 @@ void CustomData::rename(const QString& oldKey, const QString& newKey)
     m_data.insert(newKey, data);
 
     updateLastModified();
-    emit customDataModified();
+    emitModified();
     emit renamed(oldKey, newKey);
 }
 
@@ -120,7 +120,7 @@ void CustomData::copyDataFrom(const CustomData* other)
 
     updateLastModified();
     emit reset();
-    emit customDataModified();
+    emitModified();
 }
 
 QDateTime CustomData::getLastModified() const
@@ -153,7 +153,7 @@ void CustomData::clear()
     m_data.clear();
 
     emit reset();
-    emit customDataModified();
+    emitModified();
 }
 
 bool CustomData::isEmpty() const

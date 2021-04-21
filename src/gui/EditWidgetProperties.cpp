@@ -63,7 +63,7 @@ void EditWidgetProperties::setCustomData(CustomData* customData)
     m_customData = customData;
 
     if (m_customData) {
-        connect(m_customData, SIGNAL(customDataModified()), SLOT(update()));
+        connect(m_customData, &CustomData::modified, this, &EditWidgetProperties::update);
     }
 
     update();

@@ -34,6 +34,7 @@ private slots:
     void testHistoryItems();
     void testHistoryMaxSize();
     void testCustomData();
+    void testBlockModifiedSignal();
 };
 
 #endif // KEEPASSX_TESTMODIFIED_H
