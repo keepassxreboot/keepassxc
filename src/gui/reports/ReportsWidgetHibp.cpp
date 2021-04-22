@@ -65,7 +65,7 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     m_modelProxy->setSortLocaleAware(true);
     m_ui->hibpTableView->setModel(m_modelProxy.data());
     m_ui->hibpTableView->setSelectionMode(QAbstractItemView::NoSelection);
-    m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     m_ui->hibpTableView->setSortingEnabled(true);
 
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
