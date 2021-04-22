@@ -533,15 +533,18 @@ void EditEntryWidget::setupSSHAgent()
     m_sshAgentUi->publicKeyEdit->setFont(fixedFont);
 
     // clang-format off
-    connect(m_sshAgentUi->attachmentRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
-    connect(m_sshAgentUi->attachmentComboBox, SIGNAL(currentIndexChanged(int)), SLOT(updateSSHAgentAttachment()));
-    connect(m_sshAgentUi->externalFileRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
-    connect(m_sshAgentUi->externalFileEdit, SIGNAL(textChanged(QString)), SLOT(updateSSHAgentKeyInfo()));
-    connect(m_sshAgentUi->browseButton, SIGNAL(clicked()), SLOT(browsePrivateKey()));
-    connect(m_sshAgentUi->addToAgentButton, SIGNAL(clicked()), SLOT(addKeyToAgent()));
-    connect(m_sshAgentUi->removeFromAgentButton, SIGNAL(clicked()), SLOT(removeKeyFromAgent()));
-    connect(m_sshAgentUi->decryptButton, SIGNAL(clicked()), SLOT(decryptPrivateKey()));
-    connect(m_sshAgentUi->copyToClipboardButton, SIGNAL(clicked()), SLOT(copyPublicKey()));
+    connect(m_sshAgentUi->attachmentRadioButton, &QRadioButton::clicked,
+            this, &EditEntryWidget::updateSSHAgentKeyInfo);
+    connect(m_sshAgentUi->attachmentComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &EditEntryWidget::updateSSHAgentAttachment);
+    connect(m_sshAgentUi->externalFileRadioButton, &QRadioButton::clicked,
+            this, &EditEntryWidget::updateSSHAgentKeyInfo);
+    connect(m_sshAgentUi->externalFileEdit, &QLineEdit::textChanged, this, &EditEntryWidget::updateSSHAgentKeyInfo);
+    connect(m_sshAgentUi->browseButton, &QPushButton::clicked, this, &EditEntryWidget::browsePrivateKey);
+    connect(m_sshAgentUi->addToAgentButton, &QPushButton::clicked, this, &EditEntryWidget::addKeyToAgent);
+    connect(m_sshAgentUi->removeFromAgentButton, &QPushButton::clicked, this, &EditEntryWidget::removeKeyFromAgent);
+    connect(m_sshAgentUi->decryptButton, &QPushButton::clicked, this, &EditEntryWidget::decryptPrivateKey);
+    connect(m_sshAgentUi->copyToClipboardButton, &QPushButton::clicked, this, &EditEntryWidget::copyPublicKey);
 
     connect(m_advancedUi->attachmentsWidget->entryAttachments(), &EntryAttachments::modified,
             this, &EditEntryWidget::updateSSHAgentAttachments);

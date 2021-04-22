@@ -57,8 +57,8 @@ Database::Database()
 
     connect(m_metadata, &Metadata::modified, this, &Database::markAsModified);
     connect(&m_modifiedTimer, &QTimer::timeout, this, &Database::emitModified);
-    connect(this, SIGNAL(databaseOpened()), SLOT(updateCommonUsernames()));
-    connect(this, SIGNAL(databaseSaved()), SLOT(updateCommonUsernames()));
+    connect(this, &Database::databaseOpened, this, [this]() { updateCommonUsernames(); });
+    connect(this, &Database::databaseSaved, this, [this]() { updateCommonUsernames(); });
     connect(m_fileWatcher, &FileWatcher::fileChanged, this, &Database::databaseFileChanged);
 
     m_modified = false;
