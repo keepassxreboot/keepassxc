@@ -29,7 +29,7 @@ public:
 public:
     /**
      * @brief check if the modified signal is enabled.
-     *
+     * Note that this is NOT the same as m_emitModified.
      * The signal is enabled if neither the current object nor any of its parents disabled the signal.
      */
     bool modifiedSignalEnabled() const;
@@ -43,13 +43,14 @@ public slots:
      *
      * @param value
      */
-    virtual void setEmitModified(bool value);
+    void setEmitModified(bool value);
 
 protected:
     void emitModified();
 
 signals:
     void modified();
+    void emitModifiedChanged(bool value);
 
 private:
     bool m_emitModified{true};

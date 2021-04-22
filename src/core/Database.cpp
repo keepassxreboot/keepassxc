@@ -46,23 +46,33 @@ Database::Database()
     , m_fileWatcher(new FileWatcher(this))
     , m_uuid(QUuid::createUuid())
 {
-    ModifiableObject::setEmitModified(false);
-
-    setRootGroup(new Group());
-    rootGroup()->setUuid(QUuid::createUuid());
-    rootGroup()->setName(tr("Passwords", "Root group name"));
+    // setup modified timer
     m_modifiedTimer.setSingleShot(true);
-
-    s_uuidMap.insert(m_uuid, this);
-
-    connect(m_metadata, &Metadata::modified, this, &Database::markAsModified);
+    connect(this, &Database::emitModifiedChanged, this, [this](bool value) {
+        if (!value) {
+            stopModifiedTimer();
+        }
+    });
     connect(&m_modifiedTimer, &QTimer::timeout, this, &Database::emitModified);
+
+    // other signals
+    connect(m_metadata, &Metadata::modified, this, &Database::markAsModified);
     connect(this, &Database::databaseOpened, this, [this]() { updateCommonUsernames(); });
     connect(this, &Database::databaseSaved, this, [this]() { updateCommonUsernames(); });
     connect(m_fileWatcher, &FileWatcher::fileChanged, this, &Database::databaseFileChanged);
 
+    // static uuid map
+    s_uuidMap.insert(m_uuid, this);
+
+    // block modified signal and set root group
+    setEmitModified(false);
+
+    setRootGroup(new Group());
+    rootGroup()->setUuid(QUuid::createUuid());
+    rootGroup()->setName(tr("Passwords", "Root group name"));
+
     m_modified = false;
-    ModifiableObject::setEmitModified(true);
+    setEmitModified(true);
 }
 
 Database::Database(const QString& filePath)
@@ -432,7 +442,6 @@ void Database::releaseData()
 
     setEmitModified(false);
     m_modified = false;
-    stopModifiedTimer();
 
     s_uuidMap.remove(m_uuid);
     m_uuid = QUuid();
@@ -841,15 +850,6 @@ void Database::emptyRecycleBin()
             delete group;
         }
     }
-}
-
-void Database::setEmitModified(bool value)
-{
-    if (!value) {
-        stopModifiedTimer();
-    }
-
-    ModifiableObject::setEmitModified(value);
 }
 
 bool Database::isModified() const

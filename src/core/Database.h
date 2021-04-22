@@ -84,7 +84,6 @@ public:
     bool isInitialized() const;
     bool isModified() const;
     bool hasNonDataChanges() const;
-    void setEmitModified(bool value) override;
     bool isReadOnly() const;
     void setReadOnly(bool readOnly);
     bool isSaving();
