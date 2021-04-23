@@ -21,8 +21,8 @@
 
 #include "config-keepassx.h"
 #include "core/AsyncTask.h"
+#include "keys/ChallengeResponseKey.h"
 #include "keys/CompositeKey.h"
-#include "keys/YkChallengeResponseKey.h"
 
 YubiKeyEditWidget::YubiKeyEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)
@@ -45,7 +45,7 @@ bool YubiKeyEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
 
     int selectionIndex = m_compUi->comboChallengeResponse->currentIndex();
     auto slot = m_compUi->comboChallengeResponse->itemData(selectionIndex).value<YubiKeySlot>();
-    key->addChallengeResponseKey(QSharedPointer<YkChallengeResponseKey>::create(slot));
+    key->addChallengeResponseKey(QSharedPointer<ChallengeResponseKey>::create(slot));
     return true;
 }
 

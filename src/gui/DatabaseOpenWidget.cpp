@@ -27,9 +27,9 @@
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
+#include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
-#include "keys/YkChallengeResponseKey.h"
 #include "touchid/TouchID.h"
 
 #include "config-keepassx.h"
@@ -337,7 +337,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
     int selectionIndex = m_ui->challengeResponseCombo->currentIndex();
     if (selectionIndex > 0) {
         auto slot = m_ui->challengeResponseCombo->itemData(selectionIndex).value<YubiKeySlot>();
-        auto crKey = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot));
+        auto crKey = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey(slot));
         databaseKey->addChallengeResponseKey(crKey);
 
         // Qt doesn't read custom types in settings so stuff into a QString

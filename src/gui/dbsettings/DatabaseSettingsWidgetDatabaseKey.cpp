@@ -22,9 +22,9 @@
 #include "gui/databasekey/KeyFileEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
 #include "gui/databasekey/YubiKeyEditWidget.h"
+#include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
-#include "keys/YkChallengeResponseKey.h"
 
 #include <QPushButton>
 #include <QSpacerItem>
@@ -91,7 +91,7 @@ void DatabaseSettingsWidgetDatabaseKey::load(QSharedPointer<Database> db)
 
 #ifdef WITH_XC_YUBIKEY
     for (const auto& key : m_db->key()->challengeResponseKeys()) {
-        if (key->uuid() == YkChallengeResponseKey::UUID) {
+        if (key->uuid() == ChallengeResponseKey::UUID) {
             m_yubiKeyEditWidget->setComponentAdded(true);
             hasAdditionalKeys = true;
         }
@@ -150,7 +150,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
     }
 
     for (const auto& key : m_db->key()->challengeResponseKeys()) {
-        if (key->uuid() == YkChallengeResponseKey::UUID) {
+        if (key->uuid() == ChallengeResponseKey::UUID) {
             oldChallengeResponse = key;
         }
     }

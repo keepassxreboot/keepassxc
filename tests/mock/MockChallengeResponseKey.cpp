@@ -18,22 +18,18 @@
 #include "MockChallengeResponseKey.h"
 
 MockChallengeResponseKey::MockChallengeResponseKey(const QByteArray& secret)
-    : ChallengeResponseKey(QUuid("aac5b480-cdc0-411e-9cb8-962062dcc1fd"))
+    : ChallengeResponseKey()
     , m_secret(secret)
 {
 }
 
-MockChallengeResponseKey::~MockChallengeResponseKey()
+QByteArray MockChallengeResponseKey::rawKey() const
 {
+    return m_challenge + m_secret;
 }
 
 bool MockChallengeResponseKey::challenge(const QByteArray& challenge)
 {
     m_challenge = challenge;
-
-    auto response = m_challenge + m_secret;
-    m_key.resize(response.size());
-    std::copy(response.begin(), response.end(), m_key.data());
-
     return true;
 }

@@ -26,7 +26,7 @@ namespace Ui
     class YubiKeyEditWidget;
 }
 
-class YkChallengeResponseKey;
+class ChallengeResponseKey;
 
 class YubiKeyEditWidget : public KeyComponentWidget
 {

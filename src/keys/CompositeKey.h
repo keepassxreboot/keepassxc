@@ -23,9 +23,10 @@
 #include <QSharedPointer>
 #include <QString>
 
-#include "crypto/kdf/Kdf.h"
-#include "keys/ChallengeResponseKey.h"
 #include "keys/Key.h"
+
+class Kdf;
+class ChallengeResponseKey;
 
 class CompositeKey : public Key
 {
