@@ -23,7 +23,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #ifdef WITH_XC_YUBIKEY
-#include "keys/YkChallengeResponseKey.h"
+#include "keys/ChallengeResponseKey.h"
 #endif
 
 #ifdef Q_OS_WIN
@@ -174,7 +174,7 @@ namespace Utils
                 err << QObject::tr("Please touch the button on your YubiKey to continue…") << "\n\n" << flush;
             });
 
-            auto key = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey({serial, slot}));
+            auto key = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey({serial, slot}));
             compositeKey->addChallengeResponseKey(key);
 
             QObject::disconnect(conn);

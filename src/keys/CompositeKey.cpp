@@ -24,6 +24,7 @@
 #include "core/Global.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"
+#include "keys/ChallengeResponseKey.h"
 
 QUuid CompositeKey::UUID("76a7ae25-a542-4add-9849-7c06be945b94");
 
@@ -143,7 +144,7 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result, QString
             qWarning() << "Failed to issue challenge: " << key->error();
             return false;
         }
-        cryptoHash.addData(key->rawKey().data());
+        cryptoHash.addData(key->rawKey());
     }
 
     result = cryptoHash.result();

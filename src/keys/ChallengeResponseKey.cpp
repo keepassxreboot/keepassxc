@@ -16,30 +16,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "keys/YkChallengeResponseKey.h"
-#include "keys/drivers/YubiKey.h"
+#include "ChallengeResponseKey.h"
 
 #include "core/AsyncTask.h"
-#include "core/Tools.h"
-#include "crypto/CryptoHash.h"
-#include "crypto/Random.h"
 
-#include <QApplication>
-#include <QEventLoop>
-#include <QFile>
-#include <QFutureWatcher>
-#include <QXmlStreamReader>
-#include <QtConcurrent>
+QUuid ChallengeResponseKey::UUID("e092495c-e77d-498b-84a1-05ae0d955508");
 
-QUuid YkChallengeResponseKey::UUID("e092495c-e77d-498b-84a1-05ae0d955508");
-
-YkChallengeResponseKey::YkChallengeResponseKey(YubiKeySlot keySlot)
-    : ChallengeResponseKey(UUID)
+ChallengeResponseKey::ChallengeResponseKey(YubiKeySlot keySlot)
+    : Key(UUID)
     , m_keySlot(keySlot)
 {
 }
 
-bool YkChallengeResponseKey::challenge(const QByteArray& challenge)
+QByteArray ChallengeResponseKey::rawKey() const
+{
+    return QByteArray(m_key.data(), m_key.size());
+}
+
+QString ChallengeResponseKey::error() const
+{
+    return m_error;
+}
+
+bool ChallengeResponseKey::challenge(const QByteArray& challenge)
 {
     m_error.clear();
     auto result =
