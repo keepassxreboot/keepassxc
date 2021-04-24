@@ -148,8 +148,10 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
     m_modelProxy->setSortLocaleAware(true);
     m_ui->healthcheckTableView->setModel(m_modelProxy.data());
     m_ui->healthcheckTableView->setSelectionMode(QAbstractItemView::NoSelection);
-    m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    m_ui->healthcheckTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_ui->healthcheckTableView->setSortingEnabled(true);
+    m_ui->healthcheckTableView->setWordWrap(true);
 
     connect(m_ui->healthcheckTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
     connect(m_ui->healthcheckTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
@@ -279,7 +281,8 @@ void ReportsWidgetHealthcheck::calculateHealth()
         m_ui->healthcheckTableView->sortByColumn(0, Qt::AscendingOrder);
     }
 
-    m_ui->healthcheckTableView->resizeRowsToContents();
+    m_ui->healthcheckTableView->resizeColumnsToContents();
+    m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
 
     // Show the "show known bad entries" checkbox if there's any known
     // bad entry in the database.

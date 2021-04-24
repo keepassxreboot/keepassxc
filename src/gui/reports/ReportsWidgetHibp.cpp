@@ -65,7 +65,8 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     m_modelProxy->setSortLocaleAware(true);
     m_ui->hibpTableView->setModel(m_modelProxy.data());
     m_ui->hibpTableView->setSelectionMode(QAbstractItemView::NoSelection);
-    m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    m_ui->hibpTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_ui->hibpTableView->setSortingEnabled(true);
 
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
@@ -203,7 +204,7 @@ void ReportsWidgetHibp::makeHibpTable()
         m_ui->showKnownBadCheckBox->hide();
     }
 
-    m_ui->hibpTableView->resizeRowsToContents();
+    m_ui->hibpTableView->resizeColumnsToContents();
     m_ui->hibpTableView->sortByColumn(2, Qt::DescendingOrder);
 
     m_ui->stackedWidget->setCurrentIndex(1);
