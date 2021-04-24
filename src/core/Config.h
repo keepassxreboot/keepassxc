@@ -121,6 +121,7 @@ public:
         Security_ResetTouchIdTimeout,
         Security_ResetTouchIdScreenlock,
         Security_NoConfirmMoveEntryToRecycleBin,
+        Security_EnableCopyOnDoubleClick,
 
         Browser_Enabled,
         Browser_ShowNotification,

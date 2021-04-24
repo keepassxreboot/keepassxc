@@ -1195,10 +1195,18 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
     // Implement 'copy-on-doubleclick' functionality for certain columns
     switch (column) {
     case EntryModel::Username:
-        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
+        if (config()->get(Config::Security_EnableCopyOnDoubleClick).toBool()) {
+            setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
+        } else {
+            switchToEntryEdit(entry);
+        }
         break;
     case EntryModel::Password:
-        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
+        if (config()->get(Config::Security_EnableCopyOnDoubleClick).toBool()) {
+            setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
+        } else {
+            switchToEntryEdit(entry);
+        }
         break;
     case EntryModel::Url:
         if (!entry->url().isEmpty()) {

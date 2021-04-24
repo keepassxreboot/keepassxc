@@ -286,6 +286,8 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->hideNotesCheckBox->setChecked(config()->get(Config::Security_HideNotes).toBool());
     m_secUi->NoConfirmMoveEntryToRecycleBinCheckBox->setChecked(
         config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool());
+    m_secUi->EnableCopyOnDoubleClickCheckBox->setChecked(
+        config()->get(Config::Security_EnableCopyOnDoubleClick).toBool());
 
     m_secUi->touchIDResetCheckBox->setChecked(config()->get(Config::Security_ResetTouchId).toBool());
     m_secUi->touchIDResetSpinBox->setValue(config()->get(Config::Security_ResetTouchIdTimeout).toInt());
@@ -387,6 +389,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_HideNotes, m_secUi->hideNotesCheckBox->isChecked());
     config()->set(Config::Security_NoConfirmMoveEntryToRecycleBin,
                   m_secUi->NoConfirmMoveEntryToRecycleBinCheckBox->isChecked());
+    config()->set(Config::Security_EnableCopyOnDoubleClick, m_secUi->EnableCopyOnDoubleClickCheckBox->isChecked());
 
     config()->set(Config::Security_ResetTouchId, m_secUi->touchIDResetCheckBox->isChecked());
     config()->set(Config::Security_ResetTouchIdTimeout, m_secUi->touchIDResetSpinBox->value());

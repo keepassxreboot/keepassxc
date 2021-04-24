@@ -46,6 +46,14 @@ For users with smaller screens or those who desire seeing more entries at once, 
 .Compact mode comparison
 image::compact_mode_comparison.png[]
 
+==== Copy entry Columns on Double Click
+KeePassXC offers the possibility of copying certain entry columns, such as username and password, into your clipboard on double click, for a limited period of time.
+
+This feature can be enabled by checking the box "Enable double click to copy some entry columns" in the security settings:
+
+.Enable copying on double click
+image::enable_copy_dc.png[]
+
 === Keyboard Shortcuts
 include::KeyboardShortcuts.adoc[tag=content, leveloffset=+1]
 
