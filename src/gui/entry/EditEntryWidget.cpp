@@ -168,7 +168,7 @@ void EditEntryWidget::setupMain()
     m_mainUi->urlEdit->enableVerifyMode();
 #endif
     connect(m_mainUi->expireCheck, &QCheckBox::toggled, [&](bool enabled) {
-        m_mainUi->expireDatePicker->setEnabled(enabled);
+        m_mainUi->expirationBox->setEnabled(enabled);
         if (enabled) {
             m_mainUi->expireDatePicker->setDateTime(Clock::currentDateTime());
         }
@@ -178,6 +178,21 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
+    m_mainUi->extendPresets->setMenu(createPresetsMenu());
+    connect(m_mainUi->extendPresets->menu(), &QMenu::triggered, this, [&](QAction* action) {
+        m_extensionOnPwUpdate = action->data().value<TimeDelta>();
+    });
+    connect(m_mainUi->autoExtendExpire, &QCheckBox::toggled, [&](bool enabled) {
+        m_mainUi->extendPresets->setEnabled(enabled);
+    });
+    connect(m_mainUi->passwordEdit, &QLineEdit::textChanged, this, [&]() {
+        if (m_mainUi->extendPresets->isEnabled()) {
+            TimeDelta delta = m_extensionOnPwUpdate;
+            QDateTime now = Clock::currentDateTime();
+            QDateTime expiryDateTime = now + delta;
+            m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
+        }
+    });
 }
 
 void EditEntryWidget::setupAdvanced()

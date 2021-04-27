@@ -28,6 +28,7 @@
 #include <QTimer>
 
 #include "config-keepassx.h"
+#include "core/TimeDelta.h"
 #include "gui/EditWidget.h"
 
 class AutoTypeAssociations;
@@ -162,6 +163,7 @@ private:
     QPointer<Entry> m_entry;
     QSharedPointer<Database> m_db;
 
+    TimeDelta m_extensionOnPwUpdate;
     bool m_create;
     bool m_history;
 #ifdef WITH_XC_SSHAGENT
