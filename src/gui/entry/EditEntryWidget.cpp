@@ -35,6 +35,7 @@
 #include <QStandardPaths>
 #include <QStringListModel>
 #include <QTemporaryFile>
+#include <tuple>
 
 #include "autotype/AutoType.h"
 #include "core/Clock.h"
@@ -66,9 +67,18 @@
 #include "gui/entry/EntryAttributesModel.h"
 #include "gui/entry/EntryHistoryModel.h"
 
+QString timeDelta2Text(const TimeDelta& tD)
+{
+    if (tD.getDays()) {
+        return "day(s)";
+    }
+    return tD.getMonths() ? "month(s)" : "year(s)";
+};
+
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)
     , m_entry(nullptr)
+    , m_extensionOnPwUpdate(std::make_tuple(0, TimeDelta(1, 0, 0)))
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
@@ -178,16 +188,22 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
-    m_mainUi->extendPresets->setMenu(createPresetsMenu());
-    connect(m_mainUi->extendPresets->menu(), &QMenu::triggered, this, [&](QAction* action) {
-        m_extensionOnPwUpdate = action->data().value<TimeDelta>();
+    m_mainUi->extendByMagnitude->setMenu(createExtendByMenu());
+    connect(m_mainUi->extendByMagnitude->menu(), &QMenu::triggered, this, [&](QAction* action) {
+        std::get<1>(m_extensionOnPwUpdate) = action->data().value<TimeDelta>();
+        m_mainUi->extendByMagnitude->setText(action->text());
+        setModified(true);
+    });
+    connect(m_mainUi->extendByQuantity, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int n) {
+        std::get<0>(m_extensionOnPwUpdate) = static_cast<unsigned>(n);
     });
     connect(m_mainUi->autoExtendExpire, &QCheckBox::toggled, [&](bool enabled) {
-        m_mainUi->extendPresets->setEnabled(enabled);
+        m_mainUi->extendByQuantity->setEnabled(enabled);
+        m_mainUi->extendByMagnitude->setEnabled(enabled);
     });
     connect(m_mainUi->passwordEdit, &QLineEdit::textChanged, this, [&]() {
-        if (m_mainUi->extendPresets->isEnabled()) {
-            TimeDelta delta = m_extensionOnPwUpdate;
+        if (m_mainUi->autoExtendExpire->isEnabled()) {
+            TimeDelta delta = std::get<1>(m_extensionOnPwUpdate) * std::get<0>(m_extensionOnPwUpdate);
             QDateTime now = Clock::currentDateTime();
             QDateTime expiryDateTime = now + delta;
             m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
@@ -450,7 +466,9 @@ void EditEntryWidget::setupEntryUpdate()
 #endif
     connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), this, SLOT(setModified()));
+    connect(m_mainUi->autoExtendExpire, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_mainUi->notesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
+    connect(m_mainUi->extendByQuantity, SIGNAL(valueChanged(int)), this, SLOT(setModified()));
 
     // Advanced tab
     connect(m_advancedUi->attributesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
@@ -855,6 +873,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->passwordEdit->setReadOnly(m_history);
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
+    m_mainUi->autoExtendExpire->setEnabled(!m_history);
     m_mainUi->notesEnabled->setChecked(!config()->get(Config::Security_HideNotes).toBool());
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->notesEdit->setVisible(!config()->get(Config::Security_HideNotes).toBool());
@@ -897,6 +916,12 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->expirePresets->setEnabled(!m_history);
+    m_mainUi->autoExtendExpire->setChecked(entry->timeInfo().expires());
+    m_mainUi->autoExtendExpire->setChecked(entry->customData()->value("ExpirationExtension").toInt());
+    m_mainUi->extendByQuantity->setEnabled(m_mainUi->autoExtendExpire->isChecked());
+    m_mainUi->extendByQuantity->setValue(entry->customData()->value("ExpirationExtensionQuantity").toInt());
+    m_mainUi->extendByMagnitude->setEnabled(m_mainUi->autoExtendExpire->isChecked());
+    m_mainUi->extendByMagnitude->setText(entry->customData()->value("ExpirationExtensionMagnitude"));
 
     QList<QString> commonUsernames = m_db->commonUsernames();
     m_usernameCompleterModel->setStringList(commonUsernames);
@@ -1137,7 +1162,9 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setPassword(m_mainUi->passwordEdit->text());
     entry->setExpires(m_mainUi->expireCheck->isChecked());
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
-
+    entry->setExtendsExpirationOnPwdChange(m_mainUi->autoExtendExpire->isChecked());
+    entry->setExpirationExtension(QString::number(std::get<0>(m_extensionOnPwUpdate)),
+                                  timeDelta2Text(std::get<1>(m_extensionOnPwUpdate)));
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
 
     if (entry->excludeFromReports() != m_advancedUi->excludeReportsCheckBox->isChecked()) {
@@ -1538,6 +1565,18 @@ QMenu* EditEntryWidget::createPresetsMenu()
     expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
     expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 2))->setData(QVariant::fromValue(TimeDelta::fromYears(2)));
     expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromYears(3)));
+    return expirePresetsMenu;
+}
+
+QMenu* EditEntryWidget::createExtendByMenu()
+{
+    auto* expirePresetsMenu = new QMenu(this);
+    auto tD = TimeDelta::fromDays(1);
+    expirePresetsMenu->addAction(timeDelta2Text(tD))->setData(QVariant::fromValue(tD));
+    tD = TimeDelta::fromMonths(1);
+    expirePresetsMenu->addAction(timeDelta2Text(tD))->setData(QVariant::fromValue(tD));
+    tD = TimeDelta::fromYears(1);
+    expirePresetsMenu->addAction(timeDelta2Text(tD))->setData(QVariant::fromValue(tD));
     return expirePresetsMenu;
 }
 

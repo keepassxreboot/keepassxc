@@ -34,6 +34,8 @@ public:
 
     TimeDelta();
     TimeDelta(int days, int months, int years);
+    TimeDelta operator*(unsigned n);
+    bool operator==(const TimeDelta& tD) const;
 
     int getDays() const;
     int getMonths() const;

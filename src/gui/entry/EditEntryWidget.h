@@ -153,6 +153,7 @@ private:
     bool passwordsEqual();
     void setForms(Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
+    QMenu* createExtendByMenu();
     void updateEntryData(Entry* entry) const;
 #ifdef WITH_XC_SSHAGENT
     bool getOpenSSHKey(OpenSSHKey& key, bool decrypt = false);
@@ -163,7 +164,7 @@ private:
     QPointer<Entry> m_entry;
     QSharedPointer<Database> m_db;
 
-    TimeDelta m_extensionOnPwUpdate;
+    std::tuple<unsigned, TimeDelta> m_extensionOnPwUpdate;
     bool m_create;
     bool m_history;
 #ifdef WITH_XC_SSHAGENT
