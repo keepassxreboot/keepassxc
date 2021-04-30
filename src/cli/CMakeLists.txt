@@ -40,6 +40,10 @@ set(cli_SOURCES
         RemoveGroup.cpp
         Show.cpp)
 
+if(WITH_XC_GPG)
+    set(cli_SOURCES ${cli_SOURCES} GpgEncrypt.cpp)
+    set(cli_SOURCES ${cli_SOURCES} GpgDisable.cpp)
+endif()
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core Qt5::Widgets)
 
@@ -60,7 +64,8 @@ target_link_libraries(keepassxc-cli
         ${sodium_LIBRARY_RELEASE}
         ${ARGON2_LIBRARIES}
         ${ZLIB_LIBRARIES}
-        ${ZXCVBN_LIBRARIES})
+        ${ZXCVBN_LIBRARIES}
+        ${GPGME_PTHREAD_LIBRARIES})
 
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime

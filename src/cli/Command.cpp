@@ -50,6 +50,11 @@
 #include "TextStream.h"
 #include "Utils.h"
 
+#ifdef WITH_XC_GPG
+#include "GpgDisable.h"
+#include "GpgEncrypt.h"
+#endif
+
 const QCommandLineOption Command::HelpOption = QCommandLineOption(QStringList()
 #ifdef Q_OS_WIN
                                                                       << QStringLiteral("?")
@@ -186,7 +191,10 @@ namespace Commands
         s_commands.insert(QStringLiteral("rm"), QSharedPointer<Command>(new Remove()));
         s_commands.insert(QStringLiteral("rmdir"), QSharedPointer<Command>(new RemoveGroup()));
         s_commands.insert(QStringLiteral("show"), QSharedPointer<Command>(new Show()));
-
+#ifdef WITH_XC_GPG
+        s_commands.insert(QStringLiteral("gpgencrypt"), QSharedPointer<Command>(new GpgEncrypt()));
+        s_commands.insert(QStringLiteral("gpgdisable"), QSharedPointer<Command>(new GpgDisable()));
+#endif
         if (interactive) {
             s_commands.insert(QStringLiteral("exit"), QSharedPointer<Command>(new Exit("exit")));
             s_commands.insert(QStringLiteral("quit"), QSharedPointer<Command>(new Exit("quit")));

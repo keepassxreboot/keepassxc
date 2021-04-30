@@ -102,7 +102,7 @@ public:
     QString webUrl() const;
     QString displayUrl() const;
     QString username() const;
-    QString password() const;
+    QString password(bool decodeRealPassword=false) const;
     QString notes() const;
     QString attribute(const QString& key) const;
     QString totp() const;
@@ -152,6 +152,7 @@ public:
     void addHistoryItem(Entry* entry);
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
+    void updateGpgData(bool forceUpdate=false);
 
     bool equals(const Entry* other, CompareItemOptions options = CompareItemDefault) const;
 
@@ -211,6 +212,7 @@ public:
     static const QString AutoTypeSequenceUsername;
     static const QString AutoTypeSequencePassword;
     static CloneFlags DefaultCloneFlags;
+    static const QString GpgPasswordPlaceholder;
 
     /**
      * Creates a duplicate of this entry except that the returned entry isn't
@@ -284,6 +286,7 @@ private:
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
     bool m_updateTimeinfo;
+    bool m_passwordModified;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Entry::CloneFlags)

@@ -189,7 +189,7 @@ void EntryPreviewWidget::updateEntryTotp()
 
 void EntryPreviewWidget::setPasswordVisible(bool state)
 {
-    const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
+    const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password(state));
     if (state) {
         m_ui->entryPasswordLabel->setText(password);
         m_ui->entryPasswordLabel->setCursorPosition(0);

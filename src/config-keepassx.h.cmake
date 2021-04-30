@@ -23,6 +23,7 @@
 #cmakedefine WITH_XC_UPDATECHECK
 #cmakedefine WITH_XC_TOUCHID
 #cmakedefine WITH_XC_FDOSECRETS
+#cmakedefine WITH_XC_GPG
 
 #cmakedefine KEEPASSXC_BUILD_TYPE "@KEEPASSXC_BUILD_TYPE@"
 #cmakedefine KEEPASSXC_BUILD_TYPE_RELEASE

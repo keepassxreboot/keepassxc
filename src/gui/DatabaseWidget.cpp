@@ -669,7 +669,7 @@ void DatabaseWidget::copyPassword()
 
     auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
-        setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
+        setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password(true)));
     }
 }
 
@@ -1006,6 +1006,9 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
         // Workaround: ensure entries are focused so search doesn't reset
         m_entryView->setFocus();
     }
+    if(sender()==m_editEntryWidget && previousDialogAccepted){
+                m_entryView->currentEntry()->updateGpgData(true);
+    }
 
     if (sender() == m_entryView || sender() == m_editEntryWidget) {
         onEntryChanged(m_entryView->currentEntry());
@@ -1195,7 +1198,8 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
         setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
         break;
     case EntryModel::Password:
-        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
+    //TODO get password
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password(true)));
         break;
     case EntryModel::Url:
         if (!entry->url().isEmpty()) {

@@ -229,6 +229,7 @@ add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible wit
 add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare (requires quazip5 for secure containers)")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
+add_feature_info(GpgEncrypt WITH_XC_GPG "Password encryption with GpgCard")
 if(UNIX AND NOT APPLE)
     add_feature_info(FdoSecrets WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API.")
 endif()
@@ -242,6 +243,10 @@ if(WITH_XC_BROWSER)
     set(keepassxcbrowser_LIB keepassxcbrowser)
     set(keepassx_SOURCES ${keepassx_SOURCES} gui/dbsettings/DatabaseSettingsWidgetBrowser.cpp)
     set(keepassx_SOURCES ${keepassx_SOURCES} gui/entry/EntryURLModel.cpp)
+endif()
+
+if(WITH_XC_GPG)
+    set(keepassx_SOURCES ${keepassx_SOURCES} core/PasswordCacheService.cpp)
 endif()
 
 add_subdirectory(autotype)
@@ -329,6 +334,7 @@ target_link_libraries(keepassx_core
         ${ZXCVBN_LIBRARIES}
         ${ARGON2_LIBRARIES}
         ${ZLIB_LIBRARIES}
+        ${GPGME_PTHREAD_LIBRARIES}
 	)
 
 if(WITH_XC_SSHAGENT)

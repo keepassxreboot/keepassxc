@@ -125,7 +125,7 @@ int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<Q
         QString password = passwordGenerator->generatePassword();
         entry->setPassword(password);
     }
-
+            //entry->setNotes("setting password");
     QString errorMessage;
     if (!database->save(&errorMessage, true, false)) {
         err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;

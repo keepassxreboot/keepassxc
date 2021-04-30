@@ -371,6 +371,35 @@ QString BrowserService::getKey(const QString& id)
     return db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + id);
 }
 
+QString BrowserService::getPasswordByUuid(const QString& uuid){
+    //TODO: implement access checks a below
+    //this is Direct Object Reference by ID, but since ID is UUID it's not insecure
+    //only way for browser extension to learn UUID is to get it in the previous step
+    //chance of guessing is non-existing so we may just return it
+    auto db = selectedDatabase();
+    if (!db) {
+        return "";
+    }
+
+    Entry* entry = db->rootGroup()->findEntryByUuid(Tools::hexToUuid(uuid));
+    if (!entry) {
+        qInfo()<<      "Entry not found "<<uuid;
+        return "";
+    }
+
+    // Check if the entry password is a reference. If so, update the original entry instead
+    while (entry->attributes()->isReference(EntryAttributes::PasswordKey)) {
+        const QUuid referenceUuid = entry->attributes()->referenceUuid(EntryAttributes::PasswordKey);
+        if (!referenceUuid.isNull()) {
+            entry = db->rootGroup()->findEntryByUuid(referenceUuid);
+            if (!entry) {
+                return "";
+            }
+        }
+    }
+    return entry->password(true);
+}
+
 QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
                                                const QString& siteUrlStr,
                                                const QString& formUrlStr,
@@ -493,7 +522,7 @@ void BrowserService::addEntry(const QString& dbid,
     } else {
         entry->setGroup(getDefaultEntryGroup(db));
     }
-
+    entry->updateGpgData();
     const QString host = QUrl(siteUrlStr).host();
     const QString submitHost = QUrl(formUrlStr).host();
     BrowserEntryConfig config;
@@ -547,7 +576,7 @@ bool BrowserService::updateEntry(const QString& dbid,
 
     bool result = false;
     if (username.compare(login, Qt::CaseSensitive) != 0
-        || entry->password().compare(password, Qt::CaseSensitive) != 0) {
+        || entry->password(true).compare(password, Qt::CaseSensitive) != 0) {
         MessageBox::Button dialogResult = MessageBox::No;
         if (!browserSettings()->alwaysAllowUpdate()) {
             raiseWindow();
@@ -566,6 +595,7 @@ bool BrowserService::updateEntry(const QString& dbid,
                 entry->setUsername(login);
             }
             entry->setPassword(password);
+            entry->updateGpgData();
             entry->endUpdate();
             result = true;
         }

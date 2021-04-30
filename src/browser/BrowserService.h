@@ -82,6 +82,7 @@ public:
                                    const QString& realm,
                                    const StringPairList& keyList,
                                    const bool httpAuth = false);
+    QString getPasswordByUuid(const QString& uuid);
 
     static void convertAttributesToCustomData(QSharedPointer<Database> db);
 

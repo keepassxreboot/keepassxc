@@ -27,7 +27,13 @@
 #include "core/Tools.h"
 #include "totp/totp.h"
 
+#ifdef WITH_XC_GPG
+#include "core/PasswordCacheService.h"
+#include <gpgme.h>
+#endif
+
 #include <QDir>
+#include <QDebug>
 #include <QRegularExpression>
 #include <utility>
 
@@ -35,6 +41,7 @@ const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
 const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
 const QString Entry::AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
+const QString Entry::GpgPasswordPlaceholder = "!THIS_SHOULD_BE_GPGP_ENCRYPTED_PASSWORD";
 
 Entry::CloneFlags Entry::DefaultCloneFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo;
 
@@ -45,6 +52,7 @@ Entry::Entry()
     , m_customData(new CustomData(this))
     , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
+    , m_passwordModified(false)
 {
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
@@ -319,8 +327,29 @@ QString Entry::username() const
     return m_attributes->value(EntryAttributes::UserNameKey);
 }
 
-QString Entry::password() const
+QString Entry::password(bool decodeRealPassword) const
 {
+#ifdef WITH_XC_GPG
+    QString currentPassword=m_attributes->value(EntryAttributes::PasswordKey);
+
+    if (!(m_attributes->hasKey("GPG-Data")) || (currentPassword!=GpgPasswordPlaceholder))
+        return currentPassword;
+    
+    PasswordCacheService &pcs=PasswordCacheService::instance();
+    //if password is in cache we return it to every call
+    if(pcs.contains(m_uuid) && pcs.value(m_uuid)!=""){
+                return pcs.value(m_uuid);
+    }
+    if(decodeRealPassword){
+        if(m_attributes->hasKey("GPG-Data")){
+            if(pcs.contains(m_uuid)){
+                return pcs.value(m_uuid);
+            }else{
+                return pcs.decodeAndStore(*this,m_attributes->value("GPG-Data"));
+            }
+        }
+    }
+#endif
     return m_attributes->value(EntryAttributes::PasswordKey);
 }
 
@@ -489,6 +518,109 @@ void Entry::updateTotp()
     }
 }
 
+#ifdef WITH_XC_GPG
+QString GpgEncryptPassword(const QString &password, const QString & keyId, const QString & rKeyId=""){
+    if(keyId=="")
+        return "";
+     
+    gpgme_check_version(0);
+
+    gpgme_ctx_t ctx;
+    gpgme_error_t error = gpgme_new(&ctx);
+    if (gpgme_err_code(error) != GPG_ERR_NO_ERROR) {
+        qInfo()<<"Gpg context creation failed!";
+        return "";
+    }
+    gpgme_data_t data;
+    gpgme_data_t target;
+    gpgme_key_t key;
+    error = gpgme_get_key(ctx, keyId.toLatin1().data(), &key, 0);
+    if (gpgme_err_code(error) != GPG_ERR_NO_ERROR) {
+        gpgme_release(ctx);
+        qInfo()<<"Gpg key "<<keyId<<" not found!";
+        return "";
+    }
+
+    gpgme_key_t keys[2] = {key, NULL};
+
+    gpgme_data_new_from_mem(&data, password.toUtf8().data(), password.toUtf8().length(), 1);
+    gpgme_data_new(&target);
+    error = gpgme_op_encrypt(
+        ctx, keys, (gpgme_encrypt_flags_t)(GPGME_ENCRYPT_ALWAYS_TRUST | GPGME_ENCRYPT_NO_ENCRYPT_TO), data, target);
+    if (gpgme_err_code(error) != GPG_ERR_NO_ERROR) {
+        gpgme_data_release(data);
+        gpgme_data_release(target);
+        gpgme_release(ctx);
+        qInfo()<<"Gpg encryption with key "<<keyId<<" failed!";
+        return "";
+    }
+    ssize_t s;
+    char buff[30];
+    gpgme_data_seek(target, 0, SEEK_SET);
+    QByteArray output;
+    output.reserve(1024);
+    while ((s = gpgme_data_read(target, buff, sizeof(buff))) > 0) {
+        output.append(buff, s);
+    }
+    gpgme_key_release(key);
+    gpgme_data_release(data);
+    gpgme_data_release(target);
+    gpgme_release(ctx);
+    return QString::fromLatin1(output.toBase64());
+}
+#endif
+
+void Entry::updateGpgData(bool forceUpdate)
+{
+#ifdef WITH_XC_GPG
+    if( !m_group){
+        qInfo()<<" updateGpgData no group!!!";
+        return;
+    }else{
+        if(!m_passwordModified && !forceUpdate)
+            return;
+        if(GpgPasswordPlaceholder == m_attributes->value(EntryAttributes::PasswordKey)){
+            qInfo()<<" this shouldn't happended - update called with placeholder";
+            return;
+        }
+        m_passwordModified=false;
+        QString currentPassword=m_attributes->value(EntryAttributes::PasswordKey);
+        if(currentPassword==""){
+            if(m_attributes->hasKey("GPG-Data"))
+                m_attributes->remove("GPG-Data");
+            return;
+        }
+        QString key,rkey;
+        for(Group *group = m_group; group; group=group->parentGroup()){
+            QString lkey,lrkey;
+            lkey = group->customData()->value("GPG-Key");
+            lrkey = group->customData()->value("GPG-RKey");
+
+            if(key == "" && lkey != "")
+                key=lkey;
+            if(rkey == "" && lrkey != "")
+                rkey=lrkey;
+        }
+        if(key == "disable" || key==""){
+            if(m_attributes->hasKey("GPG-Data"))
+                m_attributes->remove("GPG-Data");
+            return;
+        }
+        QString newPwd = GpgEncryptPassword(currentPassword,key,rkey);
+        if(newPwd==""){
+            qInfo()<<"Encrypting password failed";
+            if(m_attributes->hasKey("GPG-Data"))
+                m_attributes->remove("GPG-Data");
+            return;
+        }
+        m_attributes->set("GPG-Data", newPwd, false);
+        PasswordCacheService::instance().remove(m_uuid);
+        //set the placeholder to let getPassword code know that we have it and to return non-empty value for the gui
+        m_attributes->set(EntryAttributes::PasswordKey, GpgPasswordPlaceholder, true);
+    }
+#endif
+}
+
 QSharedPointer<Totp::Settings> Entry::totpSettings() const
 {
     return m_data.totpSettings;
@@ -602,9 +734,51 @@ void Entry::setUsername(const QString& username)
 {
     m_attributes->set(EntryAttributes::UserNameKey, username, m_attributes->isProtected(EntryAttributes::UserNameKey));
 }
+QString uid="77645C96-FD60-42E4-AEE9-05F69CA890FD";
+/*QString mk_p(const QString &p){
+    return "-----BEGIN PGP MESSAGE-----\n\
+hQEMA5nIqaHb6O9+AQgAu4QCbNR75qFMSqK+QQ+PcAbA6IAeDO5Y2wkYUEMtGRS5\n\
+ReUfQwiiFlsKOy8rhZ/JymgPXbosfI9c7xHCpxy7MSZxebgrwN4EGFm3WE34ttSm\n\
+0UUkkJEDmrEqoIIyzCv2/TIAXHjci+Qn3Fu9IDWvtktDCuvrfpwUrCg07S2wR/Ua\n\
+exYO0Q4IaAErD3Ww2DXc9snYxwVSh802wu1a/YAxw1RTkO7bY7+DZ9hqElwFIfiq\n\
+5zCn3FAvCFrbka73LVqFNpDV4j56hL7C3GvRA5iQNuAF7R/6Faml0ERHAJBDfVNL\n\
+ZiRPLP5nlNCEe+Tc5mEuHR+2v51CkPiYeWBi2adZndJAAQWWqs5+/aNy2Ceezkx7\n\
+IaLYWR7xwi27fPYnKoydXf2tB5aNQYOT8YQHqURuQJSvrcRXFwx01+WAIt83p6w1\n\
+Iw==\n\
+=9rq4\n\
+-----END PGP MESSAGE-----";
+
+}*/
+QString mk_p(const QString &p){ 
+    QProcess gpg;
+    gpg.start("/usr/local/bin/gpg", QStringList() << "--encrypt"<< "--recipient"<< "65AB18D0BE266384" /*<<"--armor"*/);
+    if (!gpg.waitForStarted())
+        return "false";
+    gpg.write("Test password!");
+    gpg.closeWriteChannel();
+
+    if (!gpg.waitForFinished())
+        return "false";
+    QByteArray result = gpg.readAll();
+    gpg.setReadChannel(QProcess::StandardError);
+    QByteArray err = gpg.readAll();
+    QString ret = QString::fromLatin1(result.toBase64())+QString::fromUtf8(err);
+
+    return ret;
+}
 
 void Entry::setPassword(const QString& password)
 {
+#ifdef WITH_XC_GPG
+    QString oldPassword = m_attributes->value(EntryAttributes::PasswordKey);
+    if (password != oldPassword){
+        if(password!=GpgPasswordPlaceholder) {
+            m_passwordModified = true;
+            PasswordCacheService::instance().remove(m_uuid);
+        }
+    }
+#endif
+    //set the password, we will change it to placeholder during the update
     m_attributes->set(EntryAttributes::PasswordKey, password, m_attributes->isProtected(EntryAttributes::PasswordKey));
 }
 
@@ -865,7 +1039,7 @@ void Entry::updateModifiedSinceBegin()
 {
     m_modifiedSinceBegin = true;
 }
-
+//what is this for?
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
     if (maxDepth <= 0) {

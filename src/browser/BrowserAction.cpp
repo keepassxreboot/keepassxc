@@ -109,6 +109,8 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
         return handleCreateNewGroup(json, action);
     } else if (action.compare("get-totp", Qt::CaseSensitive) == 0) {
         return handleGetTotp(json, action);
+    }else if (action.compare("get-gpg-password", Qt::CaseSensitive) == 0) {
+        return handleGetGpgPassword(json, action);
     }
 
     // Action was not recognized
@@ -248,6 +250,37 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
     QJsonObject message = buildMessage(newNonce);
     message["hash"] = hash;
     message["id"] = id;
+
+    return buildResponse(action, message, newNonce);
+}
+
+QJsonObject BrowserAction::handleGetGpgPassword(const QJsonObject& json, const QString& action)
+{
+    const QString hash = browserService()->getDatabaseHash();
+    const QString nonce = json.value("nonce").toString();
+    const QString encrypted = json.value("message").toString();
+
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+    qInfo()<<decrypted;
+    const QString uuid = decrypted.value("uuid").toString();
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
+    }
+    //get password
+    QString password=browserService()->getPasswordByUuid(uuid);
+
+    const QString newNonce = incrementNonce(nonce);
+
+    QJsonObject message = buildMessage(newNonce);
+    message["uuid"]  = uuid;
+    message["password"] = password;
 
     return buildResponse(action, message, newNonce);
 }
