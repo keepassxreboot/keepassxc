@@ -36,7 +36,8 @@
 #include "core/EntrySearcher.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/PasswordGenerator.h"
+#include "core/PasswordGeneratorSettings.h"
+#include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
@@ -286,6 +287,37 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
     result["name"] = name;
     result["uuid"] = uuid;
     return result;
+}
+
+QJsonObject BrowserService::generatePassword()
+{
+    QJsonObject password;
+    if (passwordGeneratorSettings()->generatorType() == 0) {
+        m_passwordGenerator.setLength(passwordGeneratorSettings()->length());
+        m_passwordGenerator.setCharClasses(passwordGeneratorSettings()->charClasses());
+        m_passwordGenerator.setFlags(passwordGeneratorSettings()->generatorFlags());
+
+        if (passwordGeneratorSettings()->advancedMode()) {
+            m_passwordGenerator.setAdditionalChars(passwordGeneratorSettings()->additionalChars());
+            m_passwordGenerator.setExcludedChars(passwordGeneratorSettings()->excludedChars());
+        } else {
+            m_passwordGenerator.setAdditionalChars("");
+            m_passwordGenerator.setExcludedChars("");
+        }
+
+        const QString pw = m_passwordGenerator.generatePassword();
+        password["entropy"] = PasswordHealth(pw).entropy();
+        password["password"] = pw;
+    } else {
+        m_passPhraseGenerator.setWordCase(passwordGeneratorSettings()->passPhraseWordCase());
+        m_passPhraseGenerator.setWordCount(passwordGeneratorSettings()->passPhraseWordCount());
+        m_passPhraseGenerator.setWordSeparator(passwordGeneratorSettings()->passPhraseWordSeparator());
+
+        password["entropy"] = m_passPhraseGenerator.estimateEntropy();
+        password["password"] = m_passPhraseGenerator.generatePassphrase();
+    }
+
+    return password;
 }
 
 QString BrowserService::getCurrentTotp(const QString& uuid)

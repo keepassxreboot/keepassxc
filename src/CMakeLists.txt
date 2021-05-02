@@ -53,6 +53,7 @@ set(keepassx_SOURCES
         core/Merger.cpp
         core/Metadata.cpp
         core/PasswordGenerator.cpp
+        core/PasswordGeneratorSettings.cpp
         core/PasswordHealth.cpp
         core/PassphraseGenerator.cpp
         core/Resources.cpp

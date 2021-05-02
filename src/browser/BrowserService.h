@@ -21,6 +21,8 @@
 #define BROWSERSERVICE_H
 
 #include "core/Entry.h"
+#include "core/PassphraseGenerator.h"
+#include "core/PasswordGenerator.h"
 #include <QObject>
 #include <QPointer>
 #include <QSharedPointer>
@@ -58,6 +60,7 @@ public:
 
     QJsonObject getDatabaseGroups();
     QJsonObject createNewGroup(const QString& groupName);
+    QJsonObject generatePassword();
     QString getCurrentTotp(const QString& uuid);
 
     void addEntry(const QString& dbid,
@@ -160,6 +163,8 @@ private:
     bool m_bringToFrontRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
+    PasswordGenerator m_passwordGenerator;
+    PassphraseGenerator m_passPhraseGenerator;
 
     QPointer<DatabaseWidget> m_currentDatabaseWidget;
 

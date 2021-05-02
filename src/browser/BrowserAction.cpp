@@ -304,7 +304,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const QString& action)
 {
     auto nonce = json.value("nonce").toString();
-    auto password = browserSettings()->generatePassword();
+    auto password = browserService()->generatePassword();
 
     if (nonce.isEmpty() || password.isEmpty()) {
         return QJsonObject();
