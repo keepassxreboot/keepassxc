@@ -734,38 +734,6 @@ void Entry::setUsername(const QString& username)
 {
     m_attributes->set(EntryAttributes::UserNameKey, username, m_attributes->isProtected(EntryAttributes::UserNameKey));
 }
-QString uid="77645C96-FD60-42E4-AEE9-05F69CA890FD";
-/*QString mk_p(const QString &p){
-    return "-----BEGIN PGP MESSAGE-----\n\
-hQEMA5nIqaHb6O9+AQgAu4QCbNR75qFMSqK+QQ+PcAbA6IAeDO5Y2wkYUEMtGRS5\n\
-ReUfQwiiFlsKOy8rhZ/JymgPXbosfI9c7xHCpxy7MSZxebgrwN4EGFm3WE34ttSm\n\
-0UUkkJEDmrEqoIIyzCv2/TIAXHjci+Qn3Fu9IDWvtktDCuvrfpwUrCg07S2wR/Ua\n\
-exYO0Q4IaAErD3Ww2DXc9snYxwVSh802wu1a/YAxw1RTkO7bY7+DZ9hqElwFIfiq\n\
-5zCn3FAvCFrbka73LVqFNpDV4j56hL7C3GvRA5iQNuAF7R/6Faml0ERHAJBDfVNL\n\
-ZiRPLP5nlNCEe+Tc5mEuHR+2v51CkPiYeWBi2adZndJAAQWWqs5+/aNy2Ceezkx7\n\
-IaLYWR7xwi27fPYnKoydXf2tB5aNQYOT8YQHqURuQJSvrcRXFwx01+WAIt83p6w1\n\
-Iw==\n\
-=9rq4\n\
------END PGP MESSAGE-----";
-
-}*/
-QString mk_p(const QString &p){ 
-    QProcess gpg;
-    gpg.start("/usr/local/bin/gpg", QStringList() << "--encrypt"<< "--recipient"<< "65AB18D0BE266384" /*<<"--armor"*/);
-    if (!gpg.waitForStarted())
-        return "false";
-    gpg.write("Test password!");
-    gpg.closeWriteChannel();
-
-    if (!gpg.waitForFinished())
-        return "false";
-    QByteArray result = gpg.readAll();
-    gpg.setReadChannel(QProcess::StandardError);
-    QByteArray err = gpg.readAll();
-    QString ret = QString::fromLatin1(result.toBase64())+QString::fromUtf8(err);
-
-    return ret;
-}
 
 void Entry::setPassword(const QString& password)
 {
@@ -1039,7 +1007,7 @@ void Entry::updateModifiedSinceBegin()
 {
     m_modifiedSinceBegin = true;
 }
-//what is this for?
+
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
     if (maxDepth <= 0) {

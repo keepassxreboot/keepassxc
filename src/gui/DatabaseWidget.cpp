@@ -1198,7 +1198,6 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
         setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
         break;
     case EntryModel::Password:
-    //TODO get password
         setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password(true)));
         break;
     case EntryModel::Url:
