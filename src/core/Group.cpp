@@ -30,8 +30,8 @@
 #include "keeshare/KeeShare.h"
 #endif
 
-#include <QtConcurrent>
 #include <QUuid>
+#include <QtConcurrent>
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
@@ -588,24 +588,6 @@ Entry* Group::findEntryByUuid(const QUuid& uuid, bool recursive) const
 
     for (auto entry : entries) {
         if (entry->uuid() == uuid) {
-            return entry;
-        }
-    }
-
-    return nullptr;
-}
-
-Entry* Group::findEntryByUuid(const QString& uuid) const
-{
-    if (uuid.isEmpty()) {
-        return nullptr;
-    }
-
-    auto entries = m_entries;
-    entries = entriesRecursive(false);
-
-    for (auto entry : entries) {
-        if (entry->uuid().toString(QUuid::Id128) == uuid) {
             return entry;
         }
     }

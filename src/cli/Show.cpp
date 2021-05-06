@@ -21,7 +21,6 @@
 #include "core/Group.h"
 
 #include <quuid.h>
-#include <QUuid>
 
 const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
                                                                              << "totp",
@@ -67,7 +66,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         // If no entry found try find by entry UUID.
         entry = database->rootGroup()->findEntryByUuid(entryPath);
         if (!entry) {
-            errorTextStream << QObject::tr("Could not find entry with path or uuid %1.").arg(entryPath) << endl;
+            err << QObject::tr("Could not find entry with path or uuid %1.").arg(entryPath) << endl;
             return EXIT_FAILURE;
         }
     }
