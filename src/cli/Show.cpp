@@ -19,8 +19,6 @@
 #include "Utils.h"
 #include "core/Group.h"
 
-#include <QUuid>
-
 const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
                                                                              << "totp",
                                                                QObject::tr("Show the entry's current TOTP."));
@@ -103,7 +101,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         if (entry->attributes()->isProtected(canonicalName) && showDefaultAttributes && !showProtectedAttributes) {
             out << "PROTECTED" << endl;
         } else if (attributeName.compare("Uuid") == 0) {
-            out << entry->uuid().toString(QUuid::WithoutBraces) << endl;
+            out << entry->uuid().toString(QUuid::Id128) << endl;
         } else {
             out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << endl;
         }
