@@ -230,6 +230,7 @@ void TestKeePass2Format::testXmlEntry1()
     QCOMPARE(entry->attributes()->value("UserName"), QString("User Name"));
     QVERIFY(entry->attributes()->isProtected("UserName"));
     QVERIFY(attrs.removeOne("UserName"));
+    QVERIFY(attrs.removeOne("Uuid"));
     QVERIFY(attrs.isEmpty());
 
     QCOMPARE(entry->title(), entry->attributes()->value("Title"));
@@ -285,6 +286,7 @@ void TestKeePass2Format::testXmlEntry2()
     QVERIFY(attrs.removeOne("URL"));
     QCOMPARE(entry->attributes()->value("UserName"), QString("notDEFUSERNAME"));
     QVERIFY(attrs.removeOne("UserName"));
+    QVERIFY(attrs.removeOne("Uuid"));
     QVERIFY(attrs.isEmpty());
 
     QCOMPARE(entry->attachments()->keys().size(), 1);

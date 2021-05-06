@@ -139,7 +139,7 @@ void TestKdbx4Argon2::testFormat400()
 
     QCOMPARE(entry->title(), QString("Format400"));
     QCOMPARE(entry->username(), QString("Format400"));
-    QCOMPARE(entry->attributes()->keys().size(), 6);
+    QCOMPARE(entry->attributes()->keys().size(), 7);
     QCOMPARE(entry->attributes()->value("Format400"), QString("Format400"));
     QCOMPARE(entry->attachments()->keys().size(), 1);
     QCOMPARE(entry->attachments()->value("Format400"), QByteArray("Format400\n"));
