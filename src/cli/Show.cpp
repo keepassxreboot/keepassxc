@@ -14,11 +14,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include "Show.h"
 
 #include "Utils.h"
 #include "core/Group.h"
+
+#include <QUuid>
 
 const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
                                                                              << "totp",
@@ -102,7 +103,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         if (entry->attributes()->isProtected(canonicalName) && showDefaultAttributes && !showProtectedAttributes) {
             out << "PROTECTED" << endl;
         } else if (attributeName.compare("Uuid") == 0) {
-            out << entry->uuid().toString(static_cast<QUuid::StringFormat>(1)) << endl;
+            out << entry->uuid().toString(QUuid::WithoutBraces) << endl;
         } else {
             out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << endl;
         }
