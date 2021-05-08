@@ -240,14 +240,14 @@ void EntryPreviewWidget::updateEntryGeneralTab()
         m_ui->togglePasswordButton->setVisible(false);
     }
 
-    if (config()->get(Config::Security_HideNotes).toBool()) {
-        setEntryNotesVisible(false);
-        m_ui->toggleEntryNotesButton->setVisible(!m_ui->entryNotesTextEdit->toPlainText().isEmpty());
-        m_ui->toggleEntryNotesButton->setChecked(false);
-    } else {
-        setEntryNotesVisible(true);
-        m_ui->toggleEntryNotesButton->setVisible(false);
-    }
+    auto hasNotes = !m_currentEntry->notes().isEmpty();
+    auto hideNotes = config()->get(Config::Security_HideNotes).toBool();
+
+    m_ui->entryNotesTextEdit->setVisible(hasNotes);
+    setEntryNotesVisible(hasNotes && !hideNotes);
+    m_ui->toggleEntryNotesButton->setVisible(hasNotes && hideNotes
+                                             && !m_ui->entryNotesTextEdit->toPlainText().isEmpty());
+    m_ui->toggleEntryNotesButton->setChecked(false);
 
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_ui->entryNotesTextEdit->setFont(Font::fixedFont());
