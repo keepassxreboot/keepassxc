@@ -78,6 +78,11 @@ setupChrome() {
     INSTALL_DIR="${BASE_DIR}/.config/google-chrome/NativeMessagingHosts"
 }
 
+setupChromeUnstable() {
+    JSON_OUT=${JSON_CHROME}
+    INSTALL_DIR="${BASE_DIR}/.config/google-chrome-unstable/NativeMessagingHosts"
+}
+
 setupChromium() {
     askBrowserSnap "./snap/chromium/current"
     JSON_OUT=${JSON_CHROME}
@@ -109,10 +114,11 @@ BROWSER=$(whiptail \
             15 60 5 \
             "1" "Firefox" \
             "2" "Chrome" \
-            "3" "Chromium" \
-            "4" "Vivaldi" \
-            "5" "Brave" \
-            "6" "Tor Browser" \
+            "3" "Chrome Unstable" \
+            "4" "Chromium" \
+            "5" "Vivaldi" \
+            "6" "Brave" \
+            "7" "Tor Browser" \
             3>&1 1>&2 2>&3)
 
 clear
@@ -123,10 +129,11 @@ if [ $exitstatus = 0 ]; then
     case "$BROWSER" in
         1) setupFirefox ;;
         2) setupChrome ;;
-        3) setupChromium ;;
-        4) setupVivaldi ;;
-        5) setupBrave ;;
-        6) setupTorBrowser ;;
+        3) setupChromeUnstable ;;
+        4) setupChromium ;;
+        5) setupVivaldi ;;
+        6) setupBrave ;;
+        7) setupTorBrowser ;;
     esac
 
     # Install the JSON file
