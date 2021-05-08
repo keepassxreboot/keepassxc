@@ -76,6 +76,7 @@ public:
     void lockDatabase();
 
     QJsonObject getDatabaseGroups();
+    QJsonArray getDatabaseEntries();
     QJsonObject createNewGroup(const QString& groupName);
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);

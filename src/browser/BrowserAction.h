@@ -68,6 +68,7 @@ private:
     QJsonObject handleSetLogin(const QJsonObject& json, const QString& action);
     QJsonObject handleLockDatabase(const QJsonObject& json, const QString& action);
     QJsonObject handleGetDatabaseGroups(const QJsonObject& json, const QString& action);
+    QJsonObject handleGetDatabaseEntries(const QJsonObject& json, const QString& action);
     QJsonObject handleCreateNewGroup(const QJsonObject& json, const QString& action);
     QJsonObject handleGetTotp(const QJsonObject& json, const QString& action);
     QJsonObject handleDeleteEntry(const QJsonObject& json, const QString& action);

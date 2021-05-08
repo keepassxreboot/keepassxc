@@ -101,6 +101,8 @@ QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject&
         return handleDeleteEntry(json, action);
     } else if (action.compare(BROWSER_REQUEST_REQUEST_AUTOTYPE) == 0) {
         return handleGlobalAutoType(json, action);
+    } else if (action.compare("get-database-entries", Qt::CaseSensitive) == 0) {
+        return handleGetDatabaseEntries(json, action);
     }
 
     // Action was not recognized
@@ -374,6 +376,39 @@ QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, cons
 
     const Parameters params{{"groups", groups}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
+}
+
+QJsonObject BrowserAction::handleGetDatabaseEntries(const QJsonObject& json, const QString& action)
+{
+    const QString hash = browserService()->getDatabaseHash();
+    const QString nonce = json.value("nonce").toString();
+    const QString encrypted = json.value("message").toString();
+
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    QString command = decrypted.value("action").toString();
+    if (command.isEmpty() || command.compare("get-database-entries", Qt::CaseSensitive) != 0) {
+        return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
+    }
+
+    const QJsonArray entries = browserService()->getDatabaseEntries();
+    if (entries.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
+    }
+
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
+
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
+    message["entries"] = entries;
+
+    return buildResponse(action, message, newNonce);
 }
 
 QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const QString& action)
