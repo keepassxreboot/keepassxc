@@ -165,6 +165,8 @@ private:
     QSharedPointer<Database> m_db;
 
     std::tuple<unsigned, TimeDelta> m_extensionOnPwUpdate;
+    qint64 m_daysRandomizeExtension;
+
     bool m_create;
     bool m_history;
 #ifdef WITH_XC_SSHAGENT

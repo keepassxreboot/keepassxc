@@ -336,6 +336,52 @@
          </item>
         </layout>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalRandomize">
+         <property name="spacing">
+          <number>1</number>
+         </property>
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="randomizeExtensionDeadline">
+           <property name="toolTip">
+            <string>Toggle randomizing expiration date</string>
+           </property>
+           <property name="accessibleName">
+            <string>Toggle randomizing expiration date</string>
+           </property>
+           <property name="text">
+            <string>Randomize the extension deadline within the last </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="randomizeByQuantity">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="FixedWidth">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel">
+           <property name="visible">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string> days</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
     </item>

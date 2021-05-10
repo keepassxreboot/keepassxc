@@ -200,12 +200,25 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->autoExtendExpire, &QCheckBox::toggled, [&](bool enabled) {
         m_mainUi->extendByQuantity->setEnabled(enabled);
         m_mainUi->extendByMagnitude->setEnabled(enabled);
+        m_mainUi->randomizeExtensionDeadline->setEnabled(enabled);
+    });
+
+    connect(m_mainUi->randomizeExtensionDeadline, &QCheckBox::toggled, [&](bool enabled) {
+        m_mainUi->randomizeByQuantity->setEnabled(enabled);
+    });
+
+    connect(m_mainUi->randomizeByQuantity, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int n) {
+        m_daysRandomizeExtension = static_cast<qint64>(n);
     });
     connect(m_mainUi->passwordEdit, &QLineEdit::textChanged, this, [&]() {
         if (m_mainUi->autoExtendExpire->isEnabled()) {
             TimeDelta delta = std::get<1>(m_extensionOnPwUpdate) * std::get<0>(m_extensionOnPwUpdate);
             QDateTime now = Clock::currentDateTime();
             QDateTime expiryDateTime = now + delta;
+            if (m_mainUi->randomizeExtensionDeadline->isEnabled()) {
+                expiryDateTime =
+                    expiryDateTime.addDays(-QRandomGenerator::global()->bounded(0, m_daysRandomizeExtension));
+            }
             m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
         }
     });
