@@ -75,6 +75,12 @@ QString timeDelta2Text(const TimeDelta& tD)
     return tD.getMonths() ? "month(s)" : "year(s)";
 };
 
+qint64 timeDeltaToDays(const TimeDelta& delta)
+{
+    QDateTime now = Clock::currentDateTime();
+    return now.daysTo(now + delta);
+}
+
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)
     , m_entry(nullptr)
@@ -192,21 +198,23 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->extendByMagnitude->menu(), &QMenu::triggered, this, [&](QAction* action) {
         std::get<1>(m_extensionOnPwUpdate) = action->data().value<TimeDelta>();
         m_mainUi->extendByMagnitude->setText(action->text());
+        m_mainUi->randomizeByQuantity->setMaximum(
+            timeDeltaToDays(std::get<1>(m_extensionOnPwUpdate) * std::get<0>(m_extensionOnPwUpdate)));
         setModified(true);
     });
     connect(m_mainUi->extendByQuantity, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int n) {
         std::get<0>(m_extensionOnPwUpdate) = static_cast<unsigned>(n);
+        m_mainUi->randomizeByQuantity->setMaximum(
+            timeDeltaToDays(std::get<1>(m_extensionOnPwUpdate) * std::get<0>(m_extensionOnPwUpdate)));
     });
     connect(m_mainUi->autoExtendExpire, &QCheckBox::toggled, [&](bool enabled) {
         m_mainUi->extendByQuantity->setEnabled(enabled);
         m_mainUi->extendByMagnitude->setEnabled(enabled);
         m_mainUi->randomizeExtensionDeadline->setEnabled(enabled);
     });
-
     connect(m_mainUi->randomizeExtensionDeadline, &QCheckBox::toggled, [&](bool enabled) {
         m_mainUi->randomizeByQuantity->setEnabled(enabled);
     });
-
     connect(m_mainUi->randomizeByQuantity, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int n) {
         m_daysRandomizeExtension = static_cast<qint64>(n);
     });
@@ -217,7 +225,7 @@ void EditEntryWidget::setupMain()
             QDateTime expiryDateTime = now + delta;
             if (m_mainUi->randomizeExtensionDeadline->isChecked()) {
                 expiryDateTime =
-                    expiryDateTime.addDays(-QRandomGenerator::global()->bounded(0, m_daysRandomizeExtension+1));
+                    expiryDateTime.addDays(-QRandomGenerator::global()->bounded(0, m_daysRandomizeExtension + 1));
             }
             m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
         }
@@ -935,6 +943,8 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->extendByQuantity->setValue(entry->customData()->value("ExpirationExtensionQuantity").toInt());
     m_mainUi->extendByMagnitude->setEnabled(m_mainUi->autoExtendExpire->isChecked());
     m_mainUi->extendByMagnitude->setText(entry->customData()->value("ExpirationExtensionMagnitude"));
+    m_mainUi->randomizeByQuantity->setMaximum(
+        timeDeltaToDays(std::get<1>(m_extensionOnPwUpdate) * std::get<0>(m_extensionOnPwUpdate)));
 
     QList<QString> commonUsernames = m_db->commonUsernames();
     m_usernameCompleterModel->setStringList(commonUsernames);
