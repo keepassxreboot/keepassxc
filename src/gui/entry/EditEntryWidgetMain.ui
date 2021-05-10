@@ -279,63 +279,73 @@
         </layout>
        </item>
        <item>
-         <widget class="QCheckBox" name="autoExtendExpire">
-          <property name="toolTip">
-           <string>Toggle auto updating expiration</string>
-          </property>
-          <property name="accessibleName">
-           <string>Toggle auto updating expiration date</string>
-          </property>
-          <property name="text">
-           <string>Auto assign new password expiration after modification:</string>
-          </property>
-         </widget>
-        </item>
-       <item>
-       <layout class="QHBoxLayout" name="horizontalautoUpdate">
-        <property name="spacing">
-         <number>1</number>
-        </property>
-        <item>
-         <widget class="QSpinBox" name="extendByQuantity">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimum">
-           <number>0</number>
-          </property>
-          <property name="maximum">
-           <number>1000</number>
-          </property>
-          <property name="FixedWidth">
-          <number>5</number>
+        <widget class="QCheckBox" name="autoExtendExpire">
+         <property name="toolTip">
+          <string>Toggle auto updating expiration</string>
          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="extendByMagnitude">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>Expiration extension Presets</string>
-          </property>
-          <property name="accessibleName">
-           <string>Expiration extension presets</string>
-          </property>
-          <property name="text">
-           <string>Time period</string>
-          </property>
-         </widget>
-        </item>
-      </layout>
-      </item>
+         <property name="accessibleName">
+          <string>Toggle auto updating expiration date</string>
+         </property>
+         <property name="text">
+          <string>Update when password is changed:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalautoUpdate">
+         <property name="spacing">
+          <number>1</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="notesHint">
+           <property name="text">
+            <string>Extend by: </string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="extendByQuantity">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <number>1000</number>
+           </property>
+           <property name="FixedWidth">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="extendByMagnitude">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Expiration extension Presets</string>
+           </property>
+           <property name="accessibleName">
+            <string>Expiration extension presets</string>
+           </property>
+           <property name="text">
+            <string>Time period</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
     </item>
@@ -368,6 +378,6 @@
   <tabstop>notesEnabled</tabstop>
   <tabstop>notesEdit</tabstop>
  </tabstops>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>
