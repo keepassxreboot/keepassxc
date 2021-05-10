@@ -215,9 +215,9 @@ void EditEntryWidget::setupMain()
             TimeDelta delta = std::get<1>(m_extensionOnPwUpdate) * std::get<0>(m_extensionOnPwUpdate);
             QDateTime now = Clock::currentDateTime();
             QDateTime expiryDateTime = now + delta;
-            if (m_mainUi->randomizeExtensionDeadline->isEnabled()) {
+            if (m_mainUi->randomizeExtensionDeadline->isChecked()) {
                 expiryDateTime =
-                    expiryDateTime.addDays(-QRandomGenerator::global()->bounded(0, m_daysRandomizeExtension));
+                    expiryDateTime.addDays(-QRandomGenerator::global()->bounded(0, m_daysRandomizeExtension+1));
             }
             m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
         }
