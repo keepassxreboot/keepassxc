@@ -353,7 +353,7 @@
             <string>Toggle randomizing expiration date</string>
            </property>
            <property name="text">
-            <string>Randomize the extension deadline within the last </string>
+            <string>Randomize the extension deadline within </string>
            </property>
           </widget>
          </item>
@@ -376,7 +376,7 @@
             <bool>true</bool>
            </property>
            <property name="text">
-            <string> days</string>
+            <string> days from the deadline</string>
            </property>
           </widget>
          </item>
