@@ -279,30 +279,20 @@
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="autoExtendExpire">
-         <property name="toolTip">
-          <string>Toggle auto updating expiration</string>
-         </property>
-         <property name="accessibleName">
-          <string>Toggle auto updating expiration date</string>
-         </property>
-         <property name="text">
-          <string>Update when password is changed:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <layout class="QHBoxLayout" name="horizontalautoUpdate">
          <property name="spacing">
           <number>1</number>
          </property>
          <item>
-          <widget class="QLabel" name="notesHint">
-           <property name="text">
-            <string>Extend by: </string>
+          <widget class="QCheckBox" name="autoExtendExpire">
+           <property name="toolTip">
+            <string>Toggle auto updating expiration</string>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignTop</set>
+           <property name="accessibleName">
+            <string>Toggle auto updating expiration date</string>
+           </property>
+           <property name="text">
+            <string>Extend when password is changed, by:</string>
            </property>
           </widget>
          </item>
