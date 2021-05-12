@@ -486,8 +486,9 @@ bool Database::restoreDatabase(const QString& filePath)
     // Only try to restore if the backup file actually exists
     if (QFile::exists(backupFilePath)) {
         QFile::remove(filePath);
-        return QFile::copy(backupFilePath, filePath);
-        QFile::setPermissions(filePath, perms);
+        if (QFile::copy(backupFilePath, filePath)) {
+            return QFile::setPermissions(filePath, perms);
+        }
     }
     return false;
 }
