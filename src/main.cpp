@@ -116,15 +116,15 @@ int main(int argc, char** argv)
     const QStringList fileNames = parser.positionalArguments();
     if (app.isAlreadyRunning()) {
         if (parser.isSet(lockOption)) {
-            if (app.sendToRunningInstance(2, fileNames)) {
-                qInfo() << QObject::tr("Locked database.").toUtf8().constData();
+            if (app.sendLockToInstance()) {
+                qInfo() << QObject::tr("Locked databases.").toUtf8().constData();
             } else {
                 qWarning() << QObject::tr("Database failed to lock.").toUtf8().constData();
                 return EXIT_FAILURE;
             }
         } else {
             if (!fileNames.isEmpty()) {
-                app.sendToRunningInstance(1, fileNames);
+                app.sendFileNamesToRunningInstance(fileNames);
             }
 
             qWarning() << QObject::tr("Another instance of KeePassXC is already running.").toUtf8().constData();

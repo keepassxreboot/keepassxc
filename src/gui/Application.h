@@ -49,7 +49,8 @@ public:
     bool isAlreadyRunning() const;
     bool isDarkTheme() const;
 
-    bool sendToRunningInstance(quint32 id, const QStringList& fileNames);
+    bool sendFileNamesToRunningInstance(const QStringList& fileNames);
+    bool sendLockToInstance();
 
     void restart();
 
