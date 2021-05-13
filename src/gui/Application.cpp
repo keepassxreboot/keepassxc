@@ -357,15 +357,16 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_0);
-    out << quint32(0); //reserve space for block size
-    out << quint32(1); //ID for file name send. TODO: move to enum
-    out << fileNames; //send file names to be opened
+    out << quint32(0); // reserve space for block size
+    out << quint32(1); // ID for file name send. TODO: move to enum
+    out << fileNames; // send file names to be opened
     out.device()->seek(0);
-    out << quint32(data.size() - sizeof(quint32)); //replace the previous constant 0 with block size
+    out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
 
     const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
     client.disconnectFromServer();
-    const bool disconnected = client.state() == QLocalSocket::UnconnectedState || client.waitForDisconnected(WaitTimeoutMSec);
+    const bool disconnected =
+        client.state() == QLocalSocket::UnconnectedState || client.waitForDisconnected(WaitTimeoutMSec);
     return writeOk && disconnected;
 }
 
@@ -388,15 +389,16 @@ bool Application::sendLockToInstance()
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_0);
-    out << quint32(0); //reserve space for block size
-    out << quint32(2); //ID for database lock. TODO: move to enum
+    out << quint32(0); // reserve space for block size
+    out << quint32(2); // ID for database lock. TODO: move to enum
     out.device()->seek(0);
-    out << quint32(data.size() - sizeof(quint32)); //replace the previous constant 0 with block size
+    out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
 
     // Finish gracefully
     const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
     client.disconnectFromServer();
-    const bool disconnected = client.state() == QLocalSocket::UnconnectedState || client.waitForConnected(WaitTimeoutMSec);
+    const bool disconnected =
+        client.state() == QLocalSocket::UnconnectedState || client.waitForConnected(WaitTimeoutMSec);
     return writeOk && disconnected;
 }
 
