@@ -245,7 +245,8 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
 
         QFile file(attachmentPath);
         const QByteArray attachmentData = m_entryAttachments->value(filename);
-        const bool saveOk = file.open(QIODevice::WriteOnly) && file.write(attachmentData) == attachmentData.size();
+        const bool saveOk = file.open(QIODevice::WriteOnly) && file.setPermissions(QFile::ReadUser | QFile::WriteUser)
+                            && file.write(attachmentData) == attachmentData.size();
         if (!saveOk) {
             errors.append(QString("%1 - %2").arg(filename, file.errorString()));
         }
