@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>370</width>
-    <height>76</height>
+    <width>566</width>
+    <height>94</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -23,33 +23,7 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QComboBox" name="keyFileCombo">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="accessibleName">
-      <string>Key file selection</string>
-     </property>
-     <property name="editable">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
-    <widget class="QPushButton" name="browseKeyFileButton">
-     <property name="accessibleName">
-      <string>Browse for key file</string>
-     </property>
-     <property name="text">
-      <string>Browse...</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
     <widget class="QPushButton" name="createKeyFileButton">
      <property name="accessibleName">
       <string>Generate a new key file</string>
@@ -59,31 +33,58 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="0" column="0">
+    <widget class="QLabel" name="instructions">
+     <property name="text">
+      <string>Generate a new key file or choose an existing one to protect your database.</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>0</height>
-      </size>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
-    </spacer>
+    </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label">
+   <item row="3" column="0">
+    <widget class="QLabel" name="instructions_2">
      <property name="font">
       <font>
        <italic>true</italic>
       </font>
      </property>
      <property name="text">
-      <string>Note: Do not use a file that may change as that will prevent you from unlocking your database!</string>
+      <string>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLineEdit" name="keyFileLineEdit">
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="browseKeyFileButton">
+     <property name="accessibleName">
+      <string>Browse for key file</string>
+     </property>
+     <property name="text">
+      <string>Browse…</string>
      </property>
     </widget>
    </item>
