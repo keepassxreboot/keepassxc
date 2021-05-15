@@ -307,13 +307,26 @@ void Application::socketReadyRead()
     }
 
     QStringList fileNames;
-    in >> fileNames;
-    for (const QString& fileName : asConst(fileNames)) {
-        const QFileInfo fInfo(fileName);
-        if (fInfo.isFile() && fInfo.suffix().toLower() == "kdbx") {
-            emit openFile(fileName);
+    quint32 id;
+    in >> id;
+
+    // TODO: move constants to enum
+    switch (id) {
+    case 1:
+        in >> fileNames;
+        for (const QString& fileName : asConst(fileNames)) {
+            const QFileInfo fInfo(fileName);
+            if (fInfo.isFile() && fInfo.suffix().toLower() == "kdbx") {
+                emit openFile(fileName);
+            }
         }
+
+        break;
+    case 2:
+        getMainWindow()->lockAllDatabases();
+        break;
     }
+
     socket->deleteLater();
 }
 
@@ -326,6 +339,12 @@ bool Application::isAlreadyRunning() const
     return config()->get(Config::SingleInstance).toBool() && m_alreadyRunning;
 }
 
+/**
+ * Send to-open file names to the running UI instance
+ *
+ * @param fileNames - list of file names to open
+ * @return true if all operations succeeded (connection made, data sent, connection closed)
+ */
 bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
 {
     QLocalSocket client;
@@ -338,13 +357,48 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_0);
-    out << quint32(0) << fileNames;
+    out << quint32(0); // reserve space for block size
+    out << quint32(1); // ID for file name send. TODO: move to enum
+    out << fileNames; // send file names to be opened
     out.device()->seek(0);
-    out << quint32(data.size() - sizeof(quint32));
+    out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
 
     const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
     client.disconnectFromServer();
-    const bool disconnected = client.waitForDisconnected(WaitTimeoutMSec);
+    const bool disconnected =
+        client.state() == QLocalSocket::UnconnectedState || client.waitForDisconnected(WaitTimeoutMSec);
+    return writeOk && disconnected;
+}
+
+/**
+ * Locks all open databases in the running instance
+ *
+ * @return true if the "please lock" signal was sent successfully
+ */
+bool Application::sendLockToInstance()
+{
+    // Make a connection to avoid SIGSEGV
+    QLocalSocket client;
+    client.connectToServer(m_socketName);
+    const bool connected = client.waitForConnected(WaitTimeoutMSec);
+    if (!connected) {
+        return false;
+    }
+
+    // Send lock signal
+    QByteArray data;
+    QDataStream out(&data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_0);
+    out << quint32(0); // reserve space for block size
+    out << quint32(2); // ID for database lock. TODO: move to enum
+    out.device()->seek(0);
+    out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
+
+    // Finish gracefully
+    const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
+    client.disconnectFromServer();
+    const bool disconnected =
+        client.state() == QLocalSocket::UnconnectedState || client.waitForConnected(WaitTimeoutMSec);
     return writeOk && disconnected;
 }
 

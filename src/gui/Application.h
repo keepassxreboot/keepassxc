@@ -50,6 +50,7 @@ public:
     bool isDarkTheme() const;
 
     bool sendFileNamesToRunningInstance(const QStringList& fileNames);
+    bool sendLockToInstance();
 
     void restart();
 

@@ -71,6 +71,7 @@ int main(int argc, char** argv)
     QCommandLineOption configOption("config", QObject::tr("path to a custom config file"), "config");
     QCommandLineOption localConfigOption(
         "localconfig", QObject::tr("path to a custom local config file"), "localconfig");
+    QCommandLineOption lockOption("lock", QObject::tr("lock all open databases"));
     QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
@@ -81,6 +82,7 @@ int main(int argc, char** argv)
     QCommandLineOption debugInfoOption(QStringList() << "debug-info", QObject::tr("Displays debugging information."));
     parser.addOption(configOption);
     parser.addOption(localConfigOption);
+    parser.addOption(lockOption);
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
     parser.addOption(debugInfoOption);
@@ -110,12 +112,23 @@ int main(int argc, char** argv)
     }
 
     // Process single instance and early exit if already running
+    // FIXME: this is a *mess* and it is entirely my fault. --wundrweapon
     const QStringList fileNames = parser.positionalArguments();
     if (app.isAlreadyRunning()) {
-        if (!fileNames.isEmpty()) {
-            app.sendFileNamesToRunningInstance(fileNames);
+        if (parser.isSet(lockOption)) {
+            if (app.sendLockToInstance()) {
+                qInfo() << QObject::tr("Locked databases.").toUtf8().constData();
+            } else {
+                qWarning() << QObject::tr("Database failed to lock.").toUtf8().constData();
+                return EXIT_FAILURE;
+            }
+        } else {
+            if (!fileNames.isEmpty()) {
+                app.sendFileNamesToRunningInstance(fileNames);
+            }
+
+            qWarning() << QObject::tr("Another instance of KeePassXC is already running.").toUtf8().constData();
         }
-        qWarning() << QObject::tr("Another instance of KeePassXC is already running.").toUtf8().constData();
         return EXIT_SUCCESS;
     }
 
