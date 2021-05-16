@@ -18,9 +18,9 @@
 #ifndef KEEPASSXC_MACPASTEBOARD_H
 #define KEEPASSXC_MACPASTEBOARD_H
 
-#include <QMacPasteboardMime>
 #include <QObject>
 #include <QTextCodec>
+#include <QtMacExtras/QMacPasteboardMime>
 
 class MacPasteboard : public QObject, public QMacPasteboardMime
 {
