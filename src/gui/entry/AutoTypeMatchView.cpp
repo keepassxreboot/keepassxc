@@ -64,14 +64,20 @@ AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
 
 void AutoTypeMatchView::userNameCopied()
 {
-    clipboard()->setText(currentMatch().entry->username());
-    emit matchTextCopied();
+    auto entry = currentMatch().entry;
+    if (entry) {
+        clipboard()->setText(entry->resolvePlaceholder(entry->username()));
+        emit matchTextCopied();
+    }
 }
 
 void AutoTypeMatchView::passwordCopied()
 {
-    clipboard()->setText(currentMatch().entry->password());
-    emit matchTextCopied();
+    auto entry = currentMatch().entry;
+    if (entry) {
+        clipboard()->setText(entry->resolvePlaceholder(entry->password()));
+        emit matchTextCopied();
+    }
 }
 
 void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)
