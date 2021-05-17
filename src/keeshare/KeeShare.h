@@ -55,11 +55,10 @@ public:
     static QString sharingLabel(const Group* group);
 
     static KeeShareSettings::Own own();
-    static KeeShareSettings::Active active();
-    static KeeShareSettings::Foreign foreign();
-    static void setForeign(const KeeShareSettings::Foreign& foreign);
-    static void setActive(const KeeShareSettings::Active& active);
     static void setOwn(const KeeShareSettings::Own& own);
+
+    static KeeShareSettings::Active active();
+    static void setActive(const KeeShareSettings::Active& active);
 
     static KeeShareSettings::Reference referenceOf(const Group* group);
     static void setReferenceTo(Group* group, const KeeShareSettings::Reference& reference);

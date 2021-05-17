@@ -92,12 +92,8 @@ namespace Tools
 #ifdef WITH_XC_SSHAGENT
         extensions += "\n- " + QObject::tr("SSH Agent");
 #endif
-#if defined(WITH_XC_KEESHARE_SECURE) && defined(WITH_XC_KEESHARE_INSECURE)
-        extensions += "\n- " + QObject::tr("KeeShare (signed and unsigned sharing)");
-#elif defined(WITH_XC_KEESHARE_SECURE)
-        extensions += "\n- " + QObject::tr("KeeShare (only signed sharing)");
-#elif defined(WITH_XC_KEESHARE_INSECURE)
-        extensions += "\n- " + QObject::tr("KeeShare (only unsigned sharing)");
+#ifdef WITH_XC_KEESHARE
+        extensions += "\n- " + QObject::tr("KeeShare");
 #endif
 #ifdef WITH_XC_YUBIKEY
         extensions += "\n- " + QObject::tr("YubiKey");

@@ -6,11 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>378</width>
-    <height>511</height>
+    <width>425</width>
+    <height>251</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -70,67 +70,55 @@
    </item>
    <item>
     <widget class="QGroupBox" name="ownCertificateGroupBox">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="title">
       <string>Own certificate</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0">
-      <property name="horizontalSpacing">
-       <number>10</number>
-      </property>
-      <item row="0" column="0" colspan="3">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="generateOwnCerticateButton">
-          <property name="accessibleName">
-           <string>Generate new certificate</string>
-          </property>
-          <property name="text">
-           <string>Generate</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="importOwnCertificateButton">
-          <property name="accessibleName">
-           <string>Import existing certificate</string>
-          </property>
-          <property name="text">
-           <string>Import</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="exportOwnCertificateButton">
-          <property name="accessibleName">
-           <string>Export own certificate</string>
-          </property>
-          <property name="text">
-           <string>Export</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="0" column="0">
+       <widget class="QLabel" name="ownCertificateSignerLabel">
+        <property name="text">
+         <string>Signer:</string>
+        </property>
+       </widget>
       </item>
-      <item row="3" column="1" colspan="2">
+      <item row="2" column="1">
+       <widget class="QPushButton" name="generateOwnCerticateButton">
+        <property name="accessibleName">
+         <string>Generate new certificate</string>
+        </property>
+        <property name="text">
+         <string>Generate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="ownCertificateFingerprintLabel">
+        <property name="text">
+         <string>Fingerprint:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <widget class="QLineEdit" name="ownCertificateSignerEdit">
+        <property name="accessibleName">
+         <string>Signer name field</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
        <widget class="QLineEdit" name="ownCertificateFingerprintEdit">
         <property name="accessibleName">
          <string>Fingerprint</string>
@@ -139,133 +127,6 @@
          <bool>true</bool>
         </property>
        </widget>
-      </item>
-      <item row="2" column="1" colspan="2">
-       <widget class="QLineEdit" name="ownCertificateSignerEdit">
-        <property name="accessibleName">
-         <string>Signer name field</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="ownCertificateSignerLabel">
-        <property name="text">
-         <string>Signer:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="ownCertificateFingerprintLabel">
-        <property name="text">
-         <string>Fingerprint:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="importedCertificatesGroupBox">
-     <property name="title">
-      <string>Imported certificates</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="1" column="0" rowspan="2">
-       <widget class="QTableView" name="importedCertificateTableView">
-        <property name="accessibleName">
-         <string>Known shares</string>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="showDropIndicator" stdset="0">
-         <bool>false</bool>
-        </property>
-        <property name="dragDropOverwriteMode">
-         <bool>false</bool>
-        </property>
-        <property name="alternatingRowColors">
-         <bool>true</bool>
-        </property>
-        <property name="selectionMode">
-         <enum>QAbstractItemView::MultiSelection</enum>
-        </property>
-        <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <layout class="QHBoxLayout" name="certificatesActionLayout">
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="trustImportedCertificateButton">
-          <property name="accessibleName">
-           <string>Trust selected certificate</string>
-          </property>
-          <property name="text">
-           <string>Trust</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="askImportedCertificateButton">
-          <property name="accessibleName">
-           <string>Ask whether to trust the selected certificate every time</string>
-          </property>
-          <property name="text">
-           <string>Ask</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="untrustImportedCertificateButton">
-          <property name="accessibleName">
-           <string>Untrust selected certificate</string>
-          </property>
-          <property name="text">
-           <string>Untrust</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="removeImportedCertificateButton">
-          <property name="accessibleName">
-           <string>Remove selected certificate</string>
-          </property>
-          <property name="text">
-           <string>Remove</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </item>
      </layout>
     </widget>
@@ -289,16 +150,8 @@
   <tabstop>enableImportCheckBox</tabstop>
   <tabstop>quietSuccessCheckBox</tabstop>
   <tabstop>enableExportCheckBox</tabstop>
-  <tabstop>generateOwnCerticateButton</tabstop>
-  <tabstop>importOwnCertificateButton</tabstop>
-  <tabstop>exportOwnCertificateButton</tabstop>
   <tabstop>ownCertificateSignerEdit</tabstop>
   <tabstop>ownCertificateFingerprintEdit</tabstop>
-  <tabstop>trustImportedCertificateButton</tabstop>
-  <tabstop>askImportedCertificateButton</tabstop>
-  <tabstop>untrustImportedCertificateButton</tabstop>
-  <tabstop>removeImportedCertificateButton</tabstop>
-  <tabstop>importedCertificateTableView</tabstop>
  </tabstops>
  <resources/>
  <connections/>

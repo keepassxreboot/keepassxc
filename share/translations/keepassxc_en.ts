@@ -3084,10 +3084,6 @@ Would you like to correct it?</source>
         <translation>Inactive</translation>
     </message>
     <message>
-        <source>KeeShare unsigned container</source>
-        <translation>KeeShare unsigned container</translation>
-    </message>
-    <message>
         <source>KeeShare signed container</source>
         <translation>KeeShare signed container</translation>
     </message>
@@ -3171,6 +3167,10 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Browse…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeeShare container</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6739,18 +6739,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished">Auto-Type</translation>
     </message>
     <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>YubiKey</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7637,6 +7625,10 @@ Please consider generating a new key file.</source>
         <source>%1 characters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>KeeShare</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8240,89 +8232,12 @@ Please consider generating a new key file.</source>
         <translation>Fingerprint:</translation>
     </message>
     <message>
-        <source>Signer</source>
-        <translation>Signer</translation>
-    </message>
-    <message>
         <source>Generate</source>
         <translation>Generate</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation>Import</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation>Export</translation>
-    </message>
-    <message>
-        <source>Imported certificates</source>
-        <translation>Imported certificates</translation>
-    </message>
-    <message>
-        <source>Trust</source>
-        <translation>Trust</translation>
-    </message>
-    <message>
-        <source>Ask</source>
-        <translation>Ask</translation>
-    </message>
-    <message>
-        <source>Untrust</source>
-        <translation>Untrust</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Remove</translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation>Path</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>Status</translation>
-    </message>
-    <message>
         <source>Fingerprint</source>
         <translation>Fingerprint</translation>
-    </message>
-    <message>
-        <source>Trusted</source>
-        <translation>Trusted</translation>
-    </message>
-    <message>
-        <source>Untrusted</source>
-        <translation>Untrusted</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Unknown</translation>
-    </message>
-    <message>
-        <source>key.share</source>
-        <comment>Filetype for KeeShare key</comment>
-        <translation>key.share</translation>
-    </message>
-    <message>
-        <source>KeeShare key file</source>
-        <translation>KeeShare key file</translation>
-    </message>
-    <message>
-        <source>All files</source>
-        <translation>All files</translation>
-    </message>
-    <message>
-        <source>Select path</source>
-        <translation>Select path</translation>
-    </message>
-    <message>
-        <source>Exporting changed certificate</source>
-        <translation>Exporting changed certificate</translation>
-    </message>
-    <message>
-        <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</translation>
     </message>
     <message>
         <source>Signer:</source>
@@ -8348,132 +8263,18 @@ Please consider generating a new key file.</source>
         <source>Generate new certificate</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Import existing certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export own certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Known shares</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trust selected certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Untrust selected certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove selected certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ShareExport</name>
     <message>
-        <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished">Overwriting signed share container is not supported - export prevented</translation>
-    </message>
-    <message>
-        <source>Could not write export container (%1)</source>
-        <translation type="unfinished">Could not write export container (%1)</translation>
-    </message>
-    <message>
-        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <source>Could not write export container.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished">Overwriting unsigned share container is not supported - export prevented</translation>
-    </message>
-    <message>
-        <source>Could not write export container</source>
-        <translation type="unfinished">Could not write export container</translation>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
-        <source>Not this time</source>
-        <translation type="unfinished">Not this time</translation>
-    </message>
-    <message>
-        <source>Never</source>
-        <translation type="unfinished">Never</translation>
-    </message>
-    <message>
-        <source>Always</source>
-        <translation type="unfinished">Always</translation>
-    </message>
-    <message>
-        <source>Just this time</source>
-        <translation type="unfinished">Just this time</translation>
-    </message>
-    <message>
-        <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished">Signed share container are not supported - import prevented</translation>
-    </message>
-    <message>
-        <source>File is not readable</source>
-        <translation type="unfinished">File is not readable</translation>
-    </message>
-    <message>
-        <source>Invalid sharing container</source>
-        <translation type="unfinished">Invalid sharing container</translation>
-    </message>
-    <message>
-        <source>Untrusted import prevented</source>
-        <translation type="unfinished">Untrusted import prevented</translation>
-    </message>
-    <message>
-        <source>Successful signed import</source>
-        <translation type="unfinished">Successful signed import</translation>
-    </message>
-    <message>
-        <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished">Unsigned share container are not supported - import prevented</translation>
-    </message>
-    <message>
-        <source>Successful unsigned import</source>
-        <translation type="unfinished">Successful unsigned import</translation>
-    </message>
-    <message>
-        <source>File does not exist</source>
-        <translation type="unfinished">File does not exist</translation>
-    </message>
-    <message>
-        <source>KeeShare Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The source of the shared container cannot be verified because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with certificate fingerprint:
-%2
-%3</source>
+        <source>Successful import</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
