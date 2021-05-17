@@ -31,9 +31,6 @@ QTEST_GUILESS_MAIN(TestSharing)
 Q_DECLARE_METATYPE(KeeShareSettings::Type)
 Q_DECLARE_METATYPE(KeeShareSettings::Key)
 Q_DECLARE_METATYPE(KeeShareSettings::Certificate)
-Q_DECLARE_METATYPE(KeeShareSettings::Trust)
-Q_DECLARE_METATYPE(KeeShareSettings::ScopedCertificate)
-Q_DECLARE_METATYPE(QList<KeeShareSettings::ScopedCertificate>)
 
 void TestSharing::initTestCase()
 {
@@ -65,53 +62,10 @@ void TestSharing::testNullObjects()
     const auto xmlActive = KeeShareSettings::Active::deserialize(empty);
     QVERIFY(xmlActive.isNull());
 
-    const auto foreign = KeeShareSettings::Foreign();
-    QVERIFY(foreign.certificates.isEmpty());
-    const auto xmlForeign = KeeShareSettings::Foreign::deserialize(empty);
-    QVERIFY(xmlForeign.certificates.isEmpty());
-
     const auto reference = KeeShareSettings::Reference();
     QVERIFY(reference.isNull());
     const auto xmlReference = KeeShareSettings::Reference::deserialize(empty);
     QVERIFY(xmlReference.isNull());
-}
-
-void TestSharing::testCertificateSerialization()
-{
-    QFETCH(KeeShareSettings::Trust, trusted);
-    auto key = stubkey();
-    KeeShareSettings::ScopedCertificate original;
-    original.path = "/path";
-    original.certificate = KeeShareSettings::Certificate{key, "Some <!> &#_\"\" weird string"};
-    original.trust = trusted;
-
-    QString buffer;
-    QXmlStreamWriter writer(&buffer);
-    writer.writeStartDocument();
-    writer.writeStartElement("Certificate");
-    KeeShareSettings::ScopedCertificate::serialize(writer, original);
-    writer.writeEndElement();
-    writer.writeEndDocument();
-
-    QXmlStreamReader reader(buffer);
-    reader.readNextStartElement();
-    QVERIFY(reader.name() == "Certificate");
-    KeeShareSettings::ScopedCertificate restored = KeeShareSettings::ScopedCertificate::deserialize(reader);
-
-    QCOMPARE(restored.certificate.key->private_key_bits(), original.certificate.key->private_key_bits());
-    QCOMPARE(restored.certificate.signer, original.certificate.signer);
-    QCOMPARE(restored.trust, original.trust);
-    QCOMPARE(restored.path, original.path);
-
-    QCOMPARE(restored.certificate.key->public_key_bits(), key->public_key_bits());
-}
-
-void TestSharing::testCertificateSerialization_data()
-{
-    QTest::addColumn<KeeShareSettings::Trust>("trusted");
-    QTest::newRow("Ask") << KeeShareSettings::Trust::Ask;
-    QTest::newRow("Trusted") << KeeShareSettings::Trust::Trusted;
-    QTest::newRow("Untrusted") << KeeShareSettings::Trust::Untrusted;
 }
 
 void TestSharing::testKeySerialization()
@@ -177,25 +131,19 @@ void TestSharing::testSettingsSerialization()
     QFETCH(bool, exporting);
     QFETCH(KeeShareSettings::Certificate, ownCertificate);
     QFETCH(KeeShareSettings::Key, ownKey);
-    QFETCH(QList<KeeShareSettings::ScopedCertificate>, foreignCertificates);
 
     KeeShareSettings::Own originalOwn;
-    KeeShareSettings::Foreign originalForeign;
     KeeShareSettings::Active originalActive;
     originalActive.in = importing;
     originalActive.out = exporting;
     originalOwn.certificate = ownCertificate;
     originalOwn.key = ownKey;
-    originalForeign.certificates = foreignCertificates;
 
     const QString serializedActive = KeeShareSettings::Active::serialize(originalActive);
     KeeShareSettings::Active restoredActive = KeeShareSettings::Active::deserialize(serializedActive);
 
     const QString serializedOwn = KeeShareSettings::Own::serialize(originalOwn);
     KeeShareSettings::Own restoredOwn = KeeShareSettings::Own::deserialize(serializedOwn);
-
-    const QString serializedForeign = KeeShareSettings::Foreign::serialize(originalForeign);
-    KeeShareSettings::Foreign restoredForeign = KeeShareSettings::Foreign::deserialize(serializedForeign);
 
     QCOMPARE(restoredActive.in, importing);
     QCOMPARE(restoredActive.out, exporting);
@@ -205,44 +153,29 @@ void TestSharing::testSettingsSerialization()
     if (ownKey.key) {
         QCOMPARE(restoredOwn.key, ownKey);
     }
-    QCOMPARE(restoredForeign.certificates.count(), foreignCertificates.count());
-    for (int i = 0; i < foreignCertificates.count(); ++i) {
-        QCOMPARE(restoredForeign.certificates[i].certificate, foreignCertificates[i].certificate);
-    }
 }
 
 void TestSharing::testSettingsSerialization_data()
 {
     auto sshKey0 = stubkey(0);
-    KeeShareSettings::ScopedCertificate certificate0;
-    certificate0.path = "/path/0";
-    certificate0.certificate = KeeShareSettings::Certificate{sshKey0, "Some <!> &#_\"\" weird string"};
-    certificate0.trust = KeeShareSettings::Trust::Trusted;
+
+    KeeShareSettings::Certificate certificate0;
+    certificate0.key = sshKey0;
+    certificate0.signer = "signer";
 
     KeeShareSettings::Key key0;
     key0.key = sshKey0;
-
-    auto sshKey1 = stubkey(1);
-    KeeShareSettings::ScopedCertificate certificate1;
-    certificate1.path = "/path/1";
-    certificate1.certificate = KeeShareSettings::Certificate{sshKey1, "Another "};
-    certificate1.trust = KeeShareSettings::Trust::Untrusted;
 
     QTest::addColumn<bool>("importing");
     QTest::addColumn<bool>("exporting");
     QTest::addColumn<KeeShareSettings::Certificate>("ownCertificate");
     QTest::addColumn<KeeShareSettings::Key>("ownKey");
-    QTest::addColumn<QList<KeeShareSettings::ScopedCertificate>>("foreignCertificates");
-    QTest::newRow("1") << false << false << KeeShareSettings::Certificate() << KeeShareSettings::Key()
-                       << QList<KeeShareSettings::ScopedCertificate>();
-    QTest::newRow("2") << true << false << KeeShareSettings::Certificate() << KeeShareSettings::Key()
-                       << QList<KeeShareSettings::ScopedCertificate>();
-    QTest::newRow("3") << true << true << KeeShareSettings::Certificate() << KeeShareSettings::Key()
-                       << QList<KeeShareSettings::ScopedCertificate>({certificate0, certificate1});
-    QTest::newRow("4") << false << true << certificate0.certificate << key0
-                       << QList<KeeShareSettings::ScopedCertificate>();
-    QTest::newRow("5") << false << false << certificate0.certificate << key0
-                       << QList<KeeShareSettings::ScopedCertificate>({certificate1});
+
+    QTest::newRow("1") << false << false << KeeShareSettings::Certificate() << KeeShareSettings::Key();
+    QTest::newRow("2") << true << false << KeeShareSettings::Certificate() << KeeShareSettings::Key();
+    QTest::newRow("3") << true << true << KeeShareSettings::Certificate() << KeeShareSettings::Key();
+    QTest::newRow("4") << false << true << certificate0 << key0;
+    QTest::newRow("5") << false << false << certificate0 << key0;
 }
 
 const QSharedPointer<Botan::RSA_PrivateKey> TestSharing::stubkey(int index)

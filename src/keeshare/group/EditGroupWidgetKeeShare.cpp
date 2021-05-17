@@ -103,13 +103,8 @@ void EditGroupWidgetKeeShare::updateSharingState()
         return;
     }
 
-    auto supportedExtensions = QStringList();
-#if defined(WITH_XC_KEESHARE_INSECURE)
-    supportedExtensions << KeeShare::unsignedContainerFileType();
-#endif
-#if defined(WITH_XC_KEESHARE_SECURE)
-    supportedExtensions << KeeShare::signedContainerFileType();
-#endif
+    QStringList supportedExtensions;
+    supportedExtensions << KeeShare::unsignedContainerFileType() << KeeShare::signedContainerFileType();
 
     // Custom message for active KeeShare reference
     const auto reference = KeeShare::referenceOf(m_temporaryGroup);
@@ -225,26 +220,15 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
         return;
     }
     auto reference = KeeShare::referenceOf(m_temporaryGroup);
-    QString defaultFiletype = "";
-    auto supportedExtensions = QStringList();
-    auto unsupportedExtensions = QStringList();
-    auto knownFilters = QStringList() << QString("%1 (*)").arg("All files");
-#if defined(WITH_XC_KEESHARE_INSECURE)
-    defaultFiletype = KeeShare::unsignedContainerFileType();
-    supportedExtensions << KeeShare::unsignedContainerFileType();
-    knownFilters.prepend(
-        QString("%1 (*.%2)").arg(tr("KeeShare unsigned container"), KeeShare::unsignedContainerFileType()));
-#else
-    unsupportedExtensions << KeeShare::unsignedContainerFileType();
-#endif
-#if defined(WITH_XC_KEESHARE_SECURE)
-    defaultFiletype = KeeShare::signedContainerFileType();
-    supportedExtensions << KeeShare::signedContainerFileType();
-    knownFilters.prepend(
-        QString("%1 (*.%2)").arg(tr("KeeShare signed container"), KeeShare::signedContainerFileType()));
-#else
-    unsupportedExtensions << KeeShare::signedContainerFileType();
-#endif
+    QString defaultFiletype = KeeShare::unsignedContainerFileType();
+
+    QStringList supportedExtensions;
+    supportedExtensions << KeeShare::unsignedContainerFileType() << KeeShare::signedContainerFileType();
+
+    QStringList knownFilters;
+    knownFilters << QString("%1 (*.%2)").arg(tr("KeeShare container"), KeeShare::unsignedContainerFileType());
+    knownFilters << QString("%1 (*.%2)").arg(tr("KeeShare signed container"), KeeShare::signedContainerFileType());
+    knownFilters << QString("%1 (*)").arg("All files");
 
     const auto filters = knownFilters.join(";;");
     auto defaultDirPath = FileDialog::getLastDir("keeshare");
@@ -269,7 +253,7 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
         return;
     }
     bool validFilename = false;
-    for (const auto& extension : supportedExtensions + unsupportedExtensions) {
+    for (const auto& extension : supportedExtensions) {
         if (filename.endsWith(extension, Qt::CaseInsensitive)) {
             validFilename = true;
             break;

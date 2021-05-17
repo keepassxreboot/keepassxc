@@ -53,7 +53,6 @@ parts:
       - -DKEEPASSXC_BUILD_TYPE=Release
       - -DWITH_TESTS=OFF
       - -DWITH_XC_ALL=ON
-      - -DWITH_XC_KEESHARE_SECURE=ON
     build-packages:
       - g++
       - libgcrypt20-dev
@@ -71,7 +70,7 @@ parts:
       - libsodium-dev
       - libargon2-0-dev
       - libqrencode-dev
-      - libquazip5-dev
+      - libminizip-dev
       - asciidoctor
     stage-packages:
       - dbus

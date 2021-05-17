@@ -50,7 +50,7 @@ option(WITH_XC_NETWORKING "Include networking code (e.g. for downloading website
 option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
-option(WITH_XC_KEESHARE "Sharing integration with KeeShare (requires quazip5 for secure containers)" OFF)
+option(WITH_XC_KEESHARE "Sharing integration with KeeShare" OFF)
 option(WITH_XC_UPDATECHECK "Include automatic update checks; disable for controlled distributions" ON)
 if(UNIX AND NOT APPLE)
     option(WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API." OFF)

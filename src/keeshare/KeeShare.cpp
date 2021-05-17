@@ -53,22 +53,18 @@ void KeeShare::init(QObject* parent)
 
 KeeShareSettings::Own KeeShare::own()
 {
-    return KeeShareSettings::Own::deserialize(config()->get(Config::KeeShare_Own).toString());
+    // Read existing own certificate or generate a new one if none available
+    auto own = KeeShareSettings::Own::deserialize(config()->get(Config::KeeShare_Own).toString());
+    if (own.key.isNull()) {
+        own = KeeShareSettings::Own::generate();
+        setOwn(own);
+    }
+    return own;
 }
 
 KeeShareSettings::Active KeeShare::active()
 {
     return KeeShareSettings::Active::deserialize(config()->get(Config::KeeShare_Active).toString());
-}
-
-KeeShareSettings::Foreign KeeShare::foreign()
-{
-    return KeeShareSettings::Foreign::deserialize(config()->get(Config::KeeShare_Foreign).toString());
-}
-
-void KeeShare::setForeign(const KeeShareSettings::Foreign& foreign)
-{
-    config()->set(Config::KeeShare_Foreign, KeeShareSettings::Foreign::serialize(foreign));
 }
 
 void KeeShare::setActive(const KeeShareSettings::Active& active)
@@ -117,16 +113,6 @@ void KeeShare::setReferenceTo(Group* group, const KeeShareSettings::Reference& r
 bool KeeShare::isEnabled(const Group* group)
 {
     const auto reference = KeeShare::referenceOf(group);
-#if !defined(WITH_XC_KEESHARE_SECURE)
-    if (reference.path.endsWith(signedContainerFileType(), Qt::CaseInsensitive)) {
-        return false;
-    }
-#endif
-#if !defined(WITH_XC_KEESHARE_INSECURE)
-    if (reference.path.endsWith(unsignedContainerFileType(), Qt::CaseInsensitive)) {
-        return false;
-    }
-#endif
     const auto active = KeeShare::active();
     return (reference.isImporting() && active.in) || (reference.isExporting() && active.out);
 }

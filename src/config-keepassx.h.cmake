@@ -18,8 +18,6 @@
 #cmakedefine WITH_XC_YUBIKEY
 #cmakedefine WITH_XC_SSHAGENT
 #cmakedefine WITH_XC_KEESHARE
-#cmakedefine WITH_XC_KEESHARE_INSECURE
-#cmakedefine WITH_XC_KEESHARE_SECURE
 #cmakedefine WITH_XC_UPDATECHECK
 #cmakedefine WITH_XC_TOUCHID
 #cmakedefine WITH_XC_FDOSECRETS

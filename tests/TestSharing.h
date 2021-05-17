@@ -31,8 +31,6 @@ class TestSharing : public QObject
 private slots:
     void initTestCase();
     void testNullObjects();
-    void testCertificateSerialization();
-    void testCertificateSerialization_data();
     void testKeySerialization();
     void testReferenceSerialization();
     void testReferenceSerialization_data();
