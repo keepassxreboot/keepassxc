@@ -156,6 +156,7 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
     connect(m_ui->healthcheckTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
     connect(m_ui->healthcheckTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_ui->showKnownBadCheckBox, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
+    connect(m_ui->excludeExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
 }
 
 ReportsWidgetHealthcheck::~ReportsWidgetHealthcheck()
@@ -263,7 +264,8 @@ void ReportsWidgetHealthcheck::calculateHealth()
     // Display the entries
     m_rowToEntry.clear();
     for (const auto& item : health->items()) {
-        if (item->exclude && !showExcluded) {
+        auto excluded = item->exclude || (item->entry->isExpired() && m_ui->excludeExpired->isChecked());
+        if (excluded && !showExcluded) {
             // Exclude this entry from the report
             continue;
         }
