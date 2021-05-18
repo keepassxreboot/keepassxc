@@ -19,6 +19,7 @@
 #include "EntryPreviewWidget.h"
 #include "ui_EntryPreviewWidget.h"
 
+#include "Clipboard.h"
 #include "Font.h"
 #include "entry/EntryAttachmentsModel.h"
 #include "gui/Icons.h"
@@ -276,29 +277,68 @@ void EntryPreviewWidget::updateEntryGeneralTab()
 void EntryPreviewWidget::updateEntryAdvancedTab()
 {
     Q_ASSERT(m_currentEntry);
-    m_ui->entryAttributesEdit->clear();
+    m_ui->entryAttributesTable->clear();
+
     const EntryAttributes* attributes = m_currentEntry->attributes();
     const QStringList customAttributes = attributes->customKeys();
     const bool hasAttributes = !customAttributes.isEmpty();
     const bool hasAttachments = !m_currentEntry->attachments()->isEmpty();
+    m_ui->entryAttributesTable->setRowCount(customAttributes.size());
+    m_ui->entryAttributesTable->setColumnCount(3);
 
     setTabEnabled(m_ui->entryTabWidget, m_ui->entryAdvancedTab, hasAttributes || hasAttachments);
     if (hasAttributes) {
-        QString attributesText("<table>");
+        auto i = 0;
+        QFont font;
+        font.setBold(true);
         for (const QString& key : customAttributes) {
-            QString value;
-            if (m_currentEntry->attributes()->isProtected(key)) {
-                value = "<i>" + tr("[PROTECTED]") + "</i>";
+            m_ui->entryAttributesTable->setItem(i, 0, new QTableWidgetItem(key));
+
+            if (attributes->isProtected(key)) {
+                // only show the reveal button on protected attributes
+                auto button = new QToolButton();
+                button->setCheckable(true);
+                button->setChecked(false);
+                button->setIcon(icons()->onOffIcon("password-show", false));
+                button->setProperty("value", attributes->value(key));
+                button->setProperty("row", i);
+                m_ui->entryAttributesTable->setCellWidget(i, 1, button);
+                m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(QString("\u25cf").repeated(6)));
+
+                connect(button, &QToolButton::clicked, this, [this](bool state) {
+                    auto btn = qobject_cast<QToolButton*>(sender());
+                    btn->setIcon(icons()->onOffIcon("password-show", state));
+                    auto row = btn->property("row").toInt();
+                    if (state) {
+                        m_ui->entryAttributesTable->item(row, 2)->setText(btn->property("value").toString());
+                    } else {
+                        m_ui->entryAttributesTable->item(row, 2)->setText(QString("\u25cf").repeated(6));
+                    }
+                    // Maintain button height while showing contents of cell
+                    auto size = btn->size();
+                    m_ui->entryAttributesTable->resizeRowToContents(row);
+                    btn->setFixedSize(size);
+                });
             } else {
-                value = m_currentEntry->attributes()->value(key).toHtmlEscaped();
-                value.replace('\n', "<br/>");
+                m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(attributes->value(key)));
             }
-            attributesText.append(QString("<tr><td><b>%1</b>:</td><td>%2</td></tr>").arg(key, value));
+
+            m_ui->entryAttributesTable->item(i, 0)->setFont(font);
+            m_ui->entryAttributesTable->item(i, 0)->setTextAlignment(Qt::AlignTop | Qt::AlignLeft);
+            m_ui->entryAttributesTable->item(i, 2)->setTextAlignment(Qt::AlignTop | Qt::AlignLeft);
+
+            ++i;
         }
-        attributesText.append("</table>");
-        m_ui->entryAttributesEdit->setText(attributesText);
+        connect(m_ui->entryAttributesTable, &QTableWidget::cellDoubleClicked, this, [this](int row, int column) {
+            if (column == 2) {
+                clipboard()->setText(m_ui->entryAttributesTable->item(row, column)->text());
+            }
+        });
     }
 
+    m_ui->entryAttributesTable->horizontalHeader()->setStretchLastSection(true);
+    m_ui->entryAttributesTable->resizeColumnsToContents();
+    m_ui->entryAttributesTable->resizeRowsToContents();
     m_ui->entryAttachmentsWidget->setEntryAttachments(m_currentEntry->attachments());
 }
 
