@@ -22,8 +22,10 @@
 #include "core/Database.h"
 #include "core/Global.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/PasswordHealth.h"
 #include "gui/Icons.h"
+#include "gui/MessageBox.h"
 #include "gui/styles/StateColorPalette.h"
 
 #include <QMenu>
@@ -332,6 +334,11 @@ void ReportsWidgetHealthcheck::customMenuRequested(QPoint pos)
     menu->addAction(edit);
     connect(edit, SIGNAL(triggered()), SLOT(editFromContextmenu()));
 
+    // Create the "edit entry" menu item
+    const auto delEntry = new QAction(icons()->icon("entry-delete"), tr("Delete Entry…"), this);
+    menu->addAction(delEntry);
+    connect(delEntry, SIGNAL(triggered()), SLOT(deleteEntry()));
+
     // Create the "exclude from reports" menu item
     const auto exclude = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
     exclude->setCheckable(true);
@@ -358,4 +365,54 @@ void ReportsWidgetHealthcheck::editFromContextmenu()
 void ReportsWidgetHealthcheck::saveSettings()
 {
     // nothing to do - the tab is passive
+}
+
+void ReportsWidgetHealthcheck::deleteEntry()
+{
+    auto entry = m_contextmenuEntry;
+    auto* recycleBin = m_db->metadata()->recycleBin();
+    bool permanent =
+        (recycleBin && recycleBin->findEntryByUuid(entry->uuid())) || !m_db->metadata()->recycleBinEnabled();
+
+    // Confirm before delete
+    auto answer = MessageBox::Delete;
+    if (permanent) {
+        QString prompt(
+            tr("Do you really want to delete the entry \"%1\" for good?").arg(entry->title().toHtmlEscaped()));
+        answer = MessageBox::question(
+            this, "Delete entry?", prompt, MessageBox::Delete | MessageBox::Cancel, MessageBox::Cancel);
+
+    } else if (!config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool()) {
+        QString prompt(
+            tr("Do you really want to move entry \"%1\" to the recycle bin?").arg(entry->title().toHtmlEscaped()));
+        answer = MessageBox::question(
+            this, "Move entry to recycle bin?", prompt, MessageBox::Move | MessageBox::Cancel, MessageBox::Cancel);
+    }
+
+    if (answer != MessageBox::Cancel) {
+        // Find references to selected entry and prompt for direction if necessary
+        auto references = m_db->rootGroup()->referencesRecursive(entry);
+        if (!references.isEmpty()) {
+            // Prompt for reference handling
+            auto result = MessageBox::question(this,
+                                               tr("Replace references to entry?"),
+                                               tr("Entry \"%1\" has %2 reference(s). "
+                                                  "Do you want to overwrite references with values?",
+                                                  "",
+                                                  references.size())
+                                                   .arg(entry->title().toHtmlEscaped())
+                                                   .arg(references.size()),
+                                               MessageBox::Overwrite | MessageBox::Delete,
+                                               MessageBox::Overwrite);
+
+            if (result == MessageBox::Overwrite) {
+                for (auto* refEntry : references) {
+                    refEntry->replaceReferencesWithValues(entry);
+                }
+            }
+        }
+
+        permanent ? delete entry : m_db->recycleEntry(entry);
+        calculateHealth();
+    }
 }

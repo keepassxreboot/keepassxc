@@ -57,6 +57,7 @@ public slots:
     void emitEntryActivated(const QModelIndex& index);
     void customMenuRequested(QPoint);
     void editFromContextmenu();
+    void deleteEntry();
 
 private:
     void addHealthRow(QSharedPointer<PasswordHealth>, const Group*, const Entry*, bool knownBad);
