@@ -28,6 +28,7 @@
 #include <QTimer>
 
 #include "config-keepassx.h"
+#include "core/TimeDelta.h"
 #include "gui/EditWidget.h"
 
 class AutoTypeAssociations;
@@ -152,6 +153,7 @@ private:
     bool passwordsEqual();
     void setForms(Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
+    QMenu* createExtendByMenu();
     void updateEntryData(Entry* entry) const;
 #ifdef WITH_XC_SSHAGENT
     bool getOpenSSHKey(OpenSSHKey& key, bool decrypt = false);
@@ -161,6 +163,9 @@ private:
 
     QPointer<Entry> m_entry;
     QSharedPointer<Database> m_db;
+
+    std::tuple<unsigned, TimeDelta> m_extensionOnPwUpdate;
+    qint64 m_daysRandomizeExtension;
 
     bool m_create;
     bool m_history;

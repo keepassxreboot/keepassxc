@@ -56,7 +56,7 @@
     <property name="verticalSpacing">
      <number>8</number>
     </property>
-    <item row="6" column="1">
+    <item row="7" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QPlainTextEdit" name="notesEdit">
@@ -99,7 +99,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
+    <item row="7" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QCheckBox" name="notesEnabled">
@@ -126,45 +126,6 @@
          </size>
         </property>
        </spacer>
-      </item>
-     </layout>
-    </item>
-    <item row="5" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>8</number>
-      </property>
-      <item>
-       <widget class="QDateTimeEdit" name="expireDatePicker">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="accessibleName">
-         <string>Expiration field</string>
-        </property>
-        <property name="calendarPopup">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="expirePresets">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Expiration Presets</string>
-        </property>
-        <property name="accessibleName">
-         <string>Expiration presets</string>
-        </property>
-        <property name="text">
-         <string>Presets</string>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>
@@ -252,25 +213,177 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>0</number>
+    <item row="5" column="1">
+     <widget class="QCheckBox" name="expireCheck">
+      <property name="toolTip">
+       <string>Toggle expiration</string>
       </property>
-      <item>
-       <widget class="QCheckBox" name="expireCheck">
-        <property name="toolTip">
-         <string>Toggle expiration</string>
-        </property>
-        <property name="accessibleName">
-         <string>Toggle expiration</string>
-        </property>
-        <property name="text">
-         <string>Expires:</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+      <property name="accessibleName">
+       <string>Toggle expiration</string>
+      </property>
+      <property name="text">
+       <string>Configure an expiration date</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QGroupBox" name="expirationBox">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="title">
+       <string>Expiration settings</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_expiration">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_expiration">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>8</number>
+         </property>
+         <item>
+          <widget class="QDateTimeEdit" name="expireDatePicker">
+           <property name="accessibleName">
+            <string>Expiration field</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="expirePresets">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Expiration Presets</string>
+           </property>
+           <property name="accessibleName">
+            <string>Expiration presets</string>
+           </property>
+           <property name="text">
+            <string>Presets</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalautoUpdate">
+         <property name="spacing">
+          <number>1</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="autoExtendExpire">
+           <property name="toolTip">
+            <string>Toggle auto updating expiration</string>
+           </property>
+           <property name="accessibleName">
+            <string>Toggle auto updating expiration date</string>
+           </property>
+           <property name="text">
+            <string>Extend when password is changed, by:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="extendByQuantity">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <number>1000</number>
+           </property>
+           <property name="FixedWidth">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="extendByMagnitude">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Expiration extension Presets</string>
+           </property>
+           <property name="accessibleName">
+            <string>Expiration extension presets</string>
+           </property>
+           <property name="text">
+            <string>Time period</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalRandomize">
+         <property name="spacing">
+          <number>1</number>
+         </property>
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="randomizeExtensionDeadline">
+           <property name="toolTip">
+            <string>Toggle randomizing expiration date</string>
+           </property>
+           <property name="accessibleName">
+            <string>Toggle randomizing expiration date</string>
+           </property>
+           <property name="text">
+            <string>Randomize the extension deadline within </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="randomizeByQuantity">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="FixedWidth">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel">
+           <property name="visible">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string> days from the deadline</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -301,6 +414,6 @@
   <tabstop>notesEnabled</tabstop>
   <tabstop>notesEdit</tabstop>
  </tabstops>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>

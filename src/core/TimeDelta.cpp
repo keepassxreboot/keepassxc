@@ -53,6 +53,16 @@ TimeDelta::TimeDelta(int days, int months, int years)
 {
 }
 
+TimeDelta TimeDelta::operator*(unsigned int n)
+{
+    return TimeDelta(n * m_days, n * m_months, n * m_years);
+}
+
+bool TimeDelta::operator==(const TimeDelta& tD) const
+{
+    return m_days == tD.getDays() && m_years == tD.getYears() && m_months == tD.getMonths();
+}
+
 int TimeDelta::getDays() const
 {
     return m_days;
