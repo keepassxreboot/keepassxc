@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,8 +43,8 @@ public:
     QList<QTableWidgetItem*> getSelectedEntries() const;
     QList<QTableWidgetItem*> getNonSelectedEntries() const;
 
-signals:
-    void disableAccess(QTableWidgetItem* item);
+private slots:
+    void selectionChanged();
 
 private:
     QScopedPointer<Ui::BrowserAccessControlDialog> m_ui;

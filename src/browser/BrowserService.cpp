@@ -802,21 +802,6 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     BrowserAccessControlDialog accessControlDialog;
 
     connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &accessControlDialog, SLOT(reject()));
-
-    connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
-        auto entry = pwEntriesToConfirm[item->row()];
-        BrowserEntryConfig config;
-        config.load(entry);
-        config.deny(siteHost);
-        if (!formUrlStr.isEmpty() && siteHost != formUrlStr) {
-            config.deny(formUrlStr);
-        }
-        if (!realm.isEmpty()) {
-            config.setRealm(realm);
-        }
-        config.save(entry);
-    });
-
     accessControlDialog.setItems(pwEntriesToConfirm, siteUrlStr, httpAuth);
 
     QList<Entry*> allowedEntries;
