@@ -52,6 +52,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="excludeExpired">
+     <property name="text">
+      <string>Exclude expired entries from the report</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QCheckBox" name="showKnownBadCheckBox">
      <property name="text">
       <string>Also show entries that have been excluded from reports</string>
