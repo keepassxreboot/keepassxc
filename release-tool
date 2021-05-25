@@ -1269,7 +1269,7 @@ appsign() {
             exitError "Key file was not found!"
         fi
 
-        IFS="" read -s -r -p "Key password: " password
+        IFS=$'\n' read -s -r -p "Key password: " password
         echo
 
         for f in "${sign_files[@]}"; do
