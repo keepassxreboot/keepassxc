@@ -51,9 +51,8 @@ bool ModifiableObject::modifiedSignalEnabled() const
 
 void ModifiableObject::setEmitModified(bool value)
 {
-    auto old = m_emitModified;
-    m_emitModified = value;
-    if (old != m_emitModified) {
+    if (m_emitModified != value) {
+        m_emitModified = value;
         emit emitModifiedChanged(m_emitModified);
     }
 }
