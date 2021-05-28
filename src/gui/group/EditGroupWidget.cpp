@@ -124,7 +124,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     m_db = database;
 
     m_temporaryGroup.reset(group->clone(Entry::CloneNoFlags, Group::CloneNoFlags));
-    connect(m_temporaryGroup->customData(), SIGNAL(customDataModified()), SLOT(setModified()));
+    connect(m_temporaryGroup->customData(), &CustomData::modified, this, [this]() { setModified(true); });
 
     if (create) {
         setHeadline(tr("Add group"));

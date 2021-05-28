@@ -28,7 +28,7 @@ bool AutoTypeAssociations::Association::operator!=(const AutoTypeAssociations::A
 }
 
 AutoTypeAssociations::AutoTypeAssociations(QObject* parent)
-    : QObject(parent)
+    : ModifiableObject(parent)
 {
 }
 
@@ -41,7 +41,7 @@ void AutoTypeAssociations::copyDataFrom(const AutoTypeAssociations* other)
     emit aboutToReset();
     m_associations = other->m_associations;
     emit reset();
-    emit modified();
+    emitModified();
 }
 
 void AutoTypeAssociations::add(const AutoTypeAssociations::Association& association)
@@ -50,7 +50,7 @@ void AutoTypeAssociations::add(const AutoTypeAssociations::Association& associat
     emit aboutToAdd(index);
     m_associations.append(association);
     emit added(index);
-    emit modified();
+    emitModified();
 }
 
 void AutoTypeAssociations::remove(int index)
@@ -60,7 +60,7 @@ void AutoTypeAssociations::remove(int index)
     emit aboutToRemove(index);
     m_associations.removeAt(index);
     emit removed(index);
-    emit modified();
+    emitModified();
 }
 
 void AutoTypeAssociations::removeEmpty()
@@ -81,7 +81,7 @@ void AutoTypeAssociations::update(int index, const AutoTypeAssociations::Associa
     if (m_associations.at(index) != association) {
         m_associations[index] = association;
         emit dataChanged(index);
-        emit modified();
+        emitModified();
     }
 }
 

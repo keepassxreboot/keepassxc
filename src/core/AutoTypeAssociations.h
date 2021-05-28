@@ -18,9 +18,9 @@
 #ifndef KEEPASSX_AUTOTYPEASSOCIATIONS_H
 #define KEEPASSX_AUTOTYPEASSOCIATIONS_H
 
-#include <QObject>
+#include "core/ModifiableObject.h"
 
-class AutoTypeAssociations : public QObject
+class AutoTypeAssociations : public ModifiableObject
 {
     Q_OBJECT
 
@@ -53,7 +53,6 @@ private:
     QList<AutoTypeAssociations::Association> m_associations;
 
 signals:
-    void modified();
     void dataChanged(int index);
     void aboutToAdd(int index);
     void added(int index);

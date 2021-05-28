@@ -23,7 +23,9 @@
 #include <QSet>
 #include <QStringList>
 
-class CustomData : public QObject
+#include "core/ModifiableObject.h"
+
+class CustomData : public ModifiableObject
 {
     Q_OBJECT
 
@@ -54,7 +56,6 @@ public:
     static const QString ExcludeFromReports;
 
 signals:
-    void customDataModified();
     void aboutToBeAdded(const QString& key);
     void added(const QString& key);
     void aboutToBeRemoved(const QString& key);
@@ -63,7 +64,6 @@ signals:
     void renamed(const QString& oldKey, const QString& newKey);
     void aboutToBeReset();
     void reset();
-    void lastModified();
 
 private slots:
     void updateLastModified();

@@ -61,7 +61,7 @@ void TestModified::testSignals()
 
     QScopedPointer<Database> db(new Database());
     auto* root = db->rootGroup();
-    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     db->setKey(compositeKey);
     ++spyCount;
@@ -88,7 +88,7 @@ void TestModified::testSignals()
 
     QScopedPointer<Database> db2(new Database());
     auto* root2 = db2->rootGroup();
-    QSignalSpy spyModified2(db2.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified2(db2.data(), SIGNAL(modified()));
 
     group1->setParent(root2);
     ++spyCount;
@@ -149,7 +149,7 @@ void TestModified::testGroupSets()
     auto* group = new Group();
     group->setParent(root);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     root->setUuid(QUuid::createUuid());
     ++spyCount;
@@ -223,7 +223,7 @@ void TestModified::testEntrySets()
     auto* entry = new Entry();
     entry->setGroup(group);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     entry->setUuid(QUuid::createUuid());
     ++spyCount;
@@ -647,7 +647,7 @@ void TestModified::testCustomData()
     auto* entry = new Entry();
     entry->setGroup(group);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     db->metadata()->customData()->set("Key", "Value");
     ++spyCount;
@@ -666,4 +666,59 @@ void TestModified::testCustomData()
     QTRY_COMPARE(spyModified.count(), spyCount);
     group->customData()->set("Key", "Value");
     QTRY_COMPARE(spyModified.count(), spyCount);
+}
+
+void TestModified::testBlockModifiedSignal()
+{
+    QScopedPointer<Database> db(new Database());
+    auto entry = db->rootGroup()->addEntryWithPath("/abc");
+
+    QSignalSpy spyDbModified(db.data(), SIGNAL(modified()));
+    QSignalSpy spyMetadataModified(db->metadata(), SIGNAL(modified()));
+    QSignalSpy spyCustomDataModified(db->metadata()->customData(), SIGNAL(modified()));
+    QSignalSpy spyGroupModified(db->rootGroup(), SIGNAL(modified()));
+    QSignalSpy spyGroupCustomDataModified(db->rootGroup()->customData(), SIGNAL(modified()));
+    QSignalSpy spyEntryModified(entry, SIGNAL(modified()));
+    QSignalSpy spyEntryCustomDataModified(entry->customData(), SIGNAL(modified()));
+    QSignalSpy spyEntryAttributesModified(entry->attributes(), SIGNAL(modified()));
+    QSignalSpy spyEntryAttachmentModified(entry->attachments(), SIGNAL(modified()));
+    QSignalSpy spyEntryAutoTypeAssociationsModified(entry->autoTypeAssociations(), SIGNAL(modified()));
+
+    QVERIFY(spyDbModified.isValid());
+    QVERIFY(spyMetadataModified.isValid());
+    QVERIFY(spyCustomDataModified.isValid());
+    QVERIFY(spyGroupModified.isValid());
+    QVERIFY(spyGroupCustomDataModified.isValid());
+    QVERIFY(spyEntryModified.isValid());
+    QVERIFY(spyEntryCustomDataModified.isValid());
+    QVERIFY(spyEntryAttributesModified.isValid());
+    QVERIFY(spyEntryAttachmentModified.isValid());
+    QVERIFY(spyEntryAutoTypeAssociationsModified.isValid());
+
+    db->setEmitModified(false);
+
+    auto* group1 = new Group();
+    group1->setParent(db->rootGroup());
+    db->metadata()->setName("Modified Database");
+    db->metadata()->customData()->set("Key", "Value");
+
+    group1->customData()->set("abc", "dd");
+    entry->setTitle("Another Title");
+    entry->customData()->set("entryabc", "dd");
+    entry->attributes()->set("aaa", "dd");
+    entry->attachments()->set("aaa", {});
+    entry->autoTypeAssociations()->add({"", ""});
+
+    db.reset();
+
+    QCOMPARE(spyDbModified.count(), 0);
+    QCOMPARE(spyMetadataModified.count(), 0);
+    QCOMPARE(spyCustomDataModified.count(), 0);
+    QCOMPARE(spyGroupModified.count(), 0);
+    QCOMPARE(spyGroupCustomDataModified.count(), 0);
+    QCOMPARE(spyEntryModified.count(), 0);
+    QCOMPARE(spyEntryCustomDataModified.count(), 0);
+    QCOMPARE(spyEntryAttributesModified.count(), 0);
+    QCOMPARE(spyEntryAttachmentModified.count(), 0);
+    QCOMPARE(spyEntryAutoTypeAssociationsModified.count(), 0);
 }

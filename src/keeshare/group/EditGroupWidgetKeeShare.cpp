@@ -87,7 +87,7 @@ void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup, QSharedPointer<Dat
     m_temporaryGroup = temporaryGroup;
 
     if (m_temporaryGroup) {
-        connect(m_temporaryGroup, SIGNAL(groupModified()), SLOT(update()));
+        connect(m_temporaryGroup, &Group::modified, this, &EditGroupWidgetKeeShare::update);
     }
 
     update();

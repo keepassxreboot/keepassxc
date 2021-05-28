@@ -110,7 +110,7 @@ void TestDatabase::testSignals()
     QVERIFY(ok);
     QCOMPARE(spyFilePathChanged.count(), 1);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
     db->metadata()->setName("test1");
     QTRY_COMPARE(spyModified.count(), 1);
 
@@ -143,7 +143,7 @@ void TestDatabase::testEmptyRecycleBinOnDisabled()
     // Prevents assertion failures on CI systems when the data dir is not writable
     db->setReadOnly(false);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
@@ -159,7 +159,7 @@ void TestDatabase::testEmptyRecycleBinOnNotCreated()
     QVERIFY(db->open(filename, key, nullptr, false));
     db->setReadOnly(false);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
@@ -175,7 +175,7 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
     QVERIFY(db->open(filename, key, nullptr, false));
     db->setReadOnly(false);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.

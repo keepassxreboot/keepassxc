@@ -21,9 +21,11 @@
 #include <QMap>
 #include <QObject>
 
+#include "core/ModifiableObject.h"
+
 class QStringList;
 
-class EntryAttachments : public QObject
+class EntryAttachments : public ModifiableObject
 {
     Q_OBJECT
 
@@ -45,7 +47,6 @@ public:
     int attachmentsSize() const;
 
 signals:
-    void entryAttachmentsModified();
     void keyModified(const QString& key);
     void aboutToBeAdded(const QString& key);
     void added(const QString& key);

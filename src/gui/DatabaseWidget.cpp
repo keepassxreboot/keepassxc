@@ -99,6 +99,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_opVaultOpenWidget(new OpVaultOpenWidget(this))
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_saveAttempts(0)
+    , m_entrySearcher(new EntrySearcher(false))
 {
     Q_ASSERT(m_db);
 
@@ -211,7 +212,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     m_blockAutoSave = false;
 
-    m_EntrySearcher = new EntrySearcher(false);
     m_searchLimitGroup = config()->get(Config::SearchLimitGroup).toBool();
 
 #ifdef WITH_XC_KEESHARE
@@ -234,7 +234,13 @@ DatabaseWidget::DatabaseWidget(const QString& filePath, QWidget* parent)
 
 DatabaseWidget::~DatabaseWidget()
 {
-    delete m_EntrySearcher;
+    // Trigger any Database deletion related signals manually by
+    // explicitly clearing the Database pointer, instead of leaving it to ~QSharedPointer.
+    // QSharedPointer may behave differently depending on whether it is cleared by the `clear` method
+    // or by its destructor. In the latter case, the ref counter may not be correctly maintained
+    // if a copy of the QSharedPointer is created in any slots activated by the Database destructor.
+    // More details: https://github.com/keepassxreboot/keepassxc/issues/6393.
+    m_db.clear();
 }
 
 QSharedPointer<Database> DatabaseWidget::database() const
@@ -1061,10 +1067,10 @@ void DatabaseWidget::connectDatabaseSignals()
             SIGNAL(filePathChanged(QString, QString)),
 
             SIGNAL(databaseFilePathChanged(QString, QString)));
-    connect(m_db.data(), SIGNAL(databaseModified()), SIGNAL(databaseModified()));
-    connect(m_db.data(), SIGNAL(databaseModified()), SLOT(onDatabaseModified()));
-    connect(m_db.data(), SIGNAL(databaseSaved()), SIGNAL(databaseSaved()));
-    connect(m_db.data(), SIGNAL(databaseFileChanged()), this, SLOT(reloadDatabaseFile()));
+    connect(m_db.data(), &Database::modified, this, &DatabaseWidget::databaseModified);
+    connect(m_db.data(), &Database::modified, this, &DatabaseWidget::onDatabaseModified);
+    connect(m_db.data(), &Database::databaseSaved, this, &DatabaseWidget::databaseSaved);
+    connect(m_db.data(), &Database::databaseFileChanged, this, &DatabaseWidget::reloadDatabaseFile);
 }
 
 void DatabaseWidget::loadDatabase(bool accepted)
@@ -1366,7 +1372,7 @@ void DatabaseWidget::search(const QString& searchtext)
 
     Group* searchGroup = m_searchLimitGroup ? currentGroup() : m_db->rootGroup();
 
-    QList<Entry*> searchResult = m_EntrySearcher->search(searchtext, searchGroup);
+    QList<Entry*> searchResult = m_entrySearcher->search(searchtext, searchGroup);
 
     m_entryView->displaySearch(searchResult);
     m_lastSearchText = searchtext;
@@ -1388,7 +1394,7 @@ void DatabaseWidget::search(const QString& searchtext)
 
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
-    m_EntrySearcher->setCaseSensitive(state);
+    m_entrySearcher->setCaseSensitive(state);
     refreshSearch();
 }
 

@@ -47,15 +47,15 @@ Entry::Entry()
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
 
-    connect(m_attributes, SIGNAL(entryAttributesModified()), SLOT(updateTotp()));
-    connect(m_attributes, SIGNAL(entryAttributesModified()), this, SIGNAL(entryModified()));
-    connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
-    connect(m_attachments, SIGNAL(entryAttachmentsModified()), this, SIGNAL(entryModified()));
-    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(entryModified()));
-    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(entryModified()));
+    connect(m_attributes, &EntryAttributes::modified, this, &Entry::updateTotp);
+    connect(m_attributes, &EntryAttributes::modified, this, &Entry::modified);
+    connect(m_attributes, &EntryAttributes::defaultKeyModified, this, &Entry::emitDataChanged);
+    connect(m_attachments, &EntryAttachments::modified, this, &Entry::modified);
+    connect(m_autoTypeAssociations, &AutoTypeAssociations::modified, this, &Entry::modified);
+    connect(m_customData, &CustomData::modified, this, &Entry::modified);
 
-    connect(this, SIGNAL(entryModified()), SLOT(updateTimeinfo()));
-    connect(this, SIGNAL(entryModified()), SLOT(updateModifiedSinceBegin()));
+    connect(this, &Entry::modified, this, &Entry::updateTimeinfo);
+    connect(this, &Entry::modified, this, &Entry::updateModifiedSinceBegin);
 }
 
 Entry::~Entry()
@@ -76,7 +76,7 @@ template <class T> inline bool Entry::set(T& property, const T& value)
 {
     if (property != value) {
         property = value;
-        emit entryModified();
+        emitModified();
         return true;
     }
     return false;
@@ -609,7 +609,7 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = QUuid();
 
-        emit entryModified();
+        emitModified();
         emitDataChanged();
     }
 }
@@ -622,7 +622,7 @@ void Entry::setIcon(const QUuid& uuid)
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
 
-        emit entryModified();
+        emitModified();
         emitDataChanged();
     }
 }
@@ -715,7 +715,7 @@ void Entry::setExpires(const bool& value)
 {
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
-        emit entryModified();
+        emitModified();
     }
 }
 
@@ -723,7 +723,7 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
 {
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
-        emit entryModified();
+        emitModified();
     }
 }
 
@@ -742,7 +742,7 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(!entry->parent());
 
     m_history.append(entry);
-    emit entryModified();
+    emitModified();
 }
 
 void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
@@ -760,7 +760,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
         delete entry;
     }
 
-    emit entryModified();
+    emitModified();
 }
 
 void Entry::truncateHistory()
@@ -813,7 +813,7 @@ void Entry::truncateHistory()
     }
 
     if (changed) {
-        emit entryModified();
+        emitModified();
     }
 }
 

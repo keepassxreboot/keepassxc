@@ -44,24 +44,35 @@ Database::Database()
     , m_data()
     , m_rootGroup(nullptr)
     , m_fileWatcher(new FileWatcher(this))
-    , m_emitModified(false)
     , m_uuid(QUuid::createUuid())
 {
+    // setup modified timer
+    m_modifiedTimer.setSingleShot(true);
+    connect(this, &Database::emitModifiedChanged, this, [this](bool value) {
+        if (!value) {
+            stopModifiedTimer();
+        }
+    });
+    connect(&m_modifiedTimer, &QTimer::timeout, this, &Database::emitModified);
+
+    // other signals
+    connect(m_metadata, &Metadata::modified, this, &Database::markAsModified);
+    connect(this, &Database::databaseOpened, this, [this]() { updateCommonUsernames(); });
+    connect(this, &Database::databaseSaved, this, [this]() { updateCommonUsernames(); });
+    connect(m_fileWatcher, &FileWatcher::fileChanged, this, &Database::databaseFileChanged);
+
+    // static uuid map
+    s_uuidMap.insert(m_uuid, this);
+
+    // block modified signal and set root group
+    setEmitModified(false);
+
     setRootGroup(new Group());
     rootGroup()->setUuid(QUuid::createUuid());
     rootGroup()->setName(tr("Passwords", "Root group name"));
-    m_modifiedTimer.setSingleShot(true);
-
-    s_uuidMap.insert(m_uuid, this);
-
-    connect(m_metadata, SIGNAL(metadataModified()), SLOT(markAsModified()));
-    connect(&m_modifiedTimer, SIGNAL(timeout()), SIGNAL(databaseModified()));
-    connect(this, SIGNAL(databaseOpened()), SLOT(updateCommonUsernames()));
-    connect(this, SIGNAL(databaseSaved()), SLOT(updateCommonUsernames()));
-    connect(m_fileWatcher, &FileWatcher::fileChanged, this, &Database::databaseFileChanged);
 
     m_modified = false;
-    m_emitModified = true;
+    setEmitModified(true);
 }
 
 Database::Database(const QString& filePath)
@@ -431,7 +442,6 @@ void Database::releaseData()
 
     setEmitModified(false);
     m_modified = false;
-    stopModifiedTimer();
 
     s_uuidMap.remove(m_uuid);
     m_uuid = QUuid();
@@ -439,7 +449,10 @@ void Database::releaseData()
     m_data.clear();
     m_metadata->clear();
 
+    auto oldGroup = rootGroup();
     setRootGroup(new Group());
+    // explicitly delete old group, otherwise it is only deleted when the database object is destructed
+    delete oldGroup;
 
     m_fileWatcher->stop();
 
@@ -840,15 +853,6 @@ void Database::emptyRecycleBin()
     }
 }
 
-void Database::setEmitModified(bool value)
-{
-    if (m_emitModified && !value) {
-        stopModifiedTimer();
-    }
-
-    m_emitModified = value;
-}
-
 bool Database::isModified() const
 {
     return m_modified;
@@ -862,7 +866,7 @@ bool Database::hasNonDataChanges() const
 void Database::markAsModified()
 {
     m_modified = true;
-    if (m_emitModified && !m_modifiedTimer.isActive()) {
+    if (!m_modifiedTimer.isActive()) {
         // Small time delay prevents numerous consecutive saves due to repeated signals
         startModifiedTimer();
     }

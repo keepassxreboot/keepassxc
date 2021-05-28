@@ -63,7 +63,7 @@ namespace FdoSecrets
         : DBusObject(parent)
         , m_backend(backend)
     {
-        connect(m_backend.data(), &Entry::entryModified, this, &Item::itemChanged);
+        connect(m_backend, &Entry::modified, this, &Item::itemChanged);
     }
 
     DBusResult Item::locked(const DBusClientPtr& client, bool& locked) const

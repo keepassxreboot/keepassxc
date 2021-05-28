@@ -52,6 +52,7 @@ set(keepassx_SOURCES
         core/InactivityTimer.cpp
         core/Merger.cpp
         core/Metadata.cpp
+        core/ModifiableObject.cpp
         core/PasswordGenerator.cpp
         core/PasswordHealth.cpp
         core/PassphraseGenerator.cpp

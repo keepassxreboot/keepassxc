@@ -27,6 +27,7 @@
 #include <QTimer>
 
 #include "config-keepassx.h"
+#include "core/ModifiableObject.h"
 #include "crypto/kdf/AesKdf.h"
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
@@ -52,7 +53,7 @@ struct DeletedObject
 
 Q_DECLARE_TYPEINFO(DeletedObject, Q_MOVABLE_TYPE);
 
-class Database : public QObject
+class Database : public ModifiableObject
 {
     Q_OBJECT
 
@@ -83,7 +84,6 @@ public:
     bool isInitialized() const;
     bool isModified() const;
     bool hasNonDataChanges() const;
-    void setEmitModified(bool value);
     bool isReadOnly() const;
     void setReadOnly(bool readOnly);
     bool isSaving();
@@ -151,7 +151,6 @@ signals:
     void groupAboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
     void databaseOpened();
-    void databaseModified();
     void databaseSaved();
     void databaseDiscarded();
     void databaseFileChanged();
@@ -213,7 +212,6 @@ private:
     QMutex m_saveMutex;
     QPointer<FileWatcher> m_fileWatcher;
     bool m_modified = false;
-    bool m_emitModified;
     bool m_hasNonDataChange = false;
     QString m_keyError;
 
