@@ -105,7 +105,7 @@ bool SymmetricCipher::finish(QByteArray& data)
         // Post-finished data may be larger than before due to padding
         data.resize(input.size());
         // Direct copy the finished data back into the QByteArray
-        std::copy(input.begin(), input.end(), data.begin());
+        std::copy(input.begin(), input.end(), std::back_inserter(data));
         return true;
     } catch (std::exception& e) {
         m_error = e.what();
@@ -136,7 +136,7 @@ bool SymmetricCipher::aesKdf(const QByteArray& key, int rounds, QByteArray& data
         for (int i = 0; i < rounds; ++i) {
             cipher->encrypt(out);
         }
-        std::copy(out.begin(), out.end(), data.begin());
+        std::copy(out.begin(), out.end(), std::back_inserter(data));
         return true;
     } catch (std::exception& e) {
         qWarning("SymmetricCipher::aesKdf: Could not process: %s", e.what());
