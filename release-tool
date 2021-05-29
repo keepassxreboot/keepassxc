@@ -1266,10 +1266,11 @@ appsign() {
 
     elif [ "$(uname -o)" == "Msys" ]; then
         if [[ ! -f "${key}" ]]; then
-            exitError "Key file was not found!"
+            exitError "Appsign key file was not found! (${key})"
         fi
 
-        read -s -p "Key password: " password
+        logInfo "Using appsign key ${key}."
+        IFS=$'\n' read -s -r -p "Key password: " password
         echo
 
         for f in "${sign_files[@]}"; do
