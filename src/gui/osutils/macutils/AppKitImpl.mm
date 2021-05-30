@@ -206,11 +206,10 @@
 
 - (void) toggleForegroundApp:(bool) foreground
 {
-    ProcessSerialNumber psn = {0, kCurrentProcess};
     if (foreground) {
-        TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+        [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
     } else {
-        TransformProcessType(&psn, kProcessTransformToUIElementApplication);
+        [NSApp setActivationPolicy:NSApplicationActivationPolicyProhibited];
     }
 }
 
