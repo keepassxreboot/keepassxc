@@ -99,7 +99,7 @@ Now we can see two files were generated:
 With KeePassXC you only need the first file listed.
 
 ==== Generating a key on Windows with PuTTYgen
-Please read the manual on how to use PuTTYgen for details on generate a key: https://the.earth.li/~sgtatham/putty/0.74/htmldoc/Chapter8.html#pubkey-puttygen. Once generated, you must save the key in OpenSSH format, follow the image below.
+Please read the manual on how to use PuTTYgen for details on generate a key: https://the.earth.li/~sgtatham/putty/0.74/htmldoc/Chapter8.html#pubkey-puttygen. Once generated, you must save the key in the new OpenSSH format, see image below.
 
 .Generating a key with PuTTYgen
 image::sshagent_puttygen.png[,70%]
