@@ -102,7 +102,7 @@ void EditWidget::setPageHidden(QWidget* widget, bool hidden)
         m_ui->categoryList->setCategoryHidden(index, hidden);
     }
 
-    if (index == m_ui->stackedWidget->currentIndex()) {
+    if (hidden && index == m_ui->stackedWidget->currentIndex()) {
         int newIndex = m_ui->stackedWidget->currentIndex() - 1;
         if (newIndex < 0) {
             newIndex = m_ui->stackedWidget->count() - 1;

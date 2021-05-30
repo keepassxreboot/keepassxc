@@ -60,6 +60,16 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="notHttpAuthCheckbox">
+        <property name="toolTip">
+         <string>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</string>
+        </property>
+        <property name="text">
+         <string>Do not use this entry with HTTP Basic Auth</string>
+        </property>
+       </widget>
+      </item>      
      </layout>
     </widget>
    </item>
