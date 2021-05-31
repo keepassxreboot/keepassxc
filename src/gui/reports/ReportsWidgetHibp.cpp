@@ -22,11 +22,14 @@
 #include "core/Database.h"
 #include "core/Global.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/PasswordHealth.h"
+#include "gui/GuiTools.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 
 #include <QMenu>
+#include <QShortcut>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
@@ -64,10 +67,8 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     m_modelProxy->setSourceModel(m_referencesModel.data());
     m_modelProxy->setSortLocaleAware(true);
     m_ui->hibpTableView->setModel(m_modelProxy.data());
-    m_ui->hibpTableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     m_ui->hibpTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    m_ui->hibpTableView->setSortingEnabled(true);
 
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_ui->hibpTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
@@ -78,6 +79,8 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
 
     connect(m_ui->validationButton, &QPushButton::pressed, [this] { startValidation(); });
 #endif
+
+    new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }
 
 ReportsWidgetHibp::~ReportsWidgetHibp()
@@ -124,8 +127,8 @@ void ReportsWidgetHibp::makeHibpTable()
     m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Title") << tr("Path") << tr("Password exposed…"));
 
     // Search database for passwords that we've found so far
-    QList<QPair<const Entry*, int>> items;
-    for (const auto* entry : m_db->rootGroup()->entriesRecursive()) {
+    QList<QPair<Entry*, int>> items;
+    for (auto entry : m_db->rootGroup()->entriesRecursive()) {
         if (!entry->isRecycled()) {
             const auto found = m_pwndPasswords.find(entry->password());
             if (found != m_pwndPasswords.end()) {
@@ -135,7 +138,7 @@ void ReportsWidgetHibp::makeHibpTable()
     }
 
     // Sort decending by the number the password has been exposed
-    qSort(items.begin(), items.end(), [](QPair<const Entry*, int>& lhs, QPair<const Entry*, int>& rhs) {
+    qSort(items.begin(), items.end(), [](QPair<Entry*, int>& lhs, QPair<Entry*, int>& rhs) {
         return lhs.second > rhs.second;
     });
 
@@ -356,47 +359,79 @@ void ReportsWidgetHibp::refreshAfterEdit()
 
 void ReportsWidgetHibp::customMenuRequested(QPoint pos)
 {
-
-    // Find which entry has been clicked
-    const auto index = m_ui->hibpTableView->indexAt(pos);
-    if (!index.isValid()) {
-        return;
-    }
-    auto mappedIndex = m_modelProxy->mapToSource(index);
-    m_contextmenuEntry = const_cast<Entry*>(m_rowToEntry[mappedIndex.row()]);
-    if (!m_contextmenuEntry) {
+    auto selected = m_ui->hibpTableView->selectionModel()->selectedRows();
+    if (selected.isEmpty()) {
         return;
     }
 
     // Create the context menu
     const auto menu = new QMenu(this);
 
-    // Create the "edit entry" menu item
-    const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
-    menu->addAction(edit);
-    connect(edit, SIGNAL(triggered()), SLOT(editFromContextmenu()));
+    // Create the "edit entry" menu item if 1 row is selected
+    if (selected.size() == 1) {
+        const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
+        menu->addAction(edit);
+        connect(edit, &QAction::triggered, edit, [this, selected] {
+            auto row = m_modelProxy->mapToSource(selected[0]).row();
+            auto entry = m_rowToEntry[row];
+            emit entryActivated(entry);
+        });
+    }
+
+    // Create the "delete entry" menu item
+    const auto delEntry = new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
+    menu->addAction(delEntry);
+    connect(delEntry, &QAction::triggered, this, &ReportsWidgetHibp::deleteSelectedEntries);
 
     // Create the "exclude from reports" menu item
     const auto exclude = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
-    exclude->setCheckable(true);
-    exclude->setChecked(m_contextmenuEntry->excludeFromReports());
-    menu->addAction(exclude);
-    connect(exclude, &QAction::toggled, exclude, [this](bool state) {
-        if (m_contextmenuEntry) {
-            m_contextmenuEntry->setExcludeFromReports(state);
-            makeHibpTable();
+
+    bool isExcluded = false;
+    for (auto index : selected) {
+        auto row = m_modelProxy->mapToSource(index).row();
+        auto entry = m_rowToEntry[row];
+        if (entry && entry->excludeFromReports()) {
+            // If at least one entry is excluded switch to inclusion
+            isExcluded = true;
+            break;
         }
+    }
+    exclude->setCheckable(true);
+    exclude->setChecked(isExcluded);
+
+    menu->addAction(exclude);
+    connect(exclude, &QAction::toggled, exclude, [this, selected](bool state) {
+        for (auto index : selected) {
+            auto row = m_modelProxy->mapToSource(index).row();
+            auto entry = m_rowToEntry[row];
+            if (entry) {
+                entry->setExcludeFromReports(state);
+            }
+        }
+        makeHibpTable();
     });
 
     // Show the context menu
     menu->popup(m_ui->hibpTableView->viewport()->mapToGlobal(pos));
 }
 
-void ReportsWidgetHibp::editFromContextmenu()
+void ReportsWidgetHibp::deleteSelectedEntries()
 {
-    if (m_contextmenuEntry) {
-        emit entryActivated(m_contextmenuEntry);
+    QList<Entry*> selectedEntries;
+    for (auto index : m_ui->hibpTableView->selectionModel()->selectedRows()) {
+        auto row = m_modelProxy->mapToSource(index).row();
+        auto entry = m_rowToEntry[row];
+        if (entry) {
+            selectedEntries << entry;
+        }
     }
+
+    bool permanent = !m_db->metadata()->recycleBinEnabled();
+    if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
+        GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
+    }
+
+    makeHibpTable();
 }
 
 void ReportsWidgetHibp::saveSettings()

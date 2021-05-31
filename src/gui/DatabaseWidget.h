@@ -74,7 +74,7 @@ public:
 
     explicit DatabaseWidget(QSharedPointer<Database> db, QWidget* parent = nullptr);
     explicit DatabaseWidget(const QString& filePath, QWidget* parent = nullptr);
-    ~DatabaseWidget();
+    ~DatabaseWidget() override;
 
     void setFocus(Qt::FocusReason reason);
 
@@ -255,7 +255,6 @@ private:
     void setClipboardTextAndMinimize(const QString& text);
     void processAutoOpen();
     void openDatabaseFromEntry(const Entry* entry, bool inBackground = true);
-    bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false);
     bool performSave(QString& errorMessage, const QString& fileName = {});
 
