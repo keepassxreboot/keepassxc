@@ -20,6 +20,7 @@
 
 #include "config-keepassx.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/TotpLineEdit.h"
 #include "totp/totp.h"
 
 #include <QWidget>
@@ -30,7 +31,6 @@ namespace Ui
 }
 
 class QTextEdit;
-
 class EntryPreviewWidget : public QWidget
 {
     Q_OBJECT
@@ -69,7 +69,6 @@ private slots:
     void updateTabIndexes();
     void openEntryUrl();
     void updateTotpWidgets();
-    void copyTotpToClipboard();
 
 private:
     void removeTab(QTabWidget* tabWidget, QWidget* widget);
@@ -83,6 +82,8 @@ private:
     bool m_locked;
     QPointer<Entry> m_currentEntry;
     QPointer<Group> m_currentGroup;
+    QPointer<TotpLineEdit> m_totpLineEdit;
+
     QTimer m_totpTimer;
     quint8 m_selectedTabEntry;
     quint8 m_selectedTabGroup;

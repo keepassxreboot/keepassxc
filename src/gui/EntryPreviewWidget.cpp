@@ -24,6 +24,7 @@
 #include "gui/Clipboard.h"
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
+#include "gui/TotpLineEdit.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #endif
@@ -52,7 +53,6 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->toggleGroupNotesButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->toggleOTPButton->setIcon(icons()->onOffIcon("password-show", true));
-    m_ui->copyOTPButton->setIcon(icons()->icon("password-copy"));
 
     m_ui->entryAttachmentsWidget->setReadOnly(true);
     m_ui->entryAttachmentsWidget->setButtonsVisible(false);
@@ -62,10 +62,12 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryUsernameLabel->setBackgroundRole(QPalette::Window);
     m_ui->entryNotesTextEdit->setBackgroundRole(QPalette::Window);
     m_ui->groupNotesTextEdit->setBackgroundRole(QPalette::Window);
-    m_ui->entryOTPCode->setBackgroundRole(QPalette::Window);
     // Align notes text with label text
     m_ui->entryNotesTextEdit->document()->setDocumentMargin(0);
     m_ui->groupNotesTextEdit->document()->setDocumentMargin(0);
+
+    m_totpLineEdit = new TotpLineEdit(this);
+    m_ui->entryOTPLayoutCode->addWidget(m_totpLineEdit);
 
     connect(m_ui->entryUrlLabel, SIGNAL(linkActivated(QString)), SLOT(openEntryUrl()));
 
@@ -173,27 +175,25 @@ void EntryPreviewWidget::updateEntryTotp()
 {
     Q_ASSERT(m_currentEntry);
     m_hasTotp = m_currentEntry->hasTotp();
+    m_totpLineEdit->setEntry(m_currentEntry);
     m_ui->entryTotpButton->setVisible(m_hasTotp);
     m_ui->entryTotpLabel->hide();
     m_ui->entryTotpButton->setChecked(false);
 
     m_ui->entryOTPLabel->setEnabled(m_hasTotp);
-    m_ui->entryOTPCode->setVisible(m_hasTotp);
     m_ui->entryOTPTimeout->setVisible(m_hasTotp);
     m_ui->toggleOTPButton->setVisible(m_hasTotp);
-    m_ui->copyOTPButton->setVisible(m_hasTotp);
 
     if (m_hasTotp) {
         m_totpStep = m_currentEntry->totpSettings()->step;
 
         connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpWidgets()));
         connect(m_ui->toggleOTPButton, SIGNAL(clicked(bool)), SLOT(setEntryOtpVisible(bool)));
-        connect(m_ui->copyOTPButton, SIGNAL(clicked()), SLOT(copyTotpToClipboard()));
 
         m_totpTimer.start(1000);
         updateTotpWidgets();
     } else {
-        m_ui->entryOTPCode->setText("");
+        m_totpLineEdit->setText("");
         m_ui->entryOTPTimeout->setText("");
         m_ui->entryTotpLabel->clear();
         m_totpTimer.stop();
@@ -416,31 +416,18 @@ void EntryPreviewWidget::setTotpCode()
     m_ui->entryTotpLabel->setText(finalCode);
 
     if (m_ui->toggleOTPButton->isChecked()) {
-        if (m_ui->entryOTPCode->text() != finalCode) {
-            m_ui->entryOTPCode->setText(finalCode);
+        if (m_totpLineEdit->text() != finalCode) {
+            m_totpLineEdit->setText(finalCode);
         }
     } else {
-        m_ui->entryOTPCode->setText(QString("\u25cf").repeated(6));
+        m_totpLineEdit->setText(QString("\u25cf").repeated(6));
     }
 }
 
 void EntryPreviewWidget::setTotpRemainingSecondsLabel()
 {
     uint epoch = Clock::currentSecondsSinceEpoch() - 1;
-    m_ui->entryOTPTimeout->setText(tr("Expires in <b>%n</b> second(s)", "", m_totpStep - (epoch % m_totpStep)));
-}
-
-void EntryPreviewWidget::copyTotpToClipboard()
-{
-    clipboard()->setText(m_currentEntry->totp());
-    if (config()->get(Config::HideWindowOnCopy).toBool()) {
-        if (config()->get(Config::MinimizeOnCopy).toBool()) {
-            getMainWindow()->minimizeOrHide();
-        } else if (config()->get(Config::DropToBackgroundOnCopy).toBool()) {
-            getMainWindow()->lower();
-            window()->lower();
-        }
-    }
+    m_ui->entryOTPTimeout->setText(tr("<b>%n</b>s", "", m_totpStep - (epoch % m_totpStep)));
 }
 
 void EntryPreviewWidget::updateTabIndexes()
