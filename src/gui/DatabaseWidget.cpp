@@ -50,6 +50,7 @@
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/EntryPreviewWidget.h"
 #include "gui/FileDialog.h"
+#include "gui/GuiTools.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
@@ -487,57 +488,11 @@ void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries, bool confirm)
     bool permanent = (recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid()))
                      || !m_db->metadata()->recycleBinEnabled();
 
-    if (confirm && !confirmDeleteEntries(selectedEntries, permanent)) {
+    if (confirm && !GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
         return;
     }
 
-    // Find references to selected entries and prompt for direction if necessary
-    auto it = selectedEntries.begin();
-    while (confirm && it != selectedEntries.end()) {
-        auto references = m_db->rootGroup()->referencesRecursive(*it);
-        if (!references.isEmpty()) {
-            // Ignore references that are selected for deletion
-            for (auto* entry : selectedEntries) {
-                references.removeAll(entry);
-            }
-
-            if (!references.isEmpty()) {
-                // Prompt for reference handling
-                auto result = MessageBox::question(
-                    this,
-                    tr("Replace references to entry?"),
-                    tr("Entry \"%1\" has %2 reference(s). "
-                       "Do you want to overwrite references with values, skip this entry, or delete anyway?",
-                       "",
-                       references.size())
-                        .arg((*it)->title().toHtmlEscaped())
-                        .arg(references.size()),
-                    MessageBox::Overwrite | MessageBox::Skip | MessageBox::Delete,
-                    MessageBox::Overwrite);
-
-                if (result == MessageBox::Overwrite) {
-                    for (auto* entry : references) {
-                        entry->replaceReferencesWithValues(*it);
-                    }
-                } else if (result == MessageBox::Skip) {
-                    it = selectedEntries.erase(it);
-                    continue;
-                }
-            }
-        }
-
-        it++;
-    }
-
-    if (permanent) {
-        for (auto* entry : asConst(selectedEntries)) {
-            delete entry;
-        }
-    } else {
-        for (auto* entry : asConst(selectedEntries)) {
-            m_db->recycleEntry(entry);
-        }
-    }
+    GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
 
     refreshSearch();
 
@@ -547,49 +502,6 @@ void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries, bool confirm)
         m_previewView->setEntry(currentEntry);
     } else {
         m_previewView->setGroup(groupView()->currentGroup());
-    }
-}
-
-bool DatabaseWidget::confirmDeleteEntries(QList<Entry*> entries, bool permanent)
-{
-    if (entries.isEmpty()) {
-        return false;
-    }
-
-    if (permanent) {
-        QString prompt;
-        if (entries.size() == 1) {
-            prompt = tr("Do you really want to delete the entry \"%1\" for good?")
-                         .arg(entries.first()->title().toHtmlEscaped());
-        } else {
-            prompt = tr("Do you really want to delete %n entry(s) for good?", "", entries.size());
-        }
-
-        auto answer = MessageBox::question(this,
-                                           tr("Delete entry(s)?", "", entries.size()),
-                                           prompt,
-                                           MessageBox::Delete | MessageBox::Cancel,
-                                           MessageBox::Cancel);
-
-        return answer == MessageBox::Delete;
-    } else if (config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool()) {
-        return true;
-    } else {
-        QString prompt;
-        if (entries.size() == 1) {
-            prompt = tr("Do you really want to move entry \"%1\" to the recycle bin?")
-                         .arg(entries.first()->title().toHtmlEscaped());
-        } else {
-            prompt = tr("Do you really want to move %n entry(s) to the recycle bin?", "", entries.size());
-        }
-
-        auto answer = MessageBox::question(this,
-                                           tr("Move entry(s) to recycle bin?", "", entries.size()),
-                                           prompt,
-                                           MessageBox::Move | MessageBox::Cancel,
-                                           MessageBox::Cancel);
-
-        return answer == MessageBox::Move;
     }
 }
 
