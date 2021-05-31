@@ -129,6 +129,7 @@ set(keepassx_SOURCES
         gui/SortFilterHideProxyModel.cpp
         gui/SquareSvgWidget.cpp
         gui/TotpSetupDialog.cpp
+        gui/TotpLineEdit.cpp
         gui/TotpDialog.cpp
         gui/TotpExportSettingsDialog.cpp
         gui/DatabaseOpenDialog.cpp
