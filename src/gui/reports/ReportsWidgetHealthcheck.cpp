@@ -22,12 +22,15 @@
 #include "core/Database.h"
 #include "core/Global.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/PasswordHealth.h"
+#include "gui/GuiTools.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
 
 #include <QMenu>
 #include <QSharedPointer>
+#include <QShortcut>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
@@ -38,12 +41,12 @@ namespace
     public:
         struct Item
         {
-            QPointer<const Group> group;
-            QPointer<const Entry> entry;
+            QPointer<Group> group;
+            QPointer<Entry> entry;
             QSharedPointer<PasswordHealth> health;
             bool exclude = false;
 
-            Item(const Group* g, const Entry* e, QSharedPointer<PasswordHealth> h)
+            Item(Group* g, Entry* e, QSharedPointer<PasswordHealth> h)
                 : group(g)
                 , entry(e)
                 , health(h)
@@ -102,13 +105,13 @@ Health::Health(QSharedPointer<Database> db)
     : m_db(db)
     , m_checker(db)
 {
-    for (const auto* group : db->rootGroup()->groupsRecursive(true)) {
+    for (auto group : db->rootGroup()->groupsRecursive(true)) {
         // Skip recycle bin
         if (group->isRecycled()) {
             continue;
         }
 
-        for (const auto* entry : group->entries()) {
+        for (auto entry : group->entries()) {
             if (entry->isRecycled()) {
                 continue;
             }
@@ -147,16 +150,15 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
     m_modelProxy->setSourceModel(m_referencesModel.data());
     m_modelProxy->setSortLocaleAware(true);
     m_ui->healthcheckTableView->setModel(m_modelProxy.data());
-    m_ui->healthcheckTableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     m_ui->healthcheckTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    m_ui->healthcheckTableView->setSortingEnabled(true);
-    m_ui->healthcheckTableView->setWordWrap(true);
 
     connect(m_ui->healthcheckTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
     connect(m_ui->healthcheckTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_ui->showKnownBadCheckBox, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
     connect(m_ui->excludeExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
+
+    new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }
 
 ReportsWidgetHealthcheck::~ReportsWidgetHealthcheck()
@@ -164,8 +166,8 @@ ReportsWidgetHealthcheck::~ReportsWidgetHealthcheck()
 }
 
 void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> health,
-                                            const Group* group,
-                                            const Entry* entry,
+                                            Group* group,
+                                            Entry* entry,
                                             bool knownBad)
 {
     QString descr, tip;
@@ -312,50 +314,82 @@ void ReportsWidgetHealthcheck::emitEntryActivated(const QModelIndex& index)
 
 void ReportsWidgetHealthcheck::customMenuRequested(QPoint pos)
 {
-
-    // Find which entry has been clicked
-    const auto index = m_ui->healthcheckTableView->indexAt(pos);
-    if (!index.isValid()) {
-        return;
-    }
-    auto mappedIndex = m_modelProxy->mapToSource(index);
-    m_contextmenuEntry = const_cast<Entry*>(m_rowToEntry[mappedIndex.row()].second);
-    if (!m_contextmenuEntry) {
+    auto selected = m_ui->healthcheckTableView->selectionModel()->selectedRows();
+    if (selected.isEmpty()) {
         return;
     }
 
     // Create the context menu
     const auto menu = new QMenu(this);
 
-    // Create the "edit entry" menu item
-    const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
-    menu->addAction(edit);
-    connect(edit, SIGNAL(triggered()), SLOT(editFromContextmenu()));
+    // Create the "edit entry" menu item (only if 1 row is selected)
+    if (selected.size() == 1) {
+        const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
+        menu->addAction(edit);
+        connect(edit, &QAction::triggered, edit, [this, selected] {
+            auto row = m_modelProxy->mapToSource(selected[0]).row();
+            auto entry = m_rowToEntry[row].second;
+            emit entryActivated(entry);
+        });
+    }
+
+    // Create the "delete entry" menu item
+    const auto delEntry = new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
+    menu->addAction(delEntry);
+    connect(delEntry, &QAction::triggered, this, &ReportsWidgetHealthcheck::deleteSelectedEntries);
 
     // Create the "exclude from reports" menu item
     const auto exclude = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
-    exclude->setCheckable(true);
-    exclude->setChecked(m_contextmenuEntry->excludeFromReports());
-    menu->addAction(exclude);
-    connect(exclude, &QAction::toggled, exclude, [this](bool state) {
-        if (m_contextmenuEntry) {
-            m_contextmenuEntry->setExcludeFromReports(state);
-            calculateHealth();
+
+    bool isExcluded = false;
+    for (auto index : selected) {
+        auto row = m_modelProxy->mapToSource(index).row();
+        auto entry = m_rowToEntry[row].second;
+        if (entry && entry->excludeFromReports()) {
+            // If at least one entry is excluded switch to inclusion
+            isExcluded = true;
+            break;
         }
+    }
+    exclude->setCheckable(true);
+    exclude->setChecked(isExcluded);
+
+    menu->addAction(exclude);
+    connect(exclude, &QAction::toggled, exclude, [this, selected](bool state) {
+        for (auto index : selected) {
+            auto row = m_modelProxy->mapToSource(index).row();
+            auto entry = m_rowToEntry[row].second;
+            if (entry) {
+                entry->setExcludeFromReports(state);
+            }
+        }
+        calculateHealth();
     });
 
     // Show the context menu
     menu->popup(m_ui->healthcheckTableView->viewport()->mapToGlobal(pos));
 }
 
-void ReportsWidgetHealthcheck::editFromContextmenu()
-{
-    if (m_contextmenuEntry) {
-        emit entryActivated(m_contextmenuEntry);
-    }
-}
-
 void ReportsWidgetHealthcheck::saveSettings()
 {
     // nothing to do - the tab is passive
+}
+
+void ReportsWidgetHealthcheck::deleteSelectedEntries()
+{
+    QList<Entry*> selectedEntries;
+    for (auto index : m_ui->healthcheckTableView->selectionModel()->selectedRows()) {
+        auto row = m_modelProxy->mapToSource(index).row();
+        auto entry = m_rowToEntry[row].second;
+        if (entry) {
+            selectedEntries << entry;
+        }
+    }
+
+    bool permanent = !m_db->metadata()->recycleBinEnabled();
+    if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
+        GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
+    }
+
+    calculateHealth();
 }

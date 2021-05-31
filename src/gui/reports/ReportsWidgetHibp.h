@@ -61,7 +61,7 @@ public slots:
     void fetchFailed(const QString& error);
     void makeHibpTable();
     void customMenuRequested(QPoint);
-    void editFromContextmenu();
+    void deleteSelectedEntries();
 
 private:
     void startValidation();
@@ -74,11 +74,10 @@ private:
 
     QMap<QString, int> m_pwndPasswords; // Passwords we found to have been pwned (value is pwn count)
     QString m_error; // Error message if download failed, else empty
-    QList<const Entry*> m_rowToEntry; // List index is table row
-    QPointer<const Entry> m_editedEntry; // The entry we're currently editing
+    QList<Entry*> m_rowToEntry; // List index is table row
+    QPointer<Entry> m_editedEntry; // The entry we're currently editing
     QString m_editedPassword; // The old password of the entry we're editing
     bool m_editedExcluded; // The old "known bad" flag of the entry we're editing
-    Entry* m_contextmenuEntry = nullptr; // The entry that was right-clicked
 
 #ifdef WITH_XC_NETWORKING
     HibpDownloader m_downloader; // This performs the actual HIBP online query
