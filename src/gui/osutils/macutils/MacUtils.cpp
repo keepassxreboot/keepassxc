@@ -70,6 +70,7 @@ bool MacUtils::raiseWindow(WId pid)
 
 bool MacUtils::raiseOwnWindow()
 {
+    m_appkit->toggleForegroundApp(true);
     return m_appkit->activateProcess(m_appkit->ownProcessId());
 }
 
