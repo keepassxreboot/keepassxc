@@ -17,16 +17,8 @@
  */
 
 #import "AppKitImpl.h"
-#include "AppKit.h"
-#include <QWindow>
-
-#import <AppKit/NSStatusBar.h>
-#import <AppKit/NSStatusItem.h>
-#import <AppKit/NSStatusBarButton.h>
-#import <AppKit/NSWorkspace.h>
-#import <AppKit/NSWindow.h>
-#import <AppKit/NSView.h>
-#import <CoreVideo/CVPixelBuffer.h>
+#import <QWindow>
+#import <Cocoa/Cocoa.h>
 
 @implementation AppKitImpl
 
