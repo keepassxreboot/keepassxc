@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>新しい言語を設定するには、このアプリケーションを再起動する必要があります。今すぐ再起動しますか？</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>モノクロ</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2495,6 +2499,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>このエントリーは HTTP ベーシック認証でのみ使用する</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>この設定をブラウザーの HTTP 認証ダイアログに送信しません。有効になっている場合、このエントリーは HTTP 認証ダイアログには表示されません。</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>このエントリーは HTTP ベーシック認証で使用しない</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -4357,24 +4369,12 @@ Message: %2</source>
         <translation>キーファイルを選択</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>キーファイルの選択</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>キーファイルを探す</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>参照...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>新しいキーファイルを生成</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>備考: 内容が変更される可能性があるファイルを使用すると、データベースのロックを解除できなくなる恐れがあります。</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4401,6 +4401,18 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>KeePassXC は将来的に、選択した古い形式のキーファイルを&lt;br&gt;サポートしなくなる可能性があります。&lt;br&gt;&lt;br&gt;代わりに新しいキーファイルを生成することを検討してください。</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5402,10 +5414,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>16進数</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>除外される文字: &quot;0&quot;、&quot;1&quot;、&quot;l&quot;、&quot;I&quot;、&quot;O&quot;、&quot;|&quot;、&quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>生成されたパスワード</translation>
     </message>
@@ -5504,6 +5512,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Special Characters</source>
         <translation>特殊文字</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6778,6 +6790,22 @@ Please consider generating a new key file.</source>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>予期しないキーファイルデータです！キーファイルが破損している可能性があります。</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7480,10 +7508,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>コンテナを書き込めませんでした</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>予期しないエクスポートエラーが発生しました</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7550,10 +7574,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>ファイルが存在しません</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>不明な共有コンテナ形式です</translation>
     </message>
 </context>
 <context>

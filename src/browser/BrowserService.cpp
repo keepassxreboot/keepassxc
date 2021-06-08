@@ -55,6 +55,7 @@ static const QString KEEPASSHTTP_GROUP_NAME = QStringLiteral("KeePassHttp Passwo
 const QString BrowserService::OPTION_SKIP_AUTO_SUBMIT = QStringLiteral("BrowserSkipAutoSubmit");
 const QString BrowserService::OPTION_HIDE_ENTRY = QStringLiteral("BrowserHideEntry");
 const QString BrowserService::OPTION_ONLY_HTTP_AUTH = QStringLiteral("BrowserOnlyHttpAuth");
+const QString BrowserService::OPTION_NOT_HTTP_AUTH = QStringLiteral("BrowserNotHttpAuth");
 // Multiple URL's
 const QString BrowserService::ADDITIONAL_URL = QStringLiteral("KP2A_URL");
 
@@ -394,6 +395,11 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
 
         if (!httpAuth && entry->customData()->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)
             && entry->customData()->value(BrowserService::OPTION_ONLY_HTTP_AUTH) == TRUE_STR) {
+            continue;
+        }
+
+        if (httpAuth && entry->customData()->contains(BrowserService::OPTION_NOT_HTTP_AUTH)
+            && entry->customData()->value(BrowserService::OPTION_NOT_HTTP_AUTH) == TRUE_STR) {
             continue;
         }
 

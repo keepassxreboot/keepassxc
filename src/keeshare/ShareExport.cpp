@@ -224,9 +224,5 @@ ShareObserver::Result ShareExport::intoContainer(const QString& resolvedPath,
     if (KeeShare::isContainerType(info, KeeShare::signedContainerFileType())) {
         return intoSignedContainer(resolvedPath, reference, targetDb.data());
     }
-    if (KeeShare::isContainerType(info, KeeShare::unsignedContainerFileType())) {
-        return intoUnsignedContainer(resolvedPath, reference, targetDb.data());
-    }
-    Q_ASSERT(false);
-    return {reference.path, ShareObserver::Result::Error, tr("Unexpected export error occurred")};
+    return intoUnsignedContainer(resolvedPath, reference, targetDb.data());
 }

@@ -60,6 +60,10 @@ static const QString aboutContributors = R"(
     <li>Micha Ober</li>
     <li>PublicByte</li>
     <li>Clayton Casciato</li>
+    <li>Dominik</li>
+    <li>Paul Ammann</li>
+    <li>Steve Isom</li>
+    <li>Matt Cardarelli</li>
 </ul>
 <h3>Notable Code Contributions:</h3>
 <ul>
@@ -118,6 +122,8 @@ static const QString aboutContributors = R"(
     <li>Larry Siden</li>
     <li>Thammachart Chinvarapon</li>
     <li>Patrick Evans</li>
+    <li>Johannes Erchen</li>
+    <li>Ralph Azucena</li>
 </ul>
 <h3>Translations:</h3>
 <ul>

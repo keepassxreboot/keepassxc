@@ -85,8 +85,9 @@
             </Directory>
         </DirectoryRef>
 
-        <Property Id="AUTOSTARTPROGRAM" Value="1" />
-        <Property Id="LAUNCHAPPONEXIT" Value="1" />
+        <Property Id="AUTOSTARTPROGRAM" Value="1" Secure="yes" />
+        <Property Id="LAUNCHAPPONEXIT" Value="1" Secure="yes" />
+        <Property Id="INSTALLDESKTOPSHORTCUT" Secure="yes" />
 
         <FeatureRef Id="ProductFeature">
             <ComponentRef Id="ApplicationShortcut" />

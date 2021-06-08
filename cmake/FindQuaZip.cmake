@@ -1,24 +1,33 @@
 # QUAZIP_FOUND                   - QuaZip library was found
-# QUAZIP_INCLUDE_DIR             - Path to QuaZip include dir
-# QUAZIP_INCLUDE_DIRS            - Path to QuaZip and zlib include dir (combined from QUAZIP_INCLUDE_DIR + ZLIB_INCLUDE_DIR)
+# QUAZIP_INCLUDE_DIRS            - Path to QuaZip include dir
 # QUAZIP_LIBRARIES               - List of QuaZip libraries
-# QUAZIP_ZLIB_INCLUDE_DIR        - The include dir of zlib headers
 
 if(MINGW)
     find_library(QUAZIP_LIBRARIES libquazip5)
-    find_path(QUAZIP_INCLUDE_DIR quazip.h PATH_SUFFIXES quazip5)
-    find_path(QUAZIP_ZLIB_INCLUDE_DIR zlib.h)
+    find_path(QUAZIP_INCLUDE_DIRS quazip.h PATH_SUFFIXES quazip5)
+elseif(APPLE)
+    find_library(QUAZIP_LIBRARIES quazip1-qt5)
+    find_path(QUAZIP_INCLUDE_DIRS quazip.h PATH_SUFFIXES quazip)
 else()
-    find_library(QUAZIP_LIBRARIES
-        NAMES quazip5 quazip
-	PATHS /usr/lib /usr/lib64 /usr/local/lib
-    )
-    find_path(QUAZIP_INCLUDE_DIR quazip.h
-	PATHS /usr/include /usr/local/include
-        PATH_SUFFIXES quazip5 quazip
-    )
-    find_path(QUAZIP_ZLIB_INCLUDE_DIR zlib.h PATHS /usr/include /usr/local/include)
+    # Try pkgconfig first
+    find_package(PkgConfig QUIET)
+    if (PKG_CONFIG_FOUND)
+        pkg_check_modules(QUAZIP QUIET quazip1-qt5)
+    endif()
+    if(NOT QUAZIP_FOUND)
+        # Try to find QuaZip version 0.x
+        find_library(QUAZIP_LIBRARIES
+            NAMES quazip5 quazip
+            PATHS /usr/lib /usr/lib64 /usr/local/lib
+        )
+        find_path(QUAZIP_INCLUDE_DIRS quazip.h
+            PATHS /usr/include /usr/local/include
+            PATH_SUFFIXES quazip5 quazip
+        )
+    endif()
 endif()
+
+mark_as_advanced(QUAZIP_LIBRARIES QUAZIP_INCLUDE_DIRS)
+
 include(FindPackageHandleStandardArgs)
-set(QUAZIP_INCLUDE_DIRS ${QUAZIP_INCLUDE_DIR} ${QUAZIP_ZLIB_INCLUDE_DIR})
-find_package_handle_standard_args(QUAZIP DEFAULT_MSG QUAZIP_LIBRARIES QUAZIP_INCLUDE_DIR QUAZIP_ZLIB_INCLUDE_DIR QUAZIP_INCLUDE_DIRS)
+find_package_handle_standard_args(QuaZip DEFAULT_MSG QUAZIP_LIBRARIES QUAZIP_INCLUDE_DIRS)

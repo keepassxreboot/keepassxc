@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Je moet de toepassing opnieuw starten om de nieuwe taal in te stellen. Wil je dat nu doen?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monochroom</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -928,7 +932,7 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download het voor %1 en %2 en %3. %4.</translation>
+        <translation>KeePassXC-Browser is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download het voor %1 en %2 en %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -1350,11 +1354,11 @@ Als je geen sleutelbestand hebt laat je het veld leeg.</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Oud sleutelbestandsformaat</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Je gebruikt een oude sleutelbestandsindeling die KeePassXC&lt;br&gt;in de toekomst mogelijk niet meer ondersteunt.&lt;br&gt;&lt;br&gt;Overweeg om een nieuw sleutelbestand te genereren bij:&lt;br&gt;&lt;strong&gt;Database / Databasebeveiliging / Sleutelbestand wijzigen.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2290,12 +2294,13 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige invoer</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation type="unfinished"/>
+        <translation>Een externe samenvoegbewerking heeft dit item ongeldig gemaakt.
+Helaas zijn alle aangebrachte wijzigingen verloren gegaan.</translation>
     </message>
 </context>
 <context>
@@ -2494,6 +2499,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Gebruik dit item alleen met HTTP Basic Auth</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Stuur deze instelling niet naar de browser voor HTTP Auth-dialoogvensters. Indien ingeschakeld, zullen HTTP-authenticatiedialogen dit item niet tonen voor selectie.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Gebruik dit item niet met HTTP Basic Auth</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2618,7 +2631,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>Invoer bewerken</translation>
     </message>
 </context>
 <context>
@@ -2922,7 +2935,7 @@ Ondersteund zijn: %1.</translation>
     </message>
     <message>
         <source>Edit Group</source>
-        <translation type="unfinished"/>
+        <translation>Groep bewerken</translation>
     </message>
 </context>
 <context>
@@ -3443,12 +3456,12 @@ Weet je zeker dat je dit bestand wilt toevoegen?</translation>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Standaardreeks</translation>
     </message>
     <message>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
         <comment>attributes line</comment>
-        <translation type="unfinished"/>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
 </context>
 <context>
@@ -4355,24 +4368,12 @@ Bericht: %2</translation>
         <translation>Kies een sleutelbestand</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Sleutelbestand</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Blader naar sleutelbestand</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Bladeren…</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Een nieuw sleutelbestand genereren</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Merk op: gebruik geen bestand dat kan veranderen; elke verandering maakt het ontgrendelen van je database onmogelijk!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4394,10 +4395,22 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Oud sleutelbestandsformaat</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>Je hebt een sleutelbestand in een oud formaat geselecteerd dat KeePassXC in de toekomst mogelijk niet meer ondersteunt.&lt;br&gt;&lt;br&gt;Overweeg in plaats daarvan een nieuw sleutelbestand te genereren.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4866,7 +4879,7 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     </message>
     <message>
         <source>Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Altijd bovenop</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -5401,10 +5414,6 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Niet te gebruiken karakters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Gegenereerd wachtwoord</translation>
     </message>
@@ -5503,6 +5512,10 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     <message>
         <source>Special Characters</source>
         <translation>Speciale tekens</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6733,26 +6746,29 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>pad naar een aangepast lokaal configuratiebestand</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>WAARSCHUWING: Je gebruikt een oud sleutelbestandsformaat dat KeePassXC
+in de toekomst mogelijk niet meer kan ondersteunen.
+
+Overweeg om een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1 (%2 cycli, %3 KB)</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d (KDBX 4 – aanbevolen)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id (KDBX 4)</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -6764,14 +6780,30 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Niet-ondersteunde sleutelbestandversie: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Checksum komt niet overeen! Sleutelbestand is mogelijk beschadigd.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Onverwachte sleutelbestandgegevens! Sleutelbestand is mogelijk beschadigd.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7476,10 +7508,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>Kan niet schrijven naar export-container</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Onverwachte fout bij het exporteren</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7546,10 +7574,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>Bestand bestaat niet</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Type van deel-container is onbekend</translation>
     </message>
 </context>
 <context>

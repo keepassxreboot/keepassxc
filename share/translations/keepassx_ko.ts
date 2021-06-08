@@ -137,7 +137,11 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>새 언어를 적용하려면 프로그램을 다시 시작해야 합니다. 지금 다시 시작하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>흑백</translation>
     </message>
 </context>
 <context>
@@ -342,15 +346,15 @@
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스를 잠글 때 자동으로 저장</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스를 잠글 때 데이터 이외의 변경 사항 자동 저장</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation type="unfinished"/>
+        <translation>트레이 아이콘 종류</translation>
     </message>
 </context>
 <context>
@@ -1350,11 +1354,11 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>이전 키 파일 형식</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC에서 차후에 지원을 중단할 수도 있는&lt;br&gt;이전 키 파일 형식을 사용하고 있습니다.&lt;br&gt;&lt;br&gt;다음 메뉴 항목을 사용하여 새 키 파일을 생성하기를 추천합니다:&lt;br&gt;&lt;strong&gt;데이터베이스 / 데이터베이스 보안 / 키 파일 변경&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2290,12 +2294,13 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 항목</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation type="unfinished"/>
+        <translation>외부 합치기 작업으로 인해서 이 항목은 더 이상 유효하지 않습니다.
+모든 변경 사항은 손실되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -2494,6 +2499,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>HTTP Basic 인증에만 이 항목 사용</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>이 설정을 브라우저의 HTTP 인증 대화 상자로 보내지 않습니다. 이 옵션을 사용하면 HTTP 인증 대화 상자에서 이 항목을 숨깁니다.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>HTTP Basic 인증에 이 항목 사용하지 않기</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2618,7 +2631,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>항목 편집</translation>
     </message>
 </context>
 <context>
@@ -2922,7 +2935,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Edit Group</source>
-        <translation type="unfinished"/>
+        <translation>그룹 편집</translation>
     </message>
 </context>
 <context>
@@ -3444,12 +3457,12 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation type="unfinished"/>
+        <translation>기본 시퀀스</translation>
     </message>
     <message>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
         <comment>attributes line</comment>
-        <translation type="unfinished"/>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
 </context>
 <context>
@@ -4356,24 +4369,12 @@ Message: %2</source>
         <translation>키 파일 선택</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>키 파일 선택</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>키 파일 찾아보기</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>찾아보기...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>새 키 파일 생성</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>메모: 변경될 수 있는 파일을 사용하면 나중에 데이터베이스의 잠금을 해제하지 못할 수도 있습니다!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4395,11 +4396,23 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>이전 키 파일 형식</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC에서 차후에 지원을 중단할 수도 있는&lt;br&gt;이전 키 파일 형식을 사용하고 있습니다.&lt;br&gt;&lt;br&gt;새 키 파일을 생성하기를 추천합니다:</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>데이터베이스를 안전하게 보호할 수 있는 새 키 파일을 생성하거나 기존 파일을 선택할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>메모: 변경될 수 있는 파일을 사용하면 나중에 데이터베이스의 잠금을 해제하지 못할 수도 있습니다.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>찾아보기...</translation>
     </message>
 </context>
 <context>
@@ -4846,27 +4859,27 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Perform Auto-Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>자동 입력 시퀀스 실행</translation>
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>{USERNAME}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{USERNAME}{ENTER}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>{PASSWORD}</translation>
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{PASSWORD}{ENTER}</translation>
     </message>
     <message>
         <source>Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>항상 위</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -5401,10 +5414,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>16진</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>제외할 글자: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>생성된 암호</translation>
     </message>
@@ -5503,6 +5512,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Special Characters</source>
         <translation>특수 문자</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>제외할 글자: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6733,26 +6746,29 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 로컬 설정 파일 경로</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>경고: KeePassXC에서 차후에 지원을 중단할 수도 있는
+이전 키 파일 형식을 사용하고 있습니다.
+
+새 키 파일을 생성하기를 추천합니다.</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1(%2회, %3 KB)</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d(KDBX 4 – 추천)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id(KDBX 4)</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -6764,15 +6780,31 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation type="unfinished"/>
+        <translation>지원하지 않는 키 파일 버전: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>체크섬이 일치하지 않습니다! 키 파일이 손상되었을 수도 있습니다.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>예상하지 못한 키 파일 데이터입니다! 키 파일이 손상되었을 수도 있습니다.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>%1초 후 클립보드를 지웁니다...</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>모든 열린 데이터베이스 잠금</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>데이터베이스를 잠갔습니다.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>데이터베이스를 잠글 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -7476,10 +7508,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>내보내기 컨테이너에 기록할 수 없음</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>예상하지 못한 내보내기 오류</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7546,10 +7574,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>파일이 존재하지 않음</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>알 수 없는 공유 컨테이너 형식</translation>
     </message>
 </context>
 <context>

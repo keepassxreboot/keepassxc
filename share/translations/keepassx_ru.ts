@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Вы должны перезапустить приложение, чтобы установить новый язык. Хотите перезапустить сейчас?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Морохромный</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -1347,11 +1351,11 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Старый формат файла-ключа</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Вы используете старый формат файла-ключа, который KeePassXC может прекратить поддерживать в будущем. Пожалуйста, сгенерируете новый файл-ключ, перейдя в раздел параметров безопасности базы данных.</translation>
     </message>
 </context>
 <context>
@@ -2288,12 +2292,12 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимая запись</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation type="unfinished"/>
+        <translation>Операция по слиянию сделала эту запись недействительной. К сожалению, любые изменения были потеряны.</translation>
     </message>
 </context>
 <context>
@@ -2492,6 +2496,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Использовать эту запись только при обычной проверке подлинности HTTP</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Не отправлять эту настройку в браузер для HTTP Auth диалогов. Если включено, данные диалоги не покажутся для этой записи для выбора.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Не изпользовать эту запись для базовой HTTP авторизации</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2616,7 +2628,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>Редактировать запись</translation>
     </message>
 </context>
 <context>
@@ -2919,7 +2931,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Edit Group</source>
-        <translation type="unfinished"/>
+        <translation>Редактировать группу</translation>
     </message>
 </context>
 <context>
@@ -3444,12 +3456,12 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Последовательность по умолчанию</translation>
     </message>
     <message>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
         <comment>attributes line</comment>
-        <translation type="unfinished"/>
+        <translation>%1:%2</translation>
     </message>
 </context>
 <context>
@@ -4356,24 +4368,12 @@ Message: %2</source>
         <translation>Выберите файл-ключ</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Выбор файла-ключа</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Открыть диалога выбора файла-ключа</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Обзор…</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Создать новый файл-ключ</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Внимание: изменение файла приведёт к невозможности разблокировать базу данных!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4395,10 +4395,23 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Устаревший формат файла-ключа</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>ВНИМАНИЕ: Вы используете файл-ключ устаревшего формата, поддержка которого может быть прекращена в будущем.
+По возможности создайте новый ключевой файл.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4690,7 +4703,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>&amp;Безопаснось базы данных…</translation>
+        <translation>&amp;Безопасность базы данных…</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
@@ -4866,7 +4879,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Всегда поверх других окон</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -5401,10 +5414,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Исключить символы: «0», «1», «l», «I», «O», «|», «﹒»</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Сгенерированный пароль</translation>
     </message>
@@ -5503,6 +5512,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Special Characters</source>
         <translation>Специальные символы</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6732,26 +6745,29 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>Путь к пользовательскому файлу настроек</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>ВНИМАНИЕ: Вы используете файл-ключ устаревшего формата, поддержка которого 
+может быть прекращена в будущем.
+
+По возможности создайте новый ключевой файл.</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1 (%2 раунда(-ов), %3 KB)</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d (KDBX 4 – рекомендуемок)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id (KDBX 4)</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -6763,14 +6779,30 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Неподдерживаемый тип файла-ключа: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Несоответствие хэша! Возможно, ключ-файл повреждён</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Неожиданные данные в файле-ключе! Вероятно, он повреждён</translation>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7475,10 +7507,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>Не удалось записать экспортируемый контейнер</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Неизвестная ошибка экспорта</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7545,10 +7573,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>Файл не существует</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Неизвестный тип совместного контейнера</translation>
     </message>
 </context>
 <context>

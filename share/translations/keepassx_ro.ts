@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2493,6 +2497,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -4354,24 +4366,12 @@ Mesaj: %2</translation>
         <translation>Selectați un fișier cheie</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Selectarea fișierelor cheie</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Căutați fișierul cheie</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Răsfoiește...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Generați un nou fișier cheie</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Notă: Nu folosiți un fișier care s-ar putea schimba, deoarece acest lucru vă va împiedica să deblocați baza de date!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4397,6 +4397,18 @@ Sigur doriți să continuați cu acest fișier?</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5399,10 +5411,6 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Caractere excluse: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;.&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Parol generat</translation>
     </message>
@@ -5501,6 +5509,10 @@ Asteptati-va unele bug-uri și probleme minore, această versiune nu este destin
     <message>
         <source>Special Characters</source>
         <translation>Caractere speciale</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6771,6 +6783,22 @@ Please consider generating a new key file.</source>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7473,10 +7501,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>Imposibil de scris container de export</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Eroare de export neașteptată</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7543,10 +7567,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>Fișierul nu există</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Tip de container de partajare necunoscut</translation>
     </message>
 </context>
 <context>

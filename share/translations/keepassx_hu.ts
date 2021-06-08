@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Az új nyelv beállításának az érvényre kerüléséhez újra kell indítani az alkalmazást. Legyen azonnal újraindítva?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monokróm</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2495,6 +2499,14 @@ Sajnos az esetleges változások elvesztek.</translation>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Bejegyzés alkalmazása csak HTTP Basic Auth-tal</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Ne küldje ezt a beállítást a böngésző HTTP Auth párbeszédablakának. Bejelölve a HTTP Auth párbeszédablakokban ez a bejegyzés nem fog kiválaszthatóként feltűnni.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Bejegyzés tiltása HTTP Basic Auth-tal</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -3394,7 +3406,7 @@ Biztosan hozzáadható ez a fájl?</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>Automatikus típus</translation>
+        <translation>Automatikus beírás</translation>
     </message>
     <message>
         <source>Window</source>
@@ -4358,24 +4370,12 @@ Message: %2</source>
         <translation>Kulcsfájl kiválasztása</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Kulcsfájl kijelölése</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Kulcsfájl böngészése</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Tallózás…</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Új kulcsfájl előállítása</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Megjegyzés: Nem szabad olyan fájlt használni, amely megváltozhat, mivel ez megakadályozza az adatbázis feloldását!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4402,6 +4402,18 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>Egy régi kulcsfájl formátumot használ, amit a KeePassXC lehet&lt;br&gt;hogy nem fog támogatni a jövőben.&lt;br&gt;&lt;br&gt;Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4851,19 +4863,19 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation>{FELHASZNÁLÓNÉV}</translation>
+        <translation>{USERNAME}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation>{FELHASZNÁLÓNÉV}{ENTER}</translation>
+        <translation>{USERNAME}{ENTER}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
-        <translation>{JELSZÓ}</translation>
+        <translation>{PASSWORD}</translation>
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation>{JELSZÓ}{ENTER}</translation>
+        <translation>{PASSWORD}{ENTER}</translation>
     </message>
     <message>
         <source>Always on Top</source>
@@ -5402,10 +5414,6 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
         <translation>Hexadecimális</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Kihagyott karakterek: „0”, „1”, „l”, „I”, „O”, „|”, „﹒”</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Előállított jelszó</translation>
     </message>
@@ -5504,6 +5512,10 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
     <message>
         <source>Special Characters</source>
         <translation>Speciális karakterek</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6778,6 +6790,22 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Váratlan kulcsfájladatok. A kulcsfájl megsérülhetett.</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7480,10 +7508,6 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
         <source>Could not write export container</source>
         <translation>Az exportálási tároló nem írható</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Váratlan exportálás hiba történt</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7550,10 +7574,6 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     <message>
         <source>File does not exist</source>
         <translation>A fájl nem létezik</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Ismeretlen megosztási tárolótípus</translation>
     </message>
 </context>
 <context>

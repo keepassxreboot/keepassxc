@@ -3,78 +3,78 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>حول KeePassXC</translation>
+        <translation>حَول KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>حول</translation>
+        <translation>حَول</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>للإبلاغ عن العلل: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>للإبلاغ عن الأخطاء: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC موزع وفقًا لشروط رخصة غنو العمومية (GPL) إصدار 2 أو (حسب خيارك) إصدار 3.</translation>
+        <translation>يتم توزيع KeePassXC بمُوجة شُروط رخصة GNU العمومية (GPL) الإصار الثاني (حسب اختيارك) الإصدار الثالث.</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>المساهمون</translation>
+        <translation>المُساهِمون</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;إستكشاف المساهمين عبر GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;ألقِ نظرة على المُساهِمون في GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>معلومات تتبع الأخطاء</translation>
+        <translation>معلومات التصحيح</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>قم بتضمين المعلومات التالية عند الإبلاغ عن علة:</translation>
+        <translation>ََضَمِّن المعلومات التالية عند الإبلاغ عن الأخطاء:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>نسخ إلى الحافظة</translation>
+        <translation>النسخ إلى الحافظة</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>مشرفي المشروع:</translation>
+        <translation>مُشرِّفو المَشروع:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>شكر خاص من فريق KeePassXC يذهب إلى debfx لإنشاء KeePassX الأصلي.</translation>
+        <translation>فريق KeePassXC يُوجه شكر خاص إلى debfx لإنشاء KeePassX الأصلي.</translation>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>استخدام OpenSSH لنظام تشغيل Windows بدلاً من Pageant</translation>
     </message>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation type="unfinished"/>
+        <translation>تفعِّيل تكامُل SSH Agent</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation type="unfinished"/>
+        <translation>خانة SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation type="unfinished"/>
+        <translation>تجاوز SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation type="unfinished"/>
+        <translation>(فارِغ)</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation type="unfinished"/>
+        <translation>لا يُوجد مِقبَس SSH Agent مُتاح. تأكد مِن وجود مُتغير SSH_AUTH_SOCK في البيئة أو عيّن تجاوز له.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation type="unfinished"/>
+        <translation>اتِّصال SSH Agent يعمل!</translation>
     </message>
 </context>
 <context>
@@ -85,7 +85,7 @@
     </message>
     <message>
         <source>General</source>
-        <translation>العام</translation>
+        <translation>عام</translation>
     </message>
     <message>
         <source>Security</source>
@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>خطأ في الوصول لملف التكوين %1</translation>
+        <translation>خطأ في الوصول إلى ملف الإعداد %1</translation>
     </message>
     <message>
         <source>Icon only</source>
@@ -101,15 +101,15 @@
     </message>
     <message>
         <source>Text only</source>
-        <translation>الوصف بالكلمات فقط </translation>
+        <translation>النص فقط</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation>وصف حرفي بجانب الأيقونة</translation>
+        <translation>نص بجانب الأيقونة</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation>الوصف أسفل الأيقونة</translation>
+        <translation>النص أسفل الأيقونة</translation>
     </message>
     <message>
         <source>Follow style</source>
@@ -117,26 +117,30 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation type="unfinished"/>
+        <translation>إعادة تعيّين الإعدادات؟</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>هل أنت متأكد من رغبتك في إعادة جميع الإعدادات العامة وإعدادات الأمن الى وضعها النمطي الأولي ؟</translation>
+        <translation>هل أنت متأكد من رغبتك في إعادة تعيّين كافة الإعدادات العامة وإعدادات الأمن إلى وضعها الافتراضي؟</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation type="unfinished"/>
+        <translation>أُحادي اللون (فاتح)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation type="unfinished"/>
+        <translation>أُُحادي اللون (داكِن)</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation type="unfinished"/>
+        <translation>مُلون</translation>
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Monochrome</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -578,7 +582,7 @@
     </message>
     <message>
         <source>Remember</source>
-        <translation type="unfinished"/>
+        <translation>تذكر</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
@@ -885,7 +889,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation type="unfinished"/>
+        <translation>نوع المتصفح:</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -1235,7 +1239,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>أدخل كلمة المرور:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -1299,7 +1303,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>?</source>
-        <translation type="unfinished"/>
+        <translation>؟</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
@@ -2470,6 +2474,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2732,7 +2744,7 @@ Unfortunately, any changes made have been lost.</source>
     <name>EditGroupWidgetKeeShare</name>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>النوع:</translation>
     </message>
     <message>
         <source>Path:</source>
@@ -2744,7 +2756,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>غير فعال</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
@@ -4320,23 +4332,11 @@ Message: %2</source>
         <translation>حدد ملف المفتاح</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>إستعراض...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -4362,6 +4362,18 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5322,7 +5334,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation type="unfinished"/>
+        <translation>انتقل الى النمط المتقدم</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -5358,10 +5370,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Hex</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5410,7 +5418,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Copy password</source>
-        <translation type="unfinished"/>
+        <translation>انسخ كلمة المرور</translation>
     </message>
     <message>
         <source>lower case</source>
@@ -5463,6 +5471,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Special Characters</source>
         <translation>محارف خاصة</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6082,7 +6094,7 @@ Available commands:
     </message>
     <message>
         <source>file empty</source>
-        <translation type="unfinished"/>
+        <translation>ملف فارغ</translation>
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
@@ -6104,7 +6116,7 @@ Available commands:
     <message>
         <source>Invalid Key</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>المفتاح غير صالح</translation>
     </message>
     <message>
         <source>Message encryption failed.</source>
@@ -6608,11 +6620,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Name: </source>
-        <translation type="unfinished"/>
+        <translation>الاسم:</translation>
     </message>
     <message>
         <source>Description: </source>
-        <translation type="unfinished"/>
+        <translation>الوصف:</translation>
     </message>
     <message>
         <source>Cipher: </source>
@@ -6732,6 +6744,22 @@ Please consider generating a new key file.</source>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -6780,7 +6808,7 @@ Please consider generating a new key file.</source>
     <message>
         <source>Bad</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>سيئ</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
@@ -6802,7 +6830,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation type="unfinished"/>
+        <translation>ضعيف — فكر بتغير كلمة المرور</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -6830,11 +6858,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Score</source>
-        <translation type="unfinished"/>
+        <translation>النتيجة</translation>
     </message>
     <message>
         <source>Reason</source>
-        <translation type="unfinished"/>
+        <translation>السبب</translation>
     </message>
     <message>
         <source>Edit Entry...</source>
@@ -7434,10 +7462,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7503,10 +7527,6 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>File does not exist</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
         <translation type="unfinished"/>
     </message>
 </context>

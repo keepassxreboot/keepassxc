@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Yeni dili ayarlamak için uygulamayı yeniden başlatmalısınız. Şimdi yeniden başlamak ister misin?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Tek renkli</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -1350,7 +1354,7 @@ Bir anahtar dosyanız yoksa, lütfen alanı boş bırakınız.</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Eski anahtar dosya  biçimi</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -2494,6 +2498,14 @@ Unfortunately, any changes made have been lost.</source>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Bu girdiyi sadece HTTP Basic Auth ile kullan</translation>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4358,24 +4370,12 @@ Message: %2</source>
         <translation>Bir anahtar dosyası seç</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Anahtar dosya seçimi</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Anahtar dosyasına göz at</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Gözat...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Yeni anahtar dosyası oluştur</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Not: Veritabanınızın kilidini açmanızı engelleyeceği için değişebilecek bir dosya kullanmayın!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4397,10 +4397,22 @@ Bu dosyaya devam etmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Eski anahtar dosya  biçimi</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5403,10 +5415,6 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Dışlanan karakterler: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Oluşturulan parola</translation>
     </message>
@@ -5505,6 +5513,10 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
     <message>
         <source>Special Characters</source>
         <translation>Özel Karakterler</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6776,6 +6788,22 @@ Please consider generating a new key file.</source>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7479,10 +7507,6 @@ Girdiyi düzenlemek için tıkla.</translation>
         <source>Could not write export container</source>
         <translation>Dışa aktarım konteynere yazılamadı</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Beklenmeyen dışa aktarma hatası oluştu</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7549,10 +7573,6 @@ Girdiyi düzenlemek için tıkla.</translation>
     <message>
         <source>File does not exist</source>
         <translation>Dosya mevcut değil</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Bilinmeyen konteyner paylaşım türü</translation>
     </message>
 </context>
 <context>

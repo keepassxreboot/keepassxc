@@ -1,707 +1,710 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="th" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr_CA" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>เกี่ยวกับ KeePassXC</translation>
+        <translation>À propos de KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>เกี่ยวกับ</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>รายงานจุดบกพร่องที่ &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Signaler les bogues sur : &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC เผยแพร่ภายใต้เงื่อนไขของสัญญาอนุญาตสาธารณะทั่วไปของกนู (GNU GPL) รุ่น 2 หรือรุ่น 3 (คุณสามารถเลือกได้)</translation>
+        <translation>KeePassXC est distribué suivant les conditions de la licence publique générale GNU (GNU GPL) version 2 ou version 3 de la licence (à votre gré).</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>ผู้ร่วมสมทบ</translation>
+        <translation>Contributeurs</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;ดูรายชื่อผู้สมทบบน GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Voir Contributions sur GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>ข้อมูลการแก้จุดบกพร่อง</translation>
+        <translation>Renseignements de débogage</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>ใส่ข้อมูลดังต่อไปนี้ทุกครั้งที่คุณรายงานจุดบกพร่องของซอฟต์แวร์</translation>
+        <translation>Incluez les renseignements suivants chaque fois que vous signalez un bogue :</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>คัดลอกไปยังคลิปบอร์ด</translation>
+        <translation>Copier dans le presse-papiers</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>ผู้ดูแลโครงการ:</translation>
+        <translation>Responsables du projet :</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>ทีมงาน KeePassXC ขอขอบคุณ debfx สำหรับการสร้างตัวต้นฉบับของ KeePassX</translation>
+        <translation>L’équipe de KeePassXC remercie tout particulièrement debfx pour la création du KeePassX original.</translation>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation>ใช้ OpenSSH สำหรับ Windows แทน Pageant</translation>
+        <translation>Utiliser OpenSSH pour Windows au lieu de Pageant</translation>
     </message>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>เปิดใช้การผสานกับ SSH Agent</translation>
+        <translation>Activer l’intégration de l’agent SSH</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>ค่า SSH_AUTH_SOCK</translation>
+        <translation>Valeur SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation type="unfinished"/>
+        <translation>Valeur de remplacement SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(ว่าง)</translation>
+        <translation>(vide)</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation type="unfinished"/>
+        <translation>Aucun emplacement d’agent SSH n’est disponible. Assurez-vous que la variable d’environnement SSH_AUTH_SOCK existe ou définissez une valeur de remplacement.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation type="unfinished"/>
+        <translation>La connexion de l’agent SSH fonctionne.</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>การตั้งค่าโปรแกรม</translation>
+        <translation>Paramètres de l’application</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>ทั่วไป</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>ความปลอดภัย</translation>
+        <translation>Sécurité</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>มีข้อผิดพลาดในการเข้าถึงแฟ้มตั้งค่า %1</translation>
+        <translation>Erreur d’accès pour le fichier de configuration %1</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation>ไอคอนเท่านั้น</translation>
+        <translation>Icône seulement</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation>ข้อความเท่านั้น</translation>
+        <translation>Texte seulement</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation>ข้อความข้างไอคอน</translation>
+        <translation>Texte à côté de l’icône</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation>ข้อความใต้ไอคอน</translation>
+        <translation>Texte sous l’icône</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation>ปฏิบัติตามสไตล์</translation>
+        <translation>Suivre le style</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>ล้างการตั้งค่าหรือไม่?</translation>
+        <translation>Réinitialiser les paramètres?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>คุณแน่ใจหรือไม่ว่าต้องการคืนค่าทั่วไปและค่าความปลอดภัยสู่ค่าเริ่มต้น</translation>
+        <translation>Voulez-vous vraiment réinitialiser tous les paramètres généraux et de sécurité à leur valeur par défaut?</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation>สีเดียว (สว่าง)</translation>
+        <translation>Monochrome (clair)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation>สีเดียว (มืด)</translation>
+        <translation>Monochrome (sombre)</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation>สีสดใส</translation>
+        <translation>Multicolore</translation>
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>คุณจะต้องเริ่มแอปใหม่เพื่อตั้งภาษาใหม่ คุณต้องการจะเริ่มแอปใหม่ตอนนี้หรือไม่?</translation>
+        <translation>Pour appliquer la nouvelle langue, vous devez redémarrer l’application. Voulez-vous la démarrer maintenant?</translation>
     </message>
     <message>
         <source>Monochrome</source>
-        <translation>สีเดียว</translation>
+        <translation>Monochrome</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>การตั้งค่าพื้นฐาน</translation>
+        <translation>Paramètres de base</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation>เริ่มต้น</translation>
+        <translation>Démarrage</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>เริ่ม KeePassXC เพียงตัวเดียวเท่านั้น</translation>
+        <translation>Ne démarrer qu’une seule instance de KeePassXC</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation>ย่อหน้าต่างเล็กสุดตอนเริ่มแอป</translation>
+        <translation>Réduire la fenêtre lors du démarrage de l’application</translation>
     </message>
     <message>
         <source>File Management</source>
-        <translation>การจัดการแฟ้ม</translation>
+        <translation>Gestion des fichiers</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>สำรองแฟ้มฐานข้อมูลก่อนการบันทึก</translation>
+        <translation>Sauvegarder le fichier de la base de données avant d’enregistrer</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>บันทึกอัตโนมัติทุกครั้งที่มีการเปลี่ยนแปลง</translation>
+        <translation>Enregistrer automatiquement après chaque changement</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>โหลดฐานข้อมูลใหม่โดยอัตโนมัติเมื่อมีการเปลี่ยนแปลงจากภายนอก</translation>
+        <translation>Recharger automatiquement la base de données quand elle est modifiée de l’extérieur</translation>
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>การจัดการรายการ</translation>
+        <translation>Gestion des entrées</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>ใช้ไอคอนกลุ่มบนการสร้างรายการ</translation>
+        <translation>Utiliser l’icône de groupe lors de la création d’une entrée</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation>ย่อเล็กแทนการปิดแอป</translation>
+        <translation>Réduire au lieu de fermer l’appli</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>แสดงไอคอนของซิสเต็มเทรย์</translation>
+        <translation>Afficher une icône dans la zone de notification</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>ซ่อนหน้าต่างในซิสเต็มเทรย์เมื่อถูกย่อ</translation>
+        <translation>Cacher la fenêtre dans la zone de notification une fois minimisée</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
+        <translation>Saisie automatique</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>ใช้หัวเรื่องรายการเพื่อจับคู่หน้าต่างกับ Auto-Type สากล</translation>
+        <translation>Utiliser le titre de l’entrée dans la correspondance des fenêtres pour la saisie automatique globale.</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>ใช้ URL ของรายการในการจับคู่หน้าต่างกับ Auto-Type สากล</translation>
+        <translation>Utiliser l’URL de l’entrée dans la correspondance des fenêtres pour la saisie automatique globale.</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>ถามก่อนเสมอเมื่อจะทำการ Auto-Type</translation>
+        <translation>Toujours demander avant de saisir automatiquement</translation>
     </message>
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>มิลลิวินาที</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation>แถบเครื่องมือที่เคลื่อนย้ายได้</translation>
+        <translation>Barre d’outils mobile</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation>จำฐานข้อมูลที่เคยใช้คราวก่อน ๆ</translation>
+        <translation>Mémoriser les bases de données utilisées précédemment</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation>แสดงฐานข้อมูลที่เคยเปิดใช้ในตอนเริ่มโปรแกรม</translation>
+        <translation>Lors du démarrage, charger les bases de données ouvertes précédemment</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>จำแฟ้มกุญแจและดองเกิลความปลอดภัยที่ใช้กับฐานข้อมูล</translation>
+        <translation>Mémoriser les fichiers clés de base de données et les clés électroniques de sécurité</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation>ตรวจหาการปรับรุ่นสัปดาห์ละครั้งขณะเปิดแอป</translation>
+        <translation>Vérifier une fois par semaine la présence de mises à jour au démarrage de l’application</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation>ให้ตรวจหารุ่นทดสอบเบตาด้วย ขณะตรวจหาการปรับรุ่น</translation>
+        <translation>Inclure les versions bêta lors de la vérification de la présence de mises à jour</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation>ภาษา:</translation>
+        <translation>Langue :</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation>(เริ่มโปรแกรมใหม่เพื่อเปิดใช้งาน)</translation>
+        <translation>(relancer le programme pour activer)</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>ย่อหน้าต่างเล็กสุดหลังปลดล็อกฐานข้อมูล</translation>
+        <translation>Réduire la fenêtre après déverrouillage de la base de données</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation>ย่อเล็กเมื่อเปิด URL</translation>
+        <translation>Réduire lors de l’ouverture d’une URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>ซ่อนหน้าต่างเมื่อคัดลอกไปคลิปบอร์ด</translation>
+        <translation>Cacher la fenêtre lors de la copie dans le presse-papiers</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation>ย่อเล็ก</translation>
+        <translation>Réduire</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation>หลบเข้าฉากหลัง</translation>
+        <translation>Passer en arrière-plan</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>ระยะหมดเวลาดาวน์โหลด favicon:</translation>
+        <translation>Temps imparti au téléchargement de la favoricône :</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>จำนวนวินาทีที่จะพยายามดาวน์โหลดไอคอนของเว็บไซต์</translation>
+        <translation>Temps imparti au chargement de l’icône du site Web en secondes</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>วิ</translation>
+        <translation> s</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>รูปแบบปุ่มบนแถบเครื่องมือ</translation>
+        <translation>Style des boutons de la barre d’outils</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation>เลือกภาษา</translation>
+        <translation>Sélection de la langue</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>ปุ่มลัดพิมพ์อัตโนมัติในทุกโปรแกรม</translation>
+        <translation>Raccourci global de saisie automatique</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>หน่วงเวลาพิมพ์อัตโนมัติแต่ละตัวอักษร หน่วยเป็นมิลลิวินาที</translation>
+        <translation>Délai de frappe des caractères, en millisecondes, de la saisie automatique</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>หน่วงเวลาเริ่มพิมพ์อัตโนมัติ หน่วยเป็นมิลลิวินาที</translation>
+        <translation>Délai de démarrage, en millisecondes, de la saisie automatique</translation>
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>เรียกใช้ KeePassXC โดยอัตโนมัติเมื่อเริ่มระบบ</translation>
+        <translation>Lancer automatiquement KeepassXC au démarrage du système.</translation>
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
-        <translation type="unfinished"/>
+        <translation>Enregistrer les fichiers de base de données de façon sécurisée (désactiver en cas de problèmes avec Dropbox, etc.)</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>ส่วนติดต่อผู้ใช้</translation>
+        <translation>Interface utilisateur</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation>รูปแบบปุ่มบนแถบเครื่องมือ:</translation>
+        <translation>Style des boutons de la barre d’outils :</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>ใช้ฟอนต์ความกว้างคงที่สำหรับบันทึก</translation>
+        <translation>Utiliser une police à espacement constant pour les notes</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>ชนิดไอคอนที่ถาด:</translation>
+        <translation>Type d’icône de la zone de notification :</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>ล้างการตั้งค่ากลับไปที่ค่าปริยาย...</translation>
+        <translation>Réinitialiser les paramètres à leur valeur par défaut…</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>หน่วงเวลาการพิมพ์ออโต้:</translation>
+        <translation>Délai de saisie de la saisie automatique :</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation type="unfinished"/>
+        <translation>Raccourci global de la saisie automatique :</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation>การหน่วงก่อนเริ่มพิมพ์ออโต้:</translation>
+        <translation>Délai de démarrage de la saisie automatique :</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>บันทึกอัตโนมัติเมื่อล็อกฐานข้อมูล</translation>
+        <translation>Enregistrer automatiquement en verrouillant la base de données</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Enregistrer automatiquement les changements qui ne sont pas relatifs aux données en verrouillant la base de données</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation>ชนิดไอคอนที่ถาด</translation>
+        <translation>Type d’icône de la zone de notification</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>หมดเวลา</translation>
+        <translation>Délais d’attente</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>ล้างคลิปบอร์ดหลัง</translation>
+        <translation>Effacer le presse-papiers après</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>วินาที</translation>
+        <translation> s</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>ล็อคฐานข้อมูลหลังไม่มีการใช้งาน</translation>
+        <translation>Verrouiller les bases de données après une inactivité de</translation>
     </message>
     <message>
         <source> min</source>
-        <translation>นาที</translation>
+        <translation> min</translation>
     </message>
     <message>
         <source>Forget TouchID after inactivity of</source>
-        <translation>ไม่จำ TouchID หลังไม่มีการใช้งาน</translation>
+        <translation>Oublier le TouchID après une inactivité de</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation>ความสะดวก</translation>
+        <translation>Commodité</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>ล็อคฐานข้อมูลเมื่อเซสชันถูกล็อคหรือฝาถูกปิด</translation>
+        <translation>Verrouiller les bases de données quand la session est verrouillée ou l’écran rabattu</translation>
     </message>
     <message>
         <source>Forget TouchID when session is locked or lid is closed</source>
-        <translation>ไม่จำ TouchID เมื่อเซสชันถูกล็อคหรือฝาถูกปิด</translation>
+        <translation>Oublier le TouchID quand la session est verrouillée ou le couvercle fermé</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>ล็อคฐานข้อมูลหลังย่อหน้าต่างลง</translation>
+        <translation>Verrouiller les bases de données après avoir réduit la fenêtre</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>ล็อคฐานข้อมูลก่อนหน้าอีกครั้งหลังทำการ Auto-Type</translation>
+        <translation>Après avoir effectué la saisie automatique, reverrouiller la base de données qui était verrouillée précédemment</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation>ซ่อนรหัสผ่านในแผงแสดงตัวอย่างรายการ</translation>
+        <translation>Cacher les mots de passe dans le panneau de prévisualisation des entrées</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>ซ่อนบันทึกรายการเป็นค่าตั้งต้น</translation>
+        <translation>Par défaut, cacher les notes des entrées </translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation>ความเป็นส่วนตัว</translation>
+        <translation>Confidentialité</translation>
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation>ใช้บริการของ DuckDuckGo เพื่อดาวน์โหลดไอคอนของเว็บไซต์</translation>
+        <translation>Utiliser le service DuckDuckGo pour télécharger les icônes de sites Web</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation>ล้างคลิปบอร์ดภายใน หน่วยเป็นวินาที</translation>
+        <translation>Effacement du presse-papiers en secondes</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
-        <translation type="unfinished"/>
+        <translation>Réinitialisation de TouchID après inactivité</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation type="unfinished"/>
+        <translation>Délai, en secondes, avant verrouillage de la base de données</translation>
     </message>
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation>นาที</translation>
+        <translation> min</translation>
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>ล้างคำค้นหลังจาก</translation>
+        <translation>Effacer la requête de recherche après</translation>
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
-        <translation type="unfinished"/>
+        <translation>Exiger de répéter le mot de passe s’il est visible</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation>ซ่อนรหัสผ่านขณะที่แก้ไข</translation>
+        <translation>Cacher les mots de passe lors de leur modification</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser un espace réservé pour les champs de mots de passe vides</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>ไม่พบรายการที่ตรงกับหัวเรื่องเว็บไซต์</translation>
+        <translation>Impossible de trouver une entrée qui corresponde au titre de la fenêtre :</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Type - KeePassXC</translation>
+        <translation>Saisie automatique – KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
+        <translation>Saisie automatique</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>ไวยากรณ์ของคำสั่ง Auto-Type ไม่ถูกต้อง</translation>
+        <translation>La syntaxe de votre instruction de saisie automatique est incorrecte.</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>คำสั่ง Auto-Type นี้ล่าช้า ต้องการดำเนินการต่อหรือไม่</translation>
+        <translation>Cette commande de saisie automatique comprend un délai très long. Voulez-vous vraiment continuer?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>คำสั่ง Auto-Type นี้กดแป้นพิมพ์ช้า ต้องการดำเนินการต่อหรือไม่</translation>
+        <translation>Cette commande de saisie automatique comprend une frappe de touches très lente. Voulez-vous vraiment continuer?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>คำสั่ง Auto-Type นี้มีอาร์กิวเมนต์ซ้ำกันหลายครั้ง ต้องการดำเนินการต่อหรือไม่</translation>
+        <translation>Cette commande de saisie automatique comprend des arguments répétés très souvent. Voulez-vous vraiment continuer?</translation>
     </message>
     <message>
         <source>Permission Required</source>
-        <translation>ต้องการการอนุญาต</translation>
+        <translation>Une autorisation est requise</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC requiert l’autorisation Accessibilité pour la saisie automatique des entrées. SI vous avez déjà accordé l’autorisation, il vous faudra peut-être redémarrer KeePassXC.</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>หน้าต่าง</translation>
+        <translation>Fenêtre</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>ลำดับ</translation>
+        <translation>Séquence</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>ลำดับมาตรฐาน</translation>
+        <translation>Séquence par défaut</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
     <message>
         <source>Group</source>
-        <translation>กลุ่ม</translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>ชื่อผู้ใช้</translation>
+        <translation>Nom d’utilisateur</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>ลำดับ</translation>
+        <translation>Séquence</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeMatchView</name>
     <message>
         <source>Copy &amp;username</source>
-        <translation>คัดลอกชื่อผู้ใช้ (&amp;U)</translation>
+        <translation>Copier le nom d’&amp;utilisateur</translation>
     </message>
     <message>
         <source>Copy &amp;password</source>
-        <translation>คัดลอกรหัสผ่าน</translation>
+        <translation>Copier le mot de &amp;passe</translation>
     </message>
 </context>
 <context>
     <name>AutoTypePlatformMac</name>
     <message>
         <source>Permission Required</source>
-        <translation>ต้องการการอนุญาต</translation>
+        <translation>Une autorisation est requise</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC a besoin de la permission Accessibilité et Enregistreur d’écran pour la saisie automatique globale. L’enregistrement de l’écran est nécessaire afin d’utiliser le titre des fenêtres pour trouver des entrées. Si vous avez déjà accordé l’autorisation, il vous faudra peut-être redémarrer KeePassXC.</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Type - KeePassXC</translation>
+        <translation>Saisie automatique – KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>เลือกรายการเพื่อ Auto-Type</translation>
+        <translation>Sélectionner une entrée à saisir automatiquement :</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation>ค้นหา...</translation>
+        <translation>Recherche…</translation>
     </message>
 </context>
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>KeePassXC - คำขอเข้าถึงเบราว์เซอร์</translation>
+        <translation>KeePassXC – Demande d’accès au navigateur</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
-        <translation>%1 ร้องขอการเข้าถึงรายการดังต่อไปนี้:</translation>
+        <translation>%1 demande l’accès aux entrées suivantes :</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
-        <translation>จำการเข้าถึงสำหรับรายการที่เลือก</translation>
+        <translation>Mémoriser l’accès aux entrées sélectionnées</translation>
     </message>
     <message>
         <source>Remember</source>
-        <translation>จำ</translation>
+        <translation>Mémoriser</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation>อนุญาตให้เข้าถึงรายการ</translation>
+        <translation>Permettre l’accès aux entrées</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>อนุญาตสำหรับที่เลือก</translation>
+        <translation>Permettre les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>ปฏิเสธทั้งหมด</translation>
+        <translation>Tout refuser</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>ปิดใช้สำหรับไซต์เหล่านี้</translation>
+        <translation>Désactiver pour ce site</translation>
     </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>KeePassXC-Browser Save Entry</source>
-        <translation>เบราว์เซอร์ KeePassXC บันทึกข้อมูล</translation>
+        <translation>KeePassXC-Browser Enregistrer l’entrée</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>โอเค</translation>
+        <translation>Valider</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ยกเลิก</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation>คุณเปิดหลายฐานข้อมูล กรุณาเลือกฐานข้อมูลที่ถูกต้องเพื่อบันทึกข้อมูลของคุณ</translation>
+        <translation>Plusieurs bases de données sont ouvertes.
+Veuillez sélectionner la base de données souhaitée pour enregistrer les identifiants.</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC คำขอกุญแจที่เชื่อมโยงใหม่</translation>
+        <translation>KeePassXC : Nouvelle demande d’association de clé</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation>บันทึกและอนุญาตให้เข้าถึง</translation>
+        <translation>Enregistrer et permettre l’accès</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC เขียนทับกุญแจที่มีอยู่เดิม</translation>
+        <translation>KeePassXC : Remplacer la clé existante?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>กุญแจถอดรหัสลับที่ถูกแบ่งปันด้วยชื่อ &quot;%1&quot; มีอยู่ก่อนแล้ว
-คุณต้องการเขียนทับมันหรือไม่?</translation>
+        <translation>Une clé de chiffrement partagée nommée « %1 » existe déjà.
+Voulez-vous la remplacer?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC ปรับปรุงรายการ</translation>
+        <translation>KeePassXC : Mettre l’entrée à jour</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>คุณต้องการปรับปรุงข้อมูลใน %1 - %2 หรือไม่?</translation>
+        <translation>Voulez-vous mettre à jour les renseignements dans %1 - %2 ?</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>หยุด</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source>Converting attributes to custom data…</source>
-        <translation>กำลังแปลงคุณสมบัติต่างๆเป็นข้อมูลที่กำหนดเอง ...</translation>
+        <translation>Conversion des attributs en données personnalisées…</translation>
     </message>
     <message>
         <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC: แปลงคุณลักษณะของ KeePassHTTP </translation>
+        <translation>KeePassXC : Attributs KeePassHTTP convertis</translation>
     </message>
     <message>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
-        <translation>แปลงคุณสมบัติจาก %1 รายการสำเร็จ
-ย้ายกุญแจ %2 ดอกไปยังข้อมูลที่กำหนดเอง</translation>
+        <translation>Les attributs de %1 entrée(s) ont été convertis avec succès.
+%2 clés ont été déplacées vers les données personnalisées.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>ย้ายกุญแจ %n ไปยังข้อมูลที่กำหนดเองได้สำเร็จ</numerusform></translation>
+        <translation><numerusform>%n clé a été déplacée avec succès vers les données personnalisées.</numerusform><numerusform>%n clés ont été déplacées avec succès vers les données personnalisées.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC ไม่พบรายการที่มีคุณสมบัติ KeePassHTTP</translation>
+        <translation>KeePassXC : Aucune entrée avec des attributs KeePassHTTP n’a été trouvée</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>ฐานข้อมูลที่ยังใช้งานอยู่ไม่มีรายการตามคุณสมบัติ KeePassHTTP.</translation>
+        <translation>La base de données active ne comprend aucune entrée avec des attributs KeePassHTTP.</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC ตรวจพบการตั้งค่าการรวมเบราว์เซอร์ดั้งเดิม</translation>
+        <translation>KeePassXC : Des paramètres hérités d’intégration aux navigateurs ont été détectés</translation>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC สร้างกลุ่มใหม่</translation>
+        <translation>KeePassXC : Créer un nouveau groupe</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation>ได้รับคำขอให้สร้างกลุ่มใหม่ &quot;%1&quot;
-คุณต้องการสร้างกลุ่มนี้หรือไม่?
+        <translation>Une demande de création d’un nouveau groupe « %1 » a été reçue.
+Voulez-vous créer ce groupe ?
 </translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation>การตั้งค่าเบราว์เซอร์ KeePassXC ของคุณต้องถูกย้ายไปสู่การตั้งค่าฐานข้อมูล นี่จำเป็นต่อการรักษาการเชื่อมต่อเบราว์เซอร์ปัจจุบันของคุณ คุณต้องการย้ายการตั้งค่าที่มีอยู่แล้วตอนนี้หรือไม่</translation>
+        <translation>Vos paramètres KeePassXC-Browser doivent être intégrés aux paramètres de la base de données.
+Cela est nécessaire pour conserver les connexions actuelles de votre navigateur.
+Voulez-vous migrer vos paramètres maintenant ?</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>ไม่ต้องแสดงคำเตือนนี้อีก</translation>
+        <translation>Ne plus afficher cet avertissement</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -709,9 +712,10 @@ Would you like to migrate your existing settings now?</source>
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation>คุณได้รับคำขอให้เชื่อมโยงสำหรับฐานข้อมูลนี้:
+        <translation>Vous avez reçu une demande d’association pour la base de données suivante :
 %1
-ใส่ชื่อหรือหมายเลขการเชื่อมต่อที่ไม่ซ้ำ เช่น:
+
+Attribuez à cette connexion un nom ou un ID unique, par exemple :
 chrome-laptop</translation>
     </message>
 </context>
@@ -719,27 +723,27 @@ chrome-laptop</translation>
     <name>BrowserSettingsWidget</name>
     <message>
         <source>Dialog</source>
-        <translation>หน้าต่าง</translation>
+        <translation>Boîte de dialogue</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>สิ่งนี้จำเป็นเพื่อการเข้าถึงฐานข้อมูลผ่านเบราว์เซอร์ KeePassXC</translation>
+        <translation>Requis pour accéder à vos bases de données avec KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation>เปิดใช้การผสานกับเว็บเบราว์เซอร์</translation>
+        <translation>Activer l’intégration aux navigateurs</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>ทั่วไป</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation>ยังไม่รองรับเบราว์เซอร์ที่ถูกติดตั้งจาก Snap</translation>
+        <translation>Les navigateurs installés en tant que snap ne sont pas pris en charge actuellement.</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>เปิดการใช้เบราว์เซอร์เหล่านี้ร่วมกับ</translation>
+        <translation>Activer l’intégration pour ces navigateurs :</translation>
     </message>
     <message>
         <source>Vivaldi</source>
@@ -755,7 +759,7 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>Tor Browser</source>
-        <translation>Tor Browser</translation>
+        <translation>Navigateur Tor</translation>
     </message>
     <message>
         <source>Brave</source>
@@ -763,7 +767,7 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>Google Chrome</source>
-        <translation>Google Chrome</translation>
+        <translation>Google Chrome</translation>
     </message>
     <message>
         <source>Chromium</source>
@@ -772,323 +776,323 @@ chrome-laptop</translation>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Afficher une notification quand les identifiants sont demandés</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation type="unfinished"/>
+        <translation>Demander de déverrouiller la base de données si elle est verrouillée</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>ข้อมูลรูปแบบเดียวกันเท่านั้น (http://, https://, ...) จะถูกส่งคืน</translation>
+        <translation>Seules les entrées de même format (http://, https://,…) sont retournées.</translation>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://...)</source>
-        <translation>แบบแผน URL ตรงกัน (เช่น https://...)</translation>
+        <translation>Adapter au format de l’URL (p. ex. : https://….) </translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>ส่งคืนรายการเฉพาะที่ตรงกับ URL มากที่สุด แทนที่จะส่งคืนรายการทั้งหมดของทั้งโดเมน</translation>
+        <translation>Ne renvoie que les meilleures correspondances pour une URL précise au lieu de toutes les entrées du domaine entier.</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>Retourner que les identifiants qui correspondent le mieux</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation type="unfinished"/>
+        <translation>Retourne les identifiants expirés. La chaîne [expiré] est ajoutée au titre.</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation type="unfinished"/>
+        <translation>Permettre de retourner des identifiants expirés</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation type="unfinished"/>
+        <translation>Toutes les bases de données connectées à l’extension retourneront les identifiants correspondants.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Chercher les identifiants correspondants dans toutes les bases de données ouvertes</translation>
     </message>
     <message>
         <source>Sort matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Trier les identifiants correspondants par titre</translation>
     </message>
     <message>
         <source>Sort matching credentials by username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Trier les identifiants correspondants par nom d’utilisateur</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>ขั้นสูง</translation>
+        <translation>Avancé</translation>
     </message>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ne jamais demander avant d’accéder aux identifiants</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ne jamais demander avant de mettre les identifiants à jour</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ne pas demander d’autorisation pour l’authentification HTTP Basic</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>ไม่รองรับการสร้างหรือปรับปรุงช่องข้อมูลสตริงโดยอัตโนมัติ</translation>
+        <translation>Ni la création ni la mise à jour automatique des champs de chaîne ne sont prises en charge.</translation>
     </message>
     <message>
         <source>Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>Retourner les champs de chaîne avancés qui commencent par « KPH:  »</translation>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation type="unfinished"/>
+        <translation>Ne pas afficher la fenêtre de suggestion de migration des paramètres de KeePassHTTP hérités.</translation>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
-        <translation type="unfinished"/>
+        <translation>Ne pas proposer la migration des paramètres de KeePassHTTP.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>ปรับปรุงข้อมูล KeePassXC หรือเส้นทางของไบนารี keepassxc-proxy โดยอัตโนมัติไปยังการส่งข้อความฉบับดั้งเดิมเมื่อเริ่มต้น</translation>
+        <translation>Met automatiquement à jour le chemin des exécutables KeePassXC ou keepassxc-proxy vers les scripts de messagerie native lors du démarrage.</translation>
     </message>
     <message>
         <source>Update native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>Mettre les fichiers manifeste de la messagerie native à jour au lancement</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>ใช้พร็อกซีแบบกำหนดเอง ในกรณีที่คุณติดตั้งพร็อกซีด้วยตนเอง</translation>
+        <translation>Utiliser un emplacement de mandataire personnalisé si vous avez installé un mandataire manuellement.</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation type="unfinished"/>
+        <translation>Utiliser un emplacement de mandataire personnalisé :</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation type="unfinished"/>
+        <translation>Champ d’emplacement de mandataire personnalisé</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation>เรียกดูแฟ้มพร็อกซีที่กำหนดเอง</translation>
+        <translation>Sélectionner un fichier de mandataire personnalisé</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>เรียกดู...</translation>
+        <translation>Parcourir…</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
-        <translation>ใช้ที่ตั้งการปรับแต่งเบราว์เซอร์ที่กำหนดเอง:</translation>
+        <translation>Utiliser un emplacement de navigateur personnalisé :</translation>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation>ชนิดเบราว์เซอร์:</translation>
+        <translation>Type de navigateur :</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>รูปแบบปุ่มบนแถบเครื่องมือ</translation>
+        <translation>Style des boutons de la barre d’outils</translation>
     </message>
     <message>
         <source>Config Location:</source>
-        <translation>ที่ตั้งการตั้งค่า:</translation>
+        <translation>Emplacement de configuration :</translation>
     </message>
     <message>
         <source>Custom browser location field</source>
-        <translation type="unfinished"/>
+        <translation>Champ d’emplacement de navigateur personnalisé</translation>
     </message>
     <message>
         <source>~/.custom/config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
+        <translation>~/.custom/config/Mozilla/native-messaging-hosts/</translation>
     </message>
     <message>
         <source>Browse for custom browser path</source>
-        <translation>เบราว์เซอร์จากพาธที่ตั้งเบราว์เซอร์ที่ระบุเอง</translation>
+        <translation>Sélectionner un chemin personnalisé de navigateur</translation>
     </message>
     <message>
         <source>Custom extension ID:</source>
-        <translation type="unfinished"/>
+        <translation>ID d’extension personnalisé :</translation>
     </message>
     <message>
         <source>Custom extension ID</source>
-        <translation type="unfinished"/>
+        <translation>ID d’extension personnalisé</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>เนื่องจาก Snap sandbox คุณต้องเรียกใช้สคริปต์เพื่อเปิดใช้งานการรวมเบราว์เซอร์ &lt;br /&gt; คุณสามารถรับสคริปต์นี้จาก %1</translation>
+        <translation>En raison du bac à sable de Snap, vous devez exécuter un script afin d’activer l’intégration aux navigateurs.&lt;br /&gt;Vous pouvez obtenir ce script sur %1</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>จำเป็นต้องมีโปรแกรม KeePassXC-Browser เพื่อให้การผสานกับเบราว์เซอร์ทำงานได้ &lt;br /&gt;ดาวน์โหลดมันสำหรับ %1 และ %2 และ %3 %4</translation>
+        <translation>KeePassXC-Browser est nécessaire pour que l’intégration aux navigateurs fonctionne. &lt;br /&gt;Téléchargez-la pour %1, %2 et %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation>โปรดดูคำแนะนำพิเศษสำหรับการใช้งานส่วนขยายเบราว์เซอร์ด้านล่าง</translation>
+        <translation>Veuillez consulter ci-dessous les instructions spéciales de l’extension pour navigateurs</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Erreur :&lt;/b&gt; L’emplacement de mandataire personnalisé est introuvable. &lt;br/&gt;L’intégration aux navigateurs NE FONCTIONNERA PAS sans l’application mandataire.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt; คำเตือน &lt;/b&gt; ตัวเลือกต่อไปนี้อาจจะอันตราย</translation>
+        <translation>&lt;b&gt;Avertissement:&lt;/b&gt; Les options suivantes peuvent être dangereuses</translation>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation>แฟ้มปฏิบัติการ</translation>
+        <translation>Fichiers exécutables</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation>แฟ้มทั้งหมด</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>เลือกที่ตั้งพร็อกซีที่กำหนดเอง</translation>
+        <translation>Sélectionner un emplacement de mandataire personnalisé</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
-        <translation type="unfinished"/>
+        <translation>Sélectionner l’emplacement du dossier de l’hôte de messagerie native</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Options</source>
-        <translation>ตัวเลือกการโคลน</translation>
+        <translation>Options de clonage</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>เติม &apos;- Clone&apos; ต่อท้ายชื่อ</translation>
+        <translation>Ajouter ’ – Clone’ au titre</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>แทนที่ชื่อผู้ใช้และรหัสผ่านด้วยข้อมูลอ้างอิง</translation>
+        <translation>Remplacer le nom d’utilisateur et le mot de passe par des références</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>ทำสำเนาประวัติ</translation>
+        <translation>Copier l’historique</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation>นำเข้าฟิลด์ CSV</translation>
+        <translation>Importer les champs CSV</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation>ชื่อแฟ้ม</translation>
+        <translation>nom de fichier</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation>ขนาด, แถว, หลัก</translation>
+        <translation>taille, lignes, colonnes</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation>การเข้ารหัส</translation>
+        <translation>Encodage</translation>
     </message>
     <message>
         <source>Codec</source>
-        <translation>ตัวเข้ารหัส</translation>
+        <translation>Codec</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>ข้อความถูกกำกับด้วย</translation>
+        <translation>Le texte est qualifié par</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation>ฟิลด์ถูกแบ่งด้วย</translation>
+        <translation>Les champs sont séparés par</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>บันทึกความเห็นเริ่มต้นด้วย</translation>
+        <translation>Les commentaires commencent par</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>ให้นับ &apos;\&apos; เป็น escape character</translation>
+        <translation>Considérer « \ » en tant que caractère d’échappement</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>ดูตัวอย่าง</translation>
+        <translation>Aperçu</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation>นำเข้าจากแฟ้ม CSV แล้ว</translation>
+        <translation>Importé d’un fichier CSV</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>ข้อมูลต้นฉบับ</translation>
+        <translation>Données originales :</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>ผิดพลาด</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
-        <translation>พบข้อผิดพลาดในแฟ้ม CSV</translation>
+        <translation>Des erreurs ont été détectées dans le fichier CSV</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[อีก %n ข้อความถูกข้าม]</numerusform></translation>
+        <translation><numerusform>[%n autre message a été ignoré]</numerusform><numerusform>[%n autres messages ont été ignorés]</numerusform></translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
 %1</source>
-        <translation>นำเข้า CSV: ตัวเขียนมีข้อผิดพลาด:
+        <translation>Importation CSV : le scripteur comporte des erreurs :
 %1</translation>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation>ตัวกำกับข้อความ</translation>
+        <translation>Qualification du texte</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation>ตัวแบ่งช่องข้อมูล</translation>
+        <translation>Séparation des champs</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation>จำนวนบรรทัดส่วนหัวที่จะไม่สนใจ</translation>
+        <translation>Nombre de lignes d’en-tête à ignorer</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation>ดูตัวอย่างการนำเข้า CSV</translation>
+        <translation>Aperçu de l’importation d’un fichier CSV</translation>
     </message>
     <message>
         <source>Column Association</source>
-        <translation type="unfinished"/>
+        <translation>Associations de colonnes</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>แก้ไขล่าสุด</translation>
+        <translation>Dernière modification</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>ถูกสร้าง</translation>
+        <translation>Créée</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>บันทึก</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>กลุ่ม</translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1096,23 +1100,23 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>ชื่อผู้ใช้</translation>
+        <translation>Nom d’utilisateur</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation>บรรทัดส่วนหัวที่ข้าม</translation>
+        <translation>Les lignes d’en-tête ont été ignorées</translation>
     </message>
     <message>
         <source>First line has field names</source>
-        <translation>บรรทัดแรกมีชื่อช่องข้อมูล</translation>
+        <translation>La première ligne comporte des noms de champs</translation>
     </message>
     <message>
         <source>Not Present</source>
-        <translation>ไม่ปรากฏ</translation>
+        <translation>Les données ne s’y trouvent pas</translation>
     </message>
     <message>
         <source>Column %1</source>
-        <translation>คอลัมน์ %1</translation>
+        <translation>Colonne %1</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -1120,503 +1124,509 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>ไอคอน</translation>
+        <translation>Icône</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n คอลัมน์</numerusform></translation>
+        <translation><numerusform>%n colonne</numerusform><numerusform>%n colonnes</numerusform></translation>
     </message>
     <message>
         <source>%1, %2, %3</source>
         <comment>file info: bytes, rows, columns</comment>
-        <translation>%1 %2 %3</translation>
+        <translation>%1, %2, %3</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n ไบท์</numerusform></translation>
+        <translation><numerusform>%n octet</numerusform><numerusform>%n octets</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation><numerusform>%n แถว</numerusform></translation>
+        <translation><numerusform>%n ligne</numerusform><numerusform>%n lignes</numerusform></translation>
     </message>
 </context>
 <context>
     <name>Database</name>
     <message>
         <source>File %1 does not exist.</source>
-        <translation>ไม่มีแฟ้ม %1 </translation>
+        <translation>Le fichier %1 n’existe pas.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>ไม่สามารถเปิดแฟ้ม %1</translation>
+        <translation>Impossible d’ouvrir le fichier %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation>เกิดข้อผิดพลาดระหว่างอ่านฐานข้อมูล: %1</translation>
+        <translation>Erreur de lecture de la base de données : %1</translation>
     </message>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
-        <translation>ไม่สามารถเขียนแฟ้มได้ เนื่องจากถูกเปิดอยู่ในโหมดอ่านอย่างเดียว</translation>
+        <translation>Impossible d’écrire dans le fichier, car il est ouvert en lecture seulement.</translation>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation>กุญแจไม่ถูกเปลี่ยนแปลง นี่คือจุดบกพร่อง กรุณารายงานไปที่นักพัฒนา</translation>
+        <translation>La clé n’a pas été transformée, ce qui est un bogue. Veuillez le signaler aux développeurs.</translation>
     </message>
     <message>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
-พบฐานข้อมูลสำรองที่ %2</translation>
+La base de données de sauvegarde est située sur %2</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation>ไม่สามารถบันทึกได้ ฐานข้อมูลไม่ได้ถูกชี้ไปยังแฟ้มที่ใช้งานได้</translation>
+        <translation>Impossible d’enregistrer, car la base de données n’est pas dirigée vers un fichier valide.</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation>ไม่สามารถบันทึกได้ แฟ้มฐานข้อมูลเป็นแบบอ่านอย่างเดียว</translation>
+        <translation>Impossible d’enregistrer, car le fichier de la base de données est en lecture seule.</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation>แฟ้มฐานข้อมูลมีความเปลี่ยนแปลงที่ยังไม่ถูกผสาน</translation>
+        <translation>Le fichier de la base de données comporte des changements non fusionnés.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
-        <translation>ถังขยะ</translation>
+        <translation>Corbeille</translation>
     </message>
     <message>
         <source>Passwords</source>
         <comment>Root group name</comment>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mots de passe</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation>การบันทึกฐานข้อมูลกำลังอยู่ระหว่างดำเนินการ</translation>
+        <translation>La base de données est déjà en cours d’enregistrement.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d’enregistrer, la base de données n’a pas été initialisée</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>ปลดล็อกฐานข้อมูล - KeePassXC</translation>
+        <translation>Déverrouiller la base de données – KeePassXC</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Key File:</source>
-        <translation>แฟ้มกุญแจ:</translation>
+        <translation>Fichier clé :</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>รีเฟรช</translation>
+        <translation>Actualiser</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>ไม่ต้องแสดงคำเตือนนี้อีก</translation>
+        <translation>Ne plus afficher cet avertissement</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>ทุกแฟ้ม</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>แฟ้มกุญแจ</translation>
+        <translation>Fichiers clés</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>เลือกแฟ้มกุญแจ</translation>
+        <translation>Sélectionner un fichier clé</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation>ไม่สามารถเปิดแฟ้มกุญแจได้: %1</translation>
+        <translation>Échec d’ouverture du fichier clé : %1</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation>ปลดล็อกฐานข้อมูล KeePassXC</translation>
+        <translation>Déverrouiller la base de données KeePassXC</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation>ใส่รหัสผ่าน:</translation>
+        <translation>Saisissez le mot de passe :</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>ช่องรหัสผ่าน</translation>
+        <translation>Champ de mot de passe</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Sélection de l’emplacement de la clé matérielle</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>เลือกแฟ้มกุญแจ</translation>
+        <translation>Rechercher un fichier clé</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation>เรียกดู...</translation>
+        <translation>Parcourir…</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Actualiser les jetons matériels</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation>กุญแจฮาร์ดแวร์:</translation>
+        <translation>Clé matérielle :</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>Aide sur les clés matérielles</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>TouchID pour un déverrouillage rapide</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation type="unfinished"/>
+        <translation>Échec de déverrouillage et aucun mot de passe n’a été saisi</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation type="unfinished"/>
+        <translation>Le déverrouillage de la base de données a échoué et vous n’avez pas saisi de mot de passe.
+Voulez-vous plutôt réessayer sans mot de passe ?
+
+Afin d’empêcher que cette erreur survienne, vous devez accéder à « Paramètres de la base de données » et réinitialiser votre mot de passe.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation>ลองด้วยรหัสผ่านว่างเปล่า</translation>
+        <translation>Réessayer sans mot de passe</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation type="unfinished"/>
+        <translation>Saisissez des identifiants supplémentaires (si définis) :</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Vous pouvez utiliser une clé de sécurité matérielle telle qu’une &lt;strong&gt;YubiKey&lt;/strong&gt; ou une &lt;strong&gt;OnlyKey&lt;/strong&gt; avec des emplacements configurés pour HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Cliquez pour plus de précisions…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file help</source>
-        <translation>ช่วยเหลือเรื่องแฟ้มกุญแจ</translation>
+        <translation>Aide fichier clé</translation>
     </message>
     <message>
         <source>?</source>
-        <translation>?</translation>
+        <translation> ?</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation>ไม่สามารถใช้แฟ้มฐานข้อมูลเป็นแฟ้มกุญแจได้</translation>
+        <translation>Impossible d’utiliser une base de données comme fichier clé</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation type="unfinished"/>
+        <translation>Vous ne pouvez pas utiliser la base de données actuelle comme fichier clé.
+Si vous n’avez pas de fichier clé, laissez le champ vide.</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;En plus d’un mot de passe, vous pouvez utiliser un fichier secret pour améliorer la sécurité de votre base de données. Ce fichier peut être généré dans les paramètres de sécurité de votre base de données.&lt;/p&gt;&lt;p&gt;Il ne s’agit &lt;strong&gt;pas&lt;/strong&gt; de votre fichier de base de données *.kdbx.&lt;br&gt;Si vous n’avez pas de fichier clé, laissez ce champ vide.&lt;/p&gt;&lt;p&gt;Cliquez pour plus de précisions…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation type="unfinished"/>
+        <translation>Fichier clé pour déverrouiller la base de données</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation>กรุณาแตะปุ่มบน YubiKey ของคุณ!</translation>
+        <translation>Veuillez appuyez sur le bouton de votre YubiKey</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>กำลังตรวจหากุญแจฮาร์ดแวร์...</translation>
+        <translation>Détection des clés matérielles…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>ตรวจไม่พบกุญแจฮาร์ดแวร์</translation>
+        <translation>Aucune clé matérielle n’a été détectée</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>เลือกกุญแจฮาร์ดแวร์...</translation>
+        <translation>Sélectionner une clé matérielle…</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>รูปแบบแฟ้มกุญแจแบบเก่า</translation>
+        <translation>Ancien format de fichier clé</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Vous utilisez un ancien format de fichier clé que KeePassXC pourrait&lt;br&gt;ne plus prendre en charge à l’avenir.&lt;br&gt;&lt;br&gt;Veuillez envisager de générer un nouveau fichier clé en accédant à :&lt;strong&gt;Base de données &gt; Sécurité de la base de données &gt; Changer la clé.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
     <message>
         <source>Passwords</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mots de passe</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation>การตั้งค่าขั้นสูง</translation>
+        <translation>Paramètres avancés</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>ทั่วไป</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>การรักษาความปลอดภัย</translation>
+        <translation>Sécurité</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>การตั้งค่าการเข้ารหัสลับ</translation>
+        <translation>Paramètres de chiffrement</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>การทำงานร่วมกับเบราว์เซอร์</translation>
+        <translation>Intégration aux navigateurs</translation>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Identifiants de la base de données</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
-        <translation>การตั้งค่าของเบราว์เซอร์ KeePassXC</translation>
+        <translation>Paramètres de KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation>กุญแจที่ถูกเก็บไว้</translation>
+        <translation>Clés enregistrées</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ลบ</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation>ลบกุญแจที่เลือกหรือไม่</translation>
+        <translation>Supprimer la clé sélectionnée?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
-        <translation>คุณต้องการจะลบกุญแจที่เลือกหรือไม่
-สิ่งนี้อาจทำให้การเชื่อมต่อกับโปรแกรมเสริมบนเบราว์เซอร์มีปัญหา</translation>
+        <translation>Voulez-vous vraiment supprimer la clé sélectionnée?
+Cela pourrait empêcher la connexion l’extension pour navigateurs.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>กุญแจ</translation>
+        <translation>Clé</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>ค่า</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>เปิดการใช้ Browser Integration เพื่อเข้าถึงการตั้งค่านี้</translation>
+        <translation>Activez l’intégration aux navigateurs pour accéder à ces paramètres.</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation>หยุดการเชื่อมต่อกับทุกเบราว์เซอร์</translation>
+        <translation>Déconnecter tous les navigateurs</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation>คุณต้องการหยุดการเชื่อมต่อกับทุกเบราวเซอร์หรือไม่
-สิ่งนี้อาจทำให้การเชื่อมต่อกับโปรแกรมเสริมบนเบราว์เซอร์มีปัญหา</translation>
+        <translation>Voulez-vous vraiment déconnecter tous les navigateurs?
+Cela pourrait empêcher la connexion avec l’extension pour navigateurs.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: ไม่พบกุญแจ</translation>
+        <translation>KeePassXC : Aucune clé n’a été trouvée</translation>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
-        <translation>ไม่พบการแบ่งปันกุญแจที่ถูกเข้ารหัสลับแล้วในการตั้งค่า KeePassXC</translation>
+        <translation>Aucune clé de chiffrement partagée n’a été trouvée dans les paramètres de KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: กุญแจถูกลบออกจากฐานข้อมูล</translation>
+        <translation>KeePassXC : Les clés ont été supprimées de la base de données</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>ลบ %n กุญแจเข้ารหัสลับจากการตั้งค่า KeePassXC สำเร็จ</numerusform></translation>
+        <translation><numerusform>%n clé de chiffrement a été supprimée avec succès des paramètres de KeePassXC.</numerusform><numerusform>%n clés de chiffrement ont été supprimées avec succès des paramètres de KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation>ไม่จำการตั้งค่าเฉพาะสำหรับทุกไซต์บนรายการ</translation>
+        <translation>Oublier tous les paramètres d’entrée propres aux sites</translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>คุณจะไม่จำการตั้งค่าเฉพาะสำหรับทุกไซต์บนทุกรายการหรือไม่
-การอนุญาตให้เข้าถึงรายการต่างๆ จะถูกยกเลิก</translation>
+        <translation>Voulez-vous vraiment oublier tous les paramètres propres aux sites pour toutes les entrées ? Les autorisations d’accès aux entrées seront révoquées.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>กำลังลบการอนุญาตที่บันทึกออก</translation>
+        <translation>Suppression des autorisations enregistrées…</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation> ยกเลิกการทำงาน</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: การอนุญาตถูกลบออก</translation>
+        <translation>KeePassXC : Les autorisations ont été supprimées</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>ลบการอนุญาตจากรายการ %n</numerusform></translation>
+        <translation><numerusform>Les autorisations d’%n entrée ont été supprimées avec succès.</numerusform><numerusform>Les autorisations de ’%n entrées ont été supprimées avec succès.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: ไม่มีรายการที่ได้รับอนุญาต</translation>
+        <translation>KeePassXC : Aucune entrée avec autorisation n’a été trouvée</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>ฐานข้อมูลที่ปฏิบัติการอยู่ไม่มีรายการที่ได้รับอนุญาต</translation>
+        <translation>La base de données active ne comprend aucune entrée avec des autorisations.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>ย้ายลักษณะ KeePassHTTP ไปยังข้อมูลตามคำสั่ง</translation>
+        <translation>Déplacer les attributs KeePassHTTP vers les données personnalisées</translation>
     </message>
     <message>
         <source>Do you really want to move all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>คุณต้องการที่จะย้ายข้อมูลผสานในเบราว์เซอร์แบบเดิมไปยังมาตรฐานล่าสุดจริงหรือ นี่เป็นสิ่งที่จำเป็นในการรักษาความเข้ากับโปรแกรเสริมของเบราว์เซอร์</translation>
+        <translation>Voulez-vous vraiment convertir toutes les données d’intégration au navigateur héritées à la norme la plus récente ?
+Cela est nécessaire pour assurer la compatibilité avec l’extension pour navigateurs.</translation>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation>กุญแจเบราว์เซอร์ที่ถูกเก็บอยู่</translation>
+        <translation>Clés de navigateurs enregistrées</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation>ลบกุญแจที่เลือก</translation>
+        <translation>Supprimer la clé sélectionnée</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser custom data</source>
-        <translation type="unfinished"/>
+        <translation>Déplacer les attributs KeePassHTTP vers les données personnalisées de KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation type="unfinished"/>
+        <translation>Actualiser l’ID du groupe racine de la base de données</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>ถูกสร้าง</translation>
+        <translation>Créée</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
-        <translation type="unfinished"/>
+        <translation>Actualiser l’ID de la base de données</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous vraiment actualiser l’ID de la base de données?
+Cela n’est nécessaire que si votre base de données est la copie d’une autre et que l’extension pour navigateurs ne peut pas se connecter.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
         <source>Add additional protection...</source>
-        <translation>เพิ่มเติมส่วนป้องกันเพิ่มเติม</translation>
+        <translation>Ajouter une protection supplémentaire…</translation>
     </message>
     <message>
         <source>No password set</source>
-        <translation>ยังไม่ได้ตั้งรหัสผ่าน</translation>
+        <translation>Aucun mot de passe n’a été défini</translation>
     </message>
     <message>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>คำเตือน! คุณยังไม่ได้ตั้งรหัสผ่าน. การใช้ฐานข้อมูลโดยไม่ใช้รหัสผ่านเป็นเรื่องที่ไม่สนับสนุนเป็นอย่างยิ่ง
+        <translation>AVERTISSEMENT : Vous n’avez pas défini de mot de passe. Il est fortement découragé d’utiliser une base de données sans mot de passe.
 
-คุณแน่ใจหรือไม่ที่จะดำเนินการต่อโดยไม่ใช้รหัสผ่าน?</translation>
+Voulez-vous vraiment poursuivre sans mot de passe?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation>ทำต่อโดยไม่มีรหัสผ่าน</translation>
+        <translation>Poursuivre sans mot de passe</translation>
     </message>
     <message>
         <source>No encryption key added</source>
-        <translation>ไม่มีกุญแจถอดรหัสลับที่เพิ่มเข้ามา</translation>
+        <translation>Aucune clé de chiffrement n’a été ajoutée</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>คุณต้องเพิ่มกุญแจเปิดรหัสลับอย่างน้อย  1 อันเพื่อป้องกันฐานข้อมูลของคุณ</translation>
+        <translation>Vous devez ajouter au moins une clé de chiffrement afin de sécuriser votre base de données.</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>ความผิดพลาดที่ไม่อาจระบุได้</translation>
+        <translation>Erreur inconnue</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation type="unfinished"/>
+        <translation>Échec de changement des identifiants de la base de données</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>อัลกอริทึมเข้ารหัสลับ:</translation>
+        <translation>Algorithme de chiffrement :</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES:  256 บิต   (ค่าเริ่มต้น)</translation>
+        <translation>AES : 256 bits (par défaut)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation>Twofish:  256 บิต</translation>
+        <translation>Twofish : 256 bits</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation>อนุพันธ์ของฟังก์ชันหลัก</translation>
+        <translation>Fonction de dérivation de clé :</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>รอบเปลี่ยนรูป</translation>
+        <translation>Cycles de transformation :</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation>การใช้หน่วยความจำ</translation>
+        <translation>Utilisation de la mémoire :</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>การทำงานแบบขนาน</translation>
+        <translation>Parallélisme :</translation>
     </message>
     <message>
         <source>Decryption Time:</source>
-        <translation>เวลาการเข้ารหัสลับ</translation>
+        <translation>Temps de déchiffrement :</translation>
     </message>
     <message>
         <source>?? s</source>
-        <translation>?? วินาที</translation>
+        <translation>?? s</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation>เปลี่ยนแปลง</translation>
+        <translation>Changer</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation>ค่าที่สูงกว่าจะมีการป้องกันมากกว่า แต่จะใช้เวลาในการเปิดฐานข้อมูลนานกว่า</translation>
+        <translation>Les valeurs plus élevées offrent plus de protection, mais l’ouverture de la base de données prendra plus de temps.</translation>
     </message>
     <message>
         <source>Database format:</source>
-        <translation>รูปแบบฐานข้อมูล</translation>
+        <translation>Format de la base de données :</translation>
     </message>
     <message>
         <source>This is only important if you need to use your database with other programs.</source>
-        <translation>ส่วนนี้สำคัญเฉพาะเมื่อคุณต้องการใช้ฐานข้อมูลกับโปรแกรมอื่น</translation>
+        <translation>Ce paramètre n’est important que si vous devez utiliser votre base de données avec d’autres programmes.</translation>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
-        <translation>KDBX 4.0 (แนะนำ)</translation>
+        <translation>KDBX 4.0 (recommandée)</translation>
     </message>
     <message>
         <source>KDBX 3.1</source>
@@ -1625,223 +1635,226 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>unchanged</source>
         <comment>Database decryption time is unchanged</comment>
-        <translation>ไม่เปลี่ยนแปลง</translation>
+        <translation>inchangé</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation>จำนวนรอบยาวเกินไป</translation>
+        <translation>Le nombre de cycles est trop grand</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation>คุณกำลังใช้จำนวนของรอบการแปลงกุญแจกับ Argon2 สูง
-ถ้าคุณใช้จำนวนนี้ ฐานข้อมูลของคุณอาจจะใช้เวลาหลายชั่วโมง หรือหลายวัน (หรือนานกว่านั้น) เพื่อเปิด</translation>
+        <translation>Vous utilisez un très grand nombre de cycles de transformation de clé avec Argon2.
+
+Si vous gardez ce nombre, votre base de données pourrait prendre des heures voire des jours (ou plus) pour s’ouvrir.</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation>เข้าใจแล้ว เก็บตัวเลขไว้</translation>
+        <translation>Compris, garder ce nombre</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ยกเลิก</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation>จำนวนรอบต่ำเกินไป</translation>
+        <translation>Le nombre de cycles est trop petit</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database may be too easy to crack!</source>
-        <translation>คุณกำลังใช้จำนวนของรอบการแปลงกุญแจกับ AES-KDF ต่ำ
-ถ้าคุณใช้จำนวนนี้ ฐานข้อมูลของคุณอาจจะถูกถอดได้อย่างง่าย</translation>
+        <translation>Vous utilisez un très petit nombre de cycles de transformation de clé avec AES-KDF.
+
+Si vous gardez ce nombre, votre base de données pourrait être craquée trop facilement.</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation>KDF ไม่เปลี่ยนแปลง</translation>
+        <translation>La fonction de dérivation de clé est inchangée</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>ล้มเหลวการเปลี่ยนกุญแจกับเครื่องวัด KDF ใหม่ KDF จึงไม่เปลี่นแปลง</translation>
+        <translation>Échec de transformation de la clé avec les nouveaux paramètres de fonction de dérivation de clé ; la fonction de dérivation de clé est inchangée.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform></translation>
+        <translation><numerusform>Mio</numerusform><numerusform>Mio</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>thread(s)</numerusform></translation>
+        <translation><numerusform>fil d’exécution</numerusform><numerusform>fils d’exécution</numerusform></translation>
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation type="unfinished"/>
+        <translation>Changer le temps de déchiffrement existant</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation>เวลาถอดรหัสลับ หน่วยเป็นวินาที</translation>
+        <translation>Temps de déchiffrement en secondes</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation>รูปแบบฐานข้อมูล</translation>
+        <translation>Format de la base de données</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation>อัลกอริทึมการเข้ารหัสลับ</translation>
+        <translation>Algorithme de chiffrement</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation type="unfinished"/>
+        <translation>Fonction de dérivation de clé</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>Cycles de transformation</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation>หน่วยความจำที่ใช้</translation>
+        <translation>Utilisation de la mémoire</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation type="unfinished"/>
+        <translation>Parallélisme</translation>
     </message>
     <message>
         <source>?? ms</source>
-        <translation>?? มิลลิวิ</translation>
+        <translation>?? ms</translation>
     </message>
     <message>
         <source>? s</source>
-        <translation>? วิ</translation>
+        <translation>? s</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation type="unfinished"/>
+        <translation>Entrées visibles</translation>
     </message>
     <message>
         <source>Don&apos;t expose this database</source>
-        <translation type="unfinished"/>
+        <translation>Ne pas rendre cette base de données visible</translation>
     </message>
     <message>
         <source>Expose entries under this group:</source>
-        <translation type="unfinished"/>
+        <translation>Rendre visibles les entrées de ce groupe :</translation>
     </message>
     <message>
         <source>Enable Secret Service to access these settings.</source>
-        <translation type="unfinished"/>
+        <translation>Activer « Secret Service » pour accéder à ces paramètres.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation>เมทาดาทาฐานข้อมูล</translation>
+        <translation>Métadonnées de la base de données</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>ชื่อฐานข้อมูล</translation>
+        <translation>Nom de la base de données :</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>รายละเอียดฐานข้อมูล</translation>
+        <translation>Description de la base de données :</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>ค่าเริ่มต้นของชื่อผู้ใช้</translation>
+        <translation>Nom d’utilisateur par défaut :</translation>
     </message>
     <message>
         <source>History Settings</source>
-        <translation>การตั้งค่าประวัติ</translation>
+        <translation>Paramètres de l’historique</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>จำนวนมากสุดของรายการประวัติ</translation>
+        <translation>Nombre maximal d’éléments d’historique :</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>ขนาดมากสุดของรายการประวัติ</translation>
+        <translation>Taille maximale de l’historique :</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation>MiB</translation>
+        <translation> Mio</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation>ใช้ถังขยะรีไซเคิล</translation>
+        <translation>Utiliser une corbeille</translation>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>การตั้งค่าฐานข้อมูลเพิ่มเติม</translation>
+        <translation>Paramètres supplémentaires de base de données</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>ช่องชื่อฐานข้อมูล</translation>
+        <translation>Champ de nom de la base de données</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>ช่องคำอธิบายฐานข้อมูล</translation>
+        <translation>Champ de description de la base de données</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation>ช่องชื่อผู้ใช้ฐานข้อมูล</translation>
+        <translation>Champ de nom d’utilisateur par défaut</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation type="unfinished"/>
+        <translation>Nombre maximal d’éléments historiques par entrée</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation type="unfinished"/>
+        <translation>Taille maximale de l’historique par entrée</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation>ลบถังขยะ</translation>
+        <translation>Supprimer la corbeille</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous supprimer la corbeille actuelle et tout son contenu?
+Cette action est irréversible.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation> (เก่า)</translation>
+        <translation> (ancien)</translation>
     </message>
     <message>
         <source>Enable compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Activer la compression (recommandé)</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation>แบ่งปัน</translation>
+        <translation>Partage</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation>ชิ้นส่วนย่อย</translation>
+        <translation>Fil d’Ariane</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>ชนิด</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>เส้นทาง</translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation>ผู้ลงชื่อเข้าใช้คนล่าสุด</translation>
+        <translation>Dernier signataire</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation>ใบรับรอง</translation>
+        <translation>Certificats</translation>
     </message>
     <message>
         <source> &gt; </source>
@@ -1853,534 +1866,535 @@ This action is not reversible.</source>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation>ชื่อฐานข้อมูล</translation>
+        <translation>Nom de la base de données :</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>รายละเอียด</translation>
+        <translation>Description :</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>ช่องชื่อฐานข้อมูล</translation>
+        <translation>Champ de nom de la base de données</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>ช่องคำอธิบายฐานข้อมูล</translation>
+        <translation>Champ de description de la base de données</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>ฐานข้อมูล KeePass 2</translation>
+        <translation>Base de données KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>ทุกแฟ้ม</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>เปิดฐานข้อมูล</translation>
+        <translation>Ouvrir la base de données</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>แฟ้ม CSV</translation>
+        <translation>Fichier CSV</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>ผสานฐานข้อมูล</translation>
+        <translation>Fusionner la base de données</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>เปิดฐานข้อมูล KeePass 1</translation>
+        <translation>Ouvrir une base de données KeePass 1</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>ฐานข้อมูล KeePass 1</translation>
+        <translation>Base de données KeePass 1</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>ส่งออกฐานข้อมูลเป็นแฟ้ม CSV</translation>
+        <translation>Exporter la base de données vers un fichier CSV</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>การเขียนแฟ้ม CSV ล้มเหลว</translation>
+        <translation>Échec d’écriture du fichier CSV.</translation>
     </message>
     <message>
         <source>Database creation error</source>
-        <translation>การสร้างฐานข้อมูลเกิดข้อผิดพลาด</translation>
+        <translation>Erreur de création de la base de données</translation>
     </message>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
-        <translation>ฐานข้อมูลที่สร้างขึ้นไม่มีรหัสหรือ KDF ปฏิเสธที่จะบันทึก
-สิ่งนี้มีจุดบกพร่องแน่นอนโปรดรายงานต่อนักพัฒนาเวป</translation>
+        <translation>La base de données créée n’a ni clé, ni fonction de dérivation de clé et ne peut pas être enregistrée.
+C’est très certainement un bogue, veuillez le signaler aux développeurs.</translation>
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation>เลือกแฟ้ม CSV</translation>
+        <translation>Sélectionner un fichier CSV</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation>ฐานข้อมูลใหม่</translation>
+        <translation>Nouvelle base de données</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [ฐานข้อมูลใหม่]</translation>
+        <translation>%1 [nouvelle base de données]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [ถูกล็อก]</translation>
+        <translation>%1 [verrouillé]</translation>
     </message>
     <message>
         <source>%1 [Read-only]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [อ่านอย่างเดียว]</translation>
+        <translation>%1 [en lecture seule]</translation>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation>การเปิด %1 ล้มเหลว มันไม่มีอยู่หรือไม่สามารถเข้าถึงได้</translation>
+        <translation>Échec d’ouverture de %1. Soit le fichier n’existe pas soit il n’est pas accessible.</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation>ส่งออกฐานข้อมูลเป็นแฟ้ม HTML</translation>
+        <translation>Exporter la base de données vers un fichier HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation>แฟ้ม HTML</translation>
+        <translation>Fichier HTML</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation type="unfinished"/>
+        <translation>Échec d’écriture du fichier HTML.</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation>ยืนยันการส่งออก</translation>
+        <translation>Confirmation de l’exportation</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>คุณกำลังจะส่งออกฐานข้อมูลของคุณไปยังแฟ้มที่ไม่ได้เข้ารหัสลับ นี่จะทำให้รหัสผ่านและข้อมูลอ่อนไหวของคุณตกอยู่ในอันตราย! คุณแน่ใจหรือไม่ว่าจะดำเนินการต่อ?</translation>
+        <translation>Vous êtes sur le point d’exporter votre base de données vers un fichier non chiffré. Vos mots de passe et renseignements délicats seront vulnérables. Voulez-vous vraiment poursuivre ?</translation>
     </message>
     <message>
         <source>Open OPVault</source>
-        <translation>เปิด OPVault</translation>
+        <translation>Ouvrir OPVault</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Searching...</source>
-        <translation>กำลังค้นหา</translation>
+        <translation>Recherche…</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>คุณต้องการจะลบรายการ &quot;%1&quot; ให้หายไปอย่างถาวรจริงหรือไม่?</translation>
+        <translation>Voulez-vous vraiment supprimer définitivement l’entrée « %1 »?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>คุณต้องการจะย้ายรายการ &quot;%1&quot; ไปยังถังขยะจริงหรือไม่?</translation>
+        <translation>Voulez-vous vraiment déplacer l’entrée « %1 » vers la corbeille?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>คุณต้องการจะลบ %n รายการไปยังถังขยะจริงหรือไม่</numerusform></translation>
+        <translation><numerusform>Voulez-vous vraiment déplacer %n entrée vers la corbeille ?</numerusform><numerusform>Voulez-vous vraiment déplacer %n entrée(s) vers la corbeille?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation>เริ่มดำเนินการตามคำสั่งเลยหรือไม่</translation>
+        <translation>Exécuter la commande?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>คุณต้องการจะดำเนินการตามคำสั่งต่อไปนี้จริงหรือไม่? &lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Voulez-vous vraiment exécuter la commande suivante ?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>จำสิ่งที่ฉันเลือก</translation>
+        <translation>Mémoriser mon choix</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>คุณต้องการจะลบกลุ่ม &quot;%1&quot; ให้หายไปอย่างถาวรจริงหรือไม่?</translation>
+        <translation>Voulez-vous vraiment supprimer définitivement le groupe « %1 »?</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>ไม่มีฐานข้อมูลปัจจุบัน</translation>
+        <translation>Aucune base de données actuelle.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>ไม่มีฐานข้อมูลต้นทาง ไม่ต้องทำอะไร</translation>
+        <translation>Aucune base de données source, il n’y a rien à faire.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation>ผลการค้นหา (%1)</translation>
+        <translation>Résultats de recherche (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation>ไม่มีผลลัพธ์</translation>
+        <translation>Il n’y a aucun résultat</translation>
     </message>
     <message>
         <source>File has changed</source>
-        <translation>แฟ้มเปลี่ยนไปแล้ว</translation>
+        <translation>Le fichier a été modifié</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>แฟ้มฐานข้อมูลเปลี่ยนไปแล้ว คุณต้องการโหลดการเปลี่ยนแปลงหรือไม่?</translation>
+        <translation>Le fichier de la base de données a été modifié. Voulez-vous le recharger?</translation>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>คำร้องเพื่อผสาน</translation>
+        <translation>Demande de fusion</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>แฟ้มฐานข้อมูลเปลี่ยนไปแล้ว และคุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก
-คุณต้องการผสานการเปลี่ยนแปลงของคุณหรือไม่?</translation>
+        <translation>Le fichier de la base de données a été modifié et vos changements ne sont pas enregistrés.
+Voulez-vous fusionner vos changements?</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>ล้างถังขยะหรือไม่</translation>
+        <translation>Vider la corbeille?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>คุณแน่ใจว่าจะลบทุกอย่างออกจากถังขยะของคุณอย่างถาวรหรือไม่</translation>
+        <translation>Voulez-vous vraiment vider définitivement la corbeille?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>คุณต้องการจะลบ %n รายการอย่างถาวรหรือไม่</numerusform></translation>
+        <translation><numerusform>Voulez-vous vraiment supprimer %n entrée définitivement ?</numerusform><numerusform>Voulez-vous vraiment supprimer %n entrée(s) définitivement?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>ลบรายการหรือไม่</numerusform></translation>
+        <translation><numerusform>Supprimer l’entrée ?</numerusform><numerusform>Supprimer les entrées?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>ย้ายรายการไปยังถังขยะหรือไม่</numerusform></translation>
+        <translation><numerusform>Déplacer l’entrée vers la corbeille ?</numerusform><numerusform>Déplacer les entrées vers la corbeille?</numerusform></translation>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation>ล็อคฐานข้อมูลหรือไม่</translation>
+        <translation>Verrouiller la base de données?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>กำลังอยู่ในระหว่างแก้ไขรายการ คุณต้องการจะยกเลิกการแก้ไขและล็อคตอนนี้จริงหรือไม่</translation>
+        <translation>Vous êtes en train de modifier une entrée. Abandonner les changements et la verrouiller quand même?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; ถูกแก้ไขแล้ว
-บันทึกการเปลี่ยนแปลงหรือไม่?</translation>
+        <translation>« %1 » a été modifié.
+Enregistrer les changements?</translation>
     </message>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation>ฐานข้อมูลถูกแก้ไขแล้ว
-บันทึกการเปลี่ยนแปลงหรือไม่</translation>
+        <translation>La base de données a été modifiée.
+Enregistrer les changements?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>บันทึกการเปลี่ยนแปลง?</translation>
+        <translation>Enregistrer les changements?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
 Error: %1</source>
-        <translation>ไม่สามารถเปิดแฟ้มฐานข้อมูลใหม่ขณะพยายามโหลดใหม่โดยอัตโนมัติ
-ข้อผิดพลาด: %1</translation>
+        <translation>Impossible d’ouvrir le nouveau fichier de base de données en tentant de la recharger automatiquement.
+Erreur : % 1</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation>ปิดการบันทึกแบบปลอดภัยหรือไม่</translation>
+        <translation>Désactiver les enregistrements sécurisés?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC บันทึกฐานข้อมูลไม่สำเร็จหลายครั้ง นี่อาจมีสาเหตุจากบริการเชื่อมประสานแฟ้มได้ล็อกแฟ้มที่จะบันทึกอยู่
-ปิดใช้การบันทึกแบบปลอดภัยและลองอีกครั้งหรือไม่?</translation>
+        <translation>KeePassXC n’a pas réussi à enregistrer la base de données à plusieurs reprises. Le fichier à enregistrer est probablement verrouillé par les services de synchronisation de fichiers.
+Désactiver les enregistrements sécurisés et réessayer?</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mots de passe</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>บันทึกฐานข้อมูลเป็น</translation>
+        <translation>Enregistrer la base de données sous</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>ฐานข้อมูล KeePass 2</translation>
+        <translation>Base de données KeePass 2</translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation>เปลี่ยนแหล่งอ้างอิงของรายการหรือไม่</translation>
+        <translation>Remplacer les références vers l’entrée?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>รายการ &quot;%1&quot; มี %2 แหล่งอ้างอิง คุณต้องการจะเขียนทับแหล่งอ้างอิงด้วยค่าทั้งหมด หรือข้ามรายการนี้ หรือต้องการลบ?</numerusform></translation>
+        <translation><numerusform>L’entrée « %1 » a %2 référence. Voulez-vous remplacer la référence par les valeurs, ignorer cette entrée ou la supprimer ?</numerusform><numerusform>L’entrée « %1 » a %2 références. Voulez-vous remplacer les références par les valeurs, ignorer cette entrée ou la supprimer?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>ลบกลุ่ม</translation>
+        <translation>Supprimer le groupe</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation>ย้ายกลุ่มไปถังขยะ</translation>
+        <translation>Déplacer le groupe vers la corbeille?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>คุณต้องการย้ายกลุ่ม &quot;%1&quot; ไปถังขยะจริงหรือไม่</translation>
+        <translation>Voulez-vous vraiment déplacer le groupe « %1 » vers la corbeille?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation>ผสานแฟ้มฐานข้อมูลสำเร็จแล้ว</translation>
+        <translation>Les fichiers de base de données ont été fusionnés avec succès.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>ฐานข้อมูลไม่ถูกเปลี่ยนแปลงโดยการดำเนินการผสาน</translation>
+        <translation>La base de données n’a pas été modifiée par l’opération de fusion.</translation>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation>กลุ่มที่ใช้ร่วมกัน</translation>
+        <translation>Groupe partagé…</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>การเขียนฐานข้อมูลล้มเหลว: %1</translation>
+        <translation>Échec d’écriture de la base de données : %1</translation>
     </message>
     <message>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Cette base de données est ouverte en lecture seule. L’enregistrement automatique est désactivé.</translation>
     </message>
     <message>
         <source>Save database backup</source>
-        <translation>บันทึกฐานข้อมูลสำรอง</translation>
+        <translation>Sauvegarder la base de données</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
-        <translation>ไม่พบแฟ้มฐานข้อมูล: %1</translation>
+        <translation>Impossible de trouver le fichier de la base de données : %1</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>รายการ</translation>
+        <translation>Entrée</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>ขั้นสูง</translation>
+        <translation>Avancé</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>ไอคอน</translation>
+        <translation>Icône</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
+        <translation>Saisie automatique</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>คุณสมบัติ</translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>ประวัติ</translation>
+        <translation>Historique</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>ตัวแทน SSH</translation>
+        <translation>Agent SSH</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>n/a</translation>
+        <translation>s.o.</translation>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(เข้ารหัสลับอยู่)</translation>
+        <translation>(chiffrée)</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation>เลือกกุญแจส่วนตัว</translation>
+        <translation>Sélectionner un fichier clé</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>ประวัติรายการ</translation>
+        <translation>Historique de l’entrée</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>เพิ่มรายการ</translation>
+        <translation>Ajouter une entrée</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>แก้ไขรายการ</translation>
+        <translation>Modifier l’entrée</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>คุณสมบัติใหม่</translation>
+        <translation>Nouvel attribut</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>คุณแน่ใจหรือไม่ว่าต้องการลบคุณสมบัตินี้</translation>
+        <translation>Voulez-vous vraiment supprimer cet attribut?</translation>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>พรุ่งนี้</translation>
+        <translation>Demain</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n สัปดาห์</numerusform></translation>
+        <translation><numerusform>%n semaine</numerusform><numerusform>%n semaine(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n เดือน</numerusform></translation>
+        <translation><numerusform>%n mois</numerusform><numerusform>%n mois</numerusform></translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation>รายการถูกปรับปรุงสำเร็จแล้ว</translation>
+        <translation>L’entrée a été mise à jour avec succès.</translation>
     </message>
     <message>
         <source>New attribute %1</source>
-        <translation>คุณสมบัติใหม่ %1</translation>
+        <translation>Nouvel attribut %1</translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>%n ปี</numerusform></translation>
+        <translation><numerusform>% an</numerusform><numerusform>%n an(s)</numerusform></translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation>ยืนยันการลบออก</translation>
+        <translation>Confirmer la suppression</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>การทำงานร่วมกับเบราว์เซอร์</translation>
+        <translation>Intégration aux navigateurs</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
-        <translation>&lt;empty URL&gt;</translation>
+        <translation>&lt;URL vide&gt;</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>คุณแน่ใจหรือไม่ว่าจะลบ URL นี้?</translation>
+        <translation>Voulez-vous vraiment supprimer cette URL?</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>เปิดเผย</translation>
+        <translation>Révéler</translation>
     </message>
     <message>
         <source>Hide</source>
-        <translation>ซ่อน</translation>
+        <translation>Cacher</translation>
     </message>
     <message>
         <source>Unsaved Changes</source>
-        <translation>ความเปลี่ยนแปลงที่ยังไม่ได้บันทึก</translation>
+        <translation>Changements non enregistrés</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>คุณต้องการบันทึกการเปลี่ยนแปลงของรายการนี้หรือไม่?</translation>
+        <translation>Voulez-vous enregistrer les changements de cette entrée?</translation>
     </message>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>[PROTÉGÉ] Appuyez sur Révéler pour afficher ou modifier</translation>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation>ค่าป้อนเข้าไม่ถูกรูปแบบ</translation>
+        <translation>L’entrée est invalide</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation type="unfinished"/>
+        <translation>Une opération externe de fusion a invalidé cette entrée.
+Malheureusement, les changements effectués ont été perdus.</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>คุณสมบัติเพิ่มเติม</translation>
+        <translation>Attributs supplémentaires</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>เพิ่ม</translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ลบออก</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation> แก้ไขชื่อ</translation>
+        <translation>Modifier le nom</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation>ป้องกัน</translation>
+        <translation>Protéger</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>เปิดเผย</translation>
+        <translation>Révéler</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>แฟ้มแนบ</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation>สีพื้นหน้า</translation>
+        <translation>Couleur de l’avant-plan :</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation>สีพื้นหลัง</translation>
+        <translation>Couleur de l’arrière-plan :</translation>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation type="unfinished"/>
+        <translation>Sélection d’un attribut</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation type="unfinished"/>
+        <translation>Valeur de l’attribut</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation>เพิ่มคุณสมบัติใหม่</translation>
+        <translation>Ajouter un nouvel attribut</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation>ลบคุณสมบัติที่เลือก</translation>
+        <translation>Supprimer l’attribut sélectionné</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation>แก้ชื่อคุณสมบัติ</translation>
+        <translation>Modifier le nom de l’attribut</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation>สลับการป้องกันคุณสมบัติ</translation>
+        <translation>Activer ou désactiver la protection de l’attribut</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation>แสดงคุณสมบัติที่ถูกป้องกัน</translation>
+        <translation>Afficher un attribut protégé</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation>ตัวเลือกสีพื้นหน้า</translation>
+        <translation>Sélection de la couleur d’avant-plan</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation>ตัวเลือกสีพื้นหลัง</translation>
+        <translation>Sélection de la couleur d’arrière-plan</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements (e. g. password entropy or re-use). You can set the check mark if the password is beyond your control (e. g. if it needs to be a four-digit PIN) to prevent it from cluttering the reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si cette option est cochée, l’entrée n’apparaîtra pas dans les rapports tels que le bilan de santé ou les mots de passe compromis (HIBP), même si elle ne correspond pas aux exigences de qualité (p. ex. entropie ou réutilisation du mot de passe). Vous pouvez la cocher si le mot de passe échappe à votre contrôle (p. ex. s’il doit être un NIP à quatre chiffres), afin d’empêcher qu’il encombre les rapports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
-        <translation type="unfinished"/>
+        <translation>Exclure des rapports de base de données</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>เปิดใช้ Auto -Type สำหรับรายการนี้</translation>
+        <translation>Activer la saisie automatique pour cette entrée</translation>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation>หน้าต่างการเชื่อมโยง</translation>
+        <translation>Associations de fenêtres</translation>
     </message>
     <message>
         <source>+</source>
@@ -2392,855 +2406,854 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>หัวเรื่องของหน้าต่าง</translation>
+        <translation>Titre de la fenêtre :</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>ใช้ลำดับเฉพาะในการเชื่อมโยง</translation>
+        <translation>Utiliser une séquence précise pour cette association :</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Séquence personnalisée de saisie automatique</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation type="unfinished"/>
+        <translation>Ouvrir la page Web d’aide de la saisie automatique</translation>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation type="unfinished"/>
+        <translation>Associations de fenêtres existantes</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation type="unfinished"/>
+        <translation>Ajouter une nouvelle association de fenêtre</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation type="unfinished"/>
+        <translation>Supprimer l’association de fenêtre sélectionnée</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation type="unfinished"/>
+        <translation>Vous pouvez utiliser un astérisque (*) pour tout inclure</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation type="unfinished"/>
+        <translation>Définir le titre de l’association de fenêtre</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation type="unfinished"/>
+        <translation>Vous pouvez utiliser un astérisque pour tout inclure</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation type="unfinished"/>
+        <translation>Séquence personnalisée de saisie automatique pour cette fenêtre</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation type="unfinished"/>
+        <translation>Hériter du groupe la séquence par défaut de saisie automatique</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser une séquence personnalisée de saisie automatique :</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>การตั้งค่าเหล่านี้จะส่งผลต่อพฤติกรรมการป้อนข้อมูลด้วยส่วนเสริมในเบราว์เซอร์</translation>
+        <translation>Ces paramètres affectent le comportement de l’entrée avec l’extension pour navigateurs.</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>ทั่วไป</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation type="unfinished"/>
+        <translation>Ignorer l’envoi automatique pour cette entrée</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation>ซ่อนรายการข้อมูลนี้จากส่วนเสริมในเบราว์เซอร์</translation>
+        <translation>Cacher cette entrée aux yeux de l’extension pour navigateurs</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation>URL เพิ่มเติม</translation>
+        <translation>URL supplémentaires</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>เพิ่ม</translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ลบ</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>แก้ไข</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation type="unfinished"/>
+        <translation>N’envoyer ce paramètre au navigateur que pour les boîtes de dialogue d’authentification HTTP. Si cette option est activée, cette entrée ne sera pas présentée par les formulaires d’authentification normaux comme possibilité de sélection.</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation type="unfinished"/>
+        <translation>N’utiliser cette entrée qu’avec l’authentification HTTP Basic</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation type="unfinished"/>
+        <translation>Ne pas envoyer ce paramètre au navigateur pour les boîtes de dialogue d’authentification HTTP. Si cette option est activée, cette entrée ne sera pas présentée comme possibilité de sélection par les boîtes de dialogue d’authentification HTTP.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
-        <translation type="unfinished"/>
+        <translation>Ne pas utiliser cette entrée avec l’authentification HTTP Basic</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>แสดง</translation>
+        <translation>Afficher</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>เรียกคืน</translation>
+        <translation>Restaurer</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>ลบ</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>ลบทั้งหมด</translation>
+        <translation>Tout supprimer</translation>
     </message>
     <message>
         <source>Entry history selection</source>
-        <translation type="unfinished"/>
+        <translation>Sélection de l’historique de l’entrée</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Afficher l’entrée pour l’état historique sélectionné</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Restaurer l’entrée vers l’état historique sélectionné</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation>ลบประวัติช่วงที่เลือก</translation>
+        <translation>Supprimer l’état historique sélectionné</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation>ลบประวัติทั้งหมด</translation>
+        <translation>Supprimer tout l’historique</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>URL:</source>
-        <translation>URL:</translation>
+        <translation>URL :</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mot de passe :</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>Titre :</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>ค่าปรับแต่งสำเร็จรูป</translation>
+        <translation>Préréglages</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>สลับกล่องกาเครื่องหมายเพื่อแสดงส่วนบันทึก</translation>
+        <translation>Cochez la case pour révéler la section des notes.</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>ชื่อผู้ใช้งาน</translation>
+        <translation>Nom d’utilisateur :</translation>
     </message>
     <message>
         <source>Url field</source>
-        <translation>ช่องข้อมูล URL</translation>
+        <translation>Champ d’URL</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>ดาวน์โหลด favicon สำหรับ URL</translation>
+        <translation>Télécharger une favoricône pour l’URL</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>ช่องรหัสผ่าน</translation>
+        <translation>Champ de mot de passe</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation>สลับให้เห็นบันทึก</translation>
+        <translation>Activer ou désactiver la visibilité des notes</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>ช่องวันหมดอายุ</translation>
+        <translation>Champ d’expiration</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation type="unfinished"/>
+        <translation>Préréglages de l’expiration</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation type="unfinished"/>
+        <translation>Préréglages de l’expiration</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>ช่องบันทึก</translation>
+        <translation>Champ de note</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation>ช่องหัวเรื่อง</translation>
+        <translation>Champ de titre</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation>ช่องชื่อผู้ใช้</translation>
+        <translation>Champ de nom d’utilisateur</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>สลับวันหมดอายุ</translation>
+        <translation>Activer ou désactiver l’expiration</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>บันทึก:</translation>
+        <translation>Notes :</translation>
     </message>
     <message>
         <source>https://example.com</source>
-        <translation type="unfinished"/>
+        <translation>https://exemple.com</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation>หมดอายุ:</translation>
+        <translation>Expire le :</translation>
     </message>
     <message>
         <source>Edit Entry</source>
-        <translation>แก้ไขรายการ</translation>
+        <translation>Modifier l’entrée</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation>จาก</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation>ลบกุญแจออกจากตัวแทน</translation>
+        <translation>Supprimer la clé de l’agent après</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation>วินาที</translation>
+        <translation> secondes</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>ลายนิ้วมือ</translation>
+        <translation>Empreinte</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>ลบกุญแจออกจากตัวแทน เมือฐานข้อมูลถูกปิดหรือล๊อค</translation>
+        <translation>Supprimer la clé de l’agent si la base de données est fermée ou verrouillée</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>กุญแจสาธารณะ</translation>
+        <translation>Clé publique</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>เพิ่มกุญแจไปยังตัวยแทน เมื่อฐานข้อมูลถูกเปิดออกหรือถูกปลดล๊อด</translation>
+        <translation>Ajouter la clé à l’agent si la base de données est ouverte ou déverrouillée</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation>ข้อคิดเห็น</translation>
+        <translation>Commentaire</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>ถอดรหัสลับ</translation>
+        <translation>Déchiffrer</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>ไม่มีข้อมูล</translation>
+        <translation>s.o.</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>คัดลอกไปยังคลิปบอร์ด</translation>
+        <translation>Copier dans le presse-papiers</translation>
     </message>
     <message>
         <source>Private key</source>
-        <translation>กุญแจส่วนตัว</translation>
+        <translation>Clé privée</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation>แฟ้มภายนอก</translation>
+        <translation>Fichier externe</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>เรียกดู...</translation>
+        <translation>Parcourir…</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation>แฟ้มแนบ</translation>
+        <translation>Fichier joint</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation>เพิ่มไปยังตัวแทน</translation>
+        <translation>Ajouter à l’agent</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation>ลบออกจากตัวแทน</translation>
+        <translation>Retirer de l’agent</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation>จำเป็นต้องยืนยันผู้ใช้เมื่อมีการใช้กุญแจ</translation>
+        <translation>Exiger la confirmation de l’utilisateur quand cette clé est utilisée</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation type="unfinished"/>
+        <translation>Supprimer la clé de l’agent après le nombre de secondes indiqué</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation>เรียกดูแฟ้มกุญแจ</translation>
+        <translation>Rechercher un fichier clé</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation>แฟ้มกุญแจภายนอก</translation>
+        <translation>Fichier clé externe</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation>เลือกแฟ้มแนบ</translation>
+        <translation>Sélectionner une fichier joint</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>กลุ่ม</translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>ไอคอน</translation>
+        <translation>Icône</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>คุณสมบัติ</translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>เพิ่มกลุ่ม</translation>
+        <translation>Ajouter un groupe</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>แก้ไขกลุ่ม</translation>
+        <translation>Modifier le groupe</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>เปิดใช้</translation>
+        <translation>Activer</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>ปิดใช้</translation>
+        <translation>Désactiver</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>สืบคุณสมบัติจากกลุ่มแม่ (%1)</translation>
+        <translation>Hériter du groupe parent (%1)</translation>
     </message>
     <message>
         <source>Entry has unsaved changes</source>
-        <translation>รายการมีการเปลี่ยนแปลงที่ไม่ถูกบันทึก</translation>
+        <translation>L’entrée comporte des changements non enregistrés</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
     <message>
         <source>Type:</source>
-        <translation>ชนิด</translation>
+        <translation>Type :</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation>เส้นทาง</translation>
+        <translation>Chemin :</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mot de passe :</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation>ไม่มีการใช้งาน</translation>
+        <translation>Inactif</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation>ที่จัดเก็บที่ไม่ได้เซ็นไว้ของ KeeShare</translation>
+        <translation>Conteneur KeeShare non signé</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation>ที่จัดเก็บที่เซ็นไว้ของ KeeShare</translation>
+        <translation>Conteneur KeeShare signé</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation>เลือกนำฐานข้อมูลที่นำเข้า</translation>
+        <translation>Sélectionner la source d’importation</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation>เลือกเป้าหมายที่จะส่งออก</translation>
+        <translation>Sélectionner la cible de l’exportation</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation>เลือกแฟ้มนำเข้า/ส่งออก</translation>
+        <translation>Sélectionner le fichier d’importation ou d’exportation</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>ล้าง</translation>
+        <translation>Effacer</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>นำเข้า</translation>
+        <translation>Importer</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>ส่งออก</translation>
+        <translation>Exporter</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation>เชื่อมประสาน</translation>
+        <translation>Synchroniser</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation>KeePassXC รุ่นของคุณไม่รองรับการแบ่งปันกล่องบรรจุชนิดนี้
-ส่วนขยายที่รองรับคือ: %1</translation>
+        <translation>Votre version de KeePassXC ne prend pas en charge le partage de ce type de conteneur. Les extensions prises en charge sont : %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation>%1 ถูกส่งออกไปแล้วโดยฐานข้อมูลนี้</translation>
+        <translation>%1 est déjà exporté par cette base de données.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation>%1 ถูกนำเข้ามาแล้วโดยฐานข้อมูลนี้</translation>
+        <translation>%1 est déjà importé par cette base de données.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation>%1 ถูกนำเข้าและส่งออกโดยกลุ่มที่แตกต่างกันในฐานข้อมูลนี้</translation>
+        <translation>%1 est importé et exporté par différents groupes dans cette base de données.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation type="unfinished"/>
+        <translation>KeeShare est actuellement désactivé. Vous pouvez activer l’importation et l’exportation dans les paramètres de l’application.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>L’exportation de la base de données est actuellement désactivée par les paramètres de l’application.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>L’importation de la base de données est actuellement désactivée par les paramètres de l’application.</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
-        <translation type="unfinished"/>
+        <translation>Champ de mode de partage</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation type="unfinished"/>
+        <translation>Champ de chemin vers le fichier partagé</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>ช่องรหัสผ่าน</translation>
+        <translation>Champ de mot de passe</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation>ล้างช่องข้อมูล</translation>
+        <translation>Effacer les champs</translation>
     </message>
     <message>
         <source>Browse for share file</source>
-        <translation>เรียกดูแฟ้มที่แบ่งปัน</translation>
+        <translation>Sélectionner un fichier à partager</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation>เรียกดู...</translation>
+        <translation>Parcourir…</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name field</source>
-        <translation>ช่องชื่อ</translation>
+        <translation>Champ de nom</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>ช่องบันทึก</translation>
+        <translation>Champ de note</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>สลับวันหมดอายุ</translation>
+        <translation>Activer ou désactiver l’expiration</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Activer ou désactiver la saisie automatique pour cela et les sous-groupes</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>ช่องวันหมดอายุ</translation>
+        <translation>Champ d’expiration</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Activer ou désactiver la recherche pour cela et les sous-groupes</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation type="unfinished"/>
+        <translation>Champ de séquence par défaut de saisie automatique</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation>หมดอายุ:</translation>
+        <translation>Expire le :</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser la séquence par défaut de saisie automatique du groupe parent</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation>Auto-Type:</translation>
+        <translation>Saisie automatique :</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation>ค้นหา:</translation>
+        <translation>Recherche :</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>บันทึก:</translation>
+        <translation>Notes :</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>ชื่อ:</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Définir la séquence par défaut de saisie automatique</translation>
     </message>
     <message>
         <source>Edit Group</source>
-        <translation>แก้ไขกลุ่ม</translation>
+        <translation>Modifier le groupe</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Add custom icon</source>
-        <translation>เพิ่มไอคอนที่กำหนดเอง</translation>
+        <translation>Ajouter une icône personnalisée</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>ลบไอคอนที่กำหนดเอง</translation>
+        <translation>Supprimer l’icône personnalisée</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>ดาวน์โหลด favicon</translation>
+        <translation>Télécharger une favoricône</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>ไม่สามารถดึงข้อมูล favicon ได้</translation>
+        <translation>Impossible de récupérer la favoricône</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>ภาพ</translation>
+        <translation>Images</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>ทุกแฟ้ม</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation>ยืนยันการลบ</translation>
+        <translation>Confirmer la suppression</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation>เลือกรูปภาพ</translation>
+        <translation>Sélectionner des images</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>โหลดไอคอน %1  จาก %n สำเร็จ</numerusform></translation>
+        <translation><numerusform>%1 icône d’un total de %n a été chargée avec succès</numerusform><numerusform>%1 icône(s) d’un total de %n ont été chargées avec succès</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
-        <translation>ไอคอนไม่ถูกโหลด</translation>
+        <translation>Aucune icône n’a été chargée</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n ไอคอนมีอยู่แล้วในฐานข้อมูล</numerusform></translation>
+        <translation><numerusform>%n icône existe déjà dans la base de données</numerusform><numerusform>%n icônes existent déjà dans la base de données</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>ไอคอนต่อไปนี้ล้มเหลว</numerusform></translation>
+        <translation><numerusform>Échec de l’icône suivante :</numerusform><numerusform>Échec des icônes suivantes :</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>ไอคอนนี้ถูกใช้โดย %n เอ็นทรี และจะถูกแทนที่ด้วยไอคอนตั้งต้น คุณแน่ใจหรือไม่ว่าคุณต้องการลบไอคอน</numerusform></translation>
+        <translation><numerusform>Cette icône est utilisée par %n entrée et sera remplacée par l’icône par défaut. Voulez-vous vraiment la supprimer ?</numerusform><numerusform>Cette icône est utilisée par %n entrée(s) et sera remplacée par l’icône par défaut. Voulez-vous vraiment la supprimer ?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans Outils &gt; Paramètres &gt; Sécurité</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>ดาวน์โหลด favicon สำหรับ URL</translation>
+        <translation>Télécharger une favoricône pour l’URL</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation>ใช้ไอคอนที่เลือกกับกลุ่มย่อยและรายการ</translation>
+        <translation>Appliquer l’icône sélectionnée aux sous-groupes et entrées</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation>ใช้กับกลุ่มลูกด้วย</translation>
+        <translation>Appliquer aussi aux groupes enfant</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation>ใช้กับรายการลูกด้วย</translation>
+        <translation>Appliquer aussi aux entrées enfant</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation>ใช้กับลูกทั้งหมด</translation>
+        <translation>Appliquer aussi à tous les enfants</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation>ไอคอนที่มีอยู่แล้วถูกเลือก</translation>
+        <translation>L’icône existante a été sélectionnée.</translation>
     </message>
     <message>
         <source>Use default icon</source>
-        <translation>ใช้ไอคอนมาตรฐาน</translation>
+        <translation>Utiliser l’icône par défaut</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>ใช้ไอคอนที่กำหนดเอง</translation>
+        <translation>Utiliser une icône personnalisée</translation>
     </message>
     <message>
         <source>Apply icon to...</source>
-        <translation>ใช้ไอคอนกับ...</translation>
+        <translation>Appliquer l’icône à…</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
-        <translation>ใช้กับกลุ่มนี้เท่านั้น</translation>
+        <translation>N’appliquer qu’à ce groupe</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>สร้าง</translation>
+        <translation>Création :</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>แก้ไข</translation>
+        <translation>Modification :</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>เข้าถึง</translation>
+        <translation>Accès :</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid</translation>
+        <translation>UUID :</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>ข้อมูลโปรแกรมเสริม</translation>
+        <translation>Données de l’extension</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ลบออก</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>ลบข้อมูลโปรแกรมเสริมหรือไม่</translation>
+        <translation>Supprimer les données de l’extension?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>คุณต้องการลบข้อมูลโปรแกรมเสริมที่เลือกไว้หรือไม่ 
-การกระทำนี้อาจจะกระทบโปรแกรมเสริมให้ทำงานผิดพลาด</translation>
+        <translation>Voulez-vous vraiment supprimer les données d’extension sélectionnées? Cela pourrait entraîner un mauvais fonctionnement des extensions touchées.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>กุญแจ</translation>
+        <translation>Clé</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>ค่า</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation>วันเวลาที่สร้าง</translation>
+        <translation>Date et heure de création</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation>วันเวลาที่แก้ไข</translation>
+        <translation>Date et heure de modification</translation>
     </message>
     <message>
         <source>Datetime accessed</source>
-        <translation>วันเวลาที่เข้าถึง</translation>
+        <translation>Date et heure d’accès</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation>รหัสระบุตัวที่ไม่ซ้ำ</translation>
+        <translation>ID unique</translation>
     </message>
     <message>
         <source>Plugin data</source>
-        <translation>ข้อมูลโปรแกรมเสริม</translation>
+        <translation>Données de l’extension</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation>ลบข้อมูลโปรแกรมเสริมที่เลือก</translation>
+        <translation>Supprimer les données d’extension sélectionnée</translation>
     </message>
 </context>
 <context>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 - Clone</translation>
+        <translation>%1 – Cloner</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsModel</name>
     <message>
         <source>Name</source>
-        <translation>ชื่อ</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>ขนาด</translation>
+        <translation>Taille</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>รูปแบบ</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>เพิ่ม</translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ลบออก</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>เปิด</translation>
+        <translation>Ouvrir</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>บันทึก</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <source>Select files</source>
-        <translation>เลือกแฟ้ม</translation>
+        <translation>Sélectionner des fichiers</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>คุณแน่ใจหรือไม่ว่าต้องการลบแฟ้มแนบ %n แฟ้ม?</numerusform></translation>
+        <translation><numerusform>Voulez-vous vraiment supprimer %n fichier joint ?</numerusform><numerusform>Voulez-vous vraiment supprimer %n fichier(s) joint(s)?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation>บันทึกแฟ้มแนบ</translation>
+        <translation>Enregistrer les fichiers joints</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation>ไม่สามารถสร้างไดเรกทอรี:
+        <translation>Impossible de créer le répertoire :
 %1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>คุณแน่ใจหรือว่าจะเขียนทับแฟ้ม &quot;%1&quot; ที่มีอยู่ ด้วยแฟ้มแนบ?</translation>
+        <translation>Voulez-vous vraiment remplacer le fichier existant « %1 » par le fichier joint ?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation>ยืนยันการเขียนทับ</translation>
+        <translation>Confirmer le remplacement</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation>ไม่สามารถบันทึกแฟ้มแนบ:
+        <translation>Impossible d’enregistrer les fichiers joints :
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation>ไม่สามารถเปิดแฟ้มแนบ:
+        <translation>Impossible d’ouvrir le fichier joint :
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>ไม่สามารถเปิดแฟ้มแนบ:
+        <translation>Impossible d’ouvrir les fichiers joints :
 %1</translation>
     </message>
     <message>
         <source>Confirm remove</source>
-        <translation>ยืนยันการลบ</translation>
+        <translation>Confirmer la suppression</translation>
     </message>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation><numerusform>ไม่สามารถเปิดแฟ้ม:
+        <translation><numerusform>Impossible d’ouvrir le fichier :
+%1</numerusform><numerusform>Impossible d’ouvrir les fichiers :
 %1</numerusform></translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>แฟ้มแนบ</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation>เพิ่มแฟ้มแนบ</translation>
+        <translation>Ajouter une nouveau fichier joint</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation>ลบแฟ้มแนบที่เลือก</translation>
+        <translation>Supprimer le fichier joint sélectionné</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation>เปิดแฟ้มแนบที่เลือก</translation>
+        <translation>Ouvrir le fichier joint sélectionné</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation>บันทึกแฟ้มแนบที่เลือกลงดิสก์</translation>
+        <translation>Enregistrer sur le disque le fichier joint sélectionné</translation>
     </message>
     <message>
         <source>%1 is a big file (%2 MB).
 Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
-        <translation>%1 เป็นแฟ้มใหญ่ (%2 MB)
-ฐานข้อมูลของคุณอาจโตขึ้นมากและอาจทำให้ประสิทธิภาพตกลง
+        <translation>%1 est un gros fichier (%2 Mo).
+Votre base de données pourrait prendre de l’ampleur et réduire les performances.
 
-คุณแน่ใจหรือไม่ว่าจะเพิ่มแฟ้มนี้?</translation>
+Voulez-vous vraiment ajouter ce fichier?</translation>
     </message>
     <message>
         <source>Confirm Attachment</source>
-        <translation>ยืนยันแฟ้มแนบ</translation>
+        <translation>Confirmer le fichier joint</translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>ชื่อ</translation>
+        <translation>Nom</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>ถูกแก้ไขครั้งสุดท้าย</translation>
+        <translation>Dernière modification</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>ชื่อผู้ใช้</translation>
+        <translation>Nom d’utilisateur</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3252,19 +3265,19 @@ Are you sure to add this file?</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>อ้างอิง</translation>
+        <translation>Réf. : </translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>กลุ่ม</translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>ชื่อผู้ใช้</translation>
+        <translation>Nom d’utilisateur</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3272,106 +3285,106 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Never</source>
-        <translation>ไม่เลย</translation>
+        <translation>Jamais</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>บันทึก</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>หมดอายุ</translation>
+        <translation>Expire le</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>ถูกสร้าง</translation>
+        <translation>Créée</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>แก้ไข</translation>
+        <translation>Modifiée</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation>เข้าถึง</translation>
+        <translation>Accès</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>แฟ้มแนบ</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>ขนาด</translation>
+        <translation>Taille</translation>
     </message>
     <message>
         <source>Group name</source>
-        <translation>ชื่อกลุ่ม</translation>
+        <translation>Nom du groupe</translation>
     </message>
     <message>
         <source>Entry title</source>
-        <translation>หัวเรื่องรายการ</translation>
+        <translation>Titre de l’entrée</translation>
     </message>
     <message>
         <source>Entry notes</source>
-        <translation>บันทึกรายการ</translation>
+        <translation>Notes de l’entrée</translation>
     </message>
     <message>
         <source>Entry expires at</source>
-        <translation>รายการหมดอายุเมื่อ</translation>
+        <translation>L’entrée expire à</translation>
     </message>
     <message>
         <source>Creation date</source>
-        <translation>วันที่สร้าง</translation>
+        <translation>Date de création</translation>
     </message>
     <message>
         <source>Last modification date</source>
-        <translation>วันที่แก้ไขล่าสุด</translation>
+        <translation>Date de dernière modification</translation>
     </message>
     <message>
         <source>Last access date</source>
-        <translation>วันที่เข้าถึงล่าสุด</translation>
+        <translation>Date de dernier accès</translation>
     </message>
     <message>
         <source>Attached files</source>
-        <translation>แฟ้มแนบ</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Entry size</source>
-        <translation>ขนาดรายการ</translation>
+        <translation>Taille de l’entrée</translation>
     </message>
     <message>
         <source>Has attachments</source>
-        <translation>มีแฟ้มแนบ</translation>
+        <translation>Comprend des fichiers joints</translation>
     </message>
     <message>
         <source>Has TOTP one-time password</source>
-        <translation type="unfinished"/>
+        <translation>A un mot de passe TOTP à usage unique</translation>
     </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
     <message>
         <source>Close</source>
-        <translation>ปิด</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>ทั่วไป</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>ชื่อผู้ใช้</translation>
+        <translation>Nom d’utilisateur</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>หมดอายุ</translation>
+        <translation>Expiration</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3379,71 +3392,71 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>คุณสมบัติ</translation>
+        <translation>Attributs</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>แฟ้มแนบ</translation>
+        <translation>Fichiers joints</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>บันทึก</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>Autotype</translation>
+        <translation>Saisie automatique</translation>
     </message>
     <message>
         <source>Window</source>
-        <translation>หน้าต่าง</translation>
+        <translation>Fenêtre</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>ลำดับ</translation>
+        <translation>Séquence</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation>กำลังค้นหา</translation>
+        <translation>Recherche</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>ค้นหา</translation>
+        <translation>Chercher</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>ล้าง</translation>
+        <translation>Effacer</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>ไม่เลย</translation>
+        <translation>Jamais</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation>[ถูกป้องกันอยู่]</translation>
+        <translation>[PROTÉGÉ]</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>เปิดใช้</translation>
+        <translation>Activé</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>ปิดใช้</translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>แบ่งปัน</translation>
+        <translation>Partager</translation>
     </message>
     <message>
         <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
+        <translation>Afficher la valeur TOTP actuelle</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>ขั้นสูง</translation>
+        <translation>Avancé</translation>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Séquence par défaut</translation>
     </message>
     <message>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
@@ -3455,111 +3468,111 @@ Are you sure to add this file?</source>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
-        <translation>URL ผิดรูปแบบ</translation>
+        <translation>L’URL est invalide</translation>
     </message>
 </context>
 <context>
     <name>EntryView</name>
     <message>
         <source>Fit to window</source>
-        <translation>พอดีกับ window</translation>
+        <translation>Adapter à la fenêtre</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation>พอดีกับเนื้อหา</translation>
+        <translation>Adapter au contenu</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation>เริ่มใหม่เป็นค่าเริ่มต้น</translation>
+        <translation>Réinitialiser aux valeurs par défaut</translation>
     </message>
     <message>
         <source>Has attachments</source>
         <comment>Entry attachment icon toggle</comment>
-        <translation>มีแฟ้มแนบ</translation>
+        <translation>Comprend des fichiers joints</translation>
     </message>
     <message>
         <source>Has TOTP</source>
         <comment>Entry TOTP icon toggle</comment>
-        <translation type="unfinished"/>
+        <translation>A un TOTP</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>รายการ &quot;%1&quot; จากฐานข้อมูล &quot;%2&quot; ถูกใช้โดย %3</translation>
+        <translation>L’entrée « %1 » de la base de données « %2 » a été utilisée par %3</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation>การลงทะเบียนบริการ DBus ล้มเหลวเมื่อ %1 &lt;br/&gt;</translation>
+        <translation>Échec d’inscription du service DBus à %1.&lt;br/&gt;</translation>
     </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n รายการถูกใช้โดย %1</numerusform></translation>
+        <translation><numerusform>%n entrée était utilisée par %1</numerusform><numerusform>%n entrées étaient utilisées par %1</numerusform></translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsDatabaseModel</name>
     <message>
         <source>File Name</source>
-        <translation>ชื่อแฟ้ม</translation>
+        <translation>Nom de fichier</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>กลุ่ม</translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>จัดการ</translation>
+        <translation>Gérer</translation>
     </message>
     <message>
         <source>Unlock to show</source>
-        <translation>ปลดล็อกเพื่อแสดง</translation>
+        <translation>Déverrouiller pour afficher</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>ไม่มี</translation>
+        <translation>Aucun</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsSessionModel</name>
     <message>
         <source>Application</source>
-        <translation>แอปพลิเคชัน</translation>
+        <translation>Application</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>จัดการ</translation>
+        <translation>Gérer</translation>
     </message>
 </context>
 <context>
     <name>FdoSecretsPlugin</name>
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;« Secret Service » de Fdo :&lt;/b&gt; %1</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown PID</comment>
-        <translation>ไม่รู้จัก</translation>
+        <translation>Inconnu</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown executable path</comment>
-        <translation>ไม่รู้จัก</translation>
+        <translation>Inconnu</translation>
     </message>
     <message>
         <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
         <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
-        <translation type="unfinished"/>
+        <translation>&lt;i&gt;PID : %1, exécutable : %2&lt;/i&gt;</translation>
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation type="unfinished"/>
+        <translation>Un autre « secret service » est en cours d’exécution (%1).&lt;br/&gt;Veuillez l’arrêter ou le supprimer avant de réactiver l’intégration à « Secret Service ».</translation>
     </message>
 </context>
 <context>
@@ -3567,34 +3580,35 @@ Are you sure to add this file?</source>
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation>[ว่าง]</translation>
+        <translation>[vide]</translation>
     </message>
 </context>
 <context>
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation type="unfinished"/>
+        <translation>Échec de validation du mot de passe en ligne</translation>
     </message>
 </context>
 <context>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation type="unfinished"/>
+        <translation>Télécharger des favoricônes</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ยกเลิก</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Des problèmes pour télécharger les icônes ?
+Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la section sécurité des paramètres de l’application.</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>ปิด</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3602,1016 +3616,1021 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Status</source>
-        <translation>สถานะ</translation>
+        <translation>État</translation>
     </message>
     <message>
         <source>Please wait, processing entry list...</source>
-        <translation>กรุณารอ กำลังประมวลผลรายการ</translation>
+        <translation>Veuillez patienter, traitement de la liste des entrées…</translation>
     </message>
     <message>
         <source>Downloading...</source>
-        <translation>กำลังดาวน์โหลด...</translation>
+        <translation>Téléchargement…</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>ตกลง</translation>
+        <translation>Valider</translation>
     </message>
     <message>
         <source>Already Exists</source>
-        <translation>มีอยู่แล้ว</translation>
+        <translation>Existe déjà</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation>การดาวน์โหลดล้มเหลว</translation>
+        <translation>Échec de téléchargement</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation>กำลังดาวน์โหลด favicon (%1/%2)...</translation>
+        <translation>Téléchargement des favoricônes (%1/%2)…</translation>
     </message>
 </context>
 <context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation>ปิด (&amp;C)</translation>
+        <translation>&amp;Fermer</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation>ปิดข้อความ</translation>
+        <translation>Fermer le message</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>ฐานข้อมูลส่วนหัวหายไป</translation>
+        <translation>les en-têtes de la base de données manquent</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
-        <translation>ส่วนหัวไม่ตรงกับรายละเอียด</translation>
+        <translation>L’en-tête ne correspond pas à l’empreinte numérique</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>ขนาดบัญชีส่วนหัวไม่ถูกต้อง</translation>
+        <translation>La taille de l’ID d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation>ความยาวของฟิลด์ส่วนหัวไม่ถูกต้อง</translation>
+        <translation>La longueur du champ d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>ความยาวของข้อมูลส่วนหัวไม่ถูกต้อง</translation>
+        <translation>La longueur des données d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Des identifiants invalides ont été fournis, veuillez réessayer.
+Si le problème se reproduit, le fichier de la base de données pourrait être corrompu.</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de calculer la clé de la base de données</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de lancer une question-réponse : %1</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de lancer une question-réponse : %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de calculer la clé de la base de données</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>ฐานข้อมูลส่วนหัวหายไป</translation>
+        <translation>les en-têtes de la base de données manquent</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>ขนาดผลรวมหัวข้อไม่ถูกต้อง</translation>
+        <translation>La taille de la somme de contrôle de l’en-tête est invalide</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation>หัวข้อ  SHA256 ไม่ตรงกัน</translation>
+        <translation>Le SHA256 de l’en-tête ne correspond pas</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation>การเข้ารหัสที่ไม่รู้จัก</translation>
+        <translation>Chiffrement inconnu</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>ขนาด ID ส่วนหัวไม่ถูกต้อง</translation>
+        <translation>La taille de l’ID d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation>ความยาวฟิลด์ส่วนหัวไม่ถูกต้อง</translation>
+        <translation>La longueur du champ d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>ความยาวข้อมูลส่วนหัวไม่ถูกต้อง</translation>
+        <translation>La longueur des données d’en-tête est invalide</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>ไม่สามารถเปิดบัฟเฟอร์สำหรับพารามิเตอร์ KDF ในส่วนต้น</translation>
+        <translation>Échec d’ouverture d’un tampon pour les paramètres de fonction de dérivation de clé dans l’en-tête</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation>ไม่รองรับฟังก์ชั่นการค้นพบกุญแจ (KDF) หรือพารามิเตอร์ที่ไม่ถูกต้อง</translation>
+        <translation>La fonction de dérivation de clé (KDF) n’est pas prise en charge ou les paramètres sont invalides</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation>พบช่องข้อมูลส่วนหัวแบบเก่าในแฟ้ม KDBX4</translation>
+        <translation>Des champs d’en-tête hérités ont été trouvés dans le fichier KDBX4.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>ขนาดบัญชีส่วนหัวด้านในไม่ถูกต้อง</translation>
+        <translation>La taille de l’ID d’en-tête interne est invalide</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation>ความยาวของสนามวงในไม่ถูกต้อง</translation>
+        <translation>La longueur du champ d’en-tête interne est invalide</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>ขนาดไบนารีส่วนหัวภายในไม่ถูกต้อง</translation>
+        <translation>La taille binaire d’en-tête interne est invalide</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ไม่รองรับ KeePass รุ่น variant map</translation>
+        <translation>La version de la mappe de variantes KeePass n’est pas prise charge.</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวชื่อรายการ  variant map ไม่ถูกต้อง</translation>
+        <translation>La longueur d’un nom d’entrée de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation> ข้อมูลชื่อรายการ variant map ไม่ถูกต้อง</translation>
+        <translation>Les données d’un nom d’entrée de la mappe de variantes sont invalides</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวรายการ variant map ไม่ถูกต้อง</translation>
+        <translation>La longueur d’une valeur d’entrée de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>ข้อมูลรายการเริ่มต้น variant map ไม่ถูกต้อง</translation>
+        <translation>Les données d’une valeur d’entrée de la mappe de variantes sont invalides</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวค่ารายการ Bool  variant map ไม่ถูกต้อง</translation>
+        <translation>La longueur d’une valeur d’entrée Bool de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวค่ารายการ Int32 variant map ไม่ถูกต้อง</translation>
+        <translation>La longueur d’une valeur d’entrée Int32 de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวค่ารายการ UInt32 variant map ไม่ถูกต้อง</translation>
+        <translation>La longueur d’une valeur d’entrée UInt32 de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวค่ารายการ Int64 variant map ไม่ถูกต้อง</translation>
+        <translation>La longueur d’une valeur d’entrée Int64 de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวค่ารายการ UInt64 variant map ไม่ถูกต้อง</translation>
+        <translation>La longueur d’une valeur d’entrée UInt64 de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ประเภทรายการ variant map ไม่ถูกต้อง</translation>
+        <translation>Le type d’une entrée de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ขนาดชนิดของเขตข้อมูล variant map ไม่ถูกต้อง</translation>
+        <translation>La taille du type d’un champ de la mappe de variantes est invalide</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Des identifiants invalides ont été fournis, veuillez réessayer.
+Si le problème se reproduit, le fichier de la base de données pourrait être corrompu.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>(HMAC ne correspond pas)</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de calculer la clé de la base de données : %1</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation>ขั้นตอนการเข้ารหัสแบบสมมาตรไม่ถูกต้อง</translation>
+        <translation>L’algorithme de chiffrement symétrique est invalide</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>ขนาด IV การเข้ารหัสแบบสมมาตรไม่ถูกต้อง</translation>
+        <translation>La taille du chiffrement IV symétrique est invalide.</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>ล้มเหลวในการลำดับแผนที่แปรผันพารามิเตอร์ KDF   </translation>
+        <translation>Échec de sérialisation des paramètres de fonction de dérivation de clé de la mappe de variantes.</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de calculer la clé de la base de données : %1</translation>
     </message>
 </context>
 <context>
     <name>KdbxReader</name>
     <message>
         <source>Unsupported cipher</source>
-        <translation>ไม่รองรับการเข้ารหัส</translation>
+        <translation>Chiffrement non pris en charge</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>ความยาวแฟล็กบีบอัดไม่ถูกต้อง</translation>
+        <translation>La longueur des drapeaux de compression est invalide.</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation>อัลกอริทีมการบีบอัดไม่รองรับ</translation>
+        <translation>L’algorithme de compression n’est pas pris en charge</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation>การแปลงขนาดมาสเตอร์ไม่ถูกต้อง</translation>
+        <translation>La taille de la graine maîtresse est invalide</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>การแปลงขนาดค่าเริ่มต้นไม่ถูกต้อง</translation>
+        <translation>La taille de la semence de transformation est invalide</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation>ขนาดรอบการแปลงไม่ถูกต้อง</translation>
+        <translation>La taille des cycles de transformation est invalide</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation>ขนาดของไบต์เริ่มต้นไม่ถูกต้อง</translation>
+        <translation>La taille des octets de début est invalide</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>ขนาด ID สตรีมแบบสุ่มไม่ถูกต้อง</translation>
+        <translation>La taille de l’ID de flux aléatoire est invalide.</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation>การเข้ารหัสสตรีมแบบสุ่มด้านในไม่ถูกต้อง</translation>
+        <translation>Le chiffrement du flux intérieur aléatoire est invalide</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>ไม่ใช่ฐานข้อมูล KeePass</translation>
+        <translation>N’est pas une base de données KeePass.</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>แฟ้มที่เลือกเป็นฐานข้อมูล KeePass 1 แบบเก่า (.kdb)
+        <translation>Le fichier sélectionné est une ancienne base de données KeePass 1 (.kdb).
 
-คุณสามารถนำข้อมูลเข้าได้โดยคลิกที่ ฐานข้อมูล &gt; &apos;นำเข้าฐานข้อมูล KeePass 1...&apos;
-นี่คือการโอนย้ายทางเดียว คุณจะไม่สามารถเปิดฐานข้อมูลที่ถูกนำเข้าแล้วด้วย KeePassX 0.4 รุ่นเก่าได้</translation>
+Vous pouvez l’importer en cliquant sur Base de données &gt; « Importer une base de données KeePass 1… ».
+Il s’agit d’une migration à sens unique. Vous ne pourrez pas ouvrir la base de données importée avec l’ancienne version KeePassX 0.4.</translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>ไม่สนับสนุนรุ่นฐานข้อมูล KeePass 2</translation>
+        <translation>Version de base de données KeePass 2 non pris en charge.</translation>
     </message>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
-        <translation>ความยาวรหัส cipher uuid ไม่ถูกต้อง: %1 (ความยาว=%2)</translation>
+        <translation>La longueur de l’UUID de chiffrement est invalide : %1 (longueur = %2)</translation>
     </message>
     <message>
         <source>Unable to parse UUID: %1</source>
-        <translation>ไม่สามารถแยกวิเคราะห์ UUID: %1</translation>
+        <translation>Impossible d’analyser l’UUID : %1</translation>
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation>ไม่สามารถอ่านแฟ้มฐานข้อมูล</translation>
+        <translation>Échec de lecture du fichier de base de données.</translation>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation>การแยกวิเคราะห์ XML ล้มเหลว: %1</translation>
+        <translation>Échec d’analyse XML : %1</translation>
     </message>
     <message>
         <source>No root group</source>
-        <translation>ไม่มีกลุ่มรูต</translation>
+        <translation>Aucun groupe racine</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation>ไอคอน uuid หรือ ข้อมูล หายไป</translation>
+        <translation>L’UUID ou les données de l’icône manquent</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation>ไม่มีข้อมูลกุญแจหรือค่าที่กำหนดเอง</translation>
+        <translation>La valeur ou la clé des données personnalisées manque</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation>กลุ่มองค์ประกอบหลายฐานข้อมูล</translation>
+        <translation>Éléments de groupe multiples</translation>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation>กลุ่ม uuid ที่ว่าง</translation>
+        <translation>UUID de groupe nul</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>กลุ่มตัวเลขไอคอนไม่ถูกต้อง</translation>
+        <translation>Le numéro de l’icône du groupe est invalide</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation>ค่า EnableAutoType ไม่ถูกต้อง</translation>
+        <translation>La valeur EnableAutoType est invalide</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation>ค่า EnableSearching ไม่ถูกต้อง</translation>
+        <translation>La valeur de EnableSearching est invalide</translation>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation>ไม่พบกลุ่ม uuid</translation>
+        <translation>Aucun UUID de groupe n’a été trouvé</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation>DeleteObject uuid ที่ว่าง</translation>
+        <translation>UUID de DeleteObject null</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation>ไม่มี DeleteObject uuid หรือ เวลา</translation>
+        <translation>L’UUID ou l’heure de DeletedObject manque</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation>รายการ uuid ที่ว่าง</translation>
+        <translation>UUID de l’entrée null</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>ตัวเลขไอคอนไม่ถูกต้อง</translation>
+        <translation>Le numéro de l’icône de l’entrée est invalide</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation>ประวัติของส่วนประกอบในประวัติรายการ</translation>
+        <translation>Élément d’historique dans l’entrée de l’historique</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>ไม่พบรายการ uuid</translation>
+        <translation>Aucun UUID d’entrée n’a été trouvé</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation>ประวัติของส่วนประกอบที่ uuid ต่างกัน</translation>
+        <translation>Élément d’historique avec un UUID différent</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation>ค้นพบคัดลอกคุณสมบัติที่กำหนดเอง</translation>
+        <translation>Un doublon d’attribut personnalisé a été trouvé</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>รายการสายกุญแจหรือค่าที่หายไป</translation>
+        <translation>La clé ou la valeur de chaîne de l’entrée manque</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>รายการกุญแจไบนารีหรือค่าที่หายไป</translation>
+        <translation>La clé ou la valeur binaire de l’entrée manque</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>ไม่พบการพิมพ์อัตโนมัติของหน้าต่างที่เชื่อมต่อ หรือลำดับ</translation>
+        <translation>La fenêtre d’association ou la séquence de saisie automatique manque</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation>ค่าบูลไม่ถูกต้อง</translation>
+        <translation>La valeur booléenne est invalide</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation>ค่าวันที่และเวลาไม่ถูกต้อง</translation>
+        <translation>La valeur de date et d’heure est invalide</translation>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation>ค่าสีไม่ถูกต้อง</translation>
+        <translation>La valeur de couleur est invalide</translation>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation>ค่าสีส่วนRGBไม่ถูกต้อง</translation>
+        <translation>La partie de couleur RVB est invalide</translation>
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation>ค่าตัวเลขไม่ถูกต้อง</translation>
+        <translation>La valeur numérique est invalide</translation>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation>ค่า uuid ไม่ถูกต้อง</translation>
+        <translation>La valeur d’UUID est invalide</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation>การขยายไบนารีล้มเหลว</translation>
+        <translation>Impossible de décompresser les données binaires</translation>
     </message>
     <message>
         <source>XML error:
 %1
 Line %2, column %3</source>
-        <translation>XML ผิดพลาด:
+        <translation>Erreur XML :
 %1
-บรรทัด %2 คอลัมน์ %3</translation>
+Ligne %2, colonne %3</translation>
     </message>
 </context>
 <context>
     <name>KeeAgentSettings</name>
     <message>
         <source>Invalid KeeAgent settings file structure.</source>
-        <translation type="unfinished"/>
+        <translation>La structure du fichier de paramètres KeeAgent est invalide.</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
-        <translation type="unfinished"/>
+        <translation>La clé privée est un fichier joint, mais aucun fichier joint n’est fourni.</translation>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation>กุญแจส่วนตัวว่างเปล่า</translation>
+        <translation>La clé privée est vide</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>แฟ้มใหญ่เกินกว่าจะเป็นกุญแจส่วนตัว</translation>
+        <translation>Le fichier est trop important pour être un fichier clé</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>ล้มเหลวระหว่างการเปิดกุญแจส่วนตัว</translation>
+        <translation>Échec d’ouverture de la clé privée</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Unable to open the database.</source>
-        <translation>ไม่สามารถเปิดฐานข้อมูลดังกล่าว</translation>
+        <translation>Impossible d’ouvrir la base de données.</translation>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>Importer une base de données KeePass 1</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>ไม่สามารถอ่านแฟ้มกุญแจได้</translation>
+        <translation>Impossible de lire le fichier clé.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>ไม่ใช่ฐานข้อมูล KeePass</translation>
+        <translation>N’est pas une base de données KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>อัลกอริทีมเข้ารหัสลับไม่รองรับ</translation>
+        <translation>Algorithme de chiffrement non pris en charge.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>รุ่นของฐานข้อมูล Keepass ไม่รองรับ</translation>
+        <translation>Version de base de données KeePass non prise en charge.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>ไม่สามารถอ่านการเข้ารหัสลับ IV</translation>
+        <translation>Impossible de lire le chiffrement IV</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation>จำนวนกลุ่มไม่ถูกต้อง</translation>
+        <translation>Le nombre de groupes est invalide</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation>จำนวนรายการไม่ถูกต้อง</translation>
+        <translation>Le nombre d’entrées est invalide</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation>ขนาดเนื้อหาโดยละเอียดไม่ถูกต้อง</translation>
+        <translation>La taille de l’empreinte du contenu est invalide</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>การแปลงขนาดค่าเริ่มต้นไม่ถูกต้อง</translation>
+        <translation>La taille de la semence de transformation est invalide</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation>การแปลงจำนวนรอบของการเปลี่ยนแปลงไม่ถูกต้อง</translation>
+        <translation>Le nombre de cycles de transformation est invalide</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation>ไม่สามารถสร้าง group tree</translation>
+        <translation>Impossible de créer l’arborescence du groupe</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>รูต</translation>
+        <translation>Racine</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>การแปลงรหัสล้มเหลว</translation>
+        <translation>Échec de transformation de la clé</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>กรุ๊ปตัวเลขฟิลด์ไทป์ไม่ถูกต้อง</translation>
+        <translation>Le numéro de type du champ de groupe est invalide</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation>ขนาดกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille du champ de groupe est invalide</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation>ข้อมูลการอ่านกรุ๊ปฟิลด์ฟิลด์จับคู่ไม่ได้ขนาด</translation>
+        <translation>Les données du champ de groupe lues ne correspondent pas à la taille</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation>ขนาดกรุ๊ปไอดีฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille du champ « ID du groupe » est incorrecte</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>เวลาการสร้างกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille du champ d’heure de création du groupe est incorrecte</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>การแก้ไขเวลากรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille du champ d’heure de modification du groupe est incorrecte</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation>เวลาการเข้าถึงกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille du champ de date d’accès du groupe est incorrecte.</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation>เวลาหมดอายุของกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille du champ de date d’expiration du groupe est incorrecte.</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation>ขนาดกรุ๊ปฟิลด์ไอคอนไม่ถูกต้อง</translation>
+        <translation>La taille du champ d’icône du groupe est incorrecte</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation>ขนาดเลเวลกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille de champ du niveau du groupe est incorrecte</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation>กลุ่มกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille du champ de groupe est invalide</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation>บัญชีกลุ่มหรือเลเวลหายไป</translation>
+        <translation>L’ID ou le niveau du groupe manque</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>ตัวเลขเอ็นทรีฟิลด์ไทป์หายไป</translation>
+        <translation>Le numéro de type du champ d’entrée manque</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>ขนาดเอ็นทรีฟิลด์ไม่ถูกต้อง</translation>
+        <translation>La taille du champ d’entrée est invalide</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation>ขนาดการอ่านข้อมูลเอ็นทรีฟิลด์ไม่เหมาะสมกับขนาด</translation>
+        <translation>Les données du champ d’entrée lues ne correspondent pas à la taille.</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation>ขนาดฟิลด์ UUID เอ็นทรีไม่ถูกต้อง</translation>
+        <translation>La taille du champ UUID de l’entrée est invalide</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>ขนาดบัญชีเอ็นทรีกรุ๊ปไม่ถูกต้อง</translation>
+        <translation>La taille du champ d’ID de groupe de l’entrée est invalide</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>ขนาดฟิลด์ไอคอนเอ็นทรีไม่ถูกต้อง</translation>
+        <translation>La taille du champ d’icône de l’entrée est invalide</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>เวลาสร้างขนาดฟิลด์เอ็นทรีไม่ถูกต้อง</translation>
+        <translation>La taille du champ de date de création de l’entrée est invalide</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>เวลาแก้ไขขนาดฟิลด์เอ็นทรีไม่ถูกต้อง</translation>
+        <translation>La taille du champ de date de modification de l’entrée est invalide</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>เวลาหมดอายุขนาดฟิลด์เอ็นทรีไม่ถูกต้อง</translation>
+        <translation>La taille du champ de date d’expiration de l’entrée est invalide</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>กลุ่มเอ็นทรีฟิลด์ไม่ถูกต้อง</translation>
+        <translation>Le type du champ d’entrée est invalide</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
-        <translation>ไม่สามารถที่จะหาตำแหน่งเนื้อหาได้</translation>
+        <translation>impossible de se déplacer vers la position du contenu</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Des identifiants invalides ont été fournis, veuillez réessayer.
+Si le problème se reproduit, le fichier de la base de données pourrait être corrompu.</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de calculer la clé de la base de données</translation>
     </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation type="unfinished"/>
+        <translation>La référence de partage est invalide</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation type="unfinished"/>
+        <translation>Le partage %1 est inactif</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>นำเข้าจาก %1</translation>
+        <translation>Importé de %1</translation>
     </message>
     <message>
         <source>Exported to %1</source>
-        <translation>ส่งออกไป %1</translation>
+        <translation>A été exporté vers %1</translation>
     </message>
     <message>
         <source>Synchronized with %1</source>
-        <translation>เชื่อมประสานกับ %1</translation>
+        <translation>A été synchronisé avec %1</translation>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>L’importation est désactivée dans les paramètres</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>L’exportation est désactivée dans les paramètres</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation type="unfinished"/>
+        <translation>Le partage est inactif</translation>
     </message>
     <message>
         <source>Imported from</source>
-        <translation>นำเข้าจาก</translation>
+        <translation>A été importé de</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation>ส่งออกไป</translation>
+        <translation>A été exporté vers</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation>เชื่อมประสานกับ</translation>
+        <translation>A été synchronisé avec</translation>
     </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
     <message>
         <source>Key Component</source>
-        <translation>ส่วนโปรแกรมหลัก</translation>
+        <translation>Composant clé</translation>
     </message>
     <message>
         <source>Key Component Description</source>
-        <translation>คำบรรยายส่วนโปรแกรมหลัก</translation>
+        <translation>Description du composant clé</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ยกเลิก</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
-        <translation>จัดตั้งส่วนโปรแกรมหลักสำเร็จ คลิกเพื่อเปลี่ยนแปลงหรือลบออก</translation>
+        <translation>Le composant clé est défini, cliquez pour le changer ou le supprimer</translation>
     </message>
     <message>
         <source>Add %1</source>
         <comment>Add a key component</comment>
-        <translation>เพิ่ม %1</translation>
+        <translation>Ajouter %1</translation>
     </message>
     <message>
         <source>Change %1</source>
         <comment>Change a key component</comment>
-        <translation>เปลี่ยน %1</translation>
+        <translation>Changer %1</translation>
     </message>
     <message>
         <source>Remove %1</source>
         <comment>Remove a key component</comment>
-        <translation>ลบ %1</translation>
+        <translation>Supprimer %1</translation>
     </message>
     <message>
         <source>%1 set, click to change or remove</source>
         <comment>Change or remove a key component</comment>
-        <translation>ตั้งค่า %1 คลิกเพื่อเปลี่ยนแปลงหรือลบออก</translation>
+        <translation>%1 est défini, cliquez pour le changer ou le supprimer</translation>
     </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
     <message>
         <source>Generate</source>
-        <translation>สร้าง</translation>
+        <translation>Générer</translation>
     </message>
     <message>
         <source>Key File</source>
-        <translation>แฟ้มกุญแจ</translation>
+        <translation>Fichier clé</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;คุณสามารถเพิ่มแฟ้มกุญแจที่ประกอบไปด้วยไบต์แบบสุ่มเพื่อความปลอดภัยที่มากขึ้น&lt;/p&gt;&lt;p&gt;คุณต้องเก็บข้อมูลเป็นความลับห้ามทำหาย ไม่เช่นนั้นจะหลุดออกจากระบบ</translation>
+        <translation>&lt;p&gt;Pour une sécurité accrue, vous pouvez ajouter un fichier clé qui comprend des octets aléatoires.&lt;/p&gt;&lt;p&gt;Vous devez le garder secret et ne jamais le perdre ou vous ne pourrez plus vous connecter.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation>มีปัญหาในการโหลดแฟ้มกุญแจ &apos;%1&apos;
-ข้อความ: %2</translation>
+        <translation>Erreur durant le chargement du fichier clé « %1 »
+Message : %2</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>แฟ้มกุญแจ</translation>
+        <translation>Fichiers clés</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>ทุกแฟ้ม</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>สร้างแฟ้มกุญแจ...</translation>
+        <translation>Créer un fichier clé…</translation>
     </message>
     <message>
         <source>Error creating key file</source>
-        <translation>พบปัญหาในการสร้างแฟ้มกุญแจ</translation>
+        <translation>Erreur lors de la création du fichier clé</translation>
     </message>
     <message>
         <source>Unable to create key file: %1</source>
-        <translation>ไม่สามารถสร้างแฟ้มกุญแจ %1</translation>
+        <translation>Impossible de créer le fichier clé : %1</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>เลือกแฟ้มกุญแจ</translation>
+        <translation>Sélectionner un fichier clé</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>เรียกดูแฟ้มกุญแจ</translation>
+        <translation>Rechercher un fichier clé</translation>
     </message>
     <message>
         <source>Generate a new key file</source>
-        <translation>สร้างแฟ้มกุญแจใหม่</translation>
+        <translation>Générer un nouveau fichier clé</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation>แฟ้มกุญแจผิดรูปแบบ</translation>
+        <translation>Le fichier clé est invalide</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Vous ne pouvez pas utiliser la base de données actuelle comme son propre fichier clé. Veuillez choisir un autre fichier ou générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation>แฟ้มกุญแจที่น่าสงสัย</translation>
+        <translation>Fichier clé douteux</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation type="unfinished"/>
+        <translation>Le fichier clé sélectionné semble être un fichier de base de données de mots de passe. Un fichier clé doit être un fichier statique qui ne change jamais ou vous perdrez irrémédiablement l’accès à votre base de données.
+Voulez-vous vraiment poursuivre avec ce fichier?</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>รูปแบบแฟ้มกุญแจแบบเก่า</translation>
+        <translation>Ancien format de fichier clé</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Vous utilisez un ancien format de fichier clé que KeePassXC &lt;br&gt;pourrait ne plus prendre en charge à l’avenir.&lt;br&gt;&lt;br&gt;Veuillez envisager de plutôt générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation type="unfinished"/>
+        <translation>Générez un nouveau fichier clé ou choisissez-en un existant pour protéger votre base de données.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation type="unfinished"/>
+        <translation>Remarque: n’utilisez PAS un fichier qui peut changer car cela vous empêchera de déverrouiller votre base de données.</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>เลือกดู...</translation>
+        <translation>Parcourir...</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation>ฐานข้อมูล (&amp;D)</translation>
+        <translation>&amp;Base de données</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>ช่วยเหลือ (&amp;H)</translation>
+        <translation>&amp;Aide</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>กลุ่ม (&amp;G)</translation>
+        <translation>&amp;Groupes</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>เครื่องมือ (&amp;T)</translation>
+        <translation>&amp;Outils</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>ออก (&amp;Q)</translation>
+        <translation>&amp;Fermer</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>เกี่ยวกับ (&amp;A)</translation>
+        <translation>À &amp;propos</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>การตั้งค่าฐานข้อมูล</translation>
+        <translation>Paramètres de la base de données</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>คัดลอกชื่อผู้ใช้ไปคลิปบอร์ด</translation>
+        <translation>Copier le nom d’utilisateur dans le presse-papiers</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>คัดลอกรหัสผ่านไปคลิปบอร์ด</translation>
+        <translation>Copier le mot de passe dans le presse-papiers</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>การตั้งค่า (&amp;S)</translation>
+        <translation>&amp;Paramètres</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation>หัวเรื่อง (&amp;T)</translation>
+        <translation>&amp;Titre</translation>
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation>คัดลอกหัวเรื่องไปยังคลิปบอร์ด</translation>
+        <translation>Copier le titre dans le presse-papiers</translation>
     </message>
     <message>
         <source>&amp;URL</source>
-        <translation>URL (&amp;U)</translation>
+        <translation>&amp;URL</translation>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation>คัดลอก URL ไปยัง คลิปบอร์ด</translation>
+        <translation>Copier l’URL dans le presse-papiers</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>บันทึก (&amp;N)</translation>
+        <translation>&amp;Notes</translation>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation>คัดลอกข้อมูลไปยังคลิปบอร์ด</translation>
+        <translation>Copier les notes dans le presse-papiers</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation>คัดลอก &amp;TOTP</translation>
+        <translation>Copier le &amp;TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>ล้างถังรีไซเคิล</translation>
+        <translation>&amp;Vider la corbeille</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation>ล้างประวัติ</translation>
+        <translation>Effacer l’historique</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>มีข้อผิดพลาดในการเข้าถึงแฟ้มตั้งค่า %1</translation>
+        <translation>Erreur d’accès pour le fichier de configuration %1</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>ตั้งค่า</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>สลับหน้าต่าง</translation>
+        <translation>Activer ou désactiver la fenêtre</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>ออกจาก KeePassXC</translation>
+        <translation>Fermer KeePassXC</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation>กรุณาแตะปุ่มบน YubiKey ของคุณ!</translation>
+        <translation>Veuillez appuyez sur le bouton de votre YubiKey</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC!
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation>คำเตือน คุณกำลังใช้งานที่ไม่เสถียรของ KeePassXC! 
-มีความเสี่ยงสูงในการเกิดความเสียหาย เก็บสำรองข้อมูลของคุณ
-รุ่นนี้ไม่ได้มีไว้สำหรับการใช้</translation>
+        <translation>AVERTISSEMENT: Vous utilisez une version instable du KeePassXC.
+Le risque de corruption est élevé, conservez une sauvegarde de vos bases de données.
+Cette version n’est pas destinée à un usage régulier.</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation>บริจาค</translation>
+        <translation>&amp;Faire un don</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation>คำเตือน รุ่น Qt ของคุณอาจทำให้ KeePassXC ขัดข้องกับบนหน้าจอคีย์บอร์ท
-พวกเราแนะนำให้คุณใช้ Applmage อยู่หน้าดาวน์โหลด</translation>
+        <translation>AVERTISSEMENT: Votre version de Qt pourrait faire planter KeePassXC avec un clavier virtuel.
+Nous recommandons d’utiliser l’AppImage proposée sur notre page de téléchargement.</translation>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation>&amp;นำเข้า</translation>
+        <translation>&amp;Importer</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation>สร้างฐานข้อมูลใหม่</translation>
+        <translation>Créer une nouvelle base de données</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation>รวมฐานข้อมูลKDBXอีกชุด</translation>
+        <translation>Fusionner d’une autre base de données KDBX</translation>
     </message>
     <message>
         <source>Add a new entry</source>
-        <translation>เพิ่มรายการใหม่</translation>
+        <translation>Ajouter une nouvelle entrée</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation>ดู หรือ แก้ไขรายการ</translation>
+        <translation>Voir ou modifier l’entrée</translation>
     </message>
     <message>
         <source>Add a new group</source>
-        <translation>เพิ่มกลุ่มใหม่</translation>
+        <translation>Ajouter un nouveau groupe</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>ดำเนินการและพิมพ์อัตโนมัติ</translation>
+        <translation>Saisir &amp;automatiquement</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation>เปิดและ URL</translation>
+        <translation>Ouvrir l’&amp;URL</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation>นำเข้า ฐานข้อมูล KeePass1...</translation>
+        <translation>Importer une base de données KeePass 1</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
-        <translation>นำเข้า แฟ้ม CSV </translation>
+        <translation>Importer un fichier CSV</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>หมายเหตุ คุณกำลังใช้งาน KeePassXC รุ่นก่อนวางจำหน่าย คาดว่าข้อบกพร่องบางอย่างและปัญหาเล็กน้อย รุ่นนี้ไม่ได้มีไว้สำหรับการใช้งานจริง</translation>
+        <translation>NOTE : Vous utilisez une préversion de KeePassXC.
+Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas destinée à un usage régulier.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation>ตรวจหาการปรับรุ่นเมื่อเริ่มโปรแกรมหรือไม่?</translation>
+        <translation>Vérifier la présence de mises à jour au démarrage?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>คุณอยากให้ KeePassXC ตรวจหาการปรับรุ่นเมื่อเริ่มโปรแกรมหรือไม่?</translation>
+        <translation>Voulez-vous que KeePassXC vérifie la présence de mises à jour au démarrage?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation>คุณสามารถตรวจหาการปรับรุ่นได้ด้วยตนเองจากเมนูของแอป</translation>
+        <translation>Vous pouvez toujours vérifier manuellement la présence de mises à jour à partir du menu de l’application.</translation>
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>&amp;ส่งออก</translation>
+        <translation>&amp;Exporter</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation>เรียง &amp;ก-ฮ</translation>
+        <translation>Trier de &amp;A à Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation>เรียง &amp;ฮ-ก</translation>
+        <translation>Trier de &amp;Z à A</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation>ตัวสร้าง&amp;รหัสผ่าน</translation>
+        <translation>&amp;Générateur de mot de passe</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation>นำเข้า Vault ของ 1Password</translation>
+        <translation>Importer un coffre 1Password</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Guide de démarrage</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation type="unfinished"/>
+        <translation>Guide d’&amp;utilisation</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Raccourcis clavier</translation>
     </message>
     <message>
         <source>&amp;Recent Databases</source>
-        <translation type="unfinished"/>
+        <translation>Bases de données &amp;récentes</translation>
     </message>
     <message>
         <source>&amp;Entries</source>
-        <translation>&amp;รายการ</translation>
+        <translation>&amp;Entrées</translation>
     </message>
     <message>
         <source>Copy Att&amp;ribute</source>
-        <translation type="unfinished"/>
+        <translation>Copier l’att&amp;ribut</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -4619,462 +4638,462 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>View</source>
-        <translation>ดู</translation>
+        <translation>Affichage</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"/>
+        <translation>Thème</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
-        <translation>&amp;ตรวจหาการปรับปรุง</translation>
+        <translation>&amp;Vérifier la présence de mises à jour</translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>เ&amp;ปิดฐานข้อมูล...</translation>
+        <translation>&amp;Ouvrir une base de données…</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
-        <translation>&amp;บันทึกฐานข้อมูล</translation>
+        <translation>Enregistrer la base de donnée&amp;s</translation>
     </message>
     <message>
         <source>&amp;Close Database</source>
-        <translation>ปิ&amp;ดฐานข้อมูล</translation>
+        <translation>Fermer la &amp;base de données</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>ฐานข้อมูลให&amp;ม่...</translation>
+        <translation>&amp;Nouvelle base de données…</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>&amp;รวมจากฐานข้อมูล...</translation>
+        <translation>Fusio&amp;nner à partir d’une base de données…</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>รายการให&amp;ม่...</translation>
+        <translation>&amp;Nouvelle entrée…</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>แ&amp;ก้ไขรายการ...</translation>
+        <translation>&amp;Modifier l’entrée…</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation>&amp;ลบรายการ...</translation>
+        <translation>&amp;Supprimer l’entrée…</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>กลุ่มให&amp;ม่...</translation>
+        <translation>&amp;Nouveau groupe…</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>แ&amp;ก้ไขกลุ่ม...</translation>
+        <translation>&amp;Modifier le groupe…</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;ลบกลุ่ม...</translation>
+        <translation>&amp;Supprimer le groupe…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation type="unfinished"/>
+        <translation>Télécharger toutes les &amp;favoricônes…</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation type="unfinished"/>
+        <translation>Enre&amp;gistrer la base de données sous…</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Sécurité de la base de données…</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Rapports de la base de données…</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
-        <translation type="unfinished"/>
+        <translation>Statistiques, bilan de santé, etc.</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Paramètres de la base de données…</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Cloner l’entrée…</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
-        <translation>ขยับ&amp;ขึ้น</translation>
+        <translation>Déplacer vers le &amp;haut</translation>
     </message>
     <message>
         <source>Move entry one step up</source>
-        <translation type="unfinished"/>
+        <translation>Déplacer l’entrée d’un niveau vers le haut</translation>
     </message>
     <message>
         <source>Move do&amp;wn</source>
-        <translation>ขยับ&amp;ลง</translation>
+        <translation>Déplacer vers le &amp;bas</translation>
     </message>
     <message>
         <source>Move entry one step down</source>
-        <translation type="unfinished"/>
+        <translation>Déplacer l’entrée d’un niveau vers le bas</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
-        <translation>คัดลอก&amp;ชื่อผู้ใช้</translation>
+        <translation>Copier le nom d’&amp;utilisateur</translation>
     </message>
     <message>
         <source>Copy &amp;Password</source>
-        <translation>คัดลอก&amp;รหัสผ่าน</translation>
+        <translation>Copier le mot de &amp;passe</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation type="unfinished"/>
+        <translation>Télécharger une &amp;favoricône</translation>
     </message>
     <message>
         <source>&amp;Lock Databases</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Verrouiller les bases de données</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation>แฟ้ม &amp;CSV...</translation>
+        <translation>Fichier &amp;CSV…</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation>แฟ้ม &amp;HTML...</translation>
+        <translation>Fichier &amp;HTML…</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
-        <translation>ฐานข้อมูล KeePass 1...</translation>
+        <translation>Base de données KeePass 1…</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
-        <translation type="unfinished"/>
+        <translation>Coffre 1Password…</translation>
     </message>
     <message>
         <source>CSV File…</source>
-        <translation>แฟ้ม CSV...</translation>
+        <translation>Fichier CSV…</translation>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation>แสดง TOTP</translation>
+        <translation>Afficher le TOTP</translation>
     </message>
     <message>
         <source>Show QR Code</source>
-        <translation>แสดงรหัส QR</translation>
+        <translation>Afficher le QR code</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation type="unfinished"/>
+        <translation>Configurer TOTP…</translation>
     </message>
     <message>
         <source>Report a &amp;Bug</source>
-        <translation>รายงานข้อ&amp;ผิดปกติ</translation>
+        <translation>Signaler un &amp;bogue</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
-        <translation type="unfinished"/>
+        <translation>Ouvrir le guide de démarrage</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation>ช่วยเหลือ&amp;ออนไลน์</translation>
+        <translation>&amp;Aide en ligne</translation>
     </message>
     <message>
         <source>Go to online documentation</source>
-        <translation type="unfinished"/>
+        <translation>Accéder à la documentation en ligne</translation>
     </message>
     <message>
         <source>Open User Guide</source>
-        <translation type="unfinished"/>
+        <translation>Ouvrir le guide d’utilisation</translation>
     </message>
     <message>
         <source>Save Database Backup...</source>
-        <translation type="unfinished"/>
+        <translation>Sauvegarder la base de données…</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>Ajouter une clé à l’agent SSH</translation>
     </message>
     <message>
         <source>Remove key from SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>Supprimer la clé de l’agent SSH</translation>
     </message>
     <message>
         <source>Compact Mode</source>
-        <translation type="unfinished"/>
+        <translation>Mode compact</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>อัตโนมัติ</translation>
+        <translation>Automatique</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation>สว่าง</translation>
+        <translation>Clair</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>มืด</translation>
+        <translation>Sombre</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation type="unfinished"/>
+        <translation>Classique (de la plateforme)</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation>แสดงแถบเครื่องมือ</translation>
+        <translation>Afficher la barre d’outils</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation type="unfinished"/>
+        <translation>Afficher le panneau de prévisualisation</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation type="unfinished"/>
+        <translation>Ne plus afficher pour cette version</translation>
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation>เริ่มแอปใหม่หรือไม่?</translation>
+        <translation>Redémarrer l’application?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>คุณจะต้องเริ่มแอปใหม่เพื่อใช้การตั้งค่านี้ คุณต้องการจะเริ่มแอปใหม่ตอนนี้หรือไม่?</translation>
+        <translation>Pour appliquer ce paramètre, vous devez redémarrer l’application. Voulez-vous la démarrer maintenant ?</translation>
     </message>
     <message>
         <source>Perform Auto-Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Effectuer une séquence de saisie automatique</translation>
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>{NOMD’UTILISATEUR}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{NOMD’UTILISATEUR}{ENTRÉE}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>{MOTDEPASSE}</translation>
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{MOTDEPASSE}{ENTRÉE}</translation>
     </message>
     <message>
         <source>Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Toujours sur le dessus</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>ซ่อนชื่อผู้ใช้</translation>
+        <translation>Cacher les noms d’utilisateur</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>ซ่อนรหัสผ่าน</translation>
+        <translation>Cacher les mots de passe</translation>
     </message>
 </context>
 <context>
     <name>ManageDatabase</name>
     <message>
         <source>Database settings</source>
-        <translation>การตั้งค่าฐานข้อมูล</translation>
+        <translation>Paramètres de la base de données</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation>แก้ไขการตั้งค่าฐานข้อมูล</translation>
+        <translation>Modifier les paramètres de la base de données</translation>
     </message>
     <message>
         <source>Unlock database</source>
-        <translation>ปลดล็อกฐานข้อมูล</translation>
+        <translation>Déverrouiller la base de données</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation type="unfinished"/>
+        <translation>Déverrouiller la base de données pour afficher davantage de renseignements</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>ล็อกฐานข้อมูล</translation>
+        <translation>Verrouiller la base de données</translation>
     </message>
 </context>
 <context>
     <name>ManageSession</name>
     <message>
         <source>Disconnect</source>
-        <translation>หยุดเชื่อมต่อ</translation>
+        <translation>Déconnecter</translation>
     </message>
     <message>
         <source>Disconnect this application</source>
-        <translation type="unfinished"/>
+        <translation>Déconnecter cette application</translation>
     </message>
 </context>
 <context>
     <name>Merger</name>
     <message>
         <source>Creating missing %1 [%2]</source>
-        <translation>กำลังสร้างส่วนที่หายไป %1 [%2]</translation>
+        <translation>Création du %1 manquant [%2]</translation>
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
-        <translation>กำลังย้าย %1 [%2]</translation>
+        <translation>Déplacement de %1 [%2]</translation>
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation>เขียนทับ %1 [%2]</translation>
+        <translation>Remplacement de %1 [%2]</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>ผสานรายการที่เก่ากว่าจากฐานข้อมูล &quot;%1&quot;</translation>
+        <translation>ancienne entrée fusionnée de la base de données « %1 »</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
-        <translation>กำลังเพิ่มข้อมูลสำรองสำหรับเป้าหมายที่เก่ากว่า %1 [%2]</translation>
+        <translation>Ajout d’une sauvegarde pour l’ancienne cible %1 [%2]</translation>
     </message>
     <message>
         <source>Adding backup for older source %1 [%2]</source>
-        <translation>กำลังเพิ่มข้อมูลสำรองสำหรับแหล่งข้อมูลที่เก่ากว่า %1 [%2]</translation>
+        <translation>Ajout d’une sauvegarde pour l’ancienne source %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>นำรายการจากเป้าหมายเก่ามาใช้บนแหล่งข้อมูลใหม่ %1 [%2]</translation>
+        <translation>Ré-application de l’ancienne entrée cible sur la nouvelle source %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>นำรายการจากแหล่งข้อมูลเก่ามาใช้บนเป้าหมายใหม่ %1 [%2]</translation>
+        <translation>Ré-application de l’ancienne entrée source sur la nouvelle cible %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>เชื่อมประสานจากแหล่งข้อมูลใหม่ %1 [%2]</translation>
+        <translation>Synchronisation avec une source plus récente %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
-        <translation>เชื่อมประสานจากแหล่งข้อมูลเก่า %1 [%2]</translation>
+        <translation>Synchronisation avec une source plus ancienne %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation>ลบข้อมูลลูก %1 [%2]</translation>
+        <translation>Suppression de l’enfant %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation>ลบข้อมูลกำพร้า  %1 [%2]</translation>
+        <translation>Suppression de l’orphelin %1 [%2]</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
-        <translation>เปลี่ยนสิ่งที่ถูกลบ</translation>
+        <translation>Objets supprimés changés</translation>
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation>เพิ่มไอคอนที่ขาดหายไป %1</translation>
+        <translation>Ajout de l’icône %1 manquante</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Les données personnalisées %1 [%2] ont été supprimées</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Ajout des données personnalisées %1 [%2]</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database...</source>
-        <translation>สร้าง ฐานข้อมูล Keepass XC  ใหม่</translation>
+        <translation>Créer une nouvelle base de données KeePassXC…</translation>
     </message>
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation>รูต</translation>
+        <translation>Racine</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPage</name>
     <message>
         <source>WizardPage</source>
-        <translation>วิซาร์ดเพจ</translation>
+        <translation>Page d’aide</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>ที่นี่คุณสามารถปรับการตั้งค่าการเข้ารหัสฐานข้อมูล ไม่ต้องกังวลคุณสามารถเปลี่ยนได้ในภายหลังในการตั้งค่า ฐานข้อมูล</translation>
+        <translation>Vous pouvez régler ici les paramètres de chiffrement de la base de données. Ne vous inquiétez pas, vous pourrez les changer ultérieurement dans les paramètres de la base de données.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation>การตั้งค่าขั้นสูง</translation>
+        <translation>Paramètres avancés</translation>
     </message>
     <message>
         <source>Simple Settings</source>
-        <translation>การตั้งค่าพื้นฐาน</translation>
+        <translation>Paramètres simples</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>การตั้งค่าการเข้ารหัสลับ</translation>
+        <translation>Paramètres de chiffrement</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Identifiants de la base de données</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation type="unfinished"/>
+        <translation>Un jeu d’identifiants connus de vous seul, qui protège votre base de données.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation>การตั้งค่าการเข้ารหัส</translation>
+        <translation>Paramètres de chiffrement</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>ที่นี่คุณสามารถปรับการตั้งค่าการเข้ารหัสฐานข้อมูล ไม่ต้องกังวลคุณสามารถเปลี่ยนได้ในภายหลังในการตั้งค่าฐานข้อมูล</translation>
+        <translation>Vous pouvez régler ici les paramètres de chiffrement de la base de données. Ne vous inquiétez pas, vous pourrez les changer ultérieurement dans les paramètres de la base de données.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>ข้อมูล ฐานข้อมูล ทั่วไป</translation>
+        <translation>Renseignements généraux de la base de données</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>กรุณากรอกชื่อที่แสดง และคำอธิบายเพิ่มเติมสำหรับ ฐานข้อมูล ใหม่ของคุณ</translation>
+        <translation>Veuillez saisir le nom d’affichage et une description facultative pour votre nouvelle base de données :</translation>
     </message>
 </context>
 <context>
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
-        <translation>ตัวจัดการรหัสผ่าน</translation>
+        <translation>Gestionnaire de mots de passe</translation>
     </message>
 </context>
 <context>
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation type="unfinished"/>
+        <translation>OpData01 est invalide, ne comprend pas d’en-tête</translation>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de lire les octets du vecteur d’initialisation, 16 nécessaires, %1 lus</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d’initialiser le chiffrement pour opdata01 : %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de lire tous les octets de la signature HMAC</translation>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation type="unfinished"/>
+        <translation>OpData01 mal formé en raison d’un échec HMAC</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d’activer le traitement de ClearText</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 octets de texte en clair étaient attendus, %2 ont été trouvés</translation>
     </message>
 </context>
 <context>
@@ -5082,187 +5101,188 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Read Database did not produce an instance
 %1</source>
-        <translation type="unfinished"/>
+        <translation>La base de données lue n’a généré aucune instance
+%1</translation>
     </message>
 </context>
 <context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation type="unfinished"/>
+        <translation>Le répertoire .opvault doit exister</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation type="unfinished"/>
+        <translation>Le répertoire .opvault doit être lisible</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation type="unfinished"/>
+        <translation>Le répertoire .opvault/default doit exister</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation type="unfinished"/>
+        <translation>Le répertoire .opvault/default doit être lisible</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de décoder la clé maîtresse : %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de calculer la clé maîtresse : %1</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>แฟ้มกุญแจ ไม่ถูกต้อง คาดว่าจะมี กุญแจ OpenSSH</translation>
+        <translation>Une clé OpenSSH est requise, mais le fichier clé est invalide</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation>เงื่อนไข PEM ไม่ตรงกัน</translation>
+        <translation>La limite PEM ne correspond pas</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation>การถอดรหัส Base64 ล้มเหลว</translation>
+        <translation>Échec du décodage Base64</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>แฟ้มกุญแจ มีขนาดเล็กมาก</translation>
+        <translation>Le fichier clé est bien trop petit.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>รหัสพิเศษ (magic header id) ที่หัวแฟ้มกุญแจไม่ถูกรูปแบบ</translation>
+        <translation>L’identifiant d’en-tête magique du fichier clé est invalide</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation>ไมพบกุญแจ</translation>
+        <translation>Aucune clé n’a été trouvée</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation>ไม่สามารถอ่านกุญแจสาธารณะ</translation>
+        <translation>Échec de lecture de la clé publique.</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>แฟ้มกุญแจเสียหาย การอ่านกุญแจส่วนตัวล้มเหลว</translation>
+        <translation>Le fichier clé est corrompu. Échec de lecture de la clé privée.</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation>ไม่มีส่วนข้อมูลของกุญแจส่วนตัวเพื่อถอดรหัสลับ</translation>
+        <translation>Il n’y a pas de données de clé privée à déchiffrer</translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation>พยายามจะเรียกใช้ KDF โดยไม่ใช้การเข้ารหัส</translation>
+        <translation>Tentative d’exécution de la fonction de dérivation de clé sans chiffrement</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation>จำเป็นต้องใช้วลีรหัสผ่านเพื่อถอดรหัสผ่านกุญแจนี้</translation>
+        <translation>Une phrase de passe est exigée pour déchiffrer cette clé</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation>การสร้างกุญแจล้มเหลว แฟ้มกุญแจเสียหรือไม่?</translation>
+        <translation>Échec de dérivation de la clé. Le fichier clé serait-il corrompu ?</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>การถอดรหัสลับล้มเหลว ใส่วลีรหัสผ่านผิดหรือไม่</translation>
+        <translation>Échec de déchiffrement. La phrase de passe est-elle erronée ?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation>เกิด EOF ที่ไม่คาดคิดขณะอ่านกุญแจสาธารณะ</translation>
+        <translation>Fin de fichier inattendue lors de la lecture de la clé publique</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>เกิด EOF ที่ไม่คาดคิดขณะอ่านกุญแจส่วนตัว</translation>
+        <translation>Fin de fichier inattendue lors de la lecture de la clé privée</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation>ไม่สามารถเขียนกุญแจสาธารณะได้เนื่องจากไม่มี</translation>
+        <translation>Impossible d’écrire la clé publique, car elle est vide</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation>เกิด EOF ที่ไม่คาดคิดขณะเขียนกุญแจสาธารณะ</translation>
+        <translation>Fin de fichier inattendue lors de l’écriture de la clé publique</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>ไม่สามารถเขียนกุญแจส่วนตัวได้เนื่องจากไม่มี</translation>
+        <translation>Impossible d’écrire la clé privée, car elle est vide</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>เกิด EOF ที่ไม่คาดคิดขณะเขียนกุญแจส่วนตัว</translation>
+        <translation>Fin de fichier inattendue lors de l’écriture de la clé privée</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
-        <translation>ชนิดกุญแจที่ไม่รองรับ: %1</translation>
+        <translation>Type de clé non pris en charge : %1</translation>
     </message>
     <message>
         <source>Unknown cipher: %1</source>
-        <translation>การเข้ารหัสที่ไม่รู้จัก: %1</translation>
+        <translation>Chiffrement inconnu : %1</translation>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>การเข้ารหัส IV สั้นเกินไปสำหรับ MD5 kdf</translation>
+        <translation>Le chiffrement IV est trop court pour la fonction de dérivation de clé MD5</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
-        <translation>KDF ที่ไม่รู้จัก: %1</translation>
+        <translation>Fonction de dérivation de clé inconnue : %1</translation>
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation>ประเภทกุญแจที่ไม่รู้จัก: %1</translation>
+        <translation>Type de clé inconnu : %1</translation>
     </message>
 </context>
 <context>
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation>รหัสผ่านไม่ตรงกัน</translation>
+        <translation>Les mots de passe ne correspondent pas</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation>รหัสผ่านยังตรงกันอยู่</translation>
+        <translation>Les mots de passe correspondent jusqu’à présent</translation>
     </message>
     <message>
         <source>Toggle Password (%1)</source>
-        <translation>สลับรหัสผ่าน (%1)</translation>
+        <translation>Activer ou désactiver le mot de passe (%1)</translation>
     </message>
     <message>
         <source>Generate Password (%1)</source>
-        <translation>สร้างรหัสผ่าน (%1)</translation>
+        <translation>Générer un mot de passe (%1)</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation type="unfinished"/>
+        <translation>Avertissement: Les majuscules sont verrouillées</translation>
     </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
-        <translation>กรอกรหัสผ่าน</translation>
+        <translation>Saisir le mot de passe :</translation>
     </message>
     <message>
         <source>Confirm password:</source>
-        <translation>ยืนยันรหัสผ่าน</translation>
+        <translation>Confirmer le mot de passe :</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;รหัสผ่านเป็นวิธีพื้นฐานในการปกป้องฐานข้อมูลของคุณ&lt;/p&gt;&lt;p&gt;รหัสผ่านที่ดีควรยาวและมีเอกลักษณ์ KeePassXC สร้างรหัสผ่านให้คุณได้&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Un mot de passe est le moyen principal pour sécuriser votre base de données.&lt;/p&gt;&lt;p&gt;Les bons mots de passe sont longs et uniques. KeePassXC peut en générer un pour vous.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
-        <translation>รหัสผ่านไม่ตรง</translation>
+        <translation>Les mots de passe ne correspondent pas.</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>ช่องรหัสผ่าน</translation>
+        <translation>Champ de mot de passe</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>Champ de confirmation du mot de passe</translation>
     </message>
 </context>
 <context>
@@ -5274,212 +5294,211 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>strength</source>
         <comment>Password strength</comment>
-        <translation>ความแข็งแรง</translation>
+        <translation>robustesse</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation>เอนโทรปี</translation>
+        <translation>entropie</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>ชนิดอักขระ</translation>
+        <translation>Types de caractères</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>ตัวเลข</translation>
+        <translation>Chiffres</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation>Extended ASCII
-</translation>
+        <translation>ASCII étendu</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>ไม่ใช้อักขระที่หน้าตาคล้ายกัน</translation>
+        <translation>Exclure les caractères qui se ressemblent</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation>เลือกใช้ตัวอักขระจากทุกกลุ่ม</translation>
+        <translation>Choisir des caractères dans chacun des groupes</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation>ความยาว (&amp;L)</translation>
+        <translation>&amp;Longueur :</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>วลีรหัสผ่าน</translation>
+        <translation>Phrase de passe</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>รายการคำ</translation>
+        <translation>Liste de mots :</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>ตัวแบ่งคำ</translation>
+        <translation>Séparateur de mot :</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>ปิด</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>เอนโทรปี: %1 บิต</translation>
+        <translation>Entropie : %1 bits</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>คุณภาพรหัสผ่าน: %1</translation>
+        <translation>Qualité du mot de passe : %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>แย่</translation>
+        <translation>Plutôt mauvais</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>อ่อนแอ</translation>
+        <translation>Faible</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>ดี</translation>
+        <translation>Bon</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>ดีมาก</translation>
+        <translation>Excellent</translation>
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation>เปลี่ยนเป็นโหมดใช้งานขั้นสูง</translation>
+        <translation>Passer en mode avancé</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>ขั้นสูง</translation>
+        <translation>Avancé</translation>
     </message>
     <message>
         <source>Braces</source>
-        <translation>วงเล็บปีกกา</translation>
+        <translation>Accolades</translation>
     </message>
     <message>
         <source>Punctuation</source>
-        <translation>วรรคตอน</translation>
+        <translation>Ponctuation</translation>
     </message>
     <message>
         <source>Quotes</source>
-        <translation>คำพูด</translation>
+        <translation>Guillemets</translation>
     </message>
     <message>
         <source>Logograms</source>
-        <translation>สัญลักษณ์หรือตัวอักษรที่ใช้แทนคำ</translation>
+        <translation>Logogrammes</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
-        <translation>ชุดอักขระที่ต้องการยกเว้นจากรหัสผ่านที่สร้างขึ้น</translation>
+        <translation>Jeu de caractères à exclure du mot de passe généré</translation>
     </message>
     <message>
         <source>Do not include:</source>
-        <translation>ไม่รวม</translation>
+        <translation>Ne doit pas comporter :</translation>
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>เพิ่มตัวอักขระที่ไม่ใช่เลขฐานสิบหกในรายการ &quot;ห้ามรวม&quot;</translation>
+        <translation>Ajouter les lettres non hexadécimales à la liste « Ne doit pas comporter »</translation>
     </message>
     <message>
         <source>Hex</source>
-        <translation>เลขฐานสิบหก</translation>
+        <translation>Hexadécimal</translation>
     </message>
     <message>
         <source>Generated password</source>
-        <translation>สร้างรหัสผ่าน</translation>
+        <translation>Mot de passe généré</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation>อักษรพิมพ์ใหญ่</translation>
+        <translation>Majuscules</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation>อักษรตัวพิมพ์เล็ก</translation>
+        <translation>Minuscules</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation>อักขระพิเศษ</translation>
+        <translation>Caractères spéciaux</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation>สัญลักษณ์คณิตศาสตร์</translation>
+        <translation>Symboles mathématiques</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation>ขีดนอนและขีดเฉียง</translation>
+        <translation>Tirets et barres obliques</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation>ตัวอักษรที่ไม่รวม</translation>
+        <translation>Caractères exclus</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation>รหัสผ่านเลขฐาน 16</translation>
+        <translation>Mots de passe hexadécimaux</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation>ความยาวรหัสผ่าน</translation>
+        <translation>Longueur du mot de passe</translation>
     </message>
     <message>
         <source>Word Case:</source>
-        <translation type="unfinished"/>
+        <translation>Casse des mots :</translation>
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation>สร้างรหัสผ่านใหม่</translation>
+        <translation>Générer le mot de passe de nouveau</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation>คัดลอกรหัสผ่าน</translation>
+        <translation>Copier le mot de passe</translation>
     </message>
     <message>
         <source>lower case</source>
-        <translation type="unfinished"/>
+        <translation>minuscules</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation type="unfinished"/>
+        <translation>MAJUSCULES</translation>
     </message>
     <message>
         <source>Title Case</source>
-        <translation type="unfinished"/>
+        <translation>Majuscule De Signification</translation>
     </message>
     <message>
         <source>Generate Password</source>
-        <translation>สร้างรหัสผ่าน</translation>
+        <translation>Générer un mot de passe</translation>
     </message>
     <message>
         <source>Also choose from:</source>
-        <translation type="unfinished"/>
+        <translation>Choisir aussi parmi :</translation>
     </message>
     <message>
         <source>Additional characters to use for the generated password</source>
-        <translation type="unfinished"/>
+        <translation>Caractères supplémentaires à utiliser pour le mot de passe généré</translation>
     </message>
     <message>
         <source>Additional characters</source>
-        <translation type="unfinished"/>
+        <translation>Caractères supplémentaires</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation>จำนวนคำ:</translation>
+        <translation>Nombre de mots :</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation>Échap</translation>
     </message>
     <message>
         <source>Apply Password</source>
-        <translation>ใช้รหัสผ่าน</translation>
+        <translation>Appliquer le mot de passe</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
@@ -5487,15 +5506,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Regenerate password (%1)</source>
-        <translation>สร้างรหัสผ่านใหม่ (%1)</translation>
+        <translation>Générer le mot de passe de nouveau (%1)</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>อักขระพิเศษ</translation>
+        <translation>Caractères spéciaux</translation>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Caractères exclus : &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -5506,177 +5525,177 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Statistics</source>
-        <translation>สถิติ</translation>
+        <translation>Statistiques</translation>
     </message>
     <message>
         <source>Very weak password</source>
-        <translation>รหัสผ่านอ่อนแอมาก</translation>
+        <translation>Le mot de passe est très faible</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>
-        <translation>เอรโทรปีของรหัสผ่านคือ %1 บิต</translation>
+        <translation>L’entropie du mot de passe est de %1 bits</translation>
     </message>
     <message>
         <source>Weak password</source>
-        <translation>รหัสผ่านอ่อนแอ</translation>
+        <translation>Le mot de passe est faible</translation>
     </message>
     <message>
         <source>Used in %1/%2</source>
-        <translation>ใช้ใน %1/%2</translation>
+        <translation>Utilisé dans %1/%2</translation>
     </message>
     <message>
         <source>Password is used %1 times</source>
-        <translation>รหัสผ่านถูกใช้ %1 ครั้ง</translation>
+        <translation>Le mot de passe est utilisé %1 fois</translation>
     </message>
     <message>
         <source>Password has expired</source>
-        <translation>รหัสผ่านหมดอายุแล้ว</translation>
+        <translation>Le mot de passe est expiré</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
-        <translation>รหัสผ่านหมดอายุแล้วเมื่อ %1</translation>
+        <translation>La date d’expiration du mot de passe était le %1</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
-        <translation>รหัสผ่านกำลังจะหมดอายุ</translation>
+        <translation>Le mot de passe est sur le point d’expirer</translation>
     </message>
     <message>
         <source>Password expires in %1 days</source>
-        <translation>รหัสผ่านจะหมดอายุใน %1 วัน</translation>
+        <translation>Le mot de passe expire dans %1 jours</translation>
     </message>
     <message>
         <source>Password will expire soon</source>
-        <translation>รหัสผ่านจะหมดอายุเร็วๆ นี้</translation>
+        <translation>Le mot de passe expirera bientôt</translation>
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation>รหัสผ่านหมดอายุใน %1</translation>
+        <translation>Le mot de passe expire le %1</translation>
     </message>
     <message>
         <source>Health Check</source>
-        <translation>ตรวจสุขภาพ</translation>
+        <translation>Bilan de santé</translation>
     </message>
     <message>
         <source>HIBP</source>
-        <translation type="unfinished"/>
+        <translation>HIBP – Mot de passe compromis</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation>เขียนทับ</translation>
+        <translation>Remplacer</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>ลบ</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>เคลื่อนย้าย</translation>
+        <translation>Déplacer</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation>ว่างเปล่า</translation>
+        <translation>Vider</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ลบออก</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation>ข้ามไป</translation>
+        <translation>Ignorer</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>ปิดใช้</translation>
+        <translation>Désactiver</translation>
     </message>
     <message>
         <source>Merge</source>
-        <translation>ผสาน</translation>
+        <translation>Fusionner</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation>ทำต่อ</translation>
+        <translation>Poursuivre</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation>ไม่ได้เปิดฐานข้อมูล</translation>
+        <translation>La base de données n’est pas ouverte</translation>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation>ฐานข้อมูล hash ไม่พร้อมใช้งาน</translation>
+        <translation>L’empreinte numérique de la base de données n’est pas disponible</translation>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation>ไม่ได้รับกุญแจสาธารณะของผู้รับบริการ</translation>
+        <translation>La clé publique du client n’a pas été reçue</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation>ไม่สามารถถอดรหัสข้อความ</translation>
+        <translation>Impossible de déchiffrer le message</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation>การกระทำถูกยกเลิกหรือปฏิเสธ</translation>
+        <translation>L’action a été annulée ou refusée</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation>การเชื่อมโยง KeePassXC ล้มเหลว ลองอีกครั้ง</translation>
+        <translation>L’association à KeePassXC a échoué, veuillez réessayer</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation>ไม่รู้จักกุญแจเข้ารหัสลับ</translation>
+        <translation>La clé de chiffrement n’est pas reconnue</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation>การดำเนินการที่ไม่ถูกต้อง</translation>
+        <translation>L’action est incorrecte</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation>ได้รับข้อความว่างเปล่า</translation>
+        <translation>Un message vide a été reçu</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation>ไม่ได้ระบุ URL</translation>
+        <translation>Aucune URL n’a été indiquée</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation>ไม่พบการเข้าสู่ระบบ</translation>
+        <translation>Aucun identifiant n’a été trouvé</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>ความผิดพลาดที่ไม่อาจระบุได้</translation>
+        <translation>Erreur inconnue</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>เพิ่มรายการใหม่ไปยังฐานข้อมูล</translation>
+        <translation>Ajouter une nouvelle entrée à la base de données.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>เส้นทางของฐานข้อมูล</translation>
+        <translation>Chemin de la base de données.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>แฟ้มกุญแจของฐานข้อมูล</translation>
+        <translation>Fichier clé de la base de données.</translation>
     </message>
     <message>
         <source>path</source>
-        <translation>เส้นทาง</translation>
+        <translation>chemin</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>ชื่อผู้ใช้สำหรับรายการ</translation>
+        <translation>Nom d’utilisateur de l’entrée.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>ชื่อผู้ใช้</translation>
+        <translation>nom d’utilisateur</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation>URL สำหรับรายการ.</translation>
+        <translation>URL de l’entrée.</translation>
     </message>
     <message>
         <source>URL</source>
@@ -5684,56 +5703,56 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation>พร้อมสำหรับรหัสผ่านของรายการ</translation>
+        <translation>Demander le mot de passe de l’entrée.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>สร้างรหัสผ่านสำหรับรายการ</translation>
+        <translation>Générer un mot de passe pour l’entrée.</translation>
     </message>
     <message>
         <source>length</source>
-        <translation>ความยาว</translation>
+        <translation>longueur</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation>เส้นทางของรายการที่จะเพิ่ม</translation>
+        <translation>Chemin de l’entrée à ajouter.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation>เส้นทางของรายการไปยังคลิป</translation>
+        <translation>Chemin de l’entrée à épingler.</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation>ใกล้หมดเวลาก่อนที่จะล้างคลิปบอร์ด</translation>
+        <translation>Délai en secondes avant effacement du presse-papiers.</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation>แก้ไขรายการ</translation>
+        <translation>Modifier une entrée.</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation>หัวเรื่องสำหรับรายการ</translation>
+        <translation>Titre de l’entrée.</translation>
     </message>
     <message>
         <source>title</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>titre</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>เส้นทางของรายการที่จะแก้ไข</translation>
+        <translation>Chemin de l’entrée à modifier.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation>คาดคะเนเอนโทรปีของรหัสผ่าน</translation>
+        <translation>Estimer l’entropie d’un mot de passe.</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation>รหัสผ่านสำหรับคาดคะเนเอนโทรปี</translation>
+        <translation>Mot de passe pour lequel estimer l’entropie.</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation>วิเคราะห์รหัสผ่านชั้นสูง</translation>
+        <translation>Effectuer une analyse approfondie du mot de passe.</translation>
     </message>
     <message>
         <source>
@@ -5742,203 +5761,203 @@ Available commands:
 </source>
         <translation>
 
-คำสั่งที่พร้อมใช้งานคือ
+Commandes proposées :
 </translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation>ชื่อของคำสั่งที่จะดำเนินการ</translation>
+        <translation>Nom de la commande à exécuter.</translation>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation>แสดงรายการฐานข้อมูล</translation>
+        <translation>Lister les entrées de la base de données.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation>เส้นทางของกลุ่มที่จะสร้างรายการ ค่าเริ่มต้นคือ</translation>
+        <translation>Chemin du groupe à lister. Par défaut : /</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation>ค้นหารายการอย่างรวดเร็ว</translation>
+        <translation>Trouver des entrées rapidement.</translation>
     </message>
     <message>
         <source>Search term.</source>
-        <translation>คำที่ใช้ค้นหา</translation>
+        <translation>Terme d&apos;interrogation.</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation>ผสานสองฐานข้อมูลเข้าด้วยกัน</translation>
+        <translation>Fusionner deux bases de données.</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation>เส้นทางของฐานข้อมูลที่จะเอามาผสาน</translation>
+        <translation>Chemin de la base de données à partir de laquelle fusionner.</translation>
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>ใช้ข้อมูลยืนยันตัวชุดเดียวกันสำหรับทั้งสองแฟ้มฐานข้อมูล</translation>
+        <translation>Utiliser les mêmes identifiants pour les deux fichiers de base de données.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>แฟ้มกุญแจของฐานข้อมูลที่จะมาผสาน</translation>
+        <translation>Fichier clé de la base de données à partir de laquelle fusionner.</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation>แสดงข้อมูลของรายการ</translation>
+        <translation>Afficher les renseignements d’une entrée.</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>ชื่อของคุณสมบัติที่จะแสดง ตัวเลือกนี้สามารถถูกระบุได้มากกว่าหนึ่งครั้ง โดยคุณสมบัติถูกแสดงบรรทัดอันหนึ่งอันตามลำดับ ถ้าไม่มีคุณสมบัติใดถูกระบุ คุณสมบัติเริ่มต้นจะถูกเลือกแทน</translation>
+        <translation>Noms des attributs à afficher. Cette option peut être indiquée plus d’une fois, avec chaque attribut apparaissant un par ligne dans l’ordre donné. Si aucun attribut n’est indiqué, un résumé des attributs par défaut est présenté.</translation>
     </message>
     <message>
         <source>attribute</source>
-        <translation>คุณสมบัติ</translation>
+        <translation>attribut</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation>ชื่อของรายการที่จะแสดง</translation>
+        <translation>Nom de l’entrée à afficher.</translation>
     </message>
     <message>
         <source>NULL device</source>
-        <translation>อุปกรณ์ NULL</translation>
+        <translation>Dispositif NUL</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation>ข้อผิดพลาดการอ่านจากอุปกรณ์</translation>
+        <translation>erreur de lecture à partir du dispositif</translation>
     </message>
     <message>
         <source>malformed string</source>
-        <translation>รูปแบบสตริงไม่ถูกต้อง</translation>
+        <translation>chaîne mal formée</translation>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation>เครื่องหมายปิดคำพูดหายไป</translation>
+        <translation>Le guillemet fermant manque</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>กลุ่ม</translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>ชื่อผู้ใช้</translation>
+        <translation>Nom d’utilisateur</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>บันทึก</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>ถูกแก้ไขล่าสุด</translation>
+        <translation>Dernière modification</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>ถูกสร้าง</translation>
+        <translation>Créée</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>การทำงานร่วมกับเบราว์เซอร์</translation>
+        <translation>Intégration aux navigateurs</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>ตัวแทน SSH</translation>
+        <translation>Agent SSH</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>สร้างวลีรหัสผ่าน diceware ใหม่แบบสุ่ม</translation>
+        <translation>Créer une nouvelle phrase de passe générée avec la méthode du lancer de dés.</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>จำนวนคำสำหรับวลีรหัสผ่าน diceware</translation>
+        <translation>Nombre de mots de la phrase de passe générée avec la méthode du lancer de dés.</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation>รายการคำสำหรับการสร้าง diceware
-[ค่าเริ่มต้น: EFF ภาษาอังกฤษ]</translation>
+        <translation>Liste de mots pour le générateur par méthode du lancer de dés.
+[Par défaut : FFÉ anglais]</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation>สร้างรหัสผ่านใหม่แบบสุ่ม</translation>
+        <translation>Générer un nouveau mot de passe aléatoire.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
-        <translation>ไม่สามารถสร้างรายการด้วยเส้นทาง %1</translation>
+        <translation>Impossible de créer l’entrée dont le chemin est %1.</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation>ใส่รหัสผ่านสำหรับรายการใหม่</translation>
+        <translation>Saisir un mot de passe pour la nouvelle entrée :</translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation>การเขียนฐานข้อมูลล้มเหลว %1</translation>
+        <translation>Échec d’écriture de la base de données %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation>เพิ่มรายการ %1 สำเร็จแล้ว</translation>
+        <translation>Ajouté avec succès l’entrée %1.</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
-        <translation>ค่าหมดเวลาไม่ถูกต้อง %1</translation>
+        <translation>La valeur de délai d’attente %1 est invalide.</translation>
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation>ไม่พบรายการ %1  </translation>
+        <translation>L’entrée %1 est introuvable.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
-        <translation>รายการด้วยเส้นทาง %1 ไม่มีการตั้งค่า TOTP</translation>
+        <translation>Aucun TOTP n’est configuré pour l’entrée dont le chemin est %1.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>กำลังล้างคลิปบอร์ดใน %1 วินาที...</numerusform></translation>
+        <translation><numerusform>Effacement du presse-papiers dans %1 seconde…</numerusform><numerusform>Effacement du presse-papiers dans %1 secondes…</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
-        <translation>คลิปบอร์ดถูกล้างแล้ว</translation>
+        <translation>Le presse-papiers a été effacé</translation>
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
-        <translation>รหัสผ่านเงียบพร้อมท์และผลลัพธ์รองอื่น</translation>
+        <translation>Désactiver les demandes de mot de passe et autres sorties secondaires.</translation>
     </message>
     <message>
         <source>count</source>
         <comment>CLI parameter</comment>
-        <translation>การนับจำนวน</translation>
+        <translation>nombre</translation>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
-        <translation>ไม่สามารถหารายการสำหรับเส้นทาง %1</translation>
+        <translation>Impossible de trouver l’entrée dont le chemin est %1.</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
-        <translation>ไม่มีการเปลี่ยนแปลงฟิลด์ของรายการ %1</translation>
+        <translation>Aucun changement de champ pour l’entrée %1.</translation>
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation>ใส่รหัสผ่านใหม่สำหรับรายการ</translation>
+        <translation>Saisir le nouveau mot de passe pour l’entrée :</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>การเขียนฐานข้อมูลล้มเหลว: %1</translation>
+        <translation>Échec d’écriture de la base de données : %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
-        <translation>แก้ไขรายการ %1 สำเร็จ</translation>
+        <translation>L’entrée %1 a été modifiée avec succès.</translation>
     </message>
     <message>
         <source>Length %1</source>
-        <translation>ความยาว %1</translation>
+        <translation>Longueur %1</translation>
     </message>
     <message>
         <source>Entropy %1</source>
-        <translation>เอนโทรปี %1</translation>
+        <translation>Entropie %1</translation>
     </message>
     <message>
         <source>Log10 %1</source>
@@ -5946,181 +5965,181 @@ Available commands:
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation>บิตเพิ่มของ multi-word %1</translation>
+        <translation>Octets supplémentaires de mots multiples %1</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation>ชนิด: ลองทุกความเป็นไปได้</translation>
+        <translation>Type : force brute</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation>ชนิด: พจนานุกรม</translation>
+        <translation>Type : dictionnaire</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
-        <translation>ชนิด: พจนานุกรม+ลีท</translation>
+        <translation>Type : dictionnaire + leet</translation>
     </message>
     <message>
         <source>Type: User Words</source>
-        <translation>ชนิด: ชุดคำของผู้ใช้</translation>
+        <translation>Type : mots utilisateur</translation>
     </message>
     <message>
         <source>Type: User+Leet</source>
-        <translation>ชนิด: ผู้ใช้+ลีท</translation>
+        <translation>Type : utilisateur + Leet</translation>
     </message>
     <message>
         <source>Type: Repeated</source>
-        <translation>ชนิด: คำซ้ำ</translation>
+        <translation>Type : répété</translation>
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation>ชนิด: ลำดับ</translation>
+        <translation>Type : séquence</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
-        <translation>ชนิด: เชิงพื้นที่</translation>
+        <translation>Type : spatial</translation>
     </message>
     <message>
         <source>Type: Date</source>
-        <translation>ชนิด: วันที่</translation>
+        <translation>Type : date</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>ชนิด: Bruteforce(Rep)</translation>
+        <translation>Type : force brute (rép.)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation>ชนิด: Dictionary(Rep)</translation>
+        <translation>Type : dictionnaire (rép.)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation>ชนิด: Dict+Leet(Rep)</translation>
+        <translation>Type : dictionnaire + Leet (rép.)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation>ชนิด: User Words(Rep)</translation>
+        <translation>Type : mots utilisateur (rép.)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation>ชนิด: User+Leet(Rep)</translation>
+        <translation>Type : utilisateur + leet (rép.)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation>ชนิด: Repeated(Rep)</translation>
+        <translation>Type : répété (rép.)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation>ชนิด: Sequence(Rep)</translation>
+        <translation>Type : séquence (rép.)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation>ชนิด: Spatial(Rep)</translation>
+        <translation>Type : spatial (rép.)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation>ชนิด: Date(Rep)</translation>
+        <translation>Type : date (rép.)</translation>
     </message>
     <message>
         <source>Type: Unknown%1</source>
-        <translation>ชนิด: ไม่รู้จัก%1</translation>
+        <translation>Type : inconnu %1</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
-        <translation>เอนโทรปี: %1 (%2)</translation>
+        <translation>Entropie %1 (%2)</translation>
     </message>
     <message>
         <source>*** Password length (%1) != sum of length of parts (%2) ***</source>
-        <translation>*** ความยาวรหัสผ่าน (%1) != ผลรวมของความยาวแต่ละส่วน (%2) ***</translation>
+        <translation>*** Longueur du mot de passe (%1) != somme de la longueur des parties (%2) ***</translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
-        <translation>การโหลดแฟ้มกุญแจ %1 ล้มเหลว: %2</translation>
+        <translation>Échec de chargement du fichier clé %1 : %2</translation>
     </message>
     <message>
         <source>Length of the generated password</source>
-        <translation>ความยาวของรหัสผ่านที่สร้างแล้ว</translation>
+        <translation>Longueur du mot de passe généré</translation>
     </message>
     <message>
         <source>Use lowercase characters</source>
-        <translation>ใช้ตัวพิมพ์เล็ก</translation>
+        <translation>Utiliser des minuscules</translation>
     </message>
     <message>
         <source>Use uppercase characters</source>
-        <translation>ใช้ตัวพิมพ์ใหญ่</translation>
+        <translation>Utiliser des majuscules</translation>
     </message>
     <message>
         <source>Use special characters</source>
-        <translation>ใช้อักขระพิเศษ</translation>
+        <translation>Utiliser des caractères spéciaux</translation>
     </message>
     <message>
         <source>Use extended ASCII</source>
-        <translation>ใช้ extended ASCII</translation>
+        <translation>Utiliser l’ASCII étendu</translation>
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation>ไม่รวมชุดตัวอักษร</translation>
+        <translation>Exclure le jeu de caractères</translation>
     </message>
     <message>
         <source>chars</source>
-        <translation>อักขระ</translation>
+        <translation>caractères</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
-        <translation>ไม่รวมตัวอักษรที่ดูคล้ายกัน</translation>
+        <translation>Exclure les caractères qui se ressemblent</translation>
     </message>
     <message>
         <source>Include characters from every selected group</source>
-        <translation>รวมตัวอักษรจากทุกกลุ่มที่เลือกไว้</translation>
+        <translation>Choisir des caractères dans chacun des groupes sélectionnés</translation>
     </message>
     <message>
         <source>Recursively list the elements of the group.</source>
-        <translation>สร้างรายกายส่วนประกอบของกลุ่มซ้ำไปมา</translation>
+        <translation>Lister récursivement les éléments du groupe.</translation>
     </message>
     <message>
         <source>Cannot find group %1.</source>
-        <translation>ไม่พบกลุ่ม %1</translation>
+        <translation>Impossible de trouver le groupe %1.</translation>
     </message>
     <message>
         <source>Error reading merge file:
 %1</source>
-        <translation>การอ่านแฟ้มผสานล้มเหลว:
+        <translation>Erreur de lecture du fichier fusionné :
 %1</translation>
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation>ไม่สามารถบันทึกฐานข้อมูลไปยังแฟ้ม: %1</translation>
+        <translation>Impossible d’enregistrer la base de données dans le fichier : %1</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation>ไม่สามารถบันทึกฐานข้อมูลไปยังแฟ้ม: %1</translation>
+        <translation>Impossible d’enregistrer la base de données dans le fichier : %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation>นำรายการ %1 กลับมาสำเร็จ</translation>
+        <translation>L’entrée %1 a été recyclée avec succès.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation>ลบรายการ %1 สำเร็จ</translation>
+        <translation>Supprimé l’entrée %1 avec succès.</translation>
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation>แสดงรายการ TOTP ปัจจุบัน</translation>
+        <translation>Afficher le TOTP actuel pour l’entrée.</translation>
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation>ข้อผิดพลาด: ไม่รู้จักคุณสมบัติ %1</translation>
+        <translation>ERREUR : L’attribut %1 est inconnu.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
-        <translation>ไม่มีโปรแกรมกำหนดสำหรับการจัดการคลิปบอร์ด</translation>
+        <translation>Aucun programme n’est défini pour le traitement du presse-papiers</translation>
     </message>
     <message>
         <source>file empty</source>
-        <translation>แฟ้มว่างเปล่า</translation>
+        <translation>fichier vide</translation>
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
-        <translation>%1: (row, col) %2,%3</translation>
+        <translation>%1 : (ligne, colonne) %2, %3</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
@@ -6133,164 +6152,164 @@ Available commands:
     <message>
         <source>Invalid Settings</source>
         <comment>TOTP</comment>
-        <translation>การตั้งค่าไม่ถูกต้อง</translation>
+        <translation>Des paramètres sont invalides</translation>
     </message>
     <message>
         <source>Invalid Key</source>
         <comment>TOTP</comment>
-        <translation>กุญแจไม่ถูกต้อง</translation>
+        <translation>La clé est invalide</translation>
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation>การเข้ารหัสลับข้อความล้มเหลว</translation>
+        <translation>Échec de chiffrement du message.</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation>ไม่พบกลุ่ม</translation>
+        <translation>Aucun groupe n’a été trouvé</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation>สร้างฐานข้อมูลใหม่</translation>
+        <translation>Créer un nouvelle base de données.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation>มีแฟ้ม %1 อยู่แล้ว</translation>
+        <translation>Le fichier %1 existe déjà.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation>การโหลดแฟ้มกุญแจล้มเหลว</translation>
+        <translation>Échec du chargement du fichier clé</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation>ไม่มีการตั้งค่ากุญแจ ยกเลิกการสร้างฐานข้อมูล</translation>
+        <translation>Aucune clé n’est définie. Abandon de la création de la base de données.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation>การบันทึกฐานข้อมูลล้มเหลว: %1</translation>
+        <translation>Échec d’enregistrement de la base de données : %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation>การสร้างฐานข้อมูลใหม่ประสบความสำเร็จ</translation>
+        <translation>La nouvelle base de données a été créée avec succès.</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation>การสร้างแฟ้มกุญแจ %1 ล้มเหลว: %2</translation>
+        <translation>Échec de création du fichier clé %1 : %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation>การโหลดแฟ้มกุญแจ %1 ล้มเหลว: %2</translation>
+        <translation>Échec de chargement du fichier clé %1 : %2</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation>เส้นทางของรายการที่จะลบ</translation>
+        <translation>Chemin de l’entrée à supprimer.</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>แฟ้มล็อกไม่ให้เริ่มโปรแกรมหลายตัวที่มีอยู่ไม่ถูกต้อง เริ่มการทำงานตัวใหม่</translation>
+        <translation>Le fichier de verrouillage de l’instance unique existant est invalide. Lancement d’une nouvelle instance.</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>ไม่สามารถสร้างแฟ้มล็อกได้ โหมดการใช้งานโปรแกรมเพียงตัวเดียวถูกปิดอยู่</translation>
+        <translation>Impossible de créer le fichier de verrouillage. Le mode d’instance unique est désactivé.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation>KeePassXC - แอปจัดการรหัสผ่านข้ามแพลตฟอร์ม</translation>
+        <translation>KeePassXC – Gestionnaire de mots de passe multiplateforme</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>ชื่อแฟ้มของฐานข้อมูลรหัสผ่านที่จะเปิด (*.kdbx)</translation>
+        <translation>noms de fichiers des bases de données de mots de passe à ouvrir (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>เส้นทางไปยังแฟ้มบันทึกการปรับแต่งที่กำหนดเอง</translation>
+        <translation>chemin vers un fichier de configuration personnalisée</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>แฟ้มกุญแจสำหรับฐานข้อมูลดังกล่าว</translation>
+        <translation>fichier clé de la base de données</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>อ่านรหัสผ่านของฐานข้อมูลจาก stdin</translation>
+        <translation>lire le mot de passe de la base de données sur l’entrée standard</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
-        <translation>แอป KeePassXC อีกตัวกำลังทำงานอยู่</translation>
+        <translation>Une autre instance de KeePassXC est déjà en cours d’exécution.</translation>
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>เกิดข้อผิดพลาดร้ายแรงขณะทดสอบฟังก์ชั่นการเข้ารหัส</translation>
+        <translation>Erreur fatale lors de l’évaluation des fonctions cryptographiques.</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation>KeePassXC - ข้อผิดพลาด</translation>
+        <translation>KeePassXC – Erreur</translation>
     </message>
     <message>
         <source>Database password: </source>
-        <translation>รหัสผ่านฐานข้อมูล</translation>
+        <translation>Mot de passe de la base de données :</translation>
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation>ไม่สามารถสร้างกลุ่มใหม่ได้</translation>
+        <translation>Impossible de créer un nouveau groupe</translation>
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Désactiver la clé du mot de passe pour la base de données.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation type="unfinished"/>
+        <translation>Affiche les renseignements de débogage.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>Désactiver la clé du mot de passe pour la base de données à partir de laquelle fusionner.</translation>
     </message>
     <message>
         <source>Version %1</source>
-        <translation>รุ่น %1</translation>
+        <translation>Version %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation>ชนิด build: %1</translation>
+        <translation>Type de version : %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>การปรับปรุง: %1</translation>
+        <translation>Révision : %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation>ดิสทริบิวชัน: %1</translation>
+        <translation>Distribution : %1</translation>
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation>โหมดดีบักถูกปิดใช้งาน</translation>
+        <translation>Le mode débogage est désactivé.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation>โหมดดีบักถูกเปิดใช้งาน</translation>
+        <translation>Le mode débogage est activé.</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation>ระบบปฏิบัติการ: %1
-สถาปัตยกรรม CPU: %2
-เคอร์เนล: %3 %4</translation>
+        <translation>Système d’exploitation : %1
+Architecture de l’unité centrale : %2
+Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
+        <translation>Saisie automatique</translation>
     </message>
     <message>
         <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (partage signé et non signé)</translation>
     </message>
     <message>
         <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (partage signé seulement)</translation>
     </message>
     <message>
         <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (partage non signé seulement)</translation>
     </message>
     <message>
         <source>YubiKey</source>
@@ -6302,449 +6321,452 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>None</source>
-        <translation>ไม่มี</translation>
+        <translation>Aucun</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>ส่วนขยายที่เปิดใช้:</translation>
+        <translation>Extensions activées :</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation type="unfinished"/>
+        <translation>Bibliothèques cryptographiques :</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
+        <translation>Il est impossible de générer un mot de passe et de le demander en même temps</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation type="unfinished"/>
+        <translation>Ajoute un nouveau groupe à la base de données.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation type="unfinished"/>
+        <translation>Chemin du groupe à ajouter.</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
-        <translation>มีกลุ่ม %1 อยู่แล้ว!</translation>
+        <translation>Le groupe %1 existe déjà</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation>ไม่พบกลุ่ม %1</translation>
+        <translation>Le groupe %1 est introuvable.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
-        <translation>เพิ่มกลุ่ม %1 สำเร็จ</translation>
+        <translation>Le groupe %1 a été ajouté avec succès.</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Vérifier si un mot de passe a été divulgué publiquement. NOM_DU_FICHIER doit être le chemin d’un fichier qui liste les empreintes SHA-1 de mots de passe divulgués au format HIBP, tel que proposé sur https://haveibeenpwned.com/Passwords (site en anglais).</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation>FILENAME</translation>
+        <translation>NOM_DU_FICHIER</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation type="unfinished"/>
+        <translation>Analyser la robustesse et les problèmes des mots de passe.</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation>การเปิดแฟ้ม HIBP %1 ล้มเหลว: %2</translation>
+        <translation>Échec de l’ouverture du fichier HIBP %1 : %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation type="unfinished"/>
+        <translation>Comparaison des entrées de la base de données avec le fichier HIBP, cette opération prend du temps…</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation type="unfinished"/>
+        <translation>Fermer la base de données ouverte actuellement.</translation>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation>แสดงหน้าช่วยเหลือนี้</translation>
+        <translation>Afficher cette aide.</translation>
     </message>
     <message>
         <source>slot</source>
-        <translation>ช่อง</translation>
+        <translation>emplacement</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation>จำนวนคำไม่ถูกรูปแบบ %1</translation>
+        <translation>Le nombre de mots %1 est invalide</translation>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
-        <translation type="unfinished"/>
+        <translation>La liste de mots est trop courte (moins de 1 000 articles)</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
+        <translation>Quitter le mode interactif.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation type="unfinished"/>
+        <translation>Exporte au format indiqué le contenu de la base de données vers la sortie standard.</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation>ไม่สามารถส่งออกฐานข้อมูลเป็น XML: %1</translation>
+        <translation>Impossible d’exporter la base de données en XML : %1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation>รูปแบบที่ไม่รองรับ %1</translation>
+        <translation>Le format %1 n’est pas pris en charge</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation>ใช้ตัวเลข</translation>
+        <translation>Utiliser des chiffres</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation>ความยาวรหัสผ่านไม่ถูกรูปแบบ %1</translation>
+        <translation>La longueur du mot de passe %1 est invalide</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation type="unfinished"/>
+        <translation>Afficher l’aide de la commande.</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>คำสั่งที่ใช้ได้:</translation>
+        <translation>Commandes proposées :</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation type="unfinished"/>
+        <translation>Importer le contenu d’une base de données XML.</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation type="unfinished"/>
+        <translation>Chemin vers l’exportation de la base de données au format XML.</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation type="unfinished"/>
+        <translation>Chemin de la nouvelle base de données.</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>La base de données a été importée avec succès.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation>คำสั่งที่ไม่รู้จัก %1</translation>
+        <translation>La commande %1 est inconnue</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation type="unfinished"/>
+        <translation>Réduit la sortie en lignes simples.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>N’imprimer que les changements détectés par l’opération de fusion.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation type="unfinished"/>
+        <translation>Emplacement Yubikey pour la seconde base de données.</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation>ผสาน %1 เข้ากับ %2 สำเร็จ</translation>
+        <translation>%1 a été fusionné dans %2 avec succès.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>ฐานข้อมูลไม่ถูกเปลี่ยนแปลงโดยการดำเนินการผสาน</translation>
+        <translation>La base de données n’a pas été modifiée par l’opération de fusion.</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation type="unfinished"/>
+        <translation>Déplace une entrée vers un nouveau groupe.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>Chemin de l’entrée à déplacer.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation type="unfinished"/>
+        <translation>Chemin du groupe de destination.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation>ไม่พบกลุ่มที่ใช้เส้นทาง %1</translation>
+        <translation>Impossible de trouver un groupe avec le chemin %1.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation>รายการมีอยู่แล้วในกลุ่ม %1</translation>
+        <translation>L’entrée est déjà dans le groupe %1.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation>ย้ายรายการ %1 ไปยังกลุ่ม %2 สำเร็จ</translation>
+        <translation>L’entrée %1 a été déplacée vers le groupe %2 avec succès.</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation>เปิดฐานข้อมูล</translation>
+        <translation>Ouvre une base de données.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Chemin du groupe à supprimer.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de supprimer le groupe racine de la base de données.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation>นำกลุ่ม %1 กลับมาสำเร็จ</translation>
+        <translation>Le groupe %1 a été recyclé avec succès.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation>ลบกลุ่ม %1 สำเร็จ</translation>
+        <translation>Le groupe %1 a été supprimé avec succès.</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation>การอ่านแฟ้มฐานข้อมูล %1 ล้มเหลว: ไม่พบ</translation>
+        <translation>Échec d’ouverture du fichier de base de données %1 : il est introuvable</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation>การอ่านแฟ้มฐานข้อมูล %1 ล้มเหลว: ไม่ใช่แฟ้มธรรมดา</translation>
+        <translation>Échec d’ouverture du fichier de base de données %1 : ce n’est pas un fichier brut</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation>การอ่านแฟ้มฐานข้อมูล %1 ล้มเหลว: อ่านไม่ได้</translation>
+        <translation>Échec d’ouverture du fichier de base de données %1 : il est illisible</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation>ใส่รหัสผ่านเพื่อปลดล็อก %1:</translation>
+        <translation>Saisir le mot de passe pour déverrouiller %1 :</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation>ช่อง YubiKey ไม่ถูกรูปแบบ %1</translation>
+        <translation>L’emplacement YubiKey %1 est invalide</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
+        <translation>Saisissez un mot de passe pour chiffrer la base de données (facultatif) :</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
-        <translation>แฟ้ม HIBP บรรทัด %1: การแยกวิเคราะห์ผิดพลาด</translation>
+        <translation>Fichier HIBP, ligne %1 : erreur d’analyse</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation type="unfinished"/>
+        <translation>Intégration à « Secret Service »</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation type="unfinished"/>
+        <translation>Nom d’utilisateur</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Le mot de passe pour « %1 » a été divulgué %2 fois</numerusform><numerusform>Le mot de passe pour « %1 » a été divulgué %2 fois!</numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation type="unfinished"/>
+        <translation>Le générateur de mots de passe est invalide après application de toutes les options</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation type="unfinished"/>
+        <translation>Afficher en clair les attributs protégés.</translation>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
-        <translation>โปรแกรมเสริมเบราว์เซอร์ล้มเหลว</translation>
+        <translation>Échec de l’extension pour navigateurs</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d’enregistrer le fichier script de messagerie native pour %1.</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
-        <translation type="unfinished"/>
+        <translation>Copier dans le presse-papiers l’attribut donné. Si rien n’est précisé, « mot de passe » est utilisé par défaut.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation type="unfinished"/>
+        <translation>Copier le TOTP actuel dans le presse-papiers (équivalent à « -a totp »).</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Copier l’attribut d’une entrée dans le presse-papiers.</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation type="unfinished"/>
+        <translation>ERREUR : Veuillez indiquer -attribut ou -totp, mais pas les deux.</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation type="unfinished"/>
+        <translation>ERREUR : L’attribut %1 est ambigu, il correspond à %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
-        <translation type="unfinished"/>
+        <translation>L’attribut « %1 » est introuvable.</translation>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation type="unfinished"/>
+        <translation>L’attribut de l’entrée « %1 » a été copié dans le presse-papiers</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation type="unfinished"/>
+        <translation>Emplacement et numéro de série facultatif Yubikey utilisés pour accéder à la base de données (p. ex. : 1:7370001).</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
-        <translation type="unfinished"/>
+        <translation>emplacement[:numéro de série]</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Durée de déchiffrement cible en millisecondes pour la base de données.</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>เวลา</translation>
+        <translation>durée</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Définir le fichier clé de la base de données.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Définir un mot de passe pour la base de données.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
-        <translation type="unfinished"/>
+        <translation>La durée de déchiffrement est invalide : %1.</translation>
     </message>
     <message>
         <source>Target decryption time must be between %1 and %2.</source>
-        <translation type="unfinished"/>
+        <translation>La durée de déchiffrement cible doit être entre %1 et %2.</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
-        <translation type="unfinished"/>
+        <translation>Échec de définition du mot de passe de la base de données.</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation type="unfinished"/>
+        <translation>Analyse des performances de la fonction de dérivation de clé pour un retard de %1 ms.</translation>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation type="unfinished"/>
+        <translation>%1 cycles sont définis pour la fonction de dérivation de clé.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
-        <translation type="unfinished"/>
+        <translation>erreur de paramétrage de la dérivation de clé de la base de données.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Format à utiliser lors de l’exportation. Les choix proposés sont « xml » ou « csv ». La valeur par défaut est « xml ».</translation>
     </message>
     <message>
         <source>Unable to import XML database: %1</source>
-        <translation>ไม่สามารถนำเข้าฐานข้อมูล XML: %1</translation>
+        <translation>Impossible d’importer la base de données XML : %1</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
-        <translation type="unfinished"/>
+        <translation>Afficher les renseignements d’une base de données.</translation>
     </message>
     <message>
         <source>UUID: </source>
-        <translation type="unfinished"/>
+        <translation>UUID : </translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation type="unfinished"/>
+        <translation>Nom :</translation>
     </message>
     <message>
         <source>Description: </source>
-        <translation type="unfinished"/>
+        <translation>Description :</translation>
     </message>
     <message>
         <source>Cipher: </source>
-        <translation type="unfinished"/>
+        <translation>Chiffrement :</translation>
     </message>
     <message>
         <source>KDF: </source>
-        <translation type="unfinished"/>
+        <translation>Fonction de dérivation de clé :</translation>
     </message>
     <message>
         <source>Recycle bin is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>La corbeille est activée.</translation>
     </message>
     <message>
         <source>Recycle bin is not enabled.</source>
-        <translation type="unfinished"/>
+        <translation>La corbeille est désactivée.</translation>
     </message>
     <message>
         <source>Invalid command %1.</source>
-        <translation>คำสั่งผิดรูปแบบ %1</translation>
+        <translation>La commande %1 est invalide.</translation>
     </message>
     <message>
         <source>Invalid YubiKey serial %1</source>
-        <translation>เลขชุด YubiKey ไม่ถูกรูปแบบ %1</translation>
+        <translation>Le numéro de série Yubikey %1 est invalide</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to continue…</source>
-        <translation type="unfinished"/>
+        <translation>Veuillez touchez le bouton de votre YubiKey afin de poursuivre…</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous créer une base de données avec un mot de passe vide? [o/N] :</translation>
     </message>
     <message>
         <source>Repeat password: </source>
-        <translation>ทวนรหัสผ่าน:</translation>
+        <translation>Confirmer le mot de passe :</translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation>ผิดพลาด: รหัสผ่านไม่ตรงกัน</translation>
+        <translation>Erreur : Les mots de passe ne correspondent pas.</translation>
     </message>
     <message>
         <source>All clipping programs failed. Tried %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Échec de tous les programmes de découpage. %1 essayés
+</translation>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
-        <translation>AES (%1 รอบ)</translation>
+        <translation>AES (%1 cycles)</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
-        <translation>AES 256 บิต</translation>
+        <translation>AES 256 bits</translation>
     </message>
     <message>
         <source>Twofish 256-bit</source>
-        <translation>Twofish 256 บิต</translation>
+        <translation>Twofish 256 bits</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation>ChaCha20: 256 บิต {20 256-?}</translation>
+        <translation>ChaCha20 : 256 bits {20 256 à ?}</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
-        <translation>วัดมาตรฐานหน่วงเวลา %1</translation>
+        <translation>Analyse des performance : %1 de retard</translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation><numerusform>%1 มิลลิวิ</numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation><numerusform>%1 วิ</numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>chemin vers un fichier local de configuration personnalisée</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>AVERTISSEMENT : vous utilisez un ancien format de fichier clé que KeePassXC pourrait ne plus prendre en charge à l’avenir.
+
+Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1 (%2 cycles, %3 Ko)</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d (KDBX 4 – recommandé)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id (KDBX 4)</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -6752,846 +6774,846 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation>ไอคอน</translation>
+        <translation>Icône</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation>รุ่นแฟ้มกุญแจที่ไม่รองรับ: %1</translation>
+        <translation>Version de fichier clé non prise en charge : %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>La somme de contrôle ne correspond pas. Le fichier clé pourrait être corrompu.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Les données du fichier clé ne sont pas celles attendues. Le fichier clé pourrait être corrompu.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Effacement du Presse-papiers en %1 seconde(s)...</numerusform><numerusform>Effacement du Presse-papiers dans %1 seconde(s)...</numerusform></translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation type="unfinished"/>
+        <translation>verrouille toutes les bases de données ouvertes</translation>
     </message>
     <message>
         <source>Locked databases.</source>
-        <translation type="unfinished"/>
+        <translation>Bases de données verrouillées.</translation>
     </message>
     <message>
         <source>Database failed to lock.</source>
-        <translation type="unfinished"/>
+        <translation>La base de données n’a pas pu se verrouiller.</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>เกิดข้อผิดพลาด zlib ภายในในระหว่างการบีบอัด</translation>
+        <translation>Erreur interne zlib lors de la compression :</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>เกิดข้อผิดพลาดในการเขียนไปยังอุปกรณ์ที่รองรับ</translation>
+        <translation>Erreur d’écriture sur le dispositif sous-jacent :</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>เกิดข้อผิดพลาดในการเปิดอุปกรณ์อ้างอิง</translation>
+        <translation>Erreur d’ouverture du dispositif sous-jacent :</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>เกิดข้อผิดพลาดในการอ่านอุปกรณ์อ้างอิง</translation>
+        <translation>Erreur de lecture de données à partir du dispositif sous-jacent :</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>ข้อผิดพลาด zlib ภายในเมื่อคลายการบีบอัด</translation>
+        <translation>Erreur interne zlib lors de la décompression :</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>รูปแบบ gzip ไม่รองรับ zlib เวอร์ชั่นนี้</translation>
+        <translation>Le format gzip n’est pas pris en charge dans cette version de zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>ความผิดพลาดภายในของ zlib</translation>
+        <translation>Erreur interne zlib :</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Afficher aussi les entrées qui ont été exclues des rapports</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation type="unfinished"/>
+        <translation>Survolez la raison pour afficher des détails supplémentaires. Double-cliquez sur les entrées pour les modifier.</translation>
     </message>
     <message>
         <source>Bad</source>
         <comment>Password quality</comment>
-        <translation>เลวร้าย</translation>
+        <translation>Mauvais</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
-        <translation>เลวร้าย — ต้องเปลี่ยนรหัสผ่าน</translation>
+        <translation>Mauvais - le mot de passe doit être changé</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>แย่</translation>
+        <translation>Plutôt mauvais</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
-        <translation>แย่ — ควรเปลี่ยนรหัสผ่าน</translation>
+        <translation>Plutôt mauvais - le mot de passe doit être changé</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>อ่อนแอ</translation>
+        <translation>Faible</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation>อ่อนแอ — ควรพิจารณารหัสผ่านใหม่</translation>
+        <translation>Faible - envisagez de changer le mot de passe</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(ไม่นับรวม)</translation>
+        <translation> (exclue)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>รายการนี้ไม่ถูกนับรวมในรายงาน</translation>
+        <translation>Cette entrée est exclue des rapports</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated...</source>
-        <translation>กรุณารอ กำลังคำนวณข้อมูลสุขภาพ...</translation>
+        <translation>Veuillez patienter, le bilan de santé est en cours de calcul…</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
-        <translation>ยินดีด้วย ทุกอย่างดูดี!</translation>
+        <translation>Félicitations, tout est en ordre</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>เส้นทาง</translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Score</source>
-        <translation>คะแนน</translation>
+        <translation>Résultats</translation>
     </message>
     <message>
         <source>Reason</source>
-        <translation>เหตุผล</translation>
+        <translation>Raison</translation>
     </message>
     <message>
         <source>Edit Entry...</source>
-        <translation>แก้ไขรายการ...</translation>
+        <translation>Modifier l’entrée…</translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>ไม่นับรวมในรายงาน</translation>
+        <translation>Exclure des rapports</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation type="unfinished"/>
+        <translation>ATTENTION : Ce rapport requiert l’envoi de renseignements au service en ligne « Have I Been Pwned » (https://haveibeenpwned.com). Si vous poursuivez, les mots de passe de votre base de données seront hachés de façon cryptographique et les cinq premiers caractères de ces hachages seront envoyés de façon sécurisée à ce service. La sécurité de votre base de données est assurée et votre base de données ne peut pas être reconstituée à partir de ces renseignements. Toutefois, le nombre de mots de passe que vous envoyez et votre adresse IP seront dévoilés à ce service.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation type="unfinished"/>
+        <translation>Effectuer une analyse en ligne</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Afficher aussi les entrées qui ont été exclues des rapports</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation type="unfinished"/>
+        <translation>Cette version de KeePassXC ne dispose pas de fonction réseau. Il est nécessaire de se connecter au réseau afin de vérifier vos mots de passe auprès du service « Have I Been Pwned ».</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
-        <translation>ยินดีด้วย ไม่พบรหัสผ่านที่ถูกเปิดเผย!</translation>
+        <translation>Félicitations, aucun mot de passe n’a été divulgué</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>เส้นทาง</translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation>รหัสผ่านที่ถูกเปิดเผย...</translation>
+        <translation>Mots de passe divulgués…</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(ไม่นับรวม)</translation>
+        <translation> (exclue)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>รายการนี้ไม่ถูกนับรวมในรายงาน</translation>
+        <translation>Cette entrée est exclue des rapports</translation>
     </message>
     <message>
         <source>once</source>
-        <translation>ครั้งเดียว</translation>
+        <translation>une fois</translation>
     </message>
     <message>
         <source>up to 10 times</source>
-        <translation>ได้ถึง 10 เท่า</translation>
+        <translation>jusqu’à 10 fois</translation>
     </message>
     <message>
         <source>up to 100 times</source>
-        <translation>ได้ถึง 100 เท่า</translation>
+        <translation>jusqu’à 100 fois</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
-        <translation>ได้ถึง 1,000 เท่า</translation>
+        <translation>jusqu’à 1 000 fois</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
-        <translation>ได้ถึง 10,000 เท่า</translation>
+        <translation>jusqu’à 10 000 fois</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
-        <translation>ได้ถึง 100,000 เท่า</translation>
+        <translation>jusqu’à 100 000 fois</translation>
     </message>
     <message>
         <source>up to a million times</source>
-        <translation>ได้ถึงล้านเท่า</translation>
+        <translation>jusqu’à un million de fois</translation>
     </message>
     <message>
         <source>millions of times</source>
-        <translation>ได้หลายล้านเท่า</translation>
+        <translation>des millions de fois</translation>
     </message>
     <message>
         <source>Edit Entry...</source>
-        <translation>แก้ไขรายการ...</translation>
+        <translation>Modifier l’entrée…</translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>ไม่นับรวมในรายงาน</translation>
+        <translation>Exclure des rapports</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetStatistics</name>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation type="unfinished"/>
+        <translation>Survolez les lignes affichant une icône d’erreur pour plus de précisons.</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>ชื่อ</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>ค่า</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated...</source>
-        <translation>กรุณารอ กำลังคำนวณสถิติของฐานข้อมูล...</translation>
+        <translation>Veuillez patienter pendant que les statistiques de base de données sont calculées…</translation>
     </message>
     <message>
         <source>Database name</source>
-        <translation>ชื่อฐานข้อมูล</translation>
+        <translation>Nom de la base de données</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>คำอธิบาย</translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>ที่ตั้ง</translation>
+        <translation>Emplacement</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation>บันทึกครั้งสุดท้าย</translation>
+        <translation>Dernier enregistrement</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation>ความเปลี่ยนแปลงที่ยังไม่ได้บันทึก</translation>
+        <translation>Changements non enregistrés</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation>ใช่</translation>
+        <translation>oui</translation>
     </message>
     <message>
         <source>no</source>
-        <translation>ไม่</translation>
+        <translation>non</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation type="unfinished"/>
+        <translation>La base de données a été modifiée, mais les changements n’ont pas encore été enregistrés sur le disque.</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation>จำนวนกลุ่ม</translation>
+        <translation>Nombre de groupes</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation>จำนวนรายการ</translation>
+        <translation>Nombre d’entrées</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>จำนวนรายการที่หมดอายุ</translation>
+        <translation>Nombre d’entrées expirées</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation>ฐานข้อมูลมีรายการที่หมดอายุแล้ว</translation>
+        <translation>La base de données comprend des données expirées.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation>รหัสผ่านที่ไม่ซ้ำ</translation>
+        <translation>Mots de passes uniques</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation>รหัสผ่านที่ซ้ำ</translation>
+        <translation>Mots de passe non uniques</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation>มากกว่า 10% ของรหัสผ่านถูกใช้ซ้ำ ควรใช้รหัสผ่านที่ไม่ซ้ำถ้าทำได้</translation>
+        <translation>Plus de 10 % des mots de passe sont réutilisés. Si possible, utilisez des mots de passe uniques.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation>ใช้รหัสผ่านซ้ำได้สูงสุด</translation>
+        <translation>Maximum de réutilisations des mots de passe</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Certains mots de passe sont utilisés plus de trois fois. Si possible, utilisez des mots de passe uniques.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation>จำนวนรหัสผ่านขนาดสั้น</translation>
+        <translation>Nombre de mots de passe courts</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation type="unfinished"/>
+        <translation>Il est recommandé qu’un mot de passe comporte au moins huit caractères</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation>จำนวนรหัสผ่านที่อ่อนแอ</translation>
+        <translation>Nombre de mots de passe faibles</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Il est recommandé d’utiliser des mots de passe longs et aléatoires dont le niveau de robustesse est « bon » ou « excellent ».</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Entrées exclues des rapports</translation>
     </message>
     <message>
         <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
-        <translation type="unfinished"/>
+        <translation>Exclure des entrées des rapports, car elles ont par exemple un mot de passe plutôt mauvais, n’est pas un problème en soi, mais vous devriez les surveiller.</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation type="unfinished"/>
+        <translation>Longueur moyenne des mots de passe</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation>%1 ตัวอักษร</translation>
+        <translation>%1 caractères</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation type="unfinished"/>
+        <translation>La longueur moyenne des mots de passe est inférieure à dix caractères. Des mots de passe plus longs offrent une meilleure sécurité.</translation>
     </message>
 </context>
 <context>
     <name>SSHAgent</name>
     <message>
         <source>Agent connection failed.</source>
-        <translation>การเชื่อมต่อตัวแทนล้มเหลว</translation>
+        <translation>Échec de connexion à l’agent.</translation>
     </message>
     <message>
         <source>Agent protocol error.</source>
-        <translation>ตัวแทนโพรโทคอลผิดพลาด</translation>
+        <translation>Erreur de protocole de l’agent</translation>
     </message>
     <message>
         <source>No agent running, cannot add identity.</source>
-        <translation>ไม่มีการเรียกใช้ตัวแทน ไม่สามารถเพิ่มตัวตน</translation>
+        <translation>Aucun agent n’est en cours d’exécution, il est impossible d’ajouter l’identité.</translation>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
-        <translation>ไม่มีการใช้ตัวแทน ไม่สามารถลบตัวตน</translation>
+        <translation>Aucun agent n’est en cours d’exécution, il est impossible de supprimer l’identité.</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation>ตัวแทนปฏิเสธตัวตนนี้ เหตุผลที่เป็นไปได้คือ</translation>
+        <translation>L’agent a refusé cette identité. Raisons possibles, entre autres :</translation>
     </message>
     <message>
         <source>The key has already been added.</source>
-        <translation>เพิ่มกุญแจแล้ว</translation>
+        <translation>La clé a déjà été ajoutée.</translation>
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation>ไม่รับรองอายุการใช้งานที่จำกัดโดยตัวแทน ตรวจสอบตัวเลือก</translation>
+        <translation>L’agent ne prend pas en charge une durée de vie limitée (vérifier les options).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation>ไม่รองรับการยืนยันคำร้องโดยตัวแทน ตรวจสอบตัวเลือก</translation>
+        <translation>L’agent ne prend pas en charge une demande de confirmation (vérifier les options).</translation>
     </message>
     <message>
         <source>Key identity ownership conflict. Refusing to add.</source>
-        <translation type="unfinished"/>
+        <translation>Conflit de propriété de l’identité de clé. L’ajout a été refusé.</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation type="unfinished"/>
+        <translation>Aucun agent n’est en cours d’exécution, il est impossible de lister les identités.</translation>
     </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
     <message>
         <source>Search Help</source>
-        <translation>ตัวช่วยค้นหา</translation>
+        <translation>Chercher dans l’aide</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation>คำค้นมีดังนี้: [modifiers][field:][&quot;]term[&quot;]</translation>
+        <translation>Les termes d’interrogation sont les suivants : [modificateurs][champ:][&quot;]terme[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
-        <translation>คำค้นทุกคำต้องสอดคล้อง เช่น โลจิคัล AND</translation>
+        <translation>Tous les termes d’interrogation doivent correspondre (c.-à-d. : ET logique)</translation>
     </message>
     <message>
         <source>Modifiers</source>
-        <translation>ตัวแก้ไข</translation>
+        <translation>Modificateurs</translation>
     </message>
     <message>
         <source>exclude term from results</source>
-        <translation>แยกคำออกจากผลลัพธ์</translation>
+        <translation>exclure le terme des résultats</translation>
     </message>
     <message>
         <source>match term exactly</source>
-        <translation>การจับคู่คำสอดคล้องกัน</translation>
+        <translation>correspondance exacte</translation>
     </message>
     <message>
         <source>use regex in term</source>
-        <translation>ใช้ regex ในคำ</translation>
+        <translation>utiliser les expressions rationnelles dans le terme</translation>
     </message>
     <message>
         <source>Fields</source>
-        <translation>ฟิลด์</translation>
+        <translation>Champs</translation>
     </message>
     <message>
         <source>Term Wildcards</source>
-        <translation>อักขระตัวแทนคำ</translation>
+        <translation>Caractère de remplacement des termes</translation>
     </message>
     <message>
         <source>match anything</source>
-        <translation>จับคู่ทุกๆอย่าง</translation>
+        <translation>correspond à n’importe quel caractère</translation>
     </message>
     <message>
         <source>match one</source>
-        <translation>จับคู่หนึ่ง</translation>
+        <translation>correspond à un caractère</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation>โลจิคัล OR</translation>
+        <translation>OU logique</translation>
     </message>
     <message>
         <source>Examples</source>
-        <translation>ตัวอย่าง</translation>
+        <translation>Exemples</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation>ค้นหา</translation>
+        <translation>Chercher</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation>จำกัดการค้นไว้สำหรับเฉพาะกลุ่มที่เลือก</translation>
+        <translation>Limiter la recherche au groupe sélectionné</translation>
     </message>
     <message>
         <source>Search Help</source>
-        <translation>ตัวช่วยค้นหา</translation>
+        <translation>Chercher dans l’aide</translation>
     </message>
     <message>
         <source>Search (%1)...</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>ค้นหา %1</translation>
+        <translation>Recherche (%1)…</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>คำนึงถึงอักษรทั้งตัวใหญ่และเล็ก</translation>
+        <translation>Sensible à la casse</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation>ตัวเลือก</translation>
+        <translation>Options</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation type="unfinished"/>
+        <translation>Activer l’intégration de KeePassXC à « Secret Service » de Freedesktop.org </translation>
     </message>
     <message>
         <source>General</source>
-        <translation>ทั่วไป</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Show notification when credentials are requested</source>
-        <translation type="unfinished"/>
+        <translation>Afficher une notification quand les identifiants sont demandés</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si la corbeille est activée pour la base de données, les entrées seront déplacées dans la corbeille directement. Sinon, elles seront supprimées sans confirmation.&lt;/p&gt;&lt;p&gt;Une confirmation sera toujours demandée si l’entrée est référencée par d’autres.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation type="unfinished"/>
+        <translation>Groupes de base de données visibles :</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation>ตรวจยืนยันสิทธิ์</translation>
+        <translation>Autorisation</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
-        <translation type="unfinished"/>
+        <translation>Ces applications sont connectées actuellement :</translation>
     </message>
     <message>
         <source>Don&apos;t confirm when entries are deleted by clients</source>
-        <translation type="unfinished"/>
+        <translation>Ne pas confirmer la suppression d’entrées par les clients</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; Failed to connect to DBus. Please check your DBus setup.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Erreur :&lt;/b&gt; Échec de connexion à DBus. Veuillez vérifier votre configuration DBus.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;คำเตือน:&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Avertissement:&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation type="unfinished"/>
+        <translation>Enregistrer les changements actuels pour activer le greffon et permettre la modification de cette section.</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation>ใช้งานอยู่</translation>
+        <translation>Actif</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation>อนุญาตให้ส่งออก</translation>
+        <translation>Permettre l’exportation</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>อนุญาตให้นำเข้า</translation>
+        <translation>Permettre l’importation</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation>เป็นเจ้าของใบรับรอง</translation>
+        <translation>Propre certificat</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation>ลายนิ้วมือ:</translation>
+        <translation>Empreinte :</translation>
     </message>
     <message>
         <source>Certificate:</source>
-        <translation>ใบรับรอง</translation>
+        <translation>Certificat :</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation>ผู้เซ็น</translation>
+        <translation>Signataire</translation>
     </message>
     <message>
         <source>Key:</source>
-        <translation>กุญแจ:</translation>
+        <translation>Clé :</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>สร้าง</translation>
+        <translation>Générer</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>นำเข้า</translation>
+        <translation>Importer</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>ส่งออก</translation>
+        <translation>Exporter</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation>นำเข้าใบรับรองแล้ว</translation>
+        <translation>Certificats importés</translation>
     </message>
     <message>
         <source>Trust</source>
-        <translation>เชื่อถือ</translation>
+        <translation>Faire confiance</translation>
     </message>
     <message>
         <source>Ask</source>
-        <translation>ถาม</translation>
+        <translation>Demander</translation>
     </message>
     <message>
         <source>Untrust</source>
-        <translation>ไม่เชื่อถือ</translation>
+        <translation>Ne pas faire confiance</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ลบ</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>เส้นทาง</translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>สถานะ</translation>
+        <translation>État</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>ลายนิ้วมือ</translation>
+        <translation>Empreinte</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>ใบรับรอง</translation>
+        <translation>Certificat</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation>เชื่อถือได้</translation>
+        <translation>Fiable</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation>เชื่อถือไม่ได้</translation>
+        <translation>Non fiable</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>ไม่รู้จัก</translation>
+        <translation>Inconnu</translation>
     </message>
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation>แบ่งปันกุญแจ</translation>
+        <translation>key.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation>แฟ้มกุญแจ KeeShare หลัก</translation>
+        <translation>fichier clé KeeShare</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>ทุกแฟ้ม</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Select path</source>
-        <translation>เลือกเส้นทาง</translation>
+        <translation>Sélectionner le chemin</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation>ส่งออกใบรับรองที่เปลี่ยนแปลงแล้ว</translation>
+        <translation>Exportation des certificats changés</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation>ใบรับรองที่ส่งออกแล้วไม่ใช่ฉบับเดียวกับที่ใช้งานอยู่ คุณต้องการส่งออกใบรับรองปัจจุบันหรือไม่?</translation>
+        <translation>Le certificat exporté est différent de celui en cours d’utilisation. Voulez-vous exporter le certificat actuel?</translation>
     </message>
     <message>
         <source>Signer:</source>
-        <translation>ผู้ลงชื่อ</translation>
+        <translation>Signataire :</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>อนุญาตการนำเข้า KeeShare</translation>
+        <translation>Permettre les importations KeeShare</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>อนุญาตการส่งออก KeeShare</translation>
+        <translation>Permettre les exportations KeeShare</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation type="unfinished"/>
+        <translation>N’afficher que les avertissements et erreurs</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>กุญแจ</translation>
+        <translation>Clé</translation>
     </message>
     <message>
         <source>Signer name field</source>
-        <translation type="unfinished"/>
+        <translation>Champ de nom du signataire</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>Générer un nouveau certificat</translation>
     </message>
     <message>
         <source>Import existing certificate</source>
-        <translation type="unfinished"/>
+        <translation>Importer un certificat existant</translation>
     </message>
     <message>
         <source>Export own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Exporter son propre certificat</translation>
     </message>
     <message>
         <source>Known shares</source>
-        <translation type="unfinished"/>
+        <translation>Partages connus</translation>
     </message>
     <message>
         <source>Trust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Faire confiance au certificat sélectionné</translation>
     </message>
     <message>
         <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"/>
+        <translation>Toujours demander le niveau de confiance envers le certificat sélectionné</translation>
     </message>
     <message>
         <source>Untrust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Ne pas faire confiance au certificat sélectionné</translation>
     </message>
     <message>
         <source>Remove selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Supprimer le certificat sélectionné</translation>
     </message>
 </context>
 <context>
     <name>ShareExport</name>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation>ไม่สามารถเขียนทับที่จัดเก็บที่แบ่งปันไว้และลงลายเซ็นแล้ว - ไม่อนุญาตให้ส่งออก</translation>
+        <translation>Remplacer le conteneur de partage signé s’il n’est pas pris en charge - empêche l’exportation</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation>ไม่สามารถเขียนที่จัดเก็บที่ส่งออกได้ (%1)</translation>
+        <translation>Impossible d’écrire dans le conteneur d’exportation (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation>ไม่สามารถฝังลายเซ็น: ไม่สามารถเปิดแฟ้มเพื่อเขียนได้ (%1) </translation>
+        <translation>Impossible d’intégrer la signature :impossible d’ouvrir le fichier en écriture (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation>ไม่สามารถฝังลายเซ็น: ไม่สามารถเขียนแฟ้ม (%1) </translation>
+        <translation>Impossible d’intégrer la signature : impossible d’écrire le fichier (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation>ไม่สามารถฝังฐานข้อมูล: ไม่สามารถเปิดแฟ้มเพื่อเขียนได้ (%1)</translation>
+        <translation>Impossible d’intégrer la base de données : impossible d’ouvrir le fichier en écriture (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation>ไม่สามารถฝังฐานข้อมูล: ไม่สามารถเขียนแฟ้มได้ (%1)</translation>
+        <translation>Impossible d’intégrer la base de données : impossible d’écrire le fichier (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation>ไม่รองรับการเขียนทับการแชร์ที่จัดเก็บที่ไม่ได้ลงชื่อ - ป้องกันการส่งออก</translation>
+        <translation>Remplacer le conteneur de partage non signé s’il n’est pas pris en charge - empêche l’exportation</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation>ไม่สามารถส่งออกที่จัดเก็บได้</translation>
+        <translation>Impossible d’écrire dans le conteneur d’exportation</translation>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
         <source>Import from container without signature</source>
-        <translation>นำเข้าจากที่จัดเก็บโดยไม่มีลายเซ็น</translation>
+        <translation>Importer d’un conteneur sans signature</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation>เราไม่สามารถยืนยันความถูกต้องของฐานข้อมูลในที่จัดเก็บที่แบ่งปันไว้ เพราะไม่ถูกเซ็น คุณต้องการนำเข้าจาก %1 จริงๆหรือไม่</translation>
+        <translation>Nous ne pouvons vérifier la source du conteneur partagé, car il n’est pas signé. Voulez-vous vraiment importer de %1?</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation>นำเข้าที่จัดเก็บด้วยใบรับรอง</translation>
+        <translation>Importer d’un conteneur avec certificat</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation>คุณจะเชื่อถือ %1 ด้วยลายนิ้วมือของ %2 จาก %3 หรือไม่? {1 ?} {2 ?}</translation>
+        <translation>Voulez-vous faire confiance à %1 avec l’empreinte %2 de %3? {1 ?} {2 ?}</translation>
     </message>
     <message>
         <source>Not this time</source>
-        <translation>ไม่เชื่อในตอนนี้</translation>
+        <translation>Pas cette fois</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>จะไม่เชื่ออีกเลย</translation>
+        <translation>Jamais</translation>
     </message>
     <message>
         <source>Always</source>
-        <translation>เชื่อเสมอ</translation>
+        <translation>Toujours</translation>
     </message>
     <message>
         <source>Just this time</source>
-        <translation>เชื่อเฉพาะตอนนี้</translation>
+        <translation>Cette fois seulement</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation>ไม่รองรับที่จัดเก็บแบ่งปันที่เซ็นไว้ - ไม่อนุญาตการนำเข้า</translation>
+        <translation>Conteneur de partage signé non pris en charge - empêche l’importation</translation>
     </message>
     <message>
         <source>File is not readable</source>
-        <translation>ไม่สามารถอ่านแฟ้มได้</translation>
+        <translation>Le fichier n’est illisible</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation>ที่จัดเก็บที่แบ่งปันไม่ถูกต้อง</translation>
+        <translation>Le conteneur de partage est invalide</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation>การนำเข้าไม่น่าเชื่อถือ</translation>
+        <translation>Une importation non fiable a été bloquée</translation>
     </message>
     <message>
         <source>Successful signed import</source>
-        <translation>นำเข้าสำเร็จโดยมีลายเซ็น</translation>
+        <translation>L’importation a été signée avec succès</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation>ไม่รองรับที่จัดเก็บแบ่งปันที่ไม่ได้เซ็นไว้ - ไม่อนุญาตการนำเข้า</translation>
+        <translation>Conteneur de partage non signé non pris en charge - empêche l’importation</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
-        <translation>นำเข้าสำเร็จโดยไม่มีลายเซ็น</translation>
+        <translation>La signature a été ôtée de l’importation avec succès</translation>
     </message>
     <message>
         <source>File does not exist</source>
-        <translation>ไม่มีแฟ้ม</translation>
+        <translation>Le fichier n’existe pas</translation>
     </message>
 </context>
 <context>
     <name>ShareObserver</name>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation>นำเข้าจาก %1 ล้มเหลว (%2)</translation>
+        <translation>Échec d’importation de %1 (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation>นำเข้าจาก %1 สำเร็จ (%2)</translation>
+        <translation>Importé de %1 avec succès (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>นำเข้าจาก %1</translation>
+        <translation>Importé de %1</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation>ส่งออกไป %1 ล้มเหลว (%2)</translation>
+        <translation>Échec d’exportation vers %1 (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation>ส่งออกไป %1 สำเร็จ (%2)</translation>
+        <translation>Exporté vers %1 avec succès (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation>ส่งออกไป %1</translation>
+        <translation>Exporter vers %1</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation>นำเข้าจากแหล่งพาทหลายแห่งไปยัง %1 ใน %2</translation>
+        <translation>Chemin source d’importation multiple de %1 dans %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation>การนำเป้าหมายพาทออกขัดแย้งกัน %1 ใน %2</translation>
+        <translation>Conflit du chemin cible d’exportation %1 dans %2</translation>
     </message>
 </context>
 <context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation>รหัสผ่านกำหนดเวลา</translation>
+        <translation>Mot de passe temporisé</translation>
     </message>
     <message>
         <source>000000</source>
@@ -7599,291 +7621,292 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation>คัดลอก</translation>
+        <translation>Copier</translation>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>หมดอายุภายใน &lt;b&gt;%n&lt;/b&gt; วินาที</numerusform></translation>
+        <translation><numerusform>Expire dans &lt;b&gt;%n&lt;/b&gt; seconde</numerusform><numerusform>Expire dans &lt;b&gt;%n&lt;/b&gt; seconde(s)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>TotpExportSettingsDialog</name>
     <message>
         <source>Copy</source>
-        <translation>คัดลอก</translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation>บันทึก การตั้งค่า TOTP เป็นแบบกำหนดเอง อาจไม่สามารถใช้งานกับตัวรับรองความถูกต้องอื่นๆ</translation>
+        <translation>NOTE : Ces paramètres TOTP sont personnalisés et pourraient ne pas fonctionner avec d’autres authentificateurs.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation>มีข้อผิดพลาดในการสร้าง QR code</translation>
+        <translation>Une erreur est survenue lors de la création du QR code.</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation>กำลังปิดภายใน %1 วินาที</translation>
+        <translation>Fermeture dans %1 seconde(s).</translation>
     </message>
 </context>
 <context>
     <name>TotpSetupDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation>ติดตั้ง TOTP</translation>
+        <translation>Configurer TOTP</translation>
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation>การตั้งค่าโทเค็น RFC 6238 ตั้งต้น</translation>
+        <translation>Paramètres par défaut des jetons RFC 6238</translation>
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation>การตั้งค่าสตีมโทเค็น</translation>
+        <translation>Paramètres des jetons Steam</translation>
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation>ใช้การตั้งค่าที่กำหนดเอง</translation>
+        <translation>Utiliser des paramètres personnalisés</translation>
     </message>
     <message>
         <source>Custom Settings</source>
-        <translation>การตั้งค่าแบบปรับแต่งเอง</translation>
+        <translation>Paramètres personnalisés</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation>ขั้นเวลา</translation>
+        <translation>Intervalle :</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>วินาที</translation>
+        <translation> s</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>ขนาดรหัส</translation>
+        <translation>Taille du code :</translation>
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation>กุญแจลับ:</translation>
+        <translation>Clé secrète :</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation type="unfinished"/>
+        <translation>La clé secrète doit être au format Base32</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation type="unfinished"/>
+        <translation>Champ de la clé secrète</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation>อัลกอริทึม:</translation>
+        <translation>Algorithme :</translation>
     </message>
     <message>
         <source>Time step field</source>
-        <translation type="unfinished"/>
+        <translation>Champ de l’intervalle</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation>หลัก</translation>
+        <translation>chiffres</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation type="unfinished"/>
+        <translation>Le secret TOTP est invalide</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation type="unfinished"/>
+        <translation>Vous avez saisi une clé secrète invalide. La clé doit être au format Base32.
+Exemple : JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation>ยืนยันการนำค่า TOTP ออก</translation>
+        <translation>Confirmer la suppression des paramètres TOTP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>คุณแน่ใจว่าจะลบการตั้งค่า TOTP สำหรับรายการนี้หรือไม่?</translation>
+        <translation>Voulez-vous vraiment supprimer les paramètres TOTP pour cette entrée ?</translation>
     </message>
 </context>
 <context>
     <name>URLEdit</name>
     <message>
         <source>Invalid URL</source>
-        <translation>URL ผิดรูปแบบ</translation>
+        <translation>L’URL est invalide</translation>
     </message>
 </context>
 <context>
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation>&amp;ตรวจหาการปรับรุ่น</translation>
+        <translation>Vérification de la présence de mises à jour</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>กำลังตรวจหาการปรับรุ่น...</translation>
+        <translation>Vérification de la présence de mises à jour…</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>ปิด</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>Update Error!</source>
-        <translation>การปรับรุ่นผิดพลาด!</translation>
+        <translation>Erreur de mise à jour</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation>เกิดข้อผิดพลาดระหว่างการเรียกข้อมูลการปรับรุ่น</translation>
+        <translation>Une erreur est survenue lors de la récupération des renseignements de mise à jour.</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation>กรุณาลองอีกครั้งภายหลัง</translation>
+        <translation>Veuillez réessayer plus tard.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation>การปรับรุ่นซอฟต์แวร์</translation>
+        <translation>Mise à jour du logiciel</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation>KeePassXC เวอร์ชั่นใหม่พร้อมใช้แล้ว</translation>
+        <translation>Une nouvelle version de KeePassXC est proposée</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation>KeePassXC %1 มีให้ใช้แล้ว — คุณมี %2</translation>
+        <translation>KeePassXC %1 est maintenant proposée – vous avez %2.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation>ดาวน์โหลดได้ที่ keepassxc.org</translation>
+        <translation>Téléchargez-la sur keepassxc.org</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation> คุณอัปเดตแล้ว</translation>
+        <translation>Votre version est à jour</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation>KeePassXC %1 เป็นรุ่นใหม่ล่าสุดที่พร้อมใช้งานแล้ว</translation>
+        <translation>KeePassXC %1 est actuellement la version la plus récente proposée.</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>เริ่มเก็บรหัสผ่านของคุณให้ปลอดภัยในฐานข้อมูลของ KeePassXC</translation>
+        <translation>Commencez à enregistrer vos mots de passe en toute sécurité dans une base de données KeePassXC</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>สร้างฐานข้อมูลใหม่</translation>
+        <translation>Créer une nouvelle base de données</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation>เปิดฐานข้อมูลที่มีอยู่</translation>
+        <translation>Ouvrir une base de données existante</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation>นำเข้าจาก KeePass 1</translation>
+        <translation>Importer de KeePass 1</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation>นำเข้าจาก CSV</translation>
+        <translation>Importer d’un fichier CSV</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>ฐานข้อมูลที่เพิ่งใช้</translation>
+        <translation>Bases de données récentes</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation>ยินดีต้อนรับสู่ KeePassXC %1</translation>
+        <translation>Bienvenue sur KeePassXC %1</translation>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation>นำเข้าจาก 1Password</translation>
+        <translation>Importer de 1Password</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation>เปิดฐานข้อมูลล่าสุด</translation>
+        <translation>Ouvrir une base de données récente</translation>
     </message>
 </context>
 <context>
     <name>YubiKey</name>
     <message>
         <source>%1 [%2] Configured Slot - %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] Emplacement configuré – %3</translation>
     </message>
     <message>
         <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] Question-réponse – Emplacement %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
-        <translation>กด</translation>
+        <translation>Appuyer</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation>แพสซีฟ</translation>
+        <translation>Passive</translation>
     </message>
     <message>
         <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 ช่องที่ไม่ถูกรูปแบบถูกระบุมา - %2</translation>
+        <translation>%1 Un emplacement invalide est indiqué – %2</translation>
     </message>
     <message>
         <source>The YubiKey interface has not been initialized.</source>
-        <translation type="unfinished"/>
+        <translation>L’interface YubiKey n’a pas été initialisée.</translation>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation>ใช้กุญแจฮาร์ดแวร์อยู่</translation>
+        <translation>La clé matérielle est en cours d’utilisation.</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de trouver la clé matérielle dont le numéro de série est %1. Veuillez la connecter afin de poursuivre.</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation type="unfinished"/>
+        <translation>Le temps imparti à l’interaction utilisateur avec la clé matérielle est écoulé.</translation>
     </message>
     <message>
         <source>A USB error ocurred when accessing the hardware key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Une erreur USB est survenue lors de l’accès à la clé matérielle : %1</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation type="unfinished"/>
+        <translation>Échec de question-réponse, l’erreur particulière était : %1</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
     <message>
         <source>Refresh</source>
-        <translation>เรียกใหม่</translation>
+        <translation>Actualiser</translation>
     </message>
     <message>
         <source>YubiKey Challenge-Response</source>
-        <translation>YubiKey ตอบกลับการตรวจสอบไม่ถูกต้อง</translation>
+        <translation>Question-réponse YubiKey</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The YubiKey requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;หากคุณเป็นเจ้าของ&lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;คุณสามารถใช้มันสำหรับความปลอดภัยเพิ่มเติมได้&lt;/p&gt;&lt;p&gt;YubiKeyจำเป็นต้องใช้ช่องว่างเพื่อลงโปรแกรมเป็น&lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Si vous possédez une &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, vous pouvez l’utiliser pour une sécurité accrue.&lt;/p&gt;&lt;p&gt;Un des emplacements de la YubiKey doit être programmé en tant que &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;Question-réponse HMAC-SHA1&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Actualiser les jetons matériels</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Sélection de l’emplacement de la clé matérielle</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de trouver une clé matérielle</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation type="unfinished"/>
+        <translation>L’emplacement de clé matérielle sélectionné ne prend pas en charge une question-réponse.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>กำลังตรวจหากุญแจฮาร์ดแวร์...</translation>
+        <translation>Détection des clés matérielles…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>ตรวจไม่พบกุญแจฮาร์ดแวร์</translation>
+        <translation>Aucune clé matérielle n’a été détectée</translation>
     </message>
 </context>
 </TS>

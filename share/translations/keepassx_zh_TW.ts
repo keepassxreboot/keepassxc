@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>必須重啟應用程式以使用新語言。您是否要現在重新啟動？</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>單色</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2496,6 +2500,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>對此項目只使用 HTTP 基本認證</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>對 HTTP 基本認證對話框，不要傳送此設定至瀏覽器。啟用之後，HTTP 基本認證對話框將不會在選項中顯示此項目。</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>HTTP 基本認證不要使用此項目</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -3489,7 +3501,7 @@ Are you sure to add this file?</source>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>項目「%1」來自資料庫「%2」，被 %3 使用</translation>
+        <translation>來自資料庫「%2」的項目「%1」被 %3 使用</translation>
     </message>
 </context>
 <context>
@@ -4357,24 +4369,12 @@ Message: %2</source>
         <translation>選擇金鑰檔案</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>金鑰檔案選擇</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>瀏覽金鑰檔案</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>瀏覽...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>產生新金鑰檔案</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>注意：請不要使用可更改的檔案，否則可能導致您無法解鎖資料庫！</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4401,6 +4401,18 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>您選擇的金鑰檔案格式版本過舊，KeePassXC 可能&lt;br&gt;在未來停止支援。&lt;br&gt;&lt;br&gt;請考慮產生一組新的金鑰檔案。</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5402,10 +5414,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>十六進制</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>排除以下字元：&quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>已產生密碼</translation>
     </message>
@@ -5504,6 +5512,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Special Characters</source>
         <translation>特殊字元</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6778,6 +6790,22 @@ Please consider generating a new key file.</source>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>出現未預期的金鑰檔案資料！金鑰檔案可能已損壞。</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7480,10 +7508,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>無法寫入匯出的共享容器</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>出現未預期的匯出錯誤</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7550,10 +7574,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>檔案不存在</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>未知的共享容器種類</translation>
     </message>
 </context>
 <context>

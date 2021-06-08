@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -318,7 +322,7 @@
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation type="unfinished"/>
+        <translation>Usa lletra monoespaiada per a les notes</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
@@ -330,27 +334,27 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation type="unfinished"/>
+        <translation>Retard d&apos;escriptura de la compleció automàtica:</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation type="unfinished"/>
+        <translation>Drecera global de compleció automàtica:</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation type="unfinished"/>
+        <translation>Retard d&apos;inici de la compleció automàtica:</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Desa automàticament en bloquejar la base de dades</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Desa automàticament els canvis que no són de dades en bloquejar la base de dades</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation type="unfinished"/>
+        <translation>Tipus d&apos;icona de la safata</translation>
     </message>
 </context>
 <context>
@@ -439,15 +443,15 @@
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
-        <translation type="unfinished"/>
+        <translation>Demana altre cop la contrasenya quan és visible</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation type="unfinished"/>
+        <translation>Oculta les contrasenyes a l&apos;editar-les</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation type="unfinished"/>
+        <translation>Usa un marcador per als camps de contrasenya buits</translation>
     </message>
 </context>
 <context>
@@ -584,15 +588,15 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation type="unfinished"/>
+        <translation>Permet els seleccionats</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation type="unfinished"/>
+        <translation>Denega-ho tot</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation type="unfinished"/>
+        <translation>Deshabilita per aquest lloc</translation>
     </message>
 </context>
 <context>
@@ -663,7 +667,7 @@ Moved %2 keys to custom data.</source>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Les claus %n s&apos;han desplaçat correctament a dades personalitzades.</numerusform><numerusform>S&apos;han mogut correctament  %n claus a dades personalitzades.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
@@ -763,11 +767,11 @@ chrome-laptop.</source>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Mostra una notificació quan es sol·licitin les credencials</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation type="unfinished"/>
+        <translation>Sol·licita desbloquejar la base de dades si està bloquejada</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
@@ -1389,7 +1393,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Suprimiu</translation>
+        <translation>Suprimeix</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
@@ -2110,7 +2114,7 @@ Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Esteu segur que voleu moure el grup &quot;%1&quot; a la paperera de reciclatge?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
@@ -2241,7 +2245,7 @@ Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation type="unfinished"/>
+        <translation>Esteu segur que voleu suprimir aquesta URL?</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -2325,7 +2329,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation type="unfinished"/>
+        <translation>Suprimeix l&apos;atribut seleccionat</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
@@ -2400,7 +2404,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation type="unfinished"/>
+        <translation>Suprimeix l&apos;associació de finestres seleccionada</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
@@ -2467,6 +2471,14 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2589,7 +2601,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Caduca:</translation>
     </message>
     <message>
         <source>Edit Entry</source>
@@ -2604,7 +2616,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation type="unfinished"/>
+        <translation>Suprimeix la clau de l&apos;agent després</translation>
     </message>
     <message>
         <source> seconds</source>
@@ -2673,7 +2685,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation type="unfinished"/>
+        <translation>Suprimeix la clau de l&apos;agent després dels segons especificats</translation>
     </message>
     <message>
         <source>Browser for key file</source>
@@ -2868,7 +2880,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Caduca:</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
@@ -3063,7 +3075,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation type="unfinished"/>
+        <translation>Suprimeix les dades del connector seleccionat</translation>
     </message>
 </context>
 <context>
@@ -3112,7 +3124,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Esteu segur que voleu eliminar %n fitxer(s) adjunt(s)?</numerusform><numerusform>Esteu segur que voleu suprimir %n adjunt(s)?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3166,7 +3178,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>Suprimeix el fitxer adjunt seleccionat</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
@@ -4263,7 +4275,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Remove %1</source>
         <comment>Remove a key component</comment>
-        <translation type="unfinished"/>
+        <translation>Suprimeix %1</translation>
     </message>
     <message>
         <source>%1 set, click to change or remove</source>
@@ -4315,24 +4327,12 @@ Message: %2</source>
         <translation>Seleccioneu un fitxer clau</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Selecciona el fitxer clau...</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Navega...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Genera un fitxer clau nou</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Nota: no utilitzeu un fitxer que pugui canviar perquè faria que no poguéssiu desbloquejar la base de dades!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4357,6 +4357,18 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4667,19 +4679,19 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>Move u&amp;p</source>
-        <translation type="unfinished"/>
+        <translation>Mou am&amp;unt</translation>
     </message>
     <message>
         <source>Move entry one step up</source>
-        <translation type="unfinished"/>
+        <translation>Mou l&apos;entrada un graó cap amunt</translation>
     </message>
     <message>
         <source>Move do&amp;wn</source>
-        <translation type="unfinished"/>
+        <translation>Mou avall</translation>
     </message>
     <message>
         <source>Move entry one step down</source>
-        <translation type="unfinished"/>
+        <translation>Baixa l&apos;entrada una posició</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
@@ -4759,7 +4771,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>Remove key from SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>Suprimeix la clau de l&apos;agent SSH</translation>
     </message>
     <message>
         <source>Compact Mode</source>
@@ -4928,7 +4940,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>S&apos; han suprimit les dades personalitzades %1 [%2]</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
@@ -5357,10 +5369,6 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation type="unfinished"/>
     </message>
@@ -5460,6 +5468,10 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <source>Special Characters</source>
         <translation>Caràcters especials</translation>
     </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QApplication</name>
@@ -5536,7 +5548,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>Mou</translation>
     </message>
     <message>
         <source>Empty</source>
@@ -6414,7 +6426,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta de l&apos;entrada a moure.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
@@ -6430,7 +6442,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation type="unfinished"/>
+        <translation>S&apos;ha mogut correctament l&apos;entrada %1 al grup %2</translation>
     </message>
     <message>
         <source>Open a database.</source>
@@ -6438,7 +6450,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta del grup a suprimir.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
@@ -6724,6 +6736,22 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7061,7 +7089,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
-        <translation type="unfinished"/>
+        <translation>No hi ha cap agent en execució, no es pot suprimir la identitat.</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
@@ -7391,7 +7419,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Remove selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Suprimeix el certificat seleccionat</translation>
     </message>
 </context>
 <context>
@@ -7426,10 +7454,6 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unexpected export error occurred</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7498,10 +7522,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>El fitxer no existeix</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>

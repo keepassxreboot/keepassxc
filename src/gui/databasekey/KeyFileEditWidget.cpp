@@ -42,7 +42,7 @@ KeyFileEditWidget::~KeyFileEditWidget()
 bool KeyFileEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
 {
     auto fileKey = QSharedPointer<FileKey>::create();
-    QString fileKeyName = m_compUi->keyFileCombo->currentText();
+    QString fileKeyName = m_compUi->keyFileLineEdit->text();
     if (!fileKey->load(fileKeyName, nullptr)) {
         return false;
     }
@@ -64,7 +64,7 @@ bool KeyFileEditWidget::validate(QString& errorMessage) const
 {
     FileKey fileKey;
     QString fileKeyError;
-    QString fileKeyName = m_compUi->keyFileCombo->currentText();
+    QString fileKeyName = m_compUi->keyFileLineEdit->text();
     if (!fileKey.load(fileKeyName, &fileKeyError)) {
         errorMessage = tr("Error loading the key file '%1'\nMessage: %2").arg(fileKeyName, fileKeyError);
         return false;
@@ -87,7 +87,7 @@ void KeyFileEditWidget::initComponentEditWidget(QWidget* widget)
 {
     Q_UNUSED(widget);
     Q_ASSERT(m_compEditWidget);
-    m_compUi->keyFileCombo->setFocus();
+    m_compUi->keyFileLineEdit->setFocus();
 }
 
 void KeyFileEditWidget::createKeyFile()
@@ -108,7 +108,7 @@ void KeyFileEditWidget::createKeyFile()
                                  tr("Unable to create key file: %1").arg(errorMsg),
                                  QMessageBox::Button::Ok);
         } else {
-            m_compUi->keyFileCombo->setEditText(fileName);
+            m_compUi->keyFileLineEdit->setText(fileName);
         }
     }
 }
@@ -143,6 +143,6 @@ void KeyFileEditWidget::browseKeyFile()
     }
 
     if (!fileName.isEmpty()) {
-        m_compUi->keyFileCombo->setEditText(fileName);
+        m_compUi->keyFileLineEdit->setText(fileName);
     }
 }

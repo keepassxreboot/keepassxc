@@ -272,6 +272,11 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
 
 bool Database::performSave(const QString& filePath, QString* error, bool atomic, bool backup)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QFileInfo info(filePath);
+    auto createTime = info.exists() ? info.birthTime() : QDateTime::currentDateTime();
+#endif
+
     if (atomic) {
         QSaveFile saveFile(filePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
@@ -283,6 +288,11 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
             if (backup) {
                 backupDatabase(filePath);
             }
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+            // Retain orginal creation time
+            saveFile.setFileTime(createTime, QFile::FileBirthTime);
+#endif
 
             if (saveFile.commit()) {
                 // successfully saved database file
@@ -318,6 +328,10 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
                 // successfully saved the database
                 tempFile.setAutoRemove(false);
                 QFile::setPermissions(filePath, perms);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+                // Retain orginal creation time
+                tempFile.setFileTime(createTime, QFile::FileBirthTime);
+#endif
                 return true;
             } else if (!backup || !restoreDatabase(filePath)) {
                 // Failed to copy new database in place, and
@@ -486,8 +500,9 @@ bool Database::restoreDatabase(const QString& filePath)
     // Only try to restore if the backup file actually exists
     if (QFile::exists(backupFilePath)) {
         QFile::remove(filePath);
-        return QFile::copy(backupFilePath, filePath);
-        QFile::setPermissions(filePath, perms);
+        if (QFile::copy(backupFilePath, filePath)) {
+            return QFile::setPermissions(filePath, perms);
+        }
     }
     return false;
 }

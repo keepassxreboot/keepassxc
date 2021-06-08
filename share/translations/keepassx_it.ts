@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>Text only</source>
-        <translation>Solo icone</translation>
+        <translation>Solo testo</translation>
     </message>
     <message>
         <source>Text beside icon</source>
@@ -138,6 +138,10 @@
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>È necessario riavviare l&apos;applicazione per impostare la nuova lingua. Vuoi riavviare ora?</translation>
+    </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monocromatico</translation>
     </message>
 </context>
 <context>
@@ -326,7 +330,7 @@
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Ripristina impostazioni predefinite...</translation>
+        <translation>Ripristina impostazioni predefinite…</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
@@ -649,7 +653,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Converting attributes to custom data…</source>
-        <translation>Conversione di attributi in dati personalizzati in corso...</translation>
+        <translation>Conversione di attributi in dati personalizzati in corso…</translation>
     </message>
     <message>
         <source>KeePassXC: Converted KeePassHTTP attributes</source>
@@ -1337,7 +1341,7 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Rilevamento delle chiavi hardware in corso...</translation>
+        <translation>Rilevamento delle chiavi hardware in corso…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
@@ -1345,7 +1349,7 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>Seleziona chiave hardware...</translation>
+        <translation>Seleziona chiave hardware…</translation>
     </message>
     <message>
         <source>Old key file format</source>
@@ -1464,7 +1468,7 @@ Le autorizzazioni per accedere alle voci verranno revocate.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Rimozione dei permessi salvati...</translation>
+        <translation>Rimozione dei permessi salvati…</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -2494,6 +2498,14 @@ Purtroppo, le modifiche apportate sono state perse.</translation>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Utilizza questa voce solo con l&apos;autenticazione HTTP Basic </translation>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Non inviare questa impostazione al browser per le finestre di dialogo autenticazione HTTP. Se attivata, le finestre di dialogo autenticazione HTTP non mostreranno questa voce per la selezione.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Non utilizzare questa voce con l&apos;autenticazione di base HTTP</translation>
     </message>
 </context>
 <context>
@@ -3584,7 +3596,7 @@ Siete sicuri di voler aggiungere questo file?</translation>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Scarica Favicons</translation>
+        <translation>Scarica i Favicon</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4358,24 +4370,12 @@ Messaggio: %2</translation>
         <translation>Seleziona un file chiave</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Selezione del file chiave</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Cercare il file chiave</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Sfoglia...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Generare un nuovo file chiave</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Nota: non utilizzare un file che potrebbe cambiare in quanto ciò impedirà di sbloccare il database!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4402,6 +4402,18 @@ Sei sicuro di voler continuare con questo file?</translation>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>È stato selezionato un file di chiave in un vecchio formato che KeePassXC&lt;br&gt;potrebbe smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendere in considerazione la possibilità di generare un nuovo file di chiave.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>Genera un nuovo file chiave o scegline uno esistente per proteggere il tuo database.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>Nota: NON utilizzare un file che potrebbe cambiare in quanto ciò ti impedirà di sbloccare il tuo database.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Sfoglia…</translation>
     </message>
 </context>
 <context>
@@ -4652,7 +4664,7 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>&amp;Nuovo database</translation>
+        <translation>&amp;Nuovo database…</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
@@ -4660,39 +4672,39 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>&amp;Nuova voce</translation>
+        <translation>&amp;Nuova voce…</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>&amp;Modifica voce</translation>
+        <translation>&amp;Modifica voce…</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation>&amp;Elimina voce</translation>
+        <translation>&amp;Elimina voce…</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>&amp;Nuovo gruppo</translation>
+        <translation>&amp;Nuovo gruppo…</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>&amp;Modifica gruppo</translation>
+        <translation>&amp;Modifica gruppo…</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;Elimina gruppo</translation>
+        <translation>&amp;Elimina gruppo…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Scarica tutte le &amp;Favicons</translation>
+        <translation>Scarica tutte le &amp;Favicon…</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>Sal&amp;va database come</translation>
+        <translation>Sal&amp;va database come…</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>Database &amp;Sicurezza...</translation>
+        <translation>Database &amp;Sicurezza…</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
@@ -4704,11 +4716,11 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation>Impostazioni &amp;database</translation>
+        <translation>Impostazioni &amp;database…</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation>&amp;Clona voce</translation>
+        <translation>&amp;Clona voce…</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
@@ -4744,23 +4756,23 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation>&amp;File CSV...</translation>
+        <translation>&amp;File CSV…</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation>File &amp;HTML...</translation>
+        <translation>File &amp;HTML…</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
-        <translation>Database KeePass 1</translation>
+        <translation>Database KeePass 1…</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
-        <translation>1Password Vault</translation>
+        <translation>1Password Vault…</translation>
     </message>
     <message>
         <source>CSV File…</source>
-        <translation>File CSV</translation>
+        <translation>File CSV…</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -4772,7 +4784,7 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation>Configura TOTP...</translation>
+        <translation>Configura TOTP…</translation>
     </message>
     <message>
         <source>Report a &amp;Bug</source>
@@ -4796,7 +4808,7 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     </message>
     <message>
         <source>Save Database Backup...</source>
-        <translation>Salva il backup del database </translation>
+        <translation>Salva il backup del database...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -5403,10 +5415,6 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Escludere i caratteri: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Password generata</translation>
     </message>
@@ -5505,6 +5513,10 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     <message>
         <source>Special Characters</source>
         <translation>Caratteri speciali</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Caratteri esclusi: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6683,7 +6695,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to continue…</source>
-        <translation>Premere il pulsante della YubiKey per continuare</translation>
+        <translation>Premere il pulsante della YubiKey per continuare…</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
@@ -6778,6 +6790,22 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Dati di file chiave imprevisti! Il file chiave potrebbe essere danneggiato.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>Cancellazione degli appunti in %1 secondo…</numerusform><numerusform>Cancellazione degli appunti in %1 secondi…</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>blocca tutti i database aperti</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Database bloccati.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Impossibile bloccare il database.</translation>
     </message>
 </context>
 <context>
@@ -6885,7 +6913,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Edit Entry...</source>
-        <translation>Modifica voce</translation>
+        <translation>Modifica voce…</translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -6924,7 +6952,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation>Password esposta </translation>
+        <translation>Password esposta…</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -6968,7 +6996,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Edit Entry...</source>
-        <translation>Modifica voce</translation>
+        <translation>Modifica voce…</translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -7481,10 +7509,6 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
         <source>Could not write export container</source>
         <translation>Impossibile scrivere il contenitore di esportazione</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Si è verificato un errore di esportazione imprevisto</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7551,10 +7575,6 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     <message>
         <source>File does not exist</source>
         <translation>Il file non esiste</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Tipo di contenitore di condivisione sconosciuto</translation>
     </message>
 </context>
 <context>
@@ -7885,7 +7905,7 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Rilevamento delle chiavi hardware in corso...</translation>
+        <translation>Rilevamento delle chiavi hardware in corso…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>

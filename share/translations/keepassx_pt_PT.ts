@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Tem que reiniciar a aplicação para aplicar o novo idioma. Reiniciar agora?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monocromático</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2496,6 +2500,14 @@ Infelizmente, quaisquer alterações efetuadas foram perdidas.</translation>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Apenas utilizar esta entrada com HTTP Basic Auth</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Não enviar esta definição para o navegador em diálogos de HTTP Auth. Se ativa, as caixas de diálogo HTTP Auth não mostrarão esta entrada.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Não utilizar esta entrada com HTTP Basic Auth</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -4359,24 +4371,12 @@ Mensagem: %2</translation>
         <translation>Selecione o ficheiro-chave</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Seleção do ficheiro-chave</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Procurar ficheiro-chave</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Explorar...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Gerar um novo ficheiro-chave</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>AVISO: Não utilize um ficheiro que possa ser alterado pois deixará de conseguir desbloquear a sua base de dados!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4403,6 +4403,18 @@ Tem a certeza de que deseja utilizar este ficheiro?</translation>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>Está a utilizar um formato de ficheiro-chave antigo que KeePassXC pode &lt;br&gt;deixar de ter suporte no futuro.&lt;br&gt;&lt;br&gt;Deve considerar a geração de um novo ficheiro-chave.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>Gere um novo ficheiro-chave ou escolha um existente para proteger a sua base de dados.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>Atenção: não utilize um ficheiro que pode ser alterado porque, se o fizer, deixará de ter acesso à base de dados.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Procurar...</translation>
     </message>
 </context>
 <context>
@@ -5404,10 +5416,6 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Caracteres excluídos: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Palavra-passe gerada</translation>
     </message>
@@ -5506,6 +5514,10 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
     <message>
         <source>Special Characters</source>
         <translation>Caracteres especiais</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Caracteres excluídos: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6780,6 +6792,22 @@ Deve considerar a geração de um novo ficheiro-chave.</translation>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Dados inesperados! O ficheiro-chave pode estar danificado.</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>A área de transferência será limpa dentro de %1 segundo...</numerusform><numerusform>A área de transferência será limpa dentro de %1 segundos...</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>bloquear todas as bases de dados abertas</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Bases de dados bloqueadas.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Não foi possível desbloquear a base de dados.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7482,10 +7510,6 @@ Deve considerar a geração de um novo ficheiro-chave.</translation>
         <source>Could not write export container</source>
         <translation>Não foi possível escrever o contentor de exportação</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Ocorreu um erro inesperado ao exportar</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7552,10 +7576,6 @@ Deve considerar a geração de um novo ficheiro-chave.</translation>
     <message>
         <source>File does not exist</source>
         <translation>O ficheiro não existe</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Tipo de contentor de partilha desconhecido</translation>
     </message>
 </context>
 <context>

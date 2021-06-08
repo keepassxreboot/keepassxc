@@ -39,8 +39,7 @@ Clipboard::Clipboard(QObject* parent)
         m_pasteboard = new MacPasteboard();
     }
 #endif
-    m_timer->setSingleShot(true);
-    connect(m_timer, SIGNAL(timeout()), SLOT(clearClipboard()));
+    connect(m_timer, SIGNAL(timeout()), SLOT(countdownTick()));
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
 }
 
@@ -77,7 +76,9 @@ void Clipboard::setText(const QString& text, bool clear)
         if (config()->get(Config::Security_ClearClipboard).toBool()) {
             int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
             if (timeout > 0) {
-                m_timer->start(timeout * 1000);
+                m_secondsElapsed = -1;
+                countdownTick();
+                m_timer->start(1000);
             }
         }
     }
@@ -85,15 +86,9 @@ void Clipboard::setText(const QString& text, bool clear)
 
 void Clipboard::clearCopiedText()
 {
-    if (m_timer->isActive()) {
-        m_timer->stop();
-    }
+    m_timer->stop();
+    emit updateCountdown(-1, "");
 
-    clearClipboard();
-}
-
-void Clipboard::clearClipboard()
-{
     auto* clipboard = QApplication::clipboard();
     if (!clipboard) {
         qWarning("Unable to access the clipboard.");
@@ -106,6 +101,19 @@ void Clipboard::clearClipboard()
     }
 
     m_lastCopied.clear();
+}
+
+void Clipboard::countdownTick()
+{
+    m_secondsElapsed++;
+    int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
+    int timeLeft = timeout - m_secondsElapsed;
+    if (timeLeft <= 0) {
+        clearCopiedText();
+    } else {
+        emit updateCountdown(100 * timeLeft / timeout,
+                             QObject::tr("Clearing the clipboard in %1 second(s)…", "", timeLeft).arg(timeLeft));
+    }
 }
 
 Clipboard* Clipboard::instance()

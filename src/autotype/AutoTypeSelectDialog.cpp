@@ -52,18 +52,24 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     setWindowIcon(resources()->applicationIcon());
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-    QRect screenGeometry = QApplication::screenAt(QCursor::pos())->availableGeometry();
+    auto screen = QApplication::screenAt(QCursor::pos());
+    if (!screen) {
+        // screenAt can return a nullptr, default to the primary screen
+        screen = QApplication::primaryScreen();
+    }
+    QRect screenGeometry = screen->availableGeometry();
 #else
     QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());
 #endif
+
+    // Resize to last used size
     QSize size = config()->get(Config::GUI_AutoTypeSelectDialogSize).toSize();
     size.setWidth(qMin(size.width(), screenGeometry.width()));
     size.setHeight(qMin(size.height(), screenGeometry.height()));
     resize(size);
 
     // move dialog to the center of the screen
-    QPoint screenCenter = screenGeometry.center();
-    move(screenCenter.x() - (size.width() / 2), screenCenter.y() - (size.height() / 2));
+    move(screenGeometry.center().x() - (size.width() / 2), screenGeometry.center().y() - (size.height() / 2));
 
     QVBoxLayout* layout = new QVBoxLayout(this);
 

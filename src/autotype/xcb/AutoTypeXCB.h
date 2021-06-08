@@ -77,7 +77,6 @@ private:
     void updateKeymap();
     bool isRemapKeycodeValid();
     int AddKeysym(KeySym keysym);
-    void AddModifier(KeySym keysym);
     void SendKeyEvent(unsigned keycode, bool press);
     void SendModifiers(unsigned int mask, bool press);
     int GetKeycode(KeySym keysym, unsigned int* mask);
@@ -93,6 +92,8 @@ private:
     Atom m_atomString;
     Atom m_atomUtf8String;
     Atom m_atomNetActiveWindow;
+    Atom m_atomTransientFor;
+    Atom m_atomWindow;
     QSet<QString> m_classBlacklist;
     Qt::Key m_currentGlobalKey;
     Qt::KeyboardModifiers m_currentGlobalModifiers;
