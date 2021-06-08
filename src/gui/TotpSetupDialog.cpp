@@ -46,7 +46,7 @@ void TotpSetupDialog::saveSettings()
 {
     // Secret key sanity check
     // Convert user input to all uppercase and remove '='
-    auto key = m_ui->seedEdit->text().toUpper().remove(" ").remove("=").toLatin1();
+    auto key = m_ui->seedEdit->text().toUpper().remove(" ").remove("=").trimmed().toLatin1();
     auto sanitizedKey = Base32::sanitizeInput(key);
     // Use startsWith to ignore added '=' for padding at the end
     if (!sanitizedKey.startsWith(key)) {
