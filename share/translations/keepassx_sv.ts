@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Du måste starta om programmet för att tillämpa det nya språket. Vill du starta om nu?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monokrom</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2496,6 +2500,14 @@ Alla genomförda ändringar kan tyvärr ha förlorats.</translation>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Använd den här posten endast med HTTP Basic Auth</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Skicka inte den här inställningen till webbläsaren för HTTP-autentisering. Vid aktivering visas inte den här posten för markering.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Använd inte här posten med HTTP Basic Auth</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -4358,24 +4370,12 @@ Meddelande: %2</translation>
         <translation>Välj nyckelfil</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Nyckelfiler</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Bläddra efter nyckelfil</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Bläddra...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Generera en ny nyckelfil</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>OBS! Använd inte en fil som kanske kommer att modifieras, eftersom det kommer att förhindra upplåsning av databasen!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4401,7 +4401,19 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Du valde ett äldre nyckelfilsformat, som stödet &lt;br&gt;kan komma att tas bort för i framtiden.&lt;br&gt; &lt;br&gt;Överväg att generera en ny nyckelfil istället.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>Generera en ny nyckelfil eller välj en befintlig, för att skydda din databas.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>OBS! Använd INTE en fil som kanske kommer att ändras, då det förhindrar upplåsning av databasen!</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Bläddra…</translation>
     </message>
 </context>
 <context>
@@ -4868,7 +4880,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Alltid överst</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -5403,10 +5415,6 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Undanta tecknen: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Genererat lösenord</translation>
     </message>
@@ -5505,6 +5513,10 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     <message>
         <source>Special Characters</source>
         <translation>Specialtecken</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Undantagna tecken: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6735,26 +6747,29 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg till en anpassad lokal konfigurationsfil</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>VARNING! Du använder ett äldre nyckelfilsformat som KeePassXC kanske
+inte kommer att stödja i framtiden.
+
+Överväg att generera en ny nyckelfil.</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1 (%2 rundor, %3 KB)</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d (KDBX 4 – rekommenderas)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id (KDBX 4)</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -6766,15 +6781,31 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nyckelfilsversionen stöds ej: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Kontrollsumman stämmer inte! Nyckelfilen kan vara skadad.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Oväntad nyckelfilsdata! Nyckelfilen kan vara skadad.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>Rensar urklipp om %1 sekund...</numerusform><numerusform>Rensar urklipp om %1 sekunder...</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>Lås alla öppna databaser</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Låste databaser.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Databas kunde inte låsas.</translation>
     </message>
 </context>
 <context>
@@ -7478,10 +7509,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>Kunde inte skriva exportbehållare</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Ett oväntat exportfel inträffade</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7548,10 +7575,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>Filen finns inte</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Okänd typ av delningsbehållare</translation>
     </message>
 </context>
 <context>

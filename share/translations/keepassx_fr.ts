@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Pour appliquer la nouvelle langue, vous devez redémarrer l’application. Voulez-vous la démarrer maintenant ?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monochrome</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -940,7 +944,7 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Avertissement :&lt;/b&gt; Les options suivantes peuvent être dangereuses</translation>
+        <translation>&lt;b&gt;Avertissement:&lt;/b&gt; Les options suivantes peuvent être dangereuses</translation>
     </message>
     <message>
         <source>Executable Files</source>
@@ -2494,6 +2498,14 @@ Malheureusement, les changements effectués ont été perdus.</translation>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>N’utiliser cette entrée qu’avec l’authentification HTTP Basic</translation>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Ne pas envoyer ce paramètre au navigateur pour les boîtes de dialogue d’authentification HTTP. Si cette option est activée, cette entrée ne sera pas présentée comme possibilité de sélection par les boîtes de dialogue d’authentification HTTP.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Ne pas utiliser cette entrée avec l’authentification HTTP Basic</translation>
     </message>
 </context>
 <context>
@@ -4356,24 +4368,12 @@ Message : %2</translation>
         <translation>Sélectionner un fichier clé</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Sélection du fichier clé</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Rechercher un fichier clé</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Parcourir…</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Générer un nouveau fichier clé</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Note : N’utilisez pas un fichier qui pourrait changer, car cela pourrait vous empêcher de déverrouiller votre base de données.</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4400,6 +4400,18 @@ Voulez-vous vraiment poursuivre avec ce fichier ?</translation>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>Vous utilisez un ancien format de fichier clé que KeePassXC &lt;br&gt;pourrait ne plus prendre en charge à l’avenir.&lt;br&gt;&lt;br&gt;Veuillez envisager de plutôt générer un nouveau fichier clé.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>Générez un nouveau fichier clé ou choisissez un fichier clé existant afin de protéger votre base de données.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>Note : N’utilisez PAS un fichier qui pourrait être modifié, car cela vous empêchera de déverrouiller votre base de données.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Parcourir…</translation>
     </message>
 </context>
 <context>
@@ -4504,7 +4516,7 @@ Voulez-vous vraiment poursuivre avec ce fichier ?</translation>
         <source>WARNING: You are using an unstable build of KeePassXC!
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation>AVERTISSEMENT : Vous utilisez une version instable du KeePassXC.
+        <translation>AVERTISSEMENT: Vous utilisez une version instable du KeePassXC.
 Le risque de corruption est élevé, conservez une sauvegarde de vos bases de données.
 Cette version n’est pas destinée à un usage régulier.</translation>
     </message>
@@ -4515,7 +4527,7 @@ Cette version n’est pas destinée à un usage régulier.</translation>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation>AVERTISSEMENT : Votre version de Qt pourrait faire planter KeePassXC avec un clavier virtuel.
+        <translation>AVERTISSEMENT: Votre version de Qt pourrait faire planter KeePassXC avec un clavier virtuel.
 Nous recommandons d’utiliser l’AppImage proposée sur notre page de téléchargement.</translation>
     </message>
     <message>
@@ -4866,7 +4878,7 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     </message>
     <message>
         <source>Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Toujours sur le dessus</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -5239,7 +5251,7 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation>Avertissement : Les majuscules sont verrouillées</translation>
+        <translation>Avertissement: Les majuscules sont verrouillées</translation>
     </message>
 </context>
 <context>
@@ -5401,10 +5413,6 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
         <translation>Hexadécimal</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Les caractères exclus sont : « 0 », « 1 », « l », « I », « O », « | », « . »</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Mot de passe généré</translation>
     </message>
@@ -5503,6 +5511,10 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     <message>
         <source>Special Characters</source>
         <translation>Caractères spéciaux</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Caractères exclus : « 0 », « O », « 1 », « l », « I », « | », « G », « 6 », « B », « 8 », « ﹒ »</translation>
     </message>
 </context>
 <context>
@@ -6776,6 +6788,22 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Les données du fichier clé ne sont pas celles attendues. Le fichier clé pourrait être corrompu.</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>Effacement du presse-papiers dans %1 seconde…</numerusform><numerusform>Effacement du presse-papiers dans %1 secondes…</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>verrouiller toutes les bases de données ouvertes</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Les bases de données ont été verrouillées.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Échec de verrouillage de la base de données.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -6961,7 +6989,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>millions of times</source>
-        <translation>millions de fois</translation>
+        <translation>des millions de fois</translation>
     </message>
     <message>
         <source>Edit Entry...</source>
@@ -7261,7 +7289,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation>&lt;/b&gt;Avertissement :&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Avertissement:&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
@@ -7478,10 +7506,6 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
         <source>Could not write export container</source>
         <translation>Impossible d’écrire dans le conteneur d’exportation</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Une erreur d’exportation inattendue est survenue</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7548,10 +7572,6 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     <message>
         <source>File does not exist</source>
         <translation>Le fichier n’existe pas</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Le type de conteneur de partage est inconnu</translation>
     </message>
 </context>
 <context>
@@ -7819,7 +7839,7 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation type="unfinished"/>
+        <translation>Passive</translation>
     </message>
     <message>
         <source>%1 Invalid slot specified - %2</source>

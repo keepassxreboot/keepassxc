@@ -137,7 +137,11 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>Você precisa reiniciar o aplicativo para aplicar o novo idioma. Você gostaria de reiniciar agora?</translation>
+    </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monocromático</translation>
     </message>
 </context>
 <context>
@@ -342,15 +346,15 @@
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Salvar automaticamente ao bloquear banco de dados</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Salvar automaticamente alterações que não são de dados ao bloquear banco de dados</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation type="unfinished"/>
+        <translation>Tipo de ícone da área de notificação</translation>
     </message>
 </context>
 <context>
@@ -1350,11 +1354,11 @@ Se você não tem um arquivo-chave, por favor deixe o campo vazio.</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Formato antigo de arquivo de chave</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Você está usando um formato de arquivo-chave antigo, que o KeePassXC pode &lt;br&gt;parar de suportar no futuro.&lt;br&gt;&lt;br&gt;Por favor, considere gerar um novo arquivo-chave acessando:&lt;br&gt;&lt;strong&gt;Banco de Dados / Segurança do Banco de Dados / Alterar Arquivo-Chave.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2291,12 +2295,13 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>Entrada Inválida</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation type="unfinished"/>
+        <translation>Uma operação de mesclagem externa invalidou esta entrada.
+Infelizmente, todas as alterações feitas foram perdidas.</translation>
     </message>
 </context>
 <context>
@@ -2495,6 +2500,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Usar esta entrada somente com Autenticação HTTP Básica</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Não envia esta configuração para o navegador para caixas de diálogo de Autenticação HTTP. Se ativado, as caixas de diálogo de Autenticação HTTP não mostrarão esta entrada para seleção.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Não usar esta entrada com Autenticação HTTP Básica</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2619,7 +2632,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>Editar Entrada</translation>
     </message>
 </context>
 <context>
@@ -2923,7 +2936,7 @@ Extensões suportadas são: %1</translation>
     </message>
     <message>
         <source>Edit Group</source>
-        <translation type="unfinished"/>
+        <translation>Editar Grupo</translation>
     </message>
 </context>
 <context>
@@ -3446,12 +3459,12 @@ Você deseja realmente adicionar este arquivo?</translation>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Sequência Padrão</translation>
     </message>
     <message>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
         <comment>attributes line</comment>
-        <translation type="unfinished"/>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
 </context>
 <context>
@@ -4358,24 +4371,12 @@ Mensagem: %2</translation>
         <translation>Escolha um arquivo-chave</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Seleção do arquivo-chave</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Procurar por arquivo-chave</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Procurar...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Gerar um novo arquivo-chave</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Nota: Não use um arquivo que possa ser modificado, pois isso irá impedir que você destranque seu banco de dados!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4397,11 +4398,23 @@ Tem certeza que deseja continuar com este arquivo?</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Formato antigo de arquivo de chave</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>Você selecionou um arquivo-chave em um formato antigo que o KeePassXC&lt;br&gt;pode parar de suportar no futuro.&lt;br&gt;&lt;br&gt;Por favor, considere-se gerar um novo arquivo-chave.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Navegar...</translation>
     </message>
 </context>
 <context>
@@ -4848,27 +4861,27 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>Perform Auto-Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Realizar Sequência de Auto-Digitação</translation>
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>{USERNAME}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{USERNAME}{ENTER}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>{PASSWORD}</translation>
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{PASSWORD}{ENTER}</translation>
     </message>
     <message>
         <source>Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Sempre no Topo</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -5403,10 +5416,6 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Caracteres excluídos: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Senha geradas</translation>
     </message>
@@ -5505,6 +5514,10 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     <message>
         <source>Special Characters</source>
         <translation>Caracteres Especiais</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6734,26 +6747,29 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>caminho para um arquivo de configuração local personalizado</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>AVISO: Você está usando um formato de arquivo-chave antigo que o KeePassXC pode.
+parar de suportar no futuro
+
+Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1 (%2 rodadas, %3 KB)</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d (KDBX 4 – recomendado)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id (KDBX 4)</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -6765,14 +6781,30 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Versão de arquivo-chave não suportada: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Erro de checksum! O arquivo-chave pode estar corrompido.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Dados inesperados do arquivo-chave! Ele pode estar corrompido.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7477,10 +7509,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>Não foi possível escrever o recipiente de exportação</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Ocorreu um erro de exportação inesperado</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7547,10 +7575,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>Arquivo não existe</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Tipo de compartilhamento de recipiente desconhecido</translation>
     </message>
 </context>
 <context>

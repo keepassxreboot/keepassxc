@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Debe reiniciar la aplicación para establecer el nuevo lenguage. ¿Desea reiniciar ahora?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monocromo</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -819,7 +823,7 @@ portatil-chrome.</translation>
     <message>
         <source>Sort matching credentials by username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Ordenar las credenciales coincidentes por nombre de usuario</translation>
+        <translation>Ordenar las credenciales coincidentes por usuario</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1763,7 +1767,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Usuario por defecto:</translation>
+        <translation>Usuario predeterminado:</translation>
     </message>
     <message>
         <source>History Settings</source>
@@ -2495,6 +2499,14 @@ Desafortunadamente, todos los cambios hechos se han perdido.</translation>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Usar este apunte solo con autenticación básica HTTP</translation>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>No enviar esta configuración al navegador para los diálogos de autenticación HTTP. Habilitada, los formularios de autenticación no mostrarán este apunte para su selección.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>No usar este apunte con autenticación básica HTTP</translation>
     </message>
 </context>
 <context>
@@ -4359,24 +4371,12 @@ Mensaje: %2</translation>
         <translation>Seleccionar un fichero clave</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Selección de fichero clave</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Explorar para un fichero clave</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Explorar…</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Generar un nuevo fichero clave</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Nota: no use un archivo que pueda cambiar dado que impedirá desbloquear la base de datos.</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4403,6 +4403,18 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>Ha seleccionado un fichero clave con un formato que KeePassXC&lt;br&gt;puede dejar de soportar en el futuro.&lt;br&gt;&lt;br&gt;Considere generar un nuevo fichero clave en su lugar.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>Generar un nuevo fichero clave o seleccionar uno existente para proteger su base de datos.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>Nota: No use un un fichero que pueda cambiar ya que le impedirá desbloquear su base de datos.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Examinar...</translation>
     </message>
 </context>
 <context>
@@ -4729,7 +4741,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     </message>
     <message>
         <source>Copy &amp;Username</source>
-        <translation>Copiar nombre de &amp;usuario</translation>
+        <translation>Copiar &amp;usuario</translation>
     </message>
     <message>
         <source>Copy &amp;Password</source>
@@ -5404,10 +5416,6 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
         <translation>Hexadecimal</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Caracteres excluidos: «0», «1», «l», «I», «O», «|», «﹒»</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Generar contraseña</translation>
     </message>
@@ -5506,6 +5514,10 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     <message>
         <source>Special Characters</source>
         <translation>Caracteres especiales</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Caracteres excluidos: «0», «O», «1», «l», «I», «|», «G», «6», «B», «8», «﹒»</translation>
     </message>
 </context>
 <context>
@@ -6780,6 +6792,22 @@ Considere generar un nuevo fichero clave.</translation>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>¡Datos de fichero clave inesperados! El fichero clave puede estar corrupto.</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>Limpiando el portapapeles en %1 segundo...</numerusform><numerusform>Limpiando el portapapeles en %1 segundos...</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>bloquear todas las bases de datos abiertas</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Bases de datos bloquedas.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Fallo al bloquear base de datos.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7482,10 +7510,6 @@ Considere generar un nuevo fichero clave.</translation>
         <source>Could not write export container</source>
         <translation>No se puede escribir contenedor de exportación</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Ha ocurrido un error inesperado en la exportación</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7552,10 +7576,6 @@ Considere generar un nuevo fichero clave.</translation>
     <message>
         <source>File does not exist</source>
         <translation>El archivo no existe</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Tipo de contenedor compartido desconocido</translation>
     </message>
 </context>
 <context>

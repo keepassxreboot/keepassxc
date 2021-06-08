@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Zum Ändern der Sprache müssen Sie die Anwendung neu starten. Möchten Sie jetzt neu starten?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monochrom</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -1992,7 +1996,7 @@ Das ist definitiv ein Programmfehler, bitte benachrichtigen Sie die Entwickler.<
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Möchten Sie wirklich %n Eintrag aus dem Papierkorb löschen?</numerusform><numerusform>Möchten Sie wirklich %n Einträge aus dem Papierkorb löschen?</numerusform></translation>
+        <translation><numerusform>Möchten Sie wirklich %n Eintrag in den Papierkorb verschieben?</numerusform><numerusform>Möchten Sie wirklich %n Einträge in den Papierkorb verschieben?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -2494,6 +2498,14 @@ Leider sind alle vorgenommenen Änderungen verloren gegangen.</translation>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Diesen Eintrag nur mit &quot;HTTP Basic Auth&quot; verwenden</translation>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Diese Einstellung nicht an den Browser für HTTP-Auth-Dialoge senden. Wenn aktiviert, wird dieser Eintrag in HTTP-Auth-Dialogen nicht zur Auswahl angezeigt.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Diesen Eintrag nicht mit HTTP-Basic-Auth verwenden</translation>
     </message>
 </context>
 <context>
@@ -4358,24 +4370,12 @@ Message: %2</source>
         <translation>Schlüsseldatei auswählen</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Auswahl der Schlüsseldatei</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Schlüsseldatei auswählen</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Durchsuchen ...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Neue Schlüsseldatei erzeugen</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Hinweis: Benutzen Sie keine Datei, die sich ändern kann, sonst können Sie die Datenbank nicht mehr entsperren!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4402,6 +4402,18 @@ Wollen Sie wirklich mit dieser Datei fortfahren?</translation>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>Sie verwenden ein altes Schlüsseldateiformat, das KeePassXC möglicherweise&lt;br&gt;in Zukunft nicht mehr unterstützen wird.&lt;br&gt;&lt;br&gt;Bitte erwägen Sie, eine neue Schlüsseldatei zu erzeugen.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>Erzeugen Sie eine neue Schlüsseldatei oder wählen Sie eine vorhandene aus, um Ihre Datenbank zu schützen.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>Hinweis: Verwenden Sie NICHT eine Datei, die sich ändern kann, da Sie dann Ihre Datenbank nicht mehr freischalten können.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Durchsuchen...</translation>
     </message>
 </context>
 <context>
@@ -5403,10 +5415,6 @@ Rechnen Sie mit Fehlern. Diese Version ist nicht für den Produktiveinsatz gedac
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Ausgeschlossene Zeichen: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Erzeugtes Passwort</translation>
     </message>
@@ -5505,6 +5513,10 @@ Rechnen Sie mit Fehlern. Diese Version ist nicht für den Produktiveinsatz gedac
     <message>
         <source>Special Characters</source>
         <translation>Sonderzeichen</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Ausgeschlossene Zeichen: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6779,6 +6791,22 @@ Bitte erwägen Sie, eine neue Schlüsseldatei zu erzeugen.</translation>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Unerwartete Schlüsseldateidaten! Die Schlüsseldatei ist möglicherweise beschädigt.</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>Zwischenablage wird in %1 Sekunde(n) gelöscht...</numerusform><numerusform>Zwischenablage wird in %1 Sekunde(n) gelöscht ...</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>alle offenen Datenbanken sperren</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Gesperrte Datenbanken.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Datenbank kann nicht gesperrt werden.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7481,10 +7509,6 @@ Bitte erwägen Sie, eine neue Schlüsseldatei zu erzeugen.</translation>
         <source>Could not write export container</source>
         <translation>Export-Container kann nicht gespeichert werden</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Unerwarteter Fehler beim Export</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7551,10 +7575,6 @@ Bitte erwägen Sie, eine neue Schlüsseldatei zu erzeugen.</translation>
     <message>
         <source>File does not exist</source>
         <translation>Datei existiert nicht</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Unbekannter geteilter Containertyp</translation>
     </message>
 </context>
 <context>

@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Da se nastavi novi jezik je potrebno ponovno zagnati aplikacijo. Ali želite ponovno zagnati sedaj?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2467,6 +2471,14 @@ Na žalost so bile vse spremembe izgubljene.</translation>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -4317,24 +4329,12 @@ Message: %2</source>
         <translation>Izberi datoteko s kljući</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Izbira datoteke s ključi</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Prebrskaj za datoteko s ključi</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Prebrskaj...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Ustvari novo datoteko ključa</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Opomba: Ne uporabljajte datoteke, ki se lahko spremeni, saj vam bo to preprečilo odklepanje baze!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4359,6 +4359,18 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5356,10 +5368,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Izključeni znaki: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;.&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Ustvarjeno geslo</translation>
     </message>
@@ -5458,6 +5466,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Special Characters</source>
         <translation>Posebni znaki</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6723,6 +6735,22 @@ Please consider generating a new key file.</source>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7425,10 +7453,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Pri izvozu je prišlo do nepričakovane napake </translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7495,10 +7519,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>Datoteka ne obstaja</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Neznana vrsta deljenega kontejnerja</translation>
     </message>
 </context>
 <context>

@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Musisz uruchomić ponownie aplikację, aby ustawić nowy język. Czy chcesz teraz to zrobić?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monochromatyczny</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2496,6 +2500,14 @@ Niestety, wszelkie wprowadzone zmiany zostały utracone.</translation>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Użyj tego wpisu tylko w przypadku podstawowego uwierzytelniania HTTP</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Nie wysyłaj tego ustawienia do przeglądarki w przypadku okien dialogowych uwierzytelniania HTTP. Jeśli jest włączone, okna dialogowe uwierzytelniania HTTP nie będą pokazywać tego wpisu do wyboru.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Nie używaj tego wpisu z podstawowym uwierzytelnianiem HTTP</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -4361,24 +4373,12 @@ Komunikat: %2</translation>
         <translation>Wybierz plik klucza</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Wybór pliku klucza</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Przeglądaj plik klucza</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Przeglądaj...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Generuj nowy plik klucza</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Uwaga: nie należy używać pliku, który może ulec zmianie, ponieważ uniemożliwi to odblokowanie bazy danych!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4405,6 +4405,18 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>Wybrano plik klucza w starym formacie, który KeePassXC&lt;br&gt;może przestać obsługiwać w przyszłości.&lt;br&gt;&lt;br&gt;Zamiast tego warto rozważyć wygenerowanie nowego pliku klucza.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>Wygeneruj nowy plik klucza lub wybierz istniejący, aby chronić bazę danych.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>Uwaga: NIE używaj pliku, który może się zmienić, ponieważ uniemożliwi to odblokowanie bazy danych.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Przeglądaj…</translation>
     </message>
 </context>
 <context>
@@ -5405,10 +5417,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Heksadecymalne</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Wykluczone znaki: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Wygenerowane hasło</translation>
     </message>
@@ -5507,6 +5515,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Special Characters</source>
         <translation>Znaki specjalne</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Wykluczone znaki: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6781,6 +6793,22 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Nieoczekiwane dane pliku klucza! Plik klucza może być uszkodzony.</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>Czyszczenie schowka za %1 sekundę…</numerusform><numerusform>Czyszczenie schowka za %1 sekundy…</numerusform><numerusform>Czyszczenie schowka za %1 sekund…</numerusform><numerusform>Czyszczenie schowka za %1 sekund…</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>zablokuj wszystkie otwarte bazy danych</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Zablokowane bazy danych.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Nie udało się zablokować bazy danych.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7483,10 +7511,6 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
         <source>Could not write export container</source>
         <translation>Nie można zapisać kontenera eksportu</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Wystąpił nieoczekiwany błąd eksportu</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7553,10 +7577,6 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     <message>
         <source>File does not exist</source>
         <translation>Plik nie istnieje</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Nieznany typ kontenera udostępniania</translation>
     </message>
 </context>
 <context>

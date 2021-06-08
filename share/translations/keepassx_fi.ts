@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Ohjelma täytyy käynnistää uudelleen, jotta uusi kieli voidaan ottaa käyttöön. Haluatko käynnistää uudelleen nyt?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Mustavalkoinen</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -1349,11 +1353,11 @@ Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Vanha avaintiedostomuoto</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole&lt;br&gt;tuettu tulevaisuudessa.&lt;br&gt;&lt;br&gt;Ole hyvä ja harkitse uuden avaintiedoston luomista menemällä:&lt;br&gt;&lt;strong&gt;Tietokanta / Tietokannan turvallisuus / Vaihda avaintiedosto&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2289,12 +2293,13 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen tietue</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation type="unfinished"/>
+        <translation>Ulkopuolinen yhdistämisoperaatio on muuttanut tämän tietueen virheelliseksi.
+Valitettavasti kaikki siihen tehdyt muutokset ovat kadonneet.</translation>
     </message>
 </context>
 <context>
@@ -2493,6 +2498,14 @@ Unfortunately, any changes made have been lost.</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Käytä tietuetta vain HTTP Basic -autentikaatioon</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Älä lähetä tätä tietuetta HTTP-autentikaatiodialogeihin. Jos asetus on päällä, tämä tietue näkyy vain tavallisissa kirjautumiskentissä.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Älä käytä tätä tietuetta HTTP Basic -autentikaatioon</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2617,7 +2630,7 @@ Unfortunately, any changes made have been lost.</source>
     </message>
     <message>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>Muokkaa tietuetta</translation>
     </message>
 </context>
 <context>
@@ -2921,7 +2934,7 @@ Tuetut tyypit ovat: %1.</translation>
     </message>
     <message>
         <source>Edit Group</source>
-        <translation type="unfinished"/>
+        <translation>Muokkaa ryhmää</translation>
     </message>
 </context>
 <context>
@@ -3444,12 +3457,12 @@ Oletko varma, että haluat lisätä tämän tiedoston?</translation>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Oletussekvenssi</translation>
     </message>
     <message>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
         <comment>attributes line</comment>
-        <translation type="unfinished"/>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
 </context>
 <context>
@@ -4356,24 +4369,12 @@ Viesti: %2</translation>
         <translation>Valitse avaintiedosto</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Avaintiedoston valinta</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Selaa avaintiedostoa</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Selaa...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Luo uusi avaintiedosto</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Huom.: Älä käytä tiedostoa jonka sisältö voi muuttua, sillä se voi estää tietokannan avauksen!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4395,11 +4396,23 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation type="unfinished"/>
+        <translation>Vanha avaintiedostomuoto</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole&lt;br&gt;välttämättä tuettu tulevaisuudessa.&lt;br&gt;&lt;br&gt;Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation>Kuo uusi avaintiedosto, tai avaa jo olemassa oleva suojataksesi tietokantasi.</translation>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>Huom.: Älä käytä tiedostoa jonka sisältö voi muuttua, sillä se voi estää tietokannan avauksen.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Selaa...</translation>
     </message>
 </context>
 <context>
@@ -4866,7 +4879,7 @@ Bugeja ja ongelmia voi esiintyä. Tämä versio ei ole tarkoitettu päivittäise
     </message>
     <message>
         <source>Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Aina päällimmäisenä</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -5401,10 +5414,6 @@ Bugeja ja ongelmia voi esiintyä. Tämä versio ei ole tarkoitettu päivittäise
         <translation>Heksa</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Poissuljetut kirjaimet: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Luotu salasana</translation>
     </message>
@@ -5503,6 +5512,10 @@ Bugeja ja ongelmia voi esiintyä. Tämä versio ei ole tarkoitettu päivittäise
     <message>
         <source>Special Characters</source>
         <translation>Erikoismerkit</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Suodata pois kirjaimet &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6733,26 +6746,29 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>polku mukautettuun asetustiedostoon</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole
+välttämättä tuettu tulevaisuudessa.
+
+Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1 (%2 kierrosta, %3 KB)</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d (KDBX 4 - suositeltu)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id (KDBX 4)</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -6764,15 +6780,31 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Avaintiedosto joka ei ole tuettu, versio: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Tarkistussumma on virheellinen! Avaintiedosto voi olla korruptoitunut.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Odottamatonta avaintiedoston dataa havaittu. Avaintiedosto voi olla korruptoitunut.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation><numerusform>Tyhjennetään leikepöytä %1 sekunnin kuluttua...</numerusform><numerusform>Tyhjennetään leikepöytä %1 sekunnin kuluttua...</numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>lukitse kaikki avoimet tietokannat</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Lukitut tietokannat.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Tietokannan lukitus ei onnistunut.</translation>
     </message>
 </context>
 <context>
@@ -7476,10 +7508,6 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>Vietyä säiliötä ei voitu kirjoittaa</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Tapahtui odottamaton vientivirhe</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7546,10 +7574,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>File does not exist</source>
         <translation>Tiedostoa ei ole olemassa</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Tuntematon jaetun säiliön tyyppi</translation>
     </message>
 </context>
 <context>

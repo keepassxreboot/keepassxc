@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Aby se změna jazyka projevila, je třeba aplikaci restartovat. Chcete to provést nyní?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Černobílá</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -2496,6 +2500,14 @@ Všechny provedené změny byly bohužel ztraceny.</translation>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Tuto položku použít pouze ve spojení se základním HTTP ověřováním se</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Tuto položku nepoužívat ve spojení se základním HTTP ověřováním se</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -4361,24 +4373,12 @@ Zpráva: %2</translation>
         <translation>Vyberte soubor s klíčem</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Výběr souboru s klíčem</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Nalistovat soubor s klíčem</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Procházet…</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Vytvořit nový soubor s klíčem</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Pozn.: Nepoužívejte soubor, který se může změnit, protože by to znemožnilo odemčení databáze!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4405,6 +4405,18 @@ Opravdu chcete tento soubor použít?</translation>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>Vybrali jste soubor s klíčem ve starém formátu, který KeePassXC&lt;br&gt;může přestat v budoucnu podporovat.&lt;br&gt;&lt;br&gt;Zvažte prosím místo něj vytvoření nového souboru s klíčem.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5406,10 +5418,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Vynechané znaky: „0“, „1“, „l“, „I“, „O“, „|“, „ . “</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Vytvořené heslo</translation>
     </message>
@@ -5508,6 +5516,10 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     <message>
         <source>Special Characters</source>
         <translation>Zvláštní znaky</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6783,6 +6795,22 @@ Zvažte prosím vytvoření nového souboru s klíčem.</translation>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Neočekávaná data v souboru s klíčem! Soubor s klíčem může být poškozený.</translation>
     </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7485,10 +7513,6 @@ Zvažte prosím vytvoření nového souboru s klíčem.</translation>
         <source>Could not write export container</source>
         <translation>Nedaří se zapsat do exportního kontejneru</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Došlo k neočekávané chybě exportu</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7555,10 +7579,6 @@ Zvažte prosím vytvoření nového souboru s klíčem.</translation>
     <message>
         <source>File does not exist</source>
         <translation>Soubor neexistuje</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Neznámý typ kontejneru pro sdílení</translation>
     </message>
 </context>
 <context>
