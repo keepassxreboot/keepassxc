@@ -51,9 +51,6 @@ SearchWidget::SearchWidget(QWidget* parent)
     connect(m_clearSearchTimer, SIGNAL(timeout()), SLOT(clearSearch()));
     connect(this, SIGNAL(escapePressed()), SLOT(clearSearch()));
 
-    new QShortcut(QKeySequence::Find, this, SLOT(searchFocus()), nullptr, Qt::ApplicationShortcut);
-    new QShortcut(Qt::Key_Escape, m_ui->searchEdit, SLOT(clear()), nullptr, Qt::ApplicationShortcut);
-
     m_ui->searchEdit->setPlaceholderText(tr("Search (%1)...", "Search placeholder text, %1 is the keyboard shortcut")
                                              .arg(QKeySequence(QKeySequence::Find).toString(QKeySequence::NativeText)));
     m_ui->searchEdit->installEventFilter(this);
