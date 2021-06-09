@@ -72,7 +72,7 @@ private slots:
     void testTrayRestoreHide();
 
 private:
-    int addCannedEntries();
+    void addCannedEntries();
     void checkDatabase(QString dbFileName = "");
     void triggerAction(const QString& name);
     void dragAndDropGroup(const QModelIndex& sourceIndex,
