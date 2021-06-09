@@ -853,7 +853,7 @@ void TestGui::testTotp()
 void TestGui::testSearch()
 {
     // Add canned entries for consistent testing
-    Q_UNUSED(addCannedEntries());
+    addCannedEntries();
 
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
 
@@ -1007,7 +1007,7 @@ void TestGui::testSearch()
 void TestGui::testDeleteEntry()
 {
     // Add canned entries for consistent testing
-    Q_UNUSED(addCannedEntries());
+    addCannedEntries();
 
     auto* groupView = m_dbWidget->findChild<GroupView*>("groupView");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
@@ -1673,10 +1673,8 @@ void TestGui::testAutoType()
     entryView->selectionModel()->clearSelection();
 }
 
-int TestGui::addCannedEntries()
+void TestGui::addCannedEntries()
 {
-    int entries_added = 0;
-
     // Find buttons
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     QWidget* entryNewWidget = toolBar->widgetForAction(m_mainWindow->findChild<QAction*>("actionEntryNew"));
@@ -1689,22 +1687,17 @@ int TestGui::addCannedEntries()
     QTest::keyClicks(titleEdit, "test");
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
-    ++entries_added;
 
     // Add entry "something 2"
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 2");
     QTest::keyClicks(passwordEdit, "something 2");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
-    ++entries_added;
 
     // Add entry "something 3"
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 3");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
-    ++entries_added;
-
-    return entries_added;
 }
 
 void TestGui::checkDatabase(QString dbFileName)
