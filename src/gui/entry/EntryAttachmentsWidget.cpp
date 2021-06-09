@@ -51,6 +51,7 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     m_ui->attachmentsView->horizontalHeader()->resizeSection(EntryAttachmentsModel::NameColumn, 400);
     m_ui->attachmentsView->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_ui->attachmentsView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    m_ui->attachmentsView->setEditTriggers(QAbstractItemView::SelectedClicked);
 
     connect(this, SIGNAL(buttonsVisibleChanged(bool)), this, SLOT(updateButtonsVisible()));
     connect(this, SIGNAL(readOnlyChanged(bool)), SLOT(updateButtonsEnabled()));
