@@ -235,7 +235,7 @@ void TestKeys::benchmarkTransformKey()
 
     QBENCHMARK
     {
-        Q_UNUSED(compositeKey->transform(kdf, result));
+        Q_UNUSED(!compositeKey->transform(kdf, result));
     };
 }
 
