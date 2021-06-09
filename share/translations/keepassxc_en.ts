@@ -3240,10 +3240,6 @@ Supported extensions are: %1.</source>
 <context>
     <name>EditWidgetIcons</name>
     <message>
-        <source>Add custom icon</source>
-        <translation>Add custom icon</translation>
-    </message>
-    <message>
         <source>Download favicon</source>
         <translation>Download favicon</translation>
     </message>
@@ -3330,6 +3326,18 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Apply icon to…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose icon…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the URL to use to search for a favicon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Favicon URL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

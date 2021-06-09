@@ -72,6 +72,9 @@ public:
               const QString& url = "");
     void setShowApplyIconToButton(bool state);
 
+protected:
+    void keyPressEvent(QKeyEvent* event) override;
+
 public slots:
     void setUrl(const QString& url);
     void abortRequests();
@@ -102,8 +105,7 @@ private:
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
 #ifdef WITH_XC_NETWORKING
-    QScopedPointer<IconDownloader> m_downloader;
-    QString m_url;
+    QSharedPointer<IconDownloader> m_downloader;
 #endif
 
     Q_DISABLE_COPY(EditWidgetIcons)

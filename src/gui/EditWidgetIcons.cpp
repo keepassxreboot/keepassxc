@@ -32,6 +32,8 @@
 #include "gui/IconDownloader.h"
 #endif
 
+#include <QKeyEvent>
+
 IconStruct::IconStruct()
     : uuid(QUuid())
     , number(0)
@@ -78,8 +80,10 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
 #endif
     // clang-format on
 
+#ifndef WITH_XC_NETWORKING
     m_ui->faviconButton->setVisible(false);
-    m_ui->addButton->setEnabled(true);
+    m_ui->faviconURL->setVisible(false);
+#endif
 }
 
 EditWidgetIcons::~EditWidgetIcons()
@@ -175,22 +179,36 @@ QMenu* EditWidgetIcons::createApplyIconToMenu()
     return applyIconToMenu;
 }
 
+void EditWidgetIcons::keyPressEvent(QKeyEvent* event)
+{
+    if (m_ui->faviconURL->hasFocus() && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)) {
+        m_ui->faviconButton->animateClick();
+    } else {
+        QWidget::keyPressEvent(event);
+    }
+}
+
 void EditWidgetIcons::setUrl(const QString& url)
 {
 #ifdef WITH_XC_NETWORKING
-    m_url = url;
-    m_ui->faviconButton->setVisible(!url.isEmpty());
+    QUrl urlCheck(url);
+    if (urlCheck.scheme().startsWith("http")) {
+        m_ui->faviconURL->setText(urlCheck.url(QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment));
+        m_ui->faviconURL->setCursorPosition(0);
+    } else {
+        m_ui->faviconURL->setText("");
+    }
 #else
     Q_UNUSED(url);
-    m_ui->faviconButton->setVisible(false);
 #endif
 }
 
 void EditWidgetIcons::downloadFavicon()
 {
 #ifdef WITH_XC_NETWORKING
-    if (!m_url.isEmpty()) {
-        m_downloader->setUrl(m_url);
+    auto url = m_ui->faviconURL->text();
+    if (!url.isEmpty()) {
+        m_downloader->setUrl(url);
         m_downloader->download();
     }
 #endif

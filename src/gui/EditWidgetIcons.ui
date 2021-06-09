@@ -104,11 +104,40 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="customIconButtonsHorizontalLayout">
+    <layout class="QHBoxLayout" name="customIconButtonsHorizontalLayout" stretch="0,0,0,0">
      <item>
       <widget class="QPushButton" name="addButton">
        <property name="text">
-        <string>Add custom icon</string>
+        <string>Choose icon…</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="faviconURL">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Set the URL to use to search for a favicon</string>
+       </property>
+       <property name="placeholderText">
+        <string>Favicon URL</string>
        </property>
       </widget>
      </item>
@@ -174,6 +203,7 @@
   <tabstop>customIconsRadio</tabstop>
   <tabstop>customIconsView</tabstop>
   <tabstop>addButton</tabstop>
+  <tabstop>faviconURL</tabstop>
   <tabstop>faviconButton</tabstop>
   <tabstop>applyIconToPushButton</tabstop>
  </tabstops>
