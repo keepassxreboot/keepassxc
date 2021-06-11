@@ -23,6 +23,7 @@
 
 #include "config-keepassx-tests.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
@@ -117,6 +118,9 @@ void TestDatabase::testSignals()
     QSignalSpy spySaved(db.data(), SIGNAL(databaseSaved()));
     QVERIFY(db->save(&error));
     QCOMPARE(spySaved.count(), 1);
+
+    // Short delay to allow file system settling to reduce test failures
+    Tools::wait(100);
 
     QSignalSpy spyFileChanged(db.data(), SIGNAL(databaseFileChanged()));
     QVERIFY(tempFile.copyFromFile(dbFileName));
