@@ -50,6 +50,16 @@
     </screenshots>
 
     <releases>
+        <release version="2.6.6" date="2021-06-11">
+            <description>
+                <ul>
+                    <li>Fix focusing search when pressing hotkey [#6603]</li>
+                    <li>Trim whitespace from TOTP key input prior to processing [#6604]</li>
+                    <li>Fix building on macOS [#6598]</li>
+                    <li>Resolve compiler warnings for unused return values [#6607]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.6.5" date="2021-06-07">
             <description>
                 <ul>

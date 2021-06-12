@@ -4405,15 +4405,15 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation type="unfinished"/>
+        <translation>Új kulcsfájl generálása vagy egy meglévő kulcsfájl kijelölése az adatbázis védelméhez.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation type="unfinished"/>
+        <translation>Megjegyzés: NEM szabad olyan fájlt használni, amely megváltozhat, mivel ez megakadályozza az adatbázis feloldását!</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation type="unfinished"/>
+        <translation>Tallózás…</translation>
     </message>
 </context>
 <context>
@@ -5515,7 +5515,7 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Kihagyott karakterek: „0”, „O”, „1”, „l”, „I”, „|”, „G”, „6”, „B”, „8”, „﹒”</translation>
     </message>
 </context>
 <context>
@@ -6792,19 +6792,19 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Vágólap törlése %1 másodperc múlva…</numerusform><numerusform>Vágólap törlése %1 másodperc múlva…</numerusform></translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation type="unfinished"/>
+        <translation>Összes nyitott adatbázis zárolása</translation>
     </message>
     <message>
         <source>Locked databases.</source>
-        <translation type="unfinished"/>
+        <translation>Zárolt adatbázisok.</translation>
     </message>
     <message>
         <source>Database failed to lock.</source>
-        <translation type="unfinished"/>
+        <translation>Adatbázis-zárolás sikertelen.</translation>
     </message>
 </context>
 <context>
