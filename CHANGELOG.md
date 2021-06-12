@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.6 (2021-06-11)
+
+### Fixed
+
+- Fix focusing search when pressing hotkey [#6603]
+- Trim whitespace from TOTP key input prior to processing [#6604]
+- Fix building on macOS [#6598]
+- Resolve compiler warnings for unused return values [#6607]
+
 ## 2.6.5 (2021-06-07)
 
 ### Added
