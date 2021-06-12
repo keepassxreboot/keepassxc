@@ -4705,11 +4705,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>Βάση Δεδομένων &amp; Ασφάλεια...</translation>
+        <translation>Ασφάλεια Βάσης Δεδομένων...</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
-        <translation>Βάση Δεδομένων &amp; Αναφορές...</translation>
+        <translation>Αναφορές Βάσης Δεδομένων...</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
