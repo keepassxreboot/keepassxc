@@ -57,16 +57,24 @@
         </Component>
 
         <DirectoryRef Id="TARGETDIR">
-            <!-- Startmenu shortcut -->
+            <!-- Startmenu shortcuts -->
             <Directory Id="ProgramMenuFolder">
                 <Directory Id="ApplicationProgramsFolder" Name="KeePassXC">
-                    <Component Id="ApplicationShortcut" Guid="*">
+                    <Component Id="ApplicationShortcuts" Guid="*">
                         <Shortcut Id="ApplicationStartMenuShortcut" 
                             Name="KeePassXC"
                             Target="[#CM_FP_KeePassXC.exe]"
                             WorkingDirectory="INSTALL_ROOT"/>
-                        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-                        <RegistryValue Root="HKCU" Key="Software\KeePassXC" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+                        <Shortcut Id="GettingStartedShortcut"
+                            Name="KeePassXC - Getting Started"
+                            Target="[#CM_FP_share.docs.KeePassXC_GettingStarted.html]"
+                            WorkingDirectory="INSTALL_ROOT" />
+                        <Shortcut Id="UserGuideShortcut"
+                            Name="KeePassXC - User Guide"
+                            Target="[#CM_FP_share.docs.KeePassXC_UserGuide.html]"
+                            WorkingDirectory="INSTALL_ROOT" />
+                        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+                        <RegistryValue Root="HKCU" Key="Software\KeePassXC" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
                     </Component>
                 </Directory>
             </Directory>
@@ -80,33 +88,46 @@
                         Name="KeePassXC"
                         Target="[#CM_FP_KeePassXC.exe]"
                         WorkingDirectory="INSTALL_ROOT" />
+                    <RemoveFile Id="RemoveDesktopIcon" Name="KeePassXC.lnk" On="uninstall" />
                     <RegistryValue Root="HKCU" Key="Software\KeePassXC" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
                 </Component>
             </Directory>
         </DirectoryRef>
 
-        <Property Id="AUTOSTARTPROGRAM" Value="1" Secure="yes" />
+        <!-- Custom properties to control installation options -->
         <Property Id="LAUNCHAPPONEXIT" Value="1" Secure="yes" />
+        <Property Id="AUTOSTARTPROGRAM" Value="1" Secure="yes" />
+        <Property Id="AUTOSTARTPROGRAM_REGISTRY">
+            <RegistrySearch Id="AutoStartSearch" Root="HKCU" Key="Software\Microsoft\Windows\CurrentVersion\Run" Name="$(var.CPACK_PACKAGE_NAME)" Type="raw" />
+        </Property>
         <Property Id="INSTALLDESKTOPSHORTCUT" Secure="yes" />
+        <Property Id="INSTALLDESKTOPSHORTCUT_REGISTRY">
+            <RegistrySearch Id="DesktopIconSearch" Root="HKCU" Key="Software\KeePassXC" Name="DesktopShortcut" Type="raw" />
+        </Property>
+
+        <!-- Set properties based on existing conditions, prevents changing state on upgrade -->
+        <SetProperty Id="AUTOSTARTPROGRAM" After="AppSearch" Value="">AUTOSTARTPROGRAM="0" OR (WIX_UPGRADE_DETECTED AND NOT AUTOSTARTPROGRAM_REGISTRY)</SetProperty>
+        <SetProperty Id="INSTALLDESKTOPSHORTCUT" After="AppSearch" Value="1">WIX_UPGRADE_DETECTED AND INSTALLDESKTOPSHORTCUT_REGISTRY</SetProperty>
+        <SetProperty Id="LicenseAccepted" After="AppSearch" Value="1">WIX_UPGRADE_DETECTED</SetProperty>
 
         <FeatureRef Id="ProductFeature">
-            <ComponentRef Id="ApplicationShortcut" />
+            <ComponentRef Id="ApplicationShortcuts" />
             <ComponentRef Id="Autostart" />
             <ComponentRef Id="DesktopShortcut" />
         </FeatureRef>
 
+        <!-- Action to launch application after installer exits -->
         <Property Id="WixShellExecTarget" Value="[#CM_FP_KeePassXC.exe]" />
         <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 
-        <Property Id="WixSilentExecCmdLine" Value='"Taskkill" /IM KeePassXC.exe' />
+        <!-- Action to kill running KeePassXC processes -->
+        <Property Id="WixSilentExecCmdLine" Value='taskkill /IM KeePassXC.exe; taskkill /IM keepassxc-proxy.exe /F' />
         <CustomAction Id="KillKeePassXC" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore" />
-
-        <Property Id="WixQuietExecCmdLine" Value='"Taskkill" /IM keepassxc-proxy.exe /F' />
-        <CustomAction Id="KillProxy" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore" />
 
         <InstallExecuteSequence>
             <Custom Action="KillKeePassXC" Before="InstallValidate" />
-            <Custom Action="KillProxy" Before="InstallValidate" />
+            <!-- Prevent pinned taskbar shortcut from being removed -->
+            <RemoveShortcuts Suppress="yes" />
         </InstallExecuteSequence>
     </Product>
 </Wix>
