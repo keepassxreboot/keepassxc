@@ -15,7 +15,7 @@
                 <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />
                 <!-- Custom Controls for KPXC Installer -->
                 <Control Id="LaunchCheckBox" Type="CheckBox" X="80" Y="243" Width="100" Height="17" Property="LAUNCHAPPONEXIT" Hidden="yes" CheckBoxValue="1" Text="Launch KeePassXC">
-                    <Condition Action="show">NOT Installed</Condition>
+                    <Condition Action="show">NOT Installed OR WIX_UPGRADE_DETECTED</Condition>
                 </Control>
             </Dialog>
 
