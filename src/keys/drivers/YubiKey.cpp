@@ -16,15 +16,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ykcore.h>
-#include <ykdef.h>
-#include <ykpers-version.h>
-#include <ykstatus.h>
+#include "YubiKey.h"
 
 #include "core/Tools.h"
 #include "crypto/Random.h"
 
-#include "YubiKey.h"
+#include "thirdparty/ykcore/ykcore.h"
+#include "thirdparty/ykcore/ykdef.h"
+#include "thirdparty/ykcore/ykstatus.h"
 
 #include <QtConcurrent>
 
@@ -38,16 +37,11 @@ namespace
         if (onlyKey) {
             *onlyKey = false;
         }
-#if YKPERS_VERSION_NUMBER >= 0x011200
-        // This function is only available in ykcore >= 1.18.0
-        key = yk_open_key(ykIndex);
-#else
         // Only allow for the first found key to be used
         if (ykIndex == 0) {
             key = yk_open_first_key();
         }
-#endif
-#if YKPERS_VERSION_NUMBER >= 0x011400
+
         // New fuction available in yubikey-personalization version >= 1.20.0 that allows
         // selecting device VID/PID (yk_open_key_vid_pid)
         if (!key) {
@@ -57,9 +51,6 @@ namespace
                 *onlyKey = true;
             }
         }
-#else
-        Q_UNUSED(okIndex);
-#endif
         return key;
     }
 
