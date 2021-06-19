@@ -120,8 +120,11 @@ static IOHIDDeviceRef _ykosx_getHIDDeviceMatching(CFArrayRef devices,
 	return matchingDevice;
 }
 
-void *_ykusb_open_device(int vendor_id, const int *product_ids, size_t pids_len, int index)
+void *_ykusb_open_device(const int* vendor_ids, size_t vids_len, const int *product_ids, size_t pids_len, int index)
 {
+    (void) vendor_ids;
+    (void) vids_len;
+
 	IOHIDDeviceRef yk = NULL;
 
 	int rc = YK_ENOKEY;

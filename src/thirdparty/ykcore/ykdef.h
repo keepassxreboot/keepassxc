@@ -293,6 +293,9 @@ struct status_st {
 
 #define	PLUS_U2F_OTP_PID	0x0410	/* Yubikey plus - OTP+U2F */
 
+#define ONLYKEY_VID     0x1d50
+#define ONLYKEY_PID     0x60fc
+
 #define YK4_CAPA_TAG		0x01	/* TAG for capabilities */
 #define YK4_SERIAL_TAG		0x02	/* TAG for serial number */
 

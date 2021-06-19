@@ -49,7 +49,7 @@ int _ykusb_stop(void)
 	return 1;
 }
 
-void * _ykusb_open_device(int vendor_id, const int *product_ids, size_t pids_len, int index)
+void * _ykusb_open_device(const int* vendor_ids, size_t vids_len, const int *product_ids, size_t pids_len, int index)
 {
 	HDEVINFO hi;
 	SP_DEVICE_INTERFACE_DATA di;
@@ -61,8 +61,7 @@ void * _ykusb_open_device(int vendor_id, const int *product_ids, size_t pids_len
 
 	yk_errno = YK_EUSBERR;
 
-	hi = SetupDiGetClassDevs(&GUID_DEVINTERFACE_KEYBOARD, 0, 0,
-				 DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
+	hi = SetupDiGetClassDevs(&GUID_DEVINTERFACE_KEYBOARD, 0, 0, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
 	if (hi == INVALID_HANDLE_VALUE)
 		return NULL;
 
@@ -85,41 +84,27 @@ void * _ykusb_open_device(int vendor_id, const int *product_ids, size_t pids_len
 		rc = SetupDiGetDeviceInterfaceDetail(hi, &di, pi, len, &len, 0);
 		if (rc) {
 			HANDLE m_handle;
-
+            HIDD_ATTRIBUTES devInfo;
 			m_handle = CreateFile(pi->DevicePath, GENERIC_WRITE,
 					      FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
-			if (m_handle != INVALID_HANDLE_VALUE) {
-				HIDD_ATTRIBUTES devInfo;
-
-				if (HidD_GetAttributes(m_handle, &devInfo)) {
-					if (devInfo.VendorID == vendor_id) {
-						size_t j;
-						for (j = 0; j < pids_len; j++) {
-							if (devInfo.ProductID == product_ids[j]) {
-								found++;
-								if (found-1 == index) {
-									ret_handle = m_handle;
-									break;
-								}
-							}
-						}
-					}
-				}
+			if (m_handle != INVALID_HANDLE_VALUE && HidD_GetAttributes(m_handle, &devInfo)) {
+                for (size_t k = 0; k < vids_len; k++) {
+                    bool vid_match = devInfo.VendorID == vendor_ids[k];
+                    for (size_t j = 0; vid_match && j < pids_len; j++) {
+                        if (devInfo.ProductID == product_ids[j] && ++found == index + 1) {
+                            ret_handle = m_handle;
+                            goto done;
+                        }
+                    }
+                }
 			}
-			if(ret_handle == NULL) {
-				CloseHandle (m_handle);
-			} else {
-				break;
-			}
+            CloseHandle (m_handle);
 		}
-
 		free (pi);
 	}
-	if(ret_handle != NULL) {
-		goto done;
-	}
 
-	yk_errno = YK_ENOKEY;
+    // No key found
+    yk_errno = YK_ENOKEY;
 
 done:
 	SetupDiDestroyDeviceInfoList(hi);
