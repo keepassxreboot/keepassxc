@@ -161,7 +161,7 @@ extern int _ykusb_stop(void)
 	return 0;
 }
 
-void *_ykusb_open_device(int vendor_id, const int *product_ids, size_t pids_len, int index)
+void *_ykusb_open_device(const int* vendor_ids, size_t vids_len, const int *product_ids, size_t pids_len, int index)
 {
 	libusb_device *dev = NULL;
 	libusb_device_handle *h = NULL;
@@ -177,21 +177,24 @@ void *_ykusb_open_device(int vendor_id, const int *product_ids, size_t pids_len,
 		ykl_errno = libusb_get_device_descriptor(list[i], &desc);
 		if (ykl_errno != 0)
 			goto done;
-
-		if (desc.idVendor == vendor_id) {
-			size_t j;
-			for(j = 0; j < pids_len; j++) {
-				if (desc.idProduct == product_ids[j]) {
-					found++;
-					if (found-1 == index) {
-						dev = list[i];
-						break;
-					}
-				}
-			}
-		}
+        size_t k;
+        for (k = 0; k < vids_len; k++) {
+            if (desc.idVendor == vendor_ids[k]) {
+                size_t j;
+                for (j = 0; j < pids_len; j++) {
+                    if (desc.idProduct == product_ids[j]) {
+                        found++;
+                        if (found - 1 == index) {
+                            dev = list[i];
+                            goto found;
+                        }
+                    }
+                }
+            }
+        }
 	}
 
+ found:
 	if (dev) {
 		int current_cfg;
 		rc = YK_EUSBERR;

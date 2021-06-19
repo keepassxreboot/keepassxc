@@ -84,9 +84,9 @@ YK_KEY *yk_open_first_key(void)
 	return yk_open_key(0);
 }
 
-YK_KEY *yk_open_key_vid_pid(int vid, const int* pids, size_t pids_len, int index)
+YK_KEY *yk_open_key_vid_pid(const int* vids, size_t vids_len, const int* pids, size_t pids_len, int index)
 {
-	YK_KEY *yk = _ykusb_open_device(vid, pids, pids_len, index);
+	YK_KEY *yk = _ykusb_open_device(vids, vids_len, pids, pids_len, index);
 	int rc = yk_errno;
 
 	if (yk) {
@@ -102,6 +102,7 @@ YK_KEY *yk_open_key_vid_pid(int vid, const int* pids, size_t pids_len, int index
 	return yk;
 }
 
+static const int yubico_vids[] = {YUBICO_VID};
 static const int yubico_pids[] = {YUBIKEY_PID, NEO_OTP_PID, NEO_OTP_CCID_PID,
 	NEO_OTP_U2F_PID, NEO_OTP_U2F_CCID_PID, YK4_OTP_PID,
 	YK4_OTP_U2F_PID, YK4_OTP_CCID_PID, YK4_OTP_U2F_CCID_PID,
@@ -109,7 +110,9 @@ static const int yubico_pids[] = {YUBIKEY_PID, NEO_OTP_PID, NEO_OTP_CCID_PID,
 
 YK_KEY *yk_open_key(int index)
 {
-	return yk_open_key_vid_pid(YUBICO_VID, yubico_pids, sizeof(yubico_pids) / sizeof(yubico_pids[0]), index);
+	return yk_open_key_vid_pid(yubico_vids, sizeof(yubico_vids) / sizeof(yubico_vids[0]),
+                               yubico_pids, sizeof(yubico_pids) / sizeof(yubico_pids[0]),
+                               index);
 }
 
 int yk_close_key(YK_KEY *yk)
