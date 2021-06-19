@@ -81,7 +81,7 @@ extern int yk_release(void);
 /* opens first key available. For backwards compatability */
 extern YK_KEY *yk_open_first_key(void);
 extern YK_KEY *yk_open_key(int);	/* opens nth key available */
-extern YK_KEY *yk_open_key_vid_pid(int, const int*, size_t, int);
+extern YK_KEY *yk_open_key_vid_pid(const int*, size_t, const int*, size_t, int);
 extern int yk_close_key(YK_KEY *k);		/* closes a previously opened key */
 
 /*************************************************************************

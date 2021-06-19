@@ -39,7 +39,7 @@
 int _ykusb_start(void);
 int _ykusb_stop(void);
 
-void * _ykusb_open_device(int vendor_id, const int *product_ids, size_t pids_len, int index);
+void * _ykusb_open_device(const int* vendor_ids, size_t vids_len, const int *product_ids, size_t pids_len, int index);
 int _ykusb_close_device(void *);
 
 int _ykusb_read(void *dev, int report_type, int report_number,
