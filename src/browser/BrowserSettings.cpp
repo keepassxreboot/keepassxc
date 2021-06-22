@@ -20,6 +20,7 @@
 #include "BrowserSettings.h"
 #include "core/Config.h"
 #include "core/PasswordHealth.h"
+#include <QDir>
 
 #include <QJsonObject>
 
@@ -515,4 +516,28 @@ QJsonObject BrowserSettings::generatePassword()
 void BrowserSettings::updateBinaryPaths()
 {
     m_nativeMessageInstaller.updateBinaryPaths();
+}
+
+QString BrowserSettings::replaceHomePath(QString location)
+{
+#ifndef Q_OS_WIN
+    auto homePath = QDir::homePath();
+    if (location.startsWith(homePath)) {
+        location.replace(homePath, "~");
+    }
+#endif
+
+    return location;
+}
+
+QString BrowserSettings::replaceTildeHomePath(QString location)
+{
+#ifndef Q_OS_WIN
+    auto homePath = QDir::homePath();
+    if (location.startsWith("~")) {
+        location.replace("~", homePath);
+    }
+#endif
+
+    return location;
 }
