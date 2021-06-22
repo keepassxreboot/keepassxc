@@ -216,7 +216,7 @@ void WinUtils::triggerGlobalShortcut(int id)
 // Translate qt key code to windows virtual key code
 // see: https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx
 //
-DWORD WinUtils::qtToNativeKeyCode(Qt::Key key)
+WORD WinUtils::qtToNativeKeyCode(Qt::Key key)
 {
     switch (key) {
     case Qt::Key_Backspace:
@@ -265,80 +265,6 @@ DWORD WinUtils::qtToNativeKeyCode(Qt::Key key)
         return VK_DELETE;   // 0x2E
     case Qt::Key_Help:
         return VK_HELP;     // 0x2F
-
-    case Qt::Key_0:
-        return 0x30;        // 0x30
-    case Qt::Key_1:
-        return 0x31;        // 0x31
-    case Qt::Key_2:
-        return 0x32;        // 0x32
-    case Qt::Key_3:
-        return 0x33;        // 0x33
-    case Qt::Key_4:
-        return 0x34;        // 0x34
-    case Qt::Key_5:
-        return 0x35;        // 0x35
-    case Qt::Key_6:
-        return 0x36;        // 0x36
-    case Qt::Key_7:
-        return 0x37;        // 0x37
-    case Qt::Key_8:
-        return 0x38;        // 0x38
-    case Qt::Key_9:
-        return 0x39;        // 0x39
-
-    case Qt::Key_A:
-        return 0x41;        // 0x41
-    case Qt::Key_B:
-        return 0x42;        // 0x42
-    case Qt::Key_C:
-        return 0x43;        // 0x43
-    case Qt::Key_D:
-        return 0x44;        // 0x44
-    case Qt::Key_E:
-        return 0x45;        // 0x45
-    case Qt::Key_F:
-        return 0x46;        // 0x46
-    case Qt::Key_G:
-        return 0x47;        // 0x47
-    case Qt::Key_H:
-        return 0x48;        // 0x48
-    case Qt::Key_I:
-        return 0x49;        // 0x49
-    case Qt::Key_J:
-        return 0x4A;        // 0x4A
-    case Qt::Key_K:
-        return 0x4B;        // 0x4B
-    case Qt::Key_L:
-        return 0x4C;        // 0x4C
-    case Qt::Key_M:
-        return 0x4D;        // 0x4D
-    case Qt::Key_N:
-        return 0x4E;        // 0x4E
-    case Qt::Key_O:
-        return 0x4F;        // 0x4F
-    case Qt::Key_P:
-        return 0x50;        // 0x50
-    case Qt::Key_Q:
-        return 0x51;        // 0x51
-    case Qt::Key_R:
-        return 0x52;        // 0x52
-    case Qt::Key_S:
-        return 0x53;        // 0x53
-    case Qt::Key_T:
-        return 0x54;        // 0x54
-    case Qt::Key_U:
-        return 0x55;        // 0x55
-    case Qt::Key_V:
-        return 0x56;        // 0x56
-    case Qt::Key_W:
-        return 0x57;        // 0x57
-    case Qt::Key_X:
-        return 0x58;        // 0x58
-    case Qt::Key_Y:
-        return 0x59;        // 0x59
-    case Qt::Key_Z:
-        return 0x5A;        // 0x5A
 
     case Qt::Key_F1:
         return VK_F1;       // 0x70
@@ -394,42 +320,8 @@ DWORD WinUtils::qtToNativeKeyCode(Qt::Key key)
     case Qt::Key_ScrollLock:
         return VK_SCROLL;   // 0x91
 
-    case Qt::Key_Exclam:        // !
-    case Qt::Key_QuoteDbl:      // "
-    case Qt::Key_NumberSign:    // #
-    case Qt::Key_Dollar:        // $
-    case Qt::Key_Percent:       // %
-    case Qt::Key_Ampersand:     // &
-    case Qt::Key_Apostrophe:    // '
-    case Qt::Key_ParenLeft:     // (
-    case Qt::Key_ParenRight:    // )
-    case Qt::Key_Asterisk:      // *
-    case Qt::Key_Plus:          // +
-    case Qt::Key_Comma:         // ,
-    case Qt::Key_Minus:         // -
-    case Qt::Key_Period:        // .
-    case Qt::Key_Slash:         // /
-    case Qt::Key_Colon:         // :
-    case Qt::Key_Semicolon:     // ;
-    case Qt::Key_Less:          // <
-    case Qt::Key_Equal:         // =
-    case Qt::Key_Greater:       // >
-    case Qt::Key_Question:      // ?
-    case Qt::Key_BracketLeft:   // [
-    case Qt::Key_Backslash:     // '\'
-    case Qt::Key_BracketRight:  // ]
-    case Qt::Key_AsciiCircum:   // ^
-    case Qt::Key_Underscore:    // _
-    case Qt::Key_QuoteLeft:     // `
-    case Qt::Key_BraceLeft:     // {
-    case Qt::Key_Bar:           // |
-    case Qt::Key_BraceRight:    // }
-    case Qt::Key_AsciiTilde:    // ~
-        return LOBYTE(::VkKeyScanExW(key, ::GetKeyboardLayout(0)));
-
     default:
-        Q_ASSERT(false);
-        return 0;
+        return LOBYTE(::VkKeyScanExW(key, ::GetKeyboardLayout(0)));
     }
 }
 // clang-format on

@@ -83,20 +83,59 @@ bool AutoTypePlatformWin::raiseWindow(WId window)
 //
 void AutoTypePlatformWin::sendChar(const QChar& ch, bool isKeyDown)
 {
-    DWORD nativeFlags = KEYEVENTF_UNICODE;
+    auto vkey = VkKeyScanExW(ch.unicode(), GetKeyboardLayout(0));
+    if (vkey == -1) {
+        // VKey not found, send as Unicode character
+        DWORD flags = KEYEVENTF_UNICODE;
+        if (!isKeyDown) {
+            flags |= KEYEVENTF_KEYUP;
+        }
+
+        INPUT in;
+        in.type = INPUT_KEYBOARD;
+        in.ki.wVk = 0;
+        in.ki.wScan = ch.unicode();
+        in.ki.dwFlags = flags;
+        in.ki.time = 0;
+        in.ki.dwExtraInfo = ::GetMessageExtraInfo();
+        ::SendInput(1, &in, sizeof(INPUT));
+        return;
+    }
+
+    if (HIBYTE(vkey) & 0x1) {
+        sendKey(Qt::Key_Shift, true);
+    }
+    if (HIBYTE(vkey) & 0x2) {
+        sendKey(Qt::Key_Control, true);
+    }
+    if (HIBYTE(vkey) & 0x4) {
+        sendKey(Qt::Key_Alt, true);
+    }
+
+    DWORD flags = KEYEVENTF_SCANCODE;
     if (!isKeyDown) {
-        nativeFlags |= KEYEVENTF_KEYUP;
+        flags |= KEYEVENTF_KEYUP;
     }
 
     INPUT in;
     in.type = INPUT_KEYBOARD;
     in.ki.wVk = 0;
-    in.ki.wScan = ch.unicode();
-    in.ki.dwFlags = nativeFlags;
+    in.ki.wScan = MapVirtualKey(LOBYTE(vkey), MAPVK_VK_TO_VSC);
+    in.ki.dwFlags = flags;
     in.ki.time = 0;
     in.ki.dwExtraInfo = ::GetMessageExtraInfo();
 
     ::SendInput(1, &in, sizeof(INPUT));
+
+    if (HIBYTE(vkey) & 0x1) {
+        sendKey(Qt::Key_Shift, false);
+    }
+    if (HIBYTE(vkey) & 0x2) {
+        sendKey(Qt::Key_Control, false);
+    }
+    if (HIBYTE(vkey) & 0x4) {
+        sendKey(Qt::Key_Alt, false);
+    }
 }
 
 //
@@ -104,11 +143,8 @@ void AutoTypePlatformWin::sendChar(const QChar& ch, bool isKeyDown)
 //
 void AutoTypePlatformWin::sendKey(Qt::Key key, bool isKeyDown)
 {
-    DWORD nativeKeyCode = winUtils()->qtToNativeKeyCode(key);
-    if (nativeKeyCode < 1 || nativeKeyCode > 254) {
-        return;
-    }
-    DWORD nativeFlags = 0;
+    WORD nativeKeyCode = winUtils()->qtToNativeKeyCode(key);
+    DWORD nativeFlags = KEYEVENTF_SCANCODE;
     if (isExtendedKey(nativeKeyCode)) {
         nativeFlags |= KEYEVENTF_EXTENDEDKEY;
     }
@@ -118,8 +154,8 @@ void AutoTypePlatformWin::sendKey(Qt::Key key, bool isKeyDown)
 
     INPUT in;
     in.type = INPUT_KEYBOARD;
-    in.ki.wVk = LOWORD(nativeKeyCode);
-    in.ki.wScan = LOWORD(::MapVirtualKeyW(nativeKeyCode, MAPVK_VK_TO_VSC));
+    in.ki.wVk = 0;
+    in.ki.wScan = MapVirtualKey(LOBYTE(nativeKeyCode), MAPVK_VK_TO_VSC);
     in.ki.dwFlags = nativeFlags;
     in.ki.time = 0;
     in.ki.dwExtraInfo = ::GetMessageExtraInfo();
