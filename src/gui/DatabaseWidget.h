@@ -187,6 +187,7 @@ public slots:
     void performAutoTypeUsernameEnter();
     void performAutoTypePassword();
     void performAutoTypePasswordEnter();
+    void performAutoTypeTOTP();
     void openUrl();
     void downloadSelectedFavicons();
     void downloadAllFavicons();
