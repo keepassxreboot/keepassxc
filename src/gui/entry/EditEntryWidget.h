@@ -80,6 +80,7 @@ public:
 signals:
     void editFinished(bool accepted);
     void historyEntryActivated(Entry* entry);
+    void doAutoTypePasswordGeneratedDB(QString password);
 
 private slots:
     void acceptEntry();
@@ -111,6 +112,7 @@ private slots:
     void useExpiryPreset(QAction* action);
     void toggleHideNotes(bool visible);
     void pickColor();
+    void doAutoTypePasswordGenerated(const QString& password);
 #ifdef WITH_XC_SSHAGENT
     void toKeeAgentSettings(KeeAgentSettings& settings) const;
     void setSSHAgentSettings();

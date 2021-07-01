@@ -45,6 +45,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->buttonGenerate->setToolTip(
         tr("Regenerate password (%1)").arg(m_ui->buttonGenerate->shortcut().toString(QKeySequence::NativeText)));
     m_ui->buttonCopy->setIcon(icons()->icon("clipboard-text"));
+    m_ui->buttonAutoType->setIcon(icons()->icon("clipboard-text"));
     m_ui->buttonClose->setShortcut(Qt::Key_Escape);
 
     // Add two shortcuts to save the form CTRL+Enter and CTRL+S
@@ -61,6 +62,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->editExcludedChars, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
     connect(m_ui->buttonCopy, SIGNAL(clicked()), SLOT(copyPassword()));
+    connect(m_ui->buttonAutoType, SIGNAL(clicked()), SLOT(autoTypePassword()));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
     connect(m_ui->buttonClose, SIGNAL(clicked()), SIGNAL(closed()));
 
@@ -221,9 +223,11 @@ void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
     m_standalone = standalone;
     if (standalone) {
         m_ui->buttonApply->setVisible(false);
+        m_ui->buttonAutoType->setVisible(false);
         setPasswordVisible(true);
     } else {
         m_ui->buttonApply->setVisible(true);
+        m_ui->buttonAutoType->setVisible(true);
     }
 }
 
@@ -284,6 +288,11 @@ void PasswordGeneratorWidget::applyPassword()
 void PasswordGeneratorWidget::copyPassword()
 {
     clipboard()->setText(m_ui->editNewPassword->text());
+}
+
+void PasswordGeneratorWidget::autoTypePassword()
+{
+    emit doAutoTypePassword(m_ui->editNewPassword->text());
 }
 
 void PasswordGeneratorWidget::passwordLengthChanged(int length)

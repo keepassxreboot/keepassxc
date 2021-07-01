@@ -139,6 +139,8 @@ void PasswordEdit::popupPasswordGenerator()
     generator->setPasswordLength(text().length());
 
     connect(generator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));
+    connect(generator, SIGNAL(doAutoTypePassword(QString)), SLOT(doAutoTypePasswordEdit(QString)));
+
     if (m_repeatPasswordEdit) {
         connect(generator, SIGNAL(appliedPassword(QString)), m_repeatPasswordEdit, SLOT(setText(QString)));
     }
@@ -169,6 +171,11 @@ void PasswordEdit::updateRepeatStatus()
         m_errorAction->setVisible(false);
         setStyleSheet("");
     }
+}
+
+void PasswordEdit::doAutoTypePasswordEdit(const QString& password)
+{
+    emit doAutoTypePasswordEntry(password);
 }
 
 void PasswordEdit::autocompletePassword(const QString& password)
