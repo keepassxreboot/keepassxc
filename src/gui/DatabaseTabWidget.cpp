@@ -180,6 +180,33 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
 }
 
 /**
+ * Tries to lock the database at the given index and if
+ * it succeeds proceed to switch to the first unlocked database tab
+ */
+void DatabaseTabWidget::lockAndSwitchToFirstUnlockedDatabase(int index)
+{
+    if (index == -1) {
+        index = currentIndex();
+    }
+    auto dbWidget = databaseWidgetFromIndex(index);
+    if (!dbWidget) {
+        return;
+    }
+
+    if (dbWidget->isLocked()) {
+        // Database is already locked, act like lock all databases instead
+        lockDatabases();
+    } else if (dbWidget->lock()) {
+        for (int i = 0, c = count(); i < c; ++i) {
+            if (!databaseWidgetFromIndex(i)->isLocked()) {
+                setCurrentIndex(i);
+                return;
+            }
+        }
+    }
+}
+
+/**
  * Add a new database tab containing the given DatabaseWidget
  * @param filePath
  * @param inBackground optional, don't focus tab after opening

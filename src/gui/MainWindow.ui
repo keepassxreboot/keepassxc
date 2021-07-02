@@ -216,7 +216,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -253,6 +253,9 @@
     <addaction name="actionDatabaseSaveAs"/>
     <addaction name="actionDatabaseSaveBackup"/>
     <addaction name="actionDatabaseClose"/>
+    <addaction name="separator"/>
+    <addaction name="actionLockDatabase"/>
+    <addaction name="actionLockAllDatabases"/>
     <addaction name="separator"/>
     <addaction name="actionReports"/>
     <addaction name="actionDatabaseSettings"/>
@@ -355,7 +358,6 @@
     <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="actionLockDatabases"/>
     <addaction name="actionPasswordGenerator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -409,6 +411,7 @@
    </attribute>
    <addaction name="actionDatabaseOpen"/>
    <addaction name="actionDatabaseSave"/>
+   <addaction name="actionLockDatabaseToolbar"/>
    <addaction name="separator"/>
    <addaction name="actionEntryNew"/>
    <addaction name="actionEntryEdit"/>
@@ -418,8 +421,6 @@
    <addaction name="actionEntryCopyPassword"/>
    <addaction name="actionEntryCopyURL"/>
    <addaction name="actionEntryAutoType"/>
-   <addaction name="separator"/>
-   <addaction name="actionLockDatabases"/>
    <addaction name="separator"/>
    <addaction name="actionPasswordGenerator"/>
    <addaction name="actionSettings"/>
@@ -773,12 +774,20 @@
     <string>Open &amp;URL</string>
    </property>
   </action>
-  <action name="actionLockDatabases">
+  <action name="actionLockDatabase">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Lock Databases</string>
+    <string>&amp;Lock Database</string>
+   </property>
+  </action>
+  <action name="actionLockAllDatabases">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Lock &amp;All Databases</string>
    </property>
   </action>
   <action name="actionEntryCopyTitle">
@@ -1082,6 +1091,14 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionLockDatabaseToolbar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Lock Database</string>
    </property>
   </action>
  </widget>
