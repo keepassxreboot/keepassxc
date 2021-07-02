@@ -168,6 +168,15 @@ MainWindow::MainWindow()
         autoTypeButton->setPopupMode(QToolButton::MenuButtonPopup);
     }
 
+    auto databaseLockMenu = new QMenu({}, this);
+    databaseLockMenu->addAction(m_ui->actionLockAllDatabases);
+    m_ui->actionLockDatabaseToolbar->setMenu(databaseLockMenu);
+    auto databaseLockButton =
+        qobject_cast<QToolButton*>(m_ui->toolBar->widgetForAction(m_ui->actionLockDatabaseToolbar));
+    if (databaseLockButton) {
+        databaseLockButton->setPopupMode(QToolButton::MenuButtonPopup);
+    }
+
     restoreGeometry(config()->get(Config::GUI_MainWindowGeometry).toByteArray());
     restoreState(config()->get(Config::GUI_MainWindowState).toByteArray());
 
@@ -261,7 +270,8 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
-    m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
+    m_ui->actionLockDatabase->setShortcut(Qt::CTRL + Qt::Key_L);
+    m_ui->actionLockAllDatabases->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
     setShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
@@ -369,7 +379,9 @@ MainWindow::MainWindow()
     m_ui->actionReports->setIcon(icons()->icon("reports"));
     m_ui->actionDatabaseSettings->setIcon(icons()->icon("document-edit"));
     m_ui->actionDatabaseSecurity->setIcon(icons()->icon("database-change-key"));
-    m_ui->actionLockDatabases->setIcon(icons()->icon("database-lock"));
+    m_ui->actionLockDatabase->setIcon(icons()->icon("database-lock"));
+    m_ui->actionLockDatabaseToolbar->setIcon(icons()->icon("database-lock"));
+    m_ui->actionLockAllDatabases->setIcon(icons()->icon("database-lock-all"));
     m_ui->actionQuit->setIcon(icons()->icon("application-exit"));
     m_ui->actionDatabaseMerge->setIcon(icons()->icon("database-merge"));
     m_ui->menuImport->setIcon(icons()->icon("document-import"));
@@ -460,7 +472,10 @@ MainWindow::MainWindow()
     connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
     connect(m_ui->actionExportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToCsv()));
     connect(m_ui->actionExportHtml, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToHtml()));
-    connect(m_ui->actionLockDatabases, SIGNAL(triggered()), m_ui->tabWidget, SLOT(lockDatabases()));
+    connect(
+        m_ui->actionLockDatabase, SIGNAL(triggered()), m_ui->tabWidget, SLOT(lockAndSwitchToFirstUnlockedDatabase()));
+    connect(m_ui->actionLockDatabaseToolbar, SIGNAL(triggered()), m_ui->actionLockDatabase, SIGNAL(triggered()));
+    connect(m_ui->actionLockAllDatabases, SIGNAL(triggered()), m_ui->tabWidget, SLOT(lockDatabases()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(appExit()));
 
     m_actionMultiplexer.connect(m_ui->actionEntryNew, SIGNAL(triggered()), SLOT(createEntry()));
@@ -781,7 +796,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-    m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
+    m_ui->actionLockDatabase->setEnabled(m_ui->tabWidget->hasLockableDatabases());
+    m_ui->actionLockDatabaseToolbar->setEnabled(m_ui->tabWidget->hasLockableDatabases());
+    m_ui->actionLockAllDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
 
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -924,6 +941,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionExportCsv->setEnabled(false);
             m_ui->actionExportHtml->setEnabled(false);
             m_ui->actionDatabaseMerge->setEnabled(false);
+            // Only disable the action in the database menu so that the
+            // menu remains active in the toolbar, if necessary
+            m_ui->actionLockDatabase->setEnabled(false);
 
             m_searchWidgetAction->setEnabled(false);
             break;
@@ -1392,7 +1412,7 @@ void MainWindow::updateTrayIcon()
             menu->addAction(actionToggle);
             actionToggle->setIcon(icons()->icon("keepassxc-monochrome-dark"));
 
-            menu->addAction(m_ui->actionLockDatabases);
+            menu->addAction(m_ui->actionLockAllDatabases);
 
 #ifdef Q_OS_MACOS
             auto actionQuit = new QAction(tr("Quit KeePassXC"), menu);

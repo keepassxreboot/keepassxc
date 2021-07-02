@@ -146,6 +146,8 @@ License: MIT
 
 Files: share/icons/application/scalable/actions/chevron-double-down.svg
        share/icons/application/scalable/actions/chevron-double-right.svg
+       share/icons/application/scalable/actions/database-lock.svg
+       share/icons/application/scalable/actions/database-lock-all.svg
        share/icons/application/scalable/actions/document-close.svg
        share/icons/application/scalable/actions/document-edit.svg
        share/icons/application/scalable/actions/document-export.svg

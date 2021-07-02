@@ -5143,10 +5143,6 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Lock Databases</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;CSV File…</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5296,6 +5292,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Restore Entry(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock &amp;All Databases</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
