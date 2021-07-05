@@ -356,9 +356,6 @@ void DatabaseOpenWidget::reject()
 void DatabaseOpenWidget::browseKeyFile()
 {
     QString filters = QString("%1 (*);;%2 (*.keyx; *.key)").arg(tr("All files"), tr("Key files"));
-    if (!config()->get(Config::RememberLastKeyFiles).toBool()) {
-        fileDialog()->setNextForgetDialog();
-    }
     QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);
 
     if (QFileInfo(filename).canonicalFilePath() == QFileInfo(m_filename).canonicalFilePath()) {

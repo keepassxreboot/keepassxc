@@ -28,7 +28,7 @@
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
-#define CONFIG_VERSION 1
+#define CONFIG_VERSION 2
 #define QS QStringLiteral
 
 enum ConfigType
@@ -86,7 +86,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::LastActiveDatabase, {QS("LastActiveDatabase"), Local, {}}},
     {Config::LastOpenedDatabases, {QS("LastOpenedDatabases"), Local, {}}},
     {Config::LastDir, {QS("LastDir"), Local, QDir::homePath()}},
-    {Config::LastAttachmentDir, {QS("LastAttachmentDir"), Local, {}}},
 
     // GUI
     {Config::GUI_Language, {QS("GUI/Language"), Roaming, QS("system")}},
@@ -182,9 +181,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::KeeShare_Own, {QS("KeeShare/Own"), Roaming, {}}},
     {Config::KeeShare_Foreign, {QS("KeeShare/Foreign"), Roaming, {}}},
     {Config::KeeShare_Active, {QS("KeeShare/Active"), Roaming, {}}},
-    {Config::KeeShare_LastDir, {QS("KeeShare/LastDir"), Local, QDir::homePath()}},
-    {Config::KeeShare_LastKeyDir, {QS("KeeShare/LastKeyDir"), Local, QDir::homePath()}},
-    {Config::KeeShare_LastShareDir, {QS("KeeShare/LastShareDir"), Local, QDir::homePath()}},
 
     // PasswordGenerator
     {Config::PasswordGenerator_LowerCase, {QS("PasswordGenerator/LowerCase"), Roaming, true}},
@@ -353,7 +349,13 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("generator/Type"), Config::PasswordGenerator_Type},
     {QS("QtErrorMessageShown"), Config::Messages_Qt55CompatibilityWarning},
     {QS("GUI/HidePasswords"), Config::Deleted},
-    {QS("GUI/DarkTrayIcon"), Config::Deleted}};
+    {QS("GUI/DarkTrayIcon"), Config::Deleted},
+
+    // 2.7.0
+    {QS("LastAttachmentDir"), Config::Deleted},
+    {QS("KeeShare/LastDir"), Config::Deleted},
+    {QS("KeeShare/LastKeyDir"), Config::Deleted},
+    {QS("KeeShare/LastShareDir"), Config::Deleted}};
 
 /**
  * Migrate settings from previous versions.

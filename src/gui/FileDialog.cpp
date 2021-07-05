@@ -21,6 +21,10 @@
 
 FileDialog* FileDialog::m_instance(nullptr);
 
+FileDialog::FileDialog()
+{
+}
+
 QString FileDialog::getOpenFileName(QWidget* parent,
                                     const QString& caption,
                                     const QString& dir,
@@ -43,7 +47,6 @@ QString FileDialog::getOpenFileName(QWidget* parent,
             parent->activateWindow();
         }
 #endif
-        saveLastDir(result);
         return result;
     }
 }
@@ -73,9 +76,6 @@ QStringList FileDialog::getOpenFileNames(QWidget* parent,
             parent->activateWindow();
         }
 #endif
-        if (!results.isEmpty()) {
-            saveLastDir(results[0]);
-        }
         return results;
     }
 }
@@ -102,7 +102,6 @@ QString FileDialog::getSaveFileName(QWidget* parent,
             parent->activateWindow();
         }
 #endif
-        saveLastDir(result);
         return result;
     }
 }
@@ -127,7 +126,6 @@ QString FileDialog::getExistingDirectory(QWidget* parent,
             parent->activateWindow();
         }
 #endif
-        saveLastDir(result);
         return result;
     }
 }
@@ -137,32 +135,32 @@ void FileDialog::setNextFileName(const QString& fileName)
     m_nextFileName = fileName;
 }
 
-void FileDialog::setNextFileNames(const QStringList& fileNames)
+void FileDialog::setNextDirectory(const QString& path)
 {
-    m_nextFileNames = fileNames;
+    m_nextDirName = path;
 }
 
-void FileDialog::setNextDirName(const QString& dirName)
+void FileDialog::saveLastDir(const QString& role, const QString& path, bool sensitive)
 {
-    m_nextDirName = dirName;
-}
-
-void FileDialog::setNextForgetDialog()
-{
-    m_forgetLastDir = true;
-}
-
-FileDialog::FileDialog()
-{
-}
-
-void FileDialog::saveLastDir(const QString& dir)
-{
-    if (!dir.isEmpty() && !m_forgetLastDir) {
-        config()->set(Config::LastDir, QFileInfo(dir).absolutePath());
+    auto lastDirs = config()->get(Config::LastDir).toHash();
+    if (sensitive && !config()->get(Config::RememberLastDatabases).toBool()) {
+        // Ensure this role is forgotten
+        lastDirs.remove(role);
+    } else {
+        auto pathInfo = QFileInfo(path);
+        if (!pathInfo.exists()) {
+            lastDirs.remove(role);
+        } else {
+            lastDirs.insert(role, pathInfo.absolutePath());
+        }
     }
+    config()->set(Config::LastDir, lastDirs);
+}
 
-    m_forgetLastDir = false;
+QString FileDialog::getLastDir(const QString& role, const QString& defaultDir)
+{
+    auto lastDirs = config()->get(Config::LastDir).toHash();
+    return lastDirs.value(role, defaultDir).toString();
 }
 
 FileDialog* FileDialog::instance()

@@ -68,7 +68,6 @@ public:
         LastActiveDatabase,
         LastOpenedDatabases,
         LastDir,
-        LastAttachmentDir,
 
         GUI_Language,
         GUI_HideToolbar,
@@ -158,9 +157,6 @@ public:
         KeeShare_Own,
         KeeShare_Foreign,
         KeeShare_Active,
-        KeeShare_LastDir,
-        KeeShare_LastKeyDir,
-        KeeShare_LastShareDir,
 
         PasswordGenerator_LowerCase,
         PasswordGenerator_UpperCase,

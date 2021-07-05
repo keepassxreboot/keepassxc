@@ -140,15 +140,10 @@ void SettingsWidgetKeeShare::generateCertificate()
 
 void SettingsWidgetKeeShare::importCertificate()
 {
-    QString defaultDirPath = config()->get(Config::KeeShare_LastKeyDir).toString();
-    const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
-    if (!dirExists) {
-        defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
-    }
+    auto defaultDirPath = FileDialog::getLastDir("keeshare_key");
     const auto filetype = tr("key.share", "Filetype for KeeShare key");
     const auto filters = QString("%1 (*." + filetype + ");;%2 (*)").arg(tr("KeeShare key file"), tr("All files"));
-    QString filename = fileDialog()->getOpenFileName(
-        this, tr("Select path"), defaultDirPath, filters, nullptr, QFileDialog::Options(0));
+    QString filename = fileDialog()->getOpenFileName(this, tr("Select path"), defaultDirPath, filters);
     if (filename.isEmpty()) {
         return;
     }
@@ -157,7 +152,7 @@ void SettingsWidgetKeeShare::importCertificate()
     QTextStream stream(&file);
     m_own = KeeShareSettings::Own::deserialize(stream.readAll());
     file.close();
-    config()->set(Config::KeeShare_LastKeyDir, QFileInfo(filename).absolutePath());
+    FileDialog::saveLastDir("keeshare_key", filename);
 
     updateOwnCertificate();
 }
@@ -176,11 +171,7 @@ void SettingsWidgetKeeShare::exportCertificate()
             return;
         }
     }
-    QString defaultDirPath = config()->get(Config::KeeShare_LastKeyDir).toString();
-    const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
-    if (!dirExists) {
-        defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
-    }
+    auto defaultDirPath = FileDialog::getLastDir("keeshare_key");
     const auto filetype = tr("key.share", "Filetype for KeeShare key");
     const auto filters = QString("%1 (*." + filetype + ");;%2 (*)").arg(tr("KeeShare key file"), tr("All files"));
     QString filename = QString("%1.%2").arg(m_own.certificate.signer).arg(filetype);
@@ -194,7 +185,7 @@ void SettingsWidgetKeeShare::exportCertificate()
     stream << KeeShareSettings::Own::serialize(m_own);
     stream.flush();
     file.close();
-    config()->set(Config::KeeShare_LastKeyDir, QFileInfo(filename).absolutePath());
+    FileDialog::saveLastDir("keeshare_key", filename);
 }
 
 void SettingsWidgetKeeShare::trustSelectedCertificates()

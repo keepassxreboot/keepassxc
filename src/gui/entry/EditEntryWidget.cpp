@@ -26,7 +26,6 @@
 
 #include <QColorDialog>
 #include <QDesktopServices>
-#include <QFileDialog>
 #include <QSortFilterProxyModel>
 #include <QStringListModel>
 
@@ -50,6 +49,7 @@
 #include "gui/Clipboard.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
+#include "gui/FileDialog.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
@@ -677,8 +677,9 @@ void EditEntryWidget::toKeeAgentSettings(KeeAgentSettings& settings) const
 
 void EditEntryWidget::browsePrivateKey()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select private key"), "");
+    auto fileName = fileDialog()->getOpenFileName(this, tr("Select private key"), FileDialog::getLastDir("sshagent"));
     if (!fileName.isEmpty()) {
+        FileDialog::saveLastDir("sshagent", fileName);
         m_sshAgentUi->externalFileEdit->setText(fileName);
         m_sshAgentUi->externalFileRadioButton->setChecked(true);
         updateSSHAgentKeyInfo();
