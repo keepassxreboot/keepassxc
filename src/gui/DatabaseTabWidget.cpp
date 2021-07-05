@@ -123,9 +123,10 @@ DatabaseWidget* DatabaseTabWidget::newDatabase()
 
 void DatabaseTabWidget::openDatabase()
 {
-    QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Open database"), "", filter);
+    auto filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+    auto fileName = fileDialog()->getOpenFileName(this, tr("Open database"), FileDialog::getLastDir("db"), filter);
     if (!fileName.isEmpty()) {
+        FileDialog::saveLastDir("db", fileName, true);
         addDatabaseTab(fileName);
     }
 }
@@ -211,12 +212,13 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
 
 void DatabaseTabWidget::importCsv()
 {
-    QString filter = QString("%1 (*.csv);;%2 (*)").arg(tr("CSV file"), tr("All files"));
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Select CSV file"), "", filter);
-
+    auto filter = QString("%1 (*.csv);;%2 (*)").arg(tr("CSV file"), tr("All files"));
+    auto fileName = fileDialog()->getOpenFileName(this, tr("Select CSV file"), FileDialog::getLastDir("csv"), filter);
     if (fileName.isEmpty()) {
         return;
     }
+
+    FileDialog::saveLastDir("csv", fileName, true);
 
     auto db = execNewDatabaseWizard();
     if (!db) {
@@ -232,9 +234,11 @@ void DatabaseTabWidget::mergeDatabase()
 {
     auto dbWidget = currentDatabaseWidget();
     if (dbWidget && !dbWidget->isLocked()) {
-        QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
-        const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), QString(), filter);
+        auto filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+        auto fileName =
+            fileDialog()->getOpenFileName(this, tr("Merge database"), FileDialog::getLastDir("merge"), filter);
         if (!fileName.isEmpty()) {
+            FileDialog::saveLastDir("merge", fileName, true);
             mergeDatabase(fileName);
         }
     }
@@ -247,12 +251,14 @@ void DatabaseTabWidget::mergeDatabase(const QString& filePath)
 
 void DatabaseTabWidget::importKeePass1Database()
 {
-    QString filter = QString("%1 (*.kdb);;%2 (*)").arg(tr("KeePass 1 database"), tr("All files"));
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), QString(), filter);
-
+    auto filter = QString("%1 (*.kdb);;%2 (*)").arg(tr("KeePass 1 database"), tr("All files"));
+    auto fileName =
+        fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), FileDialog::getLastDir("kp1"), filter);
     if (fileName.isEmpty()) {
         return;
     }
+
+    FileDialog::saveLastDir("kp1", fileName, true);
 
     auto db = QSharedPointer<Database>::create();
     auto* dbWidget = new DatabaseWidget(db, this);
@@ -262,15 +268,18 @@ void DatabaseTabWidget::importKeePass1Database()
 
 void DatabaseTabWidget::importOpVaultDatabase()
 {
+    auto defaultDir = FileDialog::getLastDir("opvault");
 #ifdef Q_OS_MACOS
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Open OPVault"), {}, "OPVault (*.opvault)");
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Open OPVault"), defaultDir, "OPVault (*.opvault)");
 #else
-    QString fileName = fileDialog()->getExistingDirectory(this, tr("Open OPVault"));
+    QString fileName = fileDialog()->getExistingDirectory(this, tr("Open OPVault"), defaultDir);
 #endif
 
     if (fileName.isEmpty()) {
         return;
     }
+
+    FileDialog::saveLastDir("opvault", fileName);
 
     auto db = QSharedPointer<Database>::create();
     auto* dbWidget = new DatabaseWidget(db, this);
@@ -413,11 +422,13 @@ void DatabaseTabWidget::exportToCsv()
         return;
     }
 
-    const QString fileName = fileDialog()->getSaveFileName(
-        this, tr("Export database to CSV file"), QString(), tr("CSV file").append(" (*.csv)"), nullptr, nullptr);
+    auto fileName = fileDialog()->getSaveFileName(
+        this, tr("Export database to CSV file"), FileDialog::getLastDir("csv"), tr("CSV file").append(" (*.csv)"));
     if (fileName.isEmpty()) {
         return;
     }
+
+    FileDialog::saveLastDir("csv", fileName, true);
 
     CsvExporter csvExporter;
     if (!csvExporter.exportDatabase(fileName, db)) {
@@ -439,10 +450,12 @@ void DatabaseTabWidget::exportToHtml()
     }
 
     const QString fileName = fileDialog()->getSaveFileName(
-        this, tr("Export database to HTML file"), QString(), tr("HTML file").append(" (*.html)"), nullptr, nullptr);
+        this, tr("Export database to HTML file"), FileDialog::getLastDir("html"), tr("HTML file").append(" (*.html)"));
     if (fileName.isEmpty()) {
         return;
     }
+
+    FileDialog::saveLastDir("html", fileName, true);
 
     HtmlExporter htmlExporter;
     if (!htmlExporter.exportDatabase(fileName, db)) {

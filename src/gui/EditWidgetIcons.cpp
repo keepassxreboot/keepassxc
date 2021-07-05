@@ -19,12 +19,11 @@
 #include "EditWidgetIcons.h"
 #include "ui_EditWidgetIcons.h"
 
-#include <QFileDialog>
-
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
+#include "gui/FileDialog.h"
 #include "gui/IconModels.h"
 #ifdef WITH_XC_NETWORKING
 #include "gui/IconDownloader.h"
@@ -232,9 +231,9 @@ void EditWidgetIcons::addCustomIconFromFile()
         return;
     }
 
-    QString filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Tools::imageReaderFilter(), tr("All files"));
-
-    auto filenames = QFileDialog::getOpenFileNames(this, tr("Select Image(s)"), "", filter);
+    auto filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Tools::imageReaderFilter(), tr("All files"));
+    auto filenames =
+        fileDialog()->getOpenFileNames(this, tr("Select Image(s)"), FileDialog::getLastDir("icons"), filter);
     if (!filenames.empty()) {
         QStringList errornames;
         int numexisting = 0;
@@ -249,6 +248,9 @@ void EditWidgetIcons::addCustomIconFromFile()
                 }
             }
         }
+
+        // Save last used directory using first image path
+        FileDialog::saveLastDir("icons", filenames[0]);
 
         int numloaded = filenames.size() - errornames.size() - numexisting;
         QString msg;

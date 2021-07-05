@@ -133,12 +133,7 @@ void EntryAttachmentsWidget::insertAttachments()
         return;
     }
 
-    QString defaultDirPath = config()->get(Config::LastAttachmentDir).toString();
-    const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
-    if (!dirExists) {
-        defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
-    }
-
+    QString defaultDirPath = FileDialog::getLastDir("attachments");
     const auto filenames = fileDialog()->getOpenFileNames(this, tr("Select files"), defaultDirPath);
     if (filenames.isEmpty()) {
         return;
@@ -147,7 +142,8 @@ void EntryAttachmentsWidget::insertAttachments()
     if (confirmedFileNames.isEmpty()) {
         return;
     }
-    config()->set(Config::LastAttachmentDir, QFileInfo(filenames.first()).absolutePath());
+    // Save path to first filename
+    FileDialog::saveLastDir("attachments", filenames[0]);
     QString errorMessage;
     if (!insertAttachments(confirmedFileNames, errorMessage)) {
         errorOccurred(errorMessage);
@@ -195,12 +191,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
         return;
     }
 
-    QString defaultDirPath = config()->get(Config::LastAttachmentDir).toString();
-    const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
-    if (!dirExists) {
-        defaultDirPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    }
-
+    QString defaultDirPath = FileDialog::getLastDir("attachments");
     const QString saveDirPath = fileDialog()->getExistingDirectory(this, tr("Save attachments"), defaultDirPath);
     if (saveDirPath.isEmpty()) {
         return;
@@ -213,7 +204,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
             return;
         }
     }
-    config()->set(Config::LastAttachmentDir, QFileInfo(saveDir.absolutePath()).absolutePath());
+    FileDialog::saveLastDir("attachments", saveDirPath);
 
     QStringList errors;
     for (const QModelIndex& index : indexes) {

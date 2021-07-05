@@ -1880,9 +1880,10 @@ bool DatabaseWidget::saveBackup()
             oldFilePath = QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/"
                                                    + tr("Passwords").append(".kdbx"));
         }
+
         const QString newFilePath = fileDialog()->getSaveFileName(this,
                                                                   tr("Save database backup"),
-                                                                  oldFilePath,
+                                                                  FileDialog::getLastDir("backup"),
                                                                   tr("KeePass 2 Database").append(" (*.kdbx)"),
                                                                   nullptr,
                                                                   nullptr);
@@ -1906,6 +1907,7 @@ bool DatabaseWidget::saveBackup()
                 // Source database is marked as clean when copy is saved, even if source has unsaved changes
                 m_db->markAsModified();
             }
+            FileDialog::saveLastDir("backup", newFilePath, true);
             return true;
         }
 

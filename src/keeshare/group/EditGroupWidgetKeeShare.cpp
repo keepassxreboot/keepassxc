@@ -224,11 +224,6 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
     if (!m_temporaryGroup) {
         return;
     }
-    QString defaultDirPath = config()->get(Config::KeeShare_LastShareDir).toString();
-    const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
-    if (!dirExists) {
-        defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
-    }
     auto reference = KeeShare::referenceOf(m_temporaryGroup);
     QString defaultFiletype = "";
     auto supportedExtensions = QStringList();
@@ -252,6 +247,7 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
 #endif
 
     const auto filters = knownFilters.join(";;");
+    auto defaultDirPath = FileDialog::getLastDir("keeshare");
     auto filename = reference.path;
     if (filename.isEmpty()) {
         filename = m_temporaryGroup->name();
@@ -285,7 +281,7 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
 
     m_ui->pathEdit->setText(filename);
     selectPath();
-    config()->set(Config::KeeShare_LastShareDir, QFileInfo(filename).absolutePath());
+    FileDialog::saveLastDir("keeshare", filename);
 
     updateSharingState();
 }

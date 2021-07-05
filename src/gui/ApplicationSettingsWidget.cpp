@@ -397,15 +397,15 @@ void ApplicationSettingsWidget::saveSettings()
 
     // Security: clear storage if related settings are disabled
     if (!config()->get(Config::RememberLastDatabases).toBool()) {
+        config()->remove(Config::LastDir);
         config()->remove(Config::LastDatabases);
         config()->remove(Config::LastActiveDatabase);
-        config()->remove(Config::LastAttachmentDir);
     }
 
     if (!config()->get(Config::RememberLastKeyFiles).toBool()) {
+        config()->remove(Config::LastDir);
         config()->remove(Config::LastKeyFiles);
         config()->remove(Config::LastChallengeResponse);
-        config()->remove(Config::LastDir);
     }
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
@@ -438,7 +438,6 @@ void ApplicationSettingsWidget::resetSettings()
     // Clear recently used data
     config()->remove(Config::LastDatabases);
     config()->remove(Config::LastActiveDatabase);
-    config()->remove(Config::LastAttachmentDir);
     config()->remove(Config::LastKeyFiles);
     config()->remove(Config::LastDir);
 
