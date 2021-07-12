@@ -19,10 +19,8 @@
 
 #include "core/AsyncTask.h"
 
-#include <QCryptographicHash>
-
 #ifdef Q_OS_LINUX
-#include <sys/vfs.h>
+#include <sys/statfs.h>
 #endif
 
 FileWatcher::FileWatcher(QObject* parent)

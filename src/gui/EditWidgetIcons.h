@@ -20,13 +20,9 @@
 #define KEEPASSX_EDITWIDGETICONS_H
 
 #include <QMenu>
-#include <QUrl>
 #include <QUuid>
-#include <QWidget>
 
 #include "config-keepassx.h"
-#include "core/Entry.h"
-#include "core/Global.h"
 #include "gui/MessageWidget.h"
 
 class Database;

@@ -22,8 +22,9 @@
 #include <QTimer>
 #include <QWidget>
 
-#include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
+
+class SignalMultiplexer;
 
 namespace Ui
 {

@@ -19,7 +19,6 @@
 #define KEEPASSXC_DARKSTYLE_H
 
 #include "gui/styles/base/BaseStyle.h"
-#include <QApplication>
 
 class DarkStyle : public BaseStyle
 {

@@ -17,11 +17,9 @@
 
 #include "TestConfig.h"
 
-#include <QList>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
-#include "core/Config.h"
 #include "util/TemporaryFile.h"
 
 QTEST_GUILESS_MAIN(TestConfig)

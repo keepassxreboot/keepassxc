@@ -19,7 +19,6 @@
 
 #include <QCoreApplication>
 
-#include "keeshare/KeeShareSettings.h"
 #include "keeshare/ShareObserver.h"
 
 class Database;

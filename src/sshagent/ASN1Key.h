@@ -19,8 +19,8 @@
 #ifndef KEEPASSXC_ASN1KEY_H
 #define KEEPASSXC_ASN1KEY_H
 
-#include "OpenSSHKey.h"
-#include <QtCore>
+class QByteArray;
+class OpenSSHKey;
 
 namespace ASN1Key
 {

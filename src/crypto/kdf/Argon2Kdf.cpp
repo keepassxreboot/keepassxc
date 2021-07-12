@@ -17,7 +17,7 @@
 
 #include "Argon2Kdf.h"
 
-#include <QtConcurrent>
+#include <QThread>
 #include <botan/pwdhash.h>
 
 #include "format/KeePass2.h"

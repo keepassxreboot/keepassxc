@@ -19,10 +19,6 @@
 #define KEEPASSXC_TESTCLI_H
 
 #include <QBuffer>
-#include <QScopedPointer>
-#include <QSharedPointer>
-#include <QStringList>
-#include <QTest>
 
 #include "util/TemporaryFile.h"
 

@@ -20,15 +20,11 @@
 #include "NewDatabaseWizardPageEncryption.h"
 #include "NewDatabaseWizardPageMetaData.h"
 
-#include "core/Database.h"
 #include "core/Global.h"
 #include "core/Group.h"
-#include "core/Resources.h"
-#include "format/KeePass2.h"
 
 #include <QFrame>
 #include <QPalette>
-#include <QVBoxLayout>
 
 NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
     : QWizard(parent)

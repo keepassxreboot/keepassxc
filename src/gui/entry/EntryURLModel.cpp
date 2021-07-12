@@ -18,12 +18,10 @@
 
 #include "EntryURLModel.h"
 
-#include "core/Entry.h"
+#include "core/EntryAttributes.h"
 #include "core/Tools.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
-
-#include <algorithm>
 
 EntryURLModel::EntryURLModel(QObject* parent)
     : QStandardItemModel(parent)

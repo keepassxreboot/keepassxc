@@ -18,7 +18,6 @@
 #ifndef KEEPASSX_SIGNALMULTIPLEXER_H
 #define KEEPASSX_SIGNALMULTIPLEXER_H
 
-#include <QObject>
 #include <QPointer>
 
 class SignalMultiplexer

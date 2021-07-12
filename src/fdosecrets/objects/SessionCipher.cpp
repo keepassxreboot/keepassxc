@@ -20,6 +20,7 @@
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
 
+#include <QDebug>
 #include <botan/dh.h>
 #include <botan/pk_ops.h>
 

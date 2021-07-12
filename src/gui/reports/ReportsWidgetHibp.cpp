@@ -19,14 +19,10 @@
 #include "ui_ReportsWidgetHibp.h"
 
 #include "config-keepassx.h"
-#include "core/Database.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/PasswordHealth.h"
 #include "gui/GuiTools.h"
 #include "gui/Icons.h"
-#include "gui/MessageBox.h"
 
 #include <QMenu>
 #include <QShortcut>

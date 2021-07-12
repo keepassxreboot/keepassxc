@@ -17,32 +17,30 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QCheckBox>
-#include <QHostAddress>
-#include <QInputDialog>
-#include <QJsonArray>
-#include <QMessageBox>
-#include <QProgressDialog>
-#include <QUuid>
+#include "BrowserService.h"
 
 #include "BrowserAccessControlDialog.h"
 #include "BrowserAction.h"
 #include "BrowserEntryConfig.h"
 #include "BrowserEntrySaveDialog.h"
 #include "BrowserHost.h"
-#include "BrowserService.h"
 #include "BrowserSettings.h"
-#include "core/Database.h"
-#include "core/EntrySearcher.h"
-#include "core/Group.h"
-#include "core/Metadata.h"
-#include "core/PasswordGenerator.h"
 #include "core/Tools.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
+
+#include <QCheckBox>
+#include <QCryptographicHash>
+#include <QHostAddress>
+#include <QInputDialog>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QListWidget>
+#include <QProgressDialog>
+#include <QUrl>
 
 const QString BrowserService::KEEPASSXCBROWSER_NAME = QStringLiteral("KeePassXC-Browser Settings");
 const QString BrowserService::KEEPASSXCBROWSER_OLD_NAME = QStringLiteral("keepassxc-browser Settings");

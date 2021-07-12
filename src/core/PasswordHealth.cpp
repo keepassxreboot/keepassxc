@@ -15,11 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
 #include <QString>
 
-#include "Database.h"
-#include "Entry.h"
 #include "Group.h"
 #include "PasswordHealth.h"
 #include "zxcvbn.h"

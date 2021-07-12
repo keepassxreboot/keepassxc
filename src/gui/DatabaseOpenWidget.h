@@ -23,8 +23,8 @@
 #include <QTimer>
 
 #include "gui/DialogyWidget.h"
-#include "keys/CompositeKey.h"
 
+class CompositeKey;
 class Database;
 class QFile;
 

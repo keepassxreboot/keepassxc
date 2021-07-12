@@ -19,11 +19,8 @@
 #define KEEPASSX_SYMMETRICCIPHER_H
 
 #include <QByteArray>
-#include <QScopedPointer>
+#include <QSharedPointer>
 #include <QString>
-#include <QUuid>
-
-#include "format/KeePass2.h"
 
 namespace Botan
 {

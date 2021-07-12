@@ -21,7 +21,6 @@
 #include "crypto/SymmetricCipher.h"
 
 #include <QDataStream>
-#include <QDebug>
 
 OpData01::OpData01(QObject* parent)
     : QObject(parent)

@@ -10,13 +10,6 @@
  */
 
 #include "MainWindowAdaptor.h"
-#include <QtCore/QByteArray>
-#include <QtCore/QList>
-#include <QtCore/QMap>
-#include <QtCore/QMetaObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QVariant>
 
 /*
  * Implementation of adaptor class MainWindowAdaptor

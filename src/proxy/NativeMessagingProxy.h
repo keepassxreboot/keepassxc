@@ -19,8 +19,6 @@
 #define NATIVEMESSAGINGPROXY_H
 
 #include <QLocalSocket>
-#include <QObject>
-#include <QScopedPointer>
 
 class QWinEventNotifier;
 class QSocketNotifier;

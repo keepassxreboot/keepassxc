@@ -18,7 +18,6 @@
 #ifndef KEEPASSXC_ASYNCTASK_HPP
 #define KEEPASSXC_ASYNCTASK_HPP
 
-#include <QFuture>
 #include <QFutureWatcher>
 #include <QtConcurrent>
 

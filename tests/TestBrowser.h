@@ -22,7 +22,6 @@
 
 #include "browser/BrowserAction.h"
 #include "browser/BrowserService.h"
-#include "core/Group.h"
 
 class TestBrowser : public QObject
 {

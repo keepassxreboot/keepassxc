@@ -25,10 +25,9 @@
 #include "gui/osutils/OSUtils.h"
 #include "gui/styles/StateColorPalette.h"
 
-#include <QDialog>
+#include <QEvent>
 #include <QTimer>
 #include <QToolTip>
-#include <QVBoxLayout>
 
 PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)

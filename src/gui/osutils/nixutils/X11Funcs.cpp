@@ -17,7 +17,8 @@
 
 #include "X11Funcs.h"
 
-#include "core/Tools.h"
+#include <QChar>
+#include <QString>
 
 #include <X11/Xutil.h>
 

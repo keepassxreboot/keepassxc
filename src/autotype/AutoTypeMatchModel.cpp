@@ -20,9 +20,6 @@
 
 #include <QFont>
 
-#include "core/DatabaseIcons.h"
-#include "core/Entry.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 

@@ -21,11 +21,9 @@
 
 #include "CsvImportWidget.h"
 
-#include <QGridLayout>
-#include <QStackedWidget>
-
-#include "core/Database.h"
 #include "gui/DialogyWidget.h"
+
+class QGridLayout;
 
 class CsvImportWidget;
 

@@ -25,10 +25,9 @@
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/HashedBlockStream.h"
-#include "streams/QtIOCompressor"
+#include "streams/StoreDataStream.h"
 #include "streams/SymmetricCipherStream.h"
-
-#include <QBuffer>
+#include "streams/qtiocompressor.h"
 
 bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
                                    const QByteArray& headerData,

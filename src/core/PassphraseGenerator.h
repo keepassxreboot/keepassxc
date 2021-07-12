@@ -18,8 +18,6 @@
 #ifndef KEEPASSX_PASSPHRASEGENERATOR_H
 #define KEEPASSX_PASSPHRASEGENERATOR_H
 
-#include <QFlags>
-#include <QString>
 #include <QVector>
 
 class PassphraseGenerator

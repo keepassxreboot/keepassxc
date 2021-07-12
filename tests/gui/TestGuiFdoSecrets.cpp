@@ -19,23 +19,17 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
-#include "fdosecrets/dbus/DBusClient.h"
-#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/SessionCipher.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
 
-#include "TestGlobal.h"
 #include "config-keepassx-tests.h"
 
-#include "core/Config.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "crypto/Random.h"
 #include "gui/Application.h"
 #include "gui/DatabaseTabWidget.h"
-#include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
@@ -46,10 +40,7 @@
 #include <QCheckBox>
 #include <QLineEdit>
 #include <QSignalSpy>
-#include <QTemporaryDir>
-
-#include <memory>
-#include <type_traits>
+#include <QTest>
 
 int main(int argc, char* argv[])
 {

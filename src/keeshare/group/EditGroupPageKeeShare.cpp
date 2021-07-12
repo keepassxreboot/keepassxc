@@ -20,8 +20,6 @@
 #include "gui/Icons.h"
 #include "keeshare/group/EditGroupWidgetKeeShare.h"
 
-#include <QApplication>
-
 EditGroupPageKeeShare::EditGroupPageKeeShare(EditGroupWidget* widget)
 {
     Q_UNUSED(widget);

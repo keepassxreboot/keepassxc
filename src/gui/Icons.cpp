@@ -18,14 +18,9 @@
 
 #include "Icons.h"
 
-#include <QBitmap>
 #include <QIconEngine>
-#include <QPaintDevice>
 #include <QPainter>
-#include <QStyle>
 
-#include "config-keepassx.h"
-#include "core/Config.h"
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
 

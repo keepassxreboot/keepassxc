@@ -16,7 +16,9 @@
  */
 
 #include "TestEntrySearcher.h"
-#include "TestGlobal.h"
+#include "core/Group.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestEntrySearcher)
 

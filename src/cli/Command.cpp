@@ -15,8 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Command.h"
-
 #include "Add.h"
 #include "AddGroup.h"
 #include "Analyze.h"
@@ -42,6 +40,7 @@
 #include "Show.h"
 #include "Utils.h"
 
+#include <QCommandLineParser>
 #include <QFileInfo>
 #include <QRegularExpression>
 

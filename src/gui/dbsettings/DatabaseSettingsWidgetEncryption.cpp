@@ -26,9 +26,6 @@
 #include "format/KeePass2.h"
 #include "gui/MessageBox.h"
 
-#include <QApplication>
-#include <QPushButton>
-
 const char* DatabaseSettingsWidgetEncryption::CD_DECRYPTION_TIME_PREFERENCE_KEY = "KPXC_DECRYPTION_TIME_PREFERENCE";
 
 DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* parent)

@@ -16,27 +16,15 @@
  */
 
 #include "TestSharing.h"
-#include "TestGlobal.h"
 
-#include <QBuffer>
-#include <QSignalSpy>
-#include <QTemporaryFile>
+#include <QTest>
 #include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
-#include "config-keepassx-tests.h"
-#include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "crypto/Random.h"
-#include "format/KeePass2Writer.h"
 #include "keeshare/KeeShareSettings.h"
-#include "keys/PasswordKey.h"
 
-#include <botan/pkcs8.h>
 #include <botan/rsa.h>
-#include <botan/x509_key.h>
-
-#include <format/KeePass2Reader.h>
 
 QTEST_GUILESS_MAIN(TestSharing)
 

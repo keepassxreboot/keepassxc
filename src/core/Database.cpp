@@ -19,23 +19,18 @@
 #include "Database.h"
 
 #include "core/AsyncTask.h"
-#include "core/Clock.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
-#include "core/Merger.h"
-#include "core/Metadata.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 
-#include <QFile>
 #include <QFileInfo>
+#include <QJsonObject>
+#include <QRegularExpression>
 #include <QSaveFile>
 #include <QTemporaryFile>
 #include <QTimer>
-#include <QXmlStreamReader>
 
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
 

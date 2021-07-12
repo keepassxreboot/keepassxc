@@ -17,18 +17,14 @@
 
 #include "KdbxXmlReader.h"
 #include "KeePass2RandomStream.h"
-#include "core/Clock.h"
 #include "core/DatabaseIcons.h"
 #include "core/Endian.h"
-#include "core/Entry.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Tools.h"
-#include "streams/QtIOCompressor"
+#include "streams/qtiocompressor.h"
 
 #include <QBuffer>
 #include <QFile>
-#include <utility>
 
 #define UUID_LENGTH 16
 

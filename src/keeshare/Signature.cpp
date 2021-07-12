@@ -19,6 +19,8 @@
 
 #include "crypto/Random.h"
 
+#include <botan/pubkey.h>
+
 bool Signature::create(const QByteArray& data, QSharedPointer<Botan::Private_Key> key, QString& signature)
 {
     // TODO HNH: currently we publish the signature in our own non-standard format - it would

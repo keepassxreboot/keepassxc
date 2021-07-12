@@ -17,12 +17,8 @@
 
 #include "OpVaultOpenWidget.h"
 
-#include <QDir>
-
 #include "core/Database.h"
-#include "core/Metadata.h"
 #include "format/OpVaultReader.h"
-#include "gui/MessageBox.h"
 #include "ui_DatabaseOpenWidget.h"
 
 OpVaultOpenWidget::OpVaultOpenWidget(QWidget* parent)

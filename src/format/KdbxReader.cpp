@@ -1,4 +1,3 @@
-#include <utility>
 
 /*
  * Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
@@ -20,8 +19,8 @@
 #include "KdbxReader.h"
 #include "core/Database.h"
 #include "core/Endian.h"
-
-#include <QBuffer>
+#include "crypto/SymmetricCipher.h"
+#include "streams/StoreDataStream.h"
 
 #define UUID_LENGTH 16
 

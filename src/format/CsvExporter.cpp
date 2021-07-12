@@ -20,7 +20,6 @@
 
 #include <QFile>
 
-#include "core/Database.h"
 #include "core/Group.h"
 
 bool CsvExporter::exportDatabase(const QString& filename, const QSharedPointer<const Database>& db)

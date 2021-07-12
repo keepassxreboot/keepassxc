@@ -16,18 +16,14 @@
  */
 
 #include "NixUtils.h"
-#include "core/Tools.h"
 
 #include <QApplication>
-#include <QColor>
 #include <QDir>
-#include <QFile>
-#include <QGuiApplication>
-#include <QPalette>
+#include <QPointer>
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
-#include <QtX11Extras/QX11Info>
+#include <QX11Info>
 
 #include <qpa/qplatformnativeinterface.h>
 

@@ -19,8 +19,8 @@
 #ifndef KEEPASSX_CSVEXPORTER_H
 #define KEEPASSX_CSVEXPORTER_H
 
+#include <QSharedPointer>
 #include <QString>
-#include <QtCore/QSharedPointer>
 
 class Database;
 class Group;

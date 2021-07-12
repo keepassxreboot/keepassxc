@@ -20,9 +20,7 @@
 #define KEEPASSX_DATABASEWIDGET_H
 
 #include <QFileSystemWatcher>
-#include <QScopedPointer>
 #include <QStackedWidget>
-#include <QTimer>
 
 #include "DatabaseOpenDialog.h"
 #include "config-keepassx.h"

@@ -22,41 +22,27 @@
 #include "BaseStyle.h"
 #include "phantomcolor.h"
 
-#include <QAbstractItemView>
+#include <QAction>
 #include <QApplication>
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFile>
 #include <QHeaderView>
 #include <QListView>
-#include <QMainWindow>
-#include <QMenu>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPoint>
-#include <QPolygon>
-#include <QPushButton>
-#include <QScrollBar>
-#include <QSharedData>
-#include <QSlider>
-#include <QSpinBox>
-#include <QSplitter>
 #include <QString>
-#include <QStyleOption>
 #include <QTableView>
 #include <QToolBar>
 #include <QToolButton>
-#include <QTreeView>
-#include <QWindow>
 #include <QWizard>
-#include <QtMath>
-#include <qdrawutil.h>
+#include <QtCore>
 
 #ifdef Q_OS_MACOS
+#include <QMainWindow>
 #include <QOperatingSystemVersion>
 #endif
-
-#include <cmath>
 
 #include "gui/Icons.h"
 

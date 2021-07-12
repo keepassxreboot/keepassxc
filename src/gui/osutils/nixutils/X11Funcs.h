@@ -18,10 +18,11 @@
 #ifndef KEEPASSXC_X11FUNCS_H
 #define KEEPASSXC_X11FUNCS_H
 
-#include <QChar>
 #include <qnamespace.h>
 
 #include <X11/X.h>
+
+class QChar;
 
 KeySym qcharToNativeKeyCode(const QChar& ch);
 KeySym qtToNativeKeyCode(Qt::Key key);

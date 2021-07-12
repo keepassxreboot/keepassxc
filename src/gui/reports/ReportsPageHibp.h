@@ -18,8 +18,6 @@
 #ifndef KEEPASSXC_REPORTSPAGEHIBP_H
 #define KEEPASSXC_REPORTSPAGEHIBP_H
 
-#include <QWidget>
-
 #include "ReportsDialog.h"
 
 class ReportsWidgetHibp;

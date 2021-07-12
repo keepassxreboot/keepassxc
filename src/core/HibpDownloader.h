@@ -21,7 +21,6 @@
 #include "config-keepassx.h"
 #include <QHash>
 #include <QObject>
-#include <QTimer>
 
 #ifndef WITH_XC_NETWORKING
 #error This file requires KeePassXC to be built with network support.

@@ -19,11 +19,6 @@
 #define KEEPASSXC_FDOSECRETS_SESSION_H
 
 #include "fdosecrets/dbus/DBusObject.h"
-#include "fdosecrets/objects/Service.h"
-
-#include <QSharedPointer>
-#include <QUuid>
-#include <QVariant>
 
 namespace FdoSecrets
 {

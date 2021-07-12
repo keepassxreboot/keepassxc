@@ -21,10 +21,6 @@
 #include "config-keepassx.h"
 #include "core/Global.h"
 #include "gui/MessageBox.h"
-#include "updatecheck/UpdateChecker.h"
-#include <QDialog>
-#include <QScopedPointer>
-#include <QUrl>
 
 namespace Ui
 {

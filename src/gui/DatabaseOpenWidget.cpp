@@ -19,24 +19,20 @@
 #include "DatabaseOpenWidget.h"
 #include "ui_DatabaseOpenWidget.h"
 
-#include "core/Config.h"
-#include "core/Database.h"
-#include "crypto/Random.h"
-#include "format/KeePass2Reader.h"
+#include "config-keepassx.h"
 #include "gui/FileDialog.h"
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
-#include "touchid/TouchID.h"
 
-#include "config-keepassx.h"
+#ifdef Q_OS_MACOS
+#include "touchid/TouchID.h"
+#endif
 
 #include <QDesktopServices>
 #include <QFont>
-#include <QSharedPointer>
 
 namespace
 {

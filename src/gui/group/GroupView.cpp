@@ -18,12 +18,10 @@
 #include "GroupView.h"
 
 #include <QDragMoveEvent>
-#include <QMetaObject>
 #include <QMimeData>
 #include <QShortcut>
 
 #include "core/Config.h"
-#include "core/Database.h"
 #include "core/Group.h"
 #include "gui/group/GroupModel.h"
 

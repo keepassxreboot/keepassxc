@@ -18,8 +18,6 @@
 #ifndef KEEPASSXC_KEESHARESETTINGS_H
 #define KEEPASSXC_KEESHARESETTINGS_H
 
-#include <QMap>
-#include <QObject>
 #include <QSharedPointer>
 #include <QUuid>
 

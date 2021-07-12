@@ -18,8 +18,6 @@
 #ifndef KEEPASSX_RANDOM_H
 #define KEEPASSX_RANDOM_H
 
-#include <QByteArray>
-#include <QScopedPointer>
 #include <QSharedPointer>
 
 #include <botan/rng.h>

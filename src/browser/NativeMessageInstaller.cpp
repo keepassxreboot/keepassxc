@@ -23,9 +23,9 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
-#include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QMessageBox>
 #include <QProcessEnvironment>
 #include <QSettings>

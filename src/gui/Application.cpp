@@ -19,11 +19,7 @@
 
 #include "Application.h"
 
-#include "autotype/AutoType.h"
 #include "core/Bootstrap.h"
-#include "core/Config.h"
-#include "core/Global.h"
-#include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
@@ -32,10 +28,11 @@
 
 #include <QFileInfo>
 #include <QFileOpenEvent>
+#include <QLocalSocket>
 #include <QLockFile>
+#include <QPixmapCache>
 #include <QSocketNotifier>
 #include <QStandardPaths>
-#include <QtNetwork/QLocalSocket>
 
 #if defined(Q_OS_UNIX)
 #include <signal.h>

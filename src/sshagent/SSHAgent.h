@@ -20,11 +20,11 @@
 #define KEEPASSXC_SSHAGENT_H
 
 #include <QHash>
-#include <QList>
-#include <QtCore>
 
 #include "OpenSSHKey.h"
-#include "sshagent/KeeAgentSettings.h"
+
+class KeeAgentSettings;
+class Database;
 
 class SSHAgent : public QObject
 {

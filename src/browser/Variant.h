@@ -18,7 +18,7 @@
 #ifndef VARIANT_H
 #define VARIANT_H
 
-#include <QtCore>
+#include <QVariantMap>
 
 QVariantMap qo2qv(const QObject* object,
                   const QStringList& ignoredProperties = QStringList(QString(QLatin1String("objectName"))));

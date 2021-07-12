@@ -17,21 +17,15 @@
 
 #include "Collection.h"
 
-#include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
-#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
-#include "fdosecrets/objects/Session.h"
 
-#include "core/Config.h"
 #include "core/Tools.h"
-#include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 
 #include <QFileInfo>
-#include <QRegularExpression>
 
 namespace FdoSecrets
 {

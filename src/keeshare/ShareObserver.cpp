@@ -16,10 +16,7 @@
  */
 
 #include "ShareObserver.h"
-#include "core/Config.h"
-#include "core/Database.h"
 #include "core/FileWatcher.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "keeshare/KeeShare.h"
 #include "keeshare/ShareExport.h"

@@ -17,17 +17,12 @@
 
 #include "TestHibp.h"
 
-#include "config-keepassx-tests.h"
-
-#include "core/Database.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/HibpOffline.h"
 #include "crypto/Crypto.h"
 
 #include <QBuffer>
 #include <QByteArray>
-#include <QFile>
 #include <QList>
 #include <QTest>
 

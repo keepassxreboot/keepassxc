@@ -17,8 +17,18 @@
  */
 
 #include "KeeAgentSettings.h"
+
+#include "OpenSSHKey.h"
 #include "core/Database.h"
+#include "core/Entry.h"
 #include "core/Tools.h"
+
+#include <QCoreApplication>
+#include <QDebug>
+#include <QDir>
+#include <QProcessEnvironment>
+#include <QTextCodec>
+#include <QXmlStreamReader>
 
 KeeAgentSettings::KeeAgentSettings()
 {

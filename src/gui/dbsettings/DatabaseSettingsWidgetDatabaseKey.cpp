@@ -26,9 +26,8 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
+#include <QLayout>
 #include <QPushButton>
-#include <QSpacerItem>
-#include <QVBoxLayout>
 
 DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* parent)
     : DatabaseSettingsWidget(parent)

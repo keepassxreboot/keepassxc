@@ -19,8 +19,10 @@
 
 #include "Generate.h"
 #include "Utils.h"
-#include "core/Entry.h"
 #include "core/Group.h"
+#include "core/PasswordGenerator.h"
+
+#include <QCommandLineParser>
 
 const QCommandLineOption Add::UsernameOption = QCommandLineOption(QStringList() << "u"
                                                                                 << "username",

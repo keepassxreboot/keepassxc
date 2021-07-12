@@ -20,6 +20,8 @@
 #include "Utils.h"
 #include "core/Group.h"
 
+#include <QCommandLineParser>
+
 const QCommandLineOption List::RecursiveOption =
     QCommandLineOption(QStringList() << "R"
                                      << "recursive",

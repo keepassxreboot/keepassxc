@@ -21,6 +21,8 @@
 #include "core/Global.h"
 #include "core/Metadata.h"
 
+#include <QCommandLineParser>
+
 Info::Info()
 {
     name = QString("db-info");

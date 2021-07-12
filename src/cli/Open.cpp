@@ -17,6 +17,8 @@
 
 #include "Open.h"
 
+#include <QCommandLineParser>
+
 Open::Open()
 {
     name = QString("open");

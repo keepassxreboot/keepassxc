@@ -17,7 +17,6 @@
 
 #include "Bootstrap.h"
 #include "config-keepassx.h"
-#include "core/Config.h"
 #include "core/Translator.h"
 
 #ifdef Q_OS_WIN

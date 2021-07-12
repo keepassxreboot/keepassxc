@@ -17,11 +17,13 @@
  */
 
 #include "TestDatabase.h"
-#include "TestGlobal.h"
 
+#include <QRegularExpression>
 #include <QSignalSpy>
+#include <QTest>
 
 #include "config-keepassx-tests.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"

@@ -21,10 +21,7 @@
 
 #include <QMap>
 #include <QObject>
-#include <QRegularExpression>
 #include <QSet>
-#include <QStringList>
-#include <QUuid>
 
 #include "core/ModifiableObject.h"
 

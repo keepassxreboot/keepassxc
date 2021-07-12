@@ -16,7 +16,6 @@
  */
 
 #include "TestKdbx4.h"
-#include "TestGlobal.h"
 
 #include "config-keepassx-tests.h"
 #include "core/Metadata.h"
@@ -28,6 +27,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "mock/MockChallengeResponseKey.h"
+#include <QTest>
 
 int main(int argc, char* argv[])
 {

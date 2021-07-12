@@ -20,7 +20,6 @@
 #include "core/Global.h"
 
 #include <QSet>
-#include <QStringList>
 
 EntryAttachments::EntryAttachments(QObject* parent)
     : ModifiableObject(parent)

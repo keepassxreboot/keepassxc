@@ -16,8 +16,8 @@
  */
 
 #include "CustomData.h"
-#include "Clock.h"
 
+#include "core/Clock.h"
 #include "core/Global.h"
 
 const QString CustomData::LastModified = QStringLiteral("_LAST_MODIFIED");

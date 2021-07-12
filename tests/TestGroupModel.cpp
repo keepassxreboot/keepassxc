@@ -16,10 +16,11 @@
  */
 
 #include "TestGroupModel.h"
-#include "TestGlobal.h"
 
 #include <QSignalSpy>
+#include <QTest>
 
+#include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "gui/group/GroupModel.h"
 #include "modeltest.h"

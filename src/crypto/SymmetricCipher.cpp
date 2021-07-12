@@ -16,9 +16,9 @@
  */
 
 #include "SymmetricCipher.h"
-#include <QtSvg>
 
 #include "config-keepassx.h"
+#include "format/KeePass2.h"
 
 #include <botan/block_cipher.h>
 #include <botan/cipher_mode.h>

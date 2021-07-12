@@ -20,6 +20,7 @@
 #include "Utils.h"
 #include "keys/FileKey.h"
 
+#include <QCommandLineParser>
 #include <QFileInfo>
 
 const QCommandLineOption Create::DecryptionTimeOption =

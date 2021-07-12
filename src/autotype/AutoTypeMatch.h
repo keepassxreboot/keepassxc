@@ -20,7 +20,6 @@
 
 #include <QPair>
 #include <QPointer>
-#include <QString>
 
 class Entry;
 typedef QPair<QPointer<Entry>, QString> AutoTypeMatch;

@@ -20,10 +20,8 @@
 
 #include "ASN1Key.h"
 #include "BinaryStream.h"
-#include "core/Tools.h"
 #include "crypto/SymmetricCipher.h"
 
-#include <QCryptographicHash>
 #include <QRegularExpression>
 #include <QStringList>
 

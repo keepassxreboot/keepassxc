@@ -20,8 +20,6 @@
 #include "ReportsWidgetHibp.h"
 #include "gui/Icons.h"
 
-#include <QApplication>
-
 ReportsPageHibp::ReportsPageHibp()
     : m_hibpWidget(new ReportsWidgetHibp())
 {

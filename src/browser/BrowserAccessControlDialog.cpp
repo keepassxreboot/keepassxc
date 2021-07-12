@@ -18,6 +18,7 @@
 
 #include "BrowserAccessControlDialog.h"
 #include "ui_BrowserAccessControlDialog.h"
+#include <QUrl>
 
 #include "core/Entry.h"
 

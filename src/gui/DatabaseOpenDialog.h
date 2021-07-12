@@ -22,7 +22,6 @@
 
 #include <QDialog>
 #include <QPointer>
-#include <QSharedPointer>
 
 class Database;
 class DatabaseWidget;

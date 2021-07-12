@@ -27,8 +27,6 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QScopedPointer>
-#include <QUuid>
 
 bool OpVaultReader::decryptBandEntry(const QJsonObject& bandEntry,
                                      QJsonObject& data,

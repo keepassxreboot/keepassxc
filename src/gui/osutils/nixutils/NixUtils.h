@@ -20,7 +20,7 @@
 
 #include "gui/osutils/OSUtilsBase.h"
 #include <QAbstractNativeEventFilter>
-#include <QPointer>
+#include <QSharedPointer>
 
 class NixUtils : public OSUtilsBase, QAbstractNativeEventFilter
 {

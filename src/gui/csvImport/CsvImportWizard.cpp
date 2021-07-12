@@ -18,10 +18,7 @@
 
 #include "CsvImportWizard.h"
 
-#include <QApplication>
-#include <QLabel>
-
-#include "gui/MessageBox.h"
+#include <QGridLayout>
 
 CsvImportWizard::CsvImportWizard(QWidget* parent)
     : DialogyWidget(parent)

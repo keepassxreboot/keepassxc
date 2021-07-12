@@ -18,8 +18,6 @@
 #include "FdoSecretsPlugin.h"
 
 #include "fdosecrets/FdoSecretsSettings.h"
-#include "fdosecrets/dbus/DBusMgr.h"
-#include "fdosecrets/dbus/DBusTypes.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/widgets/SettingsWidgetFdoSecrets.h"
 

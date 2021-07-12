@@ -19,7 +19,6 @@
 #include "BrowserEntrySaveDialog.h"
 #include "ui_BrowserEntrySaveDialog.h"
 
-#include "core/Database.h"
 #include "gui/DatabaseWidget.h"
 
 BrowserEntrySaveDialog::BrowserEntrySaveDialog(QWidget* parent)

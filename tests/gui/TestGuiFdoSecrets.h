@@ -21,9 +21,6 @@
 #include <QByteArray>
 #include <QDBusConnection>
 #include <QPointer>
-#include <QScopedPointer>
-#include <QSharedPointer>
-#include <QString>
 
 #include "fdosecrets/dbus/DBusTypes.h"
 

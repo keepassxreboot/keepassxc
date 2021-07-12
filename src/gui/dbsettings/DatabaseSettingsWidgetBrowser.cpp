@@ -21,10 +21,8 @@
 
 #include <QProgressDialog>
 
+#include "browser/BrowserService.h"
 #include "browser/BrowserSettings.h"
-#include "core/Clock.h"
-#include "core/Database.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/MessageBox.h"

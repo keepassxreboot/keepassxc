@@ -18,13 +18,11 @@
 #include "OpData01.h"
 #include "OpVaultReader.h"
 
-#include "core/Group.h"
-#include "core/Tools.h"
+#include "core/Entry.h"
 
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QUuid>
 
 /*!
  * This will \c qCritical() if unable to open the file for reading.

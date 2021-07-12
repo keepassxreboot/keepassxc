@@ -17,33 +17,24 @@
  */
 
 #include "TestGuiBrowser.h"
-#include "TestGlobal.h"
 #include "gui/Application.h"
 
-#include <QAction>
-#include <QApplication>
-#include <QDebug>
-#include <QDialogButtonBox>
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QLineEdit>
 #include <QListView>
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QTableView>
+#include <QTest>
 #include <QToolBar>
 
 #include "browser/BrowserService.h"
 #include "config-keepassx-tests.h"
-#include "core/Config.h"
-#include "core/Database.h"
-#include "core/Entry.h"
-#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/DatabaseTabWidget.h"
-#include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
-#include "gui/PasswordEdit.h"
-#include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 

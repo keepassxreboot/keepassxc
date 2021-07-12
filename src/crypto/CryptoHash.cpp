@@ -18,9 +18,8 @@
 
 #include "CryptoHash.h"
 
-#include "crypto/Crypto.h"
-
 #include <QScopedPointer>
+
 #include <botan/hash.h>
 #include <botan/mac.h>
 

@@ -18,18 +18,14 @@
 #include "Kdbx4Writer.h"
 
 #include <QBuffer>
-#include <QFile>
 
-#include "core/CustomData.h"
-#include "core/Database.h"
-#include "core/Metadata.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "format/KdbxXmlWriter.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/HmacBlockStream.h"
-#include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
+#include "streams/qtiocompressor.h"
 
 bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 {

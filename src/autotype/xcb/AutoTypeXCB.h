@@ -23,19 +23,11 @@
 #include <QApplication>
 #include <QSet>
 #include <QWidget>
-#include <QX11Info>
 #include <QtPlugin>
 
-#include "autotype/AutoTypeAction.h"
 #include "autotype/AutoTypePlatformPlugin.h"
-#include "core/Tools.h"
-#include "gui/osutils/OSUtils.h"
-#include "gui/osutils/nixutils/X11Funcs.h"
 
 #include <X11/XKBlib.h>
-#include <X11/Xutil.h>
-#include <X11/extensions/XTest.h>
-#include <xcb/xcb.h>
 
 #define N_MOD_INDICES (Mod5MapIndex + 1)
 

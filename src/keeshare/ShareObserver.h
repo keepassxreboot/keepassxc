@@ -20,8 +20,6 @@
 
 #include <QMap>
 #include <QObject>
-#include <QSharedPointer>
-#include <QStringList>
 
 #include "gui/MessageWidget.h"
 #include "keeshare/KeeShareSettings.h"

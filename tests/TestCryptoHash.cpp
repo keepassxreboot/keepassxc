@@ -16,10 +16,11 @@
  */
 
 #include "TestCryptoHash.h"
-#include "TestGlobal.h"
 
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestCryptoHash)
 

@@ -20,8 +20,6 @@
 #define KEEPASSXC_BINARYSTREAM_H
 
 #include <QBuffer>
-#include <QIODevice>
-#include <QObject>
 
 class BinaryStream : QObject
 {

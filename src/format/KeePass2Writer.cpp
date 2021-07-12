@@ -16,12 +16,8 @@
  */
 
 #include <QFile>
-#include <QIODevice>
 
-#include "core/Database.h"
 #include "core/Group.h"
-#include "core/Metadata.h"
-#include "crypto/kdf/AesKdf.h"
 #include "format/Kdbx3Writer.h"
 #include "format/Kdbx4Writer.h"
 #include "format/KeePass2Writer.h"

@@ -19,10 +19,8 @@
 #ifndef QTOTP_H
 #define QTOTP_H
 
-#include <QMap>
+#include <QMetaType>
 #include <QString>
-#include <QtCore/QSharedPointer>
-#include <QtCore/qglobal.h>
 
 class QUrl;
 

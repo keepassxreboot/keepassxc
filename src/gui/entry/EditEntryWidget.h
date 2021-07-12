@@ -21,10 +21,7 @@
 
 #include <QButtonGroup>
 #include <QCompleter>
-#include <QModelIndex>
 #include <QPointer>
-#include <QScopedPointer>
-#include <QScrollArea>
 #include <QTimer>
 
 #include "config-keepassx.h"
@@ -42,6 +39,7 @@ class EntryAttributesModel;
 class EntryHistoryModel;
 class QButtonGroup;
 class QMenu;
+class QScrollArea;
 class QSortFilterProxyModel;
 class QStringListModel;
 #ifdef WITH_XC_SSHAGENT

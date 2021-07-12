@@ -22,16 +22,7 @@
 #include "DBusMgr.h"
 #include "DBusTypes.h"
 
-#include <QDBusAbstractAdaptor>
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
-#include <QDBusContext>
-#include <QDBusObjectPath>
-#include <QDebug>
-#include <QList>
-#include <QMetaProperty>
-#include <QObject>
-#include <QSharedPointer>
+#include <QDBusError>
 
 #ifndef Q_MOC_RUN
 // define the tag text as empty, so the compiler doesn't see it

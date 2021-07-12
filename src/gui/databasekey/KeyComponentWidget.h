@@ -19,7 +19,6 @@
 #define KEEPASSXC_KEYCOMPONENTWIDGET_H
 
 #include <QPointer>
-#include <QScopedPointer>
 #include <QWidget>
 
 namespace Ui

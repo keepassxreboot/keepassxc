@@ -20,6 +20,9 @@
 
 #include "core/Global.h"
 
+#include <QRegularExpression>
+#include <QUuid>
+
 const QString EntryAttributes::TitleKey = "Title";
 const QString EntryAttributes::UserNameKey = "UserName";
 const QString EntryAttributes::PasswordKey = "Password";

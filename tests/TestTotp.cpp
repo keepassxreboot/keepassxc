@@ -17,10 +17,12 @@
  */
 
 #include "TestTotp.h"
-#include "TestGlobal.h"
 
+#include "core/Entry.h"
 #include "crypto/Crypto.h"
 #include "totp/totp.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestTotp)
 

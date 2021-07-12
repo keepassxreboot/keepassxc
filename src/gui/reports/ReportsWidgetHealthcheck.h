@@ -19,9 +19,6 @@
 #define KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H
 
 #include "gui/entry/EntryModel.h"
-#include <QHash>
-#include <QIcon>
-#include <QPair>
 #include <QWidget>
 
 class Database;

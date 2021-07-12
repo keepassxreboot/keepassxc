@@ -17,8 +17,6 @@
 
 #include "DBusObject.h"
 
-#include <QFile>
-#include <QRegularExpression>
 #include <QUrl>
 
 namespace FdoSecrets

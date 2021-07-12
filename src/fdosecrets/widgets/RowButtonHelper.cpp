@@ -15,13 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "RowButtonHelper.h"
-
 #include <QAbstractItemView>
-#include <QItemEditorFactory>
 #include <QStyledItemDelegate>
 
-#include <utility>
+#include <functional>
 
 namespace
 {

@@ -16,13 +16,10 @@
  */
 
 #include "HibpDownloader.h"
-#include "core/Config.h"
-#include "core/Global.h"
 #include "core/NetworkManager.h"
 
 #include <QCryptographicHash>
-#include <QUrl>
-#include <QtNetwork>
+#include <QNetworkReply>
 
 namespace
 {

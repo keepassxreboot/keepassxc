@@ -16,12 +16,14 @@
  */
 
 #include "TestKeePass2RandomStream.h"
-#include "TestGlobal.h"
 
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
+#include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestKeePass2RandomStream)
 

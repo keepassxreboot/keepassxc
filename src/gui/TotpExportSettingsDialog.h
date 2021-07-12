@@ -19,11 +19,7 @@
 #define KEEPASSX_TotpExportSettingsDialog_H
 
 #include "core/Database.h"
-#include "core/Entry.h"
 #include "gui/DatabaseWidget.h"
-#include <QDialog>
-#include <QTimer>
-#include <QUrl>
 
 class QVBoxLayout;
 class SquareSvgWidget;

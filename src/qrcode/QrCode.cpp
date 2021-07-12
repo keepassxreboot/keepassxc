@@ -18,15 +18,10 @@
 #include "QrCode.h"
 #include "QrCode_p.h"
 
-#include <QBrush>
 #include <QByteArray>
-#include <QIODevice>
-#include <QImage>
 #include <QPainter>
-#include <QPen>
 #include <QString>
 #include <QSvgGenerator>
-#include <QVariant>
 
 QrCodePrivate::QrCodePrivate()
     : m_qrcode(nullptr)

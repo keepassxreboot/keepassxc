@@ -20,8 +20,6 @@
 #include "ReportsWidgetStatistics.h"
 #include "gui/Icons.h"
 
-#include <QApplication>
-
 QString ReportsPageStatistics::name()
 {
     return QObject::tr("Statistics");

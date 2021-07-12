@@ -17,12 +17,10 @@
 
 #include "HibpOffline.h"
 
-#include <QCryptographicHash>
-#include <QMultiHash>
-#include <QProcess>
-
-#include "core/Database.h"
 #include "core/Group.h"
+
+#include <QCryptographicHash>
+#include <QProcess>
 
 namespace HibpOffline
 {

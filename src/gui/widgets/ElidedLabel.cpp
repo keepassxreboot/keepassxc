@@ -17,8 +17,6 @@
 
 #include "ElidedLabel.h"
 
-#include <QResizeEvent>
-
 namespace
 {
     const QString htmlLinkTemplate("<a href=\"%1\">%2</a>");

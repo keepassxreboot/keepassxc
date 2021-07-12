@@ -19,8 +19,6 @@
 #ifndef KEEPASSX_PASSWORDGENERATOR_H
 #define KEEPASSX_PASSWORDGENERATOR_H
 
-#include <QFlags>
-#include <QString>
 #include <QVector>
 
 typedef QVector<QChar> PasswordGroup;

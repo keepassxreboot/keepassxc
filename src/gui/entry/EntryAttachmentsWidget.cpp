@@ -4,10 +4,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QDropEvent>
-#include <QFile>
-#include <QFileInfo>
 #include <QMimeData>
-#include <QProcessEnvironment>
 #include <QTemporaryFile>
 
 #include "EntryAttachmentsModel.h"

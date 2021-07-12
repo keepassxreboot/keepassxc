@@ -16,16 +16,11 @@
  */
 
 #include "BrowserHost.h"
-#include "BrowserSettings.h"
 #include "BrowserShared.h"
 
 #include <QJsonDocument>
 #include <QLocalServer>
 #include <QLocalSocket>
-#include <QMutexLocker>
-#include <QtNetwork>
-
-#include <iostream>
 
 #ifdef Q_OS_WIN
 #include <fcntl.h>
@@ -34,7 +29,6 @@
 #include <windows.h>
 #else
 #include <sys/socket.h>
-#include <sys/types.h>
 #endif
 
 BrowserHost::BrowserHost(QObject* parent)

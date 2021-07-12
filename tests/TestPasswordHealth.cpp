@@ -16,9 +16,10 @@
  */
 
 #include "TestPasswordHealth.h"
-#include "TestGlobal.h"
 
 #include "core/PasswordHealth.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestPasswordHealth)
 

@@ -24,7 +24,6 @@
 #include <QDialog>
 #include <QPointer>
 #include <QPushButton>
-#include <QScopedPointer>
 #include <QSet>
 
 #include "core/Global.h"

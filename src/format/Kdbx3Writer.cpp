@@ -20,15 +20,13 @@
 
 #include <QBuffer>
 
-#include "core/Database.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "format/KdbxXmlWriter.h"
-#include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/HashedBlockStream.h"
-#include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
+#include "streams/qtiocompressor.h"
 
 bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 {

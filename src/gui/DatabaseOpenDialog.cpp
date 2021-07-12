@@ -16,9 +16,11 @@
  */
 
 #include "DatabaseOpenDialog.h"
+
 #include "DatabaseOpenWidget.h"
 #include "DatabaseWidget.h"
-#include "core/Database.h"
+
+#include <QLayout>
 
 #ifdef Q_OS_WIN
 #include <QtPlatformHeaders/QWindowsWindowFunctions>

@@ -18,8 +18,6 @@
 #ifndef KEEPASSXC_REPORTSPAGESTATISTICS_H
 #define KEEPASSXC_REPORTSPAGESTATISTICS_H
 
-#include <QWidget>
-
 #include "ReportsDialog.h"
 
 class ReportsPageStatistics : public IReportsPage

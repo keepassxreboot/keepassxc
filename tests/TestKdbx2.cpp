@@ -16,9 +16,9 @@
  */
 
 #include "TestKdbx2.h"
-#include "TestGlobal.h"
 
 #include "config-keepassx-tests.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
@@ -26,6 +26,7 @@
 #include "keys/PasswordKey.h"
 
 #include <QBuffer>
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestKdbx2)
 

@@ -18,6 +18,7 @@
 #include "Kdbx4Reader.h"
 
 #include <QBuffer>
+#include <QJsonObject>
 
 #include "core/AsyncTask.h"
 #include "core/Endian.h"
@@ -26,8 +27,9 @@
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/HmacBlockStream.h"
-#include "streams/QtIOCompressor"
+#include "streams/StoreDataStream.h"
 #include "streams/SymmetricCipherStream.h"
+#include "streams/qtiocompressor.h"
 
 bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
                                    const QByteArray& headerData,

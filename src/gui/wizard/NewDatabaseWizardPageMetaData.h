@@ -20,9 +20,6 @@
 
 #include "NewDatabaseWizardPage.h"
 
-#include <QPointer>
-#include <QScopedPointer>
-
 class Database;
 
 class NewDatabaseWizardPageMetaData : public NewDatabaseWizardPage

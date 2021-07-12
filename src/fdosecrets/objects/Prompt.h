@@ -22,9 +22,6 @@
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
-#include <QHash>
-#include <QPointer>
-
 class QWindow;
 
 class DatabaseWidget;

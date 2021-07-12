@@ -17,21 +17,18 @@
 
 #include "Prompt.h"
 
-#include "fdosecrets/FdoSecretsPlugin.h"
-#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
 
-#include "core/Tools.h"
-#include "gui/DatabaseWidget.h"
+#include "core/Entry.h"
 #include "gui/MessageBox.h"
 
 #include <QThread>
+#include <QTimer>
 #include <QWindow>
-#include <utility>
 
 namespace FdoSecrets
 {

@@ -21,9 +21,6 @@
 #define KEEPASSXC_FDOSECRETS_DBUSTYPES_H
 
 #include <QDBusArgument>
-#include <QDBusObjectPath>
-#include <QMap>
-#include <QString>
 
 namespace FdoSecrets
 {

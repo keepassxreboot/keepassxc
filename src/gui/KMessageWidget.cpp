@@ -24,16 +24,13 @@
 #include "gui/Icons.h"
 
 #include <QAction>
+#include <QBoxLayout>
 #include <QEvent>
-#include <QGridLayout>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QPainter>
-#include <QShowEvent>
+#include <QStyle>
 #include <QTimeLine>
 #include <QToolButton>
-#include <QStyle>
-#include <QtGui/QBitmap>
 
 //---------------------------------------------------------------------
 // KMessageWidgetPrivate

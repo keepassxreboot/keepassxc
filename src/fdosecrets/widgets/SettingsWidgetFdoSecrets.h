@@ -20,9 +20,7 @@
 
 #include "gui/MessageWidget.h"
 
-#include <QScopedPointer>
 #include <QTimer>
-#include <QWidget>
 
 class QAbstractItemView;
 

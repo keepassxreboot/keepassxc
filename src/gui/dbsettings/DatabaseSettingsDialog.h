@@ -22,8 +22,6 @@
 #include "gui/DialogyWidget.h"
 
 #include <QPointer>
-#include <QScopedPointer>
-#include <QSharedPointer>
 
 class Database;
 class DatabaseSettingsWidgetGeneral;

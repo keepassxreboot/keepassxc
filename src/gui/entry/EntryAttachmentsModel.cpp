@@ -17,10 +17,8 @@
 
 #include "EntryAttachmentsModel.h"
 
-#include "core/Entry.h"
+#include "core/EntryAttachments.h"
 #include "core/Tools.h"
-
-#include <algorithm>
 
 EntryAttachmentsModel::EntryAttachmentsModel(QObject* parent)
     : QAbstractListModel(parent)

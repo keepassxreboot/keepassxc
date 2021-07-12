@@ -16,14 +16,12 @@
  */
 
 #include "Metadata.h"
-#include <QApplication>
-#include <QtCore/QCryptographicHash>
 
-#include "core/Clock.h"
 #include "core/DatabaseIcons.h"
-#include "core/Entry.h"
 #include "core/Group.h"
-#include "core/Tools.h"
+
+#include <QApplication>
+#include <QCryptographicHash>
 
 const int Metadata::DefaultHistoryMaxItems = 10;
 const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;

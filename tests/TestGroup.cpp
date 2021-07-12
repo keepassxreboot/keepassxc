@@ -17,12 +17,13 @@
  */
 
 #include "TestGroup.h"
-#include "TestGlobal.h"
 #include "mock/MockClock.h"
 
-#include <QScopedPointer>
+#include <QSet>
 #include <QSignalSpy>
+#include <QtTestGui>
 
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 

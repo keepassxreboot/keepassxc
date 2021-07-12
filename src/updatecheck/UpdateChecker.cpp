@@ -25,6 +25,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QNetworkReply>
 #include <QRegularExpression>
 
 const QString UpdateChecker::ErrorVersion("error");

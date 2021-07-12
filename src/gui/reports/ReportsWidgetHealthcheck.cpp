@@ -19,8 +19,6 @@
 #include "ui_ReportsWidgetHealthcheck.h"
 
 #include "core/AsyncTask.h"
-#include "core/Database.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
@@ -29,7 +27,6 @@
 #include "gui/styles/StateColorPalette.h"
 
 #include <QMenu>
-#include <QSharedPointer>
 #include <QShortcut>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>

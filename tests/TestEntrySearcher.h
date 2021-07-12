@@ -20,8 +20,8 @@
 
 #include <QObject>
 
+#include "core/Entry.h"
 #include "core/EntrySearcher.h"
-#include "core/Group.h"
 
 class TestEntrySearcher : public QObject
 {

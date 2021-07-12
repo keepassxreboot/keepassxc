@@ -19,10 +19,8 @@
 #ifndef KEEPASSX_MESSAGEBOX_H
 #define KEEPASSX_MESSAGEBOX_H
 
-#include <QHash>
 #include <QMap>
 #include <QMessageBox>
-#include <QPushButton>
 
 class MessageBox
 {

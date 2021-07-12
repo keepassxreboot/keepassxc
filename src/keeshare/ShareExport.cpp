@@ -27,7 +27,7 @@
 #include <QTextStream>
 
 #if defined(WITH_XC_KEESHARE_SECURE)
-#include <quazip.h>
+#include <botan/pk_keys.h>
 #include <quazipfile.h>
 #endif
 

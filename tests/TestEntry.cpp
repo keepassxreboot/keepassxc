@@ -16,12 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QScopedPointer>
+#include <QTest>
 
 #include "TestEntry.h"
-#include "TestGlobal.h"
 #include "core/Clock.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/TimeInfo.h"
 #include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestEntry)

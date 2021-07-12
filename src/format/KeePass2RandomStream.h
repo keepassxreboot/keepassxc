@@ -18,9 +18,6 @@
 #ifndef KEEPASSX_KEEPASS2RANDOMSTREAM_H
 #define KEEPASSX_KEEPASS2RANDOMSTREAM_H
 
-#include <QByteArray>
-
-#include "KeePass2.h"
 #include "crypto/SymmetricCipher.h"
 
 class KeePass2RandomStream

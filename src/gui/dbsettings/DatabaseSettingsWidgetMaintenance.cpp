@@ -18,10 +18,6 @@
 #include "DatabaseSettingsWidgetMaintenance.h"
 #include "ui_DatabaseSettingsWidgetMaintenance.h"
 
-#include <QProgressDialog>
-
-#include "core/Database.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/IconModels.h"

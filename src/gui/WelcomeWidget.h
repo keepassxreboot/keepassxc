@@ -20,7 +20,6 @@
 #define KEEPASSX_WELCOMEWIDGET_H
 
 #include <QListWidgetItem>
-#include <QWidget>
 
 namespace Ui
 {

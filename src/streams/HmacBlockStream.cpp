@@ -17,8 +17,6 @@
 
 #include "HmacBlockStream.h"
 
-#include <utility>
-
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 

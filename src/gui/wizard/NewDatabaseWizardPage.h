@@ -19,7 +19,6 @@
 #define KEEPASSXC_NEWDATABASEWIZARDPAGE_H
 
 #include <QPointer>
-#include <QScopedPointer>
 #include <QWizardPage>
 
 class Database;

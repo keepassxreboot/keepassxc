@@ -20,7 +20,6 @@
 #define KEEPASSX_TESTGROUP_H
 
 #include "core/Database.h"
-#include <QObject>
 
 class TestGroup : public QObject
 {

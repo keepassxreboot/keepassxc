@@ -18,12 +18,10 @@
 
 #include <QCommandLineParser>
 #include <QFile>
-#include <QTextStream>
 #include <QWindow>
 
 #include "cli/Utils.h"
 #include "config-keepassx.h"
-#include "core/Config.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"

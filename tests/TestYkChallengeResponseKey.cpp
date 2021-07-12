@@ -18,15 +18,14 @@
  */
 
 #include "TestYkChallengeResponseKey.h"
-#include "TestGlobal.h"
 
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "keys/ChallengeResponseKey.h"
 
 #include <QCryptographicHash>
-#include <QScopedPointer>
 #include <QSignalSpy>
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestYubiKeyChallengeResponse)
 

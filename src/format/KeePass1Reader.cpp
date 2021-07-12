@@ -18,20 +18,15 @@
 #include "KeePass1Reader.h"
 
 #include <QFile>
-#include <QImage>
 #include <QTextCodec>
 
-#include "core/Database.h"
 #include "core/Endian.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
-#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass1.h"
 #include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 #include "streams/SymmetricCipherStream.h"
 
 class KeePass1Key : public CompositeKey

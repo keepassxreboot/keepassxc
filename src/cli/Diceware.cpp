@@ -20,6 +20,8 @@
 #include "Utils.h"
 #include "core/PassphraseGenerator.h"
 
+#include <QCommandLineParser>
+
 const QCommandLineOption Diceware::WordCountOption =
     QCommandLineOption(QStringList() << "W"
                                      << "words",

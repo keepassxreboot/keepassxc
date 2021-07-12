@@ -16,12 +16,10 @@
  */
 
 #include "BrowserShared.h"
+
 #include "config-keepassx.h"
 
-#include <QCoreApplication>
-#include <QProcessEnvironment>
 #include <QStandardPaths>
-#include <QVariant>
 
 namespace BrowserShared
 {

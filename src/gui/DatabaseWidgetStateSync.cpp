@@ -19,7 +19,6 @@
 
 #include "DatabaseWidgetStateSync.h"
 
-#include "core/Config.h"
 #include <QCoreApplication>
 
 DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_SquareSvgWidget_H
 #define KEEPASSX_SquareSvgWidget_H
 
-#include <QtSvg/QSvgWidget>
+#include <QSvgWidget>
 
 class SquareSvgWidget : public QSvgWidget
 {

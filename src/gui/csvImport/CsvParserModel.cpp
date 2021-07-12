@@ -18,7 +18,7 @@
 
 #include "CsvParserModel.h"
 
-#include <utility>
+#include <QFile>
 
 CsvParserModel::CsvParserModel(QObject* parent)
     : QAbstractTableModel(parent)

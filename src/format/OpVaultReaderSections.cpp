@@ -15,21 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "OpData01.h"
 #include "OpVaultReader.h"
 
-#include "core/Group.h"
-#include "core/Tools.h"
-#include "crypto/CryptoHash.h"
-#include "crypto/SymmetricCipher.h"
+#include "core/Entry.h"
 #include "totp/totp.h"
 
 #include <QDebug>
 #include <QJsonArray>
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QUrlQuery>
-#include <QUuid>
 
 namespace
 {

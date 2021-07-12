@@ -20,13 +20,10 @@
 #include "ui_PasswordGeneratorWidget.h"
 
 #include <QDir>
-#include <QKeyEvent>
-#include <QLineEdit>
 #include <QShortcut>
 #include <QTimer>
 
 #include "core/Config.h"
-#include "core/PasswordGenerator.h"
 #include "core/PasswordHealth.h"
 #include "core/Resources.h"
 #include "gui/Clipboard.h"

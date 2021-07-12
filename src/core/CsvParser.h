@@ -20,9 +20,9 @@
 #define KEEPASSX_CSVPARSER_H
 
 #include <QBuffer>
-#include <QFile>
-#include <QQueue>
 #include <QTextStream>
+
+class QFile;
 
 typedef QStringList CsvRow;
 typedef QList<CsvRow> CsvTable;

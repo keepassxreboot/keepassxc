@@ -19,16 +19,8 @@
 #define KEEPASSX_KEEPASS2READER_H
 
 #include "KdbxReader.h"
-#include "core/Database.h"
-#include "format/KeePass2.h"
-#include "keys/CompositeKey.h"
 
-#include <QByteArray>
-#include <QCoreApplication>
-#include <QIODevice>
-#include <QScopedPointer>
-#include <QString>
-#include <QtGlobal>
+class CompositeKey;
 
 class KeePass2Reader
 {

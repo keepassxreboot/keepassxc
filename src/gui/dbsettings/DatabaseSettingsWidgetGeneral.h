@@ -20,9 +20,6 @@
 
 #include "DatabaseSettingsWidget.h"
 
-#include <QPointer>
-#include <QScopedPointer>
-
 class Database;
 namespace Ui
 {

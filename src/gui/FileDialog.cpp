@@ -19,8 +19,6 @@
 
 #include "core/Config.h"
 
-#include <QDir>
-
 FileDialog* FileDialog::m_instance(nullptr);
 
 QString FileDialog::getOpenFileName(QWidget* parent,

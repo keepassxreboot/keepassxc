@@ -22,12 +22,6 @@
 #include "gui/MainWindow.h"
 #include "util/TemporaryFile.h"
 
-#include <QAbstractItemModel>
-#include <QObject>
-#include <QPointer>
-#include <QScopedPointer>
-#include <QSharedPointer>
-
 class Database;
 class DatabaseTabWidget;
 class DatabaseWidget;

@@ -20,28 +20,18 @@
 #include "Tools.h"
 
 #include "config-keepassx.h"
-#include "core/Config.h"
-#include "core/Translator.h"
-
 #include "git-info.h"
-#include <QCoreApplication>
+
 #include <QElapsedTimer>
-#include <QIODevice>
 #include <QImageReader>
 #include <QLocale>
 #include <QRegularExpression>
 #include <QStringList>
-#include <QSysInfo>
 #include <QUrl>
 #include <QUuid>
-#include <cctype>
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep()
-#endif
-
-#ifdef Q_OS_UNIX
-#include <time.h> // for nanosleep()
 #endif
 
 namespace Tools

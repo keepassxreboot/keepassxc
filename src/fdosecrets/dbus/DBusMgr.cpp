@@ -17,8 +17,6 @@
 
 #include "DBusMgr.h"
 
-#include "fdosecrets/dbus/DBusConstants.h"
-#include "fdosecrets/dbus/DBusTypes.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
@@ -27,10 +25,6 @@
 
 #include "core/Entry.h"
 #include "core/Tools.h"
-
-#include <QCoreApplication>
-#include <QFileInfo>
-#include <QThread>
 
 namespace FdoSecrets
 {

@@ -20,15 +20,10 @@
 #define KEEPASSX_GROUP_H
 
 #include <QImage>
-#include <QPixmap>
-#include <QPointer>
 
 #include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Entry.h"
-#include "core/Global.h"
-#include "core/ModifiableObject.h"
-#include "core/TimeInfo.h"
 
 class Group : public ModifiableObject
 {

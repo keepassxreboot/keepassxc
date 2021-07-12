@@ -19,8 +19,6 @@
 
 #include "core/Config.h"
 #include "core/Global.h"
-#include "core/Resources.h"
-#include "gui/MainWindow.h"
 
 #include <QDir>
 #include <QImageReader>

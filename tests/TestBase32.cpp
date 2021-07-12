@@ -16,8 +16,9 @@
  */
 
 #include "TestBase32.h"
-#include "TestGlobal.h"
 #include "core/Base32.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestBase32)
 

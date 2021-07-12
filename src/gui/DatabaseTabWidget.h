@@ -21,7 +21,6 @@
 #include "DatabaseOpenDialog.h"
 #include "gui/MessageWidget.h"
 
-#include <QPointer>
 #include <QTabWidget>
 
 class Database;

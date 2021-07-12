@@ -19,13 +19,12 @@
 #include "ui_ReportsWidgetStatistics.h"
 
 #include "core/AsyncTask.h"
-#include "core/Database.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
 #include "gui/Icons.h"
 
+#include <QFileInfo>
 #include <QStandardItemModel>
 
 namespace

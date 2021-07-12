@@ -17,14 +17,10 @@
 
 #include "GroupModel.h"
 
-#include <QFont>
 #include <QMimeData>
 
-#include "core/Database.h"
-#include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 #include "keeshare/KeeShare.h"
 
 GroupModel::GroupModel(Database* db, QObject* parent)

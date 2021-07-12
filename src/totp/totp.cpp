@@ -17,16 +17,16 @@
  */
 
 #include "totp.h"
+
 #include "core/Base32.h"
 #include "core/Clock.h"
 
-#include <QCryptographicHash>
 #include <QMessageAuthenticationCode>
-#include <QRegularExpression>
-#include <QUrl>
+#include <QSharedPointer>
 #include <QUrlQuery>
 #include <QVariant>
 #include <QtEndian>
+
 #include <cmath>
 
 static QList<Totp::Encoder> totpEncoders{

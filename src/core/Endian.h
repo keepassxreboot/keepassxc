@@ -19,9 +19,7 @@
 #ifndef KEEPASSX_ENDIAN_H
 #define KEEPASSX_ENDIAN_H
 
-#include <QByteArray>
 #include <QIODevice>
-#include <QSysInfo>
 #include <QtEndian>
 
 namespace Endian

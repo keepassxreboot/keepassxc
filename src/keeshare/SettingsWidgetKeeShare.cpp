@@ -18,13 +18,10 @@
 #include "SettingsWidgetKeeShare.h"
 #include "ui_SettingsWidgetKeeShare.h"
 
-#include "core/Config.h"
-#include "core/Group.h"
-#include "core/Metadata.h"
+#include "config-keepassx.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "keeshare/KeeShare.h"
-#include "keeshare/KeeShareSettings.h"
 
 #include <QStandardItemModel>
 #include <QStandardPaths>

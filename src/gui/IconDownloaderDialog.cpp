@@ -18,20 +18,15 @@
 #include "IconDownloaderDialog.h"
 #include "ui_IconDownloaderDialog.h"
 
-#include "core/AsyncTask.h"
 #include "core/Config.h"
+#include "core/Database.h"
 #include "core/Entry.h"
-#include "core/Global.h"
-#include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/IconDownloader.h"
-#include "gui/IconModels.h"
-#ifdef Q_OS_MACOS
-#include "gui/osutils/macutils/MacUtils.h"
-#endif
+#include "osutils/OSUtils.h"
 
-#include <QMutexLocker>
+#include <QStandardItemModel>
 
 IconDownloaderDialog::IconDownloaderDialog(QWidget* parent)
     : QDialog(parent)

@@ -20,17 +20,11 @@
 
 #include "fdosecrets/dbus/DBusClient.h"
 
-#include <QByteArray>
 #include <QDBusConnection>
-#include <QDBusObjectPath>
 #include <QDBusServiceWatcher>
 #include <QDBusVirtualObject>
 #include <QDebug>
-#include <QHash>
-#include <QPointer>
-#include <QVector>
-
-#include <utility>
+#include <QtDBus>
 
 class TestFdoSecrets;
 

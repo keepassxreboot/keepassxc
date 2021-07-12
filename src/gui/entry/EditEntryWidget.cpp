@@ -24,29 +24,22 @@
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetSSHAgent.h"
 
-#include <QButtonGroup>
 #include <QColorDialog>
 #include <QDesktopServices>
-#include <QEvent>
-#include <QMenu>
-#include <QMimeData>
+#include <QFileDialog>
 #include <QSortFilterProxyModel>
-#include <QStackedLayout>
-#include <QStandardPaths>
 #include <QStringListModel>
-#include <QTemporaryFile>
 
 #include "autotype/AutoType.h"
+#include "core/AutoTypeAssociations.h"
 #include "core/Clock.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/EntryAttributes.h"
 #include "core/Metadata.h"
-#include "core/PasswordHealth.h"
 #include "core/TimeDelta.h"
-#include "core/Tools.h"
 #ifdef WITH_XC_SSHAGENT
-#include "sshagent/KeeAgentSettings.h"
 #include "sshagent/OpenSSHKey.h"
 #include "sshagent/SSHAgent.h"
 #endif
@@ -57,12 +50,10 @@
 #include "gui/Clipboard.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
-#include "gui/FileDialog.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
-#include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
 #include "gui/entry/EntryHistoryModel.h"
 

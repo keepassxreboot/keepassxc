@@ -16,7 +16,6 @@
  */
 
 #include "TestMerge.h"
-#include "TestGlobal.h"
 #include "mock/MockClock.h"
 
 #include "core/Merger.h"
@@ -24,6 +23,7 @@
 #include "crypto/Crypto.h"
 
 #include <QSignalSpy>
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestMerge)
 
