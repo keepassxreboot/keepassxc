@@ -36,7 +36,6 @@ set(keepassx_SOURCES
         core/Base32.cpp
         core/Bootstrap.cpp
         core/Clock.cpp
-        core/Compare.cpp
         core/Config.cpp
         core/CsvParser.cpp
         core/CustomData.cpp
