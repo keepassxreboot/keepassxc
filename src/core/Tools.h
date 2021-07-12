@@ -72,6 +72,8 @@ namespace Tools
 
         return version;
     }
+
+    QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties = {"objectName"});
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H
