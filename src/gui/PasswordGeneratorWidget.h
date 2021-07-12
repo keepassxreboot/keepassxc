@@ -20,8 +20,6 @@
 #define KEEPASSX_PASSWORDGENERATORWIDGET_H
 
 #include <QComboBox>
-#include <QLabel>
-#include <QWidget>
 
 #include "core/PassphraseGenerator.h"
 #include "core/PasswordGenerator.h"

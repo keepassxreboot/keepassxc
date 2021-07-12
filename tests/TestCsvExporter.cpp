@@ -17,10 +17,11 @@
  */
 
 #include "TestCsvExporter.h"
-#include "TestGlobal.h"
 
 #include <QBuffer>
+#include <QTest>
 
+#include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "format/CsvExporter.h"
 #include "totp/totp.h"

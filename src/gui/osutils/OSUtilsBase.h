@@ -19,7 +19,6 @@
 #define KEEPASSXC_OSUTILSBASE_H
 
 #include <QObject>
-#include <QPointer>
 
 class QWindow;
 

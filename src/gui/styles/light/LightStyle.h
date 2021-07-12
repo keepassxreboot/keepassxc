@@ -19,7 +19,6 @@
 #define KEEPASSXC_LIGHTSTYLE_H
 
 #include "gui/styles/base/BaseStyle.h"
-#include <QApplication>
 
 class LightStyle : public BaseStyle
 {

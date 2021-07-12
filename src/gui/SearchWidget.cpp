@@ -21,10 +21,9 @@
 
 #include <QKeyEvent>
 #include <QMenu>
-#include <QShortcut>
 #include <QToolButton>
 
-#include "core/Config.h"
+#include "core/SignalMultiplexer.h"
 #include "gui/Icons.h"
 #include "gui/widgets/PopupHelpWidget.h"
 

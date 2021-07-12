@@ -20,14 +20,12 @@
 #include "ui_EditWidgetIcons.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
 
 #include "core/Config.h"
-#include "core/Group.h"
+#include "core/Database.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/IconModels.h"
-#include "gui/MessageBox.h"
 #ifdef WITH_XC_NETWORKING
 #include "gui/IconDownloader.h"
 #endif

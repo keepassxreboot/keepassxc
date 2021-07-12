@@ -20,12 +20,7 @@
 #define KEEPASSX_TOTPDIALOG_H
 
 #include "core/Database.h"
-#include "core/Entry.h"
 #include "gui/DatabaseWidget.h"
-#include <QDialog>
-#include <QScopedPointer>
-#include <QTimer>
-#include <totp/totp.h>
 
 namespace Ui
 {

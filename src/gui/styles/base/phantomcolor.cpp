@@ -27,8 +27,8 @@
  */
 
 #include "phantomcolor.h"
-#include <cfloat>
 #include <cmath>
+#include <float.h>
 
 namespace Phantom
 {

@@ -19,10 +19,7 @@
 #define KEEPASSX_CLONEDIALOG_H
 
 #include "core/Database.h"
-#include "core/Entry.h"
 #include "gui/DatabaseWidget.h"
-#include <QDialog>
-#include <QScopedPointer>
 
 namespace Ui
 {

@@ -19,8 +19,6 @@
 #define KEEPASSXC_PICKCHARSDIALOG_H
 
 #include <QDialog>
-#include <QPointer>
-#include <QString>
 
 namespace Ui
 {

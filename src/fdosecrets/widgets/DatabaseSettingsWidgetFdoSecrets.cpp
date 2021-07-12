@@ -20,7 +20,6 @@
 
 #include "fdosecrets/FdoSecretsSettings.h"
 
-#include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/group/GroupModel.h"

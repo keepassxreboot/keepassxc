@@ -18,36 +18,21 @@
 
 #include "DatabaseWidget.h"
 
-#include <QAction>
 #include <QApplication>
+#include <QBoxLayout>
 #include <QCheckBox>
 #include <QDesktopServices>
-#include <QFile>
-#include <QHBoxLayout>
-#include <QHeaderView>
 #include <QHostInfo>
 #include <QKeyEvent>
-#include <QLabel>
-#include <QLineEdit>
 #include <QProcess>
 #include <QSplitter>
 #include <QTextEdit>
 
 #include "autotype/AutoType.h"
-#include "core/Config.h"
-#include "core/Database.h"
 #include "core/EntrySearcher.h"
-#include "core/FileWatcher.h"
-#include "core/Group.h"
 #include "core/Merger.h"
-#include "core/Metadata.h"
-#include "core/Resources.h"
-#include "core/Tools.h"
-#include "format/KeePass2Reader.h"
 #include "gui/Clipboard.h"
 #include "gui/CloneDialog.h"
-#include "gui/DatabaseOpenDialog.h"
-#include "gui/DatabaseOpenWidget.h"
 #include "gui/EntryPreviewWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/GuiTools.h"
@@ -59,20 +44,14 @@
 #include "gui/TotpExportSettingsDialog.h"
 #include "gui/TotpSetupDialog.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
-#include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
 #include "gui/reports/ReportsDialog.h"
 #include "keeshare/KeeShare.h"
-#include "touchid/TouchID.h"
 
 #ifdef WITH_XC_NETWORKING
 #include "gui/IconDownloaderDialog.h"
-#endif
-
-#ifdef Q_OS_LINUX
-#include <sys/vfs.h>
 #endif
 
 #ifdef WITH_XC_SSHAGENT

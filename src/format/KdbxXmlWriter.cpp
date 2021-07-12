@@ -23,7 +23,7 @@
 #include "core/Endian.h"
 #include "core/Metadata.h"
 #include "format/KeePass2RandomStream.h"
-#include "streams/QtIOCompressor"
+#include "streams/qtiocompressor.h"
 
 /**
  * @param version KDBX version

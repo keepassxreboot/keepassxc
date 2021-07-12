@@ -19,7 +19,6 @@
 #define KEEPASSXC_TESTSHARING_H
 
 #include <QObject>
-#include <QSharedPointer>
 
 namespace Botan
 {

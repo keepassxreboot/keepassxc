@@ -19,13 +19,10 @@
 #include "DatabaseSettingsWidgetKeeShare.h"
 #include "ui_DatabaseSettingsWidgetKeeShare.h"
 
-#include "core/Database.h"
 #include "core/Group.h"
-#include "core/Metadata.h"
 #include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"
 
-#include <QMessageBox>
 #include <QStandardItemModel>
 
 DatabaseSettingsWidgetKeeShare::DatabaseSettingsWidgetKeeShare(QWidget* parent)

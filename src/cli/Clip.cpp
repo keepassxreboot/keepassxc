@@ -18,9 +18,10 @@
 #include "Clip.h"
 
 #include "Utils.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Tools.h"
+
+#include <QCommandLineParser>
 
 #define CLI_DEFAULT_CLIP_TIMEOUT 10
 

@@ -18,11 +18,6 @@
 #include "DatabaseSettingsWidget.h"
 #include "core/Database.h"
 
-#include <utility>
-
-#include <QTimer>
-#include <QWidget>
-
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : SettingsWidget(parent)
 {

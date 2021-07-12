@@ -17,16 +17,14 @@
  */
 
 #include "TestSignature.h"
-#include "TestGlobal.h"
 
-#include <QBuffer>
+#include <QTest>
 
 #include "crypto/Crypto.h"
 #include "crypto/Random.h"
 #include "keeshare/Signature.h"
 
 #include <botan/pem.h>
-#include <botan/pkcs8.h>
 #include <botan/rsa.h>
 
 QTEST_GUILESS_MAIN(TestSignature)

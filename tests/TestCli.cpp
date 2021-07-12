@@ -20,7 +20,6 @@
 #include "config-keepassx-tests.h"
 #include "core/Bootstrap.h"
 #include "core/Config.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -53,6 +52,7 @@
 
 #include <QClipboard>
 #include <QSignalSpy>
+#include <QTest>
 #include <QtConcurrent>
 
 QTEST_MAIN(TestCli)

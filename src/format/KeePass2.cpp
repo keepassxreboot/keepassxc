@@ -19,7 +19,6 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"
 #include "crypto/kdf/Argon2Kdf.h"
-#include <QSharedPointer>
 
 #define UUID_LENGTH 16
 

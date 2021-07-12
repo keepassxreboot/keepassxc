@@ -19,7 +19,6 @@
 #define KEEPASSX_DIALOGYWIDGET_H
 
 #include <QDialogButtonBox>
-#include <QWidget>
 
 class DialogyWidget : public QWidget
 {

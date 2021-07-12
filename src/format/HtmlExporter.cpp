@@ -20,8 +20,6 @@
 #include <QBuffer>
 #include <QFile>
 
-#include "core/Database.h"
-#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 

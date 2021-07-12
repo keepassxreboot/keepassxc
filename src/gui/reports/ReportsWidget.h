@@ -20,8 +20,6 @@
 
 #include "gui/settings/SettingsWidget.h"
 
-#include <QSharedPointer>
-
 class Database;
 
 /**

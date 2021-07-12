@@ -16,18 +16,18 @@
  */
 
 #include "TestKeePass2Format.h"
-#include "TestGlobal.h"
 #include "mock/MockClock.h"
 
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
-#include "format/KdbxXmlReader.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "mock/MockChallengeResponseKey.h"
 
 #include "FailDevice.h"
 #include "config-keepassx-tests.h"
+#include <QtTest>
 
 void TestKeePass2Format::initTestCase()
 {

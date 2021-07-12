@@ -20,7 +20,7 @@
 
 #include "Command.h"
 
-#include "core/PasswordGenerator.h"
+class PasswordGenerator;
 
 class Generate : public Command
 {

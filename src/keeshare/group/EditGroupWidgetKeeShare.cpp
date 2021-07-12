@@ -18,11 +18,8 @@
 #include "EditGroupWidgetKeeShare.h"
 #include "ui_EditGroupWidgetKeeShare.h"
 
-#include "core/Config.h"
-#include "core/CustomData.h"
+#include "KeeShareSettings.h"
 #include "core/Group.h"
-#include "core/Metadata.h"
-#include "core/Resources.h"
 #include "gui/FileDialog.h"
 #include "keeshare/KeeShare.h"
 

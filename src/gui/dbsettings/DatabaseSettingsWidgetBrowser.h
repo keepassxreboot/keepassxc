@@ -21,16 +21,13 @@
 
 #include "DatabaseSettingsWidget.h"
 
-#include "browser/BrowserService.h"
-#include "core/CustomData.h"
-#include "gui/DatabaseTabWidget.h"
-
 #include <QItemSelection>
 #include <QPointer>
-#include <QScopedPointer>
 #include <QStandardItemModel>
 
+class CustomData;
 class Database;
+
 namespace Ui
 {
     class DatabaseSettingsWidgetBrowser;

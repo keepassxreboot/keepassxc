@@ -18,7 +18,9 @@
 #ifndef KEEPASSXC_FDOSECRETS_SESSIONCIPHER_H
 #define KEEPASSXC_FDOSECRETS_SESSIONCIPHER_H
 
-#include "fdosecrets/objects/Session.h"
+#include "fdosecrets/dbus/DBusTypes.h"
+
+#include <QSharedPointer>
 
 namespace Botan
 {

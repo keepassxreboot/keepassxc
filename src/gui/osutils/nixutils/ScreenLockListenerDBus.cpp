@@ -17,10 +17,7 @@
 
 #include "ScreenLockListenerDBus.h"
 
-#include <QDBusConnection>
 #include <QDBusInterface>
-#include <QDBusMessage>
-#include <QDBusReply>
 #include <QDebug>
 #include <QProcessEnvironment>
 

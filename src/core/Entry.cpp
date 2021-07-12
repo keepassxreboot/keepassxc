@@ -15,10 +15,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include "Entry.h"
 
 #include "core/Config.h"
-#include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -28,7 +28,7 @@
 
 #include <QDir>
 #include <QRegularExpression>
-#include <utility>
+#include <QUrl>
 
 const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;

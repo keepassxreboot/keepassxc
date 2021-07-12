@@ -16,9 +16,7 @@
  */
 
 #include "TestRandomGenerator.h"
-#include "TestGlobal.h"
 
-#include "core/Endian.h"
 #include "core/Global.h"
 #include "crypto/Random.h"
 

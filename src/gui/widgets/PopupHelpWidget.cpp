@@ -17,7 +17,7 @@
 
 #include "PopupHelpWidget.h"
 
-#include <QEvent>
+#include <QApplication>
 
 #include "gui/MainWindow.h"
 

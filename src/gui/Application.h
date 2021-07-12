@@ -21,10 +21,9 @@
 #define KEEPASSX_APPLICATION_H
 
 #include <QApplication>
-#include <QtNetwork/QLocalServer>
+#include <QtNetwork/qlocalserver.h>
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
-#include <QScopedPointer>
 
 class OSEventFilter;
 #endif

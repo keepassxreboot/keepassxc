@@ -20,8 +20,6 @@
 #include "ReportsWidgetHealthcheck.h"
 #include "gui/Icons.h"
 
-#include <QApplication>
-
 ReportsPageHealthcheck::ReportsPageHealthcheck()
     : m_healthWidget(new ReportsWidgetHealthcheck())
 {

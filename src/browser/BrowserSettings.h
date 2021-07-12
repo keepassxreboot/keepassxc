@@ -20,7 +20,6 @@
 #ifndef BROWSERSETTINGS_H
 #define BROWSERSETTINGS_H
 
-#include "BrowserShared.h"
 #include "NativeMessageInstaller.h"
 #include "core/PassphraseGenerator.h"
 #include "core/PasswordGenerator.h"

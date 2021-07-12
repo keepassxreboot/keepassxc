@@ -17,19 +17,10 @@
  */
 
 #include "TestGui.h"
-#include "TestGlobal.h"
 #include "gui/Application.h"
 
-#include <QAction>
-#include <QApplication>
 #include <QCheckBox>
 #include <QClipboard>
-#include <QComboBox>
-#include <QDebug>
-#include <QDialogButtonBox>
-#include <QLabel>
-#include <QLineEdit>
-#include <QListWidgetItem>
 #include <QMimeData>
 #include <QPlainTextEdit>
 #include <QPushButton>
@@ -37,27 +28,15 @@
 #include <QSignalSpy>
 #include <QSpinBox>
 #include <QTest>
-#include <QTimer>
 #include <QToolBar>
-#include <QToolButton>
-#include <QTreeWidgetItem>
 
 #include "config-keepassx-tests.h"
-#include "core/Config.h"
-#include "core/Database.h"
-#include "core/Entry.h"
-#include "core/Group.h"
-#include "core/Metadata.h"
-#include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "crypto/kdf/AesKdf.h"
-#include "format/KeePass2Reader.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
 #include "gui/DatabaseTabWidget.h"
-#include "gui/DatabaseWidget.h"
 #include "gui/EntryPreviewWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
@@ -66,7 +45,6 @@
 #include "gui/SearchWidget.h"
 #include "gui/TotpDialog.h"
 #include "gui/TotpSetupDialog.h"
-#include "gui/databasekey/KeyComponentWidget.h"
 #include "gui/databasekey/KeyFileEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
@@ -77,7 +55,6 @@
 #include "gui/group/GroupView.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 #include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 
 #define TEST_MODAL_NO_WAIT(TEST_CODE)                                                                                  \
     bool dialogFinished = false;                                                                                       \

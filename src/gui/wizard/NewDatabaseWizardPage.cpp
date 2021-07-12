@@ -1,4 +1,3 @@
-#include <utility>
 
 /*
  *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
@@ -22,8 +21,6 @@
 
 #include "core/Database.h"
 #include "gui/dbsettings/DatabaseSettingsWidget.h"
-
-#include <QVBoxLayout>
 
 NewDatabaseWizardPage::NewDatabaseWizardPage(QWidget* parent)
     : QWizardPage(parent)

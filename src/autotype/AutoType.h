@@ -21,10 +21,7 @@
 
 #include <QMutex>
 #include <QObject>
-#include <QStringList>
 #include <QWidget>
-
-#include "autotype/AutoTypeMatch.h"
 
 class AutoTypeAction;
 class AutoTypeExecutor;

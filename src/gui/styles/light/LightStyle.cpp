@@ -16,14 +16,17 @@
  */
 
 #include "LightStyle.h"
-#include "gui/ApplicationSettingsWidget.h"
-#include "gui/osutils/OSUtils.h"
 
 #include <QDialog>
+#include <QFile>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QToolBar>
+
+#ifdef Q_OS_MACOS
+#include "gui/osutils/OSUtils.h"
+#endif
 
 LightStyle::LightStyle()
     : BaseStyle()

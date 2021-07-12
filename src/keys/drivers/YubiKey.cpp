@@ -16,15 +16,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-
 #include <ykcore.h>
 #include <ykdef.h>
 #include <ykpers-version.h>
 #include <ykstatus.h>
-#include <yubikey.h>
 
-#include "core/Global.h"
 #include "core/Tools.h"
 #include "crypto/Random.h"
 

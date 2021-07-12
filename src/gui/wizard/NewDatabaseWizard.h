@@ -19,7 +19,6 @@
 #define KEEPASSXC_NEWDATABASEWIZARD_H
 
 #include <QPointer>
-#include <QSharedPointer>
 #include <QWizard>
 
 class Database;

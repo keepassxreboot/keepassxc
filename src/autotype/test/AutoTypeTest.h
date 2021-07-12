@@ -20,7 +20,6 @@
 
 #include <QtPlugin>
 
-#include "autotype/AutoTypeAction.h"
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/test/AutoTypeTestInterface.h"
 

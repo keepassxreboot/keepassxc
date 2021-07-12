@@ -20,7 +20,6 @@
 #include "Utils.h"
 #include "core/Group.h"
 #include "core/HibpOffline.h"
-#include "core/Tools.h"
 
 #include <QCommandLineParser>
 #include <QFile>

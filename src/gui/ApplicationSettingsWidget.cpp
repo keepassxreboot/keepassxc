@@ -23,15 +23,15 @@
 #include "config-keepassx.h"
 
 #include "autotype/AutoType.h"
-#include "core/Config.h"
-#include "core/Global.h"
 #include "core/Translator.h"
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
 
 #include "MessageBox.h"
+#ifdef Q_OS_MACOS
 #include "touchid/TouchID.h"
+#endif
 
 class ApplicationSettingsWidget::ExtraPage
 {

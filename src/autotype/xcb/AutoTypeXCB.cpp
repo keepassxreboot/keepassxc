@@ -18,6 +18,13 @@
  */
 
 #include "AutoTypeXCB.h"
+#include "core/Tools.h"
+#include "gui/osutils/nixutils/X11Funcs.h"
+
+#include <QX11Info>
+#include <X11/XKBlib.h>
+#include <X11/Xutil.h>
+#include <X11/extensions/XTest.h>
 
 AutoTypePlatformX11::AutoTypePlatformX11()
 {

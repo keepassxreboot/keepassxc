@@ -20,16 +20,7 @@
 
 #include "fdosecrets/dbus/DBusTypes.h"
 
-#include <QByteArray>
-#include <QList>
-#include <QMap>
-#include <QObject>
-#include <QString>
-#include <QStringList>
-#include <QVariant>
 #include <QtDBus>
-
-#include <QDebug>
 
 /**
  * Mimic the interface of QDBusPendingReply so the same code can be used in test

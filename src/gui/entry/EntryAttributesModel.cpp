@@ -17,10 +17,7 @@
 
 #include "EntryAttributesModel.h"
 
-#include "core/Entry.h"
-#include "core/Tools.h"
-
-#include <algorithm>
+#include "core/EntryAttributes.h"
 
 EntryAttributesModel::EntryAttributesModel(QObject* parent)
     : QAbstractListModel(parent)

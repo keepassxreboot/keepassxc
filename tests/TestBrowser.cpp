@@ -17,12 +17,14 @@
 
 #include "TestBrowser.h"
 
-#include "TestGlobal.h"
 #include "browser/BrowserSettings.h"
+#include "core/Group.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 
-#include <QString>
+#include <QJsonObject>
+#include <QTest>
+
 #include <botan/sodium.h>
 
 using namespace Botan::Sodium;

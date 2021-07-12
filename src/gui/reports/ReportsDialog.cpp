@@ -25,9 +25,10 @@
 #include "ReportsWidgetHibp.h"
 
 #include "core/Global.h"
+#include "core/Group.h"
+#ifdef Q_OS_MACOS
 #include "touchid/TouchID.h"
-#include <core/Entry.h>
-#include <core/Group.h>
+#endif
 
 class ReportsDialog::ExtraPage
 {

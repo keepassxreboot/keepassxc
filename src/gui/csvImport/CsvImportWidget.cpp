@@ -19,14 +19,11 @@
 #include "CsvImportWidget.h"
 #include "ui_CsvImportWidget.h"
 
-#include <QFile>
-#include <QFileInfo>
-#include <QSpacerItem>
+#include <QStringListModel>
 
 #include "core/Clock.h"
 #include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
-#include "gui/MessageWidget.h"
 #include "totp/totp.h"
 
 // I wanted to make the CSV import GUI future-proof, so if one day you need a new field,

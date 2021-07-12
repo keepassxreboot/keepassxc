@@ -19,10 +19,7 @@
 #ifndef KEEPASSX_ICONS_H
 #define KEEPASSX_ICONS_H
 
-#include <QColor>
-#include <QHash>
 #include <QIcon>
-#include <QString>
 
 class Icons
 {

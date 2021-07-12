@@ -18,9 +18,7 @@
 #ifndef KEEPASSX_TRANSLATOR_H
 #define KEEPASSX_TRANSLATOR_H
 
-#include <QLocale>
-#include <QPair>
-#include <QString>
+#include <QMetaType>
 
 class Translator
 {

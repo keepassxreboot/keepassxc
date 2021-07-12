@@ -21,7 +21,6 @@
 #define KEEPASSX_GLOBAL_H
 
 #include <QString>
-#include <QtGlobal>
 
 #if defined(Q_OS_WIN)
 #if defined(KEEPASSX_BUILDING_CORE)

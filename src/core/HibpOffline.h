@@ -18,9 +18,9 @@
 #ifndef KEEPASSXC_HIBPOFFLINE_H
 #define KEEPASSXC_HIBPOFFLINE_H
 
-#include <QIODevice>
-#include <QList>
-#include <QPair>
+#include <QSharedPointer>
+
+class QIODevice;
 
 class Database;
 class Entry;

@@ -21,10 +21,6 @@
 #define BROWSERSERVICE_H
 
 #include "core/Entry.h"
-#include <QObject>
-#include <QPointer>
-#include <QSharedPointer>
-#include <QtCore>
 
 typedef QPair<QString, QString> StringPair;
 typedef QList<StringPair> StringPairList;

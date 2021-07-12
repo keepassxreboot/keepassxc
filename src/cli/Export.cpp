@@ -21,6 +21,8 @@
 #include "Utils.h"
 #include "format/CsvExporter.h"
 
+#include <QCommandLineParser>
+
 const QCommandLineOption Export::FormatOption = QCommandLineOption(
     QStringList() << "f"
                   << "format",

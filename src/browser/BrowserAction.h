@@ -18,8 +18,9 @@
 #ifndef BROWSERACTION_H
 #define BROWSERACTION_H
 
-#include <QJsonObject>
 #include <QString>
+
+class QJsonObject;
 
 class BrowserAction
 {

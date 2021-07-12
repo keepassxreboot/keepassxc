@@ -19,9 +19,6 @@
 #define KEEPASSX_TESTMERGE_H
 
 #include "core/Database.h"
-#include <QDateTime>
-#include <QMap>
-#include <QObject>
 #include <functional>
 
 class TestMerge : public QObject

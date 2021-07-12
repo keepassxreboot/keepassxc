@@ -21,9 +21,7 @@
 
 #include "gui/DatabaseTabWidget.h"
 
-#include <QDialog>
-#include <QListWidgetItem>
-#include <QScopedPointer>
+class QListWidgetItem;
 
 class Entry;
 

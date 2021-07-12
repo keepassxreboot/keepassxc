@@ -17,7 +17,6 @@
 
 #include "NewDatabaseWizardPageDatabaseKey.h"
 #include "gui/dbsettings/DatabaseSettingsWidgetDatabaseKey.h"
-#include <QApplication>
 
 NewDatabaseWizardPageDatabaseKey::NewDatabaseWizardPageDatabaseKey(QWidget* parent)
     : NewDatabaseWizardPage(parent)

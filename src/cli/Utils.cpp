@@ -19,9 +19,7 @@
 
 #include "core/Database.h"
 #include "core/EntryAttributes.h"
-#include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 #ifdef WITH_XC_YUBIKEY
 #include "keys/ChallengeResponseKey.h"
 #endif
@@ -35,7 +33,6 @@
 
 #include <QFileInfo>
 #include <QProcess>
-#include <QTextStream>
 
 namespace Utils
 {

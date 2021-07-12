@@ -16,11 +16,12 @@
  */
 
 #include "TestKeePass1Reader.h"
-#include "TestGlobal.h"
 
 #include <QBuffer>
+#include <QTest>
 
 #include "config-keepassx-tests.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass1Reader.h"

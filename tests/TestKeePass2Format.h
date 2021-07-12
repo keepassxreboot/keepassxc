@@ -19,9 +19,6 @@
 #define KEEPASSXC_TESTKEEPASS2FORMAT_H
 
 #include <QBuffer>
-#include <QDateTime>
-#include <QObject>
-#include <QSharedPointer>
 
 #include "core/Database.h"
 

@@ -16,10 +16,12 @@
  */
 
 #include "TestSSHAgent.h"
-#include "TestGlobal.h"
 #include "core/Config.h"
 #include "crypto/Crypto.h"
+#include "sshagent/KeeAgentSettings.h"
 #include "sshagent/SSHAgent.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestSSHAgent)
 

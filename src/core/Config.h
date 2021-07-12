@@ -20,7 +20,6 @@
 #define KEEPASSX_CONFIG_H
 
 #include <QPointer>
-#include <QScopedPointer>
 #include <QVariant>
 
 class QSettings;

@@ -22,11 +22,6 @@
 #include "Key.h"
 #include "drivers/YubiKey.h"
 
-#include <QByteArray>
-#include <QUuid>
-
-#include <botan/secmem.h>
-
 class ChallengeResponseKey : public Key
 {
 public:

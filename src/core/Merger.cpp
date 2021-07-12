@@ -17,9 +17,6 @@
 
 #include "Merger.h"
 
-#include "core/Clock.h"
-#include "core/Database.h"
-#include "core/Entry.h"
 #include "core/Metadata.h"
 
 Merger::Merger(const Database* sourceDb, Database* targetDb)

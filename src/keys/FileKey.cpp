@@ -23,6 +23,7 @@
 #include "crypto/Random.h"
 
 #include <QFile>
+#include <QXmlStreamReader>
 
 QUuid FileKey::UUID("a584cbc4-c9b4-437e-81bb-362ca9709273");
 

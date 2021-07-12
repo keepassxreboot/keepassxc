@@ -18,15 +18,11 @@
 #ifndef KEEPASSX_KEEPASS2_H
 #define KEEPASSX_KEEPASS2_H
 
-#include <QList>
-#include <QMap>
 #include <QSharedPointer>
 #include <QUuid>
-#include <QVariantMap>
-#include <QtGlobal>
+#include <QVariant>
 
-#include "crypto/SymmetricCipher.h"
-#include "crypto/kdf/Kdf.h"
+class Kdf;
 
 namespace KeePass2
 {

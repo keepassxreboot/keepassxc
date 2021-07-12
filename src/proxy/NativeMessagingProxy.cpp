@@ -19,7 +19,8 @@
 #include "browser/BrowserShared.h"
 
 #include <QCoreApplication>
-#include <QtConcurrent/QtConcurrent>
+#include <QFuture>
+#include <QtConcurrent/qtconcurrentrun.h>
 
 #include <iostream>
 
@@ -30,7 +31,6 @@
 #include <windows.h>
 #else
 #include <sys/socket.h>
-#include <sys/types.h>
 #endif
 
 NativeMessagingProxy::NativeMessagingProxy()

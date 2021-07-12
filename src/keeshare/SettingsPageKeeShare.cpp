@@ -17,14 +17,9 @@
 
 #include "SettingsPageKeeShare.h"
 
-#include "core/Database.h"
-#include "core/Group.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/Icons.h"
-#include "gui/MessageWidget.h"
-#include "keeshare/KeeShare.h"
 #include "keeshare/SettingsWidgetKeeShare.h"
-#include <QApplication>
 #include <QObject>
 
 SettingsPageKeeShare::SettingsPageKeeShare(DatabaseTabWidget* tabWidget)

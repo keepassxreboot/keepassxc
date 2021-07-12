@@ -19,7 +19,6 @@
 #define KEEPASSXC_YUBIKEYEDITWIDGET_H
 
 #include "KeyComponentWidget.h"
-#include <QPointer>
 
 namespace Ui
 {

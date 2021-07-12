@@ -17,12 +17,13 @@
  */
 
 #include "TestSymmetricCipher.h"
-#include "TestGlobal.h"
 
 #include <QBuffer>
+#include <QTest>
+#include <QVector>
 
 #include "crypto/Crypto.h"
-#include "crypto/SymmetricCipher.h"
+#include "format/KeePass2.h"
 #include "streams/SymmetricCipherStream.h"
 
 QTEST_GUILESS_MAIN(TestSymmetricCipher)

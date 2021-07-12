@@ -21,10 +21,10 @@
 
 #include "Clipboard.h"
 #include "Font.h"
-#include "entry/EntryAttachmentsModel.h"
 #include "gui/Icons.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
+#include "keeshare/KeeShareSettings.h"
 #endif
 
 namespace

@@ -19,14 +19,14 @@
 #define KEEPASSXC_KDBXREADER_H
 
 #include "KeePass2.h"
-#include "keys/CompositeKey.h"
-#include "streams/StoreDataStream.h"
 
 #include <QCoreApplication>
 #include <QPointer>
 
+class CompositeKey;
 class Database;
 class QIODevice;
+class StoreDataStream;
 
 /**
  * Abstract KDBX reader base class.

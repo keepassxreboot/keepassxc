@@ -17,15 +17,13 @@
 
 #include "TestFdoSecrets.h"
 
-#include "TestGlobal.h"
-
 #include "core/EntrySearcher.h"
-#include "crypto/Crypto.h"
+#include "core/Group.h"
 #include "crypto/Random.h"
-#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
-#include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/SessionCipher.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestFdoSecrets)
 

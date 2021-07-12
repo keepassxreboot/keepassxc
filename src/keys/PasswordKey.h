@@ -20,8 +20,7 @@
 
 #include <botan/secmem.h>
 
-#include <QSharedPointer>
-#include <QString>
+#include <QMetaType>
 
 #include "keys/Key.h"
 

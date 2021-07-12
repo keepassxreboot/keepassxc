@@ -18,12 +18,9 @@
 #include "Random.h"
 
 #include "core/Global.h"
-#include "crypto/Crypto.h"
 
-#include <QPointer>
 #include <QSharedPointer>
 
-#include <botan/auto_rng.h>
 #include <botan/system_rng.h>
 
 QSharedPointer<Random> Random::m_instance;

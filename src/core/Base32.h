@@ -26,7 +26,6 @@
 
 #include <QByteArray>
 #include <QVariant>
-#include <QtCore/qglobal.h>
 
 class Base32
 {

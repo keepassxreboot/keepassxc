@@ -20,6 +20,7 @@
 #include "Create.h"
 #include "Utils.h"
 
+#include <QCommandLineParser>
 #include <QFileInfo>
 
 /**

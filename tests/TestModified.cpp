@@ -21,8 +21,6 @@
 #include <QSignalSpy>
 #include <QTest>
 
-#include "core/Clock.h"
-#include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"

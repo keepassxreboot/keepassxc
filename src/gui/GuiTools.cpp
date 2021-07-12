@@ -18,8 +18,6 @@
 #include "GuiTools.h"
 
 #include "core/Config.h"
-#include "core/Database.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "gui/MessageBox.h"
 

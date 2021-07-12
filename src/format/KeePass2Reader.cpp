@@ -19,6 +19,7 @@
 #include "format/Kdbx3Reader.h"
 #include "format/Kdbx4Reader.h"
 #include "format/KeePass1.h"
+#include "keys/CompositeKey.h"
 
 #include <QFile>
 

@@ -18,17 +18,18 @@
 
 #include "SSHAgent.h"
 
-#include "BinaryStream.h"
-#include "OpenSSHKey.h"
 #include "core/Config.h"
-#include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "sshagent/BinaryStream.h"
 #include "sshagent/KeeAgentSettings.h"
 
-#include <QtNetwork>
+#include <QFileInfo>
+#include <QLocalSocket>
+#include <QThread>
 
 #ifdef Q_OS_WIN
+#include <QtEndian>
 #include <windows.h>
 #endif
 

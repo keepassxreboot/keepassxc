@@ -18,28 +18,15 @@
 #include "DatabaseTabWidget.h"
 
 #include <QFileInfo>
-#include <QPushButton>
-#include <QTabWidget>
 
 #include "autotype/AutoType.h"
-#include "core/AsyncTask.h"
-#include "core/Config.h"
-#include "core/Database.h"
-#include "core/Global.h"
-#include "core/Group.h"
-#include "core/Metadata.h"
 #include "core/Tools.h"
 #include "format/CsvExporter.h"
 #include "format/HtmlExporter.h"
-#include "gui/Clipboard.h"
-#include "gui/DatabaseOpenDialog.h"
-#include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
 #include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
-#include "gui/entry/EntryView.h"
-#include "gui/group/GroupView.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif

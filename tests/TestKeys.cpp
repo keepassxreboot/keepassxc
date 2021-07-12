@@ -17,18 +17,20 @@
  */
 
 #include "TestKeys.h"
-#include "TestGlobal.h"
 
 #include <QBuffer>
+#include <QTest>
 
 #include "config-keepassx-tests.h"
 
+#include "core/Database.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
+#include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "mock/MockChallengeResponseKey.h"

@@ -23,8 +23,6 @@
 
 #include <QPointer>
 
-#include <memory>
-
 class DatabaseTabWidget;
 
 namespace FdoSecrets

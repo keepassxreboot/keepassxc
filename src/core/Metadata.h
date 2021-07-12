@@ -19,18 +19,12 @@
 #define KEEPASSX_METADATA_H
 
 #include <QDateTime>
-#include <QHash>
 #include <QIcon>
-#include <QImage>
-#include <QPixmap>
-#include <QPixmapCache>
 #include <QPointer>
-#include <QSize>
 #include <QUuid>
 
 #include "core/CustomData.h"
 #include "core/Global.h"
-#include "core/ModifiableObject.h"
 
 class Database;
 class Group;

@@ -15,17 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DBusMgr.h"
-
 #include "fdosecrets/dbus/DBusObject.h"
-#include "fdosecrets/dbus/DBusTypes.h"
-#include "fdosecrets/objects/Item.h"
-#include "fdosecrets/objects/Service.h"
-
-#include "core/Global.h"
 
 #include <QDBusMetaType>
 #include <QThread>
+#include <QtDBus>
 
 namespace FdoSecrets
 {

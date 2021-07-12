@@ -21,11 +21,6 @@
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
-#include <QHash>
-#include <QObject>
-#include <QPointer>
-#include <QVariant>
-
 class DatabaseTabWidget;
 class DatabaseWidget;
 class Group;

@@ -19,7 +19,6 @@
 #define BROWSERSETTINGSWIDGET_H
 
 #include <QPointer>
-#include <QScopedPointer>
 #include <QWidget>
 
 namespace Ui

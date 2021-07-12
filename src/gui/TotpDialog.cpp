@@ -20,10 +20,11 @@
 #include "ui_TotpDialog.h"
 
 #include "core/Clock.h"
-#include "core/Config.h"
 #include "gui/Clipboard.h"
 #include "gui/MainWindow.h"
+#include "totp/totp.h"
 
+#include <QPushButton>
 #include <QShortcut>
 
 TotpDialog::TotpDialog(QWidget* parent, Entry* entry)

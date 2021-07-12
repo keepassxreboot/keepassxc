@@ -17,13 +17,10 @@
 
 #include "EntryModel.h"
 
-#include <QDateTime>
+#include <QFont>
 #include <QMimeData>
-#include <QPainter>
 #include <QPalette>
 
-#include "core/DatabaseIcons.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"

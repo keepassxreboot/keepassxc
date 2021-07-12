@@ -17,10 +17,11 @@
 
 #include "RemoveGroup.h"
 
-#include "TextStream.h"
 #include "Utils.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+
+#include <QCommandLineParser>
 
 RemoveGroup::RemoveGroup()
 {

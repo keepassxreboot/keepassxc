@@ -20,8 +20,10 @@
 #include "Add.h"
 #include "Generate.h"
 #include "Utils.h"
-#include "core/Entry.h"
 #include "core/Group.h"
+#include "core/PasswordGenerator.h"
+
+#include <QCommandLineParser>
 
 const QCommandLineOption Edit::TitleOption = QCommandLineOption(QStringList() << "t"
                                                                               << "title",

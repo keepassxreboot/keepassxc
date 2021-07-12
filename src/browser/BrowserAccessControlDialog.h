@@ -20,8 +20,7 @@
 #define BROWSERACCESSCONTROLDIALOG_H
 
 #include <QDialog>
-#include <QScopedPointer>
-#include <QTableWidgetItem>
+#include <QTableWidget>
 
 class Entry;
 

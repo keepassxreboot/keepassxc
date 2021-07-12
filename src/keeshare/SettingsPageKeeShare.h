@@ -18,9 +18,7 @@
 #ifndef KEEPASSXC_SETTINGSPAGEKEESHARE_H
 #define KEEPASSXC_SETTINGSPAGEKEESHARE_H
 
-#include <QObject>
 #include <QPointer>
-#include <QWidget>
 
 #include "gui/ApplicationSettingsWidget.h"
 

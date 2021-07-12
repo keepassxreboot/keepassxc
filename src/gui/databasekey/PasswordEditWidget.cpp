@@ -19,7 +19,6 @@
 #include "ui_KeyComponentWidget.h"
 #include "ui_PasswordEditWidget.h"
 
-#include "gui/PasswordGeneratorWidget.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 

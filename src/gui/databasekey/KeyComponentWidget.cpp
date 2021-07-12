@@ -18,7 +18,6 @@
 #include "KeyComponentWidget.h"
 #include "ui_KeyComponentWidget.h"
 
-#include <QStackedWidget>
 #include <QTimer>
 
 KeyComponentWidget::KeyComponentWidget(QWidget* parent)

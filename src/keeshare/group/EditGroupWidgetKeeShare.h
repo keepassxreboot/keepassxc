@@ -19,7 +19,6 @@
 #define KEEPASSXC_EDITGROUPWIDGETKEESHARE_H
 
 #include <QPointer>
-#include <QStandardItemModel>
 #include <QWidget>
 
 class Group;

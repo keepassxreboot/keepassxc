@@ -21,8 +21,6 @@
 
 #include <QPointer>
 #include <QSet>
-#include <QSharedPointer>
-#include <QString>
 #include <QUuid>
 
 #include "core/Global.h"

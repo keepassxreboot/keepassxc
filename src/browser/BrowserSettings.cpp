@@ -21,6 +21,8 @@
 #include "core/Config.h"
 #include "core/PasswordHealth.h"
 
+#include <QJsonObject>
+
 BrowserSettings* BrowserSettings::m_instance(nullptr);
 
 BrowserSettings* BrowserSettings::instance()

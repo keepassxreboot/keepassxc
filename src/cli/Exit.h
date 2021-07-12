@@ -18,9 +18,6 @@
 #ifndef KEEPASSXC_EXIT_H
 #define KEEPASSXC_EXIT_H
 
-#include <QString>
-#include <QStringList>
-
 #include "Command.h"
 
 class Exit : public Command

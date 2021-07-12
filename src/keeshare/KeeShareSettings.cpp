@@ -17,25 +17,14 @@
 
 #include "KeeShareSettings.h"
 
-#include "core/CustomData.h"
-#include "core/Database.h"
-#include "core/DatabaseIcons.h"
-#include "core/Group.h"
-#include "core/Metadata.h"
 #include "crypto/Random.h"
-#include "keeshare/Signature.h"
 
-#include <QMessageBox>
-#include <QPainter>
-#include <QPushButton>
 #include <QTextCodec>
 #include <QXmlStreamWriter>
 
-#include <botan/ber_dec.h>
-#include <botan/pk_keys.h>
+#include <botan/data_src.h>
 #include <botan/pkcs8.h>
 #include <botan/rsa.h>
-#include <functional>
 
 namespace KeeShareSettings
 {

@@ -19,10 +19,8 @@
 #include "Group.h"
 #include "config-keepassx.h"
 
-#include "core/Clock.h"
 #include "core/Config.h"
 #include "core/DatabaseIcons.h"
-#include "core/Global.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 
@@ -30,7 +28,7 @@
 #include "keeshare/KeeShare.h"
 #endif
 
-#include <QtConcurrent>
+#include <QtConcurrentFilter>
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;

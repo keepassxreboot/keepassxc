@@ -20,6 +20,8 @@
 #include "macutils/ScreenLockListenerMac.h"
 #elif defined(Q_OS_UNIX)
 #include "nixutils/ScreenLockListenerDBus.h"
+
+#include <QWidget>
 #elif defined(Q_OS_WIN)
 #include "winutils/ScreenLockListenerWin.h"
 #endif

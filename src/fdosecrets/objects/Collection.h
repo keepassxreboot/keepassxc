@@ -23,9 +23,6 @@
 
 #include "core/EntrySearcher.h"
 
-#include <QPointer>
-#include <QSet>
-
 class Database;
 class DatabaseWidget;
 class Entry;

@@ -18,7 +18,6 @@
 #include "PickcharsDialog.h"
 #include "ui_PickcharsDialog.h"
 
-#include "core/Entry.h"
 #include "gui/Icons.h"
 
 #include <QPushButton>

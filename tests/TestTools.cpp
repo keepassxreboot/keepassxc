@@ -17,7 +17,6 @@
 
 #include "TestTools.h"
 
-#include <QLocale>
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestTools)

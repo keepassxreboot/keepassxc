@@ -18,7 +18,11 @@
 #include "UpdateCheckDialog.h"
 #include "ui_UpdateCheckDialog.h"
 
+#include <QPushButton>
+
+#include "config-keepassx.h"
 #include "gui/Icons.h"
+#include "updatecheck/UpdateChecker.h"
 
 UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
     : QDialog(parent)

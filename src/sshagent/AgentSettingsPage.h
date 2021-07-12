@@ -20,7 +20,6 @@
 #define AGENTSETTINGSPAGE_H
 
 #include "gui/ApplicationSettingsWidget.h"
-#include "gui/DatabaseTabWidget.h"
 
 class AgentSettingsPage : public ISettingsPage
 {

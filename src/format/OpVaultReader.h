@@ -20,8 +20,9 @@
 
 #include <QDir>
 
-#include "core/Database.h"
-#include "core/Metadata.h"
+class Database;
+class Group;
+class Entry;
 
 /*!
  * Imports a directory in the 1Password \c opvault format into a \c Database.

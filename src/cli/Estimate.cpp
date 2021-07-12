@@ -20,6 +20,7 @@
 #include "Utils.h"
 #include "core/PasswordHealth.h"
 
+#include <QCommandLineParser>
 #include <zxcvbn.h>
 
 const QCommandLineOption Estimate::AdvancedOption =

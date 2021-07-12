@@ -16,13 +16,13 @@
  */
 
 #include "EditGroupWidget.h"
-#include "gui/Font.h"
 #include "ui_EditGroupWidgetMain.h"
 
 #include "core/Config.h"
 #include "core/Metadata.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
+#include "gui/Font.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 

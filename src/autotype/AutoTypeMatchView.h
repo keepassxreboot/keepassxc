@@ -22,7 +22,8 @@
 #include <QTableView>
 
 #include "autotype/AutoTypeMatch.h"
-#include "autotype/AutoTypeMatchModel.h"
+
+class AutoTypeMatchModel;
 
 class QSortFilterProxyModel;
 

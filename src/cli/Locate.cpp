@@ -17,9 +17,8 @@
 
 #include "Locate.h"
 
-#include <QStringList>
+#include <QCommandLineParser>
 
-#include "TextStream.h"
 #include "Utils.h"
 #include "core/Group.h"
 

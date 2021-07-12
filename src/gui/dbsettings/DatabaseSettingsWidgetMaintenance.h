@@ -20,8 +20,6 @@
 
 #include "DatabaseSettingsWidget.h"
 
-#include <QScopedPointer>
-
 class QItemSelection;
 class CustomIconModel;
 class Database;

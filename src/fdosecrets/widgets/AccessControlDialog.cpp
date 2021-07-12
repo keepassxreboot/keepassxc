@@ -26,7 +26,7 @@
 
 #include <QWindow>
 
-#include <utility>
+#include <functional>
 
 AccessControlDialog::AccessControlDialog(QWindow* parent,
                                          const QList<Entry*>& entries,

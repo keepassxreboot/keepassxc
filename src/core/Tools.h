@@ -21,12 +21,7 @@
 
 #include "core/Global.h"
 
-#include <QObject>
 #include <QProcessEnvironment>
-#include <QString>
-#include <QUuid>
-
-#include <algorithm>
 
 class QIODevice;
 class QRegularExpression;

@@ -21,8 +21,6 @@
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
-#include <QPointer>
-
 class Entry;
 
 namespace FdoSecrets

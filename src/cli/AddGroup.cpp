@@ -18,8 +18,9 @@
 #include "AddGroup.h"
 
 #include "Utils.h"
-#include "core/Entry.h"
 #include "core/Group.h"
+
+#include <QCommandLineParser>
 
 AddGroup::AddGroup()
 {

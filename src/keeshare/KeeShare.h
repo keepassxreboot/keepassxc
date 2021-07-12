@@ -19,12 +19,18 @@
 #define KEEPASSXC_KEESHARE_H
 
 #include <QFileInfo>
-#include <QMap>
 #include <QUuid>
 
 #include "core/Config.h"
 #include "gui/MessageWidget.h"
-#include "keeshare/KeeShareSettings.h"
+
+namespace KeeShareSettings
+{
+    struct Own;
+    struct Active;
+    struct Foreign;
+    struct Reference;
+} // namespace KeeShareSettings
 
 class Group;
 class Database;

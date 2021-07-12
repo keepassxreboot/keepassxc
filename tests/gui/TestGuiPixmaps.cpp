@@ -16,10 +16,12 @@
  */
 
 #include "TestGuiPixmaps.h"
-#include "TestGlobal.h"
 #include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
+
+#include "core/Group.h"
 #include "crypto/Crypto.h"
+#include <QTest>
 
 void TestGuiPixmaps::initTestCase()
 {

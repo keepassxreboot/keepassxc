@@ -20,6 +20,8 @@
 #include "Utils.h"
 #include "core/Group.h"
 
+#include <QCommandLineParser>
+
 const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
                                                                              << "totp",
                                                                QObject::tr("Show the entry's current TOTP."));

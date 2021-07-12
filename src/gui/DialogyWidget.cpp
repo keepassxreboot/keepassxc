@@ -17,7 +17,6 @@
 
 #include "DialogyWidget.h"
 
-#include <QDialogButtonBox>
 #include <QKeyEvent>
 #include <QPushButton>
 

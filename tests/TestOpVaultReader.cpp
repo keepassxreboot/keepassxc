@@ -18,22 +18,15 @@
 #include "TestOpVaultReader.h"
 
 #include "config-keepassx-tests.h"
-#include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "format/OpVaultReader.h"
 #include "totp/totp.h"
 
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include <QList>
-#include <QPair>
 #include <QStringList>
 #include <QTest>
-#include <QUuid>
 
 QTEST_GUILESS_MAIN(TestOpVaultReader)
 

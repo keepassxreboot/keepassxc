@@ -19,15 +19,14 @@
 #define KEEPASSX_ICONDOWNLOADERDIALOG_H
 
 #include <QDialog>
+#include <QMap>
 #include <QMutex>
-#include <QStandardItemModel>
-
-#include "gui/MessageWidget.h"
 
 class Database;
 class Entry;
 class CustomIconModel;
 class IconDownloader;
+class QStandardItemModel;
 
 namespace Ui
 {

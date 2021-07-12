@@ -19,15 +19,13 @@
 #include "OpData01.h"
 
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
-#include "crypto/SymmetricCipher.h"
-#include "keys/PasswordKey.h"
 
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QUuid>
 
 #include <botan/pwdhash.h>
 

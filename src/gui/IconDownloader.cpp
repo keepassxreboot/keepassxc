@@ -19,9 +19,10 @@
 #include "core/Config.h"
 #include "core/NetworkManager.h"
 
+#include <QBuffer>
 #include <QHostInfo>
 #include <QImageReader>
-#include <QtNetwork>
+#include <QNetworkReply>
 
 #define MAX_REDIRECTS 5
 

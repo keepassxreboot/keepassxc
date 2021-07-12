@@ -18,14 +18,9 @@
 #ifndef KEEPASSX_KDBXXMLWRITER_H
 #define KEEPASSX_KDBXXMLWRITER_H
 
-#include <QDateTime>
-#include <QImage>
 #include <QXmlStreamWriter>
 
-#include "core/Database.h"
-#include "core/Entry.h"
 #include "core/Group.h"
-#include "core/TimeInfo.h"
 
 class KeePass2RandomStream;
 class Metadata;

@@ -19,7 +19,6 @@
 #define KEEPASSXC_SETTINGSWIDGETKEESHARE_H
 
 #include <QPointer>
-#include <QScopedPointer>
 #include <QWidget>
 
 #include "gui/MessageWidget.h"

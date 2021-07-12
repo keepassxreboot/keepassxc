@@ -20,8 +20,6 @@
 #define KEEPASSX_TESTCSVPARSER_H
 
 #include <QFile>
-#include <QObject>
-#include <QScopedPointer>
 #include <QTemporaryFile>
 
 #include "core/CsvParser.h"

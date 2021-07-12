@@ -16,9 +16,10 @@
  */
 
 #include "TestUpdateCheck.h"
-#include "TestGlobal.h"
 #include "crypto/Crypto.h"
 #include "updatecheck/UpdateChecker.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestUpdateCheck)
 

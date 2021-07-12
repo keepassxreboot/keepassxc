@@ -23,7 +23,6 @@
 #include <QLibrary>
 
 #include "config-keepassx.h"
-#include "core/Config.h"
 #include "core/Global.h"
 
 Resources* Resources::m_instance(nullptr);

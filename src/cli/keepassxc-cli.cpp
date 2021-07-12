@@ -17,10 +17,8 @@
 
 #include <QCommandLineParser>
 #include <QFileInfo>
-#include <QStringList>
 
 #include "Command.h"
-#include "DatabaseCommand.h"
 #include "Open.h"
 #include "TextStream.h"
 #include "Utils.h"

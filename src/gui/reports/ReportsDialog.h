@@ -22,10 +22,6 @@
 #include "gui/DialogyWidget.h"
 #include "gui/entry/EditEntryWidget.h"
 
-#include <QPointer>
-#include <QScopedPointer>
-#include <QSharedPointer>
-
 class Database;
 class Entry;
 class Group;

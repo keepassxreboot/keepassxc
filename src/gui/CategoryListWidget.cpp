@@ -23,7 +23,6 @@
 #include <QProxyStyle>
 #include <QScrollBar>
 #include <QSize>
-#include <QStyledItemDelegate>
 
 CategoryListWidget::CategoryListWidget(QWidget* parent)
     : QWidget(parent)

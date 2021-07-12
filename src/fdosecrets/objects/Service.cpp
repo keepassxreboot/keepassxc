@@ -19,7 +19,6 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
-#include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
@@ -27,10 +26,6 @@
 
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
-
-#include <QDBusConnection>
-#include <QDebug>
-#include <QSharedPointer>
 
 namespace
 {

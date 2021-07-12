@@ -22,8 +22,6 @@
 #include <QPushButton>
 #include <QScrollArea>
 
-#include "core/Resources.h"
-
 EditWidget::EditWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::EditWidget())

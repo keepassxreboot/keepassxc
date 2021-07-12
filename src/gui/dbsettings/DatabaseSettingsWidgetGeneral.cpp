@@ -19,8 +19,6 @@
 #include "ui_DatabaseSettingsWidgetGeneral.h"
 
 #include "core/Clock.h"
-#include "core/Database.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/MessageBox.h"

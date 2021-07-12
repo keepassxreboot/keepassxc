@@ -19,18 +19,15 @@
 #include "AutoType.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QPluginLoader>
-#include <QWindow>
+#include <QUrl>
 
 #include "config-keepassx.h"
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
 #include "autotype/PickcharsDialog.h"
-#include "core/Config.h"
-#include "core/Database.h"
-#include "core/Entry.h"
-#include "core/Group.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
 #include "gui/MainWindow.h"

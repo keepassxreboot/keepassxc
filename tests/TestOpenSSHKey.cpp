@@ -16,10 +16,11 @@
  */
 
 #include "TestOpenSSHKey.h"
-#include "TestGlobal.h"
 #include "crypto/Crypto.h"
 #include "sshagent/BinaryStream.h"
 #include "sshagent/OpenSSHKey.h"
+
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestOpenSSHKey)
 

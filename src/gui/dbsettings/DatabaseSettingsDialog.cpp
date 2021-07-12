@@ -26,18 +26,20 @@
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
 #include "DatabaseSettingsWidgetMaintenance.h"
-#if defined(WITH_XC_KEESHARE)
+#ifdef WITH_XC_KEESHARE
 #include "keeshare/DatabaseSettingsPageKeeShare.h"
 #endif
-#if defined(WITH_XC_FDOSECRETS)
+#ifdef WITH_XC_FDOSECRETS
 #include "fdosecrets/DatabaseSettingsPageFdoSecrets.h"
+#endif
+#ifdef Q_OS_MACOS
+#include "touchid/TouchID.h"
 #endif
 
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Global.h"
 #include "gui/Icons.h"
-#include "touchid/TouchID.h"
 
 #include <QScrollArea>
 

@@ -19,12 +19,10 @@
 #define KEEPASSXC_NETWORKMANAGER_H
 
 #include "config-keepassx.h"
-#include <QtGlobal>
 
 #ifdef WITH_XC_NETWORKING
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
+
+class QNetworkAccessManager;
 
 QNetworkAccessManager* getNetMgr();
 #else

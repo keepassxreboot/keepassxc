@@ -18,9 +18,6 @@
 #ifndef KEEPASSXC_OSUTILS_H
 #define KEEPASSXC_OSUTILS_H
 
-#include "OSUtilsBase.h"
-#include <QtCore>
-
 #if defined(Q_OS_WIN)
 
 #include "winutils/WinUtils.h"

@@ -20,7 +20,6 @@
 #define KEEPASSX_ABOUTDIALOG_H
 
 #include <QDialog>
-#include <QScopedPointer>
 
 namespace Ui
 {

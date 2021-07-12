@@ -18,9 +18,11 @@
 #include "config-keepassx.h"
 
 #ifdef WITH_XC_NETWORKING
+
 #include "NetworkManager.h"
 
 #include <QCoreApplication>
+#include <QNetworkAccessManager>
 
 QNetworkAccessManager* g_netMgr = nullptr;
 QNetworkAccessManager* getNetMgr()

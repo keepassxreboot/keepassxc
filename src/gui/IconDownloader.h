@@ -19,11 +19,8 @@
 #define KEEPASSXC_ICONDOWNLOADER_H
 
 #include <QImage>
-#include <QObject>
 #include <QTimer>
 #include <QUrl>
-
-#include "core/Global.h"
 
 class QNetworkReply;
 

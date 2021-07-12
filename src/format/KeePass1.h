@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_KEEPASS1_H
 #define KEEPASSX_KEEPASS1_H
 
-#include <QtGlobal>
+#include <QSysInfo>
 
 namespace KeePass1
 {

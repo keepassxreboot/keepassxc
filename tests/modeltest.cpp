@@ -33,7 +33,6 @@
 
 #include "modeltest.h"
 
-#include <QtCore>
 #include <QtTest>
 
 /*!

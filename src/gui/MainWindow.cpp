@@ -21,33 +21,29 @@
 
 #include <QCloseEvent>
 #include <QDesktopServices>
-#include <QFileInfo>
+#include <QList>
 #include <QMimeData>
 #include <QShortcut>
+#include <QStatusBar>
 #include <QTimer>
 #include <QToolButton>
 #include <QWindow>
 
 #include "config-keepassx.h"
 
+#include "Application.h"
+#include "Clipboard.h"
 #include "autotype/AutoType.h"
-#include "core/Config.h"
 #include "core/InactivityTimer.h"
-#include "core/Metadata.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
 #include "gui/AboutDialog.h"
-#include "gui/DatabaseWidget.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
 #include "gui/osutils/OSUtils.h"
-#include "keys/CompositeKey.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 
 #ifdef Q_OS_MACOS
-#include "gui/osutils/macutils/MacUtils.h"
 #ifdef WITH_XC_TOUCHID
 #include "touchid/TouchID.h"
 #endif
@@ -82,8 +78,6 @@
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
 #include "gui/MainWindowAdaptor.h"
-#include <QList>
-#include <QtDBus/QtDBus>
 #endif
 
 const QString MainWindow::BaseWindowTitle = "KeePassXC";

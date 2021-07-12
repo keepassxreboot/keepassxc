@@ -20,11 +20,7 @@
 #define KEEPASSX_ENTRY_H
 
 #include <QImage>
-#include <QMap>
-#include <QPixmap>
 #include <QPointer>
-#include <QSet>
-#include <QUrl>
 #include <QUuid>
 
 #include "core/AutoTypeAssociations.h"
@@ -32,7 +28,6 @@
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/Global.h"
-#include "core/ModifiableObject.h"
 #include "core/TimeInfo.h"
 
 class Database;

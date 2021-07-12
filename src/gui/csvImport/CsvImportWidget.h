@@ -20,15 +20,11 @@
 #define KEEPASSX_CSVIMPORTWIDGET_H
 
 #include <QComboBox>
-#include <QList>
-#include <QPushButton>
-#include <QScopedPointer>
-#include <QStackedWidget>
-#include <QStringListModel>
 
 #include "core/Metadata.h"
 #include "gui/csvImport/CsvParserModel.h"
-#include "keys/PasswordKey.h"
+
+class QStringListModel;
 
 namespace Ui
 {

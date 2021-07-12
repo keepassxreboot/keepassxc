@@ -20,8 +20,6 @@
 
 #include "format/KdbxReader.h"
 
-#include <QVariantMap>
-
 /**
  * KDBX4 reader implementation.
  */

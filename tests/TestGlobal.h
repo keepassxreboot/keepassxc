@@ -20,9 +20,6 @@
 
 #include "core/Group.h"
 
-#include <QDateTime>
-#include <QTest>
-
 namespace QTest
 {
 

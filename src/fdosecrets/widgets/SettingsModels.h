@@ -21,7 +21,6 @@
 #include "fdosecrets/dbus/DBusClient.h"
 
 #include <QAbstractTableModel>
-#include <QPointer>
 
 class DatabaseTabWidget;
 class DatabaseWidget;

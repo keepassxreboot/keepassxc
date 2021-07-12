@@ -19,7 +19,6 @@
 #define KEEPASSX_QRCODE_H
 
 #include <QScopedPointer>
-#include <QtCore/qglobal.h>
 
 class QImage;
 class QIODevice;

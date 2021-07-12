@@ -20,17 +20,15 @@
 
 #include "core/Database.h"
 #include "core/Metadata.h"
-#include "core/TimeInfo.h"
 
 #include <QCoreApplication>
-#include <QPair>
-#include <QString>
 #include <QXmlStreamReader>
 
 class QIODevice;
 class Group;
 class Entry;
 class KeePass2RandomStream;
+class TimeInfo;
 
 /**
  * KDBX XML payload reader.

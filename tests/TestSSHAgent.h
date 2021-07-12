@@ -19,7 +19,6 @@
 #define TESTSSHAGENT_H
 
 #include "sshagent/OpenSSHKey.h"
-#include <QObject>
 #include <QProcess>
 #include <QTemporaryFile>
 #include <QUuid>

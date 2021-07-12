@@ -20,7 +20,6 @@
 
 #include <QPointer>
 #include <QStyledItemDelegate>
-#include <QWidget>
 
 class CategoryListWidgetDelegate;
 class QListWidget;

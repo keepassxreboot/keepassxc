@@ -21,7 +21,7 @@
 #include <QAbstractListModel>
 #include <QPointer>
 
-#include "core/AutoTypeAssociations.h"
+class AutoTypeAssociations;
 
 class Entry;
 

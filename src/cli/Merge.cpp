@@ -17,9 +17,10 @@
 
 #include "Merge.h"
 
-#include "TextStream.h"
 #include "Utils.h"
 #include "core/Merger.h"
+
+#include <QCommandLineParser>
 
 const QCommandLineOption Merge::SameCredentialsOption =
     QCommandLineOption(QStringList() << "s"

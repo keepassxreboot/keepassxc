@@ -20,8 +20,6 @@
 
 #include <QHash>
 #include <QObject>
-#include <QSet>
-#include <QStringList>
 
 #include "core/ModifiableObject.h"
 

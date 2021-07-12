@@ -23,12 +23,9 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QProgressBar>
-#include <QStatusBar>
 #include <QSystemTrayIcon>
 
 #include "core/SignalMultiplexer.h"
-#include "gui/Application.h"
-#include "gui/Clipboard.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/osutils/ScreenLockListener.h"
 

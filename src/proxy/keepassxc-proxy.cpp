@@ -22,9 +22,7 @@
 #include <iostream>
 
 #ifndef Q_OS_WIN
-#include <initializer_list>
 #include <signal.h>
-#include <unistd.h>
 
 // (C) Gist: https://gist.github.com/azadkuh/a2ac6869661ebd3f8588
 void ignoreUnixSignals(std::initializer_list<int> ignoreSignals)

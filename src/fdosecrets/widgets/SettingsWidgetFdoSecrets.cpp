@@ -20,16 +20,12 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
-#include "fdosecrets/dbus/DBusMgr.h"
-#include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/RowButtonHelper.h"
 #include "fdosecrets/widgets/SettingsModels.h"
+#include "objects/Service.h"
 
 #include "gui/DatabaseWidget.h"
-#include "gui/Icons.h"
 
-#include <QAction>
-#include <QHeaderView>
 #include <QToolBar>
 
 using FdoSecrets::DBusClientPtr;

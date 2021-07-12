@@ -16,13 +16,17 @@
  */
 
 #include "DarkStyle.h"
-#include "gui/osutils/OSUtils.h"
 
 #include <QDialog>
+#include <QFile>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QToolBar>
+
+#ifdef Q_OS_MACOS
+#include "gui/osutils/OSUtils.h"
+#endif
 
 DarkStyle::DarkStyle()
     : BaseStyle()

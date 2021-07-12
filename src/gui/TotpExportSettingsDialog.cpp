@@ -17,23 +17,18 @@
 
 #include "TotpExportSettingsDialog.h"
 
-#include "core/Config.h"
-#include "core/Entry.h"
 #include "gui/Clipboard.h"
-#include "gui/DatabaseWidget.h"
 #include "gui/MainWindow.h"
 #include "gui/SquareSvgWidget.h"
 #include "qrcode/QrCode.h"
 #include "totp/totp.h"
 
+#include <QBoxLayout>
 #include <QBuffer>
-#include <QDialogButtonBox>
 #include <QLabel>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QShortcut>
-#include <QSizePolicy>
-#include <QVBoxLayout>
 
 TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry* entry)
     : QDialog(parent)

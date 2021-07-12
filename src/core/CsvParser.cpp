@@ -18,7 +18,7 @@
 
 #include "CsvParser.h"
 
-#include <QObject>
+#include <QFile>
 #include <QTextCodec>
 
 #include "core/Tools.h"

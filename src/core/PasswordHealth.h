@@ -20,7 +20,6 @@
 
 #include <QHash>
 #include <QSharedPointer>
-#include <QStringList>
 
 class Database;
 class Entry;

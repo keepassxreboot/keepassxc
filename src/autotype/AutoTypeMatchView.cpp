@@ -17,12 +17,8 @@
  */
 
 #include "AutoTypeMatchView.h"
+#include "AutoTypeMatchModel.h"
 
-#include "core/Entry.h"
-#include "gui/Clipboard.h"
-#include "gui/Icons.h"
-
-#include <QAction>
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QSortFilterProxyModel>

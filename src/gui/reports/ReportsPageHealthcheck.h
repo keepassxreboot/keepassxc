@@ -18,8 +18,6 @@
 #ifndef KEEPASSXC_REPORTSPAGEHEALTHCHECK_H
 #define KEEPASSXC_REPORTSPAGEHEALTHCHECK_H
 
-#include <QWidget>
-
 #include "ReportsDialog.h"
 
 class ReportsWidgetHealthcheck;

@@ -19,7 +19,6 @@
 #define KEEPASSX_TIMEINFO_H
 
 #include <QDateTime>
-#include <QFlag>
 
 #include "core/Compare.h"
 

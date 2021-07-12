@@ -19,7 +19,6 @@
 #define KEEPASSX_EDITGROUPWIDGET_H
 
 #include <QComboBox>
-#include <QScopedPointer>
 #include <QScrollArea>
 
 #include "core/Group.h"

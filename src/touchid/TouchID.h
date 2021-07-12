@@ -5,10 +5,7 @@
 #define TOUCHID_AVAILABLE 1
 #define TOUCHID_NOT_AVAILABLE 0
 
-#include <QByteArray>
 #include <QHash>
-#include <QSharedPointer>
-#include <QString>
 
 class TouchID
 {

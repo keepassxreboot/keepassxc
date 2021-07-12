@@ -21,8 +21,6 @@
 #include "config-keepassx.h"
 #include "gui/DatabaseWidget.h"
 
-#include <QWidget>
-
 namespace Ui
 {
     class EntryPreviewWidget;

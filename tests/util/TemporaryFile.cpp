@@ -17,8 +17,6 @@
 
 #include "TemporaryFile.h"
 
-#include <QTextStream>
-
 TemporaryFile::TemporaryFile()
     : TemporaryFile(nullptr)
 {

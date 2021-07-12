@@ -23,13 +23,11 @@
 #include <QHash>
 #include <QMutex>
 #include <QPointer>
-#include <QScopedPointer>
 #include <QTimer>
 
 #include "config-keepassx.h"
 #include "core/ModifiableObject.h"
 #include "crypto/kdf/AesKdf.h"
-#include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"

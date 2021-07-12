@@ -15,7 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Variant.h"
+#include <QJsonObject>
+#include <QMetaProperty>
 
 QVariantMap qo2qv(const QObject* object, const QStringList& ignoredProperties)
 {

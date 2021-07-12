@@ -21,9 +21,6 @@
 #include "config-keepassx.h"
 #include "gui/entry/EntryModel.h"
 
-#include <QMap>
-#include <QPair>
-#include <QPointer>
 #include <QWidget>
 
 #ifdef WITH_XC_NETWORKING

@@ -21,7 +21,6 @@
 #include "KdbxWriter.h"
 
 #include <QCoreApplication>
-#include <QScopedPointer>
 
 class QIODevice;
 class Database;

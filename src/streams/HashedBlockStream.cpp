@@ -17,8 +17,6 @@
 
 #include "HashedBlockStream.h"
 
-#include <cstring>
-
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 

@@ -19,9 +19,7 @@
 #ifndef KEEPASSX_COMPOSITEKEY_H
 #define KEEPASSX_COMPOSITEKEY_H
 
-#include <QList>
 #include <QSharedPointer>
-#include <QString>
 
 #include "keys/Key.h"
 

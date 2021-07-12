@@ -18,8 +18,6 @@
 #ifndef KEEPASSXC_COMPARE_H
 #define KEEPASSXC_COMPARE_H
 
-#include <QDateTime>
-
 #include "core/Clock.h"
 
 enum CompareItemOption

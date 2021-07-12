@@ -18,12 +18,8 @@
 #include "DatabaseSettingsPageKeeShare.h"
 
 #include "core/Database.h"
-#include "core/Group.h"
 #include "gui/Icons.h"
 #include "keeshare/DatabaseSettingsWidgetKeeShare.h"
-#include "keeshare/KeeShare.h"
-
-#include <QApplication>
 
 QString DatabaseSettingsPageKeeShare::name()
 {

@@ -19,7 +19,6 @@
 #ifndef KEEPASSX_KEY_H
 #define KEEPASSX_KEY_H
 
-#include <QByteArray>
 #include <QUuid>
 
 class Key

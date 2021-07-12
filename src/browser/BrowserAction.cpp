@@ -16,14 +16,17 @@
  */
 
 #include "BrowserAction.h"
+
 #include "BrowserService.h"
 #include "BrowserSettings.h"
 #include "BrowserShared.h"
 #include "config-keepassx.h"
 #include "core/Global.h"
 
+#include <QJsonArray>
 #include <QJsonDocument>
-#include <QJsonParseError>
+#include <QJsonObject>
+
 #include <botan/sodium.h>
 
 using namespace Botan::Sodium;

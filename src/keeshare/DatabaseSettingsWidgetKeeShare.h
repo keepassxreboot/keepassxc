@@ -19,7 +19,6 @@
 #define KEEPASSXC_DATABASESETTINGSWIDGETKEESHARE_H
 
 #include <QPointer>
-#include <QScopedPointer>
 #include <QWidget>
 
 class Database;

@@ -19,11 +19,12 @@
 #ifndef KEEAGENTSETTINGS_H
 #define KEEAGENTSETTINGS_H
 
-#include "OpenSSHKey.h"
-#include "core/Entry.h"
-#include "core/EntryAttachments.h"
-#include <QXmlStreamReader>
-#include <QtCore>
+#include <QProcessEnvironment>
+
+class Entry;
+class EntryAttachments;
+class OpenSSHKey;
+class QXmlStreamReader;
 
 class KeeAgentSettings
 {
