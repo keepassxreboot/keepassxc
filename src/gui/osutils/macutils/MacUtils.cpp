@@ -366,6 +366,10 @@ uint16 MacUtils::qtToNativeKeyCode(Qt::Key key)
     case Qt::Key_Shift:
         return kVK_Shift;
     case Qt::Key_Control:
+        return kVK_Control;
+    case Qt::Key_Alt:
+        return kVK_Option;
+    case Qt::Key_Meta:
         return kVK_Command;
     case Qt::Key_Backspace:
         return kVK_Delete;

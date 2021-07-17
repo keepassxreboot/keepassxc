@@ -232,6 +232,9 @@ AutoTypeAction::Result AutoTypeExecutorMac::execType(const AutoTypeKey* action)
     if (action->modifiers & Qt::AltModifier) {
         m_platform->sendKey(Qt::Key_Alt, true);
     }
+    if (action->modifiers & Qt::MetaModifier) {
+        m_platform->sendKey(Qt::Key_Meta, true);
+    }
 
     if (action->key != Qt::Key_unknown) {
         m_platform->sendKey(action->key, true);
@@ -249,6 +252,9 @@ AutoTypeAction::Result AutoTypeExecutorMac::execType(const AutoTypeKey* action)
     }
     if (action->modifiers & Qt::AltModifier) {
         m_platform->sendKey(Qt::Key_Alt, false);
+    }
+    if (action->modifiers & Qt::MetaModifier) {
+        m_platform->sendKey(Qt::Key_Meta, false);
     }
 
     Tools::sleep(execDelayMs);
