@@ -50,6 +50,42 @@
     </screenshots>
 
     <releases>
+        <release version="2.6.6" date="2021-06-11">
+            <description>
+                <ul>
+                    <li>Fix focusing search when pressing hotkey [#6603]</li>
+                    <li>Trim whitespace from TOTP key input prior to processing [#6604]</li>
+                    <li>Fix building on macOS [#6598]</li>
+                    <li>Resolve compiler warnings for unused return values [#6607]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.6.5" date="2021-06-07">
+            <description>
+                <ul>
+                    <li>Show search bar when toolbar is hidden or in overflow [#6279]</li>
+                    <li>Show countdown for clipboard clearing in status bar [#6333]</li>
+                    <li>Command line option to lock all open databases [#6511]</li>
+                    <li>Allow CSV import of bare TOTP secrets [#6211]</li>
+                    <li>Retain file creation time when saving database [#6576]</li>
+                    <li>Set permissions of saved attachments to be private to the current user [#6363]</li>
+                    <li>OPVault: Use Text instead of Name for attribute names [#6334]</li>
+                    <li>Reports: Allow resizing of reports columns [#6435]</li>
+                    <li>Reports: Toggle showing expired entries [#6534]</li>
+                    <li>Save Always on Top setting [#6236]</li>
+                    <li>Password generator can exclude additional lookalike characters (6/G, 8/B) [#6196]</li>
+                    <li>Allow setting MSI properties in unattended install [#6196]</li>
+                    <li>Update MainWindow minimum size to enable smaller verticle space [#6196]</li>
+                    <li>Use application font size when setting default or monospace fonts [#6332]</li>
+                    <li>Fix notes not clearing in entry preview panel in some cases [#6481]</li>
+                    <li>macOS: Correct window activation when restoring from tray [#6575]</li>
+                    <li>macOS: Better handling of minimize after unlock when using browser integration [#6338]</li>
+                    <li>Linux: Start after the system tray is available on LXQt [#6216]</li>
+                    <li>Linux: Allow selection of modal dialogs on X11 in Auto-Type [#6204]</li>
+                    <li>KeeShare: prevent crash when file extension is missing [#6174]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.6.4" date="2021-01-31">
             <description>
                 <ul>
