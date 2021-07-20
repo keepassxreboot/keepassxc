@@ -123,6 +123,11 @@ QString Group::notes() const
     return m_data.notes;
 }
 
+QString Group::tags() const
+{
+    return m_data.tags;
+}
+
 QImage Group::icon() const
 {
     if (m_data.customIcon.isNull()) {
@@ -398,6 +403,11 @@ void Group::setExpiryTime(const QDateTime& dateTime)
 void Group::setMergeMode(MergeMode newMode)
 {
     set(m_data.mergeMode, newMode);
+}
+
+void Group::setTags(const QString& tags)
+{
+    set(m_data.tags, tags);
 }
 
 Group* Group::parentGroup()
@@ -1231,6 +1241,9 @@ bool Group::GroupData::equals(const Group::GroupData& other, CompareItemOptions 
         return false;
     }
     if (::compare(mergeMode, other.mergeMode, options) != 0) {
+        return false;
+    }
+    if (::compare(tags, other.tags, options) != 0) {
         return false;
     }
     return true;

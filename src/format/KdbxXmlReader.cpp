@@ -586,6 +586,10 @@ Group* KdbxXmlReader::parseGroup()
             parseCustomData(group->customData());
             continue;
         }
+        if (m_xml.name() == "Tags") {
+            group->setTags(readString());
+            continue;
+        }
 
         skipCurrentElement();
     }
@@ -752,6 +756,7 @@ Entry* KdbxXmlReader::parseEntry(bool history)
             parseCustomData(entry->customData());
             continue;
         }
+
         skipCurrentElement();
     }
 

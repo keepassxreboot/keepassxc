@@ -60,6 +60,7 @@ public:
     {
         QString name;
         QString notes;
+        QString tags;
         int iconNumber;
         QUuid customIcon;
         TimeInfo timeInfo;
@@ -88,6 +89,7 @@ public:
     const TimeInfo& timeInfo() const;
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
+    QString tags() const;
     QString effectiveAutoTypeSequence() const;
     Group::TriState autoTypeEnabled() const;
     Group::TriState searchingEnabled() const;
@@ -129,6 +131,7 @@ public:
     void setExpires(bool value);
     void setExpiryTime(const QDateTime& dateTime);
     void setMergeMode(MergeMode newMode);
+    void setTags(const QString& tags);
 
     bool canUpdateTimeinfo() const;
     void setUpdateTimeinfo(bool value);
