@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017-2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ YubiKey::ChallengeResult YubiKey::challenge(YubiKeySlot slot, const QByteArray& 
     Q_UNUSED(chal);
     Q_UNUSED(resp);
 
-    return ERROR;
+    return YubiKey::ChallengeResult::YCR_ERROR;
 }
 
 bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)

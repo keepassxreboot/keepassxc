@@ -16,43 +16,35 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_YUBIKEY_H
-#define KEEPASSX_YUBIKEY_H
+#ifndef KEEPASSX_YUBIKEY_INTERFACE_H
+#define KEEPASSX_YUBIKEY_INTERFACE_H
 
 #include <QHash>
 #include <QMutex>
 #include <QObject>
-#include <QTimer>
 #include <botan/secmem.h>
 
-typedef QPair<unsigned int, int> YubiKeySlot;
-Q_DECLARE_METATYPE(YubiKeySlot);
+#include "YubiKey.h"
 
 /**
- * Singleton class to manage the interface to hardware key(s)
+ * Abstract base class to manage the interfaces to hardware key(s)
  */
-class YubiKey : public QObject
+class YubiKeyInterface : public QObject
 {
     Q_OBJECT
 
 public:
-    enum class ChallengeResult : int
-    {
-        YCR_ERROR = 0,
-        YCR_SUCCESS = 1,
-        YCR_WOULDBLOCK = 2
-    };
-
-    static YubiKey* instance();
     bool isInitialized();
 
-    void findValidKeys();
+    virtual void findValidKeys() = 0;
 
-    QList<YubiKeySlot> foundKeys();
+    QHash<unsigned int, QList<QPair<int, QString>>> foundKeys();
+    bool hasFoundKey(YubiKeySlot slot);
     QString getDisplayName(YubiKeySlot slot);
 
-    ChallengeResult challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response);
-    bool testChallenge(YubiKeySlot slot, bool* wouldBlock = nullptr);
+    virtual YubiKey::ChallengeResult
+    challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response) = 0;
+    virtual bool testChallenge(YubiKeySlot slot, bool* wouldBlock = nullptr) = 0;
 
     QString errorMessage();
 
@@ -66,11 +58,6 @@ signals:
     void detectComplete(bool found);
 
     /**
-     * Emitted when user needs to interact with the hardware key to continue
-     */
-    void userInteractionRequest();
-
-    /**
      * Emitted before/after a challenge-response is performed
      */
     void challengeStarted();
@@ -81,19 +68,24 @@ signals:
      */
     void challengeError(QString error);
 
-private:
-    explicit YubiKey();
+protected:
+    explicit YubiKeyInterface();
 
-    static YubiKey* m_instance;
+    virtual YubiKey::ChallengeResult performChallenge(void* key,
+                                                      int slot,
+                                                      bool mayBlock,
+                                                      const QByteArray& challenge,
+                                                      Botan::secure_vector<char>& response) = 0;
+    virtual bool performTestChallenge(void* key, int slot, bool* wouldBlock) = 0;
 
+    QHash<unsigned int, QList<QPair<int, QString>>> m_foundKeys;
+
+    QMutex m_mutex;
     QTimer m_interactionTimer;
     bool m_initialized = false;
     QString m_error;
-    int m_interfaces_detect_completed = -1;
-    bool m_interfaces_detect_found = false;
-    QMutex m_interfaces_detect_mutex;
 
-    Q_DISABLE_COPY(YubiKey)
+    Q_DISABLE_COPY(YubiKeyInterface)
 };
 
-#endif // KEEPASSX_YUBIKEY_H
+#endif // KEEPASSX_YUBIKEY_INTERFACE_H
