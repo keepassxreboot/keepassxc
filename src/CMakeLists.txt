@@ -285,6 +285,7 @@ if(WITH_XC_YUBIKEY)
 
     if(WITH_XC_YUBIKEY_PCSC)
         list(APPEND keepassx_SOURCES keys/drivers/YubiKeyInterfacePCSC.cpp)
+        add_definitions(-DWITH_XC_YUBIKEY_PCSC)
     else()
         list(APPEND keepassx_SOURCES keys/drivers/YubiKeyInterfacePCSCStub.cpp)
     endif()

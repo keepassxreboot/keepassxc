@@ -18,7 +18,12 @@
 #ifndef KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
 #define KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
 
+#ifdef WITH_XC_YUBIKEY_PCSC
 #include <winscard.h>
+#else
+typedef int SCARDHANDLE;
+typedef int SCARDCONTEXT;
+#endif
 
 #include "YubiKeyInterface.h"
 

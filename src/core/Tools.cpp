@@ -96,6 +96,9 @@ namespace Tools
 #endif
 #ifdef WITH_XC_YUBIKEY
         extensions += "\n- " + QObject::tr("YubiKey");
+#ifdef WITH_XC_YUBIKEY_PCSC
+        extensions += "\n- " + QObject::tr("YubiKey via PC/SC");
+#endif
 #endif
 #ifdef WITH_XC_TOUCHID
         extensions += "\n- " + QObject::tr("TouchID");
