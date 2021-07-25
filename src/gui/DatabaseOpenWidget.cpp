@@ -84,9 +84,8 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(YubiKey::instance(), &YubiKey::userInteractionRequest, this, [this] {
         // Show the press notification if we are in an independent window (e.g., DatabaseOpenDialog)
         if (window() != getMainWindow()) {
-            m_ui->messageWidget->showMessage(tr("Please touch the button on your YubiKey!"),
-                                             MessageWidget::Information,
-                                             MessageWidget::DisableAutoHide);
+            m_ui->messageWidget->showMessage(
+                tr("Please interface with your YubiKey!"), MessageWidget::Information, MessageWidget::DisableAutoHide);
         }
     });
     connect(YubiKey::instance(), &YubiKey::challengeCompleted, this, [this] { m_ui->messageWidget->hide(); });
