@@ -27,6 +27,7 @@ The following libraries are required:
 * libargon2
 * qrencode
 * yubikey ykpers (optional to support YubiKey)
+* pcsclite (optional to support YubiKey via PC/SC on Linux)
 
 Prepare the Building Environment
 ================================
@@ -95,6 +96,7 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 	```
 	  -DWITH_XC_AUTOTYPE=[ON|OFF] Enable/Disable Auto-Type (default: ON)
 	  -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication support (default: OFF)
+	  -DWITH_XC_YUBIKEY_PCSC=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication via PC/SC (default: OFF, requires -DWITH_XC_YUBIKEY=ON)
 	  -DWITH_XC_BROWSER=[ON|OFF] Enable/Disable KeePassXC-Browser extension support (default: OFF)
 	  -DWITH_XC_NETWORKING=[ON|OFF] Enable/Disable Networking support (e.g., favicon downloading) (default: OFF)
 	  -DWITH_XC_SSHAGENT=[ON|OFF] Enable/Disable SSHAgent support (default: OFF)

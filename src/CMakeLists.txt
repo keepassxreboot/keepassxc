@@ -226,6 +226,7 @@ add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with Kee
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare (requires quazip5 for secure containers)")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+add_feature_info(YubiKey-PCSC WITH_XC_YUBIKEY_PCSC "YubiKey HMAC-SHA1 challenge-response via PC/SC")
 add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
 if(UNIX AND NOT APPLE)
     add_feature_info(FdoSecrets WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API.")
@@ -280,9 +281,15 @@ if(MINGW)
 endif()
 
 if(WITH_XC_YUBIKEY)
-    list(APPEND keepassx_SOURCES keys/drivers/YubiKey.cpp)
+    list(APPEND keepassx_SOURCES keys/drivers/YubiKey.cpp keys/drivers/YubiKeyInterface.cpp keys/drivers/YubiKeyInterfaceUSB.cpp)
+
+    if(WITH_XC_YUBIKEY_PCSC)
+        list(APPEND keepassx_SOURCES keys/drivers/YubiKeyInterfacePCSC.cpp)
+    else()
+        list(APPEND keepassx_SOURCES keys/drivers/YubiKeyInterfacePCSCStub.cpp)
+    endif()
 else()
-    list(APPEND keepassx_SOURCES keys/drivers/YubiKey.h keys/drivers/YubiKeyStub.cpp)
+    list(APPEND keepassx_SOURCES keys/drivers/YubiKeyStub.cpp)
 endif()
 
 if(WITH_XC_NETWORKING)
@@ -320,6 +327,7 @@ target_link_libraries(keepassx_core
         Qt5::Network
         Qt5::Widgets
         ${BOTAN2_LIBRARIES}
+        ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${thirdparty_LIBRARIES}
