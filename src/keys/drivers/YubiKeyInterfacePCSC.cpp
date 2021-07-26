@@ -45,25 +45,66 @@ namespace
 {
 
     /***
-     * @brief Returns the names of all connected smartcard readers
+     * @brief Check if a smartcard API context is valid and reopen it if it is not
+     *
+     * @param context Smartcard API context, valid or not
+     * @return SCARD_S_SUCCESS on success
+     */
+    int32_t ensureValidContext(SCARDCONTEXT& context)
+    {
+        // This check only tests if the handle pointer is valid in memory
+        // but it does not actually verify that it works
+        int32_t rv = SCardIsValidContext(context);
+
+        // If the handle is broken, create it
+        // This happens e.g. on application launch
+        if (rv != SCARD_S_SUCCESS) {
+            rv = SCardEstablishContext(SCARD_SCOPE_SYSTEM, NULL, NULL, &context);
+            if (rv != SCARD_S_SUCCESS) {
+                return rv;
+            }
+        }
+
+        // Verify the handle actually works
+        SCUINT dwReaders = 0;
+        rv = SCardListReaders(context, NULL, NULL, &dwReaders);
+        // On windows, USB hot-plugging causes the underlying API server to die
+        // So on every USB unplug event, the API context has to be recreated
+        if (rv == static_cast<int32_t>(SCARD_E_SERVICE_STOPPED)) {
+            // Dont care if the release works since the handle might be broken
+            SCardReleaseContext(context);
+            rv = SCardEstablishContext(SCARD_SCOPE_SYSTEM, NULL, NULL, &context);
+        }
+
+        return rv;
+    }
+
+    /***
+     * @brief return the names of all connected smartcard readers
      *
      * @param context A pre-established smartcard API context
-     * @returns New list of smartcard readers
+     * @return New list of smartcard readers
      */
-    QList<QString> getReaders(SCARDCONTEXT context)
+    QList<QString> getReaders(SCARDCONTEXT& context)
     {
+        // Ensure the Smartcard API handle is still valid
+        ensureValidContext(context);
+
         QList<QString> readers_list;
         SCUINT dwReaders = 0;
 
         // Read size of required string buffer
         // OSX does not support auto-allocate
-        SCardListReaders(context, NULL, NULL, &dwReaders);
+        int32_t rv = SCardListReaders(context, NULL, NULL, &dwReaders);
+        if (rv != SCARD_S_SUCCESS) {
+            return readers_list;
+        }
         if (dwReaders == 0 || dwReaders > 16384) { // max 16kb
             return readers_list;
         }
         char* mszReaders = new char[dwReaders + 2];
 
-        int32_t rv = SCardListReaders(context, NULL, mszReaders, &dwReaders);
+        rv = SCardListReaders(context, NULL, mszReaders, &dwReaders);
         if (rv == SCARD_S_SUCCESS) {
             char* readhead = mszReaders;
             // Names are seperated by a null byte
@@ -89,7 +130,7 @@ namespace
      * @param dwProt Protocol currently used
      * @param pioSendPci Pointer to the PCI header used for sending
      *
-     * @returns SCARD_S_SUCCESS on success
+     * @return SCARD_S_SUCCESS on success
      */
     int32_t getCardStatus(SCARDHANDLE handle, SCUINT& dwProt, const SCARD_IO_REQUEST*& pioSendPci)
     {
@@ -130,7 +171,7 @@ namespace
      * @param atomic_action Lambda that contains the sequence to be executed as a transaction. Expected to return
      * SCARD_S_SUCCESS on success.
      *
-     * @returns SCARD_S_SUCCESS on success
+     * @return SCARD_S_SUCCESS on success
      */
     int32_t transactRetry(SCARDHANDLE handle, std::function<int32_t()> atomic_action)
     {
@@ -188,7 +229,7 @@ namespace
      * @param pbRecvBuffer Pointer to the data to be received
      * @param dwRecvLength Size of the data to be received in bytes
      *
-     * @returns SCARD_S_SUCCESS on success
+     * @return SCARD_S_SUCCESS on success
      */
     int32_t transmit(SCARDHANDLE handle,
                      const uint8_t* pbSendBuffer,
@@ -232,7 +273,7 @@ namespace
      *
      * @param handle Smartcard handle and applet ID bytestring pair
      *
-     * @returns SCARD_S_SUCCESS on success
+     * @return SCARD_S_SUCCESS on success
      */
     int32_t selectApplet(const SCardAID& handle)
     {
@@ -258,7 +299,7 @@ namespace
      * @param handle Smartcard handle and applet ID bytestring pair
      * @param serial The serial number
      *
-     * @returns SCARD_S_SUCCESS on success
+     * @return SCARD_S_SUCCESS on success
      */
     int32_t getSerial(const SCardAID& handle, unsigned int& serial)
     {
@@ -293,13 +334,16 @@ namespace
      * @param atr_names A map which maps the card ATR to an applet select APDU bytestring and display name pair
      * @param handle The created smartcard handle and applet select bytestring pair
      *
-     * @returns SCARD_S_SUCCESS on success
+     * @return SCARD_S_SUCCESS on success
      */
     int32_t openKeySerial(const unsigned int target_serial,
-                          SCARDCONTEXT context,
+                          SCARDCONTEXT& context,
                           const QHash<QByteArray, QPair<QByteArray, QString>>& atr_names,
                           SCardAID* handle)
     {
+        // Ensure the Smartcard API handle is still valid
+        ensureValidContext(context);
+
         int32_t rv = SCARD_S_SUCCESS;
         QList<QString> readers_list = getReaders(context);
 
@@ -361,7 +405,7 @@ namespace
      * @param handle Smartcard handle and applet ID bytestring pair
      * @param version The firmware version in [major, minor, patch] format
      *
-     * @returns SCARD_S_SUCCESS on success
+     * @return SCARD_S_SUCCESS on success
      */
     int32_t getStatus(const SCardAID& handle, uint8_t version[3])
     {
@@ -391,14 +435,14 @@ namespace
      * @brief Performs a challenge-response transmission
      *
      * The card computes the SHA1-HMAC  of the challenge
-     * using its pre-programmed secret key and returns the response
+     * using its pre-programmed secret key and return the response
      *
      * @param handle Smartcard handle and applet ID bytestring pair
      * @param slot_cmd Either CMD_HMAC_1 for slot 1 or CMD_HMAC_2 for slot 2
      * @param input Challenge byte buffer, exactly 64 bytes and padded using PKCS#7 or Yubikey padding
      * @param output Response byte buffer, exactly 20 bytes
      *
-     * @returns SCARD_S_SUCCESS on success
+     * @return SCARD_S_SUCCESS on success
      */
     int32_t getHMAC(const SCardAID& handle, uint8_t slot_cmd, const uint8_t input[64], uint8_t output[20])
     {
@@ -437,7 +481,7 @@ namespace
 YubiKeyInterfacePCSC::YubiKeyInterfacePCSC()
     : YubiKeyInterface()
 {
-    if (SCardEstablishContext(SCARD_SCOPE_SYSTEM, NULL, NULL, &m_sc_context) != SCARD_S_SUCCESS) {
+    if (ensureValidContext(m_sc_context) != SCARD_S_SUCCESS) {
         qDebug("YubiKey: Failed to establish PCSC context.");
     } else {
         m_initialized = true;
@@ -482,6 +526,18 @@ void YubiKeyInterfacePCSC::findValidKeys()
         // Connect to each reader and look for cards
         QList<QString> readers_list = getReaders(m_sc_context);
         foreach (const QString& reader_name, readers_list) {
+
+            /* Some Yubikeys present their PCSC interface via USB as well
+               Although this would not be a problem in itself,
+               we filter these connections because in USB mode,
+               the PCSC challenge-response interface is usually locked
+               Instead, the other USB (HID) interface should pick up and
+               interface the key.
+               For more info see the comment block further below. */
+            if (reader_name.toLower().contains("yubikey")) {
+                continue;
+            }
+
             SCARDHANDLE hCard;
             SCUINT dwActiveProtocol = SCARD_PROTOCOL_UNDEFINED;
             int32_t rv = SCardConnect(m_sc_context,
@@ -516,10 +572,22 @@ void YubiKeyInterfacePCSC::findValidKeys()
                                              QString::number(version[2]));
                             unsigned int serial = 0;
                             getSerial(satr, serial);
-                            // This variable is ignored
-                            // because blocking is always assumed, ie. the program waits
-                            // for the user to touch the key to the reader
+                            /* This variable indicates that the key is locked / timed out.
+                               When using the key via NFC, the user has to re-present the key to clear the timeout.
+                               Also, the key can be programmatically reset (see below).
+                               When using the key via USB (where the Yubikey presents as a PCSC reader in itself),
+                               the non-HMAC-SHA1 slots (eg. OTP) are incorrectly recognized as locked HMAC-SHA1 slots.
+                               Due to this conundrum, we exclude "locked" keys from the key enumeration,
+                               but only if the reader is the "virtual yubikey reader device".
+                               This also has the nice side effect of de-duplicating interfaces when a key
+                               Is connected via USB and also accessible via PCSC */
                             bool wouldBlock = false;
+                            /* When the key is Used via NFC, the lock state / time-out is cleared when
+                               The smartcard connection is re-established / the applet is selected
+                               So the next call to performTestChallenge actually clears the lock.
+                               Due to this, the key is unlocked and we display it as such.
+                               When the key times out in the time between the key listing and
+                               the database unlock /save, an intercation request will be displayed. */
                             QList<QPair<int, QString>> ykSlots;
                             for (int slot = 1; slot <= 2; ++slot) {
                                 if (performTestChallenge(&satr, slot, &wouldBlock)) {
@@ -566,12 +634,14 @@ bool YubiKeyInterfacePCSC::testChallenge(YubiKeySlot slot, bool* wouldBlock)
 
 bool YubiKeyInterfacePCSC::performTestChallenge(void* key, int slot, bool* wouldBlock)
 {
-    Q_UNUSED(wouldBlock);
     // Array has to be at least one byte or else the yubikey would interpret everything as padding
     auto chall = randomGen()->randomArray(1);
     Botan::secure_vector<char> resp;
     auto ret = performChallenge(static_cast<SCardAID*>(key), slot, false, chall, resp);
-    if (ret != YubiKey::ChallengeResult::YCR_ERROR) {
+    if (ret == YubiKey::ChallengeResult::YCR_SUCCESS || ret == YubiKey::ChallengeResult::YCR_WOULDBLOCK) {
+        if (wouldBlock) {
+            *wouldBlock = ret == YubiKey::ChallengeResult::YCR_WOULDBLOCK;
+        }
         return true;
     }
     return false;
@@ -604,7 +674,12 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
             auto ret = performChallenge(&hCard, slot.second, true, challenge, response);
             SCardDisconnect(hCard.first, SCARD_LEAVE_CARD);
 
-            if (ret != YubiKey::ChallengeResult::YCR_ERROR) {
+            /* If this would be YCR_WOULDBLOCK, the key is locked.
+               So we wait for the user to re-present it to clear the time-out
+               This condition usually only happens when the key times out after
+               the initial key listing, because performTestChallenge implicitly
+               resets the key (see commnt above) */
+            if (ret == YubiKey::ChallengeResult::YCR_SUCCESS) {
                 emit challengeCompleted();
                 m_mutex.unlock();
                 return ret;
@@ -668,6 +743,7 @@ YubiKey::ChallengeResult YubiKeyInterfacePCSC::performChallenge(void* key,
     if (rv != SCARD_S_SUCCESS) {
         if (rv == static_cast<int32_t>(SCARD_W_CARD_NOT_AUTHENTICATED)) {
             m_error = tr("Hardware key is locked or timed out. Unlock or re-present it to continue.");
+            return YubiKey::ChallengeResult::YCR_WOULDBLOCK;
         } else if (rv == static_cast<int32_t>(SCARD_E_FILE_NOT_FOUND)) {
             m_error = tr("Hardware key was not found or is misconfigured.");
         } else {

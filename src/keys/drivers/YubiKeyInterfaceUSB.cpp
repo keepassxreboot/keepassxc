@@ -142,8 +142,8 @@ void YubiKeyInterfaceUSB::findValidKeys()
                 yk_get_key_vid_pid(yk_key, &vid, &pid);
 
                 QString name = m_pid_names.value(pid, tr("Unknown"));
-                if(vid == 0x1d50) {
-                    name = QStringLiteral("OnlyKey") ;
+                if (vid == 0x1d50) {
+                    name = QStringLiteral("OnlyKey");
                 }
                 name += QString(" v%1.%2.%3")
                             .arg(QString::number(ykds_version_major(st)),

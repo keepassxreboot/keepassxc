@@ -123,6 +123,8 @@ QString YubiKey::getDisplayName(YubiKeySlot slot)
 
     if (YubiKeyInterfacePCSC::instance()->hasFoundKey(slot)) {
         // In some cases, the key might present on two interfaces
+        // This should usually never happen, because the PCSC interface
+        // filters the "virtual yubikey reader device".
         if (!name.isNull()) {
             name += " = ";
         }
