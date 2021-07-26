@@ -19,7 +19,7 @@
 #ifndef KEEPASSX_YUBIKEY_INTERFACE_USB_H
 #define KEEPASSX_YUBIKEY_INTERFACE_USB_H
 
-#include <ykdef.h>
+#include "thirdparty/ykcore/ykdef.h"
 
 #include "YubiKeyInterface.h"
 
