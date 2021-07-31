@@ -35,6 +35,7 @@
 #include <QStringList>
 #include <QUrl>
 #include <QUuid>
+#include <cmath>
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep()
@@ -131,6 +132,37 @@ namespace Tools
         }
 
         return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
+    }
+
+    QString humanReadableTimeDifference(qint64 seconds)
+    {
+        constexpr double secondsInHour = 3600;
+        constexpr double secondsInDay = secondsInHour * 24;
+        constexpr double secondsInWeek = secondsInDay * 7;
+        constexpr double secondsInMonth = secondsInDay * 30; // Approximation
+        constexpr double secondsInYear = secondsInDay * 365;
+
+        seconds = abs(seconds);
+
+        if (seconds >= secondsInYear) {
+            auto years = std::floor(seconds / secondsInYear);
+            return QObject::tr("over %1 year(s)", nullptr, years).arg(years);
+        } else if (seconds >= secondsInMonth) {
+            auto months = std::round(seconds / secondsInMonth);
+            return QObject::tr("about %1 month(s)", nullptr, months).arg(months);
+        } else if (seconds >= secondsInWeek) {
+            auto weeks = std::round(seconds / secondsInWeek);
+            return QObject::tr("%1 week(s)", nullptr, weeks).arg(weeks);
+        } else if (seconds >= secondsInDay) {
+            auto days = std::floor(seconds / secondsInDay);
+            return QObject::tr("%1 day(s)", nullptr, days).arg(days);
+        } else if (seconds >= secondsInHour) {
+            auto hours = std::floor(seconds / secondsInHour);
+            return QObject::tr("%1 hour(s)", nullptr, hours).arg(hours);
+        }
+
+        auto minutes = std::floor(seconds / 60);
+        return QObject::tr("%1 minute(s)", nullptr, minutes).arg(minutes);
     }
 
     bool readFromDevice(QIODevice* device, QByteArray& data, int size)

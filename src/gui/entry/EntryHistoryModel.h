@@ -35,7 +35,7 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
-    void setEntries(const QList<Entry*>& entries);
+    void setEntries(const QList<Entry*>& entries, Entry* parentEntry);
     void clear();
     void clearDeletedEntries();
     QList<Entry*> deletedEntries();
@@ -43,8 +43,12 @@ public:
     void deleteAll();
 
 private:
+    void calculateHistoryModifications();
+
     QList<Entry*> m_historyEntries;
     QList<Entry*> m_deletedHistoryEntries;
+    QStringList m_historyModifications;
+    const Entry* m_parentEntry;
 };
 
 #endif // KEEPASSX_ENTRYHISTORYMODEL_H

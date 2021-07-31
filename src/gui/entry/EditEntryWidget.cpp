@@ -504,7 +504,9 @@ void EditEntryWidget::emitHistoryEntryActivated(const QModelIndex& index)
     Q_ASSERT(!m_history);
 
     Entry* entry = m_historyModel->entryFromIndex(index);
-    emit historyEntryActivated(entry);
+    if (entry) {
+        emit historyEntryActivated(entry);
+    }
 }
 
 void EditEntryWidget::histEntryActivated(const QModelIndex& index)
@@ -521,7 +523,7 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
 {
     Q_UNUSED(previous);
 
-    if (current.isValid()) {
+    if (m_historyModel->entryFromIndex(current)) {
         m_historyUi->showButton->setEnabled(true);
         m_historyUi->restoreButton->setEnabled(true);
         m_historyUi->deleteButton->setEnabled(true);
@@ -1025,7 +1027,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
 
     if (!m_history && !restore) {
-        m_historyModel->setEntries(entry->historyItems());
+        m_historyModel->setEntries(entry->historyItems(), entry);
         m_historyUi->historyView->sortByColumn(0, Qt::DescendingOrder);
     }
     if (m_historyModel->rowCount() > 0) {
@@ -1129,7 +1131,8 @@ bool EditEntryWidget::commitEntry()
         m_entry->endUpdate();
     }
 
-    m_historyModel->setEntries(m_entry->historyItems());
+    m_historyModel->setEntries(m_entry->historyItems(), m_entry);
+    m_advancedUi->attachmentsWidget->linkAttachments(m_entry->attachments());
 
     showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
     setModified(false);
@@ -1538,8 +1541,9 @@ void EditEntryWidget::showHistoryEntry()
 void EditEntryWidget::restoreHistoryEntry()
 {
     QModelIndex index = m_sortModel->mapToSource(m_historyUi->historyView->currentIndex());
-    if (index.isValid()) {
-        setForms(m_historyModel->entryFromIndex(index), true);
+    auto entry = m_historyModel->entryFromIndex(index);
+    if (entry) {
+        setForms(entry, true);
         setModified(true);
     }
 }
@@ -1547,7 +1551,7 @@ void EditEntryWidget::restoreHistoryEntry()
 void EditEntryWidget::deleteHistoryEntry()
 {
     QModelIndex index = m_sortModel->mapToSource(m_historyUi->historyView->currentIndex());
-    if (index.isValid()) {
+    if (m_historyModel->entryFromIndex(index)) {
         m_historyModel->deleteIndex(index);
         if (m_historyModel->rowCount() > 0) {
             m_historyUi->deleteAllButton->setEnabled(true);

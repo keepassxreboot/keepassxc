@@ -21,6 +21,7 @@
 
 #include "core/Global.h"
 
+#include <QDateTime>
 #include <QProcessEnvironment>
 
 class QIODevice;
@@ -30,6 +31,7 @@ namespace Tools
 {
     QString debugInfo();
     QString humanReadableFileSize(qint64 bytes, quint32 precision = 2);
+    QString humanReadableTimeDifference(qint64 seconds);
     bool readFromDevice(QIODevice* device, QByteArray& data, int size = 16384);
     bool readAllFromDevice(QIODevice* device, QByteArray& data);
     bool isHex(const QByteArray& ba);
