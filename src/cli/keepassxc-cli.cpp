@@ -109,7 +109,7 @@ private:
 };
 #endif
 
-void enterInteractiveMode(const QStringList& arguments)
+int enterInteractiveMode(const QStringList& arguments)
 {
     auto& err = Utils::STDERR;
     // Replace command list with interactive version
@@ -118,7 +118,9 @@ void enterInteractiveMode(const QStringList& arguments)
     Open openCmd;
     QStringList openArgs(arguments);
     openArgs.removeFirst();
-    openCmd.execute(openArgs);
+    if (openCmd.execute(openArgs) != EXIT_SUCCESS) {
+        return EXIT_FAILURE;
+    };
 
     QScopedPointer<LineReader> reader;
 #if defined(USE_READLINE)
@@ -165,6 +167,8 @@ void enterInteractiveMode(const QStringList& arguments)
     if (currentDatabase) {
         currentDatabase->releaseData();
     }
+
+    return EXIT_SUCCESS;
 }
 
 int main(int argc, char** argv)
@@ -224,8 +228,7 @@ int main(int argc, char** argv)
 
     QString commandName = parser.positionalArguments().at(0);
     if (commandName == "open") {
-        enterInteractiveMode(arguments);
-        return EXIT_SUCCESS;
+        return enterInteractiveMode(arguments);
     }
 
     auto command = Commands::getCommand(commandName);

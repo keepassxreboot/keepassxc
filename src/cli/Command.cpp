@@ -138,10 +138,12 @@ QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringLi
         return {};
     }
     if (parser->positionalArguments().size() < positionalArguments.size()) {
+        err << QObject::tr("Missing positional argument(s).") << "\n\n";
         err << getHelpText();
         return {};
     }
     if (parser->positionalArguments().size() > (positionalArguments.size() + optionalArguments.size())) {
+        err << QObject::tr("Too many arguments provided.") << "\n\n";
         err << getHelpText();
         return {};
     }
