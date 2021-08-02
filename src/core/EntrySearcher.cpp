@@ -195,6 +195,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                 found = term.regex.match(entry->group()->name()).hasMatch();
             }
             break;
+        case Field::Path:
+            found = term.regex.match(entry->path()).hasMatch();
+            break;
         default:
             // Terms without a specific field try to match title, username, url, and notes
             found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
@@ -229,7 +232,8 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("u"), Field::Username}, // u: stands for username rather than url
         {QStringLiteral("url"), Field::Url},
         {QStringLiteral("username"), Field::Username},
-        {QStringLiteral("group"), Field::Group}};
+        {QStringLiteral("group"), Field::Group},
+        {QStringLiteral("path"), Field::Path}};
 
     m_searchTerms.clear();
     auto results = m_termParser.globalMatch(searchString);

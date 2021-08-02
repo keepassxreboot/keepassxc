@@ -24,6 +24,7 @@
 #include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/EntrySearcher.h"
 
 class Group : public ModifiableObject
 {
@@ -106,6 +107,7 @@ public:
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
     static const QString RootAutoTypeSequence;
+    static EntrySearcher Searcher;
 
     Group* findChildByName(const QString& name);
     Entry* findEntryByUuid(const QUuid& uuid, bool recursive = true) const;
@@ -113,7 +115,7 @@ public:
     Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);
     Group* findGroupByPath(const QString& groupPath);
-    QStringList locate(const QString& locateTerm, const QString& currentPath = {"/"}) const;
+    QStringList locate(const QString& locateTerm) const;
     Entry* addEntryWithPath(const QString& entryPath);
     void setUuid(const QUuid& uuid);
     void setName(const QString& name);

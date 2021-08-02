@@ -21,6 +21,7 @@
 
 #include "core/Config.h"
 #include "core/DatabaseIcons.h"
+#include "core/EntrySearcher.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 
@@ -33,6 +34,7 @@
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
 const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+EntrySearcher Group::Searcher;
 
 Group::Group()
     : m_customData(new CustomData(this))
@@ -1075,25 +1077,23 @@ bool Group::resolveAutoTypeEnabled() const
     }
 }
 
-QStringList Group::locate(const QString& locateTerm, const QString& currentPath) const
+QStringList Group::locate(const QString& locateTerm) const
 {
-    // TODO: Replace with EntrySearcher
     QStringList response;
     if (locateTerm.isEmpty()) {
         return response;
     }
 
-    for (const Entry* entry : asConst(m_entries)) {
-        QString entryPath = currentPath + entry->title();
-        if (entryPath.contains(locateTerm, Qt::CaseInsensitive)) {
-            response << entryPath;
-        }
-    }
+    const EntrySearcher::SearchTerm searchTerm{
+        EntrySearcher::Field::Path, locateTerm, Tools::convertToRegex(locateTerm, false, false, false), false};
+    const QList<EntrySearcher::SearchTerm> searchTermList = {searchTerm};
 
-    for (const Group* group : asConst(m_children)) {
-        for (const QString& path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
-            response << path;
-        }
+    const auto result = Group::Searcher.search(searchTermList, this, true);
+
+    for (const Entry* entry : result) {
+        auto path = entry->path().prepend('/');
+
+        response << path;
     }
 
     return response;
