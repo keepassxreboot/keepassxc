@@ -23,6 +23,7 @@
 #include <QLibrary>
 
 #include "config-keepassx.h"
+#include "core/Config.h"
 #include "core/Global.h"
 
 Resources* Resources::m_instance(nullptr);
@@ -89,6 +90,12 @@ QString Resources::pluginPath(const QString& name) const
 QString Resources::wordlistPath(const QString& name) const
 {
     return dataPath(QStringLiteral("wordlists/%1").arg(name));
+}
+
+QString Resources::userWordlistPath(const QString& name) const
+{
+    QString configPath = QFileInfo(config()->getFileName()).absolutePath();
+    return configPath + QStringLiteral("/wordlists/%1").arg(name);
 }
 
 Resources::Resources()
