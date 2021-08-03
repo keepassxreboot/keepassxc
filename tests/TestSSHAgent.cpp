@@ -211,6 +211,18 @@ void TestSSHAgent::testConfirmConstraint()
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && !keyInAgent);
 }
 
+void TestSSHAgent::testToOpenSSHKey()
+{
+    KeeAgentSettings settings;
+    settings.setSelectedType("file");
+    settings.setFileName(QString("%1/id_rsa-encrypted-asn1").arg(QString(KEEPASSX_TEST_DATA_DIR)));
+
+    OpenSSHKey key;
+    settings.toOpenSSHKey("username", "correctpassphrase", QString(), nullptr, key, false);
+
+    QVERIFY(!key.publicKey().isEmpty());
+}
+
 void TestSSHAgent::cleanupTestCase()
 {
     if (m_agentProcess.state() != QProcess::NotRunning) {

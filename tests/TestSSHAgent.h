@@ -18,6 +18,7 @@
 #ifndef TESTSSHAGENT_H
 #define TESTSSHAGENT_H
 
+#include "config-keepassx-tests.h"
 #include "sshagent/OpenSSHKey.h"
 #include <QProcess>
 #include <QTemporaryFile>
@@ -34,6 +35,7 @@ private slots:
     void testRemoveOnClose();
     void testLifetimeConstraint();
     void testConfirmConstraint();
+    void testToOpenSSHKey();
     void cleanupTestCase();
 
 private:
