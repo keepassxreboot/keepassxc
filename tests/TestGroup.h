@@ -39,7 +39,6 @@ private slots:
     void testFindEntry();
     void testFindGroupByPath();
     void testPrint();
-    void testLocate();
     void testAddEntryWithPath();
     void testIsRecycled();
     void testCopyDataFrom();

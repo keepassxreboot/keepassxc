@@ -114,7 +114,6 @@ public:
     Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);
     Group* findGroupByPath(const QString& groupPath);
-    QStringList locate(const QString& locateTerm, const QString& currentPath = {"/"}) const;
     Entry* addEntryWithPath(const QString& entryPath);
     void setUuid(const QUuid& uuid);
     void setName(const QString& name);

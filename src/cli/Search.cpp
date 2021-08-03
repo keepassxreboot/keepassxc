@@ -15,36 +15,37 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Locate.h"
+#include "Search.h"
 
 #include <QCommandLineParser>
 
 #include "Utils.h"
+#include "core/EntrySearcher.h"
 #include "core/Group.h"
 
-Locate::Locate()
+Search::Search()
 {
-    name = QString("locate");
+    name = QString("search");
     description = QObject::tr("Find entries quickly.");
     positionalArguments.append({QString("term"), QObject::tr("Search term."), QString("")});
 }
 
-int Locate::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
+int Search::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     auto& out = Utils::STDOUT;
     auto& err = Utils::STDERR;
 
     const QStringList args = parser->positionalArguments();
-    const QString& searchTerm = args.at(1);
 
-    QStringList results = database->rootGroup()->locate(searchTerm);
+    EntrySearcher searcher;
+    auto results = searcher.search(args.at(1), database->rootGroup(), true);
     if (results.isEmpty()) {
         err << "No results for that search term." << endl;
         return EXIT_FAILURE;
     }
 
-    for (const QString& result : asConst(results)) {
-        out << result << endl;
+    for (const Entry* result : asConst(results)) {
+        out << result->path().prepend('/') << endl;
     }
     return EXIT_SUCCESS;
 }

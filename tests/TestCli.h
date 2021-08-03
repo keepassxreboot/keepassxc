@@ -65,7 +65,6 @@ private slots:
     void testHelp();
     void testInteractiveCommands();
     void testList();
-    void testLocate();
     void testMerge();
     void testMergeWithKeys();
     void testMove();
@@ -73,6 +72,7 @@ private slots:
     void testRemove();
     void testRemoveGroup();
     void testRemoveQuiet();
+    void testSearch();
     void testShow();
     void testInvalidDbFiles();
     void testYubiKeyOption();

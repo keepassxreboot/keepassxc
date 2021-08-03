@@ -41,12 +41,12 @@
 #include "cli/Import.h"
 #include "cli/Info.h"
 #include "cli/List.h"
-#include "cli/Locate.h"
 #include "cli/Merge.h"
 #include "cli/Move.h"
 #include "cli/Open.h"
 #include "cli/Remove.h"
 #include "cli/RemoveGroup.h"
+#include "cli/Search.h"
 #include "cli/Show.h"
 #include "cli/Utils.h"
 
@@ -226,7 +226,6 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("generate"));
     QVERIFY(Commands::getCommand("help"));
     QVERIFY(Commands::getCommand("import"));
-    QVERIFY(Commands::getCommand("locate"));
     QVERIFY(Commands::getCommand("ls"));
     QVERIFY(Commands::getCommand("merge"));
     QVERIFY(Commands::getCommand("mkdir"));
@@ -235,6 +234,7 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("rm"));
     QVERIFY(Commands::getCommand("rmdir"));
     QVERIFY(Commands::getCommand("show"));
+    QVERIFY(Commands::getCommand("search"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
     QCOMPARE(Commands::getCommands().size(), 22);
 }
@@ -254,7 +254,6 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("exit"));
     QVERIFY(Commands::getCommand("generate"));
     QVERIFY(Commands::getCommand("help"));
-    QVERIFY(Commands::getCommand("locate"));
     QVERIFY(Commands::getCommand("ls"));
     QVERIFY(Commands::getCommand("merge"));
     QVERIFY(Commands::getCommand("mkdir"));
@@ -264,6 +263,7 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("rm"));
     QVERIFY(Commands::getCommand("rmdir"));
     QVERIFY(Commands::getCommand("show"));
+    QVERIFY(Commands::getCommand("search"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
     QCOMPARE(Commands::getCommands().size(), 22);
 }
@@ -1274,55 +1274,6 @@ void TestCli::testList()
     QCOMPARE(m_stdout->readAll(), QByteArray());
 }
 
-void TestCli::testLocate()
-{
-    Locate locateCmd;
-    QVERIFY(!locateCmd.name.isEmpty());
-    QVERIFY(locateCmd.getDescriptionLine().contains(locateCmd.name));
-
-    setInput("a");
-    execCmd(locateCmd, {"locate", m_dbFile->fileName(), "Sample"});
-    m_stderr->readLine(); // Skip password prompt
-    QCOMPARE(m_stderr->readAll(), QByteArray());
-    QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n"));
-
-    // Quiet option
-    setInput("a");
-    execCmd(locateCmd, {"locate", m_dbFile->fileName(), "-q", "Sample"});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
-    QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n"));
-
-    setInput("a");
-    execCmd(locateCmd, {"locate", m_dbFile->fileName(), "Does Not Exist"});
-    m_stderr->readLine(); // skip password prompt
-    QCOMPARE(m_stderr->readAll(), QByteArray("No results for that search term.\n"));
-    QCOMPARE(m_stdout->readAll(), QByteArray());
-
-    // write a modified database
-    auto db = readDatabase();
-    QVERIFY(db);
-    auto* group = db->rootGroup()->findGroupByPath("/General/");
-    QVERIFY(group);
-    auto* entry = new Entry();
-    entry->setUuid(QUuid::createUuid());
-    entry->setTitle("New Entry");
-    group->addEntry(entry);
-
-    TemporaryFile tmpFile;
-    tmpFile.open();
-    tmpFile.close();
-    db->saveAs(tmpFile.fileName());
-
-    setInput("a");
-    execCmd(locateCmd, {"locate", tmpFile.fileName(), "New"});
-    QCOMPARE(m_stdout->readAll(), QByteArray("/General/New Entry\n"));
-
-    setInput("a");
-    execCmd(locateCmd, {"locate", tmpFile.fileName(), "Entry"});
-    QCOMPARE(m_stdout->readAll(),
-             QByteArray("/Sample Entry\n/General/New Entry\n/Homebanking/Subgroup/Subgroup Entry\n"));
-}
-
 void TestCli::testMerge()
 {
     Merge mergeCmd;
@@ -1692,6 +1643,76 @@ void TestCli::testRemoveQuiet()
     db = readDatabase();
     QVERIFY(!db->rootGroup()->findEntryByPath("/Sample Entry"));
     QVERIFY(!db->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
+}
+
+void TestCli::testSearch()
+{
+    Search searchCmd;
+    QVERIFY(!searchCmd.name.isEmpty());
+    QVERIFY(searchCmd.getDescriptionLine().contains(searchCmd.name));
+
+    setInput("a");
+    execCmd(searchCmd, {"search", m_dbFile->fileName(), "Sample"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n"));
+
+    // Quiet option
+    setInput("a");
+    execCmd(searchCmd, {"search", m_dbFile->fileName(), "-q", "Sample"});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n"));
+
+    setInput("a");
+    execCmd(searchCmd, {"search", m_dbFile->fileName(), "Does Not Exist"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("No results for that search term.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    // write a modified database
+    auto db = readDatabase();
+    QVERIFY(db);
+    auto* group = db->rootGroup()->findGroupByPath("/General/");
+    QVERIFY(group);
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setTitle("New Entry");
+    group->addEntry(entry);
+
+    TemporaryFile tmpFile;
+    tmpFile.open();
+    tmpFile.close();
+    db->saveAs(tmpFile.fileName());
+
+    setInput("a");
+    execCmd(searchCmd, {"search", tmpFile.fileName(), "title:New"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("/General/New Entry\n"));
+
+    setInput("a");
+    execCmd(searchCmd, {"search", tmpFile.fileName(), "title:Entry"});
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("/Sample Entry\n/General/New Entry\n/Homebanking/Subgroup/Subgroup Entry\n"));
+
+    setInput("a");
+    execCmd(searchCmd, {"search", tmpFile.fileName(), "group:General"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("/General/New Entry\n"));
+
+    setInput("a");
+    execCmd(searchCmd, {"search", tmpFile.fileName(), "group:NewDatabase"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n"));
+
+    setInput("a");
+    execCmd(searchCmd, {"search", tmpFile.fileName(), "group:/NewDatabase"});
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("/Sample Entry\n/General/New Entry\n/Homebanking/Subgroup/Subgroup Entry\n"));
+
+    setInput("a");
+    execCmd(searchCmd, {"search", tmpFile.fileName(), "url:bank"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("/Homebanking/Subgroup/Subgroup Entry\n"));
+
+    setInput("a");
+    execCmd(searchCmd, {"search", tmpFile.fileName(), "u:User Name"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n/Homebanking/Subgroup/Subgroup Entry\n"));
 }
 
 void TestCli::testShow()

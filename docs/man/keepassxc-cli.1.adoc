@@ -90,10 +90,6 @@ It provides the ability to query and modify the entries of a KeePass database, d
   If both the key file and password are empty, no database will be created.
   The new database will be in kdbx 4 format.
 
-
-*locate* [_options_] <__database__> <__term__>::
-  Locates all the entries that match a specific search term in a database.
-
 *ls* [_options_] <__database__> [_group_]::
   Lists the contents of a group in a database.
   If no group is specified, it will default to the root group.
@@ -126,6 +122,9 @@ It provides the ability to query and modify the entries of a KeePass database, d
   Removes a group from a database.
   If the database has a recycle bin, the group will be moved there.
   If the group is already in the recycle bin, it will be removed permanently.
+
+*search* [_options_] <__database__> <__term__>::
+  Searches all entries that match a specific search term in a database.
 
 *show* [_options_] <__database__> <__entry__>::
   Shows the title, username, password, URL and notes of a database entry.
@@ -221,7 +220,7 @@ The same password generation options as documented for the generate command can 
   Will report an error if no TOTP is configured for the entry.
 
 *-b*, *--best*::
-  Try to find and copy to clipboard a unique entry matching the input (similar to *-locate*)
+  Try to find and copy to clipboard a unique entry matching the input
   If a unique matching entry is found it will be copied to the clipboard.
   If multiple entries are found they will be listed to refine the search. (no clip performed)
 
