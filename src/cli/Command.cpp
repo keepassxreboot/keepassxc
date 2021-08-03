@@ -31,12 +31,12 @@
 #include "Import.h"
 #include "Info.h"
 #include "List.h"
-#include "Locate.h"
 #include "Merge.h"
 #include "Move.h"
 #include "Open.h"
 #include "Remove.h"
 #include "RemoveGroup.h"
+#include "Search.h"
 #include "Show.h"
 #include "Utils.h"
 
@@ -173,7 +173,6 @@ namespace Commands
         s_commands.insert(QStringLiteral("estimate"), QSharedPointer<Command>(new Estimate()));
         s_commands.insert(QStringLiteral("generate"), QSharedPointer<Command>(new Generate()));
         s_commands.insert(QStringLiteral("help"), QSharedPointer<Command>(new Help()));
-        s_commands.insert(QStringLiteral("locate"), QSharedPointer<Command>(new Locate()));
         s_commands.insert(QStringLiteral("ls"), QSharedPointer<Command>(new List()));
         s_commands.insert(QStringLiteral("merge"), QSharedPointer<Command>(new Merge()));
         s_commands.insert(QStringLiteral("mkdir"), QSharedPointer<Command>(new AddGroup()));
@@ -181,6 +180,7 @@ namespace Commands
         s_commands.insert(QStringLiteral("open"), QSharedPointer<Command>(new Open()));
         s_commands.insert(QStringLiteral("rm"), QSharedPointer<Command>(new Remove()));
         s_commands.insert(QStringLiteral("rmdir"), QSharedPointer<Command>(new RemoveGroup()));
+        s_commands.insert(QStringLiteral("search"), QSharedPointer<Command>(new Search()));
         s_commands.insert(QStringLiteral("show"), QSharedPointer<Command>(new Show()));
 
         if (interactive) {

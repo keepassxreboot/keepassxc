@@ -32,12 +32,12 @@ set(cli_SOURCES
         Import.cpp
         Info.cpp
         List.cpp
-        Locate.cpp
         Merge.cpp
         Move.cpp
         Open.cpp
         Remove.cpp
         RemoveGroup.cpp
+        Search.cpp
         Show.cpp)
 
 add_library(cli STATIC ${cli_SOURCES})

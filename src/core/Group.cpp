@@ -1079,30 +1079,6 @@ bool Group::resolveAutoTypeEnabled() const
     }
 }
 
-QStringList Group::locate(const QString& locateTerm, const QString& currentPath) const
-{
-    // TODO: Replace with EntrySearcher
-    QStringList response;
-    if (locateTerm.isEmpty()) {
-        return response;
-    }
-
-    for (const Entry* entry : asConst(m_entries)) {
-        QString entryPath = currentPath + entry->title();
-        if (entryPath.contains(locateTerm, Qt::CaseInsensitive)) {
-            response << entryPath;
-        }
-    }
-
-    for (const Group* group : asConst(m_children)) {
-        for (const QString& path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
-            response << path;
-        }
-    }
-
-    return response;
-}
-
 Entry* Group::addEntryWithPath(const QString& entryPath)
 {
     if (entryPath.isEmpty() || findEntryByPath(entryPath)) {

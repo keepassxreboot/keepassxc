@@ -18,6 +18,7 @@
 #include "Clip.h"
 
 #include "Utils.h"
+#include "core/EntrySearcher.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 
@@ -78,16 +79,18 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     QString entryPath;
     if (parser->isSet(Clip::BestMatchOption)) {
-        QStringList results = database->rootGroup()->locate(args.at(1));
+        EntrySearcher searcher;
+        const auto& searchTerm = args.at(1);
+        const auto results = searcher.search(QString("title:%1").arg(searchTerm), database->rootGroup(), true);
         if (results.count() > 1) {
             err << QObject::tr("Multiple entries matching:") << endl;
-            for (const QString& result : asConst(results)) {
-                err << result << endl;
+            for (const Entry* result : results) {
+                err << result->path().prepend('/') << endl;
             }
             return EXIT_FAILURE;
         } else {
-            entryPath = (results.isEmpty()) ? args.at(1) : results[0];
-            out << QObject::tr("Used matching entry: %1").arg(entryPath) << endl;
+            entryPath = (results.isEmpty()) ? searchTerm : results[0]->path().prepend('/');
+            out << QObject::tr("Using matching entry: %1").arg(entryPath) << endl;
         }
     } else {
         entryPath = args.at(1);

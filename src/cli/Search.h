@@ -15,17 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_LOCATE_H
-#define KEEPASSXC_LOCATE_H
+#ifndef KEEPASSXC_SEARCH_H
+#define KEEPASSXC_SEARCH_H
 
 #include "DatabaseCommand.h"
 
-class Locate : public DatabaseCommand
+class Search : public DatabaseCommand
 {
 public:
-    Locate();
+    Search();
 
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 };
 
-#endif // KEEPASSXC_LOCATE_H
+#endif // KEEPASSXC_SEARCH_H
