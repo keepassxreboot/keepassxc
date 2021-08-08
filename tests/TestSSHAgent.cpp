@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "config-keepassx-tests.h"
 #include "TestSSHAgent.h"
+#include "config-keepassx-tests.h"
 #include "core/Config.h"
 #include "crypto/Crypto.h"
 #include "sshagent/KeeAgentSettings.h"
