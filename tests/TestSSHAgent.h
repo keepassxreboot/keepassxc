@@ -34,6 +34,7 @@ private slots:
     void testRemoveOnClose();
     void testLifetimeConstraint();
     void testConfirmConstraint();
+    void testToOpenSSHKey();
     void cleanupTestCase();
 
 private:

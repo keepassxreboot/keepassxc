@@ -478,7 +478,7 @@ bool KeeAgentSettings::toOpenSSHKey(const QString& username,
         return false;
     }
 
-    if (key.encrypted() && decrypt) {
+    if (key.encrypted() && (decrypt || key.publicKey().isEmpty())) {
         if (!key.openKey(password)) {
             m_error = key.errorString();
             return false;
