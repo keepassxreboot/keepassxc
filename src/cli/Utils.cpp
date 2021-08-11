@@ -269,7 +269,7 @@ namespace Utils
 
 #ifdef Q_OS_UNIX
         if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
-            clipPrograms << qMakePair(QStringLiteral("wl-copy"), QStringLiteral(""));
+            clipPrograms << qMakePair(QStringLiteral("wl-copy"), QStringLiteral("-t text/plain"));
         } else {
             clipPrograms << qMakePair(QStringLiteral("xclip"), QStringLiteral("-selection clipboard -i"));
         }
