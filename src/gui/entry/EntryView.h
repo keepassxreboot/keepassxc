@@ -39,6 +39,7 @@ public:
     Entry* currentEntry();
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
+    QModelIndex indexFromEntry(Entry* entry);
     int currentEntryIndex();
     bool inSearchMode();
     bool isSorted();

@@ -462,8 +462,16 @@ void DatabaseWidget::deleteSelectedEntries()
 
 void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries, bool confirm)
 {
+    if (selectedEntries.isEmpty()) {
+        return;
+    }
+
+    // Find the index above the first entry for selection after deletion
+    auto index = m_entryView->indexFromEntry(selectedEntries.first());
+    index = m_entryView->indexAbove(index);
+
     // Confirm entry removal before moving forward
-    auto* recycleBin = m_db->metadata()->recycleBin();
+    auto recycleBin = m_db->metadata()->recycleBin();
     bool permanent = (recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid()))
                      || !m_db->metadata()->recycleBinEnabled();
 
@@ -475,8 +483,15 @@ void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries, bool confirm)
 
     refreshSearch();
 
-    m_entryView->setFirstEntryActive();
-    auto* currentEntry = currentSelectedEntry();
+    // Select the row above the deleted entries
+    if (index.isValid()) {
+        m_entryView->setCurrentIndex(index);
+    } else {
+        m_entryView->setFirstEntryActive();
+    }
+
+    // Update the preview widget
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         m_previewView->setEntry(currentEntry);
     } else {

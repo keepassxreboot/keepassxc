@@ -289,6 +289,11 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
     }
 }
 
+QModelIndex EntryView::indexFromEntry(Entry* entry)
+{
+    return m_sortModel->mapFromSource(m_model->indexFromEntry(entry));
+}
+
 int EntryView::currentEntryIndex()
 {
     QModelIndexList list = selectionModel()->selectedRows();
