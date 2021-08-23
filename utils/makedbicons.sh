@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Assemble database icons from the icons8 collection
 # by Wolfram Rösler 2020-04-30
 
@@ -7,7 +7,7 @@ RED='\033[0;31m'
 YELLOW='\033[0;33m'
 
 # Check parameters
-if [[ $# != 1 ]];then
+if [[ $# != 1 ]]; then
     echo "Usage: $0 ICONS8"
     echo "ICONS8 is the directory containing the Icons8 flat-color-icons repository"
     echo "(git clone https://github.com/icons8/flat-color-icons)".
@@ -15,15 +15,15 @@ if [[ $# != 1 ]];then
 fi
 
 # Check source directory
-SRCDIR="$1"
-if [ ! -d "$SRCDIR" ];then
+SRCDIR=$1
+if [[ ! -d $SRCDIR ]]; then
     echo -e "${RED}icons8 directory doesn't exist: ${SRCDIR}${NC}"
     exit 1
 fi
 
 # Check destination directory
 DSTDIR=share/icons/database
-if [ ! -d "$DSTDIR" ];then
+if [[ ! -d $DSTDIR ]]; then
     echo -e "${RED}Please invoke this script from the KeePassXC source root directory.${NC}"
     exit 1
 fi
@@ -39,7 +39,7 @@ fi
 copy() {
     # The source file is:
     SRC="${SRCDIR}/svg/${1}.svg"
-    if [ ! -f "$SRC" ];then
+    if [[ ! -f $SRC ]]; then
         echo -e "${RED}Cannot find source icon for ${2} (${SRC})${NC}"
         return
     fi
@@ -47,7 +47,7 @@ copy() {
     # Copy the source file to the destination, keeping
     # the source file's extension
     DST="$DSTDIR/${2}.svg"
-    cp $SRC $DST
+    cp -- "$SRC" "$DST"
     echo "Copied icon for ${1} to ${DST}"
 }
 

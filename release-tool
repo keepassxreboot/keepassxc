@@ -61,7 +61,7 @@ printUsage() {
         cmd="COMMAND"
     fi
 
-    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [options]\n"
+    printf "\e[1mUsage:\e[0m $(basename "$0") $cmd [options]\n"
 
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
