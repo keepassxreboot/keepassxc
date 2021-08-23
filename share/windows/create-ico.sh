@@ -10,7 +10,7 @@ if [[ -z "$1" ]]; then
 fi
 
 outfile=$2
-if [[ -z "outfile" ]]; then
+if [[ -z $outfile ]]; then
   outfile="logo.ico"
 fi
 
