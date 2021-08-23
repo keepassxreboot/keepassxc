@@ -61,7 +61,7 @@
             <Directory Id="ProgramMenuFolder">
                 <Directory Id="ApplicationProgramsFolder" Name="KeePassXC">
                     <Component Id="ApplicationShortcuts" Guid="*">
-                        <Shortcut Id="ApplicationStartMenuShortcut" 
+                        <Shortcut Id="ApplicationStartMenuShortcut"
                             Name="KeePassXC"
                             Target="[#CM_FP_KeePassXC.exe]"
                             WorkingDirectory="INSTALL_ROOT"/>

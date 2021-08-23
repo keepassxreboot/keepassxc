@@ -60,7 +60,7 @@ if(UNIX)
         VERBATIM)
     add_custom_target(manpages ALL DEPENDS keepassxc.1 keepassxc-cli.1)
 
-    install(FILES 
+    install(FILES
         ${OUT_DIR}/keepassxc.1
         ${OUT_DIR}/keepassxc-cli.1
         DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)

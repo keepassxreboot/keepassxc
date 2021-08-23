@@ -103,7 +103,7 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 	  -DWITH_XC_KEESHARE=[ON|OFF] Enable/Disable KeeShare group synchronization extension (default: OFF)
 	  -DWITH_XC_KEESHARE_SECURE=[ON|OFF] Enable/Disable KeeShare signed containers, requires libquazip5 (default: OFF)
 	  -DWITH_XC_ALL=[ON|OFF] Enable/Disable compiling all plugins above (default: OFF)
-	  
+
 	  -DWITH_XC_UPDATECHECK=[ON|OFF] Enable/Disable automatic updating checking (requires WITH_XC_NETWORKING) (default: ON)
 
 	  -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
