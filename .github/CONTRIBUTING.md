@@ -63,7 +63,7 @@ Before submitting a bug report, check if the problem has already been reported. 
 
 ### Discuss with the team
 
-As with feature requests, you can talk to the KeePassXC team about bugs, new features, other issues and pull requests on the dedicated issue tracker, or in the IRC channel on Freenode (`#keepassxc-dev` on `irc.freenode.net`, or use a [webchat link](https://webchat.freenode.net/?channels=%23keepassxc-dev)).
+As with feature requests, you can talk to the KeePassXC team about bugs, new features, other issues and pull requests on the dedicated issue tracker, on the [Matrix development channel](https://matrix.to/#/!RhJPJPGwQIFVQeXqZa:matrix.org?via=matrix.org), or in the IRC channel on Libera.Chat (`#keepassxc-dev` on `irc.libera.chat`, or use a [webchat link](https://web.libera.chat/#keepassxc-dev)).
 
 ### Your first code contribution
 
