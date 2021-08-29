@@ -814,11 +814,8 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
         }
     }
 
-#ifdef Q_OS_MAC
     // Re-hide the application if it wasn't visible before
-    // only affects macOS because dialogs force the main window to show
     hideWindow();
-#endif
 
     m_dialogActive = false;
 
@@ -1306,12 +1303,10 @@ void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
-#ifdef Q_OS_MAC
         if (m_bringToFrontRequested) {
             m_bringToFrontRequested = false;
             hideWindow();
         }
-#endif
 
         QJsonObject msg;
         msg["action"] = QString("database-unlocked");
