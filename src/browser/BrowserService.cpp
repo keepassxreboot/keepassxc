@@ -948,6 +948,11 @@ int BrowserService::sortPriority(const QStringList& urls, const QString& siteUrl
             return 90;
         }
 
+        // Parent directory match
+        if (url.isParentOf(siteUrl) || url.isParentOf(formUrl)) {
+            return 85;
+        }
+
         // Match without path (ie, FQDN match), form url prioritizes lower than site url
         if (url.host() == siteUrl.host()) {
             return 80;
