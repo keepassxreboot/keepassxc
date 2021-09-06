@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,6 +71,7 @@ public:
                      const QString& password,
                      const QString& siteUrlStr,
                      const QString& formUrlStr);
+    bool deleteEntry(const QString& uuid);
 
     QJsonArray findMatchingEntries(const QString& dbid,
                                    const QString& siteUrlStr,

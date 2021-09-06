@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "BrowserShared.h"
 #include "config-keepassx.h"
 #include "core/Global.h"
+#include "core/Tools.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -51,7 +52,8 @@ namespace
         ERROR_KEEPASS_NO_URL_PROVIDED = 14,
         ERROR_KEEPASS_NO_LOGINS_FOUND = 15,
         ERROR_KEEPASS_NO_GROUPS_FOUND = 16,
-        ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP = 17
+        ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP = 17,
+        ERROR_KEEPASS_NO_VALID_UUID_PROVIDED = 18
     };
 }
 
@@ -112,6 +114,8 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
         return handleCreateNewGroup(json, action);
     } else if (action.compare("get-totp", Qt::CaseSensitive) == 0) {
         return handleGetTotp(json, action);
+    } else if (action.compare("delete-entry", Qt::CaseSensitive) == 0) {
+        return handleDeleteEntry(json, action);
     }
 
     // Action was not recognized
@@ -360,6 +364,10 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     if (uuid.isEmpty()) {
         browserService()->addEntry(id, login, password, url, submitUrl, realm, group, groupUuid);
     } else {
+        if (!Tools::isValidUuid(uuid)) {
+            return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
+        }
+
         result = browserService()->updateEntry(id, uuid, login, password, url, submitUrl);
     }
 
@@ -490,6 +498,9 @@ QJsonObject BrowserAction::handleGetTotp(const QJsonObject& json, const QString&
     }
 
     const QString uuid = decrypted.value("uuid").toString();
+    if (!Tools::isValidUuid(uuid)) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
+    }
 
     // Get the current TOTP
     const auto totp = browserService()->getCurrentTotp(uuid);
@@ -497,6 +508,39 @@ QJsonObject BrowserAction::handleGetTotp(const QJsonObject& json, const QString&
 
     QJsonObject message = buildMessage(newNonce);
     message["totp"] = totp;
+
+    return buildResponse(action, message, newNonce);
+}
+
+QJsonObject BrowserAction::handleDeleteEntry(const QJsonObject& json, const QString& action)
+{
+    const QString nonce = json.value("nonce").toString();
+    const QString encrypted = json.value("message").toString();
+
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    QString command = decrypted.value("action").toString();
+    if (command.isEmpty() || command.compare("delete-entry", Qt::CaseSensitive) != 0) {
+        return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
+    }
+
+    const auto uuid = decrypted.value("uuid").toString();
+    if (!Tools::isValidUuid(uuid)) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
+    }
+
+    const auto result = browserService()->deleteEntry(uuid);
+
+    const QString newNonce = incrementNonce(nonce);
+    QJsonObject message = buildMessage(newNonce);
+    message["success"] = result ? TRUE_STR : FALSE_STR;
 
     return buildResponse(action, message, newNonce);
 }
@@ -564,6 +608,8 @@ QString BrowserAction::getErrorMessage(const int errorCode) const
         return QObject::tr("No groups found");
     case ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP:
         return QObject::tr("Cannot create new group");
+    case ERROR_KEEPASS_NO_VALID_UUID_PROVIDED:
+        return QObject::tr("No valid UUID provided");
     default:
         return QObject::tr("Unknown error");
     }
