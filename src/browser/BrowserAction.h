@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ private:
     QJsonObject handleGetDatabaseGroups(const QJsonObject& json, const QString& action);
     QJsonObject handleCreateNewGroup(const QJsonObject& json, const QString& action);
     QJsonObject handleGetTotp(const QJsonObject& json, const QString& action);
+    QJsonObject handleDeleteEntry(const QJsonObject& json, const QString& action);
 
     QJsonObject buildMessage(const QString& nonce) const;
     QJsonObject buildResponse(const QString& action, const QJsonObject& message, const QString& nonce);

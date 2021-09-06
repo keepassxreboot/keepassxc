@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ namespace Tools
     bool checkUrlValid(const QString& urlField);
     QString uuidToHex(const QUuid& uuid);
     QUuid hexToUuid(const QString& uuid);
+    bool isValidUuid(const QString& uuidStr);
     QRegularExpression convertToRegex(const QString& string,
                                       bool useWildcards = false,
                                       bool exactMatch = false,
