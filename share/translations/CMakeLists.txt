@@ -22,7 +22,7 @@ message(STATUS "Including translations...\n")
 
 qt5_add_translation(QM_FILES ${TRANSLATION_FILES})
 
-if(MINGW)
+if(WIN32)
     file(GLOB QTBASE_TRANSLATIONS ${Qt5_PREFIX}/share/qt5/translations/qtbase_*.qm)
 elseif(APPLE OR KEEPASSXC_DIST_APPIMAGE)
     file(GLOB QTBASE_TRANSLATIONS
