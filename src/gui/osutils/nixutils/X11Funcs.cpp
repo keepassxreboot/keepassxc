@@ -91,7 +91,7 @@ KeySym qtToNativeKeyCode(Qt::Key key)
         if (key >= Qt::Key_F1 && key <= Qt::Key_F16) {
             return XK_F1 + (key - Qt::Key_F1);
         } else if (key >= Qt::Key_Space && key <= Qt::Key_AsciiTilde) {
-            return key && 0xff;
+            return key & 0xff;
         } else {
             return NoSymbol;
         }
