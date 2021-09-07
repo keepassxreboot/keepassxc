@@ -34,6 +34,7 @@ TARGET_BRANCH="master"
 TAG_NAME=""
 DOCKER_IMAGE=""
 DOCKER_CONTAINER_NAME="keepassxc-build-container"
+CMAKE_GENERATOR="Ninja"
 CMAKE_OPTIONS=""
 CPACK_GENERATORS="WIX;ZIP"
 COMPILER="g++"
@@ -116,7 +117,9 @@ Options:
                           If this option is set, --install-prefix has no effect
       --appsign           Perform platform specific App Signing before packaging
       --timestamp         Explicitly set the timestamp server to use for appsign (default: '${TIMESTAMP_SERVER}')
+      --vcpkg             Specify VCPKG toolchain file (example: ~/vcpkg/scripts/buildsystems/vcpkg.cmake)
   -k, --key               Specify the App Signing Key/Identity
+      --cmake-generator   Override the default CMake generator (Default: Ninja)
   -c, --cmake-options     Additional CMake options for compiling the sources
       --compiler          Compiler to use (default: '${COMPILER}')
   -m, --make-options      Make options for compiling sources (default: '${MAKE_OPTIONS}')
@@ -783,6 +786,7 @@ build() {
     local build_generators=""
     local build_appsign=false
     local build_key=""
+    local build_vcpkg=""
 
     while [ $# -ge 1 ]; do
         local arg="$1"
@@ -832,12 +836,20 @@ build() {
             --appimage)
                 build_appimage=true ;;
 
+            --cmake-generator)
+                CMAKE_GENERATOR="$2"
+                shift ;;
+
             -c|--cmake-options)
                 CMAKE_OPTIONS="$2"
                 shift ;;
 
             --compiler)
                 COMPILER="$2"
+                shift ;;
+
+            --vcpkg)
+                build_vcpkg="$2"
                 shift ;;
 
             -m|--make-options)
@@ -880,6 +892,10 @@ build() {
     # Resolve appsign key to absolute path if under Windows
     if [[ "${build_key}" && "$(uname -o)" == "Msys" ]]; then
         build_key="$(realpath "${build_key}")"
+    fi
+
+    if [[ -f ${build_vcpkg} ]]; then
+        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_TOOLCHAIN_FILE=${build_vcpkg} -DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON"
     fi
 
     if ${build_snapshot}; then
@@ -961,6 +977,8 @@ build() {
         export CC=gcc
     elif [ "$COMPILER" == "clang++" ]; then
         export CC=clang
+    else
+        export CC="$COMPILER"
     fi
     export CXX="$COMPILER"
 
@@ -970,13 +988,12 @@ build() {
             export MACOSX_DEPLOYMENT_TARGET
 
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_OSX_ARCHITECTURES="$(uname -m)" -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-              -DCMAKE_PREFIX_PATH="/opt/homebrew/opt/qt/lib/cmake;/usr/local/opt/qt/lib/cmake" \
-              ${CMAKE_OPTIONS} "$SRC_DIR"
+            cmake -G "${CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="$(uname -m)" \
+            -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" ${CMAKE_OPTIONS} "$SRC_DIR"
 
             logInfo "Compiling and packaging sources..."
-            make ${MAKE_OPTIONS} package
+            cmake --build . -- ${MAKE_OPTIONS}
+            cpack -G "DragNDrop"
 
             # Appsign the executables if desired
             if ${build_appsign}; then
@@ -988,16 +1005,16 @@ build() {
         elif [ "$(uname -o)" == "Msys" ]; then
             # Building on Windows with Msys2
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release -G"MSYS Makefiles" \
-                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" ${CMAKE_OPTIONS} "$SRC_DIR"
+            cmake -DCMAKE_BUILD_TYPE=Release -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+                ${CMAKE_OPTIONS} "$SRC_DIR"
 
             logInfo "Compiling and packaging sources..."
-            mingw32-make ${MAKE_OPTIONS} preinstall
+            cmake --build . --config "Release" -- ${MAKE_OPTIONS}
 
             # Appsign the executables if desired
             if ${build_appsign} && [ -f "${build_key}" ]; then
                 logInfo "Signing executable files"
-                appsign "-f" $(find src | $GREP -P '\.exe$|\.dll$') "-k" "${build_key}"
+                appsign "-f" $(find src | $GREP -Pi 'keepassxc.*(.exe$|.dll$)') "-k" "${build_key}"
             fi
 
             # Call cpack directly instead of calling make package.
