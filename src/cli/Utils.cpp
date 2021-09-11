@@ -98,6 +98,7 @@ namespace Utils
                                             const QString& yubiKeySlot,
                                             bool quiet)
     {
+        auto& out = quiet ? DEVNULL : STDOUT;
         auto& err = quiet ? DEVNULL : STDERR;
         auto compositeKey = QSharedPointer<CompositeKey>::create();
 
@@ -118,7 +119,7 @@ namespace Utils
         }
 
         if (isPasswordProtected) {
-            err << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
+            out << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
             QString line = Utils::getPassword(quiet);
             auto passwordKey = QSharedPointer<PasswordKey>::create();
             passwordKey->setPassword(line);
@@ -168,7 +169,7 @@ namespace Utils
             }
 
             auto conn = QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
-                err << QObject::tr("Please touch the button on your YubiKey to continue…") << "\n\n" << flush;
+                out << QObject::tr("Please touch the button on your YubiKey to continue…") << "\n\n" << flush;
             });
 
             auto key = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey({serial, slot}));
@@ -205,7 +206,7 @@ namespace Utils
         return env ? env : "";
 #else
         auto& in = STDIN;
-        auto& out = quiet ? DEVNULL : STDERR;
+        auto& out = quiet ? DEVNULL : STDOUT;
 
         setStdinEcho(false);
         QString line = in.readLine();
@@ -225,25 +226,26 @@ namespace Utils
     QSharedPointer<PasswordKey> getConfirmedPassword()
     {
         auto& err = STDERR;
+        auto& out = STDOUT;
         auto& in = STDIN;
 
         QSharedPointer<PasswordKey> passwordKey;
 
-        err << QObject::tr("Enter password to encrypt database (optional): ");
-        err.flush();
+        out << QObject::tr("Enter password to encrypt database (optional): ");
+        out.flush();
         auto password = Utils::getPassword();
 
         if (password.isEmpty()) {
-            err << QObject::tr("Do you want to create a database with an empty password? [y/N]: ");
-            err.flush();
+            out << QObject::tr("Do you want to create a database with an empty password? [y/N]: ");
+            out.flush();
             auto ans = in.readLine();
             if (ans.toLower().startsWith("y")) {
                 passwordKey = QSharedPointer<PasswordKey>::create("");
             }
-            err << endl;
+            out << endl;
         } else {
-            err << QObject::tr("Repeat password: ");
-            err.flush();
+            out << QObject::tr("Repeat password: ");
+            out.flush();
             auto repeat = Utils::getPassword();
 
             if (password == repeat) {
