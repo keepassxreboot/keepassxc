@@ -28,6 +28,8 @@
 
 namespace FdoSecrets
 {
+    // static constexpr still requires definition before c++17
+    constexpr const char* SettingsDatabaseModel::ColumnNames[];
 
     SettingsDatabaseModel::SettingsDatabaseModel(DatabaseTabWidget* dbTabs, QObject* parent)
         : QAbstractTableModel(parent)
@@ -58,7 +60,7 @@ namespace FdoSecrets
         if (parent.isValid()) {
             return 0;
         }
-        return 3;
+        return sizeof(ColumnNames) / sizeof(ColumnNames[0]);
     }
 
     QVariant SettingsDatabaseModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -71,16 +73,11 @@ namespace FdoSecrets
             return {};
         }
 
-        switch (section) {
-        case 0:
-            return tr("File Name");
-        case 1:
-            return tr("Group");
-        case 2:
-            return tr("Manage");
-        default:
+        if (section < 0 || section >= columnCount({})) {
             return {};
         }
+
+        return qApp->translate(metaObject()->className(), ColumnNames[section]);
     }
 
     QVariant SettingsDatabaseModel::data(const QModelIndex& index, int role) const
@@ -88,17 +85,24 @@ namespace FdoSecrets
         if (!index.isValid()) {
             return {};
         }
+        if (index.model() != this) {
+            return {};
+        }
+        if (index.row() >= rowCount({}) || index.column() >= columnCount({})) {
+            return {};
+        }
+
         const auto& dbWidget = m_dbs[index.row()];
         if (!dbWidget) {
             return {};
         }
 
         switch (index.column()) {
-        case 0:
+        case ColumnFileName:
             return dataForName(dbWidget, role);
-        case 1:
+        case ColumnGroup:
             return dataForExposedGroup(dbWidget, role);
-        case 2:
+        case ColumnManage:
             return dataForManage(dbWidget, role);
         default:
             return {};
@@ -240,6 +244,9 @@ namespace FdoSecrets
         }
     }
 
+    // static constexpr still requires definition before c++17
+    constexpr const char* SettingsClientModel::ColumnNames[];
+
     SettingsClientModel::SettingsClientModel(DBusMgr& dbus, QObject* parent)
         : QAbstractTableModel(parent)
         , m_dbus(dbus)
@@ -260,7 +267,7 @@ namespace FdoSecrets
         if (parent.isValid()) {
             return 0;
         }
-        return 2;
+        return sizeof(ColumnNames) / sizeof(ColumnNames[0]);
     }
 
     QVariant SettingsClientModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -273,14 +280,11 @@ namespace FdoSecrets
             return {};
         }
 
-        switch (section) {
-        case 0:
-            return tr("Application");
-        case 1:
-            return tr("Manage");
-        default:
+        if (section < 0 || section >= columnCount({})) {
             return {};
         }
+
+        return qApp->translate(metaObject()->className(), ColumnNames[section]);
     }
 
     QVariant SettingsClientModel::data(const QModelIndex& index, int role) const
@@ -288,15 +292,24 @@ namespace FdoSecrets
         if (!index.isValid()) {
             return {};
         }
+        if (index.model() != this) {
+            return {};
+        }
+        if (index.row() >= rowCount({}) || index.column() >= columnCount({})) {
+            return {};
+        }
+
         const auto& client = m_clients[index.row()];
         if (!client) {
             return {};
         }
 
         switch (index.column()) {
-        case 0:
+        case ColumnApplication:
             return dataForApplication(client, role);
-        case 1:
+        case ColumnPID:
+            return dataForPID(client, role);
+        case ColumnManage:
             return dataForManage(client, role);
         default:
             return {};
@@ -308,6 +321,16 @@ namespace FdoSecrets
         switch (role) {
         case Qt::DisplayRole:
             return client->name();
+        default:
+            return {};
+        }
+    }
+
+    QVariant SettingsClientModel::dataForPID(const DBusClientPtr& client, int role) const
+    {
+        switch (role) {
+        case Qt::DisplayRole:
+            return client->pid();
         default:
             return {};
         }
