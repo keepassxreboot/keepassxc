@@ -309,6 +309,8 @@ namespace FdoSecrets
             return dataForApplication(client, role);
         case ColumnPID:
             return dataForPID(client, role);
+        case ColumnDBus:
+            return dataForDBus(client, role);
         case ColumnManage:
             return dataForManage(client, role);
         default:
@@ -318,9 +320,21 @@ namespace FdoSecrets
 
     QVariant SettingsClientModel::dataForApplication(const DBusClientPtr& client, int role) const
     {
+        const auto& info = client->processInfo();
         switch (role) {
         case Qt::DisplayRole:
-            return client->name();
+            if (info.exePath.isEmpty()) {
+                return tr("Unknown");
+            }
+            return info.exePath;
+        case Qt::ToolTipRole:
+            if (!info.valid) {
+                return tr("Invalid executable path. The application may be running inside a container");
+            }
+            return {};
+        case Qt::DecorationRole:
+            // give some visual clues if the path is invalid
+            return icons()->icon(QStringLiteral("dialog-warning"));
         default:
             return {};
         }
@@ -331,6 +345,16 @@ namespace FdoSecrets
         switch (role) {
         case Qt::DisplayRole:
             return client->pid();
+        default:
+            return {};
+        }
+    }
+
+    QVariant SettingsClientModel::dataForDBus(const DBusClientPtr& client, int role) const
+    {
+        switch (role) {
+        case Qt::DisplayRole:
+            return client->address();
         default:
             return {};
         }

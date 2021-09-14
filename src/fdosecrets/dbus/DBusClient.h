@@ -37,7 +37,11 @@ namespace FdoSecrets
     struct ProcessInfo
     {
         uint pid;
-        // whether exePath points to a valid executable file
+        /**
+         * @brief Whether exePath points to a valid executable file.
+         *
+         * Note that an empty exePath is not valid.
+         */
         bool valid;
         QString exePath;
 

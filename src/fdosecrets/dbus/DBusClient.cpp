@@ -45,7 +45,13 @@ namespace FdoSecrets
 
     QString DBusClient::name() const
     {
-        return m_process.exePath.isEmpty() ? m_address : m_process.exePath;
+        if (m_process.exePath.isEmpty()) {
+            return m_dbus->tr("unknown executable (DBus address %1)").arg(m_address);
+        }
+        if (!m_process.valid) {
+            return m_dbus->tr("%1 (invalid executable path)").arg(m_process.exePath);
+        }
+        return m_process.exePath;
     }
 
     bool DBusClient::itemKnown(const QUuid& uuid) const

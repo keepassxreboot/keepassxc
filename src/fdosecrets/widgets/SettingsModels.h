@@ -87,17 +87,20 @@ namespace FdoSecrets
         {
             ColumnApplication,
             ColumnPID,
+            ColumnDBus,
             ColumnManage,
         };
         static constexpr const char* ColumnNames[] = {
             QT_TRANSLATE_NOOP("SettingsClientModel", "Application"),
             QT_TRANSLATE_NOOP("SettingsClientModel", "PID"),
+            QT_TRANSLATE_NOOP("SettingsClientModel", "DBus Address"),
             QT_TRANSLATE_NOOP("SettingsClientModel", "Manage"),
         };
 
     private:
         QVariant dataForApplication(const DBusClientPtr& client, int role) const;
         QVariant dataForPID(const DBusClientPtr& client, int role) const;
+        QVariant dataForDBus(const DBusClientPtr& client, int role) const;
         QVariant dataForManage(const DBusClientPtr& client, int role) const;
 
     private slots:

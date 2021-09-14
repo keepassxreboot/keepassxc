@@ -217,9 +217,8 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     auto clientViewHeader = m_ui->tableClients->horizontalHeader();
     clientViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
     clientViewHeader->setSectionsClickable(false);
+    clientViewHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
     clientViewHeader->setSectionResizeMode(SettingsClientModel::ColumnApplication, QHeaderView::Stretch);
-    clientViewHeader->setSectionResizeMode(SettingsClientModel::ColumnPID, QHeaderView::ResizeToContents);
-    clientViewHeader->setSectionResizeMode(SettingsClientModel::ColumnManage, QHeaderView::ResizeToContents);
 
     auto dbModel = new SettingsDatabaseModel(plugin->dbTabs(), this);
     m_ui->tableDatabases->setModel(dbModel);
@@ -232,8 +231,7 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     auto dbViewHeader = m_ui->tableDatabases->horizontalHeader();
     dbViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
     dbViewHeader->setSectionsClickable(false);
-    dbViewHeader->setSectionResizeMode(SettingsDatabaseModel::ColumnFileName, QHeaderView::Stretch);
-    dbViewHeader->setSectionResizeMode(SettingsDatabaseModel::ColumnGroup, QHeaderView::Stretch);
+    dbViewHeader->setSectionResizeMode(QHeaderView::Stretch);
     dbViewHeader->setSectionResizeMode(SettingsDatabaseModel::ColumnManage, QHeaderView::ResizeToContents);
 
     // prompt the user to save settings before the sections are enabled
