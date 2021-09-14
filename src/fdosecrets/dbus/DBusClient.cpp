@@ -22,14 +22,30 @@
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
+#include <utility>
+
 namespace FdoSecrets
 {
-    DBusClient::DBusClient(DBusMgr* dbus, const QString& address, uint pid, const QString& name)
-        : m_dbus(dbus)
-        , m_address(address)
-        , m_pid(pid)
-        , m_name(name)
+    bool ProcessInfo::operator==(const ProcessInfo& other) const
     {
+        return this->pid == other.pid && this->exePath == other.exePath;
+    }
+
+    bool ProcessInfo::operator!=(const ProcessInfo& other) const
+    {
+        return !(*this == other);
+    }
+
+    DBusClient::DBusClient(DBusMgr* dbus, QString address, ProcessInfo process)
+        : m_dbus(dbus)
+        , m_address(std::move(address))
+        , m_process(std::move(process))
+    {
+    }
+
+    QString DBusClient::name() const
+    {
+        return m_process.exePath.isEmpty() ? m_address : m_process.exePath;
     }
 
     bool DBusClient::itemKnown(const QUuid& uuid) const

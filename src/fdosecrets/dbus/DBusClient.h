@@ -31,6 +31,19 @@ namespace FdoSecrets
     class CipherPair;
 
     /**
+     * Contains info representing a process.
+     * This can be obtained by DBusMgr::serviceInfo given a dbus address.
+     */
+    struct ProcessInfo
+    {
+        uint pid;
+        QString exePath;
+
+        bool operator==(const ProcessInfo& other) const;
+        bool operator!=(const ProcessInfo& other) const;
+    };
+
+    /**
      * Represent a client that has made requests to our service. A client is identified by its
      * DBus address, which is guaranteed to be unique by the DBus protocol.
      *
@@ -48,10 +61,9 @@ namespace FdoSecrets
         /**
          * @brief Given peer's service address, construct a client object
          * @param address obtained from `QDBusMessage::service()`
-         * @param pid the process PID
-         * @param name the process name
+         * @param process the process info
          */
-        explicit DBusClient(DBusMgr* dbus, const QString& address, uint pid, const QString& name);
+        explicit DBusClient(DBusMgr* dbus, QString address, ProcessInfo process);
 
         DBusMgr* dbus() const
         {
@@ -61,10 +73,7 @@ namespace FdoSecrets
         /**
          * @return The human readable client name, usually the process name
          */
-        QString name() const
-        {
-            return m_name;
-        }
+        QString name() const;
 
         /**
          * @return The unique DBus address of the client
@@ -79,7 +88,15 @@ namespace FdoSecrets
          */
         uint pid() const
         {
-            return m_pid;
+            return m_process.pid;
+        }
+
+        /**
+         * @return The process info
+         */
+        const ProcessInfo& processInfo() const
+        {
+            return m_process;
         }
 
         QSharedPointer<CipherPair>
@@ -125,8 +142,7 @@ namespace FdoSecrets
         QPointer<DBusMgr> m_dbus;
         QString m_address;
 
-        uint m_pid{0};
-        QString m_name{};
+        ProcessInfo m_process;
 
         bool m_authorizedAll{false};
 

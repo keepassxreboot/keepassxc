@@ -560,9 +560,11 @@ namespace FdoSecrets
             }
             it = m_clients.insert(addr, client);
         }
-        // double check the client
+        // double-check the client
         ProcessInfo info{};
-        if (!serviceInfo(addr, info) || info.pid != it.value()->pid()) {
+        if (!serviceInfo(addr, info) || info != it.value()->processInfo()) {
+            // peer process changed, something bad must have happened,
+            // so just assume the original peer has gone.
             dbusServiceUnregistered(addr);
             return {};
         }
@@ -576,7 +578,7 @@ namespace FdoSecrets
             return {};
         }
 
-        auto client = DBusClientPtr(new DBusClient(this, addr, info.pid, info.exePath.isEmpty() ? addr : info.exePath));
+        auto client = DBusClientPtr(new DBusClient(this, addr, info));
 
         emit clientConnected(client);
         m_watcher.addWatchedService(addr);
@@ -612,6 +614,7 @@ namespace FdoSecrets
         }
         auto client = it.value();
 
+        // client will notify DBusMgr and call DBusMgr::removeClient
         client->disconnectDBus();
     }
 } // namespace FdoSecrets

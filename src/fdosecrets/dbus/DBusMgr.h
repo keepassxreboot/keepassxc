@@ -219,11 +219,6 @@ namespace FdoSecrets
     private:
         QDBusConnection m_conn;
 
-        struct ProcessInfo
-        {
-            uint pid;
-            QString exePath;
-        };
         bool serviceInfo(const QString& addr, ProcessInfo& info) const;
 
         bool sendDBusSignal(const QString& path,
