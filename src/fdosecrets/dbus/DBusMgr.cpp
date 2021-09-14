@@ -210,6 +210,16 @@ namespace FdoSecrets
         QFileInfo proc(QStringLiteral("/proc/%1/exe").arg(pid.value()));
         info.exePath = proc.canonicalFilePath();
 
+        // check if the exe file is valid
+        // (assuming for now that an accessible file is valid)
+        info.valid = QFileInfo::exists(info.exePath);
+
+        // ask again to double-check and protect against pid reuse
+        auto newPid = m_conn.interface()->servicePid(addr);
+        if (!newPid.isValid() || newPid.value() != pid.value()) {
+            // either the peer already gone or the pid changed to something else
+            return false;
+        }
         return true;
     }
 
@@ -559,14 +569,6 @@ namespace FdoSecrets
                 return {};
             }
             it = m_clients.insert(addr, client);
-        }
-        // double-check the client
-        ProcessInfo info{};
-        if (!serviceInfo(addr, info) || info != it.value()->processInfo()) {
-            // peer process changed, something bad must have happened,
-            // so just assume the original peer has gone.
-            dbusServiceUnregistered(addr);
-            return {};
         }
         return it.value();
     }

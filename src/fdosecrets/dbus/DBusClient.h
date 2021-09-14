@@ -37,6 +37,8 @@ namespace FdoSecrets
     struct ProcessInfo
     {
         uint pid;
+        // whether exePath points to a valid executable file
+        bool valid;
         QString exePath;
 
         bool operator==(const ProcessInfo& other) const;
