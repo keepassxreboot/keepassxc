@@ -219,7 +219,7 @@ namespace FdoSecrets
     private:
         QDBusConnection m_conn;
 
-        bool serviceInfo(const QString& addr, ProcessInfo& info) const;
+        bool serviceInfo(const QString& addr, PeerInfo& info) const;
 
         bool sendDBusSignal(const QString& path,
                             const QString& interface,

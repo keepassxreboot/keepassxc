@@ -323,18 +323,21 @@ namespace FdoSecrets
         const auto& info = client->processInfo();
         switch (role) {
         case Qt::DisplayRole:
-            if (info.exePath.isEmpty()) {
+            if (info.exePath().isEmpty()) {
                 return tr("Unknown");
             }
-            return info.exePath;
+            return info.exePath();
         case Qt::ToolTipRole:
             if (!info.valid) {
-                return tr("Invalid executable path. The application may be running inside a container");
+                return tr("Non-existing/inaccessible executable path. Please double-check the client is legit.");
             }
             return {};
         case Qt::DecorationRole:
             // give some visual clues if the path is invalid
-            return icons()->icon(QStringLiteral("dialog-warning"));
+            if (!info.valid) {
+                return icons()->icon(QStringLiteral("dialog-warning"));
+            }
+            return {};
         default:
             return {};
         }

@@ -26,32 +26,49 @@
 
 namespace FdoSecrets
 {
-    bool ProcessInfo::operator==(const ProcessInfo& other) const
+    bool ProcInfo::operator==(const ProcInfo& other) const
     {
-        return this->pid == other.pid && this->exePath == other.exePath;
+        return this->pid == other.pid && this->ppid == other.ppid && this->exePath == other.exePath
+               && this->name == other.name && this->command == other.command;
     }
 
-    bool ProcessInfo::operator!=(const ProcessInfo& other) const
+    bool ProcInfo::operator!=(const ProcInfo& other) const
     {
         return !(*this == other);
     }
 
-    DBusClient::DBusClient(DBusMgr* dbus, QString address, ProcessInfo process)
+    bool PeerInfo::operator==(const PeerInfo& other) const
+    {
+        return this->address == other.address && this->pid == other.pid && this->valid == other.valid
+               && this->hierarchy == other.hierarchy;
+    }
+
+    bool PeerInfo::operator!=(const PeerInfo& other) const
+    {
+        return !(*this == other);
+    }
+
+    DBusClient::DBusClient(DBusMgr* dbus, PeerInfo process)
         : m_dbus(dbus)
-        , m_address(std::move(address))
         , m_process(std::move(process))
     {
     }
 
+    DBusMgr* DBusClient::dbus() const
+    {
+        return m_dbus;
+    }
+
     QString DBusClient::name() const
     {
-        if (m_process.exePath.isEmpty()) {
-            return m_dbus->tr("unknown executable (DBus address %1)").arg(m_address);
+        auto exePath = m_process.exePath();
+        if (exePath.isEmpty()) {
+            return m_dbus->tr("unknown executable (DBus address %1)").arg(m_process.address);
         }
         if (!m_process.valid) {
-            return m_dbus->tr("%1 (invalid executable path)").arg(m_process.exePath);
+            return m_dbus->tr("%1 (invalid executable path)").arg(exePath);
         }
-        return m_process.exePath;
+        return exePath;
     }
 
     bool DBusClient::itemKnown(const QUuid& uuid) const

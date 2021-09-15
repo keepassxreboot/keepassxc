@@ -30,23 +30,54 @@ namespace FdoSecrets
     class DBusMgr;
     class CipherPair;
 
+    struct ProcInfo
+    {
+        uint pid = 0;
+        uint ppid = 0;
+        QString exePath{};
+        QString name{};
+        QString command{};
+
+        bool operator==(const ProcInfo& other) const;
+        bool operator!=(const ProcInfo& other) const;
+    };
+
     /**
      * Contains info representing a process.
      * This can be obtained by DBusMgr::serviceInfo given a dbus address.
      */
-    struct ProcessInfo
+    struct PeerInfo
     {
+        /**
+         * @brief DBus address
+         */
+        QString address;
+
         uint pid;
         /**
-         * @brief Whether exePath points to a valid executable file.
+         * @brief Whether current process' exePath points to a valid executable file.
          *
          * Note that an empty exePath is not valid.
          */
         bool valid;
-        QString exePath;
 
-        bool operator==(const ProcessInfo& other) const;
-        bool operator!=(const ProcessInfo& other) const;
+        /**
+         * @brief List of parents of the process.
+         *
+         * The first element is the current process. The last element is usually PID 1.
+         *
+         * This is for showing to the user only and is intentionally simple.
+         * Getting detailed process info is beyond the scope of KPXC.
+         */
+        QList<ProcInfo> hierarchy;
+
+        QString exePath() const
+        {
+            return hierarchy.front().exePath;
+        }
+
+        bool operator==(const PeerInfo& other) const;
+        bool operator!=(const PeerInfo& other) const;
     };
 
     /**
@@ -69,12 +100,9 @@ namespace FdoSecrets
          * @param address obtained from `QDBusMessage::service()`
          * @param process the process info
          */
-        explicit DBusClient(DBusMgr* dbus, QString address, ProcessInfo process);
+        explicit DBusClient(DBusMgr* dbus, PeerInfo process);
 
-        DBusMgr* dbus() const
-        {
-            return m_dbus;
-        }
+        DBusMgr* dbus() const;
 
         /**
          * @return The human readable client name, usually the process name
@@ -86,7 +114,7 @@ namespace FdoSecrets
          */
         QString address() const
         {
-            return m_address;
+            return m_process.address;
         }
 
         /**
@@ -100,7 +128,7 @@ namespace FdoSecrets
         /**
          * @return The process info
          */
-        const ProcessInfo& processInfo() const
+        const PeerInfo& processInfo() const
         {
             return m_process;
         }
@@ -146,9 +174,7 @@ namespace FdoSecrets
 
     private:
         QPointer<DBusMgr> m_dbus;
-        QString m_address;
-
-        ProcessInfo m_process;
+        PeerInfo m_process;
 
         bool m_authorizedAll{false};
 

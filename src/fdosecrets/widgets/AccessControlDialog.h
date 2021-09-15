@@ -21,6 +21,7 @@
 #define KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H
 
 #include <QAbstractTableModel>
+#include <QCheckBox>
 #include <QDialog>
 #include <QPointer>
 #include <QPushButton>
@@ -33,6 +34,11 @@ class Entry;
 namespace Ui
 {
     class AccessControlDialog;
+}
+
+namespace FdoSecrets
+{
+    struct PeerInfo;
 }
 
 enum class AuthOption
@@ -52,6 +58,7 @@ public:
     explicit AccessControlDialog(QWindow* parent,
                                  const QList<Entry*>& entries,
                                  const QString& app,
+                                 const FdoSecrets::PeerInfo& info,
                                  AuthOptions authOptions = AuthOption::Remember | AuthOption::PerEntryDeny);
     ~AccessControlDialog() override;
 
@@ -76,7 +83,10 @@ private:
     class EntryModel;
     class DenyButton;
 
+    void setupDetails(const FdoSecrets::PeerInfo& info);
+
     QScopedPointer<Ui::AccessControlDialog> m_ui;
+    QPointer<QCheckBox> m_rememberCheck;
     QScopedPointer<EntryModel> m_model;
     QHash<Entry*, AuthDecision> m_decisions;
 };
