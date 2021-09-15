@@ -81,6 +81,7 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
     detailsButton->setCheckable(true);
 
     m_rememberCheck = new QCheckBox(tr("Remember"), this);
+    m_rememberCheck->setObjectName("rememberCheck"); // for testing
     m_rememberCheck->setChecked(true);
     m_ui->buttonBox->addButton(m_rememberCheck, QDialogButtonBox::ActionRole);
 

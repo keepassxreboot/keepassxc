@@ -32,11 +32,11 @@ namespace FdoSecrets
 
     struct ProcInfo
     {
-        uint pid = 0;
-        uint ppid = 0;
-        QString exePath{};
-        QString name{};
-        QString command{};
+        uint pid;
+        uint ppid;
+        QString exePath;
+        QString name;
+        QString command;
 
         bool operator==(const ProcInfo& other) const;
         bool operator!=(const ProcInfo& other) const;
