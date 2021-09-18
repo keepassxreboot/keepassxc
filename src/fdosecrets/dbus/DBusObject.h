@@ -85,7 +85,7 @@ namespace FdoSecrets
 
         // Implicitly convert from QDBusError
         DBusResult(QDBusError::ErrorType error) // NOLINT(google-explicit-constructor)
-            : QString(QDBusError::errorString(error))
+            : QString(error == QDBusError::ErrorType::NoError ? "" : QDBusError::errorString(error))
         {
         }
 

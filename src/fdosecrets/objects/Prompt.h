@@ -32,14 +32,60 @@ namespace FdoSecrets
 
     class Service;
 
+    // a simple helper class to auto convert
+    // true/false, DBusResult and Pending values
+    class PromptResult
+    {
+        enum Value
+        {
+            Accepted,
+            Dismissed,
+            AsyncPending,
+        };
+        const Value value;
+
+        explicit PromptResult(Value v) noexcept
+            : value(v)
+        {
+        }
+        explicit PromptResult(bool accepted)
+            : value(accepted ? Accepted : Dismissed)
+        {
+        }
+
+    public:
+        PromptResult()
+            : PromptResult(true)
+        {
+        }
+        PromptResult(const DBusResult& res) // NOLINT(google-explicit-constructor)
+            : PromptResult(res.ok())
+        {
+        }
+
+        static const PromptResult Pending;
+        static PromptResult accepted(bool accepted)
+        {
+            return PromptResult{accepted};
+        }
+
+        bool isDismiss() const
+        {
+            return value == Dismissed;
+        }
+        bool isPending() const
+        {
+            return value == AsyncPending;
+        }
+    };
+
     class PromptBase : public DBusObject
     {
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_PROMPT_LITERAL)
     public:
-        Q_INVOKABLE virtual DBusResult prompt(const DBusClientPtr& client, const QString& windowId) = 0;
-
-        Q_INVOKABLE virtual DBusResult dismiss();
+        Q_INVOKABLE DBusResult prompt(const DBusClientPtr& client, const QString& windowId);
+        Q_INVOKABLE DBusResult dismiss();
 
         template <typename PROMPT, typename... ARGS> static PromptBase* Create(Service* parent, ARGS&&... args)
         {
@@ -57,8 +103,15 @@ namespace FdoSecrets
     protected:
         explicit PromptBase(Service* parent);
 
+        virtual PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) = 0;
+        virtual QVariant currentResult() const;
+
         QWindow* findWindow(const QString& windowId);
         Service* service() const;
+        void finishPrompt(bool dismissed);
+
+    private:
+        bool m_signalSent = false;
     };
 
     class Collection;
@@ -66,14 +119,11 @@ namespace FdoSecrets
     class DeleteCollectionPrompt : public PromptBase
     {
         Q_OBJECT
+        friend class PromptBase;
 
         explicit DeleteCollectionPrompt(Service* parent, Collection* coll);
 
-    public:
-        DBusResult prompt(const DBusClientPtr& client, const QString& windowId) override;
-
-    private:
-        friend class PromptBase;
+        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
 
         QPointer<Collection> m_collection;
     };
@@ -81,32 +131,27 @@ namespace FdoSecrets
     class CreateCollectionPrompt : public PromptBase
     {
         Q_OBJECT
+        friend class PromptBase;
 
         explicit CreateCollectionPrompt(Service* parent, QVariantMap properties, QString alias);
 
-    public:
-        DBusResult prompt(const DBusClientPtr& client, const QString& windowId) override;
-        DBusResult dismiss() override;
-
-    private:
-        friend class PromptBase;
+        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        QVariant currentResult() const override;
 
         QVariantMap m_properties;
         QString m_alias;
+        Collection* m_coll{};
     };
 
     class LockCollectionsPrompt : public PromptBase
     {
         Q_OBJECT
+        friend class PromptBase;
 
         explicit LockCollectionsPrompt(Service* parent, const QList<Collection*>& colls);
 
-    public:
-        DBusResult prompt(const DBusClientPtr& client, const QString& windowId) override;
-        DBusResult dismiss() override;
-
-    private:
-        friend class PromptBase;
+        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        QVariant currentResult() const override;
 
         QList<QPointer<Collection>> m_collections;
         QList<QDBusObjectPath> m_locked;
@@ -116,21 +161,16 @@ namespace FdoSecrets
     class UnlockPrompt : public PromptBase
     {
         Q_OBJECT
+        friend class PromptBase;
 
         explicit UnlockPrompt(Service* parent, const QSet<Collection*>& colls, const QSet<Item*>& items);
 
-    public:
-        DBusResult prompt(const DBusClientPtr& client, const QString& windowId) override;
-        DBusResult dismiss() override;
+        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        QVariant currentResult() const override;
 
-    private slots:
         void collectionUnlockFinished(bool accepted);
         void itemUnlockFinished(const QHash<Entry*, AuthDecision>& results);
-
-    private:
         void unlockItems();
-
-        friend class PromptBase;
 
         static constexpr auto FdoSecretsBackend = "FdoSecretsBackend";
 
@@ -148,14 +188,11 @@ namespace FdoSecrets
     class DeleteItemPrompt : public PromptBase
     {
         Q_OBJECT
+        friend class PromptBase;
 
         explicit DeleteItemPrompt(Service* parent, Item* item);
 
-    public:
-        DBusResult prompt(const DBusClientPtr& client, const QString& windowId) override;
-
-    private:
-        friend class PromptBase;
+        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
 
         QPointer<Item> m_item;
     };
@@ -163,29 +200,24 @@ namespace FdoSecrets
     class CreateItemPrompt : public PromptBase
     {
         Q_OBJECT
+        friend class PromptBase;
 
         explicit CreateItemPrompt(Service* parent,
                                   Collection* coll,
                                   QVariantMap properties,
                                   Secret secret,
-                                  QString itemPath,
-                                  Item* existing);
+                                  bool replace);
 
-    public:
-        DBusResult prompt(const DBusClientPtr& client, const QString& windowId) override;
-        DBusResult dismiss() override;
-    private slots:
-        void itemUnlocked(bool dismissed, const QVariant& result);
+        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        QVariant currentResult() const override;
 
-    private:
         DBusResult updateItem();
-
-        friend class PromptBase;
 
         QPointer<Collection> m_coll;
         QVariantMap m_properties;
         Secret m_secret;
-        QString m_itemPath;
+        bool m_replace;
+
         QPointer<Item> m_item;
 
         QPointer<const Session> m_sess;

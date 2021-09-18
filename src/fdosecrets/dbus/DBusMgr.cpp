@@ -177,14 +177,12 @@ namespace FdoSecrets
         // It's still weak and if the application does a prctl(PR_SET_DUMPABLE, 0) this link cannot be accessed.
         QFileInfo exe(QStringLiteral("/proc/%1/exe").arg(pid));
         info.exePath = exe.canonicalFilePath();
-        qDebug() << "process" << pid << info.exePath;
 
         // /proc/pid/cmdline gives full command line
         QFile cmdline(QStringLiteral("/proc/%1/cmdline").arg(pid));
         if (cmdline.open(QFile::ReadOnly)) {
             info.command = QString::fromLocal8Bit(cmdline.readAll().replace('\0', ' ')).trimmed();
         }
-        qDebug() << "process" << pid << info.command;
 
         // /proc/pid/stat gives ppid, name
         QFile stat(QStringLiteral("/proc/%1/stat").arg(pid));

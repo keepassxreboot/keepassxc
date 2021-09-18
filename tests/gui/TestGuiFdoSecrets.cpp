@@ -186,7 +186,7 @@ void TestGuiFdoSecrets::init()
 
     // make sure window is activated or focus tests may fail
     m_mainWindow->activateWindow();
-    QApplication::processEvents();
+    processEvents();
 
     // open and unlock the database
     m_tabWidget->addDatabaseTab(m_dbFile->fileName(), false, "a");
@@ -202,6 +202,7 @@ void TestGuiFdoSecrets::init()
 void TestGuiFdoSecrets::cleanup()
 {
     // restore to default settings
+    FdoSecrets::settings()->setUnlockBeforeSearch(false);
     FdoSecrets::settings()->setShowNotification(false);
     FdoSecrets::settings()->setConfirmAccessItem(false);
     FdoSecrets::settings()->setEnabled(false);
@@ -213,8 +214,14 @@ void TestGuiFdoSecrets::cleanup()
     for (int i = 0; i != m_tabWidget->count(); ++i) {
         m_tabWidget->databaseWidgetFromIndex(i)->database()->markAsClean();
     }
+
+    // Close any dialogs
+    while (auto w = QApplication::activeModalWidget()) {
+        w->close();
+    }
+
     VERIFY(m_tabWidget->closeAllDatabaseTabs());
-    QApplication::processEvents();
+    processEvents();
 
     if (m_dbFile) {
         m_dbFile->remove();
@@ -250,7 +257,7 @@ void TestGuiFdoSecrets::testServiceEnable()
     VERIFY(sigError.isEmpty());
     COMPARE(sigStarted.size(), 1);
 
-    QApplication::processEvents();
+    processEvents();
 
     VERIFY(QDBusConnection::sessionBus().interface()->isServiceRegistered(DBUS_SERVICE_SECRET));
 
@@ -288,9 +295,11 @@ void TestGuiFdoSecrets::testServiceSearch()
     auto item = getFirstItem(coll);
     VERIFY(item);
 
-    auto entries = m_db->rootGroup()->entriesRecursive(false);
-    VERIFY(!entries.isEmpty());
-    const auto& entry = entries.first();
+    auto itemObj = m_plugin->dbus()->pathToObject<Item>(QDBusObjectPath(item->path()));
+    VERIFY(itemObj);
+    auto entry = itemObj->backend();
+    VERIFY(entry);
+
     entry->attributes()->set("fdosecrets-test", "1");
     entry->attributes()->set("fdosecrets-test-protected", "2", true);
     const QString crazyKey = "_a:bc&-+'-e%12df_d";
@@ -336,6 +345,72 @@ void TestGuiFdoSecrets::testServiceSearch()
     }
 }
 
+void TestGuiFdoSecrets::testServiceSearchBlockingUnlock()
+{
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+
+    auto entries = m_db->rootGroup()->entriesRecursive();
+    VERIFY(!entries.isEmpty());
+    // assumes the db is not empty
+    auto title = entries.first()->title();
+
+    // NOTE: entries are no longer valid after locking
+    lockDatabaseInBackend();
+
+    // when database is locked, nothing is returned
+    FdoSecrets::settings()->setUnlockBeforeSearch(false);
+    {
+        DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", title}}));
+        COMPARE(locked, {});
+        COMPARE(unlocked, {});
+    }
+
+    // when database is locked, nothing is returned
+    FdoSecrets::settings()->setUnlockBeforeSearch(true);
+    {
+        // SearchItems will block because the blocking wait is implemented
+        // using a local QEventLoop.
+        // so we do a little trick here to get the return value back
+        bool unlockDialogWorks = false;
+        QTimer::singleShot(50, [&]() { unlockDialogWorks = driveUnlockDialog(); });
+
+        DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", title}}));
+        VERIFY(unlockDialogWorks);
+        COMPARE(locked, {});
+        COMPARE(unlocked.size(), 1);
+        auto item = getProxy<ItemProxy>(unlocked.first());
+        DBUS_COMPARE(item->label(), title);
+    }
+}
+
+void TestGuiFdoSecrets::testServiceSearchForce()
+{
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+
+    auto itemObj = m_plugin->dbus()->pathToObject<Item>(QDBusObjectPath(item->path()));
+    VERIFY(itemObj);
+    auto entry = itemObj->backend();
+    VERIFY(entry);
+
+    // fdosecrets should still find the item even if searching is disabled
+    entry->group()->setSearchingEnabled(Group::Disable);
+
+    // search by title
+    {
+        DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", entry->title()}}));
+        COMPARE(locked, {});
+        COMPARE(unlocked, {QDBusObjectPath(item->path())});
+    }
+}
+
 void TestGuiFdoSecrets::testServiceUnlock()
 {
     lockDatabaseInBackend();
@@ -362,46 +437,83 @@ void TestGuiFdoSecrets::testServiceUnlock()
     VERIFY(spyPromptCompleted.isValid());
 
     // nothing is unlocked yet
-    QTRY_COMPARE(spyPromptCompleted.count(), 0);
+    VERIFY(waitForSignal(spyPromptCompleted, 0));
     DBUS_COMPARE(coll->locked(), true);
 
-    // drive the prompt
+    // show the prompt
     DBUS_VERIFY(prompt->Prompt(""));
 
     // still not unlocked before user action
-    QTRY_COMPARE(spyPromptCompleted.count(), 0);
+    VERIFY(waitForSignal(spyPromptCompleted, 0));
     DBUS_COMPARE(coll->locked(), true);
 
-    // interact with the dialog
-    QApplication::processEvents();
-    {
-        auto dbOpenDlg = m_tabWidget->findChild<DatabaseOpenDialog*>();
-        VERIFY(dbOpenDlg);
-        auto editPassword = dbOpenDlg->findChild<QLineEdit*>("editPassword");
-        VERIFY(editPassword);
-        editPassword->setFocus();
-        QTest::keyClicks(editPassword, "a");
-        QTest::keyClick(editPassword, Qt::Key_Enter);
-    }
-    QApplication::processEvents();
+    VERIFY(driveUnlockDialog());
 
-    // unlocked
-    DBUS_COMPARE(coll->locked(), false);
-
-    QTRY_COMPARE(spyPromptCompleted.count(), 1);
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
     {
         auto args = spyPromptCompleted.takeFirst();
         COMPARE(args.size(), 2);
         COMPARE(args.at(0).toBool(), false);
         COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(coll->path())});
     }
-    QTRY_COMPARE(spyCollectionCreated.count(), 0);
+
+    // check unlocked *AFTER* the prompt signal
+    DBUS_COMPARE(coll->locked(), false);
+
+    VERIFY(waitForSignal(spyCollectionCreated, 0));
     QTRY_VERIFY(!spyCollectionChanged.isEmpty());
     for (const auto& args : spyCollectionChanged) {
         COMPARE(args.size(), 1);
         COMPARE(args.at(0).value<QDBusObjectPath>().path(), coll->path());
     }
-    QTRY_COMPARE(spyCollectionDeleted.count(), 0);
+    VERIFY(waitForSignal(spyCollectionDeleted, 0));
+}
+
+void TestGuiFdoSecrets::testServiceUnlockDatabaseConcurrent()
+{
+    lockDatabaseInBackend();
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(coll->path())}));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    // while the first prompt is running, another request come in
+    DBUS_GET2(unlocked2, promptPath2, service->Unlock({QDBusObjectPath(coll->path())}));
+    auto prompt2 = getProxy<PromptProxy>(promptPath2);
+    VERIFY(prompt2);
+    QSignalSpy spyPromptCompleted2(prompt2.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted2.isValid());
+    DBUS_VERIFY(prompt2->Prompt(""));
+
+    // there should be only one unlock dialog
+    VERIFY(driveUnlockDialog());
+
+    // both prompts should complete
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    {
+        auto args = spyPromptCompleted.takeFirst();
+        COMPARE(args.size(), 2);
+        COMPARE(args.at(0).toBool(), false);
+        COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(coll->path())});
+    }
+    VERIFY(waitForSignal(spyPromptCompleted2, 1));
+    {
+        auto args = spyPromptCompleted2.takeFirst();
+        COMPARE(args.size(), 2);
+        COMPARE(args.at(0).toBool(), false);
+        COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(coll->path())});
+    }
+
+    // check unlocked *AFTER* prompt signal
+    DBUS_COMPARE(coll->locked(), false);
 }
 
 void TestGuiFdoSecrets::testServiceUnlockItems()
@@ -438,17 +550,16 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
         // only allow once
         VERIFY(driveAccessControlDialog(false));
 
-        // unlocked
-        DBUS_COMPARE(item->locked(), false);
-
-        VERIFY(spyPromptCompleted.wait());
-        COMPARE(spyPromptCompleted.count(), 1);
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
         {
             auto args = spyPromptCompleted.takeFirst();
             COMPARE(args.size(), 2);
             COMPARE(args.at(0).toBool(), false);
             COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(item->path())});
         }
+
+        // unlocked
+        DBUS_COMPARE(item->locked(), false);
     }
 
     // access the secret should reset the locking state
@@ -477,17 +588,16 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
         // only allow and remember
         VERIFY(driveAccessControlDialog(true));
 
-        // unlocked
-        DBUS_COMPARE(item->locked(), false);
-
-        VERIFY(spyPromptCompleted.wait());
-        COMPARE(spyPromptCompleted.count(), 1);
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
         {
             auto args = spyPromptCompleted.takeFirst();
             COMPARE(args.size(), 2);
             COMPARE(args.at(0).toBool(), false);
             COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(item->path())});
         }
+
+        // unlocked
+        DBUS_COMPARE(item->locked(), false);
     }
 
     // access the secret does not reset the locking state
@@ -524,15 +634,15 @@ void TestGuiFdoSecrets::testServiceLock()
         // prompt and click cancel
         MessageBox::setNextAnswer(MessageBox::Cancel);
         DBUS_VERIFY(prompt->Prompt(""));
-        QApplication::processEvents();
+        processEvents();
 
-        DBUS_COMPARE(coll->locked(), false);
-
-        QTRY_COMPARE(spyPromptCompleted.count(), 1);
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
         auto args = spyPromptCompleted.takeFirst();
         COMPARE(args.count(), 2);
         COMPARE(args.at(0).toBool(), true);
         COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {});
+
+        DBUS_COMPARE(coll->locked(), false);
     }
     {
         DBUS_GET2(locked, promptPath, service->Lock({QDBusObjectPath(coll->path())}));
@@ -545,24 +655,24 @@ void TestGuiFdoSecrets::testServiceLock()
         // prompt and click save
         MessageBox::setNextAnswer(MessageBox::Save);
         DBUS_VERIFY(prompt->Prompt(""));
-        QApplication::processEvents();
+        processEvents();
 
-        DBUS_COMPARE(coll->locked(), true);
-
-        QTRY_COMPARE(spyPromptCompleted.count(), 1);
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
         auto args = spyPromptCompleted.takeFirst();
         COMPARE(args.count(), 2);
         COMPARE(args.at(0).toBool(), false);
         COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(coll->path())});
+
+        DBUS_COMPARE(coll->locked(), true);
     }
 
-    QTRY_COMPARE(spyCollectionCreated.count(), 0);
+    VERIFY(waitForSignal(spyCollectionCreated, 0));
     QTRY_VERIFY(!spyCollectionChanged.isEmpty());
     for (const auto& args : spyCollectionChanged) {
         COMPARE(args.size(), 1);
         COMPARE(args.at(0).value<QDBusObjectPath>().path(), coll->path());
     }
-    QTRY_COMPARE(spyCollectionDeleted.count(), 0);
+    VERIFY(waitForSignal(spyCollectionDeleted, 0));
 
     // locking item locks the whole db
     unlockDatabaseInBackend();
@@ -575,10 +685,57 @@ void TestGuiFdoSecrets::testServiceLock()
 
         MessageBox::setNextAnswer(MessageBox::Save);
         DBUS_VERIFY(prompt->Prompt(""));
-        QApplication::processEvents();
+        processEvents();
 
         DBUS_COMPARE(coll->locked(), true);
     }
+}
+
+void TestGuiFdoSecrets::testServiceLockConcurrent()
+{
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+
+    m_db->markAsModified();
+
+    DBUS_GET2(locked, promptPath, service->Lock({QDBusObjectPath(coll->path())}));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+
+    DBUS_GET2(locked2, promptPath2, service->Lock({QDBusObjectPath(coll->path())}));
+    auto prompt2 = getProxy<PromptProxy>(promptPath2);
+    VERIFY(prompt2);
+    QSignalSpy spyPromptCompleted2(prompt2.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted2.isValid());
+
+    // prompt and click save
+    MessageBox::setNextAnswer(MessageBox::Save);
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    // second prompt should not show dialog
+    DBUS_VERIFY(prompt2->Prompt(""));
+
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    {
+        auto args = spyPromptCompleted.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), false);
+        COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(coll->path())});
+    }
+
+    VERIFY(waitForSignal(spyPromptCompleted2, 1));
+    {
+        auto args = spyPromptCompleted2.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), false);
+        COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(coll->path())});
+    }
+
+    DBUS_COMPARE(coll->locked(), true);
 }
 
 void TestGuiFdoSecrets::testSessionOpen()
@@ -621,7 +778,7 @@ void TestGuiFdoSecrets::testCollectionCreate()
         COMPARE(promptPath, QDBusObjectPath("/"));
         COMPARE(collPath.path(), existing->path());
     }
-    QTRY_COMPARE(spyCollectionCreated.count(), 0);
+    VERIFY(waitForSignal(spyCollectionCreated, 0));
 
     // create new one and set properties
     {
@@ -635,11 +792,10 @@ void TestGuiFdoSecrets::testCollectionCreate()
         QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
         VERIFY(spyPromptCompleted.isValid());
 
-        QTimer::singleShot(50, this, &TestGuiFdoSecrets::driveNewDatabaseWizard);
         DBUS_VERIFY(prompt->Prompt(""));
-        QApplication::processEvents();
+        VERIFY(driveNewDatabaseWizard());
 
-        QTRY_COMPARE(spyPromptCompleted.count(), 1);
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
         auto args = spyPromptCompleted.takeFirst();
         COMPARE(args.size(), 2);
         COMPARE(args.at(0).toBool(), false);
@@ -648,41 +804,13 @@ void TestGuiFdoSecrets::testCollectionCreate()
 
         DBUS_COMPARE(coll->label(), QStringLiteral("Test NewDB"));
 
-        QTRY_COMPARE(spyCollectionCreated.count(), 1);
+        VERIFY(waitForSignal(spyCollectionCreated, 1));
         {
             args = spyCollectionCreated.takeFirst();
             COMPARE(args.size(), 1);
             COMPARE(args.at(0).value<QDBusObjectPath>().path(), coll->path());
         }
     }
-}
-
-void TestGuiFdoSecrets::driveNewDatabaseWizard()
-{
-    auto wizard = m_tabWidget->findChild<NewDatabaseWizard*>();
-    VERIFY(wizard);
-
-    COMPARE(wizard->currentId(), 0);
-    wizard->next();
-    wizard->next();
-    COMPARE(wizard->currentId(), 2);
-
-    // enter password
-    auto* passwordEdit = wizard->findChild<QLineEdit*>("enterPasswordEdit");
-    auto* passwordRepeatEdit = wizard->findChild<QLineEdit*>("repeatPasswordEdit");
-    QTest::keyClicks(passwordEdit, "test");
-    QTest::keyClick(passwordEdit, Qt::Key::Key_Tab);
-    QTest::keyClicks(passwordRepeatEdit, "test");
-
-    // save database to temporary file
-    TemporaryFile tmpFile;
-    VERIFY(tmpFile.open());
-    tmpFile.close();
-    fileDialog()->setNextFileName(tmpFile.fileName());
-
-    wizard->accept();
-
-    tmpFile.remove();
 }
 
 void TestGuiFdoSecrets::testCollectionDelete()
@@ -711,7 +839,12 @@ void TestGuiFdoSecrets::testCollectionDelete()
     // closing the tab should have deleted the database if not in testing
     // but deleteLater is not processed in QApplication::processEvent
     // see https://doc.qt.io/qt-5/qcoreapplication.html#processEvents
-    QApplication::processEvents();
+
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    auto args = spyPromptCompleted.takeFirst();
+    COMPARE(args.count(), 2);
+    COMPARE(args.at(0).toBool(), false);
+    COMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
 
     // however, the object should already be taken down from dbus
     {
@@ -720,17 +853,62 @@ void TestGuiFdoSecrets::testCollectionDelete()
         COMPARE(reply.error().type(), QDBusError::UnknownObject);
     }
 
-    QTRY_COMPARE(spyPromptCompleted.count(), 1);
-    auto args = spyPromptCompleted.takeFirst();
-    COMPARE(args.count(), 2);
-    COMPARE(args.at(0).toBool(), false);
-    COMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
-
-    QTRY_COMPARE(spyCollectionDeleted.count(), 1);
+    VERIFY(waitForSignal(spyCollectionDeleted, 1));
     {
         args = spyCollectionDeleted.takeFirst();
         COMPARE(args.size(), 1);
         COMPARE(args.at(0).value<QDBusObjectPath>().path(), collPath);
+    }
+}
+
+void TestGuiFdoSecrets::testCollectionDeleteConcurrent()
+{
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+
+    m_db->markAsModified();
+    DBUS_GET(promptPath, coll->Delete());
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+
+    // before interacting with the prompt, another request come in
+    DBUS_GET(promptPath2, coll->Delete());
+    auto prompt2 = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt2);
+    QSignalSpy spyPromptCompleted2(prompt2.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted2.isValid());
+
+    // prompt and click save
+    MessageBox::setNextAnswer(MessageBox::Save);
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    // there should be no prompt
+    DBUS_VERIFY(prompt2->Prompt(""));
+
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    {
+        auto args = spyPromptCompleted.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), false);
+        COMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
+    }
+
+    VERIFY(waitForSignal(spyPromptCompleted2, 1));
+    {
+        auto args = spyPromptCompleted2.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), false);
+        COMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
+    }
+
+    {
+        auto reply = coll->locked();
+        VERIFY(reply.isFinished() && reply.isError());
+        COMPARE(reply.error().type(), QDBusError::UnknownObject);
     }
 }
 
@@ -822,7 +1000,7 @@ void TestGuiFdoSecrets::testItemCreate()
 
     // signals
     {
-        QTRY_COMPARE(spyItemCreated.count(), 1);
+        VERIFY(waitForSignal(spyItemCreated, 1));
         auto args = spyItemCreated.takeFirst();
         COMPARE(args.size(), 1);
         COMPARE(args.at(0).value<QDBusObjectPath>().path(), item->path());
@@ -942,7 +1120,7 @@ void TestGuiFdoSecrets::testItemReplace()
         QSet<QDBusObjectPath> expected{QDBusObjectPath(item1->path()), QDBusObjectPath(item2->path())};
         COMPARE(QSet<QDBusObjectPath>::fromList(unlocked), expected);
 
-        QTRY_COMPARE(spyItemCreated.count(), 0);
+        VERIFY(waitForSignal(spyItemCreated, 0));
         // there may be multiple changed signals, due to each item attribute is set separately
         QTRY_VERIFY(!spyItemChanged.isEmpty());
         for (const auto& args : spyItemChanged) {
@@ -968,7 +1146,7 @@ void TestGuiFdoSecrets::testItemReplace()
         };
         COMPARE(QSet<QDBusObjectPath>::fromList(unlocked), expected);
 
-        QTRY_COMPARE(spyItemCreated.count(), 1);
+        VERIFY(waitForSignal(spyItemCreated, 1));
         {
             auto args = spyItemCreated.takeFirst();
             COMPARE(args.size(), 1);
@@ -1013,7 +1191,7 @@ void TestGuiFdoSecrets::testItemReplaceExistingLocked()
         DBUS_COMPARE(item->locked(), true);
     }
 
-    // when replace with a locked item, there will be an prompt
+    // when replace with a locked item, there will be a prompt
     auto item2 = createItem(sess, coll, "abc2", "PasswordUpdated", attr1, true, true);
     VERIFY(item2);
     COMPARE(item2->path(), item->path());
@@ -1061,7 +1239,7 @@ void TestGuiFdoSecrets::testItemSecret()
         COMPARE(ss.contentType, TEXT_PLAIN);
         COMPARE(ss.value, entry->password().toUtf8());
 
-        QTRY_COMPARE(spyShowNotification.count(), 1);
+        VERIFY(waitForSignal(spyShowNotification, 1));
     }
     FdoSecrets::settings()->setShowNotification(false);
 
@@ -1125,15 +1303,14 @@ void TestGuiFdoSecrets::testItemDelete()
     VERIFY(itemObj);
     MessageBox::setNextAnswer(MessageBox::Delete);
     DBUS_VERIFY(prompt->Prompt(""));
-    QApplication::processEvents();
 
-    QTRY_COMPARE(spyPromptCompleted.count(), 1);
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
     auto args = spyPromptCompleted.takeFirst();
     COMPARE(args.count(), 2);
     COMPARE(args.at(0).toBool(), false);
     COMPARE(args.at(1).toString(), QStringLiteral(""));
 
-    QTRY_COMPARE(spyItemDeleted.count(), 1);
+    VERIFY(waitForSignal(spyItemDeleted, 1));
     args = spyItemDeleted.takeFirst();
     COMPARE(args.size(), 1);
     COMPARE(args.at(0).value<QDBusObjectPath>().path(), itemPath);
@@ -1275,7 +1452,7 @@ void TestGuiFdoSecrets::testModifyingExposedGroup()
 
     m_db->metadata()->setRecycleBinEnabled(true);
     m_db->recycleGroup(subgroup);
-    QApplication::processEvents();
+    processEvents();
 
     {
         DBUS_GET(collPaths, service->collections());
@@ -1284,7 +1461,7 @@ void TestGuiFdoSecrets::testModifyingExposedGroup()
 
     // test setting another exposed group, the collection will be exposed again
     FdoSecrets::settings()->setExposedGroup(m_db, m_db->rootGroup()->uuid());
-    QApplication::processEvents();
+    processEvents();
     {
         DBUS_GET(collPaths, service->collections());
         COMPARE(collPaths.size(), 1);
@@ -1295,14 +1472,25 @@ void TestGuiFdoSecrets::lockDatabaseInBackend()
 {
     m_dbWidget->lock();
     m_db.reset();
-    QApplication::processEvents();
+    processEvents();
 }
 
 void TestGuiFdoSecrets::unlockDatabaseInBackend()
 {
     m_dbWidget->performUnlockDatabase("a");
     m_db = m_dbWidget->database();
-    QApplication::processEvents();
+    processEvents();
+}
+
+void TestGuiFdoSecrets::processEvents()
+{
+    // Couldn't use QApplication::processEvents, because per Qt documentation:
+    //     events that are posted while the function runs will be queued until a later round of event processing.
+    // and we may post QTimer single shot events during event handling to achieve async method.
+    // So we directly call event dispatcher in a loop until no events can be handled
+    while (QAbstractEventDispatcher::instance()->processEvents(QEventLoop::AllEvents)) {
+        // pass
+    }
 }
 
 // the following functions have return value, switch macros to the version supporting that
@@ -1388,9 +1576,7 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
     bool found = driveAccessControlDialog();
     COMPARE(found, expectPrompt);
 
-    // wait for signal
-    VERIFY(spyPromptCompleted.wait());
-    COMPARE(spyPromptCompleted.count(), 1);
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
     auto args = spyPromptCompleted.takeFirst();
     COMPARE(args.size(), 2);
     COMPARE(args.at(0).toBool(), false);
@@ -1401,22 +1587,92 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
 
 bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember)
 {
-    QApplication::processEvents();
-    for (auto w : qApp->allWidgets()) {
+    processEvents();
+    for (auto w : QApplication::topLevelWidgets()) {
         if (!w->isWindow()) {
             continue;
         }
         auto dlg = qobject_cast<AccessControlDialog*>(w);
-        if (dlg) {
+        if (dlg && dlg->isVisible()) {
             auto rememberCheck = dlg->findChild<QCheckBox*>("rememberCheck");
             VERIFY(rememberCheck);
             rememberCheck->setChecked(remember);
-            QTest::keyClick(dlg, Qt::Key_Enter);
-            QApplication::processEvents();
+            dlg->done(AccessControlDialog::AllowSelected);
+            processEvents();
+            VERIFY(dlg->isHidden());
             return true;
         }
     }
     return false;
+}
+
+bool TestGuiFdoSecrets::driveNewDatabaseWizard()
+{
+    // processEvents will block because the NewDatabaseWizard is shown using exec
+    // which creates a local QEventLoop.
+    // so we do a little trick here to get the return value back
+    bool ret = false;
+    QTimer::singleShot(0, this, [this, &ret]() {
+        ret = [this]() -> bool {
+            auto wizard = m_tabWidget->findChild<NewDatabaseWizard*>();
+            VERIFY(wizard);
+
+            COMPARE(wizard->currentId(), 0);
+            wizard->next();
+            wizard->next();
+            COMPARE(wizard->currentId(), 2);
+
+            // enter password
+            auto* passwordEdit = wizard->findChild<QLineEdit*>("enterPasswordEdit");
+            auto* passwordRepeatEdit = wizard->findChild<QLineEdit*>("repeatPasswordEdit");
+            VERIFY(passwordEdit);
+            VERIFY(passwordRepeatEdit);
+            QTest::keyClicks(passwordEdit, "test");
+            QTest::keyClick(passwordEdit, Qt::Key::Key_Tab);
+            QTest::keyClicks(passwordRepeatEdit, "test");
+
+            // save database to temporary file
+            TemporaryFile tmpFile;
+            VERIFY(tmpFile.open());
+            tmpFile.close();
+            fileDialog()->setNextFileName(tmpFile.fileName());
+
+            wizard->accept();
+
+            tmpFile.remove();
+            return true;
+        }();
+    });
+    processEvents();
+    return ret;
+}
+
+bool TestGuiFdoSecrets::driveUnlockDialog()
+{
+    processEvents();
+    auto dbOpenDlg = m_tabWidget->findChild<DatabaseOpenDialog*>();
+    VERIFY(dbOpenDlg);
+    auto editPassword = dbOpenDlg->findChild<QLineEdit*>("editPassword");
+    VERIFY(editPassword);
+    editPassword->setFocus();
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+    processEvents();
+    return true;
+}
+
+bool TestGuiFdoSecrets::waitForSignal(QSignalSpy& spy, int expectedCount)
+{
+    processEvents();
+    // If already expected count, do not wait and return immediately
+    if (spy.count() == expectedCount) {
+        return true;
+    } else if (spy.count() > expectedCount) {
+        return false;
+    }
+    spy.wait();
+    COMPARE(spy.count(), expectedCount);
+    return true;
 }
 
 #undef VERIFY

@@ -155,6 +155,7 @@ public:
         FdoSecrets_ShowNotification,
         FdoSecrets_ConfirmDeleteItem,
         FdoSecrets_ConfirmAccessItem,
+        FdoSecrets_UnlockBeforeSearch,
 
         KeeShare_QuietSuccess,
         KeeShare_Own,
