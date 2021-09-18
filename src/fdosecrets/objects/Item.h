@@ -91,8 +91,13 @@ namespace FdoSecrets
         QString path() const;
 
     public slots:
-        void doDelete();
+        // will actually delete the entry in KPXC
+        bool doDelete();
 
+        // Only delete from dbus, will remove self. Do not affect database in KPXC
+        void removeFromDBus();
+
+    private slots:
         /**
          * Check if the backend is a valid object, send error reply if not.
          * @return No error if the backend is valid.

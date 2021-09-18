@@ -96,8 +96,8 @@ namespace FdoSecrets
 
         /**
          * Finish signal for async action doUnlockDatabaseInDialog
-         * @param accepted If false, the action is canceled by the user
-         * @param dbWidget The unlocked the dbWidget if succeed
+         * @param accepted If false, the action is cancelled by the user
+         * @param dbWidget The dbWidget the action is on
          */
         void doneUnlockDatabaseInDialog(bool accepted, DatabaseWidget* dbWidget);
 
@@ -114,6 +114,7 @@ namespace FdoSecrets
         }
 
     public slots:
+        bool doLockDatabase(DatabaseWidget* dbWidget);
         bool doCloseDatabase(DatabaseWidget* dbWidget);
         Collection* doNewDatabase();
         void doSwitchToDatabaseSettings(DatabaseWidget* dbWidget);
@@ -135,6 +136,8 @@ namespace FdoSecrets
 
         void onCollectionAliasRemoved(const QString& alias);
 
+        void onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
+
     private:
         bool initialize();
 
@@ -153,16 +156,18 @@ namespace FdoSecrets
         Collection* findCollection(const DatabaseWidget* db) const;
 
     private:
-        FdoSecretsPlugin* m_plugin;
-        QPointer<DatabaseTabWidget> m_databases;
+        FdoSecretsPlugin* m_plugin{nullptr};
+        QPointer<DatabaseTabWidget> m_databases{};
 
-        QHash<QString, Collection*> m_aliases;
-        QList<Collection*> m_collections;
-        QHash<const DatabaseWidget*, Collection*> m_dbToCollection;
+        QHash<QString, Collection*> m_aliases{};
+        QList<Collection*> m_collections{};
+        QHash<const DatabaseWidget*, Collection*> m_dbToCollection{};
 
-        QList<Session*> m_sessions;
+        QList<Session*> m_sessions{};
 
-        bool m_insideEnsureDefaultAlias;
+        bool m_insideEnsureDefaultAlias{false};
+        QSet<const DatabaseWidget*> m_unlockingDb{}; // list of db being unlocking
+        QSet<const DatabaseWidget*> m_lockingDb{}; // list of db being locking
     };
 
 } // namespace FdoSecrets

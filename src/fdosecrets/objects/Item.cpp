@@ -335,7 +335,14 @@ namespace FdoSecrets
         return m_backend;
     }
 
-    void Item::doDelete()
+    bool Item::doDelete()
+    {
+        Q_ASSERT(m_backend);
+
+        return collection()->doDeleteEntry(m_backend);
+    }
+
+    void Item::removeFromDBus()
     {
         emit itemAboutToDelete();
 

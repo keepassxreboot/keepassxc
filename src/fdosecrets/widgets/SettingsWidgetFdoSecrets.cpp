@@ -255,6 +255,7 @@ void SettingsWidgetFdoSecrets::loadSettings()
     m_ui->showNotification->setChecked(FdoSecrets::settings()->showNotification());
     m_ui->confirmDeleteItem->setChecked(FdoSecrets::settings()->confirmDeleteItem());
     m_ui->confirmAccessItem->setChecked(FdoSecrets::settings()->confirmAccessItem());
+    m_ui->unlockBeforeSearch->setChecked(FdoSecrets::settings()->unlockBeforeSearch());
 }
 
 void SettingsWidgetFdoSecrets::saveSettings()
@@ -263,6 +264,7 @@ void SettingsWidgetFdoSecrets::saveSettings()
     FdoSecrets::settings()->setShowNotification(m_ui->showNotification->isChecked());
     FdoSecrets::settings()->setConfirmDeleteItem(m_ui->confirmDeleteItem->isChecked());
     FdoSecrets::settings()->setConfirmAccessItem(m_ui->confirmAccessItem->isChecked());
+    FdoSecrets::settings()->setUnlockBeforeSearch(m_ui->unlockBeforeSearch->isChecked());
 }
 
 void SettingsWidgetFdoSecrets::showEvent(QShowEvent* event)

@@ -44,6 +44,9 @@ namespace FdoSecrets
         bool confirmAccessItem() const;
         void setConfirmAccessItem(bool confirmAccessItem);
 
+        bool unlockBeforeSearch() const;
+        void setUnlockBeforeSearch(bool unlockBeforeSearch);
+
         // Per db settings
 
         QUuid exposedGroup(const QSharedPointer<Database>& db) const;

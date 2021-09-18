@@ -23,6 +23,7 @@
 #include <QPointer>
 
 #include "fdosecrets/dbus/DBusTypes.h"
+#include "gui/MessageBox.h"
 
 class MainWindow;
 class Database;
@@ -47,6 +48,7 @@ class SessionProxy;
 class PromptProxy;
 
 class QAbstractItemView;
+class QSignalSpy;
 
 class TestGuiFdoSecrets : public QObject
 {
@@ -64,15 +66,20 @@ private slots:
     void testServiceEnable();
     void testServiceEnableNoExposedDatabase();
     void testServiceSearch();
+    void testServiceSearchBlockingUnlock();
+    void testServiceSearchForce();
     void testServiceUnlock();
+    void testServiceUnlockDatabaseConcurrent();
     void testServiceUnlockItems();
     void testServiceLock();
+    void testServiceLockConcurrent();
 
     void testSessionOpen();
     void testSessionClose();
 
     void testCollectionCreate();
     void testCollectionDelete();
+    void testCollectionDeleteConcurrent();
     void testCollectionChange();
 
     void testItemCreate();
@@ -92,11 +99,14 @@ private slots:
     void testHiddenFilename();
     void testDuplicateName();
 
-protected slots:
-    void driveNewDatabaseWizard();
-    bool driveAccessControlDialog(bool remember = true);
-
 private:
+    bool driveUnlockDialog();
+    bool driveNewDatabaseWizard();
+    bool driveAccessControlDialog(bool remember = true);
+    bool waitForSignal(QSignalSpy& spy, int expectedCount);
+
+    void processEvents();
+
     void lockDatabaseInBackend();
     void unlockDatabaseInBackend();
     QSharedPointer<ServiceProxy> enableService();

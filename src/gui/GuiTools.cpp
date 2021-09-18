@@ -66,10 +66,10 @@ namespace GuiTools
         }
     }
 
-    void deleteEntriesResolveReferences(QWidget* parent, const QList<Entry*>& entries, bool permanent)
+    size_t deleteEntriesResolveReferences(QWidget* parent, const QList<Entry*>& entries, bool permanent)
     {
         if (!parent || entries.isEmpty()) {
-            return;
+            return 0;
         }
 
         QList<Entry*> selectedEntries;
@@ -116,5 +116,6 @@ namespace GuiTools
                 entry->database()->recycleEntry(entry);
             }
         }
+        return selectedEntries.size();
     }
 } // namespace GuiTools

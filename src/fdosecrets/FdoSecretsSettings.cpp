@@ -83,6 +83,16 @@ namespace FdoSecrets
         config()->set(Config::FdoSecrets_ConfirmAccessItem, confirmAccessItem);
     }
 
+    bool FdoSecretsSettings::unlockBeforeSearch() const
+    {
+        return config()->get(Config::FdoSecrets_UnlockBeforeSearch).toBool();
+    }
+
+    void FdoSecretsSettings::setUnlockBeforeSearch(bool unlockBeforeSearch)
+    {
+        config()->set(Config::FdoSecrets_UnlockBeforeSearch, unlockBeforeSearch);
+    }
+
     QUuid FdoSecretsSettings::exposedGroup(const QSharedPointer<Database>& db) const
     {
         return exposedGroup(db.data());

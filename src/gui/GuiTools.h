@@ -26,6 +26,6 @@ class Entry;
 namespace GuiTools
 {
     bool confirmDeleteEntries(QWidget* parent, const QList<Entry*>& entries, bool permanent);
-    void deleteEntriesResolveReferences(QWidget* parent, const QList<Entry*>& entries, bool permanent);
+    size_t deleteEntriesResolveReferences(QWidget* parent, const QList<Entry*>& entries, bool permanent);
 } // namespace GuiTools
 #endif // KEEPASSXC_GUITOOLS_H

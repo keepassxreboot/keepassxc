@@ -52,8 +52,10 @@ namespace FdoSecrets
         , m_databases(std::move(dbTabs))
         , m_insideEnsureDefaultAlias(false)
     {
-        connect(
-            m_databases, &DatabaseTabWidget::databaseUnlockDialogFinished, this, &Service::doneUnlockDatabaseInDialog);
+        connect(m_databases,
+                &DatabaseTabWidget::databaseUnlockDialogFinished,
+                this,
+                &Service::onDatabaseUnlockDialogFinished);
     }
 
     Service::~Service() = default;
@@ -86,7 +88,7 @@ namespace FdoSecrets
     {
         // The Collection will monitor the database's exposed group.
         // When the Collection finds that no exposed group, it will delete itself.
-        // Thus the service also needs to monitor it and recreate the collection if the user changes
+        // Thus, the service also needs to monitor it and recreate the collection if the user changes
         // from no exposed to exposed something.
         connect(dbWidget, &DatabaseWidget::databaseReplaced, this, [this, dbWidget]() {
             monitorDatabaseExposedGroup(dbWidget);
@@ -119,16 +121,16 @@ namespace FdoSecrets
         // m_backend may already be reset to nullptr
         // We want to remove the collection object from dbus as early as possible, to avoid
         // race conditions when deleteLater was called on the m_backend, but not delivered yet,
-        // and new method calls from dbus occurred. Therefore we can't rely on the destroyed
+        // and new method calls from dbus occurred. Therefore, we can't rely on the destroyed
         // signal on m_backend.
         // bind to coll lifespan
         connect(m_databases.data(), &DatabaseTabWidget::databaseClosed, coll, [coll](const QString& filePath) {
             if (filePath == coll->backendFilePath()) {
-                coll->doDelete();
+                coll->removeFromDBus();
             }
         });
 
-        // actual load, must after updates to m_collections, because the reload may trigger
+        // actual load, must after updates to m_collections, because reloading may trigger
         // another onDatabaseTabOpen, and m_collections will be used to prevent recursion.
         if (!coll->reloadBackend()) {
             // error in dbus
@@ -250,7 +252,7 @@ namespace FdoSecrets
 
         for (const auto& coll : asConst(colls)) {
             QList<Item*> items;
-            ret = coll->searchItems(attributes, items);
+            ret = coll->searchItems(client, attributes, items);
             if (ret.err()) {
                 return ret;
             }
@@ -282,7 +284,7 @@ namespace FdoSecrets
         itemsToUnlock.reserve(objects.size());
 
         for (const auto& obj : asConst(objects)) {
-            // the object is either an item or an collection
+            // the object is either an item or a collection
             auto item = qobject_cast<Item*>(obj);
             auto coll = item ? item->collection() : qobject_cast<Collection*>(obj);
             // either way there should be a collection
@@ -317,6 +319,7 @@ namespace FdoSecrets
             }
         }
 
+        prompt = nullptr;
         if (!collectionsToUnlock.isEmpty() || !itemsToUnlock.isEmpty()) {
             prompt = PromptBase::Create<UnlockPrompt>(this, collectionsToUnlock, itemsToUnlock);
             if (!prompt) {
@@ -493,9 +496,44 @@ namespace FdoSecrets
         m_plugin->emitRequestSwitchToDatabases();
     }
 
+    bool Service::doLockDatabase(DatabaseWidget* dbWidget)
+    {
+        // return immediately if the db is already unlocked
+        if (dbWidget && dbWidget->isLocked()) {
+            return true;
+        }
+
+        // mark the db as being unlocked to prevent multiple dialogs for the same db
+        if (m_lockingDb.contains(dbWidget)) {
+            return true;
+        }
+        m_lockingDb.insert(dbWidget);
+        auto ret = dbWidget->lock();
+        m_lockingDb.remove(dbWidget);
+
+        return ret;
+    }
+
     void Service::doUnlockDatabaseInDialog(DatabaseWidget* dbWidget)
     {
+        // return immediately if the db is already unlocked
+        if (dbWidget && !dbWidget->isLocked()) {
+            emit doneUnlockDatabaseInDialog(true, dbWidget);
+            return;
+        }
+
+        // mark the db as being unlocked to prevent multiple dialogs for the same db
+        if (m_unlockingDb.contains(dbWidget)) {
+            return;
+        }
+        m_unlockingDb.insert(dbWidget);
+
         m_databases->unlockDatabaseInDialog(dbWidget, DatabaseOpenDialog::Intent::None);
     }
 
+    void Service::onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget)
+    {
+        m_unlockingDb.remove(dbWidget);
+        emit doneUnlockDatabaseInDialog(accepted, dbWidget);
+    }
 } // namespace FdoSecrets

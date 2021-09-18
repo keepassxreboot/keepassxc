@@ -63,8 +63,10 @@ namespace FdoSecrets
 
         Q_INVOKABLE DBUS_PROPERTY DBusResult modified(qulonglong& modified) const;
 
-        Q_INVOKABLE DBusResult remove(const DBusClientPtr& client, PromptBase*& prompt);
-        Q_INVOKABLE DBusResult searchItems(const StringStringMap& attributes, QList<Item*>& items);
+        Q_INVOKABLE DBusResult remove(PromptBase*& prompt);
+        Q_INVOKABLE DBusResult searchItems(const DBusClientPtr& client,
+                                           const StringStringMap& attributes,
+                                           QList<Item*>& items);
         Q_INVOKABLE DBusResult
         createItem(const QVariantMap& properties, const Secret& secret, bool replace, Item*& item, PromptBase*& prompt);
 
@@ -112,14 +114,18 @@ namespace FdoSecrets
 
     public slots:
         // expose some methods for Prompt to use
-        bool doLock();
-        void doUnlock();
-        Item* doNewItem(const DBusClientPtr& client, QString itemPath);
-        // will remove self
-        void doDelete();
 
-        // delete the Entry in backend from this collection
-        void doDeleteEntries(QList<Entry*> entries);
+        bool doLock();
+        // actually only closes database tab in KPXC
+        bool doDelete();
+        // Async, finish signal doneUnlockCollection
+        void doUnlock();
+
+        bool doDeleteEntry(Entry* entry);
+        Item* doNewItem(const DBusClientPtr& client, QString itemPath);
+
+        // Only delete from dbus, will remove self. Do not affect database in KPXC
+        void removeFromDBus();
 
         // force reload info from backend, potentially delete self
         bool reloadBackend();
