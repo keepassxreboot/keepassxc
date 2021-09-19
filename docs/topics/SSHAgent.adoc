@@ -4,7 +4,7 @@ include::.sharedheader[]
 
 // tag::content[]
 == SSH Agent
-SSH (Secure Shell) is a widely used remote secure shell protocol and is considered an industry standard for secure remote access to UNIX-like systems including Linux, BSDs, MacOS and more recently even Windows received native support. SSH supports multiple types of authentication and the most widely used ones are either interactive keyboard input with a password or a public-key cryptography pair of keys.
+SSH (Secure Shell) is a widely used remote secure shell protocol and is considered an industry standard for secure remote access to UNIX-like systems including Linux, BSDs, macOS and more recently even Windows received native support. SSH supports multiple types of authentication and the most widely used ones are either interactive keyboard input with a password or a public-key cryptography pair of keys.
 
 KeePassXC SSH Agent integration is built to manage SSH keys in a secure manner by either storing them completely within your KeePassXC database or by having only the decryption key of a key file that is stored elsewhere. SSH Agent integration _does not_ provide an agent itself but works as a client for any agent implementation that is OpenSSH compatible.
 
@@ -32,17 +32,34 @@ WARNING: _GNOME Keyring_ prior to release 3.27.92 had its own custom implementat
 It does not support any constraints you may want to configure for an added key.
 If you are running a modern distribution the custom agent has been removed and replaced with the stock OpenSSH agent which is feature complete.
 
-=== OpenSSH agent on MacOS
-Apple has made OpenSSH an integrated part of MacOS with automatic agent startup when it is first used. No further configuration is needed.
+=== OpenSSH agent on macOS
+Apple has made OpenSSH an integrated part of macOS with automatic agent startup when it is first used. No further configuration is needed.
 
-=== Pageant agent on Windows
+=== OpenSSH agent and Pageant on Windows
 The SSH Agent integration on Windows supports both _PuTTY Pageant_ and _OpenSSH for Windows 10_.
-Since Pageant is currently still the most widely used implementation and is easily installable on any version of Windows we focus on that.
-It is also the default on KeePassXC.
+Since Pageant is currently still the most widely used implementation and is easily installable on any version of Windows, it is the default on KeePassXC.
+However, Microsoft includes a native OpenSSH client implementation with Windows 10 since autumn 2018 that can be used instead. If you would like to self-manage your OpenSSH version you can use the builds offered via their official https://github.com/powershell/Win32-OpenSSH[GitHub repository].
 
+==== Pageant
 Download Pageant from the official PuTTY home page at https://www.chiark.greenend.org.uk/~sgtatham/putty/
 
 To use Pageant with KeePassXC, simply start it and it will minimize into the system tray and is ready to use. PuTTY and compatible tools will use Pageant automatically.
+
+==== OpenSSH
+Make sure your Windows version has at least update 1809 installed. For more details consult the https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview[official documentation].
+
+To use Windows OpenSSH the _OpenSSH Authentication Agent_ service has to be enabled first:
+
+ 1. Open the Services application via the _Start Menu_, it is located in the _Windows Administrative Tools_ section
+ 2. Select the _OpenSSH Authentication Agent_ and open its _Properties_
+ 3. Set the _Startup type_ to _Automatic_ and start the service
+
+Alternatively, you can use a _Windows PowerShell_ running as _Administrator_ to enable and start the service:
+
+    PS C:\Users\user> Get-Service ssh-agent | Set-Service -StartupType Automatic
+    PS C:\Users\user> Start-Service ssh-agent
+
+KeePassXC and other compatible tools can now use the Windows OpenSSH agent. To use it with KeePassXC, update the settings explained in <<Setting up SSH Agent integration>>.
 
 === Setting up SSH Agent integration
 By default the SSH Agent integration plugin is disabled.
@@ -64,8 +81,7 @@ If the value of _SSH_AUTH_SOCK_ is empty it means the agent is not properly conf
 === Generating a key to use with KeePassXC
 KeePassXC only supports keys in the _OpenSSH_ format. On Windows, _PuTTYgen_ saves keys in its own format by default and you will need to convert them to OpenSSH format before being used. In this guide we are going to generate a standard RSA key in the default size.
 
-==== Generating a key on Linux or MacOS with _ssh-keygen_
-
+==== Generating a key on Linux or macOS with _ssh-keygen_
 Open a terminal window and type the following command to generate a key:
 
     $ ssh-keygen -o -f keepassxc -C johndoe@example
@@ -89,7 +105,6 @@ Open a terminal window and type the following command to generate a key:
     |. ..++ooo        |
     +----[SHA256]-----+
 
-
 Now we can see two files were generated:
 
     $ ls -l keepassxc*
@@ -98,11 +113,51 @@ Now we can see two files were generated:
 
 With KeePassXC you only need the first file listed.
 
-==== Generating a key on Windows with PuTTYgen
-Please read the manual on how to use PuTTYgen for details on generate a key: https://the.earth.li/~sgtatham/putty/0.74/htmldoc/Chapter8.html#pubkey-puttygen. Once generated, you must save the key in the new OpenSSH format, see image below.
+==== Generating a key on Windows
+On Windows you can generate key pairs with _PuTTYgen_ and with _ssh-keygen_, depending on whether you installed PuTTY and your Windows version.
 
-.Generating a key with PuTTYgen
+===== Using _PuTTYgen_
+Please read the manual on how to use _PuTTYgen_ for details on generate a key: https://the.earth.li/~sgtatham/putty/0.74/htmldoc/Chapter8.html#pubkey-puttygen. Once generated, you must save the key in the new OpenSSH format, see image below.
+
+.Generating a key with _PuTTYgen_
 image::sshagent_puttygen.png[,70%]
+
+===== Using _ssh-keygen_
+Open _Command Prompt_ or _Windows PowerShell_ and type the following command to generate a key:
+
+    PS C:\Users\user> ssh-keygen.exe -o -f keepassxc -C johndoe@example
+    Generating public/private rsa key pair.
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
+    Your identification has been saved in keepassxc
+    Your public key has been saved in keepassxc.pub
+    The key fingerprint is:
+    SHA256:pN+o5AqUmijYBDUrFV/caMus9oIR61+MiWLa8fcsVYI johndoe@example
+    The key's randomart image is:
+    +---[RSA 3072]----+
+    |  =. ..o         |
+    | o + .+ .        |
+    |o . .+ o.        |
+    | o..  Eo. .      |
+    |  +o .. So       |
+    |o*o.o+ ..o       |
+    |Bo=+o.+.o .      |
+    |+oo+.++o         |
+    |. ..++ooo        |
+    +----[SHA256]-----+
+
+Now we can see two files were generated:
+
+    PS C:\Users\user> dir keepassxc*
+
+    Directory C:\Users\user
+
+    Mode                 LastWriteTime         Length Name
+    ----                 -------------         ------ ----
+    -a----         9/19/2021  12:08 PM           2655 keepassxc
+    -a----         9/19/2021  12:08 PM            570 keepassxc.pub
+
+With KeePassXC you only need the first file listed.
 
 === Configuring an entry to use SSH Agent
 The last step is to setup an entry to contain the SSH Agent settings and key file you generated.
