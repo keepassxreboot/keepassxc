@@ -168,7 +168,7 @@ namespace Utils
             }
 
             auto conn = QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
-                err << QObject::tr("Please touch the button on your YubiKey to continue…") << "\n\n" << flush;
+                err << QObject::tr("Please interface with your YubiKey to continue…") << "\n\n" << flush;
             });
 
             auto key = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey({serial, slot}));
