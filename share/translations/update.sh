@@ -16,23 +16,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-BASEDIR="$(dirname $0)"
+BASEDIR=$(dirname "$0")
 
 PUSH=true
 PULL=true
 UPDATE=true
 
-if [ "$1" == "push" ]; then
+if [[ $1 == "push" ]]; then
     PULL=false
-elif [ "$1" == "pull" ]; then
+elif [[ $1 == "pull" ]]; then
     PUSH=false
     UPDATE=false
-elif [ "$1" == "update" ]; then
+elif [[ $1 == "update" ]]; then
     PUSH=false
     PULL=false
-elif [ "$1" != "" ]; then
+elif [[ $1 != "" ]]; then
     echo "Unknown command '${1}'"
-    echo "Usage: $(basename $0) [update|pull|push] [additional tx options]"
+    echo "Usage: $(basename "$0") [update|pull|push] [additional tx options]"
     exit 1
 fi
 
@@ -45,7 +45,7 @@ if $UPDATE; then
 
     LUPDATE=lupdate-qt5
     command -v $LUPDATE > /dev/null
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         LUPDATE=lupdate
     fi
     $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -no-obsolete src -ts share/translations/keepassx_en.ts

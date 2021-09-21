@@ -17,4 +17,4 @@ Then just run
 ```shell
 keepass-cr-recovery path-to-your-password-database path-of-the-new-keyfile
 ```
-It will prompt for the challenge-response secret. You will get a keyfile at the specified destination path. Then, to unlock your database in KeePassXC, you need to check "key file" instead of "challenge response" and load the file. 
+It will prompt for the challenge-response secret. You will get a keyfile at the specified destination path. Then, to unlock your database in KeePassXC, you need to check "key file" instead of "challenge response" and load the file.

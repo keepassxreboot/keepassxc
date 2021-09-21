@@ -47,4 +47,3 @@ mark_as_advanced(
     Readline_INCLUDE_DIR
     Readline_LIBRARY
 )
-

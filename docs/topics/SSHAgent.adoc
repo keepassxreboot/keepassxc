@@ -70,8 +70,8 @@ Open a terminal window and type the following command to generate a key:
 
     $ ssh-keygen -o -f keepassxc -C johndoe@example
     Generating public/private rsa key pair.
-    Enter passphrase (empty for no passphrase): 
-    Enter same passphrase again: 
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
     Your identification has been saved in keepassxc
     Your public key has been saved in keepassxc.pub
     The key fingerprint is:
@@ -110,7 +110,7 @@ The last step is to setup an entry to contain the SSH Agent settings and key fil
 1. Create a new entry, or open an existing entry in edit mode.
 2. Set the password you used for the key file in the password field.
 3. Go to the advanced category and attach the key file you generated previously.
-4. Go to the SSH Agent category *(1)* and select the attachment from the list *(2)*. 
+4. Go to the SSH Agent category *(1)* and select the attachment from the list *(2)*.
 5. Alternatively, you can load an external file dynamically using the file selection.
 6. Choose the options for this key.
 7. Press *OK* to accept the entry. Depending on the options you chose, KeePassXC will load the key and present it for use.

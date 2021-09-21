@@ -48,7 +48,7 @@ This section contains full details on advanced features available in KeePassXC.
 |===
 
 === Entry Cross-Reference
-A reference to another entry's field is possible using the short-hand syntax:  
+A reference to another entry's field is possible using the short-hand syntax:
 `{REF:<FIELD>@<SEARCH_IN>:<SEARCH_TEXT>}`
 
 `<FIELD>` and `<SEARCH_IN>` can be one of following:

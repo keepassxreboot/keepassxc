@@ -18,4 +18,4 @@ minify -o icons/database --match=.svg icons/database
 
 # Crush PNG's
 echo "Crushing PNG's..."
-find "." -iname '*png' -exec pngcrush -ow -brute {} \;
+find . -iname '*.png' -exec pngcrush -ow -brute {} \;
