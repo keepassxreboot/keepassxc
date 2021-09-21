@@ -19,9 +19,10 @@
 #include "EntryPreviewWidget.h"
 #include "ui_EntryPreviewWidget.h"
 
-#include "Clipboard.h"
-#include "Font.h"
+#include "gui/Clipboard.h"
+#include "gui/Font.h"
 #include "gui/Icons.h"
+#include "totp/totp.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"
@@ -65,6 +66,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->entryUrlLabel, SIGNAL(linkActivated(QString)), SLOT(openEntryUrl()));
 
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
+    connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpProgress, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
     connect(m_ui->toggleEntryNotesButton, SIGNAL(clicked(bool)), SLOT(setEntryNotesVisible(bool)));
@@ -180,10 +182,12 @@ void EntryPreviewWidget::updateEntryTotp()
     const bool hasTotp = m_currentEntry->hasTotp();
     m_ui->entryTotpButton->setVisible(hasTotp);
     m_ui->entryTotpLabel->hide();
+    m_ui->entryTotpProgress->hide();
     m_ui->entryTotpButton->setChecked(false);
 
     if (hasTotp) {
         m_totpTimer.start(1000);
+        m_ui->entryTotpProgress->setMaximum(m_currentEntry->totpSettings()->step);
         updateTotpLabel();
     } else {
         m_ui->entryTotpLabel->clear();
@@ -420,10 +424,14 @@ void EntryPreviewWidget::updateGroupSharingTab()
 void EntryPreviewWidget::updateTotpLabel()
 {
     if (!m_locked && m_currentEntry && m_currentEntry->hasTotp()) {
-        const QString totpCode = m_currentEntry->totp();
-        const QString firstHalf = totpCode.left(totpCode.size() / 2);
-        const QString secondHalf = totpCode.mid(totpCode.size() / 2);
-        m_ui->entryTotpLabel->setText(firstHalf + " " + secondHalf);
+        auto totpCode = m_currentEntry->totp();
+        totpCode.insert(totpCode.size() / 2, " ");
+        m_ui->entryTotpLabel->setText(totpCode);
+
+        auto step = m_currentEntry->totpSettings()->step;
+        auto timeleft = step - (Clock::currentSecondsSinceEpoch() % step);
+        m_ui->entryTotpProgress->setValue(timeleft);
+        m_ui->entryTotpProgress->update();
     } else {
         m_ui->entryTotpLabel->clear();
         m_totpTimer.stop();
