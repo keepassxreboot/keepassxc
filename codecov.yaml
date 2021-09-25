@@ -1,0 +1,6 @@
+coverage:
+  range: 60..80
+  round: nearest
+  precision: 2
+comment:
+  require_changes: true
