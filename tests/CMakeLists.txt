@@ -236,11 +236,9 @@ if(WITH_XC_BROWSER)
         LIBS ${TEST_LIBRARIES})
 endif()
 
+add_unit_test(NAME testcli SOURCES TestCli.cpp
+        LIBS testsupport cli ${TEST_LIBRARIES})
 
 if(WITH_GUI_TESTS)
-    # CLI clip tests need X environment on Linux
-    add_unit_test(NAME testcli SOURCES TestCli.cpp
-            LIBS testsupport cli ${TEST_LIBRARIES})
-
     add_subdirectory(gui)
 endif(WITH_GUI_TESTS)
