@@ -43,6 +43,10 @@ set(cli_SOURCES
         Search.cpp
         Show.cpp)
 
+if(WITH_XC_SSHAGENT)
+    list(APPEND cli_SOURCES SSHAdd.cpp)
+endif()
+
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core)
 

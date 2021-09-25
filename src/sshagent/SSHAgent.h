@@ -25,6 +25,7 @@
 
 class KeeAgentSettings;
 class Database;
+class Entry;
 
 class SSHAgent : public QObject
 {
@@ -57,6 +58,7 @@ public:
     bool removeIdentity(OpenSSHKey& key);
     void removeAllIdentities();
     void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
+    QSharedPointer<OpenSSHKey> getKeyFromEntry(QSharedPointer<Database> db, Entry* e) const;
 
 signals:
     void error(const QString& message);

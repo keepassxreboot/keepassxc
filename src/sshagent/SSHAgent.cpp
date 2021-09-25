@@ -508,6 +508,35 @@ void SSHAgent::databaseLocked(QSharedPointer<Database> db)
     }
 }
 
+QSharedPointer<OpenSSHKey> SSHAgent::getKeyFromEntry(QSharedPointer<Database> db, Entry* e) const
+{
+    if (!db || !isEnabled()) {
+        return QSharedPointer<OpenSSHKey>();
+    }
+
+    if (db->metadata()->recycleBinEnabled() && e->group() == db->metadata()->recycleBin()) {
+        return QSharedPointer<OpenSSHKey>();
+    }
+
+    KeeAgentSettings settings;
+
+    if (!settings.fromEntry(e)) {
+        return QSharedPointer<OpenSSHKey>();
+    }
+
+    if (!settings.allowUseOfSshKey() || !settings.addAtDatabaseOpen()) {
+        return QSharedPointer<OpenSSHKey>();
+    }
+
+    OpenSSHKey* key = new OpenSSHKey();
+
+    if (!settings.toOpenSSHKey(e, *key, true)) {
+        return QSharedPointer<OpenSSHKey>();
+    }
+
+    return QSharedPointer<OpenSSHKey>(key);
+}
+
 void SSHAgent::databaseUnlocked(QSharedPointer<Database> db)
 {
     if (!db || !isEnabled()) {
