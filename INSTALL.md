@@ -126,7 +126,7 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 Installation
 ============
 
-After you have successfully built KeePassXC, install the binary by executing the following:
+After you have successfully built KeePassXC, the binary will be in `build/src/keepassxc`. You can install it by executing the following:
 
 ```bash
 sudo make install
