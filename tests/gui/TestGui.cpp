@@ -658,7 +658,11 @@ void TestGui::testPasswordEntryEntropy()
     QVERIFY(passwordEdit);
     QTest::mouseClick(passwordEdit, Qt::LeftButton);
 
+#ifdef Q_OS_MAC
+    QTest::keyClick(passwordEdit, Qt::Key_G, Qt::MetaModifier);
+#else
     QTest::keyClick(passwordEdit, Qt::Key_G, Qt::ControlModifier);
+#endif
 
     TEST_MODAL(PasswordGeneratorWidget * pwGeneratorWidget;
                QTRY_VERIFY(pwGeneratorWidget = m_dbWidget->findChild<PasswordGeneratorWidget*>());
@@ -739,7 +743,11 @@ void TestGui::testDicewareEntryEntropy()
     QVERIFY(passwordEdit);
     QTest::mouseClick(passwordEdit, Qt::LeftButton);
 
+#ifdef Q_OS_MAC
+    QTest::keyClick(passwordEdit, Qt::Key_G, Qt::MetaModifier);
+#else
     QTest::keyClick(passwordEdit, Qt::Key_G, Qt::ControlModifier);
+#endif
 
     TEST_MODAL(PasswordGeneratorWidget * pwGeneratorWidget;
                QTRY_VERIFY(pwGeneratorWidget = m_dbWidget->findChild<PasswordGeneratorWidget*>());
@@ -854,6 +862,7 @@ void TestGui::testSearch()
     QTRY_VERIFY(helpPanel->isVisible());
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(helpPanel->isVisible());
+    QApplication::processEvents();
     helpButton->trigger();
     QTRY_VERIFY(!helpPanel->isVisible());
     // Search for "ZZZ"
@@ -1480,6 +1489,7 @@ void TestGui::testTrayRestoreHide()
         QSKIP("QSystemTrayIcon::isSystemTrayAvailable() = false, skipping tray restore/hide test…");
     }
 
+#ifndef Q_OS_MACOS
     m_mainWindow->hideWindow();
     QVERIFY(!m_mainWindow->isVisible());
 
@@ -1507,6 +1517,7 @@ void TestGui::testTrayRestoreHide()
     // Ensure window is visible at the end
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
+#endif
 }
 
 void TestGui::testAutoType()

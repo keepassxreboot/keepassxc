@@ -51,9 +51,9 @@ PasswordEdit::PasswordEdit(QWidget* parent)
 
     // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
 #ifdef Q_OS_MAC
-    auto modifier = Qt::META;
+    constexpr auto modifier = Qt::MetaModifier;
 #else
-    auto modifier = Qt::CTRL;
+    constexpr auto modifier = Qt::ControlModifier;
 #endif
 
     m_toggleVisibleAction = new QAction(

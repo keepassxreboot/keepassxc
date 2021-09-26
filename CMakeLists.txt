@@ -290,15 +290,6 @@ check_add_gcc_compiler_flag("-Werror=format-security")
 check_add_gcc_compiler_flag("-Werror=implicit-function-declaration" C)
 check_add_gcc_compiler_flag("-Wcast-align")
 
-if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
-  # then:
-  # $ llvm-profdata merge -sparse default.profraw -o default.profdata
-  # $ llvm-cov show ./tests/${the_test_binary} \
-  #      -format=html -instr-profile=default.profdata -output-dir=./coverages \
-  #      `find src -iname '*.h' -or -iname '*.cpp'`
-endif()
-
 if(UNIX AND NOT APPLE)
     check_add_gcc_compiler_flag("-Qunused-arguments")
     check_add_gcc_compiler_flag("-fPIC")
@@ -394,16 +385,37 @@ endif(WITH_TESTS)
 if(WITH_COVERAGE)
     # Include code coverage, use with -DCMAKE_BUILD_TYPE=Debug
     include(CodeCoverage)
-    set(COVERAGE_GCOVR_EXCLUDES
+    set(COVERAGE_EXCLUDES
             "\\(.+/\\)?tests/.\\*"
+            "\\(.+/\\)?build/.\\*"
+            "\\(.+/\\)?thirdparty/.\\*"
+            "\\(.+/\\)?CMakeFiles/.\\*"
+            "src/main.cpp"
             ".\\*/moc_\\[^/\\]+\\.cpp"
             ".\\*/ui_\\[^/\\]+\\.h"
-            "\\(.+/\\)?zxcvbn/.\\*")
+            ".\\*/\\[^/\\]+_autogen/.\\*"
+            "\\(.+/\\)?zxcvbn/.\\*"
+            "/Applications/.\\*"
+            "/opt/.\\*")
     append_coverage_compiler_flags()
-    setup_target_for_coverage_gcovr_html(
-            NAME coverage
-            EXECUTABLE $(MAKE) && $(MAKE) test
-    )
+
+    if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
+        set(MAIN_BINARIES
+                "$<TARGET_FILE:${PROGNAME}>"
+                "$<TARGET_FILE:keepassxc-cli>"
+                "$<TARGET_FILE:keepassxc-proxy>")
+        setup_target_for_coverage_llvm(
+                NAME coverage
+                EXECUTABLE $(MAKE) test
+                BINARY ${MAIN_BINARIES}
+                SOURCES ${CMAKE_SOURCE_DIR}/src
+        )
+    else()
+        setup_target_for_coverage_gcovr(
+                NAME coverage
+                EXECUTABLE $(MAKE) test
+        )
+    endif()
 endif()
 
 include(CLangFormat)
