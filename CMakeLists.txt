@@ -385,20 +385,13 @@ endif(WITH_TESTS)
 if(WITH_COVERAGE)
     # Include code coverage, use with -DCMAKE_BUILD_TYPE=Debug
     include(CodeCoverage)
-    set(COVERAGE_EXCLUDES
-            "\\(.+/\\)?tests/.\\*"
-            "\\(.+/\\)?build/.\\*"
-            "\\(.+/\\)?thirdparty/.\\*"
-            "\\(.+/\\)?CMakeFiles/.\\*"
-            "src/main.cpp"
-            ".\\*/moc_\\[^/\\]+\\.cpp"
-            ".\\*/ui_\\[^/\\]+\\.h"
-            ".\\*/\\[^/\\]+_autogen/.\\*"
-            "\\(.+/\\)?zxcvbn/.\\*"
-            "/Applications/.\\*"
-            "/opt/.\\*")
     append_coverage_compiler_flags()
 
+    set(COVERAGE_EXCLUDES
+            "'^(.+/)?(thirdparty|zxcvbn)/.*'"
+            "'^(.+/)?main\\.cpp$$'"
+            "'^(.+/)?cli/keepassxc-cli\\.cpp$$'"
+            "'^(.+/)?proxy/keepassxc-proxy\\.cpp$$'")
     if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
         set(MAIN_BINARIES
                 "$<TARGET_FILE:${PROGNAME}>"
@@ -406,14 +399,13 @@ if(WITH_COVERAGE)
                 "$<TARGET_FILE:keepassxc-proxy>")
         setup_target_for_coverage_llvm(
                 NAME coverage
-                EXECUTABLE $(MAKE) test
                 BINARY ${MAIN_BINARIES}
-                SOURCES ${CMAKE_SOURCE_DIR}/src
+                SOURCES_ROOT ${CMAKE_SOURCE_DIR}/src
         )
     else()
         setup_target_for_coverage_gcovr(
                 NAME coverage
-                EXECUTABLE $(MAKE) test
+                SOURCES_ROOT ${CMAKE_SOURCE_DIR}/src
         )
     endif()
 endif()
