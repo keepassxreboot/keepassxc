@@ -45,7 +45,7 @@ elseif(CMAKE_COMPILER_IS_CLANGXX)
 endif()
 
 set(CMAKE_COVERAGE_FORMAT
-    "html" "txt"
+    "html" "xml"
     CACHE STRING "Coverage report output format.")
 set_property(CACHE CMAKE_COVERAGE_FORMAT PROPERTY STRINGS "html" "txt")
 
@@ -93,7 +93,7 @@ endif()
 function(SETUP_TARGET_FOR_COVERAGE_GCOVR)
 
     set(options NONE)
-    set(oneValueArgs NAME)
+    set(oneValueArgs NAME SOURCES_ROOT)
     set(multiValueArgs EXECUTABLE EXECUTABLE_ARGS DEPENDENCIES)
     cmake_parse_arguments(Coverage "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -110,33 +110,48 @@ function(SETUP_TARGET_FOR_COVERAGE_GCOVR)
 
     add_custom_target(${Coverage_NAME}
         # Run tests
-        COMMAND $(MAKE)
-        COMMAND ${Coverage_EXECUTABLE}
+        COMMAND ctest -C $<CONFIG> $ENV{ARGS} $$ARGS
 
-        # Create folder
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/${Coverage_NAME}
         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
         DEPENDS ${Coverage_DEPENDENCIES}
     )
 
     if("html" IN_LIST CMAKE_COVERAGE_FORMAT)
         add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
+            # Create folder
+            COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/${Coverage_NAME}-html
+
             # Running gcovr HTML
             COMMAND ${GCOVR_PATH} --html --html-details
-                -r ${PROJECT_SOURCE_DIR} ${GCOVR_EXCLUDES}
+                -r ${Coverage_SOURCES_ROOT} ${GCOVR_EXCLUDES}
                 --object-directory=${PROJECT_BINARY_DIR}
+                --exclude-unreachable-branches --exclude-throw-branches
                 -o ${Coverage_NAME}-html/index.html
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
             COMMENT "Running gcovr to produce HTML code coverage report ${Coverage_NAME}-html."
         )
     endif()
 
+    if("xml" IN_LIST CMAKE_COVERAGE_FORMAT)
+        add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
+            # Running gcovr TXT
+            COMMAND ${GCOVR_PATH} --xml
+                -r ${Coverage_SOURCES_ROOT} ${GCOVR_EXCLUDES}
+                --object-directory=${PROJECT_BINARY_DIR}
+                --exclude-unreachable-branches --exclude-throw-branches
+                -o ${Coverage_NAME}.xml
+            WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+            COMMENT "Running gcovr to produce XML code coverage report ${Coverage_NAME}.xml."
+        )
+    endif()
+
     if("txt" IN_LIST CMAKE_COVERAGE_FORMAT)
         add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
-            # Running gcovr XML
+            # Running gcovr TXT
             COMMAND ${GCOVR_PATH}
-                -r ${PROJECT_SOURCE_DIR} ${GCOVR_EXCLUDES}
+                -r ${Coverage_SOURCES_ROOT} ${GCOVR_EXCLUDES}
                 --object-directory=${PROJECT_BINARY_DIR}
+                --exclude-unreachable-branches --exclude-throw-branches
                 -o ${Coverage_NAME}.txt
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
             COMMENT "Running gcovr to produce TXT code coverage report ${Coverage_NAME}.txt."
@@ -158,8 +173,8 @@ endfunction() # SETUP_TARGET_FOR_COVERAGE_GCOVR
 function(SETUP_TARGET_FOR_COVERAGE_LLVM)
 
     set(options NONE)
-    set(oneValueArgs NAME PROF_FILE)
-    set(multiValueArgs EXECUTABLE BINARY EXECUTABLE_ARGS SOURCES DEPENDENCIES)
+    set(oneValueArgs NAME SOURCES_ROOT PROF_FILE)
+    set(multiValueArgs EXECUTABLE BINARY EXECUTABLE_ARGS DEPENDENCIES)
     cmake_parse_arguments(Coverage "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     if(XCRUN_PATH)
@@ -191,8 +206,7 @@ function(SETUP_TARGET_FOR_COVERAGE_LLVM)
     endif()
 
     add_custom_target(${Coverage_NAME}
-        COMMAND $(MAKE)
-        COMMAND ${CMAKE_COMMAND} -E env LLVM_PROFILE_FILE=${LLVM_PROFILE_DIR}/profile-%p.profraw ${Coverage_EXECUTABLE}
+        COMMAND ${CMAKE_COMMAND} -E env LLVM_PROFILE_FILE=${LLVM_PROFILE_DIR}/profile-%p.profraw ctest -C $<CONFIG> $$ARGS
 
         COMMAND ${LLVM_PROFDATA_PATH} merge -sparse ${LLVM_PROFILE_DIR}/* -o coverage.profdata
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
@@ -201,15 +215,19 @@ function(SETUP_TARGET_FOR_COVERAGE_LLVM)
     if("html" IN_LIST CMAKE_COVERAGE_FORMAT)
         add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
             COMMAND ${LLVM_COV_PATH} show -instr-profile=coverage.profdata ${COV_BINARY}
-                --format=html --output-dir=${Coverage_NAME}-html ${COV_EXCLUDES} ${Coverage_SOURCES}
+                --format=html --output-dir=${Coverage_NAME}-html ${COV_EXCLUDES} ${Coverage_SOURCES_ROOT}
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
             COMMENT "Running llvm-cov to produce HTML code coverage report ${Coverage_NAME}-html")
+    endif()
+
+    if("xml" IN_LIST CMAKE_COVERAGE_FORMAT)
+        message(WARNING "XML coverage report format not supported for llvm-cov")
     endif()
 
     if("txt" IN_LIST CMAKE_COVERAGE_FORMAT)
         add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
             COMMAND ${LLVM_COV_PATH} show -instr-profile=coverage.profdata ${COV_BINARY}
-                --format=text ${COV_EXCLUDES} ${Coverage_SOURCES} > ${Coverage_NAME}.txt
+                --format=text ${COV_EXCLUDES} ${Coverage_SOURCES_ROOT} > ${Coverage_NAME}.txt
 
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
             COMMENT "Running llvm-cov to produce TXT code coverage report ${Coverage_NAME}.txt.")
