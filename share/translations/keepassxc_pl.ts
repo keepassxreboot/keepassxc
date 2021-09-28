@@ -112,11 +112,11 @@
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Użyj Pageanta</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
+        <translation>Użyj OpenSSH</translation>
     </message>
 </context>
 <context>
@@ -841,13 +841,14 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Usuń wpis</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation type="unfinished"/>
+        <translation>Odebrano żądanie usunięcie wpisu &quot;%1&quot;.
+Czy chcesz usunąć wpis?</translation>
     </message>
 </context>
 <context>
@@ -1081,7 +1082,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>~/.config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
+        <translation>~/.config/Mozilla/native-messaging-hosts/</translation>
     </message>
 </context>
 <context>
@@ -2028,7 +2029,7 @@ To działanie jest nieodwracalne.</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Skasowano %n ikonę z bazy danych.</numerusform><numerusform>Skasowano %n ikony z bazy danych.</numerusform><numerusform>Skasowano %n ikon z bazy danych.</numerusform><numerusform>Skasowano %n ikon z bazy danych.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3266,11 +3267,11 @@ Może to spowodować nieprawidłowe działanie wtyczek.</translation>
     <name>EntryAttachments</name>
     <message>
         <source>%1 - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 - %2</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Nie można otworzyć pliku &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -3407,21 +3408,23 @@ Czy na pewno chcesz dodać ten plik?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation type="unfinished"/>
+        <translation>Zmodyfikowano załącznik</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation type="unfinished"/>
+        <translation>Zmodyfikowano załącznik &apos;%1&apos;.
+Czy chcesz zapisać zmiany w bazie danych?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation type="unfinished"/>
+        <translation>Zapisywanie załącznika nie powiodło się</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Zapisywanie zaktualizowanego załącznika nie powiodło się.
+Błąd: %1</translation>
     </message>
 </context>
 <context>
@@ -3737,7 +3740,7 @@ Error: %1</source>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n wpis był używany przez %1</numerusform><numerusform>%n wpisy były używane przez %1</numerusform><numerusform>%n wpisów było używanych przez %1</numerusform><numerusform>%n wpisów było używanych przez %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5087,7 +5090,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation type="unfinished"/>
+        <translation>Sklonuj grupę...</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
@@ -6976,7 +6979,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
+        <translation>Podano nieważny UUID</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
@@ -7008,7 +7011,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Wyciekło hasło do &apos;%1&apos;!</numerusform><numerusform>Wyciekło hasło do &apos;%1&apos;!</numerusform><numerusform>Wyciekło hasło do &apos;%1&apos;!</numerusform><numerusform>Wyciekło hasło do &apos;%1&apos;!</numerusform></translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -7029,15 +7032,15 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
+        <translation>Używanie pasującego wpisu: %1</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
+        <translation>Brakujący argument pozycyjny.</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Podano zbyt wiele argumentów.</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
@@ -7077,7 +7080,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Hasło zostało użyte %1 raz</numerusform><numerusform>Hasło zostało użyte %1 razy</numerusform><numerusform>Hasło zostało użyte %1 razy</numerusform><numerusform>Hasło zostało użyte %1 razy</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7097,7 +7100,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Hasło wygaśnie za %1 dzień</numerusform><numerusform>Hasło wygaśnie za %1 dni</numerusform><numerusform>Hasło wygaśnie za %1 dni</numerusform><numerusform>Hasło wygaśnie za %1 dni</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7125,7 +7128,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Czyszczenie schowka za %1 sekundę…</numerusform><numerusform>Czyszczenie schowka za %1 sekundy…</numerusform><numerusform>Czyszczenie schowka za %1 sekund…</numerusform><numerusform>Czyszczenie schowka za %1 sekund…</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7133,11 +7136,11 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Czy naprawdę chcesz usunąć %n wpis na dobre?</numerusform><numerusform>Czy naprawdę chcesz usunąć %n wpisy na dobre?</numerusform><numerusform>Czy naprawdę chcesz usunąć %n wpisów na dobre?</numerusform><numerusform>Czy naprawdę chcesz usunąć %n wpisów na dobre?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Usunąć wpis?</numerusform><numerusform>Usunąć wpisy?</numerusform><numerusform>Usunąć wpisy?</numerusform><numerusform>Usunąć wpisy?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7145,11 +7148,11 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Czy na pewno chcesz przenieść %n wpis do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisy do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Przenieść wpis do kosza?</numerusform><numerusform>Przenieść wpisy do kosza?</numerusform><numerusform>Przenieść wpisy do kosza?</numerusform><numerusform>Przenieść wpisy do kosza?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7157,7 +7160,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Wpis &quot;%1&quot; ma %2 odniesienie. Czy chcesz zastąpić odniesienie wartościami, pominąć ten wpis, czy usunąć mimo to?</numerusform><numerusform>Wpis &quot;%1&quot; ma %2 odniesienia. Czy chcesz zastąpić odniesienia wartościami, pominąć ten wpis, czy usunąć mimo to?</numerusform><numerusform>Wpis &quot;%1&quot; ma %2 odniesień. Czy chcesz zastąpić odniesienia wartościami, pominąć ten wpis, czy usunąć mimo to?</numerusform><numerusform>Wpis &quot;%1&quot; ma %2 odniesień. Czy chcesz zastąpić odniesienia wartościami, pominąć ten wpis, czy usunąć mimo to?</numerusform></translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7309,7 +7312,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Usuń wpis…</numerusform><numerusform>Usuń wpisy…</numerusform><numerusform>Usuń wpisy…</numerusform><numerusform>Usuń wpisy…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7404,7 +7407,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Usuń wpis…</numerusform><numerusform>Usuń wpisy…</numerusform><numerusform>Usuń wpisy…</numerusform><numerusform>Usuń wpisy…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7531,7 +7534,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation type="unfinished"/>
+        <translation>Utworzono bazę danych</translation>
     </message>
 </context>
 <context>
