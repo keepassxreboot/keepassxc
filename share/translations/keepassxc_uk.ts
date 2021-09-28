@@ -47,11 +47,45 @@
     </message>
 </context>
 <context>
-    <name>AgentSettingsWidget</name>
+    <name>AccessControlDialog</name>
     <message>
-        <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation>Використовувати OpenSSH для Windows замість Pageant</translation>
+        <source>KeePassXC -  Access Request</source>
+        <translation type="unfinished"/>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember</source>
+        <translation>Запам&apos;ятати</translation>
+    </message>
+    <message>
+        <source>Allow access to entries</source>
+        <translation>Дозволити доступ до записів</translation>
+    </message>
+    <message>
+        <source>Allow Selected</source>
+        <translation>Дозволити обрані</translation>
+    </message>
+    <message>
+        <source>Deny All</source>
+        <translation>Заборонити всі</translation>
+    </message>
+</context>
+<context>
+    <name>AccessControlDialog::DenyButton</name>
+    <message>
+        <source>Deny for this program</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
         <translation>Увімкнути інтеграцію з SSH Agent</translation>
@@ -75,6 +109,14 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>З&apos;єднання з SSH Agent працює!</translation>
+    </message>
+    <message>
+        <source>Use Pageant</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use OpenSSH</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -138,6 +180,10 @@
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Ви мусите перезапустити програму, щоб встановити іншу мову. Бажаєте перезапустити зараз?</translation>
+    </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Монохромна</translation>
     </message>
 </context>
 <context>
@@ -352,6 +398,10 @@
         <source>Tray icon type</source>
         <translation>Варіант значка в лотку</translation>
     </message>
+    <message>
+        <source>Hide expired entries from Auto-Type</source>
+        <translation>Не використовувати знечинені записи для автозаповнення</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -449,37 +499,17 @@
         <source>Use placeholder for empty password fields</source>
         <translation>Показувати текст-заповнювач для порожніх полів паролів</translation>
     </message>
+    <message>
+        <source>Move entries to recycle bin without confirmation</source>
+        <translation>Переміщати записи в смітник без підтвердження</translation>
+    </message>
+    <message>
+        <source>Enable double click to copy the username/password entry columns</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
-    <message>
-        <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Не знайдено запис, що відповідає заголовку вікна:</translation>
-    </message>
-    <message>
-        <source>Auto-Type - KeePassXC</source>
-        <translation>Автозаповнення – KeePassXC</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Автозаповнення</translation>
-    </message>
-    <message>
-        <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>Синтаксис виразу Автозаповнення неправильний!</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Команда Автозаповнення містить надто довгу затримку. Ви дійсно хочете продовжити?</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Команда Автозаповнення містить надто повільні натискання клавіш. Ви дійсно хочете продовжити?</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Команда Автозаповнення містить надто часто повторювані параметри. Ви дійсно хочете продовжити?</translation>
-    </message>
     <message>
         <source>Permission Required</source>
         <translation>Необхідний дозвіл</translation>
@@ -487,6 +517,55 @@
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
         <translation>KeePassXC потребує дозволу на доступність для виконання автозаповнення на рівні записів. Якщо Ви вже надали цей дозвіл, можливо Вам необхідно перезапустити KeePassXC.</translation>
+    </message>
+    <message>
+        <source>The requested Auto-Type sequence cannot be used due to an error:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC потребує дозволу на доступність і запис екрану для виконання глобального автозаповнення. Запис екрану необхідний, щоб виявити зоголовок вікна для пошуку записів. Якщо Ви вже надали цей дозвіл, можливо Вам необхідно перезапустити KeePassXC.</translation>
+    </message>
+    <message>
+        <source>Invalid entry provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bracket imbalance detected, found extra { or }</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Too many repetitions detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Very slow key press detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Very long delay detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid conversion type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid conversion syntax: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid regular expression syntax %1
+%2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid placeholder: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -524,25 +603,22 @@
     </message>
 </context>
 <context>
-    <name>AutoTypeMatchView</name>
+    <name>AutoTypePlatformX11</name>
     <message>
-        <source>Copy &amp;username</source>
-        <translation>Скопіювати &amp;ім&apos;я користувача</translation>
+        <source>Trying to send invalid keysym.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Copy &amp;password</source>
-        <translation>Скопіювати &amp;пароль</translation>
-    </message>
-</context>
-<context>
-    <name>AutoTypePlatformMac</name>
-    <message>
-        <source>Permission Required</source>
-        <translation>Необхідний дозвіл</translation>
+        <source>Unable to get valid keycode for key: </source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC потребує дозволу на доступність і запис екрану для виконання глобального автозаповнення. Запис екрану необхідний, щоб виявити зоголовок вікна для пошуку записів. Якщо Ви вже надали цей дозвіл, можливо Вам необхідно перезапустити KeePassXC.</translation>
+        <source>Sequence aborted: Caps Lock is on</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sequence aborted: Modifier keys held by user</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -552,12 +628,56 @@
         <translation>Автозаповнення – KeePassXC</translation>
     </message>
     <message>
-        <source>Select entry to Auto-Type:</source>
-        <translation>Виберіть запис для автозаповнення:</translation>
+        <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Search...</source>
-        <translation>Знайти...</translation>
+        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
+Ctrl+F - Toggle database search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Скасувати</translation>
+    </message>
+    <message>
+        <source>Type {USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type {PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type {TOTP}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy TOTP</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -714,6 +834,16 @@ chrome-laptop.</source>
 Надайте сполученню унікальне ім&apos;я або ідентифікатор, наприклад:
 chrome-на-ноутбуці.</translation>
     </message>
+    <message>
+        <source>KeePassXC: Delete entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for deleting entry &quot;%1&quot; has been received.
+Do you want to delete the entry?
+</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
@@ -779,14 +909,6 @@ chrome-на-ноутбуці.</translation>
         <translation>Запитувати щодо розблокування сховища, якщо воно заблоковане</translation>
     </message>
     <message>
-        <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Показані тільки записи з такою самою схемою (http://, https://, ftp://, …).</translation>
-    </message>
-    <message>
-        <source>Match URL scheme (e.g., https://...)</source>
-        <translation>Узгоджувати схеми URL (наприклад, https://...)</translation>
-    </message>
-    <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
         <translation>Показувати лише найкращі збіги для певного URL замість усіх записів для всієї області.</translation>
     </message>
@@ -810,16 +932,6 @@ chrome-на-ноутбуці.</translation>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
         <translation>Шукати збіги з реєстраційними даними в усіх відкритих сховищах</translation>
-    </message>
-    <message>
-        <source>Sort matching credentials by title</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Сортувати збіжні реєстраційні дані за заголовком</translation>
-    </message>
-    <message>
-        <source>Sort matching credentials by username</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Сортувати збіжні реєстраційні дані за іменем користувача</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -882,11 +994,6 @@ chrome-на-ноутбуці.</translation>
         <translation>Переглядач для файлу власного посередника</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Переглянути...</translation>
-    </message>
-    <message>
         <source>Use a custom browser configuration location:</source>
         <translation>Використовувати власне розташування параметрів переглядача:</translation>
     </message>
@@ -905,10 +1012,6 @@ chrome-на-ноутбуці.</translation>
     <message>
         <source>Custom browser location field</source>
         <translation>Поле власного розташування переглядача</translation>
-    </message>
-    <message>
-        <source>~/.custom/config/Mozilla/native-messaging-hosts/</source>
-        <translation>~/.custom/config/Mozilla/native-messaging-hosts/</translation>
     </message>
     <message>
         <source>Browse for custom browser path</source>
@@ -958,13 +1061,26 @@ chrome-на-ноутбуці.</translation>
         <source>Select native messaging host folder location</source>
         <translation>Вибрати розташування теки для господаря власного обміну повідомленнями</translation>
     </message>
+    <message>
+        <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Match URL scheme (e.g., https://example.com)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>~/.config/Mozilla/native-messaging-hosts/</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>
-    <message>
-        <source>Clone Options</source>
-        <translation>Параметри клонування</translation>
-    </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
         <translation>Додати « – клон» до заголовка</translation>
@@ -976,6 +1092,10 @@ chrome-на-ноутбуці.</translation>
     <message>
         <source>Copy history</source>
         <translation>Скопіювати журнал</translation>
+    </message>
+    <message>
+        <source>Clone Entry Options</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1162,10 +1282,6 @@ chrome-на-ноутбуці.</translation>
         <translation>Неможливо записати файл, оскільки він відкритий у режимі читання.</translation>
     </message>
     <message>
-        <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation>Ключ не перетворено через ваду в програмі. Будь ласка, повідомте про це розробникам!</translation>
-    </message>
-    <message>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
@@ -1199,6 +1315,10 @@ Backup database located at %2</source>
     <message>
         <source>Could not save, database has not been initialized!</source>
         <translation>Збереження неможливе оскільки сховище не започатковане!</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1259,10 +1379,6 @@ Backup database located at %2</source>
         <translation>Вибір файлового ключа</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Переглянути...</translation>
-    </message>
-    <message>
         <source>Refresh hardware tokens</source>
         <translation>Оновити апаратні позначки</translation>
     </message>
@@ -1301,12 +1417,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>Введіть додаткові реєстраційні дані (якщо є):</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Ви можете використовувати апаратний ключ захисту на кшталт &lt;strong&gt;YubiKey&lt;/strong&gt; чи &lt;strong&gt;OnlyKey&lt;/strong&gt; з гніздами налаштованими під HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Натисніть тут для додаткової інформації...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Довідка щодо файлового ключа</translation>
     </message>
@@ -1323,10 +1433,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
 If you do not have a key file, please leave the field empty.</source>
         <translation>Ви не можете використовувати файл сховища як файловий ключ.
 Якщо у Вас немає файлового ключа, залиште, будь ласка, це поле порожнім.</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;На додаток до Вашого пароля Ви можете використовувати таємний файл для посилення захисту Вашого сховища. Такий файл можна створити у розділі налаштування безпеки Вашого сховища.&lt;/p&gt;&lt;p&gt;Цей файл &lt;strong&gt;відрізняється&lt;/strong&gt; від Вашого файлу сховища *.kdbx!&lt;br&gt;Якщо у Вас немає файлового ключа, залиште це поле порожнім.&lt;/p&gt;&lt;p&gt;Натисніть тут для додаткової інформації...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
@@ -1353,8 +1459,21 @@ If you do not have a key file, please leave the field empty.</source>
         <translation>Старий формат файлового ключа</translation>
     </message>
     <message>
-        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation>Ви використовуєте старий формат файлового ключа, який KeePassXC може&lt;br&gt;незабаром припинити підтримувати.&lt;br&gt;&lt;br&gt;Будь ласка створіть новий файловий ключ у параметрах сховища:&lt;br&gt;&lt;strong&gt;Сховище / Безпека сховища / Змінити файловий ключ.&lt;/strong&gt;&lt;br&gt;</translation>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1389,6 +1508,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Database Credentials</source>
         <translation>Реєстраційні дані сховища</translation>
+    </message>
+    <message>
+        <source>Maintenance</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1492,12 +1615,6 @@ Permissions to access entries will be revoked.</source>
         <translation>Перемістити ознаки KeePassHTTP до користувацьких даних</translation>
     </message>
     <message>
-        <source>Do you really want to move all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Ви дійсно бажаєте оновити застаріле налаштування сполучення з переглядачами згідно з найновішими стандартами?
-Це необхідно для підтримання сумісності з модулем переглядача.</translation>
-    </message>
-    <message>
         <source>Stored browser keys</source>
         <translation>Збережені ключі переглядачів</translation>
     </message>
@@ -1527,13 +1644,14 @@ This is only necessary if your database is a copy of another and the browser ext
         <translation>Ви дійсно бажаєте оновити ID сховища?
 Це необхідно лише тоді, коли ваше сховище є копією іншого і не вдається під&apos;єднати розширення браузера.</translation>
     </message>
+    <message>
+        <source>Do you really want to convert all legacy browser integration data to the latest standard?
+This is necessary to maintain compatibility with the browser plugin.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
-    <message>
-        <source>Add additional protection...</source>
-        <translation>Поліпшити захист...</translation>
-    </message>
     <message>
         <source>No password set</source>
         <translation>Пароль не встановлено</translation>
@@ -1565,6 +1683,10 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>Failed to change database credentials</source>
         <translation>Не вдалося змінити облікові дані сховища</translation>
+    </message>
+    <message>
+        <source>Add additional protection…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1640,14 +1762,6 @@ Are you sure you want to continue without a password?</source>
         <translation>Кількість циклів надто висока</translation>
     </message>
     <message>
-        <source>You are using a very high number of key transform rounds with Argon2.
-
-If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation>Ви використовуєте надто багато циклів перетворення для ключа у форматі Argon2.
-
-Якщо Ви залишите таку кількість циклів, відкриття Вашого сховища може тривати кілька годин або днів (чи навіть довше)!</translation>
-    </message>
-    <message>
         <source>Understood, keep number</source>
         <translation>Зрозуміло, залишити таку кількість</translation>
     </message>
@@ -1659,14 +1773,6 @@ If you keep this number, your database may take hours or days (or even longer) t
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
         <translation>Кількість циклів надто низька</translation>
-    </message>
-    <message>
-        <source>You are using a very low number of key transform rounds with AES-KDF.
-
-If you keep this number, your database may be too easy to crack!</source>
-        <translation>Ви використовуєте надто мало циклів перетворення для ключа у форматі AES-KDF.
-
-Якщо Ви залишите таку кількість циклів, Ваше сховище буде легко зламати!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -1726,6 +1832,18 @@ If you keep this number, your database may be too easy to crack!</source>
         <source>? s</source>
         <translation>? с</translation>
     </message>
+    <message>
+        <source>You are using a very high number of key transform rounds with Argon2.
+
+If you keep this number, your database may take hours, days, or even longer to open.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are using a very low number of key transform rounds with AES-KDF.
+
+If you keep this number, your database will not be protected from brute force attacks.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
@@ -1748,10 +1866,6 @@ If you keep this number, your database may be too easy to crack!</source>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
-    <message>
-        <source>Database Meta Data</source>
-        <translation>Метадані сховища</translation>
-    </message>
     <message>
         <source>Database name:</source>
         <translation>Назва сховища:</translation>
@@ -1826,6 +1940,10 @@ This action is not reversible.</source>
         <source>Enable compression (recommended)</source>
         <translation>Увімкнути стиснення (рекомендовано)</translation>
     </message>
+    <message>
+        <source>Database Metadata</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
@@ -1857,6 +1975,49 @@ This action is not reversible.</source>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
         <translation> &gt; </translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseSettingsWidgetMaintenance</name>
+    <message>
+        <source>Manage Custom Icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete selected icon(s)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete all custom icons not in use by any entry or group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purge unused icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Deletion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Icons Are In Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All custom icons are in use by at least one entry or group.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purged Unused Icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Purged %n icon(s) from the database.</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -1981,22 +2142,6 @@ This is definitely a bug, please report it to the developers.</source>
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Searching...</source>
-        <translation>Триває пошук…</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Ви дійсно хочете остаточно видалити запис «%1»?</translation>
-    </message>
-    <message>
-        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Ви дійсно хочете перемістити запис «%1» у смітник?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Ви дійсно хочете перемістити %n запис у смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записи у смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записів у смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записів у смітник?</numerusform></translation>
-    </message>
-    <message>
         <source>Execute command?</source>
         <translation>Виконати команду?</translation>
     </message>
@@ -2054,18 +2199,6 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Ви дійсно бажаєте остаточно видалити все зі смітника?</translation>
     </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Ви дійсно хочете остаточно видалити %n запис?</numerusform><numerusform>Ви дійсно хочете остаточно видалити %n записи?</numerusform><numerusform>Ви дійсно хочете остаточно видалити %n записів?</numerusform><numerusform>Ви дійсно хочете остаточно видалити %n записів?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>Видалити запис?</numerusform><numerusform>Видалити записи?</numerusform><numerusform>Видалити записи?</numerusform><numerusform>Видалити записи?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Перемістити запис у смітник?</numerusform><numerusform>Перемістити записи в смітник?</numerusform><numerusform>Перемістити записи в смітник?</numerusform><numerusform>Перемістити записи в смітник?</numerusform></translation>
-    </message>
     <message>
         <source>Lock Database?</source>
         <translation>Заблокувати сховище?</translation>
@@ -2119,14 +2252,6 @@ Disable safe saves and try again?</source>
         <translation>Сховище KeePass 2</translation>
     </message>
     <message>
-        <source>Replace references to entry?</source>
-        <translation>Замінити посилання на запис?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>Запис «%1» має %2 посилання. Бажаєте перезаписати посилання значенням, пропустити запис або все одно видалити?</numerusform><numerusform>Запис «%1» має %2 посилання. Бажаєте перезаписати посилання значенням, пропустити запис або все одно видалити?</numerusform><numerusform>Запис «%1» має %2 посилань. Бажаєте перезаписати посилання значенням, пропустити запис або все одно видалити?</numerusform><numerusform>Запис «%1» має %2 посилань. Бажаєте перезаписати посилання значенням, пропустити запис або все одно видалити?</numerusform></translation>
-    </message>
-    <message>
         <source>Delete group</source>
         <translation>Видалити групу</translation>
     </message>
@@ -2147,10 +2272,6 @@ Disable safe saves and try again?</source>
         <translation>Об&apos;єднання не змінило сховище.</translation>
     </message>
     <message>
-        <source>Shared group...</source>
-        <translation>Спільна група...</translation>
-    </message>
-    <message>
         <source>Writing the database failed: %1</source>
         <translation>Записати сховище не вдалося: %1</translation>
     </message>
@@ -2165,6 +2286,22 @@ Disable safe saves and try again?</source>
     <message>
         <source>Could not find database file: %1</source>
         <translation>Не вдалося знайти файл сховища: %1</translation>
+    </message>
+    <message>
+        <source>Searching…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shared group…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type into the previously active window?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2299,6 +2436,22 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Зовнішня операція об&apos;єднання знечинила цей запис.
 На жаль, всі зміни загублено.</translation>
     </message>
+    <message>
+        <source>Auto-Type Validation Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An error occurred while validating the custom Auto-Type sequence:
+%1
+Would you like to correct it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
+%2
+Would you like to correct it?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2375,12 +2528,12 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Вибір кольору тла</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements (e. g. password entropy or re-use). You can set the check mark if the password is beyond your control (e. g. if it needs to be a four-digit PIN) to prevent it from cluttering the reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Якщо відмічено, запис не буде показано у таких звітах, як Health Check та HIBP, навіть якщо він не відповідає вимогам безпеки (наприклад, ентропія пароля чи повторність використання). Ви можете встановити цей прапорець у випадках, коли вибір пароля є Вашим контролем (наприклад, чотиризначний PIN-код), аби не захаращувати звіти.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Exclude from database reports</source>
         <translation>Виключити зі звітів по сховищам</translation>
+    </message>
+    <message>
+        <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2495,6 +2648,14 @@ Unfortunately, any changes made have been lost.</source>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Використовувати цей запис лише з HTTP Basic Auth</translation>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Не надсилати цей параметр до переглядача в діалогах автентифікації HTTP. Якщо ввімкнено, цей запис не буде показано для діалогів автентифікації HTTP.</translation>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Не використовувати цей запис для HTTP Basic Auth</translation>
     </message>
 </context>
 <context>
@@ -2611,10 +2772,6 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Примітки:</translation>
     </message>
     <message>
-        <source>https://example.com</source>
-        <translation>https://example.com</translation>
-    </message>
-    <message>
         <source>Expires:</source>
         <translation>Знечинюється:</translation>
     </message>
@@ -2678,11 +2835,6 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Зовнішній файл</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Переглянути...</translation>
-    </message>
-    <message>
         <source>Attachment</source>
         <translation>Вкладення</translation>
     </message>
@@ -2713,6 +2865,11 @@ Unfortunately, any changes made have been lost.</source>
     <message>
         <source>Select attachment file</source>
         <translation>Вибрати файл вкладення</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2860,8 +3017,8 @@ Supported extensions are: %1.</source>
         <translation>Вибрати файл для спільного використання</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Переглянути...</translation>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2934,10 +3091,6 @@ Supported extensions are: %1.</source>
         <translation>Додати свій значок</translation>
     </message>
     <message>
-        <source>Delete custom icon</source>
-        <translation>Видалити свій значок</translation>
-    </message>
-    <message>
         <source>Download favicon</source>
         <translation>Завантажити фавікон</translation>
     </message>
@@ -2952,10 +3105,6 @@ Supported extensions are: %1.</source>
     <message>
         <source>All files</source>
         <translation>Всі файли</translation>
-    </message>
-    <message>
-        <source>Confirm Delete</source>
-        <translation>Схвалити видалення</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -2976,10 +3125,6 @@ Supported extensions are: %1.</source>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
         <translation><numerusform>Такий значок зазнав невдачі:</numerusform><numerusform>Такі значки зазнали невдачі:</numerusform><numerusform>Такі значки зазнали невдачі:</numerusform><numerusform>Такі значки зазнали невдачі:</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>Цей значок використовує %n запис і його буде замінено на типовий значок. Ви дійсно хочете видалити його?</numerusform><numerusform>Цей значок використовують %n записи і його буде замінено на типовий значок. Ви дійсно хочете видалити його?</numerusform><numerusform>Цей значок використовують %n записів і його буде замінено на типовий значок. Ви дійсно хочете видалити його?</numerusform><numerusform>Цей значок використовують %n записів і його буде замінено на типовий значок. Ви дійсно хочете видалити його?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -3018,12 +3163,12 @@ Supported extensions are: %1.</source>
         <translation>Використовувати свій значок</translation>
     </message>
     <message>
-        <source>Apply icon to...</source>
-        <translation>Застосувати значок до...</translation>
-    </message>
-    <message>
         <source>Apply to this group only</source>
         <translation>Застосувати лише до цієї групи</translation>
+    </message>
+    <message>
+        <source>Apply icon to…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3100,6 +3245,17 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 - Клон</translation>
+    </message>
+</context>
+<context>
+    <name>EntryAttachments</name>
+    <message>
+        <source>%1 - %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3225,6 +3381,32 @@ Are you sure to add this file?</source>
     <message>
         <source>Confirm Attachment</source>
         <translation>Схвалити долучення</translation>
+    </message>
+    <message>
+        <source>Rename selected attachment</source>
+        <translation>Перейменувати вибраний додаток</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Перейменувати</translation>
+    </message>
+    <message>
+        <source>Attachment modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The attachment '%1' was modified.
+Do you want to save the changes to your database?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Saving attachment failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Saving updated attachment failed.
+Error: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3353,8 +3535,12 @@ Are you sure to add this file?</source>
         <translation>Містить вкладення</translation>
     </message>
     <message>
-        <source>Has TOTP one-time password</source>
-        <translation>Має одноразовий пароль ТОП</translation>
+        <source>Password Strength</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Has TOTP</source>
+        <translation>Містить ТОП</translation>
     </message>
 </context>
 <context>
@@ -3424,10 +3610,6 @@ Are you sure to add this file?</source>
         <translation>Ніколи</translation>
     </message>
     <message>
-        <source>[PROTECTED]</source>
-        <translation>[ЗАХИЩЕНО]</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Увімкнено</translation>
     </message>
@@ -3451,11 +3633,6 @@ Are you sure to add this file?</source>
         <source>Default Sequence</source>
         <translation>Типова послідовність</translation>
     </message>
-    <message>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
-        <comment>attributes line</comment>
-        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
-    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3478,22 +3655,85 @@ Are you sure to add this file?</source>
         <source>Reset to defaults</source>
         <translation>Повернути до типового налаштування</translation>
     </message>
+</context>
+<context>
+    <name>FdoSecrets::DBusMgr</name>
     <message>
-        <source>Has attachments</source>
-        <comment>Entry attachment icon toggle</comment>
-        <translation>Містить вкладення</translation>
+        <source>Failed to deliver message</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Has TOTP</source>
-        <comment>Entry TOTP icon toggle</comment>
-        <translation>Містить ТОП</translation>
+        <source>Failed to send reply on DBus</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown PID</comment>
+        <translation>Невідомий</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown executable path</comment>
+        <translation>Невідомий</translation>
+    </message>
+    <message>
+        <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
+        <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
+        <translation>&lt;i&gt;PID: %1, програма: %2&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
+        <translation>Зараз працює інша служба таємниць (%1).&lt;br/&gt;Будь ласка зупиніть або приберіть її перед тим як знову ввімкнути сполучення зі «Службою таємниць».</translation>
+    </message>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation>Не вдалося зареєструвати службу DBus в %1: &lt;br/&gt;</translation>
+    </message>
+    <message>
+        <source>Failed to register service on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
+        <translation>Не вдалося зареєструвати сховище в службі DBus під назвою «%1»</translation>
+    </message>
+    <message>
+        <source>Failed to register session on DBus at path &apos;%1&apos;</source>
+        <translation>Не вдалося зареєструвати сеанс в службі DBus за шляхом «%1»</translation>
+    </message>
+    <message>
+        <source>Failed to register item on DBus at path &apos;%1&apos;</source>
+        <translation>Не вдалося зареєструвати елемент в службі DBus за шляхом «%1»</translation>
+    </message>
+    <message>
+        <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::Item</name>
+    <message>
+        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
+        <translation>Програма %3 використала запис &quot;%1&quot; зі сховища &quot;%2&quot;</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
+    <message numerus="yes">
+        <source>%n Entry(s) was used by %1</source>
+        <comment>%1 is the name of an application</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::SettingsClientModel</name>
     <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation>Не вдалося зареєструвати службу DBus в %1: &lt;br/&gt;</translation>
+        <source>Application</source>
+        <translation>Застосунок</translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation>Керувати</translation>
     </message>
 </context>
 <context>
@@ -3520,14 +3760,10 @@ Are you sure to add this file?</source>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::SettingsSessionModel</name>
+    <name>FdoSecrets::UnlockPrompt</name>
     <message>
-        <source>Application</source>
-        <translation>Застосунок</translation>
-    </message>
-    <message>
-        <source>Manage</source>
-        <translation>Керувати</translation>
+        <source>%1 (PID: %2)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3536,25 +3772,6 @@ Are you sure to add this file?</source>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>Служба таємниць Fdo: %1</translation>
     </message>
-    <message>
-        <source>Unknown</source>
-        <comment>Unknown PID</comment>
-        <translation>Невідомий</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <comment>Unknown executable path</comment>
-        <translation>Невідомий</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
-        <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
-        <translation>&lt;i&gt;PID: %1, програма: %2&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Зараз працює інша служба таємниць (%1).&lt;br/&gt;Будь ласка зупиніть або приберіть її перед тим як знову ввімкнути сполучення зі «Службою таємниць».</translation>
-    </message>
 </context>
 <context>
     <name>Group</name>
@@ -3562,6 +3779,10 @@ Are you sure to add this file?</source>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[порожня]</translation>
+    </message>
+    <message>
+        <source>%1 - Clone</source>
+        <translation>%1 - Клон</translation>
     </message>
 </context>
 <context>
@@ -3600,14 +3821,6 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <translation>Стан</translation>
     </message>
     <message>
-        <source>Please wait, processing entry list...</source>
-        <translation>Зачекайте, будь ласка, триває оброблення списку записів...</translation>
-    </message>
-    <message>
-        <source>Downloading...</source>
-        <translation>Завантаження...</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Гаразд</translation>
     </message>
@@ -3620,8 +3833,16 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <translation>Завантаження зазнало невдачі</translation>
     </message>
     <message>
-        <source>Downloading favicons (%1/%2)...</source>
-        <translation>Завантаження фавіконів (%1/%2)...</translation>
+        <source>Please wait, processing entry list…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading favicons (%1/%2)…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3681,6 +3902,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Unable to calculate database key</source>
         <translation>Неможливо обчислити ключ сховища</translation>
+    </message>
+    <message>
+        <source>Invalid symmetric cipher IV size.</source>
+        <comment>IV = Initialization Vector for symmetric cipher</comment>
+        <translation>Непридатний розмір симетричного шифру IV.</translation>
     </message>
 </context>
 <context>
@@ -3876,16 +4102,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation>Це не сховище KeePass.</translation>
     </message>
     <message>
-        <source>The selected file is an old KeePass 1 database (.kdb).
-
-You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>Вибраний файл є старим сховищем для KeePass 1 (.kdb).
-
-Щоб імпортувати його, виберіть пункт меню «Сховище &gt; Імпортувати &gt; Сховище KeePass 1…».
-Перетворення можливе лише в одному напрямку. Ви не зможете відкрити імпортоване сховище старою версією KeePassX 0.4.</translation>
-    </message>
-    <message>
         <source>Unsupported KeePass 2 database version.</source>
         <translation>Непідтримувана версія сховища KeePass 2.</translation>
     </message>
@@ -3900,6 +4116,13 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Failed to read database file.</source>
         <translation>Зчитування файлу сховища зазнало невдачі.</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4176,10 +4399,6 @@ Line %2, column %3</source>
         <translation>Дані у полі запису читання не відповідають розміру</translation>
     </message>
     <message>
-        <source>Invalid entry uuid field size</source>
-        <translation>Непридатний розмір поля uuid запису</translation>
-    </message>
-    <message>
         <source>Invalid entry group id field size</source>
         <translation>Непридатний розмір поля для ідентифікатора групи запису</translation>
     </message>
@@ -4216,6 +4435,10 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Unable to calculate database key</source>
         <translation>Неможливо обчислити ключ сховища</translation>
+    </message>
+    <message>
+        <source>Invalid entry UUID field size</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4283,26 +4506,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <source>Key Component set, click to change or remove</source>
         <translation>Набір складників ключа, клацніть щоб змінити або видалити</translation>
     </message>
-    <message>
-        <source>Add %1</source>
-        <comment>Add a key component</comment>
-        <translation>Додати %1</translation>
-    </message>
-    <message>
-        <source>Change %1</source>
-        <comment>Change a key component</comment>
-        <translation>Змінити %1</translation>
-    </message>
-    <message>
-        <source>Remove %1</source>
-        <comment>Remove a key component</comment>
-        <translation>Видалити %1</translation>
-    </message>
-    <message>
-        <source>%1 set, click to change or remove</source>
-        <comment>Change or remove a key component</comment>
-        <translation>%1 встановлено, клацніть, щоб змінити або видалити</translation>
-    </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
@@ -4313,10 +4516,6 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Key File</source>
         <translation>Файловий ключ</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Ви можете додати файловий ключ, що містить випадкові байти для покращення безпеки.&lt;/p&gt;&lt;p&gt;Ви мусите зберігати його таємно і не губити, інакше Ви не зможете відкрити сховище.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -4333,10 +4532,6 @@ Message: %2</source>
         <translation>Всі файли</translation>
     </message>
     <message>
-        <source>Create Key File...</source>
-        <translation>Створити файловий ключ...</translation>
-    </message>
-    <message>
         <source>Error creating key file</source>
         <translation>Помилка створення файлового ключа</translation>
     </message>
@@ -4349,24 +4544,12 @@ Message: %2</source>
         <translation>Обрати файловий ключ</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Вибір файлового ключа</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Вибір файлового ключа</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Переглянути...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Створити новий файловий ключ</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Увага: не використовуйте файл, що може змінитися у майбутньому, інакше Ви не зможете розблокувати Ваше сховище!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4393,6 +4576,57 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
         <translation>Ви використовуєте застарілий формат файлового ключа, який KeePassXC&lt;br&gt; може припинити підтримувати у майбутньому.&lt;br&gt;&lt;br&gt;Бажано створити новий файловий ключ.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key File set, click to change or remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Key File…</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>MacUtils</name>
+    <message>
+        <source>Invalid key code</source>
+        <translation>Непридатний код ключа</translation>
+    </message>
+    <message>
+        <source>Global shortcut already registered to %1</source>
+        <translation>Глобальне сполучення клавіш вже зареєстровано для %1</translation>
+    </message>
+    <message>
+        <source>Could not register global shortcut</source>
+        <translation>Реєстрація глобального сполучення клавіш зазнало невдачі</translation>
     </message>
 </context>
 <context>
@@ -4494,21 +4728,8 @@ Are you sure you want to continue with this file?</source>
         <translation>Натисніть, будь ласка, кнопку на вашому YubiKey!</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC!
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>Попередження: Ви використовуєте нестійку збірку KeePassXC!
-Зберігайте резервну копію Ваших сховищ через підвищений ризик пошкодження даних.
-Ця версія не призначена для повсякденного користування.</translation>
-    </message>
-    <message>
         <source>&amp;Donate</source>
         <translation>Пожерт&amp;вувати</translation>
-    </message>
-    <message>
-        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
-We recommend you use the AppImage available on our downloads page.</source>
-        <translation>&lt;b&gt;Попередження&lt;/b&gt;: Використання Вашої версії Qt з екранною клавіатурою може призвести до збою KeePassXC.</translation>
     </message>
     <message>
         <source>&amp;Import</source>
@@ -4549,12 +4770,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Import a CSV file</source>
         <translation>Імпортувати файл CSV</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC!
-Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>&lt;b&gt;Примітка&lt;/b&gt;: Ви використовуєте попередній випуск KeePassXC!
-Зважайте на ймовірні помилки та незначні проблеми, ця версія не призначена для повсякденного користування.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
@@ -4685,10 +4900,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Безпека сховища...</translation>
     </message>
     <message>
-        <source>Database &amp;Reports...</source>
-        <translation>Звіти для сховища...</translation>
-    </message>
-    <message>
         <source>Statistics, health check, etc.</source>
         <translation>Статистика, перевіряння непошкодності тощо</translation>
     </message>
@@ -4785,10 +4996,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Відкрити довідник користувача</translation>
     </message>
     <message>
-        <source>Save Database Backup...</source>
-        <translation>Зберегти резервну копію сховища...</translation>
-    </message>
-    <message>
         <source>Add key to SSH Agent</source>
         <translation>Додати до в&apos;язки посередника SSH</translation>
     </message>
@@ -4841,26 +5048,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Ви мусите перезапустити програму, щоб застосувати цей параметр. Бажаєте перезапустити зараз?</translation>
     </message>
     <message>
-        <source>Perform Auto-Type Sequence</source>
-        <translation>Виконати послідовність автозаповнення</translation>
-    </message>
-    <message>
-        <source>{USERNAME}</source>
-        <translation>{КОРИСТУВАЧ}</translation>
-    </message>
-    <message>
-        <source>{USERNAME}{ENTER}</source>
-        <translation>{КОРИСТУВАЧ}{ENTER}</translation>
-    </message>
-    <message>
-        <source>{PASSWORD}</source>
-        <translation>{ПАРОЛЬ}</translation>
-    </message>
-    <message>
-        <source>{PASSWORD}{ENTER}</source>
-        <translation>{ПАРОЛЬ}{ENTER}</translation>
-    </message>
-    <message>
         <source>Always on Top</source>
         <translation>Завжди зверху</translation>
     </message>
@@ -4871,6 +5058,34 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Hide Passwords</source>
         <translation>Приховувати паролі</translation>
+    </message>
+    <message>
+        <source>Database &amp;Reports…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Database Backup…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clone Group...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC.
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>NOTE: You are using a pre-release version of KeePassXC.
+Expect some bugs and minor issues, this version is meant for testing purposes.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
+We recommend you use the AppImage available on our downloads page.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4977,13 +5192,13 @@ Expect some bugs and minor issues, this version is not meant for production use.
 <context>
     <name>NewDatabaseWizard</name>
     <message>
-        <source>Create a new KeePassXC database...</source>
-        <translation>Створити нове сховище KeePassXC...</translation>
-    </message>
-    <message>
         <source>Root</source>
         <comment>Root group</comment>
         <translation>Корінь</translation>
+    </message>
+    <message>
+        <source>Create a new KeePassXC database…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5047,6 +5262,14 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Password Manager</source>
         <translation>Керівник паролів</translation>
+    </message>
+    <message>
+        <source>Global shortcut already registered to %1</source>
+        <translation>Глобальне сполучення клавіш вже зареєстровано для %1</translation>
+    </message>
+    <message>
+        <source>Could not register global shortcut</source>
+        <translation>Реєстрація глобального сполучення клавіш зазнало невдачі</translation>
     </message>
 </context>
 <context>
@@ -5155,16 +5378,8 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Корисної навантаги таємного ключа не знайдено</translation>
     </message>
     <message>
-        <source>Trying to run KDF without cipher</source>
-        <translation>Пробуємо обчислити ФОК без шифру</translation>
-    </message>
-    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>Для розшифрування цього ключа потрібен вираз пароля</translation>
-    </message>
-    <message>
-        <source>Key derivation failed, key file corrupted?</source>
-        <translation>Обчислення ключа зазнало невдачі. Можливо, файл ключа пошкоджений?</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
@@ -5213,6 +5428,18 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Unknown key type: %1</source>
         <translation>Невідомий тип ключа: %1</translation>
+    </message>
+    <message>
+        <source>Key derivation failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to initialize cipher: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decryption failed: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5267,6 +5494,22 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Repeat password field</source>
         <translation>Поле повторення пароля</translation>
+    </message>
+    <message>
+        <source>Add Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password set, click to change or remove</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5489,10 +5732,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Застосувати пароль</translation>
     </message>
     <message>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Створити пароль знову (%1)</translation>
     </message>
@@ -5500,68 +5739,28 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>Special Characters</source>
         <translation>Спеціальні символи</translation>
     </message>
+    <message>
+        <source>Character Count:</source>
+        <translation>Кількість символів:</translation>
+    </message>
+    <message>
+        <source>character</source>
+        <translation>символ</translation>
+    </message>
 </context>
 <context>
-    <name>QApplication</name>
+    <name>PickcharsDialog</name>
     <message>
-        <source>KeeShare</source>
-        <translation>KeeShare</translation>
+        <source>KeePassXC - Pick Characters</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Statistics</source>
-        <translation>Статистика</translation>
+        <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Very weak password</source>
-        <translation>Дуже слабкий пароль</translation>
-    </message>
-    <message>
-        <source>Password entropy is %1 bits</source>
-        <translation>Ентропія пароля: %1 біт</translation>
-    </message>
-    <message>
-        <source>Weak password</source>
-        <translation>Слабкий пароль</translation>
-    </message>
-    <message>
-        <source>Used in %1/%2</source>
-        <translation>Використано в %1/%2</translation>
-    </message>
-    <message>
-        <source>Password is used %1 times</source>
-        <translation>Пароль використано %1 разів</translation>
-    </message>
-    <message>
-        <source>Password has expired</source>
-        <translation>Термін дії пароля сплив</translation>
-    </message>
-    <message>
-        <source>Password expiry was %1</source>
-        <translation>Термін дії пароля був %1</translation>
-    </message>
-    <message>
-        <source>Password is about to expire</source>
-        <translation>Термін дії пароля ось-ось спливе</translation>
-    </message>
-    <message>
-        <source>Password expires in %1 days</source>
-        <translation>Термін дії пароля спливає через %1 днів</translation>
-    </message>
-    <message>
-        <source>Password will expire soon</source>
-        <translation>Термін дії пароля спливає незабаром</translation>
-    </message>
-    <message>
-        <source>Password expires on %1</source>
-        <translation>Термін дії пароля спливає %1</translation>
-    </message>
-    <message>
-        <source>Health Check</source>
-        <translation>Перевіряння непошкодності</translation>
-    </message>
-    <message>
-        <source>HIBP</source>
-        <translation>HIBP</translation>
+        <source>Press &amp;Tab between characters</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5705,10 +5904,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
         <translation>Шлях до запису, що підлягає копіюванню.</translation>
-    </message>
-    <message>
-        <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation>Час очікування в секундах перед очищенням кишені.</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
@@ -6024,10 +6219,6 @@ Available commands:
         <translation>Тип: Дата (повт.)</translation>
     </message>
     <message>
-        <source>Type: Unknown%1</source>
-        <translation>Тип: Невідомий%1</translation>
-    </message>
-    <message>
         <source>Entropy %1 (%2)</source>
         <translation>Ентропія: %1 (%2)</translation>
     </message>
@@ -6316,10 +6507,6 @@ Kernel: %3 %4</source>
         <translation>Шифрувальні бібліотеки:</translation>
     </message>
     <message>
-        <source>Cannot generate a password and prompt at the same time!</source>
-        <translation>Неможливо створити пароль і запросити його водночасно!</translation>
-    </message>
-    <message>
         <source>Adds a new group to a database.</source>
         <translation>Додає нову групу для сховища.</translation>
     </message>
@@ -6354,10 +6541,6 @@ Kernel: %3 %4</source>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
         <translation>Не вдалося відкрити файл HIBP %1: %2</translation>
-    </message>
-    <message>
-        <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation>Звіряння записів сховища з файлом HIBP, це може тривате досить довго...</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
@@ -6550,10 +6733,6 @@ Kernel: %3 %4</source>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
         <translation>Не вдалося зберегти файл сценарію для власного обміну повідомленнями в %1.</translation>
-    </message>
-    <message>
-        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
-        <translation>Скопіювати надану ознаку в кишеню. Якщо не вказано, типовим значенням буде «password»</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
@@ -6773,6 +6952,223 @@ Please consider generating a new key file.</source>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Неочікувані дані у файловому ключі! Він може бути пошкодженим.</translation>
     </message>
+    <message>
+        <source>No valid UUID provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes for the entry.</source>
+        <translation>Нотатки для запису.</translation>
+    </message>
+    <message>
+        <source>Cannot generate a password and prompt at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path to okon-cli to search a formatted HIBP file</source>
+        <translation>Шлях до okon-cli для пошуку в файлі з форматом HIBP</translation>
+    </message>
+    <message>
+        <source>okon-cli</source>
+        <translation>okon-cli</translation>
+    </message>
+    <message>
+        <source>Cannot find HIBP file: %1</source>
+        <translation>Не вдалося знайти файл HBIP: %1</translation>
+    </message>
+    <message>
+        <source>Evaluating database entries using okon…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Evaluating database entries against HIBP file, this will take a while…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Password for &apos;%1&apos; has been leaked!</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
+        <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
+        <translation>Скопіювати надану ознаку в кишеню. Якщо не вказано, типовим значенням буде «password»</translation>
+    </message>
+    <message>
+        <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Multiple entries matching:</source>
+        <translation>Збігаються декілька записів:</translation>
+    </message>
+    <message>
+        <source>Using matching entry: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Missing positional argument(s).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Too many arguments provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type: Unknown (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not start okon process: %1</source>
+        <translation>Запуск процесу okon зазнав невдачі: %1</translation>
+    </message>
+    <message>
+        <source>Error: okon process did not finish</source>
+        <translation>Помилка: процес okon не завершився</translation>
+    </message>
+    <message>
+        <source>Failed to load okon processed database: %1</source>
+        <translation>Завантаження сховища після оброблення програмою okon зазнало невдачі: %1</translation>
+    </message>
+    <message>
+        <source>Very weak password</source>
+        <translation>Дуже слабкий пароль</translation>
+    </message>
+    <message>
+        <source>Password entropy is %1 bits</source>
+        <translation>Ентропія пароля: %1 біт</translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation>Слабкий пароль</translation>
+    </message>
+    <message>
+        <source>Used in %1/%2</source>
+        <translation>Використано в %1/%2</translation>
+    </message>
+    <message numerus="yes">
+        <source>Password is used %1 time(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Password has expired</source>
+        <translation>Термін дії пароля сплив</translation>
+    </message>
+    <message>
+        <source>Password expiry was %1</source>
+        <translation>Термін дії пароля був %1</translation>
+    </message>
+    <message>
+        <source>Password expires on %1</source>
+        <translation>Термін дії пароля спливає %1</translation>
+    </message>
+    <message>
+        <source>Password is about to expire</source>
+        <translation>Термін дії пароля ось-ось спливе</translation>
+    </message>
+    <message numerus="yes">
+        <source>Password expires in %1 day(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Password will expire soon</source>
+        <translation>Термін дії пароля спливає незабаром</translation>
+    </message>
+    <message>
+        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SymmetricCipher::init: Invalid cipher mode.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cipher not initialized prior to use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot process 0 length data.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
+        <translation>Ви дійсно хочете остаточно видалити запис «%1»?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to delete %n entry(s) for good?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation>Ви дійсно хочете перемістити запис «%1» у смітник?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to move %n entry(s) to the recycle bin?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Move entry(s) to recycle bin?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Replace references to entry?</source>
+        <translation>Замінити посилання на запис?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Health Check</source>
+        <translation>Перевіряння непошкодності</translation>
+    </message>
+    <message>
+        <source>HIBP</source>
+        <translation>HIBP</translation>
+    </message>
+    <message>
+        <source>Statistics</source>
+        <translation>Статистика</translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>allow app screen recordering and screenshots</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: Failed to prevent screenshots on a top level window!</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -6854,10 +7250,6 @@ Please consider generating a new key file.</source>
         <translation>Цей запис виключено зі звітів</translation>
     </message>
     <message>
-        <source>Please wait, health data is being calculated...</source>
-        <translation>Зачекайте, будь ласка, триває обчислення даних стану...</translation>
-    </message>
-    <message>
         <source>Congratulations, everything is healthy!</source>
         <translation>Вітаємо, все здорово!</translation>
     </message>
@@ -6878,12 +7270,24 @@ Please consider generating a new key file.</source>
         <translation>Причина</translation>
     </message>
     <message>
-        <source>Edit Entry...</source>
-        <translation>Змінити запис...</translation>
-    </message>
-    <message>
         <source>Exclude from reports</source>
         <translation>Виключити зі звітів</translation>
+    </message>
+    <message>
+        <source>Exclude expired entries from the report</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, health data is being calculated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6929,44 +7333,56 @@ Please consider generating a new key file.</source>
         <translation>Цей запис виключено зі звітів</translation>
     </message>
     <message>
+        <source>Exclude from reports</source>
+        <translation>Виключити зі звітів</translation>
+    </message>
+    <message>
         <source>once</source>
+        <comment>Password exposure amount</comment>
         <translation>одноразово</translation>
     </message>
     <message>
         <source>up to 10 times</source>
+        <comment>Password exposure amount</comment>
         <translation>до 10 разів</translation>
     </message>
     <message>
         <source>up to 100 times</source>
+        <comment>Password exposure amount</comment>
         <translation>до 100 разів</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
+        <comment>Password exposure amount</comment>
         <translation>до 1000 разів</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
+        <comment>Password exposure amount</comment>
         <translation>до 10 000 разів</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
+        <comment>Password exposure amount</comment>
         <translation>до 100 000 разів</translation>
     </message>
     <message>
         <source>up to a million times</source>
+        <comment>Password exposure amount</comment>
         <translation>до мільйона разів</translation>
     </message>
     <message>
         <source>millions of times</source>
+        <comment>Password exposure amount</comment>
         <translation>мільйони разів</translation>
     </message>
     <message>
-        <source>Edit Entry...</source>
-        <translation>Змінити запис...</translation>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Exclude from reports</source>
-        <translation>Виключити зі звітів</translation>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6982,10 +7398,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>Value</source>
         <translation>Значення</translation>
-    </message>
-    <message>
-        <source>Please wait, database statistics are being calculated...</source>
-        <translation>Зачекайте, будь ласка, триває обчислення статистики сховища...</translation>
     </message>
     <message>
         <source>Database name</source>
@@ -7090,6 +7502,14 @@ Please consider generating a new key file.</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Середня довжина пароля менша 10 символів. Довші паролі покращують безпеку.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7205,13 +7625,13 @@ Please consider generating a new key file.</source>
         <translation>Довідка з пошуку</translation>
     </message>
     <message>
-        <source>Search (%1)...</source>
-        <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>Знайти (%1)...</translation>
-    </message>
-    <message>
         <source>Case sensitive</source>
         <translation>Враховується регістр</translation>
+    </message>
+    <message>
+        <source>Search (%1)…</source>
+        <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7229,14 +7649,6 @@ Please consider generating a new key file.</source>
         <translation>Загальні</translation>
     </message>
     <message>
-        <source>Show notification when credentials are requested</source>
-        <translation>Показувати повідомлення, коли надходить запит на реєстраційні дані</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Якщо смітник увімкнено для сховища, записи будуть переміщені у смітник, а не видалені. Інакше їх буде видалено без додаткового схвалення.&lt;/p&gt;&lt;p&gt;Ви одержуватими повідомлення тільки якщо існують посилання на записи, що Ви видаляєте.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Exposed database groups:</source>
         <translation>Виставлені групи сховища:</translation>
     </message>
@@ -7249,20 +7661,32 @@ Please consider generating a new key file.</source>
         <translation>Такі застосунки зараз сполучені:</translation>
     </message>
     <message>
-        <source>Don&apos;t confirm when entries are deleted by clients</source>
-        <translation>Не запитувати схвалення, коли записи видаляють інші клієнти</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; Failed to connect to DBus. Please check your DBus setup.</source>
-        <translation>&lt;b&gt;Помилка:&lt;/b&gt; Сполучення з DBus зазнало невдачі. Перевірте, будь ласка, налаштування Вашої DBus.</translation>
-    </message>
-    <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
         <translation>&lt;b&gt;Попередження:&lt;/b&gt; </translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Зберегти поточні зміни, щоб увімкнути модуль і уможливити редагування в цьому розділі.</translation>
+    </message>
+    <message>
+        <source>Show notification when passwords are retrieved by clients</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm when passwords are retrieved by clients</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm when clients request entry deletion</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7288,16 +7712,8 @@ Please consider generating a new key file.</source>
         <translation>Відбиток:</translation>
     </message>
     <message>
-        <source>Certificate:</source>
-        <translation>Сертифікат:</translation>
-    </message>
-    <message>
         <source>Signer</source>
         <translation>Підписувач</translation>
-    </message>
-    <message>
-        <source>Key:</source>
-        <translation>Ключ:</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -7342,10 +7758,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>Fingerprint</source>
         <translation>Відбиток</translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation>Сертифікат</translation>
     </message>
     <message>
         <source>Trusted</source>
@@ -7399,10 +7811,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>Only show warnings and errors</source>
         <translation>Показувати лише попередження і помилки</translation>
-    </message>
-    <message>
-        <source>Key</source>
-        <translation>Ключ</translation>
     </message>
     <message>
         <source>Signer name field</source>
@@ -7475,29 +7883,9 @@ Please consider generating a new key file.</source>
         <source>Could not write export container</source>
         <translation>Неможливо записати експортовану оболонку</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Неочікувана помилка під час експортування</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
-    <message>
-        <source>Import from container without signature</source>
-        <translation>Імпортування з оболонки без підпису</translation>
-    </message>
-    <message>
-        <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation>Ми не можемо перевірити джерело спільної оболонки, тому що вона не підписана. Ви дійсно хочете імпортувати з %1?</translation>
-    </message>
-    <message>
-        <source>Import from container with certificate</source>
-        <translation>Імпортування з оболонки, що має сертифікат</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation>Довірити %1, що має відбиток %2 з %3? {1 ?} {2 ?}</translation>
-    </message>
     <message>
         <source>Not this time</source>
         <translation>Не зараз</translation>
@@ -7547,8 +7935,18 @@ Please consider generating a new key file.</source>
         <translation>Файл не існує</translation>
     </message>
     <message>
-        <source>Unknown share container type</source>
-        <translation>Невідомий тип спільної оболонки</translation>
+        <source>KeeShare Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The source of the shared container cannot be verified because it is not signed. Do you really want to import from %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with certificate fingerprint:
+%2
+%3</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7632,18 +8030,6 @@ Please consider generating a new key file.</source>
         <translation>Налаштування ТОП</translation>
     </message>
     <message>
-        <source>Default RFC 6238 token settings</source>
-        <translation>Типове налаштування позначки RFC 6238</translation>
-    </message>
-    <message>
-        <source>Steam token settings</source>
-        <translation>Налаштування позначки потока</translation>
-    </message>
-    <message>
-        <source>Use custom settings</source>
-        <translation>Використовувати власне налаштування</translation>
-    </message>
-    <message>
         <source>Custom Settings</source>
         <translation>Власне налаштування</translation>
     </message>
@@ -7701,6 +8087,18 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>Ви дійсно хочете видалити параметри ТОП для цього запису?</translation>
     </message>
+    <message>
+        <source>Default settings (RFC 6238)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Steam® settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom settings:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>URLEdit</name>
@@ -7716,48 +8114,28 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>Перевіряння наявності оновлень</translation>
     </message>
     <message>
-        <source>Checking for updates...</source>
-        <translation>Перевіряння наявності оновлень...</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation>Закрити</translation>
-    </message>
-    <message>
-        <source>Update Error!</source>
-        <translation>Помилка оновлення!</translation>
-    </message>
-    <message>
-        <source>An error occurred in retrieving update information.</source>
-        <translation>Помилка під час видобування інформації щодо оновлення.</translation>
-    </message>
-    <message>
-        <source>Please try again later.</source>
-        <translation>Будь ласка, спробуйте ще раз пізніше.</translation>
     </message>
     <message>
         <source>Software Update</source>
         <translation>Оновлення програми</translation>
     </message>
     <message>
-        <source>A new version of KeePassXC is available!</source>
-        <translation>Доступна нова версія KeePassXC!</translation>
+        <source>Checking for updates…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation>Доступна версія %1 KeePassXC — Ваша версія %2.</translation>
+        <source>An error occurred when trying to retrieve update information, please try again later.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Download it at keepassxc.org</source>
-        <translation>Завантажити її з keepassxc.org</translation>
+        <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>You&apos;re up-to-date!</source>
-        <translation>Маєте найновішу версію!</translation>
-    </message>
-    <message>
-        <source>KeePassXC %1 is currently the newest version available</source>
-        <translation>Наразі KeePassXC %1 є найновішую доступною версією</translation>
+        <source>You have the latest version of KeePassXC</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7800,22 +8178,25 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
 </context>
 <context>
+    <name>WinUtils</name>
+    <message>
+        <source>Invalid key code</source>
+        <translation>Непридатний код ключа</translation>
+    </message>
+    <message>
+        <source>Global shortcut already registered to %1</source>
+        <translation>Глобальне сполучення клавіш вже зареєстровано для %1</translation>
+    </message>
+    <message>
+        <source>Could not register global shortcut</source>
+        <translation>Реєстрація глобального сполучення клавіш зазнало невдачі</translation>
+    </message>
+</context>
+<context>
     <name>YubiKey</name>
     <message>
         <source>%1 [%2] Configured Slot - %3</source>
         <translation>%1 [%2] налаштоване гніздо — %3</translation>
-    </message>
-    <message>
-        <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
-        <translation>%1 [%2] виклик відповідь — гніздо %3 — %4</translation>
-    </message>
-    <message>
-        <source>Press</source>
-        <translation>Натиснути</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation>Пасивне</translation>
     </message>
     <message>
         <source>%1 Invalid slot specified - %2</source>
@@ -7838,12 +8219,26 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>Перевищено час очікування на дії користувача для апаратного захисту.</translation>
     </message>
     <message>
-        <source>A USB error ocurred when accessing the hardware key: %1</source>
-        <translation>Під час доступу до апаратного ключа сталася помилка USB: %1</translation>
-    </message>
-    <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation>Не вдалося завершити виклик-відповідь, конкретна помилка: %1</translation>
+    </message>
+    <message>
+        <source>%1 [%2] Challenge-Response - Slot %3 - %4</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>Challenge-Response Key interaction request</comment>
+        <translation>Натиснути</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>Challenge-Response Key no interaction required</comment>
+        <translation>Пасивне</translation>
+    </message>
+    <message>
+        <source>A USB error occurred when accessing the hardware key: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7851,14 +8246,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Refresh</source>
         <translation>Оновити</translation>
-    </message>
-    <message>
-        <source>YubiKey Challenge-Response</source>
-        <translation>YubiKey Challenge-Response</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The YubiKey requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Якщо у вас є &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, ви можете використовувати його для додаткової безпеки.&lt;/p&gt;&lt;p&gt;Один із слотів YubiKey має бути налаштованим як &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
@@ -7883,6 +8270,30 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>No hardware keys detected</source>
         <translation>Не виявлено апаратних ключів</translation>
+    </message>
+    <message>
+        <source>Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge-Response set, click to change or remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
