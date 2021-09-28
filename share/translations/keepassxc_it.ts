@@ -112,11 +112,11 @@
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Usa Pageant</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
+        <translation>Usa OpenSSH</translation>
     </message>
 </context>
 <context>
@@ -840,13 +840,15 @@ laptop-chrome</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Elimina voce</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation type="unfinished"/>
+        <translation>Una richiesta di eliminazione della voce &quot;%1&quot; è stato ricevuta.
+Vuoi eliminare questa voce?
+</translation>
     </message>
 </context>
 <context>
@@ -1080,7 +1082,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>~/.config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
+        <translation>~/.config/Mozilla/native-messaging-hosts/</translation>
     </message>
 </context>
 <context>
@@ -2027,7 +2029,7 @@ Questa azione non è reversibile.</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Eliminata %n icona dal database.</numerusform><numerusform>Eliminate %n icone dal database.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3265,11 +3267,11 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     <name>EntryAttachments</name>
     <message>
         <source>%1 - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 - %2</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aprire il file &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -3404,21 +3406,23 @@ Siete sicuri di voler aggiungere questo file?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation type="unfinished"/>
+        <translation>Allegato modificato</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation type="unfinished"/>
+        <translation>L&apos;allegato &apos;%1&apos; è stato modificato.
+Vuoi salvare le modifiche nel tuo database?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation type="unfinished"/>
+        <translation>Salvataggio dell&apos;allegato non riuscito</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Salvataggio allegato aggiornato fallito.
+Errore: %1</translation>
     </message>
 </context>
 <context>
@@ -3734,7 +3738,7 @@ Error: %1</source>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n voce utlizzata da %1</numerusform><numerusform>%n voci utilizzate da %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5084,7 +5088,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation type="unfinished"/>
+        <translation>Clona gruppo...</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
@@ -6973,7 +6977,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
+        <translation>Nessun UUID valido fornito</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
@@ -7005,7 +7009,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>La password per &apos;%1&apos; è trapelata!</numerusform><numerusform>La password per &apos;%1&apos; è trapelata!</numerusform></translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -7026,15 +7030,15 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
+        <translation>Voce corrispondente utilizzata: %1</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
+        <translation>Argomento(i) posizionale(i) mancante(i).</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Troppi argomenti forniti.</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
@@ -7074,7 +7078,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>La password è stata utilizzata %1 volta</numerusform><numerusform>La password è stata utilizzata %1 volte</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7094,7 +7098,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>La password scade tra %1 giorno</numerusform><numerusform>La password scade tra %1 giorni</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7122,7 +7126,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Cancellazione degli appunti in %1 secondo…</numerusform><numerusform>Cancellazione degli appunti in %1 secondi…</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7130,11 +7134,11 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Vuoi davvero eliminare %n voce per sempre?</numerusform><numerusform>Vuoi davvero eliminare %n voci per sempre?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Eliminare voce?</numerusform><numerusform>Eliminare voci?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7142,11 +7146,11 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Vuoi davvero spostare %n voce nel cestino?</numerusform><numerusform>Vuoi davvero spostare %n voci nel cestino?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Spostare voce nel cestino?</numerusform><numerusform>Spostare voci nel cestino?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7154,7 +7158,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>La voce &quot;%1&quot; ha %2 riferimento. Sovrascrivere i riferimenti con i valori, ignorare questa voce o eliminare comunque?</numerusform><numerusform>La voce &quot;%1&quot; ha %2 riferimenti. Sovrascrivere i riferimenti con i valori, ignorare questa voce o eliminare comunque?</numerusform></translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7306,7 +7310,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7401,7 +7405,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7528,7 +7532,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Database created</source>
-        <translation type="unfinished"/>
+        <translation>Database creato</translation>
     </message>
 </context>
 <context>
