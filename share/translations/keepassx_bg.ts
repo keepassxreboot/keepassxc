@@ -137,7 +137,7 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>Трябва да рестартирате приложението, за да настроите нов език. Желаете ли да рестартирате сега?</translation>
     </message>
 </context>
 <context>
@@ -342,15 +342,15 @@
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Запази автоматично при заключване на базата данни</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation type="unfinished"/>
+        <translation>При заключване на базата данни, запази автоматично промените, които не засягат данните.</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation type="unfinished"/>
+        <translation>Тип иконата в системната лента</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1114,14 @@ chrome-laptop.</translation>
         <source>Column %1</source>
         <translation>Колона %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Икона</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1211,20 +1219,6 @@ Backup database located at %2</source>
         <translation>Обновяване</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Остарял файлов формат на ключа</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Използвате остарял файлов формат на ключа, който може да стане
-неподдържан в бъдеще.
-
-Помислете за генериране на нов файл с ключове.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Не показвай това предупреждение отново</translation>
     </message>
@@ -1283,14 +1277,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID за бързо отключване</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Почисти</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Изчистване на файл-ключ</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1361,6 +1347,14 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>Избор на хардуерен ключ...</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Стар файлов формат на ключа</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Използвате стар ключ файлов формат, който KeePassXC може &lt;br&gt;да спре да поддържва в бъдеще.&lt;br&gt;&lt;br&gt;Моля, създайте нов ключ, като:&lt;br&gt;&lt;strong&gt;База данни / Защита на базата данни / Промяна на ключ.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -1517,7 +1511,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation type="unfinished"/>
+        <translation>Обновяване на IDна главната група на базата данни</translation>
     </message>
     <message>
         <source>Created</source>
@@ -1589,7 +1583,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation type="unfinished"/>
+        <translation>Функция за формиране на ключа</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -2129,7 +2123,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Записът &quot;%1&quot; има %2 препратка. Искате ли да презапишете стойности, да пропуснете този запис или въпреки това да изтриете?</numerusform><numerusform>Записът &quot;%1&quot; има %2 препратки. Искате ли да презапишете стойност, да пропуснете този запис или въпреки това да изтриете?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -2293,6 +2287,16 @@ Disable safe saves and try again?</source>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[ЗАЩИТЕНО] Натиснете &quot;Показане&quot;, за да видите или редактирате</translation>
+    </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Невалиден запис</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>Външна операция за обединяване е анулирала този запис.
+За съжаление, всички направени промени са загубени.</translation>
     </message>
 </context>
 <context>
@@ -2613,6 +2617,10 @@ Disable safe saves and try again?</source>
         <source>Expires:</source>
         <translation>Изтича:</translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Редактиране на запис</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2880,7 +2888,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Превключване на търсенето за тази група и подгрупите ѝ</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
@@ -2913,6 +2921,10 @@ Supported extensions are: %1.</source>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>Задаване на Auto-Type последователност по подразбиране</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Редактиране на група</translation>
     </message>
 </context>
 <context>
@@ -2963,7 +2975,7 @@ Supported extensions are: %1.</source>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Следната икона е проблемна:</numerusform><numerusform>Следните икони са проблемни:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
@@ -2983,7 +2995,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation type="unfinished"/>
+        <translation>Прилага се и за детски групи</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
@@ -3414,11 +3426,6 @@ Are you sure to add this file?</source>
         <translation>[ЗАЩИТЕНО]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Включено</translation>
     </message>
@@ -3438,6 +3445,15 @@ Are you sure to add this file?</source>
         <source>Advanced</source>
         <translation>Допълнителни</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>Последователност по подразбиране</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3448,18 +3464,6 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Персонализиране на изгледа</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Скриване на потребителските имена</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Скриване на паролите</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Побиране в прозореца</translation>
@@ -3484,19 +3488,7 @@ Are you sure to add this file?</source>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::Item</name>
-    <message>
-        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>Запис &quot;%1&quot; от база данни &quot;%2&quot; е използван от %3</translation>
-    </message>
-</context>
-<context>
     <name>FdoSecrets::Service</name>
-    <message numerus="yes">
-        <source>%n Entry(s) was used by %1</source>
-        <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n Запис(и) е(са) използван(и) от %1</numerusform><numerusform>%n Запис(а) е(са) използван(и) от %1</numerusform></translation>
-    </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
         <translation>Неуспешно регистриране на услугата DBus на % 1.&lt;br/&gt;</translation>
@@ -3725,7 +3717,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation type="unfinished"/>
+        <translation>Неподдържана функция за извличане на ключове (KDF) или невалидни параметри</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
@@ -4151,11 +4143,11 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>Неправилен размер на полето за изтичане на времето на група</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation type="unfinished"/>
+        <translation>Неправилен размер на поле за икона на група</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
@@ -4175,7 +4167,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation type="unfinished"/>
+        <translation>Невалиден размер на поле за въвеждане</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
@@ -4325,10 +4317,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation>&lt;p&gt;Можете да добавите ключ-файл, съдържащ случайни байтове за допълнителна сигурност.&lt;/p&gt;&lt;p&gt;Трябва да го пазите в тайна и никога да не го губите или ще бъдете заключени!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Остарял формат на файл-ключа</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Грешка при зареждане на файл-ключа &quot;%1&quot;
@@ -4397,14 +4385,14 @@ Are you sure you want to continue with this file?</source>
 Наистина ли искате да продължите с този файл?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
+        <source>Old key file format</source>
+        <translation>Стар файлов формат на ключа</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>Използвате остарял файлов формат на ключа, който KeePass XC може да спре да поддържа в бъдеще.
 
-Generate a new key file in the database security settings.</source>
-        <translation>Използвате остарял файлов формат на ключа, който може да стане
-неподдържан в бъдеще.
-
-Генериране на нов ключ файл в настройките за сигурност на базата данни.</translation>
+Помислете за генериране на нов ключ файл.</translation>
     </message>
 </context>
 <context>
@@ -4834,6 +4822,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Покажи лентата с инструменти</translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation>Показване на панела &quot;Групи&quot;</translation>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation>Показване на панела за визуализация</translation>
     </message>
@@ -4851,7 +4843,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Perform Auto-Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Изпълнение на Auto-Type</translation>
     </message>
     <message>
         <source>{USERNAME}</source>
@@ -4868,6 +4860,18 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>Винаги отгоре</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Скриване на потребителските имена</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Скриване на паролите</translation>
     </message>
 </context>
 <context>
@@ -5490,16 +5494,12 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Почисти</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Регенериране на паролата (%1)</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation type="unfinished"/>
+        <translation>Специални знаци</translation>
     </message>
 </context>
 <context>
@@ -5740,16 +5740,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Извършване на разширен анализ на паролата.</translation>
     </message>
     <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>ВНИМАНИЕ: Използвате остарял файлов формат на ключа, който може да стане
-неподдържан в бъдеще.
-
-Помислете за генериране на нов файл с ключове.</translation>
-    </message>
-    <message>
         <source>
 
 Available commands:
@@ -5907,7 +5897,7 @@ Available commands:
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Изчистване на клипборда след %1 секунда...</numerusform><numerusform>Изчистване на клипборда след %1 секунди...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -6106,7 +6096,7 @@ Available commands:
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Успешно изтриване на запис%1.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
@@ -6131,10 +6121,6 @@ Available commands:
     <message>
         <source>%1: (row, col) %2,%3</source>
         <translation>%1: (ред, колона) %2,%3</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – препоръчително)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
@@ -6227,10 +6213,6 @@ Available commands:
         <translation>прочетете паролата на базата данни от stdin</translation>
     </message>
     <message>
-        <source>Parent window handle</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Another instance of KeePassXC is already running.</source>
         <translation>Друга инстанция на KeePassXC вече работи.</translation>
     </message>
@@ -6252,7 +6234,7 @@ Available commands:
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Деактивиране на парола за базата данни.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
@@ -6504,7 +6486,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Успешно изтрита група% 1.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
@@ -6548,7 +6530,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Паролата за &apos;%1&apos; е изтекла %2 път!</numerusform><numerusform>Паролата за &apos;%1&apos; е изтекла %2 пъти!</numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
@@ -6608,7 +6590,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"/>
+        <translation>Време</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -6716,10 +6698,6 @@ Kernel: %3 %4</source>
         <translation>AES (% 1 рунда)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Аргон 2 (%1 рунда, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-битов</translation>
     </message>
@@ -6743,7 +6721,52 @@ Kernel: %3 %4</source>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 с</numerusform><numerusform>%1 с</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation>Използвате остарял файлов формат на ключа, който KeePass XC може да спре да поддържа в бъдеще.
+
+Помислете за генериране на нов ключ файл.</translation>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Икона</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation>Неподдържан тип ключ: %1</translation>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7169,10 +7192,6 @@ Kernel: %3 %4</source>
         <translation>Търсене</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Почисти</translation>
-    </message>
-    <message>
         <source>Limit search to selected group</source>
         <translation>Ограничаване на търсенето до избрана група</translation>
     </message>
@@ -7578,7 +7597,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Изтича след &lt;b&gt;%n&lt;/b&gt; секунда</numerusform><numerusform>Изтича след &lt;b&gt;%n&lt;/b&gt; секунди</numerusform></translation>
     </message>
 </context>
 <context>
