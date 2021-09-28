@@ -112,11 +112,11 @@
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Χρησιμοποιήστε Pageant</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
+        <translation>Χρησιμοποιήστε OpenSSH</translation>
     </message>
 </context>
 <context>
@@ -837,13 +837,15 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Διαγραφή καταχώρησης</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation type="unfinished"/>
+        <translation>Ελήφθη ένα αίτημα για διαγραφή της καταχώρησης &quot;%1&quot;.
+Θέλετε να διαγράψετε την καταχώρηση;
+</translation>
     </message>
 </context>
 <context>
@@ -1077,7 +1079,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>~/.config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
+        <translation>~/.config/Mozilla/native-messaging-hosts/</translation>
     </message>
 </context>
 <context>
@@ -2024,7 +2026,7 @@ This action is not reversible.</source>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Εκκαθαρίστηκε %n εικονίδιo από τη βάση δεδομένων.</numerusform><numerusform>Εκκαθαρίστηκαν %n εικονίδια από τη βάση δεδομένων.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3262,11 +3264,11 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryAttachments</name>
     <message>
         <source>%1 - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 - %2</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -3401,21 +3403,23 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation type="unfinished"/>
+        <translation>Το συνημμένο τροποποιήθηκε</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation type="unfinished"/>
+        <translation>Το συνημμένο &apos;%1&apos; τροποποιήθηκε.
+Θέλετε να αποθηκεύσετε τις αλλαγές στη βάση δεδομένων σας;</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation type="unfinished"/>
+        <translation>Η αποθήκευση του συνημμένου απέτυχε</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Η αποθήκευση του ενημερωμένου συνημμένου απέτυχε.
+Σφάλμα: %1</translation>
     </message>
 </context>
 <context>
@@ -3731,7 +3735,7 @@ Error: %1</source>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n Καταχώρηση χρησιμοποιήθηκε από %1</numerusform><numerusform>%n Καταχωρήσεις χρησιμοποιήθηκαν από %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5081,7 +5085,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation type="unfinished"/>
+        <translation>Κλωνοποίηση Ομάδας...</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
@@ -6969,7 +6973,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
+        <translation>Παρέχεται μη έγκυρο UUID</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
@@ -7001,7 +7005,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ο κωδικός πρόσβασης για &apos;%1&apos; έχει διαρρεύσει!</numerusform><numerusform>Ο κωδικός πρόσβασης για &apos;%1&apos; έχει διαρρεύσει!</numerusform></translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -7022,15 +7026,15 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση αντιστοίχισης καταχώρησης: %1</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
+        <translation>Λείπουν επιχειρήματα θέσης.</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Παρέχονται πάρα πολλά επιχειρήματα.</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
@@ -7070,7 +7074,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ο κωδικός πρόσβασης χρησιμοποιείται %1 φορά</numerusform><numerusform>Ο κωδικός πρόσβασης χρησιμοποιείται %1 φορές</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7090,7 +7094,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ο κωδικός πρόσβασης λήγει σε %1 ημέρα</numerusform><numerusform>Ο κωδικός πρόσβασης λήγει σε %1 ημέρες</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7118,7 +7122,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Εκκαθάριση του πρόχειρου σε %1 δευτερόλεπτο…</numerusform><numerusform>Εκκαθάριση του πρόχειρου σε %1 δευτερόλεπτα…</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7126,11 +7130,11 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Θέλετε πραγματικά να διαγράψετε οριστικά %n καταχώρηση για πάντα;</numerusform><numerusform>Θέλετε πραγματικά να διαγράψετε οριστικά %n καταχωρήσεις για πάντα;</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Διαγραφή καταχώρησης;</numerusform><numerusform>Διαγραφή καταχωρήσεων;</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7138,11 +7142,11 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Θέλετε πραγματικά να μετακινήσετε %n καταχώρηση στον κάδο ανακύκλωσης;</numerusform><numerusform>Θέλετε πραγματικά να μετακινήσετε %n καταχωρήσεις στον κάδο ανακύκλωσης;</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Μετακίνηση των καταχώρησης στον κάδο ανακύκλωσης;</numerusform><numerusform>Μετακίνηση των καταχωρήσεων στον κάδο ανακύκλωσης;</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7150,7 +7154,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Η καταχώρηση &quot; %1&quot; έχει %2 αναφορά. Θέλετε να αντικαταστήσετε τις αναφορές με τιμές, να παραλείψετε αυτήν την καταχώρηση ή να τις διαγράψετε ούτως ή άλλως;</numerusform><numerusform>Η καταχώρηση &quot; %1&quot; έχει %2 αναφορές. Θέλετε να αντικαταστήσετε τις αναφορές με τιμές, να παραλείψετε αυτήν την καταχώρηση ή να τις διαγράψετε ούτως ή άλλως;</numerusform></translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7302,7 +7306,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Διαγραφή καταχώρησης;</numerusform><numerusform>Διαγραφή καταχωρήσεων;</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7397,7 +7401,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Διαγραφή καταχώρησης;</numerusform><numerusform>Διαγραφή καταχωρήσεων;</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7524,7 +7528,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Database created</source>
-        <translation type="unfinished"/>
+        <translation>Δημιουργήθηκε βάση δεδομένων</translation>
     </message>
 </context>
 <context>
