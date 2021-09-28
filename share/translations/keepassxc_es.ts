@@ -112,11 +112,11 @@
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Usar Pageant</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
+        <translation>Usar OpenSSH</translation>
     </message>
 </context>
 <context>
@@ -841,13 +841,15 @@ portatil-chrome.</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Borrar apunte</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation type="unfinished"/>
+        <translation>Se ha recibido una solicitud para borrar el apunte &quot;%1&quot;.
+¿Desea borrar este apunte?
+</translation>
     </message>
 </context>
 <context>
@@ -1081,7 +1083,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>~/.config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
+        <translation>~/.config/Mozilla/native-messaging-hosts/</translation>
     </message>
 </context>
 <context>
@@ -2028,7 +2030,7 @@ Esta acción no es reversible.</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Purgado %n icono de la base de datos.</numerusform><numerusform>Purgados %n iconos de la base de datos.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3265,11 +3267,11 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <name>EntryAttachments</name>
     <message>
         <source>%1 - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 - %2</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>No se puede abrir el archivo &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -3404,21 +3406,23 @@ Su base de datos puede vovlerse muy grande y reducir el rendimiento.
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation type="unfinished"/>
+        <translation>Adjunto modificado</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation type="unfinished"/>
+        <translation>El adjunto «%1» ha sido modificado.
+¿Desea guardar los cambios en su base de datos?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation type="unfinished"/>
+        <translation>Falló el guardado del adjunto</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Falló el guardado del adjunto
+Error: %1</translation>
     </message>
 </context>
 <context>
@@ -3734,7 +3738,7 @@ Error: %1</source>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n apunte era usado por %1</numerusform><numerusform>%n apuntes eran usados por %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5084,7 +5088,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation type="unfinished"/>
+        <translation>Clonar Grupo...</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
@@ -6973,7 +6977,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
+        <translation>UUID proporcionado no válido</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
@@ -7005,7 +7009,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>¡La contraseña para «%1» ha sido filtrada!</numerusform><numerusform>¡La contraseña para «%1» ha sido filtrada!</numerusform></translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -7026,15 +7030,15 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
+        <translation>Apunte coincidente usado: %1</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
+        <translation>Faltan argumentos posicionales.</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Demasiados argumentos proporcionados.</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
@@ -7074,7 +7078,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>La contraseña es usada %1 vez</numerusform><numerusform>La contraseña es usada %1 veces</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7094,7 +7098,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>La contraseña expira en %1 día</numerusform><numerusform>La contraseña expira en %1 días</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7122,7 +7126,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Vaciando el portapapeles en %1 segundo...</numerusform><numerusform>Vaciando el portapapeles en %1 segundos...</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7130,11 +7134,11 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>¿Desea eliminar para siempre %n apunte?</numerusform><numerusform>¿Desea eliminar para siempre %n apuntes?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>¿Eliminar apunte?</numerusform><numerusform>¿Eliminar apuntes?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7142,11 +7146,11 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>¿Desea mover %n apunte a la papelera de reciclaje?</numerusform><numerusform>¿Desea mover %n apuntes a la papelera de reciclaje?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>¿Mover el(los) apunte(s) a la papelera de reciclaje?</numerusform><numerusform>¿Mover el(los) apunte(s) a la papelera de reciclaje?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7154,7 +7158,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>El apunte «%1» tiene %2 referencia. ¿Desea sobreescribir las referencia con valores, omitir este apunte o eliminar de todos modos?</numerusform><numerusform>El apunte «%1» tiene %2 referencias. ¿Desea sobreescribir las referencias con valores, omitir este apunte o eliminar de todos modos?</numerusform></translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7306,7 +7310,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Eliminar apunte(s)...</numerusform><numerusform>Eliminar apunte(s)...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7401,7 +7405,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Eliminar apunte(s)...</numerusform><numerusform>Eliminar apunte(s)...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7528,7 +7532,7 @@ Considere generar un nuevo fichero clave.</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation type="unfinished"/>
+        <translation>Base de datos creada</translation>
     </message>
 </context>
 <context>
