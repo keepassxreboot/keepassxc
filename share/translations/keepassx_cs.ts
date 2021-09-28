@@ -1114,6 +1114,14 @@ chrome-laptop.</translation>
         <source>Column %1</source>
         <translation>Sloupec %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikona</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1211,19 +1219,6 @@ Záložní databáze se nachází v %2</translation>
         <translation>Načíst znovu</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Starý formát souboru s klíčem</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Používáte starý formát souboru s klíčem, který v budoucnu nemusí být podporován.
-
-Zvažte vytvoření nového souboru s klíčem.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Toto varování znovu nezobrazovat</translation>
     </message>
@@ -1282,14 +1277,6 @@ Zvažte vytvoření nového souboru s klíčem.</translation>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID pro rychlé odemknutí</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Vyčistit</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Vyčistit soubor s klíčem</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1360,6 +1347,14 @@ Pokud nemáte žádný soubor, který by se zaručeně neměnil (a byl tedy vhod
     <message>
         <source>Select hardware key…</source>
         <translation>Vyberte hardwarový klíč…</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Starý formát souboru s klíčem</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Používáte starý formát souboru s klíčem, který může KeePassXC &lt;br&gt;přestat v budoucnu podporovat.&lt;br&gt;&lt;br&gt;Zvažte prosím vytvoření nového souboru s klíčem v nabídce &lt;br&gt;&lt;strong&gt;Databáze / Zabezpečení databáze / Změnit soubor s klíčem.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2294,6 +2289,16 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[CHRÁNĚNO] Pro zobrazení nebo úpravu klikněte na odhalit</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Neplatný údaj</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>Externí operace sloučení tuto položku zneplatnila.
+Všechny provedené změny byly bohužel ztraceny.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2613,6 +2618,10 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <source>Expires:</source>
         <translation>Platnost skončí:</translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Upravit položku</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2912,6 +2921,10 @@ Podporovaná rozšíření jsou: %1.</translation>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>Nastavit výchozí pořadí automatického vyplňování</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Upravit skupinu</translation>
     </message>
 </context>
 <context>
@@ -3415,11 +3428,6 @@ Opravdu chcete tento soubor přidat?</translation>
         <translation>[CHRÁNĚNO]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Zapnuto</translation>
     </message>
@@ -3439,6 +3447,15 @@ Opravdu chcete tento soubor přidat?</translation>
         <source>Advanced</source>
         <translation>Pokročilé</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>Výchozí pořadí</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3449,18 +3466,6 @@ Opravdu chcete tento soubor přidat?</translation>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Přizpůsobit pohled</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Skrýt uživatelská jména</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Skrýt hesla</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Přizpůsobit oknu</translation>
@@ -3485,19 +3490,7 @@ Opravdu chcete tento soubor přidat?</translation>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::Item</name>
-    <message>
-        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>Záznam „%1“ z databáze „%2“ byl použit %3</translation>
-    </message>
-</context>
-<context>
     <name>FdoSecrets::Service</name>
-    <message numerus="yes">
-        <source>%n Entry(s) was used by %1</source>
-        <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n záznam byl použit %1</numerusform><numerusform>%n záznamy byly použity %1</numerusform><numerusform>%n záznamů bylo použito %1</numerusform><numerusform>%n záznamy byly použity %1</numerusform></translation>
-    </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
         <translation>Nepodařilo se zaregistrovat službu DBus na %1.&lt;br/&gt;</translation>
@@ -4326,10 +4319,6 @@ Pokud se toto opakuje, pak je možné, že je váš soubor s databází poškoze
         <translation>&lt;p&gt;Jako další úroveň zabezpečení je možné přidat soubor s klíčem obsahujícím náhodné bajty.&lt;/p&gt;&lt;p&gt;Je třeba ho uchovávat v bezpečí a nikdy ho neztratit, jinak budete uzamčeni!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Starý formát souboru s klíčem</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Chyba načítání souboru s klíčem „%1“
@@ -4398,13 +4387,12 @@ Are you sure you want to continue with this file?</source>
 Opravdu chcete tento soubor použít?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>Používáte starý formát souboru s klíčem, který v budoucnu nemusí být podporován.
-
-V nastavení zabezpečení databáze vytvořte nový klíč.</translation>
+        <source>Old key file format</source>
+        <translation>Starý formát souboru s klíčem</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>Vybrali jste soubor s klíčem ve starém formátu, který KeePassXC&lt;br&gt;může přestat v budoucnu podporovat.&lt;br&gt;&lt;br&gt;Zvažte prosím místo něj vytvoření nového souboru s klíčem.</translation>
     </message>
 </context>
 <context>
@@ -4834,6 +4822,10 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Zobrazovat lištu nástrojů</translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation>Zobrazit panel náhledu</translation>
     </message>
@@ -4868,6 +4860,18 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation>{HESLO}{ENTER}</translation>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>Vždy nahoře</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Skrýt uživatelská jména</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Skrýt hesla</translation>
     </message>
 </context>
 <context>
@@ -5490,10 +5494,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Vyčistit</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Znovu vytvořit heslo (%1)</translation>
     </message>
@@ -5738,15 +5738,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>Provést pokročilou analýzu hesla.</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>VAROVÁNÍ: Používáte starší formát souboru s klíčem, který v budoucnu nemusí být podporován.
-
-Zvažte vytvoření nového souboru s klíčem.</translation>
     </message>
     <message>
         <source>
@@ -6136,10 +6127,6 @@ Příkazy k dispozici:
         <translation>%1: (řádek, sloupec) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – doporučeno)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6228,10 +6215,6 @@ Příkazy k dispozici:
     <message>
         <source>read password of the database from stdin</source>
         <translation>načíst heslo k databázi ze standardního vstupu</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Obecný identifikátor (handle) nadřazeného okna</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6721,10 +6704,6 @@ Jádro systému: %3 %4</translation>
         <translation>AES (%1 průchodů)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 průchody, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-bit</translation>
     </message>
@@ -6749,6 +6728,52 @@ Jádro systému: %3 %4</translation>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation>umístění vlastního lokálního souboru s nastaveními</translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation>VAROVÁNÍ: Používáte starý formát souboru s klíčem, který může KeePassXC
+přestat v budoucnu podporovat.
+
+Zvažte prosím vytvoření nového souboru s klíčem.</translation>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation>Argon2%1 (%2 průchody, %3 KB)</translation>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation>Argon2d (KDBX 4 – doporučeno)</translation>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation>Argon2id (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikona</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation>Nepodporovaná verze souboru s klíčem: %1</translation>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation>Kontrolní součet se neshoduje! Soubor s klíčem může být poškozen.</translation>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Neočekávaná data v souboru s klíčem! Soubor s klíčem může být poškozený.</translation>
     </message>
 </context>
 <context>
@@ -7172,10 +7197,6 @@ Jádro systému: %3 %4</translation>
     <message>
         <source>Search</source>
         <translation>Hledat</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Vyčistit</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
