@@ -112,11 +112,11 @@
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Pageant használata</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
+        <translation>OpenSSH használata</translation>
     </message>
 </context>
 <context>
@@ -840,13 +840,14 @@ A kapcsolatnak egy olyan egyedi nevet, ill. azonosítót szükség adni, mint am
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Bejegyzés törlése</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation type="unfinished"/>
+        <translation>A(z) „%1” bejegyzés törlési kérése fogadva.
+Biztos, hogy törli a bejegyzést?</translation>
     </message>
 </context>
 <context>
@@ -1081,7 +1082,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>~/.config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
+        <translation>~/.config/Mozilla/native-messaging-hosts/</translation>
     </message>
 </context>
 <context>
@@ -2027,7 +2028,7 @@ Ez nem vonható vissza!</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ikon törölve az adatbázisból.</numerusform><numerusform>%n ikon törölve az adatbázisból.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3265,11 +3266,11 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     <name>EntryAttachments</name>
     <message>
         <source>%1 - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 – %2</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>A(z) „%1” fájl nem nyitható meg</translation>
     </message>
 </context>
 <context>
@@ -3404,21 +3405,23 @@ Biztosan hozzáadható ez a fájl?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation type="unfinished"/>
+        <translation>Melléklet módosítva</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation type="unfinished"/>
+        <translation>A(z) „%1” melléklet módosult.
+Menti a változásokat az adatbázisba?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation type="unfinished"/>
+        <translation>A melléklet mentése sikertelen</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>A frissült melléklet mentése sikertelen.
+Hiba: %1</translation>
     </message>
 </context>
 <context>
@@ -3734,7 +3737,7 @@ Error: %1</source>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A(z) %1 %n bejegyzést használt</numerusform><numerusform>A(z) %1 %n bejegyzést használt</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5084,7 +5087,7 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation type="unfinished"/>
+        <translation>Csoport klónozása…</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
@@ -6972,7 +6975,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
+        <translation>Nincs érvényes UUID megadva</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
@@ -7004,7 +7007,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A(z) „%1” jelszava kiszivárgott.</numerusform><numerusform>A(z) „%1” jelszava kiszivárgott.</numerusform></translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -7025,15 +7028,15 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
+        <translation>Megfelelő bejegyzés használata: %1</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
+        <translation>Hiányzó pozicionális argumentumok</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Túl sok argumentum lett megadva.</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
@@ -7073,7 +7076,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A jelszó %1 alkalommal használt</numerusform><numerusform>A jelszó %1 alkalommal használt</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7093,7 +7096,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A jelszó %1 nap múlva lejár</numerusform><numerusform>A jelszó %1 nap múlva lejár</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7121,7 +7124,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Vágólap törlése %1 másodperc múlva…</numerusform><numerusform>Vágólap törlése %1 másodperc múlva…</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7129,11 +7132,11 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Biztos, hogy végleg töröl %n bejegyzést?</numerusform><numerusform>Biztos, hogy végleg töröl %n bejegyzést?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Törli a bejegyzést?</numerusform><numerusform>Törli a bejegyzéseket?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7141,11 +7144,11 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Biztos, hogy a kukába dob %n elemet?</numerusform><numerusform>Biztos, hogy a kukába dob %n elemet?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Kukába dobja a bejegyzést?</numerusform><numerusform>Kukába dobja a bejegyzéseket?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7153,7 +7156,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A(z) „%1” bejegyzésnek van %2 hivatkozása. Felülírja a hivatkozásokat az értékekkel, átugorja a bejegyzést, vagy mindenképp törli?</numerusform><numerusform>A(z) „%1” bejegyzésnek van %2 hivatkozása. Felülírja a hivatkozásokat az értékekkel, átugorja a bejegyzést, vagy mindenképp törli?</numerusform></translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7305,7 +7308,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Bejegyzés törlése…</numerusform><numerusform>Bejegyzések törlése…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7400,7 +7403,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Bejegyzés törlése…</numerusform><numerusform>Bejegyzések törlése…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7527,7 +7530,7 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation type="unfinished"/>
+        <translation>Adatbázis létrehozva</translation>
     </message>
 </context>
 <context>
