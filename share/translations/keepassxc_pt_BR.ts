@@ -50,15 +50,15 @@
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Pedido de acesso</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;está a solicitar acessos a estas entradas:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation type="unfinished"/>
+        <translation>A sua escolha para as entradas acima será memorizada durante o tempo que o cliente solicitador estiver em execução.</translation>
     </message>
     <message>
         <source>Remember</source>
@@ -81,7 +81,7 @@
     <name>AccessControlDialog::DenyButton</name>
     <message>
         <source>Deny for this program</source>
-        <translation type="unfinished"/>
+        <translation>Recusar para esta aplicação</translation>
     </message>
 </context>
 <context>
@@ -112,11 +112,11 @@
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Usar Pageant</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
+        <translation>Usar OpenSSH</translation>
     </message>
 </context>
 <context>
@@ -505,7 +505,7 @@
     </message>
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
-        <translation type="unfinished"/>
+        <translation>Ativar duplo clique para copiar a entrada nome de utilizador/palavra-passe</translation>
     </message>
 </context>
 <context>
@@ -520,11 +520,11 @@
     </message>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation type="unfinished"/>
+        <translation>A sequência de escrita automática não pode ser utilizada por causa do seguinte erro:</translation>
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation type="unfinished"/>
+        <translation>Erro de escrita automática</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -532,40 +532,41 @@
     </message>
     <message>
         <source>Invalid entry provided</source>
-        <translation type="unfinished"/>
+        <translation>Disponibilizada uma entrada inválida</translation>
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
-        <translation type="unfinished"/>
+        <translation>Detetada chaveta incompleta, { ou } em excesso</translation>
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Detetadas demasiadas repetições, o máximo é %1: %2</translation>
     </message>
     <message>
         <source>Very slow key press detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Detetado um premir de tecla muito lento, o máximo é %1: %2</translation>
     </message>
     <message>
         <source>Very long delay detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Atraso muito longo detetado, o máximo é %1: %2</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tipo de conversão inválido: %1</translation>
     </message>
     <message>
         <source>Invalid conversion syntax: %1</source>
-        <translation type="unfinished"/>
+        <translation>Sintaxe de conversão inválida: %1</translation>
     </message>
     <message>
         <source>Invalid regular expression syntax %1
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Sintaxe de expressão regular inválida %1
+%2</translation>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
-        <translation type="unfinished"/>
+        <translation>Marcador de posição inválido: %1</translation>
     </message>
 </context>
 <context>
@@ -606,19 +607,19 @@
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Trying to send invalid keysym.</source>
-        <translation type="unfinished"/>
+        <translation>Tentando enviar keysym inválida.</translation>
     </message>
     <message>
         <source>Unable to get valid keycode for key: </source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível obter um código válido para a chave:</translation>
     </message>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
-        <translation type="unfinished"/>
+        <translation>Sequência abortada: Caps Lock está ativo</translation>
     </message>
     <message>
         <source>Sequence aborted: Modifier keys held by user</source>
-        <translation type="unfinished"/>
+        <translation>Sequência abortada. Tecla modificadora premida pelo utilizador.</translation>
     </message>
 </context>
 <context>
@@ -629,7 +630,7 @@
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation type="unfinished"/>
+        <translation>Duplo clique na linha para escrita automática ou para encontrar uma entrada através de pesquisa:</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
@@ -637,19 +638,23 @@ Ctrl+F - Toggle database search&lt;br/&gt;
 Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Pode utilizar a pesquisa avançada para localizar uma entrada nas bases de dados abertas. Os atalhos abaixo indicados podem ser úteis:&lt;br/&gt;
+Ctrl+F - Comutar pesquisa na base de dados
+Ctrl+1 - Escrever nome de utilizador&lt;br/&gt;
+Ctrl+2 - Escrever palavra-passe&lt;br/&gt;
+Ctrl+3 - Escrever TOTP&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation type="unfinished"/>
+        <translation>Pesquisar em todas as bases de dados abertas</translation>
     </message>
     <message>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Pesquisar...</translation>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Escrever sequência</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -657,27 +662,27 @@ Ctrl+3 - Type TOTP&lt;/p&gt;</source>
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>Escrever {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>Escrever {PASSWORD}</translation>
     </message>
     <message>
         <source>Type {TOTP}</source>
-        <translation type="unfinished"/>
+        <translation>Escrever {TOTP}</translation>
     </message>
     <message>
         <source>Copy Username</source>
-        <translation type="unfinished"/>
+        <translation>Copiar nome de utilizador</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation type="unfinished"/>
+        <translation>Copiar senha</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Copiar TOTP</translation>
     </message>
 </context>
 <context>
@@ -836,13 +841,15 @@ chrome-laptop</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Excluir entrada</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation type="unfinished"/>
+        <translation>Um pedido para excluir a entrada &quot;%1&quot; foi recebido.
+Você quer excluir a entrada?
+</translation>
     </message>
 </context>
 <context>
@@ -1063,11 +1070,11 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
-        <translation type="unfinished"/>
+        <translation>Apenas entradas com o mesmo esquema (http://, https://,...) são retornadas.</translation>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation type="unfinished"/>
+        <translation>Corresponder ao esquema URL (exemplo: https://example.com)</translation>
     </message>
     <message>
         <source>Browse…</source>
@@ -1076,7 +1083,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>~/.config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
+        <translation>~/.config/Mozilla/native-messaging-hosts/</translation>
     </message>
 </context>
 <context>
@@ -1095,7 +1102,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Clone Entry Options</source>
-        <translation type="unfinished"/>
+        <translation>Clonar opções da entrada</translation>
     </message>
 </context>
 <context>
@@ -1318,7 +1325,7 @@ Backup do banco de dados alocado em %2</translation>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers.</source>
-        <translation type="unfinished"/>
+        <translation>Chave não transformada. Isto é um erro e deve ser reportado aos programadores.</translation>
     </message>
 </context>
 <context>
@@ -1460,12 +1467,13 @@ Se você não tem um arquivo-chave, por favor deixe o campo vazio.</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Para além da palavra-passe, pode utilizar um ficheiro-chave para aumentar a segurança da sua base de dados. Este ficheiro pode ser gerado nas definições de segurança da sua base de dados..&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Não&lt;/strong&gt; pode utilizar ficheiros *.kdbx como ficheiro-chave!&lt;br&gt;Se não quiser utilizar um ficheiro-chave, deixe este campo em branco.&lt;/p&gt;&lt;p&gt;Clique aqui para mais informação.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Pode utilizar uma chave de segurança como, por exemplo, os dispositivos &lt;strong&gt;YubiKey&lt;/strong&gt; ou &lt;strong&gt;OnlyKey&lt;/strong&gt; com &apos;slots&apos; configuradas para  HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Clique aqui para mais informações.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Browse…</source>
@@ -1473,7 +1481,7 @@ Se você não tem um arquivo-chave, por favor deixe o campo vazio.</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Você está usando um formato de arquivo-chave antigo, que o KeePassXC pode &lt;br&gt;parar de suportar no futuro.&lt;br&gt;&lt;br&gt;Por favor, considere gerar um novo arquivo-chave acessando:&lt;br&gt;&lt;strong&gt;Banco de Dados / Segurança do Banco de Dados / Alterar Arquivo-Chave.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -1511,7 +1519,7 @@ Se você não tem um arquivo-chave, por favor deixe o campo vazio.</translation>
     </message>
     <message>
         <source>Maintenance</source>
-        <translation type="unfinished"/>
+        <translation>Manutenção</translation>
     </message>
 </context>
 <context>
@@ -1647,7 +1655,8 @@ Isto somente é necessário se o seu banco de dados é uma cópia de outro e a e
     <message>
         <source>Do you really want to convert all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation type="unfinished"/>
+        <translation>Tem a certeza de que deseja converter os dados legados para a versão mais recente?
+Esta atualização é necessária para manter a compatibilidade com o suplemento.</translation>
     </message>
 </context>
 <context>
@@ -1686,7 +1695,7 @@ Tem certeza de que deseja continuar sem uma senha?</translation>
     </message>
     <message>
         <source>Add additional protection…</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar proteção extra...</translation>
     </message>
 </context>
 <context>
@@ -1836,13 +1845,17 @@ Tem certeza de que deseja continuar sem uma senha?</translation>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours, days, or even longer to open.</source>
-        <translation type="unfinished"/>
+        <translation>Está a utilizar um número muito alto para a transformação de chaves com Argon2.
+
+Se mantiver este número, a sua base de dados pode levar muitas horas, dias ou ainda mais tempo para ser aberta.</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database will not be protected from brute force attacks.</source>
-        <translation type="unfinished"/>
+        <translation>Você está usando um número muito baixo de transformação chave rodadas com AES-KDF.
+
+Se você manter este número, seu banco de dados não estará protegido de ataques de força bruta.</translation>
     </message>
 </context>
 <context>
@@ -1942,7 +1955,7 @@ Esta ação não é reversível.</translation>
     </message>
     <message>
         <source>Database Metadata</source>
-        <translation type="unfinished"/>
+        <translation>Metadados do Banco de Dados</translation>
     </message>
 </context>
 <context>
@@ -1981,43 +1994,43 @@ Esta ação não é reversível.</translation>
     <name>DatabaseSettingsWidgetMaintenance</name>
     <message>
         <source>Manage Custom Icons</source>
-        <translation type="unfinished"/>
+        <translation>Gerenciar ícones personalizados</translation>
     </message>
     <message>
         <source>Delete selected icon(s)</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar ícones selecionados</translation>
     </message>
     <message>
         <source>Delete all custom icons not in use by any entry or group</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar todos os ícones personalizados que não estejam a ser usados</translation>
     </message>
     <message>
         <source>Purge unused icons</source>
-        <translation type="unfinished"/>
+        <translation>Remover ícones não utilizados</translation>
     </message>
     <message>
         <source>Confirm Deletion</source>
-        <translation type="unfinished"/>
+        <translation>Confirmação de remoção</translation>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation type="unfinished"/>
+        <translation>Pelo menos um dos ícones selecionados está a ser utilizado por uma entrada ou grupo. Os ícones da entrada ou grupo afetado serão substituídos pelo ícone padrão. Tem a certeza de que deseja continuar?</translation>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
-        <translation type="unfinished"/>
+        <translation>Ícones personalizados em utilização</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
-        <translation type="unfinished"/>
+        <translation>Todos os ícones personalizados estão a ser utilizados por uma entrada ou grupo.</translation>
     </message>
     <message>
         <source>Purged Unused Icons</source>
-        <translation type="unfinished"/>
+        <translation>Ícones removidos</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ícones removidos da base de dados.</numerusform><numerusform>%n ícones removidos da base de dados.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2289,19 +2302,19 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message>
         <source>Searching…</source>
-        <translation type="unfinished"/>
+        <translation>Pesquisando...</translation>
     </message>
     <message>
         <source>Shared group…</source>
-        <translation type="unfinished"/>
+        <translation>Grupo compartilhado...</translation>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar digitação automática</translation>
     </message>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
-        <translation type="unfinished"/>
+        <translation>Executar digitação automática na janela anteriormente ativa?</translation>
     </message>
 </context>
 <context>
@@ -2438,19 +2451,23 @@ Infelizmente, todas as alterações feitas foram perdidas.</translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
-        <translation type="unfinished"/>
+        <translation>Erro de validação de digitação automática</translation>
     </message>
     <message>
         <source>An error occurred while validating the custom Auto-Type sequence:
 %1
 Would you like to correct it?</source>
-        <translation type="unfinished"/>
+        <translation>Ocorreu um erro ao validar a sequência personalizada de digitação automática:
+%1
+Gostaria de a corrigir?</translation>
     </message>
     <message>
         <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
 %2
 Would you like to correct it?</source>
-        <translation type="unfinished"/>
+        <translation>Ocorreu um erro ao validar a sequência personalizada de digitação automática para %1.
+%2
+Gostaria de a corrigir?</translation>
     </message>
 </context>
 <context>
@@ -2533,7 +2550,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation type="unfinished"/>
+        <translation>Se marcado, a entrada não aparecerá em relatórios como Health Check e HIBP, mesmo que não corresponda aos requisitos de qualidade.</translation>
     </message>
 </context>
 <context>
@@ -3168,7 +3185,7 @@ Extensões suportadas são: %1</translation>
     </message>
     <message>
         <source>Apply icon to…</source>
-        <translation type="unfinished"/>
+        <translation>Aplicar ícone a...</translation>
     </message>
 </context>
 <context>
@@ -3251,11 +3268,11 @@ Isto pode causar mal funcionamento dos plugins afetados.</translation>
     <name>EntryAttachments</name>
     <message>
         <source>%1 - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 - %2</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Não é possível abrir o arquivo %1.</translation>
     </message>
 </context>
 <context>
@@ -3390,21 +3407,23 @@ Você deseja realmente adicionar este arquivo?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation type="unfinished"/>
+        <translation>Anexo modificado</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation type="unfinished"/>
+        <translation>O anexo &apos;%1&apos; foi modificado.
+Gostaria de salvar as alterações no seu banco de dados?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao salvar o anexo</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao salvar anexo atualizado.
+Erro: %1</translation>
     </message>
 </context>
 <context>
@@ -3534,7 +3553,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Password Strength</source>
-        <translation type="unfinished"/>
+        <translation>Força da senha</translation>
     </message>
     <message>
         <source>Has TOTP</source>
@@ -3658,11 +3677,11 @@ Error: %1</source>
     <name>FdoSecrets::DBusMgr</name>
     <message>
         <source>Failed to deliver message</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível entregar a mensagem</translation>
     </message>
     <message>
         <source>Failed to send reply on DBus</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível enviar resposta para DBus</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -3689,7 +3708,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Failed to register service on DBus at path &apos;%1&apos;</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível registar o serviço em DBus no caminho &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
@@ -3705,7 +3724,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível registrar o objeto imediato em DBus no caminho &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -3720,7 +3739,7 @@ Error: %1</source>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n entrada(s) foram utilizadas por %1</numerusform><numerusform>%n entrada(s) foram utilizadas por %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3761,7 +3780,7 @@ Error: %1</source>
     <name>FdoSecrets::UnlockPrompt</name>
     <message>
         <source>%1 (PID: %2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (PID: %2)</translation>
     </message>
 </context>
 <context>
@@ -3832,15 +3851,15 @@ Você pode habilitar o serviço de ícones do DuckDuckGo na seção de seguranç
     </message>
     <message>
         <source>Please wait, processing entry list…</source>
-        <translation type="unfinished"/>
+        <translation>Processando lista de entradas. Por favor, aguarde...</translation>
     </message>
     <message>
         <source>Downloading…</source>
-        <translation type="unfinished"/>
+        <translation>Baixando...</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)…</source>
-        <translation type="unfinished"/>
+        <translation>Baixando favicons (%1/%2)…</translation>
     </message>
 </context>
 <context>
@@ -4120,7 +4139,10 @@ Se este erro ocorrer novamente, seu banco de dados pode estar corrompido.</trans
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation type="unfinished"/>
+        <translation>O arquivo selecionado é um banco de dados antigo do KeePass 1 (.kdb).
+
+Você pode importá-lo clicando em Banco de Dados &gt; &apos;Importar banco de dados KeePass 1...&apos;
+Esta é uma migração de uma via. Você não poderá abrir o banco de dados importado com a versão antiga do KeePassX 0.4.</translation>
     </message>
 </context>
 <context>
@@ -4436,7 +4458,7 @@ Se este erro ocorrer novamente, seu banco de dados pode estar corrompido.</trans
     </message>
     <message>
         <source>Invalid entry UUID field size</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho do campo UUID de entrada inválida</translation>
     </message>
 </context>
 <context>
@@ -4577,11 +4599,11 @@ Tem certeza que deseja continuar com este arquivo?</translation>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation type="unfinished"/>
+        <translation>Gere um novo arquivo-chave ou escolha um existente para proteger o seu banco de dados.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation type="unfinished"/>
+        <translation>Nota: Não use um arquivo que possa ser modificado, pois isso irá impedir que você desbloqueie seu banco de dados.</translation>
     </message>
     <message>
         <source>Browse…</source>
@@ -4589,27 +4611,27 @@ Tem certeza que deseja continuar com este arquivo?</translation>
     </message>
     <message>
         <source>Add Key File</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar arquivo-chave</translation>
     </message>
     <message>
         <source>Change Key File</source>
-        <translation type="unfinished"/>
+        <translation>Alterar arquivo-chave</translation>
     </message>
     <message>
         <source>Remove Key File</source>
-        <translation type="unfinished"/>
+        <translation>Remover arquivo-chave</translation>
     </message>
     <message>
         <source>Key File set, click to change or remove</source>
-        <translation type="unfinished"/>
+        <translation>Arquivo-chave definido, clique para alterar ou remover</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Para mais segurança, pode adicionar um arquivo-chave que contenha dados aleatórios.&lt;/p&gt;&lt;p&gt;Tem de o manter secreto e não o pode perder pois se tal acontecer, nunca mais conseguirá abrir a base de dados.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Create Key File…</source>
-        <translation type="unfinished"/>
+        <translation>Criar arquivo-chave...</translation>
     </message>
 </context>
 <context>
@@ -5059,31 +5081,35 @@ Tem certeza que deseja continuar com este arquivo?</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Relatórios do Banco de Dados...</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation type="unfinished"/>
+        <translation>Salvar Backup do Banco de Dados...</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation type="unfinished"/>
+        <translation>Clonar grupo...</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>AVISO: está a utilizar uma versão instável do KeePassXC!
+Existe um risco elevado de corrupção de ficheiros. Deve criar um backup da base de dados.
+Esta versão não deve ser utilizada em ambientes de produção.</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC.
 Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>AVISO: você está usando uma versão de testes do KeePassXC!
+Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes de produção.</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation type="unfinished"/>
+        <translation>AVISO: Sua versão do Qt pode fazer com que o KeePassXC trave com um teclado na tela!
+Recomendamos que você use o AppImage disponível em nossa página de downloads.</translation>
     </message>
 </context>
 <context>
@@ -5196,7 +5222,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Create a new KeePassXC database…</source>
-        <translation type="unfinished"/>
+        <translation>Criar um novo banco de dados KeePassXC...</translation>
     </message>
 </context>
 <context>
@@ -5429,15 +5455,15 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Key derivation failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Falha na derivação da chave: %1</translation>
     </message>
     <message>
         <source>Failed to initialize cipher: %1</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao iniciar cipher: %1</translation>
     </message>
     <message>
         <source>Decryption failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Falha na descriptografia: %1</translation>
     </message>
 </context>
 <context>
@@ -5495,19 +5521,19 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Add Password</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar senha</translation>
     </message>
     <message>
         <source>Change Password</source>
-        <translation type="unfinished"/>
+        <translation>Alterar senha</translation>
     </message>
     <message>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>Remover senha</translation>
     </message>
     <message>
         <source>Password set, click to change or remove</source>
-        <translation type="unfinished"/>
+        <translation>Senha definida, clique para alterar ou remover</translation>
     </message>
 </context>
 <context>
@@ -5750,15 +5776,15 @@ We recommend you use the AppImage available on our downloads page.</source>
     <name>PickcharsDialog</name>
     <message>
         <source>KeePassXC - Pick Characters</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Escolha de caracteres</translation>
     </message>
     <message>
         <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
-        <translation type="unfinished"/>
+        <translation>Selecione os caracteres para digitar, navegue com as setas, Ctrl + S para enviar.</translation>
     </message>
     <message>
         <source>Press &amp;Tab between characters</source>
-        <translation type="unfinished"/>
+        <translation>Pressione &amp;Tab entre os caracteres</translation>
     </message>
 </context>
 <context>
@@ -6951,7 +6977,7 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
+        <translation>Nenhuma UUID válida fornecida</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
@@ -6959,7 +6985,7 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time.</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível gerar uma senha e um alerta ao mesmo tempo.</translation>
     </message>
     <message>
         <source>Path to okon-cli to search a formatted HIBP file</source>
@@ -6975,15 +7001,15 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Evaluating database entries using okon…</source>
-        <translation type="unfinished"/>
+        <translation>Avaliando entradas no banco de dados usando okon...</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while…</source>
-        <translation type="unfinished"/>
+        <translation>Avaliando entradas no banco de dados com arquivo HIBP. Isto pode demorar um pouco...</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A senha para &apos;%1&apos; foi vazada!</numerusform><numerusform>A senha para &apos;%1&apos; foi vazada!</numerusform></translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -6992,11 +7018,11 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
-        <translation type="unfinished"/>
+        <translation>Deve corresponder apenas a uma entrada, caso contrário é mostrada uma lista de possíveis correspondências.</translation>
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation type="unfinished"/>
+        <translation>Tempo limite antes de limpar a área de transferência (o padrão é %1 segundos, defina em 0 para ilimitado).</translation>
     </message>
     <message>
         <source>Multiple entries matching:</source>
@@ -7004,23 +7030,23 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
+        <translation>Usando entrada correspondente: %1</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
+        <translation>Argumento(s) posicional(is) ausente(s).</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Muitos argumentos fornecidos.</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: Desconhecido (%1)</translation>
     </message>
     <message>
         <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
-        <translation type="unfinished"/>
+        <translation>Para usar o okon você deve fornecer um arquivo pós-processado (ex.: arquivo.okon)</translation>
     </message>
     <message>
         <source>Could not start okon process: %1</source>
@@ -7052,7 +7078,7 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A senha foi usada %1 vezes</numerusform><numerusform>A senha foi usada %1 vezes</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7072,7 +7098,7 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A senha expira em %1 dias</numerusform><numerusform>A senha expira em %1 dias</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7080,27 +7106,27 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation type="unfinished"/>
+        <translation>A biblioteca Botan deve ser pelo menos, 2.11.x mas foi encontrada %1.%2.%3</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
-        <translation type="unfinished"/>
+        <translation>SymmetricCipher::init: Modo cipher inválido.</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
-        <translation type="unfinished"/>
+        <translation>SymmetricCipher::init: Tamanho IV inválido de %1 para %2.</translation>
     </message>
     <message>
         <source>Cipher not initialized prior to use.</source>
-        <translation type="unfinished"/>
+        <translation>Cipher não iniciada antes da utilização.</translation>
     </message>
     <message>
         <source>Cannot process 0 length data.</source>
-        <translation type="unfinished"/>
+        <translation>Não pode processar dados de tamanho 0.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Limpando a área de transferência em %1 segundo(s)...</numerusform><numerusform>Limpando a área de transferência em %1 segundo(s)...</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7108,11 +7134,11 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Tem a certeza de que deseja apagar %n entradas?</numerusform><numerusform>Tem a certeza de que deseja apagar %n entradas?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Apagar entrada?</numerusform><numerusform>Apagar entradas?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7120,11 +7146,11 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Você deseja realmente mover %n entrada para a lixeira?</numerusform><numerusform>Você deseja realmente mover %n entrada(s) para a lixeira?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Mover entrada para a lixeira?</numerusform><numerusform>Mover entradas para a lixeira?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7132,7 +7158,7 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A entrada &quot;%1&quot; tem %2 referência(s). Deseja substituir referências por valores, ignorar essa entrada ou excluir mesmo assim?</numerusform><numerusform>A entrada &quot;%1&quot; tem %2 referência(s). Deseja substituir referências por valores, ignorar essa entrada ou excluir mesmo assim?</numerusform></translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7148,23 +7174,23 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation type="unfinished"/>
+        <translation>bloquear todas os bancos de dados abertos</translation>
     </message>
     <message>
         <source>allow app screen recordering and screenshots</source>
-        <translation type="unfinished"/>
+        <translation>permitir gravação e capturas de tela do aplicativo</translation>
     </message>
     <message>
         <source>Locked databases.</source>
-        <translation type="unfinished"/>
+        <translation>Bancos de dados bloqueados.</translation>
     </message>
     <message>
         <source>Database failed to lock.</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao bloquear banco de dados.</translation>
     </message>
     <message>
         <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation type="unfinished"/>
+        <translation>Aviso: Falha ao evitar capturas de tela em uma janela de nível superior!</translation>
     </message>
 </context>
 <context>
@@ -7272,19 +7298,19 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Exclude expired entries from the report</source>
-        <translation type="unfinished"/>
+        <translation>Excluir entradas expiradas do relatório</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
-        <translation type="unfinished"/>
+        <translation>Por favor espere, os dados de saúde estão sendo calculados...</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation type="unfinished"/>
+        <translation>Editar entrada...</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Excluir entrada...</numerusform><numerusform>Excluir entradas...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7375,11 +7401,11 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation type="unfinished"/>
+        <translation>Editar entrada...</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Excluir entrada...</numerusform><numerusform>Excluir entradas...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7502,11 +7528,11 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated…</source>
-        <translation type="unfinished"/>
+        <translation>Por favor espere, as estatísticas do banco de dados estão sendo calculadas...</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation type="unfinished"/>
+        <translation>Banco de dados criado</translation>
     </message>
 </context>
 <context>
@@ -7628,7 +7654,7 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation type="unfinished"/>
+        <translation>Pesquisar (%1)...</translation>
     </message>
 </context>
 <context>
@@ -7667,23 +7693,23 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>Show notification when passwords are retrieved by clients</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar notificação quando as senhas forem obtidas pelos clientes</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se ativa, quaisquer tentativas para ler uma senha terão que ser confirmadas. Caso contrário, se os bancos dados estiverem desbloqueadas, os clientes poderão ler as senhas sem qualquer confirmação.&lt;/p&gt;&lt;p&gt;Esta opção apenas abrange o acesso à senha de uma entrada. Contudo, os clientes podem enumerar os itens das bases de dados expostas e consultar os seus atributos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar quando as senhas forem obtidas pelos clientes</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Esta configuração não substitui a desativação das solicitações da lixeira&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar quando os clientes solicitam uma remoção</translation>
     </message>
 </context>
 <context>
@@ -7933,17 +7959,19 @@ Por favor, considere gerar um novo arquivo-chave.</translation>
     </message>
     <message>
         <source>KeeShare Import</source>
-        <translation type="unfinished"/>
+        <translation>Importar do KeepShare</translation>
     </message>
     <message>
         <source>The source of the shared container cannot be verified because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>A origem do contêiner compartilhado não pode ser verificada porque não está assinada. Você realmente deseja importar de %1?</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with certificate fingerprint:
 %2
 %3</source>
-        <translation type="unfinished"/>
+        <translation>Deseja confiar %1 com a impressão digital do certificado:
+%2
+%3</translation>
     </message>
 </context>
 <context>
@@ -8087,15 +8115,15 @@ Exemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
-        <translation type="unfinished"/>
+        <translation>Configurações padrão (RFC 6238)</translation>
     </message>
     <message>
         <source>Steam® settings</source>
-        <translation type="unfinished"/>
+        <translation>Configurações da Steam®</translation>
     </message>
     <message>
         <source>Custom settings:</source>
-        <translation type="unfinished"/>
+        <translation>Configurações personalizadas:</translation>
     </message>
 </context>
 <context>
@@ -8121,19 +8149,19 @@ Exemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <translation>Verificar por atualizações...</translation>
     </message>
     <message>
         <source>An error occurred when trying to retrieve update information, please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Ocorreu um erro ao tentar obter a informação das atualizações. Por favor, tente mais tarde.</translation>
     </message>
     <message>
         <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;strong&gt;Uma nova versão está disponível.&lt;/strong&gt;&lt;br/&gt;O KeePassXC %1 pode ser &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;baixado aqui&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Você possui a versão mais recente do KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -8222,7 +8250,7 @@ Exemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>%1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] Pergunta de segurança - Slot %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -8236,7 +8264,7 @@ Exemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>A USB error occurred when accessing the hardware key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ocorreu um erro de USB ao acessar a chave de hardware: %1</translation>
     </message>
 </context>
 <context>
@@ -8271,27 +8299,27 @@ Exemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Challenge-Response</source>
-        <translation type="unfinished"/>
+        <translation>Pergunta de segurança</translation>
     </message>
     <message>
         <source>Add Challenge-Response</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar pergunta de segurança</translation>
     </message>
     <message>
         <source>Change Challenge-Response</source>
-        <translation type="unfinished"/>
+        <translation>Alterar pergunta de segurança</translation>
     </message>
     <message>
         <source>Remove Challenge-Response</source>
-        <translation type="unfinished"/>
+        <translation>Remover pergunta de segurança</translation>
     </message>
     <message>
         <source>Challenge-Response set, click to change or remove</source>
-        <translation type="unfinished"/>
+        <translation>Pergunta de segurança definida, clique para alterar ou remover</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Se tiver uma &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; ou &lt;a href=&quot;https://onlykey.io&quot;&gt;Only Key&lt;/a&gt;, pode utilizá-la para mais segurança.&lt;/p&gt;&lt;p&gt;A chave requer que uma das suas ranhuras seja programada como uma &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
 </context>
 </TS>
