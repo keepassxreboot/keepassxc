@@ -54,15 +54,15 @@ printUsage() {
     local cmd
     if [ "" == "$1" ] || [ "help" == "$1" ]; then
         cmd="COMMAND"
-    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] \
-        || [ "gpgsign" == "$1" ] || [ "appsign" == "$1" ] || [ "notarize" == "$1" ] || [ "appimage" == "$1" ]; then
+    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "gpgsign" == "$1" ] || \
+        [ "appsign" == "$1" ] || [ "notarize" == "$1" ] || [ "appimage" == "$1" ] || [ "i18n" == "$1" ]; then
         cmd="$1"
     else
         logError "Unknown command: '$1'\n"
         cmd="COMMAND"
     fi
 
-    printf "\e[1mUsage:\e[0m $(basename "$0") $cmd [options]\n"
+    printf "\e[1mUsage:\e[0m $(basename "$0") $cmd [OPTIONS, ...]\n"
 
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
@@ -75,6 +75,7 @@ Commands:
   appsign    Sign binaries with code signing certificates on Windows and macOS
   notarize   Submit macOS application DMG for notarization
   help       Show help for the given command
+  i18n       Update translation files and pull from or push to Transifex
 EOF
     elif [ "merge" == "$cmd" ]; then
         cat << EOF
@@ -184,6 +185,16 @@ Options:
   -k, --key            The PGP Signing Key
       --verbosity      linuxdeploy verbosity (default: 3)
   -h, --help           Show this help
+EOF
+    elif [ "i18n" == "$cmd" ]; then
+        cat << EOF
+
+Update translation files and pull from or push to Transifex
+
+Subcommands:
+  tx-push      Push source translation file to Transifex
+  tx-pull      Pull updated translations from Transifex
+  lupdate      Update source translation file from C++ sources
 EOF
     fi
 }
@@ -533,9 +544,10 @@ merge() {
 
     performChecks
 
-    logInfo "Updating language files..."
-    ./share/translations/update.sh update
-    ./share/translations/update.sh pull
+    # Update translations
+    i18n lupdate
+    i18n tx-pull
+
     if [ 0 -ne $? ]; then
         exitError "Updating translations failed!"
     fi
@@ -1422,6 +1434,72 @@ notarize() {
     done
 }
 
+
+# -----------------------------------------------------------------------
+#                              i18n command
+# -----------------------------------------------------------------------
+
+i18n() {
+    local cmd="$1"
+    if [ "$cmd" == "" ]; then
+        logError "No subcommand specified.\n"
+        printUsage i18n
+        exit 1
+    elif [ "$cmd" != "tx-push" ] && [ "$cmd" != "tx-pull" ] && [ "$cmd" != "lupdate" ]; then
+        logError "Unknown subcommand: '${cmd}'\n"
+        printUsage i18n
+        exit 1
+    fi
+    shift
+
+    if [ "$cmd" == "lupdate" ]; then
+        if [ ! -d share/translations ]; then
+            logError "Command must be called from repository root directory."
+            exit 1
+        fi
+
+        logInfo "Updating source translation file..."
+        LUPDATE=lupdate-qt5
+        if ! command -v $LUPDATE > /dev/null; then
+            LUPDATE=lupdate
+        fi
+        $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -no-obsolete src \
+            -ts share/translations/keepassxc_en.ts $@
+
+        return 0
+    fi
+
+    local branch="$(git branch --show-current 2>&1)"
+    local real_branch="$branch"
+    if [[ "$branch" =~ ^release/ ]]; then
+        logInfo "Release branch, setting language resource to master branch."
+        branch="master"
+    elif [ "$branch" != "develop" ] && [ "$branch" != "master" ]; then
+        logError "Must be on master or develop branch!"
+        exit 1
+    fi
+    local resource="keepassxc.share-translations-keepassxc-en-ts--${branch}"
+
+    if [ "$cmd" == "tx-push" ]; then
+        echo -e "This will push the \e[1m'en'\e[0m source file from the current branch to Transifex:\n" >&2
+        echo -e "   \e[1m${real_branch}\e[0m -> \e[1m${resource}\e[0m\n" >&2
+        echo -n "Continue? [y/N] " >&2
+        read -r yesno
+        if [ "$yesno" != "y" ] && [ "$yesno" != "Y" ]; then
+            logError "Push aborted."
+            exit 1
+        fi
+
+        logInfo "Pushing source translation file to Transifex..."
+        tx push -s --use-git-timestamps -r "$resource" $@
+
+    elif [ "$cmd" == "tx-pull" ]; then
+        logInfo "Pulling updated translations from Transifex..."
+        tx pull -af --minimum-perc=60 --parallel -r "$resource" $@
+    fi
+}
+
+
 # -----------------------------------------------------------------------
 #                       parse global command line
 # -----------------------------------------------------------------------
@@ -1436,7 +1514,7 @@ elif [ "help" == "$MODE" ]; then
     exit
 elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] \
     || [ "gpgsign" == "$MODE" ] || [ "appsign" == "$MODE" ]|| [ "notarize" == "$MODE" ] \
-    || [ "appimage" == "$MODE" ]; then
+    || [ "appimage" == "$MODE" ]|| [ "i18n" == "$MODE" ]; then
     ${MODE} "$@"
 else
     printUsage "$MODE"
