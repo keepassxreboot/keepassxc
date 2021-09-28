@@ -1113,6 +1113,14 @@ laptop-chrome</translation>
         <source>Column %1</source>
         <translation>Colonna %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Icona</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1210,20 +1218,6 @@ Database di backup che si trova in %2</translation>
         <translation>Aggiorna</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Formato di file chiave legacy</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Per il file della chiave, stai utilizzando un formato obsoleto
-che potrebbe non essere più supportato in futuro.
-
-Considera l&apos;opzione di generarne uno nuovo</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Non mostrare nuovamente questo avviso</translation>
     </message>
@@ -1282,14 +1276,6 @@ Considera l&apos;opzione di generarne uno nuovo</translation>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID per lo sblocco rapido</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Azzera</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Cancella file di chiave</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1360,6 +1346,14 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Seleziona chiave hardware...</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Vecchio formato di file chiave</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Stai utilizzando un vecchio formato di file chiave che KeePassXC può&lt;br&gt;smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendere in considerazione la possibilità di generare un nuovo file di chiave andando a:&lt;br&gt;&lt;strong&gt;Database / Sicurezza database / Cambiare file chiave.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2294,6 +2288,16 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[PROTETTO] Premere Mostra per visualizzare o modificare</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Voce non valida</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>Questa voce è stata invalidata da un&apos;operazione di unione esterna.
+Purtroppo, le modifiche apportate sono state perse.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2613,6 +2617,10 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
         <source>Expires:</source>
         <translation>Scade:</translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Modifica voce</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2912,6 +2920,10 @@ Le estensioni supportate sono: %1.</translation>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>Impostare la sequenza predefinita del completamento automatico</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Modifica gruppo</translation>
     </message>
 </context>
 <context>
@@ -3413,11 +3425,6 @@ Siete sicuri di voler aggiungere questo file?</translation>
         <translation>[PROTETTO]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Abilitato</translation>
     </message>
@@ -3437,6 +3444,15 @@ Siete sicuri di voler aggiungere questo file?</translation>
         <source>Advanced</source>
         <translation>Avanzate</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>Sequenza predefinita</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3447,18 +3463,6 @@ Siete sicuri di voler aggiungere questo file?</translation>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Personalizza vista</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Nascondi nome utente</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Nascondi password</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Adatta alla finestra</translation>
@@ -3483,19 +3487,7 @@ Siete sicuri di voler aggiungere questo file?</translation>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::Item</name>
-    <message>
-        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>La voce &quot;%1&quot; dal database &quot;%2&quot; è stata utilizzata da %3</translation>
-    </message>
-</context>
-<context>
     <name>FdoSecrets::Service</name>
-    <message numerus="yes">
-        <source>%n Entry(s) was used by %1</source>
-        <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n Voce utilizzata da %1</numerusform><numerusform>%n Voci utilizzate da %1</numerusform></translation>
-    </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
         <translation>Impossibile registrare il servizio DBus a %1.&lt;br/&gt;</translation>
@@ -4324,10 +4316,6 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
         <translation>&lt;p&gt;È possibile aggiungere un file chiave contenente byte casuali per una maggiore sicurezza.&lt;/p&gt;&lt;p&gt;Devi tenerlo segreto e non perderlo mai o sarai bloccato!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Formato di file chiave legacy</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Errore nel caricamento del file chiave &apos;%1&apos;
@@ -4396,14 +4384,12 @@ Are you sure you want to continue with this file?</source>
 Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>Si sta utilizzando un formato di file di chiave legacy che può diventare
-non supportato in futuro.
-
-Generare un nuovo file di chiave nelle impostazioni di sicurezza del database.</translation>
+        <source>Old key file format</source>
+        <translation>Vecchio formato di file chiave</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>È stato selezionato un file chiave in un vecchio formato che KeePassXC&lt;br&gt;potrebbe smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendere in considerazione la possibilità di generare un nuovo file di chiave.</translation>
     </message>
 </context>
 <context>
@@ -4833,6 +4819,10 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
         <translation>Mostra barra degli strumenti</translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation>Mostra pannello dei Gruppi</translation>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation>Mostra pannello anteprima</translation>
     </message>
@@ -4867,6 +4857,18 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation>{PASSWORD}{ENTER}</translation>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>Sempre sopra</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Nascondi nome utente</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Nascondi password</translation>
     </message>
 </context>
 <context>
@@ -5489,10 +5491,6 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Azzera</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Rigenera password (%1)</translation>
     </message>
@@ -5737,16 +5735,6 @@ Aspettatevi alcuni bug e problemi minori, questa versione non è destinata all&a
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>Esegui un&apos;analisi avanzata sulla password.</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>ATTENZIONE: state utilizzando un formato di file della chiave obsoleto che potrebbe diventare
-non supportato in futuro.
-
-Per favore valutate la possibilita&apos; di generare un nuovo file della chiave</translation>
     </message>
     <message>
         <source>
@@ -6136,10 +6124,6 @@ Comandi disponibili:
         <translation>%1: (riga, col) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – raccomandato)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6228,10 +6212,6 @@ Comandi disponibili:
     <message>
         <source>read password of the database from stdin</source>
         <translation>leggi la password del database da stdin</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Riferimento alla finestra padre</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6720,10 +6700,6 @@ Kernel: %3 %4</translation>
         <translation>AES (%1 turni)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 iterazioni, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-bit</translation>
     </message>
@@ -6748,6 +6724,52 @@ Kernel: %3 %4</translation>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation>Percorso di un file di configurazione locale personalizzato</translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation>ATTENZIONE: stai utilizzando un vecchio formato di file chiave che KeePassXC potrebbe
+smettere di supportare in futuro.
+
+Prendere in considerazione la possibilità di generare un nuovo file di chiave.</translation>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation>Argon2%1 (%2 passaggi, %3 KB)</translation>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation>Argon2d (KDBX 4 – consigliato)</translation>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation>Argon2id (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Icona</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation>Versione del file chiave non supportata: %1</translation>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation>Checksum non corrispondente! Il file chiave potrebbe essere danneggiato.</translation>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Dati di file chiave imprevisti! Il file chiave potrebbe essere danneggiato.</translation>
     </message>
 </context>
 <context>
@@ -7171,10 +7193,6 @@ Kernel: %3 %4</translation>
     <message>
         <source>Search</source>
         <translation>Cerca</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Azzera</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
