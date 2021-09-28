@@ -69,9 +69,9 @@ bool Translator::installTranslator(const QStringList& languages, const QString& 
     for (const auto& language : languages) {
         QLocale locale(language);
         QScopedPointer<QTranslator> translator(new QTranslator(qApp));
-        if (translator->load(locale, "keepassx_", "", path)) {
+        if (translator->load(locale, "keepassxc_", "", path)) {
             return QCoreApplication::installTranslator(translator.take());
-        } else if (translator->load(locale, "keepassx_", "", QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        } else if (translator->load(locale, "keepassxc_", "", QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
             return QCoreApplication::installTranslator(translator.take());
         }
     }
@@ -109,7 +109,7 @@ QList<QPair<QString, QString>> Translator::availableLanguages()
     QList<QPair<QString, QString>> languages;
     languages.append(QPair<QString, QString>("system", "System default"));
 
-    QRegularExpression regExp("^keepassx_([a-zA-Z_]+)\\.qm$", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression regExp("^keepassxc_([a-zA-Z_]+)\\.qm$", QRegularExpression::CaseInsensitiveOption);
     const QStringList fileList = QDir(resources()->dataPath("translations")).entryList();
     for (const QString& filename : fileList) {
         QRegularExpressionMatch match = regExp.match(filename);
