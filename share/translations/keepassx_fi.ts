@@ -1113,6 +1113,14 @@ chrome-läppäri.</translation>
         <source>Column %1</source>
         <translation>Sarake %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Kuvake</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1210,20 +1218,6 @@ Tietokannan varmuuskopio paikannettu: %2</translation>
         <translation>Päivitä</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Vanha avaintiedostomuoto</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole
-välttämättä tuettu tulevaisuudessa.
-
-Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Älä näytä tätä varoitusta uudelleen</translation>
     </message>
@@ -1282,14 +1276,6 @@ Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID Pika-Avaukseen</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Tyhjennä</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Tyhjennä Avaintiedosto</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1360,6 +1346,14 @@ Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Valitse laiteavain...</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Vanha avaintiedostomuoto</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole&lt;br&gt;tuettu tulevaisuudessa.&lt;br&gt;&lt;br&gt;Ole hyvä ja harkitse uuden avaintiedoston luomista menemällä:&lt;br&gt;&lt;strong&gt;Tietokanta / Tietokannan turvallisuus / Vaihda avaintiedosto&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2293,6 +2287,16 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[SUOJATTU] Klikkaa Paljasta näyttääksesi tai muokataksesi</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Virheellinen tietue</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>Ulkopuolinen yhdistämisoperaatio on muuttanut tämän tietueen virheelliseksi.
+Valitettavasti kaikki siihen tehdyt muutokset ovat kadonneet.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2612,6 +2616,10 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
         <source>Expires:</source>
         <translation>Vanhentuu:</translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Muokkaa tietuetta</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2911,6 +2919,10 @@ Tuetut tyypit ovat: %1.</translation>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>Aseta automaattisyötön oletussekvenssi</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Muokkaa ryhmää</translation>
     </message>
 </context>
 <context>
@@ -3412,11 +3424,6 @@ Oletko varma, että haluat lisätä tämän tiedoston?</translation>
         <translation>[SUOJATTU]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Käytössä</translation>
     </message>
@@ -3436,6 +3443,15 @@ Oletko varma, että haluat lisätä tämän tiedoston?</translation>
         <source>Advanced</source>
         <translation>Lisäasetukset</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>Oletussekvenssi</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3446,18 +3462,6 @@ Oletko varma, että haluat lisätä tämän tiedoston?</translation>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Muokkaa näkymää</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Piilota käyttäjänimet</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Piilota salasanat</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Sovita ikkunaan</translation>
@@ -3482,19 +3486,7 @@ Oletko varma, että haluat lisätä tämän tiedoston?</translation>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::Item</name>
-    <message>
-        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>Tietuetta &quot;%1&quot; tietokannasta &quot;%2&quot; käytettiin %3:n toimesta</translation>
-    </message>
-</context>
-<context>
     <name>FdoSecrets::Service</name>
-    <message numerus="yes">
-        <source>%n Entry(s) was used by %1</source>
-        <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n tietue käytetiin %1</numerusform><numerusform>%n tietuetta käytettiin %1</numerusform></translation>
-    </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
         <translation>DBus-palvelun rekisteröinti epäonnistui %1.&lt;br/&gt;</translation>
@@ -4323,10 +4315,6 @@ Jos tämä toistuu, tietokantasi voi olla viallinen.</translation>
         <translation>&lt;p&gt;Lisäturvaksi voit lisätä avaintiedoston, joka sisältää sattumanvaraista dataa.&lt;/p&gt;&lt;p&gt;Tämä tiedosto täytyy pitää salassa eikä sitä saa koskaan hävittää!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Vanha avaintiedostomuoto</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Avaintiedostoa &apos;%1&apos; ei voitu avata
@@ -4395,14 +4383,12 @@ Are you sure you want to continue with this file?</source>
 Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole
-välttämättä tuettu tulevaisuudessa.
-
-Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
+        <source>Old key file format</source>
+        <translation>Vanha avaintiedostomuoto</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole&lt;br&gt;välttämättä tuettu tulevaisuudessa.&lt;br&gt;&lt;br&gt;Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
     </message>
 </context>
 <context>
@@ -4832,6 +4818,10 @@ Bugeja ja ongelmia voi esiintyä. Tämä versio ei ole tarkoitettu päivittäise
         <translation>Näytä työkalupalkki</translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation>Näytä ryhmäpaneeli</translation>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation>Näytä esikatselupaneeli</translation>
     </message>
@@ -4866,6 +4856,18 @@ Bugeja ja ongelmia voi esiintyä. Tämä versio ei ole tarkoitettu päivittäise
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation>{PASSWORD}{ENTER}</translation>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>Aina päällimmäisenä</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Piilota käyttäjänimet</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Piilota salasanat</translation>
     </message>
 </context>
 <context>
@@ -5488,10 +5490,6 @@ Bugeja ja ongelmia voi esiintyä. Tämä versio ei ole tarkoitettu päivittäise
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Tyhjennä</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Luo salasana uudelleen (%1)</translation>
     </message>
@@ -5736,16 +5734,6 @@ Bugeja ja ongelmia voi esiintyä. Tämä versio ei ole tarkoitettu päivittäise
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>Suorita salasanalle edistynyt analyysi.</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole
-välttämättä tuettu tulevaisuudessa.
-
-Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
     </message>
     <message>
         <source>
@@ -6135,10 +6123,6 @@ Käytettävissä olevat komennot:
         <translation>%1: (rivi, sarake) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – suositeltu)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6227,10 +6211,6 @@ Käytettävissä olevat komennot:
     <message>
         <source>read password of the database from stdin</source>
         <translation>lue tietokannan salasana stdin:istä</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Ylemmän ikkunan kahva</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6719,10 +6699,6 @@ Ydin: %3 %4</translation>
         <translation>AES (%1 kierrosta)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 kierrosta, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-bit</translation>
     </message>
@@ -6747,6 +6723,52 @@ Ydin: %3 %4</translation>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation>polku mukautettuun asetustiedostoon</translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation>Käytät vanhaa avaintiedostomuotoa joka ei ole
+välttämättä tuettu tulevaisuudessa.
+
+Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation>Argon2%1 (%2 kierrosta, %3 KB)</translation>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation>Argon2d (KDBX 4 - suositeltu)</translation>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation>Argon2id (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Kuvake</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation>Avaintiedosto joka ei ole tuettu, versio: %1</translation>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation>Tarkistussumma on virheellinen! Avaintiedosto voi olla korruptoitunut.</translation>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Odottamatonta avaintiedoston dataa havaittu. Avaintiedosto voi olla korruptoitunut.</translation>
     </message>
 </context>
 <context>
@@ -7170,10 +7192,6 @@ Ydin: %3 %4</translation>
     <message>
         <source>Search</source>
         <translation>Etsi</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Tyhjennä</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
