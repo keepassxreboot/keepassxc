@@ -1114,6 +1114,14 @@ chrome-laptop.</translation>
         <source>Column %1</source>
         <translation>列 %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>アイコン</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1211,20 +1219,6 @@ Backup database located at %2</source>
         <translation>再読み込み</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>レガシーなキーファイル形式</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>レガシーなキーファイル形式は将来的に、
-サポートしなくなる可能性があります。
-
-新しいキーファイルの生成を検討してください。</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>今後この警告を表示しない</translation>
     </message>
@@ -1283,14 +1277,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID で素早くロックを解除する</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>消去</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>キーファイルを消去</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1360,6 +1346,14 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>ハードウェアキーを選択…</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>古いキーファイル形式</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>KeePassXC は将来的に、現在使用中の古いキーファイル形式を&lt;br&gt;サポートしなくなる可能性があります。&lt;br&gt;&lt;br&gt;&lt;strong&gt;データベース -&gt; データベースのセキュリティ&lt;/strong&gt;メニューから&lt;br&gt;新しいキーファイルを生成することを検討してください。&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2294,6 +2288,16 @@ Disable safe saves and try again?</source>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[保護] 表示または編集する場合は開示をクリックしてください</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>不正なエントリー</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>外部でのマージ処理によって、このエントリーは無効化されました。
+申し訳ありませんが、行った変更は全て失われました。</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2613,6 +2617,10 @@ Disable safe saves and try again?</source>
         <source>Expires:</source>
         <translation>期限:</translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>エントリーを編集</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2912,6 +2920,10 @@ Supported extensions are: %1.</source>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>既定の自動入力シーケンスを設定する</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>グループを編集</translation>
     </message>
 </context>
 <context>
@@ -3412,11 +3424,6 @@ Are you sure to add this file?</source>
         <translation>[保護]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>有効</translation>
     </message>
@@ -3436,6 +3443,15 @@ Are you sure to add this file?</source>
         <source>Advanced</source>
         <translation>詳細設定</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>既定のシーケンス</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3446,18 +3462,6 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>表示のカスタマイズ</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>ユーザー名を隠す</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>パスワードを隠す</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>ウィンドウに合わせる</translation>
@@ -3482,19 +3486,7 @@ Are you sure to add this file?</source>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::Item</name>
-    <message>
-        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>データベース &quot;%2&quot; のエントリー &quot;%1&quot; が %3 に使用されました</translation>
-    </message>
-</context>
-<context>
     <name>FdoSecrets::Service</name>
-    <message numerus="yes">
-        <source>%n Entry(s) was used by %1</source>
-        <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n 個のエントリーが %1 に使用されました</numerusform></translation>
-    </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
         <translation>%1 で DBus サービスの登録に失敗しました。&lt;br/&gt;</translation>
@@ -4323,10 +4315,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation>&lt;p&gt;セキュリティ対策でランダムバイトを含むキーファイルを追加できます。&lt;/p&gt;&lt;p&gt;キーファイルは誰にも知られず、絶対に無くさないよう注意してください。&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>レガシーなキーファイル形式</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>キーファイル &apos;%1&apos; の読み込み時にエラーが発生しました
@@ -4395,14 +4383,12 @@ Are you sure you want to continue with this file?</source>
 このファイルで続行してもよろしいですか？</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>レガシーなキーファイル形式は将来的に、
-サポートされなくなる可能性があります。
-
-データベースのセキュリティ設定で新しいキーファイルを生成してください。</translation>
+        <source>Old key file format</source>
+        <translation>古いキーファイル形式</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>KeePassXC は将来的に、選択した古い形式のキーファイルを&lt;br&gt;サポートしなくなる可能性があります。&lt;br&gt;&lt;br&gt;代わりに新しいキーファイルを生成することを検討してください。</translation>
     </message>
 </context>
 <context>
@@ -4832,6 +4818,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>ツールバーを表示</translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation>グループパネルを表示</translation>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation>プレビューパネルを表示</translation>
     </message>
@@ -4866,6 +4856,18 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation>{PASSWORD}{ENTER}</translation>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>常に最前面に表示</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>ユーザー名を隠す</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>パスワードを隠す</translation>
     </message>
 </context>
 <context>
@@ -5488,10 +5490,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>消去</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>パスワードを再生成 (%1)</translation>
     </message>
@@ -5736,16 +5734,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>パスワードの詳細な分析を実行する。</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>警告: レガシーなキーファイル形式は将来的に、
-サポートしなくなる可能性があります。
-
-新しいキーファイルの生成を検討してください。</translation>
     </message>
     <message>
         <source>
@@ -6135,10 +6123,6 @@ Available commands:
         <translation>%1: (行, 列) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – 推奨)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6227,10 +6211,6 @@ Available commands:
     <message>
         <source>read password of the database from stdin</source>
         <translation>標準入力からデータベースのパスワードを読み込む</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>親ウィンドウの制御</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6719,10 +6699,6 @@ CPU アーキテクチャー: %2
         <translation>AES (%1 回)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 回, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256 ビット</translation>
     </message>
@@ -6747,6 +6723,52 @@ CPU アーキテクチャー: %2
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 秒</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation>カスタムローカル設定ファイルへのパス</translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation>警告: KeePassXC は将来的に、古いキーファイル
+形式をサポートしなくなる可能性があります。
+
+新しいキーファイルの生成を検討してください。</translation>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation>Argon2%1 (%2 回, %3 KB)</translation>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation>Argon2d (KDBX 4 – 推奨)</translation>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation>Argon2id (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>アイコン</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation>サポートしていないバージョンのキーファイルです: %1</translation>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation>チェックサムが一致しません！キーファイルが破損している可能性があります。</translation>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>予期しないキーファイルデータです！キーファイルが破損している可能性があります。</translation>
     </message>
 </context>
 <context>
@@ -7170,10 +7192,6 @@ CPU アーキテクチャー: %2
     <message>
         <source>Search</source>
         <translation>検索</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>消去</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
