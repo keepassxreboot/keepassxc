@@ -1113,6 +1113,14 @@ chrome-laptop.</translation>
         <source>Column %1</source>
         <translation>%1. veerg</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikoon</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1210,20 +1218,6 @@ Varuandmebaasi asukoht: %2</translation>
         <translation>Värskenda</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Võtmefaili pärandvorming</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Kasutad pärandvormingus võtmefaili, mis ei pruugi
-programmi järgmistes versioonides enam toetatud olla.
-
-Kaalu uue võtmefaili genereerimist.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Seda hoiatust rohkem ei näidata</translation>
     </message>
@@ -1282,14 +1276,6 @@ Kaalu uue võtmefaili genereerimist.</translation>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID kasutamine kiiresti luku avamiseks</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Puhasta</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Ära kasuta võtmefaili</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1360,6 +1346,14 @@ Kui andmebaasi avamiseks pole võtmefaili vaja, jäta see väli tühjaks.</trans
     <message>
         <source>Select hardware key…</source>
         <translation>vali riistvaraline võti…</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Vanas vormingus võtmefail</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Kasutad vana võtmefailivormingut, mille tugi võidakse&lt;br&gt;KeePassXC-st tulevikus eemaldada.&lt;br&gt;&lt;br&gt;Palun genereeri uus võtmefail – selleks vali menüüst:&lt;br&gt;&lt;strong&gt;Andmebaas – Andmebaasi turvalisus – Muuda võtmefaili.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2294,6 +2288,16 @@ Kas keelata turvaline salvestamine ja proovida seejärel uuesti?</translation>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[KAITSTUD] Vaatamiseks või muutmiseks klõpsa &quot;Paljasta&quot;</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Vigane kirje</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>Väljastpoolt algatatud mestimine on selle kirje kehtetuks muutnud.
+Kõik tehtud muudatused läksid kahjuks kaotsi.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2613,6 +2617,10 @@ Kas keelata turvaline salvestamine ja proovida seejärel uuesti?</translation>
         <source>Expires:</source>
         <translation>Aegub:</translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Kirje muutmine</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2807,15 +2815,15 @@ Toetatud faililaiendid: %1</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>See andmebaas juba ekspordib asukohta „%1”.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>See andmebaas juba impordib asukohast „%1”.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation type="unfinished"/>
+        <translation>Selle andmebaasi eri grupid kasutavad asukohta „%1” nii importimiseks kui ka eksportimiseks.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
@@ -2912,6 +2920,10 @@ Toetatud faililaiendid: %1</translation>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>Grupile määratakse oma vaikimisi automaatsisestuse jada</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Grupi muutmine</translation>
     </message>
 </context>
 <context>
@@ -3413,11 +3425,6 @@ Kas oled kindel, et tahad selle faili lisada?</translation>
         <translation>[KAITSTUD]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>lubatud</translation>
     </message>
@@ -3437,6 +3444,15 @@ Kas oled kindel, et tahad selle faili lisada?</translation>
         <source>Advanced</source>
         <translation>Lisaseaded</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>Vaikejada:</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3447,18 +3463,6 @@ Kas oled kindel, et tahad selle faili lisada?</translation>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Vaate kohandamine</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Kasutajanimed peidetud</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Paroolid peidetud</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Mahuta aknasse</translation>
@@ -3483,19 +3487,7 @@ Kas oled kindel, et tahad selle faili lisada?</translation>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::Item</name>
-    <message>
-        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>%3 kasutas andmebaasi &quot;%2&quot; kirjet &quot;%1&quot;</translation>
-    </message>
-</context>
-<context>
     <name>FdoSecrets::Service</name>
-    <message numerus="yes">
-        <source>%n Entry(s) was used by %1</source>
-        <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%1 kasutas %n kirjet</numerusform><numerusform>%1 kasutas %n kirjet</numerusform></translation>
-    </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
         <translation>DBus&apos;i teenuse registreerimine asukohas %1 ebaõnnestus.&lt;br/&gt;</translation>
@@ -3869,11 +3861,11 @@ Kui probleem püsib, võib andmebaasifail olla rikutud.</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation type="unfinished"/>
+        <translation>sobimatu juhuvoo ID suurus</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation type="unfinished"/>
+        <translation>sobimatu sisemine juhuvoo šiffer</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -3926,11 +3918,11 @@ Teisendus on ühesuunaline, seega imporditud andmebaasi ei saa vana KeePassX 0.4
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation type="unfinished"/>
+        <translation>mitu grupielementi</translation>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation type="unfinished"/>
+        <translation>nullväärtusega grupi-UUID</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
@@ -3950,15 +3942,15 @@ Teisendus on ühesuunaline, seega imporditud andmebaasi ei saa vana KeePassX 0.4
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation type="unfinished"/>
+        <translation>nullväärtusega DeleteObject’i-UUID</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation type="unfinished"/>
+        <translation>DeletedObject’i UUID või ajaväärtus on puudu</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation type="unfinished"/>
+        <translation>nullväärtusega kirje-UUID</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
@@ -4038,7 +4030,7 @@ Rida %2, veerg %3</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Privaatvõti olevat kaasatud fail, aga kaasatud faile pole.</translation>
     </message>
     <message>
         <source>Private key is empty</source>
@@ -4230,7 +4222,7 @@ Kui probleem püsib, võib andmebaasifail olla rikutud.</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation type="unfinished"/>
+        <translation>Mitteaktiivne jagatud ressurss %1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
@@ -4254,7 +4246,7 @@ Kui probleem püsib, võib andmebaasifail olla rikutud.</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation type="unfinished"/>
+        <translation>Mitteaktiivne jagatud ressurss</translation>
     </message>
     <message>
         <source>Imported from</source>
@@ -4321,10 +4313,6 @@ Kui probleem püsib, võib andmebaasifail olla rikutud.</translation>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
         <translation>&lt;p&gt;Lisaturvalisuse saavutamiseks võid määrata juhuslikke baite sisaldava võtmefaili.&lt;/p&gt;&lt;p&gt;Hoia seda salajas ja ära seda ära kaota, sest muidu ei saa andmebaasi lukku enam avada!&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Legacy key file format</source>
-        <translation>Võtmefaili pärandvorming</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -4395,14 +4383,12 @@ Are you sure you want to continue with this file?</source>
 Kas oled kindel, et soovid selle failiga jätkata?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>Kasutad pärandvormingus võtmefaili, mis ei pruugi
-programmi järgmistes versioonides enam toetatud olla.
-
-Genereeri andmebaasi turvaseadete all uus võtmefail.</translation>
+        <source>Old key file format</source>
+        <translation>Vanas vormingus võtmefail</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>Valisid võtmefaili, mis on vanas vormingus, mille tugi võidakse&lt;br&gt;KeePassXC-st tulevikus eemaldada.&lt;br&gt;&lt;br&gt;Palun genereeri selle asemele uus võtmefail.</translation>
     </message>
 </context>
 <context>
@@ -4832,6 +4818,10 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
         <translation>&amp;Tööriistariba nähtaval</translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation>Gruppide paneel nähtaval</translation>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation>&amp;Eelvaatluse paneel nähtaval</translation>
     </message>
@@ -4866,6 +4856,18 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation>Parool ja Enter</translation>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>Alati pealmine</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Kasutajanimede varjamine</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Paroolide varjamine</translation>
     </message>
 </context>
 <context>
@@ -4906,67 +4908,67 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
     <name>Merger</name>
     <message>
         <source>Creating missing %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Puuduva kirje „%1” [%2] loomine</translation>
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Kirje „%1” [%2] teisaldamine</translation>
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Kirje „%1” [%2] ülekirjutamine</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>andmebaasist „%1” mestitud vanem kirje</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Vanemale sihtmärgile „%1” [%2] varukoopia lisamine</translation>
     </message>
     <message>
         <source>Adding backup for older source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Vanemale allikale „%1” [%2] varukoopia lisamine</translation>
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Uuema lähtekirje „%1” [%2] peale vanema sihtkirje taasrakendamine</translation>
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Uuema sihtkirje „%1” [%2] peale vanema lähtekirje taasrakendamine</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Sünkroonimine uuema allikaga „%1” [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Sünkroonimine vanema allikaga „%1” [%2]</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Alamobjekti „%1” [%2] kustutamine</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Orvuks jäänud objekti „%1” [%2] kustutamine</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
-        <translation type="unfinished"/>
+        <translation>Muudetud kustutatud objektid</translation>
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation type="unfinished"/>
+        <translation>Puuduva ikooni „%1” lisamine</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Kohandatud andmed „%1” [%2] eemaldatud</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Kohandatud andmete „%1” [%2] lisamine</translation>
     </message>
 </context>
 <context>
@@ -5488,10 +5490,6 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Puhasta</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Genereeri uus parool (%1)</translation>
     </message>
@@ -5622,23 +5620,23 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation type="unfinished"/>
+        <translation>Toiming tühistati või keelati</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-ga ühendumine ebaõnnestus, proovi uuesti.</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation type="unfinished"/>
+        <translation>Krüptimisvõtit ei tuntud ära</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation type="unfinished"/>
+        <translation>Sobimatu toiming</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation type="unfinished"/>
+        <translation>Saadi tühi sõnum</translation>
     </message>
     <message>
         <source>No URL provided</source>
@@ -5646,7 +5644,7 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
     </message>
     <message>
         <source>No logins found</source>
-        <translation type="unfinished"/>
+        <translation>Sisselogimisandmeid ei leitud</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -5735,14 +5733,7 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Parooli põhjalikum analüüsimine.</translation>
     </message>
     <message>
         <source>
@@ -5927,7 +5918,7 @@ Võimalikud käsud:
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Kirje &quot;%1&quot; ühtki välja ei muudeta.</translation>
     </message>
     <message>
         <source>Enter new password for entry: </source>
@@ -5955,83 +5946,83 @@ Võimalikud käsud:
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation type="unfinished"/>
+        <translation>Mitmiksõna lisabitid %1</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: jõhkra jõuga</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: sõnastik</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: sõnastik+1337</translation>
     </message>
     <message>
         <source>Type: User Words</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: kasutaja sõnad</translation>
     </message>
     <message>
         <source>Type: User+Leet</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: kasutaja+1337</translation>
     </message>
     <message>
         <source>Type: Repeated</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: kordus</translation>
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: jada</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: ruumiline</translation>
     </message>
     <message>
         <source>Type: Date</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: kuupäev</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: jõhkra jõuga (korduv)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: sõnastik (korduv)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: sõnastik+1337 (korduv)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: kasutaja sõnad (korduv)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: kasutaja+1337 (korduv)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: kordus (korduv)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: jada (korduv)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: ruumiline (korduv)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: kuupäev (korduv)</translation>
     </message>
     <message>
         <source>Type: Unknown%1</source>
-        <translation type="unfinished"/>
+        <translation>Tüüp: teadmata %1</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
@@ -6132,10 +6123,6 @@ Võimalikud käsud:
         <translation>%1: (rida, veerg) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – soovituslik)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6224,10 +6211,6 @@ Võimalikud käsud:
     <message>
         <source>read password of the database from stdin</source>
         <translation>Andmebaasi parooli lugemine standardsisendist (stdin).</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Ülemakna pide</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6395,7 +6378,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
+        <translation>Väljumine interaktiivsest režiimist.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
@@ -6411,7 +6394,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation type="unfinished"/>
+        <translation>Kasutatakse numbreid.</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
@@ -6447,11 +6430,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation type="unfinished"/>
+        <translation>Väljastab liigendamata üksikread.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>Näitab, mida mestimise käigus tehtaks, tegelikult midagi muutmata.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
@@ -6551,7 +6534,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation type="unfinished"/>
+        <translation>Kõigi valikute rakendamise järel saadi sobimatu parooligeneraator.</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
@@ -6559,11 +6542,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
-        <translation type="unfinished"/>
+        <translation>Brauseriplugina tõrge</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation type="unfinished"/>
+        <translation>Programmiomase teatevahetuse skripti salvestamine brauseri %1 jaoks ebaõnnestus.</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -6583,7 +6566,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation type="unfinished"/>
+        <translation>VIGA: atribuut %1 on mitmeti tõlgendatav, palun täpsusta: %2</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
@@ -6715,10 +6698,6 @@ Kernel: %3 %4</translation>
         <translation>AES (%1 raundi)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 raundi, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES: 256-bitine</translation>
     </message>
@@ -6744,6 +6723,52 @@ Kernel: %3 %4</translation>
         <comment>seconds</comment>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation>Kohandatud kohaliku seadistusfaili asukoht.</translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation>HOIATUS: kasutad võtmefaili, mis on vanas vormingus, mille tugi võidakse
+KeePassXC-st tulevikus eemaldada.
+
+Palun genereeri selle asemele uus võtmefail.</translation>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation>Argon2%1 (%2 raundi, %3 KB)</translation>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation>Argon2d (KDBX 4 – soovituslik)</translation>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation>Argon2id (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikoon</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation>Toetamata võtmefaili versioon: %1</translation>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation>Kontrollsumma ei klapi. Võtmefail võib olla rikutud.</translation>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Ootamatud andmed võtmefailis. Võtmefail võib olla rikutud.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -6753,15 +6778,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Viga alusseadmesse kirjutamisel: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Viga alusseadme avamisel: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Viga alusseadmest andmete lugemisel: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -7075,15 +7100,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>No agent running, cannot add identity.</source>
-        <translation type="unfinished"/>
+        <translation>Ükski agent ei tööta, identiteeti pole võimalik lisada.</translation>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
-        <translation type="unfinished"/>
+        <translation>Ükski agent ei tööta, identiteeti pole võimalik eemaldada.</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation type="unfinished"/>
+        <translation>Agent lükkas selle identiteedi tagasi. Võimalikud põhjused:</translation>
     </message>
     <message>
         <source>The key has already been added.</source>
@@ -7091,19 +7116,19 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation type="unfinished"/>
+        <translation>Agent ei toeta piiratud kehtivusaega (kontrolli seadeid).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation type="unfinished"/>
+        <translation>Agent ei toeta kinnitustaotlusi (kontrolli seadeid).</translation>
     </message>
     <message>
         <source>Key identity ownership conflict. Refusing to add.</source>
-        <translation type="unfinished"/>
+        <translation>Võtme identiteedi omanduse konflikt. Lisamisest keelduti.</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation type="unfinished"/>
+        <translation>Ükski agent ei tööta, identiteete pole võimalik loetleda.</translation>
     </message>
 </context>
 <context>
@@ -7166,10 +7191,6 @@ Kernel: %3 %4</translation>
     <message>
         <source>Search</source>
         <translation>Otsimine</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Puhasta</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
@@ -7353,11 +7374,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>Muudetud sertifikaadi eksportimine</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>Eksporditav sertifikaat pole sama, mis kasutusel on. Kas tahad ikkagi praeguse sertifikaadi eksportida?</translation>
     </message>
     <message>
         <source>Signer:</source>
@@ -7385,93 +7406,93 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>Genereeri uus sertifikaat</translation>
     </message>
     <message>
         <source>Import existing certificate</source>
-        <translation type="unfinished"/>
+        <translation>Impordi olemasolev sertifikaat</translation>
     </message>
     <message>
         <source>Export own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Ekspordi oma sertifikaat</translation>
     </message>
     <message>
         <source>Known shares</source>
-        <translation type="unfinished"/>
+        <translation>Teadaolevad jagatud ressursid</translation>
     </message>
     <message>
         <source>Trust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Märgi valitud sertifikaat usaldusväärseks</translation>
     </message>
     <message>
         <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"/>
+        <translation>Küsi iga kord, kas usaldada valitud sertifikaati</translation>
     </message>
     <message>
         <source>Untrust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Märgi valitud sertifikaat ebausaldusväärseks</translation>
     </message>
     <message>
         <source>Remove selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Eemalda valitud sertifikaat</translation>
     </message>
 </context>
 <context>
     <name>ShareExport</name>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Allkirjastatud jagamisümbriku ülekirjutamist ei toetata – midagi ei eksporditud</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Ekspordiümbriku kirjutamine polnud võimalik (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Allkirja põimimine polnud võimalik: faili ei õnnestunud kirjutamiseks avada (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Allkirja põimimine polnud võimalik: faili ei õnnestunud kirjutada (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Andmebaasi põimimine polnud võimalik: faili ei õnnestunud kirjutamiseks avada (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Andmebaasi põimimine polnud võimalik: faili ei õnnestunud kirjutada (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Allkirjastamata jagamisümbriku ülekirjutamist ei toetata – midagi ei eksporditud</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>Ekspordiümbriku kirjutamine polnud võimalik</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>Eksportimisel tekkis ootamatu viga</translation>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
         <source>Import from container without signature</source>
-        <translation type="unfinished"/>
+        <translation>Impordi ilma signatuurita konteinerist</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>Selle jagatud ümbriku allikat pole võimalik verifitseerida, kuna see on allkirjastamata. Kas soovid siiski asukohast „%1” importida?</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
+        <translation>Sertifikaadiga ümbrikust importimine</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation type="unfinished"/>
+        <translation>Kas %1 on usaldusväärne allkirjastaja? Sertifikaadi sõrmejälg on %2 ja asukoht „%3”. {1 ?} {2 ?}</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -7491,7 +7512,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Allkirjastatud jagamisümbrikke ei toetata – midagi ei imporditud</translation>
     </message>
     <message>
         <source>File is not readable</source>
@@ -7499,11 +7520,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>Sobimatu jagamisümbrik</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Ebausaldusväärsest allikast importimisest hoiduti</translation>
     </message>
     <message>
         <source>Successful signed import</source>
@@ -7511,7 +7532,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Allkirjastamata jagamisümbrikke ei toetata – midagi ei imporditud</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
@@ -7530,11 +7551,11 @@ Kernel: %3 %4</translation>
     <name>ShareObserver</name>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Importimine asukohast „%1” ebaõnnestus (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Importimine asukohast %1 kenasti lõpetatud (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
@@ -7542,15 +7563,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Eksportimine asukohta „%1” ebaõnnestus (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Eksportimine asukohta „%1” kenasti lõpetatud (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation type="unfinished"/>
+        <translation>Eksportimine asukohta „%1”</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
@@ -7795,7 +7816,7 @@ Näide: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>%1 Invalid slot specified - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1: määrati sobimatu pesa – %2</translation>
     </message>
     <message>
         <source>The YubiKey interface has not been initialized.</source>
