@@ -1114,6 +1114,14 @@ A kapcsolatnak egy olyan egyedi nevet, ill. azonosítót szükség adni, mint am
         <source>Column %1</source>
         <translation>%1. oszlop</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikon</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1211,19 +1219,6 @@ Az adatbázis biztonsági másolata:  %2</translation>
         <translation>Frissítés</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Örökölt kulcsfájl formátum</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Egy régi, örökölt kulcsfájl formátumot használ, ami a közeljövőben már nem lesz támogatott.
-
-Megfontolandó egy új kulcsfájl készítése.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Ne jelenjen meg többé a figyelmeztetés</translation>
     </message>
@@ -1282,14 +1277,6 @@ Megfontolandó egy új kulcsfájl készítése.</translation>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID a Quick Unlockhoz</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Törlés</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Kulcsfájl törlése</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1359,6 +1346,14 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>Hardverkulcs kijelölése…</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Régi kulcsfájl formátum</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Egy régi kulcsfájl formátumot használ, amit a KeePassXC lehet&lt;br&gt;hogy nem fog támogatni a jövőben.&lt;br&gt;&lt;br&gt;Fontolja meg, hogy új kulcsfájl készít a következő menüben:&lt;br&gt;&lt;strong&gt;Adatbázis / Adatbázis-biztonság / Kulcsfájl módosítása.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2293,6 +2288,16 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[VÉDETT] A megjelenítés vagy a szerkesztés a „Felfedés” gombbal érhető el</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Érvénytelen bejegyzés</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>Egy külső egyesítési művelet érvénytelenítette ezt a bejegyzést.
+Sajnos az esetleges változások elvesztek.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2612,6 +2617,10 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
         <source>Expires:</source>
         <translation>Lejárat:</translation>
     </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Bejegyzés szerkesztése</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
@@ -2911,6 +2920,10 @@ Támogatott kiterjesztések: %1.</translation>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>Egyéni automatikus beírási sorrend beállítása</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Csoport szerkesztése</translation>
     </message>
 </context>
 <context>
@@ -3412,11 +3425,6 @@ Biztosan hozzáadható ez a fájl?</translation>
         <translation>[VÉDETT]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Engedélyezett</translation>
     </message>
@@ -3436,6 +3444,15 @@ Biztosan hozzáadható ez a fájl?</translation>
         <source>Advanced</source>
         <translation>Speciális</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>Alapértelmezett sorrend</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3446,18 +3463,6 @@ Biztosan hozzáadható ez a fájl?</translation>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Nézet testre szabása</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Felhasználónevek elrejtése</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Jelszavak elrejtése</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Igazítás az ablakhoz</translation>
@@ -3482,19 +3487,7 @@ Biztosan hozzáadható ez a fájl?</translation>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::Item</name>
-    <message>
-        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>%3 használta a(z) „%2” adatbázis bejegyzését: „%1”,</translation>
-    </message>
-</context>
-<context>
     <name>FdoSecrets::Service</name>
-    <message numerus="yes">
-        <source>%n Entry(s) was used by %1</source>
-        <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n bejegyzést használ: %1</numerusform><numerusform>%n bejegyzést használ: %1</numerusform></translation>
-    </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
         <translation>Nem sikerült regisztrálni a DBus-szolgáltatást: %1.&lt;br/&gt;</translation>
@@ -4323,10 +4316,6 @@ Ha ez újból előfordul, lehet hogy az adatbázisfájl sérült.</translation>
         <translation>&lt;p&gt;Megadhat egy véletlenszerű bájtokat tartalmazó kulcsot a további biztonság érdekében.&lt;/p&gt;&lt;p&gt;Tartsa titokban, és ne veszítse el, nehogy kizárja magát!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Örökölt kulcsfájl formátum</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Hiba a(z) „%1” kulcsfájl betöltésekor
@@ -4395,13 +4384,12 @@ Are you sure you want to continue with this file?</source>
 Valóban folytatható a művelet ezzel a fájllal?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>Egy régi, örökölt kulcsfájl formátumot használ, ami a közeljövőben már nem lesz támogatott.
-
-Állítson elő egy új kulcsfájlt az adatbázis biztonsági beállításaiban.</translation>
+        <source>Old key file format</source>
+        <translation>Régi kulcsfájl formátum</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>Egy régi kulcsfájl formátumot használ, amit a KeePassXC lehet&lt;br&gt;hogy nem fog támogatni a jövőben.&lt;br&gt;&lt;br&gt;Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
     </message>
 </context>
 <context>
@@ -4830,6 +4818,10 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
         <translation>Eszköztár megjelenítése</translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation>Csoportok panel megjelenítése</translation>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation>Előnézet panel megjelenítése</translation>
     </message>
@@ -4864,6 +4856,18 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation>{JELSZÓ}{ENTER}</translation>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>Mindig felül</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Felhasználónevek elrejtése</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Jelszavak elrejtése</translation>
     </message>
 </context>
 <context>
@@ -5486,10 +5490,6 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Törlés</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Jelszó újraelőállítása (%1)</translation>
     </message>
@@ -5734,15 +5734,6 @@ Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem aján
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>A jelszó speciális elemzése.</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>FIGYELEM: Egy régi, örökölt kulcsfájl formátumot használ, ami a közeljövőben már nem lesz támogatott.
-
-Megfontolandó egy új kulcsfájl készítése.</translation>
     </message>
     <message>
         <source>
@@ -6132,10 +6123,6 @@ Elérhető parancsok:
         <translation>%1: (sor, oszlop) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – ajánlott)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6224,10 +6211,6 @@ Elérhető parancsok:
     <message>
         <source>read password of the database from stdin</source>
         <translation>adatbázis jelszó beolvasása az stdin-ről</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Szülőablak kezelése</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6716,10 +6699,6 @@ Kernel: %3 %4</translation>
         <translation>AES (%1 forduló)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 forduló, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-bit</translation>
     </message>
@@ -6744,6 +6723,52 @@ Kernel: %3 %4</translation>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation>útvonal az egyéni helyi beállítófájlhoz</translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation>FIGYELEM: Egy régi kulcsfájl formátumot használ, amit a KeePassXC lehet
+hogy nem fog támogatni a jövőben.
+
+Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation>Argon2%1 (%2 forduló, %3 KB)</translation>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation>Argon2d (KDBX 4 – ajánlott)</translation>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation>Argon2id (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikon</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation>Nem támogatott kulcsfájlverzió: %1</translation>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation>Nem egyezik az ellenőrzőösszeg. A kulcsfájl megsérülhetett.</translation>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Váratlan kulcsfájladatok. A kulcsfájl megsérülhetett.</translation>
     </message>
 </context>
 <context>
@@ -7167,10 +7192,6 @@ Kernel: %3 %4</translation>
     <message>
         <source>Search</source>
         <translation>Keresés</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Törlés</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
