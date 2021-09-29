@@ -47,10 +47,10 @@ GroupView::GroupView(Database* db, QWidget* parent)
 
     // keyboard shortcuts to sort children of a group
     auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_Down, this);
-    connect(shortcut, &QShortcut::activated, this, [this]() { sortGroupRequested(false); });
+    connect(shortcut, &QShortcut::activated, this, [this]() { sortGroups(false); });
 
     shortcut = new QShortcut(Qt::CTRL + Qt::Key_Up, this);
-    connect(shortcut, &QShortcut::activated, this, [this]() { sortGroupRequested(true); });
+    connect(shortcut, &QShortcut::activated, this, [this]() { sortGroups(true); });
 
     modelReset();
 
@@ -73,11 +73,6 @@ void GroupView::contextMenuShortcutPressed()
     if (hasFocus() && index.isValid()) {
         emit customContextMenuRequested(visualRect(index).bottomLeft());
     }
-}
-
-void GroupView::sortGroupRequested(bool reverse)
-{
-    sortGroups(reverse);
 }
 
 void GroupView::changeDatabase(const QSharedPointer<Database>& newDb)
