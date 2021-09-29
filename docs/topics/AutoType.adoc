@@ -80,7 +80,7 @@ Search the unlocked databases by activating Search Database radio button. Use th
 .Additional Auto-Type choices
 image::autotype_selection_dialog_type_menu.png[,70%]
 
-The option to type just the username, password, or current TOTP value is available by right clicking the desired row or expanding the Type Sequence button options. 
+The option to type just the username, password, or current TOTP value is available by right clicking the desired row or expanding the Type Sequence button options.
 
 === Performing Entry-Level Auto-Type
 You can quickly activate the default Auto-Type sequence for a particular entry using Entry-Level Auto-Type. For this operation, the KeePassXC window will be minimized and the Auto-Type sequence occurs in the previously selected window. You can perform Entry-Level Auto-Type from the toolbar icon *(A)*, entry context menu *(B)*, or by pressing `Ctrl+Shift+V`.

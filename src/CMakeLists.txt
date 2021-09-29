@@ -207,7 +207,7 @@ if(UNIX AND NOT APPLE)
             gui/osutils/nixutils/NixUtils.cpp
             gui/osutils/nixutils/X11Funcs.cpp)
 endif()
-if(MINGW)
+if(WIN32)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
             gui/osutils/winutils/ScreenLockListenerWin.cpp
@@ -275,7 +275,7 @@ set(autotype_SOURCES
         autotype/ShortcutWidget.cpp
         autotype/WindowSelectComboBox.cpp)
 
-if(MINGW)
+if(WIN32)
     set(keepassx_SOURCES_MAINEXE ${keepassx_SOURCES_MAINEXE} ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
 endif()
 
@@ -348,11 +348,11 @@ if(UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus Qt5::X11Extras X11)
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
-if(MINGW)
+if(WIN32)
     target_link_libraries(keepassx_core Wtsapi32.lib Ws2_32.lib)
 endif()
 
-if(MINGW)
+if(WIN32)
     include(GenerateProductVersion)
     generate_product_version(
             WIN32_ProductVersionFiles
@@ -407,7 +407,7 @@ install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
-if(MINGW)
+if(WIN32)
     if(${CMAKE_SIZEOF_VOID_P} EQUAL "8")
         set(OUTPUT_FILE_POSTFIX "Win64")
     else()
@@ -462,38 +462,54 @@ if(MINGW)
     set(CPACK_WIX_EXTENSIONS "WixUtilExtension.dll")
     include(CPack)
 
-    install(CODE "set(gp_tool \"objdump\")" COMPONENT Runtime)
+    if(NOT VCPKG_INSTALLED_DIR)
+        install(CODE "set(gp_tool \"objdump\")" COMPONENT Runtime)
 
-    # Deploy all 3rd party library dependencies first
-    install(CODE "include(BundleUtilities)
-                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/${PROGNAME}.exe\" \"\" \"\")"
-            COMPONENT Runtime)
+        # Deploy all 3rd party library dependencies first
+        install(CODE "include(BundleUtilities)
+                      fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/${PROGNAME}.exe\" \"\" \"\")"
+                COMPONENT Runtime)
 
-    # Use windeployqt.exe to setup Qt dependencies
-    if(Qt5Core_VERSION VERSION_LESS "5.14.1")
-        set(WINDEPLOYQT_MODE "--release")
-        if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
-            set(WINDEPLOYQT_MODE "--debug")
+        # Use windeployqt.exe to setup Qt dependencies
+        if(Qt5Core_VERSION VERSION_LESS "5.14.1")
+            set(WINDEPLOYQT_MODE "--release")
+            if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+                set(WINDEPLOYQT_MODE "--debug")
+            endif()
+        endif()
+
+        install(CODE "execute_process(COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe ${WINDEPLOYQT_MODE} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX} OUTPUT_QUIET)"
+                COMPONENT Runtime)
+
+        # install OpenSSL library
+        if(WITH_XC_NETWORKING)
+            find_file(OPENSSL_DLL
+                    NAMES libssl-1_1.dll libssl-1_1-x64.dll
+                    HINTS "${OPENSSL_ROOT_DIR}/bin"
+                    )
+            if (NOT OPENSSL_DLL)
+                message(FATAL_ERROR "Cannot find libssl dll, ensure openssl is properly installed.")
+            endif()
+
+            find_file(CRYPTO_DLL
+                    NAMES libcrypto-1_1.dll libcrypto-1_1-x64.dll
+                    HINTS "${OPENSSL_ROOT_DIR}/bin"
+                    )
+            if (NOT CRYPTO_DLL)
+                message(FATAL_ERROR "Cannot find libcrypto dll, ensure openssl is properly installed.")
+            endif()
+
+            install(FILES ${OPENSSL_DLL} ${CRYPTO_DLL} DESTINATION ".")
         endif()
     endif()
-
-    install(CODE "execute_process(COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe ${WINDEPLOYQT_MODE} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX} OUTPUT_QUIET)"
-            COMPONENT Runtime)
 
     # install CA cert chains
-    install(FILES ${Qt5_PREFIX}/ssl/certs/ca-bundle.crt DESTINATION "ssl/certs")
-    # install OpenSSL library
-    if(WITH_XC_NETWORKING)
-        find_file(OPENSSL_DLL NAMES libssl-1_1.dll libssl-1_1-x64.dll)
-        if (NOT OPENSSL_DLL)
-            message(FATAL_ERROR "Cannot find libssl dll, ensure openssl is properly installed.")
-        endif()
-
-        find_file(CRYPTO_DLL NAMES libcrypto-1_1.dll libcrypto-1_1-x64.dll)
-        if (NOT CRYPTO_DLL)
-            message(FATAL_ERROR "Cannot find libcrypto dll, ensure openssl is properly installed.")
-        endif()
-
-        install(FILES ${OPENSSL_DLL} ${CRYPTO_DLL} DESTINATION ".")
+    find_file(SSL_CA_BUNDLE ca-bundle.crt PATHS "${Qt5_PREFIX}/ssl/certs")
+    if(SSL_CA_BUNDLE)
+        install(FILES ${SSL_CA_BUNDLE} DESTINATION "ssl/certs")
+    else()
+        file(DOWNLOAD "https://curl.se/ca/cacert.pem" "${CMAKE_BINARY_DIR}/ca-bundle.crt" TLS_VERIFY ON)
+        install(FILES "${CMAKE_BINARY_DIR}/ca-bundle.crt" DESTINATION "ssl/certs")
     endif()
+
 endif()

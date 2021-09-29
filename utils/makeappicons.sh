@@ -42,22 +42,22 @@ NC='\033[0m'
 RED='\033[0;31m'
 YELLOW='\033[0;33m'
 
-if [ $# != 1 ];then
+if [[ $# != 1 ]]; then
     echo "Usage: $0 MATERIAL"
     echo "MATERIAL is the directory containing the material icons repository"
     echo "(git clone https://github.com/Templarian/MaterialDesign.git)".
     exit
 fi
 
-MATERIAL="$1"
-if [ ! -d "$MATERIAL" ];then
+MATERIAL=$1
+if [[ ! -d $MATERIAL ]]; then
     echo -e "${RED}Material Icons directory does not exist: ${MATERIAL}${NC}"
     exit 1
 fi
 
 # Check destination dir
 DSTDIR=share/icons/application
-if [ ! -d "$DSTDIR" ];then
+if [[ ! -d $DSTDIR ]]; then
     echo -e "${RED}Please invoke this script from the KeePassXC source root directory.${NC}"
     exit 1
 fi
@@ -69,7 +69,7 @@ fi
 # extension, e. g. "folder-plus") to stdout.
 # If the icon name is unknown, outputs nothing.
 map() {
-    case "$1" in
+    case $1 in
         application-exit)                   echo exit-run                       ;;
         auto-type)                          echo keyboard-variant               ;;
         bugreport)                          echo bug-outline                    ;;
@@ -148,27 +148,27 @@ map() {
 }
 
 # Now do the actual work
-find $DSTDIR -type f -name "*.svg" | while read -r DST;do
+find "$DSTDIR" -type f -name "*.svg" | while read -r DST; do
 
     # Find the icon name (base name without extender)
-    NAME=$(basename $DST .svg)
+    NAME=$(basename "$DST" .svg)
 
     # Find the base name of the svg file for this icon
-    MAT=$(map $NAME)
-    if [[ -z $MAT ]];then
+    MAT=$(map "$NAME")
+    if [[ -z $MAT ]]; then
         echo -e "${YELLOW}Warning: No MaterialDesign mapping for ${NAME}${NC}"
         continue
     fi
 
     # So the source file is:
     SRC="$MATERIAL/svg/$MAT.svg"
-    if [ ! -f "$SRC" ];then
+    if [[ ! -f $SRC ]]; then
         echo -e "${RED}Error: Source for ${NAME} doesn't exist: ${SRC}${NC}"
         continue
     fi
 
     # Replace the icon file with the source file
-    cp "$SRC" "$DST" || exit
+    cp -- "$SRC" "$DST" || exit
     echo "Copied icon for ${NAME}"
 
 done

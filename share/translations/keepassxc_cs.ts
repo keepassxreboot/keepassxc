@@ -47,11 +47,45 @@
     </message>
 </context>
 <context>
-    <name>AgentSettingsWidget</name>
+    <name>AccessControlDialog</name>
     <message>
-        <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation>Použít namísto Pagent raději OpenSSH pro Windows</translation>
+        <source>KeePassXC -  Access Request</source>
+        <translation type="unfinished"/>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember</source>
+        <translation>Zapamatovat</translation>
+    </message>
+    <message>
+        <source>Allow access to entries</source>
+        <translation>Umožnit přístup k záznamům</translation>
+    </message>
+    <message>
+        <source>Allow Selected</source>
+        <translation>Povolit vybrané</translation>
+    </message>
+    <message>
+        <source>Deny All</source>
+        <translation>Odepřít vše</translation>
+    </message>
+</context>
+<context>
+    <name>AccessControlDialog::DenyButton</name>
+    <message>
+        <source>Deny for this program</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
         <translation>Zapnout integraci s SSH agentem</translation>
@@ -75,6 +109,14 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>Spojení s SSH agentem funguje!</translation>
+    </message>
+    <message>
+        <source>Use Pageant</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use OpenSSH</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -138,6 +180,10 @@
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Aby se změna jazyka projevila, je třeba aplikaci restartovat. Chcete to provést nyní?</translation>
+    </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Černobílá</translation>
     </message>
 </context>
 <context>
@@ -352,6 +398,10 @@
         <source>Tray icon type</source>
         <translation>Typ ikony v oznamovací oblasti</translation>
     </message>
+    <message>
+        <source>Hide expired entries from Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -449,37 +499,17 @@
         <source>Use placeholder for empty password fields</source>
         <translation>Používat pro prázdné kolonky pro heslo zástupnou výplň</translation>
     </message>
+    <message>
+        <source>Move entries to recycle bin without confirmation</source>
+        <translation>Přesunout záznamy do Koše?</translation>
+    </message>
+    <message>
+        <source>Enable double click to copy the username/password entry columns</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
-    <message>
-        <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Nedaří se nalézt záznam, který by se shodoval s titulkem okna:</translation>
-    </message>
-    <message>
-        <source>Auto-Type - KeePassXC</source>
-        <translation>Automatické vyplňování – KeePassXC</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Automatické vyplňování</translation>
-    </message>
-    <message>
-        <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>Neplatná syntaxe vyjádření automatického vyplňování!</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Tento příkaz automatického vyplňování obsahuje velmi dlouhou prodlevu. Opravdu chcete pokračovat?</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Tento příkaz automatického vyplňování obsahuje velmi pomalé stisky kláves. Opravdu chcete pokračovat?</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Tento příkaz automatického vyplňování obsahuje argumenty, které se velmi často opakují. Opravdu chcete pokračovat?</translation>
-    </message>
     <message>
         <source>Permission Required</source>
         <translation>Jsou zapotřebí oprávnění</translation>
@@ -487,6 +517,55 @@
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
         <translation>KeePassXC vyžaduje oprávnění ke Zpřístupnění, aby mohlo být prováděno automatické vyplňování na úrovni položky. Pokud jste toto oprávnění už udělili, může být třeba ještě KeePassXC restartovat.</translation>
+    </message>
+    <message>
+        <source>The requested Auto-Type sequence cannot be used due to an error:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC vyžaduje oprávnění ke Zpřístupnění a „Nahrávání obrazovky“, aby mohlo být prováděno globální automatické vyplňování. Nahrávání obrazovky je nezbytné pro použití nadpisu okna pro vyhledávání položek v databázi. Pokud jste tato oprávnění už udělili, může být třeba ještě KeePassXC restartovat.</translation>
+    </message>
+    <message>
+        <source>Invalid entry provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bracket imbalance detected, found extra { or }</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Too many repetitions detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Very slow key press detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Very long delay detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid conversion type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid conversion syntax: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid regular expression syntax %1
+%2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid placeholder: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -524,25 +603,22 @@
     </message>
 </context>
 <context>
-    <name>AutoTypeMatchView</name>
+    <name>AutoTypePlatformX11</name>
     <message>
-        <source>Copy &amp;username</source>
-        <translation>Zkopírovat &amp;uživatelské jméno</translation>
+        <source>Trying to send invalid keysym.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Copy &amp;password</source>
-        <translation>Zko&amp;pírovat heslo</translation>
-    </message>
-</context>
-<context>
-    <name>AutoTypePlatformMac</name>
-    <message>
-        <source>Permission Required</source>
-        <translation>Jsou zapotřebí oprávnění</translation>
+        <source>Unable to get valid keycode for key: </source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC vyžaduje oprávnění ke Zpřístupnění a „Nahrávání obrazovky“, aby mohlo být prováděno globální automatické vyplňování. Nahrávání obrazovky je nezbytné pro použití nadpisu okna pro vyhledávání položek v databázi. Pokud jste tato oprávnění už udělili, může být třeba ještě KeePassXC restartovat.</translation>
+        <source>Sequence aborted: Caps Lock is on</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sequence aborted: Modifier keys held by user</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -552,12 +628,56 @@
         <translation>Automatické vyplňování – KeePassXC</translation>
     </message>
     <message>
-        <source>Select entry to Auto-Type:</source>
-        <translation>Vyberte záznam, kterým se bude automaticky vyplňovat:</translation>
+        <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Search...</source>
-        <translation>Hledat…</translation>
+        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
+Ctrl+F - Toggle database search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Type {USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type {PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type {TOTP}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy TOTP</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -714,6 +834,16 @@ chrome-laptop.</source>
 Dejte spojení neopakující se název nebo identifikátor, například:
 chrome-laptop.</translation>
     </message>
+    <message>
+        <source>KeePassXC: Delete entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for deleting entry &quot;%1&quot; has been received.
+Do you want to delete the entry?
+</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
@@ -779,14 +909,6 @@ chrome-laptop.</translation>
         <translation>Pokud je uzamčená, požádat o odemčení databáze</translation>
     </message>
     <message>
-        <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Je odpovězeno pouze položkami stejného schématu (http://, https://, …).</translation>
-    </message>
-    <message>
-        <source>Match URL scheme (e.g., https://...)</source>
-        <translation>Hledat shodu ve schématu URL (např., https://…)</translation>
-    </message>
-    <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
         <translation>Odpoví pouze nejlepšími shodami pro konkrétní URL adresu namísto všech položek pro celou doménu.</translation>
     </message>
@@ -810,16 +932,6 @@ chrome-laptop.</translation>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
         <translation>Hledat odpovídající přihlašovací údaje ve všech otevřených databázích</translation>
-    </message>
-    <message>
-        <source>Sort matching credentials by title</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Seřadit odpovídající přihlašovací údaje podle titulku</translation>
-    </message>
-    <message>
-        <source>Sort matching credentials by username</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Seřadit odpovídající přihlašovací údaje podle uživatelského jména</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -882,11 +994,6 @@ chrome-laptop.</translation>
         <translation>Nalistovat uživatelsky určený proxy soubor</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Procházet…</translation>
-    </message>
-    <message>
         <source>Use a custom browser configuration location:</source>
         <translation>Použít uživatelsky určené umístění nastavení pro prohlížeč:</translation>
     </message>
@@ -905,10 +1012,6 @@ chrome-laptop.</translation>
     <message>
         <source>Custom browser location field</source>
         <translation>Kolonka uživatelsky určené umístění prohlížeče</translation>
-    </message>
-    <message>
-        <source>~/.custom/config/Mozilla/native-messaging-hosts/</source>
-        <translation>~/.custom/config/Mozilla/native-messaging-hosts/</translation>
     </message>
     <message>
         <source>Browse for custom browser path</source>
@@ -958,13 +1061,26 @@ chrome-laptop.</translation>
         <source>Select native messaging host folder location</source>
         <translation>Vyberte umístění složky hostitele nativních zpráv</translation>
     </message>
+    <message>
+        <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Match URL scheme (e.g., https://example.com)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>~/.config/Mozilla/native-messaging-hosts/</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>
-    <message>
-        <source>Clone Options</source>
-        <translation>Předvolby klonu</translation>
-    </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
         <translation>Připojit k titulku „ – klon“</translation>
@@ -976,6 +1092,10 @@ chrome-laptop.</translation>
     <message>
         <source>Copy history</source>
         <translation>Kopírovat historii</translation>
+    </message>
+    <message>
+        <source>Clone Entry Options</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1114,6 +1234,14 @@ chrome-laptop.</translation>
         <source>Column %1</source>
         <translation>Sloupec %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikona</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1154,10 +1282,6 @@ chrome-laptop.</translation>
         <translation>Do souboru nelze zapisovat, protože je otevřen v režimu pouze pro čtení.</translation>
     </message>
     <message>
-        <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation>Klíč nebyl přeměněn.  Toto je chyba – prosím nahlaste to vývojářům.</translation>
-    </message>
-    <message>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
@@ -1192,6 +1316,10 @@ Záložní databáze se nachází v %2</translation>
         <source>Could not save, database has not been initialized!</source>
         <translation>Není možné uložit, databáze nebyla inicializována!</translation>
     </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
@@ -1209,19 +1337,6 @@ Záložní databáze se nachází v %2</translation>
     <message>
         <source>Refresh</source>
         <translation>Načíst znovu</translation>
-    </message>
-    <message>
-        <source>Legacy key file format</source>
-        <translation>Starý formát souboru s klíčem</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Používáte starý formát souboru s klíčem, který v budoucnu nemusí být podporován.
-
-Zvažte vytvoření nového souboru s klíčem.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
@@ -1264,10 +1379,6 @@ Zvažte vytvoření nového souboru s klíčem.</translation>
         <translation>Nalistovat soubor s klíčem</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Procházet…</translation>
-    </message>
-    <message>
         <source>Refresh hardware tokens</source>
         <translation>Znovu načíst hardwarová bezpečnostní zařízení</translation>
     </message>
@@ -1282,14 +1393,6 @@ Zvažte vytvoření nového souboru s klíčem.</translation>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID pro rychlé odemknutí</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Vyčistit</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Vyčistit soubor s klíčem</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1314,12 +1417,6 @@ Abyste tomu, aby se tato chyba objevovala, je třeba přejít do „Nastavení d
         <translation>Zadejte další přihlašovací údaje (pokud jsou):</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Je možné používat hardwarové bezpečnostní klíče jako například &lt;strong&gt;YubiKey&lt;/strong&gt; nebo &lt;strong&gt;OnlyKey&lt;/strong&gt; se sloty nastavenými pro HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Klikněte pro další informace…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Nápověda k souboru s klíčem</translation>
     </message>
@@ -1336,10 +1433,6 @@ Abyste tomu, aby se tato chyba objevovala, je třeba přejít do „Nastavení d
 If you do not have a key file, please leave the field empty.</source>
         <translation>Soubor s databází není možné použít pro účely souboru s klíčem (bude se měnit).
 Pokud nemáte žádný soubor, který by se zaručeně neměnil (a byl tedy vhodný jako klíč), tuto kolonku nevyplňujte.</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Krom hlavního hesla je možné použít tajný soubor a vylepšit tak zabezpečení databáze. Takový soubor je možné vytvořit v nastavení zabezpečení databáze.&lt;/p&gt;&lt;p&gt;Toto &lt;strong&gt;není&lt;/strong&gt; *.kdbx databázový soubor!&lt;br&gt;Pokud nemáte soubor s klíčem, ponechte kolonku nevyplněnou.&lt;/p&gt;&lt;p&gt;Pro více informaci klikněte sem…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
@@ -1360,6 +1453,27 @@ Pokud nemáte žádný soubor, který by se zaručeně neměnil (a byl tedy vhod
     <message>
         <source>Select hardware key…</source>
         <translation>Vyberte hardwarový klíč…</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Starý formát souboru s klíčem</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1394,6 +1508,10 @@ Pokud nemáte žádný soubor, který by se zaručeně neměnil (a byl tedy vhod
     <message>
         <source>Database Credentials</source>
         <translation>Přihlašovací údaje do databáze</translation>
+    </message>
+    <message>
+        <source>Maintenance</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1497,12 +1615,6 @@ Oprávnění pro přístup k položkám budou odvolána.</translation>
         <translation>Přesunout KeePassHTTP atributy do uživatelsky určených dat</translation>
     </message>
     <message>
-        <source>Do you really want to move all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Opravdu chcete přesunout všechna data starého napojení na prohlížeč na nejnovější standard?
-Toto je nezbytné pro zachování kompatibility se zásuvným modulem pro prohlížeč.</translation>
-    </message>
-    <message>
         <source>Stored browser keys</source>
         <translation>Uložené klíče prohlížeče</translation>
     </message>
@@ -1532,13 +1644,14 @@ This is only necessary if your database is a copy of another and the browser ext
         <translation>Opravdu chcete znovu vytvořit identifikátor databáze?
 Toto je nutné pouze v případě, že vaše databáze je kopií jiné a nefunguje propojení s rozšířením prohlížeče.</translation>
     </message>
+    <message>
+        <source>Do you really want to convert all legacy browser integration data to the latest standard?
+This is necessary to maintain compatibility with the browser plugin.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
-    <message>
-        <source>Add additional protection...</source>
-        <translation>Přidat další ochranu…</translation>
-    </message>
     <message>
         <source>No password set</source>
         <translation>Není nastavené žádné heslo</translation>
@@ -1570,6 +1683,10 @@ Opravdu chcete pokračovat bez hesla?</translation>
     <message>
         <source>Failed to change database credentials</source>
         <translation>Nepodařilo se změnit přihlašovací údaje do databáze</translation>
+    </message>
+    <message>
+        <source>Add additional protection…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1645,14 +1762,6 @@ Opravdu chcete pokračovat bez hesla?</translation>
         <translation>Počet průchodů je příliš vysoký</translation>
     </message>
     <message>
-        <source>You are using a very high number of key transform rounds with Argon2.
-
-If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation>Používáte velmi vysoký počet průchodů transformace klíče s Argnon2.
-
-Pokud tento počet ponecháte, otevírání databáze může trvat hodiny až dny (nebo dokonce déle)!</translation>
-    </message>
-    <message>
         <source>Understood, keep number</source>
         <translation>Rozumím, počet ponechat</translation>
     </message>
@@ -1664,14 +1773,6 @@ Pokud tento počet ponecháte, otevírání databáze může trvat hodiny až dn
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
         <translation>Počet průchodů je příliš nízký</translation>
-    </message>
-    <message>
-        <source>You are using a very low number of key transform rounds with AES-KDF.
-
-If you keep this number, your database may be too easy to crack!</source>
-        <translation>Používáte velmi nízký počet průchodů transformace funkcí pro odvození klíče (KDF) a šifrou AES.
-
-Pokud tento počet ponecháte, může být velmi snadné prolomit šifrování vaší databáze!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -1731,6 +1832,18 @@ Pokud tento počet ponecháte, může být velmi snadné prolomit šifrování v
         <source>? s</source>
         <translation>? s</translation>
     </message>
+    <message>
+        <source>You are using a very high number of key transform rounds with Argon2.
+
+If you keep this number, your database may take hours, days, or even longer to open.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are using a very low number of key transform rounds with AES-KDF.
+
+If you keep this number, your database will not be protected from brute force attacks.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
@@ -1753,10 +1866,6 @@ Pokud tento počet ponecháte, může být velmi snadné prolomit šifrování v
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
-    <message>
-        <source>Database Meta Data</source>
-        <translation>Metadata databáze</translation>
-    </message>
     <message>
         <source>Database name:</source>
         <translation>Název databáze:</translation>
@@ -1831,6 +1940,10 @@ Tuto akci nelze vzít zpět.</translation>
         <source>Enable compression (recommended)</source>
         <translation>Zapnout kompresi (doporučeno)</translation>
     </message>
+    <message>
+        <source>Database Metadata</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
@@ -1862,6 +1975,49 @@ Tuto akci nelze vzít zpět.</translation>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
         <translation> &gt; </translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseSettingsWidgetMaintenance</name>
+    <message>
+        <source>Manage Custom Icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete selected icon(s)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete all custom icons not in use by any entry or group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purge unused icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Deletion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Icons Are In Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All custom icons are in use by at least one entry or group.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purged Unused Icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Purged %n icon(s) from the database.</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -1986,22 +2142,6 @@ Toto je nepochybně chyba, nahlaste ji prosím vývojářům.</translation>
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Searching...</source>
-        <translation>Hledání…</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Opravdu chcete nenávratně smazat záznam „%1“?</translation>
-    </message>
-    <message>
-        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Opravdu přesunout záznam „%1“ do Koše?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Opravdu přesunout %n záznam do Koše?</numerusform><numerusform>Opravdu přesunout %n záznamy do Koše?</numerusform><numerusform>Opravdu přesunout %n záznamů do Koše?</numerusform><numerusform>Opravdu přesunout %n záznamy do Koše?</numerusform></translation>
-    </message>
-    <message>
         <source>Execute command?</source>
         <translation>Spustit příkaz?</translation>
     </message>
@@ -2059,18 +2199,6 @@ Přejete si je zahrnout?</translation>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Opravdu chcete nevratně smazat všechno z Koše?</translation>
     </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Opravdu chcete %n položku nevratně smazat?</numerusform><numerusform>Opravdu chcete %n položky nevratně smazat?</numerusform><numerusform>Opravdu chcete %n položek nevratně smazat?</numerusform><numerusform>Opravdu chcete %n položky nevratně smazat?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>Smazat položku?</numerusform><numerusform>Smazat položky?</numerusform><numerusform>Smazat položky?</numerusform><numerusform>Smazat položky?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Přesunout položku do Koše?</numerusform><numerusform>Přesunout položky do Koše?</numerusform><numerusform>Přesunout položky do Koše?</numerusform><numerusform>Přesunout položky do Koše?</numerusform></translation>
-    </message>
     <message>
         <source>Lock Database?</source>
         <translation>Uzamknout databázi?</translation>
@@ -2124,14 +2252,6 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <translation>Databáze ve formátu KeePass 2</translation>
     </message>
     <message>
-        <source>Replace references to entry?</source>
-        <translation>Nahradit odkazy na položku?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>Položka „%1“ má %2 odkaz. Chcete odkazy přepsat hodnotami, přeskočit ji, nebo smazat i tak?</numerusform><numerusform>Položka „%1“ má %2 odkazy. Chcete odkazy přepsat hodnotami, přeskočit ji, nebo smazat i tak?</numerusform><numerusform>Položka „%1“ má %2 odkazů. Chcete odkazy přepsat hodnotami, přeskočit ji, nebo smazat i tak?</numerusform><numerusform>Položka „%1“ má %2 odkazy. Chcete odkazy přepsat hodnotami, přeskočit ji, nebo smazat i tak?</numerusform></translation>
-    </message>
-    <message>
         <source>Delete group</source>
         <translation>Smazat skupinu</translation>
     </message>
@@ -2152,10 +2272,6 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <translation>Databáze nebyla operací slučování upravena.</translation>
     </message>
     <message>
-        <source>Shared group...</source>
-        <translation>Sdílená skupina…</translation>
-    </message>
-    <message>
         <source>Writing the database failed: %1</source>
         <translation>Zápis do databáze se nezdařil: %1</translation>
     </message>
@@ -2170,6 +2286,22 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
     <message>
         <source>Could not find database file: %1</source>
         <translation>Nedaří se nalézt soubor s databází: %1</translation>
+    </message>
+    <message>
+        <source>Searching…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shared group…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type into the previously active window?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2294,6 +2426,32 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[CHRÁNĚNO] Pro zobrazení nebo úpravu klikněte na odhalit</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Neplatný údaj</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation>Externí operace sloučení tuto položku zneplatnila.
+Všechny provedené změny byly bohužel ztraceny.</translation>
+    </message>
+    <message>
+        <source>Auto-Type Validation Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An error occurred while validating the custom Auto-Type sequence:
+%1
+Would you like to correct it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
+%2
+Would you like to correct it?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2370,12 +2528,12 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <translation>Výběr barvy pozadí</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements (e. g. password entropy or re-use). You can set the check mark if the password is beyond your control (e. g. if it needs to be a four-digit PIN) to prevent it from cluttering the reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pokud zaškrtnuto, položka se neobjeví v hlášeních jako Kontrola zdraví a HIBP, i když neodpovídá požadavků mna kvalitu (např. nahodilost hesla nebo opětovné použití). Toto můžete zaškrtnout pokud heslo není pod vaší kontrolu (např. je vyžadováno, že se musí jednat o PIN kód dlouhý čtyři číslice), aby tím nebyl výkaz zaneřáděný.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Exclude from database reports</source>
         <translation>Vynechat z přehledů o databázi</translation>
+    </message>
+    <message>
+        <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2490,6 +2648,14 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Tuto položku použít pouze ve spojení se základním HTTP ověřováním se</translation>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation>Tuto položku nepoužívat ve spojení se základním HTTP ověřováním se</translation>
     </message>
 </context>
 <context>
@@ -2606,12 +2772,12 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <translation>Poznámky:</translation>
     </message>
     <message>
-        <source>https://example.com</source>
-        <translation>https://example.com</translation>
-    </message>
-    <message>
         <source>Expires:</source>
         <translation>Platnost skončí:</translation>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Upravit položku</translation>
     </message>
 </context>
 <context>
@@ -2669,11 +2835,6 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <translation>Vnější soubor</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Procházet…</translation>
-    </message>
-    <message>
         <source>Attachment</source>
         <translation>Příloha</translation>
     </message>
@@ -2704,6 +2865,11 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
     <message>
         <source>Select attachment file</source>
         <translation>Vybrat soubor, který přiložit</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2851,8 +3017,8 @@ Podporovaná rozšíření jsou: %1.</translation>
         <translation>Nalistovat sdílený soubor</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Procházet…</translation>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2913,16 +3079,16 @@ Podporovaná rozšíření jsou: %1.</translation>
         <source>Set default Auto-Type sequence</source>
         <translation>Nastavit výchozí pořadí automatického vyplňování</translation>
     </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Upravit skupinu</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Add custom icon</source>
         <translation>Přidat uživatelsky určenou ikonu</translation>
-    </message>
-    <message>
-        <source>Delete custom icon</source>
-        <translation>Smazat uživatelsky určenou ikonu</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -2939,10 +3105,6 @@ Podporovaná rozšíření jsou: %1.</translation>
     <message>
         <source>All files</source>
         <translation>Veškeré soubory</translation>
-    </message>
-    <message>
-        <source>Confirm Delete</source>
-        <translation>Potvrdit smazání</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -2963,10 +3125,6 @@ Podporovaná rozšíření jsou: %1.</translation>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
         <translation><numerusform>Následující ikona se nezdařila:</numerusform><numerusform>Následující ikony se nezdařily:</numerusform><numerusform>Následující ikony se nezdařily:</numerusform><numerusform>Následující ikony se nezdařily:</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>Tato ikona je používána %n záznamem a bude nahrazena výchozí ikonou. Opravdu ji chcete smazat?</numerusform><numerusform>Tato ikona je používána %n záznamy a bude nahrazena výchozí ikonou. Opravdu ji chcete smazat?</numerusform><numerusform>Tato ikona je používána %n záznamy a bude nahrazena výchozí ikonou. Opravdu ji chcete smazat?</numerusform><numerusform>Tato ikona je používána %n záznamy a bude nahrazena výchozí ikonou. Opravdu ji chcete smazat?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -3005,12 +3163,12 @@ Podporovaná rozšíření jsou: %1.</translation>
         <translation>Použít uživatelsky určenou ikonu</translation>
     </message>
     <message>
-        <source>Apply icon to...</source>
-        <translation>Použít ikonu na…</translation>
-    </message>
-    <message>
         <source>Apply to this group only</source>
         <translation>Použít pouze na tuto skupinu</translation>
+    </message>
+    <message>
+        <source>Apply icon to…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3087,6 +3245,17 @@ Dotčený zásuvný modul to může rozbít.</translation>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 – klon</translation>
+    </message>
+</context>
+<context>
+    <name>EntryAttachments</name>
+    <message>
+        <source>%1 - %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3212,6 +3381,32 @@ Opravdu chcete tento soubor přidat?</translation>
     <message>
         <source>Confirm Attachment</source>
         <translation>Potvrdit přílohu</translation>
+    </message>
+    <message>
+        <source>Rename selected attachment</source>
+        <translation>Přejmenovat označenou přílohu</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Přejmenovat</translation>
+    </message>
+    <message>
+        <source>Attachment modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The attachment '%1' was modified.
+Do you want to save the changes to your database?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Saving attachment failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Saving updated attachment failed.
+Error: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3340,8 +3535,12 @@ Opravdu chcete tento soubor přidat?</translation>
         <translation>Má přílohy</translation>
     </message>
     <message>
-        <source>Has TOTP one-time password</source>
-        <translation>Má jednorázové TOTP heslo</translation>
+        <source>Password Strength</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Has TOTP</source>
+        <translation>Má TOTP heslo</translation>
     </message>
 </context>
 <context>
@@ -3411,15 +3610,6 @@ Opravdu chcete tento soubor přidat?</translation>
         <translation>Nikdy</translation>
     </message>
     <message>
-        <source>[PROTECTED]</source>
-        <translation>[CHRÁNĚNO]</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Zapnuto</translation>
     </message>
@@ -3439,6 +3629,10 @@ Opravdu chcete tento soubor přidat?</translation>
         <source>Advanced</source>
         <translation>Pokročilé</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation>Výchozí pořadí</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3449,18 +3643,6 @@ Opravdu chcete tento soubor přidat?</translation>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Přizpůsobit pohled</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Skrýt uživatelská jména</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Skrýt hesla</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Přizpůsobit oknu</translation>
@@ -3473,15 +3655,59 @@ Opravdu chcete tento soubor přidat?</translation>
         <source>Reset to defaults</source>
         <translation>Vrátit na výchozí</translation>
     </message>
+</context>
+<context>
+    <name>FdoSecrets::DBusMgr</name>
     <message>
-        <source>Has attachments</source>
-        <comment>Entry attachment icon toggle</comment>
-        <translation>Má přílohy</translation>
+        <source>Failed to deliver message</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Has TOTP</source>
-        <comment>Entry TOTP icon toggle</comment>
-        <translation>Má TOTP heslo</translation>
+        <source>Failed to send reply on DBus</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown PID</comment>
+        <translation>Neznámý</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown executable path</comment>
+        <translation>Neznámý</translation>
+    </message>
+    <message>
+        <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
+        <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
+        <translation>&lt;i&gt;Identif. procesu: %1, spustitelný soubor: %2&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
+        <translation>Je spuštěná jiná služba pro tajemství (%1).&lt;br/&gt;Prosím zastavte/odeberte ji a až poté znovu zapněte napojení na službu pro tajemství.</translation>
+    </message>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation>Nepodařilo se zaregistrovat službu DBus na %1.&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <source>Failed to register service on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register session on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register item on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3496,11 +3722,18 @@ Opravdu chcete tento soubor přidat?</translation>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n záznam byl použit %1</numerusform><numerusform>%n záznamy byly použity %1</numerusform><numerusform>%n záznamů bylo použito %1</numerusform><numerusform>%n záznamy byly použity %1</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::SettingsClientModel</name>
+    <message>
+        <source>Application</source>
+        <translation>Aplikace</translation>
     </message>
     <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation>Nepodařilo se zaregistrovat službu DBus na %1.&lt;br/&gt;</translation>
+        <source>Manage</source>
+        <translation>Spravovat</translation>
     </message>
 </context>
 <context>
@@ -3527,14 +3760,10 @@ Opravdu chcete tento soubor přidat?</translation>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::SettingsSessionModel</name>
+    <name>FdoSecrets::UnlockPrompt</name>
     <message>
-        <source>Application</source>
-        <translation>Aplikace</translation>
-    </message>
-    <message>
-        <source>Manage</source>
-        <translation>Spravovat</translation>
+        <source>%1 (PID: %2)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3543,25 +3772,6 @@ Opravdu chcete tento soubor přidat?</translation>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo tajná služba:&lt;/b&gt; %1</translation>
     </message>
-    <message>
-        <source>Unknown</source>
-        <comment>Unknown PID</comment>
-        <translation>Neznámý</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <comment>Unknown executable path</comment>
-        <translation>Neznámý</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
-        <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
-        <translation>&lt;i&gt;Identif. procesu: %1, spustitelný soubor: %2&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Je spuštěná jiná služba pro tajemství (%1).&lt;br/&gt;Prosím zastavte/odeberte ji a až poté znovu zapněte napojení na službu pro tajemství.</translation>
-    </message>
 </context>
 <context>
     <name>Group</name>
@@ -3569,6 +3779,10 @@ Opravdu chcete tento soubor přidat?</translation>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[prázdné]</translation>
+    </message>
+    <message>
+        <source>%1 - Clone</source>
+        <translation>%1 – klon</translation>
     </message>
 </context>
 <context>
@@ -3607,14 +3821,6 @@ Můžete zapnout službu pro stahování ikon z DuckDuckGo v sekci zabezpečení
         <translation>Stav</translation>
     </message>
     <message>
-        <source>Please wait, processing entry list...</source>
-        <translation>Čekejte, zpracovává se seznam položek…</translation>
-    </message>
-    <message>
-        <source>Downloading...</source>
-        <translation>Stahování…</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -3627,8 +3833,16 @@ Můžete zapnout službu pro stahování ikon z DuckDuckGo v sekci zabezpečení
         <translation>Stažení se nezdařilo</translation>
     </message>
     <message>
-        <source>Downloading favicons (%1/%2)...</source>
-        <translation>Stahování ikon webů (%1/%2)…</translation>
+        <source>Please wait, processing entry list…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading favicons (%1/%2)…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3688,6 +3902,11 @@ Pokud se toto opakuje, pak je možné, že je váš soubor s databází poškoze
     <message>
         <source>Unable to calculate database key</source>
         <translation>Nedaří se vypočítat klíč databáze</translation>
+    </message>
+    <message>
+        <source>Invalid symmetric cipher IV size.</source>
+        <comment>IV = Initialization Vector for symmetric cipher</comment>
+        <translation>Neplatná velikost symetrické šifry IV.</translation>
     </message>
 </context>
 <context>
@@ -3883,16 +4102,6 @@ Pokud se toto opakuje, pak je možné, že je váš soubor s databází poškoze
         <translation>Nejedná se o databázi KeePass.</translation>
     </message>
     <message>
-        <source>The selected file is an old KeePass 1 database (.kdb).
-
-You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>Zvolený soubor je databáze ve starém formátu KeePass 1 (.kdb).
-
-Můžete ho importovat pomocí Databáze → Importovat databázi ve formátu KeePass 1….
-Jedná se o jednosměrný převod. Databázi, vzniklou z importu, nepůjde otevřít ve staré aplikaci KeePassX verze 0.4.</translation>
-    </message>
-    <message>
         <source>Unsupported KeePass 2 database version.</source>
         <translation>Nepodporovaná verze databáze KeePass 2.</translation>
     </message>
@@ -3907,6 +4116,13 @@ Jedná se o jednosměrný převod. Databázi, vzniklou z importu, nepůjde otev�
     <message>
         <source>Failed to read database file.</source>
         <translation>Nepodařilo se číst soubor s databází.</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4183,10 +4399,6 @@ Line %2, column %3</source>
         <translation>Načtená data kolonky položky neodpovídají velikosti</translation>
     </message>
     <message>
-        <source>Invalid entry uuid field size</source>
-        <translation>Neplatná velikost kolonky neopakujícího se identifikátoru položky</translation>
-    </message>
-    <message>
         <source>Invalid entry group id field size</source>
         <translation>Neplatná velikost kolonky identifikátoru skupiny položky</translation>
     </message>
@@ -4223,6 +4435,10 @@ Pokud se toto opakuje, pak je možné, že je váš soubor s databází poškoze
     <message>
         <source>Unable to calculate database key</source>
         <translation>Nedaří se vypočítat klíč databáze</translation>
+    </message>
+    <message>
+        <source>Invalid entry UUID field size</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4290,26 +4506,6 @@ Pokud se toto opakuje, pak je možné, že je váš soubor s databází poškoze
         <source>Key Component set, click to change or remove</source>
         <translation> Součást klíče nastavena, kliknutím změníte nebo odeberete</translation>
     </message>
-    <message>
-        <source>Add %1</source>
-        <comment>Add a key component</comment>
-        <translation>Přidat %1</translation>
-    </message>
-    <message>
-        <source>Change %1</source>
-        <comment>Change a key component</comment>
-        <translation>Změnit %1</translation>
-    </message>
-    <message>
-        <source>Remove %1</source>
-        <comment>Remove a key component</comment>
-        <translation>Odebrat %1</translation>
-    </message>
-    <message>
-        <source>%1 set, click to change or remove</source>
-        <comment>Change or remove a key component</comment>
-        <translation>%1 nastaveno, kliknutím změníte nebo odeberete</translation>
-    </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
@@ -4320,14 +4516,6 @@ Pokud se toto opakuje, pak je možné, že je váš soubor s databází poškoze
     <message>
         <source>Key File</source>
         <translation>Soubor s klíčem</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Jako další úroveň zabezpečení je možné přidat soubor s klíčem obsahujícím náhodné bajty.&lt;/p&gt;&lt;p&gt;Je třeba ho uchovávat v bezpečí a nikdy ho neztratit, jinak budete uzamčeni!&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Legacy key file format</source>
-        <translation>Starý formát souboru s klíčem</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -4344,10 +4532,6 @@ Zpráva: %2</translation>
         <translation>Veškeré soubory</translation>
     </message>
     <message>
-        <source>Create Key File...</source>
-        <translation>Vytvořit soubor s klíčem…</translation>
-    </message>
-    <message>
         <source>Error creating key file</source>
         <translation>Chyba při vytváření souboru s klíčem</translation>
     </message>
@@ -4360,24 +4544,12 @@ Zpráva: %2</translation>
         <translation>Vyberte soubor s klíčem</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Výběr souboru s klíčem</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Nalistovat soubor s klíčem</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Procházet…</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Vytvořit nový soubor s klíčem</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>Pozn.: Nepoužívejte soubor, který se může změnit, protože by to znemožnilo odemčení databáze!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4398,13 +4570,63 @@ Are you sure you want to continue with this file?</source>
 Opravdu chcete tento soubor použít?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>Používáte starý formát souboru s klíčem, který v budoucnu nemusí být podporován.
-
-V nastavení zabezpečení databáze vytvořte nový klíč.</translation>
+        <source>Old key file format</source>
+        <translation>Starý formát souboru s klíčem</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation>Vybrali jste soubor s klíčem ve starém formátu, který KeePassXC&lt;br&gt;může přestat v budoucnu podporovat.&lt;br&gt;&lt;br&gt;Zvažte prosím místo něj vytvoření nového souboru s klíčem.</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key File set, click to change or remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Key File…</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>MacUtils</name>
+    <message>
+        <source>Invalid key code</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global shortcut already registered to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not register global shortcut</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4506,22 +4728,8 @@ V nastavení zabezpečení databáze vytvořte nový klíč.</translation>
         <translation>Dotkněte se tlačítka na svém YubiKey zařízení!</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC!
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>VAROVÁNÍ: Používáte vývojové sestavení KeePassXC!
-Je zde vysoké riziko poškození dat, proto udržujte zálohu svých databází.
-Tato verze není určena pro produkční použití.</translation>
-    </message>
-    <message>
         <source>&amp;Donate</source>
         <translation>&amp;Darovat</translation>
-    </message>
-    <message>
-        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
-We recommend you use the AppImage available on our downloads page.</source>
-        <translation>VAROVÁNÍ: Vámi používaná verze Qt může způsobovat, že při použití klávesnice na obrazovce KeePassXC zhavaruje!
-Doporučujeme použít AppImage, které je k dispozici v sekci stahování našich stránek.</translation>
     </message>
     <message>
         <source>&amp;Import</source>
@@ -4562,12 +4770,6 @@ Doporučujeme použít AppImage, které je k dispozici v sekci stahování naši
     <message>
         <source>Import a CSV file</source>
         <translation>Importovat CSV soubor</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC!
-Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>UPOZORNĚNÍ: Používáte vývojové sestavení KeePassXC!
-Očekávejte chyby a drobné problémy, tato verze není určena pro produkční použití.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
@@ -4698,10 +4900,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Zabezpečení databáze…</translation>
     </message>
     <message>
-        <source>Database &amp;Reports...</source>
-        <translation>Hlášení o &amp;databázi…</translation>
-    </message>
-    <message>
         <source>Statistics, health check, etc.</source>
         <translation>Statistiky, kontrola stavu atd.</translation>
     </message>
@@ -4798,10 +4996,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Otevřít Uživatelskou příručku</translation>
     </message>
     <message>
-        <source>Save Database Backup...</source>
-        <translation>Uložit zálohu databáze…</translation>
-    </message>
-    <message>
         <source>Add key to SSH Agent</source>
         <translation>Přidat klíč do SSH Agenta</translation>
     </message>
@@ -4834,6 +5028,10 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Zobrazovat lištu nástrojů</translation>
     </message>
     <message>
+        <source>Show Groups Panel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation>Zobrazit panel náhledu</translation>
     </message>
@@ -4850,24 +5048,44 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Chcete-li toto nastavení použít, musíte restartovat aplikaci. Chcete nyní restartovat?</translation>
     </message>
     <message>
-        <source>Perform Auto-Type Sequence</source>
-        <translation>Provést posloupnost automatického vyplnění</translation>
+        <source>Always on Top</source>
+        <translation>Vždy nahoře</translation>
     </message>
     <message>
-        <source>{USERNAME}</source>
-        <translation>{UŽIVATELSKÉ_JMÉNO}</translation>
+        <source>Hide Usernames</source>
+        <translation>Skrýt uživatelská jména</translation>
     </message>
     <message>
-        <source>{USERNAME}{ENTER}</source>
-        <translation>{UŽIVATELSKÉ_JMÉNO}{ENTER}</translation>
+        <source>Hide Passwords</source>
+        <translation>Skrýt hesla</translation>
     </message>
     <message>
-        <source>{PASSWORD}</source>
-        <translation>{HESLO}</translation>
+        <source>Database &amp;Reports…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>{PASSWORD}{ENTER}</source>
-        <translation>{HESLO}{ENTER}</translation>
+        <source>Save Database Backup…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clone Group...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC.
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>NOTE: You are using a pre-release version of KeePassXC.
+Expect some bugs and minor issues, this version is meant for testing purposes.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
+We recommend you use the AppImage available on our downloads page.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4974,13 +5192,13 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
 <context>
     <name>NewDatabaseWizard</name>
     <message>
-        <source>Create a new KeePassXC database...</source>
-        <translation>Vytvořit novou KeePassXC databázi…</translation>
-    </message>
-    <message>
         <source>Root</source>
         <comment>Root group</comment>
         <translation>Kořen</translation>
+    </message>
+    <message>
+        <source>Create a new KeePassXC database…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5044,6 +5262,14 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     <message>
         <source>Password Manager</source>
         <translation>Správce hesel</translation>
+    </message>
+    <message>
+        <source>Global shortcut already registered to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not register global shortcut</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5152,16 +5378,8 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Žádná obsažená soukromá část klíče k rozšifrování</translation>
     </message>
     <message>
-        <source>Trying to run KDF without cipher</source>
-        <translation>Snažíte se spustit funkci odvození klíče bez šifry</translation>
-    </message>
-    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>Pro rozšifrování tohoto klíče je třeba zadat heslovou frázi</translation>
-    </message>
-    <message>
-        <source>Key derivation failed, key file corrupted?</source>
-        <translation>Odvození klíče se nezdařilo, soubor s klíčem je poškozený?</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
@@ -5210,6 +5428,18 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     <message>
         <source>Unknown key type: %1</source>
         <translation>Neznámý typ klíče: %1</translation>
+    </message>
+    <message>
+        <source>Key derivation failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to initialize cipher: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decryption failed: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5264,6 +5494,22 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     <message>
         <source>Repeat password field</source>
         <translation>Kolonka pro zopakování zadání hesla</translation>
+    </message>
+    <message>
+        <source>Add Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password set, click to change or remove</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5486,14 +5732,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Použít heslo</translation>
     </message>
     <message>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Vyčistit</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Znovu vytvořit heslo (%1)</translation>
     </message>
@@ -5501,68 +5739,28 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <source>Special Characters</source>
         <translation>Zvláštní znaky</translation>
     </message>
+    <message>
+        <source>Character Count:</source>
+        <translation>Počet znaků:</translation>
+    </message>
+    <message>
+        <source>character</source>
+        <translation>znak</translation>
+    </message>
 </context>
 <context>
-    <name>QApplication</name>
+    <name>PickcharsDialog</name>
     <message>
-        <source>KeeShare</source>
-        <translation>KeeShare</translation>
+        <source>KeePassXC - Pick Characters</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Statistics</source>
-        <translation>Statistiky</translation>
+        <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Very weak password</source>
-        <translation>Velmi slabé heslo</translation>
-    </message>
-    <message>
-        <source>Password entropy is %1 bits</source>
-        <translation>Nahodilost hesla je %1 bitů</translation>
-    </message>
-    <message>
-        <source>Weak password</source>
-        <translation>Slabé heslo</translation>
-    </message>
-    <message>
-        <source>Used in %1/%2</source>
-        <translation>Použito v %1/%2</translation>
-    </message>
-    <message>
-        <source>Password is used %1 times</source>
-        <translation>Heslo je použito %1 krát</translation>
-    </message>
-    <message>
-        <source>Password has expired</source>
-        <translation>Platnost hesla skončila</translation>
-    </message>
-    <message>
-        <source>Password expiry was %1</source>
-        <translation>Konec platnosti hesla byl %1</translation>
-    </message>
-    <message>
-        <source>Password is about to expire</source>
-        <translation>Platnost hesla bude končit</translation>
-    </message>
-    <message>
-        <source>Password expires in %1 days</source>
-        <translation>Platnost hesla končí za %1 dny</translation>
-    </message>
-    <message>
-        <source>Password will expire soon</source>
-        <translation>Platnost hesla brzy skončí</translation>
-    </message>
-    <message>
-        <source>Password expires on %1</source>
-        <translation>Platnost hesla skončí %1</translation>
-    </message>
-    <message>
-        <source>Health Check</source>
-        <translation>Kontrola stavu</translation>
-    </message>
-    <message>
-        <source>HIBP</source>
-        <translation>HIBP</translation>
+        <source>Press &amp;Tab between characters</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5708,10 +5906,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
         <translation>Popis umístění záznamu ke zkopírování do schránky.</translation>
     </message>
     <message>
-        <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation>Časová prodleva (v sekundách) před vymazáním obsahu schránky.</translation>
-    </message>
-    <message>
         <source>Edit an entry.</source>
         <translation>Upravit položku.</translation>
     </message>
@@ -5738,15 +5932,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>Provést pokročilou analýzu hesla.</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>VAROVÁNÍ: Používáte starší formát souboru s klíčem, který v budoucnu nemusí být podporován.
-
-Zvažte vytvoření nového souboru s klíčem.</translation>
     </message>
     <message>
         <source>
@@ -6034,10 +6219,6 @@ Příkazy k dispozici:
         <translation>Type: datum (opak)</translation>
     </message>
     <message>
-        <source>Type: Unknown%1</source>
-        <translation>Typ: neznámé%1</translation>
-    </message>
-    <message>
         <source>Entropy %1 (%2)</source>
         <translation>Nahodilost %1 (%2)</translation>
     </message>
@@ -6136,10 +6317,6 @@ Příkazy k dispozici:
         <translation>%1: (řádek, sloupec) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – doporučeno)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6228,10 +6405,6 @@ Příkazy k dispozici:
     <message>
         <source>read password of the database from stdin</source>
         <translation>načíst heslo k databázi ze standardního vstupu</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Obecný identifikátor (handle) nadřazeného okna</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6336,10 +6509,6 @@ Jádro systému: %3 %4</translation>
         <translation>Kryptografické knihovny:</translation>
     </message>
     <message>
-        <source>Cannot generate a password and prompt at the same time!</source>
-        <translation>Není možné vytvořit a dotázat se na heslo naráz!</translation>
-    </message>
-    <message>
         <source>Adds a new group to a database.</source>
         <translation>Přidá do databáze novou skupinu.</translation>
     </message>
@@ -6374,10 +6543,6 @@ Jádro systému: %3 %4</translation>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
         <translation>Nepodařilo se otevřít HIBP soubor %1: %2</translation>
-    </message>
-    <message>
-        <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation>Vyhodnocování databázových záznamů vůči HIBP souboru – chvíli potrvá…</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
@@ -6572,10 +6737,6 @@ Jádro systému: %3 %4</translation>
         <translation>Nedaří se uložit soubor se skriptem pro posílání zpráv mezi webovým prohlížečem a desktopovou aplikací (native messaging) pro %1.</translation>
     </message>
     <message>
-        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
-        <translation>Zkopírovat daný atribut do schránky. Pokud není určen, je jako výchozí použito „heslo“.</translation>
-    </message>
-    <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
         <translation>Zkopírovat stávající TOTP do schránky (totožné s &quot;=a totp&quot;).</translation>
     </message>
@@ -6721,10 +6882,6 @@ Jádro systému: %3 %4</translation>
         <translation>AES (%1 průchodů)</translation>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation>Argon2 (%1 průchody, %2 KB)</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-bit</translation>
     </message>
@@ -6749,6 +6906,269 @@ Jádro systému: %3 %4</translation>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation>umístění vlastního lokálního souboru s nastaveními</translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation>VAROVÁNÍ: Používáte starý formát souboru s klíčem, který může KeePassXC
+přestat v budoucnu podporovat.
+
+Zvažte prosím vytvoření nového souboru s klíčem.</translation>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation>Argon2%1 (%2 průchody, %3 KB)</translation>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation>Argon2d (KDBX 4 – doporučeno)</translation>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation>Argon2id (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikona</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation>Nepodporovaná verze souboru s klíčem: %1</translation>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation>Kontrolní součet se neshoduje! Soubor s klíčem může být poškozen.</translation>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation>Neočekávaná data v souboru s klíčem! Soubor s klíčem může být poškozený.</translation>
+    </message>
+    <message>
+        <source>No valid UUID provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes for the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot generate a password and prompt at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path to okon-cli to search a formatted HIBP file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>okon-cli</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot find HIBP file: %1</source>
+        <translation>Nepodařilo se najít HIBP soubor: %1</translation>
+    </message>
+    <message>
+        <source>Evaluating database entries using okon…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Evaluating database entries against HIBP file, this will take a while…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Password for &apos;%1&apos; has been leaked!</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
+        <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
+        <translation>Zkopírovat daný atribut do schránky. Pokud není určen, je jako výchozí použito „heslo“.</translation>
+    </message>
+    <message>
+        <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Multiple entries matching:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Using matching entry: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Missing positional argument(s).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Too many arguments provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type: Unknown (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not start okon process: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error: okon process did not finish</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to load okon processed database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Very weak password</source>
+        <translation>Velmi slabé heslo</translation>
+    </message>
+    <message>
+        <source>Password entropy is %1 bits</source>
+        <translation>Nahodilost hesla je %1 bitů</translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation>Slabé heslo</translation>
+    </message>
+    <message>
+        <source>Used in %1/%2</source>
+        <translation>Použito v %1/%2</translation>
+    </message>
+    <message numerus="yes">
+        <source>Password is used %1 time(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Password has expired</source>
+        <translation>Platnost hesla skončila</translation>
+    </message>
+    <message>
+        <source>Password expiry was %1</source>
+        <translation>Konec platnosti hesla byl %1</translation>
+    </message>
+    <message>
+        <source>Password expires on %1</source>
+        <translation>Platnost hesla skončí %1</translation>
+    </message>
+    <message>
+        <source>Password is about to expire</source>
+        <translation>Platnost hesla bude končit</translation>
+    </message>
+    <message numerus="yes">
+        <source>Password expires in %1 day(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Password will expire soon</source>
+        <translation>Platnost hesla brzy skončí</translation>
+    </message>
+    <message>
+        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SymmetricCipher::init: Invalid cipher mode.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cipher not initialized prior to use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot process 0 length data.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
+        <translation>Opravdu chcete nenávratně smazat záznam „%1“?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to delete %n entry(s) for good?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation>Opravdu přesunout záznam „%1“ do Koše?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to move %n entry(s) to the recycle bin?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Move entry(s) to recycle bin?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Replace references to entry?</source>
+        <translation>Nahradit odkazy na položku?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Health Check</source>
+        <translation>Kontrola stavu</translation>
+    </message>
+    <message>
+        <source>HIBP</source>
+        <translation>HIBP</translation>
+    </message>
+    <message>
+        <source>Statistics</source>
+        <translation>Statistiky</translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>allow app screen recordering and screenshots</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: Failed to prevent screenshots on a top level window!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6831,10 +7251,6 @@ Jádro systému: %3 %4</translation>
         <translation>Tato položka je vynechána z přehledů</translation>
     </message>
     <message>
-        <source>Please wait, health data is being calculated...</source>
-        <translation>Čekejte, probíhá výpočet pro kontrolu stavu...</translation>
-    </message>
-    <message>
         <source>Congratulations, everything is healthy!</source>
         <translation>Gratulujeme – vše je v pořádku!</translation>
     </message>
@@ -6855,12 +7271,24 @@ Jádro systému: %3 %4</translation>
         <translation>Důvod</translation>
     </message>
     <message>
-        <source>Edit Entry...</source>
-        <translation>Upravit záznam…</translation>
-    </message>
-    <message>
         <source>Exclude from reports</source>
         <translation>Vynechat z přehledů</translation>
+    </message>
+    <message>
+        <source>Exclude expired entries from the report</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, health data is being calculated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6906,44 +7334,56 @@ Jádro systému: %3 %4</translation>
         <translation>Tato položka je vynechána z přehledů</translation>
     </message>
     <message>
+        <source>Exclude from reports</source>
+        <translation>Vynechat z přehledů</translation>
+    </message>
+    <message>
         <source>once</source>
+        <comment>Password exposure amount</comment>
         <translation>jednou</translation>
     </message>
     <message>
         <source>up to 10 times</source>
+        <comment>Password exposure amount</comment>
         <translation>až 10 krát</translation>
     </message>
     <message>
         <source>up to 100 times</source>
+        <comment>Password exposure amount</comment>
         <translation>až 100 krát</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
+        <comment>Password exposure amount</comment>
         <translation>až 1000 krát</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
+        <comment>Password exposure amount</comment>
         <translation>až 10 000 krát</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
+        <comment>Password exposure amount</comment>
         <translation>až 100 000 krát</translation>
     </message>
     <message>
         <source>up to a million times</source>
+        <comment>Password exposure amount</comment>
         <translation>až milionkrát</translation>
     </message>
     <message>
         <source>millions of times</source>
+        <comment>Password exposure amount</comment>
         <translation>milionkrát</translation>
     </message>
     <message>
-        <source>Edit Entry...</source>
-        <translation>Upravit záznam…</translation>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Exclude from reports</source>
-        <translation>Vynechat z přehledů</translation>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6959,10 +7399,6 @@ Jádro systému: %3 %4</translation>
     <message>
         <source>Value</source>
         <translation>Hodnota</translation>
-    </message>
-    <message>
-        <source>Please wait, database statistics are being calculated...</source>
-        <translation>Čekejte, probíhá výpočet statistik o databázi…</translation>
     </message>
     <message>
         <source>Database name</source>
@@ -7067,6 +7503,14 @@ Jádro systému: %3 %4</translation>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Průměrná délka hesla je kratší, než deset znaků. Delší hesla poskytují vyšší zabezpečení.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7174,10 +7618,6 @@ Jádro systému: %3 %4</translation>
         <translation>Hledat</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Vyčistit</translation>
-    </message>
-    <message>
         <source>Limit search to selected group</source>
         <translation>Omezit hledání na označenou skupinu</translation>
     </message>
@@ -7186,13 +7626,13 @@ Jádro systému: %3 %4</translation>
         <translation>Nápověda ke hledání</translation>
     </message>
     <message>
-        <source>Search (%1)...</source>
-        <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>Hledat (%1)…</translation>
-    </message>
-    <message>
         <source>Case sensitive</source>
         <translation>Rozlišovat malá/velká písmena</translation>
+    </message>
+    <message>
+        <source>Search (%1)…</source>
+        <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7210,14 +7650,6 @@ Jádro systému: %3 %4</translation>
         <translation>Obecné</translation>
     </message>
     <message>
-        <source>Show notification when credentials are requested</source>
-        <translation>Při vyžádání si přihlašovacích údajů zobrazit oznámení</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;/p&gt;Pokud je pro databázi zapnutý Koš, záznamy budou přesouvány přímo do něj. Jinak budou bez potvrzování smazány.&lt;/p&gt;&lt;p&gt;Pokud je položka odkazována z jiné, budete ale dotázáni.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Exposed database groups:</source>
         <translation>Vystavené skupiny databáze:</translation>
     </message>
@@ -7230,20 +7662,32 @@ Jádro systému: %3 %4</translation>
         <translation>Tyto aplikace jsou aktuálně připojené:</translation>
     </message>
     <message>
-        <source>Don&apos;t confirm when entries are deleted by clients</source>
-        <translation>Nepotvrzovat pokud jsou položky mazané z klientů</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; Failed to connect to DBus. Please check your DBus setup.</source>
-        <translation>&lt;b&gt;Chyba:&lt;/b&gt; Nepodařilo se připojit k DBus. Zkontrolujte nastavení DBus.</translation>
-    </message>
-    <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
         <translation>&lt;b&gt;Varování:&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Aby byl zásuvný modul aktivován a zapnuto upravování této sekce, uložte stávající změny.</translation>
+    </message>
+    <message>
+        <source>Show notification when passwords are retrieved by clients</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm when passwords are retrieved by clients</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm when clients request entry deletion</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7269,16 +7713,8 @@ Jádro systému: %3 %4</translation>
         <translation>Otisk:</translation>
     </message>
     <message>
-        <source>Certificate:</source>
-        <translation>Certifikát:</translation>
-    </message>
-    <message>
         <source>Signer</source>
         <translation>Podepsal</translation>
-    </message>
-    <message>
-        <source>Key:</source>
-        <translation>Klíč:</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -7323,10 +7759,6 @@ Jádro systému: %3 %4</translation>
     <message>
         <source>Fingerprint</source>
         <translation>Otisk</translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation>Certifikát</translation>
     </message>
     <message>
         <source>Trusted</source>
@@ -7380,10 +7812,6 @@ Jádro systému: %3 %4</translation>
     <message>
         <source>Only show warnings and errors</source>
         <translation>Zobrazovat pouze varování a chyby</translation>
-    </message>
-    <message>
-        <source>Key</source>
-        <translation>Klíč</translation>
     </message>
     <message>
         <source>Signer name field</source>
@@ -7456,29 +7884,9 @@ Jádro systému: %3 %4</translation>
         <source>Could not write export container</source>
         <translation>Nedaří se zapsat do exportního kontejneru</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Došlo k neočekávané chybě exportu</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
-    <message>
-        <source>Import from container without signature</source>
-        <translation>Importovat z kontejneru bez podpisu</translation>
-    </message>
-    <message>
-        <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation>Není možné ověřit zdroj sdíleného kontejneru protože není podepsán. Opravdu chcete importovat z %1?</translation>
-    </message>
-    <message>
-        <source>Import from container with certificate</source>
-        <translation>Importovat z kontejneru s certifikátem</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation>Věříte %1 s otiskem %2 od %3? {1 ?} {2 ?}</translation>
-    </message>
     <message>
         <source>Not this time</source>
         <translation>Tentokrát ne</translation>
@@ -7528,8 +7936,18 @@ Jádro systému: %3 %4</translation>
         <translation>Soubor neexistuje</translation>
     </message>
     <message>
-        <source>Unknown share container type</source>
-        <translation>Neznámý typ kontejneru pro sdílení</translation>
+        <source>KeeShare Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The source of the shared container cannot be verified because it is not signed. Do you really want to import from %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with certificate fingerprint:
+%2
+%3</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7613,18 +8031,6 @@ Jádro systému: %3 %4</translation>
         <translation>Nastavit na času založené jednorázové heslo (TOTP)</translation>
     </message>
     <message>
-        <source>Default RFC 6238 token settings</source>
-        <translation>Výchozí nastavení RFC 6238 tokenu</translation>
-    </message>
-    <message>
-        <source>Steam token settings</source>
-        <translation>Nastavení proudového tokenu</translation>
-    </message>
-    <message>
-        <source>Use custom settings</source>
-        <translation>Použít uživatelsky určená nastavení</translation>
-    </message>
-    <message>
         <source>Custom Settings</source>
         <translation>Uživatelsky určená nastavení</translation>
     </message>
@@ -7683,6 +8089,18 @@ Příklad: JBSWY3DPEHPK3PXP</translation>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>Opravdu chcete smazat nastavení pro TOTP heslo u tohoto záznamu?</translation>
     </message>
+    <message>
+        <source>Default settings (RFC 6238)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Steam® settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom settings:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>URLEdit</name>
@@ -7698,48 +8116,28 @@ Příklad: JBSWY3DPEHPK3PXP</translation>
         <translation>Zjišťování aktualizací</translation>
     </message>
     <message>
-        <source>Checking for updates...</source>
-        <translation>Zjišťování aktualizací…</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation>Zavřít</translation>
-    </message>
-    <message>
-        <source>Update Error!</source>
-        <translation>Chyba aktualizace!</translation>
-    </message>
-    <message>
-        <source>An error occurred in retrieving update information.</source>
-        <translation>Došlo k chybě při získávání informací o aktualizacích.</translation>
-    </message>
-    <message>
-        <source>Please try again later.</source>
-        <translation>Zkuste to prosím znovu později.</translation>
     </message>
     <message>
         <source>Software Update</source>
         <translation>Aktualizace software</translation>
     </message>
     <message>
-        <source>A new version of KeePassXC is available!</source>
-        <translation>Je k dispozici nová verze KeePassXC!</translation>
+        <source>Checking for updates…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation>Nyní je k dispozici KeePassXC verze %1 ‒ nainstalovanou máte %2.</translation>
+        <source>An error occurred when trying to retrieve update information, please try again later.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Download it at keepassxc.org</source>
-        <translation>Stáhněte si z keepassxc.org</translation>
+        <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>You&apos;re up-to-date!</source>
-        <translation>Používáte aktuální verzi!</translation>
-    </message>
-    <message>
-        <source>KeePassXC %1 is currently the newest version available</source>
-        <translation>KeePassXC %1 je v tuto chvíli nejnovější dostupná verze</translation>
+        <source>You have the latest version of KeePassXC</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7782,22 +8180,25 @@ Příklad: JBSWY3DPEHPK3PXP</translation>
     </message>
 </context>
 <context>
+    <name>WinUtils</name>
+    <message>
+        <source>Invalid key code</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global shortcut already registered to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not register global shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>YubiKey</name>
     <message>
         <source>%1 [%2] Configured Slot - %3</source>
         <translation>%1 [%2] Nastavených slotů – %3</translation>
-    </message>
-    <message>
-        <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
-        <translation>%1 [%2] Výzva-odpověď – Slot %3 – %4</translation>
-    </message>
-    <message>
-        <source>Press</source>
-        <translation>Stisknout</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation>Pasivní</translation>
     </message>
     <message>
         <source>%1 Invalid slot specified - %2</source>
@@ -7820,12 +8221,26 @@ Příklad: JBSWY3DPEHPK3PXP</translation>
         <translation>Překročen časový limit pro zahájení interakce uživatele s hardwarovým klíčem.</translation>
     </message>
     <message>
-        <source>A USB error ocurred when accessing the hardware key: %1</source>
-        <translation>Při přistupování k hardwarovému klíči došlo k chybě na USB sběrnici: %1</translation>
-    </message>
-    <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation>Nepodařilo se dokončit výzvu-odpověď – konkrétní chyba byla: %1</translation>
+    </message>
+    <message>
+        <source>%1 [%2] Challenge-Response - Slot %3 - %4</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>Challenge-Response Key interaction request</comment>
+        <translation>Stisknout</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>Challenge-Response Key no interaction required</comment>
+        <translation>Pasivní</translation>
+    </message>
+    <message>
+        <source>A USB error occurred when accessing the hardware key: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7833,14 +8248,6 @@ Příklad: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Refresh</source>
         <translation>Načíst znovu</translation>
-    </message>
-    <message>
-        <source>YubiKey Challenge-Response</source>
-        <translation>YubiKey výzva-odpověď</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The YubiKey requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Pokud vlastníte zařízení &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, můžete ho použít jako další úroveň zabezpečení.&lt;/p&gt;&lt;p&gt;YubiKey vyžaduje aby jeden z jeho slotů byl naprogramován jako &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 výzva-odpověď&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
@@ -7865,6 +8272,30 @@ Příklad: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>No hardware keys detected</source>
         <translation>Nenalezeny žádné hardwarové klíče</translation>
+    </message>
+    <message>
+        <source>Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge-Response set, click to change or remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

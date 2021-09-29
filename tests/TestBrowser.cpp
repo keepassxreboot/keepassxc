@@ -165,10 +165,13 @@ void TestBrowser::testSortPriority_data()
 
     QTest::newRow("Site Query Mismatch") << siteUrl << siteUrl + "?test=test" << formUrl << 90;
 
-    QTest::newRow("Path Mismatch (site)") << "https://github.com/" << siteUrl << formUrl << 80;
-    QTest::newRow("Path Mismatch (site) No Scheme") << "github.com" << siteUrl << formUrl << 80;
+    QTest::newRow("Path Mismatch (site)") << "https://github.com/" << siteUrl << formUrl << 85;
+    QTest::newRow("Path Mismatch (site) No Scheme") << "github.com" << siteUrl << formUrl << 85;
     QTest::newRow("Path Mismatch (form)") << "https://github.com/"
-                                          << "https://github.net" << formUrl << 70;
+                                          << "https://github.net" << formUrl << 85;
+    QTest::newRow("Path Mismatch (diff parent)") << "https://github.com/keepassxreboot" << siteUrl << formUrl << 80;
+    QTest::newRow("Path Mismatch (diff parent, form)") << "https://github.com/keepassxreboot"
+                                                       << "https://github.net" << formUrl << 70;
 
     QTest::newRow("Subdomain Mismatch (site)") << siteUrl << "https://sub.github.com/"
                                                << "https://github.net/" << 60;

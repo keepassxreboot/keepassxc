@@ -4,10 +4,10 @@
 ### change the path to suit your installation or set KDBX_SEARCH before calling ###
 : ${KDBX_SEARCH:=~/.KeePass/*.kdbx}
 
-PROG="${0##*/}"
+PROG=${0##*/}
 KEEPASSXC=$(which -a keepassxc | sed -e "\\,$0,d" -e 'q')
 
-function daemon_main {
+daemon_main() {
   # open kdewallet
   handle=$(qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.open kdewallet 0 "$PROG")
   while [[ true != $(qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.isOpen kdewallet) ]]; do
@@ -27,7 +27,7 @@ function daemon_main {
   qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.close "$handle" "false" "$PROG"
 }
 
-if [[ '-d' = "$1" ]]; then
+if [[ $1 == '-d' ]]; then
   exec >&~/tmp/$PROG.log
   set -vx
   daemon_main

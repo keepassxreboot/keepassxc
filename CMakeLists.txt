@@ -290,15 +290,6 @@ check_add_gcc_compiler_flag("-Werror=format-security")
 check_add_gcc_compiler_flag("-Werror=implicit-function-declaration" C)
 check_add_gcc_compiler_flag("-Wcast-align")
 
-if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
-  # then:
-  # $ llvm-profdata merge -sparse default.profraw -o default.profdata
-  # $ llvm-cov show ./tests/${the_test_binary} \
-  #      -format=html -instr-profile=default.profdata -output-dir=./coverages \
-  #      `find src -iname '*.h' -or -iname '*.cpp'`
-endif()
-
 if(UNIX AND NOT APPLE)
     check_add_gcc_compiler_flag("-Qunused-arguments")
     check_add_gcc_compiler_flag("-fPIC")
@@ -324,29 +315,46 @@ else()
     add_gcc_compiler_cxxflags("-Wno-deprecated-declarations")
 endif()
 
-if(MINGW)
+if (MSVC)
+    if(MSVC_VERSION LESS 1910)
+        message(FATAL_ERROR "Only Microsoft Visual Studio 17 and newer are supported!")
+    endif()
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    add_compile_options(/permissive- /utf-8)
+endif()
+
+if(WIN32)
     set(CMAKE_RC_COMPILER_INIT windres)
     enable_language(RC)
-    set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+    if(MINGW)
+        set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+    endif()
     if(NOT (CMAKE_BUILD_TYPE_LOWER STREQUAL "debug" OR CMAKE_BUILD_TYPE_LOWER STREQUAL "relwithdebinfo"))
-        # Enable DEP and ASLR
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
-        set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
-        # Enable high entropy ASLR for 64-bit builds
-        if(NOT IS_32BIT)
-            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--high-entropy-va")
-            set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--high-entropy-va")
+        # Enable DEP, ASLR and on VS additional enable
+        # control flow guard and buffer security check
+        if(MSVC)
+            add_compile_options(/DYNAMICBASE:YES /guard:cf /GS)
+            add_link_options(/NXCOMPAT /guard:cf)
+        else(MINGW)
+            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
+            set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
+            # Enable high entropy ASLR for 64-bit builds
+            if(NOT IS_32BIT)
+                set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--high-entropy-va")
+                set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--high-entropy-va")
+            endif()
         endif()
     endif()
 endif()
 
-if(APPLE AND WITH_APP_BUNDLE OR MINGW)
+if(APPLE AND WITH_APP_BUNDLE OR WIN32)
     set(PROGNAME KeePassXC)
 else()
     set(PROGNAME keepassxc)
 endif()
 
-if(MINGW)
+if(WIN32)
     set(CLI_INSTALL_DIR ".")
     set(PROXY_INSTALL_DIR ".")
     set(BIN_INSTALL_DIR ".")
@@ -377,16 +385,29 @@ endif(WITH_TESTS)
 if(WITH_COVERAGE)
     # Include code coverage, use with -DCMAKE_BUILD_TYPE=Debug
     include(CodeCoverage)
-    set(COVERAGE_GCOVR_EXCLUDES
-            "\\(.+/\\)?tests/.\\*"
-            ".\\*/moc_\\[^/\\]+\\.cpp"
-            ".\\*/ui_\\[^/\\]+\\.h"
-            "\\(.+/\\)?zxcvbn/.\\*")
     append_coverage_compiler_flags()
-    setup_target_for_coverage_gcovr_html(
-            NAME coverage
-            EXECUTABLE $(MAKE) && $(MAKE) test
-    )
+
+    set(COVERAGE_EXCLUDES
+            "'^(.+/)?(thirdparty|zxcvbn)/.*'"
+            "'^(.+/)?main\\.cpp$$'"
+            "'^(.+/)?cli/keepassxc-cli\\.cpp$$'"
+            "'^(.+/)?proxy/keepassxc-proxy\\.cpp$$'")
+    if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
+        set(MAIN_BINARIES
+                "$<TARGET_FILE:${PROGNAME}>"
+                "$<TARGET_FILE:keepassxc-cli>"
+                "$<TARGET_FILE:keepassxc-proxy>")
+        setup_target_for_coverage_llvm(
+                NAME coverage
+                BINARY ${MAIN_BINARIES}
+                SOURCES_ROOT ${CMAKE_SOURCE_DIR}/src
+        )
+    else()
+        setup_target_for_coverage_gcovr(
+                NAME coverage
+                SOURCES_ROOT ${CMAKE_SOURCE_DIR}/src
+        )
+    endif()
 endif()
 
 include(CLangFormat)
@@ -429,8 +450,8 @@ if(APPLE)
         message(FATAL_ERROR "macdeployqt is required to build on macOS")
     endif()
     message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
-elseif(MINGW)
-    find_program(WINDEPLOYQT_EXE windeployqt HINTS ${Qt5_PREFIX}/bin ENV PATH)
+elseif(WIN32)
+    find_program(WINDEPLOYQT_EXE windeployqt HINTS ${Qt5_PREFIX}/bin ${Qt5_PREFIX}/tools/qt5/debug/bin ENV PATH)
     if(NOT WINDEPLOYQT_EXE)
         message(FATAL_ERROR "windeployqt is required to build on Windows")
     endif()
@@ -454,9 +475,6 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
     message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
 endif()
 include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
-
-# QREncode required for TOTP
-find_package(QREncode REQUIRED)
 
 if(UNIX)
     check_cxx_source_compiles("#include <sys/prctl.h>

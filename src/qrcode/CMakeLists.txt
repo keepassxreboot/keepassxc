@@ -17,6 +17,8 @@ set(qrcode_SOURCES
     QrCode.cpp
 )
 
+find_package(QREncode REQUIRED)
+
 add_library(qrcode STATIC ${qrcode_SOURCES})
-target_link_libraries(qrcode Qt5::Core Qt5::Widgets Qt5::Svg ${QRENCODE_LIBRARY})
 target_include_directories(qrcode PRIVATE ${QRENCODE_INCLUDE_DIR})
+target_link_libraries(qrcode PUBLIC Qt5::Core Qt5::Widgets Qt5::Svg ${QRENCODE_LIBRARY})
