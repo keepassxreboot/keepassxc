@@ -112,11 +112,11 @@
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>使用 Pageant</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
+        <translation>使用 OpenSSH</translation>
     </message>
 </context>
 <context>
@@ -836,17 +836,18 @@ chrome-laptop.</source>
 %1
 
 请为它提供一个唯一的名称或ID，比如：
-Chrome笔记本电脑</translation>
+Chrome 笔记本电脑。</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC：删除条目</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation type="unfinished"/>
+        <translation>已收到删除条目“%1”的请求。
+您要删除该条目吗？</translation>
     </message>
 </context>
 <context>
@@ -1080,7 +1081,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>~/.config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
+        <translation>~/.config/Mozilla/native-messaging-hosts/</translation>
     </message>
 </context>
 <context>
@@ -1126,15 +1127,15 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>文本由此通过验证：</translation>
+        <translation>文本由此通过验证</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation>字段分隔：</translation>
+        <translation>字段分隔</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>评论以此开头：</translation>
+        <translation>评论以此开头</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -2027,7 +2028,7 @@ This action is not reversible.</source>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>已从数据库中清除 %n 个图标。</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3265,11 +3266,11 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryAttachments</name>
     <message>
         <source>%1 - %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 - %2</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>无法打开文件 “%1”</translation>
     </message>
 </context>
 <context>
@@ -3402,21 +3403,23 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation type="unfinished"/>
+        <translation>附件已修改</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation type="unfinished"/>
+        <translation>附件 “%1” 已修改。
+是否要将更改保存到数据库？</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation type="unfinished"/>
+        <translation>保存附件失败</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>保存更新的附件失败。
+错误：%1</translation>
     </message>
 </context>
 <context>
@@ -3732,7 +3735,7 @@ Error: %1</source>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 条目已被 %1 使用</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5081,7 +5084,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation type="unfinished"/>
+        <translation>克隆群组...</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
@@ -6968,7 +6971,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
+        <translation>未提供有效的 UUID</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
@@ -7000,7 +7003,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform> &apos;%1&apos; 的密码已泄露！</numerusform></translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -7021,15 +7024,15 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
+        <translation>使用匹配条目：%1</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
+        <translation>缺少位置参数。</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
+        <translation>提供的参数过多。</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
@@ -7069,7 +7072,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>密码已使用 %1 次</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7089,7 +7092,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>密码在 %1 天后过期</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7117,7 +7120,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>正在 %1 秒内清除剪贴板...</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7125,11 +7128,11 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>您确定要永久删除 %n 个条目吗？</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>删除条目？</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7137,11 +7140,11 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>您确定要将 %n 个条目移动到回收站吗？</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>是否将条目移动到回收站？</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7149,7 +7152,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>条目 &quot;%1&quot; 具有 %2 个引用。 是否要使用值覆盖引用，跳过此条目或删除？</numerusform></translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7301,7 +7304,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>删除条目…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7396,7 +7399,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>删除条目…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7523,7 +7526,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Database created</source>
-        <translation type="unfinished"/>
+        <translation>数据库已创建</translation>
     </message>
 </context>
 <context>
