@@ -171,12 +171,8 @@ void YubiKeyInterfaceUSB::findValidKeys()
                                      QString::number(slot),
                                      wouldBlock ? tr("Press", "USB Challenge-Response Key interaction request")
                                                 : tr("Passive", "USB Challenge-Response Key no interaction required"));
-                        ykSlots.append({slot, display});
+                        m_foundKeys.insert(serial, {serial, slot, display});
                     }
-                }
-
-                if (!ykSlots.isEmpty()) {
-                    m_foundKeys.insert(serial, ykSlots);
                 }
 
                 ykds_free(st);

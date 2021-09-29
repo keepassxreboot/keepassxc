@@ -76,11 +76,6 @@ signals:
     void challengeStarted();
     void challengeCompleted();
 
-    /**
-     * Emitted when an error occurred during challenge/response
-     */
-    void challengeError(QString error);
-
 private:
     explicit YubiKey();
 

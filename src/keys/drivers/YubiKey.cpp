@@ -26,22 +26,20 @@ YubiKey::YubiKey()
     int num_interfaces = 0;
 
     if (YubiKeyInterfaceUSB::instance()->isInitialized()) {
-        num_interfaces++;
+        ++num_interfaces;
     } else {
         qDebug("YubiKey: USB interface is not initialized.");
     }
     connect(YubiKeyInterfaceUSB::instance(), SIGNAL(challengeStarted()), this, SIGNAL(challengeStarted()));
     connect(YubiKeyInterfaceUSB::instance(), SIGNAL(challengeCompleted()), this, SIGNAL(challengeCompleted()));
-    connect(YubiKeyInterfaceUSB::instance(), SIGNAL(challengeError(QString)), this, SIGNAL(challengeError(QString)));
 
     if (YubiKeyInterfacePCSC::instance()->isInitialized()) {
-        num_interfaces++;
+        ++num_interfaces;
     } else {
         qDebug("YubiKey: PCSC interface is disabled or not initialized.");
     }
     connect(YubiKeyInterfacePCSC::instance(), SIGNAL(challengeStarted()), this, SIGNAL(challengeStarted()));
     connect(YubiKeyInterfacePCSC::instance(), SIGNAL(challengeCompleted()), this, SIGNAL(challengeCompleted()));
-    connect(YubiKeyInterfacePCSC::instance(), SIGNAL(challengeError(QString)), this, SIGNAL(challengeError(QString)));
 
     // Collapse the detectComplete signals from all interfaces into one signal
     // If multiple interfaces are used, wait for them all to finish
@@ -70,7 +68,7 @@ YubiKey::YubiKey()
     }
 }
 
-YubiKey* YubiKey::m_instance(Q_NULLPTR);
+YubiKey* YubiKey::m_instance(nullptr);
 
 YubiKey* YubiKey::instance()
 {
@@ -96,20 +94,29 @@ void YubiKey::findValidKeys()
 
 QList<YubiKeySlot> YubiKey::foundKeys()
 {
-    QHash<unsigned int, QList<QPair<int, QString>>> keys;
+    QList<YubiKeySlot> foundKeys;
 
-    keys.insert(YubiKeyInterfaceUSB::instance()->foundKeys());
-    keys.insert(YubiKeyInterfacePCSC::instance()->foundKeys());
-
-    QList<YubiKeySlot> klist;
-
-    for (auto serial : keys.uniqueKeys()) {
-        for (auto key : keys.value(serial)) {
-            klist.append({serial, key.first});
+    auto keys = YubiKeyInterfaceUSB::instance()->foundKeys();
+    auto usbSerials = keys.keys();
+    for (auto serial : usbSerials) {
+        for (const auto& key : keys.values(serial)) {
+            foundKeys.append({serial, key.slot});
         }
     }
 
-    return klist;
+    keys = YubiKeyInterfacePCSC::instance()->foundKeys();
+    for (auto serial : keys.keys()) {
+        // Ignore keys that were detected on USB interface already
+        if (usbSerials.contains(serial)) {
+            continue;
+        }
+
+        for (const auto& key : keys.values(serial)) {
+            foundKeys.append({serial, key.slot});
+        }
+    }
+
+    return foundKeys;
 }
 
 QString YubiKey::getDisplayName(YubiKeySlot slot)

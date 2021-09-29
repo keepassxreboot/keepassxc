@@ -21,6 +21,8 @@
 
 #include "YubiKey.h"
 
+#include <QMultiHash>
+
 /**
  * Abstract base class to manage the interfaces to hardware key(s)
  */
@@ -29,14 +31,19 @@ class YubiKeyInterface : public QObject
     Q_OBJECT
 
 public:
-    bool isInitialized();
+    struct KeyData
+    {
+        unsigned int serial;
+        int slot;
+        QString desc;
+    };
 
-    virtual void findValidKeys() = 0;
-
-    QHash<unsigned int, QList<QPair<int, QString>>> foundKeys();
+    bool isInitialized() const;
+    QMultiHash<unsigned int, KeyData> foundKeys();
     bool hasFoundKey(YubiKeySlot slot);
     QString getDisplayName(YubiKeySlot slot);
 
+    virtual void findValidKeys() = 0;
     virtual YubiKey::ChallengeResult
     challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response) = 0;
     virtual bool testChallenge(YubiKeySlot slot, bool* wouldBlock) = 0;
@@ -58,11 +65,6 @@ signals:
     void challengeStarted();
     void challengeCompleted();
 
-    /**
-     * Emitted when an error occurred during challenge/response
-     */
-    void challengeError(QString error);
-
 protected:
     explicit YubiKeyInterface();
 
@@ -73,7 +75,7 @@ protected:
                                                       Botan::secure_vector<char>& response) = 0;
     virtual bool performTestChallenge(void* key, int slot, bool* wouldBlock) = 0;
 
-    QHash<unsigned int, QList<QPair<int, QString>>> m_foundKeys;
+    QMultiHash<unsigned int, KeyData> m_foundKeys;
 
     QMutex m_mutex;
     QTimer m_interactionTimer;

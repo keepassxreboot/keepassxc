@@ -634,12 +634,8 @@ void YubiKeyInterfacePCSC::findValidKeys()
                                                  QString::number(slot),
                                                  tr("Present",
                                                     "PCSC Challenge-Response Key presentation to reader required"));
-                                    ykSlots.append({slot, display});
+                                    m_foundKeys.insert(serial, {serial, slot, display});
                                 }
-                            }
-
-                            if (!ykSlots.isEmpty()) {
-                                m_foundKeys.insert(serial, ykSlots);
                             }
                         }
                     }
@@ -722,8 +718,7 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
             }
         }
 
-        tries--;
-        if (tries > 0) {
+        if (--tries > 0) {
             QThread::msleep(250);
         }
     }
