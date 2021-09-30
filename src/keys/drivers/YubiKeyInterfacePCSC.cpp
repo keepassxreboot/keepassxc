@@ -152,7 +152,7 @@ namespace
                 break;
             default:
                 // This should not happen during normal use
-                rv = SCARD_E_PROTO_MISMATCH;
+                rv = static_cast<int32_t>(SCARD_E_PROTO_MISMATCH);
                 break;
             }
         }
@@ -207,7 +207,7 @@ namespace
                     }
                 }
                 if (i == 0) {
-                    rv = SCARD_W_RESET_CARD;
+                    rv = static_cast<int32_t>(SCARD_W_RESET_CARD);
                     qDebug("Smardcard was reset and failed to reconnect after 3 tries");
                 }
             }
@@ -258,12 +258,12 @@ namespace
                                && pbRecvBuffer[dwRecvLength - 1] == SW_PRECOND_LOW) {
                         // This happens if the key requires eg. a button press or if the applet times out
                         // Solution: Re-present the card to the reader
-                        rv = SCARD_W_CARD_NOT_AUTHENTICATED;
+                        rv = static_cast<int32_t>(SCARD_W_CARD_NOT_AUTHENTICATED);
                     } else if ((pbRecvBuffer[dwRecvLength - 2] == SW_NOTFOUND_HIGH
                                 && pbRecvBuffer[dwRecvLength - 1] == SW_NOTFOUND_LOW)
                                || pbRecvBuffer[dwRecvLength - 2] == SW_UNSUP_HIGH) {
                         // This happens eg. during a select command when the AID is not found
-                        rv = SCARD_E_FILE_NOT_FOUND;
+                        rv = static_cast<int32_t>(SCARD_E_FILE_NOT_FOUND);
                     } else {
                         rv = static_cast<int32_t>(SCARD_E_UNEXPECTED);
                     }
@@ -413,7 +413,7 @@ namespace
                             }
                         }
                     } else {
-                        rv = SCARD_E_PROTO_MISMATCH;
+                        rv = static_cast<int32_t>(SCARD_E_PROTO_MISMATCH);
                     }
                 }
 
@@ -425,7 +425,7 @@ namespace
             return rv;
         }
 
-        return SCARD_E_NO_SMARTCARD;
+        return static_cast<int32_t>(SCARD_E_NO_SMARTCARD);
     }
 
     /***
