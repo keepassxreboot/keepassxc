@@ -167,6 +167,46 @@ namespace FdoSecrets
 </interface>
 )xml";
 
+    // read /proc, each field except pid may be empty
+    ProcInfo readProc(uint pid)
+    {
+        ProcInfo info{};
+        info.pid = pid;
+
+        // The /proc/pid/exe link is more reliable than /proc/pid/cmdline
+        // It's still weak and if the application does a prctl(PR_SET_DUMPABLE, 0) this link cannot be accessed.
+        QFileInfo exe(QStringLiteral("/proc/%1/exe").arg(pid));
+        info.exePath = exe.canonicalFilePath();
+        qDebug() << "process" << pid << info.exePath;
+
+        // /proc/pid/cmdline gives full command line
+        QFile cmdline(QStringLiteral("/proc/%1/cmdline").arg(pid));
+        if (cmdline.open(QFile::ReadOnly)) {
+            info.command = QString::fromLocal8Bit(cmdline.readAll().replace('\0', ' ')).trimmed();
+        }
+        qDebug() << "process" << pid << info.command;
+
+        // /proc/pid/stat gives ppid, name
+        QFile stat(QStringLiteral("/proc/%1/stat").arg(pid));
+        if (stat.open(QIODevice::ReadOnly)) {
+            auto line = stat.readAll();
+            // find comm field without looking in what's inside as it's user controlled
+            auto commStart = line.indexOf('(');
+            auto commEnd = line.lastIndexOf(')');
+            if (commStart != -1 && commEnd != -1 && commStart < commEnd) {
+                // start past '(', and subtract 2 from total length
+                info.name = QString::fromLocal8Bit(line.mid(commStart + 1, commEnd + 1 - commStart - 2));
+
+                auto parts = line.mid(commEnd + 1).trimmed().split(' ');
+                if (parts.size() >= 2) {
+                    info.ppid = parts[1].toUInt();
+                }
+            }
+        }
+
+        return info;
+    }
+
     DBusMgr::DBusMgr()
         : m_conn(QDBusConnection::sessionBus())
     {
@@ -198,18 +238,33 @@ namespace FdoSecrets
         return m_clients.values();
     }
 
-    bool DBusMgr::serviceInfo(const QString& addr, ProcessInfo& info) const
+    bool DBusMgr::serviceInfo(const QString& addr, PeerInfo& info) const
     {
+        info.address = addr;
         auto pid = m_conn.interface()->servicePid(addr);
         if (!pid.isValid()) {
             return false;
         }
         info.pid = pid.value();
-        // The /proc/pid/exe link is more reliable than /proc/pid/cmdline
-        // It's still weak and if the application does a prctl(PR_SET_DUMPABLE, 0) this link cannot be accessed.
-        QFileInfo proc(QStringLiteral("/proc/%1/exe").arg(pid.value()));
-        info.exePath = proc.canonicalFilePath();
 
+        // get the whole hierarchy
+        uint ppid = info.pid;
+        while (ppid != 0) {
+            auto proc = readProc(ppid);
+            info.hierarchy.append(proc);
+            ppid = proc.ppid;
+        }
+
+        // check if the exe file is valid
+        // (assuming for now that an accessible file is valid)
+        info.valid = QFileInfo::exists(info.exePath());
+
+        // ask again to double-check and protect against pid reuse
+        auto newPid = m_conn.interface()->servicePid(addr);
+        if (!newPid.isValid() || newPid.value() != pid.value()) {
+            // either the peer already gone or the pid changed to something else
+            return false;
+        }
         return true;
     }
 
@@ -321,11 +376,11 @@ namespace FdoSecrets
         auto pidStr = tr("Unknown", "Unknown PID");
         auto exeStr = tr("Unknown", "Unknown executable path");
 
-        ProcessInfo info{};
+        PeerInfo info{};
         if (serviceInfo(DBUS_SERVICE_SECRET, info)) {
             pidStr = QString::number(info.pid);
-            if (!info.exePath.isEmpty()) {
-                exeStr = info.exePath;
+            if (!info.exePath().isEmpty()) {
+                exeStr = info.exePath();
             }
         }
 
@@ -560,23 +615,17 @@ namespace FdoSecrets
             }
             it = m_clients.insert(addr, client);
         }
-        // double check the client
-        ProcessInfo info{};
-        if (!serviceInfo(addr, info) || info.pid != it.value()->pid()) {
-            dbusServiceUnregistered(addr);
-            return {};
-        }
         return it.value();
     }
 
     DBusClientPtr DBusMgr::createClient(const QString& addr)
     {
-        ProcessInfo info{};
+        PeerInfo info{};
         if (!serviceInfo(addr, info)) {
             return {};
         }
 
-        auto client = DBusClientPtr(new DBusClient(this, addr, info.pid, info.exePath.isEmpty() ? addr : info.exePath));
+        auto client = DBusClientPtr(new DBusClient(this, info));
 
         emit clientConnected(client);
         m_watcher.addWatchedService(addr);
@@ -612,6 +661,7 @@ namespace FdoSecrets
         }
         auto client = it.value();
 
+        // client will notify DBusMgr and call DBusMgr::removeClient
         client->disconnectDBus();
     }
 } // namespace FdoSecrets

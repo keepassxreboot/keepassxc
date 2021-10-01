@@ -291,7 +291,8 @@ namespace FdoSecrets
         }
         if (!entries.isEmpty()) {
             QString app = tr("%1 (PID: %2)").arg(client->name()).arg(client->pid());
-            auto ac = new AccessControlDialog(findWindow(m_windowId), entries, app, AuthOption::Remember);
+            auto ac = new AccessControlDialog(
+                findWindow(m_windowId), entries, app, client->processInfo(), AuthOption::Remember);
             connect(ac, &AccessControlDialog::finished, this, &UnlockPrompt::itemUnlockFinished);
             connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
             ac->open();

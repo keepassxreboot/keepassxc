@@ -67,15 +67,35 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Allow access to entries</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Allow Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deny All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>PID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3773,28 +3793,16 @@ Error: %1</source>
 <context>
     <name>FdoSecrets::SettingsClientModel</name>
     <message>
-        <source>Application</source>
-        <translation type="unfinished"></translation>
+        <source>Unknown</source>
+        <translation type="unfinished">Unknown</translation>
     </message>
     <message>
-        <source>Manage</source>
+        <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsDatabaseModel</name>
-    <message>
-        <source>File Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Group</source>
-        <translation type="unfinished">Group</translation>
-    </message>
-    <message>
-        <source>Manage</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Unlock to show</source>
         <translation type="unfinished"></translation>
@@ -7249,6 +7257,14 @@ Please consider generating a new key file.</source>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>unknown executable (DBus address %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (invalid executable path)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7721,6 +7737,40 @@ Please consider generating a new key file.</source>
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsClientModel</name>
+    <message>
+        <source>Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DBus Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDatabaseModel</name>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished">Group</translation>
+    </message>
+    <message>
+        <source>Manage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
