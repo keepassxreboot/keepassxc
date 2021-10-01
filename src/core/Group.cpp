@@ -1155,8 +1155,8 @@ void Group::applyGroupIconToChildEntries()
 
 void Group::sortChildrenRecursively(bool reverse)
 {
-    Group* recycleBin = Q_NULLPTR;
-    if(database()) {
+    Group* recycleBin = nullptr;
+    if (database()) {
         recycleBin = database()->metadata()->recycleBin();
     }
     std::sort(m_children.begin(), m_children.end(),
