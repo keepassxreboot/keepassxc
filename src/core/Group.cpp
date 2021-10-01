@@ -1161,7 +1161,7 @@ void Group::sortChildrenRecursively(bool reverse)
     // Put recyclebin at end position
     if(this->parentGroup() == Q_NULLPTR && m_db->metadata()->recycleBin() != Q_NULLPTR)  {
         int recyleBinIndex = this->children().indexOf(this->findChildByName("Recycle Bin"));
-        this->m_children.swapItemsAt(recyleBinIndex, this->m_children.length()-1);
+        this->m_children.swap(recyleBinIndex, this->m_children.length()-1);
         beginIter = m_children.begin();
         endIter = m_children.end()-1;
     }
