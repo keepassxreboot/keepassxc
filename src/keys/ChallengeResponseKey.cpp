@@ -44,11 +44,11 @@ bool ChallengeResponseKey::challenge(const QByteArray& challenge)
     auto result =
         AsyncTask::runAndWaitForFuture([&] { return YubiKey::instance()->challenge(m_keySlot, challenge, m_key); });
 
-    if (result != YubiKey::SUCCESS) {
+    if (result != YubiKey::ChallengeResult::YCR_SUCCESS) {
         // Record the error message
         m_key.clear();
         m_error = YubiKey::instance()->errorMessage();
     }
 
-    return result == YubiKey::SUCCESS;
+    return result == YubiKey::ChallengeResult::YCR_SUCCESS;
 }

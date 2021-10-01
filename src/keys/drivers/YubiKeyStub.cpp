@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017-2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,11 +22,7 @@ YubiKey::YubiKey()
 {
 }
 
-YubiKey::~YubiKey()
-{
-}
-
-YubiKey* YubiKey::m_instance(nullptr);
+YubiKey* YubiKey::m_instance(Q_NULLPTR);
 
 YubiKey* YubiKey::instance()
 {
@@ -62,18 +58,18 @@ QString YubiKey::errorMessage()
     return {};
 }
 
+bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)
+{
+    Q_UNUSED(slot);
+    Q_UNUSED(wouldBlock);
+    return false;
+}
+
 YubiKey::ChallengeResult YubiKey::challenge(YubiKeySlot slot, const QByteArray& chal, Botan::secure_vector<char>& resp)
 {
     Q_UNUSED(slot);
     Q_UNUSED(chal);
     Q_UNUSED(resp);
 
-    return ERROR;
-}
-
-bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)
-{
-    Q_UNUSED(slot);
-    Q_UNUSED(wouldBlock);
-    return false;
+    return YubiKey::ChallengeResult::YCR_ERROR;
 }

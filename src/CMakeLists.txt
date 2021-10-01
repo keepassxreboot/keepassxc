@@ -280,9 +280,16 @@ if(WIN32)
 endif()
 
 if(WITH_XC_YUBIKEY)
-    list(APPEND keepassx_SOURCES keys/drivers/YubiKey.cpp)
+    list(APPEND keepassx_SOURCES 
+        keys/drivers/YubiKey.h
+        keys/drivers/YubiKey.cpp 
+        keys/drivers/YubiKeyInterface.cpp 
+        keys/drivers/YubiKeyInterfaceUSB.cpp 
+        keys/drivers/YubiKeyInterfacePCSC.cpp)
 else()
-    list(APPEND keepassx_SOURCES keys/drivers/YubiKey.h keys/drivers/YubiKeyStub.cpp)
+    list(APPEND keepassx_SOURCES 
+        keys/drivers/YubiKey.h
+        keys/drivers/YubiKeyStub.cpp)
 endif()
 
 if(WITH_XC_NETWORKING)
@@ -320,6 +327,7 @@ target_link_libraries(keepassx_core
         Qt5::Network
         Qt5::Widgets
         ${BOTAN2_LIBRARIES}
+        ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${thirdparty_LIBRARIES}

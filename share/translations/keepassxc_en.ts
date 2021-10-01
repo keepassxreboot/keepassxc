@@ -1443,10 +1443,6 @@ If you do not have a key file, please leave the field empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please touch the button on your YubiKey!</source>
-        <translation type="unfinished">Please touch the button on your YubiKey!</translation>
-    </message>
-    <message>
         <source>Detecting hardware keys…</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1477,6 +1473,10 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4756,10 +4756,6 @@ Are you sure you want to continue with this file?</source>
         <translation>Quit KeePassXC</translation>
     </message>
     <message>
-        <source>Please touch the button on your YubiKey!</source>
-        <translation>Please touch the button on your YubiKey!</translation>
-    </message>
-    <message>
         <source>&amp;Donate</source>
         <translation>&amp;Donate</translation>
     </message>
@@ -5117,6 +5113,10 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
 We recommend you use the AppImage available on our downloads page.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6890,10 +6890,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please touch the button on your YubiKey to continue…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -7231,6 +7227,10 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Warning: Failed to prevent screenshots on a top level window!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8268,49 +8268,15 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>%1 [%2] Configured Slot - %3</source>
+        <source>%1 No interface, slot %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 Invalid slot specified - %2</source>
+        <source>General: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The YubiKey interface has not been initialized.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hardware key is currently in use.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hardware key timed out waiting for user interaction.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Press</source>
-        <comment>Challenge-Response Key interaction request</comment>
-        <translation type="unfinished">Press</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <comment>Challenge-Response Key no interaction required</comment>
-        <translation type="unfinished">Passive</translation>
-    </message>
-    <message>
-        <source>A USB error occurred when accessing the hardware key: %1</source>
+        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8366,6 +8332,93 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>YubiKeyInterface</name>
+    <message>
+        <source>%1 Invalid slot specified - %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>YubiKeyInterfacePCSC</name>
+    <message>
+        <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The YubiKey PCSC interface has not been initialized.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hardware key is currently in use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hardware key was not found or is misconfigured.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>YubiKeyInterfaceUSB</name>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished">Unknown</translation>
+    </message>
+    <message>
+        <source>(USB) %1 [%2] Configured Slot - %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>USB Challenge-Response Key interaction request</comment>
+        <translation type="unfinished">Press</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>USB Challenge-Response Key no interaction required</comment>
+        <translation type="unfinished">Passive</translation>
+    </message>
+    <message>
+        <source>The YubiKey USB interface has not been initialized.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hardware key is currently in use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hardware key timed out waiting for user interaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A USB error occurred when accessing the hardware key: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
