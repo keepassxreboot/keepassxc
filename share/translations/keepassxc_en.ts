@@ -381,10 +381,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>User Interface</source>
         <translation type="unfinished"></translation>
     </message>
@@ -430,6 +426,18 @@
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary file moved into place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directly write to database file (dangerous)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

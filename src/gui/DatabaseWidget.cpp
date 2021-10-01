@@ -1867,16 +1867,20 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
     m_groupView->setDisabled(true);
     QApplication::processEvents();
 
+    Database::SaveAction saveAction = Database::Atomic;
+    if (!config()->get(Config::UseAtomicSaves).toBool()) {
+        if (config()->get(Config::UseDirectWriteSaves).toBool()) {
+            saveAction = Database::DirectWrite;
+        } else {
+            saveAction = Database::TempFile;
+        }
+    }
+
     bool ok;
     if (fileName.isEmpty()) {
-        ok = m_db->save(&errorMessage,
-                        config()->get(Config::UseAtomicSaves).toBool(),
-                        config()->get(Config::BackupBeforeSave).toBool());
+        ok = m_db->save(saveAction, config()->get(Config::BackupBeforeSave).toBool(), &errorMessage);
     } else {
-        ok = m_db->saveAs(fileName,
-                          &errorMessage,
-                          config()->get(Config::UseAtomicSaves).toBool(),
-                          config()->get(Config::BackupBeforeSave).toBool());
+        ok = m_db->saveAs(fileName, saveAction, config()->get(Config::BackupBeforeSave).toBool(), &errorMessage);
     }
 
     // Return control

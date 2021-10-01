@@ -63,6 +63,13 @@ public:
     };
     static const quint32 CompressionAlgorithmMax = CompressionGZip;
 
+    enum SaveAction
+    {
+        Atomic, // Saves are transactional and atomic
+        TempFile, // Write to a temporary location then move into place, may be non-atomic
+        DirectWrite, // Directly write to the destination file (dangerous)
+    };
+
     Database();
     explicit Database(const QString& filePath);
     ~Database() override;
@@ -72,8 +79,8 @@ public:
               QSharedPointer<const CompositeKey> key,
               QString* error = nullptr,
               bool readOnly = false);
-    bool save(QString* error = nullptr, bool atomic = true, bool backup = false);
-    bool saveAs(const QString& filePath, QString* error = nullptr, bool atomic = true, bool backup = false);
+    bool save(SaveAction action = Atomic, bool backup = false, QString* error = nullptr);
+    bool saveAs(const QString& filePath, SaveAction action = Atomic, bool backup = false, QString* error = nullptr);
     bool extract(QByteArray&, QString* error = nullptr);
     bool import(const QString& xmlExportPath, QString* error = nullptr);
 
@@ -198,7 +205,7 @@ private:
     bool writeDatabase(QIODevice* device, QString* error = nullptr);
     bool backupDatabase(const QString& filePath);
     bool restoreDatabase(const QString& filePath);
-    bool performSave(const QString& filePath, QString* error, bool atomic, bool backup);
+    bool performSave(const QString& filePath, SaveAction flags, bool backup, QString* error);
     void startModifiedTimer();
     void stopModifiedTimer();
 
