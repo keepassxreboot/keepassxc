@@ -75,17 +75,22 @@ void TestDatabase::testSave()
     // Test safe saves
     db->metadata()->setName("test");
     QVERIFY(db->isModified());
-    QVERIFY2(db->save(&error), error.toLatin1());
+    QVERIFY2(db->save(Database::Atomic, false, &error), error.toLatin1());
     QVERIFY(!db->isModified());
 
-    // Test unsafe saves
+    // Test temp-file saves
     db->metadata()->setName("test2");
-    QVERIFY2(db->save(&error, false, false), error.toLatin1());
+    QVERIFY2(db->save(Database::TempFile, false, &error), error.toLatin1());
+    QVERIFY(!db->isModified());
+
+    // Test direct-write saves
+    db->metadata()->setName("test3");
+    QVERIFY2(db->save(Database::DirectWrite, false, &error), error.toLatin1());
     QVERIFY(!db->isModified());
 
     // Test save backups
-    db->metadata()->setName("test3");
-    QVERIFY2(db->save(&error, true, true), error.toLatin1());
+    db->metadata()->setName("test4");
+    QVERIFY2(db->save(Database::Atomic, true, &error), error.toLatin1());
     QVERIFY(!db->isModified());
 
     // Confirm backup exists and then delete it
@@ -118,7 +123,7 @@ void TestDatabase::testSignals()
     QTRY_COMPARE(spyModified.count(), 1);
 
     QSignalSpy spySaved(db.data(), SIGNAL(databaseSaved()));
-    QVERIFY(db->save(&error));
+    QVERIFY(db->save(Database::Atomic, false, &error));
     QCOMPARE(spySaved.count(), 1);
 
     // Short delay to allow file system settling to reduce test failures

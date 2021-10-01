@@ -181,7 +181,7 @@ bool Database::isSaving()
  * @param backup Backup the existing database file, if exists
  * @return true on success
  */
-bool Database::save(QString* error, bool atomic, bool backup)
+bool Database::save(SaveAction action, bool backup, QString* error)
 {
     Q_ASSERT(!m_data.filePath.isEmpty());
     if (m_data.filePath.isEmpty()) {
@@ -191,7 +191,7 @@ bool Database::save(QString* error, bool atomic, bool backup)
         return false;
     }
 
-    return saveAs(m_data.filePath, error, atomic, backup);
+    return saveAs(m_data.filePath, action, backup, error);
 }
 
 /**
@@ -212,7 +212,7 @@ bool Database::save(QString* error, bool atomic, bool backup)
  * @param backup Backup the existing database file, if exists
  * @return true on success
  */
-bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool backup)
+bool Database::saveAs(const QString& filePath, SaveAction action, bool backup, QString* error)
 {
     // Disallow overlapping save operations
     if (isSaving()) {
@@ -260,7 +260,7 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
     QFileInfo fileInfo(filePath);
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
     bool isNewFile = !QFile::exists(realFilePath);
-    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, error, atomic, backup); });
+    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backup, error); });
     if (ok) {
         markAsClean();
         setFilePath(filePath);
@@ -276,14 +276,19 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
     return ok;
 }
 
-bool Database::performSave(const QString& filePath, QString* error, bool atomic, bool backup)
+bool Database::performSave(const QString& filePath, SaveAction action, bool backup, QString* error)
 {
+    if (backup) {
+        backupDatabase(filePath);
+    }
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QFileInfo info(filePath);
     auto createTime = info.exists() ? info.birthTime() : QDateTime::currentDateTime();
 #endif
 
-    if (atomic) {
+    switch (action) {
+    case Atomic: {
         QSaveFile saveFile(filePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             // write the database to the file
@@ -291,12 +296,8 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
                 return false;
             }
 
-            if (backup) {
-                backupDatabase(filePath);
-            }
-
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-            // Retain orginal creation time
+            // Retain original creation time
             saveFile.setFileTime(createTime, QFile::FileBirthTime);
 #endif
 
@@ -309,19 +310,16 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
         if (error) {
             *error = saveFile.errorString();
         }
-    } else {
+        break;
+    }
+    case TempFile: {
         QTemporaryFile tempFile;
         if (tempFile.open()) {
             // write the database to the file
             if (!writeDatabase(&tempFile, error)) {
                 return false;
             }
-
             tempFile.close(); // flush to disk
-
-            if (backup) {
-                backupDatabase(filePath);
-            }
 
             // Delete the original db and move the temp file in place
             auto perms = QFile::permissions(filePath);
@@ -353,6 +351,23 @@ bool Database::performSave(const QString& filePath, QString* error, bool atomic,
         if (error) {
             *error = tempFile.errorString();
         }
+        break;
+    }
+    case DirectWrite: {
+        // Open the original database file for direct-write
+        QFile dbFile(filePath);
+        if (dbFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+            if (!writeDatabase(&dbFile, error)) {
+                return false;
+            }
+            dbFile.close();
+            return true;
+        }
+        if (error) {
+            *error = dbFile.errorString();
+        }
+        break;
+    }
     }
 
     // Saving failed
