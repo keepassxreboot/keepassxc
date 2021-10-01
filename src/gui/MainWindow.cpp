@@ -1708,7 +1708,7 @@ void MainWindow::hideGlobalMessage()
 
 void MainWindow::showYubiKeyPopup()
 {
-    displayGlobalMessage(tr("Please touch the button on your YubiKey!"),
+    displayGlobalMessage(tr("Please present or touch your YubiKey to continue…"),
                          MessageWidget::Information,
                          false,
                          MessageWidget::DisableAutoHide);

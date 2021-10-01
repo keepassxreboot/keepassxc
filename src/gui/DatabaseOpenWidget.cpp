@@ -84,7 +84,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(YubiKey::instance(), &YubiKey::userInteractionRequest, this, [this] {
         // Show the press notification if we are in an independent window (e.g., DatabaseOpenDialog)
         if (window() != getMainWindow()) {
-            m_ui->messageWidget->showMessage(tr("Please touch the button on your YubiKey!"),
+            m_ui->messageWidget->showMessage(tr("Please present or touch your YubiKey to continue…"),
                                              MessageWidget::Information,
                                              MessageWidget::DisableAutoHide);
         }

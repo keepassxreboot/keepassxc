@@ -25,6 +25,7 @@ The following libraries are required:
 * readline (for completion in cli)
 * libqt5x11extras5, libxi, and libxtst (for auto-type on X11)
 * qrencode
+* libusb-1.0, pcsclite (optional to support YubiKey on Linux)
 
 Prepare the Building Environment
 ================================
