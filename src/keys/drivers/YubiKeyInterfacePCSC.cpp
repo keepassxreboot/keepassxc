@@ -624,17 +624,11 @@ void YubiKeyInterfacePCSC::findValidKeys()
                                 Due to this, the key is unlocked and we display it as such.
                                 When the key times out in the time between the key listing and
                                 the database unlock /save, an intercation request will be displayed. */
-                            QList<QPair<int, QString>> ykSlots;
                             for (int slot = 1; slot <= 2; ++slot) {
                                 if (performTestChallenge(&satr, slot, &wouldBlock)) {
-                                    auto display =
-                                        tr("(PCSC) %1 [%2] Challenge-Response - Slot %3 - %4")
-                                            .arg(name,
-                                                 QString::number(serial),
-                                                 QString::number(slot),
-                                                 tr("Present",
-                                                    "PCSC Challenge-Response Key presentation to reader required"));
-                                    m_foundKeys.insert(serial, {serial, slot, display});
+                                    auto display = tr("(PCSC) %1 [%2] Challenge-Response - Slot %3")
+                                                       .arg(name, QString::number(serial), QString::number(slot));
+                                    m_foundKeys.insert(serial, {slot, display});
                                 }
                             }
                         }

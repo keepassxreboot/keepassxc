@@ -1708,8 +1708,10 @@ void MainWindow::hideGlobalMessage()
 
 void MainWindow::showYubiKeyPopup()
 {
-    displayGlobalMessage(
-        tr("Please interface with your YubiKey!"), MessageWidget::Information, false, MessageWidget::DisableAutoHide);
+    displayGlobalMessage(tr("Please present or touch your YubiKey to continue…"),
+                         MessageWidget::Information,
+                         false,
+                         MessageWidget::DisableAutoHide);
     setEnabled(false);
 }
 

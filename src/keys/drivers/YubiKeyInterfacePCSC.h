@@ -45,6 +45,7 @@ typedef QPair<SCARDHANDLE, QByteArray> SCardAID;
  */
 class YubiKeyInterfacePCSC : public YubiKeyInterface
 {
+    Q_OBJECT
 
 public:
     static YubiKeyInterfacePCSC* instance();

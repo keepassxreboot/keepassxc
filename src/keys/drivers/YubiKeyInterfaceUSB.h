@@ -28,6 +28,7 @@
  */
 class YubiKeyInterfaceUSB : public YubiKeyInterface
 {
+    Q_OBJECT
 
 public:
     static YubiKeyInterfaceUSB* instance();

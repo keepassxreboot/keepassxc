@@ -30,7 +30,7 @@ bool YubiKeyInterface::isInitialized() const
     return m_initialized;
 }
 
-QMultiHash<unsigned int, YubiKeyInterface::KeyData> YubiKeyInterface::foundKeys()
+QMultiMap<unsigned int, QPair<int, QString>> YubiKeyInterface::foundKeys()
 {
     return m_foundKeys;
 }
@@ -38,7 +38,7 @@ QMultiHash<unsigned int, YubiKeyInterface::KeyData> YubiKeyInterface::foundKeys(
 bool YubiKeyInterface::hasFoundKey(YubiKeySlot slot)
 {
     for (const auto& key : m_foundKeys.values(slot.first)) {
-        if (slot.second == key.slot) {
+        if (slot.second == key.first) {
             return true;
         }
     }
@@ -48,8 +48,8 @@ bool YubiKeyInterface::hasFoundKey(YubiKeySlot slot)
 QString YubiKeyInterface::getDisplayName(YubiKeySlot slot)
 {
     for (const auto& key : m_foundKeys.values(slot.first)) {
-        if (slot.second == key.slot) {
-            return key.desc;
+        if (slot.second == key.first) {
+            return key.second;
         }
     }
     return tr("%1 Invalid slot specified - %2").arg(QString::number(slot.first), QString::number(slot.second));

@@ -150,7 +150,6 @@ void YubiKeyInterfaceUSB::findValidKeys()
                                  QString::number(ykds_version_build(st)));
 
                 bool wouldBlock;
-                QList<QPair<int, QString>> ykSlots;
                 for (int slot = 1; slot <= 2; ++slot) {
                     auto config = (slot == 1 ? CONFIG1_VALID : CONFIG2_VALID);
                     if (!(ykds_touch_level(st) & config)) {
@@ -162,7 +161,7 @@ void YubiKeyInterfaceUSB::findValidKeys()
                     if (pid <= NEO_OTP_U2F_CCID_PID) {
                         auto display = tr("(USB) %1 [%2] Configured Slot - %3")
                                            .arg(name, QString::number(serial), QString::number(slot));
-                        ykSlots.append({slot, display});
+                        m_foundKeys.insert(serial, {slot, display});
                     } else if (performTestChallenge(yk_key, slot, &wouldBlock)) {
                         auto display =
                             tr("(USB) %1 [%2] Challenge-Response - Slot %3 - %4")
@@ -171,7 +170,7 @@ void YubiKeyInterfaceUSB::findValidKeys()
                                      QString::number(slot),
                                      wouldBlock ? tr("Press", "USB Challenge-Response Key interaction request")
                                                 : tr("Passive", "USB Challenge-Response Key no interaction required"));
-                        m_foundKeys.insert(serial, {serial, slot, display});
+                        m_foundKeys.insert(serial, {slot, display});
                     }
                 }
 
