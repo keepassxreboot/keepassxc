@@ -97,23 +97,32 @@ QList<YubiKeySlot> YubiKey::foundKeys()
     QList<YubiKeySlot> foundKeys;
 
     auto keys = YubiKeyInterfaceUSB::instance()->foundKeys();
-    auto usbSerials = keys.keys();
-    for (auto serial : usbSerials) {
-        for (const auto& key : keys.values(serial)) {
-            foundKeys.append({serial, key.slot});
-        }
-    }
-
-    keys = YubiKeyInterfacePCSC::instance()->foundKeys();
+    QList<unsigned int> handledSerials;
     for (auto serial : keys.keys()) {
-        // Ignore keys that were detected on USB interface already
-        if (usbSerials.contains(serial)) {
+        // This check is needed to prevent duplicate keys
+        //  when more than one slot is configured
+        if(handledSerials.contains(serial)) {
             continue;
         }
 
         for (const auto& key : keys.values(serial)) {
             foundKeys.append({serial, key.slot});
         }
+        handledSerials.append(serial);
+    }
+
+    keys = YubiKeyInterfacePCSC::instance()->foundKeys();
+    for (auto serial : keys.keys()) {
+        // Ignore keys that were detected on USB interface already
+        // This also prevents duplicate keys (see above)
+        if(handledSerials.contains(serial)) {
+            continue;
+        }
+
+        for (const auto& key : keys.values(serial)) {
+            foundKeys.append({serial, key.slot});
+        }
+        handledSerials.append(serial);
     }
 
     return foundKeys;
