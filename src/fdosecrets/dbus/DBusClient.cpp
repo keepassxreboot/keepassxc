@@ -63,10 +63,10 @@ namespace FdoSecrets
     {
         auto exePath = m_process.exePath();
         if (exePath.isEmpty()) {
-            return m_dbus->tr("unknown executable (DBus address %1)").arg(m_process.address);
+            return QObject::tr("unknown executable (DBus address %1)").arg(m_process.address);
         }
         if (!m_process.valid) {
-            return m_dbus->tr("%1 (invalid executable path)").arg(exePath);
+            return QObject::tr("%1 (invalid executable path)").arg(exePath);
         }
         return exePath;
     }
