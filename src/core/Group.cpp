@@ -1155,18 +1155,15 @@ void Group::applyGroupIconToChildEntries()
 
 void Group::sortChildrenRecursively(bool reverse)
 {
-    QList<Group*>::iterator beginIter = m_children.begin();
-    QList<Group*>::iterator endIter = m_children.end();
-
-    // Put recyclebin at end position
-    if(this->parentGroup() == Q_NULLPTR && m_db->metadata()->recycleBin() != Q_NULLPTR)  {
-        int recyleBinIndex = this->children().indexOf(this->findChildByName("Recycle Bin"));
-        this->m_children.swap(recyleBinIndex, this->m_children.length()-1);
-        beginIter = m_children.begin();
-        endIter = m_children.end()-1;
+    Group* recycleBin = Q_NULLPTR;
+    if(database()) {
+        recycleBin = database()->metadata()->recycleBin();
     }
-
-    std::sort(beginIter, endIter, [reverse](const Group* childGroup1, const Group* childGroup2) -> bool {
+    std::sort(m_children.begin(), m_children.end(),
+         [=](const Group* childGroup1, const Group* childGroup2) -> bool {
+            if (childGroup1 == recycleBin) {
+                return false;
+            }
             QString name1 = childGroup1->name();
             QString name2 = childGroup2->name();
             return reverse ? name1.compare(name2, Qt::CaseInsensitive) > 0
