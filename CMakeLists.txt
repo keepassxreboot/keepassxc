@@ -476,6 +476,11 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
 endif()
 include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 
+if(WITH_XC_YUBIKEY)
+    find_package(PCSC REQUIRED)
+    include_directories(SYSTEM ${PCSC_INCLUDE_DIRS})
+endif()
+
 if(UNIX)
     check_cxx_source_compiles("#include <sys/prctl.h>
     int main() { prctl(PR_SET_DUMPABLE, 0); return 0; }"

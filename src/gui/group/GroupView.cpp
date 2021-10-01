@@ -45,6 +45,13 @@ GroupView::GroupView(Database* db, QWidget* parent)
 
     new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
 
+    // keyboard shortcuts to sort children of a group
+    auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_Down, this);
+    connect(shortcut, &QShortcut::activated, this, [this]() { sortGroups(false); });
+
+    shortcut = new QShortcut(Qt::CTRL + Qt::Key_Up, this);
+    connect(shortcut, &QShortcut::activated, this, [this]() { sortGroups(true); });
+
     modelReset();
 
     setDragEnabled(true);
