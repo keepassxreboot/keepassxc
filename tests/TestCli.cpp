@@ -437,6 +437,10 @@ void TestCli::testAnalyze()
 
 void TestCli::testClip()
 {
+    if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
+        QSKIP("Clip test skipped due to QClipboard and Wayland issues on Linux");
+    }
+
     QClipboard* clipboard = QGuiApplication::clipboard();
     clipboard->clear();
 
@@ -448,10 +452,6 @@ void TestCli::testClip()
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0"});
     QString errorOutput(m_stderr->readAll());
-
-    if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
-        QSKIP("Clip test skipped due to QClipboard and Wayland issues");
-    }
 
     if (errorOutput.contains("Unable to start program")
         || errorOutput.contains("No program defined for clipboard manipulation")) {

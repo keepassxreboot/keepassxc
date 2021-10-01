@@ -47,7 +47,7 @@ find_package(Readline)
 
 if (READLINE_FOUND)
     target_compile_definitions(cli PUBLIC USE_READLINE)
-    target_link_libraries(cli readline)
+    target_link_libraries(cli ${Readline_LIBRARY})
 endif()
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
@@ -60,10 +60,10 @@ install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
 
-if(MINGW)
-    install(CODE "include(BundleUtilities)
-                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/keepassxc-cli.exe\" \"\" \"\")"
-            COMPONENT Runtime)
+if(WIN32)
+#    install(CODE "include(BundleUtilities)
+#                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/keepassxc-cli.exe\" \"\" \"\")"
+#            COMPONENT Runtime)
 endif()
 
 if(APPLE AND WITH_APP_BUNDLE)

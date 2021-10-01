@@ -4,7 +4,7 @@
 # QUAZIP_LIBRARIES               - List of QuaZip libraries
 # QUAZIP_ZLIB_INCLUDE_DIR        - The include dir of zlib headers
 
-if(MINGW)
+if(WIN32)
     find_library(QUAZIP_LIBRARIES libquazip5)
     find_path(QUAZIP_INCLUDE_DIR quazip.h PATH_SUFFIXES quazip5)
     find_path(QUAZIP_ZLIB_INCLUDE_DIR zlib.h)

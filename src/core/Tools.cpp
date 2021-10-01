@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 Lennart Glauer <mail@lennart-glauer.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -315,6 +315,20 @@ namespace Tools
     QUuid hexToUuid(const QString& uuid)
     {
         return QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1()));
+    }
+
+    bool isValidUuid(const QString& uuidStr)
+    {
+        if (uuidStr.isEmpty() || uuidStr.length() != 32 || !isHex(uuidStr.toLatin1())) {
+            return false;
+        }
+
+        const auto uuid = hexToUuid(uuidStr);
+        if (uuid.isNull() || uuid.version() == QUuid::VerUnknown) {
+            return false;
+        }
+
+        return true;
     }
 
     QString envSubstitute(const QString& filepath, QProcessEnvironment environment)

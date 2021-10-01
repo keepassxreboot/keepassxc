@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -87,4 +87,21 @@ void TestTools::testEnvSubstitute()
     QCOMPARE(Tools::envSubstitute("$HOME/.ssh/id_rsa", environment), QString("/home/user/.ssh/id_rsa"));
     QCOMPARE(Tools::envSubstitute("start/$EMPTY$$EMPTY$HOME/end", environment), QString("start/$/home/user/end"));
 #endif
+}
+
+void TestTools::testValidUuid()
+{
+    auto validUuid = Tools::uuidToHex(QUuid::createUuid());
+    auto nonValidUuid = "1234567890abcdef1234567890abcdef";
+    auto emptyUuid = QString();
+    auto shortUuid = validUuid.left(10);
+    auto longUuid = validUuid + "baddata";
+    auto nonHexUuid = Tools::uuidToHex(QUuid::createUuid()).replace(0, 1, 'p');
+
+    QVERIFY(Tools::isValidUuid(validUuid));
+    QVERIFY(not Tools::isValidUuid(nonValidUuid));
+    QVERIFY(not Tools::isValidUuid(emptyUuid));
+    QVERIFY(not Tools::isValidUuid(shortUuid));
+    QVERIFY(not Tools::isValidUuid(longUuid));
+    QVERIFY(not Tools::isValidUuid(nonHexUuid));
 }

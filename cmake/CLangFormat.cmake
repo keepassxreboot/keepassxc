@@ -15,48 +15,45 @@
 
 set(EXCLUDED_DIRS
         # third-party directories
-        src/thirdparty/
-        src/zxcvbn/
+        src/thirdparty
+        src/zxcvbn
         # objective-c directories
-        src/touchid/
-        src/autotype/mac/
-        src/gui/osutils/macutils/)
+        src/touchid
+        src/autotype/mac
+        src/gui/osutils/macutils)
 
 set(EXCLUDED_FILES
         # third-party files
-        streams/qtiocompressor.cpp
-        streams/qtiocompressor.h
-        gui/KMessageWidget.h
-        gui/KMessageWidget.cpp
-        gui/MainWindowAdaptor.h
-        gui/MainWindowAdaptor.cpp
-        tests/modeltest.cpp
-        tests/modeltest.h
+        src/streams/qtiocompressor.\\*
+        src/gui/KMessageWidget.\\*
+        src/gui/MainWindowAdaptor.\\*
+        tests/modeltest.\\*
         # objective-c files
-        core/ScreenLockListenerMac.h
-        core/ScreenLockListenerMac.cpp)
+        src/core/ScreenLockListenerMac.\\*)
 
-file(GLOB_RECURSE ALL_SOURCE_FILES RELATIVE ${CMAKE_SOURCE_DIR} src/*.cpp src/*.h tests/*.cpp tests/*.h)
-foreach(SOURCE_FILE ${ALL_SOURCE_FILES})
-    foreach(EXCLUDED_DIR ${EXCLUDED_DIRS})
-        string(FIND ${SOURCE_FILE} ${EXCLUDED_DIR} SOURCE_FILE_EXCLUDED)
-        if(NOT ${SOURCE_FILE_EXCLUDED} EQUAL -1)
-            list(REMOVE_ITEM ALL_SOURCE_FILES ${SOURCE_FILE})
-        endif()
-    endforeach()
-    foreach(EXCLUDED_FILE ${EXCLUDED_FILES})
-        if(${SOURCE_FILE} MATCHES ".*${EXCLUDED_FILE}$")
-            list(REMOVE_ITEM ALL_SOURCE_FILES ${SOURCE_FILE})
-        endif()
-    endforeach()
+set(FIND_EXCLUDE_DIR_EXPR "")
+foreach(EXCLUDE ${EXCLUDED_DIRS})
+    list(APPEND FIND_EXCLUDE_DIR_EXPR -o -path "${EXCLUDE}" -prune)
 endforeach()
+
+set(FIND_EXCLUDE_FILE_EXPR "")
+foreach(EXCLUDE ${EXCLUDED_FILES})
+    if(FIND_EXCLUDE_FILE_EXPR)
+        list(APPEND FIND_EXCLUDE_FILE_EXPR -o)
+    endif()
+    list(APPEND FIND_EXCLUDE_FILE_EXPR -path "${EXCLUDE}")
+endforeach()
+if(FIND_EXCLUDE_FILE_EXPR)
+    set(FIND_EXCLUDE_FILE_EXPR -a -not "\\(" ${FIND_EXCLUDE_FILE_EXPR} "\\)")
+endif()
 
 add_custom_target(format)
-foreach(SOURCE_FILE ${ALL_SOURCE_FILES})
-    add_custom_command(
-            TARGET format
-            PRE_BUILD
-            COMMAND echo Formatting ${SOURCE_FILE}
-            COMMAND clang-format -style=file -i \"${SOURCE_FILE}\"
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-endforeach()
+
+add_custom_command(
+        TARGET format
+        PRE_BUILD
+        COMMAND find src tests "\\(" -name "\\*.h" -o -name "\\*.cpp" ${FIND_EXCLUDE_DIR_EXPR} "\\)"
+            ${FIND_EXCLUDE_FILE_EXPR} -type f -print0 | xargs -0 -P0 -n10 clang-format -style=file -i
+
+        COMMENT "Formatting source files..."
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})

@@ -8,4 +8,3 @@ apps:
   _app_name_:
     command: foo-launch bar-launch _app_command_
 ```
-
