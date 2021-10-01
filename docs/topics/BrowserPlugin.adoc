@@ -48,7 +48,7 @@ image::browser_settings.png[]
 .Connect Extension to KeePassXC
 image::browser_extension_connect.png[,80%]
 
-6. Click the _Connect_ button *(B)* in the pop-up window to complete integrating the KeePassXC-Browser extension with your KeePassXC desktop application. 
+6. Click the _Connect_ button *(B)* in the pop-up window to complete integrating the KeePassXC-Browser extension with your KeePassXC desktop application.
 
 7. You are now prompted to enter a unique name to identify the connection between this browser and your database. Enter a unique name in the field (e.g., firefox-laptop) and click the _Save and allow access_ button.
 +
@@ -62,7 +62,7 @@ The KeePassXC-Browser extension lets you automatically populate the entries from
 
 1. Open your KeePassXC desktop application and unlock your database.
 
-2. Open your web browser. The KeePassXC-Browser extension icon in your browser window will change based on its connection state. The figure below shows the different states. 
+2. Open your web browser. The KeePassXC-Browser extension icon in your browser window will change based on its connection state. The figure below shows the different states.
 +
 *(A)* KeePassXC is not running or is disconnected +
 *(B)* Connected to KeePassXC, but database is locked +

@@ -1,8 +1,14 @@
 [main]
 host = https://www.transifex.com
 
-[keepassxc.keepassxc]
-source_file = share/translations/keepassx_en.ts
-file_filter = share/translations/keepassx_<lang>.ts
+[keepassxc.share-translations-keepassxc-en-ts--develop]
+source_file = share/translations/keepassxc_en.ts
+file_filter = share/translations/keepassxc_<lang>.ts
+source_lang = en
+type = QT
+
+[keepassxc.share-translations-keepassxc-en-ts--master]
+source_file = share/translations/keepassxc_en.ts
+file_filter = share/translations/keepassxc_<lang>.ts
 source_lang = en
 type = QT

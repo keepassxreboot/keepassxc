@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -578,6 +578,32 @@ bool BrowserService::updateEntry(const QString& dbid,
     return result;
 }
 
+bool BrowserService::deleteEntry(const QString& uuid)
+{
+    auto db = selectedDatabase();
+    if (!db) {
+        return false;
+    }
+
+    auto* entry = db->rootGroup()->findEntryByUuid(Tools::hexToUuid(uuid));
+    if (!entry) {
+        return false;
+    }
+
+    auto dialogResult = MessageBox::warning(nullptr,
+                                            tr("KeePassXC: Delete entry"),
+                                            tr("A request for deleting entry \"%1\" has been received.\n"
+                                               "Do you want to delete the entry?\n")
+                                                .arg(entry->title()),
+                                            MessageBox::Yes | MessageBox::No);
+    if (dialogResult != MessageBox::Yes) {
+        return false;
+    }
+
+    db->recycleEntry(entry);
+    return true;
+}
+
 QList<Entry*>
 BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString& siteUrlStr, const QString& formUrlStr)
 {
@@ -946,6 +972,11 @@ int BrowserService::sortPriority(const QStringList& urls, const QString& siteUrl
         // Exact match without the query string
         if (url.matches(siteUrl, QUrl::RemoveQuery) || url.matches(formUrl, QUrl::RemoveQuery)) {
             return 90;
+        }
+
+        // Parent directory match
+        if (url.isParentOf(siteUrl) || url.isParentOf(formUrl)) {
+            return 85;
         }
 
         // Match without path (ie, FQDN match), form url prioritizes lower than site url

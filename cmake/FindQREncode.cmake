@@ -13,8 +13,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-find_path(QRENCODE_INCLUDE_DIR qrencode.h)
-find_library(QRENCODE_LIBRARY qrencode)
+find_path(QRENCODE_INCLUDE_DIR NAMES qrencode.h)
+
+if (VCPKG_INSTALLED_DIR)
+    find_library(QRENCODE_LIBRARY_RELEASE qrencode)
+    find_library(QRENCODE_LIBRARY_DEBUG qrencoded)
+    set(QRENCODE_LIBRARY optimized ${QRENCODE_LIBRARY_RELEASE} debug ${QRENCODE_LIBRARY_DEBUG})
+else()
+    find_library(QRENCODE_LIBRARY qrencode)
+endif()
 
 mark_as_advanced(QRENCODE_LIBRARY QRENCODE_INCLUDE_DIR)
 

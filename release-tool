@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # KeePassXC Release Preparation Helper
-# Copyright (C) 2017 KeePassXC team <https://keepassxc.org/>
+# Copyright (C) 2021 KeePassXC team <https://keepassxc.org/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,8 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 printf "\e[1m\e[32mKeePassXC\e[0m Release Preparation Helper\n"
-printf "Copyright (C) 2017 KeePassXC Team <https://keepassxc.org/>\n\n"
+printf "Copyright (C) 2021 KeePassXC Team <https://keepassxc.org/>\n\n"
 
+set -eE -o pipefail
 
 # -----------------------------------------------------------------------
 #                        global default values
@@ -34,6 +35,7 @@ TARGET_BRANCH="master"
 TAG_NAME=""
 DOCKER_IMAGE=""
 DOCKER_CONTAINER_NAME="keepassxc-build-container"
+CMAKE_GENERATOR="Ninja"
 CMAKE_OPTIONS=""
 CPACK_GENERATORS="WIX;ZIP"
 COMPILER="g++"
@@ -51,17 +53,17 @@ TIMESTAMP_SERVER="http://timestamp.sectigo.com"
 # -----------------------------------------------------------------------
 printUsage() {
     local cmd
-    if [ "" == "$1" ] || [ "help" == "$1" ]; then
+    if [ -z "$1" ] || [ "help" == "$1" ]; then
         cmd="COMMAND"
-    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] \
-        || [ "gpgsign" == "$1" ] || [ "appsign" == "$1" ] || [ "notarize" == "$1" ] || [ "appimage" == "$1" ]; then
+    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "gpgsign" == "$1" ] || \
+        [ "appsign" == "$1" ] || [ "notarize" == "$1" ] || [ "appimage" == "$1" ] || [ "i18n" == "$1" ]; then
         cmd="$1"
     else
         logError "Unknown command: '$1'\n"
         cmd="COMMAND"
     fi
 
-    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [options]\n"
+    printf "\e[1mUsage:\e[0m $(basename "$0") $cmd [OPTIONS, ...]\n"
 
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
@@ -74,6 +76,7 @@ Commands:
   appsign    Sign binaries with code signing certificates on Windows and macOS
   notarize   Submit macOS application DMG for notarization
   help       Show help for the given command
+  i18n       Update translation files and pull from or push to Transifex
 EOF
     elif [ "merge" == "$cmd" ]; then
         cat << EOF
@@ -116,7 +119,9 @@ Options:
                           If this option is set, --install-prefix has no effect
       --appsign           Perform platform specific App Signing before packaging
       --timestamp         Explicitly set the timestamp server to use for appsign (default: '${TIMESTAMP_SERVER}')
+      --vcpkg             Specify VCPKG toolchain file (example: ~/vcpkg/scripts/buildsystems/vcpkg.cmake)
   -k, --key               Specify the App Signing Key/Identity
+      --cmake-generator   Override the default CMake generator (Default: Ninja)
   -c, --cmake-options     Additional CMake options for compiling the sources
       --compiler          Compiler to use (default: '${COMPILER}')
   -m, --make-options      Make options for compiling sources (default: '${MAKE_OPTIONS}')
@@ -182,6 +187,16 @@ Options:
       --verbosity      linuxdeploy verbosity (default: 3)
   -h, --help           Show this help
 EOF
+    elif [ "i18n" == "$cmd" ]; then
+        cat << EOF
+
+Update translation files and pull from or push to Transifex
+
+Subcommands:
+  tx-push      Push source translation file to Transifex
+  tx-pull      Pull updated translations from Transifex
+  lupdate      Update source translation file from C++ sources
+EOF
     fi
 }
 
@@ -198,17 +213,17 @@ logError() {
 }
 
 init() {
-    if [ "" == "$RELEASE_NAME" ]; then
+    if [ -z "$RELEASE_NAME" ]; then
         logError "Missing arguments, --version is required!\n"
         printUsage "check"
         exit 1
     fi
 
-    if [ "" == "$TAG_NAME" ]; then
+    if [ -z "$TAG_NAME" ]; then
         TAG_NAME="$RELEASE_NAME"
     fi
 
-    if [ "" == "$SOURCE_BRANCH" ]; then
+    if [ -z "$SOURCE_BRANCH" ]; then
         SOURCE_BRANCH="release/${RELEASE_NAME}"
     fi
 
@@ -271,29 +286,25 @@ checkGitRepository() {
 }
 
 checkReleaseDoesNotExist() {
-    git tag | $GREP -q "^$TAG_NAME$"
-    if [ $? -eq 0 ]; then
+    if ! git tag | $GREP -q "^$TAG_NAME$"; then
         exitError "Release '$RELEASE_NAME' (tag: '$TAG_NAME') already exists!"
     fi
 }
 
 checkWorkingTreeClean() {
-    git diff-index --quiet HEAD --
-    if [ $? -ne 0 ]; then
+    if ! git diff-index --quiet HEAD --; then
         exitError "Current working tree is not clean! Please commit or unstage any changes."
     fi
 }
 
 checkSourceBranchExists() {
-    git rev-parse "$SOURCE_BRANCH" > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
+    if ! git rev-parse "$SOURCE_BRANCH" > /dev/null 2>&1; then
         exitError "Source branch '$SOURCE_BRANCH' does not exist!"
     fi
 }
 
 checkTargetBranchExists() {
-    git rev-parse "$TARGET_BRANCH" > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
+    if ! git rev-parse "$TARGET_BRANCH" > /dev/null 2>&1; then
         exitError "Target branch '$TARGET_BRANCH' does not exist!"
     fi
 }
@@ -304,18 +315,15 @@ checkVersionInCMake() {
     local minor_num="$(echo ${RELEASE_NAME} | cut -f2 -d.)"
     local patch_num="$(echo ${RELEASE_NAME} | cut -f3 -d. | cut -f1 -d-)"
 
-    $GREP -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt
-    if [ $? -ne 0 ]; then
+    if ! $GREP -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt; then
         exitError "${app_name_upper}_VERSION_MAJOR not updated to '${major_num}' in CMakeLists.txt!"
     fi
 
-    $GREP -q "${app_name_upper}_VERSION_MINOR \"${minor_num}\"" CMakeLists.txt
-    if [ $? -ne 0 ]; then
+    if ! $GREP -q "${app_name_upper}_VERSION_MINOR \"${minor_num}\"" CMakeLists.txt; then
         exitError "${app_name_upper}_VERSION_MINOR not updated to '${minor_num}' in CMakeLists.txt!"
     fi
 
-    $GREP -q "${app_name_upper}_VERSION_PATCH \"${patch_num}\"" CMakeLists.txt
-    if [ $? -ne 0 ]; then
+    if ! $GREP -q "${app_name_upper}_VERSION_PATCH \"${patch_num}\"" CMakeLists.txt; then
         exitError "${app_name_upper}_VERSION_PATCH not updated to '${patch_num}' in CMakeLists.txt!"
     fi
 }
@@ -325,8 +333,7 @@ checkChangeLog() {
         exitError "No CHANGELOG file found!"
     fi
 
-    $GREP -qPzo "## ${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n" CHANGELOG.md
-    if [ $? -ne 0 ]; then
+    if ! $GREP -qPzo "## ${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n" CHANGELOG.md; then
         exitError "'CHANGELOG.md' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
@@ -336,8 +343,7 @@ checkAppStreamInfo() {
         exitError "No AppStream info file found!"
     fi
 
-    $GREP -qPzo "<release version=\"${RELEASE_NAME}\" date=\"\d{4}-\d{2}-\d{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml
-    if [ $? -ne 0 ]; then
+    if ! $GREP -qPzo "<release version=\"${RELEASE_NAME}\" date=\"\d{4}-\d{2}-\d{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml; then
         exitError "'share/linux/org.keepassxc.KeePassXC.appdata.xml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
@@ -348,13 +354,11 @@ checkSnapcraft() {
         return
     fi
 
-    $GREP -qPzo "version: ${RELEASE_NAME}" snap/snapcraft.yaml
-    if [ $? -ne 0 ]; then
+    if ! $GREP -qPzo "version: ${RELEASE_NAME}" snap/snapcraft.yaml; then
         exitError "'snapcraft.yaml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 
-    $GREP -qPzo "KEEPASSXC_BUILD_TYPE=Release" snap/snapcraft.yaml
-    if [ $? -ne 0 ]; then
+    if ! $GREP -qPzo "KEEPASSXC_BUILD_TYPE=Release" snap/snapcraft.yaml; then
         exitError "'snapcraft.yaml' is not set for a release build!"
     fi
 }
@@ -450,7 +454,7 @@ if ! cmdExists realpath; then
 fi
 
 
-trap exitTrap SIGINT SIGTERM
+trap exitTrap SIGINT SIGTERM ERR
 
 # -----------------------------------------------------------------------
 #                             check command
@@ -530,17 +534,17 @@ merge() {
 
     performChecks
 
-    logInfo "Updating language files..."
-    ./share/translations/update.sh update
-    ./share/translations/update.sh pull
+    # Update translations
+    i18n lupdate
+    i18n tx-pull
+
     if [ 0 -ne $? ]; then
         exitError "Updating translations failed!"
     fi
-    git diff-index --quiet HEAD --
-    if [ $? -ne 0 ]; then
+    if ! git diff-index --quiet HEAD --; then
         git add -A ./share/translations/
         logInfo "Committing changes..."
-        if [ "" == "$GPG_GIT_KEY" ]; then
+        if [ -z "$GPG_GIT_KEY" ]; then
             git commit -m "Update translations"
         else
             git commit -m "Update translations" -S"$GPG_GIT_KEY"
@@ -559,7 +563,7 @@ merge() {
     git merge "$SOURCE_BRANCH" --no-ff -m "$COMMIT_MSG" -m "${CHANGELOG}" "$SOURCE_BRANCH" -S"$GPG_GIT_KEY"
 
     logInfo "Creating tag '${TAG_NAME}'..."
-    if [ "" == "$GPG_GIT_KEY" ]; then
+    if [ -z  "$GPG_GIT_KEY" ]; then
         git tag -a "$TAG_NAME" -m "$COMMIT_MSG" -m "${CHANGELOG}" -s
     else
         git tag -a "$TAG_NAME" -m "$COMMIT_MSG" -m "${CHANGELOG}" -s -u "$GPG_GIT_KEY"
@@ -642,7 +646,7 @@ appimage() {
     appdir="$(realpath "$appdir")"
 
     local out="${OUTPUT_DIR}"
-    if [ "" == "$out" ]; then
+    if [ -z "$out" ]; then
         out="."
     fi
     mkdir -p "$out"
@@ -659,12 +663,12 @@ appimage() {
     logInfo "Testing for AppImage tools..."
     local docker_test_cmd
     if [ "" != "$DOCKER_IMAGE" ]; then
-        docker_test_cmd="docker run --rm ${DOCKER_IMAGE}"
+        docker_test_cmd="docker run -it --user $(id -u):$(id -g) --rm ${DOCKER_IMAGE}"
     fi
 
     # Test if linuxdeploy and linuxdeploy-plugin-qt are installed
     # on the system or inside the Docker container
-    if ! ${docker_test_cmd} which ${linuxdeploy} &> /dev/null; then
+    if ! ${docker_test_cmd} which ${linuxdeploy} > /dev/null; then
         logInfo "Downloading linuxdeploy..."
         linuxdeploy="./linuxdeploy"
         linuxdeploy_cleanup="rm -f ${linuxdeploy}"
@@ -673,7 +677,7 @@ appimage() {
         fi
         chmod +x "$linuxdeploy"
     fi
-    if ! ${docker_test_cmd} which ${linuxdeploy_plugin_qt} &> /dev/null; then
+    if ! ${docker_test_cmd} which ${linuxdeploy_plugin_qt} > /dev/null; then
         logInfo "Downloading linuxdeploy-plugin-qt..."
         linuxdeploy_plugin_qt="./linuxdeploy-plugin-qt"
         linuxdeploy_plugin_qt_cleanup="rm -f ${linuxdeploy_plugin_qt}"
@@ -695,49 +699,46 @@ appimage() {
     fi
 
     # Create custom AppRun wrapper
-    cat << EOF > "${out_real}/KeePassXC-AppRun"
+    cat << 'EOF' > "${out_real}/KeePassXC-AppRun"
 #!/usr/bin/env bash
 
-export PATH="\$(dirname \$0)/usr/bin:\${PATH}"
-export LD_LIBRARY_PATH="\$(dirname \$0)/usr/lib:\${LD_LIBRARY_PATH}"
+export PATH="$(dirname $0)/usr/bin:${PATH}"
+export LD_LIBRARY_PATH="$(dirname $0)/usr/lib:${LD_LIBRARY_PATH}"
 
-if [ "\${1}" == "cli" ]; then
+if [ "$1" == "cli" ]; then
     shift
-    exec keepassxc-cli "\$@"
-elif [ "\${1}" == "proxy" ]; then
+    exec keepassxc-cli "$@"
+elif [ "$1" == "proxy" ]; then
     shift
-    exec keepassxc-proxy "\$@"
+    exec keepassxc-proxy "$@"
 elif [ -v CHROME_WRAPPER ] || [ -v MOZ_LAUNCHED_CHILD ]; then
-    exec keepassxc-proxy "\$@"
+    exec keepassxc-proxy "$@"
 else
-    exec keepassxc "\$@"
+    exec keepassxc "$@"
 fi
 EOF
     chmod +x "${out_real}/KeePassXC-AppRun"
 
     # Find .desktop files, icons, and binaries to deploy
     local desktop_file="$(find "$appdir" -name "org.keepassxc.KeePassXC.desktop" | head -n1)"
-    local icon="$(find "$appdir" -name 'keepassxc.png' | $GREP -P 'application/256x256/apps/keepassxc.png$' | head -n1)"
-    local executables="$(IFS=$'\n' find "$appdir" | $GREP -P '/usr/bin/keepassxc[^/]*$' | xargs -i printf " --executable={}")"
+    local icon="$(find "$appdir" -path '*/application/256x256/apps/keepassxc.png' | head -n1)"
+    local executables="$(find "$appdir" -type f -executable -path '*/bin/keepassxc*' -print0 | xargs -0 -i printf " --executable={}")"
 
     logInfo "Collecting libs and patching binaries..."
-    if [ "" == "$DOCKER_IMAGE" ]; then
+    if [ -z "$DOCKER_IMAGE" ]; then
         "$linuxdeploy" --verbosity=${verbosity} --plugin=qt --appdir="$appdir" --desktop-file="$desktop_file" \
-        --custom-apprun="${out_real}/KeePassXC-AppRun" --icon-file="$icon" ${executables} \
-        --library=$(ldconfig -p | $GREP x86-64 | $GREP -oP '/[^\s]+/libgpg-error\.so\.\d+$' | head -n1)
+        --custom-apprun="${out_real}/KeePassXC-AppRun" --icon-file="$icon" ${executables}
     else
-        desktop_file="${desktop_file//${appdir}/\/keepassxc\/AppDir}"
-        icon="${icon//${appdir}/\/keepassxc\/AppDir}"
-        executables="${executables//${appdir}/\/keepassxc\/AppDir}"
-
         docker run --name "$DOCKER_CONTAINER_NAME" --rm \
-            --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse \
-            -v "${appdir}:/keepassxc/AppDir:rw" \
-            -v "${out_real}:/keepassxc/out:rw" \
+            --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse -it \
+            -v "${out_real}:${out_real}:rw" \
+            -v "${appdir}:${appdir}:rw" \
+            -w "$out_real" \
+            --user $(id -u):$(id -g) \
             "$DOCKER_IMAGE" \
-            bash -c "cd /keepassxc/out && ${linuxdeploy} --verbosity=${verbosity} --plugin=qt --appdir=/keepassxc/AppDir \
-            --custom-apprun="/keepassxc/out/KeePassXC-AppRun" --desktop-file=${desktop_file} --icon-file=${icon} ${executables} \
-            --library=\$(ldconfig -p | grep x86-64 | grep -oP '/[^\s]+/libgpg-error\.so\.\d+$' | head -n1)"
+            bash -c "${linuxdeploy} --verbosity=${verbosity} --plugin=qt \
+            --appdir='${appdir}' --custom-apprun='${out_real}/KeePassXC-AppRun' \
+            --desktop-file='${desktop_file}' --icon-file='${icon}' ${executables}"
     fi
 
     if [ $? -ne 0 ]; then
@@ -783,6 +784,7 @@ build() {
     local build_generators=""
     local build_appsign=false
     local build_key=""
+    local build_vcpkg=""
 
     while [ $# -ge 1 ]; do
         local arg="$1"
@@ -832,12 +834,20 @@ build() {
             --appimage)
                 build_appimage=true ;;
 
+            --cmake-generator)
+                CMAKE_GENERATOR="$2"
+                shift ;;
+
             -c|--cmake-options)
                 CMAKE_OPTIONS="$2"
                 shift ;;
 
             --compiler)
                 COMPILER="$2"
+                shift ;;
+
+            --vcpkg)
+                build_vcpkg="$2"
                 shift ;;
 
             -m|--make-options)
@@ -876,10 +886,13 @@ build() {
 
     init
 
-    OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
     # Resolve appsign key to absolute path if under Windows
     if [[ "${build_key}" && "$(uname -o)" == "Msys" ]]; then
         build_key="$(realpath "${build_key}")"
+    fi
+
+    if [[ -f ${build_vcpkg} ]]; then
+        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_TOOLCHAIN_FILE=${build_vcpkg} -DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON"
     fi
 
     if ${build_snapshot}; then
@@ -902,10 +915,13 @@ build() {
         git checkout "$TAG_NAME" > /dev/null 2>&1
     fi
 
-    logInfo "Creating output directory..."
-    mkdir -p "$OUTPUT_DIR"
+    OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
+    if  ! ${build_snapshot} && [ -d "$OUTPUT_DIR" ]; then
+        exitError "Output dir '${OUTPUT_DIR}' already exists."
+    fi
 
-    if [ $? -ne 0 ]; then
+    logInfo "Creating output directory..."
+    if ! mkdir -p "$OUTPUT_DIR"; then
         exitError "Failed to create output directory!"
     fi
 
@@ -933,14 +949,6 @@ build() {
         $xz -6 "${OUTPUT_DIR}/${tarball_name}"
     fi
 
-    if ! ${build_snapshot} && [ -e "${OUTPUT_DIR}/build-release" ]; then
-        logInfo "Cleaning existing build directory..."
-        rm -rf "${OUTPUT_DIR}/build-release" 2> /dev/null
-        if [ $? -ne 0 ]; then
-            exitError "Failed to clean existing build directory, please do it manually."
-        fi
-    fi
-
     logInfo "Creating build directory..."
     mkdir -p "${OUTPUT_DIR}/build-release"
     cd "${OUTPUT_DIR}/build-release"
@@ -961,22 +969,23 @@ build() {
         export CC=gcc
     elif [ "$COMPILER" == "clang++" ]; then
         export CC=clang
+    else
+        export CC="$COMPILER"
     fi
     export CXX="$COMPILER"
 
-    if [ "" == "$DOCKER_IMAGE" ]; then
+    if [ -z "$DOCKER_IMAGE" ]; then
         if [ "$(uname -s)" == "Darwin" ]; then
             # Building on macOS
             export MACOSX_DEPLOYMENT_TARGET
 
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_OSX_ARCHITECTURES="$(uname -m)" -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-              -DCMAKE_PREFIX_PATH="/opt/homebrew/opt/qt/lib/cmake;/usr/local/opt/qt/lib/cmake" \
-              ${CMAKE_OPTIONS} "$SRC_DIR"
+            cmake -G "${CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="$(uname -m)" \
+            -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" ${CMAKE_OPTIONS} "$SRC_DIR"
 
             logInfo "Compiling and packaging sources..."
-            make ${MAKE_OPTIONS} package
+            cmake --build . -- ${MAKE_OPTIONS}
+            cpack -G "DragNDrop"
 
             # Appsign the executables if desired
             if ${build_appsign}; then
@@ -988,16 +997,16 @@ build() {
         elif [ "$(uname -o)" == "Msys" ]; then
             # Building on Windows with Msys2
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release -G"MSYS Makefiles" \
-                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" ${CMAKE_OPTIONS} "$SRC_DIR"
+            cmake -DCMAKE_BUILD_TYPE=Release -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+                ${CMAKE_OPTIONS} "$SRC_DIR"
 
             logInfo "Compiling and packaging sources..."
-            mingw32-make ${MAKE_OPTIONS} preinstall
+            cmake --build . --config "Release" -- ${MAKE_OPTIONS}
 
             # Appsign the executables if desired
             if ${build_appsign} && [ -f "${build_key}" ]; then
                 logInfo "Signing executable files"
-                appsign "-f" $(find src | $GREP -P '\.exe$|\.dll$') "-k" "${build_key}"
+                appsign "-f" $(find src | $GREP -Pi 'keepassxc.*(.exe$|.dll$)') "-k" "${build_key}"
             fi
 
             # Call cpack directly instead of calling make package.
@@ -1039,7 +1048,7 @@ build() {
 
             logInfo "Launching Docker contain to compile snapcraft..."
 
-            sudo docker run --name "$DOCKER_CONTAINER_NAME" --rm \
+            sudo docker run --name "$DOCKER_CONTAINER_NAME" --rm -it --user $(id -u):$(id -g) \
                 -v "$(realpath "$SRC_DIR"):/keepassxc" -w "/keepassxc" \
                 "$DOCKER_IMAGE" snapcraft
         else
@@ -1049,7 +1058,8 @@ build() {
 
             docker run --name "$DOCKER_CONTAINER_NAME" --rm \
                 --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse \
-                -e "CC=${CC}" -e "CXX=${CXX}" \
+                --user $(id -u):$(id -g) \
+                -e "CC=${CC}" -e "CXX=${CXX}" -it  \
                 -v "$(realpath "$SRC_DIR"):/keepassxc/src:ro" \
                 -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
                 "$DOCKER_IMAGE" \
@@ -1079,7 +1089,7 @@ build() {
             docker_image_flag="-d ${DOCKER_IMAGE}"
             docker_container_name_flag="--container-name ${DOCKER_CONTAINER_NAME}"
         fi
-        appimage "-a" "${OUTPUT_DIR}/KeePassXC.AppDir" "-o" "${OUTPUT_DIR}" \
+        appimage -a "${OUTPUT_DIR}/KeePassXC.AppDir" -o "${OUTPUT_DIR}" \
             ${appsign_flag} ${appsign_key_flag} ${docker_image_flag} ${docker_container_name_flag}
     fi
 
@@ -1347,7 +1357,7 @@ notarize() {
         exit 1
     fi
 
-    if [ "$ac_username" == "" ]; then
+    if [ -z "$ac_username" ]; then
         logError "Missing arguments, --username is required!"
         printUsage "notarize"
         exit 1
@@ -1405,12 +1415,84 @@ notarize() {
     done
 }
 
+
+# -----------------------------------------------------------------------
+#                              i18n command
+# -----------------------------------------------------------------------
+
+i18n() {
+    local cmd="$1"
+    if [ -z "$cmd" ]; then
+        logError "No subcommand specified.\n"
+        printUsage i18n
+        exit 1
+    elif [ "$cmd" != "tx-push" ] && [ "$cmd" != "tx-pull" ] && [ "$cmd" != "lupdate" ]; then
+        logError "Unknown subcommand: '${cmd}'\n"
+        printUsage i18n
+        exit 1
+    fi
+    shift
+
+    checkGitRepository
+
+    if [ "$cmd" == "lupdate" ]; then
+        if [ ! -d share/translations ]; then
+            logError "Command must be called from repository root directory."
+            exit 1
+        fi
+
+        checkQt5LUpdateExists
+
+        logInfo "Updating source translation file..."
+        LUPDATE=lupdate-qt5
+        if ! command -v $LUPDATE > /dev/null; then
+            LUPDATE=lupdate
+        fi
+        $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -no-obsolete src \
+            -ts share/translations/keepassxc_en.ts $@
+
+        return 0
+    fi
+
+    checkTransifexCommandExists
+
+    local branch="$(git branch --show-current 2>&1)"
+    local real_branch="$branch"
+    if [[ "$branch" =~ ^release/ ]]; then
+        logInfo "Release branch, setting language resource to master branch."
+        branch="master"
+    elif [ "$branch" != "develop" ] && [ "$branch" != "master" ]; then
+        logError "Must be on master or develop branch!"
+        exit 1
+    fi
+    local resource="keepassxc.share-translations-keepassxc-en-ts--${branch}"
+
+    if [ "$cmd" == "tx-push" ]; then
+        echo -e "This will push the \e[1m'en'\e[0m source file from the current branch to Transifex:\n" >&2
+        echo -e "   \e[1m${real_branch}\e[0m -> \e[1m${resource}\e[0m\n" >&2
+        echo -n "Continue? [y/N] " >&2
+        read -r yesno
+        if [ "$yesno" != "y" ] && [ "$yesno" != "Y" ]; then
+            logError "Push aborted."
+            exit 1
+        fi
+
+        logInfo "Pushing source translation file to Transifex..."
+        tx push -s --use-git-timestamps -r "$resource" $@
+
+    elif [ "$cmd" == "tx-pull" ]; then
+        logInfo "Pulling updated translations from Transifex..."
+        tx pull -af --minimum-perc=60 --parallel -r "$resource" $@
+    fi
+}
+
+
 # -----------------------------------------------------------------------
 #                       parse global command line
 # -----------------------------------------------------------------------
 MODE="$1"
-shift
-if [ "" == "$MODE" ]; then
+shift || true
+if [ -z "$MODE" ]; then
     logError "Missing arguments!\n"
     printUsage
     exit 1
@@ -1419,7 +1501,7 @@ elif [ "help" == "$MODE" ]; then
     exit
 elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] \
     || [ "gpgsign" == "$MODE" ] || [ "appsign" == "$MODE" ]|| [ "notarize" == "$MODE" ] \
-    || [ "appimage" == "$MODE" ]; then
+    || [ "appimage" == "$MODE" ]|| [ "i18n" == "$MODE" ]; then
     ${MODE} "$@"
 else
     printUsage "$MODE"

@@ -118,9 +118,9 @@ BROWSER=$(whiptail \
 clear
 
 exitstatus=$?
-if [ $exitstatus = 0 ]; then
+if [[ $exitstatus == 0 ]]; then
     # Configure settings for the chosen browser
-    case "$BROWSER" in
+    case $BROWSER in
         1) setupFirefox ;;
         2) setupChrome ;;
         3) setupChromium ;;
@@ -132,7 +132,7 @@ if [ $exitstatus = 0 ]; then
     # Install the JSON file
     cd ~
     mkdir -p "$INSTALL_DIR"
-    echo "$JSON_OUT" > ${INSTALL_DIR}/${INSTALL_FILE}
+    echo "$JSON_OUT" > "${INSTALL_DIR}/${INSTALL_FILE}"
 
     whiptail \
         --title "Installation Complete" \

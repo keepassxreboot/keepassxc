@@ -12,21 +12,19 @@ Build Dependencies
 The following tools must exist within your PATH:
 
 * make
-* cmake (>= 2.8.12)
-* g++ (>= 4.7) or clang++ (>= 3.0)
-* asciidoctor (on Linux/MacOS)
+* cmake (>= 3.3.0)
+* g++ (>= 4.7) or clang++ (>= 6.0)
+* asciidoctor
 
 The following libraries are required:
 
-* Qt 5 (>= 5.2): qtbase and qttools5
-* libgcrypt (>= 1.6)
+* Qt 5 (>= 5.9.5): qtbase5, qtbase5-private, libqt5svg5, qttools5, qt5-image-formats-plugins
+* botan (>= 2.12)
 * zlib
-* libmicrohttpd
-* libxi, libxtst, qtx11extras (optional for auto-type on X11)
-* libsodium (>= 1.0.12)
-* libargon2
+* minizip
+* readline (for completion in cli)
+* libqt5x11extras5, libxi, and libxtst (for auto-type on X11)
 * qrencode
-* yubikey ykpers (optional to support YubiKey)
 
 Prepare the Building Environment
 ================================
@@ -40,7 +38,7 @@ Build Steps
 We recommend using the release tool to perform builds, please read up-to-date instructions [on our wiki](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC#building-using-the-release-tool).
 
 To compile from source, open a **Terminal (on Linux/MacOS)** or a **MSYS2-MinGW shell (on Windows)**<br/>
-**Note:** on Windows make sure you are using a **MINGW shell** by checking the label before the current path
+**Note:** on Windows you can also use MSVC to build natively, we recommend Visual Studio 2019
 
 First, download the KeePassXC [source tarball](https://keepassxc.org/download#source)
 or check out the latest version from our [Git repository](https://github.com/keepassxreboot/keepassxc).
@@ -65,6 +63,8 @@ For a stable build, it is recommended to checkout the master branch.
 git checkout master
 ```
 
+NOTE: See the [Windows Build Instructions](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC#windows) for building with MSVC.
+
 Navigate to the directory where you have downloaded KeePassXC and type these commands:
 
 ```
@@ -74,7 +74,7 @@ cmake -DWITH_XC_ALL=ON ..
 make
 ```
 
-If you are on Windows, you may have to add ```-G "MSYS Makefiles"``` to the beginning of the cmake command. See the [Windows Build Instructions](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC#windows) for more information.
+NOTE: If you are using MSYS2, you may have to add ```-G "MSYS Makefiles"``` to the beginning of the cmake command.
 
 These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
 (Note the cmake notes/options below.)
@@ -103,7 +103,7 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 	  -DWITH_XC_KEESHARE=[ON|OFF] Enable/Disable KeeShare group synchronization extension (default: OFF)
 	  -DWITH_XC_KEESHARE_SECURE=[ON|OFF] Enable/Disable KeeShare signed containers, requires libquazip5 (default: OFF)
 	  -DWITH_XC_ALL=[ON|OFF] Enable/Disable compiling all plugins above (default: OFF)
-	  
+
 	  -DWITH_XC_UPDATECHECK=[ON|OFF] Enable/Disable automatic updating checking (requires WITH_XC_NETWORKING) (default: ON)
 
 	  -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)

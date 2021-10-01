@@ -263,7 +263,7 @@
 - Return keyboard focus after saving database edits [#4287]
 - Windows: Use bare minimum settings in portable version [#4131]
 - Windows: Use SHA256 code signing [#4129]
-- macOS: Fix code signing incompatibility in latest macOS release [#4564] 
+- macOS: Fix code signing incompatibility in latest macOS release [#4564]
 
 ## 2.5.3 (2020-01-19)
 
@@ -395,8 +395,8 @@
 - Redesign database unlock dialog [ #3287]
 - Rework the entry preview panel [ #3306]
 - Move notes to General tab on Group Preview Panel [#3336]
-- Enable entry actions when editing an entry and cleanup entry context menu  [#3641]
-- Improve detection of external database changes  [#2389]
+- Enable entry actions when editing an entry and cleanup entry context menu [#3641]
+- Improve detection of external database changes [#2389]
 - Warn if user is trying to use a KDBX file as a key file [#3625]
 - Add option to disable KeePassHTTP settings migrations prompt [#3349, #3344]
 - Re-enabled Wayland support (no Auto-Type yet) [#3520, #3341]
