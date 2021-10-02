@@ -67,15 +67,35 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Allow access to entries</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Allow Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deny All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>PID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -118,6 +138,14 @@
     </message>
     <message>
         <source>Use OpenSSH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSH_SK_PROVIDER value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSH_SK_PROVIDER override</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3765,28 +3793,16 @@ Error: %1</source>
 <context>
     <name>FdoSecrets::SettingsClientModel</name>
     <message>
-        <source>Application</source>
-        <translation type="unfinished"></translation>
+        <source>Unknown</source>
+        <translation type="unfinished">Unknown</translation>
     </message>
     <message>
-        <source>Manage</source>
+        <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsDatabaseModel</name>
-    <message>
-        <source>File Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Group</source>
-        <translation type="unfinished">Group</translation>
-    </message>
-    <message>
-        <source>Manage</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Unlock to show</source>
         <translation type="unfinished"></translation>
@@ -5470,6 +5486,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Decryption failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected EOF while reading key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported key part</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7233,6 +7257,14 @@ Please consider generating a new key file.</source>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>unknown executable (DBus address %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (invalid executable path)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7624,6 +7656,10 @@ Please consider generating a new key file.</source>
         <source>No agent running, cannot list identities.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Security keys are not supported by the agent or the security key provider is unavailable.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
@@ -7701,6 +7737,40 @@ Please consider generating a new key file.</source>
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsClientModel</name>
+    <message>
+        <source>Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DBus Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDatabaseModel</name>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished">Group</translation>
+    </message>
+    <message>
+        <source>Manage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

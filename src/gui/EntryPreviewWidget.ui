@@ -46,7 +46,7 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QHBoxLayout" name="entryHorizontalLayout" stretch="0,0,0,0">
+        <layout class="QHBoxLayout" name="entryHorizontalLayout" stretch="1,0,0,0">
          <property name="sizeConstraint">
           <enum>QLayout::SetDefaultConstraint</enum>
          </property>
@@ -104,18 +104,44 @@
           </layout>
          </item>
          <item>
-          <widget class="QLabel" name="entryTotpLabel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <property name="text">
-            <string notr="true">1234567</string>
-           </property>
-          </widget>
+           <item>
+            <widget class="QLabel" name="entryTotpLabel">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string notr="true">1234567</string>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="entryTotpProgress">
+             <property name="maximumSize">
+              <size>
+               <width>57</width>
+               <height>4</height>
+              </size>
+             </property>
+             <property name="value">
+              <number>50</number>
+             </property>
+             <property name="textVisible">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QToolButton" name="entryTotpButton">

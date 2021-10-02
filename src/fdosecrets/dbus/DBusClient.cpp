@@ -22,14 +22,53 @@
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
+#include <utility>
+
 namespace FdoSecrets
 {
-    DBusClient::DBusClient(DBusMgr* dbus, const QString& address, uint pid, const QString& name)
-        : m_dbus(dbus)
-        , m_address(address)
-        , m_pid(pid)
-        , m_name(name)
+    bool ProcInfo::operator==(const ProcInfo& other) const
     {
+        return this->pid == other.pid && this->ppid == other.ppid && this->exePath == other.exePath
+               && this->name == other.name && this->command == other.command;
+    }
+
+    bool ProcInfo::operator!=(const ProcInfo& other) const
+    {
+        return !(*this == other);
+    }
+
+    bool PeerInfo::operator==(const PeerInfo& other) const
+    {
+        return this->address == other.address && this->pid == other.pid && this->valid == other.valid
+               && this->hierarchy == other.hierarchy;
+    }
+
+    bool PeerInfo::operator!=(const PeerInfo& other) const
+    {
+        return !(*this == other);
+    }
+
+    DBusClient::DBusClient(DBusMgr* dbus, PeerInfo process)
+        : m_dbus(dbus)
+        , m_process(std::move(process))
+    {
+    }
+
+    DBusMgr* DBusClient::dbus() const
+    {
+        return m_dbus;
+    }
+
+    QString DBusClient::name() const
+    {
+        auto exePath = m_process.exePath();
+        if (exePath.isEmpty()) {
+            return QObject::tr("unknown executable (DBus address %1)").arg(m_process.address);
+        }
+        if (!m_process.valid) {
+            return QObject::tr("%1 (invalid executable path)").arg(exePath);
+        }
+        return exePath;
     }
 
     bool DBusClient::itemKnown(const QUuid& uuid) const

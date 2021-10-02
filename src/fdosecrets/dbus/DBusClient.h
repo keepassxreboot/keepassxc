@@ -30,6 +30,56 @@ namespace FdoSecrets
     class DBusMgr;
     class CipherPair;
 
+    struct ProcInfo
+    {
+        uint pid;
+        uint ppid;
+        QString exePath;
+        QString name;
+        QString command;
+
+        bool operator==(const ProcInfo& other) const;
+        bool operator!=(const ProcInfo& other) const;
+    };
+
+    /**
+     * Contains info representing a process.
+     * This can be obtained by DBusMgr::serviceInfo given a dbus address.
+     */
+    struct PeerInfo
+    {
+        /**
+         * @brief DBus address
+         */
+        QString address;
+
+        uint pid;
+        /**
+         * @brief Whether current process' exePath points to a valid executable file.
+         *
+         * Note that an empty exePath is not valid.
+         */
+        bool valid;
+
+        /**
+         * @brief List of parents of the process.
+         *
+         * The first element is the current process. The last element is usually PID 1.
+         *
+         * This is for showing to the user only and is intentionally simple.
+         * Getting detailed process info is beyond the scope of KPXC.
+         */
+        QList<ProcInfo> hierarchy;
+
+        QString exePath() const
+        {
+            return hierarchy.front().exePath;
+        }
+
+        bool operator==(const PeerInfo& other) const;
+        bool operator!=(const PeerInfo& other) const;
+    };
+
     /**
      * Represent a client that has made requests to our service. A client is identified by its
      * DBus address, which is guaranteed to be unique by the DBus protocol.
@@ -48,30 +98,23 @@ namespace FdoSecrets
         /**
          * @brief Given peer's service address, construct a client object
          * @param address obtained from `QDBusMessage::service()`
-         * @param pid the process PID
-         * @param name the process name
+         * @param process the process info
          */
-        explicit DBusClient(DBusMgr* dbus, const QString& address, uint pid, const QString& name);
+        explicit DBusClient(DBusMgr* dbus, PeerInfo process);
 
-        DBusMgr* dbus() const
-        {
-            return m_dbus;
-        }
+        DBusMgr* dbus() const;
 
         /**
          * @return The human readable client name, usually the process name
          */
-        QString name() const
-        {
-            return m_name;
-        }
+        QString name() const;
 
         /**
          * @return The unique DBus address of the client
          */
         QString address() const
         {
-            return m_address;
+            return m_process.address;
         }
 
         /**
@@ -79,7 +122,15 @@ namespace FdoSecrets
          */
         uint pid() const
         {
-            return m_pid;
+            return m_process.pid;
+        }
+
+        /**
+         * @return The process info
+         */
+        const PeerInfo& processInfo() const
+        {
+            return m_process;
         }
 
         QSharedPointer<CipherPair>
@@ -123,10 +174,7 @@ namespace FdoSecrets
 
     private:
         QPointer<DBusMgr> m_dbus;
-        QString m_address;
-
-        uint m_pid{0};
-        QString m_name{};
+        PeerInfo m_process;
 
         bool m_authorizedAll{false};
 

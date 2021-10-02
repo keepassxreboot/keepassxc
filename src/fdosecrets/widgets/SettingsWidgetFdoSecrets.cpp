@@ -209,28 +209,30 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
 
     auto clientModel = new SettingsClientModel(*plugin->dbus(), this);
     m_ui->tableClients->setModel(clientModel);
-    installWidgetItemDelegate<ManageSession>(
-        m_ui->tableClients, 1, [](QWidget* p, const QModelIndex&) { return new ManageSession(p); });
+    installWidgetItemDelegate<ManageSession>(m_ui->tableClients,
+                                             SettingsClientModel::ColumnManage,
+                                             [](QWidget* p, const QModelIndex&) { return new ManageSession(p); });
 
     // config header after setting model, otherwise the header doesn't have enough sections
     auto clientViewHeader = m_ui->tableClients->horizontalHeader();
     clientViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
     clientViewHeader->setSectionsClickable(false);
-    clientViewHeader->setSectionResizeMode(0, QHeaderView::Stretch); // application
-    clientViewHeader->setSectionResizeMode(1, QHeaderView::ResizeToContents); // disconnect button
+    clientViewHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
+    clientViewHeader->setSectionResizeMode(SettingsClientModel::ColumnApplication, QHeaderView::Stretch);
 
     auto dbModel = new SettingsDatabaseModel(plugin->dbTabs(), this);
     m_ui->tableDatabases->setModel(dbModel);
     installWidgetItemDelegate<ManageDatabase>(
-        m_ui->tableDatabases, 2, [plugin](QWidget* p, const QModelIndex&) { return new ManageDatabase(plugin, p); });
+        m_ui->tableDatabases, SettingsDatabaseModel::ColumnManage, [plugin](QWidget* p, const QModelIndex&) {
+            return new ManageDatabase(plugin, p);
+        });
 
     // config header after setting model, otherwise the header doesn't have enough sections
     auto dbViewHeader = m_ui->tableDatabases->horizontalHeader();
     dbViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
     dbViewHeader->setSectionsClickable(false);
-    dbViewHeader->setSectionResizeMode(0, QHeaderView::Stretch); // file name
-    dbViewHeader->setSectionResizeMode(1, QHeaderView::Stretch); // group
-    dbViewHeader->setSectionResizeMode(2, QHeaderView::ResizeToContents); // manage button
+    dbViewHeader->setSectionResizeMode(QHeaderView::Stretch);
+    dbViewHeader->setSectionResizeMode(SettingsDatabaseModel::ColumnManage, QHeaderView::ResizeToContents);
 
     // prompt the user to save settings before the sections are enabled
     connect(m_plugin, &FdoSecretsPlugin::secretServiceStarted, this, &SettingsWidgetFdoSecrets::updateServiceState);

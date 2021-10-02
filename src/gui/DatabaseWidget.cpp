@@ -713,6 +713,11 @@ void DatabaseWidget::performAutoTypePasswordEnter()
     performAutoType(QStringLiteral("{PASSWORD}{ENTER}"));
 }
 
+void DatabaseWidget::performAutoTypeTOTP()
+{
+    performAutoType(QStringLiteral("{TOTP}"));
+}
+
 void DatabaseWidget::openUrl()
 {
     auto currentEntry = currentSelectedEntry();
