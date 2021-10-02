@@ -1159,16 +1159,14 @@ void Group::sortChildrenRecursively(bool reverse)
     if (database()) {
         recycleBin = database()->metadata()->recycleBin();
     }
-    std::sort(m_children.begin(), m_children.end(),
-         [=](const Group* childGroup1, const Group* childGroup2) -> bool {
-            if (childGroup1 == recycleBin) {
-                return false;
-            }
-            QString name1 = childGroup1->name();
-            QString name2 = childGroup2->name();
-            return reverse ? name1.compare(name2, Qt::CaseInsensitive) > 0
-                           : name1.compare(name2, Qt::CaseInsensitive) < 0;
-        });
+    std::sort(m_children.begin(), m_children.end(), [=](const Group* childGroup1, const Group* childGroup2) -> bool {
+        if (childGroup1 == recycleBin) {
+            return false;
+        }
+        QString name1 = childGroup1->name();
+        QString name2 = childGroup2->name();
+        return reverse ? name1.compare(name2, Qt::CaseInsensitive) > 0 : name1.compare(name2, Qt::CaseInsensitive) < 0;
+    });
 
     for (auto child : m_children) {
         child->sortChildrenRecursively(reverse);
