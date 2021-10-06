@@ -15,7 +15,7 @@ The [QuickStart Guide](https://keepassxc.org/docs/KeePassXC_GettingStarted.html)
 KeePassXC has numerous features for novice and power users alike. Our goal is to create an application that can be used by anyone while still offering advanced features to those that need them.
 
 ### Basic
-* Create, open, and save databases in the KDBX format (KeePass compatible with KDBX4 and KDBX3)
+* Create, open, and save databases in the KDBX format (KeePass-compatible with KDBX4 and KDBX3)
 * Store sensitive information in entries that are organized by groups
 * Search for entries
 * Password generator
