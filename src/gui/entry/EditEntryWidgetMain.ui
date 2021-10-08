@@ -142,8 +142,24 @@
         <property name="accessibleName">
          <string>Expiration field</string>
         </property>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
+        </property>
         <property name="calendarPopup">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="expireDateInDays">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="suffix">
+         <string> Days</string>
+        </property>
+        <property name="maximum">
+         <number>9999999</number>
         </property>
        </widget>
       </item>

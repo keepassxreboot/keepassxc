@@ -77,6 +77,9 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     addPage(tr("Properties"), icons()->icon("document-properties"), m_editWidgetProperties);
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+    connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDateInDays, SLOT(setEnabled(bool)));
+
+
     connect(m_mainUi->autoTypeSequenceCustomRadio,
             SIGNAL(toggled(bool)),
             m_mainUi->autoTypeSequenceCustomEdit,
@@ -108,6 +111,12 @@ void EditGroupWidget::setupModifiedTracking()
     connect(m_mainUi->editNotes, SIGNAL(textChanged()), SLOT(setModified()));
     connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), SLOT(setModified()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), SLOT(setModified()));
+    connect(m_mainUi->expireDatePicker, &QDateTimeEdit::dateTimeChanged,this, [&](const QDateTime &datetime) {
+            m_mainUi->expireDateInDays->setValue(datetime.date().toJulianDay() - QDate::currentDate().toJulianDay());
+        });
+    connect(m_mainUi->expireDateInDays, QOverload<int>::of(&QSpinBox::valueChanged),this,[=](int i){
+        m_mainUi->expireDatePicker->setDate(QDate::currentDate().addDays(i));
+    });
     connect(m_mainUi->searchComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
     connect(m_mainUi->autotypeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
     connect(m_mainUi->autoTypeSequenceInherit, SIGNAL(toggled(bool)), SLOT(setModified()));

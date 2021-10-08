@@ -161,8 +161,10 @@ void EditEntryWidget::setupMain()
 #endif
     connect(m_mainUi->expireCheck, &QCheckBox::toggled, [&](bool enabled) {
         m_mainUi->expireDatePicker->setEnabled(enabled);
+        m_mainUi->expireDateInDays->setEnabled(enabled);
         if (enabled) {
             m_mainUi->expireDatePicker->setDateTime(Clock::currentDateTime());
+            m_mainUi->expireDateInDays->setValue(0);
         }
     });
 
@@ -427,6 +429,13 @@ void EditEntryWidget::setupEntryUpdate()
 #endif
     connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), this, SLOT(setModified()));
+    connect(m_mainUi->expireDatePicker, &QDateTimeEdit::dateTimeChanged,this, [&](const QDateTime &datetime) {
+            m_mainUi->expireDateInDays->setValue(datetime.date().toJulianDay() - QDate::currentDate().toJulianDay());
+        });
+    connect(m_mainUi->expireDateInDays, QOverload<int>::of(&QSpinBox::valueChanged),this,[=](int i){
+        m_mainUi->expireDatePicker->setDate(QDate::currentDate().addDays(i));
+    });
+
     connect(m_mainUi->notesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
 
     // Advanced tab
