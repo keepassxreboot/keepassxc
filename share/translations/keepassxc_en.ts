@@ -8443,11 +8443,11 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hardware key was not found or is misconfigured.</source>
+        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
+        <source>Hardware key was not found or is not configured.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

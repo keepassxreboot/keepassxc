@@ -34,8 +34,10 @@
 // Windows winscard and Linux pcsc-lite use unsigned long
 #ifdef Q_OS_MACOS
 typedef uint32_t SCUINT;
+typedef uint32_t RETVAL;
 #else
 typedef unsigned long SCUINT;
+typedef long RETVAL;
 #endif
 
 // This namescape contains static wrappers for the smart card API
@@ -49,11 +51,11 @@ namespace
      * @param context Smartcard API context, valid or not
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t ensureValidContext(SCARDCONTEXT& context)
+    RETVAL ensureValidContext(SCARDCONTEXT& context)
     {
         // This check only tests if the handle pointer is valid in memory
         // but it does not actually verify that it works
-        int32_t rv = SCardIsValidContext(context);
+        auto rv = SCardIsValidContext(context);
 
         // If the handle is broken, create it
         // This happens e.g. on application launch
@@ -69,7 +71,7 @@ namespace
         rv = SCardListReaders(context, nullptr, nullptr, &dwReaders);
         // On windows, USB hot-plugging causes the underlying API server to die
         // So on every USB unplug event, the API context has to be recreated
-        if (rv == static_cast<int32_t>(SCARD_E_SERVICE_STOPPED)) {
+        if (rv == SCARD_E_SERVICE_STOPPED) {
             // Dont care if the release works since the handle might be broken
             SCardReleaseContext(context);
             rv = SCardEstablishContext(SCARD_SCOPE_SYSTEM, nullptr, nullptr, &context);
@@ -94,7 +96,7 @@ namespace
 
         // Read size of required string buffer
         // OSX does not support auto-allocate
-        int32_t rv = SCardListReaders(context, nullptr, nullptr, &dwReaders);
+        auto rv = SCardListReaders(context, nullptr, nullptr, &dwReaders);
         if (rv != SCARD_S_SUCCESS) {
             return readers_list;
         }
@@ -131,18 +133,16 @@ namespace
      *
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t getCardStatus(SCARDHANDLE handle, SCUINT& dwProt, const SCARD_IO_REQUEST*& pioSendPci)
+    RETVAL getCardStatus(SCARDHANDLE handle, SCUINT& dwProt, const SCARD_IO_REQUEST*& pioSendPci)
     {
-        int32_t rv = static_cast<int32_t>(SCARD_E_UNEXPECTED);
-
-        uint8_t pbAtr[MAX_ATR_SIZE] = {0}; // ATR record
         char pbReader[MAX_READERNAME] = {0}; // Name of the reader the card is placed in
-        SCUINT dwAtrLen = sizeof(pbAtr); // ATR record size
         SCUINT dwReaderLen = sizeof(pbReader); // String length of the reader name
         SCUINT dwState = 0; // Unused. Contents differ depending on API implementation.
+        uint8_t pbAtr[MAX_ATR_SIZE] = {0}; // ATR record
+        SCUINT dwAtrLen = sizeof(pbAtr); // ATR record size
 
-        if ((rv = SCardStatus(handle, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen))
-            == SCARD_S_SUCCESS) {
+        auto rv = SCardStatus(handle, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
+        if (rv == SCARD_S_SUCCESS) {
             switch (dwProt) {
             case SCARD_PROTOCOL_T0:
                 pioSendPci = SCARD_PCI_T0;
@@ -152,7 +152,7 @@ namespace
                 break;
             default:
                 // This should not happen during normal use
-                rv = static_cast<int32_t>(SCARD_E_PROTO_MISMATCH);
+                rv = SCARD_E_PROTO_MISMATCH;
                 break;
             }
         }
@@ -172,20 +172,20 @@ namespace
      *
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t transactRetry(SCARDHANDLE handle, const std::function<int32_t()>& atomic_action)
+    RETVAL transactRetry(SCARDHANDLE handle, const std::function<RETVAL()>& atomic_action)
     {
-        int32_t rv = static_cast<int32_t>(SCARD_E_UNEXPECTED);
-
         SCUINT dwProt = SCARD_PROTOCOL_UNDEFINED;
         const SCARD_IO_REQUEST* pioSendPci = nullptr;
-        if ((rv = getCardStatus(handle, dwProt, pioSendPci)) == SCARD_S_SUCCESS) {
+        auto rv = getCardStatus(handle, dwProt, pioSendPci);
+        if (rv == SCARD_S_SUCCESS) {
             // Begin a transaction. This locks out any other process from interfacing with the card
-            if ((rv = SCardBeginTransaction(handle)) == SCARD_S_SUCCESS) {
+            rv = SCardBeginTransaction(handle);
+            if (rv == SCARD_S_SUCCESS) {
                 int i;
                 for (i = 4; i > 0; i--) { // 3 tries for reconnecting after reset
                     // Run the lambda payload and store its return code
-                    int32_t rv_act = atomic_action();
-                    if (rv_act == static_cast<int32_t>(SCARD_W_RESET_CARD)) {
+                    RETVAL rv_act = atomic_action();
+                    if (rv_act == SCARD_W_RESET_CARD) {
                         // The card was reset during the transmission.
                         SCUINT dwProt_new = SCARD_PROTOCOL_UNDEFINED;
                         // Acknowledge the reset and reestablish the connection and handle
@@ -207,7 +207,7 @@ namespace
                     }
                 }
                 if (i == 0) {
-                    rv = static_cast<int32_t>(SCARD_W_RESET_CARD);
+                    rv = SCARD_W_RESET_CARD;
                     qDebug("Smardcard was reset and failed to reconnect after 3 tries");
                 }
             }
@@ -231,26 +231,24 @@ namespace
      *
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t transmit(SCARDHANDLE handle,
-                     const uint8_t* pbSendBuffer,
-                     SCUINT dwSendLength,
-                     uint8_t* pbRecvBuffer,
-                     SCUINT& dwRecvLength)
+    RETVAL transmit(SCARDHANDLE handle,
+                    const uint8_t* pbSendBuffer,
+                    SCUINT dwSendLength,
+                    uint8_t* pbRecvBuffer,
+                    SCUINT& dwRecvLength)
     {
-        int32_t rv = static_cast<int32_t>(SCARD_E_UNEXPECTED);
-
         SCUINT dwProt = SCARD_PROTOCOL_UNDEFINED;
         const SCARD_IO_REQUEST* pioSendPci = nullptr;
-        if ((rv = getCardStatus(handle, dwProt, pioSendPci)) == SCARD_S_SUCCESS) {
+        auto rv = getCardStatus(handle, dwProt, pioSendPci);
+        if (rv == SCARD_S_SUCCESS) {
             // Write to and read from the card
             // pioRecvPci is nullptr because we do not expect any PCI response header
-            if ((rv = SCardTransmit(
-                     handle, pioSendPci, pbSendBuffer, dwSendLength, nullptr, pbRecvBuffer, &dwRecvLength))
-                == SCARD_S_SUCCESS) {
+            rv = SCardTransmit(handle, pioSendPci, pbSendBuffer, dwSendLength, nullptr, pbRecvBuffer, &dwRecvLength);
+            if (rv == SCARD_S_SUCCESS) {
                 if (dwRecvLength < 2) {
                     // Any valid response should be at least 2 bytes (response status)
                     // However the protocol itself could fail
-                    rv = static_cast<int32_t>(SCARD_E_UNEXPECTED);
+                    rv = SCARD_E_UNEXPECTED;
                 } else {
                     if (pbRecvBuffer[dwRecvLength - 2] == SW_OK_HIGH && pbRecvBuffer[dwRecvLength - 1] == SW_OK_LOW) {
                         rv = SCARD_S_SUCCESS;
@@ -258,14 +256,14 @@ namespace
                                && pbRecvBuffer[dwRecvLength - 1] == SW_PRECOND_LOW) {
                         // This happens if the key requires eg. a button press or if the applet times out
                         // Solution: Re-present the card to the reader
-                        rv = static_cast<int32_t>(SCARD_W_CARD_NOT_AUTHENTICATED);
+                        rv = SCARD_W_CARD_NOT_AUTHENTICATED;
                     } else if ((pbRecvBuffer[dwRecvLength - 2] == SW_NOTFOUND_HIGH
                                 && pbRecvBuffer[dwRecvLength - 1] == SW_NOTFOUND_LOW)
                                || pbRecvBuffer[dwRecvLength - 2] == SW_UNSUP_HIGH) {
                         // This happens eg. during a select command when the AID is not found
-                        rv = static_cast<int32_t>(SCARD_E_FILE_NOT_FOUND);
+                        rv = SCARD_E_FILE_NOT_FOUND;
                     } else {
-                        rv = static_cast<int32_t>(SCARD_E_UNEXPECTED);
+                        rv = SCARD_E_UNEXPECTED;
                     }
                 }
             }
@@ -281,7 +279,7 @@ namespace
      *
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t selectApplet(const SCardAID& handle)
+    RETVAL selectApplet(const SCardAID& handle)
     {
         uint8_t pbSendBuffer_head[5] = {
             CLA_ISO, INS_SELECT, SEL_APP_AID, 0, static_cast<uint8_t>(handle.second.size())};
@@ -292,7 +290,7 @@ namespace
             0}; // 3 bytes version, 1 byte program counter, other stuff for various implementations, 2 bytes status
         SCUINT dwRecvLength = 12;
 
-        int32_t rv = transmit(handle.first, pbSendBuffer, 5 + handle.second.size(), pbRecvBuffer, dwRecvLength);
+        auto rv = transmit(handle.first, pbSendBuffer, 5 + handle.second.size(), pbRecvBuffer, dwRecvLength);
 
         delete[] pbSendBuffer;
 
@@ -312,7 +310,7 @@ namespace
     {
         for (const auto& aid : aid_codes) {
             // Ensure the transmission is retransmitted after card resets
-            int32_t rv = transactRetry(handle, [&handle, &aid]() {
+            auto rv = transactRetry(handle, [&handle, &aid]() {
                 // Try to select the card using the specified AID
                 return selectApplet({handle, aid});
             });
@@ -333,28 +331,27 @@ namespace
      *
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t getSerial(const SCardAID& handle, unsigned int& serial)
+    RETVAL getSerial(const SCardAID& handle, unsigned int& serial)
     {
         // Ensure the transmission is retransmitted after card resets
         return transactRetry(handle.first, [&handle, &serial]() {
-            int32_t rv_l = static_cast<int32_t>(SCARD_E_UNEXPECTED);
-
             // Ensure that the card is always selected before sending the command
-            if ((rv_l = selectApplet(handle)) != SCARD_S_SUCCESS) {
-                return rv_l;
+            auto rv = selectApplet(handle);
+            if (rv != SCARD_S_SUCCESS) {
+                return rv;
             }
 
             uint8_t pbSendBuffer[5] = {CLA_ISO, INS_API_REQ, CMD_GET_SERIAL, 0, 6};
             uint8_t pbRecvBuffer[6] = {0}; // 4 bytes serial, 2 bytes status
             SCUINT dwRecvLength = 6;
 
-            rv_l = transmit(handle.first, pbSendBuffer, 5, pbRecvBuffer, dwRecvLength);
-            if (rv_l == SCARD_S_SUCCESS && dwRecvLength >= 4) {
+            rv = transmit(handle.first, pbSendBuffer, 5, pbRecvBuffer, dwRecvLength);
+            if (rv == SCARD_S_SUCCESS && dwRecvLength >= 4) {
                 // The serial number is encoded MSB first
                 serial = (pbRecvBuffer[0] << 24) + (pbRecvBuffer[1] << 16) + (pbRecvBuffer[2] << 8) + (pbRecvBuffer[3]);
             }
 
-            return rv_l;
+            return rv;
         });
     }
 
@@ -368,16 +365,18 @@ namespace
      *
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t openKeySerial(const unsigned int target_serial,
-                          SCARDCONTEXT& context,
-                          const QList<QByteArray>& aid_codes,
-                          SCardAID* handle)
+    RETVAL openKeySerial(const unsigned int target_serial,
+                         SCARDCONTEXT& context,
+                         const QList<QByteArray>& aid_codes,
+                         SCardAID* handle)
     {
         // Ensure the Smartcard API handle is still valid
-        ensureValidContext(context);
+        auto rv = ensureValidContext(context);
+        if (rv != SCARD_S_SUCCESS) {
+            return rv;
+        }
 
-        int32_t rv = SCARD_S_SUCCESS;
-        QList<QString> readers_list = getReaders(context);
+        auto readers_list = getReaders(context);
 
         // Iterate all connected readers
         foreach (const QString& reader_name, readers_list) {
@@ -392,40 +391,34 @@ namespace
 
             if (rv == SCARD_S_SUCCESS) {
                 // Read the ATR record of the card
-                uint8_t pbAtr[MAX_ATR_SIZE] = {0};
                 char pbReader[MAX_READERNAME] = {0};
-                SCUINT dwAtrLen = sizeof(pbAtr);
                 SCUINT dwReaderLen = sizeof(pbReader);
-                SCUINT dwState = 0, dwProt = SCARD_PROTOCOL_UNDEFINED;
+                SCUINT dwState = 0;
+                SCUINT dwProt = SCARD_PROTOCOL_UNDEFINED;
+                uint8_t pbAtr[MAX_ATR_SIZE] = {0};
+                SCUINT dwAtrLen = sizeof(pbAtr);
+
                 rv = SCardStatus(hCard, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
-                if (rv == SCARD_S_SUCCESS) {
-                    if (dwProt == SCARD_PROTOCOL_T0 || dwProt == SCARD_PROTOCOL_T1) {
-                        // Find which AID to use
-                        SCardAID satr;
-                        if (findAID(hCard, aid_codes, satr)) {
-                            unsigned int serial = 0;
-                            // Read the serial number of the card
-                            getSerial(satr, serial);
-                            if (serial == target_serial) {
-                                handle->first = satr.first;
-                                handle->second = satr.second;
-                                return SCARD_S_SUCCESS;
-                            }
+                if (rv == SCARD_S_SUCCESS && (dwProt == SCARD_PROTOCOL_T0 || dwProt == SCARD_PROTOCOL_T1)) {
+                    // Find which AID to use
+                    SCardAID satr;
+                    if (findAID(hCard, aid_codes, satr)) {
+                        unsigned int serial = 0;
+                        // Read the serial number of the card
+                        getSerial(satr, serial);
+                        if (serial == target_serial) {
+                            handle->first = satr.first;
+                            handle->second = satr.second;
+                            return SCARD_S_SUCCESS;
                         }
-                    } else {
-                        rv = static_cast<int32_t>(SCARD_E_PROTO_MISMATCH);
                     }
                 }
 
-                rv = SCardDisconnect(hCard, SCARD_LEAVE_CARD);
+                SCardDisconnect(hCard, SCARD_LEAVE_CARD);
             }
         }
 
-        if (rv != SCARD_S_SUCCESS) {
-            return rv;
-        }
-
-        return static_cast<int32_t>(SCARD_E_NO_SMARTCARD);
+        return SCARD_E_NO_SMARTCARD;
     }
 
     /***
@@ -438,27 +431,27 @@ namespace
      *
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t getStatus(const SCardAID& handle, uint8_t version[3])
+    RETVAL getStatus(const SCardAID& handle, uint8_t version[3])
     {
         // Ensure the transmission is retransmitted after card resets
         return transactRetry(handle.first, [&handle, &version]() {
-            int32_t rv_l = static_cast<int32_t>(SCARD_E_UNEXPECTED);
+            auto rv = selectApplet(handle);
 
             // Ensure that the card is always selected before sending the command
-            if ((rv_l = selectApplet(handle)) != SCARD_S_SUCCESS) {
-                return rv_l;
+            if (rv != SCARD_S_SUCCESS) {
+                return rv;
             }
 
             uint8_t pbSendBuffer[5] = {CLA_ISO, INS_STATUS, 0, 0, 6};
             uint8_t pbRecvBuffer[8] = {0}; // 4 bytes serial, 2 bytes other stuff, 2 bytes status
             SCUINT dwRecvLength = 8;
 
-            rv_l = transmit(handle.first, pbSendBuffer, 5, pbRecvBuffer, dwRecvLength);
-            if (rv_l == SCARD_S_SUCCESS && dwRecvLength >= 3) {
+            rv = transmit(handle.first, pbSendBuffer, 5, pbRecvBuffer, dwRecvLength);
+            if (rv == SCARD_S_SUCCESS && dwRecvLength >= 3) {
                 memcpy(version, pbRecvBuffer, 3);
             }
 
-            return rv_l;
+            return rv;
         });
     }
 
@@ -475,15 +468,15 @@ namespace
      *
      * @return SCARD_S_SUCCESS on success
      */
-    int32_t getHMAC(const SCardAID& handle, uint8_t slot_cmd, const uint8_t input[64], uint8_t output[20])
+    RETVAL getHMAC(const SCardAID& handle, uint8_t slot_cmd, const uint8_t input[64], uint8_t output[20])
     {
         // Ensure the transmission is retransmitted after card resets
         return transactRetry(handle.first, [&handle, &slot_cmd, &input, &output]() {
-            int32_t rv_l = static_cast<int32_t>(SCARD_E_UNEXPECTED);
+            auto rv = selectApplet(handle);
 
             // Ensure that the card is always selected before sending the command
-            if ((rv_l = selectApplet(handle)) != SCARD_S_SUCCESS) {
-                return rv_l;
+            if (rv != SCARD_S_SUCCESS) {
+                return rv;
             }
 
             uint8_t pbSendBuffer[5 + 64] = {CLA_ISO, INS_API_REQ, slot_cmd, 0, 64};
@@ -491,19 +484,19 @@ namespace
             uint8_t pbRecvBuffer[22] = {0}; // 20 bytes hmac, 2 bytes status
             SCUINT dwRecvLength = 22;
 
-            rv_l = transmit(handle.first, pbSendBuffer, 5 + 64, pbRecvBuffer, dwRecvLength);
-            if (rv_l == SCARD_S_SUCCESS && dwRecvLength >= 20) {
+            rv = transmit(handle.first, pbSendBuffer, 5 + 64, pbRecvBuffer, dwRecvLength);
+            if (rv == SCARD_S_SUCCESS && dwRecvLength >= 20) {
                 memcpy(output, pbRecvBuffer, 20);
             }
 
             // If transmission is successful but no data is returned
             // then the slot is probably not configured for HMAC-SHA1
             // but for OTP or nothing instead
-            if (rv_l == SCARD_S_SUCCESS && dwRecvLength != 22) {
-                return static_cast<int32_t>(SCARD_E_FILE_NOT_FOUND);
+            if (rv == SCARD_S_SUCCESS && dwRecvLength != 22) {
+                return SCARD_E_FILE_NOT_FOUND;
             }
 
-            return rv_l;
+            return rv;
         });
     }
 
@@ -555,7 +548,7 @@ void YubiKeyInterfacePCSC::findValidKeys()
         m_foundKeys.clear();
 
         // Connect to each reader and look for cards
-        QList<QString> readers_list = getReaders(m_sc_context);
+        auto readers_list = getReaders(m_sc_context);
         foreach (const QString& reader_name, readers_list) {
 
             /* Some Yubikeys present their PCSC interface via USB as well
@@ -571,71 +564,69 @@ void YubiKeyInterfacePCSC::findValidKeys()
 
             SCARDHANDLE hCard;
             SCUINT dwActiveProtocol = SCARD_PROTOCOL_UNDEFINED;
-            int32_t rv = SCardConnect(m_sc_context,
-                                      reader_name.toStdString().c_str(),
-                                      SCARD_SHARE_SHARED,
-                                      SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
-                                      &hCard,
-                                      &dwActiveProtocol);
+            auto rv = SCardConnect(m_sc_context,
+                                   reader_name.toStdString().c_str(),
+                                   SCARD_SHARE_SHARED,
+                                   SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
+                                   &hCard,
+                                   &dwActiveProtocol);
 
             if (rv == SCARD_S_SUCCESS) {
                 // Read the potocol and the ATR record
-                uint8_t pbAtr[MAX_ATR_SIZE] = {0};
                 char pbReader[MAX_READERNAME] = {0};
-                SCUINT dwAtrLen = sizeof(pbAtr);
                 SCUINT dwReaderLen = sizeof(pbReader);
-                SCUINT dwState = 0, dwProt = SCARD_PROTOCOL_UNDEFINED;
-                rv = SCardStatus(hCard, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
-                if (rv == SCARD_S_SUCCESS) {
-                    // Check for a valid protocol
-                    if (dwProt == SCARD_PROTOCOL_T0 || dwProt == SCARD_PROTOCOL_T1) {
-                        // Find which AID to use
-                        SCardAID satr;
-                        if (findAID(hCard, m_aid_codes, satr)) {
-                            // Build the UI name using the display name found in the ATR map
-                            QByteArray atr = QByteArray(reinterpret_cast<char*>(pbAtr), dwAtrLen);
-                            QString name = "Unknown Key";
-                            if (m_atr_names.contains(atr)) {
-                                name = m_atr_names.value(atr);
-                            }
-                            // Add the firmware version and the serial number
-                            uint8_t version[3] = {0};
-                            getStatus(satr, version);
-                            name += QString(" v%1.%2.%3")
-                                        .arg(QString::number(version[0]),
-                                             QString::number(version[1]),
-                                             QString::number(version[2]));
-                            unsigned int serial = 0;
-                            getSerial(satr, serial);
+                SCUINT dwState = 0;
+                SCUINT dwProt = SCARD_PROTOCOL_UNDEFINED;
+                uint8_t pbAtr[MAX_ATR_SIZE] = {0};
+                SCUINT dwAtrLen = sizeof(pbAtr);
 
-                            /* This variable indicates that the key is locked / timed out.
-                                When using the key via NFC, the user has to re-present the key to clear the timeout.
-                                Also, the key can be programmatically reset (see below).
-                                When using the key via USB (where the Yubikey presents as a PCSC reader in itself),
-                                the non-HMAC-SHA1 slots (eg. OTP) are incorrectly recognized as locked HMAC-SHA1 slots.
-                                Due to this conundrum, we exclude "locked" keys from the key enumeration,
-                                but only if the reader is the "virtual yubikey reader device".
-                                This also has the nice side effect of de-duplicating interfaces when a key
-                                Is connected via USB and also accessible via PCSC */
-                            bool wouldBlock = false;
-                            /* When the key is Used via NFC, the lock state / time-out is cleared when
-                                The smartcard connection is re-established / the applet is selected
-                                So the next call to performTestChallenge actually clears the lock.
-                                Due to this, the key is unlocked and we display it as such.
-                                When the key times out in the time between the key listing and
-                                the database unlock /save, an intercation request will be displayed. */
-                            for (int slot = 1; slot <= 2; ++slot) {
-                                if (performTestChallenge(&satr, slot, &wouldBlock)) {
-                                    auto display = tr("(PCSC) %1 [%2] Challenge-Response - Slot %3")
-                                                       .arg(name, QString::number(serial), QString::number(slot));
-                                    m_foundKeys.insert(serial, {slot, display});
-                                }
+                rv = SCardStatus(hCard, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
+                if (rv == SCARD_S_SUCCESS && (dwProt == SCARD_PROTOCOL_T0 || dwProt == SCARD_PROTOCOL_T1)) {
+                    // Find which AID to use
+                    SCardAID satr;
+                    if (findAID(hCard, m_aid_codes, satr)) {
+                        // Build the UI name using the display name found in the ATR map
+                        QByteArray atr(reinterpret_cast<char*>(pbAtr), dwAtrLen);
+                        QString name("Unknown Key");
+                        if (m_atr_names.contains(atr)) {
+                            name = m_atr_names.value(atr);
+                        }
+                        // Add the firmware version and the serial number
+                        uint8_t version[3] = {0};
+                        getStatus(satr, version);
+                        name += QString(" v%1.%2.%3")
+                                    .arg(QString::number(version[0]),
+                                         QString::number(version[1]),
+                                         QString::number(version[2]));
+
+                        unsigned int serial = 0;
+                        getSerial(satr, serial);
+
+                        /* This variable indicates that the key is locked / timed out.
+                            When using the key via NFC, the user has to re-present the key to clear the timeout.
+                            Also, the key can be programmatically reset (see below).
+                            When using the key via USB (where the Yubikey presents as a PCSC reader in itself),
+                            the non-HMAC-SHA1 slots (eg. OTP) are incorrectly recognized as locked HMAC-SHA1 slots.
+                            Due to this conundrum, we exclude "locked" keys from the key enumeration,
+                            but only if the reader is the "virtual yubikey reader device".
+                            This also has the nice side effect of de-duplicating interfaces when a key
+                            Is connected via USB and also accessible via PCSC */
+                        bool wouldBlock = false;
+                        /* When the key is used via NFC, the lock state / time-out is cleared when
+                            the smartcard connection is re-established / the applet is selected
+                            so the next call to performTestChallenge actually clears the lock.
+                            Due to this the key is unlocked, and we display it as such.
+                            When the key times out in the time between the key listing and
+                            the database unlock /save, an interaction request will be displayed. */
+                        for (int slot = 1; slot <= 2; ++slot) {
+                            if (performTestChallenge(&satr, slot, &wouldBlock)) {
+                                auto display = tr("(PCSC) %1 [%2] Challenge-Response - Slot %3")
+                                                   .arg(name, QString::number(serial), QString::number(slot));
+                                m_foundKeys.insert(serial, {slot, display});
                             }
                         }
                     }
                 }
-
-                rv = SCardDisconnect(hCard, SCARD_LEAVE_CARD);
             }
         }
 
@@ -648,8 +639,8 @@ bool YubiKeyInterfacePCSC::testChallenge(YubiKeySlot slot, bool* wouldBlock)
 {
     bool ret = false;
     SCardAID hCard;
-    int32_t rv = openKeySerial(slot.first, m_sc_context, m_aid_codes, &hCard);
 
+    auto rv = openKeySerial(slot.first, m_sc_context, m_aid_codes, &hCard);
     if (rv == SCARD_S_SUCCESS) {
         ret = performTestChallenge(&hCard, slot.second, wouldBlock);
         SCardDisconnect(hCard.first, SCARD_LEAVE_CARD);
@@ -694,7 +685,7 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
     SCardAID hCard;
     int tries = 20; // 5 seconds, test every 250 ms
     while (tries > 0) {
-        int32_t rv = openKeySerial(slot.first, m_sc_context, m_aid_codes, &hCard);
+        auto rv = openKeySerial(slot.first, m_sc_context, m_aid_codes, &hCard);
         // Key with specified serial number is found
         if (rv == SCARD_S_SUCCESS) {
             auto ret = performChallenge(&hCard, slot.second, true, challenge, response);
@@ -758,19 +749,16 @@ YubiKey::ChallengeResult YubiKeyInterfacePCSC::performChallenge(void* key,
         paddedChallenge.append(QByteArray(padLen, padLen));
     }
 
-    const unsigned char* c;
-    unsigned char* r;
-    c = reinterpret_cast<const unsigned char*>(paddedChallenge.constData());
-    r = reinterpret_cast<unsigned char*>(response.data());
+    auto c = reinterpret_cast<const unsigned char*>(paddedChallenge.constData());
+    auto r = reinterpret_cast<unsigned char*>(response.data());
 
-    int32_t rv = getHMAC(*static_cast<SCardAID*>(key), yk_cmd, c, r);
-
+    auto rv = getHMAC(*static_cast<SCardAID*>(key), yk_cmd, c, r);
     if (rv != SCARD_S_SUCCESS) {
-        if (rv == static_cast<int32_t>(SCARD_W_CARD_NOT_AUTHENTICATED)) {
+        if (rv == SCARD_W_CARD_NOT_AUTHENTICATED) {
             m_error = tr("Hardware key is locked or timed out. Unlock or re-present it to continue.");
             return YubiKey::ChallengeResult::YCR_WOULDBLOCK;
-        } else if (rv == static_cast<int32_t>(SCARD_E_FILE_NOT_FOUND)) {
-            m_error = tr("Hardware key was not found or is misconfigured.");
+        } else if (rv == SCARD_E_FILE_NOT_FOUND) {
+            m_error = tr("Hardware key was not found or is not configured.");
         } else {
             m_error =
                 tr("Failed to complete a challenge-response, the PCSC error code was: %1").arg(QString::number(rv));
