@@ -100,7 +100,7 @@ void TestGui::initTestCase()
 
     Application::bootstrap();
 
-    m_mainWindow.reset(new MainWindow());
+    m_mainWindow.reset(new MainWindow(false));
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
     m_mainWindow->resize(1024, 768);

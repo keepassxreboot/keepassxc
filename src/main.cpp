@@ -74,6 +74,7 @@ int main(int argc, char** argv)
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
                                                 QObject::tr("allow app screen recordering and screenshots"));
+    QCommandLineOption minimizeOption("minimize", QObject::tr("Start application minimized or minimize existing running application"));
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
@@ -84,6 +85,7 @@ int main(int argc, char** argv)
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
     parser.addOption(debugInfoOption);
+    parser.addOption(minimizeOption);
 
     if (osUtils->canPreventScreenCapture()) {
         parser.addOption(allowScreenCaptureOption);
@@ -120,6 +122,8 @@ int main(int argc, char** argv)
                 qWarning() << QObject::tr("Database failed to lock.").toUtf8().constData();
                 return EXIT_FAILURE;
             }
+        } else if(parser.isSet(minimizeOption)) {
+            app.sendMinimize();
         } else {
             if (!fileNames.isEmpty()) {
                 app.sendFileNamesToRunningInstance(fileNames);
@@ -147,7 +151,7 @@ int main(int argc, char** argv)
 
     Application::bootstrap();
 
-    MainWindow mainWindow;
+    MainWindow mainWindow(parser.isSet(minimizeOption));
 
 #ifndef QT_DEBUG
     // Disable screen capture if capable and not explicitly allowed

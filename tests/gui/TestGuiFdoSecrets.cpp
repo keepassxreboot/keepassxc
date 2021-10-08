@@ -147,7 +147,7 @@ void TestGuiFdoSecrets::initTestCase()
 
     Application::bootstrap();
 
-    m_mainWindow.reset(new MainWindow());
+    m_mainWindow.reset(new MainWindow(false));
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     VERIFY(m_tabWidget);
     m_plugin = FdoSecretsPlugin::getPlugin();

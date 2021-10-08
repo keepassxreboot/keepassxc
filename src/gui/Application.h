@@ -50,6 +50,7 @@ public:
 
     bool sendFileNamesToRunningInstance(const QStringList& fileNames);
     bool sendLockToInstance();
+    bool sendMinimize();
 
     void restart();
 
@@ -84,7 +85,8 @@ private:
 
     enum IpcMessages {
         OPEN_DATABASE = 1,
-        LOCK_DATABASE = 2
+        LOCK_DATABASE = 2,
+        MINIMIZE
     };
 };
 

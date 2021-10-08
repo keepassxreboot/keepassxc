@@ -321,6 +321,10 @@ void Application::socketReadyRead()
     case IpcMessages::LOCK_DATABASE:
         getMainWindow()->lockAllDatabases();
         break;
+
+    case IpcMessages::MINIMIZE:
+        getMainWindow()->minimizeOrHide();
+        break;
     }
 
     socket->deleteLater();
@@ -414,4 +418,33 @@ void Application::restart()
     }
 
     exit(RESTART_EXITCODE);
+}
+
+/**
+ * Send minimization message to the running UI instance
+ *
+ * @return true if all operations succeeded (connection made, data sent, connection closed)
+ */
+bool Application::sendMinimize()
+{
+    QLocalSocket client;
+    client.connectToServer(m_socketName);
+    const bool connected = client.waitForConnected(WaitTimeoutMSec);
+    if (!connected) {
+        return false;
+    }
+
+    QByteArray data;
+    QDataStream out(&data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_0);
+    out << quint32(0); // reserve space for block size
+    out << quint32(IpcMessages::MINIMIZE);
+    out.device()->seek(0);
+    out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
+
+    const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
+    client.disconnectFromServer();
+    const bool disconnected =
+        client.state() == QLocalSocket::UnconnectedState || client.waitForDisconnected(WaitTimeoutMSec);
+    return writeOk && disconnected;
 }
