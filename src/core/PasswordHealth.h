@@ -82,6 +82,12 @@ public:
         return m_entropy;
     }
 
+    struct Length
+    {
+        static const int Short = 8;
+        static const int Long = 25;
+    };
+
 private:
     int m_score = 0;
     double m_entropy = 0.0;

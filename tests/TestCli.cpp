@@ -858,6 +858,22 @@ void TestCli::testInfo()
     QCOMPARE(m_stdout->readLine(), QByteArray("Cipher: AES 256-bit\n"));
     QCOMPARE(m_stdout->readLine(), QByteArray("KDF: AES (6000 rounds)\n"));
     QCOMPARE(m_stdout->readLine(), QByteArray("Recycle bin is enabled.\n"));
+    QVERIFY(m_stdout->readLine().contains(m_dbFile->fileName().toUtf8()));
+    QVERIFY(m_stdout->readLine().contains(
+        QByteArray("Database created: "))); // date changes often, so just test for the first part
+    QVERIFY(m_stdout->readLine().contains(
+        QByteArray("Last saved: "))); // date changes often, so just test for the first part
+    QCOMPARE(m_stdout->readLine(), QByteArray("Unsaved changes: no\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Number of groups: 8\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Number of entries: 2\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Number of expired entries: 0\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Unique passwords: 2\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Non-unique passwords: 0\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Maximum password reuse: 1\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Number of short passwords: 0\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Number of weak passwords: 2\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Entries excluded from reports: 0\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Average password length: 11 characters\n"));
 
     // Test with quiet option.
     setInput("a");

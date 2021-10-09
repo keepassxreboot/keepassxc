@@ -7561,6 +7561,74 @@ Please consider generating a new key file.</source>
         <source>Use custom character set</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
