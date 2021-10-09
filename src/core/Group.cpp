@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -274,6 +274,35 @@ CustomData* Group::customData()
 const CustomData* Group::customData() const
 {
     return m_customData;
+}
+
+Group::TriState Group::resolveCustomDataTriState(const QString& key, bool checkParent) const
+{
+    // If not defined, check our parent up to the root group
+    if (!m_customData->contains(key)) {
+        if (!m_parent || !checkParent) {
+            return Inherit;
+        } else {
+            return m_parent->resolveCustomDataTriState(key);
+        }
+    }
+
+    return m_customData->value(key) == TRUE_STR ? Enable : Disable;
+}
+
+void Group::setCustomDataTriState(const QString& key, const Group::TriState& value)
+{
+    switch (value) {
+    case Enable:
+        m_customData->set(key, TRUE_STR);
+        break;
+    case Disable:
+        m_customData->set(key, FALSE_STR);
+        break;
+    case Inherit:
+        m_customData->remove(key);
+        break;
+    }
 }
 
 bool Group::equals(const Group* other, CompareItemOptions options) const

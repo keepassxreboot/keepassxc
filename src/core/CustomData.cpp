@@ -80,11 +80,13 @@ void CustomData::remove(const QString& key)
 {
     emit aboutToBeRemoved(key);
 
-    m_data.remove(key);
+    if (m_data.contains(key)) {
+        m_data.remove(key);
+        updateLastModified();
+        emitModified();
+    }
 
-    updateLastModified();
     emit removed(key);
-    emitModified();
 }
 
 void CustomData::rename(const QString& oldKey, const QString& newKey)
@@ -180,7 +182,7 @@ int CustomData::dataSize() const
 
 void CustomData::updateLastModified()
 {
-    if (m_data.size() == 1 && m_data.contains(LastModified)) {
+    if (m_data.isEmpty() || (m_data.size() == 1 && m_data.contains(LastModified))) {
         m_data.remove(LastModified);
         return;
     }

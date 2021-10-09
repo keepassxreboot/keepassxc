@@ -390,18 +390,19 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
     for (auto* entry : searchEntries(siteUrlStr, formUrlStr, keyList)) {
-        if (entry->customData()->contains(BrowserService::OPTION_HIDE_ENTRY)
-            && entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == TRUE_STR) {
+        auto entryCustomData = entry->customData();
+
+        if (!httpAuth
+            && ((entryCustomData->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)
+                 && entryCustomData->value(BrowserService::OPTION_ONLY_HTTP_AUTH) == TRUE_STR)
+                || entry->group()->resolveCustomDataTriState(BrowserService::OPTION_ONLY_HTTP_AUTH) == Group::Enable)) {
             continue;
         }
 
-        if (!httpAuth && entry->customData()->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)
-            && entry->customData()->value(BrowserService::OPTION_ONLY_HTTP_AUTH) == TRUE_STR) {
-            continue;
-        }
-
-        if (httpAuth && entry->customData()->contains(BrowserService::OPTION_NOT_HTTP_AUTH)
-            && entry->customData()->value(BrowserService::OPTION_NOT_HTTP_AUTH) == TRUE_STR) {
+        if (httpAuth
+            && ((entryCustomData->contains(BrowserService::OPTION_NOT_HTTP_AUTH)
+                 && entryCustomData->value(BrowserService::OPTION_NOT_HTTP_AUTH) == TRUE_STR)
+                || entry->group()->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH) == Group::Enable)) {
             continue;
         }
 
@@ -614,12 +615,15 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
     }
 
     for (const auto& group : rootGroup->groupsRecursive(true)) {
-        if (group->isRecycled() || !group->resolveSearchingEnabled()) {
+        if (group->isRecycled()
+            || group->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY) == Group::Enable) {
             continue;
         }
 
         for (auto* entry : group->entries()) {
-            if (entry->isRecycled()) {
+            if (entry->isRecycled()
+                || (entry->customData()->contains(BrowserService::OPTION_HIDE_ENTRY)
+                    && entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == TRUE_STR)) {
                 continue;
             }
 
@@ -870,8 +874,13 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
         res["expired"] = TRUE_STR;
     }
 
-    if (entry->customData()->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
-        res["skipAutoSubmit"] = entry->customData()->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT);
+    auto skipAutoSubmitGroup = entry->group()->resolveCustomDataTriState(BrowserService::OPTION_SKIP_AUTO_SUBMIT);
+    if (skipAutoSubmitGroup == Group::Inherit) {
+        if (entry->customData()->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
+            res["skipAutoSubmit"] = entry->customData()->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT);
+        }
+    } else {
+        res["skipAutoSubmit"] = skipAutoSubmitGroup == Group::Enable ? TRUE_STR : FALSE_STR;
     }
 
     if (browserSettings()->supportKphFields()) {

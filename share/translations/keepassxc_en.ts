@@ -2513,6 +2513,10 @@ Would you like to correct it?</source>
 Would you like to correct it?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Some Browser Integration settings are overridden by group settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2968,8 +2972,55 @@ Would you like to correct it?</source>
         <translation>Inherit from parent group (%1)</translation>
     </message>
     <message>
-        <source>Entry has unsaved changes</source>
-        <translation type="unfinished">Entry has unsaved changes</translation>
+        <source>Browser Integration</source>
+        <translation type="unfinished">Browser Integration</translation>
+    </message>
+    <message>
+        <source>Group has unsaved changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditGroupWidgetBrowser</name>
+    <message>
+        <source>Edit Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide entries from browser extension:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide entries from browser extension toggle for this and sub groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip Auto-Submit for entries:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip Auto-Submit toggle for this and sub groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use entries only with HTTP Basic Auth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only HTTP Auth toggle for this and sub groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not use entries with HTTP Basic Auth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not use HTTP Auth toggle for this and sub groups</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
