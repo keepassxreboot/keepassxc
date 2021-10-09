@@ -92,14 +92,17 @@ void TestTools::testEnvSubstitute()
 void TestTools::testValidUuid()
 {
     auto validUuid = Tools::uuidToHex(QUuid::createUuid());
-    auto nonValidUuid = "1234567890abcdef1234567890abcdef";
+    auto nonRfc4122Uuid = "1234567890abcdef1234567890abcdef";
     auto emptyUuid = QString();
     auto shortUuid = validUuid.left(10);
     auto longUuid = validUuid + "baddata";
     auto nonHexUuid = Tools::uuidToHex(QUuid::createUuid()).replace(0, 1, 'p');
 
     QVERIFY(Tools::isValidUuid(validUuid));
-    QVERIFY(not Tools::isValidUuid(nonValidUuid));
+    /* Before https://github.com/keepassxreboot/keepassxc/pull/1770/, entry
+     * UUIDs are simply random 16-byte strings. Such older entries should be
+     * accepted as well. */
+    QVERIFY(Tools::isValidUuid(nonRfc4122Uuid));
     QVERIFY(not Tools::isValidUuid(emptyUuid));
     QVERIFY(not Tools::isValidUuid(shortUuid));
     QVERIFY(not Tools::isValidUuid(longUuid));
