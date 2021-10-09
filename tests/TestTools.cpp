@@ -48,7 +48,7 @@ void TestTools::testHumanReadableFileSize()
 void TestTools::testIsHex()
 {
     QVERIFY(Tools::isHex("0123456789abcdefABCDEF"));
-    QVERIFY(not Tools::isHex(QByteArray("0xnothex")));
+    QVERIFY(!Tools::isHex(QByteArray("0xnothex")));
 }
 
 void TestTools::testIsBase64()
@@ -59,9 +59,9 @@ void TestTools::testIsBase64()
     QVERIFY(Tools::isBase64(QByteArray("abcd9876MN==")));
     QVERIFY(Tools::isBase64(QByteArray("abcd9876DEFGhijkMNO=")));
     QVERIFY(Tools::isBase64(QByteArray("abcd987/DEFGh+jk/NO=")));
-    QVERIFY(not Tools::isBase64(QByteArray("abcd123==")));
-    QVERIFY(not Tools::isBase64(QByteArray("abc_")));
-    QVERIFY(not Tools::isBase64(QByteArray("123")));
+    QVERIFY(!Tools::isBase64(QByteArray("abcd123==")));
+    QVERIFY(!Tools::isBase64(QByteArray("abc_")));
+    QVERIFY(!Tools::isBase64(QByteArray("123")));
 }
 
 void TestTools::testEnvSubstitute()
@@ -92,16 +92,19 @@ void TestTools::testEnvSubstitute()
 void TestTools::testValidUuid()
 {
     auto validUuid = Tools::uuidToHex(QUuid::createUuid());
-    auto nonValidUuid = "1234567890abcdef1234567890abcdef";
+    auto nonRfc4122Uuid = "1234567890abcdef1234567890abcdef";
     auto emptyUuid = QString();
     auto shortUuid = validUuid.left(10);
     auto longUuid = validUuid + "baddata";
     auto nonHexUuid = Tools::uuidToHex(QUuid::createUuid()).replace(0, 1, 'p');
 
     QVERIFY(Tools::isValidUuid(validUuid));
-    QVERIFY(not Tools::isValidUuid(nonValidUuid));
-    QVERIFY(not Tools::isValidUuid(emptyUuid));
-    QVERIFY(not Tools::isValidUuid(shortUuid));
-    QVERIFY(not Tools::isValidUuid(longUuid));
-    QVERIFY(not Tools::isValidUuid(nonHexUuid));
+    /* Before https://github.com/keepassxreboot/keepassxc/pull/1770/, entry
+     * UUIDs are simply random 16-byte strings. Such older entries should be
+     * accepted as well. */
+    QVERIFY(Tools::isValidUuid(nonRfc4122Uuid));
+    QVERIFY(!Tools::isValidUuid(emptyUuid));
+    QVERIFY(!Tools::isValidUuid(shortUuid));
+    QVERIFY(!Tools::isValidUuid(longUuid));
+    QVERIFY(!Tools::isValidUuid(nonHexUuid));
 }

@@ -324,7 +324,7 @@ namespace Tools
         }
 
         const auto uuid = hexToUuid(uuidStr);
-        if (uuid.isNull() || uuid.version() == QUuid::VerUnknown) {
+        if (uuid.isNull()) {
             return false;
         }
 
