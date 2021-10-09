@@ -83,7 +83,8 @@ private:
     QLocalServer m_lockServer;
     QString m_socketName;
 
-    enum IpcMessages {
+    enum IpcMessages
+    {
         OPEN_DATABASE = 1,
         LOCK_DATABASE = 2,
         MINIMIZE

@@ -7273,6 +7273,10 @@ Please consider generating a new key file.</source>
         <source>%1 (invalid executable path)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Start application minimized or minimize existing running application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>

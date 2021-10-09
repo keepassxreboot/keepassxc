@@ -74,7 +74,8 @@ int main(int argc, char** argv)
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
                                                 QObject::tr("allow app screen recordering and screenshots"));
-    QCommandLineOption minimizeOption("minimize", QObject::tr("Start application minimized or minimize existing running application"));
+    QCommandLineOption minimizeOption(
+        "minimize", QObject::tr("Start application minimized or minimize existing running application"));
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
@@ -122,7 +123,7 @@ int main(int argc, char** argv)
                 qWarning() << QObject::tr("Database failed to lock.").toUtf8().constData();
                 return EXIT_FAILURE;
             }
-        } else if(parser.isSet(minimizeOption)) {
+        } else if (parser.isSet(minimizeOption)) {
             app.sendMinimize();
         } else {
             if (!fileNames.isEmpty()) {
