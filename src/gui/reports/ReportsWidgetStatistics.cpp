@@ -19,137 +19,13 @@
 #include "ui_ReportsWidgetStatistics.h"
 
 #include "core/AsyncTask.h"
+#include "core/DatabaseStats.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
 #include "gui/Icons.h"
 
-#include <QFileInfo>
 #include <QStandardItemModel>
-
-namespace
-{
-    class Stats
-    {
-    public:
-        // The statistics we collect:
-        QDateTime modified; // File modification time
-        int groupCount = 0; // Number of groups in the database
-        int entryCount = 0; // Number of entries (across all groups)
-        int expiredEntries = 0; // Number of expired entries
-        int excludedEntries = 0; // Number of known bad entries
-        int weakPasswords = 0; // Number of weak or poor passwords
-        int shortPasswords = 0; // Number of passwords 8 characters or less in size
-        int uniquePasswords = 0; // Number of unique passwords
-        int reusedPasswords = 0; // Number of non-unique passwords
-        int totalPasswordLength = 0; // Total length of all passwords
-
-        // Ctor does all the work
-        explicit Stats(QSharedPointer<Database> db)
-            : modified(QFileInfo(db->filePath()).lastModified())
-            , m_db(db)
-        {
-            gatherStats(db->rootGroup()->groupsRecursive(true));
-        }
-
-        // Get average password length
-        int averagePwdLength() const
-        {
-            const auto passwords = uniquePasswords + reusedPasswords;
-            return passwords == 0 ? 0 : std::round(totalPasswordLength / double(passwords));
-        }
-
-        // Get max number of password reuse (=how many entries
-        // share the same password)
-        int maxPwdReuse() const
-        {
-            int ret = 0;
-            for (const auto& count : m_passwords) {
-                ret = std::max(ret, count);
-            }
-            return ret;
-        }
-
-        // A warning sign is displayed if one of the
-        // following returns true.
-        bool isAnyExpired() const
-        {
-            return expiredEntries > 0;
-        }
-
-        bool areTooManyPwdsReused() const
-        {
-            return reusedPasswords > uniquePasswords / 10;
-        }
-
-        bool arePwdsReusedTooOften() const
-        {
-            return maxPwdReuse() > 3;
-        }
-
-        bool isAvgPwdTooShort() const
-        {
-            return averagePwdLength() < 10;
-        }
-
-    private:
-        QSharedPointer<Database> m_db;
-        QHash<QString, int> m_passwords;
-
-        void gatherStats(const QList<Group*>& groups)
-        {
-            auto checker = HealthChecker(m_db);
-
-            for (const auto* group : groups) {
-                // Don't count anything in the recycle bin
-                if (group->isRecycled()) {
-                    continue;
-                }
-
-                ++groupCount;
-
-                for (const auto* entry : group->entries()) {
-                    // Don't count anything in the recycle bin
-                    if (entry->isRecycled()) {
-                        continue;
-                    }
-
-                    ++entryCount;
-
-                    if (entry->isExpired()) {
-                        ++expiredEntries;
-                    }
-
-                    // Get password statistics
-                    const auto pwd = entry->password();
-                    if (!pwd.isEmpty()) {
-                        if (!m_passwords.contains(pwd)) {
-                            ++uniquePasswords;
-                        } else {
-                            ++reusedPasswords;
-                        }
-
-                        if (pwd.size() < 8) {
-                            ++shortPasswords;
-                        }
-
-                        // Speed up Zxcvbn process by excluding very long passwords and most passphrases
-                        if (pwd.size() < 25 && checker.evaluate(entry)->quality() <= PasswordHealth::Quality::Weak) {
-                            ++weakPasswords;
-                        }
-
-                        if (entry->excludeFromReports()) {
-                            ++excludedEntries;
-                        }
-
-                        totalPasswordLength += pwd.size();
-                        m_passwords[pwd]++;
-                    }
-                }
-            }
-        }
-    };
-} // namespace
 
 ReportsWidgetStatistics::ReportsWidgetStatistics(QWidget* parent)
     : QWidget(parent)
@@ -205,7 +81,8 @@ void ReportsWidgetStatistics::showEvent(QShowEvent* event)
 
 void ReportsWidgetStatistics::calculateStats()
 {
-    const QScopedPointer<Stats> stats(AsyncTask::runAndWaitForFuture([this] { return new Stats(m_db); }));
+    const QScopedPointer<DatabaseStats> stats(
+        AsyncTask::runAndWaitForFuture([this] { return new DatabaseStats(m_db); }));
 
     m_referencesModel->clear();
     addStatsRow(tr("Database name"), m_db->metadata()->name());
