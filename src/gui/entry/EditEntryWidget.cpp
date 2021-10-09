@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/TimeDelta.h"
 #ifdef WITH_XC_SSHAGENT
@@ -263,6 +264,11 @@ void EditEntryWidget::setupBrowser()
         m_additionalURLsDataModel->setEntryAttributes(m_entryAttributes);
         m_browserUi->additionalURLsView->setModel(m_additionalURLsDataModel);
 
+        m_browserUi->messageWidget->setCloseButtonVisible(false);
+        m_browserUi->messageWidget->setAutoHideTimeout(-1);
+        m_browserUi->messageWidget->setAnimate(false);
+        m_browserUi->messageWidget->setVisible(false);
+
         // Use a custom item delegate to align the icon to the right side
         auto iconDelegate = new URLModelIconDelegate(m_browserUi->additionalURLsView);
         m_browserUi->additionalURLsView->setItemDelegate(iconDelegate);
@@ -296,14 +302,26 @@ void EditEntryWidget::updateBrowser()
         return;
     }
 
-    auto skip = m_browserUi->skipAutoSubmitCheckbox->isChecked();
-    auto hide = m_browserUi->hideEntryCheckbox->isChecked();
-    auto onlyHttpAuth = m_browserUi->onlyHttpAuthCheckbox->isChecked();
-    auto notHttpAuth = m_browserUi->notHttpAuthCheckbox->isChecked();
-    m_customData->set(BrowserService::OPTION_SKIP_AUTO_SUBMIT, (skip ? TRUE_STR : FALSE_STR));
-    m_customData->set(BrowserService::OPTION_HIDE_ENTRY, (hide ? TRUE_STR : FALSE_STR));
-    m_customData->set(BrowserService::OPTION_ONLY_HTTP_AUTH, (onlyHttpAuth ? TRUE_STR : FALSE_STR));
-    m_customData->set(BrowserService::OPTION_NOT_HTTP_AUTH, (notHttpAuth ? TRUE_STR : FALSE_STR));
+    // Only update the custom data if no group level settings are used (checkbox is enabled)
+    if (m_browserUi->hideEntryCheckbox->isEnabled()) {
+        auto hide = m_browserUi->hideEntryCheckbox->isChecked();
+        m_customData->set(BrowserService::OPTION_HIDE_ENTRY, (hide ? TRUE_STR : FALSE_STR));
+    }
+
+    if (m_browserUi->skipAutoSubmitCheckbox->isEnabled()) {
+        auto skip = m_browserUi->skipAutoSubmitCheckbox->isChecked();
+        m_customData->set(BrowserService::OPTION_SKIP_AUTO_SUBMIT, (skip ? TRUE_STR : FALSE_STR));
+    }
+
+    if (m_browserUi->onlyHttpAuthCheckbox->isEnabled()) {
+        auto onlyHttpAuth = m_browserUi->onlyHttpAuthCheckbox->isChecked();
+        m_customData->set(BrowserService::OPTION_ONLY_HTTP_AUTH, (onlyHttpAuth ? TRUE_STR : FALSE_STR));
+    }
+
+    if (m_browserUi->notHttpAuthCheckbox->isEnabled()) {
+        auto notHttpAuth = m_browserUi->notHttpAuthCheckbox->isChecked();
+        m_customData->set(BrowserService::OPTION_NOT_HTTP_AUTH, (notHttpAuth ? TRUE_STR : FALSE_STR));
+    }
 }
 
 void EditEntryWidget::insertURL()
@@ -941,34 +959,55 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
             setupBrowser();
         }
 
-        if (m_customData->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
-            // clang-format off
-            m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == TRUE_STR);
-            // clang-format on
-        } else {
-            m_browserUi->skipAutoSubmitCheckbox->setChecked(false);
+        auto hideEntriesCheckBoxEnabled = true;
+        auto skipAutoSubmitCheckBoxEnabled = true;
+        auto onlyHttpAuthCheckBoxEnabled = true;
+        auto notHttpAuthCheckBoxEnabled = true;
+        auto hideEntries = false;
+        auto skipAutoSubmit = false;
+        auto onlyHttpAuth = false;
+        auto notHttpAuth = false;
+
+        const auto group = m_entry->group();
+        if (group) {
+            hideEntries = group->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY) == Group::Enable;
+            skipAutoSubmit = group->resolveCustomDataTriState(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == Group::Enable;
+            onlyHttpAuth = group->resolveCustomDataTriState(BrowserService::OPTION_ONLY_HTTP_AUTH) == Group::Enable;
+            notHttpAuth = group->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH) == Group::Enable;
+
+            hideEntriesCheckBoxEnabled =
+                group->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY) == Group::Inherit;
+            skipAutoSubmitCheckBoxEnabled =
+                group->resolveCustomDataTriState(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == Group::Inherit;
+            onlyHttpAuthCheckBoxEnabled =
+                group->resolveCustomDataTriState(BrowserService::OPTION_ONLY_HTTP_AUTH) == Group::Inherit;
+            notHttpAuthCheckBoxEnabled =
+                group->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH) == Group::Inherit;
         }
 
-        if (m_customData->contains(BrowserService::OPTION_HIDE_ENTRY)) {
-            m_browserUi->hideEntryCheckbox->setChecked(m_customData->value(BrowserService::OPTION_HIDE_ENTRY)
-                                                       == TRUE_STR);
-        } else {
-            m_browserUi->hideEntryCheckbox->setChecked(false);
+        // Show information about group level settings
+        if (!hideEntriesCheckBoxEnabled || !skipAutoSubmitCheckBoxEnabled || !onlyHttpAuthCheckBoxEnabled
+            || !notHttpAuthCheckBoxEnabled) {
+            m_browserUi->messageWidget->showMessage(
+                tr("Some Browser Integration settings are overridden by group settings."), MessageWidget::Information);
+            m_browserUi->messageWidget->setVisible(true);
         }
 
-        if (m_customData->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)) {
-            m_browserUi->onlyHttpAuthCheckbox->setChecked(m_customData->value(BrowserService::OPTION_ONLY_HTTP_AUTH)
-                                                          == TRUE_STR);
-        } else {
-            m_browserUi->onlyHttpAuthCheckbox->setChecked(false);
-        }
-
-        if (m_customData->contains(BrowserService::OPTION_NOT_HTTP_AUTH)) {
-            m_browserUi->notHttpAuthCheckbox->setChecked(m_customData->value(BrowserService::OPTION_NOT_HTTP_AUTH)
-                                                         == TRUE_STR);
-        } else {
-            m_browserUi->notHttpAuthCheckbox->setChecked(false);
-        }
+        // Disable checkboxes based on group level settings
+        updateBrowserIntegrationCheckbox(
+            m_browserUi->hideEntryCheckbox, hideEntriesCheckBoxEnabled, hideEntries, BrowserService::OPTION_HIDE_ENTRY);
+        updateBrowserIntegrationCheckbox(m_browserUi->skipAutoSubmitCheckbox,
+                                         skipAutoSubmitCheckBoxEnabled,
+                                         skipAutoSubmit,
+                                         BrowserService::OPTION_SKIP_AUTO_SUBMIT);
+        updateBrowserIntegrationCheckbox(m_browserUi->onlyHttpAuthCheckbox,
+                                         onlyHttpAuthCheckBoxEnabled,
+                                         onlyHttpAuth,
+                                         BrowserService::OPTION_ONLY_HTTP_AUTH);
+        updateBrowserIntegrationCheckbox(m_browserUi->notHttpAuthCheckbox,
+                                         notHttpAuthCheckBoxEnabled,
+                                         notHttpAuth,
+                                         BrowserService::OPTION_NOT_HTTP_AUTH);
 
         m_browserUi->addURLButton->setEnabled(!m_history);
         m_browserUi->removeURLButton->setEnabled(false);
@@ -1161,6 +1200,28 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         m_sshAgentSettings.toEntry(entry);
     }
 #endif
+}
+
+void EditEntryWidget::updateBrowserIntegrationCheckbox(QCheckBox* checkBox,
+                                                       bool enabled,
+                                                       bool value,
+                                                       const QString& option)
+{
+    auto block = checkBox->signalsBlocked();
+    checkBox->blockSignals(true);
+
+    if (enabled) {
+        if (m_customData->contains(option)) {
+            checkBox->setChecked(m_customData->value(option) == TRUE_STR);
+        } else {
+            checkBox->setChecked(false);
+        }
+    } else {
+        checkBox->setChecked(value);
+    }
+    checkBox->setEnabled(enabled);
+
+    checkBox->blockSignals(block);
 }
 
 void EditEntryWidget::cancel()

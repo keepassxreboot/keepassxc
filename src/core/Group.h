@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -101,6 +101,8 @@ public:
     bool isEmpty() const;
     CustomData* customData();
     const CustomData* customData() const;
+    Group::TriState resolveCustomDataTriState(const QString& key, bool checkParent = true) const;
+    void setCustomDataTriState(const QString& key, const Group::TriState& value);
 
     bool equals(const Group* other, CompareItemOptions options) const;
 

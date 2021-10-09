@@ -31,22 +31,32 @@
     </widget>
    </item>
    <item>
+    <widget class="MessageWidget" name="messageWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>General</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QCheckBox" name="skipAutoSubmitCheckbox">
+       <widget class="QCheckBox" name="hideEntryCheckbox">
         <property name="text">
-         <string>Skip Auto-Submit for this entry</string>
+         <string>Hide this entry from the browser extension</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="hideEntryCheckbox">
+       <widget class="QCheckBox" name="skipAutoSubmitCheckbox">
         <property name="text">
-         <string>Hide this entry from the browser extension</string>
+         <string>Skip Auto-Submit for this entry</string>
         </property>
        </widget>
       </item>
@@ -69,16 +79,16 @@
          <string>Do not use this entry with HTTP Basic Auth</string>
         </property>
        </widget>
-      </item>      
+      </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox_3">
-      <property name="title">
-       <string>Additional URL's</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_1">
+     <property name="title">
+      <string>Additional URL's</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_1">
       <item>
        <widget class="QListView" name="additionalURLsView">
         <property name="minimumSize">
@@ -147,9 +157,15 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>skipAutoSubmitCheckbox</tabstop>
-  <tabstop>hideEntryCheckbox</tabstop>
   <tabstop>onlyHttpAuthCheckbox</tabstop>
   <tabstop>additionalURLsView</tabstop>
   <tabstop>addURLButton</tabstop>

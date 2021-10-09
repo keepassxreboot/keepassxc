@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditGroupWidgetBrowser</class>
+ <widget class="QScrollArea" name="EditGroupWidgetBrowser">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>539</width>
+    <height>523</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Edit Group</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::NoFrame</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Plain</enum>
+  </property>
+  <property name="horizontalScrollBarPolicy">
+   <enum>Qt::ScrollBarAlwaysOff</enum>
+  </property>
+  <property name="sizeAdjustPolicy">
+   <enum>QAbstractScrollArea::AdjustToContents</enum>
+  </property>
+  <property name="widgetResizable">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="container">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>539</width>
+     <height>523</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_1">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>These settings affect to the group's behaviour with the browser extension.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,1" columnstretch="0,1" rowminimumheight="0,0,0,1">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="horizontalSpacing">
+       <number>10</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>8</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="browserIntegrationHideEntriesLabel">
+        <property name="text">
+         <string>Hide entries from browser extension:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="browserIntegrationHideEntriesComboBox">
+        <property name="accessibleName">
+         <string>Hide entries from browser extension toggle for this and sub groups</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="browserIntegrationSkipAutoSubmitLabel">
+        <property name="text">
+         <string>Skip Auto-Submit for entries:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="browserIntegrationSkipAutoSubmitComboBox">
+        <property name="accessibleName">
+         <string>Skip Auto-Submit toggle for this and sub groups</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="browserIntegrationOnlyHttpAuthLabel">
+        <property name="text">
+         <string>Use entries only with HTTP Basic Auth:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="browserIntegrationOnlyHttpAuthComboBox">
+        <property name="accessibleName">
+         <string>Only HTTP Auth toggle for this and sub groups</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="browserIntegrationNotHttpAuthLabel">
+        <property name="text">
+         <string>Do not use entries with HTTP Basic Auth:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="browserIntegrationNotHttpAuthComboBox">
+        <property name="accessibleName">
+         <string>Do not use HTTP Auth toggle for this and sub groups</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <spacer name="verticalSpacer_1">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>browserIntegrationHideEntriesComboBox</tabstop>
+  <tabstop>browserIntegrationSkipAutoSubmitComboBox</tabstop>
+  <tabstop>browserIntegrationOnlyHttpAuthComboBox</tabstop>
+  <tabstop>browserIntegrationNotHttpAuthComboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
