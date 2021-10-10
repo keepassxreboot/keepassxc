@@ -39,82 +39,87 @@ namespace
         return QString("<img src=\"data:image/png;base64,") + a.toBase64() + "\"/>";
     }
 
-    QString formatHTML(const QString& value)
-    {
-        return value.toHtmlEscaped().replace(" ", "&nbsp;").replace('\n', "<br>");
-    }
-
-    QString formatAttribute(const QString& key,
-                            const QString& value,
-                            const QString& classname,
-                            const QString& templt = QString("<tr><th>%1</th><td class=\"%2\">%3</td></tr>"))
-    {
-        const auto& formatted_attribute = templt;
-        if (!value.isEmpty()) {
-            // Format key as well -> Translations into other languages may have non-standard chars
-            return formatted_attribute.arg(formatHTML(key), classname, formatHTML(value));
-        }
-        return {};
-    }
-
-    QString formatAttribute(const Entry& entry,
-                            const QString& key,
-                            const QString& value,
-                            const QString& classname,
-                            const QString& templt = QString("<tr><th>%1</th><td class=\"%2\">%3</td></tr>"))
-    {
-        if (value.isEmpty())
-            return {};
-        return formatAttribute(key, entry.resolveMultiplePlaceholders(value), classname, templt);
-    }
-
     QString formatEntry(const Entry& entry)
     {
         // Here we collect the table rows with this entry's data fields
         QString item;
 
         // Output the fixed fields
-        item.append(formatAttribute(entry, QObject::tr("User name"), entry.username(), "username"));
-
-        item.append(formatAttribute(entry, QObject::tr("Password"), entry.password(), "password"));
-
-        if (!entry.url().isEmpty()) {
-            constexpr auto maxlen = 100;
-            QString displayedURL(formatHTML(entry.url()).mid(0, maxlen));
-
-            if (displayedURL.size() == maxlen) {
-                displayedURL.append("&hellip;");
-            }
-
-            item.append(formatAttribute(entry,
-                                        QObject::tr("URL"),
-                                        entry.url(),
-                                        "url",
-                                        R"(<tr><th>%1</th><td class="%2"><a href="%3">%4</a></td></tr>)")
-                            .arg(entry.resolveMultiplePlaceholders(displayedURL)));
+        const auto& u = entry.username();
+        if (!u.isEmpty()) {
+            item.append("<tr><th>");
+            item.append(QObject::tr("User name"));
+            item.append("</th><td class=\"username\">");
+            item.append(entry.username().toHtmlEscaped());
+            item.append("</td></tr>");
         }
 
-        item.append(formatAttribute(entry, QObject::tr("Notes"), entry.notes(), "notes"));
+        const auto& p = entry.password();
+        if (!p.isEmpty()) {
+            item.append("<tr><th>");
+            item.append(QObject::tr("Password"));
+            item.append("</th><td class=\"password\">");
+            item.append(entry.password().toHtmlEscaped());
+            item.append("</td></tr>");
+        }
+
+        const auto& r = entry.url();
+        if (!r.isEmpty()) {
+            item.append("<tr><th>");
+            item.append(QObject::tr("URL"));
+            item.append("</th><td class=\"url\"><a href=\"");
+            item.append(r.toHtmlEscaped());
+            item.append("\">");
+
+            // Restrict the length of what we display of the URL -
+            // even from a paper backup, nobody will every type in
+            // more than 100 characters of a URL
+            constexpr auto maxlen = 100;
+            if (r.size() <= maxlen) {
+                item.append(r.toHtmlEscaped());
+            } else {
+                item.append(r.mid(0, maxlen).toHtmlEscaped());
+                item.append("&hellip;");
+            }
+
+            item.append("</a></td></tr>");
+        }
+
+        const auto& n = entry.notes();
+        if (!n.isEmpty()) {
+            item.append("<tr><th>");
+            item.append(QObject::tr("Notes"));
+            item.append("</th><td class=\"notes\">");
+            item.append(entry.notes().toHtmlEscaped().replace("\n", "<br>"));
+            item.append("</td></tr>");
+        }
 
         // Now add the attributes (if there are any)
         const auto* const attr = entry.attributes();
         if (attr && !attr->customKeys().isEmpty()) {
             for (const auto& key : attr->customKeys()) {
-                item.append(formatAttribute(entry, key, attr->value(key), "attr"));
+                item.append("<tr><th>");
+                item.append(key.toHtmlEscaped());
+                item.append("</th><td class=\"attr\">");
+                item.append(attr->value(key).toHtmlEscaped().replace(" ", "&nbsp;").replace("\n", "<br>"));
+                item.append("</td></tr>");
             }
         }
         return item;
     }
 } // namespace
 
-bool HtmlExporter::exportDatabase(const QString& filename, const QSharedPointer<const Database>& db)
+bool HtmlExporter::exportDatabase(const QString& filename,
+                                  const QSharedPointer<const Database>& db,
+                                  bool sorted,
+                                  bool ascending)
 {
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         m_error = file.errorString();
         return false;
     }
-    return exportDatabase(&file, db);
+    return exportDatabase(&file, db, sorted, ascending);
 }
 
 QString HtmlExporter::errorString() const
@@ -122,7 +127,10 @@ QString HtmlExporter::errorString() const
     return m_error;
 }
 
-bool HtmlExporter::exportDatabase(QIODevice* device, const QSharedPointer<const Database>& db)
+bool HtmlExporter::exportDatabase(QIODevice* device,
+                                  const QSharedPointer<const Database>& db,
+                                  bool sorted,
+                                  bool ascending)
 {
     const auto meta = db->metadata();
     if (!meta) {
@@ -171,7 +179,7 @@ bool HtmlExporter::exportDatabase(QIODevice* device, const QSharedPointer<const 
     }
 
     if (db->rootGroup()) {
-        if (!writeGroup(*device, *db->rootGroup())) {
+        if (!writeGroup(*device, *db->rootGroup(), QString(), sorted, ascending)) {
             return false;
         }
     }
@@ -184,7 +192,7 @@ bool HtmlExporter::exportDatabase(QIODevice* device, const QSharedPointer<const 
     return true;
 }
 
-bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString path)
+bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString path, bool sorted, bool ascending)
 {
     // Don't output the recycle bin
     if (&group == group.database()->metadata()->recycleBin()) {
@@ -199,10 +207,8 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
     // Output the header for this group (but only if there are
     // any notes or  entries in this group, otherwise we'd get
     // a header with nothing after it, which looks stupid)
-    const auto& entries = group.entries();
     const auto notes = group.notes();
-    if (!entries.empty() || !notes.isEmpty()) {
-
+    if (!group.entries().empty() || !notes.isEmpty()) {
         // Header line
         auto header = QString("<hr><h2>");
         header.append(PixmapToHTML(Icons::groupIconPixmap(&group, IconSize::Medium)));
@@ -227,8 +233,16 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
     // Begin the table for the entries in this group
     auto table = QString("<table width=\"100%\">");
 
+    auto entries = group.entries();
+    if (sorted) {
+        std::sort(entries.begin(), entries.end(), [&](Entry* lhs, Entry* rhs) {
+            int cmp = lhs->title().compare(rhs->title(), Qt::CaseInsensitive);
+            return ascending ? cmp < 0 : cmp > 0;
+        });
+    }
+
     // Output the entries in this group
-    for (const auto entry : entries) {
+    for (const auto* entry : entries) {
         auto formatted_entry = formatEntry(*entry);
 
         if (formatted_entry.isEmpty())
@@ -252,10 +266,17 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
         return false;
     }
 
+    auto children = group.children();
+    if (sorted) {
+        std::sort(children.begin(), children.end(), [&](Group* lhs, Group* rhs) {
+            int cmp = lhs->name().compare(rhs->name(), Qt::CaseInsensitive);
+            return ascending ? cmp < 0 : cmp > 0;
+        });
+    }
+
     // Recursively output the child groups
-    const auto& children = group.children();
-    for (const auto child : children) {
-        if (child && !writeGroup(device, *child, path)) {
+    for (const auto* child : children) {
+        if (child && !writeGroup(device, *child, path, sorted, ascending)) {
             return false;
         }
     }

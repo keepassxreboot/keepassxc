@@ -30,6 +30,7 @@
 #include "gui/FileDialog.h"
 #include "gui/HtmlExporter.h"
 #include "gui/MessageBox.h"
+#include "gui/export/ExportDialog.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -440,6 +441,11 @@ void DatabaseTabWidget::exportToCsv()
     }
 }
 
+void DatabaseTabWidget::handleExportError(const QString& reason)
+{
+    emit messageGlobal(tr("Writing the HTML file failed.").append("\n").append(reason), MessageWidget::Error);
+}
+
 void DatabaseTabWidget::exportToHtml()
 {
     auto db = databaseWidgetFromIndex(currentIndex())->database();
@@ -448,23 +454,9 @@ void DatabaseTabWidget::exportToHtml()
         return;
     }
 
-    if (!warnOnExport()) {
-        return;
-    }
-
-    const QString fileName = fileDialog()->getSaveFileName(
-        this, tr("Export database to HTML file"), FileDialog::getLastDir("html"), tr("HTML file").append(" (*.html)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
-
-    FileDialog::saveLastDir("html", fileName, true);
-
-    HtmlExporter htmlExporter;
-    if (!htmlExporter.exportDatabase(fileName, db)) {
-        emit messageGlobal(tr("Writing the HTML file failed.").append("\n").append(htmlExporter.errorString()),
-                           MessageWidget::Error);
-    }
+    auto exportDialog = new ExportDialog(db, this);
+    connect(exportDialog, SIGNAL(exportFailed(QString)), SLOT(handleExportError(const QString&)));
+    exportDialog->exec();
 }
 
 bool DatabaseTabWidget::warnOnExport()

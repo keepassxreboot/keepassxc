@@ -28,12 +28,22 @@ class QIODevice;
 class HtmlExporter
 {
 public:
-    bool exportDatabase(const QString& filename, const QSharedPointer<const Database>& db);
+    bool exportDatabase(const QString& filename,
+                        const QSharedPointer<const Database>& db,
+                        bool sorted = true,
+                        bool ascending = true);
     QString errorString() const;
 
 private:
-    bool exportDatabase(QIODevice* device, const QSharedPointer<const Database>& db);
-    bool writeGroup(QIODevice& device, const Group& group, QString path = QString());
+    bool exportDatabase(QIODevice* device,
+                        const QSharedPointer<const Database>& db,
+                        bool sorted = true,
+                        bool ascending = true);
+    bool writeGroup(QIODevice& device,
+                    const Group& group,
+                    QString path = QString(),
+                    bool sorted = true,
+                    bool ascending = true);
 
     QString m_error;
 };
