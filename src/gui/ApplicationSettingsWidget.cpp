@@ -113,7 +113,12 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_generalUi->alternativeSaveComboBox, SLOT(setEnabled(bool)));
 
     connect(m_generalUi->enableAutoSaveTimerCheckBox, SIGNAL(toggled(bool)), m_generalUi->autoSaveIntervalSpinBox, SLOT(setEnabled(bool)));
-    m_generalUi->autoSaveIntervalSpinBox->setRange(1, static_cast<int>(std::min(std::chrono::milliseconds::max().count(), static_cast<long>(std::numeric_limits<int>::max()))));
+    auto max_ms = std::chrono::milliseconds::max().count();
+    if(max_ms > std::numeric_limits<int>::max()) {
+        m_generalUi->autoSaveIntervalSpinBox->setRange(1, std::numeric_limits<int>::max());
+    } else {
+        m_generalUi->autoSaveIntervalSpinBox->setRange(1, static_cast<int>(max_ms));
+    }
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
