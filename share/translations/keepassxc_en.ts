@@ -440,6 +440,14 @@
         <source>Directly write to database file (dangerous)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically save the database every X seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>

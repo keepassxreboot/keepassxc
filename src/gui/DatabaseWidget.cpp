@@ -2093,7 +2093,7 @@ void DatabaseWidget::onAutosaveTriggered()
 }
 void DatabaseWidget::resetAutosaveTimer()
 {
-    if(config()->get(Config::AutoSaveTimerEnabled).toBool()) {
+    if (config()->get(Config::AutoSaveTimerEnabled).toBool()) {
         // We do not create a one-shot timer here on purpose. The timer is reset only on successful saves,
         // hence, we would not restart upon failure.
         m_autosaveTimer.start(config()->get(Config::AutoSaveInterval).toInt());
@@ -2104,7 +2104,7 @@ void DatabaseWidget::resetAutosaveTimer()
 
 void DatabaseWidget::onConfigChanged(Config::ConfigKey key)
 {
-    if(key == Config::AutoSaveInterval || key == Config::AutoSaveTimerEnabled) {
+    if (key == Config::AutoSaveInterval || key == Config::AutoSaveTimerEnabled) {
         resetAutosaveTimer();
     }
 }
