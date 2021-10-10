@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ public:
     virtual bool setPreventScreenCapture(QWindow* window, bool allow) const;
 
 signals:
-    void globalShortcutTriggered(const QString& name);
+    void globalShortcutTriggered(const QString& name, const QString& search = {});
 
     /**
      * Indicates platform UI theme change (light mode to dark mode).

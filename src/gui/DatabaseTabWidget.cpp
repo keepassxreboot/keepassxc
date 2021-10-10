@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActiveDatabaseChanged()));
     connect(this, SIGNAL(activeDatabaseChanged(DatabaseWidget*)),
             m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
-    connect(autoType(), SIGNAL(globalAutoTypeTriggered()), SLOT(performGlobalAutoType()));
+    connect(autoType(), SIGNAL(globalAutoTypeTriggered(const QString&)), SLOT(performGlobalAutoType(const QString&)));
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
     connect(autoType(), SIGNAL(autotypeRejected()), SLOT(relockPendingDatabase()));
     connect(m_databaseOpenDialog.data(), &DatabaseOpenDialog::dialogFinished,
@@ -790,28 +790,30 @@ void DatabaseTabWidget::emitDatabaseLockChanged()
     }
 }
 
-void DatabaseTabWidget::performGlobalAutoType()
+void DatabaseTabWidget::performGlobalAutoType(const QString& search)
 {
     auto currentDbWidget = currentDatabaseWidget();
     if (!currentDbWidget) {
-        // no open databases, nothing to do
+        // No open databases, nothing to do
         return;
     } else if (currentDbWidget->isLocked()) {
         // Current database tab is locked, match behavior of browser unlock - prompt with
         // the unlock dialog even if there are additional unlocked open database tabs.
+        currentDbWidget->setSearchStringForAutoType(search);
         unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent::AutoType);
     } else {
-        // current database is unlocked, use it for AutoType along with any other unlocked databases
+        // Current database is unlocked, use it for AutoType along with any other unlocked databases
         QList<QSharedPointer<Database>> unlockedDatabases;
         for (int i = 0, c = count(); i < c; ++i) {
             auto* dbWidget = databaseWidgetFromIndex(i);
             if (!dbWidget->isLocked()) {
+                dbWidget->setSearchStringForAutoType(search);
                 unlockedDatabases.append(dbWidget->database());
             }
         }
 
         Q_ASSERT(!unlockedDatabases.isEmpty());
-        autoType()->performGlobalAutoType(unlockedDatabases);
+        autoType()->performGlobalAutoType(unlockedDatabases, search);
     }
 }
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ private slots:
     void testGetBase64FromKey();
     void testIncrementNonce();
 
-    void testBaseDomain();
+    void testTopLevelDomain();
+    void testIsIpAddress();
     void testSortPriority();
     void testSortPriority_data();
     void testSearchEntries();

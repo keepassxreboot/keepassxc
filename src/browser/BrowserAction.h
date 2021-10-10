@@ -44,6 +44,7 @@ private:
     QJsonObject handleCreateNewGroup(const QJsonObject& json, const QString& action);
     QJsonObject handleGetTotp(const QJsonObject& json, const QString& action);
     QJsonObject handleDeleteEntry(const QJsonObject& json, const QString& action);
+    QJsonObject handleGlobalAutoType(const QJsonObject& json, const QString& action);
 
     QJsonObject buildMessage(const QString& nonce) const;
     QJsonObject buildResponse(const QString& action, const QJsonObject& message, const QString& nonce);
@@ -63,6 +64,8 @@ private:
     QString incrementNonce(const QString& nonce);
 
 private:
+    static const int MaxUrlLength;
+
     QString m_clientPublicKey;
     QString m_publicKey;
     QString m_secretKey;

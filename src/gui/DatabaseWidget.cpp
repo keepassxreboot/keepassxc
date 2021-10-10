@@ -186,7 +186,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_opVaultOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
-    connect(this, SIGNAL(requestGlobalAutoType()), parent, SLOT(performGlobalAutoType()));
+    connect(this, SIGNAL(requestGlobalAutoType(const QString&)), parent, SLOT(performGlobalAutoType(const QString&)));
     // clang-format on
 
     connectDatabaseSignals();
@@ -307,6 +307,11 @@ QList<int> DatabaseWidget::previewSplitterSizes() const
 void DatabaseWidget::setPreviewSplitterSizes(const QList<int>& sizes)
 {
     m_previewSplitter->setSizes(sizes);
+}
+
+void DatabaseWidget::setSearchStringForAutoType(const QString& search)
+{
+    m_searchStringForAutoType = search;
 }
 
 /**
@@ -1118,7 +1123,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         // Rather than starting AutoType directly for this database, signal the parent DatabaseTabWidget to
         // restart AutoType now that this database is unlocked, so that other open+unlocked databases
         // can be included in the search.
-        emit requestGlobalAutoType();
+        emit requestGlobalAutoType(m_searchStringForAutoType);
     }
 }
 

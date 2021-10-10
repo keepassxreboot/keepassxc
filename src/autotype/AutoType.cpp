@@ -164,11 +164,14 @@ void AutoType::loadPlugin(const QString& pluginPath)
         if (m_plugin) {
             if (m_plugin->isAvailable()) {
                 m_executor = m_plugin->createExecutor();
-                connect(osUtils, &OSUtilsBase::globalShortcutTriggered, this, [this](const QString& name) {
-                    if (name == "autotype") {
-                        startGlobalAutoType();
-                    }
-                });
+                connect(osUtils,
+                        &OSUtilsBase::globalShortcutTriggered,
+                        this,
+                        [this](const QString& name, const QString& initialSearch) {
+                            if (name == "autotype") {
+                                startGlobalAutoType(initialSearch);
+                            }
+                        });
             } else {
                 unloadPlugin();
             }
@@ -359,7 +362,7 @@ void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& se
     executeAutoTypeActions(entry, hideWindow, sequence);
 }
 
-void AutoType::startGlobalAutoType()
+void AutoType::startGlobalAutoType(const QString& search)
 {
     // Never Auto-Type into KeePassXC itself
     if (qApp->focusWindow()) {
@@ -382,6 +385,7 @@ void AutoType::startGlobalAutoType()
                 tr("KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global "
                    "Auto-Type. Screen Recording is necessary to use the window title to find entries. If you "
                    "already granted permission, you may have to restart KeePassXC."));
+            qDebug() << "Oh noes macOS.";
             return;
         }
     }
@@ -397,14 +401,14 @@ void AutoType::startGlobalAutoType()
     }
 #endif
 
-    emit globalAutoTypeTriggered();
+    emit globalAutoTypeTriggered(search);
 }
 
 /**
  * Global Autotype entry-point function
  * Perform global Auto-Type on the active window
  */
-void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbList)
+void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbList, const QString& search)
 {
     if (!m_plugin) {
         return;
@@ -448,6 +452,10 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
 
         auto* selectDialog = new AutoTypeSelectDialog();
         selectDialog->setMatches(matchList, dbList);
+
+        if (!search.isEmpty()) {
+            selectDialog->setSearchString(search);
+        }
 
         connect(getMainWindow(), &MainWindow::databaseLocked, selectDialog, &AutoTypeSelectDialog::reject);
         connect(selectDialog, &AutoTypeSelectDialog::matchActivated, this, [this](const AutoTypeMatch& match) {
