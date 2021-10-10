@@ -121,6 +121,7 @@ public:
     void setMainSplitterSizes(const QList<int>& sizes);
     QList<int> previewSplitterSizes() const;
     void setPreviewSplitterSizes(const QList<int>& sizes);
+    void setSearchStringForAutoType(const QString& search);
 
 signals:
     // relayed Database signals
@@ -151,7 +152,7 @@ signals:
     void previewSplitterSizesChanged();
     void entryViewStateChanged();
     void clearSearch();
-    void requestGlobalAutoType();
+    void requestGlobalAutoType(const QString& search);
 
 public slots:
     bool lock();
@@ -297,6 +298,9 @@ private:
 
     // Autoreload
     bool m_blockAutoSave;
+
+    // Auto-Type related
+    QString m_searchStringForAutoType;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

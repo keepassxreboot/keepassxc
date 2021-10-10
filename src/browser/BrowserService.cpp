@@ -18,7 +18,6 @@
  */
 
 #include "BrowserService.h"
-
 #include "BrowserAccessControlDialog.h"
 #include "BrowserAction.h"
 #include "BrowserEntryConfig.h"
@@ -28,6 +27,7 @@
 #include "core/Tools.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
+#include "gui/osutils/OSUtils.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -761,6 +761,11 @@ void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> db)
     }
 }
 
+void BrowserService::requestGlobalAutoType(const QString& search)
+{
+    emit osUtils->globalShortcutTriggered("autotype", search);
+}
+
 QList<Entry*>
 BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& siteUrlStr, const QString& formUrlStr)
 {
@@ -1012,6 +1017,12 @@ bool BrowserService::schemeFound(const QString& url)
     return !address.scheme().isEmpty();
 }
 
+bool BrowserService::isIpAddress(const QString& host) const
+{
+    QHostAddress address(host);
+    return address.protocol() == QAbstractSocket::IPv4Protocol || address.protocol() == QAbstractSocket::IPv6Protocol;
+}
+
 bool BrowserService::removeFirstDomain(QString& hostname)
 {
     int pos = hostname.indexOf(".");
@@ -1088,7 +1099,7 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& siteUrlSt
     }
 
     // Match the base domain
-    if (baseDomain(siteQUrl.host()) != baseDomain(entryQUrl.host())) {
+    if (getTopLevelDomainFromUrl(siteQUrl.host()) != getTopLevelDomainFromUrl(entryQUrl.host())) {
         return false;
     }
 
@@ -1105,15 +1116,14 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& siteUrlSt
  *
  * Returns the base domain, e.g. https://another.example.co.uk -> example.co.uk
  */
-QString BrowserService::baseDomain(const QString& hostname) const
+QString BrowserService::getTopLevelDomainFromUrl(const QString& url) const
 {
-    QUrl qurl = QUrl::fromUserInput(hostname);
+    QUrl qurl = QUrl::fromUserInput(url);
     QString host = qurl.host();
 
     // If the hostname is an IP address, return it directly
-    QHostAddress hostAddress(hostname);
-    if (!hostAddress.isNull()) {
-        return hostname;
+    if (isIpAddress(host)) {
+        return host;
     }
 
     if (host.isEmpty() || !host.contains(qurl.topLevelDomain())) {

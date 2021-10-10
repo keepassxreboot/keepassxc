@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -112,22 +112,49 @@ void TestBrowser::testIncrementNonce()
 /**
  * Tests for BrowserService
  */
-void TestBrowser::testBaseDomain()
+void TestBrowser::testTopLevelDomain()
 {
     QString url1 = "https://another.example.co.uk";
     QString url2 = "https://www.example.com";
     QString url3 = "http://test.net";
     QString url4 = "http://so.many.subdomains.co.jp";
+    QString url5 = "https://192.168.0.1";
+    QString url6 = "https://192.168.0.1:8000";
 
-    QString res1 = m_browserService->baseDomain(url1);
-    QString res2 = m_browserService->baseDomain(url2);
-    QString res3 = m_browserService->baseDomain(url3);
-    QString res4 = m_browserService->baseDomain(url4);
+    QString res1 = m_browserService->getTopLevelDomainFromUrl(url1);
+    QString res2 = m_browserService->getTopLevelDomainFromUrl(url2);
+    QString res3 = m_browserService->getTopLevelDomainFromUrl(url3);
+    QString res4 = m_browserService->getTopLevelDomainFromUrl(url4);
+    QString res5 = m_browserService->getTopLevelDomainFromUrl(url5);
+    QString res6 = m_browserService->getTopLevelDomainFromUrl(url6);
 
     QCOMPARE(res1, QString("example.co.uk"));
     QCOMPARE(res2, QString("example.com"));
     QCOMPARE(res3, QString("test.net"));
     QCOMPARE(res4, QString("subdomains.co.jp"));
+    QCOMPARE(res5, QString("192.168.0.1"));
+    QCOMPARE(res6, QString("192.168.0.1"));
+}
+
+void TestBrowser::testIsIpAddress()
+{
+    auto host1 = "example.com"; // Not valid
+    auto host2 = "192.168.0.1";
+    auto host3 = "278.21.2.0"; // Not valid
+    auto host4 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
+    auto host5 = "2001:db8:0:1:1:1:1:1";
+    auto host6 = "fe80::1ff:fe23:4567:890a";
+    auto host7 = "2001:20::1";
+    auto host8 = "2001:0db8:85y3:0000:0000:8a2e:0370:7334"; // Not valid
+
+    QVERIFY(!m_browserService->isIpAddress(host1));
+    QVERIFY(m_browserService->isIpAddress(host2));
+    QVERIFY(!m_browserService->isIpAddress(host3));
+    QVERIFY(m_browserService->isIpAddress(host4));
+    QVERIFY(m_browserService->isIpAddress(host5));
+    QVERIFY(m_browserService->isIpAddress(host6));
+    QVERIFY(m_browserService->isIpAddress(host7));
+    QVERIFY(!m_browserService->isIpAddress(host8));
 }
 
 void TestBrowser::testSortPriority()
