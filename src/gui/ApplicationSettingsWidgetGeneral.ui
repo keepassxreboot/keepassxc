@@ -274,7 +274,7 @@
               <item>
                <widget class="QCheckBox" name="enableAutoSaveTimerCheckBox">
                 <property name="text">
-                 <string>Automatically save the database every X seconds</string>
+                 <string>Automatically save the database every X minutes</string>
                 </property>
                </widget>
               </item>
@@ -311,14 +311,14 @@
                    <number>10000</number>
                   </property>
                   <property name="value">
-                   <number>300</number>
+                   <number>5</number>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QLabel" name="label">
                   <property name="text">
-                   <string>Seconds</string>
+                   <string>Minutes</string>
                   </property>
                   <property name="buddy">
                    <cstring>autoSaveIntervalSpinBox</cstring>

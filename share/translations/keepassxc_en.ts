@@ -441,11 +441,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automatically save the database every X seconds</source>
+        <source>Automatically save the database every X minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Seconds</source>
+        <source>Minutes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

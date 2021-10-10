@@ -195,7 +195,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get(Config::AutoSaveAfterEveryChange).toBool());
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get(Config::AutoSaveOnExit).toBool());
     m_generalUi->enableAutoSaveTimerCheckBox->setChecked(config()->get(Config::AutoSaveTimerEnabled).toBool());
-    m_generalUi->autoSaveIntervalSpinBox->setValue(config()->get(Config::AutoSaveInterval).toInt() / 1000);
+    m_generalUi->autoSaveIntervalSpinBox->setValue(config()->get(Config::AutoSaveInterval).toInt() / (1000 * 60));
     m_generalUi->autoSaveNonDataChangesCheckBox->setChecked(config()->get(Config::AutoSaveNonDataChanges).toBool());
     m_generalUi->backupBeforeSaveCheckBox->setChecked(config()->get(Config::BackupBeforeSave).toBool());
     m_generalUi->useAlternativeSaveCheckBox->setChecked(!config()->get(Config::UseAtomicSaves).toBool());
@@ -335,7 +335,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::AutoSaveAfterEveryChange, m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set(Config::AutoSaveOnExit, m_generalUi->autoSaveOnExitCheckBox->isChecked());
     config()->set(Config::AutoSaveTimerEnabled, m_generalUi->enableAutoSaveTimerCheckBox->isChecked());
-    config()->set(Config::AutoSaveInterval, m_generalUi->autoSaveIntervalSpinBox->value() * 1000);
+    config()->set(Config::AutoSaveInterval, m_generalUi->autoSaveIntervalSpinBox->value() * (1000 * 60));
     config()->set(Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox->isChecked());
     config()->set(Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox->isChecked());
     config()->set(Config::UseAtomicSaves, !m_generalUi->useAlternativeSaveCheckBox->isChecked());
