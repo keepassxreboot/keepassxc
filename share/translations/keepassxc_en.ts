@@ -2218,14 +2218,6 @@ This is definitely a bug, please report it to the developers.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export database to HTML file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HTML file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Writing the HTML file failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3834,6 +3826,47 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Reset to defaults</translation>
+    </message>
+</context>
+<context>
+    <name>ExportDialog</name>
+    <message>
+        <source>Export options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to export your database to an unencrypted file.
+This will leave your passwords and sensitive information vulnerable!
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export database to HTML file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTML file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>database order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name (ascending)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name (descending)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort entries by...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
