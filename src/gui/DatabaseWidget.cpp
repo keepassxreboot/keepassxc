@@ -187,11 +187,15 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
     connect(this, SIGNAL(requestGlobalAutoType()), parent, SLOT(performGlobalAutoType()));
+
+    connect(config(), &Config::changed, this, &DatabaseWidget::onConfigChanged);
+    connect(&m_autosaveTimer, &QTimer::timeout, this, &DatabaseWidget::onAutosaveTriggered);
     // clang-format on
 
     connectDatabaseSignals();
 
     m_blockAutoSave = false;
+    resetAutosaveTimer();
 
     m_searchLimitGroup = config()->get(Config::SearchLimitGroup).toBool();
 
@@ -996,6 +1000,7 @@ void DatabaseWidget::connectDatabaseSignals()
     connect(m_db.data(), &Database::modified, this, &DatabaseWidget::databaseModified);
     connect(m_db.data(), &Database::modified, this, &DatabaseWidget::onDatabaseModified);
     connect(m_db.data(), &Database::databaseSaved, this, &DatabaseWidget::databaseSaved);
+    connect(m_db.data(), &Database::databaseSaved, this, &DatabaseWidget::resetAutosaveTimer);
     connect(m_db.data(), &Database::databaseFileChanged, this, &DatabaseWidget::reloadDatabaseFile);
 }
 
@@ -2076,4 +2081,30 @@ void DatabaseWidget::openDatabaseFromEntry(const Entry* entry, bool inBackground
 
     // Request to open the database file in the background with a password and keyfile
     emit requestOpenDatabase(dbFileInfo.canonicalFilePath(), inBackground, password, keyFileInfo.canonicalFilePath());
+}
+
+void DatabaseWidget::onAutosaveTriggered()
+{
+    if (!isLocked() && !m_blockAutoSave) {
+        save();
+    } else {
+        resetAutosaveTimer();
+    }
+}
+void DatabaseWidget::resetAutosaveTimer()
+{
+    if(config()->get(Config::AutoSaveTimerEnabled).toBool()) {
+        // We do not create a one-shot timer here on purpose. The timer is reset only on successful saves,
+        // hence, we would not restart upon failure.
+        m_autosaveTimer.start(config()->get(Config::AutoSaveInterval).toInt());
+    } else {
+        m_autosaveTimer.stop();
+    }
+}
+
+void DatabaseWidget::onConfigChanged(Config::ConfigKey key)
+{
+    if(key == Config::AutoSaveInterval || key == Config::AutoSaveTimerEnabled) {
+        resetAutosaveTimer();
+    }
 }

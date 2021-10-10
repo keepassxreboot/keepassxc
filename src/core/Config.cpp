@@ -59,6 +59,8 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::AutoSaveAfterEveryChange,{QS("AutoSaveAfterEveryChange"), Roaming, true}},
     {Config::AutoReloadOnChange,{QS("AutoReloadOnChange"), Roaming, true}},
     {Config::AutoSaveOnExit,{QS("AutoSaveOnExit"), Roaming, true}},
+    {Config::AutoSaveTimerEnabled,{QS("AutoSaveTimerEnabled"), Roaming, true}},
+    {Config::AutoSaveInterval,{QS("AutoSaveInterval"), Roaming, 10*1000}}, // Autosave every 5 minutes by default
     {Config::AutoSaveNonDataChanges,{QS("AutoSaveNonDataChanges"), Roaming, true}},
     {Config::BackupBeforeSave,{QS("BackupBeforeSave"), Roaming, false}},
     {Config::UseAtomicSaves,{QS("UseAtomicSaves"), Roaming, true}},

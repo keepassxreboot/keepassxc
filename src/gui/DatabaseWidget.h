@@ -251,6 +251,8 @@ private slots:
     // Database autoreload slots
     void reloadDatabaseFile();
     void restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& EntryUuid);
+    // Autosave
+    void onAutosaveTriggered();
 
 private:
     int addChildWidget(QWidget* w);
@@ -259,6 +261,8 @@ private:
     void openDatabaseFromEntry(const Entry* entry, bool inBackground = true);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false);
     bool performSave(QString& errorMessage, const QString& fileName = {});
+    void resetAutosaveTimer();
+    void onConfigChanged(Config::ConfigKey);
 
     QSharedPointer<Database> m_db;
 
@@ -289,6 +293,8 @@ private:
     QUuid m_entryBeforeLock;
 
     int m_saveAttempts;
+
+    QTimer m_autosaveTimer;
 
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;

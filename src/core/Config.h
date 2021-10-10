@@ -42,6 +42,8 @@ public:
         AutoReloadOnChange,
         AutoSaveOnExit,
         AutoSaveNonDataChanges,
+        AutoSaveTimerEnabled,
+        AutoSaveInterval,
         BackupBeforeSave,
         UseAtomicSaves,
         UseDirectWriteSaves,
