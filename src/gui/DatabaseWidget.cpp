@@ -172,6 +172,13 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_groupView, SIGNAL(groupSelectionChanged()), SLOT(onGroupChanged()));
     connect(m_groupView, SIGNAL(groupSelectionChanged()), SIGNAL(groupChanged()));
     connect(m_groupView, &GroupView::groupFocused, this, [this] { m_previewView->setGroup(currentGroup()); });
+    connect(m_entryView, &EntryView::entrySelectionChanged, this, [this](Entry * currentEntry) {
+        if (currentEntry) {
+            m_previewView->setEntry(currentEntry);
+        } else {
+            m_previewView->setGroup(groupView()->currentGroup());
+        }
+    });
     connect(m_entryView, SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
         SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
     connect(m_entryView, SIGNAL(entrySelectionChanged(Entry*)), SLOT(onEntryChanged(Entry*)));
@@ -488,21 +495,11 @@ void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries, bool confirm)
 
     GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
 
-    refreshSearch();
-
     // Select the row above the deleted entries
     if (index.isValid()) {
         m_entryView->setCurrentIndex(index);
     } else {
         m_entryView->setFirstEntryActive();
-    }
-
-    // Update the preview widget
-    auto currentEntry = currentSelectedEntry();
-    if (currentEntry) {
-        m_previewView->setEntry(currentEntry);
-    } else {
-        m_previewView->setGroup(groupView()->currentGroup());
     }
 }
 
@@ -1369,6 +1366,7 @@ void DatabaseWidget::onDatabaseModified()
         // Only block once, then reset
         m_blockAutoSave = false;
     }
+    refreshSearch();
 }
 
 QString DatabaseWidget::getCurrentSearch()
@@ -1989,7 +1987,6 @@ void DatabaseWidget::emptyRecycleBin()
 
     if (result == MessageBox::Empty) {
         m_db->emptyRecycleBin();
-        refreshSearch();
     }
 }
 
