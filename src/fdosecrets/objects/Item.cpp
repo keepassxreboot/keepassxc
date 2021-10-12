@@ -33,7 +33,7 @@
 namespace FdoSecrets
 {
 
-    const QSet<QString> Item::ReadOnlyAttributes(QSet<QString>() << ItemAttributes::UuidKey << ItemAttributes::PathKey);
+    const QSet<QString> Item::ReadOnlyAttributes(QSet<QString>() << ItemAttributes::UuidKey << ItemAttributes::PathKey << ItemAttributes::TotpKey);
 
     static void setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType);
     static Secret getEntrySecret(Entry* entry);
@@ -110,6 +110,9 @@ namespace FdoSecrets
         // add some informative and readonly attributes
         attrs[ItemAttributes::UuidKey] = m_backend->uuidToHex();
         attrs[ItemAttributes::PathKey] = path();
+        if (m_backend->hasTotp()) {
+            attrs[ItemAttributes::TotpKey] = m_backend->totp();
+        }
         return {};
     }
 
