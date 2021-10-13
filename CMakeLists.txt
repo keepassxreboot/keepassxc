@@ -169,6 +169,9 @@ elseif(KEEPASSXC_DIST_TYPE STREQUAL "Other")
     unset(KEEPASSXC_DIST)
 endif()
 
+# Create position independent code for shared libraries and executables
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 if("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
     set(IS_32BIT TRUE)
 endif()
@@ -292,7 +295,6 @@ check_add_gcc_compiler_flag("-Wcast-align")
 
 if(UNIX AND NOT APPLE)
     check_add_gcc_compiler_flag("-Qunused-arguments")
-    check_add_gcc_compiler_flag("-fPIC")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro,-z,now -pie")
     set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed")
