@@ -32,10 +32,25 @@
 
 namespace FdoSecrets
 {
+    struct EntryUpdater
+    {
+        Entry* entry;
+        explicit EntryUpdater(Entry* entry)
+            : entry(entry)
+        {
+            entry->beginUpdate();
+        }
 
-    const QSet<QString> Item::ReadOnlyAttributes(QSet<QString>() << ItemAttributes::UuidKey << ItemAttributes::PathKey << ItemAttributes::TotpKey);
+        ~EntryUpdater()
+        {
+            entry->endUpdate();
+        }
+    };
 
-    static void setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType);
+    const QSet<QString> Item::ReadOnlyAttributes(QSet<QString>() << ItemAttributes::UuidKey << ItemAttributes::PathKey
+                                                                 << ItemAttributes::TotpKey);
+
+    static DBusResult setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType);
     static Secret getEntrySecret(Entry* entry);
 
     namespace
@@ -127,23 +142,28 @@ namespace FdoSecrets
             return ret;
         }
 
-        m_backend->beginUpdate();
-
-        auto entryAttrs = m_backend->attributes();
+        // set on a temp variable first and check for errors to avoid partial updates
+        EntryAttributes tempAttrs;
+        tempAttrs.copyDataFrom(m_backend->attributes());
         for (auto it = attrs.constBegin(); it != attrs.constEnd(); ++it) {
-            if (entryAttrs->isProtected(it.key()) || it.key() == EntryAttributes::PasswordKey) {
-                continue;
+            if (tempAttrs.isProtected(it.key()) || it.key() == EntryAttributes::PasswordKey) {
+                return QDBusError::InvalidArgs;
             }
 
             if (ReadOnlyAttributes.contains(it.key())) {
-                continue;
+                return QDBusError::InvalidArgs;
             }
 
-            entryAttrs->set(it.key(), it.value());
+            if (EntryAttributes::matchReference(it.value()).hasMatch()) {
+                return QDBusError::InvalidArgs;
+            }
+
+            tempAttrs.set(it.key(), it.value());
         }
 
-        m_backend->endUpdate();
-
+        // actually update the backend
+        EntryUpdater eu(m_backend);
+        m_backend->attributes()->copyDataFrom(&tempAttrs);
         return {};
     }
 
@@ -173,10 +193,12 @@ namespace FdoSecrets
             return ret;
         }
 
-        m_backend->beginUpdate();
-        m_backend->setTitle(label);
-        m_backend->endUpdate();
+        if (EntryAttributes::matchReference(label).hasMatch()) {
+            return QDBusError::InvalidArgs;
+        }
 
+        EntryUpdater eu(m_backend);
+        m_backend->setTitle(label);
         return {};
     }
 
@@ -281,12 +303,14 @@ namespace FdoSecrets
         // decode using session
         auto decoded = secret.session->decode(secret);
 
-        // set in backend
-        m_backend->beginUpdate();
-        setEntrySecret(m_backend, decoded.value, decoded.contentType);
-        m_backend->endUpdate();
+        // block references
+        if (EntryAttributes::matchReference(decoded.value).hasMatch()) {
+            return QDBusError::InvalidArgs;
+        }
 
-        return {};
+        EntryUpdater eu(m_backend);
+        // set in backend
+        return setEntrySecret(m_backend, decoded.value, decoded.contentType);
     }
 
     DBusResult Item::setProperties(const QVariantMap& properties)
@@ -374,7 +398,7 @@ namespace FdoSecrets
         return pathComponents.join('/');
     }
 
-    void setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType)
+    DBusResult setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType)
     {
         auto mimeName = contentType.split(';').takeFirst().trimmed();
 
@@ -393,23 +417,28 @@ namespace FdoSecrets
         }
 
         if (!mimeType.isValid() || !mimeType.inherits(QStringLiteral("text/plain")) || !codec) {
+            if (EntryAttributes::matchReference(contentType).hasMatch()) {
+                return QDBusError::InvalidArgs;
+            }
             // we can't handle this content type, save the data as attachment, and clear the password field
             entry->setPassword("");
             entry->attachments()->set(FDO_SECRETS_DATA, data);
             entry->attributes()->set(FDO_SECRETS_CONTENT_TYPE, contentType);
-            return;
+        } else {
+            auto password = codec->toUnicode(data);
+            if (EntryAttributes::matchReference(password).hasMatch()) {
+                return QDBusError::InvalidArgs;
+            }
+            // save the data to password field
+            entry->setPassword(password);
+            if (entry->attachments()->hasKey(FDO_SECRETS_DATA)) {
+                entry->attachments()->remove(FDO_SECRETS_DATA);
+            }
+            if (entry->attributes()->hasKey(FDO_SECRETS_CONTENT_TYPE)) {
+                entry->attributes()->remove(FDO_SECRETS_CONTENT_TYPE);
+            }
         }
-
-        // save the data to password field
-        if (entry->attachments()->hasKey(FDO_SECRETS_DATA)) {
-            entry->attachments()->remove(FDO_SECRETS_DATA);
-        }
-        if (entry->attributes()->hasKey(FDO_SECRETS_CONTENT_TYPE)) {
-            entry->attributes()->remove(FDO_SECRETS_CONTENT_TYPE);
-        }
-
-        Q_ASSERT(codec);
-        entry->setPassword(codec->toUnicode(data));
+        return {};
     }
 
     Secret getEntrySecret(Entry* entry)

@@ -27,13 +27,16 @@ The following attributes are exposed:
 
 In addition, all non-protected custom attributes are also exposed.
 
-## Architecture
+## Implementation
 
 * `FdoSecrets::Service` is the top level DBus service
 * There is one and only one `FdoSecrets::Collection` per opened database tab
 * Each entry under the exposed database group has a corresponding `FdoSecrets::Item` DBus object.
 
 ### Signal connections
+
+Collection here means the `Collection` object in code. Not the logical concept "collection"
+that the user interacts with.
 
 - Collections are created when a corresponding database tab opened
 - If the database is locked, a collection is still created
