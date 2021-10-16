@@ -37,6 +37,73 @@ namespace
         pixmap.save(&buffer, "PNG");
         return QString("<img src=\"data:image/png;base64,") + a.toBase64() + "\"/>";
     }
+
+    QString formatHTML(const QString& value)
+    {
+        return value.toHtmlEscaped().replace(" ", "&nbsp;").replace('\n', "<br>");
+    }
+
+    QString formatAttribute(const QString& key,
+                            const QString& value,
+                            const QString& classname,
+                            const QString& templt = QString("<tr><th>%1</th><td class=\"%2\">%3</td></tr>"))
+    {
+        const auto& formatted_attribute = templt;
+        if (!value.isEmpty()) {
+            // Format key as well -> Translations into other languages may have non-standard chars
+            return formatted_attribute.arg(formatHTML(key), classname, formatHTML(value));
+        }
+        return {};
+    }
+
+    QString formatAttribute(const Entry& entry,
+                            const QString& key,
+                            const QString& value,
+                            const QString& classname,
+                            const QString& templt = QString("<tr><th>%1</th><td class=\"%2\">%3</td></tr>"))
+    {
+        if (value.isEmpty())
+            return {};
+        return formatAttribute(key, entry.resolveMultiplePlaceholders(value), classname, templt);
+    }
+
+    QString formatEntry(const Entry& entry)
+    {
+        // Here we collect the table rows with this entry's data fields
+        QString item;
+
+        // Output the fixed fields
+        item.append(formatAttribute(entry, QObject::tr("User name"), entry.username(), "username"));
+
+        item.append(formatAttribute(entry, QObject::tr("Password"), entry.password(), "password"));
+
+        if (!entry.url().isEmpty()) {
+            constexpr auto maxlen = 100;
+            QString displayedURL(formatHTML(entry.url()).mid(0, maxlen));
+
+            if (displayedURL.size() == maxlen) {
+                displayedURL.append("&hellip;");
+            }
+
+            item.append(formatAttribute(entry,
+                                        QObject::tr("URL"),
+                                        entry.url(),
+                                        "url",
+                                        R"(<tr><th>%1</th><td class="%2"><a href="%3">%4</a></td></tr>)")
+                            .arg(entry.resolveMultiplePlaceholders(displayedURL)));
+        }
+
+        item.append(formatAttribute(entry, QObject::tr("Notes"), entry.notes(), "notes"));
+
+        // Now add the attributes (if there are any)
+        const auto* const attr = entry.attributes();
+        if (attr && !attr->customKeys().isEmpty()) {
+            for (const auto& key : attr->customKeys()) {
+                item.append(formatAttribute(entry, key, attr->value(key), "attr"));
+            }
+        }
+        return item;
+    }
 } // namespace
 
 bool HtmlExporter::exportDatabase(const QString& filename, const QSharedPointer<const Database>& db)
@@ -161,74 +228,9 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
 
     // Output the entries in this group
     for (const auto entry : entries) {
+        auto formatted_entry = formatEntry(*entry);
 
-        // Here we collect the table rows with this entry's data fields
-        QString item;
-
-        // Output the fixed fields
-        const auto& u = entry->username();
-        if (!u.isEmpty()) {
-            item.append("<tr><th>");
-            item.append(QObject::tr("User name"));
-            item.append("</th><td class=\"username\">");
-            item.append(entry->username().toHtmlEscaped());
-            item.append("</td></tr>");
-        }
-
-        const auto& p = entry->password();
-        if (!p.isEmpty()) {
-            item.append("<tr><th>");
-            item.append(QObject::tr("Password"));
-            item.append("</th><td class=\"password\">");
-            item.append(entry->password().toHtmlEscaped());
-            item.append("</td></tr>");
-        }
-
-        const auto& r = entry->url();
-        if (!r.isEmpty()) {
-            item.append("<tr><th>");
-            item.append(QObject::tr("URL"));
-            item.append("</th><td class=\"url\"><a href=\"");
-            item.append(r.toHtmlEscaped());
-            item.append("\">");
-
-            // Restrict the length of what we display of the URL -
-            // even from a paper backup, nobody will every type in
-            // more than 100 characters of a URL
-            constexpr auto maxlen = 100;
-            if (r.size() <= maxlen) {
-                item.append(r.toHtmlEscaped());
-            } else {
-                item.append(r.mid(0, maxlen).toHtmlEscaped());
-                item.append("&hellip;");
-            }
-
-            item.append("</a></td></tr>");
-        }
-
-        const auto& n = entry->notes();
-        if (!n.isEmpty()) {
-            item.append("<tr><th>");
-            item.append(QObject::tr("Notes"));
-            item.append("</th><td class=\"notes\">");
-            item.append(entry->notes().toHtmlEscaped().replace("\n", "<br>"));
-            item.append("</td></tr>");
-        }
-
-        // Now add the attributes (if there are any)
-        const auto* const attr = entry->attributes();
-        if (attr && !attr->customKeys().isEmpty()) {
-            for (const auto& key : attr->customKeys()) {
-                item.append("<tr><th>");
-                item.append(key.toHtmlEscaped());
-                item.append("</th><td class=\"attr\">");
-                item.append(attr->value(key).toHtmlEscaped().replace(" ", "&nbsp;").replace("\n", "<br>"));
-                item.append("</td></tr>");
-            }
-        }
-
-        // Skip if everything is empty
-        if (item.isEmpty())
+        if (formatted_entry.isEmpty())
             continue;
 
         // Output it into our table. First the left side with
@@ -238,7 +240,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
         table += "<td width=\"19%\" valign=\"top\"><h3>" + entry->title().toHtmlEscaped() + "</h3></td>";
 
         // ... then the right side with the data fields
-        table += "<td style=\"padding-bottom: 0.5em;\"><table width=\"100%\">" + item + "</table></td>";
+        table += "<td style=\"padding-bottom: 0.5em;\"><table width=\"100%\">" + formatted_entry + "</table></td>";
         table += "</tr>";
     }
 
