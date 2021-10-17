@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include "PasswordGeneratorWidget.h"
 #include "ui_PasswordGeneratorWidget.h"
 
+#include <QCloseEvent>
 #include <QDir>
 #include <QShortcut>
 #include <QTimer>
@@ -107,6 +108,13 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
 PasswordGeneratorWidget::~PasswordGeneratorWidget()
 {
+}
+
+void PasswordGeneratorWidget::closeEvent(QCloseEvent* event)
+{
+    // Emits closed signal when clicking X from title bar
+    emit closed();
+    event->accept();
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)

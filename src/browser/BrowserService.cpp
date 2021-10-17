@@ -311,6 +311,34 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
     return {};
 }
 
+void BrowserService::showPasswordGenerator(const QJsonObject& errorMessage, const QString& nonce)
+{
+    if (!m_passwordGenerator) {
+        m_passwordGenerator.reset(PasswordGeneratorWidget::popupGenerator());
+
+        connect(m_passwordGenerator.data(), &PasswordGeneratorWidget::closed, m_passwordGenerator.data(), [=] {
+            m_passwordGenerator.reset();
+            m_browserHost->sendClientMessage(errorMessage);
+            hideWindow();
+        });
+
+        connect(m_passwordGenerator.data(),
+                &PasswordGeneratorWidget::appliedPassword,
+                m_passwordGenerator.data(),
+                [=](const QString& password) { emit passwordGenerated(password, nonce); });
+    }
+
+    raiseWindow();
+    m_passwordGenerator->raise();
+    m_passwordGenerator->activateWindow();
+}
+
+void BrowserService::sendPassword(const QJsonObject& message)
+{
+    m_browserHost->sendClientMessage(message);
+    hideWindow();
+}
+
 QString BrowserService::storeKey(const QString& key)
 {
     auto db = getDatabase();

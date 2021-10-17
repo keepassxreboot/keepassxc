@@ -21,6 +21,7 @@
 #define BROWSERSERVICE_H
 
 #include "core/Entry.h"
+#include "gui/PasswordGeneratorWidget.h"
 
 typedef QPair<QString, QString> StringPair;
 typedef QList<StringPair> StringPairList;
@@ -55,6 +56,8 @@ public:
     QJsonObject getDatabaseGroups();
     QJsonObject createNewGroup(const QString& groupName);
     QString getCurrentTotp(const QString& uuid);
+    void showPasswordGenerator(const QJsonObject& errorMessage, const QString& nonce);
+    void sendPassword(const QJsonObject& message);
 
     void addEntry(const QString& dbid,
                   const QString& login,
@@ -93,6 +96,7 @@ public:
 
 signals:
     void requestUnlock();
+    void passwordGenerated(const QString& password, const QString& nonce);
 
 public slots:
     void databaseLocked(DatabaseWidget* dbWidget);
@@ -145,9 +149,9 @@ private:
     QString getDatabaseRecycleBinUuid();
     bool checkLegacySettings(QSharedPointer<Database> db);
     QStringList getEntryURLs(const Entry* entry);
-
     void hideWindow() const;
     void raiseWindow(const bool force = false);
+
     void updateWindowState();
 
     static bool moveSettingsToCustomData(Entry* entry, const QString& name);
@@ -162,6 +166,7 @@ private:
     QUuid m_keepassBrowserUUID;
 
     QPointer<DatabaseWidget> m_currentDatabaseWidget;
+    QScopedPointer<PasswordGeneratorWidget> m_passwordGenerator;
 
     Q_DISABLE_COPY(BrowserService);
 
