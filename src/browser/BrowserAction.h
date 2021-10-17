@@ -25,7 +25,7 @@ class QJsonObject;
 class BrowserAction
 {
 public:
-    explicit BrowserAction() = default;
+    explicit BrowserAction();
     ~BrowserAction() = default;
 
     QJsonObject processClientMessage(const QJsonObject& json);

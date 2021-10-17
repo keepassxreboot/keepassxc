@@ -23,6 +23,7 @@
 #include "config-keepassx.h"
 #include "core/Global.h"
 #include "core/Tools.h"
+#include "gui/PasswordGeneratorWidget.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -58,6 +59,20 @@ namespace
 }
 
 const int BrowserAction::MaxUrlLength = 256;
+
+BrowserAction::BrowserAction()
+{
+    QObject::connect(browserService(),
+                     &BrowserService::passwordGenerated,
+                     browserService(),
+                     [=](const QString& password, const QString& nonce) {
+                         auto newNonce = incrementNonce(nonce);
+                         QJsonObject message = buildMessage(newNonce);
+                         message["password"] = password;
+
+                         browserService()->sendPassword(buildResponse("generate-password", message, newNonce));
+                     });
+}
 
 QJsonObject BrowserAction::processClientMessage(const QJsonObject& json)
 {
@@ -315,25 +330,11 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 
 QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const QString& action)
 {
+    auto errorMessage = getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
     auto nonce = json.value("nonce").toString();
-    auto password = browserSettings()->generatePassword();
 
-    if (nonce.isEmpty() || password.isEmpty()) {
-        return QJsonObject();
-    }
-
-    // For backwards compatibility
-    password["login"] = password["entropy"];
-
-    QJsonArray arr;
-    arr.append(password);
-
-    const QString newNonce = incrementNonce(nonce);
-
-    QJsonObject message = buildMessage(newNonce);
-    message["entries"] = arr;
-
-    return buildResponse(action, message, newNonce);
+    browserService()->showPasswordGenerator(errorMessage, nonce);
+    return QJsonObject();
 }
 
 QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString& action)
