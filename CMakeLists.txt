@@ -169,6 +169,12 @@ elseif(KEEPASSXC_DIST_TYPE STREQUAL "Other")
     unset(KEEPASSXC_DIST)
 endif()
 
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.14.0")
+    cmake_policy(SET CMP0083 NEW)
+    include(CheckPIESupported)
+    check_pie_supported()
+endif()
+
 # Create position independent code for shared libraries and executables
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
