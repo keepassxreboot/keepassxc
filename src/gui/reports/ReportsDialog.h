@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,9 @@ class QTabWidget;
 class ReportsPageHealthcheck;
 class ReportsPageHibp;
 class ReportsPageStatistics;
+#ifdef WITH_XC_BROWSER
+class ReportsPageBrowserStatistics;
+#endif
 
 namespace Ui
 {
@@ -74,6 +77,9 @@ private:
     const QSharedPointer<ReportsPageHealthcheck> m_healthPage;
     const QSharedPointer<ReportsPageHibp> m_hibpPage;
     const QSharedPointer<ReportsPageStatistics> m_statPage;
+#ifdef WITH_XC_BROWSER
+    const QSharedPointer<ReportsPageBrowserStatistics> m_browserStatPage;
+#endif
     QPointer<EditEntryWidget> m_editEntryWidget;
     QWidget* m_sender = nullptr;
 

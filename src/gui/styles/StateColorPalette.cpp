@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,6 +40,9 @@ void StateColorPalette::initDefaultPaletteLight()
     setColor(ColorRole::HealthWeak, QStringLiteral("#FFD30F"));
     setColor(ColorRole::HealthOk, QStringLiteral("#5EA10E"));
     setColor(ColorRole::HealthExcellent, QStringLiteral("#118f17"));
+
+    setColor(ColorRole::True, QStringLiteral("#5EA10E"));
+    setColor(ColorRole::False, QStringLiteral("#C43F31"));
 }
 
 void StateColorPalette::initDefaultPaletteDark()
@@ -54,4 +57,7 @@ void StateColorPalette::initDefaultPaletteDark()
     setColor(ColorRole::HealthWeak, QStringLiteral("#F0C400"));
     setColor(ColorRole::HealthOk, QStringLiteral("#608A22"));
     setColor(ColorRole::HealthExcellent, QStringLiteral("#1F8023"));
+
+    setColor(ColorRole::True, QStringLiteral("#608A22"));
+    setColor(ColorRole::False, QStringLiteral("#C43F31"));
 }

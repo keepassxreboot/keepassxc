@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,10 @@
 #include "ReportsPageHealthcheck.h"
 #include "ReportsPageHibp.h"
 #include "ReportsPageStatistics.h"
+#ifdef WITH_XC_BROWSER
+#include "ReportsPageBrowserStatistics.h"
+#include "ReportsWidgetBrowserStatistics.h"
+#endif
 #include "ReportsWidgetHealthcheck.h"
 #include "ReportsWidgetHibp.h"
 
@@ -58,6 +62,9 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     , m_healthPage(new ReportsPageHealthcheck())
     , m_hibpPage(new ReportsPageHibp())
     , m_statPage(new ReportsPageStatistics())
+#ifdef WITH_XC_BROWSER
+    , m_browserStatPage(new ReportsPageBrowserStatistics())
+#endif
     , m_editEntryWidget(new EditEntryWidget(this))
 {
     m_ui->setupUi(this);
@@ -66,6 +73,9 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     addPage(m_healthPage);
     addPage(m_hibpPage);
     addPage(m_statPage);
+#ifdef WITH_XC_BROWSER
+    addPage(m_browserStatPage);
+#endif
 
     m_ui->stackedWidget->setCurrentIndex(0);
 
@@ -77,6 +87,11 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
     connect(m_healthPage->m_healthWidget, SIGNAL(entryActivated(Entry*)), SLOT(entryActivationSignalReceived(Entry*)));
     connect(m_hibpPage->m_hibpWidget, SIGNAL(entryActivated(Entry*)), SLOT(entryActivationSignalReceived(Entry*)));
+#ifdef WITH_XC_BROWSER
+    connect(m_browserStatPage->m_browserWidget,
+            SIGNAL(entryActivated(Entry*)),
+            SLOT(entryActivationSignalReceived(Entry*)));
+#endif
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
 }
 
@@ -142,6 +157,11 @@ void ReportsDialog::switchToMainView(bool previousDialogAccepted)
         } else if (m_sender == m_hibpPage->m_hibpWidget) {
             m_hibpPage->m_hibpWidget->refreshAfterEdit();
         }
+#ifdef WITH_XC_BROWSER
+        if (m_sender == m_browserStatPage->m_browserWidget) {
+            m_browserStatPage->m_browserWidget->calculateBrowserStatistics();
+        }
+#endif
     }
 
     // Don't process the same sender twice

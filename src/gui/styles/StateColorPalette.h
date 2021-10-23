@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,9 @@ public:
         HealthPoor,
         HealthWeak,
         HealthOk,
-        HealthExcellent
+        HealthExcellent,
+        True,
+        False
     };
 
     inline void setColor(ColorRole role, const QColor& color)

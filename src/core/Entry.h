@@ -98,6 +98,7 @@ public:
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;
     QString url() const;
+    QStringList getAllUrls() const;
     QString webUrl() const;
     QString displayUrl() const;
     QString username() const;

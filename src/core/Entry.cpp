@@ -355,6 +355,26 @@ QString Entry::url() const
     return m_attributes->value(EntryAttributes::URLKey);
 }
 
+QStringList Entry::getAllUrls() const
+{
+    QStringList urlList;
+
+    if (!url().isEmpty()) {
+        urlList << url();
+    }
+
+    for (const auto& key : m_attributes->keys()) {
+        if (key.startsWith("KP2A_URL")) {
+            auto additionalUrl = m_attributes->value(key);
+            if (!additionalUrl.isEmpty()) {
+                urlList << additionalUrl;
+            }
+        }
+    }
+
+    return urlList;
+}
+
 QString Entry::webUrl() const
 {
     QString url = resolveMultiplePlaceholders(m_attributes->value(EntryAttributes::URLKey));
