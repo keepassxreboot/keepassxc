@@ -55,7 +55,7 @@ namespace
     {
         // This check only tests if the handle pointer is valid in memory
         // but it does not actually verify that it works
-        auto rv = SCardIsValidContext(context);
+        RETVAL rv = SCardIsValidContext(context);
 
         // If the handle is broken, create it
         // This happens e.g. on application launch
