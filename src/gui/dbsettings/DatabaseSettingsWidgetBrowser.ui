@@ -60,7 +60,10 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Move KeePassHTTP attributes to KeePassXC-Browser custom data</string>
+         <string>Convert KeePassHTTP data</string>
+        </property>
+        <property name="toolTip">
+         <string>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</string>
         </property>
        </widget>
       </item>
