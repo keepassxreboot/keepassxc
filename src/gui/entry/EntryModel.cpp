@@ -119,7 +119,7 @@ bool EntryModel::dropMimeData(const QMimeData* data,
         return true;
     }
 
-    if (!data || (action != Qt::MoveAction && action != Qt::CopyAction) || !parent.isValid()) {
+    if (!data || !m_group) {
         return false;
     }
 
@@ -134,12 +134,13 @@ bool EntryModel::dropMimeData(const QMimeData* data,
 
     int toRow;
 
-    if (row != -1)
+    if (row != -1) {
         toRow = row;
-    else if (parent.isValid())
+    } else if (parent.isValid()) {
         toRow = parent.row();
-    else
-        toRow = rowCount(QModelIndex());
+    } else {
+        toRow = rowCount(QModelIndex()) - 1;
+    }
 
     // decode and insert
     QByteArray encoded = data->data(types.at(0));
@@ -160,9 +161,15 @@ bool EntryModel::dropMimeData(const QMimeData* data,
             continue;
         }
 
-        m_group->emit moveEntryToRowNum(dragEntry, toRow);
+        m_group->moveEntryToRowNum(dragEntry, toRow);
+
+        toRow = qMin(toRow + 1, rowCount(QModelIndex()) - 1);
     }
 
+    // Change the layout in one batch
+    emit layoutAboutToBeChanged();
+    m_entries = m_group->entries();
+    emit layoutChanged();
     return true;
 }
 
@@ -498,11 +505,11 @@ Qt::DropActions EntryModel::supportedDragActions() const
 
 Qt::ItemFlags EntryModel::flags(const QModelIndex& modelIndex) const
 {
-    if (!modelIndex.isValid()) {
-        return Qt::NoItemFlags;
-    } else {
-        return QAbstractItemModel::flags(modelIndex) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+    auto defaultFlags = QAbstractItemModel::flags(modelIndex);
+    if (modelIndex.isValid()) {
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
     }
+    return Qt::ItemIsDropEnabled | defaultFlags;
 }
 
 QStringList EntryModel::mimeTypes() const
@@ -587,39 +594,23 @@ void EntryModel::entryRemoved()
     endRemoveRows();
 }
 
-void EntryModel::entryAboutToMoveToRowNum(int fromRow, int toRow)
-{
-    beginMoveRows(QModelIndex(), fromRow, fromRow, QModelIndex(), toRow + 1);
-    if (m_group) {
-        m_entries.move(fromRow, toRow);
-    }
-}
-
 void EntryModel::entryAboutToMoveUp(int row)
 {
     beginMoveRows(QModelIndex(), row, row, QModelIndex(), row - 1);
-    if (m_group) {
+    if (!m_group) {
         m_entries.move(row, row - 1);
     }
-}
-
-void EntryModel::entryMovedUp()
-{
-    if (m_group) {
-        m_entries = m_group->entries();
-    }
-    endMoveRows();
 }
 
 void EntryModel::entryAboutToMoveDown(int row)
 {
     beginMoveRows(QModelIndex(), row, row, QModelIndex(), row + 2);
-    if (m_group) {
+    if (!m_group) {
         m_entries.move(row, row + 1);
     }
 }
 
-void EntryModel::entryMovedDown()
+void EntryModel::entryMoved()
 {
     if (m_group) {
         m_entries = m_group->entries();
@@ -664,10 +655,8 @@ void EntryModel::makeConnections(const Group* group)
     connect(group, SIGNAL(entryAdded(Entry*)), SLOT(entryAdded(Entry*)));
     connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
     connect(group, SIGNAL(entryRemoved(Entry*)), SLOT(entryRemoved()));
-    connect(group, SIGNAL(entryAboutToMoveToRowNum(int, int)), SLOT(entryAboutToMoveToRowNum(int, int)));
     connect(group, SIGNAL(entryAboutToMoveUp(int)), SLOT(entryAboutToMoveUp(int)));
-    connect(group, SIGNAL(entryMovedUp()), SLOT(entryMovedUp()));
     connect(group, SIGNAL(entryAboutToMoveDown(int)), SLOT(entryAboutToMoveDown(int)));
-    connect(group, SIGNAL(entryMovedDown()), SLOT(entryMovedDown()));
+    connect(group, SIGNAL(entryMoved()), SLOT(entryMoved()));
     connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
 }

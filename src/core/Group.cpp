@@ -987,13 +987,11 @@ void Group::removeEntry(Entry* entry)
 void Group::moveEntryToRowNum(Entry* entry, int toRowNum)
 {
     int fromRowNum = m_entries.indexOf(entry);
-    if (fromRowNum < 0 || toRowNum < 0 || fromRowNum == toRowNum + 1) {
+    if (fromRowNum < 0 || toRowNum < 0 || toRowNum >= m_entries.size()) {
         return;
     }
 
-    emit entryAboutToMoveToRowNum(fromRowNum, toRowNum);
     m_entries.move(fromRowNum, toRowNum);
-    emit entryMovedUp();
     emit groupNonDataChange();
 }
 
@@ -1006,7 +1004,7 @@ void Group::moveEntryUp(Entry* entry)
 
     emit entryAboutToMoveUp(row);
     m_entries.move(row, row - 1);
-    emit entryMovedUp();
+    emit entryMoved();
     emit groupNonDataChange();
 }
 
@@ -1019,7 +1017,7 @@ void Group::moveEntryDown(Entry* entry)
 
     emit entryAboutToMoveDown(row);
     m_entries.move(row, row + 1);
-    emit entryMovedDown();
+    emit entryMoved();
     emit groupNonDataChange();
 }
 

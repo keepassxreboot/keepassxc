@@ -76,10 +76,8 @@ private slots:
     void entryAboutToRemove(Entry* entry);
     void entryRemoved();
     void entryAboutToMoveUp(int row);
-    void entryAboutToMoveToRowNum(int fromRow, int toRow);
-    void entryMovedUp();
     void entryAboutToMoveDown(int row);
-    void entryMovedDown();
+    void entryMoved();
     void entryDataChanged(Entry* entry);
 
     void onConfigChanged(Config::ConfigKey key);

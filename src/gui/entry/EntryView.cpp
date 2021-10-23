@@ -76,12 +76,10 @@ EntryView::EntryView(QWidget* parent)
     setUniformRowHeights(true);
     setRootIsDecorated(false);
     setAlternatingRowColors(true);
-    setDragEnabled(true);
 
-    viewport()->setAcceptDrops(true);
+    setDragDropMode(InternalMove);
     setDropIndicatorShown(true);
     setDefaultDropAction(Qt::MoveAction);
-    setDragDropMode(QAbstractItemView::InternalMove);
 
     setSortingEnabled(true);
     setSelectionMode(QAbstractItemView::ExtendedSelection);

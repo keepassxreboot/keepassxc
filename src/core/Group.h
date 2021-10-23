@@ -189,10 +189,9 @@ signals:
     void entryAboutToRemove(Entry* entry);
     void entryRemoved(Entry* entry);
     void entryAboutToMoveUp(int row);
-    void entryAboutToMoveToRowNum(int fromRow, int toRow);
-    void entryMovedUp();
     void entryAboutToMoveDown(int row);
-    void entryMovedDown();
+    void entryAboutToMoveToRowNum(int fromRow, int toRow);
+    void entryMoved();
     void entryDataChanged(Entry* entry);
 
 private slots:
