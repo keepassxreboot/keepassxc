@@ -200,12 +200,6 @@ void EntryView::focusInEvent(QFocusEvent* event)
     QTreeView::focusInEvent(event);
 }
 
-void EntryView::focusOutEvent(QFocusEvent* event)
-{
-    emit entrySelectionChanged(nullptr);
-    QTreeView::focusOutEvent(event);
-}
-
 void EntryView::displayGroup(Group* group)
 {
     m_model->setGroup(group);
