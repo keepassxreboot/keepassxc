@@ -3533,6 +3533,15 @@ Do you want to save the changes to your database?</source>
 Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Confirm Overwrite Attachment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
