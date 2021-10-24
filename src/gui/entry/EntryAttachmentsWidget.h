@@ -69,7 +69,7 @@ private slots:
 private:
     bool insertAttachments(const QStringList& fileNames, QString& errorMessage);
 
-    QStringList confirmLargeAttachments(const QStringList& filenames);
+    QStringList confirmAttachmentSelection(const QStringList& filenames);
 
     bool eventFilter(QObject* watched, QEvent* event) override;
 
