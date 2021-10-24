@@ -30,6 +30,7 @@ namespace FdoSecrets
     {
         constexpr const auto UuidKey = "Uuid";
         constexpr const auto PathKey = "Path";
+        constexpr const auto TotpKey = "TOTP";
     } // namespace ItemAttributes
 
     class Session;

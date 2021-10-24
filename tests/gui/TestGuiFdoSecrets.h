@@ -89,6 +89,7 @@ private slots:
     void testItemSecret();
     void testItemDelete();
     void testItemLockState();
+    void testItemRejectSetReferenceFields();
 
     void testAlias();
     void testDefaultAliasAlwaysPresent();
@@ -120,6 +121,8 @@ private:
                                          const FdoSecrets::wire::StringStringMap& attr,
                                          bool replace,
                                          bool expectPrompt = false);
+    FdoSecrets::wire::Secret
+    encryptPassword(QByteArray value, QString contentType, const QSharedPointer<SessionProxy>& sess);
     template <typename Proxy> QSharedPointer<Proxy> getProxy(const QDBusObjectPath& path) const
     {
         auto ret = QSharedPointer<Proxy>{

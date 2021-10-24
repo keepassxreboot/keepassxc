@@ -41,6 +41,7 @@
 #include <QLineEdit>
 #include <QSignalSpy>
 #include <QTest>
+#include <utility>
 
 int main(int argc, char* argv[])
 {
@@ -1248,30 +1249,24 @@ void TestGuiFdoSecrets::testItemSecret()
         // first create Secret in wire format,
         // then convert to internal format and encrypt
         // finally convert encrypted internal format back to wire format to pass to SetSecret
-        wire::Secret ss;
-        ss.contentType = TEXT_PLAIN;
-        ss.value = "NewPassword";
-        ss.session = QDBusObjectPath(sess->path());
-        auto encrypted = m_clientCipher->encrypt(ss.unmarshal(m_plugin->dbus()));
-        DBUS_VERIFY(item->SetSecret(encrypted.marshal()));
-
-        COMPARE(entry->password().toUtf8(), ss.value);
+        const QByteArray expected = QByteArrayLiteral("NewPassword");
+        auto encrypted = encryptPassword(expected, TEXT_PLAIN, sess);
+        DBUS_VERIFY(item->SetSecret(encrypted));
+        COMPARE(entry->password().toUtf8(), expected);
     }
 
     // set secret with something else is saved as attachment
+    const QByteArray expected = QByteArrayLiteral("NewPasswordBinary");
     {
-        wire::Secret expected;
-        expected.contentType = APPLICATION_OCTET_STREAM;
-        expected.value = QByteArrayLiteral("NewPasswordBinary");
-        expected.session = QDBusObjectPath(sess->path());
-        DBUS_VERIFY(item->SetSecret(m_clientCipher->encrypt(expected.unmarshal(m_plugin->dbus())).marshal()));
-
+        auto encrypted = encryptPassword(expected, APPLICATION_OCTET_STREAM, sess);
+        DBUS_VERIFY(item->SetSecret(encrypted));
         COMPARE(entry->password(), QStringLiteral(""));
-
+    }
+    {
         DBUS_GET(encrypted, item->GetSecret(QDBusObjectPath(sess->path())));
         auto ss = m_clientCipher->decrypt(encrypted.unmarshal(m_plugin->dbus()));
-        COMPARE(ss.contentType, expected.contentType);
-        COMPARE(ss.value, expected.value);
+        COMPARE(ss.contentType, APPLICATION_OCTET_STREAM);
+        COMPARE(ss.value, expected);
     }
 }
 
@@ -1372,6 +1367,51 @@ void TestGuiFdoSecrets::testItemLockState()
     DBUS_COMPARE(item->locked(), false);
     DBUS_VERIFY(item->GetSecret(QDBusObjectPath(sess->path())));
     DBUS_VERIFY(item->SetSecret(encrypted));
+}
+
+void TestGuiFdoSecrets::testItemRejectSetReferenceFields()
+{
+    // expose a subgroup, entries in it should not be able to retrieve data from entries outside it
+    auto rootEntry = m_db->rootGroup()->entries().first();
+    VERIFY(rootEntry);
+    auto subgroup = m_db->rootGroup()->findGroupByPath("/Homebanking/Subgroup");
+    VERIFY(subgroup);
+    FdoSecrets::settings()->setExposedGroup(m_db, subgroup->uuid());
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+    VERIFY(sess);
+
+    const auto refText = QStringLiteral("{REF:P@T:%1}").arg(rootEntry->title());
+
+    // reject ref in label
+    {
+        auto reply = item->setLabel(refText);
+        VERIFY(reply.isFinished() && reply.isError());
+        COMPARE(reply.error().type(), QDBusError::InvalidArgs);
+    }
+    // reject ref in custom attributes
+    {
+        auto reply = item->setAttributes({{"steal", refText}});
+        VERIFY(reply.isFinished() && reply.isError());
+        COMPARE(reply.error().type(), QDBusError::InvalidArgs);
+    }
+    // reject ref in password
+    {
+        auto reply = item->SetSecret(encryptPassword(refText.toUtf8(), "text/plain", sess));
+        VERIFY(reply.isFinished() && reply.isError());
+        COMPARE(reply.error().type(), QDBusError::InvalidArgs);
+    }
+    // reject ref in content type
+    {
+        auto reply = item->SetSecret(encryptPassword("dummy", refText, sess));
+        VERIFY(reply.isFinished() && reply.isError());
+        COMPARE(reply.error().type(), QDBusError::InvalidArgs);
+    }
 }
 
 void TestGuiFdoSecrets::testAlias()
@@ -1583,6 +1623,16 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
     itemPath = getSignalVariantArgument<QDBusObjectPath>(args.at(1));
 
     return getProxy<ItemProxy>(itemPath);
+}
+
+FdoSecrets::wire::Secret
+TestGuiFdoSecrets::encryptPassword(QByteArray value, QString contentType, const QSharedPointer<SessionProxy>& sess)
+{
+    wire::Secret ss;
+    ss.contentType = std::move(contentType);
+    ss.value = std::move(value);
+    ss.session = QDBusObjectPath(sess->path());
+    return m_clientCipher->encrypt(ss.unmarshal(m_plugin->dbus())).marshal();
 }
 
 bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember)
