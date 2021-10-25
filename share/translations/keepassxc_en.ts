@@ -1669,10 +1669,6 @@ Permissions to access entries will be revoked.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move KeePassHTTP attributes to KeePassXC-Browser custom data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Refresh database root group ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1692,6 +1688,14 @@ This is only necessary if your database is a copy of another and the browser ext
     <message>
         <source>Do you really want to convert all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert KeePassHTTP data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
