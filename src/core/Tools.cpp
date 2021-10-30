@@ -22,7 +22,8 @@
 #include "config-keepassx.h"
 #include "git-info.h"
 
-#include <QDateTime>
+#include "core/Clock.h"
+
 #include <QElapsedTimer>
 #include <QFileInfo>
 #include <QImageReader>
@@ -379,12 +380,12 @@ namespace Tools
         return result;
     }
 
-    QString
-    substituteBackupFilePathPattern(QString pattern, const QString& databasePath, QDateTime date, int maxSubstitutions)
+    QString substituteBackupFilePath(QString pattern, const QString& databasePath)
     {
         // Fail if substitution fails
-        if (databasePath.isEmpty())
+        if (databasePath.isEmpty()) {
             return {};
+        }
 
         // Replace backup pattern
         QFileInfo dbFileInfo(databasePath);
@@ -393,18 +394,16 @@ namespace Tools
         pattern.replace(QString("{DB_FILENAME}"), baseName);
 
         auto re = QRegularExpression(R"(\{TIME(?::([^\\]*))?\})");
-        // "Detect" loops
-        auto num_substitutions = 0;
-        for (auto matches = re.globalMatch(pattern); matches.hasNext() && num_substitutions < maxSubstitutions;
-             matches = re.globalMatch(pattern), ++num_substitutions) {
-            auto match = matches.next();
+        auto match = re.match(pattern);
+        while (match.hasMatch()) {
             // Extract time format specifier
             auto formatSpecifier = QString("dd_MM_yyyy_hh-mm-ss");
             if (!match.captured(1).isEmpty()) {
                 formatSpecifier = match.captured(1);
             }
-            auto replacement = date.toString(formatSpecifier);
+            auto replacement = Clock::currentDateTime().toString(formatSpecifier);
             pattern.replace(match.capturedStart(), match.capturedLength(), replacement);
+            match = re.match(pattern);
         }
 
         // Replace escaped braces

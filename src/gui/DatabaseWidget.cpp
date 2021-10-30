@@ -1889,7 +1889,7 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
         }
 
         QFileInfo dbFileInfo(m_db->filePath());
-        backupFilePath = Tools::substituteBackupFilePathPattern(backupFilePath, dbFileInfo.canonicalFilePath());
+        backupFilePath = Tools::substituteBackupFilePath(backupFilePath, dbFileInfo.canonicalFilePath());
         if (!backupFilePath.isNull()) {
             // Note that we cannot guarantee that backupFilePath is actually a valid filename. QT currently provides
             // no function for this. Moreover, we don't check if backupFilePath is a file and not a directory.

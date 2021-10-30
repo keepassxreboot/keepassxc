@@ -69,8 +69,8 @@ private slots:
 
 private:
     void addCannedEntries();
-    void checkDatabase(const QString& dbFileName, const QString& expectedDbName);
-    void checkDatabase(QString dbFileName = {});
+    void checkDatabase(const QString& filePath, const QString& expectedDbName);
+    void checkDatabase(const QString& filePath = {});
     void triggerAction(const QString& name);
     void dragAndDropGroup(const QModelIndex& sourceIndex,
                           const QModelIndex& targetIndex,

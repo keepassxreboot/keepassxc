@@ -21,7 +21,6 @@
 
 #include "core/Global.h"
 
-#include <QDateTime>
 #include <QProcessEnvironment>
 
 class QIODevice;
@@ -77,10 +76,7 @@ namespace Tools
 
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties = {"objectName"});
 
-    QString substituteBackupFilePathPattern(QString pattern,
-                                            const QString& databasePath,
-                                            QDateTime date = QDateTime::currentDateTime(),
-                                            int maxSubstitutions = 100);
+    QString substituteBackupFilePath(QString pattern, const QString& databasePath);
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H
