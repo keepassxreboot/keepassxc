@@ -29,6 +29,8 @@ private slots:
     void testIsBase64();
     void testEnvSubstitute();
     void testValidUuid();
+    void testBackupFilePatternSubstitution_data();
+    void testBackupFilePatternSubstitution();
 };
 
 #endif // KEEPASSX_TESTTOOLS_H

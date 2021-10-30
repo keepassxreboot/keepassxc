@@ -178,10 +178,10 @@ bool Database::isSaving()
  *
  * @param error error message in case of failure
  * @param atomic Use atomic file transactions
- * @param backup Backup the existing database file, if exists
+ * @param backupFilePath Absolute file path to write the backup file to. Pass an empty QString to disable backup.
  * @return true on success
  */
-bool Database::save(SaveAction action, bool backup, QString* error)
+bool Database::save(SaveAction action, const QString& backupFilePath, QString* error)
 {
     Q_ASSERT(!m_data.filePath.isEmpty());
     if (m_data.filePath.isEmpty()) {
@@ -191,7 +191,7 @@ bool Database::save(SaveAction action, bool backup, QString* error)
         return false;
     }
 
-    return saveAs(m_data.filePath, action, backup, error);
+    return saveAs(m_data.filePath, action, backupFilePath, error);
 }
 
 /**
@@ -209,10 +209,11 @@ bool Database::save(SaveAction action, bool backup, QString* error)
  * @param filePath Absolute path of the file to save
  * @param error error message in case of failure
  * @param atomic Use atomic file transactions
- * @param backup Backup the existing database file, if exists
+ * @param backupFilePath Absolute path to the location where the backup should be stored. Passing an empty string
+ * disables backup.
  * @return true on success
  */
-bool Database::saveAs(const QString& filePath, SaveAction action, bool backup, QString* error)
+bool Database::saveAs(const QString& filePath, SaveAction action, const QString& backupFilePath, QString* error)
 {
     // Disallow overlapping save operations
     if (isSaving()) {
@@ -260,7 +261,7 @@ bool Database::saveAs(const QString& filePath, SaveAction action, bool backup, Q
     QFileInfo fileInfo(filePath);
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
     bool isNewFile = !QFile::exists(realFilePath);
-    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backup, error); });
+    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backupFilePath, error); });
     if (ok) {
         markAsClean();
         setFilePath(filePath);
@@ -276,10 +277,10 @@ bool Database::saveAs(const QString& filePath, SaveAction action, bool backup, Q
     return ok;
 }
 
-bool Database::performSave(const QString& filePath, SaveAction action, bool backup, QString* error)
+bool Database::performSave(const QString& filePath, SaveAction action, const QString& backupFilePath, QString* error)
 {
-    if (backup) {
-        backupDatabase(filePath);
+    if (!backupFilePath.isNull()) {
+        backupDatabase(filePath, backupFilePath);
     }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
@@ -337,7 +338,7 @@ bool Database::performSave(const QString& filePath, SaveAction action, bool back
                 tempFile.setFileTime(createTime, QFile::FileBirthTime);
 #endif
                 return true;
-            } else if (!backup || !restoreDatabase(filePath)) {
+            } else if (backupFilePath.isEmpty() || !restoreDatabase(filePath, backupFilePath)) {
                 // Failed to copy new database in place, and
                 // failed to restore from backup or backups disabled
                 tempFile.setAutoRemove(false);
@@ -485,23 +486,26 @@ void Database::releaseData()
 }
 
 /**
- * Remove the old backup and replace it with a new one
- * backups are named <filename>.old.<extension>
+ * Remove the old backup and replace it with a new one. Backup name is taken from destinationFilePath.
+ * Non-existing parent directories will be created automatically.
  *
  * @param filePath Path to the file to backup
+ * @param destinationFilePath Path to the backup destination file
  * @return true on success
  */
-bool Database::backupDatabase(const QString& filePath)
+bool Database::backupDatabase(const QString& filePath, const QString& destinationFilePath)
 {
-    static auto re = QRegularExpression("(\\.[^.]+)$");
-
-    auto match = re.match(filePath);
-    auto backupFilePath = filePath;
+    // Ensure that the path to write to actually exists
+    auto parentDirectory = QFileInfo(destinationFilePath).absoluteDir();
+    if (!parentDirectory.exists()) {
+        if (!QDir().mkpath(parentDirectory.absolutePath())) {
+            return false;
+        }
+    }
     auto perms = QFile::permissions(filePath);
-    backupFilePath = backupFilePath.replace(re, "") + ".old" + match.captured(1);
-    QFile::remove(backupFilePath);
-    bool res = QFile::copy(filePath, backupFilePath);
-    QFile::setPermissions(backupFilePath, perms);
+    QFile::remove(destinationFilePath);
+    bool res = QFile::copy(filePath, destinationFilePath);
+    QFile::setPermissions(destinationFilePath, perms);
     return res;
 }
 
@@ -513,17 +517,13 @@ bool Database::backupDatabase(const QString& filePath)
  * @param filePath Path to the file to restore
  * @return true on success
  */
-bool Database::restoreDatabase(const QString& filePath)
+bool Database::restoreDatabase(const QString& filePath, const QString& fromBackupFilePath)
 {
-    static auto re = QRegularExpression("^(.*?)(\\.[^.]+)?$");
-
-    auto match = re.match(filePath);
     auto perms = QFile::permissions(filePath);
-    auto backupFilePath = match.captured(1) + ".old" + match.captured(2);
     // Only try to restore if the backup file actually exists
-    if (QFile::exists(backupFilePath)) {
+    if (QFile::exists(fromBackupFilePath)) {
         QFile::remove(filePath);
-        if (QFile::copy(backupFilePath, filePath)) {
+        if (QFile::copy(fromBackupFilePath, filePath)) {
             return QFile::setPermissions(filePath, perms);
         }
     }

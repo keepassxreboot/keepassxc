@@ -108,3 +108,68 @@ void TestTools::testValidUuid()
     QVERIFY(!Tools::isValidUuid(longUuid));
     QVERIFY(!Tools::isValidUuid(nonHexUuid));
 }
+
+void TestTools::testBackupFilePatternSubstitution_data()
+{
+    QTest::addColumn<QString>("pattern");
+    QTest::addColumn<QString>("dbFilePath");
+    QTest::addColumn<QDateTime>("date");
+    QTest::addColumn<int>("maxSubstitutions");
+    QTest::addColumn<QString>("expectedSubstitution");
+
+    static const auto DEFAULT_DB_FILE_NAME = QStringLiteral("KeePassXC");
+    static const auto DEFAULT_DB_FILE_PATH = QStringLiteral("/tmp/") + DEFAULT_DB_FILE_NAME + QStringLiteral(".kdbx");
+    static const auto NOW = QDateTime::currentDateTime();
+    auto DEFAULT_FORMATTED_TIME = NOW.toString("dd_MM_yyyy_hh-mm-ss");
+
+    QTest::newRow("Null pattern") << QString() << DEFAULT_DB_FILE_PATH << NOW << 100 << QString();
+    QTest::newRow("Empty pattern") << QString("") << DEFAULT_DB_FILE_PATH << NOW << 100 << QString("");
+    QTest::newRow("Null database path") << "valid_pattern" << QString() << NOW << 100 << QString();
+    QTest::newRow("Empty database path") << "valid_pattern" << QString("") << NOW << 100 << QString();
+    QTest::newRow("Unclosed/invalid pattern") << "{DB_FILENAME" << DEFAULT_DB_FILE_PATH << NOW << 100 << "{DB_FILENAME";
+    QTest::newRow("Unknown pattern") << "{NO_MATCH}" << DEFAULT_DB_FILE_PATH << NOW << 100 << "{NO_MATCH}";
+    QTest::newRow("Do not replace escaped patterns (filename)")
+        << "\\{DB_FILENAME\\}" << DEFAULT_DB_FILE_PATH << NOW << 100 << "{DB_FILENAME}";
+    QTest::newRow("Do not replace escaped patterns (time)")
+        << "\\{TIME:dd.MM.yyyy\\}" << DEFAULT_DB_FILE_PATH << NOW << 100 << "{TIME:dd.MM.yyyy}";
+    QTest::newRow("Multiple patterns should be replaced")
+        << "{DB_FILENAME} {TIME} {DB_FILENAME}" << DEFAULT_DB_FILE_PATH << NOW << 100
+        << DEFAULT_DB_FILE_NAME + QStringLiteral(" ") + DEFAULT_FORMATTED_TIME + QStringLiteral(" ")
+               + DEFAULT_DB_FILE_NAME;
+    QTest::newRow("Default time pattern") << "{TIME}" << DEFAULT_DB_FILE_PATH << NOW << 100 << DEFAULT_FORMATTED_TIME;
+    QTest::newRow("Default time pattern (empty formatter)")
+        << "{TIME:}" << DEFAULT_DB_FILE_PATH << NOW << 100 << DEFAULT_FORMATTED_TIME;
+    QTest::newRow("Custom time pattern") << "{TIME:dd-ss}" << DEFAULT_DB_FILE_PATH << NOW << 100
+                                         << NOW.toString("dd-ss");
+    QTest::newRow("Invalid custom time pattern")
+        << "{TIME:dd/-ss}" << DEFAULT_DB_FILE_PATH << NOW << 100 << NOW.toString("dd/-ss");
+    QTest::newRow("Recursive substitution")
+        << "{TIME:'{TIME}'}" << DEFAULT_DB_FILE_PATH << NOW << 100 << DEFAULT_FORMATTED_TIME;
+    QTest::newRow("Substitution limit is respected")
+        << "{TIME} {TIME} {TIME}" << DEFAULT_DB_FILE_PATH << NOW << 2
+        << DEFAULT_FORMATTED_TIME + QStringLiteral(" ") + DEFAULT_FORMATTED_TIME + QStringLiteral(" {TIME}");
+    QTest::newRow("Substitution limit is respected (recursive)")
+        << "{TIME} {TIME} {TIME:'{TIME}'}" << DEFAULT_DB_FILE_PATH << NOW << 3
+        << DEFAULT_FORMATTED_TIME + QStringLiteral(" ") + DEFAULT_FORMATTED_TIME + QStringLiteral(" {TIME}");
+    QTest::newRow("{DB_FILENAME} substitution")
+        << "some {DB_FILENAME} thing" << DEFAULT_DB_FILE_PATH << NOW << 100
+        << QStringLiteral("some ") + DEFAULT_DB_FILE_NAME + QStringLiteral(" thing");
+    QTest::newRow("{DB_FILENAME} substitution with multiple extensions")
+        << "some {DB_FILENAME} thing"
+        << "/tmp/KeePassXC.kdbx.ext" << NOW << 100 << "some KeePassXC.kdbx thing";
+    // Not relevant right now, added test anyway
+    QTest::newRow("There should be no substitution loops")
+        << "{DB_FILENAME}"
+        << "{TIME:'{DB_FILENAME}'}.ext" << NOW << 100 << "{DB_FILENAME}";
+}
+
+void TestTools::testBackupFilePatternSubstitution()
+{
+    QFETCH(QString, pattern);
+    QFETCH(QString, dbFilePath);
+    QFETCH(QDateTime, date);
+    QFETCH(int, maxSubstitutions);
+    QFETCH(QString, expectedSubstitution);
+
+    QCOMPARE(Tools::substituteBackupFilePathPattern(pattern, dbFilePath, date, maxSubstitutions), expectedSubstitution);
+}

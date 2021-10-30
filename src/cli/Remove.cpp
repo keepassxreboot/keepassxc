@@ -53,7 +53,7 @@ int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     };
 
     QString errorMessage;
-    if (!database->save(Database::Atomic, false, &errorMessage)) {
+    if (!database->save(Database::Atomic, QString(), &errorMessage)) {
         err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

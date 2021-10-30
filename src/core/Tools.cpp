@@ -22,7 +22,9 @@
 #include "config-keepassx.h"
 #include "git-info.h"
 
+#include <QDateTime>
 #include <QElapsedTimer>
+#include <QFileInfo>
 #include <QImageReader>
 #include <QLocale>
 #include <QMetaProperty>
@@ -375,5 +377,40 @@ namespace Tools
             result[QLatin1String(name)] = value;
         }
         return result;
+    }
+
+    QString
+    substituteBackupFilePathPattern(QString pattern, const QString& databasePath, QDateTime date, int maxSubstitutions)
+    {
+        // Fail if substitution fails
+        if (databasePath.isEmpty())
+            return {};
+
+        // Replace backup pattern
+        QFileInfo dbFileInfo(databasePath);
+        QString baseName = dbFileInfo.completeBaseName();
+
+        pattern.replace(QString("{DB_FILENAME}"), baseName);
+
+        auto re = QRegularExpression(R"(\{TIME(?::([^\\]*))?\})");
+        // "Detect" loops
+        auto num_substitutions = 0;
+        for (auto matches = re.globalMatch(pattern); matches.hasNext() && num_substitutions < maxSubstitutions;
+             matches = re.globalMatch(pattern), ++num_substitutions) {
+            auto match = matches.next();
+            // Extract time format specifier
+            auto formatSpecifier = QString("dd_MM_yyyy_hh-mm-ss");
+            if (!match.captured(1).isEmpty()) {
+                formatSpecifier = match.captured(1);
+            }
+            auto replacement = date.toString(formatSpecifier);
+            pattern.replace(match.capturedStart(), match.capturedLength(), replacement);
+        }
+
+        // Replace escaped braces
+        pattern.replace("\\{", "{");
+        pattern.replace("\\}", "}");
+
+        return pattern;
     }
 } // namespace Tools

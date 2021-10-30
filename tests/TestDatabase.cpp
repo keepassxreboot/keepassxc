@@ -75,29 +75,26 @@ void TestDatabase::testSave()
     // Test safe saves
     db->metadata()->setName("test");
     QVERIFY(db->isModified());
-    QVERIFY2(db->save(Database::Atomic, false, &error), error.toLatin1());
+    QVERIFY2(db->save(Database::Atomic, QString(), &error), error.toLatin1());
     QVERIFY(!db->isModified());
 
     // Test temp-file saves
     db->metadata()->setName("test2");
-    QVERIFY2(db->save(Database::TempFile, false, &error), error.toLatin1());
+    QVERIFY2(db->save(Database::TempFile, QString(), &error), error.toLatin1());
     QVERIFY(!db->isModified());
 
     // Test direct-write saves
     db->metadata()->setName("test3");
-    QVERIFY2(db->save(Database::DirectWrite, false, &error), error.toLatin1());
+    QVERIFY2(db->save(Database::DirectWrite, QString(), &error), error.toLatin1());
     QVERIFY(!db->isModified());
 
     // Test save backups
+    TemporaryFile backupFile;
+    auto backupFilePath = backupFile.fileName();
     db->metadata()->setName("test4");
-    QVERIFY2(db->save(Database::Atomic, true, &error), error.toLatin1());
+    QVERIFY2(db->save(Database::Atomic, backupFilePath, &error), error.toLatin1());
     QVERIFY(!db->isModified());
 
-    // Confirm backup exists and then delete it
-    auto re = QRegularExpression("(\\.[^.]+)$");
-    auto match = re.match(tempFile.fileName());
-    auto backupFilePath = tempFile.fileName();
-    backupFilePath = backupFilePath.replace(re, "") + ".old" + match.captured(1);
     QVERIFY(QFile::exists(backupFilePath));
     QFile::remove(backupFilePath);
     QVERIFY(!QFile::exists(backupFilePath));
@@ -123,7 +120,7 @@ void TestDatabase::testSignals()
     QTRY_COMPARE(spyModified.count(), 1);
 
     QSignalSpy spySaved(db.data(), SIGNAL(databaseSaved()));
-    QVERIFY(db->save(Database::Atomic, false, &error));
+    QVERIFY(db->save(Database::Atomic, QString(), &error));
     QCOMPARE(spySaved.count(), 1);
 
     // Short delay to allow file system settling to reduce test failures

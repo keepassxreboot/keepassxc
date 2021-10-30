@@ -43,6 +43,7 @@ public:
         AutoSaveOnExit,
         AutoSaveNonDataChanges,
         BackupBeforeSave,
+        BackupFilePathPattern,
         UseAtomicSaves,
         UseDirectWriteSaves,
         SearchLimitGroup,
@@ -195,6 +196,7 @@ public:
 
     ~Config() override;
     QVariant get(ConfigKey key);
+    QVariant getDefault(ConfigKey key);
     QString getFileName();
     void set(ConfigKey key, const QVariant& value);
     void remove(ConfigKey key);
