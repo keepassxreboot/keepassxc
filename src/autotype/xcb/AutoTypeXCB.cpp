@@ -295,6 +295,10 @@ void AutoTypePlatformX11::updateKeymap()
     }
     m_xkb = XkbGetMap(m_dpy, XkbAllClientInfoMask, XkbUseCoreKbd);
 
+    /* workaround X11 bug https://gitlab.freedesktop.org/xorg/xserver/-/issues/1155 */
+    XkbSetMap(m_dpy, XkbAllClientInfoMask, m_xkb);
+    XSync(m_dpy, False);
+
     /* Build updated keymap */
     m_keymap.clear();
     m_remapKeycode = 0;
