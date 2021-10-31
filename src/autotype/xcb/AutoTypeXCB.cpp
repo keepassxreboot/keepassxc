@@ -368,6 +368,7 @@ void AutoTypePlatformX11::SendKeyEvent(unsigned keycode, bool press)
 
     XTestFakeKeyEvent(m_dpy, keycode, press, 0);
     XFlush(m_dpy);
+    XSync(m_dpy, False);
 
     XSetErrorHandler(oldHandler);
 }
