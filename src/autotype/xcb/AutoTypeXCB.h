@@ -58,7 +58,7 @@ private:
     bool isTopLevelWindow(Window window);
 
     XkbDescPtr getKeyboard();
-    int AddKeysym(KeySym keysym);
+    bool RemapKeycode(KeySym keysym);
     void SendKeyEvent(unsigned keycode, bool press);
     void SendModifiers(unsigned int mask, bool press);
     bool GetKeycode(KeySym keysym, int* keycode, int* group, unsigned int* mask);
@@ -88,6 +88,7 @@ private:
     XkbDescPtr m_xkb;
     QList<KeyDesc> m_keymap;
     KeyCode m_modifier_keycode[N_MOD_INDICES];
+    KeyCode m_remapKeycode;
     bool m_loaded;
 };
 
