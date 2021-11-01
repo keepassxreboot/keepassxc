@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ namespace
     const QString TARGET_DIR_TOR_BROWSER = QStringLiteral(
         "/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts");
     const QString TARGET_DIR_BRAVE = QStringLiteral("/BraveSoftware/Brave-Browser/NativeMessagingHosts");
-    const QString TARGET_DIR_EDGE = QStringLiteral("/microsoftedge/NativeMessagingHosts");
+    const QString TARGET_DIR_EDGE = QStringLiteral("/microsoft-edge/NativeMessagingHosts");
 #endif
 } // namespace
 
