@@ -6561,7 +6561,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation>Passw‭örter auf Schwächen und Probleme prüfen.</translation>
+        <translation>Passwörter auf Schwächen und Probleme prüfen.</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
