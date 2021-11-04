@@ -15,22 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SHOW_H
-#define KEEPASSXC_SHOW_H
+#ifndef KEEPASSXC_ATTACHMENTREMOVE_H
+#define KEEPASSXC_ATTACHMENTREMOVE_H
 
 #include "DatabaseCommand.h"
 
-class Show : public DatabaseCommand
+class AttachmentRemove : public DatabaseCommand
 {
 public:
-    Show();
+    AttachmentRemove();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
-
-    static const QCommandLineOption TotpOption;
-    static const QCommandLineOption AttributesOption;
-    static const QCommandLineOption ProtectedAttributesOption;
-    static const QCommandLineOption AttachmentsOption;
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 };
 
-#endif // KEEPASSXC_SHOW_H
+#endif // KEEPASSXC_ATTACHMENTMOVE_H

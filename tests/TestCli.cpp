@@ -30,6 +30,9 @@
 #include "cli/Add.h"
 #include "cli/AddGroup.h"
 #include "cli/Analyze.h"
+#include "cli/AttachmentExport.h"
+#include "cli/AttachmentImport.h"
+#include "cli/AttachmentRemove.h"
 #include "cli/Clip.h"
 #include "cli/Create.h"
 #include "cli/Diceware.h"
@@ -215,6 +218,9 @@ void TestCli::testBatchCommands()
     Commands::setupCommands(false);
     QVERIFY(Commands::getCommand("add"));
     QVERIFY(Commands::getCommand("analyze"));
+    QVERIFY(Commands::getCommand("attachment-export"));
+    QVERIFY(Commands::getCommand("attachment-import"));
+    QVERIFY(Commands::getCommand("attachment-rm"));
     QVERIFY(Commands::getCommand("clip"));
     QVERIFY(Commands::getCommand("close"));
     QVERIFY(Commands::getCommand("db-create"));
@@ -236,7 +242,7 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(Commands::getCommand("search"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 22);
+    QCOMPARE(Commands::getCommands().size(), 25);
 }
 
 void TestCli::testInteractiveCommands()
@@ -244,6 +250,9 @@ void TestCli::testInteractiveCommands()
     Commands::setupCommands(true);
     QVERIFY(Commands::getCommand("add"));
     QVERIFY(Commands::getCommand("analyze"));
+    QVERIFY(Commands::getCommand("attachment-export"));
+    QVERIFY(Commands::getCommand("attachment-import"));
+    QVERIFY(Commands::getCommand("attachment-rm"));
     QVERIFY(Commands::getCommand("clip"));
     QVERIFY(Commands::getCommand("close"));
     QVERIFY(Commands::getCommand("db-create"));
@@ -265,7 +274,7 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(Commands::getCommand("search"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 22);
+    QCOMPARE(Commands::getCommands().size(), 25);
 }
 
 void TestCli::testAdd()
@@ -433,6 +442,184 @@ void TestCli::testAnalyze()
     QVERIFY(output.contains("123"));
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
+}
+
+void TestCli::testAttachmentExport()
+{
+    AttachmentExport attachmentExportCmd;
+    QVERIFY(!attachmentExportCmd.name.isEmpty());
+    QVERIFY(attachmentExportCmd.getDescriptionLine().contains(attachmentExportCmd.name));
+
+    TemporaryFile exportOutput;
+    exportOutput.open(QIODevice::WriteOnly);
+    exportOutput.close();
+
+    // Try exporting an attachment of a non-existent entry
+    setInput("a");
+    execCmd(attachmentExportCmd,
+            {"attachment-export",
+             m_dbFile->fileName(),
+             "invalid_entry_path",
+             "invalid_attachment_name",
+             exportOutput.fileName()});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Could not find entry with path invalid_entry_path.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    // Try exporting a non-existent attachment
+    setInput("a");
+    execCmd(attachmentExportCmd,
+            {"attachment-export",
+             m_dbFile->fileName(),
+             "/Sample Entry",
+             "invalid_attachment_name",
+             exportOutput.fileName()});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Could not find attachment with name invalid_attachment_name.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    // Export an existing attachment to a file
+    setInput("a");
+    execCmd(
+        attachmentExportCmd,
+        {"attachment-export", m_dbFile->fileName(), "/Sample Entry", "Sample attachment.txt", exportOutput.fileName()});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray(qPrintable(QString("Successfully exported attachment %1 of entry %2 to %3.\n")
+                                       .arg("Sample attachment.txt", "/Sample Entry", exportOutput.fileName()))));
+
+    exportOutput.open(QIODevice::ReadOnly);
+    QCOMPARE(exportOutput.readAll(), QByteArray("Sample content\n"));
+
+    // Export an existing attachment to stdout
+    setInput("a");
+    execCmd(attachmentExportCmd,
+            {"attachment-export", "--stdout", m_dbFile->fileName(), "/Sample Entry", "Sample attachment.txt"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Sample content\n"));
+
+    // Ensure --stdout works even in quiet mode
+    setInput("a");
+    execCmd(
+        attachmentExportCmd,
+        {"attachment-export", "--quiet", "--stdout", m_dbFile->fileName(), "/Sample Entry", "Sample attachment.txt"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Sample content\n"));
+}
+
+void TestCli::testAttachmentImport()
+{
+    AttachmentImport attachmentImportCmd;
+    QVERIFY(!attachmentImportCmd.name.isEmpty());
+    QVERIFY(attachmentImportCmd.getDescriptionLine().contains(attachmentImportCmd.name));
+
+    const QString attachmentPath = QString(KEEPASSX_TEST_DATA_DIR).append("/Attachment.txt");
+    QVERIFY(QFile::exists(attachmentPath));
+
+    // Try importing an attachment to a non-existent entry
+    setInput("a");
+    execCmd(attachmentImportCmd,
+            {"attachment-import",
+             m_dbFile->fileName(),
+             "invalid_entry_path",
+             "invalid_attachment_name",
+             "invalid_attachment_path"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Could not find entry with path invalid_entry_path.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    // Try importing an attachment with an occupied name without -f option
+    setInput("a");
+    execCmd(attachmentImportCmd,
+            {"attachment-import",
+             m_dbFile->fileName(),
+             "/Sample Entry",
+             "Sample attachment.txt",
+             "invalid_attachment_path"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(),
+             QByteArray("Attachment Sample attachment.txt already exists for entry /Sample Entry.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    // Try importing a non-existent attachment
+    setInput("a");
+    execCmd(attachmentImportCmd,
+            {"attachment-import",
+             m_dbFile->fileName(),
+             "/Sample Entry",
+             "Sample attachment 2.txt",
+             "invalid_attachment_path"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Could not open attachment file invalid_attachment_path.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    // Try importing an attachment with an occupied name with -f option
+    setInput("a");
+    execCmd(
+        attachmentImportCmd,
+        {"attachment-import", "-f", m_dbFile->fileName(), "/Sample Entry", "Sample attachment.txt", attachmentPath});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray(qPrintable(
+                 QString("Successfully imported attachment %1 as Sample attachment.txt to entry /Sample Entry.\n")
+                     .arg(attachmentPath))));
+
+    // Try importing an attachment with an unoccupied name
+    setInput("a");
+    execCmd(attachmentImportCmd,
+            {"attachment-import", m_dbFile->fileName(), "/Sample Entry", "Attachment.txt", attachmentPath});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(
+        m_stdout->readAll(),
+        QByteArray(qPrintable(QString("Successfully imported attachment %1 as Attachment.txt to entry /Sample Entry.\n")
+                                  .arg(attachmentPath))));
+}
+
+void TestCli::testAttachmentRemove()
+{
+    AttachmentRemove attachmentRemoveCmd;
+    QVERIFY(!attachmentRemoveCmd.name.isEmpty());
+    QVERIFY(attachmentRemoveCmd.getDescriptionLine().contains(attachmentRemoveCmd.name));
+
+    // Try deleting an attachment belonging to an non-existent entry
+    setInput("a");
+    execCmd(attachmentRemoveCmd,
+            {"attachment-rm", m_dbFile->fileName(), "invalid_entry_path", "invalid_attachment_name"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Could not find entry with path invalid_entry_path.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    // Try deleting a non-existent attachment from an entry
+    setInput("a");
+    execCmd(attachmentRemoveCmd, {"attachment-rm", m_dbFile->fileName(), "/Sample Entry", "invalid_attachment_name"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Could not find attachment with name invalid_attachment_name.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    // Finally delete an existing attachment from an existing entry
+    auto db = readDatabase();
+    QVERIFY(db);
+
+    const Entry* entry = db->rootGroup()->findEntryByPath("/Sample Entry");
+    QVERIFY(entry);
+
+    QVERIFY(entry->attachments()->hasKey("Sample attachment.txt"));
+
+    setInput("a");
+    execCmd(attachmentRemoveCmd, {"attachment-rm", m_dbFile->fileName(), "/Sample Entry", "Sample attachment.txt"});
+    m_stderr->readLine(); // skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("Successfully removed attachment Sample attachment.txt from entry /Sample Entry.\n"));
+
+    db = readDatabase();
+    QVERIFY(db);
+    QVERIFY(!db->rootGroup()->findEntryByPath("/Sample Entry")->attachments()->hasKey("Sample attachment.txt"));
 }
 
 void TestCli::testClip()
@@ -1750,6 +1937,33 @@ void TestCli::testShow()
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
                         "Notes: Notes\n"));
+
+    setInput("a");
+    execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Sample Entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("Title: Sample Entry\n"
+                        "UserName: User Name\n"
+                        "Password: PROTECTED\n"
+                        "URL: http://www.somesite.com/\n"
+                        "Notes: Notes\n"
+                        "\n"
+                        "Attachments:\n"
+                        "  Sample attachment.txt (15.0 B)\n"));
+
+    setInput("a");
+    execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Homebanking/Subgroup/Subgroup Entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("Title: Subgroup Entry\n"
+                        "UserName: Bank User Name\n"
+                        "Password: PROTECTED\n"
+                        "URL: https://www.bank.com\n"
+                        "Notes: Important note\n"
+                        "\n"
+                        "No attachments present.\n"));
 
     setInput("a");
     execCmd(showCmd, {"show", "-a", "Title", m_dbFile->fileName(), "/Sample Entry"});

@@ -40,6 +40,17 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *analyze* [_options_] <__database__>::
   Analyzes passwords in a database for weaknesses using offline HIBP SHA-1 hash lookup.
 
+*attachment-export* [_options_] <__database__> <__entry__> <__attachment_name__> <__export_file__>::
+  Exports the content of an attachment to a specified file.
+  Use *--stdout* option to instead output the contents of the attachment to stdout.
+
+*attachment-import* [_options_] <__database__> <__entry__> <__attachment_name__> <__import_file__>::
+  Imports the attachment into an entry.
+  An existing attachment with the same name may be overwritten if the *-f* option is specified.
+
+*attachment-rm* <__database__> <__entry__> <__attachment_name__>::
+  Removes the named attachment from an entry.
+
 *clip* [_options_] <__database__> <__entry__> [_timeout_]::
   Copies an attribute or the current TOTP (if the *-t* option is specified) of a database entry to the clipboard.
   If no attribute name is specified using the *-a* option, the password is copied.
@@ -243,6 +254,9 @@ The same password generation options as documented for the generate command can 
 
 *-s*, *--show-protected*::
   Shows the protected attributes in clear text.
+
+*--show-attachments*::
+  Shows the attachment names along with the size of the attachments.
 
 *-t*, *--totp*::
   Also shows the current TOTP, reporting an error if no TOTP is configured for the entry.
