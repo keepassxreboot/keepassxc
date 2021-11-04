@@ -184,7 +184,7 @@ int TestCli::execCmd(Command& cmd, const QStringList& args) const
         m_stdout->readLine();
     }
     while (m_stderr->peek(1) == newline) {
-        m_stdout->readLine();
+        m_stderr->readLine();
     }
 
     return ret;
