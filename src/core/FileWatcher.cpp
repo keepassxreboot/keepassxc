@@ -131,7 +131,7 @@ void FileWatcher::checkFileChanged()
 QByteArray FileWatcher::calculateChecksum()
 {
     QFile file(m_filePath);
-    if (file.open(QFile::ReadOnly)) {
+    if (!m_filePath.isEmpty() && file.open(QFile::ReadOnly)) {
         QCryptographicHash hash(QCryptographicHash::Sha256);
         if (m_fileChecksumSizeBytes > 0) {
             hash.addData(file.read(m_fileChecksumSizeBytes));
