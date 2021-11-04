@@ -15,22 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SHOW_H
-#define KEEPASSXC_SHOW_H
+#ifndef KEEPASSXC_ATTACHMENTEXPORT_H
+#define KEEPASSXC_ATTACHMENTEXPORT_H
 
 #include "DatabaseCommand.h"
 
-class Show : public DatabaseCommand
+class AttachmentExport : public DatabaseCommand
 {
 public:
-    Show();
+    AttachmentExport();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 
-    static const QCommandLineOption TotpOption;
-    static const QCommandLineOption AttributesOption;
-    static const QCommandLineOption ProtectedAttributesOption;
-    static const QCommandLineOption AttachmentsOption;
+    static const QCommandLineOption StdoutOption;
 };
 
-#endif // KEEPASSXC_SHOW_H
+#endif // KEEPASSXC_ATTACHMENTEXPORT_H

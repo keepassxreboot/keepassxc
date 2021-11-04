@@ -7386,6 +7386,94 @@ Please consider generating a new key file.</source>
         <source>%1 (invalid executable path)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export an attachment of an entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path of the entry with the target attachment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of the attachment to be exported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path to which the attachment should be exported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not find attachment with name %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not open output file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully exported attachment %1 of entry %2 to %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite existing attachments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imports an attachment to an entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path of the entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of the attachment to be added.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path of the attachment to be imported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachment %1 already exists for entry %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not open attachment file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully imported attachment %1 as %2 to entry %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove an attachment of an entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of the attachment to be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully removed attachment %1 from entry %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the attachments of the entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No attachments present.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachments:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
