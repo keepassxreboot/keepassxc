@@ -5691,6 +5691,34 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>Wordlist:</translation>
     </message>
     <message>
+        <source>Delete selected wordlist</source>
+        <translation>Delete selected wordlist</translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
+        <translation>Do you really want to delete the wordlist &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <source>Failed to delete wordlist</source>
+        <translation>Failed to delete wordlist</translation>
+    </message>
+    <message>
+        <source>Add custom wordlist</source>
+        <translation>Add custom wordlist</translation>
+    </message>
+    <message>
+        <source>Wordlists</source>
+        <translation>Wordlists</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>All files</translation>
+    </message>
+    <message>
+        <source>Failed to add wordlist</source>
+        <translation>Failed to add wordlist</translation>
+    </message>
+    <message>
         <source>Word Separator:</source>
         <translation>Word Separator:</translation>
     </message>
@@ -5872,6 +5900,27 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(SYSTEM)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Wordlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Custom Wordlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite Wordlist?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
+Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

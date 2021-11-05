@@ -61,6 +61,8 @@ public slots:
     void applyPassword();
     void copyPassword();
     void setPasswordVisible(bool visible);
+    void deleteWordList();
+    void addWordList();
 
 signals:
     void appliedPassword(const QString& password);
@@ -80,6 +82,7 @@ private slots:
 
 private:
     bool m_standalone = false;
+    int m_firstCustomWordlistIndex;
 
     void closeEvent(QCloseEvent* event);
     PasswordGenerator::CharClasses charClasses();

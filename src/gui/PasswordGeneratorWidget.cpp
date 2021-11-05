@@ -28,7 +28,9 @@
 #include "core/PasswordHealth.h"
 #include "core/Resources.h"
 #include "gui/Clipboard.h"
+#include "gui/FileDialog.h"
 #include "gui/Icons.h"
+#include "gui/MessageBox.h"
 #include "gui/styles/StateColorPalette.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
@@ -43,6 +45,8 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->buttonGenerate->setToolTip(
         tr("Regenerate password (%1)").arg(m_ui->buttonGenerate->shortcut().toString(QKeySequence::NativeText)));
     m_ui->buttonCopy->setIcon(icons()->icon("clipboard-text"));
+    m_ui->buttonDeleteWordList->setIcon(icons()->icon("trash"));
+    m_ui->buttonAddWordList->setIcon(icons()->icon("document-new"));
     m_ui->buttonClose->setShortcut(Qt::Key_Escape);
 
     // Add two shortcuts to save the form CTRL+Enter and CTRL+S
@@ -60,6 +64,8 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
     connect(m_ui->buttonCopy, SIGNAL(clicked()), SLOT(copyPassword()));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
+    connect(m_ui->buttonDeleteWordList, SIGNAL(clicked()), SLOT(deleteWordList()));
+    connect(m_ui->buttonAddWordList, SIGNAL(clicked()), SLOT(addWordList()));
     connect(m_ui->buttonClose, SIGNAL(clicked()), SIGNAL(closed()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
@@ -92,15 +98,18 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->wordCaseComboBox->addItem(tr("UPPER CASE"), PassphraseGenerator::UPPERCASE);
     m_ui->wordCaseComboBox->addItem(tr("Title Case"), PassphraseGenerator::TITLECASE);
 
+    // load system-wide wordlists
     QDir path(resources()->wordlistPath(""));
-    QStringList files = path.entryList(QDir::Files);
-    m_ui->comboBoxWordList->addItems(files);
-    if (files.size() > 1) {
-        m_ui->comboBoxWordList->setVisible(true);
-        m_ui->labelWordList->setVisible(true);
-    } else {
-        m_ui->comboBoxWordList->setVisible(false);
-        m_ui->labelWordList->setVisible(false);
+    for (const auto& fileName : path.entryList(QDir::Files)) {
+        m_ui->comboBoxWordList->addItem(tr("(SYSTEM)") + " " + fileName, fileName);
+    }
+
+    m_firstCustomWordlistIndex = m_ui->comboBoxWordList->count();
+
+    // load user-provided wordlists
+    path = QDir(resources()->userWordlistPath(""));
+    for (const auto& fileName : path.entryList(QDir::Files)) {
+        m_ui->comboBoxWordList->addItem(fileName, path.absolutePath() + QDir::separator() + fileName);
     }
 
     loadSettings();
@@ -164,7 +173,10 @@ void PasswordGeneratorWidget::loadSettings()
     // Diceware config
     m_ui->spinBoxWordCount->setValue(config()->get(Config::PasswordGenerator_WordCount).toInt());
     m_ui->editWordSeparator->setText(config()->get(Config::PasswordGenerator_WordSeparator).toString());
-    m_ui->comboBoxWordList->setCurrentText(config()->get(Config::PasswordGenerator_WordList).toString());
+    int i = m_ui->comboBoxWordList->findData(config()->get(Config::PasswordGenerator_WordList).toString());
+    if (i > -1) {
+        m_ui->comboBoxWordList->setCurrentIndex(i);
+    }
     m_ui->wordCaseComboBox->setCurrentIndex(config()->get(Config::PasswordGenerator_WordCase).toInt());
 
     // Password or diceware?
@@ -205,7 +217,7 @@ void PasswordGeneratorWidget::saveSettings()
     // Diceware config
     config()->set(Config::PasswordGenerator_WordCount, m_ui->spinBoxWordCount->value());
     config()->set(Config::PasswordGenerator_WordSeparator, m_ui->editWordSeparator->text());
-    config()->set(Config::PasswordGenerator_WordList, m_ui->comboBoxWordList->currentText());
+    config()->set(Config::PasswordGenerator_WordList, m_ui->comboBoxWordList->currentData());
     config()->set(Config::PasswordGenerator_WordCase, m_ui->wordCaseComboBox->currentIndex());
 
     // Password or diceware?
@@ -327,6 +339,86 @@ void PasswordGeneratorWidget::setPasswordVisible(bool visible)
 bool PasswordGeneratorWidget::isPasswordVisible() const
 {
     return m_ui->editNewPassword->isPasswordVisible();
+}
+
+void PasswordGeneratorWidget::deleteWordList()
+{
+    if (m_ui->comboBoxWordList->currentIndex() < m_firstCustomWordlistIndex) {
+        return;
+    }
+
+    QFile file(m_ui->comboBoxWordList->currentData().toString());
+    if (!file.exists()) {
+        return;
+    }
+
+    auto result = MessageBox::question(this,
+                                       tr("Confirm Delete Wordlist"),
+                                       tr("Do you really want to delete the wordlist \"%1\"?").arg(file.fileName()),
+                                       MessageBox::Delete | MessageBox::Cancel,
+                                       MessageBox::Cancel);
+    if (result != MessageBox::Delete) {
+        return;
+    }
+
+    if (!file.remove()) {
+        MessageBox::critical(this, tr("Failed to delete wordlist"), file.errorString());
+        return;
+    }
+
+    m_ui->comboBoxWordList->removeItem(m_ui->comboBoxWordList->currentIndex());
+    updateGenerator();
+}
+
+void PasswordGeneratorWidget::addWordList()
+{
+    auto filter = QString("%1 (*.txt *.asc *.wordlist);;%2 (*)").arg(tr("Wordlists"), tr("All files"));
+    auto filePath = fileDialog()->getOpenFileName(this, tr("Select Custom Wordlist"), "", filter);
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    // create directory for user-specified wordlists, if necessary
+    QDir destDir(resources()->userWordlistPath(""));
+    destDir.mkpath(".");
+
+    // check if destination wordlist already exists
+    QString fileName = QFileInfo(filePath).fileName();
+    QString destPath = destDir.absolutePath() + QDir::separator() + fileName;
+    QFile dest(destPath);
+    if (dest.exists()) {
+        auto response = MessageBox::warning(this,
+                                            tr("Overwrite Wordlist?"),
+                                            tr("Wordlist \"%1\" already exists as a custom wordlist.\n"
+                                               "Do you want to overwrite it?")
+                                                .arg(fileName),
+                                            MessageBox::Overwrite | MessageBox::Cancel,
+                                            MessageBox::Cancel);
+        if (response != MessageBox::Overwrite) {
+            return;
+        }
+        if (!dest.remove()) {
+            MessageBox::critical(this, tr("Failed to delete wordlist"), dest.errorString());
+            return;
+        }
+    }
+
+    // copy wordlist to destination path and add corresponding item to the combo box
+    QFile file(filePath);
+    if (!file.copy(destPath)) {
+        MessageBox::critical(this, tr("Failed to add wordlist"), file.errorString());
+        return;
+    }
+
+    auto index = m_ui->comboBoxWordList->findData(destPath);
+    if (index == -1) {
+        m_ui->comboBoxWordList->addItem(fileName, destPath);
+        index = m_ui->comboBoxWordList->count() - 1;
+    }
+    m_ui->comboBoxWordList->setCurrentIndex(index);
+
+    // update the password generator
+    updateGenerator();
 }
 
 void PasswordGeneratorWidget::setAdvancedMode(bool advanced)
@@ -540,10 +632,15 @@ void PasswordGeneratorWidget::updateGenerator()
             static_cast<PassphraseGenerator::PassphraseWordCase>(m_ui->wordCaseComboBox->currentData().toInt()));
 
         m_dicewareGenerator->setWordCount(m_ui->spinBoxWordCount->value());
-        if (!m_ui->comboBoxWordList->currentText().isEmpty()) {
-            QString path = resources()->wordlistPath(m_ui->comboBoxWordList->currentText());
-            m_dicewareGenerator->setWordList(path);
+        auto path = m_ui->comboBoxWordList->currentData().toString();
+        if (m_ui->comboBoxWordList->currentIndex() < m_firstCustomWordlistIndex) {
+            path = resources()->wordlistPath(path);
+            m_ui->buttonDeleteWordList->setEnabled(false);
+        } else {
+            m_ui->buttonDeleteWordList->setEnabled(true);
         }
+        m_dicewareGenerator->setWordList(path);
+
         m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
 
         if (m_dicewareGenerator->isValid()) {
