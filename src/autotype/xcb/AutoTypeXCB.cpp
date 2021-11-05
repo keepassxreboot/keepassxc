@@ -295,11 +295,22 @@ void AutoTypePlatformX11::updateKeymap()
     }
     m_xkb = XkbGetMap(m_dpy, XkbAllClientInfoMask, XkbUseCoreKbd);
 
+    /* workaround X11 bug https://gitlab.freedesktop.org/xorg/xserver/-/issues/1155 */
+    XkbSetMap(m_dpy, XkbAllClientInfoMask, m_xkb);
+    XSync(m_dpy, False);
+
     /* Build updated keymap */
     m_keymap.clear();
+    m_remapKeycode = 0;
 
     for (int ckeycode = m_xkb->min_key_code; ckeycode < m_xkb->max_key_code; ckeycode++) {
         int groups = XkbKeyNumGroups(m_xkb, ckeycode);
+
+        /* track highest remappable keycode, don't add to keymap */
+        if (groups == 0) {
+            m_remapKeycode = ckeycode;
+            continue;
+        }
 
         for (int cgroup = 0; cgroup < groups; cgroup++) {
             XkbKeyTypePtr type = XkbKeyKeyType(m_xkb, ckeycode, cgroup);
@@ -357,6 +368,7 @@ void AutoTypePlatformX11::SendKeyEvent(unsigned keycode, bool press)
 
     XTestFakeKeyEvent(m_dpy, keycode, press, 0);
     XFlush(m_dpy);
+    XSync(m_dpy, False);
 
     XSetErrorHandler(oldHandler);
 }
@@ -399,7 +411,41 @@ bool AutoTypePlatformX11::GetKeycode(KeySym keysym, int* keycode, int* group, un
         return true;
     }
 
+    /* if we can't find an existing key for this keysym, try remapping */
+    if (RemapKeycode(keysym)) {
+        *keycode = m_remapKeycode;
+        *group = 0;
+        *mask = 0;
+        return true;
+    }
+
     return false;
+}
+
+/*
+ * Get remapped keycode for any keysym.
+ */
+bool AutoTypePlatformX11::RemapKeycode(KeySym keysym)
+{
+    if (!m_remapKeycode) {
+        return false;
+    }
+
+    if (keysym != NoSymbol) {
+        int type = XkbOneLevelIndex;
+        if (XkbChangeTypesOfKey(m_xkb, m_remapKeycode, 1, XkbGroup1Mask, &type, NULL) != Success) {
+            return false;
+        }
+
+        XkbKeySymEntry(m_xkb, m_remapKeycode, 0, 0) = keysym;
+    } else {
+        XkbChangeTypesOfKey(m_xkb, m_remapKeycode, 0, XkbGroup1Mask, NULL, NULL);
+    }
+
+    XkbSetMap(m_dpy, XkbAllClientInfoMask, m_xkb);
+    XFlush(m_dpy);
+    XSync(m_dpy, False);
+    return true;
 }
 
 /*
@@ -426,14 +472,6 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
     /* tell GetKeycode we would prefer a key from active group */
     group = group_active;
 
-    /* determine keycode, group and mask for the given keysym */
-    if (!GetKeycode(keysym, &keycode, &group, &wanted_mask)) {
-        return AutoTypeAction::Result::Failed(tr("Unable to get valid keycode for key: ")
-                                              + QString(XKeysymToString(keysym)));
-    }
-
-    wanted_mask |= modifiers;
-
     Window root, child;
     int root_x, root_y, x, y;
     unsigned int original_mask;
@@ -450,6 +488,14 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
     if (original_mask & (ShiftMask | ControlMask | Mod1Mask | Mod3Mask | Mod4Mask | Mod5Mask)) {
         return AutoTypeAction::Result::Retry(tr("Sequence aborted: Modifier keys held by user"));
     }
+
+    /* determine keycode, group and mask for the given keysym */
+    if (!GetKeycode(keysym, &keycode, &group, &wanted_mask)) {
+        return AutoTypeAction::Result::Failed(tr("Unable to get valid keycode for key: ")
+                                              + QString(XKeysymToString(keysym)));
+    }
+
+    wanted_mask |= modifiers;
 
     /* modifiers that need to be held but aren't */
     unsigned int press_mask = wanted_mask & ~original_mask;
@@ -472,6 +518,11 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
     if (group_active != group) {
         XkbLockGroup(m_dpy, XkbUseCoreKbd, group_active);
         XFlush(m_dpy);
+    }
+
+    /* reset remap to prevent leaking remap keysyms longer than necessary */
+    if (keycode == m_remapKeycode) {
+        RemapKeycode(NoSymbol);
     }
 
     return AutoTypeAction::Result::Ok();
