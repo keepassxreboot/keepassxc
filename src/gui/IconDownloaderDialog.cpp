@@ -191,7 +191,7 @@ void IconDownloaderDialog::updateTable(const QString& url, const QString& messag
 void IconDownloaderDialog::abortDownloads()
 {
     for (auto* downloader : m_activeDownloaders) {
-        delete downloader;
+        downloader->deleteLater();
     }
     m_activeDownloaders.clear();
     updateProgressBar();
