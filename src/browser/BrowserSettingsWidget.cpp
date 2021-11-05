@@ -139,12 +139,6 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->snapWarningLabel->setVisible(false);
 #endif
 
-// TODO: Enable Edge support when Linux version is released
-#ifdef Q_OS_LINUX
-    m_ui->edgeSupport->setChecked(false);
-    m_ui->edgeSupport->setEnabled(false);
-#endif
-
 #ifdef KEEPASSXC_DIST_SNAP
     // Disable settings that will not work
     m_ui->useCustomProxy->setChecked(false);
