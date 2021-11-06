@@ -53,6 +53,12 @@ const QCommandLineOption Generate::ExcludeCharsOption = QCommandLineOption(QStri
                                                                            QObject::tr("Exclude character set"),
                                                                            QObject::tr("chars"));
 
+const QCommandLineOption Generate::IncludeAdditionalCharsOption =
+    QCommandLineOption(QStringList() << "i"
+                                     << "include",
+                       QObject::tr("Additionally include character set"),
+                       QObject::tr("chars"));
+
 const QCommandLineOption Generate::ExcludeSimilarCharsOption =
     QCommandLineOption(QStringList() << "exclude-similar", QObject::tr("Exclude similar looking characters"));
 
@@ -71,6 +77,7 @@ Generate::Generate()
     options.append(Generate::ExcludeCharsOption);
     options.append(Generate::ExcludeSimilarCharsOption);
     options.append(Generate::IncludeEveryGroupOption);
+    options.append(Generate::IncludeAdditionalCharsOption);
 }
 
 /**
@@ -123,6 +130,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
     passwordGenerator->setCharClasses(classes);
     passwordGenerator->setFlags(flags);
     passwordGenerator->setExcludedChars(parser->value(Generate::ExcludeCharsOption));
+    passwordGenerator->setAdditionalChars(parser->value(Generate::IncludeAdditionalCharsOption));
 
     if (!passwordGenerator->isValid()) {
         err << QObject::tr("Invalid password generator after applying all options") << endl;
