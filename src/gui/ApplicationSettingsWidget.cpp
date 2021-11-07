@@ -19,6 +19,8 @@
 #include "ApplicationSettingsWidget.h"
 #include "ui_ApplicationSettingsWidgetGeneral.h"
 #include "ui_ApplicationSettingsWidgetSecurity.h"
+#include <QDesktopServices>
+#include <QDir>
 
 #include "config-keepassx.h"
 
@@ -28,6 +30,7 @@
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
 
+#include "FileDialog.h"
 #include "MessageBox.h"
 #ifdef Q_OS_MACOS
 #include "touchid/TouchID.h"
@@ -112,6 +115,12 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_generalUi->useAlternativeSaveCheckBox, SIGNAL(toggled(bool)),
             m_generalUi->alternativeSaveComboBox, SLOT(setEnabled(bool)));
 
+    connect(m_generalUi->backupBeforeSaveCheckBox, SIGNAL(toggled(bool)),
+            m_generalUi->backupFilePath, SLOT(setEnabled(bool)));
+    connect(m_generalUi->backupBeforeSaveCheckBox, SIGNAL(toggled(bool)),
+            m_generalUi->backupFilePathPicker, SLOT(setEnabled(bool)));
+    connect(m_generalUi->backupFilePathPicker, SIGNAL(pressed()), SLOT(selectBackupDirectory()));
+
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
     connect(m_secUi->clearSearchCheckBox, SIGNAL(toggled(bool)),
@@ -188,6 +197,9 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get(Config::AutoSaveOnExit).toBool());
     m_generalUi->autoSaveNonDataChangesCheckBox->setChecked(config()->get(Config::AutoSaveNonDataChanges).toBool());
     m_generalUi->backupBeforeSaveCheckBox->setChecked(config()->get(Config::BackupBeforeSave).toBool());
+
+    m_generalUi->backupFilePath->setText(config()->get(Config::BackupFilePathPattern).toString());
+
     m_generalUi->useAlternativeSaveCheckBox->setChecked(!config()->get(Config::UseAtomicSaves).toBool());
     m_generalUi->alternativeSaveComboBox->setCurrentIndex(config()->get(Config::UseDirectWriteSaves).toBool() ? 1 : 0);
     m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get(Config::AutoReloadOnChange).toBool());
@@ -326,6 +338,9 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::AutoSaveOnExit, m_generalUi->autoSaveOnExitCheckBox->isChecked());
     config()->set(Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox->isChecked());
     config()->set(Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox->isChecked());
+
+    config()->set(Config::BackupFilePathPattern, m_generalUi->backupFilePath->text());
+
     config()->set(Config::UseAtomicSaves, !m_generalUi->useAlternativeSaveCheckBox->isChecked());
     config()->set(Config::UseDirectWriteSaves, m_generalUi->alternativeSaveComboBox->currentIndex() == 1);
     config()->set(Config::AutoReloadOnChange, m_generalUi->autoReloadOnChangeCheckBox->isChecked());
@@ -503,4 +518,14 @@ void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
 void ApplicationSettingsWidget::checkUpdatesToggled(bool checked)
 {
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setEnabled(checked);
+}
+
+void ApplicationSettingsWidget::selectBackupDirectory()
+{
+    auto backupDirectory =
+        FileDialog::instance()->getExistingDirectory(this, tr("Select backup storage directory"), QDir::homePath());
+    if (!backupDirectory.isEmpty()) {
+        m_generalUi->backupFilePath->setText(
+            QDir(backupDirectory).filePath(config()->getDefault(Config::BackupFilePathPattern).toString()));
+    }
 }

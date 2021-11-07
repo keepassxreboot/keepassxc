@@ -22,7 +22,10 @@
 #include "config-keepassx.h"
 #include "git-info.h"
 
+#include "core/Clock.h"
+
 #include <QElapsedTimer>
+#include <QFileInfo>
 #include <QImageReader>
 #include <QLocale>
 #include <QMetaProperty>
@@ -375,5 +378,38 @@ namespace Tools
             result[QLatin1String(name)] = value;
         }
         return result;
+    }
+
+    QString substituteBackupFilePath(QString pattern, const QString& databasePath)
+    {
+        // Fail if substitution fails
+        if (databasePath.isEmpty()) {
+            return {};
+        }
+
+        // Replace backup pattern
+        QFileInfo dbFileInfo(databasePath);
+        QString baseName = dbFileInfo.completeBaseName();
+
+        pattern.replace(QString("{DB_FILENAME}"), baseName);
+
+        auto re = QRegularExpression(R"(\{TIME(?::([^\\]*))?\})");
+        auto match = re.match(pattern);
+        while (match.hasMatch()) {
+            // Extract time format specifier
+            auto formatSpecifier = QString("dd_MM_yyyy_hh-mm-ss");
+            if (!match.captured(1).isEmpty()) {
+                formatSpecifier = match.captured(1);
+            }
+            auto replacement = Clock::currentDateTime().toString(formatSpecifier);
+            pattern.replace(match.capturedStart(), match.capturedLength(), replacement);
+            match = re.match(pattern);
+        }
+
+        // Replace escaped braces
+        pattern.replace("\\{", "{");
+        pattern.replace("\\}", "}");
+
+        return pattern;
     }
 } // namespace Tools

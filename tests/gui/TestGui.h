@@ -57,6 +57,8 @@ private slots:
     void testSaveAs();
     void testSaveBackup();
     void testSave();
+    void testSaveBackupPath();
+    void testSaveBackupPath_data();
     void testDatabaseSettings();
     void testKeePass1Import();
     void testDatabaseLocking();
@@ -67,7 +69,8 @@ private slots:
 
 private:
     void addCannedEntries();
-    void checkDatabase(QString dbFileName = "");
+    void checkDatabase(const QString& filePath, const QString& expectedDbName);
+    void checkDatabase(const QString& filePath = {});
     void triggerAction(const QString& name);
     void dragAndDropGroup(const QModelIndex& sourceIndex,
                           const QModelIndex& targetIndex,

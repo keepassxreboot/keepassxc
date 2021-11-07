@@ -27,6 +27,7 @@
 #include <QProcess>
 #include <QSplitter>
 #include <QTextEdit>
+#include <core/Tools.h>
 
 #include "autotype/AutoType.h"
 #include "core/EntrySearcher.h"
@@ -1879,11 +1880,31 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
         }
     }
 
+    QString backupFilePath;
+    if (config()->get(Config::BackupBeforeSave).toBool()) {
+        backupFilePath = config()->get(Config::BackupFilePathPattern).toString();
+        // Fall back to default
+        if (backupFilePath.isEmpty()) {
+            backupFilePath = config()->getDefault(Config::BackupFilePathPattern).toString();
+        }
+
+        QFileInfo dbFileInfo(m_db->filePath());
+        backupFilePath = Tools::substituteBackupFilePath(backupFilePath, dbFileInfo.canonicalFilePath());
+        if (!backupFilePath.isNull()) {
+            // Note that we cannot guarantee that backupFilePath is actually a valid filename. QT currently provides
+            // no function for this. Moreover, we don't check if backupFilePath is a file and not a directory.
+            // If this isn't the case, just let the backup fail.
+            if (QDir::isRelativePath(backupFilePath)) {
+                backupFilePath = QDir::cleanPath(dbFileInfo.absolutePath() + QDir::separator() + backupFilePath);
+            }
+        }
+    }
+
     bool ok;
     if (fileName.isEmpty()) {
-        ok = m_db->save(saveAction, config()->get(Config::BackupBeforeSave).toBool(), &errorMessage);
+        ok = m_db->save(saveAction, backupFilePath, &errorMessage);
     } else {
-        ok = m_db->saveAs(fileName, saveAction, config()->get(Config::BackupBeforeSave).toBool(), &errorMessage);
+        ok = m_db->saveAs(fileName, saveAction, backupFilePath, &errorMessage);
     }
 
     // Return control

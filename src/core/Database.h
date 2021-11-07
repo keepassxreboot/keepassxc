@@ -79,8 +79,11 @@ public:
               QSharedPointer<const CompositeKey> key,
               QString* error = nullptr,
               bool readOnly = false);
-    bool save(SaveAction action = Atomic, bool backup = false, QString* error = nullptr);
-    bool saveAs(const QString& filePath, SaveAction action = Atomic, bool backup = false, QString* error = nullptr);
+    bool save(SaveAction action = Atomic, const QString& backupFilePath = QString(), QString* error = nullptr);
+    bool saveAs(const QString& filePath,
+                SaveAction action = Atomic,
+                const QString& backupFilePath = QString(),
+                QString* error = nullptr);
     bool extract(QByteArray&, QString* error = nullptr);
     bool import(const QString& xmlExportPath, QString* error = nullptr);
 
@@ -203,9 +206,9 @@ private:
     void createRecycleBin();
 
     bool writeDatabase(QIODevice* device, QString* error = nullptr);
-    bool backupDatabase(const QString& filePath);
-    bool restoreDatabase(const QString& filePath);
-    bool performSave(const QString& filePath, SaveAction flags, bool backup, QString* error);
+    bool backupDatabase(const QString& filePath, const QString& destinationFilePath);
+    bool restoreDatabase(const QString& filePath, const QString& fromBackupFilePath);
+    bool performSave(const QString& filePath, SaveAction flags, const QString& backupFilePath, QString* error);
     void startModifiedTimer();
     void stopModifiedTimer();
 

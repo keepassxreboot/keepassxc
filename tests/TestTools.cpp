@@ -17,6 +17,8 @@
 
 #include "TestTools.h"
 
+#include "core/Clock.h"
+
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestTools)
@@ -107,4 +109,56 @@ void TestTools::testValidUuid()
     QVERIFY(!Tools::isValidUuid(shortUuid));
     QVERIFY(!Tools::isValidUuid(longUuid));
     QVERIFY(!Tools::isValidUuid(nonHexUuid));
+}
+
+void TestTools::testBackupFilePatternSubstitution_data()
+{
+    QTest::addColumn<QString>("pattern");
+    QTest::addColumn<QString>("dbFilePath");
+    QTest::addColumn<QString>("expectedSubstitution");
+
+    static const auto DEFAULT_DB_FILE_NAME = QStringLiteral("KeePassXC");
+    static const auto DEFAULT_DB_FILE_PATH = QStringLiteral("/tmp/") + DEFAULT_DB_FILE_NAME + QStringLiteral(".kdbx");
+    static const auto NOW = Clock::currentDateTime();
+    auto DEFAULT_FORMATTED_TIME = NOW.toString("dd_MM_yyyy_hh-mm-ss");
+
+    QTest::newRow("Null pattern") << QString() << DEFAULT_DB_FILE_PATH << QString();
+    QTest::newRow("Empty pattern") << QString("") << DEFAULT_DB_FILE_PATH << QString("");
+    QTest::newRow("Null database path") << "valid_pattern" << QString() << QString();
+    QTest::newRow("Empty database path") << "valid_pattern" << QString("") << QString();
+    QTest::newRow("Unclosed/invalid pattern") << "{DB_FILENAME" << DEFAULT_DB_FILE_PATH << "{DB_FILENAME";
+    QTest::newRow("Unknown pattern") << "{NO_MATCH}" << DEFAULT_DB_FILE_PATH << "{NO_MATCH}";
+    QTest::newRow("Do not replace escaped patterns (filename)")
+        << "\\{DB_FILENAME\\}" << DEFAULT_DB_FILE_PATH << "{DB_FILENAME}";
+    QTest::newRow("Do not replace escaped patterns (time)")
+        << "\\{TIME:dd.MM.yyyy\\}" << DEFAULT_DB_FILE_PATH << "{TIME:dd.MM.yyyy}";
+    QTest::newRow("Multiple patterns should be replaced")
+        << "{DB_FILENAME} {TIME} {DB_FILENAME}" << DEFAULT_DB_FILE_PATH
+        << DEFAULT_DB_FILE_NAME + QStringLiteral(" ") + DEFAULT_FORMATTED_TIME + QStringLiteral(" ")
+               + DEFAULT_DB_FILE_NAME;
+    QTest::newRow("Default time pattern") << "{TIME}" << DEFAULT_DB_FILE_PATH << DEFAULT_FORMATTED_TIME;
+    QTest::newRow("Default time pattern (empty formatter)")
+        << "{TIME:}" << DEFAULT_DB_FILE_PATH << DEFAULT_FORMATTED_TIME;
+    QTest::newRow("Custom time pattern") << "{TIME:dd-ss}" << DEFAULT_DB_FILE_PATH << NOW.toString("dd-ss");
+    QTest::newRow("Invalid custom time pattern") << "{TIME:dd/-ss}" << DEFAULT_DB_FILE_PATH << NOW.toString("dd/-ss");
+    QTest::newRow("Recursive substitution") << "{TIME:'{TIME}'}" << DEFAULT_DB_FILE_PATH << DEFAULT_FORMATTED_TIME;
+    QTest::newRow("{DB_FILENAME} substitution")
+        << "some {DB_FILENAME} thing" << DEFAULT_DB_FILE_PATH
+        << QStringLiteral("some ") + DEFAULT_DB_FILE_NAME + QStringLiteral(" thing");
+    QTest::newRow("{DB_FILENAME} substitution with multiple extensions") << "some {DB_FILENAME} thing"
+                                                                         << "/tmp/KeePassXC.kdbx.ext"
+                                                                         << "some KeePassXC.kdbx thing";
+    // Not relevant right now, added test anyway
+    QTest::newRow("There should be no substitution loops") << "{DB_FILENAME}"
+                                                           << "{TIME:'{DB_FILENAME}'}.ext"
+                                                           << "{DB_FILENAME}";
+}
+
+void TestTools::testBackupFilePatternSubstitution()
+{
+    QFETCH(QString, pattern);
+    QFETCH(QString, dbFilePath);
+    QFETCH(QString, expectedSubstitution);
+
+    QCOMPARE(Tools::substituteBackupFilePath(pattern, dbFilePath), expectedSubstitution);
 }

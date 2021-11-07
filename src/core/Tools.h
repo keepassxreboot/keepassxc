@@ -75,6 +75,8 @@ namespace Tools
     }
 
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties = {"objectName"});
+
+    QString substituteBackupFilePath(QString pattern, const QString& databasePath);
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H

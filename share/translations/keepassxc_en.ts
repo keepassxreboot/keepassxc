@@ -215,6 +215,10 @@
         <source>Monochrome</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select backup storage directory</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -438,6 +442,22 @@
     </message>
     <message>
         <source>Directly write to database file (dangerous)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specifies the database backup file location. Occurences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>{DB_FILENAME}.old.kdbx</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

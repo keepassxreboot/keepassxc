@@ -82,22 +82,10 @@ int main(int argc, char* argv[])
     return QTest::qExec(&tc, argc, argv);
 }
 
-static QString dbFileName = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx");
-
 void TestGui::initTestCase()
 {
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
-    // Disable autosave so we can test the modified file indicator
-    config()->set(Config::AutoSaveAfterEveryChange, false);
-    config()->set(Config::AutoSaveOnExit, false);
-    // Enable the tray icon so we can test hiding/restoring the windowQByteArray
-    config()->set(Config::GUI_ShowTrayIcon, true);
-    // Disable advanced settings mode (activate within individual tests to test advanced settings)
-    config()->set(Config::GUI_AdvancedSettings, false);
-    // Disable the update check first time alert
-    config()->set(Config::UpdateCheckMessageShown, true);
-
     Application::bootstrap();
 
     m_mainWindow.reset(new MainWindow());
@@ -106,11 +94,22 @@ void TestGui::initTestCase()
     m_mainWindow->resize(1024, 768);
 }
 
-// Every test starts with opening the temp database
+// Every test starts with resetting config settings and opening the temp database
 void TestGui::init()
 {
+    // Reset config to defaults
+    config()->resetToDefaults();
+    // Disable autosave so we can test the modified file indicator
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+    config()->set(Config::AutoSaveOnExit, false);
+    // Enable the tray icon so we can test hiding/restoring the windowQByteArray
+    config()->set(Config::GUI_ShowTrayIcon, true);
+    // Disable the update check first time alert
+    config()->set(Config::UpdateCheckMessageShown, true);
+
     // Copy the test database file to the temporary file
-    QVERIFY(m_dbFile.copyFromFile(dbFileName));
+    auto origFilePath = QDir(KEEPASSX_TEST_DATA_DIR).absoluteFilePath("NewDatabase.kdbx");
+    QVERIFY(m_dbFile.copyFromFile(origFilePath));
 
     m_dbFileName = QFileInfo(m_dbFile.fileName()).fileName();
     m_dbFilePath = m_dbFile.fileName();
@@ -353,6 +352,8 @@ void TestGui::testAutoreloadDatabase()
     // Reset the state
     cleanup();
     init();
+
+    config()->set(Config::AutoReloadOnChange, false);
 
     // Test rejecting new file in autoreload
     MessageBox::setNextAnswer(MessageBox::No);
@@ -1277,9 +1278,74 @@ void TestGui::testSave()
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSave*"));
 
     triggerAction("actionDatabaseSave");
-    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSave"));
+    QTRY_COMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSave"));
 
     checkDatabase();
+}
+
+void TestGui::testSaveBackupPath_data()
+{
+    QTest::addColumn<QString>("backupFilePathPattern");
+    QTest::addColumn<QString>("expectedBackupFile");
+
+    // Absolute paths should remain absolute
+    TemporaryFile tmpFile;
+    QVERIFY(tmpFile.open());
+    tmpFile.remove();
+
+    QTest::newRow("Absolute backup path") << tmpFile.fileName() << tmpFile.fileName();
+    // relative paths should be resolved to database parent directory
+    QTest::newRow("Relative backup path (implicit)") << "other_dir/test.old.kdbx"
+                                                     << "other_dir/test.old.kdbx";
+    QTest::newRow("Relative backup path (explicit)") << "./other_dir2/test2.old.kdbx"
+                                                     << "other_dir2/test2.old.kdbx";
+
+    QTest::newRow("Path with placeholders") << "{DB_FILENAME}.old.kdbx"
+                                            << "KeePassXC.old.kdbx";
+    // empty path should be replaced with default pattern
+    QTest::newRow("Empty path") << QString("") << config()->getDefault(Config::BackupFilePathPattern).toString();
+    // {DB_FILENAME} should be replaced with database filename
+    QTest::newRow("") << "{DB_FILENAME}_.old.kdbx"
+                      << "{DB_FILENAME}_.old.kdbx";
+}
+
+void TestGui::testSaveBackupPath()
+{
+    /**
+     * Tests that the backupFilePathPattern config entry is respected. We do not test patterns like {TIME} etc here
+     * as this is done in a separate test case. We do however check {DB_FILENAME} as this is a feature of the
+     * performBackup() function.
+     */
+
+    // Get test data
+    QFETCH(QString, backupFilePathPattern);
+    QFETCH(QString, expectedBackupFile);
+
+    // Enable automatic backups
+    config()->set(Config::BackupBeforeSave, true);
+    config()->set(Config::BackupFilePathPattern, backupFilePathPattern);
+
+    // Replace placeholders and resolve relative paths. This cannot be done in the _data() function as the
+    // db path/filename is not known yet
+    auto dbFileInfo = QFileInfo(m_dbFilePath);
+    if (!QDir::isAbsolutePath(expectedBackupFile)) {
+        expectedBackupFile = QDir(dbFileInfo.absolutePath()).absoluteFilePath(expectedBackupFile);
+    }
+    expectedBackupFile.replace("{DB_FILENAME}", dbFileInfo.completeBaseName());
+
+    // Save a modified database
+    auto prevName = m_db->metadata()->name();
+    m_db->metadata()->setName("testBackupPathPattern");
+
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testBackupPathPattern*"));
+    triggerAction("actionDatabaseSave");
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testBackupPathPattern"));
+
+    // Test that the backup file has the previous database name
+    checkDatabase(expectedBackupFile, prevName);
+
+    // Clean up
+    QFile(expectedBackupFile).remove();
 }
 
 void TestGui::testDatabaseSettings()
@@ -1301,7 +1367,7 @@ void TestGui::testDatabaseSettings()
     QCOMPARE(m_db->kdf()->rounds(), 123456);
 
     triggerAction("actionDatabaseSave");
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testDatabaseSettings"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testDatabaseSettings"));
 
     advancedToggle->setChecked(false);
     QApplication::processEvents();
@@ -1365,6 +1431,8 @@ void TestGui::testDragAndDropKdbxFiles()
     const int openedDatabasesCount = m_tabWidget->count();
 
     const QString badDatabaseFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/NotDatabase.notkdbx"));
+    const QString goodDatabaseFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+
     QMimeData badMimeData;
     badMimeData.setUrls({QUrl::fromLocalFile(badDatabaseFilePath)});
     QDragEnterEvent badDragEvent(QPoint(1, 1), Qt::LinkAction, &badMimeData, Qt::LeftButton, Qt::NoModifier);
@@ -1378,7 +1446,7 @@ void TestGui::testDragAndDropKdbxFiles()
     QCOMPARE(m_tabWidget->count(), openedDatabasesCount);
 
     QMimeData goodMimeData;
-    goodMimeData.setUrls({QUrl::fromLocalFile(dbFileName)});
+    goodMimeData.setUrls({QUrl::fromLocalFile(goodDatabaseFilePath)});
     QDragEnterEvent goodDragEvent(QPoint(1, 1), Qt::LinkAction, &goodMimeData, Qt::LeftButton, Qt::NoModifier);
     qApp->notify(m_mainWindow.data(), &goodDragEvent);
     QCOMPARE(goodDragEvent.isAccepted(), true);
@@ -1700,17 +1768,18 @@ void TestGui::addCannedEntries()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 }
 
-void TestGui::checkDatabase(QString dbFileName)
+void TestGui::checkDatabase(const QString& filePath, const QString& expectedDbName)
 {
-    if (dbFileName.isEmpty()) {
-        dbFileName = m_dbFilePath;
-    }
-
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     auto dbSaved = QSharedPointer<Database>::create();
-    QVERIFY(dbSaved->open(dbFileName, key, nullptr, false));
-    QCOMPARE(dbSaved->metadata()->name(), m_db->metadata()->name());
+    QVERIFY(dbSaved->open(filePath, key, nullptr, false));
+    QCOMPARE(dbSaved->metadata()->name(), expectedDbName);
+}
+
+void TestGui::checkDatabase(const QString& filePath)
+{
+    checkDatabase(filePath.isEmpty() ? m_dbFilePath : filePath, m_db->metadata()->name());
 }
 
 void TestGui::triggerAction(const QString& name)
