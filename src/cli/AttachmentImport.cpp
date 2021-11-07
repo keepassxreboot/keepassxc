@@ -75,7 +75,7 @@ int AttachmentImport::executeWithDatabase(QSharedPointer<Database> database, QSh
     entry->endUpdate();
 
     QString errorMessage;
-    if (!database->save(Database::Atomic, false, &errorMessage)) {
+    if (!database->save(Database::Atomic, {}, &errorMessage)) {
         err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

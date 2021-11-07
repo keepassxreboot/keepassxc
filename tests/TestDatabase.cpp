@@ -75,7 +75,7 @@ void TestDatabase::testSave()
     // Test safe saves
     db->metadata()->setName("test");
     QVERIFY(db->isModified());
-    QVERIFY2(db->save(Database::Atomic, QString(), &error), error.toLatin1());
+    QVERIFY2(db->save(Database::Atomic, {}, &error), error.toLatin1());
     QVERIFY(!db->isModified());
 
     // Test temp-file saves
@@ -120,7 +120,7 @@ void TestDatabase::testSignals()
     QTRY_COMPARE(spyModified.count(), 1);
 
     QSignalSpy spySaved(db.data(), SIGNAL(databaseSaved()));
-    QVERIFY(db->save(Database::Atomic, QString(), &error));
+    QVERIFY(db->save(Database::Atomic, {}, &error));
     QCOMPARE(spySaved.count(), 1);
 
     // Short delay to allow file system settling to reduce test failures

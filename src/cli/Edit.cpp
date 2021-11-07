@@ -126,7 +126,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     entry->endUpdate();
 
     QString errorMessage;
-    if (!database->save(Database::Atomic, QString(), &errorMessage)) {
+    if (!database->save(Database::Atomic, {}, &errorMessage)) {
         err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
