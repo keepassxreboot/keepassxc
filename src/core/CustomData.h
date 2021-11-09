@@ -51,7 +51,7 @@ public:
     static const QString Created;
     static const QString BrowserKeyPrefix;
     static const QString BrowserLegacyKeyPrefix;
-    static const QString ExcludeFromReports;
+    static const QString ExcludeFromReportsLegacy; // Pre-KDBX 4.1
 
 signals:
     void aboutToBeAdded(const QString& key);

@@ -46,6 +46,7 @@ Entry::Entry()
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
+    m_data.excludeFromReports = false;
 
     connect(m_attributes, &EntryAttributes::modified, this, &Entry::updateTotp);
     connect(m_attributes, &EntryAttributes::modified, this, &Entry::modified);
@@ -219,13 +220,14 @@ const QSharedPointer<PasswordHealth>& Entry::passwordHealth()
 
 bool Entry::excludeFromReports() const
 {
-    return customData()->contains(CustomData::ExcludeFromReports)
-           && customData()->value(CustomData::ExcludeFromReports) == TRUE_STR;
+    return m_data.excludeFromReports
+           || (customData()->contains(CustomData::ExcludeFromReportsLegacy)
+               && customData()->value(CustomData::ExcludeFromReportsLegacy) == TRUE_STR);
 }
 
 void Entry::setExcludeFromReports(bool state)
 {
-    customData()->set(CustomData::ExcludeFromReports, state ? TRUE_STR : FALSE_STR);
+    set(m_data.excludeFromReports, state);
 }
 
 /**
@@ -1431,6 +1433,9 @@ bool EntryData::equals(const EntryData& other, CompareItemOptions options) const
         }
     } else if (totpSettings.isNull() != other.totpSettings.isNull()) {
         // The existance of TOTP has changed between these entries
+        return false;
+    }
+    if (::compare(excludeFromReports, other.excludeFromReports, options) != 0) {
         return false;
     }
 
