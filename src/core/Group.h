@@ -69,6 +69,7 @@ public:
         Group::TriState autoTypeEnabled;
         Group::TriState searchingEnabled;
         Group::MergeMode mergeMode;
+        QUuid previousParentGroupUuid;
 
         bool operator==(const GroupData& other) const;
         bool operator!=(const GroupData& other) const;
@@ -101,6 +102,8 @@ public:
     const CustomData* customData() const;
     Group::TriState resolveCustomDataTriState(const QString& key, bool checkParent = true) const;
     void setCustomDataTriState(const QString& key, const Group::TriState& value);
+    const Group* previousParentGroup() const;
+    QUuid previousParentGroupUuid() const;
 
     bool equals(const Group* other, CompareItemOptions options) const;
 
@@ -110,9 +113,10 @@ public:
 
     Group* findChildByName(const QString& name);
     Entry* findEntryByUuid(const QUuid& uuid, bool recursive = true) const;
-    Entry* findEntryByPath(const QString& entryPath);
+    Entry* findEntryByPath(const QString& entryPath) const;
     Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);
+    const Group* findGroupByUuid(const QUuid& uuid) const;
     Group* findGroupByPath(const QString& groupPath);
     Entry* addEntryWithPath(const QString& entryPath);
     void setUuid(const QUuid& uuid);
@@ -129,13 +133,15 @@ public:
     void setExpires(bool value);
     void setExpiryTime(const QDateTime& dateTime);
     void setMergeMode(MergeMode newMode);
+    void setPreviousParentGroup(const Group* group);
+    void setPreviousParentGroupUuid(const QUuid& uuid);
 
     bool canUpdateTimeinfo() const;
     void setUpdateTimeinfo(bool value);
 
     Group* parentGroup();
     const Group* parentGroup() const;
-    void setParent(Group* parent, int index = -1);
+    void setParent(Group* parent, int index = -1, bool trackPrevious = true);
     QStringList hierarchy(int height = -1) const;
     bool hasChildren() const;
 
@@ -203,7 +209,7 @@ private:
     void cleanupParent();
     void recCreateDelObjects();
 
-    Entry* findEntryByPathRecursive(const QString& entryPath, const QString& basePath);
+    Entry* findEntryByPathRecursive(const QString& entryPath, const QString& basePath) const;
     Group* findGroupByPathRecursive(const QString& groupPath, const QString& basePath);
 
     QPointer<Database> m_db;
@@ -221,7 +227,7 @@ private:
 
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();
-    friend void Entry::setGroup(Group* group);
+    friend void Entry::setGroup(Group* group, bool trackPrevious);
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Group::CloneFlags)

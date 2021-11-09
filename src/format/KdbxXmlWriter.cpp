@@ -276,6 +276,9 @@ void KdbxXmlWriter::writeGroup(const Group* group)
 
     if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
         writeCustomData(group->customData());
+        if (!group->previousParentGroupUuid().isNull()) {
+            writeUuid("PreviousParentGroup", group->previousParentGroupUuid());
+        }
     }
 
     const QList<Entry*>& entryList = group->entries();
@@ -344,8 +347,14 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
     writeString("OverrideURL", entry->overrideUrl());
     writeString("Tags", entry->tags());
     writeTimes(entry->timeInfo());
-    if (entry->excludeFromReports()) {
-        writeBool("QualityCheck", false);
+
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
+        if (entry->excludeFromReports()) {
+            writeBool("QualityCheck", false);
+        }
+        if (!entry->previousParentGroupUuid().isNull()) {
+            writeUuid("PreviousParentGroup", entry->previousParentGroupUuid());
+        }
     }
 
     const QList<QString> attributesKeyList = entry->attributes()->keys();
