@@ -403,7 +403,7 @@ const Group* Group::parentGroup() const
     return m_parent;
 }
 
-void Group::setParent(Group* parent, int index)
+void Group::setParent(Group* parent, int index, bool trackPrevious)
 {
     Q_ASSERT(parent);
     Q_ASSERT(index >= -1 && index <= parent->children().size());
@@ -428,6 +428,7 @@ void Group::setParent(Group* parent, int index)
         cleanupParent();
         m_parent = parent;
         if (m_db) {
+            setPreviousParentGroup(nullptr);
             recCreateDelObjects();
 
             // copy custom icon to the new database
@@ -445,6 +446,9 @@ void Group::setParent(Group* parent, int index)
         parent->m_children.insert(index, this);
     } else {
         emit aboutToMove(this, parent, index);
+        if (trackPrevious && m_parent != parent) {
+            setPreviousParentGroup(m_parent);
+        }
         m_parent->m_children.removeAll(this);
         m_parent = parent;
         QObject::setParent(parent);
@@ -585,7 +589,7 @@ Entry* Group::findEntryByUuid(const QUuid& uuid, bool recursive) const
     return nullptr;
 }
 
-Entry* Group::findEntryByPath(const QString& entryPath)
+Entry* Group::findEntryByPath(const QString& entryPath) const
 {
     if (entryPath.isEmpty()) {
         return nullptr;
@@ -647,7 +651,7 @@ Entry* Group::findEntryBySearchTerm(const QString& term, EntryReferenceType refe
     return nullptr;
 }
 
-Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& basePath)
+Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& basePath) const
 {
     // Return the first entry that matches the full path OR if there is no leading
     // slash, return the first entry title that matches
@@ -835,6 +839,21 @@ Group* Group::findGroupByUuid(const QUuid& uuid)
     }
 
     for (Group* group : groupsRecursive(true)) {
+        if (group->uuid() == uuid) {
+            return group;
+        }
+    }
+
+    return nullptr;
+}
+
+const Group* Group::findGroupByUuid(const QUuid& uuid) const
+{
+    if (uuid.isNull()) {
+        return nullptr;
+    }
+
+    for (const Group* group : groupsRecursive(true)) {
         if (group->uuid() == uuid) {
             return group;
         }
@@ -1166,6 +1185,29 @@ void Group::sortChildrenRecursively(bool reverse)
     }
 
     emitModified();
+}
+
+const Group* Group::previousParentGroup() const
+{
+    if (!database() || !database()->rootGroup()) {
+        return nullptr;
+    }
+    return database()->rootGroup()->findGroupByUuid(m_data.previousParentGroupUuid);
+}
+
+QUuid Group::previousParentGroupUuid() const
+{
+    return m_data.previousParentGroupUuid;
+}
+
+void Group::setPreviousParentGroupUuid(const QUuid& uuid)
+{
+    set(m_data.previousParentGroupUuid, uuid);
+}
+
+void Group::setPreviousParentGroup(const Group* group)
+{
+    setPreviousParentGroupUuid(group ? group->uuid() : QUuid());
 }
 
 bool Group::GroupData::operator==(const Group::GroupData& other) const

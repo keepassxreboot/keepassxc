@@ -66,6 +66,7 @@ struct EntryData
     QSharedPointer<Totp::Settings> totpSettings;
     QSharedPointer<PasswordHealth> passwordHealth;
     bool excludeFromReports;
+    QUuid previousParentGroupUuid;
 
     bool operator==(const EntryData& other) const;
     bool operator!=(const EntryData& other) const;
@@ -106,6 +107,8 @@ public:
     QString totp() const;
     QString totpSettingsString() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
+    const Group* previousParentGroup() const;
+    QUuid previousParentGroupUuid() const;
     int size() const;
     QString path() const;
     const QSharedPointer<PasswordHealth>& passwordHealth();
@@ -147,6 +150,8 @@ public:
     void setExpires(const bool& value);
     void setExpiryTime(const QDateTime& dateTime);
     void setTotp(QSharedPointer<Totp::Settings> settings);
+    void setPreviousParentGroup(const Group* group);
+    void setPreviousParentGroupUuid(const QUuid& uuid);
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
@@ -243,7 +248,7 @@ public:
 
     Group* group();
     const Group* group() const;
-    void setGroup(Group* group);
+    void setGroup(Group* group, bool trackPrevious = true);
     const Database* database() const;
     Database* database();
 

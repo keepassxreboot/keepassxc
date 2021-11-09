@@ -1143,7 +1143,7 @@ void TestGroup::testUsernamesRecursive()
     QVERIFY(usernames.indexOf("Name2") < usernames.indexOf("Name1"));
 }
 
-void TestGroup::testMove()
+void TestGroup::testMoveUpDown()
 {
     Database database;
     Group* root = database.rootGroup();
@@ -1252,4 +1252,41 @@ void TestGroup::testMove()
     QCOMPARE(root->entries().at(1), entry2);
     QCOMPARE(root->entries().at(2), entry1);
     QCOMPARE(root->entries().at(3), entry0);
+}
+
+void TestGroup::testPreviousParentGroup()
+{
+    Database db;
+    auto* root = db.rootGroup();
+    root->setUuid(QUuid::createUuid());
+    QVERIFY(!root->uuid().isNull());
+    QVERIFY(!root->previousParentGroup());
+    QVERIFY(root->previousParentGroupUuid().isNull());
+
+    auto* group1 = new Group();
+    group1->setUuid(QUuid::createUuid());
+    group1->setParent(root);
+    QVERIFY(!group1->uuid().isNull());
+    QVERIFY(!group1->previousParentGroup());
+    QVERIFY(group1->previousParentGroupUuid().isNull());
+
+    auto* group2 = new Group();
+    group2->setParent(root);
+    group2->setUuid(QUuid::createUuid());
+    QVERIFY(!group2->uuid().isNull());
+    QVERIFY(!group2->previousParentGroup());
+    QVERIFY(group2->previousParentGroupUuid().isNull());
+
+    group1->setParent(group2);
+    QVERIFY(group1->previousParentGroupUuid() == root->uuid());
+    QVERIFY(group1->previousParentGroup() == root);
+
+    // Previous parent shouldn't be recorded if new and old parent are the same
+    group1->setParent(group2);
+    QVERIFY(group1->previousParentGroupUuid() == root->uuid());
+    QVERIFY(group1->previousParentGroup() == root);
+
+    group1->setParent(root);
+    QVERIFY(group1->previousParentGroupUuid() == group2->uuid());
+    QVERIFY(group1->previousParentGroup() == group2);
 }

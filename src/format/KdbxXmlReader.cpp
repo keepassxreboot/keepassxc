@@ -583,6 +583,10 @@ Group* KdbxXmlReader::parseGroup()
             parseCustomData(group->customData());
             continue;
         }
+        if (m_xml.name() == "PreviousParentGroup") {
+            group->setPreviousParentGroupUuid(readUuid());
+            continue;
+        }
 
         skipCurrentElement();
     }
@@ -602,11 +606,11 @@ Group* KdbxXmlReader::parseGroup()
     }
 
     for (Group* child : asConst(children)) {
-        child->setParent(group);
+        child->setParent(group, -1, false);
     }
 
     for (Entry* entry : asConst(entries)) {
-        entry->setGroup(group);
+        entry->setGroup(group, false);
     }
 
     return group;
@@ -758,6 +762,10 @@ Entry* KdbxXmlReader::parseEntry(bool history)
                                              == TRUE_STR);
                 entry->customData()->remove(CustomData::ExcludeFromReportsLegacy);
             }
+            continue;
+        }
+        if (m_xml.name() == "PreviousParentGroup") {
+            entry->setPreviousParentGroupUuid(readUuid());
             continue;
         }
         skipCurrentElement();
