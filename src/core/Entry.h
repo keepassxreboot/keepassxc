@@ -65,6 +65,7 @@ struct EntryData
     TimeInfo timeInfo;
     QSharedPointer<Totp::Settings> totpSettings;
     QSharedPointer<PasswordHealth> passwordHealth;
+    bool excludeFromReports;
 
     bool operator==(const EntryData& other) const;
     bool operator!=(const EntryData& other) const;

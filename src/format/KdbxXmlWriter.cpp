@@ -344,6 +344,9 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
     writeString("OverrideURL", entry->overrideUrl());
     writeString("Tags", entry->tags());
     writeTimes(entry->timeInfo());
+    if (entry->excludeFromReports()) {
+        writeBool("QualityCheck", false);
+    }
 
     const QList<QString> attributesKeyList = entry->attributes()->keys();
     for (const QString& key : attributesKeyList) {

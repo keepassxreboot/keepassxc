@@ -726,6 +726,10 @@ Entry* KdbxXmlReader::parseEntry(bool history)
             parseEntryString(entry);
             continue;
         }
+        if (m_xml.name() == "QualityCheck") {
+            entry->setExcludeFromReports(!readBool());
+            continue;
+        }
         if (m_xml.name() == "Binary") {
             QPair<QString, QString> ref = parseEntryBinary(entry);
             if (!ref.first.isEmpty() && !ref.second.isEmpty()) {
@@ -747,6 +751,13 @@ Entry* KdbxXmlReader::parseEntry(bool history)
         }
         if (m_xml.name() == "CustomData") {
             parseCustomData(entry->customData());
+
+            // Upgrade pre-KDBX-4.1 password report exclude flag
+            if (entry->customData()->contains(CustomData::ExcludeFromReportsLegacy)) {
+                entry->setExcludeFromReports(entry->customData()->value(CustomData::ExcludeFromReportsLegacy)
+                                             == TRUE_STR);
+                entry->customData()->remove(CustomData::ExcludeFromReportsLegacy);
+            }
             continue;
         }
         skipCurrentElement();
