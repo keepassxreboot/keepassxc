@@ -69,6 +69,7 @@ public:
         Group::TriState autoTypeEnabled;
         Group::TriState searchingEnabled;
         Group::MergeMode mergeMode;
+        QString tags;
         QUuid previousParentGroupUuid;
 
         bool operator==(const GroupData& other) const;
@@ -83,6 +84,7 @@ public:
     const QString uuidToHex() const;
     QString name() const;
     QString notes() const;
+    QString tags() const;
     int iconNumber() const;
     const QUuid& iconUuid() const;
     const TimeInfo& timeInfo() const;
@@ -122,6 +124,7 @@ public:
     void setUuid(const QUuid& uuid);
     void setName(const QString& name);
     void setNotes(const QString& notes);
+    void setTags(const QString& tags);
     void setIcon(int iconNumber);
     void setIcon(const QUuid& uuid);
     void setTimeInfo(const TimeInfo& timeInfo);

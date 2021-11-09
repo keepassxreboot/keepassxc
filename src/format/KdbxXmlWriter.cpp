@@ -259,6 +259,9 @@ void KdbxXmlWriter::writeGroup(const Group* group)
     writeUuid("UUID", group->uuid());
     writeString("Name", group->name());
     writeString("Notes", group->notes());
+    if (!group->tags().isEmpty()) {
+        writeString("Tags", group->tags());
+    }
     writeNumber("IconID", group->iconNumber());
 
     if (!group->iconUuid().isNull()) {
