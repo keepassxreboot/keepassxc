@@ -502,6 +502,10 @@ Group* KdbxXmlReader::parseGroup()
             group->setNotes(readString());
             continue;
         }
+        if (m_xml.name() == "Tags") {
+            group->setTags(readString());
+            continue;
+        }
         if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
