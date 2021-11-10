@@ -131,7 +131,7 @@ void KdbxXmlWriter::writeMetadata()
     if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
         writeBinaries();
     }
-    writeCustomData(m_meta->customData());
+    writeCustomData(m_meta->customData(), true);
 
     m_xml.writeEndElement();
 }
@@ -220,7 +220,7 @@ void KdbxXmlWriter::writeBinaries()
     m_xml.writeEndElement();
 }
 
-void KdbxXmlWriter::writeCustomData(const CustomData* customData)
+void KdbxXmlWriter::writeCustomData(const CustomData* customData, bool writeItemLastModified)
 {
     if (customData->isEmpty()) {
         return;
@@ -229,18 +229,23 @@ void KdbxXmlWriter::writeCustomData(const CustomData* customData)
 
     const QList<QString> keyList = customData->keys();
     for (const QString& key : keyList) {
-        writeCustomDataItem(key, customData->value(key));
+        writeCustomDataItem(key, customData->item(key), writeItemLastModified);
     }
 
     m_xml.writeEndElement();
 }
 
-void KdbxXmlWriter::writeCustomDataItem(const QString& key, const QString& value)
+void KdbxXmlWriter::writeCustomDataItem(const QString& key,
+                                        const CustomData::CustomDataItem& item,
+                                        bool writeLastModified)
 {
     m_xml.writeStartElement("Item");
 
     writeString("Key", key);
-    writeString("Value", value);
+    writeString("Value", item.value);
+    if (writeLastModified && m_kdbxVersion >= KeePass2::FILE_VERSION_4 && item.lastModified.isValid()) {
+        writeDateTime("LastModificationTime", item.lastModified);
+    }
 
     m_xml.writeEndElement();
 }

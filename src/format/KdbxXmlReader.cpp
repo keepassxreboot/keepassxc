@@ -420,7 +420,7 @@ void KdbxXmlReader::parseCustomDataItem(CustomData* customData)
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Item");
 
     QString key;
-    QString value;
+    CustomData::CustomDataItem item;
     bool keySet = false;
     bool valueSet = false;
 
@@ -429,15 +429,17 @@ void KdbxXmlReader::parseCustomDataItem(CustomData* customData)
             key = readString();
             keySet = true;
         } else if (m_xml.name() == "Value") {
-            value = readString();
+            item.value = readString();
             valueSet = true;
+        } else if (m_xml.name() == "LastModificationTime") {
+            item.lastModified = readDateTime();
         } else {
             skipCurrentElement();
         }
     }
 
     if (keySet && valueSet) {
-        customData->set(key, value);
+        customData->set(key, item);
         return;
     }
 

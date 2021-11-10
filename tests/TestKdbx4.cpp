@@ -373,7 +373,7 @@ void TestKdbx4Argon2::testCustomData()
     db.metadata()->customData()->set(customDataKey1, customData1);
     db.metadata()->customData()->set(customDataKey2, customData2);
     auto lastModified = db.metadata()->customData()->value(CustomData::LastModified);
-    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() + customData1.toUtf8().size()
+    const int dataSize = customDataKey1.toUtf8().size() + customDataKey2.toUtf8().size() + customData1.toUtf8().size()
                          + customData2.toUtf8().size() + lastModified.toUtf8().size()
                          + CustomData::LastModified.toUtf8().size();
     QCOMPARE(db.metadata()->customData()->size(), 3);

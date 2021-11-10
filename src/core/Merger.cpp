@@ -617,8 +617,8 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
     }
 
     // Merge Custom Data if source is newer
-    const auto targetCustomDataModificationTime = targetMetadata->customData()->getLastModified();
-    const auto sourceCustomDataModificationTime = sourceMetadata->customData()->getLastModified();
+    const auto targetCustomDataModificationTime = targetMetadata->customData()->lastModified();
+    const auto sourceCustomDataModificationTime = sourceMetadata->customData()->lastModified();
     if (!targetMetadata->customData()->contains(CustomData::LastModified)
         || (targetCustomDataModificationTime.isValid() && sourceCustomDataModificationTime.isValid()
             && targetCustomDataModificationTime < sourceCustomDataModificationTime)) {
@@ -628,8 +628,7 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
         // Check missing keys from source. Remove those from target
         for (const auto& key : targetCustomDataKeys) {
             // Do not remove protected custom data
-            if (!sourceMetadata->customData()->contains(key)
-                && !sourceMetadata->customData()->isProtectedCustomData(key)) {
+            if (!sourceMetadata->customData()->contains(key) && !sourceMetadata->customData()->isProtected(key)) {
                 auto value = targetMetadata->customData()->value(key);
                 targetMetadata->customData()->remove(key);
                 changes << tr("Removed custom data %1 [%2]").arg(key, value);

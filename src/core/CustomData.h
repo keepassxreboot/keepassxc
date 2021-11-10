@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_CUSTOMDATA_H
 #define KEEPASSXC_CUSTOMDATA_H
 
+#include <QDateTime>
 #include <QHash>
 #include <QObject>
 
@@ -28,13 +29,30 @@ class CustomData : public ModifiableObject
     Q_OBJECT
 
 public:
+    struct CustomDataItem
+    {
+        QString value;
+        QDateTime lastModified;
+
+        bool inline operator==(const CustomDataItem& rhs) const
+        {
+            // Compare only actual values, not modification dates
+            return value == rhs.value;
+        }
+    };
+
     explicit CustomData(QObject* parent = nullptr);
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
     QString value(const QString& key) const;
+    const CustomDataItem& item(const QString& key) const;
     bool contains(const QString& key) const;
     bool containsValue(const QString& value) const;
-    void set(const QString& key, const QString& value);
+    QDateTime lastModified() const;
+    QDateTime lastModified(const QString& key) const;
+    bool isProtected(const QString& key) const;
+    void set(const QString& key, CustomDataItem item);
+    void set(const QString& key, const QString& value, const QDateTime& lastModified = {});
     void remove(const QString& key);
     void rename(const QString& oldKey, const QString& newKey);
     void clear();
@@ -42,16 +60,17 @@ public:
     int size() const;
     int dataSize() const;
     void copyDataFrom(const CustomData* other);
-    QDateTime getLastModified() const;
-    bool isProtectedCustomData(const QString& key) const;
     bool operator==(const CustomData& other) const;
     bool operator!=(const CustomData& other) const;
 
+    // Pre-defined keys
     static const QString LastModified;
     static const QString Created;
     static const QString BrowserKeyPrefix;
     static const QString BrowserLegacyKeyPrefix;
-    static const QString ExcludeFromReportsLegacy; // Pre-KDBX 4.1
+
+    // Pre-KDBX 4.1
+    static const QString ExcludeFromReportsLegacy;
 
 signals:
     void aboutToBeAdded(const QString& key);
@@ -64,10 +83,10 @@ signals:
     void reset();
 
 private slots:
-    void updateLastModified();
+    void updateLastModified(QDateTime lastModified = {});
 
 private:
-    QHash<QString, QString> m_data;
+    QHash<QString, CustomDataItem> m_data;
 };
 
 #endif // KEEPASSXC_CUSTOMDATA_H
