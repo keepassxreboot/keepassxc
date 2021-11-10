@@ -475,6 +475,26 @@ void DatabaseWidget::deleteSelectedEntries()
     deleteEntries(std::move(selectedEntries));
 }
 
+void DatabaseWidget::restoreSelectedEntries()
+{
+    const QModelIndexList selected = m_entryView->selectionModel()->selectedRows();
+    if (selected.isEmpty()) {
+        return;
+    }
+
+    // Resolve entries from the selection model
+    QList<Entry*> selectedEntries;
+    for (auto& index : selected) {
+        selectedEntries.append(m_entryView->entryFromIndex(index));
+    }
+
+    for (auto* entry : selectedEntries) {
+        if (entry->previousParentGroup()) {
+            entry->setGroup(entry->previousParentGroup());
+        }
+    }
+}
+
 void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries, bool confirm)
 {
     if (selectedEntries.isEmpty()) {

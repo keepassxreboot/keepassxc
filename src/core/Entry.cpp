@@ -1381,6 +1381,14 @@ QString Entry::resolveUrl(const QString& url) const
     return {};
 }
 
+Group* Entry::previousParentGroup()
+{
+    if (!database() || !database()->rootGroup()) {
+        return nullptr;
+    }
+    return database()->rootGroup()->findGroupByUuid(m_data.previousParentGroupUuid);
+}
+
 const Group* Entry::previousParentGroup() const
 {
     if (!database() || !database()->rootGroup()) {

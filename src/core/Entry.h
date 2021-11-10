@@ -107,6 +107,7 @@ public:
     QString totp() const;
     QString totpSettingsString() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
+    Group* previousParentGroup();
     const Group* previousParentGroup() const;
     QUuid previousParentGroupUuid() const;
     int size() const;

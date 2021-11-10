@@ -216,7 +216,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -283,6 +283,9 @@
     <property name="title">
      <string>&amp;Entries</string>
     </property>
+    <property name="separatorsCollapsible">
+     <bool>true</bool>
+    </property>
     <widget class="QMenu" name="menuEntryCopyAttribute">
      <property name="enabled">
       <bool>false</bool>
@@ -330,6 +333,8 @@
     <addaction name="separator"/>
     <addaction name="actionEntryAddToAgent"/>
     <addaction name="actionEntryRemoveFromAgent"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryRestore"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -1066,6 +1071,17 @@
    </property>
    <property name="text">
     <string>Clone Group...</string>
+   </property>
+  </action>
+  <action name="actionEntryRestore">
+   <property name="text">
+    <string>Restore Entry(s)</string>
+   </property>
+   <property name="toolTip">
+    <string>Restore Entry(s)</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+R</string>
    </property>
   </action>
  </widget>
