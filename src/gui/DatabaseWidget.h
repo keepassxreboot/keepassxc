@@ -164,6 +164,7 @@ public slots:
     void createEntry();
     void cloneEntry();
     void deleteSelectedEntries();
+    void restoreSelectedEntries();
     void deleteEntries(QList<Entry*> entries, bool confirm = true);
     void focusOnEntries(bool editIfFocused = false);
     void focusOnGroups(bool editIfFocused = false);

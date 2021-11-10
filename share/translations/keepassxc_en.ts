@@ -5227,6 +5227,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Restore Entry(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
