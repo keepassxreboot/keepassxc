@@ -34,6 +34,7 @@ private slots:
     void testDeletedObjectsFromFile();
     void testDeletedObjectsFromNewDb();
     void testDatabaseChange();
+    void testCustomIconDeletion();
 };
 
 #endif // KEEPASSX_TESTDELETEDOBJECTS_H

@@ -34,6 +34,7 @@ private slots:
     void testEmptyRecycleBinOnNotCreated();
     void testEmptyRecycleBinOnEmpty();
     void testEmptyRecycleBinWithHierarchicalData();
+    void testCustomIcons();
 };
 
 #endif // KEEPASSX_TESTDATABASE_H

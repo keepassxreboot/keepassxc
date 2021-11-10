@@ -152,3 +152,15 @@ void TestDeletedObjects::testDatabaseChange()
 
     delete group;
 }
+
+void TestDeletedObjects::testCustomIconDeletion()
+{
+    Database db;
+    QCOMPARE(db.deletedObjects().size(), 0);
+
+    QUuid uuid = QUuid::createUuid();
+    db.metadata()->addCustomIcon(uuid, QByteArray());
+    db.metadata()->removeCustomIcon(uuid);
+    QCOMPARE(db.deletedObjects().size(), 1);
+    QCOMPARE(db.deletedObjects().at(0).uuid, uuid);
+}

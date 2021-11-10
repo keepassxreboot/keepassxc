@@ -300,7 +300,7 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             if (sourceDb != targetDb) {
                 QUuid customIcon = entry->iconUuid();
                 if (!customIcon.isNull() && !targetDb->metadata()->hasCustomIcon(customIcon)) {
-                    targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon));
+                    targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon).data);
                 }
 
                 // Reset the UUID when moving across db boundary

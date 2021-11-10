@@ -28,7 +28,6 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Writer.h"
-#include "keys/PasswordKey.h"
 #include "util/TemporaryFile.h"
 
 QTEST_GUILESS_MAIN(TestDatabase)
@@ -213,4 +212,27 @@ void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
     KeePass2Writer writer;
     writer.writeDatabase(&afterCleanup, db.data());
     QVERIFY(afterCleanup.size() < initialSize);
+}
+
+void TestDatabase::testCustomIcons()
+{
+    Database db;
+
+    QUuid uuid1 = QUuid::createUuid();
+    QByteArray icon1("icon 1");
+    Q_ASSERT(!icon1.isNull());
+    db.metadata()->addCustomIcon(uuid1, icon1);
+    Metadata::CustomIconData iconData = db.metadata()->customIcon(uuid1);
+    QCOMPARE(iconData.data, icon1);
+    QVERIFY(iconData.name.isNull());
+    QVERIFY(iconData.lastModified.isNull());
+
+    QUuid uuid2 = QUuid::createUuid();
+    QByteArray icon2("icon 2");
+    QDateTime date = QDateTime::currentDateTimeUtc();
+    db.metadata()->addCustomIcon(uuid2, icon2, "Test", date);
+    iconData = db.metadata()->customIcon(uuid2);
+    QCOMPARE(iconData.data, icon2);
+    QCOMPARE(iconData.name, QString("Test"));
+    QCOMPARE(iconData.lastModified, date);
 }

@@ -85,7 +85,7 @@ private slots:
     void downloadFavicon();
     void iconReceived(const QString& url, const QImage& icon);
     void addCustomIconFromFile();
-    bool addCustomIcon(const QImage& icon);
+    bool addCustomIcon(const QImage& icon, const QString& name = {});
     void updateWidgetsDefaultIcons(bool checked);
     void updateWidgetsCustomIcons(bool checked);
     void updateRadioButtonDefaultIcons();

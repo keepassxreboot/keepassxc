@@ -316,33 +316,37 @@ void TestGroup::testCopyCustomIcon()
 
     QUuid groupIconUuid = QUuid::createUuid();
     QByteArray groupIcon("group icon");
-    dbSource->metadata()->addCustomIcon(groupIconUuid, groupIcon);
+    QString groupIconName("group icon");
+    dbSource->metadata()->addCustomIcon(groupIconUuid, groupIcon, groupIconName);
 
     QUuid entryIconUuid = QUuid::createUuid();
     QByteArray entryIcon("entry icon");
-    dbSource->metadata()->addCustomIcon(entryIconUuid, entryIcon);
+    QString entryIconName("entry icon");
+    dbSource->metadata()->addCustomIcon(entryIconUuid, entryIcon, entryIconName);
 
-    Group* group = new Group();
+    auto* group = new Group();
     group->setParent(dbSource->rootGroup());
     group->setIcon(groupIconUuid);
-    QCOMPARE(group->database()->metadata()->customIcon(groupIconUuid), groupIcon);
+    QCOMPARE(group->database()->metadata()->customIcon(groupIconUuid).data, groupIcon);
+    QCOMPARE(group->database()->metadata()->customIcon(groupIconUuid).name, groupIconName);
 
-    Entry* entry = new Entry();
+    auto* entry = new Entry();
     entry->setGroup(dbSource->rootGroup());
     entry->setIcon(entryIconUuid);
-    QCOMPARE(entry->database()->metadata()->customIcon(entryIconUuid), entryIcon);
+    QCOMPARE(entry->database()->metadata()->customIcon(entryIconUuid).data, entryIcon);
+    QCOMPARE(entry->database()->metadata()->customIcon(entryIconUuid).name, entryIconName);
 
     QScopedPointer<Database> dbTarget(new Database());
 
     group->setParent(dbTarget->rootGroup());
     QVERIFY(dbTarget->metadata()->hasCustomIcon(groupIconUuid));
-    QCOMPARE(dbTarget->metadata()->customIcon(groupIconUuid), groupIcon);
-    QCOMPARE(group->database()->metadata()->customIcon(groupIconUuid), groupIcon);
+    QCOMPARE(dbTarget->metadata()->customIcon(groupIconUuid).data, groupIcon);
+    QCOMPARE(dbTarget->metadata()->customIcon(groupIconUuid).name, groupIconName);
 
     entry->setGroup(dbTarget->rootGroup());
     QVERIFY(dbTarget->metadata()->hasCustomIcon(entryIconUuid));
-    QCOMPARE(dbTarget->metadata()->customIcon(entryIconUuid), entryIcon);
-    QCOMPARE(entry->database()->metadata()->customIcon(entryIconUuid), entryIcon);
+    QCOMPARE(dbTarget->metadata()->customIcon(entryIconUuid).data, entryIcon);
+    QCOMPARE(dbTarget->metadata()->customIcon(entryIconUuid).name, entryIconName);
 }
 
 void TestGroup::testClone()
@@ -423,37 +427,36 @@ void TestGroup::testCopyCustomIcons()
     QScopedPointer<Database> dbSource(new Database());
     QScopedPointer<Database> dbTarget(new Database());
 
-    QByteArray iconImage1("icon 1");
-
-    QByteArray iconImage2("icon 2");
+    Metadata::CustomIconData icon1 = {QByteArray("icon 1"), "icon 1", Clock::currentDateTimeUtc()};
+    Metadata::CustomIconData icon2 = {QByteArray("icon 2"), "icon 2", Clock::currentDateTimeUtc()};
 
     QScopedPointer<Group> group1(new Group());
     group1->setParent(dbSource->rootGroup());
     QUuid group1Icon = QUuid::createUuid();
-    dbSource->metadata()->addCustomIcon(group1Icon, iconImage1);
+    dbSource->metadata()->addCustomIcon(group1Icon, icon1);
     group1->setIcon(group1Icon);
 
     QScopedPointer<Group> group2(new Group());
     group2->setParent(group1.data());
     QUuid group2Icon = QUuid::createUuid();
-    dbSource->metadata()->addCustomIcon(group2Icon, iconImage1);
+    dbSource->metadata()->addCustomIcon(group2Icon, icon1);
     group2->setIcon(group2Icon);
 
     QScopedPointer<Entry> entry1(new Entry());
     entry1->setGroup(group2.data());
     QUuid entry1IconOld = QUuid::createUuid();
-    dbSource->metadata()->addCustomIcon(entry1IconOld, iconImage1);
+    dbSource->metadata()->addCustomIcon(entry1IconOld, icon1);
     entry1->setIcon(entry1IconOld);
 
     // add history item
     entry1->beginUpdate();
     QUuid entry1IconNew = QUuid::createUuid();
-    dbSource->metadata()->addCustomIcon(entry1IconNew, iconImage1);
+    dbSource->metadata()->addCustomIcon(entry1IconNew, icon1);
     entry1->setIcon(entry1IconNew);
     entry1->endUpdate();
 
     // test that we don't overwrite icons
-    dbTarget->metadata()->addCustomIcon(group2Icon, iconImage2);
+    dbTarget->metadata()->addCustomIcon(group2Icon, icon1);
 
     dbTarget->metadata()->copyCustomIcons(group1->customIconsRecursive(), dbSource->metadata());
 
@@ -465,8 +468,8 @@ void TestGroup::testCopyCustomIcons()
     QVERIFY(metaTarget->hasCustomIcon(entry1IconOld));
     QVERIFY(metaTarget->hasCustomIcon(entry1IconNew));
 
-    QCOMPARE(metaTarget->customIcon(group1Icon), iconImage1);
-    QCOMPARE(metaTarget->customIcon(group2Icon), iconImage2);
+    QCOMPARE(metaTarget->customIcon(group1Icon), icon1);
+    QCOMPARE(metaTarget->customIcon(group2Icon), icon1);
 }
 
 void TestGroup::testFindEntry()
@@ -1082,7 +1085,7 @@ void TestGroup::testApplyGroupIconRecursively()
     QCOMPARE(subgroupEntry->iconUuid(), subgroupIconUuid);
     QCOMPARE(subsubgroup->iconUuid(), subgroupIconUuid);
     QCOMPARE(subsubgroupEntry->iconUuid(), subgroupIconUuid);
-    QCOMPARE(subgroup->database()->metadata()->customIcon(subgroupIconUuid), subgroupIcon);
+    QCOMPARE(subgroup->database()->metadata()->customIcon(subgroupIconUuid).data, subgroupIcon);
 
     // Reset all icons to root icon
     database.rootGroup()->setIcon(rootIconNumber);

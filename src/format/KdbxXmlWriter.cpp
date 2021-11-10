@@ -21,7 +21,6 @@
 #include <QFile>
 
 #include "core/Endian.h"
-#include "core/Metadata.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/qtiocompressor.h"
 
@@ -162,12 +161,20 @@ void KdbxXmlWriter::writeCustomIcons()
     m_xml.writeEndElement();
 }
 
-void KdbxXmlWriter::writeIcon(const QUuid& uuid, const QByteArray& iconData)
+void KdbxXmlWriter::writeIcon(const QUuid& uuid, const Metadata::CustomIconData& iconData)
 {
     m_xml.writeStartElement("Icon");
 
     writeUuid("UUID", uuid);
-    writeBinary("Data", iconData);
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
+        if (!iconData.name.isEmpty()) {
+            writeString("Name", iconData.name);
+        }
+        if (iconData.lastModified.isValid()) {
+            writeDateTime("LastModificationTime", iconData.lastModified);
+        }
+    }
+    writeBinary("Data", iconData.data);
 
     m_xml.writeEndElement();
 }

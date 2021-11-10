@@ -1137,8 +1137,8 @@ void TestMerge::testMergeDuplicateCustomIcons()
 
     QUuid customIconId = QUuid::createUuid();
 
-    QByteArray customIcon1 = QString("custom icon 1").toLocal8Bit();
-    QByteArray customIcon2 = QString("custom icon 2").toLocal8Bit();
+    QByteArray customIcon1("custom icon 1");
+    QByteArray customIcon2("custom icon 2");
 
     dbSource->metadata()->addCustomIcon(customIconId, customIcon1);
     dbDestination->metadata()->addCustomIcon(customIconId, customIcon2);
@@ -1153,7 +1153,7 @@ void TestMerge::testMergeDuplicateCustomIcons()
 
     QVERIFY(dbDestination->metadata()->hasCustomIcon(customIconId));
     QCOMPARE(dbDestination->metadata()->customIconsOrder().count(), 1);
-    QCOMPARE(dbDestination->metadata()->customIcon(customIconId), customIcon2);
+    QCOMPARE(dbDestination->metadata()->customIcon(customIconId).data, customIcon2);
 }
 
 void TestMerge::testMetadata()
