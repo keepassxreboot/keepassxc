@@ -28,6 +28,9 @@
 const int Metadata::DefaultHistoryMaxItems = 10;
 const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;
 
+// Fallback icon for return by reference
+static const Metadata::CustomIconData NULL_ICON;
+
 Metadata::Metadata(QObject* parent)
     : ModifiableObject(parent)
     , m_customData(new CustomData(this))
@@ -176,9 +179,14 @@ bool Metadata::protectNotes() const
     return m_data.protectNotes;
 }
 
-QByteArray Metadata::customIcon(const QUuid& uuid) const
+const Metadata::CustomIconData& Metadata::customIcon(const QUuid& uuid) const
 {
-    return m_customIcons.value(uuid);
+    auto icon = m_customIcons.find(uuid);
+    Q_ASSERT(icon != m_customIcons.end());
+    if (icon == m_customIcons.end()) {
+        return NULL_ICON;
+    }
+    return icon.value();
 }
 
 bool Metadata::hasCustomIcon(const QUuid& uuid) const
@@ -339,21 +347,31 @@ void Metadata::setProtectNotes(bool value)
     set(m_data.protectNotes, value);
 }
 
-void Metadata::addCustomIcon(const QUuid& uuid, const QByteArray& iconData)
+void Metadata::addCustomIcon(const QUuid& uuid, const CustomIconData& iconData)
 {
+
     Q_ASSERT(!uuid.isNull());
     Q_ASSERT(!m_customIcons.contains(uuid));
 
-    m_customIcons[uuid] = iconData;
     // remove all uuids to prevent duplicates in release mode
+    m_customIcons[uuid] = iconData;
     m_customIconsOrder.removeAll(uuid);
     m_customIconsOrder.append(uuid);
+
     // Associate image hash to uuid
-    QByteArray hash = hashIcon(iconData);
+    QByteArray hash = hashIcon(iconData.data);
     m_customIconsHashes[hash] = uuid;
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
 
     emitModified();
+}
+
+void Metadata::addCustomIcon(const QUuid& uuid,
+                             const QByteArray& iconBytes,
+                             const QString& name,
+                             const QDateTime& lastModified)
+{
+    addCustomIcon(uuid, {iconBytes, name, lastModified});
 }
 
 void Metadata::removeCustomIcon(const QUuid& uuid)
@@ -362,7 +380,7 @@ void Metadata::removeCustomIcon(const QUuid& uuid)
     Q_ASSERT(m_customIcons.contains(uuid));
 
     // Remove hash record only if this is the same uuid
-    QByteArray hash = hashIcon(m_customIcons[uuid]);
+    QByteArray hash = hashIcon(m_customIcons[uuid].data);
     if (m_customIconsHashes.contains(hash) && m_customIconsHashes[hash] == uuid) {
         m_customIconsHashes.remove(hash);
     }
@@ -370,6 +388,7 @@ void Metadata::removeCustomIcon(const QUuid& uuid)
     m_customIcons.remove(uuid);
     m_customIconsOrder.removeAll(uuid);
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
+    dynamic_cast<Database*>(parent())->addDeletedObject(uuid);
     emitModified();
 }
 

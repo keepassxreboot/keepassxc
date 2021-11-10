@@ -61,6 +61,19 @@ public:
         bool protectNotes;
     };
 
+    struct CustomIconData
+    {
+        QByteArray data;
+        QString name;
+        QDateTime lastModified;
+
+        bool operator==(const CustomIconData& rhs) const
+        {
+            // Compare only actual icon data
+            return data == rhs.data;
+        }
+    };
+
     void init();
     void clear();
 
@@ -79,7 +92,7 @@ public:
     bool protectPassword() const;
     bool protectUrl() const;
     bool protectNotes() const;
-    QByteArray customIcon(const QUuid& uuid) const;
+    const CustomIconData& customIcon(const QUuid& uuid) const;
     bool hasCustomIcon(const QUuid& uuid) const;
     QList<QUuid> customIconsOrder() const;
     bool recycleBinEnabled() const;
@@ -116,7 +129,11 @@ public:
     void setProtectPassword(bool value);
     void setProtectUrl(bool value);
     void setProtectNotes(bool value);
-    void addCustomIcon(const QUuid& uuid, const QByteArray& iconData);
+    void addCustomIcon(const QUuid& uuid, const CustomIconData& iconData);
+    void addCustomIcon(const QUuid& uuid,
+                       const QByteArray& iconBytes,
+                       const QString& name = {},
+                       const QDateTime& lastModified = {});
     void removeCustomIcon(const QUuid& uuid);
     void copyCustomIcons(const QSet<QUuid>& iconList, const Metadata* otherMetadata);
     QUuid findCustomIcon(const QByteArray& candidate);
@@ -152,7 +169,7 @@ private:
     MetadataData m_data;
 
     QList<QUuid> m_customIconsOrder;
-    QHash<QUuid, QByteArray> m_customIcons;
+    QHash<QUuid, CustomIconData> m_customIcons;
     QHash<QByteArray, QUuid> m_customIconsHashes;
 
     QPointer<Group> m_recycleBin;

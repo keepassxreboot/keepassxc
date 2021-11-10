@@ -22,9 +22,9 @@
 #include <QXmlStreamWriter>
 
 #include "core/Group.h"
+#include "core/Metadata.h"
 
 class KeePass2RandomStream;
-class Metadata;
 
 class KdbxXmlWriter
 {
@@ -47,7 +47,7 @@ private:
     void writeMetadata();
     void writeMemoryProtection();
     void writeCustomIcons();
-    void writeIcon(const QUuid& uuid, const QByteArray& iconData);
+    void writeIcon(const QUuid& uuid, const Metadata::CustomIconData& iconData);
     void writeBinaries();
     void writeCustomData(const CustomData* customData);
     void writeCustomDataItem(const QString& key, const QString& value);

@@ -222,7 +222,7 @@ QPixmap Icons::customIconPixmap(const Database* db, const QUuid& uuid, IconSize 
         return {};
     }
     // Generate QIcon with pre-baked resolutions
-    auto icon = QImage::fromData(db->metadata()->customIcon(uuid));
+    auto icon = QImage::fromData(db->metadata()->customIcon(uuid).data);
     auto basePixmap = QPixmap::fromImage(icon.scaled(64, 64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     return QIcon(basePixmap).pixmap(databaseIcons()->iconSize(size));
 }
