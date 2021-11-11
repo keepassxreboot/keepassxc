@@ -279,16 +279,20 @@ namespace Phantom
 #ifdef Q_OS_MACOS
             QColor tabBarBase(const QPalette& pal)
             {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
                 if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::MacOSBigSur) {
                     return hack_isLightPalette(pal) ? QRgb(0xD4D4D4) : QRgb(0x2A2A2A);
                 }
+#endif
                 return hack_isLightPalette(pal) ? QRgb(0xDD1D1D1) : QRgb(0x252525);
             }
             QColor tabBarBaseInactive(const QPalette& pal)
             {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
                 if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::MacOSBigSur) {
                     return hack_isLightPalette(pal) ? QRgb(0xF5F5F5) : QRgb(0x2D2D2D);
                 }
+#endif
                 return hack_isLightPalette(pal) ? QRgb(0xF4F4F4) : QRgb(0x282828);
             }
 #endif
