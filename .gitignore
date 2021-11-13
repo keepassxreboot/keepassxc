@@ -23,5 +23,6 @@ desktop.ini
 
 # MSVC Files
 CMakeSettings.json
+CMakePresets.json
 .vs/
 out/

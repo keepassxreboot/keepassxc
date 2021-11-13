@@ -14,3 +14,6 @@ AppImage-Recipe.sh export-ignore
 
 # binary files
 *.ai binary
+
+# Line endings harmony
+* text=auto
