@@ -795,13 +795,13 @@ void TestKeePass2Format::testDuplicateAttachments()
 }
 
 /**
- * @return fast "dummy" KDF
+ * Fast "dummy" KDF
  */
-QSharedPointer<Kdf> TestKeePass2Format::fastKdf(QSharedPointer<Kdf> kdf) const
+QSharedPointer<Kdf> fastKdf(QSharedPointer<Kdf> kdf)
 {
     kdf->setRounds(1);
 
-    if (kdf->uuid() == KeePass2::KDF_ARGON2D) {
+    if (kdf->uuid() == KeePass2::KDF_ARGON2D or kdf->uuid() == KeePass2::KDF_ARGON2ID) {
         kdf->processParameters({{KeePass2::KDFPARAM_ARGON2_MEMORY, 1024}, {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}});
     }
 

@@ -23,7 +23,7 @@
 #include "core/Database.h"
 
 /**
- * Abstract base class for KeePass2 file format tests.
+ * Abstract base class for version-dependent KDBX file format tests.
  */
 class TestKeePass2Format : public QObject
 {
@@ -83,8 +83,6 @@ protected:
                           QString& errorString) = 0;
     virtual void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) = 0;
 
-    QSharedPointer<Kdf> fastKdf(QSharedPointer<Kdf> kdf) const;
-
     QSharedPointer<Database> m_xmlDb;
     QSharedPointer<Database> m_kdbxSourceDb;
     QSharedPointer<Database> m_kdbxTargetDb;
@@ -92,5 +90,7 @@ protected:
 private:
     QBuffer m_kdbxTargetBuffer;
 };
+
+QSharedPointer<Kdf> fastKdf(QSharedPointer<Kdf> kdf);
 
 #endif // KEEPASSXC_TESTKEEPASS2FORMAT_H

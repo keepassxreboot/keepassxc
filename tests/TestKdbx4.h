@@ -24,14 +24,6 @@ class TestKdbx4Argon2 : public TestKeePass2Format
 {
     Q_OBJECT
 
-private slots:
-    void testFormat400();
-    void testFormat400Upgrade();
-    void testFormat400Upgrade_data();
-    void testUpgradeMasterKeyIntegrity();
-    void testUpgradeMasterKeyIntegrity_data();
-    void testCustomData();
-
 protected:
     void initTestCaseImpl() override;
 
@@ -59,6 +51,23 @@ class TestKdbx4AesKdf : public TestKdbx4Argon2
 
 protected:
     void initTestCaseImpl() override;
+};
+
+/**
+ * KDF-independent KDBX4 format tests.
+ */
+class TestKdbx4Format : public QObject
+{
+    Q_OBJECT
+
+private slots:
+    void testFormat400();
+    void testFormat400Upgrade();
+    void testFormat400Upgrade_data();
+    void testFormat410Upgrade();
+    void testUpgradeMasterKeyIntegrity();
+    void testUpgradeMasterKeyIntegrity_data();
+    void testCustomData();
 };
 
 #endif // KEEPASSXC_TEST_KDBX4_H
