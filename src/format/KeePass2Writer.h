@@ -33,6 +33,7 @@ public:
     bool writeDatabase(const QString& filename, Database* db);
     bool writeDatabase(QIODevice* device, Database* db);
     void extractDatabase(Database* db, QByteArray& xmlOutput);
+    static bool implicitKDBXUpgradeNeeded(Database const* db);
 
     QSharedPointer<KdbxWriter> writer() const;
     quint32 version() const;
@@ -42,7 +43,6 @@ public:
 
 private:
     void raiseError(const QString& errorMessage);
-    bool implicitUpgradeNeeded(Database const* db) const;
 
     bool m_error = false;
     QString m_errorStr = "";

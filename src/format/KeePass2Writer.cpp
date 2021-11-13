@@ -18,6 +18,7 @@
 #include <QFile>
 
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "format/Kdbx3Writer.h"
 #include "format/Kdbx4Writer.h"
 #include "format/KeePass2Writer.h"
@@ -42,7 +43,7 @@ bool KeePass2Writer::writeDatabase(const QString& filename, Database* db)
 /**
  * @return true if the database should upgrade to KDBX4.
  */
-bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
+bool KeePass2Writer::implicitKDBXUpgradeNeeded(Database const* db)
 {
     if (db->kdf()->uuid() != KeePass2::KDF_AES_KDBX3) {
         return false;
@@ -56,9 +57,21 @@ bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
         if (group->customData() && !group->customData()->isEmpty()) {
             return true;
         }
+        if (!group->tags().isEmpty()) {
+            return true;
+        }
+        if (group->previousParentGroup()) {
+            return true;
+        }
 
         for (const auto& entry : group->entries()) {
             if (entry->customData() && !entry->customData()->isEmpty()) {
+                return true;
+            }
+            if (entry->excludeFromReports()) {
+                return true;
+            }
+            if (entry->previousParentGroup()) {
                 return true;
             }
 
@@ -67,6 +80,14 @@ bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
                     return true;
                 }
             }
+        }
+    }
+
+    const QList<QUuid> customIconsOrder = db->metadata()->customIconsOrder();
+    for (const QUuid& uuid : customIconsOrder) {
+        const auto& icon = db->metadata()->customIcon(uuid);
+        if (!icon.name.isEmpty() || icon.lastModified.isValid()) {
+            return true;
         }
     }
 
@@ -85,7 +106,7 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     m_error = false;
     m_errorStr.clear();
 
-    bool upgradeNeeded = implicitUpgradeNeeded(db);
+    bool upgradeNeeded = implicitKDBXUpgradeNeeded(db);
     if (upgradeNeeded) {
         // We MUST re-transform the key, because challenge-response hashing has changed in KDBX 4.
         // If we forget to re-transform, the database will be saved WITHOUT a challenge-response key component!
