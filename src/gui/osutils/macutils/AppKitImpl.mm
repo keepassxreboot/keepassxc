@@ -139,6 +139,7 @@
 //
 - (bool) isStatusBarDark
 {
+#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101000
     if (@available(macOS 10.17, *)) {
         // This is an ugly hack, but I couldn't find a way to access QTrayIcon's NSStatusItem.
         NSStatusItem* dummy = [[NSStatusBar systemStatusBar] statusItemWithLength:0];
@@ -146,6 +147,7 @@
         [[NSStatusBar systemStatusBar] removeStatusItem:dummy];
         return [appearance containsString:@"dark"];
     }
+#endif
 
     return [self isDarkMode];
 }
