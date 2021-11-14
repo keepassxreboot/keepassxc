@@ -168,9 +168,13 @@
 //
 - (bool) enableAccessibility
 {
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1090
     // Request accessibility permissions for Auto-Type type on behalf of the user
     NSDictionary* opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt): @YES};
     return AXIsProcessTrustedWithOptions(static_cast<CFDictionaryRef>(opts));
+#else
+    return YES;
+#endif
 }
 
 //
