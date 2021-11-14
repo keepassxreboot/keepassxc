@@ -60,7 +60,7 @@
 - (void) didDeactivateApplicationObserver:(NSNotification*) notification
 {
     NSDictionary* userInfo = notification.userInfo;
-    NSRunningApplication* app = userInfo[NSWorkspaceApplicationKey];
+    NSRunningApplication* app = [userInfo objectForKey:NSWorkspaceApplicationKey];
 
     if (app.processIdentifier != [self ownProcessId]) {
         self.lastActiveApplication = app;
@@ -182,6 +182,7 @@
 //
 - (bool) enableScreenRecording
 {
+#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 1080
     if (@available(macOS 10.15, *)) {
         // Request screen recording permission on macOS 10.15+
         // This is necessary to get the current window title
@@ -199,6 +200,7 @@
             return NO;
         }
     }
+#endif
     return YES;
 }
 
