@@ -16,6 +16,7 @@
  */
 
 #include <botan/mem_ops.h>
+#include <cstdlib>
 #if defined(Q_OS_MACOS)
 #include <malloc/malloc.h>
 #elif defined(Q_OS_FREEBSD)
