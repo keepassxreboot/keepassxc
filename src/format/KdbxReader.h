@@ -83,8 +83,6 @@ protected:
 
     void raiseError(const QString& errorMessage);
 
-    quint32 m_kdbxVersion = 0;
-
     QByteArray m_masterSeed;
     QByteArray m_encryptionIV;
     QByteArray m_streamStartBytes;

@@ -56,7 +56,7 @@ const QList<QPair<QUuid, QString>> KeePass2::KDFS{
     qMakePair(KeePass2::KDF_ARGON2D, QObject::tr("Argon2d (KDBX 4 – recommended)")),
     qMakePair(KeePass2::KDF_ARGON2ID, QObject::tr("Argon2id (KDBX 4)")),
     qMakePair(KeePass2::KDF_AES_KDBX4, QObject::tr("AES-KDF (KDBX 4)")),
-    qMakePair(KeePass2::KDF_AES_KDBX3, QObject::tr("AES-KDF (KDBX 3.1)"))};
+    qMakePair(KeePass2::KDF_AES_KDBX3, QObject::tr("AES-KDF (KDBX 3)"))};
 
 QByteArray KeePass2::hmacKey(const QByteArray& masterSeed, const QByteArray& transformedMasterKey)
 {

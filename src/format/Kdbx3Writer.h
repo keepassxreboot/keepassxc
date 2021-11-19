@@ -29,7 +29,6 @@ class Kdbx3Writer : public KdbxWriter
 
 public:
     bool writeDatabase(QIODevice* device, Database* db) override;
-    quint32 formatVersion() override;
 };
 
 #endif // KEEPASSX_KDBX3WRITER_H

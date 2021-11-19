@@ -52,11 +52,6 @@ public:
      */
     virtual bool writeDatabase(QIODevice* device, Database* db) = 0;
 
-    /**
-     * Get the database format version for the writer.
-     */
-    virtual quint32 formatVersion() = 0;
-
     void extractDatabase(QByteArray& xmlOutput, Database* db);
 
     bool hasError() const;

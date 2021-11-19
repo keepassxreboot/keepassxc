@@ -1535,6 +1535,28 @@ If you do not have a key file, please leave the field empty.</source>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Database Version Mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database you are trying to open was most likely
+created by a newer version of KeePassXC.
+
+You can try to open it anyway, but it may be incomplete
+and saving any changes may incur data loss.
+
+We recommend you update your KeePassXC installation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open database anyway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database unlock canceled.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -1809,18 +1831,6 @@ Are you sure you want to continue without a password?</translation>
         <translation>Database format:</translation>
     </message>
     <message>
-        <source>This is only important if you need to use your database with other programs.</source>
-        <translation>This is only important if you need to use your database with other programs.</translation>
-    </message>
-    <message>
-        <source>KDBX 4.0 (recommended)</source>
-        <translation>KDBX 4.0 (recommended)</translation>
-    </message>
-    <message>
-        <source>KDBX 3.1</source>
-        <translation>KDBX 3.1</translation>
-    </message>
-    <message>
         <source>unchanged</source>
         <comment>Database decryption time is unchanged</comment>
         <translation>unchanged</translation>
@@ -1918,6 +1928,22 @@ If you keep this number, your database may take hours, days, or even longer to o
 
 If you keep this number, your database will not be protected from brute force attacks.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format cannot be changed: Your database uses KDBX 4 features</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unless you need to open your database with other programs, always use the latest format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KDBX 4 (recommended)</source>
+        <translation type="unfinished">KDBX 4.0 (recommended) {4 ?}</translation>
+    </message>
+    <message>
+        <source>KDBX 3</source>
+        <translation type="unfinished">KDBX 3</translation>
     </message>
 </context>
 <context>
@@ -6524,10 +6550,6 @@ Available commands:
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
     <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
         <source>Invalid Settings</source>
         <comment>TOTP</comment>
         <translation>Invalid Settings</translation>
@@ -7497,6 +7519,10 @@ Please consider generating a new key file.</source>
     <message>
         <source>Attachments:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3)</source>
+        <translation type="unfinished">AES-KDF (KDBX 3.1) {3)?}</translation>
     </message>
 </context>
 <context>

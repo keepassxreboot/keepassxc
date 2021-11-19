@@ -36,7 +36,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
                                    QSharedPointer<const CompositeKey> key,
                                    Database* db)
 {
-    Q_ASSERT(m_kdbxVersion == KeePass2::FILE_VERSION_4);
+    Q_ASSERT((db->formatVersion() & KeePass2::FILE_VERSION_CRITICAL_MASK) == KeePass2::FILE_VERSION_4);
 
     m_binaryPool.clear();
 

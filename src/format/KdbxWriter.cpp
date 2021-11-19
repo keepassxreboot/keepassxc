@@ -71,7 +71,7 @@ void KdbxWriter::extractDatabase(QByteArray& xmlOutput, Database* db)
     QBuffer buffer;
     buffer.setBuffer(&xmlOutput);
     buffer.open(QIODevice::WriteOnly);
-    KdbxXmlWriter writer(formatVersion());
+    KdbxXmlWriter writer(db->formatVersion());
     writer.disableInnerStreamProtection(true);
     writer.writeDatabase(&buffer, db);
 }

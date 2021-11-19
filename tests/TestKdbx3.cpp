@@ -75,22 +75,7 @@ void TestKdbx3::readKdbx(QIODevice* device,
     if (hasError) {
         errorString = reader.errorString();
     }
-    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK);
-}
-
-void TestKdbx3::readKdbx(const QString& path,
-                         QSharedPointer<const CompositeKey> key,
-                         QSharedPointer<Database> db,
-                         bool& hasError,
-                         QString& errorString)
-{
-    KeePass2Reader reader;
-    reader.readDatabase(path, key, db.data());
-    hasError = reader.hasError();
-    if (hasError) {
-        errorString = reader.errorString();
-    }
-    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK);
+    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1);
 }
 
 void TestKdbx3::writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString)

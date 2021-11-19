@@ -166,7 +166,7 @@ void KdbxXmlWriter::writeIcon(const QUuid& uuid, const Metadata::CustomIconData&
     m_xml.writeStartElement("Icon");
 
     writeUuid("UUID", uuid);
-    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4_1) {
         if (!iconData.name.isEmpty()) {
             writeString("Name", iconData.name);
         }
@@ -243,7 +243,7 @@ void KdbxXmlWriter::writeCustomDataItem(const QString& key,
 
     writeString("Key", key);
     writeString("Value", item.value);
-    if (writeLastModified && m_kdbxVersion >= KeePass2::FILE_VERSION_4 && item.lastModified.isValid()) {
+    if (writeLastModified && m_kdbxVersion >= KeePass2::FILE_VERSION_4_1 && item.lastModified.isValid()) {
         writeDateTime("LastModificationTime", item.lastModified);
     }
 
@@ -291,9 +291,9 @@ void KdbxXmlWriter::writeGroup(const Group* group)
 
     if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
         writeCustomData(group->customData());
-        if (!group->previousParentGroupUuid().isNull()) {
-            writeUuid("PreviousParentGroup", group->previousParentGroupUuid());
-        }
+    }
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4_1 && !group->previousParentGroupUuid().isNull()) {
+        writeUuid("PreviousParentGroup", group->previousParentGroupUuid());
     }
 
     const QList<Entry*>& entryList = group->entries();
@@ -363,7 +363,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
     writeString("Tags", entry->tags());
     writeTimes(entry->timeInfo());
 
-    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4_1) {
         if (entry->excludeFromReports()) {
             writeBool("QualityCheck", false);
         }

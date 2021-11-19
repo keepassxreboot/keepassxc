@@ -81,11 +81,8 @@ bool KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const Compos
         return false;
     }
 
-    // mask out minor version
-    m_version &= KeePass2::FILE_VERSION_CRITICAL_MASK;
-
-    quint32 maxVersion = KeePass2::FILE_VERSION_4 & KeePass2::FILE_VERSION_CRITICAL_MASK;
-    if (m_version < KeePass2::FILE_VERSION_MIN || m_version > maxVersion) {
+    if (m_version < KeePass2::FILE_VERSION_MIN
+        || (m_version & KeePass2::FILE_VERSION_CRITICAL_MASK) > KeePass2::FILE_VERSION_MAX) {
         raiseError(tr("Unsupported KeePass 2 database version."));
         return false;
     }

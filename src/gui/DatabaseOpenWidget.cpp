@@ -206,6 +206,26 @@ void DatabaseOpenWidget::openDatabase()
     QApplication::restoreOverrideCursor();
     m_ui->passwordFormFrame->setEnabled(true);
 
+    if (ok && m_db->hasMinorVersionMismatch()) {
+        QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
+        msgBox->setIcon(QMessageBox::Warning);
+        msgBox->setWindowTitle(tr("Database Version Mismatch"));
+        msgBox->setText(tr("The database you are trying to open was most likely\n"
+                           "created by a newer version of KeePassXC.\n\n"
+                           "You can try to open it anyway, but it may be incomplete\n"
+                           "and saving any changes may incur data loss.\n\n"
+                           "We recommend you update your KeePassXC installation."));
+        auto btn = msgBox->addButton(tr("Open database anyway"), QMessageBox::ButtonRole::AcceptRole);
+        msgBox->setDefaultButton(btn);
+        msgBox->addButton(QMessageBox::Cancel);
+        msgBox->exec();
+        if (msgBox->clickedButton() != btn) {
+            m_db.reset(new Database());
+            m_ui->messageWidget->showMessage(tr("Database unlock canceled."), MessageWidget::MessageType::Error);
+            return;
+        }
+    }
+
     if (ok) {
 #ifdef WITH_XC_TOUCHID
         QHash<QString, QVariant> useTouchID = config()->get(Config::UseTouchID).toHash();
