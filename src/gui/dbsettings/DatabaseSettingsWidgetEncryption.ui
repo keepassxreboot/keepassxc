@@ -183,6 +183,9 @@
        </item>
        <item>
         <layout class="QFormLayout" name="formLayout">
+         <property name="verticalSpacing">
+          <number>2</number>
+         </property>
          <item row="0" column="0">
           <widget class="QLabel" name="compatibilityLabel">
            <property name="text">
@@ -203,12 +206,24 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="formatCannotBeChanged">
+           <property name="font">
+            <font>
+             <italic>true</italic>
+            </font>
+           </property>
+           <property name="text">
+            <string>Format cannot be changed: Your database uses KDBX 4 features</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>This is only important if you need to use your database with other programs.</string>
+          <string>Unless you need to open your database with other programs, always use the latest format.</string>
          </property>
         </widget>
        </item>

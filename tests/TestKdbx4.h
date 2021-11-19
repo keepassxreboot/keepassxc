@@ -32,11 +32,6 @@ protected:
     readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) override;
     void writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
 
-    void readKdbx(const QString& path,
-                  QSharedPointer<const CompositeKey> key,
-                  QSharedPointer<Database> db,
-                  bool& hasError,
-                  QString& errorString) override;
     void readKdbx(QIODevice* device,
                   QSharedPointer<const CompositeKey> key,
                   QSharedPointer<Database> db,

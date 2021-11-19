@@ -34,7 +34,7 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
                                    QSharedPointer<const CompositeKey> key,
                                    Database* db)
 {
-    Q_ASSERT(m_kdbxVersion <= KeePass2::FILE_VERSION_3_1);
+    Q_ASSERT((db->formatVersion() & KeePass2::FILE_VERSION_CRITICAL_MASK) <= KeePass2::FILE_VERSION_3);
 
     if (hasError()) {
         return false;
@@ -120,7 +120,7 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
         return false;
     }
 
-    Q_ASSERT(!xmlReader.headerHash().isEmpty() || m_kdbxVersion < KeePass2::FILE_VERSION_3_1);
+    Q_ASSERT(!xmlReader.headerHash().isEmpty() || db->formatVersion() < KeePass2::FILE_VERSION_3_1);
 
     if (!xmlReader.headerHash().isEmpty()) {
         QByteArray headerHash = CryptoHash::hash(headerData, CryptoHash::Sha256);

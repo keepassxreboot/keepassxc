@@ -76,11 +76,6 @@ protected:
                           QSharedPointer<Database> db,
                           bool& hasError,
                           QString& errorString) = 0;
-    virtual void readKdbx(const QString& path,
-                          QSharedPointer<const CompositeKey> key,
-                          QSharedPointer<Database> db,
-                          bool& hasError,
-                          QString& errorString) = 0;
     virtual void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) = 0;
 
     QSharedPointer<Database> m_xmlDb;

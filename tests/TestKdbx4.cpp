@@ -92,21 +92,6 @@ void TestKdbx4Argon2::readKdbx(QIODevice* device,
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4);
 }
 
-void TestKdbx4Argon2::readKdbx(const QString& path,
-                               QSharedPointer<const CompositeKey> key,
-                               QSharedPointer<Database> db,
-                               bool& hasError,
-                               QString& errorString)
-{
-    KeePass2Reader reader;
-    reader.readDatabase(path, key, db.data());
-    hasError = reader.hasError();
-    if (hasError) {
-        errorString = reader.errorString();
-    }
-    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4);
-}
-
 void TestKdbx4Argon2::writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString)
 {
     if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
@@ -218,8 +203,8 @@ void TestKdbx4Format::testFormat400Upgrade_data()
     QTest::addColumn<bool>("addCustomData");
     QTest::addColumn<quint32>("expectedVersion");
 
-    auto constexpr kdbx3 = KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK;
-    auto constexpr kdbx4 = KeePass2::FILE_VERSION_4   & KeePass2::FILE_VERSION_CRITICAL_MASK;
+    auto constexpr kdbx3 = KeePass2::FILE_VERSION_3_1;
+    auto constexpr kdbx4 = KeePass2::FILE_VERSION_4;
 
     QTest::newRow("Argon2d          + AES")                  << KeePass2::KDF_ARGON2D   << KeePass2::CIPHER_AES256  << false << kdbx4;
     QTest::newRow("Argon2id         + AES")                  << KeePass2::KDF_ARGON2ID  << KeePass2::CIPHER_AES256  << false << kdbx4;
@@ -255,7 +240,7 @@ void TestKdbx4Format::testFormat410Upgrade()
     Database db;
     db.changeKdf(fastKdf(db.kdf()));
     QCOMPARE(db.kdf()->uuid(), KeePass2::KDF_AES_KDBX3);
-    QVERIFY(!KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_3_1);
 
     auto group1 = new Group();
     group1->setUuid(QUuid::createUuid());
@@ -271,44 +256,45 @@ void TestKdbx4Format::testFormat410Upgrade()
 
     // Groups with tags
     group1->setTags("tag");
-    QVERIFY(KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_4_1);
     group1->setTags("");
-    QVERIFY(!KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_3_1);
 
     // PasswordQuality flag set
     entry->setExcludeFromReports(true);
-    QVERIFY(KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_4_1);
     entry->setExcludeFromReports(false);
-    QVERIFY(!KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_3_1);
 
     // Previous parent group set on group
     group1->setPreviousParentGroup(group2);
     QCOMPARE(group1->previousParentGroup(), group2);
-    QVERIFY(KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_4_1);
     group1->setPreviousParentGroup(nullptr);
-    QVERIFY(!KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_3_1);
 
     // Previous parent group set on entry
     entry->setPreviousParentGroup(group2);
     QCOMPARE(entry->previousParentGroup(), group2);
-    QVERIFY(KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_4_1);
     entry->setPreviousParentGroup(nullptr);
-    QVERIFY(!KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_3_1);
 
     // Custom icons with name or modification date
     Metadata::CustomIconData customIcon;
     auto iconUuid = QUuid::createUuid();
     db.metadata()->addCustomIcon(iconUuid, customIcon);
-    QVERIFY(!KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_3_1);
     customIcon.name = "abc";
     db.metadata()->removeCustomIcon(iconUuid);
     db.metadata()->addCustomIcon(iconUuid, customIcon);
-    QVERIFY(KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_4_1);
     customIcon.name.clear();
     customIcon.lastModified = Clock::currentDateTimeUtc();
     db.metadata()->removeCustomIcon(iconUuid);
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_3_1);
     db.metadata()->addCustomIcon(iconUuid, customIcon);
-    QVERIFY(KeePass2Writer::implicitKDBXUpgradeNeeded(&db));
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(&db), KeePass2::FILE_VERSION_4_1);
 }
 
 void TestKdbx4Format::testUpgradeMasterKeyIntegrity()
@@ -394,8 +380,8 @@ void TestKdbx4Format::testUpgradeMasterKeyIntegrity()
     if (reader.hasError()) {
         QFAIL(qPrintable(reader.errorString()));
     }
-    QCOMPARE(reader.version(), expectedVersion & KeePass2::FILE_VERSION_CRITICAL_MASK);
-    if (expectedVersion != KeePass2::FILE_VERSION_3) {
+    QCOMPARE(reader.version(), expectedVersion);
+    if (expectedVersion >= KeePass2::FILE_VERSION_4) {
         QVERIFY(db2->kdf()->uuid() != KeePass2::KDF_AES_KDBX3);
     }
 }
@@ -405,9 +391,9 @@ void TestKdbx4Format::testUpgradeMasterKeyIntegrity_data()
     QTest::addColumn<QString>("upgradeAction");
     QTest::addColumn<quint32>("expectedVersion");
 
-    QTest::newRow("Upgrade: none") << QString("none") << KeePass2::FILE_VERSION_3;
-    QTest::newRow("Upgrade: none (meta-customdata)") << QString("meta-customdata") << KeePass2::FILE_VERSION_3;
-    QTest::newRow("Upgrade: none (explicit kdf-aes-kdbx3)") << QString("kdf-aes-kdbx3") << KeePass2::FILE_VERSION_3;
+    QTest::newRow("Upgrade: none") << QString("none") << KeePass2::FILE_VERSION_3_1;
+    QTest::newRow("Upgrade: none (meta-customdata)") << QString("meta-customdata") << KeePass2::FILE_VERSION_3_1;
+    QTest::newRow("Upgrade: none (explicit kdf-aes-kdbx3)") << QString("kdf-aes-kdbx3") << KeePass2::FILE_VERSION_3_1;
     QTest::newRow("Upgrade (explicit): kdf-argon2") << QString("kdf-argon2") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (explicit): kdf-aes-kdbx4") << QString("kdf-aes-kdbx4") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (implicit): public-customdata") << QString("public-customdata") << KeePass2::FILE_VERSION_4;

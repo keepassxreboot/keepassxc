@@ -163,6 +163,27 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
     return true;
 }
 
+/**
+ * KDBX format version.
+ */
+quint32 Database::formatVersion() const
+{
+    return m_data.formatVersion;
+}
+
+void Database::setFormatVersion(quint32 version)
+{
+    m_data.formatVersion = version;
+}
+
+/**
+ * Whether the KDBX minor version is greater than the newest supported.
+ */
+bool Database::hasMinorVersionMismatch() const
+{
+    return m_data.formatVersion > KeePass2::FILE_VERSION_MAX;
+}
+
 bool Database::isSaving()
 {
     bool locked = m_saveMutex.tryLock();
@@ -935,6 +956,7 @@ void Database::setKdf(QSharedPointer<Kdf> kdf)
 {
     Q_ASSERT(!m_data.isReadOnly);
     m_data.kdf = std::move(kdf);
+    setFormatVersion(KeePass2Writer::kdbxVersionRequired(this, true, m_data.kdf.isNull()));
 }
 
 bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)

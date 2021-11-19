@@ -87,6 +87,10 @@ public:
     bool extract(QByteArray&, QString* error = nullptr);
     bool import(const QString& xmlExportPath, QString* error = nullptr);
 
+    quint32 formatVersion() const;
+    void setFormatVersion(quint32 version);
+    bool hasMinorVersionMismatch() const;
+
     void releaseData();
 
     bool isInitialized() const;
@@ -166,6 +170,7 @@ signals:
 private:
     struct DatabaseData
     {
+        quint32 formatVersion = 0;
         QString filePath;
         bool isReadOnly = false;
         QUuid cipher = KeePass2::CIPHER_AES256;
