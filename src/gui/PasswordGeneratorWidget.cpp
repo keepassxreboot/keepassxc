@@ -576,51 +576,15 @@ void PasswordGeneratorWidget::updateGenerator()
         auto classes = charClasses();
         auto flags = generatorFlags();
 
-        int length = 0;
-        if (flags.testFlag(PasswordGenerator::CharFromEveryGroup)) {
-            if (classes.testFlag(PasswordGenerator::LowerLetters)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::UpperLetters)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::Numbers)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::Braces)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::Punctuation)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::Quotes)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::Dashes)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::Math)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::Logograms)) {
-                ++length;
-            }
-            if (classes.testFlag(PasswordGenerator::EASCII)) {
-                ++length;
-            }
-        }
-
-        length = qMax(length, m_ui->spinBoxLength->value());
-        m_passwordGenerator->setLength(length);
-        m_passwordGenerator->setCharClasses(classes);
-        m_passwordGenerator->setFlags(flags);
+        m_passwordGenerator->setLength(m_ui->spinBoxLength->value());
         if (m_ui->buttonAdvancedMode->isChecked()) {
-            m_passwordGenerator->setAdditionalChars(m_ui->editAdditionalChars->text());
-            m_passwordGenerator->setExcludedChars(m_ui->editExcludedChars->text());
+            m_passwordGenerator->setCharClasses(classes);
+            m_passwordGenerator->setCustomCharacterSet(m_ui->editAdditionalChars->text());
+            m_passwordGenerator->setCustomCharacterSet(m_ui->editExcludedChars->text());
         } else {
-            m_passwordGenerator->setAdditionalChars("");
-            m_passwordGenerator->setExcludedChars("");
+            m_passwordGenerator->setCharClasses(classes);
         }
+        m_passwordGenerator->setFlags(flags);
 
         if (m_passwordGenerator->isValid()) {
             m_ui->buttonGenerate->setEnabled(true);

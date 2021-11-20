@@ -1195,9 +1195,9 @@ void TestCli::testGenerate_data()
         << QStringList{"generate", "-L", "2", "--upper", "-l", "--every-group"} << "^[a-z][A-Z]|[A-Z][a-z]$";
     QTest::newRow("numbers + lowercase (every)")
         << QStringList{"generate", "-L", "2", "-n", "-l", "--every-group"} << "^[a-z][0-9]|[0-9][a-z]$";
-    QTest::newRow("include additional") << QStringList{"generate", "-L", "200", "-n", "-i", "abc"} << "^[abc0-9]{200}$";
-    QTest::newRow("include additional uses default character set")
-        << QStringList{"generate", "-L", "200", "-i", "a"} << "[^a]";
+    QTest::newRow("custom character set") << QStringList{"generate", "-L", "200", "-n", "-c", "abc"} << "^[abc0-9]{200}$";
+    QTest::newRow("custom character set without extra options uses only custom chars")
+        << QStringList{"generate", "-L", "200", "-c", "a"} << "^a{200}$";
 }
 
 void TestCli::testGenerate()

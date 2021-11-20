@@ -53,10 +53,10 @@ const QCommandLineOption Generate::ExcludeCharsOption = QCommandLineOption(QStri
                                                                            QObject::tr("Exclude character set"),
                                                                            QObject::tr("chars"));
 
-const QCommandLineOption Generate::IncludeAdditionalCharsOption =
-    QCommandLineOption(QStringList() << "i"
-                                     << "include",
-                       QObject::tr("Additionally include character set"),
+const QCommandLineOption Generate::CustomCharacterSetOption =
+    QCommandLineOption(QStringList() << "c"
+                                     << "custom",
+                       QObject::tr("Use custom character set"),
                        QObject::tr("chars"));
 
 const QCommandLineOption Generate::ExcludeSimilarCharsOption =
@@ -77,7 +77,7 @@ Generate::Generate()
     options.append(Generate::ExcludeCharsOption);
     options.append(Generate::ExcludeSimilarCharsOption);
     options.append(Generate::IncludeEveryGroupOption);
-    options.append(Generate::IncludeAdditionalCharsOption);
+    options.append(Generate::CustomCharacterSetOption);
 }
 
 /**
@@ -127,10 +127,15 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
 
     // The default charset will be used if no explicit class
     // option was set.
-    passwordGenerator->setCharClasses(classes);
-    passwordGenerator->setFlags(flags);
-    passwordGenerator->setExcludedChars(parser->value(Generate::ExcludeCharsOption));
-    passwordGenerator->setAdditionalChars(parser->value(Generate::IncludeAdditionalCharsOption));
+    if(flags != 0x0) {
+        passwordGenerator->setFlags(flags);
+    }
+    QString customCharacterSet = parser->value(Generate::CustomCharacterSetOption);
+    if(classes != 0x0 || !customCharacterSet.isNull()) {
+        passwordGenerator->setCharClasses(classes);
+    }
+    passwordGenerator->setCustomCharacterSet(customCharacterSet);
+    passwordGenerator->setExcludedCharacterSet(parser->value(Generate::ExcludeCharsOption));
 
     if (!passwordGenerator->isValid()) {
         err << QObject::tr("Invalid password generator after applying all options") << endl;
