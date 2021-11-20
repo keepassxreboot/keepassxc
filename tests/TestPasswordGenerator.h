@@ -20,7 +20,6 @@
 
 #include "core/PasswordGenerator.h"
 #include <QObject>
-#include "core/PasswordGenerator.h"
 
 class TestPasswordGenerator : public QObject
 {

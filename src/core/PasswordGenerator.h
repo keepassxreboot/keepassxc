@@ -21,7 +21,6 @@
 
 #include <QObject>
 #include <QVector>
-#include <QObject>
 
 typedef QVector<QChar> PasswordGroup;
 
