@@ -24,7 +24,6 @@ const int PasswordGenerator::DefaultLength = 32;
 const char* PasswordGenerator::DefaultCustomCharacterSet = "";
 const char* PasswordGenerator::DefaultExcludedChars = "";
 
-
 PasswordGenerator::PasswordGenerator()
     : m_length(PasswordGenerator::DefaultLength)
     , m_classes(PasswordGenerator::CharClass::DefaultCharset)
@@ -302,7 +301,7 @@ int PasswordGenerator::numCharClasses() const
 
 int PasswordGenerator::getMinLength() const
 {
-    if((m_flags & CharFromEveryGroup)) {
+    if ((m_flags & CharFromEveryGroup)) {
         return numCharClasses();
     }
     return 1;

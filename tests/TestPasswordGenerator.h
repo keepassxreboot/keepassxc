@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_TESTPASSWORDGENERATOR_H
 #define KEEPASSXC_TESTPASSWORDGENERATOR_H
 
+#include "core/PasswordGenerator.h"
 #include <QObject>
 #include "core/PasswordGenerator.h"
 

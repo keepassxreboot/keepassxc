@@ -127,11 +127,11 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
 
     // The default charset will be used if no explicit class
     // option was set.
-    if(flags != 0x0) {
+    if (flags != 0x0) {
         passwordGenerator->setFlags(flags);
     }
     QString customCharacterSet = parser->value(Generate::CustomCharacterSetOption);
-    if(classes != 0x0 || !customCharacterSet.isNull()) {
+    if (classes != 0x0 || !customCharacterSet.isNull()) {
         passwordGenerator->setCharClasses(classes);
     }
     passwordGenerator->setCustomCharacterSet(customCharacterSet);

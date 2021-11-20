@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_PASSWORDGENERATOR_H
 #define KEEPASSX_PASSWORDGENERATOR_H
 
+#include <QObject>
 #include <QVector>
 #include <QObject>
 
