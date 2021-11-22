@@ -39,7 +39,9 @@ public:
     explicit AutoTypeSelectDialog(QWidget* parent = nullptr);
     ~AutoTypeSelectDialog() override;
 
-    void setMatches(const QList<AutoTypeMatch>& matchList, const QList<QSharedPointer<Database>>& dbs);
+    void setMatches(const QList<AutoTypeMatch>& matchList,
+                    const QList<QSharedPointer<Database>>& dbs,
+                    const AutoTypeMatch& lastMatch);
     void setSearchString(const QString& search);
 
 signals:
@@ -63,6 +65,7 @@ private:
 
     QList<QSharedPointer<Database>> m_dbs;
     QList<AutoTypeMatch> m_matches;
+    AutoTypeMatch m_lastMatch;
     QTimer m_searchTimer;
     QPointer<QMenu> m_actionMenu;
 

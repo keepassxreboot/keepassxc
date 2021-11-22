@@ -23,6 +23,8 @@
 #include <QObject>
 #include <QWidget>
 
+#include "AutoTypeMatch.h"
+
 class AutoTypeAction;
 class AutoTypeExecutor;
 class AutoTypePlatformInterface;
@@ -95,6 +97,8 @@ private:
     QString m_windowTitleForGlobal;
     WindowState m_windowState;
     WId m_windowForGlobal;
+    AutoTypeMatch m_lastMatch;
+    qint64 m_lastMatchTime;
 
     Q_DISABLE_COPY(AutoType)
 };
