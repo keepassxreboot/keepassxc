@@ -45,6 +45,24 @@ QModelIndex AutoTypeMatchModel::indexFromMatch(const AutoTypeMatch& match) const
     return index(row, 1);
 }
 
+QModelIndex AutoTypeMatchModel::closestIndexFromMatch(const AutoTypeMatch& match) const
+{
+    int row = -1;
+
+    for (int i = m_matches.size() - 1; i >= 0; --i) {
+        const auto& currentMatch = m_matches.at(i);
+        if (currentMatch.first == match.first) {
+            row = i;
+
+            if (currentMatch.second == match.second) {
+                break;
+            }
+        }
+    }
+
+    return (row > -1) ? index(row, 1) : QModelIndex();
+}
+
 void AutoTypeMatchModel::setMatchList(const QList<AutoTypeMatch>& matches)
 {
     beginResetModel();

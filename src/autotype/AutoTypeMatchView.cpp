@@ -18,6 +18,7 @@
 
 #include "AutoTypeMatchView.h"
 #include "AutoTypeMatchModel.h"
+#include "core/Entry.h"
 
 #include <QHeaderView>
 #include <QKeyEvent>
@@ -78,21 +79,36 @@ void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)
     }
 }
 
-void AutoTypeMatchView::setMatchList(const QList<AutoTypeMatch>& matches, bool selectFirst)
+void AutoTypeMatchView::setMatchList(const QList<AutoTypeMatch>& matches)
 {
     m_model->setMatchList(matches);
     m_sortModel->setFilterWildcard({});
 
     horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 
-    if (selectFirst) {
-        selectionModel()->setCurrentIndex(m_sortModel->index(0, 0),
+    selectionModel()->clear();
+    emit currentMatchChanged(currentMatch());
+}
+
+void AutoTypeMatchView::selectFirstMatch()
+{
+    selectionModel()->setCurrentIndex(m_sortModel->index(0, 0),
+                                      QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    emit currentMatchChanged(currentMatch());
+}
+
+bool AutoTypeMatchView::selectMatch(const AutoTypeMatch& match)
+{
+    QModelIndex index = m_model->closestIndexFromMatch(match);
+
+    if (index.isValid()) {
+        selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(index),
                                           QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-    } else {
-        selectionModel()->clear();
+        emit currentMatchChanged(currentMatch());
+        return true;
     }
 
-    emit currentMatchChanged(currentMatch());
+    return false;
 }
 
 void AutoTypeMatchView::filterList(const QString& filter)

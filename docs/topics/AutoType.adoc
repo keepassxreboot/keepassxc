@@ -65,7 +65,7 @@ image::autotype_entry_sequences.png[]
 === Performing Global Auto-Type
 The global Auto-Type keyboard shortcut is used when you have focus on the window you want to type into. To make use of this feature, you must have previously configured an Auto-Type hotkey.
 
-When you press the global Auto-Type hotkey, KeePassXC searches all unlocked databases for entries that match the focused window title. The Auto-Type selection dialog will appear in the following circumstances: there are no matches found, there are multiple matches found, or the setting "Always ask before performing Auto-Type" is enabled.
+When you press the global Auto-Type hotkey, KeePassXC searches all unlocked databases for entries that match the focused window title. The Auto-Type selection dialog will appear in the following circumstances: there are no matches found, there are multiple matches found, or the setting "Always ask before performing Auto-Type" is enabled. The selection is remembered for a short while to help retype with the same entry in quick succession.
 
 .Auto-Type sequence selection
 image::autotype_selection_dialog.png[,70%]
