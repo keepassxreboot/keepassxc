@@ -20,6 +20,7 @@
 #include "core/Clock.h"
 
 #include <QTest>
+#include <QUuid>
 
 QTEST_GUILESS_MAIN(TestTools)
 
