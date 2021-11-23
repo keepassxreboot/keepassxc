@@ -82,6 +82,7 @@ private:
                     QAbstractItemView* view,
                     Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
+    void checkSaveDatabase();
 
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<DatabaseTabWidget> m_tabWidget;
