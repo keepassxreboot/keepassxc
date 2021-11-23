@@ -321,7 +321,7 @@ void TestGui::testMergeDatabase()
     QTest::keyClick(editPasswordMerge, Qt::Key_Enter);
 
     QTRY_COMPARE(dbMergeSpy.count(), 1);
-    QTRY_VERIFY(m_tabWidget->tabName(m_tabWidget->currentIndex()).contains("*"));
+    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).contains("*"));
 
     m_db = m_tabWidget->currentDatabaseWidget()->database();
 
@@ -347,7 +347,7 @@ void TestGui::testAutoreloadDatabase()
 
     // the General group contains one entry from the new db data
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
-    QVERIFY(!m_tabWidget->tabName(m_tabWidget->currentIndex()).endsWith("*"));
+    QVERIFY(!m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 
     // Reset the state
     cleanup();
@@ -362,7 +362,7 @@ void TestGui::testAutoreloadDatabase()
 
     // Ensure the merge did not take place
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 0);
-    QTRY_VERIFY(m_tabWidget->tabName(m_tabWidget->currentIndex()).endsWith("*"));
+    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 
     // Reset the state
     cleanup();
@@ -389,7 +389,7 @@ void TestGui::testAutoreloadDatabase()
 void TestGui::testTabs()
 {
     QCOMPARE(m_tabWidget->count(), 1);
-    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), m_dbFileName);
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_dbFileName);
 }
 
 void TestGui::testEditEntry()
@@ -491,7 +491,7 @@ void TestGui::testEditEntry()
     QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Confirm modified indicator is showing
-    QTRY_COMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
 
     // Test copy & paste newline sanitization
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
@@ -1232,7 +1232,7 @@ void TestGui::testSaveAs()
 
     triggerAction("actionDatabaseSaveAs");
 
-    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSaveAs"));
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveAs"));
 
     checkDatabase(tmpFileName);
 
@@ -1261,7 +1261,7 @@ void TestGui::testSaveBackup()
 
     triggerAction("actionDatabaseSaveBackup");
 
-    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
 
     checkDatabase(tmpFileName);
 
@@ -1272,15 +1272,9 @@ void TestGui::testSaveBackup()
 
 void TestGui::testSave()
 {
+    // Make a modification to the database then save
     m_db->metadata()->setName("testSave");
-
-    // wait for modified timer
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSave*"));
-
-    triggerAction("actionDatabaseSave");
-    QTRY_COMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSave"));
-
-    checkDatabase();
+    checkSaveDatabase();
 }
 
 void TestGui::testSaveBackupPath_data()
@@ -1336,10 +1330,7 @@ void TestGui::testSaveBackupPath()
     // Save a modified database
     auto prevName = m_db->metadata()->name();
     m_db->metadata()->setName("testBackupPathPattern");
-
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testBackupPathPattern*"));
-    triggerAction("actionDatabaseSave");
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testBackupPathPattern"));
+    checkSaveDatabase();
 
     // Test that the backup file has the previous database name
     checkDatabase(expectedBackupFile, prevName);
@@ -1362,17 +1353,9 @@ void TestGui::testDatabaseSettings()
     QVERIFY(transformRoundsSpinBox != nullptr);
     transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
-    // wait for modified timer
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testDatabaseSettings*"));
-    QCOMPARE(m_db->kdf()->rounds(), 123456);
+    QTRY_COMPARE(m_db->kdf()->rounds(), 123456);
 
-    triggerAction("actionDatabaseSave");
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testDatabaseSettings"));
-
-    advancedToggle->setChecked(false);
-    QApplication::processEvents();
-
-    checkDatabase();
+    checkSaveDatabase();
 }
 
 void TestGui::testKeePass1Import()
@@ -1388,7 +1371,7 @@ void TestGui::testKeePass1Import()
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
     QTRY_COMPARE(m_tabWidget->count(), 2);
-    QTRY_COMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("basic [New Database]*"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New Database]*"));
 
     // Close the KeePass1 Database
     MessageBox::setNextAnswer(MessageBox::No);
@@ -1403,7 +1386,7 @@ void TestGui::testDatabaseLocking()
     MessageBox::setNextAnswer(MessageBox::Cancel);
     triggerAction("actionLockDatabases");
 
-    QCOMPARE(m_tabWidget->tabName(0), origDbName + " [Locked]");
+    QCOMPARE(m_tabWidget->tabText(0), origDbName + " [Locked]");
 
     auto* actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), false);
@@ -1420,7 +1403,7 @@ void TestGui::testDatabaseLocking()
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
     QVERIFY(!dbWidget->isLocked());
-    QCOMPARE(m_tabWidget->tabName(0), origDbName);
+    QCOMPARE(m_tabWidget->tabText(0), origDbName);
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);
@@ -1780,6 +1763,25 @@ void TestGui::checkDatabase(const QString& filePath, const QString& expectedDbNa
 void TestGui::checkDatabase(const QString& filePath)
 {
     checkDatabase(filePath.isEmpty() ? m_dbFilePath : filePath, m_db->metadata()->name());
+}
+
+void TestGui::checkSaveDatabase()
+{
+    // Attempt to save the database up to two times to overcome transient file errors
+    QTRY_VERIFY(m_db->isModified());
+    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
+    int i = 0;
+    do {
+        triggerAction("actionDatabaseSave");
+        if (!m_db->isModified()) {
+            checkDatabase();
+            return;
+        }
+        QWARN("Failed to save database, trying again...");
+        Tools::wait(250);
+    } while (++i < 2);
+
+    QFAIL("Could not save database.");
 }
 
 void TestGui::triggerAction(const QString& name)
