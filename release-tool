@@ -1014,17 +1014,6 @@ build() {
             # release.
             cpack -G "${CPACK_GENERATORS};${build_generators}"
 
-            # Inject the portable config into the zip build and rename
-            touch .portable
-            for filename in ${APP_NAME}-*.zip; do
-                logInfo "Creating portable zip file"
-                local folder=$(echo ${filename} | sed -r 's/(.*)\.zip/\1/')
-                python -c 'import zipfile,sys ; zipfile.ZipFile(sys.argv[1],"a").write(sys.argv[2],sys.argv[3])' \
-                    ${filename} .portable ${folder}/.portable
-                mv ${filename} ${folder}-portable.zip
-            done
-            rm .portable
-
             mv "${APP_NAME}-"*.* ../
         else
             mkdir -p "${OUTPUT_DIR}/KeePassXC.AppDir"

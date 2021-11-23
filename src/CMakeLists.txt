@@ -433,6 +433,9 @@ if(WIN32)
             "${CMAKE_SOURCE_DIR}/LICENSE.GPL-2"
             "${CMAKE_CURRENT_BINARY_DIR}/INSTALLER_LICENSE.txt")
 
+    # Prepare portal zip file
+    set(CPACK_INSTALL_SCRIPTS "${CMAKE_SOURCE_DIR}/cmake/MakePortableZip.cmake")
+
     string(REGEX REPLACE "-.*$" "" KEEPASSXC_VERSION_CLEAN ${KEEPASSXC_VERSION})
 
     set(CPACK_GENERATOR "ZIP;WIX")
