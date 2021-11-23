@@ -7524,6 +7524,10 @@ Please consider generating a new key file.</source>
         <source>AES-KDF (KDBX 3)</source>
         <translation type="unfinished">AES-KDF (KDBX 3.1) {3)?}</translation>
     </message>
+    <message>
+        <source>Use custom character set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
