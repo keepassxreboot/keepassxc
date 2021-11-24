@@ -666,11 +666,14 @@ void DatabaseWidget::addToAgent()
         return;
     }
 
+    SSHAgent* agent = SSHAgent::instance();
     OpenSSHKey key;
     if (settings.toOpenSSHKey(currentEntry, key, true)) {
-        SSHAgent::instance()->addIdentity(key, settings, database()->uuid());
+        if (!agent->addIdentity(key, settings, database()->uuid())) {
+            m_messageWidget->showMessage(agent->errorString(), MessageWidget::Error);
+        }
     } else {
-        m_messageWidget->showMessage(key.errorString(), MessageWidget::Error);
+        m_messageWidget->showMessage(settings.errorString(), MessageWidget::Error);
     }
 }
 
@@ -687,11 +690,14 @@ void DatabaseWidget::removeFromAgent()
         return;
     }
 
+    SSHAgent* agent = SSHAgent::instance();
     OpenSSHKey key;
     if (settings.toOpenSSHKey(currentEntry, key, false)) {
-        SSHAgent::instance()->removeIdentity(key);
+        if (!agent->removeIdentity(key)) {
+            m_messageWidget->showMessage(agent->errorString(), MessageWidget::Error);
+        }
     } else {
-        m_messageWidget->showMessage(key.errorString(), MessageWidget::Error);
+        m_messageWidget->showMessage(settings.errorString(), MessageWidget::Error);
     }
 }
 #endif
