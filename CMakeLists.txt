@@ -314,7 +314,18 @@ endif()
 add_gcc_compiler_cflags("-std=c99")
 add_gcc_compiler_cxxflags("-std=c++11")
 
-check_add_gcc_compiler_flag("-fsized-deallocation" CXX)
+check_cxx_compiler_flag("-fsized-deallocation" CXX_HAS_fsized_deallocation)
+if(CXX_HAS_fsized_deallocation)
+    # Do additional check: the deallocation functions must be there too.
+    set(CMAKE_REQUIRED_FLAGS "-fsized-deallocation")
+    check_cxx_source_compiles("#include <new>
+        int main() { void * ptr = nullptr; std::size_t size = 1; ::operator delete(ptr, size); }"
+        HAVE_DEALLOCATION_FUNCTIONS)
+    if(HAVE_DEALLOCATION_FUNCTIONS)
+        check_add_gcc_compiler_flag("-fsized-deallocation" CXX)
+    endif()
+    unset(CMAKE_REQUIRED_FLAGS)
+endif()
 
 if(APPLE AND CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_cxxflags("-stdlib=libc++")
