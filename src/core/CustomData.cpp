@@ -27,7 +27,7 @@ const QString CustomData::BrowserLegacyKeyPrefix = QStringLiteral("Public Key: "
 const QString CustomData::ExcludeFromReportsLegacy = QStringLiteral("KnownBad");
 
 // Fallback item for return by reference
-static const CustomData::CustomDataItem NULL_ITEM;
+static const CustomData::CustomDataItem NULL_ITEM{};
 
 CustomData::CustomData(QObject* parent)
     : ModifiableObject(parent)

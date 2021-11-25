@@ -29,7 +29,7 @@ const int Metadata::DefaultHistoryMaxItems = 10;
 const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;
 
 // Fallback icon for return by reference
-static const Metadata::CustomIconData NULL_ICON;
+static const Metadata::CustomIconData NULL_ICON{};
 
 Metadata::Metadata(QObject* parent)
     : ModifiableObject(parent)
