@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@ public:
     ~IconDownloaderDialog() override;
 
     void downloadFavicons(const QSharedPointer<Database>& database, const QList<Entry*>& entries, bool force = false);
+    void downloadFaviconInBackground(const QSharedPointer<Database>& database, Entry* entry);
 
 private slots:
     void downloadFinished(const QString& url, const QImage& icon);

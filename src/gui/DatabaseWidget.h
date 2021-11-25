@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -193,6 +193,7 @@ public slots:
     void openUrl();
     void downloadSelectedFavicons();
     void downloadAllFavicons();
+    void downloadFaviconInBackground(Entry* entry);
     void openUrlForEntry(Entry* entry);
     void createGroup();
     void cloneGroup();
@@ -259,7 +260,7 @@ private:
     void setClipboardTextAndMinimize(const QString& text);
     void processAutoOpen();
     void openDatabaseFromEntry(const Entry* entry, bool inBackground = true);
-    void performIconDownloads(const QList<Entry*>& entries, bool force = false);
+    void performIconDownloads(const QList<Entry*>& entries, bool force = false, bool downloadInBackground = false);
     bool performSave(QString& errorMessage, const QString& fileName = {});
 
     QSharedPointer<Database> m_db;

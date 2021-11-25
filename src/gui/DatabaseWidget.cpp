@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  * Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ * Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -794,15 +794,30 @@ void DatabaseWidget::downloadAllFavicons()
 #endif
 }
 
-void DatabaseWidget::performIconDownloads(const QList<Entry*>& entries, bool force)
+void DatabaseWidget::downloadFaviconInBackground(Entry* entry)
+{
+#ifdef WITH_XC_NETWORKING
+    performIconDownloads({entry}, true, true);
+#else
+    Q_UNUSED(entry);
+#endif
+}
+
+void DatabaseWidget::performIconDownloads(const QList<Entry*>& entries, bool force, bool downloadInBackground)
 {
 #ifdef WITH_XC_NETWORKING
     auto* iconDownloaderDialog = new IconDownloaderDialog(this);
     connect(this, SIGNAL(databaseLockRequested()), iconDownloaderDialog, SLOT(close()));
-    iconDownloaderDialog->downloadFavicons(m_db, entries, force);
+
+    if (downloadInBackground && entries.count() > 0) {
+        iconDownloaderDialog->downloadFaviconInBackground(m_db, entries.first());
+    } else {
+        iconDownloaderDialog->downloadFavicons(m_db, entries, force);
+    }
 #else
     Q_UNUSED(entries);
     Q_UNUSED(force);
+    Q_UNUSED(downloadInBackground);
 #endif
 }
 
