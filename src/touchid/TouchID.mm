@@ -95,6 +95,7 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
     // prepare adding secure entry to the macOS KeyChain
     CFErrorRef error = NULL;
     SecAccessControlRef sacObject;
+#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
     if (@available(macOS 10.15, *)) {
         // kSecAccessControlWatch is only available for macOS 10.15 and later
         sacObject = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
@@ -102,11 +103,14 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
                                                     kSecAccessControlOr | kSecAccessControlBiometryCurrentSet | kSecAccessControlWatch,
                                                     &error);
     } else {
+#endif
         sacObject = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
                                                     kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
                                                     kSecAccessControlTouchIDCurrentSet, // depr: kSecAccessControlBiometryCurrentSet,
                                                     &error);
+#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
     }
+#endif
 
 
     if (sacObject == NULL || error != NULL) {
@@ -234,11 +238,15 @@ bool TouchID::isAvailable()
         LAContext* context = [[LAContext alloc] init];
 
         LAPolicy policyCode;
+#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
         if (@available(macOS 10.15, *)) {
             policyCode = LAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch;
         } else {
+#endif
             policyCode = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
         }
+#endif
 
         bool canAuthenticate = [context canEvaluatePolicy:policyCode error:nil];
         [context release];
@@ -274,11 +282,15 @@ bool TouchID::authenticate(const QString& message) const
         NSString* authMessage = msg.toNSString(); // autoreleased
 
         LAPolicy policyCode;
+#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
         if (@available(macOS 10.15, *)) {
             policyCode = LAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch;
         } else {
+#endif
             policyCode = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
         }
+#endif
 
         [context evaluatePolicy:policyCode
                 localizedReason:authMessage reply:^(BOOL success, NSError* error) {
