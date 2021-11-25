@@ -494,6 +494,7 @@ void BrowserService::addEntry(const QString& dbid,
                               const QString& realm,
                               const QString& group,
                               const QString& groupUuid,
+                              const bool downloadFavicon,
                               const QSharedPointer<Database>& selectedDb)
 {
     // TODO: select database based on this key id
@@ -537,6 +538,10 @@ void BrowserService::addEntry(const QString& dbid,
         config.setRealm(realm);
     }
     config.save(entry);
+
+    if (downloadFavicon && m_currentDatabaseWidget) {
+        m_currentDatabaseWidget->downloadFaviconInBackground(entry);
+    }
 }
 
 bool BrowserService::updateEntry(const QString& dbid,

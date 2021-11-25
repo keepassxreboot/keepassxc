@@ -67,6 +67,7 @@ public:
                   const QString& realm,
                   const QString& group,
                   const QString& groupUuid,
+                  const bool downloadFavicon,
                   const QSharedPointer<Database>& selectedDb = {});
     bool updateEntry(const QString& dbid,
                      const QString& uuid,

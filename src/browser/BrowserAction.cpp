@@ -364,11 +364,13 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     const QString uuid = decrypted.value("uuid").toString();
     const QString group = decrypted.value("group").toString();
     const QString groupUuid = decrypted.value("groupUuid").toString();
+    const QString downloadFavicon = decrypted.value("downloadFavicon").toString();
     const QString realm;
 
     bool result = true;
     if (uuid.isEmpty()) {
-        browserService()->addEntry(id, login, password, url, submitUrl, realm, group, groupUuid);
+        auto dlFavicon = !downloadFavicon.isEmpty() && downloadFavicon.compare(TRUE_STR) == 0;
+        browserService()->addEntry(id, login, password, url, submitUrl, realm, group, groupUuid, dlFavicon);
     } else {
         if (!Tools::isValidUuid(uuid)) {
             return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
