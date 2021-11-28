@@ -311,8 +311,8 @@ if(UNIX AND NOT APPLE)
     set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro,-z,now")
 endif()
 
-add_gcc_compiler_cflags("-std=c99")
-add_gcc_compiler_cxxflags("-std=c++11")
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 17)
 
 check_add_gcc_compiler_flag("-fsized-deallocation" CXX)
 
