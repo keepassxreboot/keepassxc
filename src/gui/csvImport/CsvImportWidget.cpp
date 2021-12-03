@@ -225,18 +225,29 @@ void CsvImportWidget::writeDatabase()
         if (m_parserModel->data(m_parserModel->index(r, 8)).isValid()) {
             auto datetime = m_parserModel->data(m_parserModel->index(r, 8)).toString();
             if (datetime.contains(QRegularExpression("^\\d+$"))) {
-                timeInfo.setLastModificationTime(Clock::datetimeUtc(datetime.toLongLong() * 1000));
+                auto t = datetime.toLongLong();
+                if (t <= INT32_MAX) {
+                    t *= 1000;
+                }
+                auto lastModified = Clock::datetimeUtc(t);
+                timeInfo.setLastModificationTime(lastModified);
+                timeInfo.setLastAccessTime(lastModified);
             } else {
                 auto lastModified = QDateTime::fromString(datetime, Qt::ISODate);
                 if (lastModified.isValid()) {
                     timeInfo.setLastModificationTime(lastModified);
+                    timeInfo.setLastAccessTime(lastModified);
                 }
             }
         }
         if (m_parserModel->data(m_parserModel->index(r, 9)).isValid()) {
             auto datetime = m_parserModel->data(m_parserModel->index(r, 9)).toString();
             if (datetime.contains(QRegularExpression("^\\d+$"))) {
-                timeInfo.setCreationTime(Clock::datetimeUtc(datetime.toLongLong() * 1000));
+                auto t = datetime.toLongLong();
+                if (t <= INT32_MAX) {
+                    t *= 1000;
+                }
+                timeInfo.setCreationTime(Clock::datetimeUtc(t));
             } else {
                 auto created = QDateTime::fromString(datetime, Qt::ISODate);
                 if (created.isValid()) {
