@@ -60,6 +60,10 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setDefaultDropAction(Qt::MoveAction);
     setVisible(!config()->get(Config::GUI_HideGroupsPanel).toBool());
 
+    if (config()->get(Config::GUI_CompactMode).toBool()) {
+        setIndentation(indentation() / 2);
+    }
+
     connect(config(), &Config::changed, this, [this](Config::ConfigKey key) {
         if (key == Config::GUI_HideGroupsPanel) {
             setVisible(!config()->get(Config::GUI_HideGroupsPanel).toBool());
