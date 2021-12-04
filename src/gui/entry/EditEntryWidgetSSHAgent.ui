@@ -242,6 +242,18 @@
      </item>
      <item>
       <widget class="QSpinBox" name="lifetimeSpinBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="accessibleName">
         <string>Remove key from agent after specified seconds</string>
        </property>

@@ -26,7 +26,7 @@
    <item>
     <widget class="QTabWidget" name="generalSettingsTabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabGeneral">
       <attribute name="title">
@@ -57,9 +57,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>664</width>
-            <height>1215</height>
+            <y>-133</y>
+            <width>564</width>
+            <height>1052</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -499,6 +499,24 @@
                  <widget class="QSpinBox" name="faviconTimeoutSpinBox">
                   <property name="enabled">
                    <bool>true</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="baseSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
                   </property>
                   <property name="focusPolicy">
                    <enum>Qt::StrongFocus</enum>
@@ -1011,6 +1029,12 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="accessibleName">
             <string>Auto-type character typing delay milliseconds</string>
            </property>
@@ -1035,6 +1059,12 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="accessibleName">
             <string>Auto-type start delay milliseconds</string>

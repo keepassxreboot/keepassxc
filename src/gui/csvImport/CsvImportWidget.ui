@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>753</width>
-        <height>615</height>
+        <width>751</width>
+        <height>684</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -601,6 +601,18 @@
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
                <widget class="QSpinBox" name="spinBoxSkip">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="font">
                  <font>
                   <weight>50</weight>
@@ -713,7 +725,7 @@
              <bool>false</bool>
             </property>
             <attribute name="horizontalHeaderVisible">
-             <bool>true</bool>
+             <bool>false</bool>
             </attribute>
            </widget>
           </item>
