@@ -1,0 +1,195 @@
+---
+id: org.keepassxc.KeePassXC
+runtime: org.kde.Platform
+runtime-version: "5.15"
+sdk: org.kde.Sdk
+command: keepassxc-wrapper
+cleanup:
+  - "*.a"
+  - "*.h"
+  - "*.la"
+  - /include
+  - /lib/pkgconfig
+finish-args:
+  - "--share=ipc"
+  - "--socket=x11"
+  - "--socket=wayland"
+  - "--talk-name=org.freedesktop.Notifications"
+  - "--talk-name=org.freedesktop.ScreenSaver"
+  - "--talk-name=org.freedesktop.login1.Manager"
+  - "--talk-name=org.freedesktop.login1.Session"
+  - "--talk-name=org.gnome.ScreenSaver"
+  - "--talk-name=org.gnome.SessionManager"
+  - "--talk-name=org.gnome.SessionManager.Presence"
+  - "--talk-name=com.canonical.Unity.Session"
+  - "--talk-name=org.kde.StatusNotifierWatcher"
+  - "--own-name=org.kde.StatusNotifierItem-2-1"
+  - "--own-name=org.kde.StatusNotifierItem-2-2"
+  - "--own-name=org.kde.StatusNotifierItem-3-2"
+  - "--share=network"
+  - "--device=all"
+  - "--filesystem=/tmp"
+  - "--socket=ssh-auth"
+  - "--filesystem=host"
+  - "--filesystem=xdg-run/gvfs"
+  - "--talk-name=org.gtk.vfs"
+  - "--talk-name=org.gtk.vfs.*"
+modules:
+  - name: libyubikey
+    sources:
+      - type: archive
+        url: "https://github.com/Yubico/yubico-c/archive/refs/tags/libyubikey-1.13.tar.gz"
+        sha256: dd046c83e67560206b0b3301ee8053922b516e3975b895804582eb8d7bdd1d79
+      - type: shell
+        commands:
+          - "autoreconf --install"
+    buildsystem: autotools
+    build-commands:
+      - "./configure"
+  - name: libsodium
+    sources:
+      - type: git
+        url: "https://github.com/jedisct1/libsodium.git"
+        commit: bfcfa87f2d211bc072a56b203015122f7678bf04
+    buildsystem: autotools
+    post-install:
+      - "install -Dm644 LICENSE ${FLATPAK_DEST}/share/licenses/libsodium/LICENSE"
+  - name: libargon2
+    sources:
+      - type: archive
+        url: "https://github.com/P-H-C/phc-winner-argon2/archive/20190702.tar.gz"
+        sha256: daf972a89577f8772602bf2eb38b6a3dd3d922bf5724d45e7f9589b5e830442c
+        x-checker-data:
+          type: anitya
+    buildsystem: simple
+    build-commands:
+      - "PREFIX=${FLATPAK_DEST} LIBRARY_REL=lib make -j$FLATPAK_BUILDER_N_JOBS"
+      - "PREFIX=${FLATPAK_DEST} LIBRARY_REL=lib make install"
+    post-install:
+      - "install -Dm644 LICENSE ${FLATPAK_DEST}/share/licenses/libargon2/LICENSE"
+  - name: keepassxc
+    sources:
+      - type: git
+        path: "./"
+    config-opts:
+      - "-DCMAKE_BUILD_TYPE=Release"
+      - "-DKEEPASSXC_DIST_TYPE=Flatpak"
+      - "-DKEEPASSXC_BUILD_TYPE=Release"
+      - "-DCMAKE_INSTALL_LIBDIR=lib"
+      - "-DWITH_XC_UPDATECHECK=OFF"
+      - "-DWITH_XC_AUTOTYPE=ON"
+      - "-DWITH_XC_NETWORKING=ON"
+      - "-DWITH_XC_BROWSER=ON"
+      - "-DWITH_XC_YUBIKEY=ON"
+      - "-DWITH_XC_SSHAGENT=ON"
+      - "-DWITH_XC_KEESHARE=ON"
+      - "-DWITH_XC_FDOSECRETS=OFF"
+    buildsystem: cmake
+    build-options:
+      arch: {}
+    post-install:
+      - install -Dm755 ./utils/flatpak-command-wrapper.sh /app/bin/keepassxc-wrapper
+      - "for f in COPYING LICENSE*; do\n  install -Dm644 $f /app/share/licenses/org.keepassxc.KeePassXC/$f\ndone\n"
+    cleanup:
+      - /share/man
+    modules:
+      - shared-modules/libusb/libusb.json
+      - name: libyubikey
+        sources:
+          - type: git
+            url: "https://github.com/Yubico/yubico-c.git"
+            commit: 0b4f3909416a5a5c4d5bbf5104682218fe3c7218
+            tag: libyubikey-1.13
+          - type: script
+            commands:
+              - autoreconf --install
+            dest-filename: autogen.sh
+          - type: patch
+            path: patch/yubikey-c/0001-Add-configure-option-to-disable-documentation.patch
+        config-opts:
+          - "--disable-documentation"
+        post-install:
+          - install -Dm644 -t /app/share/licenses/libyubikey COPYING
+        cleanup:
+          - /bin
+      - name: libykpers-1
+        sources:
+          - type: git
+            url: "https://github.com/Yubico/yubikey-personalization.git"
+            commit: 8dfad10ecea2ddf6e099b8c5e5392c5964821eaa
+            tag: v1.20.0
+          - type: script
+            commands:
+              - autoreconf --install
+            dest-filename: autogen.sh
+          - type: patch
+            path: patch/libykpers-1/0001-Add-configure-option-to-disable-documentation.patch
+          - type: patch
+            path: patch/libykpers-1/0002-make-header-declarations-extern.patch
+        config-opts:
+          - "--disable-documentation"
+        post-install:
+          - install -Dm644 -t /app/share/licenses/libykpers-1 COPYING
+        cleanup:
+          - /bin
+      - name: libsodium
+        sources:
+          - type: git
+            url: "https://github.com/jedisct1/libsodium.git"
+            commit: 940ef42797baa0278df6b7fd9e67c7590f87744b
+            tag: 1.0.18-RELEASE
+        post-install:
+          - install -Dm644 -t /app/share/licenses/libsodium LICENSE
+      - name: libargon2
+        sources:
+          - type: git
+            url: "https://github.com/P-H-C/phc-winner-argon2.git"
+            commit: 62358ba2123abd17fccf2a108a301d4b52c01a7c
+            tag: "20190702"
+        make-args:
+          - PREFIX=/app
+          - OPTTARGET=none
+          - LIBRARY_REL=lib
+        make-install-args:
+          - PREFIX=/app
+          - OPTTARGET=none
+          - LIBRARY_REL=lib
+        no-autogen: true
+        post-install:
+          - install -Dm644 -t /app/share/licenses/libargon2 LICENSE
+        cleanup:
+          - /bin
+      - name: libqrencode
+        sources:
+          - type: archive
+            url: "https://fukuchi.org/works/qrencode/qrencode-4.1.1.tar.gz"
+            sha512: 209bb656ae3f391b03c7b3ceb03e34f7320b0105babf48b619e7a299528b8828449e0e7696f0b5db0d99170a81709d0518e34835229a748701e7df784e58a9ce
+        config-opts:
+          - "-DWITH_TOOLS=NO"
+          - "-DBUILD_SHARED_LIBS=YES"
+        buildsystem: cmake-ninja
+        post-install:
+          - install -Dm644 -t /app/share/licenses/libqrencode COPYING
+        cleanup:
+          - /share/man
+      - name: libquazip
+        sources:
+          - type: git
+            url: "https://github.com/stachenov/quazip.git"
+            commit: 100578f686b7da029a19c0bc9ad3c93f80adb2bb
+            tag: v1.1
+        config-opts:
+          - "-DCMAKE_CXX_FLAGS=$CFLAGS -fPIC"
+        buildsystem: cmake-ninja
+        post-install:
+          - install -Dm644 -t /app/share/licenses/libquazip COPYING
+      - name: asciidoctor
+        sources:
+          - type: file
+            url: "https://rubygems.org/downloads/asciidoctor-2.0.10.gem"
+            sha256: 7f3df92816f75344d36bb15e49a6fbc07ac0999a1cd2938fd0802ea587964aac
+        buildsystem: simple
+        build-commands:
+          - gem install --ignore-dependencies --no-user-install --verbose --local --install-dir /app/lib/ruby/gems/2.6.0 --bindir /app/bin asciidoctor-2.0.10.gem
+        cleanup:
+          - "*"
