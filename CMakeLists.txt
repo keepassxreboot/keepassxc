@@ -24,6 +24,9 @@ if(NOT CMAKE_BUILD_TYPE)
             FORCE)
 endif()
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug" OR CMAKE_BUILD_TYPE_LOWER STREQUAL "relwithdebinfo")
+    set(IS_DEBUG_BUILD TRUE)
+endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -313,6 +316,7 @@ endif()
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 check_add_gcc_compiler_flag("-fsized-deallocation" CXX)
 
@@ -327,13 +331,18 @@ else()
     add_gcc_compiler_cxxflags("-Wno-deprecated-declarations")
 endif()
 
+# MSVC specific options
 if (MSVC)
-    if(MSVC_VERSION LESS 1910)
+    if(MSVC_TOOLSET_VERSION LESS 141)
         message(FATAL_ERROR "Only Microsoft Visual Studio 17 and newer are supported!")
     endif()
-    set(CMAKE_CXX_STANDARD 17)
-    set(CMAKE_CXX_STANDARD_REQUIRED ON)
     add_compile_options(/permissive- /utf-8)
+    if(IS_DEBUG_BUILD)
+        add_compile_options(/Zf)
+        if(MSVC_TOOLSET_VERSION GREATER 141)
+            add_compile_definitions(/fsanitize=address)
+        endif()
+    endif()
 endif()
 
 if(WIN32)
@@ -342,12 +351,11 @@ if(WIN32)
     if(MINGW)
         set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
     endif()
-    if(NOT (CMAKE_BUILD_TYPE_LOWER STREQUAL "debug" OR CMAKE_BUILD_TYPE_LOWER STREQUAL "relwithdebinfo"))
-        # Enable DEP, ASLR and on VS additional enable
-        # control flow guard and buffer security check
+    if(NOT IS_DEBUG_BUILD)
         if(MSVC)
-            add_compile_options(/DYNAMICBASE:YES /guard:cf /GS)
-            add_link_options(/NXCOMPAT /guard:cf)
+            # By default MSVC enables NXCOMPAT
+            add_compile_options(/guard:cf)
+            add_link_options(/DYNAMICBASE /HIGHENTROPYVA /GUARD:CF)
         else(MINGW)
             set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
             set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
