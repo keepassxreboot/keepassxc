@@ -39,6 +39,7 @@ public:
     static const QCommandLineOption ExcludeCharsOption;
     static const QCommandLineOption ExcludeSimilarCharsOption;
     static const QCommandLineOption IncludeEveryGroupOption;
+    static const QCommandLineOption CustomCharacterSetOption;
 };
 
 #endif // KEEPASSXC_GENERATE_H

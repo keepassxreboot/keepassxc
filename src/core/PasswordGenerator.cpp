@@ -20,49 +20,41 @@
 
 #include "crypto/Random.h"
 
-const char* PasswordGenerator::DefaultAdditionalChars = "";
+const int PasswordGenerator::DefaultLength = 32;
+const char* PasswordGenerator::DefaultCustomCharacterSet = "";
 const char* PasswordGenerator::DefaultExcludedChars = "";
 
 PasswordGenerator::PasswordGenerator()
-    : m_length(0)
-    , m_classes(nullptr)
-    , m_flags(nullptr)
-    , m_additional(PasswordGenerator::DefaultAdditionalChars)
+    : m_length(PasswordGenerator::DefaultLength)
+    , m_classes(PasswordGenerator::CharClass::DefaultCharset)
+    , m_flags(PasswordGenerator::GeneratorFlag::DefaultFlags)
+    , m_custom(PasswordGenerator::DefaultCustomCharacterSet)
     , m_excluded(PasswordGenerator::DefaultExcludedChars)
 {
 }
 
 void PasswordGenerator::setLength(int length)
 {
-    if (length <= 0) {
-        m_length = DefaultLength;
-        return;
-    }
     m_length = length;
 }
 
-void PasswordGenerator::setCharClasses(const CharClasses& classes)
+void PasswordGenerator::setCharClasses(const PasswordGenerator::CharClasses& classes)
 {
-    if (classes == 0) {
-        m_classes = DefaultCharset;
-        return;
-    }
     m_classes = classes;
+}
+
+void PasswordGenerator::setCustomCharacterSet(const QString& customCharacterSet)
+{
+    m_custom = customCharacterSet;
+}
+void PasswordGenerator::setExcludedCharacterSet(const QString& excludedCharacterSet)
+{
+    m_excluded = excludedCharacterSet;
 }
 
 void PasswordGenerator::setFlags(const GeneratorFlags& flags)
 {
     m_flags = flags;
-}
-
-void PasswordGenerator::setAdditionalChars(const QString& chars)
-{
-    m_additional = chars;
-}
-
-void PasswordGenerator::setExcludedChars(const QString& chars)
-{
-    m_excluded = chars;
 }
 
 QString PasswordGenerator::generatePassword() const
@@ -114,9 +106,9 @@ QString PasswordGenerator::generatePassword() const
 
 bool PasswordGenerator::isValid() const
 {
-    if (m_classes == 0 && m_additional.isEmpty()) {
+    if (m_classes == CharClass::NoClass && m_custom.isEmpty()) {
         return false;
-    } else if (m_length == 0) {
+    } else if (m_length <= 0) {
         return false;
     }
 
@@ -266,10 +258,10 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
 
         passwordGroups.append(group);
     }
-    if (!m_additional.isEmpty()) {
+    if (!m_custom.isEmpty()) {
         PasswordGroup group;
 
-        for (auto ch : m_additional) {
+        for (auto ch : m_custom) {
             group.append(ch);
         }
 
@@ -302,38 +294,43 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
 
 int PasswordGenerator::numCharClasses() const
 {
-    int numClasses = 0;
+    // Actually compute the non empty password groups
+    auto non_empty_groups = passwordGroups();
+    return non_empty_groups.size();
+}
 
-    if (m_classes & LowerLetters) {
-        numClasses++;
+int PasswordGenerator::getMinLength() const
+{
+    if ((m_flags & CharFromEveryGroup)) {
+        return numCharClasses();
     }
-    if (m_classes & UpperLetters) {
-        numClasses++;
-    }
-    if (m_classes & Numbers) {
-        numClasses++;
-    }
-    if (m_classes & Braces) {
-        numClasses++;
-    }
-    if (m_classes & Punctuation) {
-        numClasses++;
-    }
-    if (m_classes & Quotes) {
-        numClasses++;
-    }
-    if (m_classes & Dashes) {
-        numClasses++;
-    }
-    if (m_classes & Math) {
-        numClasses++;
-    }
-    if (m_classes & Logograms) {
-        numClasses++;
-    }
-    if (m_classes & EASCII) {
-        numClasses++;
-    }
-
-    return numClasses;
+    return 1;
+}
+void PasswordGenerator::reset()
+{
+    m_classes = CharClass::DefaultCharset;
+    m_flags = GeneratorFlag::DefaultFlags;
+    m_custom = DefaultCustomCharacterSet;
+    m_excluded = DefaultExcludedChars;
+    m_length = DefaultLength;
+}
+int PasswordGenerator::getLength() const
+{
+    return m_length;
+}
+const PasswordGenerator::GeneratorFlags& PasswordGenerator::getFlags() const
+{
+    return m_flags;
+}
+const PasswordGenerator::CharClasses& PasswordGenerator::getActiveClasses() const
+{
+    return m_classes;
+}
+const QString& PasswordGenerator::getCustomCharacterSet() const
+{
+    return m_custom;
+}
+const QString& PasswordGenerator::getExcludedCharacterSet() const
+{
+    return m_excluded;
 }
