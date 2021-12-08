@@ -24,6 +24,7 @@
 #include <QDesktopServices>
 #include <QHostInfo>
 #include <QKeyEvent>
+#include <QPlainTextEdit>
 #include <QProcess>
 #include <QSplitter>
 #include <QTextEdit>
@@ -591,11 +592,26 @@ void DatabaseWidget::copyUsername()
 
 void DatabaseWidget::copyPassword()
 {
-    // QTextEdit does not properly trap Ctrl+C copy shortcut
-    // if a text edit has focus pass the copy operation to it
+    // Some platforms do not properly trap Ctrl+C copy shortcut
+    // if a text edit or label has focus pass the copy operation to it
+
+    bool clearClipboard = config()->get(Config::Security_ClearClipboard).toBool();
+
+    auto plainTextEdit = qobject_cast<QPlainTextEdit*>(focusWidget());
+    if (plainTextEdit) {
+        clipboard()->setText(plainTextEdit->textCursor().selectedText(), clearClipboard);
+        return;
+    }
+
+    auto label = qobject_cast<QLabel*>(focusWidget());
+    if (label) {
+        clipboard()->setText(label->selectedText(), clearClipboard);
+        return;
+    }
+
     auto textEdit = qobject_cast<QTextEdit*>(focusWidget());
     if (textEdit) {
-        textEdit->copy();
+        clipboard()->setText(textEdit->textCursor().selectedText(), clearClipboard);
         return;
     }
 
