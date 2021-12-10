@@ -20,6 +20,7 @@
 #include "core/Config.h"
 #include "crypto/Crypto.h"
 #include "sshagent/KeeAgentSettings.h"
+#include "sshagent/OpenSSHKeyGen.h"
 #include "sshagent/SSHAgent.h"
 
 #include <QTest>
@@ -222,6 +223,66 @@ void TestSSHAgent::testToOpenSSHKey()
     settings.toOpenSSHKey("username", "correctpassphrase", QString(), nullptr, key, false);
 
     QVERIFY(!key.publicKey().isEmpty());
+}
+
+void TestSSHAgent::testKeyGenRSA()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+
+    QVERIFY(agent.isAgentRunning());
+
+    OpenSSHKey key;
+    KeeAgentSettings settings;
+    bool keyInAgent;
+
+    QVERIFY(OpenSSHKeyGen::generateRSA(key, 2048));
+
+    QVERIFY(agent.addIdentity(key, settings, m_uuid));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+    QVERIFY(agent.removeIdentity(key));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
+}
+
+void TestSSHAgent::testKeyGenECDSA()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+
+    QVERIFY(agent.isAgentRunning());
+
+    OpenSSHKey key;
+    KeeAgentSettings settings;
+    bool keyInAgent;
+
+    QVERIFY(OpenSSHKeyGen::generateECDSA(key, 256));
+
+    QVERIFY(agent.addIdentity(key, settings, m_uuid));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+    QVERIFY(agent.removeIdentity(key));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
+}
+
+void TestSSHAgent::testKeyGenEd25519()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+
+    QVERIFY(agent.isAgentRunning());
+
+    OpenSSHKey key;
+    KeeAgentSettings settings;
+    bool keyInAgent;
+
+    QVERIFY(OpenSSHKeyGen::generateEd25519(key));
+
+    QVERIFY(agent.addIdentity(key, settings, m_uuid));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+    QVERIFY(agent.removeIdentity(key));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
 }
 
 void TestSSHAgent::cleanupTestCase()
