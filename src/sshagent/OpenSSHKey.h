@@ -41,9 +41,11 @@ public:
     const QString fingerprint(QCryptographicHash::Algorithm algo = QCryptographicHash::Sha256) const;
     const QString comment() const;
     const QString publicKey() const;
+    const QString privateKey();
     const QString errorString() const;
 
     void setType(const QString& type);
+    void setCheck(quint32 check);
     void setPublicData(const QByteArray& data);
     void setPrivateData(const QByteArray& data);
     void setComment(const QString& comment);
@@ -70,6 +72,7 @@ private:
 
     bool extractPEM(const QByteArray& in, QByteArray& out);
 
+    quint32 m_check;
     QString m_type;
     QString m_cipherName;
     QByteArray m_cipherIV;

@@ -41,6 +41,7 @@
 #include "core/TimeDelta.h"
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
+#include "sshagent/OpenSSHKeyGenDialog.h"
 #include "sshagent/SSHAgent.h"
 #endif
 #ifdef WITH_XC_BROWSER
@@ -535,6 +536,7 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
 #ifdef WITH_XC_SSHAGENT
 void EditEntryWidget::setupSSHAgent()
 {
+    m_pendingPrivateKey = "";
     m_sshAgentUi->setupUi(m_sshAgentWidget);
 
     QFont fixedFont = Font::fixedFont();
@@ -555,6 +557,7 @@ void EditEntryWidget::setupSSHAgent()
     connect(m_sshAgentUi->removeFromAgentButton, &QPushButton::clicked, this, &EditEntryWidget::removeKeyFromAgent);
     connect(m_sshAgentUi->decryptButton, &QPushButton::clicked, this, &EditEntryWidget::decryptPrivateKey);
     connect(m_sshAgentUi->copyToClipboardButton, &QPushButton::clicked, this, &EditEntryWidget::copyPublicKey);
+    connect(m_sshAgentUi->generateButton, &QPushButton::clicked, this, &EditEntryWidget::generatePrivateKey);
 
     connect(m_attachments.data(), &EntryAttachments::modified,
             this, &EditEntryWidget::updateSSHAgentAttachments);
@@ -581,6 +584,12 @@ void EditEntryWidget::updateSSHAgent()
     m_sshAgentSettings.reset();
     m_sshAgentSettings.fromEntry(m_entry);
     setSSHAgentSettings();
+
+    if (!m_pendingPrivateKey.isEmpty()) {
+        m_sshAgentSettings.setAttachmentName(m_pendingPrivateKey);
+        m_sshAgentSettings.setSelectedType("attachment");
+        m_pendingPrivateKey = "";
+    }
 
     updateSSHAgentAttachments();
 }
@@ -783,6 +792,38 @@ void EditEntryWidget::decryptPrivateKey()
 void EditEntryWidget::copyPublicKey()
 {
     clipboard()->setText(m_sshAgentUi->publicKeyEdit->document()->toPlainText());
+}
+
+void EditEntryWidget::generatePrivateKey()
+{
+    auto dialog = new OpenSSHKeyGenDialog(this);
+
+    OpenSSHKey key;
+    dialog->setKey(&key);
+
+    if (dialog->exec()) {
+        // derive openssh naming from type
+        QString keyPrefix = key.type();
+        if (keyPrefix.startsWith("ecdsa")) {
+            keyPrefix = "id_ecdsa";
+        } else {
+            keyPrefix.replace("ssh-", "id_");
+        }
+
+        for (int i = 0; i < 10; i++) {
+            QString keyName = keyPrefix;
+
+            if (i > 0) {
+                keyName += "." + QString::number(i);
+            }
+
+            if (!m_entry->attachments()->hasKey(keyName)) {
+                m_pendingPrivateKey = keyName;
+                m_entry->attachments()->set(m_pendingPrivateKey, key.privateKey().toUtf8());
+                break;
+            }
+        }
+    }
 }
 #endif
 
