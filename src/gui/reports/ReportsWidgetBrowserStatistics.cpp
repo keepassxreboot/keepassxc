@@ -126,7 +126,7 @@ void ReportsWidgetBrowserStatistics::addStatisticsRow(bool hasUrls,
                                                       bool hasSettings,
                                                       Group* group,
                                                       Entry* entry,
-                                                      bool knownBad)
+                                                      bool excluded)
 {
     StateColorPalette statePalette;
 
@@ -141,23 +141,23 @@ void ReportsWidgetBrowserStatistics::addStatisticsRow(bool hasUrls,
     auto deniedUrlsToolTip = hasSettings ? tr("Denied URLs") : tr("Entry has no Browser Integration settings");
 
     auto title = entry->title();
-    if (knownBad) {
+    if (excluded) {
         title.append(tr(" (Excluded)"));
     }
 
     auto row = QList<QStandardItem*>();
+    row << new QStandardItem(Icons::entryIconPixmap(entry), title);
+    row << new QStandardItem(Icons::groupIconPixmap(group), group->hierarchy().join("/"));
     row << new QStandardItem(urlList.join('\n'));
     row << new QStandardItem(allowedUrlsList.join('\n'));
     row << new QStandardItem(deniedUrlsList.join('\n'));
-    row << new QStandardItem(Icons::entryIconPixmap(entry), title);
-    row << new QStandardItem(Icons::groupIconPixmap(group), group->hierarchy().join("/"));
 
     // Set tooltips
-    row[0]->setToolTip(urlToolTip);
-    row[1]->setToolTip(allowedUrlsToolTip);
-    row[2]->setToolTip(deniedUrlsToolTip);
-    if (knownBad) {
-        row[3]->setToolTip(tr("This entry is being excluded from reports"));
+    row[2]->setToolTip(urlToolTip);
+    row[3]->setToolTip(allowedUrlsToolTip);
+    row[4]->setToolTip(deniedUrlsToolTip);
+    if (excluded) {
+        row[0]->setToolTip(tr("This entry is being excluded from reports"));
     }
 
     // Store entry pointer per table row (used in double click handler)
@@ -229,9 +229,9 @@ void ReportsWidgetBrowserStatistics::calculateBrowserStatistics()
         m_referencesModel->setHorizontalHeaderLabels(
             QStringList() << tr("No entries with a URL, or none has browser extension settings saved."));
     } else {
-        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("URLs") << tr("Allowed URLs")
-                                                                   << tr("Denied URLs") << tr("Title") << tr("Path"));
-        m_ui->browserStatisticsTableView->sortByColumn(3, Qt::AscendingOrder);
+        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Title") << tr("Path") << tr("URLs")
+                                                                   << tr("Allowed URLs") << tr("Denied URLs"));
+        m_ui->browserStatisticsTableView->sortByColumn(0, Qt::AscendingOrder);
     }
 
     m_ui->browserStatisticsTableView->resizeColumnsToContents();

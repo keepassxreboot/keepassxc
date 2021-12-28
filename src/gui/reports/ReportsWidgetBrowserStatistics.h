@@ -56,7 +56,7 @@ public slots:
     void deleteSelectedEntries();
 
 private:
-    void addStatisticsRow(bool hasUrls, bool hasSettings, Group*, Entry*, bool knownBad);
+    void addStatisticsRow(bool hasUrls, bool hasSettings, Group*, Entry*, bool);
     QMap<QString, QStringList> getBrowserConfigFromEntry(Entry* entry) const;
 
     QScopedPointer<Ui::ReportsWidgetBrowserStatistics> m_ui;

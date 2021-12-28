@@ -70,12 +70,12 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     m_ui->setupUi(this);
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    addPage(m_healthPage);
-    addPage(m_hibpPage);
     addPage(m_statPage);
 #ifdef WITH_XC_BROWSER
     addPage(m_browserStatPage);
 #endif
+    addPage(m_healthPage);
+    addPage(m_hibpPage);
 
     m_ui->stackedWidget->setCurrentIndex(0);
 
