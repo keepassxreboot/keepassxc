@@ -51,7 +51,10 @@
 #include "gui/group/GroupView.h"
 #include "gui/reports/ReportsDialog.h"
 #include "gui/tag/TagModel.h"
+
+#if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
+#endif
 
 #ifdef WITH_XC_NETWORKING
 #include "gui/IconDownloaderDialog.h"

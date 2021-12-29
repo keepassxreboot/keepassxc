@@ -25,7 +25,10 @@
 #include "core/Tools.h"
 #include "gui/DatabaseIcons.h"
 #include "gui/Icons.h"
+
+#if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
+#endif
 
 GroupModel::GroupModel(Database* db, QObject* parent)
     : QAbstractItemModel(parent)
