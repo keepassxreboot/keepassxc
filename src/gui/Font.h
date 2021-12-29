@@ -20,16 +20,19 @@
 
 class QFont;
 
-class Font
+namespace UIUtils
 {
-public:
-    static QFont defaultFont();
-    static QFont fixedFont();
-
-private:
-    Font()
+    class Font
     {
-    }
-};
+    public:
+        static QFont defaultFont();
+        static QFont fixedFont();
+
+    private:
+        Font()
+        {
+        }
+    };
+}
 
 #endif // KEEPASSX_FONT_H

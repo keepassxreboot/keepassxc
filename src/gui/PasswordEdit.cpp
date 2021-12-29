@@ -45,7 +45,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     setEchoMode(QLineEdit::Password);
 
     // use a monospace font for the password field
-    QFont passwordFont = Font::fixedFont();
+    QFont passwordFont = UIUtils::Font::fixedFont();
     passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
     setFont(passwordFont);
 

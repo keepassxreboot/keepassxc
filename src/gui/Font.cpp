@@ -20,27 +20,31 @@
 #include <QFontDatabase>
 #include <QGuiApplication>
 
-QFont Font::defaultFont()
+namespace UIUtils
 {
-    return qApp->font();
-}
 
-QFont Font::fixedFont()
-{
-    auto fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+    QFont Font::defaultFont()
+    {
+        return qApp->font();
+    }
+
+    QFont Font::fixedFont()
+    {
+        auto fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 
 #ifdef Q_OS_WIN
-    // try to use Consolas on Windows, because the default Courier New has too many similar characters
-    auto consolasFont = QFontDatabase().font("Consolas", fixedFont.styleName(), fixedFont.pointSize());
-    if (consolasFont.family().contains("consolas", Qt::CaseInsensitive)) {
-        fixedFont = consolasFont;
-    }
+        // try to use Consolas on Windows, because the default Courier New has too many similar characters
+        auto consolasFont = QFontDatabase().font("Consolas", fixedFont.styleName(), fixedFont.pointSize());
+        if (consolasFont.family().contains("consolas", Qt::CaseInsensitive)) {
+            fixedFont = consolasFont;
+        }
 #endif
 #ifdef Q_OS_MACOS
-    // Qt doesn't choose a monospace font correctly on macOS
-    fixedFont = QFontDatabase().font("Menlo", fixedFont.styleName(), fixedFont.pointSize());
+        // Qt doesn't choose a monospace font correctly on macOS
+        fixedFont = QFontDatabase().font("Menlo", fixedFont.styleName(), fixedFont.pointSize());
 #endif
 
-    fixedFont.setPointSize(qApp->font().pointSize());
-    return fixedFont;
+        fixedFont.setPointSize(qApp->font().pointSize());
+        return fixedFont;
+    }
 }

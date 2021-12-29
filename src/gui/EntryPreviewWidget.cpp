@@ -201,7 +201,7 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
     if (state) {
         m_ui->entryPasswordLabel->setText(password);
         m_ui->entryPasswordLabel->setCursorPosition(0);
-        m_ui->entryPasswordLabel->setFont(Font::fixedFont());
+        m_ui->entryPasswordLabel->setFont(UIUtils::Font::fixedFont());
     } else if (password.isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
         m_ui->entryPasswordLabel->setText("");
     } else {
@@ -263,9 +263,9 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     m_ui->toggleEntryNotesButton->setChecked(false);
 
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
-        m_ui->entryNotesTextEdit->setFont(Font::fixedFont());
+        m_ui->entryNotesTextEdit->setFont(UIUtils::Font::fixedFont());
     } else {
-        m_ui->entryNotesTextEdit->setFont(Font::defaultFont());
+        m_ui->entryNotesTextEdit->setFont(UIUtils::Font::defaultFont());
     }
 
     m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
@@ -406,9 +406,9 @@ void EntryPreviewWidget::updateGroupGeneralTab()
     }
 
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
-        m_ui->groupNotesTextEdit->setFont(Font::fixedFont());
+        m_ui->groupNotesTextEdit->setFont(UIUtils::Font::fixedFont());
     } else {
-        m_ui->groupNotesTextEdit->setFont(Font::defaultFont());
+        m_ui->groupNotesTextEdit->setFont(UIUtils::Font::defaultFont());
     }
 }
 

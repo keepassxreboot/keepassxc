@@ -539,7 +539,7 @@ void EditEntryWidget::setupSSHAgent()
 {
     m_sshAgentUi->setupUi(m_sshAgentWidget);
 
-    QFont fixedFont = Font::fixedFont();
+    QFont fixedFont = UIUtils::Font::fixedFont();
     m_sshAgentUi->fingerprintTextLabel->setFont(fixedFont);
     m_sshAgentUi->commentTextLabel->setFont(fixedFont);
     m_sshAgentUi->publicKeyEdit->setFont(fixedFont);
@@ -864,9 +864,9 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->notesEdit->setVisible(!config()->get(Config::Security_HideNotes).toBool());
     m_mainUi->notesHint->setVisible(config()->get(Config::Security_HideNotes).toBool());
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
-        m_mainUi->notesEdit->setFont(Font::fixedFont());
+        m_mainUi->notesEdit->setFont(UIUtils::Font::fixedFont());
     } else {
-        m_mainUi->notesEdit->setFont(Font::defaultFont());
+        m_mainUi->notesEdit->setFont(UIUtils::Font::defaultFont());
     }
 
     m_advancedUi->attachmentsWidget->setReadOnly(m_history);

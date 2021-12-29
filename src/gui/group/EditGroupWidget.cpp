@@ -197,9 +197,9 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     m_mainUi->autoTypeSequenceCustomEdit->setText(group->effectiveAutoTypeSequence());
 
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
-        m_mainUi->editNotes->setFont(Font::fixedFont());
+        m_mainUi->editNotes->setFont(UIUtils::Font::fixedFont());
     } else {
-        m_mainUi->editNotes->setFont(Font::defaultFont());
+        m_mainUi->editNotes->setFont(UIUtils::Font::defaultFont());
     }
 
     IconStruct iconStruct;
