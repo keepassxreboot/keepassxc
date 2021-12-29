@@ -59,6 +59,10 @@ target_link_libraries(keepassxc-cli
         cli
         keepassx_core)
 
+if(ENABLE_UNITY_BUILDS)
+    set_target_properties(keepassxc-cli PROPERTIES UNITY_BUILDS ON)
+endif()
+
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)

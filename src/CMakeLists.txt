@@ -237,6 +237,7 @@ endif()
 if(APPLE)
     add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
 endif()
+add_feature_info(UnityBuilds ENABLE_UNITY_BUILD "Enable unity build")
 
 add_subdirectory(browser)
 add_subdirectory(proxy)
@@ -339,8 +340,22 @@ target_link_libraries(keepassx_core
         ${thirdparty_LIBRARIES}
 	)
 
+
+if(ENABLE_UNITY_BUILDS)
+    set_target_properties(keepassx_core PROPERTIES UNITY_BUILD on)
+    set_source_files_properties(core/Tools.cpp gui/styles/base/BaseStyle.cpp gui/reports/ReportsWidgetHealthcheck.cpp gui/reports/ReportsWidgetHibp.cpp gui/Font.cpp gui/osutils/nixutils/NixUtils.cpp gui/osutils/nixutils/X11Funcs.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
+
+    set_target_properties(autotype PROPERTIES UNITY_BUILD on)
+    set_target_properties(${keepassxcbrowser_LIB} PROPERTIES UNITY_BUILD ON)
+    set_target_properties(${qrcode_LIB} PROPERTIES UNITY_BUILD on)
+    set_target_properties(${fdosecrets_LIB} PROPERTIES UNITY_BUILD on)
+endif()
+
 if(WITH_XC_SSHAGENT)
   target_link_libraries(keepassx_core sshagent)
+  if(ENABLE_UNITY_BUILDS)
+      set_target_properties(sshagent PROPERTIES UNITY_BUILD ON)
+  endif()
 endif()
 if(WITH_XC_KEESHARE)
   target_link_libraries(keepassx_core keeshare)
