@@ -296,27 +296,35 @@ namespace Tools
         return true;
     }
 
-    // Escape common regex symbols except for *, ?, and |
-    auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");
+    // Escape regex symbols
+    auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#|*?]))re");
 
-    QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool exactMatch, bool caseSensitive)
+    QRegularExpression convertToRegex(const QString& string, int opts)
     {
         QString pattern = string;
 
         // Wildcard support (*, ?, |)
-        if (useWildcards) {
+        if (opts & RegexConvertOpts::WILDCARD_ALL || opts & RegexConvertOpts::ESCAPE_REGEX) {
             pattern.replace(regexEscape, "\\\\1");
-            pattern.replace("*", ".*");
-            pattern.replace("?", ".");
+
+            if (opts & RegexConvertOpts::WILDCARD_UNLIMITED_MATCH) {
+                pattern.replace("\\*", ".*");
+            }
+            if (opts & RegexConvertOpts::WILDCARD_SINGLE_MATCH) {
+                pattern.replace("\\?", ".");
+            }
+            if (opts & RegexConvertOpts::WILDCARD_LOGICAL_OR) {
+                pattern.replace("\\|", "|");
+            }
         }
 
         // Exact modifier
-        if (exactMatch) {
+        if (opts & RegexConvertOpts::EXACT_MATCH) {
             pattern = "^" + pattern + "$";
         }
 
         auto regex = QRegularExpression(pattern);
-        if (!caseSensitive) {
+        if ((opts & RegexConvertOpts::CASE_SENSITIVE) != RegexConvertOpts::CASE_SENSITIVE) {
             regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
         }
 
