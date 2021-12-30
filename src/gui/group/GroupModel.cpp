@@ -18,6 +18,7 @@
 #include "GroupModel.h"
 
 #include <QMimeData>
+#include <QFont>
 
 #include "core/Database.h"
 #include "core/Group.h"
