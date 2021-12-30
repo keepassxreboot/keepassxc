@@ -7731,6 +7731,10 @@ Please consider generating a new key file.</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Browser Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7764,6 +7768,88 @@ Please consider generating a new key file.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Internal zlib error: </translation>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetBrowserStatistics</name>
+    <message>
+        <source>Exclude expired entries from the report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show only entries which have URL set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show only entries which have browser settings in custom data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-click entries to edit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of entry URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entry has no URLs set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allowed URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entry has no Browser Integration settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Denied URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (Excluded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This entry is being excluded from reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please wait, browser statistics is being calculated…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No entries with a URL, or none has browser extension settings saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished">Title</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="unfinished">Path</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Exclude from reports</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
