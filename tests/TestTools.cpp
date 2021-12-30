@@ -19,6 +19,7 @@
 
 #include "core/Clock.h"
 
+#include <QRegularExpression>
 #include <QTest>
 #include <QUuid>
 
@@ -162,4 +163,38 @@ void TestTools::testBackupFilePatternSubstitution()
     QFETCH(QString, expectedSubstitution);
 
     QCOMPARE(Tools::substituteBackupFilePath(pattern, dbFilePath), expectedSubstitution);
+}
+
+void TestTools::testConvertToRegex()
+{
+    QFETCH(QString, input);
+    QFETCH(int, options);
+    QFETCH(QString, expected);
+
+    auto regex = Tools::convertToRegex(input, options).pattern();
+    QCOMPARE(regex, expected);
+}
+
+void TestTools::testConvertToRegex_data()
+{
+    const QString input = R"(te|st*t?[5]^(test);',.)";
+
+    QTest::addColumn<QString>("input");
+    QTest::addColumn<int>("options");
+    QTest::addColumn<QString>("expected");
+
+    QTest::newRow("No Options") << input << static_cast<int>(Tools::RegexConvertOpts::DEFAULT)
+                                << QString(R"(te|st*t?[5]^(test);',.)");
+    QTest::newRow("Exact Match") << input << static_cast<int>(Tools::RegexConvertOpts::EXACT_MATCH)
+                                 << QString(R"(^te|st*t?[5]^(test);',.$)");
+    QTest::newRow("Exact Match & Wildcard")
+        << input << static_cast<int>(Tools::RegexConvertOpts::EXACT_MATCH | Tools::RegexConvertOpts::WILDCARD_ALL)
+        << QString(R"(^te|st.*t.\[5\]\^\(test\);'\,\.$)");
+    QTest::newRow("Wildcard Single Match") << input << static_cast<int>(Tools::RegexConvertOpts::WILDCARD_SINGLE_MATCH)
+                                           << QString(R"(te\|st\*t.\[5\]\^\(test\);'\,\.)");
+    QTest::newRow("Wildcard OR") << input << static_cast<int>(Tools::RegexConvertOpts::WILDCARD_LOGICAL_OR)
+                                 << QString(R"(te|st\*t\?\[5\]\^\(test\);'\,\.)");
+    QTest::newRow("Wildcard Unlimited Match")
+        << input << static_cast<int>(Tools::RegexConvertOpts::WILDCARD_UNLIMITED_MATCH)
+        << QString(R"(te\|st.*t\?\[5\]\^\(test\);'\,\.)");
 }

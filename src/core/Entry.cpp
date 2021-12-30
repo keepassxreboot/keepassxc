@@ -281,7 +281,7 @@ QString Entry::effectiveAutoTypeSequence() const
 }
 
 /**
- * Retrive the autotype sequences matches for a given windowTitle
+ * Retrieve the Auto-Type sequences matches for a given windowTitle
  * This returns a list with priority ordering. If you don't want duplicates call .toSet() on it.
  */
 QList<QString> Entry::autoTypeSequences(const QString& windowTitle) const
@@ -295,13 +295,14 @@ QList<QString> Entry::autoTypeSequences(const QString& windowTitle) const
     auto windowMatches = [&](const QString& pattern) {
         // Regex searching
         if (pattern.startsWith("//") && pattern.endsWith("//") && pattern.size() >= 4) {
-            QRegExp regExp(pattern.mid(2, pattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
-            return (regExp.indexIn(windowTitle) != -1);
+            QRegularExpression regExp(pattern.mid(2, pattern.size() - 4), QRegularExpression::CaseInsensitiveOption);
+            return regExp.match(windowTitle).hasMatch();
         }
 
         // Wildcard searching
-        auto regex = Tools::convertToRegex(pattern, true, false, false);
-        return windowTitle.contains(regex);
+        const auto regExp = Tools::convertToRegex(
+            pattern, Tools::RegexConvertOpts::EXACT_MATCH | Tools::RegexConvertOpts::WILDCARD_UNLIMITED_MATCH);
+        return regExp.match(windowTitle).hasMatch();
     };
 
     auto windowMatchesTitle = [&](const QString& entryTitle) {

@@ -277,7 +277,14 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         auto mods = result.captured(1);
 
         // Convert term to regex
-        term.regex = Tools::convertToRegex(term.word, !mods.contains("*"), mods.contains("+"), m_caseSensitive);
+        int opts = m_caseSensitive ? Tools::RegexConvertOpts::CASE_SENSITIVE : Tools::RegexConvertOpts::DEFAULT;
+        if (!mods.contains("*")) {
+            opts |= Tools::RegexConvertOpts::WILDCARD_ALL;
+        }
+        if (mods.contains("+")) {
+            opts |= Tools::RegexConvertOpts::EXACT_MATCH;
+        }
+        term.regex = Tools::convertToRegex(term.word, opts);
 
         // Exclude modifier
         term.exclude = mods.contains("-") || mods.contains("!");
