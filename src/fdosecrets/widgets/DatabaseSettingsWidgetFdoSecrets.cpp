@@ -16,15 +16,28 @@
  */
 
 #include "DatabaseSettingsWidgetFdoSecrets.h"
+
+#include <QSortFilterProxyModel>
+#include <QAbstractItemModel>
+#include <QButtonGroup>
+#include <QGroupBox>
+#include <QItemSelectionModel>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QRadioButton>
+#include <QTreeView>
+#include <QUuid>
+#include <QtCore>
+#include <utility>
+
 #include "ui_DatabaseSettingsWidgetFdoSecrets.h"
-
 #include "fdosecrets/FdoSecretsSettings.h"
-
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/group/GroupModel.h"
-
-#include <QSortFilterProxyModel>
+#include "core/Database.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
 
 namespace
 {

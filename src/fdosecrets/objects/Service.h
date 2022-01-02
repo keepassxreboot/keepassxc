@@ -18,13 +18,27 @@
 #ifndef KEEPASSXC_FDOSECRETS_SERVICE_H
 #define KEEPASSXC_FDOSECRETS_SERVICE_H
 
+#include <QList>
+#include <QPointer>
+#include <QSet>
+#include <QVariantMap>
+#include <QSharedPointer>
+#include <QString>
+#include <QVariant>
+#include <QtCore>
+
+#include "fdosecrets/dbus/DBusConstants.h" // IWYU pragma: keep
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
+#include "dbus/DBusTypes.h"
 
 class DatabaseTabWidget;
 class DatabaseWidget;
-class Group;
 
+namespace FdoSecrets {
+class DBusMgr;
+}  // namespace FdoSecrets
+template <class T> class QSharedPointer;
 class FdoSecretsPlugin;
 
 namespace FdoSecrets

@@ -17,14 +17,29 @@
 
 #include "DBusMgr.h"
 
+#include <QCoreApplication>
+#include <QDBusConnectionInterface>
+#include <QDBusMessage>
+#include <QDBusReply>
+#include <QDBusVariant>
+#include <QFile>
+#include <QFileInfo>
+#include <QIODevice>
+#include <QSet>
+#include <QSharedPointer>
+#include <QStringList>
+#include <QUuid>
+
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
-
 #include "core/Entry.h"
 #include "core/Tools.h"
+#include "dbus/DBusClient.h"
+#include "dbus/DBusConstants.h"
+#include "dbus/DBusObject.h"
 
 namespace FdoSecrets
 {

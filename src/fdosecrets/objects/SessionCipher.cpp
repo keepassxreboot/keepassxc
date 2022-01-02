@@ -17,12 +17,17 @@
 
 #include "SessionCipher.h"
 
-#include "crypto/Random.h"
-#include "crypto/SymmetricCipher.h"
-
-#include <QDebug>
 #include <botan/dh.h>
 #include <botan/pk_ops.h>
+#include <QtCore/qglobal.h>
+#include <botan/dl_group.h>
+#include <botan/secmem.h>
+#include <QDebug>
+#include <exception>
+
+#include "crypto/Random.h"
+#include "crypto/SymmetricCipher.h"
+#include "dbus/DBusTypes.h"
 
 namespace FdoSecrets
 {

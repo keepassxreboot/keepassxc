@@ -18,9 +18,11 @@
 #include "DBusObject.h"
 
 #include <QUrl>
+#include <QByteArray>
 
 namespace FdoSecrets
 {
+class DBusMgr;
 
     DBusObject::DBusObject(DBusObject* parent)
         : QObject(parent)

@@ -18,13 +18,30 @@
 #ifndef KEEPASSXC_FDOSECRETS_PROMPT_H
 #define KEEPASSXC_FDOSECRETS_PROMPT_H
 
+#include <QDBusVariant>
+#include <QList>
+#include <QPointer>
+#include <QSet>
+#include <QVariantMap>
+#include <QWeakPointer>
+#include <QtCore>
+#include <utility>
+#include <QScopedPointer>
+#include <QString>
+#include <QVariant>
+
+#include "fdosecrets/dbus/DBusConstants.h" // IWYU pragma: keep
 #include "core/Global.h"
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
+#include "dbus/DBusTypes.h"
+
+namespace FdoSecrets {
+class Item;
+class Session;
+}  // namespace FdoSecrets
 
 class QWindow;
-
-class DatabaseWidget;
 class Entry;
 
 namespace FdoSecrets
@@ -100,6 +117,7 @@ namespace FdoSecrets
     signals:
         void completed(bool dismissed, const QVariant& result);
 
+
     protected:
         explicit PromptBase(Service* parent);
 
@@ -142,7 +160,6 @@ namespace FdoSecrets
         QString m_alias;
         Collection* m_coll{};
     };
-
     class LockCollectionsPrompt : public PromptBase
     {
         Q_OBJECT
@@ -157,7 +174,7 @@ namespace FdoSecrets
         QList<QDBusObjectPath> m_locked;
     };
 
-    class DBusClient;
+
     class UnlockPrompt : public PromptBase
     {
         Q_OBJECT
@@ -169,6 +186,7 @@ namespace FdoSecrets
         QVariant currentResult() const override;
 
         void collectionUnlockFinished(bool accepted);
+
         void itemUnlockFinished(const QHash<Entry*, AuthDecision>& results);
         void unlockItems();
 
@@ -185,6 +203,7 @@ namespace FdoSecrets
     };
 
     class Item;
+
     class DeleteItemPrompt : public PromptBase
     {
         Q_OBJECT

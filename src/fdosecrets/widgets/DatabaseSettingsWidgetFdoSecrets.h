@@ -21,6 +21,11 @@
 #include <QScopedPointer>
 #include <QSharedPointer>
 #include <QWidget>
+#include <QByteArrayData>
+#include <QString>
+
+class QObject;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {
@@ -28,6 +33,7 @@ namespace Ui
 }
 
 class Database;
+
 class DatabaseSettingsWidgetFdoSecrets : public QWidget
 {
     Q_OBJECT
@@ -41,12 +47,14 @@ public:
 private:
     void settingsWarning();
 
+
 private:
     QScopedPointer<Ui::DatabaseSettingsWidgetFdoSecrets> m_ui;
 
     QSharedPointer<Database> m_db;
 
     class GroupModelNoRecycle;
+
     QScopedPointer<GroupModelNoRecycle> m_model;
 };
 

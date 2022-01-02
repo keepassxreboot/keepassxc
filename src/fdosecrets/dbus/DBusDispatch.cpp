@@ -15,11 +15,40 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "fdosecrets/dbus/DBusObject.h"
-
+#include <QtCore/qglobal.h>
 #include <QDBusMetaType>
 #include <QThread>
-#include <QtDBus>
+#include <QByteArray>
+#include <QDBusArgument>
+#include <QDBusError>
+#include <QDBusMessage>
+#include <QDBusVariant>
+#include <QDebug>
+#include <QList>
+#include <QMetaClassInfo>
+#include <QMetaMethod>
+#include <QMetaObject>
+#include <QMetaType>
+#include <QPointer>
+#include <QSharedPointer>
+#include <QStaticStringData>
+#include <QString>
+#include <QStringLiteral>
+#include <QVarLengthArray>
+#include <QVariant>
+#include <QVariantList>
+#include <QVariantMap>
+#include <QVector>
+#include <QtCore>
+#include <QChar>
+
+#include "fdosecrets/dbus/DBusObject.h"
+#include "core/Global.h"
+#include "dbus/DBusClient.h"
+#include "dbus/DBusMgr.h"
+#include "dbus/DBusTypes.h"
+
+class QDBusConnection;
 
 namespace FdoSecrets
 {

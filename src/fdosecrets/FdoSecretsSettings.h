@@ -22,6 +22,7 @@
 #include <QUuid>
 
 class Database;
+template <class T> class QSharedPointer;
 
 namespace FdoSecrets
 {

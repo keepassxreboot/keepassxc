@@ -17,14 +17,26 @@
 
 #include "SettingsModels.h"
 
+#include <QtCore/qsharedpointer.h>
+#include <QFileInfo>
+#include <QCoreApplication>
+#include <QFont>
+#include <QIcon>
+#include <QMetaObject>
+#include <QModelIndex>
+#include <QPixmap>
+#include <QSharedPointer>
+#include <QStaticStringData>
+#include <QStringLiteral>
+
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusMgr.h"
-
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/Icons.h"
-
-#include <QFileInfo>
+#include "core/Database.h"
+#include "core/Group.h"
+#include "dbus/DBusClient.h"
 
 namespace FdoSecrets
 {

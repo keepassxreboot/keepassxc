@@ -18,7 +18,16 @@
 #ifndef KEEPASSXC_DATABASESETTINGSPAGEFDOSECRETS_H
 #define KEEPASSXC_DATABASESETTINGSPAGEFDOSECRETS_H
 
+#include <QIcon>
+#include <QSharedPointer>
+#include <QString>
+#include <QtGlobal>
+
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
+
+class Database;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class DatabaseSettingsPageFdoSecrets : public IDatabaseSettingsPage
 {

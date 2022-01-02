@@ -17,9 +17,15 @@
 
 #include "DatabaseSettingsPageFdoSecrets.h"
 
-#include "fdosecrets/widgets/DatabaseSettingsWidgetFdoSecrets.h"
+#include <QObject>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QWidget>
 
+#include "fdosecrets/widgets/DatabaseSettingsWidgetFdoSecrets.h"
 #include "gui/Icons.h"
+
+class Database;
 
 QString DatabaseSettingsPageFdoSecrets::name()
 {

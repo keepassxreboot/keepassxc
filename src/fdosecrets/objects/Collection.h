@@ -18,12 +18,20 @@
 #ifndef KEEPASSXC_FDOSECRETS_COLLECTION_H
 #define KEEPASSXC_FDOSECRETS_COLLECTION_H
 
-#include "fdosecrets/dbus/DBusClient.h"
+#include <QList>
+#include <QMap>
+#include <QPointer>
+#include <QSet>
+#include <QString>
+#include <QVariantMap>
+#include <QtCore>
+
+#include "fdosecrets/dbus/DBusConstants.h" // IWYU pragma: keep
 #include "fdosecrets/dbus/DBusObject.h"
-
 #include "core/EntrySearcher.h"
+#include "dbus/DBusTypes.h"
+#include "fdosecrets/dbus/DBusClient.h"
 
-class Database;
 class DatabaseWidget;
 class Entry;
 class Group;
@@ -33,6 +41,7 @@ namespace FdoSecrets
     class Item;
     class PromptBase;
     class Service;
+
     class Collection : public DBusObject
     {
         Q_OBJECT

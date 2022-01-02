@@ -18,13 +18,26 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSMGR_H
 #define KEEPASSXC_FDOSECRETS_DBUSMGR_H
 
-#include "fdosecrets/dbus/DBusClient.h"
-
+#include <QtCore/qglobal.h>
 #include <QDBusConnection>
 #include <QDBusServiceWatcher>
 #include <QDBusVirtualObject>
 #include <QDebug>
 #include <QtDBus>
+#include <QByteArray>
+#include <QList>
+#include <QStaticStringData>
+#include <QString>
+#include <QStringLiteral>
+#include <QPointer>
+#include <QVariant>
+#include <QVariantList>
+#include <QVector>
+#include <QtCore>
+#include <iosfwd>
+#include <utility>
+
+#include "fdosecrets/dbus/DBusClient.h"
 
 class TestFdoSecrets;
 

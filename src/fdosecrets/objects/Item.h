@@ -18,8 +18,19 @@
 #ifndef KEEPASSXC_FDOSECRETS_ITEM_H
 #define KEEPASSXC_FDOSECRETS_ITEM_H
 
+#include <QPointer>
+#include <QString>
+#include <QVariantMap>
+#include <QtCore>
+
+#include "fdosecrets/dbus/DBusConstants.h" // IWYU pragma: keep
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
+#include "dbus/DBusTypes.h"
+
+namespace FdoSecrets {
+class Service;
+}  // namespace FdoSecrets
 
 class Entry;
 
@@ -29,6 +40,7 @@ namespace FdoSecrets
     namespace ItemAttributes
     {
         constexpr const auto UuidKey = "Uuid";
+
         constexpr const auto PathKey = "Path";
         constexpr const auto TotpKey = "TOTP";
     } // namespace ItemAttributes

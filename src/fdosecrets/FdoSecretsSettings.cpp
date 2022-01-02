@@ -17,9 +17,14 @@
 
 #include "FdoSecretsSettings.h"
 
+#include <QVariant>
+
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
+#include "core/CustomData.h"
+
+template <class T> class QSharedPointer;
 
 namespace Keys
 {

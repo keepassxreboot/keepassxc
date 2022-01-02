@@ -18,12 +18,18 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSOBJECT_H
 #define KEEPASSXC_FDOSECRETS_DBUSOBJECT_H
 
-#include "DBusConstants.h"
-#include "DBusMgr.h"
-#include "DBusTypes.h"
-
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+#include <utility>
+#include <QDBusVariant>
+#include <QObject>
 #include <QDBusError>
 
+namespace FdoSecrets {
+class DBusMgr;
+}  // namespace FdoSecrets
+template <class T> class QSharedPointer;
 #ifndef Q_MOC_RUN
 // define the tag text as empty, so the compiler doesn't see it
 #define DBUS_PROPERTY
@@ -31,7 +37,6 @@
 
 namespace FdoSecrets
 {
-    class Service;
 
     /**
      * @brief A common base class for all dbus-exposed objects.

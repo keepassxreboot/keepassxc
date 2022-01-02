@@ -17,8 +17,14 @@
 
 #include <QAbstractItemView>
 #include <QStyledItemDelegate>
-
 #include <functional>
+#include <QAbstractItemModel>
+#include <QModelIndex>
+#include <QObject>
+#include <QStyleOptionViewItem>
+#include <utility>
+
+class QWidget;
 
 namespace
 {

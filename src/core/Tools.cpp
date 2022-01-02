@@ -19,11 +19,9 @@
 
 #include "Tools.h"
 
-#include "config-keepassx.h"
-#include "git-info.h"
-
-#include "core/Clock.h"
-
+#include <bits/std_abs.h>
+#include <stdlib.h>
+#include <time.h>
 #include <QCoreApplication>
 #include <QElapsedTimer>
 #include <QEventLoop>
@@ -36,6 +34,19 @@
 #include <QUrl>
 #include <QUuid>
 #include <cmath>
+#include <QDateTime>
+#include <QLatin1String>
+#include <QMetaObject>
+#include <QObject>
+#include <QRegExp>
+#include <QSysInfo>
+#include <QVariant>
+#include <QtCore>
+#include <cctype>
+
+#include "config-keepassx.h"
+#include "git-info.h"
+#include "core/Clock.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep()

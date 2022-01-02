@@ -17,18 +17,31 @@
 
 #include "Prompt.h"
 
+#include <QtCore/qglobal.h>
+#include <QThread>
+#include <QTimer>
+#include <QWindow>
+#include <QArgument>
+#include <QDBusError>
+#include <QDebug>
+#include <QMetaObject>
+#include <QObject>
+#include <QReturnArgument>
+#include <QSharedPointer>
+#include <QtGui>
+#include <QMap>
+
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
-
 #include "core/Entry.h"
 #include "gui/MessageBox.h"
-
-#include <QThread>
-#include <QTimer>
-#include <QWindow>
+#include "dbus/DBusClient.h"
+#include "dbus/DBusConstants.h"
+#include "dbus/DBusMgr.h"
+#include "dbus/DBusObject.h"
 
 namespace FdoSecrets
 {

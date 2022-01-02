@@ -18,9 +18,16 @@
 #ifndef KEEPASSXC_FDOSECRETS_SESSIONCIPHER_H
 #define KEEPASSXC_FDOSECRETS_SESSIONCIPHER_H
 
+#include <QSharedPointer>
+#include <QByteArray>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QVariant>
+#include <QtGlobal>
+
 #include "fdosecrets/dbus/DBusTypes.h"
 
-#include <QSharedPointer>
+
 
 namespace Botan
 {

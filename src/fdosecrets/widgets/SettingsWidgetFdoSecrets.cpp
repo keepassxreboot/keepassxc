@@ -16,17 +16,38 @@
  */
 
 #include "SettingsWidgetFdoSecrets.h"
-#include "ui_SettingsWidgetFdoSecrets.h"
 
+#include <QToolBar>
+#include <QAbstractItemView>
+#include <QAction>
+#include <QCheckBox>
+#include <QHeaderView>
+#include <QPointer>
+#include <QSharedPointer>
+#include <QSizePolicy>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QTabWidget>
+#include <QTableView>
+#include <utility>
+
+#include "ui_SettingsWidgetFdoSecrets.h"
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/widgets/RowButtonHelper.h"
 #include "fdosecrets/widgets/SettingsModels.h"
 #include "objects/Service.h"
-
 #include "gui/DatabaseWidget.h"
+#include "dbus/DBusClient.h"
+#include "dbus/DBusMgr.h"
+#include "gui/Icons.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
 
-#include <QToolBar>
+class QHideEvent;
+class QModelIndex;
+class QObject;
+class QShowEvent;
 
 using FdoSecrets::DBusClientPtr;
 using FdoSecrets::SettingsClientModel;

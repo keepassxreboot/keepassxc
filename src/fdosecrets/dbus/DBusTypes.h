@@ -21,6 +21,16 @@
 #define KEEPASSXC_FDOSECRETS_DBUSTYPES_H
 
 #include <QDBusArgument>
+#include <QByteArray>
+#include <QDBusVariant>
+#include <QMap>
+#include <QWeakPointer>
+#include <QtCore>
+#include <QSharedPointer>
+#include <QString>
+
+template <class T> class QSharedPointer;
+template <class T> class QWeakPointer;
 
 namespace FdoSecrets
 {
@@ -53,6 +63,7 @@ namespace FdoSecrets
             argument.beginStructure();
             argument >> secret.session >> secret.parameters >> secret.value >> secret.contentType;
             argument.endStructure();
+
             return argument;
         }
 
@@ -63,6 +74,7 @@ namespace FdoSecrets
     // types used in method parameters
     class Session;
     class Item;
+
     struct Secret
     {
         const Session* session;

@@ -16,13 +16,34 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtCore/qglobal.h>
+#include <QDBusMetaType>
+#include <QByteArray>
+#include <QDBusArgument>
+#include <QDBusVariant>
+#include <QDebug>
+#include <QList>
+#include <QMetaObject>
+#include <QMetaType>
+#include <QSharedPointer>
+#include <QStaticByteArrayData>
+#include <QString>
+#include <QVariant>
+#include <QWeakPointer>
+
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
+#include "dbus/DBusClient.h"
+#include "dbus/DBusMgr.h"
+#include "dbus/DBusObject.h"
+#include "dbus/DBusTypes.h"
+#include "DBusTypes.h"
 
-#include <QDBusMetaType>
+template <class T> class QSharedPointer;
+template <class T> class QWeakPointer;
 
 namespace FdoSecrets
 {

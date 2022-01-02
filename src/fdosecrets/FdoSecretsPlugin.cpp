@@ -17,11 +17,18 @@
 
 #include "FdoSecretsPlugin.h"
 
+#include <QtCore/qglobal.h>
+#include <QDebug>
+#include <QWidget>
+
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/widgets/SettingsWidgetFdoSecrets.h"
-
 #include "gui/DatabaseTabWidget.h"
+#include "dbus/DBusMgr.h"
+#include "dbus/DBusTypes.h"
+
+template <class T> class QSharedPointer;
 
 using FdoSecrets::DBusMgr;
 using FdoSecrets::Service;

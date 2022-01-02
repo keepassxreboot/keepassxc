@@ -22,8 +22,15 @@
 #include <QPointer>
 #include <QSet>
 #include <QUuid>
+#include <QList>
+#include <QSharedPointer>
+#include <QString>
+#include <QVariant>
+#include <QtCore>
 
 #include "core/Global.h"
+
+template <class T> class QSharedPointer;
 
 namespace FdoSecrets
 {

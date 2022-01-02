@@ -17,18 +17,38 @@
 
 #include "Item.h"
 
+#include <QMimeDatabase>
+#include <QSet>
+#include <QTextCodec>
+#include <QByteArray>
+#include <QDBusError>
+#include <QDateTime>
+#include <QLatin1Literal>
+#include <QList>
+#include <QMimeType>
+#include <QRegularExpression>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QStaticByteArrayData>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QVariant>
+
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
-
 #include "core/EntryAttributes.h"
 #include "core/Group.h"
-
-#include <QMimeDatabase>
-#include <QSet>
-#include <QTextCodec>
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
+#include "core/TimeInfo.h"
+#include "dbus/DBusClient.h"
+#include "dbus/DBusConstants.h"
+#include "dbus/DBusMgr.h"
+#include "dbus/DBusObject.h"
 
 namespace FdoSecrets
 {

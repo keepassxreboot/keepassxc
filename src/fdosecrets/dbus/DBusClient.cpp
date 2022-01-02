@@ -18,11 +18,15 @@
 
 #include "DBusClient.h"
 
+#include <QtCore/qglobal.h>
+#include <utility>
+#include <QByteArray>
+#include <QDebug>
+#include <QObject>
+
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
-
-#include <utility>
 
 namespace FdoSecrets
 {

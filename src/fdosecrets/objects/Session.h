@@ -18,11 +18,26 @@
 #ifndef KEEPASSXC_FDOSECRETS_SESSION_H
 #define KEEPASSXC_FDOSECRETS_SESSION_H
 
+#include <QByteArrayData>
+#include <QSharedPointer>
+#include <QString>
+#include <QUuid>
+
+#include "fdosecrets/dbus/DBusConstants.h" // IWYU pragma: keep
 #include "fdosecrets/dbus/DBusObject.h"
+#include "dbus/DBusTypes.h"
+
+class QObject;
+
+namespace FdoSecrets {
+class Service;
+}  // namespace FdoSecrets
+template <class T> class QSharedPointer;
 
 namespace FdoSecrets
 {
     class CipherPair;
+
     class Session : public DBusObject
     {
         Q_OBJECT

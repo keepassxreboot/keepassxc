@@ -18,9 +18,14 @@
 #ifndef KEEPASSXC_FDOSECRETS_SETTINGSMODELS_H
 #define KEEPASSXC_FDOSECRETS_SETTINGSMODELS_H
 
-#include "fdosecrets/dbus/DBusClient.h"
-
 #include <QAbstractTableModel>
+#include <QList>
+#include <QPointer>
+#include <QString>
+#include <QVariant>
+#include <QtCore>
+
+#include "fdosecrets/dbus/DBusClient.h"
 
 class DatabaseTabWidget;
 class DatabaseWidget;
@@ -65,6 +70,7 @@ namespace FdoSecrets
     private:
         // source
         QPointer<DatabaseTabWidget> m_dbTabs;
+
 
         // internal store
         QList<QPointer<DatabaseWidget>> m_dbs;

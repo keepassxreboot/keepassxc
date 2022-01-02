@@ -18,12 +18,19 @@
 #ifndef KEEPASSXC_FDOSECRETSPLUGIN_H
 #define KEEPASSXC_FDOSECRETSPLUGIN_H
 
+#include <QPointer>
+#include <QByteArrayData>
+#include <QIcon>
+#include <QObject>
+#include <QSharedPointer>
+#include <QString>
+
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/Icons.h"
 
-#include <QPointer>
-
 class DatabaseTabWidget;
+class QWidget;
+template <class T> class QSharedPointer;
 
 namespace FdoSecrets
 {

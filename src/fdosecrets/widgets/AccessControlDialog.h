@@ -21,14 +21,24 @@
 #define KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H
 
 #include <QAbstractTableModel>
-#include <QCheckBox>
 #include <QDialog>
 #include <QPointer>
 #include <QPushButton>
 #include <QSet>
+#include <QFlags>
+#include <QList>
+#include <QPersistentModelIndex>
+#include <QString>
+#include <QVariant>
+#include <QtCore>
+#include <QScopedPointer>
 
 #include "core/Global.h"
+#include "widgets/AccessControlDialog.h"
 
+class QCheckBox;
+class QWidget;
+class QWindow;
 class Entry;
 
 namespace Ui
@@ -70,6 +80,7 @@ public:
     };
 
     QHash<Entry*, AuthDecision> decisions() const;
+
 
 signals:
     void finished(const QHash<Entry*, AuthDecision>& results);

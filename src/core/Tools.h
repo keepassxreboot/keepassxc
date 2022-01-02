@@ -19,13 +19,18 @@
 #ifndef KEEPASSX_TOOLS_H
 #define KEEPASSX_TOOLS_H
 
-#include "core/Global.h"
-
-#include <QDateTime>
 #include <QProcessEnvironment>
+#include <QByteArray>
+#include <QChar>
+#include <QString>
+#include <QStringList>
+#include <QUuid>
+#include <QVariantMap>
+#include <QtGlobal>
 
 class QIODevice;
 class QRegularExpression;
+class QObject;
 
 namespace Tools
 {

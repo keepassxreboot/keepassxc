@@ -18,17 +18,31 @@
  */
 
 #include "AccessControlDialog.h"
-#include "ui_AccessControlDialog.h"
-
-#include "fdosecrets/dbus/DBusClient.h"
-#include "fdosecrets/widgets/RowButtonHelper.h"
-
-#include "core/Entry.h"
-#include "gui/Icons.h"
 
 #include <QWindow>
+#include <QCheckBox>
+#include <QDialogButtonBox>
+#include <QHeaderView>
+#include <QLabel>
+#include <QModelIndex>
+#include <QPixmap>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QTableView>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QWidget>
+#include <iterator>
+#include <utility>
+#include <QStringLiteral>
 
-#include <functional>
+#include "ui_AccessControlDialog.h"
+#include "fdosecrets/dbus/DBusClient.h"
+#include "fdosecrets/widgets/RowButtonHelper.h"
+#include "core/Entry.h"
+#include "gui/Icons.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
 
 AccessControlDialog::AccessControlDialog(QWindow* parent,
                                          const QList<Entry*>& entries,

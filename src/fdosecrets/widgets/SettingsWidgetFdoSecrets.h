@@ -18,12 +18,15 @@
 #ifndef KEEPASSXC_SETTINGSWIDGETFDOSECRETS_H
 #define KEEPASSXC_SETTINGSWIDGETFDOSECRETS_H
 
-#include "gui/MessageWidget.h"
-
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QString>
+#include <QWidget>
 #include <QTimer>
 
-class QAbstractItemView;
-
+class QHideEvent;
+class QObject;
+class QShowEvent;
 class FdoSecretsPlugin;
 
 namespace Ui

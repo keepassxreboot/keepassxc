@@ -17,10 +17,15 @@
 
 #include "Session.h"
 
+#include <QScopedPointer>
+#include <QtCore>
+#include <utility>
+
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/SessionCipher.h"
-
 #include "core/Tools.h"
+#include "dbus/DBusMgr.h"
+#include "dbus/DBusObject.h"
 
 namespace FdoSecrets
 {

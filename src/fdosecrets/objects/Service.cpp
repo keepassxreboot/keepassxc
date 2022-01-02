@@ -17,15 +17,29 @@
 
 #include "Service.h"
 
+#include <QtCore/qsharedpointer.h>
+#include <QDBusError>
+#include <QUuid>
+#include <utility>
+
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Session.h"
-
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/Global.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
+#include "dbus/DBusClient.h"
+#include "dbus/DBusConstants.h"
+#include "dbus/DBusMgr.h"
+#include "dbus/DBusObject.h"
+#include "gui/DatabaseOpenDialog.h"
 
 namespace
 {
