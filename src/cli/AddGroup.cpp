@@ -17,10 +17,19 @@
 
 #include "AddGroup.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QList>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QTextStream>
+#include <QUuid>
+
 #include "Utils.h"
 #include "core/Group.h"
-
-#include <QCommandLineParser>
+#include "cli/Command.h"
+#include "core/Database.h"
 
 AddGroup::AddGroup()
 {

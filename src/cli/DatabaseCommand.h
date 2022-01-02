@@ -18,7 +18,14 @@
 #ifndef KEEPASSXC_DATABASECOMMAND_H
 #define KEEPASSXC_DATABASECOMMAND_H
 
+#include <QSharedPointer>
+#include <QStringList>
+
 #include "Command.h"
+
+class Database;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class DatabaseCommand : public Command
 {

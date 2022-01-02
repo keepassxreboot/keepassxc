@@ -19,10 +19,17 @@
 #define KEEPASSXC_COMMAND_H
 
 #include <QCommandLineOption>
+#include <QList>
+#include <QSharedPointer>
+#include <QString>
+#include <QStringList>
 
 #include "core/Database.h"
 
 class QCommandLineParser;
+class Database;
+class QCommandLineOption;
+template <class T> class QSharedPointer;
 
 // At the moment, there's no QT class for the positional arguments
 // like there is for the options (QCommandLineOption).

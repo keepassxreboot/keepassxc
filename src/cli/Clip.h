@@ -18,7 +18,14 @@
 #ifndef KEEPASSXC_CLIP_H
 #define KEEPASSXC_CLIP_H
 
+#include <QSharedPointer>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineOption;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class Clip : public DatabaseCommand
 {

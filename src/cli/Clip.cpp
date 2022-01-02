@@ -17,12 +17,24 @@
 
 #include "Clip.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <QList>
+#include <QLocale>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QTextStream>
+
 #include "Utils.h"
 #include "core/EntrySearcher.h"
 #include "core/Group.h"
 #include "core/Tools.h"
-
-#include <QCommandLineParser>
+#include "cli/Command.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttributes.h"
 
 #define CLI_DEFAULT_CLIP_TIMEOUT 10
 

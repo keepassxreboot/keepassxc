@@ -18,9 +18,15 @@
 #ifndef KEEPASSXC_GENERATE_H
 #define KEEPASSXC_GENERATE_H
 
+#include <QSharedPointer>
+#include <QStringList>
+
 #include "Command.h"
 
 class PasswordGenerator;
+class QCommandLineOption;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class Generate : public Command
 {

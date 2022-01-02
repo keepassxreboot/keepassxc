@@ -17,7 +17,15 @@
 
 #include "Open.h"
 
-#include <QCommandLineParser>
+#include <stdlib.h>
+#include <QObject>
+#include <QString>
+#include <QtGlobal>
+
+#include "cli/DatabaseCommand.h"
+#include "core/Database.h"
+
+class QCommandLineParser;
 
 Open::Open()
 {

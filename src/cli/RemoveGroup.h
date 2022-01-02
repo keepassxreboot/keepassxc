@@ -18,7 +18,13 @@
 #ifndef KEEPASSXC_REMOVEGROUP_H
 #define KEEPASSXC_REMOVEGROUP_H
 
+#include <QSharedPointer>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class RemoveGroup : public DatabaseCommand
 {

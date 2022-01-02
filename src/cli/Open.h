@@ -18,7 +18,14 @@
 #ifndef KEEPASSXC_OPEN_H
 #define KEEPASSXC_OPEN_H
 
+#include <QSharedPointer>
+#include <QStringList>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class Open : public DatabaseCommand
 {

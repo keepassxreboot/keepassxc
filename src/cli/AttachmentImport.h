@@ -18,7 +18,14 @@
 #ifndef KEEPASSXC_ATTACHMENTIMPORT_H
 #define KEEPASSXC_ATTACHMENTIMPORT_H
 
+#include <QSharedPointer>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineOption;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class AttachmentImport : public DatabaseCommand
 {

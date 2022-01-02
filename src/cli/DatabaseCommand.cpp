@@ -17,10 +17,17 @@
 
 #include "DatabaseCommand.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QString>
+
 #include "Utils.h"
 #include "config-keepassx.h"
-
-#include <QCommandLineParser>
+#include "cli/Command.h"
+#include "core/Database.h"
 
 DatabaseCommand::DatabaseCommand()
 {

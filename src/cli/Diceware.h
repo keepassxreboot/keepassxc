@@ -18,7 +18,11 @@
 #ifndef KEEPASSXC_DICEWARE_H
 #define KEEPASSXC_DICEWARE_H
 
+#include <QStringList>
+
 #include "Command.h"
+
+class QCommandLineOption;
 
 class Diceware : public Command
 {

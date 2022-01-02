@@ -18,7 +18,13 @@
 #ifndef KEEPASSXC_ATTACHMENTREMOVE_H
 #define KEEPASSXC_ATTACHMENTREMOVE_H
 
+#include <QSharedPointer>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class AttachmentRemove : public DatabaseCommand
 {

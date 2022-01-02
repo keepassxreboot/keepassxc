@@ -18,7 +18,13 @@
 #ifndef KEEPASSXC_REMOVE_H
 #define KEEPASSXC_REMOVE_H
 
+#include <QSharedPointer>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class Remove : public DatabaseCommand
 {

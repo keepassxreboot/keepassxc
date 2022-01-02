@@ -18,6 +18,8 @@ cmake_minimum_required(VERSION 3.3.0)
 
 project(KeePassXC)
 
+set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE include-what-you-use -Xiwyu --mapping_file=/usr/share/include-what-you-use/qt5_11.imp)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
             "Choose the type of build, options are: Debug Release RelWithDebInfo Profile"
@@ -88,6 +90,7 @@ if(WITH_XC_ALL)
         set(WITH_XC_FDOSECRETS ON)
     endif()
 endif()
+set(WITH_XC_KEESHARE OFF)
 
 # Prefer WITH_XC_NETWORKING setting over WITH_XC_UPDATECHECK
 if(NOT WITH_XC_NETWORKING AND WITH_XC_UPDATECHECK)

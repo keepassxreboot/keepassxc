@@ -18,7 +18,11 @@
 #ifndef KEEPASSXC_ESTIMATE_H
 #define KEEPASSXC_ESTIMATE_H
 
+#include <QStringList>
+
 #include "Command.h"
+
+class QCommandLineOption;
 
 class Estimate : public Command
 {

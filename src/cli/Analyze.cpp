@@ -17,12 +17,22 @@
 
 #include "Analyze.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QFile>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QPair>
+#include <QString>
+#include <QTextStream>
+#include <QtCore>
+
 #include "Utils.h"
 #include "core/Group.h"
 #include "core/HibpOffline.h"
-
-#include <QCommandLineParser>
-#include <QFile>
+#include "core/Database.h"
+#include "core/Entry.h"
 
 const QCommandLineOption Analyze::HIBPDatabaseOption = QCommandLineOption(
     {"H", "hibp"},

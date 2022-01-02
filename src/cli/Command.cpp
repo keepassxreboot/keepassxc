@@ -15,6 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCommandLineParser>
+#include <QFileInfo>
+#include <QRegularExpression>
+#include <QCommandLineOption>
+#include <QCoreApplication>
+#include <QList>
+#include <QMap>
+#include <QObject>
+#include <QSharedPointer>
+#include <QStaticStringData>
+#include <QString>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QTextStream>
+
 #include "Add.h"
 #include "AddGroup.h"
 #include "Analyze.h"
@@ -42,10 +57,9 @@
 #include "Search.h"
 #include "Show.h"
 #include "Utils.h"
+#include "cli/Command.h"
 
-#include <QCommandLineParser>
-#include <QFileInfo>
-#include <QRegularExpression>
+template <class T> class QSharedPointer;
 
 const QCommandLineOption Command::HelpOption = QCommandLineOption(QStringList()
 #ifdef Q_OS_WIN

@@ -17,11 +17,21 @@
 
 #include "Remove.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QList>
+#include <QObject>
+#include <QPointer>
+#include <QString>
+#include <QStringList>
+#include <QTextStream>
+
 #include "Utils.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-
-#include <QCommandLineParser>
+#include "cli/Command.h"
+#include "core/Database.h"
+#include "core/Entry.h"
 
 Remove::Remove()
 {

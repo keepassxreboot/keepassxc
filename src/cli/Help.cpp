@@ -17,7 +17,15 @@
 
 #include "Help.h"
 
+#include <stdlib.h>
+#include <QList>
+#include <QObject>
+#include <QSharedPointer>
+#include <QString>
+#include <QTextStream>
+
 #include "Utils.h"
+#include "cli/Command.h"
 
 Help::Help()
 {

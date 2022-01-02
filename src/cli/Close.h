@@ -18,6 +18,8 @@
 #ifndef KEEPASSXC_CLOSE_H
 #define KEEPASSXC_CLOSE_H
 
+#include <QStringList>
+
 #include "Command.h"
 
 class Close : public Command

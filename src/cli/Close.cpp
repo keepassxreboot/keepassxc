@@ -17,6 +17,14 @@
 
 #include "Close.h"
 
+#include <stdlib.h>
+#include <QObject>
+#include <QSharedPointer>
+#include <QString>
+#include <QtGlobal>
+
+#include "core/Database.h"
+
 Close::Close()
 {
     name = QString("close");

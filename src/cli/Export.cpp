@@ -17,11 +17,23 @@
 
 #include "Export.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QByteArray>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QStaticStringData>
+#include <QString>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QTextStream>
+#include <Qt>
+
 #include "TextStream.h"
 #include "Utils.h"
 #include "format/CsvExporter.h"
-
-#include <QCommandLineParser>
+#include "core/Database.h"
 
 const QCommandLineOption Export::FormatOption = QCommandLineOption(
     QStringList() << "f"

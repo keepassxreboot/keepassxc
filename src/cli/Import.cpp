@@ -17,11 +17,20 @@
 
 #include "Import.h"
 
-#include "Create.h"
-#include "Utils.h"
-
+#include <stdlib.h>
 #include <QCommandLineParser>
 #include <QFileInfo>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QSharedPointer>
+#include <QString>
+#include <QTextStream>
+
+#include "Create.h"
+#include "Utils.h"
+#include "cli/Command.h"
+#include "core/Database.h"
 
 /**
  * Create a database file from an XML export of another database.

@@ -17,6 +17,10 @@
 
 #include "Exit.h"
 
+#include <stdlib.h>
+#include <QObject>
+#include <QtGlobal>
+
 Exit::Exit(const QString& name)
 {
     this->name = name;

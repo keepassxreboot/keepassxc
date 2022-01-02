@@ -17,12 +17,22 @@
 
 #include "Add.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QTextStream>
+
 #include "Generate.h"
 #include "Utils.h"
 #include "core/Group.h"
 #include "core/PasswordGenerator.h"
-
-#include <QCommandLineParser>
+#include "cli/Command.h"
+#include "core/Database.h"
+#include "core/Entry.h"
 
 const QCommandLineOption Add::UsernameOption = QCommandLineOption(QStringList() << "u"
                                                                                 << "username",

@@ -17,10 +17,16 @@
 
 #include "Generate.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QString>
+#include <QTextStream>
+
 #include "Utils.h"
 #include "core/PasswordGenerator.h"
-
-#include <QCommandLineParser>
 
 const QCommandLineOption Generate::PasswordLengthOption =
     QCommandLineOption(QStringList() << "L"

@@ -17,10 +17,17 @@
 
 #include "Diceware.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QSharedPointer>
+#include <QString>
+#include <QTextStream>
+
 #include "Utils.h"
 #include "core/PassphraseGenerator.h"
-
-#include <QCommandLineParser>
 
 const QCommandLineOption Diceware::WordCountOption =
     QCommandLineOption(QStringList() << "W"

@@ -18,7 +18,15 @@
 #ifndef KEEPASSXC_CREATE_H
 #define KEEPASSXC_CREATE_H
 
+#include <QSharedPointer>
+#include <QStringList>
+
 #include "Command.h"
+
+class Database;
+class QCommandLineOption;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class Create : public Command
 {

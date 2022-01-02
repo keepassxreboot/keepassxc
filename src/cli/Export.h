@@ -18,7 +18,14 @@
 #ifndef KEEPASSXC_EXPORT_H
 #define KEEPASSXC_EXPORT_H
 
+#include <QSharedPointer>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineOption;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class Export : public DatabaseCommand
 {

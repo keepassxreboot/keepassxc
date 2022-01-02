@@ -17,11 +17,21 @@
 
 #include "Estimate.h"
 
+#include <zxcvbn.h>
+#include <stdlib.h>
+#include <string.h>
+#include <QCommandLineParser>
+#include <QByteArray>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QSharedPointer>
+#include <QString>
+#include <QTextStream>
+
 #include "Utils.h"
 #include "core/PasswordHealth.h"
-
-#include <QCommandLineParser>
-#include <zxcvbn.h>
+#include "cli/Command.h"
 
 const QCommandLineOption Estimate::AdvancedOption =
     QCommandLineOption(QStringList() << "a"

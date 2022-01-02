@@ -17,13 +17,27 @@
 
 #include "Info.h"
 
+#include <stdlib.h>
+#include <QDateTime>
+#include <QList>
+#include <QObject>
+#include <QPair>
+#include <QString>
+#include <QTextStream>
+#include <QUuid>
+#include <Qt>
+
 #include "Utils.h"
 #include "core/DatabaseStats.h"
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Database.h"
+#include "core/TimeInfo.h"
+#include "crypto/kdf/Kdf.h"
+#include "format/KeePass2.h"
 
-#include <QCommandLineParser>
+class QCommandLineParser;
 
 Info::Info()
 {

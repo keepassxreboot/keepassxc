@@ -17,10 +17,19 @@
 
 #include "List.h"
 
+#include <stdlib.h>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QTextStream>
+
 #include "Utils.h"
 #include "core/Group.h"
-
-#include <QCommandLineParser>
+#include "cli/Command.h"
+#include "core/Database.h"
 
 const QCommandLineOption List::RecursiveOption =
     QCommandLineOption(QStringList() << "R"

@@ -18,6 +18,8 @@
 #ifndef KEEPASSXC_HELP_H
 #define KEEPASSXC_HELP_H
 
+#include <QStringList>
+
 #include "Command.h"
 
 class Help : public Command

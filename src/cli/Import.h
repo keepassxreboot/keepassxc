@@ -18,6 +18,8 @@
 #ifndef KEEPASSXC_IMPORT_H
 #define KEEPASSXC_IMPORT_H
 
+#include <QStringList>
+
 #include "Command.h"
 
 class Import : public Command

@@ -18,7 +18,13 @@
 #ifndef KEEPASSXC_SEARCH_H
 #define KEEPASSXC_SEARCH_H
 
+#include <QSharedPointer>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class Search : public DatabaseCommand
 {

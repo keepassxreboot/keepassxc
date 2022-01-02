@@ -17,11 +17,22 @@
 
 #include "Create.h"
 
-#include "Utils.h"
-#include "keys/FileKey.h"
-
+#include <stdlib.h>
 #include <QCommandLineParser>
 #include <QFileInfo>
+#include <QCommandLineOption>
+#include <QList>
+#include <QObject>
+#include <QString>
+#include <QTextStream>
+#include <QtGlobal>
+
+#include "Utils.h"
+#include "cli/Command.h"
+#include "core/Database.h"
+#include "crypto/kdf/Kdf.h"
+#include "keys/CompositeKey.h"
+#include "keys/FileKey.h" // IWYU pragma: keep
 
 const QCommandLineOption Create::DecryptionTimeOption =
     QCommandLineOption(QStringList() << "t"

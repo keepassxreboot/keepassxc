@@ -18,7 +18,14 @@
 #ifndef KEEPASSXC_MERGE_H
 #define KEEPASSXC_MERGE_H
 
+#include <QSharedPointer>
+
 #include "DatabaseCommand.h"
+
+class Database;
+class QCommandLineOption;
+class QCommandLineParser;
+template <class T> class QSharedPointer;
 
 class Merge : public DatabaseCommand
 {
