@@ -20,24 +20,32 @@
 #define KEEPASSX_DATABASE_H
 
 #include <QDateTime>
-#include <QHash>
 #include <QMutex>
 #include <QPointer>
 #include <QTimer>
+#include <QByteArray>
+#include <QList>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QUuid>
+#include <QVariantMap>
+#include <QtCore>
 
-#include "config-keepassx.h"
 #include "core/ModifiableObject.h"
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2.h"
-#include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
+#include "crypto/kdf/Kdf.h"
 
 class Entry;
+class CompositeKey;
+template <class T> class QSharedPointer;
+
 enum class EntryReferenceType;
 class FileWatcher;
 class Group;
 class Metadata;
-class QIODevice;
 
 struct DeletedObject
 {

@@ -18,6 +18,7 @@
 #include "AutoTypeAssociationsModel.h"
 
 #include "core/Entry.h"
+#include "core/AutoTypeAssociations.h"
 
 AutoTypeAssociationsModel::AutoTypeAssociationsModel(QObject* parent)
     : QAbstractListModel(parent)

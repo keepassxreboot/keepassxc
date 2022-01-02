@@ -18,23 +18,33 @@
 #include "DatabaseTabWidget.h"
 
 #include <QFileInfo>
+#include <QList>
+#include <QScopedPointer>
+#include <QStringList>
+#include <QTabBar>
+#include <QVariant>
+#include <QWidget>
+#include <QtCore>
 
 #include "autotype/AutoType.h"
-#include "core/Tools.h"
 #include "format/CsvExporter.h"
-#include "gui/Clipboard.h"
 #include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
 #include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
-#include "gui/HtmlExporter.h"
 #include "gui/MessageBox.h"
 #include "gui/export/ExportDialog.h"
+#include "core/Config.h"
+#include "core/Database.h"
+#include "core/Global.h"
+#include "core/Metadata.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
 #include "gui/wizard/NewDatabaseWizard.h"
+
+template <class T> class QSharedPointer;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)

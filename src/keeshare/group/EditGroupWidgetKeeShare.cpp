@@ -16,15 +16,27 @@
  */
 
 #include "EditGroupWidgetKeeShare.h"
-#include "ui_EditGroupWidgetKeeShare.h"
 
+#include <QComboBox>
+#include <QFlags>
+#include <QLineEdit>
+#include <QList>
+#include <QPushButton>
+#include <QStringList>
+#include <QToolButton>
+#include <QUuid>
+#include <QVariant>
+#include <QtCore>
+
+#include "ui_EditGroupWidgetKeeShare.h"
 #include "KeeShareSettings.h"
 #include "core/Group.h"
 #include "gui/FileDialog.h"
 #include "keeshare/KeeShare.h"
-
-#include <QDir>
-#include <QStandardPaths>
+#include "core/Database.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+#include "gui/PasswordEdit.h"
 
 EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     : QWidget(parent)

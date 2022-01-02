@@ -23,8 +23,24 @@
 #define KEEPASSXC_BASESTYLE_H
 
 #include <QCommonStyle>
+#include <QByteArrayData>
+#include <QIcon>
+#include <QPalette>
+#include <QRect>
+#include <QSize>
+#include <QString>
+#include <QStyle>
 
 class BaseStylePrivate;
+class QApplication;
+class QObject;
+class QPainter;
+class QPixmap;
+class QPoint;
+class QStyleHintReturn;
+class QStyleOption;
+class QStyleOptionComplex;
+class QWidget;
 
 class BaseStyle : public QCommonStyle
 {

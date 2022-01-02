@@ -19,7 +19,12 @@
 #define KEEPASSX_KDF_H
 
 #include <QUuid>
-#include <QVariant>
+#include <QByteArray>
+#include <QSharedPointer>
+#include <QString>
+#include <QVariantMap>
+
+template <class T> class QSharedPointer;
 
 #define KDF_MIN_SEED_SIZE 8
 #define KDF_MAX_SEED_SIZE 32

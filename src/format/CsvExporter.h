@@ -25,6 +25,7 @@
 class Database;
 class Group;
 class QIODevice;
+template <class T> class QSharedPointer;
 
 class CsvExporter
 {

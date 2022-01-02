@@ -18,10 +18,11 @@
 #ifndef KEEPASSXC_GUITOOLS_H
 #define KEEPASSXC_GUITOOLS_H
 
+#include <stddef.h>
 #include <QList>
-#include <QWidget>
 
 class Entry;
+class QWidget;
 
 namespace GuiTools
 {

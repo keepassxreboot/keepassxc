@@ -19,13 +19,19 @@
 
 #include <QMimeData>
 #include <QFont>
+#include <QByteArray>
+#include <QDataStream>
+#include <QFlags>
+#include <QIODevice>
+#include <QPixmap>
+#include <QSet>
+#include <QUuid>
 
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
-#include "gui/DatabaseIcons.h"
 #include "gui/Icons.h"
+#include "core/Entry.h"
 
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"

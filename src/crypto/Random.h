@@ -19,8 +19,13 @@
 #define KEEPASSX_RANDOM_H
 
 #include <QSharedPointer>
+#include <QByteArray>
+#include <QtGlobal>
 
-#include <botan/rng.h>
+namespace Botan {
+class RandomNumberGenerator;
+}  // namespace Botan
+template <class T> class QSharedPointer;
 
 class Random
 {

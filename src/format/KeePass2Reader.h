@@ -18,9 +18,14 @@
 #ifndef KEEPASSX_KEEPASS2READER_H
 #define KEEPASSX_KEEPASS2READER_H
 
-#include "KdbxReader.h"
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
 
 class CompositeKey;
+class Database;
+class KdbxReader;
+template <class T> class QSharedPointer;
 
 class KeePass2Reader
 {

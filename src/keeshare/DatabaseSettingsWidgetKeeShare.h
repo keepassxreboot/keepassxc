@@ -18,12 +18,16 @@
 #ifndef KEEPASSXC_DATABASESETTINGSWIDGETKEESHARE_H
 #define KEEPASSXC_DATABASESETTINGSWIDGETKEESHARE_H
 
-#include <QPointer>
 #include <QWidget>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
 
 class Database;
-
 class QStandardItemModel;
+class QObject;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

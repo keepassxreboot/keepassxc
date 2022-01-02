@@ -18,7 +18,14 @@
 #ifndef KEEPASSXC_LIGHTSTYLE_H
 #define KEEPASSXC_LIGHTSTYLE_H
 
+#include <QByteArrayData>
+#include <QPalette>
+#include <QString>
+
 #include "gui/styles/base/BaseStyle.h"
+
+class QObject;
+class QWidget;
 
 class LightStyle : public BaseStyle
 {

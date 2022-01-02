@@ -20,14 +20,33 @@
 #include <QFont>
 #include <QMimeData>
 #include <QPalette>
+#include <QAbstractItemModel>
+#include <QByteArray>
+#include <QColor>
+#include <QDataStream>
+#include <QDate>
+#include <QDateTime>
+#include <QFlags>
+#include <QIODevice>
+#include <QIcon>
+#include <QLatin1String>
+#include <QPixmap>
+#include <QSet>
+#include <QSharedPointer>
+#include <QStaticStringData>
+#include <QStringLiteral>
 
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
-#include "gui/DatabaseIcons.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
+#include "core/Database.h"
+#include "core/EntryAttachments.h"
+#include "core/EntryAttributes.h"
+#include "core/Global.h"
+#include "core/TimeInfo.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif

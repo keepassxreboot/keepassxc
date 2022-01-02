@@ -20,8 +20,8 @@
  */
 
 #include "BaseStyle.h"
-#include "phantomcolor.h"
 
+#include <QtCore/qglobal.h>
 #include <QAction>
 #include <QApplication>
 #include <QComboBox>
@@ -30,7 +30,6 @@
 #include <QHeaderView>
 #include <QListView>
 #include <QPainter>
-#include <QPainterPath>
 #include <QPoint>
 #include <QString>
 #include <QTableView>
@@ -38,6 +37,66 @@
 #include <QToolButton>
 #include <QWizard>
 #include <QtCore>
+#include <QAbstractItemView>
+#include <QAbstractSpinBox>
+#include <QColor>
+#include <QExplicitlySharedDataPointer>
+#include <QFlag>
+#include <QFlags>
+#include <QFontMetrics>
+#include <QFrame>
+#include <QIODevice>
+#include <QIncompatibleFlag>
+#include <QItemSelection>
+#include <QItemSelectionModel>
+#include <QItemSelectionRange>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QLine>
+#include <QList>
+#include <QMargins>
+#include <QObject>
+#include <QPair>
+#include <QPen>
+#include <QPixmap>
+#include <QPointF>
+#include <QPolygonF>
+#include <QRectF>
+#include <QRegion>
+#include <QSharedData>
+#include <QSizeF>
+#include <QSlider>
+#include <QStringRef>
+#include <QStyleOption>
+#include <QStyleOptionButton>
+#include <QStyleOptionComboBox>
+#include <QStyleOptionComplex>
+#include <QStyleOptionDockWidget>
+#include <QStyleOptionFocusRect>
+#include <QStyleOptionFrame>
+#include <QStyleOptionGroupBox>
+#include <QStyleOptionHeader>
+#include <QStyleOptionMenuItem>
+#include <QStyleOptionProgressBar>
+#include <QStyleOptionRubberBand>
+#include <QStyleOptionSlider>
+#include <QStyleOptionSpinBox>
+#include <QStyleOptionTab>
+#include <QStyleOptionTabBarBase>
+#include <QStyleOptionTabWidgetFrame>
+#include <QStyleOptionTitleBar>
+#include <QStyleOptionToolBar>
+#include <QStyleOptionToolButton>
+#include <QStyleOptionViewItem>
+#include <QTabBar>
+#include <QTextOption>
+#include <QVarLengthArray>
+#include <QVector>
+#include <QWidget>
+#include <QtGui>
+#include <cmath>
+
+#include "phantomcolor.h"
 
 #ifdef Q_OS_MACOS
 #include <QMainWindow>

@@ -16,11 +16,27 @@
  */
 
 #include "TotpSetupDialog.h"
-#include "ui_TotpSetupDialog.h"
 
+#include <QByteArray>
+#include <QComboBox>
+#include <QDialogButtonBox>
+#include <QGroupBox>
+#include <QLineEdit>
+#include <QList>
+#include <QPair>
+#include <QRadioButton>
+#include <QSharedPointer>
+#include <QSpinBox>
+#include <QVariant>
+#include <QtCore>
+
+#include "ui_TotpSetupDialog.h"
 #include "core/Base32.h"
 #include "gui/MessageBox.h"
 #include "totp/totp.h"
+#include "core/Entry.h"
+
+class QWidget;
 
 TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
     : QDialog(parent)

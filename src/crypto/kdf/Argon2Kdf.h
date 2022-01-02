@@ -18,7 +18,15 @@
 #ifndef KEEPASSX_ARGON2KDF_H
 #define KEEPASSX_ARGON2KDF_H
 
+#include <QByteArray>
+#include <QSharedPointer>
+#include <QString>
+#include <QVariantMap>
+#include <QtGlobal>
+
 #include "Kdf.h"
+
+template <class T> class QSharedPointer;
 
 class Argon2Kdf : public Kdf
 {

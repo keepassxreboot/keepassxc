@@ -29,6 +29,7 @@
 
 #include <X11/XKBlib.h>
 
+
 #define N_MOD_INDICES (Mod5MapIndex + 1)
 
 class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface

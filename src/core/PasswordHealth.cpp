@@ -16,10 +16,18 @@
  */
 
 #include <QString>
+#include <QByteArray>
+#include <QDateTime>
+#include <QList>
+#include <QObject>
+#include <QtCore>
 
 #include "Group.h"
 #include "PasswordHealth.h"
 #include "zxcvbn.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/TimeInfo.h"
 
 PasswordHealth::PasswordHealth(double entropy)
     : m_score(entropy)

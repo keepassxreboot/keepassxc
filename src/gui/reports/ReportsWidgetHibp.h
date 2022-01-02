@@ -18,10 +18,21 @@
 #ifndef KEEPASSXC_REPORTSWIDGETHIBP_H
 #define KEEPASSXC_REPORTSWIDGETHIBP_H
 
-#include "config-keepassx.h"
-#include "gui/entry/EntryModel.h"
-
 #include <QWidget>
+#include <QByteArrayData>
+#include <QList>
+#include <QMap>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+
+#include "config-keepassx.h"
+
+class QModelIndex;
+class QObject;
+class QPoint;
+template <class T> class QSharedPointer;
 
 #ifdef WITH_XC_NETWORKING
 #include "core/HibpDownloader.h"
@@ -29,7 +40,6 @@
 
 class Database;
 class Entry;
-class Group;
 class QSortFilterProxyModel;
 class QStandardItemModel;
 

@@ -18,7 +18,12 @@
 #ifndef KEEPASSXC_NEWDATABASEWIZARDPAGEDATABASEKEY_H
 #define KEEPASSXC_NEWDATABASEWIZARDPAGEDATABASEKEY_H
 
+#include <QString>
+#include <QtCore>
+
 #include "NewDatabaseWizardPage.h"
+
+class QWidget;
 
 class NewDatabaseWizardPageDatabaseKey : public NewDatabaseWizardPage
 {

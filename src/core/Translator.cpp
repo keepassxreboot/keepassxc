@@ -18,14 +18,17 @@
 
 #include "Translator.h"
 
+#include <QtCore/qglobal.h>
 #include <QCoreApplication>
 #include <QDir>
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QRegularExpression>
 #include <QTranslator>
+#include <QPair>
+#include <QScopedPointer>
+#include <QVariant>
 
-#include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Resources.h"
 

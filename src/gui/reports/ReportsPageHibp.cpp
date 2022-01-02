@@ -17,8 +17,13 @@
 
 #include "ReportsPageHibp.h"
 
+#include <QObject>
+
 #include "ReportsWidgetHibp.h"
 #include "gui/Icons.h"
+
+class Database;
+class QWidget;
 
 ReportsPageHibp::ReportsPageHibp()
     : m_hibpWidget(new ReportsWidgetHibp())

@@ -21,6 +21,13 @@
 
 #include <QBuffer>
 #include <QTextStream>
+#include <QByteArray>
+#include <QChar>
+#include <QList>
+#include <QSet>
+#include <QString>
+#include <QStringList>
+#include <QtGlobal>
 
 class QFile;
 

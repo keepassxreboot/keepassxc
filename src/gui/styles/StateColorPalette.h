@@ -19,8 +19,7 @@
 #define KEEPASSXC_STATECOLORPALETTE_H
 
 #include <QColor>
-#include <QHash>
-#include <QObject>
+#include <QtCore>
 
 /**
  * Extended color palette for indicating custom widget states.

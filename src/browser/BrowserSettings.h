@@ -20,7 +20,11 @@
 #ifndef BROWSERSETTINGS_H
 #define BROWSERSETTINGS_H
 
+#include <QString>
+#include <QtGlobal>
+
 #include "NativeMessageInstaller.h"
+#include "BrowserShared.h"
 
 class BrowserSettings
 {

@@ -17,9 +17,15 @@
 
 #include "KPToolBar.h"
 
+#include <QtCore/qglobal.h>
 #include <QAbstractButton>
 #include <QEvent>
 #include <QLayout>
+#include <QArgument>
+#include <QMetaObject>
+#include <utility>
+
+class QWidget;
 
 KPToolBar::KPToolBar(const QString& title, QWidget* parent)
     : QToolBar(title, parent)

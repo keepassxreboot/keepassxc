@@ -17,6 +17,9 @@
 
 #include "KeePass2RandomStream.h"
 
+#include <QByteRef>
+#include <QtGlobal>
+
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2.h"
 

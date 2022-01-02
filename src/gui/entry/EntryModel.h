@@ -19,7 +19,13 @@
 #define KEEPASSX_ENTRYMODEL_H
 
 #include <QAbstractTableModel>
-#include <QPixmap>
+#include <QList>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QtCore>
 
 #include "core/Config.h"
 

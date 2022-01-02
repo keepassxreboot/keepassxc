@@ -17,22 +17,39 @@
  */
 
 #include "EditWidgetIcons.h"
-#include "ui_EditWidgetIcons.h"
 
+#include "ui_EditWidgetIcons.h"
 #include "core/Clock.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 #include "gui/FileDialog.h"
 #include "gui/IconModels.h"
 #include "gui/Icons.h"
-#include "gui/MessageBox.h"
+#include "gui/DatabaseIcons.h"
+
+template <class T> class QSharedPointer;
 #ifdef WITH_XC_NETWORKING
 #include "gui/IconDownloader.h"
 #endif
 
 #include <QKeyEvent>
+#include <QAction>
+#include <QByteArray>
+#include <QFileInfo>
+#include <QImage>
+#include <QItemSelectionModel>
+#include <QLineEdit>
+#include <QList>
+#include <QListView>
+#include <QMenu>
+#include <QModelIndex>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QStringList>
+#include <QUrl>
+#include <QUrlTwoFlags>
+#include <QVariant>
 
 IconStruct::IconStruct()
     : uuid(QUuid())

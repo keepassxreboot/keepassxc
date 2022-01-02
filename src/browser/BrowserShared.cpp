@@ -17,9 +17,10 @@
 
 #include "BrowserShared.h"
 
-#include "config-keepassx.h"
-
+#include <QtCore/qglobal.h>
 #include <QStandardPaths>
+#include <QStaticStringData>
+#include <QStringLiteral>
 
 namespace BrowserShared
 {

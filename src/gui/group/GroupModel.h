@@ -19,6 +19,13 @@
 #define KEEPASSX_GROUPMODEL_H
 
 #include <QAbstractItemModel>
+#include <QList>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QtCore>
 
 class Database;
 class Group;

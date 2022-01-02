@@ -17,15 +17,24 @@
  */
 
 #include "TotpDialog.h"
-#include "ui_TotpDialog.h"
 
+#include <QPushButton>
+#include <QShortcut>
+#include <QDialogButtonBox>
+#include <QKeySequence>
+#include <QLabel>
+#include <QProgressBar>
+#include <QSharedPointer>
+#include <QVariant>
+#include <QWidget>
+
+#include "ui_TotpDialog.h"
 #include "core/Clock.h"
 #include "gui/Clipboard.h"
 #include "gui/MainWindow.h"
 #include "totp/totp.h"
-
-#include <QPushButton>
-#include <QShortcut>
+#include "core/Config.h"
+#include "core/Entry.h"
 
 TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     : QDialog(parent)

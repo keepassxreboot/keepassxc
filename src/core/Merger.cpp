@@ -17,7 +17,24 @@
 
 #include "Merger.h"
 
+#include <QtCore/qglobal.h>
+#include <QByteArray>
+#include <QDateTime>
+#include <QFlags>
+#include <QList>
+#include <QMap>
+#include <QSet>
+#include <QUuid>
+#include <QtCore>
+
 #include "core/Metadata.h"
+#include "core/Clock.h"
+#include "core/Compare.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttributes.h"
+#include "core/TimeInfo.h"
 
 Merger::Merger(const Database* sourceDb, Database* targetDb)
     : m_mode(Group::Default)

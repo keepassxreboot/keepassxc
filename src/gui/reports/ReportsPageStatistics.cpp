@@ -17,8 +17,13 @@
 
 #include "ReportsPageStatistics.h"
 
+#include <QObject>
+
 #include "ReportsWidgetStatistics.h"
 #include "gui/Icons.h"
+
+class Database;
+class QWidget;
 
 QString ReportsPageStatistics::name()
 {

@@ -18,6 +18,10 @@
 
 #include "YubiKeyInterface.h"
 
+#include <QList>
+
+#include "keys/drivers/YubiKey.h"
+
 YubiKeyInterface::YubiKeyInterface()
     : m_mutex(QMutex::Recursive)
 {

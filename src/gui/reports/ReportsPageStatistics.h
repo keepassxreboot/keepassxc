@@ -18,7 +18,15 @@
 #ifndef KEEPASSXC_REPORTSPAGESTATISTICS_H
 #define KEEPASSXC_REPORTSPAGESTATISTICS_H
 
+#include <QIcon>
+#include <QSharedPointer>
+#include <QString>
+
 #include "ReportsDialog.h"
+
+class Database;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class ReportsPageStatistics : public IReportsPage
 {

@@ -19,13 +19,7 @@
 
 #include "Application.h"
 
-#include "core/Bootstrap.h"
-#include "gui/MainWindow.h"
-#include "gui/MessageBox.h"
-#include "gui/osutils/OSUtils.h"
-#include "gui/styles/dark/DarkStyle.h"
-#include "gui/styles/light/LightStyle.h"
-
+#include <QtCore/qglobal.h>
 #include <QFileInfo>
 #include <QFileOpenEvent>
 #include <QLocalSocket>
@@ -33,6 +27,26 @@
 #include <QPixmapCache>
 #include <QSocketNotifier>
 #include <QStandardPaths>
+#include <QByteArray>
+#include <QDataStream>
+#include <QDebug>
+#include <QEvent>
+#include <QFile>
+#include <QIODevice>
+#include <QList>
+#include <QObject>
+#include <QVariant>
+#include <QVector>
+
+#include "core/Bootstrap.h"
+#include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
+#include "gui/osutils/OSUtils.h"
+#include "gui/styles/dark/DarkStyle.h"
+#include "gui/styles/light/LightStyle.h"
+#include "core/Config.h"
+#include "core/Global.h"
+#include "gui/osutils/OSUtilsBase.h"
 
 #if defined(Q_OS_UNIX)
 #include <signal.h>

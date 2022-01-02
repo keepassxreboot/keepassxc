@@ -20,9 +20,15 @@
 #define BROWSERACCESSCONTROLDIALOG_H
 
 #include <QDialog>
-#include <QTableWidget>
+#include <QByteArrayData>
+#include <QList>
+#include <QScopedPointer>
+#include <QString>
 
 class Entry;
+class QObject;
+class QTableWidgetItem;
+class QWidget;
 
 namespace Ui
 {

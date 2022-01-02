@@ -17,7 +17,19 @@
 
 #include "Kdbx4Writer.h"
 
+#include <QtCore/qglobal.h>
+#include <stdint.h>
 #include <QBuffer>
+#include <QIODevice>
+#include <QList>
+#include <QMetaType>
+#include <QScopedPointer>
+#include <QSet>
+#include <QSharedPointer>
+#include <QString>
+#include <QUuid>
+#include <QVariant>
+#include <QtGlobal>
 
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
@@ -26,6 +38,13 @@
 #include "streams/HmacBlockStream.h"
 #include "streams/SymmetricCipherStream.h"
 #include "streams/qtiocompressor.h"
+#include "core/Database.h"
+#include "core/Endian.h"
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
+#include "core/Group.h"
+#include "crypto/SymmetricCipher.h"
+#include "format/KdbxWriter.h"
 
 bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 {

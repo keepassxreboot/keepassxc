@@ -23,8 +23,9 @@
 
 #include "Base32.h"
 
-#include <QHash>
 #include <QVariant>
+#include <QByteRef>
+#include <QtCore>
 
 constexpr quint64 MASK_40BIT = quint64(0xF8) << 32;
 constexpr quint64 MASK_35BIT = quint64(0x7C0000000);

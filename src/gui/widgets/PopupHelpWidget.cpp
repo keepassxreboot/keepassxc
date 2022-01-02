@@ -18,8 +18,12 @@
 #include "PopupHelpWidget.h"
 
 #include <QApplication>
+#include <QEvent>
+#include <QWidget>
 
 #include "gui/MainWindow.h"
+
+class QShowEvent;
 
 PopupHelpWidget::PopupHelpWidget(QWidget* parent)
     : QFrame(parent)

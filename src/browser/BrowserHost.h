@@ -21,6 +21,9 @@
 #include <QJsonObject>
 #include <QObject>
 #include <QPointer>
+#include <QByteArrayData>
+#include <QList>
+#include <QString>
 
 class QLocalServer;
 class QLocalSocket;

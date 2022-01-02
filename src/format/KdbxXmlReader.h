@@ -18,17 +18,29 @@
 #ifndef KEEPASSXC_KDBXXMLREADER_H
 #define KEEPASSXC_KDBXXMLREADER_H
 
-#include "core/Database.h"
-#include "core/Metadata.h"
-
 #include <QCoreApplication>
 #include <QXmlStreamReader>
+#include <QByteArray>
+#include <QDateTime>
+#include <QList>
+#include <QPair>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QStringRef>
+#include <QUuid>
+#include <QtCore>
 
-class QIODevice;
-class Group;
+#include "core/Group.h"
+
 class Entry;
 class KeePass2RandomStream;
 class TimeInfo;
+class CustomData;
+class Database;
+class Metadata;
+template <class T> class QSharedPointer;
 
 /**
  * KDBX XML payload reader.

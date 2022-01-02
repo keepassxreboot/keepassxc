@@ -16,13 +16,26 @@
  */
 
 #include "YubiKeyEditWidget.h"
+
+#include <QComboBox>
+#include <QGroupBox>
+#include <QLabel>
+#include <QList>
+#include <QPair>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QSizePolicy>
+#include <QVariant>
+#include <QWidget>
+
 #include "ui_KeyComponentWidget.h"
 #include "ui_YubiKeyEditWidget.h"
-
 #include "config-keepassx.h"
 #include "core/AsyncTask.h"
 #include "keys/ChallengeResponseKey.h"
 #include "keys/CompositeKey.h"
+#include "gui/databasekey/KeyComponentWidget.h"
+#include "keys/drivers/YubiKey.h"
 
 YubiKeyEditWidget::YubiKeyEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)

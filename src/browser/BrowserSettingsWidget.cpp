@@ -16,12 +16,26 @@
  */
 
 #include "BrowserSettingsWidget.h"
-#include "ui_BrowserSettingsWidget.h"
-
-#include "BrowserSettings.h"
-#include "config-keepassx.h"
 
 #include <QFileDialog>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QCoreApplication>
+#include <QFile>
+#include <QFileInfo>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QTabWidget>
+#include <QVariant>
+#include <QtCore>
+
+#include "ui_BrowserSettingsWidget.h"
+#include "BrowserSettings.h"
+#include "BrowserShared.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
 
 BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     : QWidget(parent)

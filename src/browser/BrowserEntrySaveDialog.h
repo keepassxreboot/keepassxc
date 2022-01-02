@@ -19,11 +19,16 @@
 #ifndef BROWSERENTRYSAVEDIALOG_H
 #define BROWSERENTRYSAVEDIALOG_H
 
-#include "gui/DatabaseTabWidget.h"
+#include <QByteArrayData>
+#include <QDialog>
+#include <QList>
+#include <QScopedPointer>
+#include <QString>
 
 class QListWidgetItem;
-
-class Entry;
+class DatabaseWidget;
+class QObject;
+class QWidget;
 
 namespace Ui
 {

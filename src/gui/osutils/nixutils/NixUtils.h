@@ -18,9 +18,15 @@
 #ifndef KEEPASSXC_NIXUTILS_H
 #define KEEPASSXC_NIXUTILS_H
 
-#include "gui/osutils/OSUtilsBase.h"
 #include <QAbstractNativeEventFilter>
 #include <QSharedPointer>
+#include <QByteArray>
+#include <QString>
+#include <QtCore>
+
+#include "gui/osutils/OSUtilsBase.h"
+
+template <class T> class QSharedPointer;
 
 class NixUtils : public OSUtilsBase, QAbstractNativeEventFilter
 {

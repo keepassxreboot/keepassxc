@@ -19,20 +19,29 @@
 #ifndef KEEPASSX_ENTRY_H
 #define KEEPASSX_ENTRY_H
 
-#include <QMap>
 #include <QPointer>
 #include <QUuid>
+#include <QByteArrayData>
+#include <QFlags>
+#include <QList>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
 
-#include "core/AutoTypeAssociations.h"
-#include "core/CustomData.h"
-#include "core/EntryAttachments.h"
-#include "core/EntryAttributes.h"
-#include "core/Global.h"
 #include "core/TimeInfo.h"
+#include "core/Compare.h"
+#include "core/ModifiableObject.h"
 
 class Database;
 class Group;
 class PasswordHealth;
+class AutoTypeAssociations;
+class CustomData;
+class EntryAttachments;
+class EntryAttributes;
+class QDateTime;
+class QObject;
+template <class T> class QSharedPointer;
 
 namespace Totp
 {

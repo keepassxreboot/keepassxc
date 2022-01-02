@@ -17,11 +17,17 @@
 
 #include "SymmetricCipher.h"
 
-#include "config-keepassx.h"
-#include "format/KeePass2.h"
-
 #include <botan/block_cipher.h>
 #include <botan/cipher_mode.h>
+#include <QtCore/qglobal.h>
+#include <botan/secmem.h>
+#include <QObject>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <algorithm>
+#include <exception>
+
+#include "format/KeePass2.h"
 
 bool SymmetricCipher::init(Mode mode, Direction direction, const QByteArray& key, const QByteArray& iv)
 {

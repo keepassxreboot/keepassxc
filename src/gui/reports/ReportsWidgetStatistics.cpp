@@ -16,16 +16,29 @@
  */
 
 #include "ReportsWidgetStatistics.h"
-#include "ui_ReportsWidgetStatistics.h"
 
+#include <QStandardItemModel>
+#include <QAbstractItemView>
+#include <QDateTime>
+#include <QHeaderView>
+#include <QList>
+#include <QStandardItem>
+#include <QStringList>
+#include <QTableView>
+#include <QTimer>
+#include <QtCore>
+#include <utility>
+
+#include "ui_ReportsWidgetStatistics.h"
 #include "core/AsyncTask.h"
 #include "core/DatabaseStats.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/PasswordHealth.h"
 #include "gui/Icons.h"
+#include "core/Database.h"
+#include "core/TimeInfo.h"
 
-#include <QStandardItemModel>
+class QShowEvent;
 
 ReportsWidgetStatistics::ReportsWidgetStatistics(QWidget* parent)
     : QWidget(parent)

@@ -16,12 +16,25 @@
  */
 
 #include <QFile>
+#include <QDateTime>
+#include <QIODevice>
+#include <QList>
+#include <QUuid>
+#include <QVariantMap>
 
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "format/Kdbx3Writer.h"
 #include "format/Kdbx4Writer.h"
 #include "format/KeePass2Writer.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "crypto/kdf/Kdf.h"
+#include "format/KdbxWriter.h"
+#include "format/KeePass2.h"
+
+class QByteArray;
 
 /**
  * Write a database to a KDBX file.

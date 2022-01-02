@@ -18,14 +18,17 @@
 
 #include "OpenSSHKey.h"
 
+#include <botan/pwdhash.h>
+#include <botan/types.h>
+#include <QRegularExpression>
+#include <QStringList>
+#include <QMap>
+#include <QScopedPointer>
+#include <exception>
+
 #include "ASN1Key.h"
 #include "BinaryStream.h"
 #include "crypto/SymmetricCipher.h"
-
-#include <QRegularExpression>
-#include <QStringList>
-
-#include <botan/pwdhash.h>
 
 const QString OpenSSHKey::TYPE_DSA_PRIVATE = "DSA PRIVATE KEY";
 const QString OpenSSHKey::TYPE_RSA_PRIVATE = "RSA PRIVATE KEY";

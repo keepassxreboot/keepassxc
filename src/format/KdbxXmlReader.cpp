@@ -16,15 +16,36 @@
  */
 
 #include "KdbxXmlReader.h"
+
+#include <QtCore/qglobal.h>
+#include <QBuffer>
+#include <QFile>
+#include <QChar>
+#include <QCharRef>
+#include <QDate>
+#include <QIODevice>
+#include <QLatin1String>
+#include <QSet>
+#include <QTime>
+#include <QXmlStreamAttributes>
+#include <utility>
+
 #include "KeePass2RandomStream.h"
 #include "core/Clock.h"
 #include "core/Endian.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "streams/qtiocompressor.h"
-
-#include <QBuffer>
-#include <QFile>
+#include "core/AutoTypeAssociations.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
+#include "core/EntryAttributes.h"
+#include "core/Global.h"
+#include "core/Metadata.h"
+#include "core/TimeInfo.h"
+#include "format/KeePass2.h"
 
 #define UUID_LENGTH 16
 

@@ -18,7 +18,12 @@
 #ifndef KEEPASSXC_BROWSERSETTINGSPAGE_H
 #define KEEPASSXC_BROWSERSETTINGSPAGE_H
 
+#include <QIcon>
+#include <QString>
+
 #include "gui/ApplicationSettingsWidget.h"
+
+class QWidget;
 
 class BrowserSettingsPage : public ISettingsPage
 {

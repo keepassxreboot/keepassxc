@@ -16,6 +16,10 @@
  */
 #include "Clock.h"
 
+#include <QDate>
+#include <QSharedPointer>
+#include <QTime>
+
 QSharedPointer<Clock> Clock::m_instance;
 
 QDateTime Clock::currentDateTimeUtc()

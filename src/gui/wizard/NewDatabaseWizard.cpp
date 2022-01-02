@@ -16,15 +16,23 @@
  */
 
 #include "NewDatabaseWizard.h"
-#include "NewDatabaseWizardPageDatabaseKey.h"
-#include "NewDatabaseWizardPageEncryption.h"
-#include "NewDatabaseWizardPageMetaData.h"
-
-#include "core/Global.h"
-#include "core/Group.h"
 
 #include <QFrame>
 #include <QPalette>
+#include <QColor>
+#include <QPixmap>
+#include <QPointer>
+#include <QtGlobal>
+
+#include "NewDatabaseWizardPageDatabaseKey.h"
+#include "NewDatabaseWizardPageEncryption.h"
+#include "NewDatabaseWizardPageMetaData.h"
+#include "core/Global.h"
+#include "core/Group.h"
+#include "core/Database.h"
+#include "gui/wizard/NewDatabaseWizardPage.h"
+
+class QWidget;
 
 NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
     : QWizard(parent)

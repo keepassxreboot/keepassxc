@@ -16,16 +16,28 @@
  */
 
 #include "EntryAttachmentsWidget.h"
-#include "ui_EntryAttachmentsWidget.h"
 
 #include <QDir>
 #include <QDropEvent>
 #include <QMimeData>
-#include <QStandardPaths>
-#include <QTemporaryFile>
+#include <QAbstractItemView>
+#include <QByteArray>
+#include <QEvent>
+#include <QFile>
+#include <QFileInfo>
+#include <QHeaderView>
+#include <QIODevice>
+#include <QItemSelectionModel>
+#include <QList>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QPushButton>
+#include <QTableView>
+#include <QUrl>
+#include <QtCore>
 
+#include "ui_EntryAttachmentsWidget.h"
 #include "EntryAttachmentsModel.h"
-#include "core/Config.h"
 #include "core/EntryAttachments.h"
 #include "core/Tools.h"
 #include "gui/FileDialog.h"

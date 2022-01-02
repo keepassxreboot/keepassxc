@@ -17,8 +17,18 @@
 
 #include "KeePass1Reader.h"
 
+#include <QtCore/qglobal.h>
 #include <QFile>
 #include <QTextCodec>
+#include <QDate>
+#include <QIODevice>
+#include <QMap>
+#include <QMapIterator>
+#include <QRegExp>
+#include <QScopedPointer>
+#include <QStringList>
+#include <QTime>
+#include <QUuid>
 
 #include "core/Endian.h"
 #include "core/Group.h"
@@ -28,6 +38,16 @@
 #include "format/KeePass1.h"
 #include "keys/FileKey.h"
 #include "streams/SymmetricCipherStream.h"
+#include "core/AutoTypeAssociations.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
+#include "core/Global.h"
+#include "core/TimeInfo.h"
+#include "crypto/SymmetricCipher.h"
+#include "crypto/kdf/AesKdf.h"
+#include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
 
 class KeePass1Key : public CompositeKey
 {

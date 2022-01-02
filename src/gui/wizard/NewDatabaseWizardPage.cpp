@@ -17,10 +17,15 @@
  */
 
 #include "NewDatabaseWizardPage.h"
-#include "ui_NewDatabaseWizardPage.h"
 
-#include "core/Database.h"
+#include <QPushButton>
+#include <QScrollArea>
+#include <utility>
+
+#include "ui_NewDatabaseWizardPage.h"
 #include "gui/dbsettings/DatabaseSettingsWidget.h"
+
+class QWidget;
 
 NewDatabaseWizardPage::NewDatabaseWizardPage(QWidget* parent)
     : QWizardPage(parent)

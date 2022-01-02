@@ -20,12 +20,17 @@
 
 #include <QCoreApplication>
 #include <QSharedPointer>
+#include <QByteArray>
+#include <QDateTime>
+#include <QList>
+#include <QString>
+#include <QtCore>
 
 class Database;
 class Entry;
 class Group;
 class SymmetricCipherStream;
-class QIODevice;
+template <class T> class QSharedPointer;
 
 class KeePass1Reader
 {

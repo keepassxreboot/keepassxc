@@ -15,14 +15,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "OpData01.h"
-#include "OpVaultReader.h"
-
-#include "core/Entry.h"
-
+#include <QtCore/qglobal.h>
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QByteArray>
+#include <QByteRef>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QIODevice>
+#include <QJsonParseError>
+#include <QJsonValueRef>
+#include <QList>
+#include <QString>
+#include <QStringList>
+
+#include "OpData01.h"
+#include "OpVaultReader.h"
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
 
 /*!
  * This will \c qCritical() if unable to open the file for reading.

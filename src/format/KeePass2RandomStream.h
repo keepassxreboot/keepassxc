@@ -18,6 +18,10 @@
 #ifndef KEEPASSX_KEEPASS2RANDOMSTREAM_H
 #define KEEPASSX_KEEPASS2RANDOMSTREAM_H
 
+#include <QtCore/qglobal.h>
+#include <QByteArray>
+#include <QString>
+
 #include "crypto/SymmetricCipher.h"
 
 class KeePass2RandomStream

@@ -18,10 +18,16 @@
 #ifndef KEEPASSXC_EDITGROUPPAGEKEESHARE_H
 #define KEEPASSXC_EDITGROUPPAGEKEESHARE_H
 
+#include <QIcon>
+#include <QSharedPointer>
+#include <QString>
+
 #include "gui/group/EditGroupWidget.h"
 
 class Group;
 class Database;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class EditGroupPageKeeShare : public IEditGroupPage
 {

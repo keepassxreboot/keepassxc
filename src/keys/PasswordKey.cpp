@@ -17,9 +17,13 @@
 
 #include "PasswordKey.h"
 
-#include "crypto/CryptoHash.h"
-
 #include <QSharedPointer>
+#include <QUuid>
+#include <QtGlobal>
+#include <algorithm>
+#include <cstring>
+
+#include "crypto/CryptoHash.h"
 
 QUuid PasswordKey::UUID("77e90411-303a-43f2-b773-853b05635ead");
 

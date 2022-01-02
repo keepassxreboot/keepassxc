@@ -30,10 +30,10 @@
 #define PHANTOMCOLOR_H
 
 #include <QColor>
+#include <QtGlobal>
 
 namespace Phantom
 {
-    struct Rgb;
     struct Hsl;
 
     // A color presumed to be in linear space, represented as RGB. Values are in

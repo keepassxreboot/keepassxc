@@ -18,11 +18,16 @@
 #ifndef KEEPASSXC_DATABASESETTINGSWIDGETENCRYPTION_H
 #define KEEPASSXC_DATABASESETTINGSWIDGETENCRYPTION_H
 
-#include "DatabaseSettingsWidget.h"
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
 
+#include "DatabaseSettingsWidget.h"
 #include "crypto/kdf/Kdf.h"
 
-class Database;
+class QShowEvent;
+class QWidget;
+
 namespace Ui
 {
     class DatabaseSettingsWidgetEncryption;

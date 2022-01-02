@@ -16,10 +16,21 @@
  */
 
 #include "ExportDialog.h"
-#include "ui_ExportDialog.h"
 
+#include <QComboBox>
+#include <QDialogButtonBox>
+#include <QVariant>
+#include <QtCore>
+#include <utility>
+
+#include "ui_ExportDialog.h"
 #include "gui/FileDialog.h"
 #include "gui/HtmlExporter.h"
+#include "gui/DatabaseTabWidget.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+
+class Database;
 
 ExportDialog::ExportDialog(QSharedPointer<const Database> db, DatabaseTabWidget* parent)
     : QDialog(parent)

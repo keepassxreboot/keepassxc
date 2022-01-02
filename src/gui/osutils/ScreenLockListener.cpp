@@ -16,6 +16,9 @@
  */
 
 #include "ScreenLockListener.h"
+
+#include <QWidget>
+
 #include "ScreenLockListenerPrivate.h"
 
 ScreenLockListener::ScreenLockListener(QWidget* parent)

@@ -16,22 +16,34 @@
  */
 
 #include "IconDownloaderDialog.h"
-#include "ui_IconDownloaderDialog.h"
 
+#include "ui_IconDownloaderDialog.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 #include "gui/IconDownloader.h"
-#include "gui/IconModels.h"
 #include "gui/Icons.h"
-#include "osutils/OSUtils.h"
+
+class QWidget;
+template <class T> class QSharedPointer;
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
 
 #include <QStandardItemModel>
+#include <QApplication>
+#include <QByteArray>
+#include <QHeaderView>
+#include <QImage>
+#include <QLabel>
+#include <QMutexLocker>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QStandardItem>
+#include <QTableView>
+#include <QUuid>
+#include <QVariant>
 
 IconDownloaderDialog::IconDownloaderDialog(QWidget* parent)
     : QDialog(parent)

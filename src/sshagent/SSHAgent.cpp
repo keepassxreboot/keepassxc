@@ -18,19 +18,27 @@
 
 #include "SSHAgent.h"
 
+#include <QFileInfo>
+#include <QLocalSocket>
+#include <QByteRef>
+#include <QGlobalStatic>
+#include <QList>
+#include <QProcessEnvironment>
+#include <QVariant>
+
 #include "core/Config.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "sshagent/BinaryStream.h"
 #include "sshagent/KeeAgentSettings.h"
+#include "core/Database.h"
+#include "core/Entry.h"
 
-#include <QFileInfo>
-#include <QLocalSocket>
-#include <QThread>
+template <class T> class QSharedPointer;
 
 #ifdef Q_OS_WIN
-#include <QtEndian>
 #include <windows.h>
+#include <QtEndian>
 #endif
 
 Q_GLOBAL_STATIC(SSHAgent, s_sshAgent);

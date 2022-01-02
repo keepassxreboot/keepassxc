@@ -19,6 +19,8 @@
 #define KEEPASSX_PASSPHRASEGENERATOR_H
 
 #include <QVector>
+#include <QString>
+#include <QtGlobal>
 
 class PassphraseGenerator
 {

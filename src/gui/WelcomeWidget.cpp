@@ -17,9 +17,19 @@
  */
 
 #include "WelcomeWidget.h"
-#include "ui_WelcomeWidget.h"
-#include <QKeyEvent>
 
+#include <QKeyEvent>
+#include <QFont>
+#include <QIcon>
+#include <QLabel>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QPushButton>
+#include <QStringList>
+#include <QVariant>
+#include <QtCore>
+
+#include "ui_WelcomeWidget.h"
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "gui/Icons.h"

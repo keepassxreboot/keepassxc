@@ -18,19 +18,30 @@
 
 #include "Database.h"
 
+#include <QFileInfo>
+#include <QSaveFile>
+#include <QTemporaryFile>
+#include <QTimer>
+#include <QArgument>
+#include <QDir>
+#include <QFile>
+#include <QIODevice>
+#include <QMetaObject>
+#include <QMutexLocker>
+#include <utility>
+
 #include "core/AsyncTask.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
+#include "core/Clock.h"
+#include "core/Entry.h"
+#include "core/Metadata.h"
+#include "keys/CompositeKey.h"
 
-#include <QFileInfo>
-#include <QJsonObject>
-#include <QRegularExpression>
-#include <QSaveFile>
-#include <QTemporaryFile>
-#include <QTimer>
+template <class T> class QSharedPointer;
 
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
 

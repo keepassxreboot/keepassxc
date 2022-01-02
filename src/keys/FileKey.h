@@ -20,10 +20,13 @@
 #define KEEPASSX_FILEKEY_H
 
 #include <botan/secmem.h>
+#include <QByteArray>
+#include <QString>
 
 #include "keys/Key.h"
 
 class QIODevice;
+class QUuid;
 
 class FileKey : public Key
 {

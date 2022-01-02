@@ -16,18 +16,39 @@
  */
 
 #include "OpVaultReader.h"
-#include "OpData01.h"
 
+#include <botan/pwdhash.h>
+#include <QtCore/qglobal.h>
+#include <botan/secmem.h>
+#include <QDebug>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QChar>
+#include <QDateTime>
+#include <QFile>
+#include <QIODevice>
+#include <QJsonValue>
+#include <QJsonValueRef>
+#include <QList>
+#include <QMap>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QStringList>
+#include <QUuid>
+#include <QtCore>
+#include <exception>
+
+#include "OpData01.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
-
-#include <QDebug>
-#include <QJsonDocument>
-#include <QJsonObject>
-
-#include <botan/pwdhash.h>
+#include "core/Database.h"
+#include "core/Global.h"
+#include "core/TimeInfo.h"
+#include "format/KeePass2.h"
+#include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
 
 OpVaultReader::OpVaultReader(QObject* parent)
     : QObject(parent)

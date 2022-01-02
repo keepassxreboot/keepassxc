@@ -20,6 +20,7 @@
 #define KEEPASSX_RESOURCES_H
 
 #include <QString>
+#include <QtGlobal>
 
 class Resources
 {

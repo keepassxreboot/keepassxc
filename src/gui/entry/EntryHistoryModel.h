@@ -19,6 +19,12 @@
 #define KEEPASSX_ENTRYHISTORYMODEL_H
 
 #include <QAbstractTableModel>
+#include <QList>
+#include <QModelIndex>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QtCore>
 
 class Entry;
 

@@ -21,14 +21,10 @@
 #define KEEPASSX_APPLICATION_H
 
 #include <QApplication>
-#include <QtNetwork/qlocalserver.h>
-
-#if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
-
-class OSEventFilter;
-#endif
-class QLockFile;
-class QSocketNotifier;
+#include <QLocalServer>
+#include <QString>
+#include <QStringList>
+#include <QtCore>
 
 constexpr int RESTART_EXITCODE = -1;
 

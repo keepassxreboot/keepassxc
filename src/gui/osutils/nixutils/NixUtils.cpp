@@ -17,6 +17,8 @@
 
 #include "NixUtils.h"
 
+#include <qpa/qplatformnativeinterface.h>
+#include <QtCore/qglobal.h>
 #include <QApplication>
 #include <QDir>
 #include <QPointer>
@@ -24,12 +26,26 @@
 #include <QStyle>
 #include <QTextStream>
 #include <QX11Info>
-
-#include <qpa/qplatformnativeinterface.h>
-
-#include "X11Funcs.h"
+#include <QColor>
+#include <QFile>
+#include <QGuiApplication>
+#include <QHashIterator>
+#include <QIODevice>
+#include <QPalette>
+#include <QStaticByteArrayData>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QVariant>
 #include <X11/XKBlib.h>
 #include <xcb/xproto.h>
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/XKB.h>
+#include <xcb/xcb.h>
+
+#include "X11Funcs.h"
+
+template <class T> class QSharedPointer;
 
 namespace
 {

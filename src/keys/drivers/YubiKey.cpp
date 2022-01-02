@@ -17,6 +17,10 @@
  */
 
 #include "YubiKey.h"
+
+#include <QtCore/qglobal.h>
+#include <QMultiMap>
+
 #include "YubiKeyInterfacePCSC.h"
 #include "YubiKeyInterfaceUSB.h"
 

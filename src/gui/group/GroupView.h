@@ -19,10 +19,20 @@
 #define KEEPASSX_GROUPVIEW_H
 
 #include <QTreeView>
+#include <QByteArrayData>
+#include <QSharedPointer>
+#include <QString>
 
 class Database;
 class Group;
 class GroupModel;
+class QAbstractItemModel;
+class QDragMoveEvent;
+class QFocusEvent;
+class QModelIndex;
+class QObject;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class GroupView : public QTreeView
 {

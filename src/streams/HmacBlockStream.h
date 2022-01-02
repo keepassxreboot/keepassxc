@@ -19,6 +19,9 @@
 #define KEEPASSX_HMACBLOCKSTREAM_H
 
 #include <QSysInfo>
+#include <QByteArray>
+#include <QString>
+#include <QtCore>
 
 #include "streams/LayeredStream.h"
 

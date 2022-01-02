@@ -17,13 +17,19 @@
 
 #include "DatabaseIcons.h"
 
-#include "core/Config.h"
-#include "core/Global.h"
-
+#include <QtCore/qglobal.h>
 #include <QDir>
 #include <QImageReader>
 #include <QPainter>
 #include <QPixmapCache>
+#include <QList>
+#include <QPoint>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QVariant>
+
+#include "core/Config.h"
 
 DatabaseIcons* DatabaseIcons::m_instance(nullptr);
 

@@ -17,6 +17,11 @@
 
 #include "EntryAttachmentsModel.h"
 
+#include <QByteArray>
+#include <QFlags>
+#include <QList>
+#include <algorithm>
+
 #include "core/EntryAttachments.h"
 #include "core/Tools.h"
 

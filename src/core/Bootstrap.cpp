@@ -16,12 +16,18 @@
  */
 
 #include "Bootstrap.h"
+
+#include <QtCore/qglobal.h>
+#include <QByteArray>
+#include <QtGlobal>
+
 #include "config-keepassx.h"
 #include "core/Translator.h"
 
 #ifdef Q_OS_WIN
 #include <aclapi.h> // for createWindowsDACL()
 #include <windows.h> // for Sleep(), SetDllDirectoryA(), SetSearchPathMode(), ...
+
 #undef MessageBox
 #endif
 

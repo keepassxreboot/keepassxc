@@ -18,9 +18,13 @@
 #ifndef KEEPASSXC_UPDATECHECKDIALOG_H
 #define KEEPASSXC_UPDATECHECKDIALOG_H
 
-#include "config-keepassx.h"
-#include "core/Global.h"
-#include "gui/MessageBox.h"
+#include <QByteArrayData>
+#include <QDialog>
+#include <QScopedPointer>
+#include <QString>
+
+class QObject;
+class QWidget;
 
 namespace Ui
 {

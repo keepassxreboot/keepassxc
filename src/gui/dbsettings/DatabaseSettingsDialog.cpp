@@ -17,11 +17,12 @@
  */
 
 #include "DatabaseSettingsDialog.h"
-#include "ui_DatabaseSettingsDialog.h"
 
+#include "ui_DatabaseSettingsDialog.h"
 #include "DatabaseSettingsWidgetDatabaseKey.h"
 #include "DatabaseSettingsWidgetEncryption.h"
 #include "DatabaseSettingsWidgetGeneral.h"
+#include "gui/CategoryListWidget.h"
 #ifdef WITH_XC_BROWSER
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
@@ -36,12 +37,21 @@
 #include "touchid/TouchID.h"
 #endif
 
+#include <QScrollArea>
+#include <QAbstractScrollArea>
+#include <QCheckBox>
+#include <QDialogButtonBox>
+#include <QFrame>
+#include <QStackedWidget>
+#include <QTabWidget>
+#include <QVariant>
+#include <QWidget>
+
 #include "core/Config.h"
-#include "core/Database.h"
 #include "core/Global.h"
 #include "gui/Icons.h"
 
-#include <QScrollArea>
+template <class T> class QSharedPointer;
 
 class DatabaseSettingsDialog::ExtraPage
 {

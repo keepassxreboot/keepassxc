@@ -18,9 +18,16 @@
 #ifndef KEEPASSXC_REPORTSPAGEHEALTHCHECK_H
 #define KEEPASSXC_REPORTSPAGEHEALTHCHECK_H
 
+#include <QIcon>
+#include <QSharedPointer>
+#include <QString>
+
 #include "ReportsDialog.h"
 
 class ReportsWidgetHealthcheck;
+class Database;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class ReportsPageHealthcheck : public IReportsPage
 {

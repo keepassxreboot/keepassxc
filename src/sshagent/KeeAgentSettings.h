@@ -20,6 +20,8 @@
 #define KEEAGENTSETTINGS_H
 
 #include <QProcessEnvironment>
+#include <QByteArray>
+#include <QString>
 
 class Entry;
 class EntryAttachments;

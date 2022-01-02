@@ -18,16 +18,20 @@
 #ifndef KEEPASSX_UNLOCKDATABASEDIALOG_H
 #define KEEPASSX_UNLOCKDATABASEDIALOG_H
 
-#include "core/Global.h"
-
 #include <QDialog>
 #include <QList>
 #include <QPointer>
-#include <QTabBar>
+#include <QByteArrayData>
+#include <QSharedPointer>
+#include <QString>
 
 class Database;
 class DatabaseWidget;
 class DatabaseOpenWidget;
+class QObject;
+class QTabBar;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class DatabaseOpenDialog : public QDialog
 {

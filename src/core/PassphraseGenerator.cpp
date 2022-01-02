@@ -17,9 +17,14 @@
 
 #include "PassphraseGenerator.h"
 
+#include <QtCore/qglobal.h>
 #include <QFile>
 #include <QTextStream>
 #include <cmath>
+#include <QIODevice>
+#include <QRegExp>
+#include <QSharedPointer>
+#include <QStringList>
 
 #include "core/Resources.h"
 #include "crypto/Random.h"

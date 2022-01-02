@@ -18,6 +18,7 @@
  */
 
 #include "BrowserService.h"
+
 #include "BrowserAccessControlDialog.h"
 #include "BrowserAction.h"
 #include "BrowserEntryConfig.h"
@@ -28,19 +29,46 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
+#include "core/Clock.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttributes.h"
+#include "core/Global.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
+#include "gui/DatabaseWidget.h"
+#include "gui/osutils/OSUtilsBase.h"
+
+template <class T> class QSharedPointer;
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
 
 #include <QCheckBox>
-#include <QCryptographicHash>
 #include <QHostAddress>
 #include <QInputDialog>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QListWidget>
 #include <QProgressDialog>
 #include <QUrl>
+#include <QAbstractSocket>
+#include <QByteArray>
+#include <QDateTime>
+#include <QDialog>
+#include <QFlags>
+#include <QGlobalStatic>
+#include <QJsonValue>
+#include <QJsonValueRef>
+#include <QListWidgetItem>
+#include <QMultiMap>
+#include <QRegularExpression>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QTableWidgetItem>
+#include <QUrlTwoFlags>
+#include <QVariant>
+#include <algorithm>
 
 const QString BrowserService::KEEPASSXCBROWSER_NAME = QStringLiteral("KeePassXC-Browser Settings");
 const QString BrowserService::KEEPASSXCBROWSER_OLD_NAME = QStringLiteral("keepassxc-browser Settings");

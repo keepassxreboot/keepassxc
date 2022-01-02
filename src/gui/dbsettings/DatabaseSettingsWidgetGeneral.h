@@ -18,9 +18,15 @@
 #ifndef KEEPASSXC_DATABASESETTINGSWIDGETGENERAL_H
 #define KEEPASSXC_DATABASESETTINGSWIDGETGENERAL_H
 
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "DatabaseSettingsWidget.h"
 
-class Database;
+class QShowEvent;
+class QWidget;
+
 namespace Ui
 {
     class DatabaseSettingsWidgetGeneral;

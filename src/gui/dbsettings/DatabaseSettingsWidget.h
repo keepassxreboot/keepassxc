@@ -18,9 +18,15 @@
 #ifndef KEEPASSXC_DATABASESETTINGSWIDGET_H
 #define KEEPASSXC_DATABASESETTINGSWIDGET_H
 
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "gui/settings/SettingsWidget.h"
 
 class Database;
+class QWidget;
+template <class T> class QSharedPointer;
 
 /**
  * Pure-virtual base class for KeePassXC database settings widgets.

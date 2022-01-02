@@ -18,6 +18,8 @@
 #include "TestMerge.h"
 #include "mock/MockClock.h"
 
+#include "core/CustomData.h"
+#include "core/EntryAttributes.h"
 #include "core/Merger.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"

@@ -18,11 +18,18 @@
 #ifndef KEEPASSXC_NEWDATABASEWIZARD_H
 #define KEEPASSXC_NEWDATABASEWIZARD_H
 
-#include <QPointer>
 #include <QWizard>
+#include <QByteArrayData>
+#include <QList>
+#include <QSharedPointer>
+#include <QString>
 
 class Database;
 class NewDatabaseWizardPage;
+class QObject;
+class QWidget;
+template <class T> class QPointer;
+template <class T> class QSharedPointer;
 
 /**
  * Setup wizard for creating a new database.

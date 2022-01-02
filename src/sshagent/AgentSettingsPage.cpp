@@ -17,8 +17,13 @@
  */
 
 #include "AgentSettingsPage.h"
+
+#include <QObject>
+
 #include "AgentSettingsWidget.h"
 #include "gui/Icons.h"
+
+class QWidget;
 
 QString AgentSettingsPage::name()
 {

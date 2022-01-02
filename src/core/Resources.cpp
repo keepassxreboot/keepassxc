@@ -18,9 +18,15 @@
 
 #include "Resources.h"
 
+#include <QtCore/qglobal.h>
 #include <QCoreApplication>
 #include <QDir>
 #include <QLibrary>
+#include <QFileInfo>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QtCore>
 
 #include "config-keepassx.h"
 #include "core/Config.h"

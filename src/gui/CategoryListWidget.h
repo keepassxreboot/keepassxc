@@ -20,9 +20,19 @@
 
 #include <QPointer>
 #include <QStyledItemDelegate>
+#include <QIcon>
+#include <QScopedPointer>
+#include <QSize>
+#include <QString>
+#include <QStyleOptionViewItem>
+#include <QWidget>
+#include <QtCore>
 
 class CategoryListWidgetDelegate;
 class QListWidget;
+class QPainter;
+class QResizeEvent;
+class QShowEvent;
 
 namespace Ui
 {

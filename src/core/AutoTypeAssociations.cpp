@@ -17,6 +17,9 @@
 
 #include "AutoTypeAssociations.h"
 
+#include <QByteArray>
+#include <QMutableListIterator>
+
 bool AutoTypeAssociations::Association::operator==(const AutoTypeAssociations::Association& other) const
 {
     return window == other.window && sequence == other.sequence;

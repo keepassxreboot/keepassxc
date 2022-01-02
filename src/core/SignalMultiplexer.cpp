@@ -17,6 +17,10 @@
 
 #include "SignalMultiplexer.h"
 
+#include <QMutableListIterator>
+#include <QObject>
+#include <QtCore>
+
 #include "core/Global.h"
 
 SignalMultiplexer::SignalMultiplexer()

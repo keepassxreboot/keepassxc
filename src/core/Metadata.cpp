@@ -18,12 +18,17 @@
 
 #include "Metadata.h"
 
-#include "core/Clock.h"
-#include "core/Entry.h"
-#include "core/Group.h"
+#include <QObject>
+#include <QStaticStringData>
+#include <QStringLiteral>
 
-#include <QApplication>
-#include <QCryptographicHash>
+// TODO Should this class export CustomData?
+// TODO Should Entry export EntryAttributes/EntryAttachments etc?
+
+#include "core/Clock.h"
+#include "core/Group.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
 
 const int Metadata::DefaultHistoryMaxItems = 10;
 const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;

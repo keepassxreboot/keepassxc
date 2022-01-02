@@ -17,9 +17,8 @@
  */
 
 #include "NativeMessageInstaller.h"
-#include "BrowserSettings.h"
-#include "config-keepassx.h"
 
+#include <QtCore/qglobal.h>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -27,9 +26,18 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-#include <QProcessEnvironment>
-#include <QSettings>
 #include <QStandardPaths>
+#include <QFile>
+#include <QFileInfo>
+#include <QIODevice>
+#include <QJsonValueRef>
+#include <QObject>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QtCore>
+
+#include "BrowserSettings.h"
 
 using namespace BrowserShared;
 

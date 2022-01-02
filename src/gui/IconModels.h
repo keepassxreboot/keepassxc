@@ -20,6 +20,12 @@
 
 #include <QAbstractListModel>
 #include <QPixmap>
+#include <QList>
+#include <QModelIndex>
+#include <QString>
+#include <QUuid>
+#include <QVariant>
+#include <QtCore>
 
 class DefaultIconModel : public QAbstractListModel
 {

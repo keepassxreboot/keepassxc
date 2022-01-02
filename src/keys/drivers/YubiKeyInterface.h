@@ -19,9 +19,17 @@
 #ifndef KEEPASSX_YUBIKEY_INTERFACE_H
 #define KEEPASSX_YUBIKEY_INTERFACE_H
 
-#include "YubiKey.h"
-
+#include <botan/secmem.h>
 #include <QMultiMap>
+#include <QByteArray>
+#include <QMutex>
+#include <QObject>
+#include <QPair>
+#include <QString>
+#include <QTimer>
+#include <QtCore>
+
+#include "YubiKey.h"
 
 /**
  * Abstract base class to manage the interfaces to hardware key(s)

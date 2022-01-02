@@ -16,14 +16,20 @@
  */
 
 #include "BrowserHost.h"
-#include "BrowserShared.h"
 
+#include <QtCore/qglobal.h>
 #include <QJsonDocument>
 #include <QLocalServer>
 #include <QLocalSocket>
+#include <QByteArray>
+#include <QDebug>
+#include <QJsonParseError>
+
+#include "BrowserShared.h"
 
 #ifdef Q_OS_WIN
 #include <fcntl.h>
+
 #undef NOMINMAX
 #define NOMINMAX
 #include <windows.h>

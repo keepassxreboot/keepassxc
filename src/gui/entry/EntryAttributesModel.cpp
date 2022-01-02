@@ -17,6 +17,10 @@
 
 #include "EntryAttributesModel.h"
 
+#include <QAbstractItemModel>
+#include <QFlags>
+#include <algorithm>
+
 #include "core/EntryAttributes.h"
 
 EntryAttributesModel::EntryAttributesModel(QObject* parent)

@@ -19,11 +19,13 @@
 #ifndef KEEPASSX_CLIPBOARD_H
 #define KEEPASSX_CLIPBOARD_H
 
-#include <QElapsedTimer>
 #include <QObject>
+#include <QByteArrayData>
+#include <QString>
 #ifdef Q_OS_MACOS
-#include "core/MacPasteboard.h"
 #include <QPointer>
+
+#include "core/MacPasteboard.h"
 #endif
 
 class QTimer;

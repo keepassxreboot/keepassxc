@@ -18,7 +18,11 @@
 
 #include "ChallengeResponseKey.h"
 
+#include <QUuid>
+
 #include "core/AsyncTask.h"
+#include "keys/Key.h"
+#include "keys/drivers/YubiKey.h"
 
 QUuid ChallengeResponseKey::UUID("e092495c-e77d-498b-84a1-05ae0d955508");
 

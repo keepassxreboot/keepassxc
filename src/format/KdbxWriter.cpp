@@ -18,8 +18,11 @@
 #include "KdbxWriter.h"
 
 #include <QBuffer>
+#include <QIODevice>
 
 #include "format/KdbxXmlWriter.h"
+#include "core/Database.h"
+#include "format/KeePass2.h"
 
 bool KdbxWriter::hasError() const
 {

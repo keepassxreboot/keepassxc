@@ -19,14 +19,18 @@
 #ifndef KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H
 #define KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H
 
+#include <QPointer>
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "DatabaseSettingsWidget.h"
 
-#include <QItemSelection>
-#include <QPointer>
-#include <QStandardItemModel>
-
 class CustomData;
-class Database;
+class QShowEvent;
+class QStandardItem;
+class QStandardItemModel;
+class QWidget;
 
 namespace Ui
 {

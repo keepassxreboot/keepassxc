@@ -17,6 +17,9 @@
 
 #include "StateColorPalette.h"
 
+#include <QStaticStringData>
+#include <QStringLiteral>
+
 #include "gui/Application.h"
 
 StateColorPalette::StateColorPalette()

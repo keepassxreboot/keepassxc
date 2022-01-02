@@ -18,7 +18,15 @@
 #ifndef KEEPASSX_AESKDF_H
 #define KEEPASSX_AESKDF_H
 
+#include <QtCore/qglobal.h>
+#include <QByteArray>
+#include <QSharedPointer>
+#include <QString>
+#include <QVariantMap>
+
 #include "Kdf.h"
+
+template <class T> class QSharedPointer;
 
 class AesKdf : public Kdf
 {

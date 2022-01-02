@@ -18,10 +18,12 @@
 
 #include "CryptoHash.h"
 
-#include <QScopedPointer>
-
 #include <botan/hash.h>
 #include <botan/mac.h>
+#include <QtCore/qglobal.h>
+#include <botan/secmem.h>
+#include <QScopedPointer>
+#include <exception>
 
 class CryptoHashPrivate
 {

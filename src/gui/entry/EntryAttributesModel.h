@@ -19,6 +19,11 @@
 #define KEEPASSX_ENTRYATTRIBUTESMODEL_H
 
 #include <QAbstractListModel>
+#include <QList>
+#include <QModelIndex>
+#include <QString>
+#include <QVariant>
+#include <QtCore>
 
 class EntryAttributes;
 

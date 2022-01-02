@@ -13,15 +13,11 @@
 #ifndef MAINWINDOWADAPTOR_H
 #define MAINWINDOWADAPTOR_H
 
-#include <QtCore/QObject>
-#include <QtDBus/QtDBus>
+#include <QDBusAbstractAdaptor>
+#include <QString>
+#include <QtCore>
+
 QT_BEGIN_NAMESPACE
-class QByteArray;
-template <class T> class QList;
-template <class Key, class Value> class QMap;
-class QString;
-class QStringList;
-class QVariant;
 QT_END_NAMESPACE
 
 /*

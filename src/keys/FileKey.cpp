@@ -18,12 +18,24 @@
 
 #include "FileKey.h"
 
+#include <QFile>
+#include <QXmlStreamReader>
+#include <QByteRef>
+#include <QChar>
+#include <QFileDevice>
+#include <QIODevice>
+#include <QObject>
+#include <QSharedPointer>
+#include <QStringRef>
+#include <QUuid>
+#include <QXmlStreamAttributes>
+#include <QXmlStreamWriter>
+#include <algorithm>
+#include <cstring>
+
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
-
-#include <QFile>
-#include <QXmlStreamReader>
 
 QUuid FileKey::UUID("a584cbc4-c9b4-437e-81bb-362ca9709273");
 

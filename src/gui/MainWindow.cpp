@@ -17,7 +17,6 @@
  */
 
 #include "MainWindow.h"
-#include "ui_MainWindow.h"
 
 #include <QCloseEvent>
 #include <QDesktopServices>
@@ -29,20 +28,58 @@
 #include <QTimer>
 #include <QToolButton>
 #include <QWindow>
+#include <QAction>
+#include <QActionGroup>
+#include <QApplication>
+#include <QCoreApplication>
+#include <QCursor>
+#include <QDBusConnection>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QEvent>
+#include <QFile>
+#include <QFlag>
+#include <QFlags>
+#include <QFrame>
+#include <QGuiApplication>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QMenu>
+#include <QMenuBar>
+#include <QMetaObject>
+#include <QMouseEvent>
+#include <QProgressBar>
+#include <QSharedPointer>
+#include <QStackedWidget>
+#include <QTabBar>
+#include <QUrl>
+#include <QVariant>
+#include <QWidget>
 
+#include "ui_MainWindow.h"
 #include "config-keepassx.h"
-
 #include "Application.h"
 #include "Clipboard.h"
 #include "autotype/AutoType.h"
 #include "core/InactivityTimer.h"
 #include "core/Resources.h"
-#include "core/Tools.h"
 #include "gui/AboutDialog.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
 #include "gui/osutils/OSUtils.h"
+#include "core/Clock.h"
+#include "core/Config.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Group.h"
+#include "gui/ApplicationSettingsWidget.h"
+#include "gui/DatabaseTabWidget.h"
+#include "gui/PasswordGeneratorWidget.h"
+#include "gui/WelcomeWidget.h"
+#include "gui/osutils/OSUtilsBase.h"
+#include "gui/osutils/ScreenLockListener.h"
+#include "gui/widgets/KPToolBar.h"
 
 #ifdef Q_OS_MACOS
 #ifdef WITH_XC_TOUCHID

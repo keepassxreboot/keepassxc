@@ -18,11 +18,11 @@
  */
 
 #include "BrowserSettings.h"
-#include "core/Config.h"
-#include "core/PasswordHealth.h"
-#include <QDir>
 
-#include <QJsonObject>
+#include <QDir>
+#include <QVariant>
+
+#include "core/Config.h"
 
 BrowserSettings* BrowserSettings::m_instance(nullptr);
 

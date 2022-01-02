@@ -16,13 +16,22 @@
  */
 
 #include "IconDownloader.h"
-#include "core/Config.h"
-#include "core/NetworkManager.h"
 
 #include <QBuffer>
 #include <QHostInfo>
 #include <QImageReader>
 #include <QNetworkReply>
+#include <QHostAddress>
+#include <QIODevice>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QSize>
+#include <QStringList>
+#include <QVariant>
+#include <algorithm>
+
+#include "core/Config.h"
+#include "core/NetworkManager.h"
 
 #define MAX_REDIRECTS 5
 

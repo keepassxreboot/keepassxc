@@ -19,8 +19,9 @@
 #define KEEPASSXC_CUSTOMDATA_H
 
 #include <QDateTime>
-#include <QHash>
-#include <QObject>
+#include <QList>
+#include <QString>
+#include <QtCore>
 
 #include "core/ModifiableObject.h"
 

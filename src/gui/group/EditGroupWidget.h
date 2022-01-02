@@ -19,21 +19,32 @@
 #ifndef KEEPASSX_EDITGROUPWIDGET_H
 #define KEEPASSX_EDITGROUPWIDGET_H
 
-#include <QComboBox>
-#include <QScrollArea>
+#include <QIcon>
+#include <QList>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
 
 #include "core/Group.h"
 #include "gui/EditWidget.h"
+#include "config-keepassx.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
 
-class CustomData;
 class EditWidgetIcons;
 class EditWidgetProperties;
+class Database;
+class QComboBox;
+class QScrollArea;
+class QWidget;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {
     class EditGroupWidgetMain;
     class EditGroupWidgetBrowser;
-    class EditWidget;
 } // namespace Ui
 
 class IEditGroupPage
@@ -97,6 +108,7 @@ private:
     QSharedPointer<Database> m_db;
 
     class ExtraPage;
+
     QList<ExtraPage> m_extraPages;
 
     Q_DISABLE_COPY(EditGroupWidget)

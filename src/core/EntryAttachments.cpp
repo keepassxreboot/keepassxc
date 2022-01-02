@@ -17,15 +17,16 @@
 
 #include "EntryAttachments.h"
 
-#include "core/Global.h"
-#include "crypto/Random.h"
-
 #include <QDesktopServices>
 #include <QDir>
-#include <QProcessEnvironment>
 #include <QSet>
 #include <QTemporaryFile>
 #include <QUrl>
+#include <QFile>
+
+#include "core/Global.h"
+#include "crypto/Random.h"
+#include "core/FileWatcher.h"
 
 EntryAttachments::EntryAttachments(QObject* parent)
     : ModifiableObject(parent)

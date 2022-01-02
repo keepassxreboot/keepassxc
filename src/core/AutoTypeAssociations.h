@@ -18,6 +18,10 @@
 #ifndef KEEPASSX_AUTOTYPEASSOCIATIONS_H
 #define KEEPASSX_AUTOTYPEASSOCIATIONS_H
 
+#include <QList>
+#include <QString>
+#include <QtCore>
+
 #include "core/ModifiableObject.h"
 
 class AutoTypeAssociations : public ModifiableObject

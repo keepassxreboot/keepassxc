@@ -16,16 +16,15 @@
  */
 
 #include "SettingsWidgetKeeShare.h"
+
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QPushButton>
+
 #include "ui_SettingsWidgetKeeShare.h"
-
-#include "config-keepassx.h"
-#include "gui/FileDialog.h"
-#include "gui/MessageBox.h"
 #include "keeshare/KeeShare.h"
-
-#include <QStandardItemModel>
-#include <QStandardPaths>
-#include <QTextStream>
+#include "KeeShareSettings.h"
+#include "core/Config.h"
 
 SettingsWidgetKeeShare::SettingsWidgetKeeShare(QWidget* parent)
     : QWidget(parent)

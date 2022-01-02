@@ -19,6 +19,12 @@
 #define KEEPASSX_DIALOGYWIDGET_H
 
 #include <QDialogButtonBox>
+#include <QByteArrayData>
+#include <QString>
+#include <QWidget>
+
+class QKeyEvent;
+class QObject;
 
 class DialogyWidget : public QWidget
 {

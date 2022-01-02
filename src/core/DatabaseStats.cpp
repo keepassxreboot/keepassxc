@@ -16,6 +16,15 @@
  */
 #include "DatabaseStats.h"
 
+#include <QFileInfo>
+#include <algorithm>
+#include <cmath>
+
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Group.h"
+#include "core/PasswordHealth.h"
+
 // Ctor does all the work
 DatabaseStats::DatabaseStats(QSharedPointer<Database> db)
     : modified(QFileInfo(db->filePath()).lastModified())

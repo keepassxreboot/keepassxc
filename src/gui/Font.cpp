@@ -19,6 +19,7 @@
 
 #include <QFontDatabase>
 #include <QGuiApplication>
+#include <QFont>
 
 namespace UIUtils
 {

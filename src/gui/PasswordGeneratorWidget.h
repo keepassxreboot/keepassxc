@@ -19,17 +19,21 @@
 #ifndef KEEPASSX_PASSWORDGENERATORWIDGET_H
 #define KEEPASSX_PASSWORDGENERATORWIDGET_H
 
-#include <QComboBox>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QString>
+#include <QWidget>
 
-#include "core/PassphraseGenerator.h"
 #include "core/PasswordGenerator.h"
+
+class QCloseEvent;
+class QObject;
 
 namespace Ui
 {
     class PasswordGeneratorWidget;
 }
 
-class PasswordGenerator;
 class PasswordHealth;
 class PassphraseGenerator;
 

@@ -17,11 +17,12 @@
 
 #include "Random.h"
 
-#include "core/Global.h"
-
+#include <botan/system_rng.h>
+#include <botan/rng.h>
+#include <botan/secmem.h>
 #include <QSharedPointer>
 
-#include <botan/system_rng.h>
+#include "core/Global.h"
 
 QSharedPointer<Random> Random::m_instance;
 

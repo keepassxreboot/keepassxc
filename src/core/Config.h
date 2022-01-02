@@ -19,10 +19,12 @@
 #ifndef KEEPASSX_CONFIG_H
 #define KEEPASSX_CONFIG_H
 
-#include <QPointer>
 #include <QVariant>
-
-class QSettings;
+#include <QObject>
+#include <QPair>
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
 
 class Config : public QObject
 {

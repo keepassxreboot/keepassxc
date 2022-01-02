@@ -20,9 +20,15 @@
 
 #include <QPointer>
 #include <QWidget>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
 
 class Group;
 class Database;
+class QObject;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

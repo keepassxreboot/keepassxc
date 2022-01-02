@@ -16,12 +16,19 @@
  */
 
 #include "KeeShare.h"
+
+#include <QtCore/qglobal.h>
+#include <QByteArray>
+#include <QStringList>
+#include <QVariant>
+#include <QtCore>
+
 #include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Group.h"
-#include "core/Metadata.h"
 #include "gui/DatabaseIcons.h"
 #include "keeshare/ShareObserver.h"
+#include "KeeShareSettings.h"
 
 namespace
 {

@@ -26,7 +26,7 @@
 #include "fdosecrets/dbus/DBusConstants.h" // IWYU pragma: keep
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
-#include "dbus/DBusTypes.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 
 namespace FdoSecrets {
 class Service;

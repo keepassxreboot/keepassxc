@@ -19,10 +19,19 @@
 #ifndef KEEPASSX_ICONS_H
 #define KEEPASSX_ICONS_H
 
-#include <QIcon>
-
-#include <core/Database.h>
 #include <gui/DatabaseIcons.h>
+#include <QIcon>
+#include <QByteArray>
+#include <QColor>
+#include <QPixmap>
+#include <QString>
+#include <QUuid>
+#include <QtCore>
+
+class Database;
+class Entry;
+class Group;
+class QImage;
 
 class Icons
 {

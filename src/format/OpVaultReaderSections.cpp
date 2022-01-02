@@ -15,15 +15,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "OpVaultReader.h"
-
-#include "core/Entry.h"
-#include "totp/totp.h"
-
+#include <QtCore/qglobal.h>
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QUrlQuery>
+#include <QDateTime>
+#include <QJsonValue>
+#include <QJsonValueRef>
+#include <QList>
+#include <QMap>
+#include <QString>
+#include <QUrl>
+#include <QVariant>
+#include <QtCore>
+
+#include "OpVaultReader.h"
+#include "core/Entry.h"
+#include "totp/totp.h"
+#include "core/EntryAttributes.h"
 
 namespace
 {

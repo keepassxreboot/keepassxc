@@ -18,9 +18,17 @@
 #ifndef KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
 #define KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
 
-#include "YubiKeyInterface.h"
+#include <botan/secmem.h>
+#include <pcsclite.h>
+#include <QByteArray>
+#include <QList>
+#include <QPair>
+#include <QStaticByteArrayData>
+#include <QString>
+#include <QtCore>
 
-#include <winscard.h>
+#include "YubiKeyInterface.h"
+#include "keys/drivers/YubiKey.h"
 
 #define CLA_ISO 0x00
 #define INS_SELECT 0xA4

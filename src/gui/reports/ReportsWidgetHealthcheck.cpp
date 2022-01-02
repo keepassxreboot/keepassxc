@@ -16,8 +16,34 @@
  */
 
 #include "ReportsWidgetHealthcheck.h"
-#include "ui_ReportsWidgetHealthcheck.h"
 
+#include <QtCore/qsharedpointer.h>
+#include <QMenu>
+#include <QShortcut>
+#include <QSortFilterProxyModel>
+#include <QStandardItemModel>
+#include <QAbstractItemModel>
+#include <QAction>
+#include <QCheckBox>
+#include <QColor>
+#include <QHeaderView>
+#include <QItemSelectionModel>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QPair>
+#include <QPoint>
+#include <QPointer>
+#include <QStandardItem>
+#include <QStringList>
+#include <QTableView>
+#include <QTimer>
+#include <QVariant>
+#include <QtCore>
+#include <QtGui>
+#include <algorithm>
+#include <utility>
+
+#include "ui_ReportsWidgetHealthcheck.h"
 #include "core/AsyncTask.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -25,11 +51,8 @@
 #include "gui/GuiTools.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
-
-#include <QMenu>
-#include <QShortcut>
-#include <QSortFilterProxyModel>
-#include <QStandardItemModel>
+#include "core/Database.h"
+#include "core/Entry.h"
 
 namespace
 {

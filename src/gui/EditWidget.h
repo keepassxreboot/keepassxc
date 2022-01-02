@@ -20,13 +20,17 @@
 #define KEEPASSX_EDITWIDGET_H
 
 #include <QScopedPointer>
-#include <QStyledItemDelegate>
-#include <QtWidgets/QStyledItemDelegate>
+#include <QIcon>
+#include <QString>
+#include <QtCore>
 
 #include "gui/DialogyWidget.h"
 #include "gui/MessageWidget.h"
+#include "gui/KMessageWidget.h"
 
 class QLabel;
+class QAbstractButton;
+class QWidget;
 
 namespace Ui
 {

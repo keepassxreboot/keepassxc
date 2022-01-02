@@ -17,10 +17,11 @@
 
 #include "OpData01.h"
 
+#include <QDataStream>
+#include <QtGlobal>
+
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
-
-#include <QDataStream>
 
 OpData01::OpData01(QObject* parent)
     : QObject(parent)

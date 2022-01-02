@@ -22,6 +22,11 @@
 #include <QMap>
 #include <QPushButton>
 #include <QWindow>
+#include <QList>
+#include <QtCore>
+
+class QAbstractButton;
+class QWidget;
 
 QWindow* MessageBox::m_overrideParent(nullptr);
 

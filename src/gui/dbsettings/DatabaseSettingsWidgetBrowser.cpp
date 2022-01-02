@@ -17,15 +17,37 @@
  */
 
 #include "DatabaseSettingsWidgetBrowser.h"
-#include "ui_DatabaseSettingsWidgetBrowser.h"
 
 #include <QProgressDialog>
+#include <QItemSelection>
+#include <QItemSelectionModel>
+#include <QList>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QPushButton>
+#include <QSharedPointer>
+#include <QStandardItem>
+#include <QStandardItemModel>
+#include <QStringList>
+#include <QTableView>
+#include <QUuid>
+#include <QVariant>
+#include <QWidget>
 
+#include "ui_DatabaseSettingsWidgetBrowser.h"
 #include "browser/BrowserService.h"
 #include "browser/BrowserSettings.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/MessageBox.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+#include "gui/dbsettings/DatabaseSettingsWidget.h"
+
+class QShowEvent;
 
 DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     : DatabaseSettingsWidget(parent)

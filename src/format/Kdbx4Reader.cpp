@@ -17,12 +17,16 @@
 
 #include "Kdbx4Reader.h"
 
+#include <QtCore/qglobal.h>
+#include <stdint.h>
 #include <QBuffer>
-#include <QJsonObject>
+#include <QIODevice>
+#include <QScopedPointer>
+#include <QUuid>
+#include <QVariant>
 
 #include "core/AsyncTask.h"
 #include "core/Endian.h"
-#include "core/Group.h"
 #include "crypto/CryptoHash.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2RandomStream.h"
@@ -30,6 +34,13 @@
 #include "streams/StoreDataStream.h"
 #include "streams/SymmetricCipherStream.h"
 #include "streams/qtiocompressor.h"
+#include "core/Database.h"
+#include "crypto/SymmetricCipher.h"
+#include "format/KeePass2.h"
+
+class CompositeKey;
+class Kdf;
+template <class T> class QSharedPointer;
 
 bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
                                    const QByteArray& headerData,

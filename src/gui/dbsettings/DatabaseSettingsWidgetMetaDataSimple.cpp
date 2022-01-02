@@ -16,10 +16,17 @@
  */
 
 #include "DatabaseSettingsWidgetMetaDataSimple.h"
-#include "ui_DatabaseSettingsWidgetMetaDataSimple.h"
 
+#include <QLineEdit>
+#include <QSharedPointer>
+#include <QWidget>
+
+#include "ui_DatabaseSettingsWidgetMetaDataSimple.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
+#include "gui/dbsettings/DatabaseSettingsWidget.h"
+
+class QShowEvent;
 
 DatabaseSettingWidgetMetaData::DatabaseSettingWidgetMetaData(QWidget* parent)
     : DatabaseSettingsWidget(parent)

@@ -17,6 +17,9 @@
 
 #include "SortFilterHideProxyModel.h"
 
+#include <QAbstractItemModel>
+#include <QBitRef>
+
 SortFilterHideProxyModel::SortFilterHideProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent)
 {

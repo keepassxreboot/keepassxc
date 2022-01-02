@@ -16,18 +16,40 @@
  */
 
 #include "ReportsWidgetHibp.h"
-#include "ui_ReportsWidgetHibp.h"
-
-#include "config-keepassx.h"
-#include "core/Group.h"
-#include "core/Metadata.h"
-#include "gui/GuiTools.h"
-#include "gui/Icons.h"
 
 #include <QMenu>
 #include <QShortcut>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
+#include <QAbstractItemModel>
+#include <QAction>
+#include <QCheckBox>
+#include <QColor>
+#include <QHeaderView>
+#include <QItemSelectionModel>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QPair>
+#include <QPoint>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QStackedWidget>
+#include <QStandardItem>
+#include <QStringList>
+#include <QTableView>
+#include <QVariant>
+#include <QtCore>
+#include <QtGui>
+#include <utility>
+
+#include "ui_ReportsWidgetHibp.h"
+#include "config-keepassx.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
+#include "gui/GuiTools.h"
+#include "gui/Icons.h"
+#include "core/Database.h"
+#include "core/Entry.h"
 
 namespace
 {

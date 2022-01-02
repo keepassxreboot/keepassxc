@@ -11,6 +11,9 @@
 
 #include "MainWindowAdaptor.h"
 
+#include <QArgument>
+#include <QMetaObject>
+
 /*
  * Implementation of adaptor class MainWindowAdaptor
  */

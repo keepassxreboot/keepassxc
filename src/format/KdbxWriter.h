@@ -18,10 +18,13 @@
 #ifndef KEEPASSXC_KDBXWRITER_H
 #define KEEPASSXC_KDBXWRITER_H
 
+#include <QCoreApplication>
+#include <QByteArray>
+#include <QString>
+#include <QtGlobal>
+
 #include "KeePass2.h"
 #include "core/Endian.h"
-
-#include <QCoreApplication>
 
 // clang-format off
 #define CHECK_RETURN_FALSE(x) if (!(x)) return false;

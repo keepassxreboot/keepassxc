@@ -19,8 +19,17 @@
 #ifndef KEEPASSX_MESSAGEBOX_H
 #define KEEPASSX_MESSAGEBOX_H
 
-#include <QMap>
+#include <stdint.h>
 #include <QMessageBox>
+#include <QString>
+#include <utility>
+
+class QAbstractButton;
+class QCheckBox;
+class QWidget;
+class QWindow;
+template <class Key, class T> class QHash;
+template <class Key, class T> class QMap;
 
 class MessageBox
 {

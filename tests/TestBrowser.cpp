@@ -18,7 +18,9 @@
 #include "TestBrowser.h"
 
 #include "browser/BrowserSettings.h"
+#include "core/Global.h"
 #include "core/Group.h"
+#include "core/EntryAttributes.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 

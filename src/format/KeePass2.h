@@ -20,9 +20,16 @@
 
 #include <QSharedPointer>
 #include <QUuid>
-#include <QVariant>
+#include <QByteArray>
+#include <QList>
+#include <QString>
+#include <QSysInfo>
+#include <QVariantMap>
+#include <QtGlobal>
 
 class Kdf;
+template <class T1, class T2> struct QPair;
+template <class T> class QSharedPointer;
 
 namespace KeePass2
 {

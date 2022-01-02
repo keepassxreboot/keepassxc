@@ -17,6 +17,9 @@
 
 #include "HashedBlockStream.h"
 
+#include <string.h>
+#include <QIODevice>
+
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 

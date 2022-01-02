@@ -19,15 +19,25 @@
 #ifndef KEEPASSX_EDITWIDGETICONS_H
 #define KEEPASSX_EDITWIDGETICONS_H
 
-#include <QMenu>
 #include <QUuid>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QWidget>
+#include <QtCore>
 
 #include "config-keepassx.h"
 #include "gui/MessageWidget.h"
+#include "gui/KMessageWidget.h"
 
 class Database;
 class DefaultIconModel;
 class CustomIconModel;
+class QAction;
+class QImage;
+class QKeyEvent;
+class QMenu;
+template <class T> class QSharedPointer;
 #ifdef WITH_XC_NETWORKING
 class IconDownloader;
 #endif

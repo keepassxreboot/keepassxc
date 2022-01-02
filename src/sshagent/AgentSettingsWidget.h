@@ -20,8 +20,11 @@
 #define AGENTSETTINGSWIDGET_H
 
 #include <QScopedPointer>
-#include <QUuid>
 #include <QWidget>
+#include <QByteArrayData>
+#include <QString>
+
+class QObject;
 
 namespace Ui
 {

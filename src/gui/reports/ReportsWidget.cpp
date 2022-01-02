@@ -17,6 +17,10 @@
 
 #include "ReportsWidget.h"
 
+#include <utility>
+
+class QWidget;
+
 ReportsWidget::ReportsWidget(QWidget* parent)
     : SettingsWidget(parent)
 {

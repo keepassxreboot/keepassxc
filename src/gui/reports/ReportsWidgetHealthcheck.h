@@ -18,8 +18,12 @@
 #ifndef KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H
 #define KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H
 
-#include "gui/entry/EntryModel.h"
 #include <QWidget>
+#include <QByteArrayData>
+#include <QList>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
 
 class Database;
 class Entry;
@@ -27,6 +31,11 @@ class Group;
 class PasswordHealth;
 class QSortFilterProxyModel;
 class QStandardItemModel;
+class QModelIndex;
+class QObject;
+class QPoint;
+template <class T1, class T2> struct QPair;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

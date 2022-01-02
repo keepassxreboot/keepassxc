@@ -18,8 +18,11 @@
 
 #include "CsvParser.h"
 
+#include <QtCore/qglobal.h>
 #include <QFile>
 #include <QTextCodec>
+#include <QIODevice>
+#include <QObject>
 
 #include "core/Tools.h"
 

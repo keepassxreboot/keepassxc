@@ -17,10 +17,16 @@
 
 #ifndef KEEPASSXC_DATABASESTATS_H
 #define KEEPASSXC_DATABASESTATS_H
-#include "PasswordHealth.h"
-#include "core/Group.h"
-#include <QFileInfo>
-#include <cmath>
+#include <QDateTime>
+#include <QHashNode>
+#include <QList>
+#include <QSharedPointer>
+#include <QString>
+
+class Database;
+class Group;
+template <class T> class QSharedPointer;
+
 class DatabaseStats
 {
 public:

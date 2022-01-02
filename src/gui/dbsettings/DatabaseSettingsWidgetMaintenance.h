@@ -18,11 +18,19 @@
 #ifndef KEEPASSXC_DATABASESETTINGSWIDGETMAINTENANCE_H
 #define KEEPASSXC_DATABASESETTINGSWIDGETMAINTENANCE_H
 
+#include <stdint.h>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "DatabaseSettingsWidget.h"
 
-class QItemSelection;
 class CustomIconModel;
 class Database;
+class QWidget;
+template <class T> class QSharedPointer;
+
 namespace Ui
 {
     class DatabaseSettingsWidgetMaintenance;

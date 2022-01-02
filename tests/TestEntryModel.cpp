@@ -26,9 +26,13 @@
 #include "gui/DatabaseIcons.h"
 #include "gui/IconModels.h"
 #include "gui/SortFilterHideProxyModel.h"
+#include "core/AutoTypeAssociations.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
+#include "core/EntryAttachments.h"
 #include "gui/entry/EntryAttachmentsModel.h"
+#include "core/EntryAttributes.h"
 #include "gui/entry/EntryAttributesModel.h"
+#include "core/Entry.h"
 #include "gui/entry/EntryModel.h"
 #include "modeltest.h"
 

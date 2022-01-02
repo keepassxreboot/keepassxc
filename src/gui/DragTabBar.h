@@ -19,6 +19,16 @@
 #define KEEPASSX_DRAGTABBAR_H
 
 #include <QTabBar>
+#include <QByteArrayData>
+#include <QString>
+
+class QDragEnterEvent;
+class QDragLeaveEvent;
+class QDragMoveEvent;
+class QDropEvent;
+class QObject;
+class QTimer;
+class QWidget;
 
 class DragTabBar : public QTabBar
 {

@@ -19,8 +19,15 @@
 #ifndef KPXC_CHALLENGE_RESPONSE_KEY_H
 #define KPXC_CHALLENGE_RESPONSE_KEY_H
 
+#include <botan/secmem.h>
+#include <QByteArray>
+#include <QString>
+#include <QtGlobal>
+
 #include "Key.h"
 #include "drivers/YubiKey.h"
+
+class QUuid;
 
 class ChallengeResponseKey : public Key
 {

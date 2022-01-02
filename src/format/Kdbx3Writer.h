@@ -18,7 +18,12 @@
 #ifndef KEEPASSX_KDBX3WRITER_H
 #define KEEPASSX_KDBX3WRITER_H
 
+#include <QCoreApplication>
+
 #include "KdbxWriter.h"
+
+class Database;
+class QIODevice;
 
 /**
  * KDBX2/3 writer implementation.

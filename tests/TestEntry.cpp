@@ -20,6 +20,9 @@
 
 #include "TestEntry.h"
 #include "core/Clock.h"
+#include "core/EntryAttributes.h"
+#include "core/EntryAttachments.h"
+#include "core/AutoTypeAssociations.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/TimeInfo.h"

@@ -20,6 +20,8 @@
 
 #include <QBitArray>
 #include <QSortFilterProxyModel>
+#include <QString>
+#include <QtCore>
 
 class SortFilterHideProxyModel : public QSortFilterProxyModel
 {

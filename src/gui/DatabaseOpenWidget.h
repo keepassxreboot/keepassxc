@@ -21,12 +21,18 @@
 
 #include <QScopedPointer>
 #include <QTimer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
 
 #include "gui/DialogyWidget.h"
 
 class CompositeKey;
 class Database;
-class QFile;
+class QHideEvent;
+class QShowEvent;
+class QWidget;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

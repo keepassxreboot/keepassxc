@@ -20,6 +20,10 @@
 #include "DatabaseWidgetStateSync.h"
 
 #include <QCoreApplication>
+#include <QVariantList>
+
+#include "core/Config.h"
+#include "gui/DatabaseWidget.h"
 
 DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
     : QObject(parent)

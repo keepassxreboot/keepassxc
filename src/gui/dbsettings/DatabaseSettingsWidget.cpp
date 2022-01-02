@@ -16,7 +16,10 @@
  */
 
 #include "DatabaseSettingsWidget.h"
-#include "core/Database.h"
+
+#include <utility>
+
+class QWidget;
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : SettingsWidget(parent)

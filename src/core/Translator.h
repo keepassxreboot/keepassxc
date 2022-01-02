@@ -18,7 +18,11 @@
 #ifndef KEEPASSX_TRANSLATOR_H
 #define KEEPASSX_TRANSLATOR_H
 
-#include <QMetaType>
+#include <QList>
+#include <QString>
+#include <QStringList>
+
+template <class T1, class T2> struct QPair;
 
 class Translator
 {

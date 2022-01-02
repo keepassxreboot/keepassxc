@@ -18,11 +18,14 @@
 #ifndef KEEPASSX_PASSWORDHEALTH_H
 #define KEEPASSX_PASSWORDHEALTH_H
 
-#include <QHash>
 #include <QSharedPointer>
+#include <QHashNode>
+#include <QString>
+#include <QStringList>
 
 class Database;
 class Entry;
+template <class T> class QSharedPointer;
 
 /**
  * Health status of a single password.

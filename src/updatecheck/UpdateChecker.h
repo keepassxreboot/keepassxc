@@ -18,6 +18,9 @@
 #ifndef KEEPASSXC_UPDATECHECK_H
 #define KEEPASSXC_UPDATECHECK_H
 #include <QObject>
+#include <QByteArray>
+#include <QString>
+#include <QtCore>
 
 class QNetworkReply;
 

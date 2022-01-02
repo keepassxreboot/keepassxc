@@ -18,12 +18,18 @@
 #ifndef KEEPASSX_KEEPASS2WRITER_H
 #define KEEPASSX_KEEPASS2WRITER_H
 
-#include "KdbxWriter.h"
-
 #include <QCoreApplication>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtGlobal>
+
+#include "KdbxWriter.h"
 
 class QIODevice;
 class Database;
+class QByteArray;
+template <class T> class QSharedPointer;
 
 class KeePass2Writer
 {

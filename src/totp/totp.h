@@ -19,10 +19,13 @@
 #ifndef QTOTP_H
 #define QTOTP_H
 
-#include <QMetaType>
 #include <QString>
+#include <QList>
+#include <QSharedPointer>
+#include <QtGlobal>
 
-class QUrl;
+template <class T1, class T2> struct QPair;
+template <class T> class QSharedPointer;
 
 namespace Totp
 {

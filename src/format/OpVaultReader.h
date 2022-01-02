@@ -19,10 +19,17 @@
 #define OPVAULT_READER_H_
 
 #include <QDir>
+#include <QByteArray>
+#include <QByteArrayData>
+#include <QFileInfo>
+#include <QJsonObject>
+#include <QObject>
+#include <QString>
 
 class Database;
 class Group;
 class Entry;
+class QFile;
 
 /*!
  * Imports a directory in the 1Password \c opvault format into a \c Database.

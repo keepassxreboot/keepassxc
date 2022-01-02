@@ -19,7 +19,17 @@
 #ifndef KEEPASSX_KDBX3READER_H
 #define KEEPASSX_KDBX3READER_H
 
+#include <QByteArray>
+#include <QCoreApplication>
+#include <QSharedPointer>
+
 #include "format/KdbxReader.h"
+
+class CompositeKey;
+class Database;
+class QIODevice;
+class StoreDataStream;
+template <class T> class QSharedPointer;
 
 /**
  * KDBX 2/3 reader implementation.

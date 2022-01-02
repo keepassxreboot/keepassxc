@@ -17,6 +17,10 @@
 
 #include "FileWatcher.h"
 
+#include <QFile>
+#include <QLatin1String>
+#include <QtCore>
+
 #include "core/AsyncTask.h"
 
 #ifdef Q_OS_LINUX

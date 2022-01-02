@@ -19,10 +19,23 @@
 
 #include <QBuffer>
 #include <QFile>
+#include <QByteArray>
+#include <QIODevice>
+#include <QList>
+#include <QObject>
+#include <QPixmap>
+#include <Qt>
+#include <algorithm>
 
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/Icons.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttributes.h"
+#include "gui/DatabaseIcons.h"
+
+template <class T> class QSharedPointer;
 
 namespace
 {

@@ -19,12 +19,15 @@
 #ifndef KEEPASSX_SEARCHWIDGET_H
 #define KEEPASSX_SEARCHWIDGET_H
 
-#include <QTimer>
 #include <QWidget>
-
-#include "gui/DatabaseWidget.h"
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
 
 class SignalMultiplexer;
+class DatabaseWidget;
+class QAction;
+class QMenu;
 
 namespace Ui
 {

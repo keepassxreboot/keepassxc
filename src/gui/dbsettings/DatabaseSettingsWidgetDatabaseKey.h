@@ -18,10 +18,13 @@
 #ifndef KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
 #define KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
 
+#include <QPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "DatabaseSettingsWidget.h"
 #include "config-keepassx.h"
-
-#include <QPointer>
 
 class Database;
 class Key;
@@ -32,6 +35,8 @@ class PasswordEditWidget;
 class KeyFileEditWidget;
 class YubiKeyEditWidget;
 class QPushButton;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class DatabaseSettingsWidgetDatabaseKey : public DatabaseSettingsWidget
 {

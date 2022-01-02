@@ -20,6 +20,11 @@
 
 #include <QGridLayout>
 
+#include "core/Database.h"
+#include "gui/csvImport/CsvImportWidget.h"
+
+class QWidget;
+
 CsvImportWizard::CsvImportWizard(QWidget* parent)
     : DialogyWidget(parent)
 {

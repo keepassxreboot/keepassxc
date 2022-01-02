@@ -17,9 +17,22 @@
  */
 
 #include "BrowserEntrySaveDialog.h"
-#include "ui_BrowserEntrySaveDialog.h"
 
+#include <QAbstractItemView>
+#include <QFlags>
+#include <QLabel>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QPushButton>
+#include <QSharedPointer>
+#include <QtCore>
+
+#include "ui_BrowserEntrySaveDialog.h"
 #include "gui/DatabaseWidget.h"
+#include "core/Database.h"
+#include "core/Metadata.h"
+
+class QWidget;
 
 BrowserEntrySaveDialog::BrowserEntrySaveDialog(QWidget* parent)
     : QDialog(parent)

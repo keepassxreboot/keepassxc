@@ -18,7 +18,12 @@
 #ifndef KEEPASSXC_NEWDATABASEWIZARDPAGEENCRYPTION_H
 #define KEEPASSXC_NEWDATABASEWIZARDPAGEENCRYPTION_H
 
+#include <QString>
+#include <QtCore>
+
 #include "NewDatabaseWizardPage.h"
+
+class QWidget;
 
 class NewDatabaseWizardPageEncryption : public NewDatabaseWizardPage
 {

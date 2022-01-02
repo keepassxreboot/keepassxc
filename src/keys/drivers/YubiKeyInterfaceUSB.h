@@ -19,9 +19,14 @@
 #ifndef KEEPASSX_YUBIKEY_INTERFACE_USB_H
 #define KEEPASSX_YUBIKEY_INTERFACE_USB_H
 
-#include "thirdparty/ykcore/ykdef.h"
+#include <botan/secmem.h>
+#include <QByteArray>
+#include <QString>
+#include <QtCore>
 
+#include "thirdparty/ykcore/ykdef.h"
 #include "YubiKeyInterface.h"
+#include "keys/drivers/YubiKey.h"
 
 /**
  * Singleton class to manage the USB interface to hardware key(s)

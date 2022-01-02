@@ -18,7 +18,13 @@
 #ifndef KEEPASSX_KEEPASS1OPENWIDGET_H
 #define KEEPASSX_KEEPASS1OPENWIDGET_H
 
+#include <QByteArrayData>
+#include <QString>
+
 #include "gui/DatabaseOpenWidget.h"
+
+class QObject;
+class QWidget;
 
 class KeePass1OpenWidget : public DatabaseOpenWidget
 {

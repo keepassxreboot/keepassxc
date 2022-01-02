@@ -19,10 +19,14 @@
 #define KEEPASSX_PASSWORDKEY_H
 
 #include <botan/secmem.h>
-
-#include <QMetaType>
+#include <QByteArray>
+#include <QSharedPointer>
+#include <QString>
 
 #include "keys/Key.h"
+
+class QUuid;
+template <class T> class QSharedPointer;
 
 class PasswordKey : public Key
 {

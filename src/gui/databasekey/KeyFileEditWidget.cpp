@@ -16,14 +16,25 @@
  */
 
 #include "KeyFileEditWidget.h"
+
+#include <QFileInfo>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QWidget>
+
 #include "ui_KeyComponentWidget.h"
 #include "ui_KeyFileEditWidget.h"
-
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/dbsettings/DatabaseSettingsWidget.h"
 #include "keys/FileKey.h"
+#include "core/Database.h"
+#include "gui/databasekey/KeyComponentWidget.h"
+#include "keys/CompositeKey.h"
 
 KeyFileEditWidget::KeyFileEditWidget(DatabaseSettingsWidget* parent)
     : KeyComponentWidget(parent)

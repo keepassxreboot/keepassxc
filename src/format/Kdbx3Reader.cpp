@@ -18,9 +18,15 @@
 
 #include "Kdbx3Reader.h"
 
+#include <QtCore/qglobal.h>
+#include <QIODevice>
+#include <QScopedPointer>
+#include <QString>
+#include <QUuid>
+#include <QtGlobal>
+
 #include "core/AsyncTask.h"
 #include "core/Endian.h"
-#include "core/Group.h"
 #include "crypto/CryptoHash.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2RandomStream.h"
@@ -28,6 +34,12 @@
 #include "streams/StoreDataStream.h"
 #include "streams/SymmetricCipherStream.h"
 #include "streams/qtiocompressor.h"
+#include "core/Database.h"
+#include "crypto/SymmetricCipher.h"
+#include "format/KeePass2.h"
+
+class CompositeKey;
+template <class T> class QSharedPointer;
 
 bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
                                    const QByteArray& headerData,

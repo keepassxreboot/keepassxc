@@ -20,10 +20,21 @@
 #include <QDragMoveEvent>
 #include <QMimeData>
 #include <QShortcut>
+#include <QFlags>
+#include <QItemSelectionModel>
+#include <QList>
+#include <QModelIndex>
+#include <QRect>
+#include <QVariant>
+#include <QWidget>
+#include <QtCore>
+#include <QtWidgets>
 
 #include "core/Config.h"
 #include "core/Group.h"
 #include "gui/group/GroupModel.h"
+
+template <class T> class QSharedPointer;
 
 GroupView::GroupView(Database* db, QWidget* parent)
     : QTreeView(parent)

@@ -20,9 +20,12 @@
 
 #include <QAbstractListModel>
 #include <QPointer>
+#include <QModelIndex>
+#include <QString>
+#include <QVariant>
+#include <QtCore>
 
 class AutoTypeAssociations;
-
 class Entry;
 
 class AutoTypeAssociationsModel : public QAbstractListModel

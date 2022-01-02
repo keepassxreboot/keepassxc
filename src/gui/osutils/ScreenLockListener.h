@@ -17,9 +17,12 @@
 
 #ifndef SCREENLOCKLISTENER_H
 #define SCREENLOCKLISTENER_H
-#include <QWidget>
+#include <QByteArrayData>
+#include <QObject>
+#include <QString>
 
 class ScreenLockListenerPrivate;
+class QWidget;
 
 class ScreenLockListener : public QObject
 {

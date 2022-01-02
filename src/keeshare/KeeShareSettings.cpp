@@ -17,20 +17,24 @@
 
 #include "KeeShareSettings.h"
 
-#include "core/CustomData.h"
-#include "core/Database.h"
-#include "core/Group.h"
-#include "core/Metadata.h"
-#include "crypto/Random.h"
-#include "gui/DatabaseIcons.h"
-
-#include <QDataStream>
-#include <QTextCodec>
-#include <QXmlStreamWriter>
-
 #include <botan/data_src.h>
 #include <botan/pkcs8.h>
 #include <botan/rsa.h>
+#include <QtCore/qglobal.h>
+#include <botan/bigint.h>
+#include <botan/secmem.h>
+#include <QDataStream>
+#include <QTextCodec>
+#include <QXmlStreamWriter>
+#include <QByteArray>
+#include <QIODevice>
+#include <QStringRef>
+#include <QXmlStreamReader>
+#include <QtGlobal>
+#include <exception>
+#include <functional>
+
+#include "crypto/Random.h"
 
 namespace KeeShareSettings
 {

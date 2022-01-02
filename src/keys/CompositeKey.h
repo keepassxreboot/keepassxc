@@ -19,12 +19,18 @@
 #ifndef KEEPASSX_COMPOSITEKEY_H
 #define KEEPASSX_COMPOSITEKEY_H
 
+#include <QtCore/qglobal.h>
 #include <QSharedPointer>
+#include <QByteArray>
+#include <QList>
 
 #include "keys/Key.h"
 
 class Kdf;
 class ChallengeResponseKey;
+class QString;
+class QUuid;
+template <class T> class QSharedPointer;
 
 class CompositeKey : public Key
 {

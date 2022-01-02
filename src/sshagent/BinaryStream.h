@@ -19,7 +19,11 @@
 #ifndef KEEPASSXC_BINARYSTREAM_H
 #define KEEPASSXC_BINARYSTREAM_H
 
-#include <QBuffer>
+#include <QByteArray>
+#include <QObject>
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
 
 class BinaryStream : QObject
 {

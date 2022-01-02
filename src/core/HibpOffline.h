@@ -19,11 +19,14 @@
 #define KEEPASSXC_HIBPOFFLINE_H
 
 #include <QSharedPointer>
+#include <QString>
 
 class QIODevice;
-
 class Database;
 class Entry;
+template <class T1, class T2> struct QPair;
+template <class T> class QList;
+template <class T> class QSharedPointer;
 
 namespace HibpOffline
 {

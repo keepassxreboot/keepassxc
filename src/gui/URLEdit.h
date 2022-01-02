@@ -19,9 +19,14 @@
 #ifndef KEEPASSX_URLEDIT_H
 #define KEEPASSX_URLEDIT_H
 
-#include <QAction>
 #include <QLineEdit>
 #include <QPointer>
+#include <QByteArrayData>
+#include <QString>
+
+class QAction;
+class QObject;
+class QWidget;
 
 class URLEdit : public QLineEdit
 {

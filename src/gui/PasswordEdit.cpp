@@ -18,16 +18,29 @@
 
 #include "PasswordEdit.h"
 
+#include <QEvent>
+#include <QTimer>
+#include <QToolTip>
+#include <QAction>
+#include <QColor>
+#include <QFont>
+#include <QIcon>
+#include <QKeySequence>
+#include <QRect>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QVariant>
+#include <QtCore>
+
 #include "core/Config.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/styles/StateColorPalette.h"
+#include "gui/osutils/OSUtilsBase.h"
 
-#include <QEvent>
-#include <QTimer>
-#include <QToolTip>
+class QWidget;
 
 PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)

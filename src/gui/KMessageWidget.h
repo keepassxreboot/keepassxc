@@ -22,8 +22,16 @@
 #define KMESSAGEWIDGET_H
 
 #include <QFrame>
+#include <QIcon>
+#include <QSize>
+#include <QString>
+#include <QtCore>
 
 class KMessageWidgetPrivate;
+class QAction;
+class QPaintEvent;
+class QResizeEvent;
+class QWidget;
 
 /**
  * @short A widget to provide feedback or propose opportunistic interactions.

@@ -20,13 +20,18 @@
 
 #include <QPointer>
 #include <QWidget>
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
+
+class QShowEvent;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {
     class KeyComponentWidget;
 }
 class CompositeKey;
-class QStackedWidget;
 
 class KeyComponentWidget : public QWidget
 {

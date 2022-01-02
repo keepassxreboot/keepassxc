@@ -45,7 +45,12 @@
 ****************************************************************************/
 
 #include "qtiocompressor.h"
+
 #include <zlib.h>
+#include <QtCore/qglobal.h>
+#include <string.h>
+#include <zconf.h>
+#include <QFlags>
 
 typedef Bytef ZlibByte;
 typedef uInt ZlibSize;

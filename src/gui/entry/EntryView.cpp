@@ -24,8 +24,29 @@
 #include <QPainter>
 #include <QShortcut>
 #include <QStyledItemDelegate>
+#include <QAbstractItemView>
+#include <QAccessibleEvent>
+#include <QAction>
+#include <QActionGroup>
+#include <QColor>
+#include <QCoreApplication>
+#include <QIcon>
+#include <QImage>
+#include <QItemSelectionModel>
+#include <QKeyEvent>
+#include <QMetaType>
+#include <QModelIndexList>
+#include <QPalette>
+#include <QPixmap>
+#include <QRect>
+#include <QSize>
+#include <QStyleOptionViewItem>
+#include <QVariant>
+#include <QWidget>
+#include <initializer_list>
 
 #include "gui/SortFilterHideProxyModel.h"
+#include "core/Config.h"
 
 #define ICON_ONLY_SECTION_SIZE 26
 

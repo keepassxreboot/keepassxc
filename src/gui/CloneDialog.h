@@ -18,8 +18,15 @@
 #ifndef KEEPASSX_CLONEDIALOG_H
 #define KEEPASSX_CLONEDIALOG_H
 
-#include "core/Database.h"
-#include "gui/DatabaseWidget.h"
+#include <QByteArrayData>
+#include <QDialog>
+#include <QScopedPointer>
+#include <QString>
+
+class Database;
+class DatabaseWidget;
+class Entry;
+class QObject;
 
 namespace Ui
 {

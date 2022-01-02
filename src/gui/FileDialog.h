@@ -19,6 +19,12 @@
 #define KEEPASSX_FILEDIALOG_H
 
 #include <QFileDialog>
+#include <QDir>
+#include <QString>
+#include <QStringList>
+#include <QtGlobal>
+
+class QWidget;
 
 class FileDialog
 {

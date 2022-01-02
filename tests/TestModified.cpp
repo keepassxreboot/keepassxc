@@ -21,8 +21,13 @@
 #include <QSignalSpy>
 #include <QTest>
 
+#include "core/AutoTypeAssociations.h"
+#include "core/CustomData.h"
+#include "core/EntryAttributes.h"
+#include "core/EntryAttachments.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "keys/CompositeKey.h"
 #include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestModified)

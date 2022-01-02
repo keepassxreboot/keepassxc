@@ -17,6 +17,8 @@
 
 #include "Kdf.h"
 
+#include <limits.h>
+
 #include "crypto/Random.h"
 
 Kdf::Kdf(const QUuid& uuid)

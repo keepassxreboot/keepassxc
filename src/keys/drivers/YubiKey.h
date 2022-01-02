@@ -19,11 +19,15 @@
 #ifndef KEEPASSX_YUBIKEY_H
 #define KEEPASSX_YUBIKEY_H
 
-#include <QHash>
+#include <botan/secmem.h>
 #include <QMutex>
 #include <QObject>
 #include <QTimer>
-#include <botan/secmem.h>
+#include <QByteArray>
+#include <QList>
+#include <QPair>
+#include <QString>
+#include <QtCore>
 
 typedef QPair<unsigned int, int> YubiKeySlot;
 Q_DECLARE_METATYPE(YubiKeySlot);

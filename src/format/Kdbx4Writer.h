@@ -18,7 +18,15 @@
 #ifndef KEEPASSX_KDBX4WRITER_H
 #define KEEPASSX_KDBX4WRITER_H
 
+#include <QByteArray>
+#include <QCoreApplication>
+#include <QVariantMap>
+
 #include "KdbxWriter.h"
+#include "format/KeePass2.h"
+
+class Database;
+class QIODevice;
 
 /**
  * KDBX4 writer implementation.

@@ -16,9 +16,16 @@
  */
 
 #include "KeyComponentWidget.h"
-#include "ui_KeyComponentWidget.h"
 
 #include <QTimer>
+#include <QPushButton>
+#include <QSizePolicy>
+#include <QStackedWidget>
+#include <QVBoxLayout>
+
+#include "ui_KeyComponentWidget.h"
+
+class QShowEvent;
 
 KeyComponentWidget::KeyComponentWidget(QWidget* parent)
     : QWidget(parent)

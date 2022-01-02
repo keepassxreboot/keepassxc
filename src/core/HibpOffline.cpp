@@ -17,10 +17,18 @@
 
 #include "HibpOffline.h"
 
-#include "core/Group.h"
-
-#include <QCryptographicHash>
 #include <QProcess>
+#include <QByteArray>
+#include <QIODevice>
+#include <QList>
+#include <QObject>
+#include <QPair>
+#include <QtCore>
+#include <cstddef>
+
+#include "core/Group.h"
+#include "core/Database.h"
+#include "core/Entry.h"
 
 namespace HibpOffline
 {

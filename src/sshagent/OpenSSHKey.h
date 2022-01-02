@@ -19,8 +19,11 @@
 #ifndef KEEPASSXC_OPENSSHKEY_H
 #define KEEPASSXC_OPENSSHKEY_H
 
-#include <QCryptographicHash>
 #include <QObject>
+#include <QByteArray>
+#include <QList>
+#include <QString>
+#include <QtCore>
 
 class BinaryStream;
 

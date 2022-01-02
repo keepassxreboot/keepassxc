@@ -19,7 +19,15 @@
 #ifndef KEEPASSX_WELCOMEWIDGET_H
 #define KEEPASSX_WELCOMEWIDGET_H
 
-#include <QListWidgetItem>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QString>
+#include <QWidget>
+
+class QKeyEvent;
+class QListWidgetItem;
+class QObject;
+class QShowEvent;
 
 namespace Ui
 {

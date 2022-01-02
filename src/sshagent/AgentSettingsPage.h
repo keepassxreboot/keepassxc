@@ -19,7 +19,12 @@
 #ifndef AGENTSETTINGSPAGE_H
 #define AGENTSETTINGSPAGE_H
 
+#include <QIcon>
+#include <QString>
+
 #include "gui/ApplicationSettingsWidget.h"
+
+class QWidget;
 
 class AgentSettingsPage : public ISettingsPage
 {

@@ -17,12 +17,46 @@
  */
 
 #include "EntryPreviewWidget.h"
-#include "ui_EntryPreviewWidget.h"
 
+#include <QDateTime>
+#include <QFlags>
+#include <QFont>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QList>
+#include <QPalette>
+#include <QProgressBar>
+#include <QSharedPointer>
+#include <QStackedWidget>
+#include <QStringList>
+#include <QTabWidget>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QTextCursor>
+#include <QTextDocument>
+#include <QTextEdit>
+#include <QToolButton>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QVariant>
+
+#include "ui_EntryPreviewWidget.h"
 #include "gui/Clipboard.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
 #include "totp/totp.h"
+#include "core/AutoTypeAssociations.h"
+#include "core/Clock.h"
+#include "core/Config.h"
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
+#include "core/EntryAttributes.h"
+#include "core/Group.h"
+#include "core/TimeInfo.h"
+#include "gui/DatabaseIcons.h"
+#include "gui/entry/EntryAttachmentsWidget.h"
+#include "gui/widgets/ElidedLabel.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"

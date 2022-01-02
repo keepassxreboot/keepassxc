@@ -18,7 +18,12 @@
 #ifndef KEEPASSXC_TEXTSTREAM_H
 #define KEEPASSXC_TEXTSTREAM_H
 
+#include <stdio.h>
 #include <QTextStream>
+#include <QByteArray>
+#include <QIODevice>
+
+class QString;
 
 /**
  * QTextStream with codec fixes for the Windows command line.

@@ -19,6 +19,7 @@
 #include "format/KeePass2Reader.h"
 #include "keeshare/KeeShare.h"
 #include "keys/PasswordKey.h"
+#include "keys/CompositeKey.h"
 
 #include <QBuffer>
 #include <unzip.h>

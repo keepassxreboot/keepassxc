@@ -34,7 +34,6 @@ class AutoTypeExecutor;
 class AutoTypePlatformInterface;
 class Database;
 class Entry;
-class QPluginLoader;
 class QWidget;
 template <class T> class QSharedPointer;
 

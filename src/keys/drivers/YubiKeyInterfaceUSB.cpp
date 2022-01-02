@@ -18,13 +18,21 @@
 
 #include "YubiKeyInterfaceUSB.h"
 
+#include <QtCore/qglobal.h>
+#include <QtConcurrent>
+#include <QMultiMap>
+#include <QMutex>
+#include <QPair>
+#include <QSharedPointer>
+#include <QStaticStringData>
+#include <QStringLiteral>
+
 #include "core/Tools.h"
 #include "crypto/Random.h"
 #include "thirdparty/ykcore/ykcore.h"
 #include "thirdparty/ykcore/ykdef.h"
 #include "thirdparty/ykcore/ykstatus.h"
-
-#include <QtConcurrent>
+#include "keys/drivers/YubiKeyInterface.h"
 
 namespace
 {

@@ -18,8 +18,12 @@
 #ifndef BROWSERSETTINGSWIDGET_H
 #define BROWSERSETTINGSWIDGET_H
 
-#include <QPointer>
 #include <QWidget>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QString>
+
+class QObject;
 
 namespace Ui
 {

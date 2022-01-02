@@ -19,7 +19,10 @@
 #define KEEPASSXC_CLOCK_H
 
 #include <QDateTime>
-#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+
+template <class T> class QSharedPointer;
 
 class Clock
 {

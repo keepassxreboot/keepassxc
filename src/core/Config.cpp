@@ -17,16 +17,22 @@
  */
 
 #include "Config.h"
-#include "Global.h"
 
 #include <QCoreApplication>
 #include <QDir>
-#include <QHash>
 #include <QProcessEnvironment>
 #include <QSettings>
 #include <QSize>
 #include <QStandardPaths>
 #include <QTemporaryFile>
+#include <QFile>
+#include <QFileInfo>
+#include <QList>
+#include <QPointer>
+#include <QStaticStringData>
+#include <QStringLiteral>
+
+#include "Global.h"
 
 #define CONFIG_VERSION 2
 #define QS QStringLiteral

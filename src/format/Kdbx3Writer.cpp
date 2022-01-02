@@ -19,6 +19,13 @@
 #include "Kdbx3Writer.h"
 
 #include <QBuffer>
+#include <QByteArray>
+#include <QIODevice>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QUuid>
+#include <QtGlobal>
 
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
@@ -27,6 +34,12 @@
 #include "streams/HashedBlockStream.h"
 #include "streams/SymmetricCipherStream.h"
 #include "streams/qtiocompressor.h"
+#include "core/Database.h"
+#include "core/Endian.h"
+#include "crypto/SymmetricCipher.h"
+#include "crypto/kdf/Kdf.h"
+#include "format/KdbxWriter.h"
+#include "format/KeePass2.h"
 
 bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 {

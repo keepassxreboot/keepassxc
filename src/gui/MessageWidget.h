@@ -19,9 +19,14 @@
 #ifndef MESSAGEWIDGET_H
 #define MESSAGEWIDGET_H
 
+#include <QByteArrayData>
+#include <QString>
+
 #include "gui/KMessageWidget.h"
 
 class QTimer;
+class QObject;
+class QWidget;
 
 class MessageWidget : public KMessageWidget
 {

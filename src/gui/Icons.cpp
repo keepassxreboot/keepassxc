@@ -22,12 +22,25 @@
 #include <QImageReader>
 #include <QPaintDevice>
 #include <QPainter>
+#include <QBuffer>
+#include <QChar>
+#include <QIODevice>
+#include <QImage>
+#include <QList>
+#include <QPalette>
+#include <QRect>
+#include <QSize>
+#include <QStringList>
+#include <QVariant>
+#include <utility>
 
-#include "config-keepassx.h"
 #include "core/Config.h"
 #include "gui/DatabaseIcons.h"
 #include "gui/MainWindow.h"
-#include "gui/osutils/OSUtils.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
 
 #ifdef WITH_XC_KEESHARE
 #include "keeshare/KeeShare.h"

@@ -29,7 +29,7 @@
 #include "fdosecrets/dbus/DBusConstants.h" // IWYU pragma: keep
 #include "fdosecrets/dbus/DBusObject.h"
 #include "core/EntrySearcher.h"
-#include "dbus/DBusTypes.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 #include "fdosecrets/dbus/DBusClient.h"
 
 class DatabaseWidget;

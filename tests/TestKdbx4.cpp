@@ -19,6 +19,8 @@
 
 #include "config-keepassx-tests.h"
 #include "core/Metadata.h"
+#include "core/EntryAttributes.h"
+#include "core/EntryAttachments.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KdbxXmlWriter.h"
 #include "format/KeePass2.h"
@@ -26,6 +28,7 @@
 #include "format/KeePass2Writer.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "keys/CompositeKey.h"
 #include "mock/MockChallengeResponseKey.h"
 #include <QTest>
 

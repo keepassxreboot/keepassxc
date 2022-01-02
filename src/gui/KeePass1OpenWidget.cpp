@@ -16,13 +16,26 @@
  */
 
 #include "KeePass1OpenWidget.h"
-#include "ui_DatabaseOpenWidget.h"
 
 #include <QFileInfo>
+#include <QApplication>
+#include <QCursor>
+#include <QFile>
+#include <QIODevice>
+#include <QLabel>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QtCore>
 
+#include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "format/KeePass1Reader.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+#include "gui/PasswordEdit.h"
+
+class QWidget;
 
 KeePass1OpenWidget::KeePass1OpenWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)

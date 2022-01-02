@@ -17,13 +17,18 @@
  */
 
 #include "DatabaseSettingsWidgetKeeShare.h"
-#include "ui_DatabaseSettingsWidgetKeeShare.h"
 
+#include <QStandardItemModel>
+#include <QList>
+#include <QStandardItem>
+#include <QStringList>
+#include <QTableView>
+
+#include "ui_DatabaseSettingsWidgetKeeShare.h"
 #include "core/Group.h"
 #include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"
-
-#include <QStandardItemModel>
+#include "core/Database.h"
 
 DatabaseSettingsWidgetKeeShare::DatabaseSettingsWidgetKeeShare(QWidget* parent)
     : QWidget(parent)

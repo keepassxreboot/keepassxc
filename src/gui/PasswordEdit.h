@@ -19,11 +19,15 @@
 #ifndef KEEPASSX_PASSWORDEDIT_H
 #define KEEPASSX_PASSWORDEDIT_H
 
-#include <QAction>
 #include <QLineEdit>
 #include <QPointer>
+#include <QByteArrayData>
+#include <QString>
 
-class QDialog;
+class QAction;
+class QEvent;
+class QObject;
+class QWidget;
 
 class PasswordEdit : public QLineEdit
 {

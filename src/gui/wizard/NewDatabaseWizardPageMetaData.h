@@ -18,9 +18,12 @@
 #ifndef KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H
 #define KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H
 
+#include <QString>
+#include <QtCore>
+
 #include "NewDatabaseWizardPage.h"
 
-class Database;
+class QWidget;
 
 class NewDatabaseWizardPageMetaData : public NewDatabaseWizardPage
 {

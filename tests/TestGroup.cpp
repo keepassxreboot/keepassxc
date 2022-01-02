@@ -24,6 +24,7 @@
 #include <QtTestGui>
 
 #include "core/Group.h"
+#include "core/CustomData.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 

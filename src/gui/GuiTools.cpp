@@ -17,9 +17,18 @@
 
 #include "GuiTools.h"
 
+#include <QObject>
+#include <QString>
+#include <QVariant>
+
 #include "core/Config.h"
 #include "core/Group.h"
 #include "gui/MessageBox.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Global.h"
+
+class QWidget;
 
 namespace GuiTools
 {

@@ -18,11 +18,15 @@
 #include "TestKeePass2Format.h"
 #include "mock/MockClock.h"
 
+#include "core/AutoTypeAssociations.h"
+#include "core/EntryAttributes.h"
+#include "core/EntryAttachments.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "keys/CompositeKey.h"
 #include "mock/MockChallengeResponseKey.h"
 
 #include "FailDevice.h"

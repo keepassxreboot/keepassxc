@@ -17,16 +17,25 @@
 
 #include "UpdateChecker.h"
 
-#include "config-keepassx.h"
-#include "core/Clock.h"
-#include "core/Config.h"
-#include "core/NetworkManager.h"
-
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkReply>
 #include <QRegularExpression>
+#include <QDateTime>
+#include <QIODevice>
+#include <QJsonValue>
+#include <QList>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QStringList>
+#include <QUrl>
+#include <QVariant>
+
+#include "config-keepassx.h"
+#include "core/Clock.h"
+#include "core/Config.h"
+#include "core/NetworkManager.h"
 
 const QString UpdateChecker::ErrorVersion("error");
 UpdateChecker* UpdateChecker::m_instance(nullptr);

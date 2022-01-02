@@ -19,15 +19,30 @@
 #ifndef KEEPASSX_MAINWINDOW_H
 #define KEEPASSX_MAINWINDOW_H
 
-#include <QActionGroup>
-#include <QLabel>
 #include <QMainWindow>
-#include <QProgressBar>
 #include <QSystemTrayIcon>
+#include <QKeySequence>
+#include <QList>
+#include <QObject>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QString>
+#include <QStringList>
+#include <QTimer>
+#include <QtCore>
 
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
-#include "gui/osutils/ScreenLockListener.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+
+class QAction;
+class QActionGroup;
+class QLabel;
+class QMenu;
+class QProgressBar;
+class QWindow;
+class ScreenLockListener;
 
 namespace Ui
 {
@@ -36,7 +51,6 @@ namespace Ui
 
 class InactivityTimer;
 class SearchWidget;
-class MainWindowEventFilter;
 
 class MainWindow : public QMainWindow
 {

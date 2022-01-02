@@ -19,12 +19,19 @@
 #ifndef KEEPASSXC_SSHAGENT_H
 #define KEEPASSXC_SSHAGENT_H
 
-#include <QHash>
+#include <QByteArray>
+#include <QObject>
+#include <QPair>
+#include <QSharedPointer>
+#include <QString>
+#include <QUuid>
+#include <QtCore>
 
 #include "OpenSSHKey.h"
 
 class KeeAgentSettings;
 class Database;
+template <class T> class QSharedPointer;
 
 class SSHAgent : public QObject
 {

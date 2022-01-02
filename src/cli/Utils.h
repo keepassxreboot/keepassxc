@@ -19,12 +19,15 @@
 #define KEEPASSXC_UTILS_H
 
 #include <QTextStream>
+#include <QSharedPointer>
+#include <QString>
+#include <QStringList>
 
-class CompositeKey;
 class Database;
 class EntryAttributes;
 class FileKey;
 class PasswordKey;
+template <class T> class QSharedPointer;
 
 namespace Utils
 {

@@ -18,17 +18,24 @@
 #ifndef KEEPASSX_REPORTSWIDGET_H
 #define KEEPASSX_REPORTSWIDGET_H
 
-#include "config-keepassx.h"
+#include <QIcon>
+#include <QList>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "gui/DialogyWidget.h"
-#include "gui/entry/EditEntryWidget.h"
 
 class Database;
 class Entry;
-class Group;
-class QTabWidget;
 class ReportsPageHealthcheck;
 class ReportsPageHibp;
 class ReportsPageStatistics;
+class EditEntryWidget;
+class QWidget;
+template <class T> class QSharedPointer;
 #ifdef WITH_XC_BROWSER
 class ReportsPageBrowserStatistics;
 #endif
@@ -84,6 +91,7 @@ private:
     QWidget* m_sender = nullptr;
 
     class ExtraPage;
+
     QList<ExtraPage> m_extraPages;
 };
 

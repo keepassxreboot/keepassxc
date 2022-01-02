@@ -17,10 +17,23 @@
  */
 
 #include "BrowserAccessControlDialog.h"
-#include "ui_BrowserAccessControlDialog.h"
-#include <QUrl>
 
+#include <QUrl>
+#include <QAbstractButton>
+#include <QCheckBox>
+#include <QFlags>
+#include <QHeaderView>
+#include <QLabel>
+#include <QPushButton>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QUrlTwoFlags>
+#include <QtCore>
+
+#include "ui_BrowserAccessControlDialog.h"
 #include "core/Entry.h"
+
+class QWidget;
 
 BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent)
     : QDialog(parent)

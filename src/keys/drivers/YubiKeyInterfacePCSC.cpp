@@ -17,9 +17,19 @@
 
 #include "YubiKeyInterfacePCSC.h"
 
-#include "crypto/Random.h"
-
+#include <QtCore/qglobal.h>
+#include <string.h>
+#include <winscard.h>
 #include <QtConcurrent>
+#include <QMultiMap>
+#include <QMutex>
+#include <QSharedPointer>
+#include <QThread>
+#include <functional>
+#include <string>
+
+#include "crypto/Random.h"
+#include "keys/drivers/YubiKeyInterface.h"
 
 // MSYS2 does not define these macros
 // So set them to the value used by pcsc-lite

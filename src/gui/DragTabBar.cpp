@@ -20,6 +20,10 @@
 #include <QApplication>
 #include <QDragEnterEvent>
 #include <QTimer>
+#include <QCursor>
+#include <QDragMoveEvent>
+
+class QWidget;
 
 DragTabBar::DragTabBar(QWidget* parent)
     : QTabBar(parent)

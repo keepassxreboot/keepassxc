@@ -17,18 +17,50 @@
  */
 
 #include "EditEntryWidget.h"
+
+#include <QColorDialog>
+#include <QDesktopServices>
+#include <QSortFilterProxyModel>
+#include <QStringListModel>
+#include <QAbstractItemView>
+#include <QAction>
+#include <QButtonGroup>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QCompleter>
+#include <QDateTime>
+#include <QDateTimeEdit>
+#include <QFont>
+#include <QItemSelectionModel>
+#include <QLabel>
+#include <QLineEdit>
+#include <QList>
+#include <QListView>
+#include <QMenu>
+#include <QMessageBox>
+#include <QModelIndex>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QRegularExpression>
+#include <QScrollArea>
+#include <QSpinBox>
+#include <QSplitter>
+#include <QTextDocument>
+#include <QToolButton>
+#include <QTreeView>
+#include <QUrl>
+#include <QUuid>
+#include <QVariant>
+#include <QWidget>
+#include <utility>
+
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetAutoType.h"
 #include "ui_EditEntryWidgetBrowser.h"
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetSSHAgent.h"
-
-#include <QColorDialog>
-#include <QDesktopServices>
-#include <QSortFilterProxyModel>
-#include <QStringListModel>
-
 #include "autotype/AutoType.h"
 #include "core/AutoTypeAssociations.h"
 #include "core/Clock.h"
@@ -39,6 +71,17 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/TimeDelta.h"
+#include "autotype/WindowSelectComboBox.h"
+#include "core/CustomData.h"
+#include "core/EntryAttachments.h"
+#include "core/Global.h"
+#include "core/TimeInfo.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+#include "gui/PasswordEdit.h"
+#include "gui/URLEdit.h"
+#include "gui/entry/EditEntryWidget_p.h"
+#include "gui/entry/EntryAttachmentsWidget.h"
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
 #include "sshagent/SSHAgent.h"

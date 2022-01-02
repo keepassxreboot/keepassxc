@@ -16,8 +16,25 @@
  */
 
 #include "DatabaseSettingsWidgetEncryption.h"
-#include "ui_DatabaseSettingsWidgetEncryption.h"
 
+#include <QApplication>
+#include <QComboBox>
+#include <QLabel>
+#include <QList>
+#include <QMessageBox>
+#include <QObject>
+#include <QPair>
+#include <QPushButton>
+#include <QSharedPointer>
+#include <QSlider>
+#include <QSpinBox>
+#include <QStackedWidget>
+#include <QToolButton>
+#include <QUuid>
+#include <QVariant>
+#include <QWidget>
+
+#include "ui_DatabaseSettingsWidgetEncryption.h"
 #include "core/AsyncTask.h"
 #include "core/Database.h"
 #include "core/Global.h"
@@ -26,6 +43,11 @@
 #include "format/KeePass2.h"
 #include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
+#include "core/CustomData.h"
+#include "gui/dbsettings/DatabaseSettingsWidget.h"
+#include "keys/CompositeKey.h"
+
+class QShowEvent;
 
 const char* DatabaseSettingsWidgetEncryption::CD_DECRYPTION_TIME_PREFERENCE_KEY = "KPXC_DECRYPTION_TIME_PREFERENCE";
 

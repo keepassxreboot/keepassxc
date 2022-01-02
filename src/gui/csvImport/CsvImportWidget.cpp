@@ -17,14 +17,39 @@
  */
 
 #include "CsvImportWidget.h"
-#include "ui_CsvImportWidget.h"
 
+#include <stdint.h>
 #include <QStringListModel>
+#include <QAbstractItemView>
+#include <QApplication>
+#include <QBuffer>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDateTime>
+#include <QDialogButtonBox>
+#include <QHeaderView>
+#include <QLabel>
+#include <QObject>
+#include <QRegularExpression>
+#include <QSharedPointer>
+#include <QSpinBox>
+#include <QTableView>
+#include <QUuid>
+#include <QVariant>
 
+#include "ui_CsvImportWidget.h"
 #include "core/Clock.h"
 #include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
 #include "totp/totp.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Group.h"
+#include "core/TimeInfo.h"
+#include "format/CsvParser.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+#include "gui/csvImport/CsvParserModel.h"
 
 // I wanted to make the CSV import GUI future-proof, so if one day you need a new field,
 // all you have to do is add a field to m_columnHeader, and the GUI will follow:

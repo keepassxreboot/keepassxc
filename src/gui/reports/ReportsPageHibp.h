@@ -18,9 +18,16 @@
 #ifndef KEEPASSXC_REPORTSPAGEHIBP_H
 #define KEEPASSXC_REPORTSPAGEHIBP_H
 
+#include <QIcon>
+#include <QSharedPointer>
+#include <QString>
+
 #include "ReportsDialog.h"
 
 class ReportsWidgetHibp;
+class Database;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class ReportsPageHibp : public IReportsPage
 {

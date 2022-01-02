@@ -18,10 +18,12 @@
 
 #include "EntryAttributes.h"
 
-#include "core/Global.h"
-
 #include <QRegularExpression>
 #include <QUuid>
+#include <QByteArray>
+#include <QStringList>
+
+#include "core/Global.h"
 
 const QString EntryAttributes::TitleKey = "Title";
 const QString EntryAttributes::UserNameKey = "UserName";

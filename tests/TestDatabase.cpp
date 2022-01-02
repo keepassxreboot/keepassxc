@@ -28,6 +28,7 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Writer.h"
+#include "keys/CompositeKey.h"
 #include "util/TemporaryFile.h"
 
 QTEST_GUILESS_MAIN(TestDatabase)

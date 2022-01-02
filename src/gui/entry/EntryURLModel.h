@@ -21,6 +21,14 @@
 
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
+#include <QIcon>
+#include <QList>
+#include <QModelIndex>
+#include <QPair>
+#include <QString>
+#include <QStyleOptionViewItem>
+#include <QVariant>
+#include <QtCore>
 
 class EntryAttributes;
 

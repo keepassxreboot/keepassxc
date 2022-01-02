@@ -17,8 +17,12 @@
 
 #include "CustomData.h"
 
+#include <QByteArray>
+#include <QHashIterator>
+#include <QStaticStringData>
+#include <QStringLiteral>
+
 #include "core/Clock.h"
-#include "core/Global.h"
 
 const QString CustomData::LastModified = QStringLiteral("_LAST_MODIFIED");
 const QString CustomData::Created = QStringLiteral("_CREATED");

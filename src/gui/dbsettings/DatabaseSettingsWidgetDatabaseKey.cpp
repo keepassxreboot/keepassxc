@@ -17,6 +17,15 @@
 
 #include "DatabaseSettingsWidgetDatabaseKey.h"
 
+#include <QLayout>
+#include <QPushButton>
+#include <QList>
+#include <QMessageBox>
+#include <QScopedPointer>
+#include <QUuid>
+#include <QVBoxLayout>
+#include <QWidget>
+
 #include "core/Database.h"
 #include "gui/MessageBox.h"
 #include "gui/databasekey/KeyFileEditWidget.h"
@@ -25,9 +34,12 @@
 #include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "gui/databasekey/KeyComponentWidget.h"
+#include "gui/dbsettings/DatabaseSettingsWidget.h"
+#include "keys/CompositeKey.h"
+#include "keys/Key.h"
 
-#include <QLayout>
-#include <QPushButton>
+template <class T> class QSharedPointer;
 
 DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* parent)
     : DatabaseSettingsWidget(parent)

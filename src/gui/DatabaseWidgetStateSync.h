@@ -20,7 +20,15 @@
 #ifndef KEEPASSX_DATABASEWIDGETSTATESYNC_H
 #define KEEPASSX_DATABASEWIDGETSTATESYNC_H
 
-#include "gui/DatabaseWidget.h"
+#include <QByteArray>
+#include <QByteArrayData>
+#include <QList>
+#include <QObject>
+#include <QPointer>
+#include <QString>
+#include <QVariant>
+
+class DatabaseWidget;
 
 class DatabaseWidgetStateSync : public QObject
 {

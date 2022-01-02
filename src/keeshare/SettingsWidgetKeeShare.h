@@ -18,15 +18,16 @@
 #ifndef KEEPASSXC_SETTINGSWIDGETKEESHARE_H
 #define KEEPASSXC_SETTINGSWIDGETKEESHARE_H
 
-#include <QPointer>
 #include <QWidget>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QString>
 
 #include "gui/MessageWidget.h"
 #include "keeshare/KeeShareSettings.h"
+#include "gui/KMessageWidget.h"
 
-class Database;
-
-class QStandardItemModel;
+class QObject;
 
 namespace Ui
 {

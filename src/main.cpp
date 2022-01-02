@@ -16,9 +16,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtCore/qglobal.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <QCommandLineParser>
 #include <QFile>
-#include <QWindow>
+#include <QApplication>
+#include <QByteArray>
+#include <QCommandLineOption>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QGuiApplication>
+#include <QIODevice>
+#include <QMessageBox>
+#include <QObject>
+#include <QProcess>
+#include <QStaticStringData>
+#include <QString>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QTextStream>
+#include <QVariant>
+#include <QtConfig>
+#include <QtCore>
 
 #include "cli/Utils.h"
 #include "config-keepassx.h"
@@ -28,6 +48,8 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
+#include "core/Config.h"
+#include "gui/osutils/OSUtilsBase.h"
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
 #include <sanitizer/lsan_interface.h>

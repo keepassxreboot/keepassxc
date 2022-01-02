@@ -18,16 +18,26 @@
 
 #include "totp.h"
 
-#include "core/Base32.h"
-#include "core/Clock.h"
-
 #include <QMessageAuthenticationCode>
 #include <QSharedPointer>
 #include <QUrlQuery>
 #include <QVariant>
-#include <QtEndian>
-
 #include <cmath>
+#include <QByteArray>
+#include <QByteRef>
+#include <QCharRef>
+#include <QObject>
+#include <QPair>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QUrl>
+#include <QtCore>
+
+#include "core/Base32.h"
+#include "core/Clock.h"
+
+template <class T> class QSharedPointer;
 
 static QList<Totp::Encoder> totpEncoders{
     {"", "", "0123456789", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP, false},

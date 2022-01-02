@@ -17,12 +17,19 @@
 
 #include "DarkStyle.h"
 
+#include <QtCore/qglobal.h>
 #include <QDialog>
 #include <QFile>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QToolBar>
+#include <QIODevice>
+#include <QRgb>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QWidget>
+#include <QtCore>
 
 #ifdef Q_OS_MACOS
 #include "gui/osutils/OSUtils.h"

@@ -17,6 +17,8 @@
 
 #include "SymmetricCipherStream.h"
 
+#include <string.h>
+
 SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice)
     : LayeredStream(baseDevice)
     , m_cipher(new SymmetricCipher())

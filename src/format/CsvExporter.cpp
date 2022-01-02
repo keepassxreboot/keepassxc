@@ -19,8 +19,17 @@
 #include "CsvExporter.h"
 
 #include <QFile>
+#include <QDateTime>
+#include <QIODevice>
+#include <QList>
+#include <Qt>
 
 #include "core/Group.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/TimeInfo.h"
+
+template <class T> class QSharedPointer;
 
 bool CsvExporter::exportDatabase(const QString& filename, const QSharedPointer<const Database>& db)
 {

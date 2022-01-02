@@ -17,8 +17,12 @@
 
 #include "EditGroupPageKeeShare.h"
 
+#include <QtGlobal>
+
 #include "gui/Icons.h"
 #include "keeshare/group/EditGroupWidgetKeeShare.h"
+
+class QWidget;
 
 EditGroupPageKeeShare::EditGroupPageKeeShare(EditGroupWidget* widget)
 {

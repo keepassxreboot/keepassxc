@@ -18,15 +18,21 @@
 #ifndef KEEPASSXC_KDBXREADER_H
 #define KEEPASSXC_KDBXREADER_H
 
-#include "KeePass2.h"
-
 #include <QCoreApplication>
 #include <QPointer>
+#include <QByteArray>
+#include <QPair>
+#include <QSharedPointer>
+#include <QString>
+#include <QtGlobal>
+
+#include "KeePass2.h"
 
 class CompositeKey;
 class Database;
 class QIODevice;
 class StoreDataStream;
+template <class T> class QSharedPointer;
 
 /**
  * Abstract KDBX reader base class.

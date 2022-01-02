@@ -19,6 +19,9 @@
 #define KEEPASSXC_OPDATA01_H
 
 #include <QObject>
+#include <QByteArray>
+#include <QByteArrayData>
+#include <QString>
 
 /*!
  * Packages and transports the AgileBits data structure called \c OpData01

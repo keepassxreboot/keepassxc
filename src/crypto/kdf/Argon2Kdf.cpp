@@ -17,10 +17,18 @@
 
 #include "Argon2Kdf.h"
 
-#include <QThread>
 #include <botan/pwdhash.h>
+#include <QtCore/qglobal.h>
+#include <botan/types.h>
+#include <QThread>
+#include <QObject>
+#include <QUuid>
+#include <QVariant>
+#include <chrono>
+#include <exception>
 
 #include "format/KeePass2.h"
+#include "crypto/kdf/Kdf.h"
 
 /**
  * KeePass' Argon2 implementation supports all parameters that are defined in the official specification,

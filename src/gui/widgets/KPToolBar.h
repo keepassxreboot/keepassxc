@@ -21,8 +21,13 @@
 #include <QPointer>
 #include <QTimer>
 #include <QToolBar>
+#include <QByteArrayData>
+#include <QString>
 
 class QAbstractButton;
+class QEvent;
+class QObject;
+class QWidget;
 
 class KPToolBar : public QToolBar
 {

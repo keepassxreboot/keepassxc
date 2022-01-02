@@ -20,6 +20,7 @@
 #define KEEPASSX_CRYPTOHASH_H
 
 #include <QByteArray>
+#include <QtGlobal>
 
 class CryptoHashPrivate;
 

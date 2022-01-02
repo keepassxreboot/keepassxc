@@ -22,12 +22,22 @@
 #include <QFileSystemWatcher>
 #include <QListView>
 #include <QStackedWidget>
+#include <QByteArray>
+#include <QList>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QStringList>
+#include <QUuid>
+#include <QtCore>
 
 #include "DatabaseOpenDialog.h"
 #include "config-keepassx.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
+#include "gui/KMessageWidget.h"
 
 class DatabaseOpenWidget;
 class KeePass1OpenWidget;
@@ -49,11 +59,10 @@ class QSplitter;
 class QLabel;
 class MessageWidget;
 class EntryPreviewWidget;
-
-namespace Ui
-{
-    class SearchWidget;
-}
+class CsvImportWizard;
+class QAction;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class DatabaseWidget : public QStackedWidget
 {

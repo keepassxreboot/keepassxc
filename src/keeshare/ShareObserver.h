@@ -20,13 +20,21 @@
 
 #include <QMap>
 #include <QObject>
+#include <QByteArrayData>
+#include <QList>
+#include <QPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QStringList>
 
 #include "gui/MessageWidget.h"
 #include "keeshare/KeeShareSettings.h"
+#include "gui/KMessageWidget.h"
 
 class FileWatcher;
 class Group;
 class Database;
+template <class T> class QSharedPointer;
 
 class ShareObserver : public QObject
 {

@@ -19,6 +19,8 @@
 #define BROWSERACTION_H
 
 #include <QString>
+#include <QByteArray>
+#include <QtGlobal>
 
 class QJsonObject;
 

@@ -18,15 +18,12 @@
 #ifndef KEEPASSXC_KEESHARESETTINGS_H
 #define KEEPASSXC_KEESHARESETTINGS_H
 
+#include <botan/pk_keys.h>
 #include <QSharedPointer>
 #include <QUuid>
+#include <QFlags>
+#include <QString>
 
-namespace Botan
-{
-    class Private_Key;
-}
-
-class CustomData;
 class QXmlStreamWriter;
 class QXmlStreamReader;
 

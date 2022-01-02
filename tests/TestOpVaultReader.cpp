@@ -18,6 +18,8 @@
 #include "TestOpVaultReader.h"
 
 #include "config-keepassx-tests.h"
+#include "core/EntryAttributes.h"
+#include "core/EntryAttachments.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"

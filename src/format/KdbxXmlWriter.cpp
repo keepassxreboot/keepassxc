@@ -17,12 +17,26 @@
 
 #include "KdbxXmlWriter.h"
 
+#include <QtCore/qglobal.h>
 #include <QBuffer>
 #include <QFile>
+#include <QChar>
+#include <QCharRef>
+#include <QDate>
+#include <QDateTime>
+#include <QIODevice>
+#include <QList>
+#include <QTime>
 
 #include "core/Endian.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/qtiocompressor.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
+#include "core/EntryAttributes.h"
+#include "core/TimeInfo.h"
+#include "format/KeePass2.h"
 
 /**
  * @param version KDBX version

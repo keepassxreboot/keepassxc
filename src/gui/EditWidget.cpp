@@ -17,10 +17,22 @@
  */
 
 #include "EditWidget.h"
-#include "ui_EditWidget.h"
 
 #include <QPushButton>
 #include <QScrollArea>
+#include <QAbstractScrollArea>
+#include <QDialogButtonBox>
+#include <QFlags>
+#include <QFont>
+#include <QFrame>
+#include <QLabel>
+#include <QStackedWidget>
+#include <QWidget>
+
+#include "ui_EditWidget.h"
+#include "gui/CategoryListWidget.h"
+
+class QAbstractButton;
 
 EditWidget::EditWidget(QWidget* parent)
     : DialogyWidget(parent)

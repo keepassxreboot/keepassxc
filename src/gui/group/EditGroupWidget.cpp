@@ -17,7 +17,26 @@
  */
 
 #include "EditGroupWidget.h"
+
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDateTime>
+#include <QDateTimeEdit>
+#include <QFont>
+#include <QLineEdit>
+#include <QPlainTextEdit>
+#include <QRadioButton>
+#include <QScrollArea>
+#include <QUuid>
+#include <QVariant>
+#include <QWidget>
+
 #include "ui_EditGroupWidgetMain.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Global.h"
+#include "core/TimeInfo.h"
 #if defined(WITH_XC_BROWSER)
 #include "browser/BrowserService.h"
 #include "ui_EditGroupWidgetBrowser.h"
@@ -30,6 +49,8 @@
 #include "gui/Font.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
+
+template <class T> class QSharedPointer;
 
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/group/EditGroupPageKeeShare.h"

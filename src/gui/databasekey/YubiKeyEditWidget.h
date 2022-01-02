@@ -18,14 +18,22 @@
 #ifndef KEEPASSXC_YUBIKEYEDITWIDGET_H
 #define KEEPASSXC_YUBIKEYEDITWIDGET_H
 
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "KeyComponentWidget.h"
+
+class CompositeKey;
+class QWidget;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {
     class YubiKeyEditWidget;
 }
-
-class ChallengeResponseKey;
 
 class YubiKeyEditWidget : public KeyComponentWidget
 {

@@ -20,14 +20,21 @@
 #define KEEPASSX_ENTRYVIEW_H
 
 #include <QTreeView>
+#include <QByteArray>
+#include <QList>
+#include <QModelIndex>
+#include <QString>
+#include <QtCore>
 
 #include "gui/entry/EntryModel.h"
 
 class Entry;
-class EntryModel;
 class Group;
 class SortFilterHideProxyModel;
 class QActionGroup;
+class QAction;
+class QMenu;
+class QWidget;
 
 class EntryView : public QTreeView
 {

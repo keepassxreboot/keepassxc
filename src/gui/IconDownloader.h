@@ -21,6 +21,11 @@
 #include <QImage>
 #include <QTimer>
 #include <QUrl>
+#include <QByteArray>
+#include <QByteArrayData>
+#include <QList>
+#include <QObject>
+#include <QString>
 
 class QNetworkReply;
 

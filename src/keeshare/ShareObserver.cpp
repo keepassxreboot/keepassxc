@@ -16,13 +16,26 @@
  */
 
 #include "ShareObserver.h"
+
+#include <QtCore/qglobal.h>
+#include <QtCore/qsharedpointer.h>
+#include <QDir>
+#include <QByteArray>
+#include <QFileInfo>
+#include <QPair>
+#include <QTimer>
+#include <QVariant>
+#include <QtCore>
+#include <utility>
+
 #include "core/FileWatcher.h"
 #include "core/Group.h"
 #include "keeshare/KeeShare.h"
 #include "keeshare/ShareExport.h"
 #include "keeshare/ShareImport.h"
-
-#include <QDir>
+#include "KeeShareSettings.h"
+#include "core/Config.h"
+#include "core/Database.h"
 
 namespace
 {

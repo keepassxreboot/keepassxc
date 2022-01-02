@@ -16,12 +16,24 @@
  */
 
 #include "DatabaseSettingsWidgetGeneral.h"
-#include "ui_DatabaseSettingsWidgetGeneral.h"
 
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QList>
+#include <QSharedPointer>
+#include <QSpinBox>
+#include <QWidget>
+
+#include "ui_DatabaseSettingsWidgetGeneral.h"
 #include "core/Clock.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/MessageBox.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "gui/dbsettings/DatabaseSettingsWidget.h"
+
+class QShowEvent;
 
 DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
     : DatabaseSettingsWidget(parent)

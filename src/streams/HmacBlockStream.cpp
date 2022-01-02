@@ -17,6 +17,10 @@
 
 #include "HmacBlockStream.h"
 
+#include <string.h>
+#include <QIODevice>
+#include <utility>
+
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 

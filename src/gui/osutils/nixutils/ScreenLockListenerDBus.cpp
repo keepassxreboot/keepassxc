@@ -17,9 +17,17 @@
 
 #include "ScreenLockListenerDBus.h"
 
+#include <QtCore/qglobal.h>
 #include <QDBusInterface>
 #include <QDebug>
 #include <QProcessEnvironment>
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDBusVariant>
+#include <QList>
+#include <QVariant>
+
+class QWidget;
 
 ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget* parent)
     : ScreenLockListenerPrivate(parent)

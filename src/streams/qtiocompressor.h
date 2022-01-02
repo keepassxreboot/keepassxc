@@ -48,8 +48,11 @@
 #define QTIOCOMPRESSOR_H
 
 #include <QIODevice>
+#include <QString>
+#include <QtCore>
 
 class QtIOCompressorPrivate;
+
 class QtIOCompressor : public QIODevice
 {
 Q_OBJECT

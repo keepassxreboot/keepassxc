@@ -19,6 +19,9 @@
 #define KEEPASSX_DATABASEICONS_H
 
 #include <QIcon>
+#include <QPixmap>
+#include <QString>
+#include <QtCore>
 
 enum IconSize
 {

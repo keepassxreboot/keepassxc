@@ -19,8 +19,10 @@
 #ifndef NATIVEMESSAGEINSTALLER_H
 #define NATIVEMESSAGEINSTALLER_H
 
-#include "BrowserShared.h"
 #include <QtGlobal>
+#include <QString>
+
+#include "BrowserShared.h"
 
 class QJsonObject;
 

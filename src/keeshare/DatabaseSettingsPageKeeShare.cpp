@@ -17,9 +17,11 @@
 
 #include "DatabaseSettingsPageKeeShare.h"
 
-#include "core/Database.h"
 #include "gui/Icons.h"
 #include "keeshare/DatabaseSettingsWidgetKeeShare.h"
+
+class Database;
+class QWidget;
 
 QString DatabaseSettingsPageKeeShare::name()
 {

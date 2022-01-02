@@ -18,8 +18,18 @@
 #ifndef KEEPASSX_DETAILSWIDGET_H
 #define KEEPASSX_DETAILSWIDGET_H
 
-#include "config-keepassx.h"
+#include <QPointer>
+#include <QScopedPointer>
+#include <QString>
+#include <QTimer>
+#include <QWidget>
+#include <QtCore>
+
 #include "gui/DatabaseWidget.h"
+
+class Entry;
+class Group;
+class QTabWidget;
 
 namespace Ui
 {

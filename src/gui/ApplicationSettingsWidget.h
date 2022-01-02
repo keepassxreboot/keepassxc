@@ -19,7 +19,15 @@
 #ifndef KEEPASSX_SETTINGSWIDGET_H
 #define KEEPASSX_SETTINGSWIDGET_H
 
+#include <QIcon>
+#include <QList>
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "gui/EditWidget.h"
+
+class QWidget;
 
 namespace Ui
 {
@@ -73,6 +81,7 @@ private:
     Qt::Key m_globalAutoTypeKey;
     Qt::KeyboardModifiers m_globalAutoTypeModifiers;
     class ExtraPage;
+
     QList<ExtraPage> m_extraPages;
 };
 

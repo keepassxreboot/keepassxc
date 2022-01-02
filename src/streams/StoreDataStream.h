@@ -18,6 +18,11 @@
 #ifndef KEEPASSX_STOREDATASTREAM_H
 #define KEEPASSX_STOREDATASTREAM_H
 
+#include <QByteArray>
+#include <QIODevice>
+#include <QString>
+#include <QtCore>
+
 #include "streams/LayeredStream.h"
 
 class StoreDataStream : public LayeredStream

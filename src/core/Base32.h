@@ -24,6 +24,7 @@
 #ifndef BASE32_H
 #define BASE32_H
 
+#include <QtCore/qglobal.h>
 #include <QByteArray>
 #include <QVariant>
 

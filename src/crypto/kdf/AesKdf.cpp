@@ -18,10 +18,17 @@
 #include "AesKdf.h"
 
 #include <QtConcurrent>
+#include <QElapsedTimer>
+#include <QFuture>
+#include <QObject>
+#include <QUuid>
+#include <QVariant>
+#include <QtGlobal>
 
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
 #include "format/KeePass2.h"
+#include "crypto/kdf/Kdf.h"
 
 AesKdf::AesKdf()
     : Kdf::Kdf(KeePass2::KDF_AES_KDBX4)

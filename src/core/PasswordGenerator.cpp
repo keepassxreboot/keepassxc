@@ -18,6 +18,10 @@
 
 #include "PasswordGenerator.h"
 
+#include <QCharRef>
+#include <QSharedPointer>
+#include <QtCore>
+
 #include "crypto/Random.h"
 
 const int PasswordGenerator::DefaultLength = 32;

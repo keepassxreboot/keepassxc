@@ -16,13 +16,25 @@
  */
 
 #include "CategoryListWidget.h"
-#include "ui_CategoryListWidget.h"
 
 #include <QListWidget>
 #include <QPainter>
 #include <QProxyStyle>
 #include <QScrollBar>
 #include <QSize>
+#include <QFlags>
+#include <QFontMetrics>
+#include <QListWidgetItem>
+#include <QPalette>
+#include <QRect>
+#include <QStyle>
+#include <QStyleOption>
+#include <QToolButton>
+
+#include "ui_CategoryListWidget.h"
+
+class QResizeEvent;
+class QShowEvent;
 
 CategoryListWidget::CategoryListWidget(QWidget* parent)
     : QWidget(parent)

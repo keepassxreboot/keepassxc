@@ -20,6 +20,10 @@
 
 #include <QFileSystemWatcher>
 #include <QTimer>
+#include <QByteArray>
+#include <QByteArrayData>
+#include <QObject>
+#include <QString>
 
 class FileWatcher : public QObject
 {

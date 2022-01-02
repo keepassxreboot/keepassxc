@@ -1,0 +1,4 @@
+[
+  # Include <termios.h> instead of importing private headers.
+  { include: [ "@<bits/termios-.*>", private, "<termios.h>", public ] },
+]

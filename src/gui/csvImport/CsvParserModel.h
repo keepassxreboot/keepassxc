@@ -20,8 +20,13 @@
 #define KEEPASSX_CSVPARSERMODEL_H
 
 #include <QAbstractTableModel>
+#include <QMap>
+#include <QModelIndex>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QtCore>
 
-#include "core/Group.h"
 #include "format/CsvParser.h"
 
 class CsvParserModel : public QAbstractTableModel, public CsvParser

@@ -18,6 +18,10 @@
 
 #include "EntryURLModel.h"
 
+#include <QColor>
+#include <QFlags>
+#include <QStandardItem>
+
 #include "core/EntryAttributes.h"
 #include "core/Tools.h"
 #include "gui/Icons.h"

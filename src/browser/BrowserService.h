@@ -20,8 +20,25 @@
 #ifndef BROWSERSERVICE_H
 #define BROWSERSERVICE_H
 
-#include "core/Entry.h"
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QList>
+#include <QObject>
+#include <QPair>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QStringList>
+#include <QUuid>
+#include <QtCore>
+
 #include "gui/PasswordGeneratorWidget.h"
+
+class Database;
+class Entry;
+class Group;
+template <class T> class QSharedPointer;
 
 typedef QPair<QString, QString> StringPair;
 typedef QList<StringPair> StringPairList;

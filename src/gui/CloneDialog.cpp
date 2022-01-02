@@ -16,9 +16,16 @@
  */
 
 #include "CloneDialog.h"
-#include "ui_CloneDialog.h"
 
-#include "config-keepassx.h"
+#include <QCheckBox>
+#include <QDialogButtonBox>
+#include <QtCore>
+
+#include "ui_CloneDialog.h"
+#include "core/Entry.h"
+#include "gui/DatabaseWidget.h"
+
+class Database;
 
 CloneDialog::CloneDialog(DatabaseWidget* parent, Database* db, Entry* entry)
     : QDialog(parent)

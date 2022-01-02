@@ -17,11 +17,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AutoTypeXCB.h"
+#include <QX11Info>
 #include "core/Tools.h"
+
+#include "AutoTypeXCB.h"
 #include "gui/osutils/nixutils/X11Funcs.h"
 
-#include <QX11Info>
 #include <X11/XKBlib.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/XTest.h>

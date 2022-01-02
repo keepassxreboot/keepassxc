@@ -18,14 +18,16 @@
 #ifndef KEEPASSX_EDITWIDGETPROPERTIES_H
 #define KEEPASSX_EDITWIDGETPROPERTIES_H
 
-#include <QItemSelection>
 #include <QPointer>
-#include <QStandardItemModel>
 #include <QWidget>
+#include <QScopedPointer>
+#include <QString>
+#include <QtCore>
+#include <QUuid>
 
 class CustomData;
 class TimeInfo;
-class QUuid;
+class QStandardItemModel;
 
 namespace Ui
 {

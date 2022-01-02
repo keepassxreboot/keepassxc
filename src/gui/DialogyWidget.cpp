@@ -19,6 +19,9 @@
 
 #include <QKeyEvent>
 #include <QPushButton>
+#include <QFlags>
+#include <QList>
+#include <QtCore>
 
 DialogyWidget::DialogyWidget(QWidget* parent)
     : QWidget(parent)

@@ -17,8 +17,13 @@
 
 #ifndef SCREENLOCKLISTENERDBUS_H
 #define SCREENLOCKLISTENERDBUS_H
+#include <QString>
+#include <QtCore>
+#include <QDBusMessage> // IWYU pragma: keep, export
+
 #include "gui/osutils/ScreenLockListenerPrivate.h"
-#include <QDBusMessage>
+
+class QWidget;
 
 class ScreenLockListenerDBus : public ScreenLockListenerPrivate
 {

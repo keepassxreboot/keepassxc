@@ -18,7 +18,18 @@
 #ifndef KEEPASSX_KDBX4READER_H
 #define KEEPASSX_KDBX4READER_H
 
+#include <QByteArray>
+#include <QSharedPointer>
+#include <QString>
+#include <QVariantMap>
+#include <QtCore>
+
 #include "format/KdbxReader.h"
+
+class CompositeKey;
+class Database;
+class StoreDataStream;
+template <class T> class QSharedPointer;
 
 /**
  * KDBX4 reader implementation.

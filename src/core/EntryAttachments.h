@@ -18,15 +18,19 @@
 #ifndef KEEPASSX_ENTRYATTACHMENTS_H
 #define KEEPASSX_ENTRYATTACHMENTS_H
 
-#include "core/FileWatcher.h"
+#include <QMap>
+#include <QSharedPointer>
+#include <QByteArray>
+#include <QList>
+#include <QSet>
+#include <QString>
+#include <QStringList>
+#include <QtCore>
+
 #include "core/ModifiableObject.h"
 
-#include <QHash>
-#include <QMap>
-#include <QObject>
-#include <QSharedPointer>
-
-class QStringList;
+class FileWatcher;
+template <class T> class QSharedPointer;
 
 class EntryAttachments : public ModifiableObject
 {

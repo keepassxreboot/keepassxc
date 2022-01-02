@@ -17,9 +17,22 @@
 
 #include "OpVaultOpenWidget.h"
 
+#include <QApplication>
+#include <QCursor>
+#include <QDir>
+#include <QLabel>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QtCore>
+
 #include "core/Database.h"
 #include "format/OpVaultReader.h"
 #include "ui_DatabaseOpenWidget.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+#include "gui/PasswordEdit.h"
+
+class QWidget;
 
 OpVaultOpenWidget::OpVaultOpenWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)

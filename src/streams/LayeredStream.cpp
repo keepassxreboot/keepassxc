@@ -17,6 +17,9 @@
 
 #include "LayeredStream.h"
 
+#include <QtCore/qglobal.h>
+#include <QFlags>
+
 LayeredStream::LayeredStream(QIODevice* baseDevice)
     : QIODevice(baseDevice)
     , m_baseDevice(baseDevice)

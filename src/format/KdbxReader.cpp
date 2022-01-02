@@ -17,10 +17,17 @@
  */
 
 #include "KdbxReader.h"
+
+#include <QIODevice>
+#include <QUuid>
+#include <utility>
+
 #include "core/Database.h"
 #include "core/Endian.h"
 #include "crypto/SymmetricCipher.h"
 #include "streams/StoreDataStream.h"
+#include "crypto/kdf/Kdf.h"
+#include "format/KeePass2.h"
 
 #define UUID_LENGTH 16
 

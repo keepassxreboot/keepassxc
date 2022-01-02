@@ -20,15 +20,18 @@
 #define KEEPASSX_METADATA_H
 
 #include <QDateTime>
-#include <QHash>
 #include <QPointer>
 #include <QUuid>
+#include <QByteArray>
+#include <QList>
+#include <QSet>
+#include <QString>
+#include <QtCore>
 
-#include "core/CustomData.h"
-#include "core/Global.h"
+#include "core/ModifiableObject.h"
 
-class Database;
 class Group;
+class CustomData;
 
 class Metadata : public ModifiableObject
 {

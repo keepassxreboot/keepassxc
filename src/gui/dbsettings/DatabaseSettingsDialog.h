@@ -18,15 +18,23 @@
 #ifndef KEEPASSX_DATABASESETTINGSWIDGET_H
 #define KEEPASSX_DATABASESETTINGSWIDGET_H
 
+#include <QPointer>
+#include <QIcon>
+#include <QList>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "config-keepassx.h"
 #include "gui/DialogyWidget.h"
-
-#include <QPointer>
 
 class Database;
 class DatabaseSettingsWidgetGeneral;
 class DatabaseSettingsWidgetEncryption;
 class DatabaseSettingsWidgetDatabaseKey;
+class QWidget;
+template <class T> class QSharedPointer;
 #ifdef WITH_XC_BROWSER
 class DatabaseSettingsWidgetBrowser;
 #endif
@@ -92,6 +100,7 @@ private:
     QPointer<DatabaseSettingsWidgetMaintenance> m_maintenanceWidget;
 
     class ExtraPage;
+
     QList<ExtraPage> m_extraPages;
 };
 

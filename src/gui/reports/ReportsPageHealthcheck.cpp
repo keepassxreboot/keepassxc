@@ -17,8 +17,13 @@
 
 #include "ReportsPageHealthcheck.h"
 
+#include <QObject>
+
 #include "ReportsWidgetHealthcheck.h"
 #include "gui/Icons.h"
+
+class Database;
+class QWidget;
 
 ReportsPageHealthcheck::ReportsPageHealthcheck()
     : m_healthWidget(new ReportsWidgetHealthcheck())

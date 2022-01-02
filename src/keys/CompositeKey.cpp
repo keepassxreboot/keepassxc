@@ -17,12 +17,18 @@
  */
 
 #include "CompositeKey.h"
-#include <QDebug>
+
 #include <format/KeePass2.h>
+#include <QDebug>
+#include <QString>
+#include <QUuid>
+#include <QtGlobal>
 
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/Kdf.h"
 #include "keys/ChallengeResponseKey.h"
+
+template <class T> class QSharedPointer;
 
 QUuid CompositeKey::UUID("76a7ae25-a542-4add-9849-7c06be945b94");
 

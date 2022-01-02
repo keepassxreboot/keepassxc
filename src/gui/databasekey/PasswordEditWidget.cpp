@@ -16,11 +16,20 @@
  */
 
 #include "PasswordEditWidget.h"
+
+#include <QGroupBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QWidget>
+
 #include "ui_KeyComponentWidget.h"
 #include "ui_PasswordEditWidget.h"
-
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
+#include "gui/PasswordEdit.h"
+#include "gui/databasekey/KeyComponentWidget.h"
+
+class QHideEvent;
 
 PasswordEditWidget::PasswordEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)

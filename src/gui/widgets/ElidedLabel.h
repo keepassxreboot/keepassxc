@@ -19,8 +19,11 @@
 #define KEEPASSX_ELIDEDLABEL_H
 
 #include <QLabel>
+#include <QString>
+#include <QtCore>
 
 class QResizeEvent;
+class QWidget;
 
 class ElidedLabel : public QLabel
 {

@@ -18,7 +18,14 @@
 #ifndef KEEPASSXC_DARKSTYLE_H
 #define KEEPASSXC_DARKSTYLE_H
 
+#include <QByteArrayData>
+#include <QPalette>
+#include <QString>
+
 #include "gui/styles/base/BaseStyle.h"
+
+class QObject;
+class QWidget;
 
 class DarkStyle : public BaseStyle
 {

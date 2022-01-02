@@ -19,8 +19,18 @@
 #include "EntrySearcher.h"
 
 #include "PasswordHealth.h"
+#include <QPair>
+#include <QRegularExpressionMatchIterator>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QtCore>
+
 #include "core/Group.h"
 #include "core/Tools.h"
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
+#include "core/EntryAttributes.h"
 
 EntrySearcher::EntrySearcher(bool caseSensitive, bool skipProtected)
     : m_caseSensitive(caseSensitive)

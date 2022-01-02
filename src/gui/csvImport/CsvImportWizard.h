@@ -19,13 +19,17 @@
 #ifndef KEEPASSX_CSVIMPORTWIZARD_H
 #define KEEPASSX_CSVIMPORTWIZARD_H
 
-#include "CsvImportWidget.h"
+#include <QByteArrayData>
+#include <QPointer>
+#include <QString>
 
 #include "gui/DialogyWidget.h"
 
 class QGridLayout;
-
 class CsvImportWidget;
+class Database;
+class QObject;
+class QWidget;
 
 class CsvImportWizard : public DialogyWidget
 {

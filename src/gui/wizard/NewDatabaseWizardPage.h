@@ -20,9 +20,16 @@
 
 #include <QPointer>
 #include <QWizardPage>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
 
 class Database;
 class DatabaseSettingsWidget;
+class QWidget;
+template <class T> class QSharedPointer;
+
 namespace Ui
 {
     class NewDatabaseWizardPage;

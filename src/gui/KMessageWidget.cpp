@@ -20,17 +20,31 @@
  */
 #include "KMessageWidget.h"
 
-#include "core/Global.h"
-#include "gui/Icons.h"
-
 #include <QAction>
-#include <QBoxLayout>
 #include <QEvent>
 #include <QLabel>
 #include <QPainter>
 #include <QStyle>
 #include <QTimeLine>
 #include <QToolButton>
+#include <QColor>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QLayout>
+#include <QList>
+#include <QObject>
+#include <QPixmap>
+#include <QPoint>
+#include <QRect>
+#include <QRegion>
+#include <QSizePolicy>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QWidget>
+#include <type_traits>
+
+#include "core/Global.h"
+#include "gui/Icons.h"
 
 //---------------------------------------------------------------------
 // KMessageWidgetPrivate

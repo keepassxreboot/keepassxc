@@ -18,7 +18,15 @@
 #ifndef KEEPASSXC_DATABASESETTINGSPAGEKEESHARE_H
 #define KEEPASSXC_DATABASESETTINGSPAGEKEESHARE_H
 
+#include <QIcon>
+#include <QSharedPointer>
+#include <QString>
+
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
+
+class Database;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class DatabaseSettingsPageKeeShare : public IDatabaseSettingsPage
 {

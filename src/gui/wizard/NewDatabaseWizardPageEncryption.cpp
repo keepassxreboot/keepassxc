@@ -16,7 +16,11 @@
  */
 
 #include "NewDatabaseWizardPageEncryption.h"
+
 #include "gui/dbsettings/DatabaseSettingsWidgetEncryption.h"
+#include "gui/wizard/NewDatabaseWizardPage.h"
+
+class QWidget;
 
 NewDatabaseWizardPageEncryption::NewDatabaseWizardPageEncryption(QWidget* parent)
     : NewDatabaseWizardPage(parent)

@@ -17,8 +17,8 @@
  */
 
 #include "DatabaseOpenWidget.h"
-#include "ui_DatabaseOpenWidget.h"
 
+#include "ui_DatabaseOpenWidget.h"
 #include "config-keepassx.h"
 #include "gui/FileDialog.h"
 #include "gui/Icons.h"
@@ -26,6 +26,18 @@
 #include "gui/MessageBox.h"
 #include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
+#include "core/Config.h"
+#include "core/Database.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+#include "gui/PasswordEdit.h"
+#include "gui/widgets/ElidedLabel.h"
+#include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
+#include "keys/drivers/YubiKey.h"
+
+class QHideEvent;
+class QShowEvent;
 
 #ifdef Q_OS_MACOS
 #include "touchid/TouchID.h"
@@ -33,6 +45,30 @@
 
 #include <QDesktopServices>
 #include <QFont>
+#include <QApplication>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QCoreApplication>
+#include <QCursor>
+#include <QDialogButtonBox>
+#include <QFileInfo>
+#include <QFrame>
+#include <QIcon>
+#include <QLabel>
+#include <QList>
+#include <QMessageBox>
+#include <QPair>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QSize>
+#include <QSizePolicy>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QToolButton>
+#include <QUrl>
+#include <QVariant>
+#include <QWidget>
 
 namespace
 {

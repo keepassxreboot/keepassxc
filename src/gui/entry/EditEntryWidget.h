@@ -19,11 +19,14 @@
 #ifndef KEEPASSX_EDITENTRYWIDGET_H
 #define KEEPASSX_EDITENTRYWIDGET_H
 
-#include <QButtonGroup>
-#include <QCheckBox>
-#include <QCompleter>
 #include <QPointer>
 #include <QTimer>
+#include <QColor>
+#include <QPersistentModelIndex>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
 
 #include "config-keepassx.h"
 #include "gui/EditWidget.h"
@@ -42,10 +45,14 @@ class EntryHistoryModel;
 class QButtonGroup;
 class QMenu;
 class QScrollArea;
-class QSortFilterProxyModel;
-class QStringListModel;
+class QAction;
+class QCheckBox;
+class QCompleter;
+class QWidget;
+template <class T> class QSharedPointer;
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/KeeAgentSettings.h"
+
 class OpenSSHKey;
 #endif
 #ifdef WITH_XC_BROWSER
@@ -60,7 +67,6 @@ namespace Ui
     class EditEntryWidgetSSHAgent;
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
-    class EditWidget;
 } // namespace Ui
 
 class EditEntryWidget : public EditWidget

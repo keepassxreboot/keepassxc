@@ -19,8 +19,8 @@
 #define KEEPASSXC_SETTINGSWIDGET_H
 
 #include <QWidget>
-
-class Database;
+#include <QString>
+#include <QtCore>
 
 /**
  * Pure-virtual base class for KeePassXC settings widgets.

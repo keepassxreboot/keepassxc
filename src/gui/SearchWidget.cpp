@@ -16,16 +16,26 @@
  */
 
 #include "SearchWidget.h"
-#include "ui_SearchHelpWidget.h"
-#include "ui_SearchWidget.h"
 
 #include <QKeyEvent>
 #include <QMenu>
 #include <QToolButton>
+#include <QAction>
+#include <QEvent>
+#include <QKeySequence>
+#include <QLineEdit>
+#include <QList>
+#include <QRect>
+#include <QTimer>
+#include <QVariant>
 
+#include "ui_SearchHelpWidget.h"
+#include "ui_SearchWidget.h"
 #include "core/SignalMultiplexer.h"
 #include "gui/Icons.h"
 #include "gui/widgets/PopupHelpWidget.h"
+#include "core/Config.h"
+#include "gui/DatabaseWidget.h"
 
 SearchWidget::SearchWidget(QWidget* parent)
     : QWidget(parent)

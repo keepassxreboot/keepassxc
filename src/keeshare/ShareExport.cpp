@@ -16,6 +16,7 @@
  */
 
 #include "ShareExport.h"
+#include "core/EntryAttributes.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Random.h"
@@ -24,6 +25,7 @@
 #include "gui/MessageBox.h"
 #include "keeshare/KeeShare.h"
 #include "keys/PasswordKey.h"
+#include "keys/CompositeKey.h"
 
 #include <QBuffer>
 #include <botan/pubkey.h>

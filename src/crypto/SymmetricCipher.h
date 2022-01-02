@@ -21,6 +21,8 @@
 #include <QByteArray>
 #include <QSharedPointer>
 #include <QString>
+#include <QUuid>
+#include <QtCore>
 
 namespace Botan
 {

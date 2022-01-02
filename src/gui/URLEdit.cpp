@@ -18,9 +18,15 @@
 
 #include "URLEdit.h"
 
+#include <QAction>
+#include <QColor>
+#include <QIcon>
+
 #include "core/Tools.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
+
+class QWidget;
 
 URLEdit::URLEdit(QWidget* parent)
     : QLineEdit(parent)

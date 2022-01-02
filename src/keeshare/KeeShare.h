@@ -20,23 +20,30 @@
 
 #include <QFileInfo>
 #include <QUuid>
+#include <QByteArrayData>
+#include <QMap>
+#include <QObject>
+#include <QPixmap>
+#include <QPointer>
+#include <QSharedPointer>
+#include <QString>
 
 #include "core/Config.h"
 #include "gui/MessageWidget.h"
+#include "gui/KMessageWidget.h"
+
+template <class T> class QSharedPointer;
 
 namespace KeeShareSettings
 {
     struct Own;
     struct Active;
-    struct Foreign;
     struct Reference;
 } // namespace KeeShareSettings
 
 class Group;
 class Database;
 class ShareObserver;
-class QXmlStreamWriter;
-class QXmlStreamReader;
 
 class KeeShare : public QObject
 {

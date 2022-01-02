@@ -34,7 +34,7 @@
 #include <QScopedPointer>
 
 #include "core/Global.h"
-#include "widgets/AccessControlDialog.h"
+#include "fdosecrets/widgets/AccessControlDialog.h"
 
 class QCheckBox;
 class QWidget;

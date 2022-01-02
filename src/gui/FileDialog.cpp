@@ -17,7 +17,13 @@
 
 #include "FileDialog.h"
 
+#include <QFileInfo>
+#include <QVariant>
+#include <QtCore>
+
 #include "core/Config.h"
+
+class QWidget;
 
 FileDialog* FileDialog::m_instance(nullptr);
 

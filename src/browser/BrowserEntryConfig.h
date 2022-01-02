@@ -22,6 +22,8 @@
 #include <QObject>
 #include <QSet>
 #include <QString>
+#include <QByteArrayData>
+#include <QStringList>
 
 class Entry;
 

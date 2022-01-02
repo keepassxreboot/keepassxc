@@ -16,10 +16,16 @@
  */
 
 #include "HibpDownloader.h"
-#include "core/NetworkManager.h"
 
-#include <QCryptographicHash>
 #include <QNetworkReply>
+#include <QIODevice>
+#include <QList>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QStringRef>
+#include <QUrl>
+
+#include "core/NetworkManager.h"
 
 namespace
 {

@@ -16,7 +16,11 @@
  */
 
 #include "NewDatabaseWizardPageDatabaseKey.h"
+
 #include "gui/dbsettings/DatabaseSettingsWidgetDatabaseKey.h"
+#include "gui/wizard/NewDatabaseWizardPage.h"
+
+class QWidget;
 
 NewDatabaseWizardPageDatabaseKey::NewDatabaseWizardPageDatabaseKey(QWidget* parent)
     : NewDatabaseWizardPage(parent)

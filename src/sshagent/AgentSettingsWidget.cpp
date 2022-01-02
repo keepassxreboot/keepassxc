@@ -17,8 +17,21 @@
  */
 
 #include "AgentSettingsWidget.h"
+
+#include <QCheckBox>
+#include <QFrame>
+#include <QLabel>
+#include <QLineEdit>
+#include <QList>
+#include <QSharedPointer>
+
 #include "SSHAgent.h"
 #include "ui_AgentSettingsWidget.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+
+class OpenSSHKey;
+template <class T> class QSharedPointer;
 
 AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
     : QWidget(parent)

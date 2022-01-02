@@ -19,14 +19,21 @@
 #define KEEPASSX_ICONDOWNLOADERDIALOG_H
 
 #include <QDialog>
-#include <QMap>
 #include <QMutex>
+#include <QList>
+#include <QMultiMap>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
 
 class Database;
 class Entry;
-class CustomIconModel;
 class IconDownloader;
 class QStandardItemModel;
+class QImage;
+class QWidget;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

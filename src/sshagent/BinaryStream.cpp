@@ -17,7 +17,9 @@
  */
 
 #include "BinaryStream.h"
-#include <QtEndian>
+
+#include <QBuffer>
+#include <QIODevice>
 
 BinaryStream::BinaryStream(QIODevice* device)
     : QObject(device)

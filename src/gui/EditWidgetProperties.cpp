@@ -16,13 +16,28 @@
  */
 
 #include "EditWidgetProperties.h"
-#include "ui_EditWidgetProperties.h"
 
+#include <QUuid>
+#include <QDateTime>
+#include <QItemSelection>
+#include <QItemSelectionModel>
+#include <QLineEdit>
+#include <QList>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QPushButton>
+#include <QStandardItem>
+#include <QStandardItemModel>
+#include <QStringList>
+#include <QTableView>
+#include <QVariant>
+#include <algorithm>
+#include <QByteArray>
+
+#include "ui_EditWidgetProperties.h"
 #include "MessageBox.h"
 #include "core/CustomData.h"
 #include "core/TimeInfo.h"
-
-#include <QUuid>
 
 EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     : QWidget(parent)

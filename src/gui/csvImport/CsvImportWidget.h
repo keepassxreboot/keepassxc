@@ -19,12 +19,20 @@
 #ifndef KEEPASSX_CSVIMPORTWIDGET_H
 #define KEEPASSX_CSVIMPORTWIDGET_H
 
-#include <QComboBox>
 
-#include "core/Metadata.h"
-#include "gui/csvImport/CsvParserModel.h"
 
-class QStringListModel;
+
+#include <QList>
+#include <QScopedPointer>
+#include <QString>
+#include <QStringList>
+#include <QWidget>
+#include <QtCore>
+
+class CsvParserModel;
+class Database;
+class Group;
+class QComboBox;
 
 namespace Ui
 {

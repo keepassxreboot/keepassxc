@@ -20,8 +20,11 @@
 #define KEEPASSX_ENTRYATTRIBUTES_H
 
 #include <QMap>
-#include <QObject>
 #include <QSet>
+#include <QList>
+#include <QString>
+#include <QUuid>
+#include <QtCore>
 
 #include "core/ModifiableObject.h"
 

@@ -18,12 +18,15 @@
 
 #include "BrowserEntryConfig.h"
 
-#include "core/Entry.h"
-#include "core/Tools.h"
-
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QVariant>
+#include <QByteArray>
+#include <QVariantMap>
+#include <QMap>
+
+#include "core/Entry.h"
+#include "core/Tools.h"
+#include "core/CustomData.h"
 
 static const char KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
 

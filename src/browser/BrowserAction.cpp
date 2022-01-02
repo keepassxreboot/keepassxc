@@ -17,19 +17,26 @@
 
 #include "BrowserAction.h"
 
+#include <botan/sodium.h>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QJsonValue>
+#include <QJsonValueRef>
+#include <QObject>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QtCore>
+#include <algorithm>
+#include <string>
+#include <vector>
+
 #include "BrowserService.h"
-#include "BrowserSettings.h"
 #include "BrowserShared.h"
 #include "config-keepassx.h"
 #include "core/Global.h"
 #include "core/Tools.h"
-#include "gui/PasswordGeneratorWidget.h"
-
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
-
-#include <botan/sodium.h>
 
 using namespace Botan::Sodium;
 

@@ -17,6 +17,10 @@
  */
 
 #include "ASN1Key.h"
+
+#include <QByteArray>
+#include <QtGlobal>
+
 #include "BinaryStream.h"
 #include "OpenSSHKey.h"
 

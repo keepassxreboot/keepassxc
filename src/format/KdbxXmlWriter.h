@@ -18,14 +18,23 @@
 #ifndef KEEPASSX_KDBXXMLWRITER_H
 #define KEEPASSX_KDBXXMLWRITER_H
 
-#include <QDateTime>
 #include <QXmlStreamWriter>
+#include <QByteArray>
+#include <QPointer>
+#include <QString>
+#include <QUuid>
+#include <QtCore>
 
 #include "core/CustomData.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/AutoTypeAssociations.h"
 
 class KeePass2RandomStream;
+class Database;
+class Entry;
+class TimeInfo;
+struct DeletedObject;
 
 class KdbxXmlWriter
 {

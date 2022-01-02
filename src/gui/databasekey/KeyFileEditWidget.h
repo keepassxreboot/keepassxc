@@ -18,7 +18,17 @@
 #ifndef KEEPASSXC_KEYFILEEDITWIDGET_H
 #define KEEPASSXC_KEYFILEEDITWIDGET_H
 
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+#include <QtCore>
+
 #include "KeyComponentWidget.h"
+
+class CompositeKey;
+class QWidget;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

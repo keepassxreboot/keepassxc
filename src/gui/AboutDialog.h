@@ -20,6 +20,12 @@
 #define KEEPASSX_ABOUTDIALOG_H
 
 #include <QDialog>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QString>
+
+class QObject;
+class QWidget;
 
 namespace Ui
 {

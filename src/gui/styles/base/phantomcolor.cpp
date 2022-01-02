@@ -27,13 +27,16 @@
  */
 
 #include "phantomcolor.h"
-#include <cmath>
+
 #include <float.h>
+#include <cmath>
 
 namespace Phantom
 {
     namespace
     {
+struct Bounds_tag;
+struct Triplet_tag;
 
         // Th`ese declarations originate from hsluv.h, from the hsluv-c library. The
         // hpluv functions have been removed, as they are unnecessary for Phantom.

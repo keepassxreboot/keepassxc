@@ -17,21 +17,40 @@
  */
 
 #include "ApplicationSettingsWidget.h"
+
+#include <QDir>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QEvent>
+#include <QLabel>
+#include <QLineEdit>
+#include <QObject>
+#include <QPair>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QSharedPointer>
+#include <QSpinBox>
+#include <QTabWidget>
+#include <QTimer>
+#include <QVariant>
+#include <QWidget>
+
 #include "ui_ApplicationSettingsWidgetGeneral.h"
 #include "ui_ApplicationSettingsWidgetSecurity.h"
-#include <QDesktopServices>
-#include <QDir>
-
 #include "config-keepassx.h"
-
 #include "autotype/AutoType.h"
 #include "core/Translator.h"
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
-
 #include "FileDialog.h"
 #include "MessageBox.h"
+#include "autotype/ShortcutWidget.h"
+#include "core/Config.h"
+#include "core/Global.h"
+#include "gui/KMessageWidget.h"
+#include "gui/MessageWidget.h"
+#include "gui/osutils/OSUtilsBase.h"
 #ifdef Q_OS_MACOS
 #include "touchid/TouchID.h"
 #endif

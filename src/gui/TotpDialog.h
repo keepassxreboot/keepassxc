@@ -19,8 +19,14 @@
 #ifndef KEEPASSX_TOTPDIALOG_H
 #define KEEPASSX_TOTPDIALOG_H
 
-#include "core/Database.h"
-#include "gui/DatabaseWidget.h"
+#include <QDialog>
+#include <QScopedPointer>
+#include <QString>
+#include <QTimer>
+#include <QtCore>
+
+class Entry;
+class QWidget;
 
 namespace Ui
 {

@@ -20,10 +20,23 @@
 #define KEEPASSX_GROUP_H
 
 #include <QPointer>
+#include <QByteArrayData>
+#include <QFlags>
+#include <QList>
+#include <QSet>
+#include <QString>
+#include <QStringList>
+#include <QUuid>
 
-#include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Compare.h"
+#include "core/ModifiableObject.h"
+#include "core/TimeInfo.h"
+
+class CustomData;
+class QDateTime;
+class QObject;
 
 class Group : public ModifiableObject
 {

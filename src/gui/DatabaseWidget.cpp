@@ -18,17 +18,37 @@
 
 #include "DatabaseWidget.h"
 
+#include <core/Tools.h>
 #include <QApplication>
-#include <QBoxLayout>
 #include <QCheckBox>
 #include <QDesktopServices>
 #include <QHostInfo>
-#include <QKeyEvent>
 #include <QPlainTextEdit>
 #include <QProcess>
 #include <QSplitter>
 #include <QTextEdit>
-#include <core/Tools.h>
+#include <QAction>
+#include <QCloseEvent>
+#include <QDir>
+#include <QFileInfo>
+#include <QHBoxLayout>
+#include <QItemSelectionModel>
+#include <QLabel>
+#include <QMessageBox>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QObject>
+#include <QShowEvent>
+#include <QSizePolicy>
+#include <QStaticStringData>
+#include <QStringLiteral>
+#include <QTextCursor>
+#include <QTimer>
+#include <QUrl>
+#include <QVBoxLayout>
+#include <QVariant>
+#include <QWidget>
+#include <utility>
 
 #include "autotype/AutoType.h"
 #include "core/EntrySearcher.h"
@@ -51,6 +71,18 @@
 #include "gui/group/GroupView.h"
 #include "gui/reports/ReportsDialog.h"
 #include "gui/tag/TagModel.h"
+#include "core/Config.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttributes.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
+#include "gui/DatabaseOpenDialog.h"
+#include "gui/DatabaseOpenWidget.h"
+#include "gui/csvImport/CsvImportWizard.h"
+#include "gui/entry/EditEntryWidget.h"
+#include "sshagent/KeeAgentSettings.h"
+#include "sshagent/OpenSSHKey.h"
 
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"

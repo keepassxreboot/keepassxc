@@ -20,6 +20,11 @@
 
 #include <QAbstractListModel>
 #include <QPointer>
+#include <QModelIndex>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QtCore>
 
 class EntryAttachments;
 

@@ -17,6 +17,9 @@
 
 #include "BrowserSettingsPage.h"
 
+#include <QObject>
+#include <QWidget>
+
 #include "BrowserService.h"
 #include "BrowserSettings.h"
 #include "BrowserSettingsWidget.h"

@@ -16,12 +16,17 @@
  */
 
 #include "format/KeePass2Reader.h"
+
+#include <QFile>
+#include <utility>
+
 #include "format/Kdbx3Reader.h"
 #include "format/Kdbx4Reader.h"
 #include "format/KeePass1.h"
-#include "keys/CompositeKey.h"
+#include "format/KdbxReader.h"
+#include "format/KeePass2.h"
 
-#include <QFile>
+class Database;
 
 /**
  * Read database from file and detect correct file format.

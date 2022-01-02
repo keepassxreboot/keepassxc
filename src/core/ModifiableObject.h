@@ -19,6 +19,8 @@
 #define KEEPASSXC_MODIFIABLEOBJECT_H
 
 #include <QObject>
+#include <QByteArrayData>
+#include <QString>
 
 class ModifiableObject : public QObject
 {

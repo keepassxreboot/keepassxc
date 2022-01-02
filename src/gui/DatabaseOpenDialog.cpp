@@ -17,13 +17,18 @@
 
 #include "DatabaseOpenDialog.h"
 
-#include "DatabaseOpenWidget.h"
-#include "DatabaseTabWidget.h"
-#include "DatabaseWidget.h"
-
+#include <QtCore/qglobal.h>
 #include <QFileInfo>
-#include <QLayout>
 #include <QShortcut>
+#include <QTabBar>
+#include <QVBoxLayout>
+#include <QtCore>
+
+#include "DatabaseOpenWidget.h"
+#include "DatabaseWidget.h"
+#include "core/Database.h"
+
+class QWidget;
 
 #ifdef Q_OS_WIN
 #include <QtPlatformHeaders/QWindowsWindowFunctions>

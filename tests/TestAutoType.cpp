@@ -26,6 +26,8 @@
 #include "autotype/test/AutoTypeTestInterface.h"
 #include "core/Config.h"
 #include "core/Group.h"
+#include "core/EntryAttributes.h"
+#include "core/AutoTypeAssociations.h"
 #include "core/Resources.h"
 #include "crypto/Crypto.h"
 #include "gui/MessageBox.h"

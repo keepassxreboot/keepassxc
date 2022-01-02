@@ -18,13 +18,18 @@
 #ifndef KEEPASSX_TotpExportSettingsDialog_H
 #define KEEPASSX_TotpExportSettingsDialog_H
 
-#include "core/Database.h"
-#include "gui/DatabaseWidget.h"
+#include <QByteArrayData>
+#include <QDialog>
+#include <QString>
 
 class QVBoxLayout;
 class SquareSvgWidget;
 class QLabel;
 class QDialogButtonBox;
+class DatabaseWidget;
+class Entry;
+class QObject;
+class QTimer;
 
 class TotpExportSettingsDialog : public QDialog
 {

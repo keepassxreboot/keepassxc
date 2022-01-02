@@ -18,10 +18,12 @@
 
 #include "Crypto.h"
 
+#include <botan/version.h>
+#include <QByteArray>
+#include <QObject>
+
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
-
-#include <botan/version.h>
 
 namespace
 {

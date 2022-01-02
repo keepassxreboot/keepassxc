@@ -18,9 +18,16 @@
 #ifndef KEEPASSXC_EXPORTDIALOG_H
 #define KEEPASSXC_EXPORTDIALOG_H
 
-#include "core/Database.h"
-#include "gui/DatabaseTabWidget.h"
 #include <QDialog>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
+
+class Database;
+class DatabaseTabWidget;
+class QObject;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

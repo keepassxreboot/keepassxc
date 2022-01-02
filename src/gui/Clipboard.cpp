@@ -18,10 +18,13 @@
 
 #include "Clipboard.h"
 
+#include <QtCore/qglobal.h>
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
 #include <QTimer>
+#include <QStaticByteArrayData>
+#include <QVariant>
 
 #include "core/Config.h"
 

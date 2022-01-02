@@ -19,10 +19,13 @@
 #define KEEPASSXC_SETTINGSPAGEKEESHARE_H
 
 #include <QPointer>
+#include <QIcon>
+#include <QString>
 
 #include "gui/ApplicationSettingsWidget.h"
 
 class DatabaseTabWidget;
+class QWidget;
 
 class SettingsPageKeeShare : public ISettingsPage
 {

@@ -17,13 +17,33 @@
  */
 
 #include "PasswordGeneratorWidget.h"
-#include "ui_PasswordGeneratorWidget.h"
 
 #include <QCloseEvent>
 #include <QDir>
 #include <QShortcut>
 #include <QTimer>
+#include <QButtonGroup>
+#include <QCheckBox>
+#include <QColor>
+#include <QComboBox>
+#include <QFile>
+#include <QFileInfo>
+#include <QFont>
+#include <QKeySequence>
+#include <QLabel>
+#include <QLineEdit>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QRegularExpression>
+#include <QSlider>
+#include <QSpinBox>
+#include <QStringList>
+#include <QTabWidget>
+#include <QVariant>
+#include <QtCore>
+#include <algorithm>
 
+#include "ui_PasswordGeneratorWidget.h"
 #include "core/Config.h"
 #include "core/PasswordHealth.h"
 #include "core/Resources.h"
@@ -32,6 +52,8 @@
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/styles/StateColorPalette.h"
+#include "core/PassphraseGenerator.h"
+#include "gui/PasswordEdit.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     : QWidget(parent)

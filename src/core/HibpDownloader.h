@@ -18,9 +18,14 @@
 #ifndef KEEPASSXC_HIBPDOWNLOADER_H
 #define KEEPASSXC_HIBPDOWNLOADER_H
 
-#include "config-keepassx.h"
-#include <QHash>
 #include <QObject>
+#include <QByteArray>
+#include <QPair>
+#include <QString>
+#include <QStringList>
+#include <QtCore>
+
+#include "config-keepassx.h"
 
 #ifndef WITH_XC_NETWORKING
 #error This file requires KeePassXC to be built with network support.

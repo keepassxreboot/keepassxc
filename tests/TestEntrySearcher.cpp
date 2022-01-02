@@ -17,6 +17,7 @@
 
 #include "TestEntrySearcher.h"
 #include "core/Group.h"
+#include "core/EntryAttributes.h"
 
 #include <QTest>
 

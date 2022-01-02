@@ -17,10 +17,13 @@
 
 #include "X11Funcs.h"
 
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
 #include <QChar>
 #include <QString>
-
-#include <X11/Xutil.h>
+#include <QFlags>
+#include <QLatin1Char>
+#include <string>
 
 KeySym qcharToNativeKeyCode(const QChar& ch)
 {

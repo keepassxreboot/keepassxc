@@ -20,6 +20,9 @@
 
 #include <QByteArray>
 #include <QScopedPointer>
+#include <QIODevice>
+#include <QString>
+#include <QtCore>
 
 #include "crypto/SymmetricCipher.h"
 #include "streams/LayeredStream.h"

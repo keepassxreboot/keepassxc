@@ -18,15 +18,22 @@
 #ifndef KEEPASSX_DATABASETABWIDGET_H
 #define KEEPASSX_DATABASETABWIDGET_H
 
+#include <QTabWidget>
+#include <QByteArrayData>
+#include <QPointer>
+#include <QSharedPointer>
+#include <QString>
+
 #include "DatabaseOpenDialog.h"
 #include "gui/MessageWidget.h"
-
-#include <QTabWidget>
+#include "gui/KMessageWidget.h"
 
 class Database;
 class DatabaseWidget;
 class DatabaseWidgetStateSync;
-class DatabaseOpenWidget;
+class QObject;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class DatabaseTabWidget : public QTabWidget
 {

@@ -17,12 +17,20 @@
 
 #include "EntryHistoryModel.h"
 
+#include <QFont>
+#include <QDateTime>
+#include <QUuid>
+#include <algorithm>
+
 #include "core/Clock.h"
 #include "core/Entry.h"
 #include "core/Global.h"
 #include "core/Tools.h"
-
-#include <QFont>
+#include "core/AutoTypeAssociations.h"
+#include "core/CustomData.h"
+#include "core/EntryAttachments.h"
+#include "core/EntryAttributes.h"
+#include "core/TimeInfo.h"
 
 EntryHistoryModel::EntryHistoryModel(QObject* parent)
     : QAbstractTableModel(parent)

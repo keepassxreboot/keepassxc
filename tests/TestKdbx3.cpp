@@ -18,6 +18,7 @@
 #include "TestKdbx3.h"
 
 #include "config-keepassx-tests.h"
+#include "core/EntryAttributes.h"
 #include "core/Metadata.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KdbxXmlWriter.h"
@@ -25,6 +26,7 @@
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
+#include "keys/CompositeKey.h"
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestKdbx3)

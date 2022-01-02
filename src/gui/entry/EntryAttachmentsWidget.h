@@ -20,13 +20,20 @@
 
 #include <QPointer>
 #include <QWidget>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QString>
+#include <QStringList>
+
+class QEvent;
+class QModelIndex;
+class QObject;
 
 namespace Ui
 {
     class EntryAttachmentsWidget;
 }
 
-class QByteArray;
 class EntryAttachments;
 class EntryAttachmentsModel;
 

@@ -20,9 +20,16 @@
 
 #include <QIcon>
 #include <QWidget>
+#include <QByteArrayData>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
 
 class Database;
 class QStandardItemModel;
+class QObject;
+class QShowEvent;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

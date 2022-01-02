@@ -16,13 +16,28 @@
  */
 
 #include "DatabaseSettingsWidgetMaintenance.h"
-#include "ui_DatabaseSettingsWidgetMaintenance.h"
 
+#include <QItemSelectionModel>
+#include <QList>
+#include <QListView>
+#include <QModelIndex>
+#include <QPushButton>
+#include <QSet>
+#include <QUuid>
+
+#include "ui_DatabaseSettingsWidgetMaintenance.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/IconModels.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Global.h"
+#include "gui/DatabaseIcons.h"
+#include "gui/dbsettings/DatabaseSettingsWidget.h"
+
+class QWidget;
 
 DatabaseSettingsWidgetMaintenance::DatabaseSettingsWidgetMaintenance(QWidget* parent)
     : DatabaseSettingsWidget(parent)

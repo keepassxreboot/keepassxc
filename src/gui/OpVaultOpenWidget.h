@@ -18,7 +18,13 @@
 #ifndef KEEPASSXC_OPVAULTOPENWIDGET_H
 #define KEEPASSXC_OPVAULTOPENWIDGET_H
 
+#include <QByteArrayData>
+#include <QString>
+
 #include "gui/DatabaseOpenWidget.h"
+
+class QObject;
+class QWidget;
 
 class OpVaultOpenWidget : public DatabaseOpenWidget
 {

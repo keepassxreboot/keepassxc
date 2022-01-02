@@ -19,6 +19,8 @@
 #define KEEPASSX_LAYEREDSTREAM_H
 
 #include <QIODevice>
+#include <QString>
+#include <QtCore>
 
 class LayeredStream : public QIODevice
 {

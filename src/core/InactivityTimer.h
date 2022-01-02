@@ -20,8 +20,11 @@
 
 #include <QMutex>
 #include <QObject>
+#include <QByteArrayData>
+#include <QString>
 
 class QTimer;
+class QEvent;
 
 class InactivityTimer : public QObject
 {

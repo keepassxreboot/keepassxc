@@ -17,14 +17,25 @@
  */
 
 #include "AboutDialog.h"
-#include "ui_AboutDialog.h"
 
+#include <QClipboard>
+#include <QApplication>
+#include <QDialogButtonBox>
+#include <QFlags>
+#include <QFont>
+#include <QIcon>
+#include <QLabel>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QtCore>
+
+#include "ui_AboutDialog.h"
 #include "config-keepassx.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/Icons.h"
 
-#include <QClipboard>
+class QWidget;
 
 static const QString aboutMaintainers = R"(
 <p><ul>

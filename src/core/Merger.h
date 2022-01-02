@@ -18,6 +18,12 @@
 #ifndef KEEPASSXC_MERGER_H
 #define KEEPASSXC_MERGER_H
 
+#include <QByteArrayData>
+#include <QObject>
+#include <QPointer>
+#include <QString>
+#include <QStringList>
+
 #include "core/Group.h"
 
 class Database;

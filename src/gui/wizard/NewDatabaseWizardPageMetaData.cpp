@@ -16,7 +16,11 @@
  */
 
 #include "NewDatabaseWizardPageMetaData.h"
+
 #include "gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.h"
+#include "gui/wizard/NewDatabaseWizardPage.h"
+
+class QWidget;
 
 NewDatabaseWizardPageMetaData::NewDatabaseWizardPageMetaData(QWidget* parent)
     : NewDatabaseWizardPage(parent)

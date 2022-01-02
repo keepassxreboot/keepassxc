@@ -19,6 +19,8 @@
 
 #include <QCoreApplication>
 #include <QTimer>
+#include <QEvent>
+#include <QtCore>
 
 InactivityTimer::InactivityTimer(QObject* parent)
     : QObject(parent)

@@ -16,9 +16,17 @@
  */
 
 #include "KeePass2.h"
+
+#include <QObject>
+#include <QPair>
+#include <QVariant>
+
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"
 #include "crypto/kdf/Argon2Kdf.h"
+#include "crypto/kdf/Kdf.h"
+
+template <class T> class QSharedPointer;
 
 #define UUID_LENGTH 16
 

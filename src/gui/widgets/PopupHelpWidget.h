@@ -20,6 +20,12 @@
 
 #include <QFrame>
 #include <QPointer>
+#include <QPoint>
+#include <QString>
+#include <QtCore>
+
+class QShowEvent;
+class QWidget;
 
 class PopupHelpWidget : public QFrame
 {

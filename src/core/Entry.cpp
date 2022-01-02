@@ -18,6 +18,28 @@
 
 #include "Entry.h"
 
+#include <QtCore/qglobal.h>
+#include <QDir>
+#include <QRegularExpression>
+#include <QUrl>
+#include <QByteArray>
+#include <QDateTime>
+#include <QFileInfo>
+#include <QLatin1Char>
+#include <QLatin1Literal>
+#include <QLatin1String>
+#include <QMap>
+#include <QMutableListIterator>
+#include <QObject>
+#include <QRegExp>
+#include <QSet>
+#include <QStaticStringData>
+#include <QStringList>
+#include <QStringLiteral>
+#include <QVariant>
+#include <QtCore>
+#include <utility>
+
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Group.h"
@@ -25,10 +47,14 @@
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "totp/totp.h"
+#include "core/AutoTypeAssociations.h"
+#include "core/Clock.h"
+#include "core/CustomData.h"
+#include "core/EntryAttachments.h"
+#include "core/EntryAttributes.h"
+#include "core/Global.h"
 
-#include <QDir>
-#include <QRegularExpression>
-#include <QUrl>
+template <class T> class QSharedPointer;
 
 const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
