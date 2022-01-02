@@ -19,6 +19,10 @@
 #ifndef KEEPASSX_AUTOTYPEACTION_H
 #define KEEPASSX_AUTOTYPEACTION_H
 
+#include <QChar>
+#include <QString>
+#include <Qt>
+
 #include "core/Global.h"
 
 class AutoTypeExecutor;

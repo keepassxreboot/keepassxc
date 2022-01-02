@@ -18,8 +18,13 @@
 #include "WindowSelectComboBox.h"
 
 #include <QLineEdit>
+#include <QAbstractItemModel>
+#include <QSizePolicy>
+#include <QtGlobal>
 
 #include "autotype/AutoType.h"
+
+class QWidget;
 
 WindowSelectComboBox::WindowSelectComboBox(QWidget* parent)
     : QComboBox(parent)

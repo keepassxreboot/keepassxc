@@ -19,6 +19,13 @@
 #define KEEPASSXC_PICKCHARSDIALOG_H
 
 #include <QDialog>
+#include <QByteArrayData>
+#include <QSharedPointer>
+#include <QString>
+
+class QObject;
+class QShowEvent;
+class QWidget;
 
 namespace Ui
 {

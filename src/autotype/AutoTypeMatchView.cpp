@@ -17,12 +17,20 @@
  */
 
 #include "AutoTypeMatchView.h"
-#include "AutoTypeMatchModel.h"
-#include "core/Entry.h"
 
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QSortFilterProxyModel>
+#include <QAbstractItemModel>
+#include <QItemSelectionModel>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QVariant>
+#include <QtCore>
+
+#include "AutoTypeMatchModel.h"
+
+class QWidget;
 
 class CustomSortFilterProxyModel : public QSortFilterProxyModel
 {

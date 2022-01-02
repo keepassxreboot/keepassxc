@@ -19,12 +19,22 @@
 #ifndef KEEPASSX_AUTOTYPESELECTDIALOG_H
 #define KEEPASSX_AUTOTYPESELECTDIALOG_H
 
-#include "autotype/AutoTypeMatch.h"
 #include <QDialog>
 #include <QTimer>
+#include <QByteArrayData>
+#include <QList>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QString>
+
+#include "autotype/AutoTypeMatch.h"
 
 class Database;
 class QMenu;
+class QEvent;
+class QObject;
+class QWidget;
+template <class T> class QSharedPointer;
 
 namespace Ui
 {

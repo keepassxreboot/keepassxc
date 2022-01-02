@@ -21,7 +21,11 @@
 
 #include <QMutex>
 #include <QObject>
-#include <QWidget>
+#include <QList>
+#include <QString>
+#include <QStringList>
+#include <QtCore>
+#include <QtGui>
 
 #include "AutoTypeMatch.h"
 
@@ -31,6 +35,8 @@ class AutoTypePlatformInterface;
 class Database;
 class Entry;
 class QPluginLoader;
+class QWidget;
+template <class T> class QSharedPointer;
 
 class AutoType : public QObject
 {

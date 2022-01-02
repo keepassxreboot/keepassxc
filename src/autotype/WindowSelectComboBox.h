@@ -19,6 +19,12 @@
 #define KEEPASSX_WINDOWSELECTCOMBOBOX_H
 
 #include <QComboBox>
+#include <QByteArrayData>
+#include <QSize>
+#include <QString>
+
+class QObject;
+class QWidget;
 
 class WindowSelectComboBox : public QComboBox
 {

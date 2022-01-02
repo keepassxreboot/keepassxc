@@ -18,13 +18,27 @@
 
 #include "AutoType.h"
 
+#include <QtCore/qglobal.h>
 #include <QApplication>
 #include <QDebug>
 #include <QPluginLoader>
 #include <QUrl>
+#include <QByteArray>
+#include <QChar>
+#include <QCharRef>
+#include <QCoreApplication>
+#include <QDialog>
+#include <QEventLoop>
+#include <QLibrary>
+#include <QPair>
+#include <QPointer>
+#include <QRegularExpression>
+#include <QRegularExpressionMatchIterator>
+#include <QSet>
+#include <QSharedPointer>
+#include <QVariant>
 
 #include "config-keepassx.h"
-
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
 #include "autotype/PickcharsDialog.h"
@@ -33,6 +47,18 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
+#include "autotype/AutoTypeAction.h"
+#include "autotype/AutoTypeMatch.h"
+#include "core/Clock.h"
+#include "core/Config.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Global.h"
+#include "core/Group.h"
+#include "gui/osutils/OSUtilsBase.h"
+
+class QWidget;
+template <class T> class QSharedPointer;
 
 namespace
 {

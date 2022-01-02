@@ -17,11 +17,33 @@
  */
 
 #include "AutoTypeSelectDialog.h"
-#include "ui_AutoTypeSelectDialog.h"
 
-#include <QCloseEvent>
 #include <QMenu>
 #include <QShortcut>
+#include <QAction>
+#include <QApplication>
+#include <QCheckBox>
+#include <QCursor>
+#include <QEvent>
+#include <QFlags>
+#include <QKeyEvent>
+#include <QLineEdit>
+#include <QPair>
+#include <QPoint>
+#include <QPushButton>
+#include <QRect>
+#include <QSet>
+#include <QSharedPointer>
+#include <QSize>
+#include <QToolButton>
+#include <QVariant>
+#include <QWidget>
+#include <QtCore>
+#include <utility>
+
+#include "ui_AutoTypeSelectDialog.h"
+#include "autotype/AutoTypeMatchView.h"
+#include "core/AutoTypeAssociations.h"
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QScreen>
 #else
@@ -34,6 +56,8 @@
 #include "core/EntrySearcher.h"
 #include "gui/Clipboard.h"
 #include "gui/Icons.h"
+
+template <class T> class QSharedPointer;
 
 AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     : QDialog(parent)

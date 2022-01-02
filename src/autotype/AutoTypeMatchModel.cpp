@@ -19,13 +19,17 @@
 #include "AutoTypeMatchModel.h"
 
 #include <QFont>
+#include <QPair>
+#include <QPixmap>
+#include <QPointer>
+#include <QSet>
 
 #include "core/Entry.h"
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "gui/DatabaseIcons.h"
 #include "gui/Icons.h"
+#include "core/Database.h"
 
 AutoTypeMatchModel::AutoTypeMatchModel(QObject* parent)
     : QAbstractTableModel(parent)

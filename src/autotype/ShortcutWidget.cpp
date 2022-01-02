@@ -19,8 +19,14 @@
 
 #include <QKeyEvent>
 #include <QToolTip>
+#include <QEvent>
+#include <QFlags>
+#include <QKeySequence>
+#include <QRect>
 
 #include "autotype/AutoType.h"
+
+class QWidget;
 
 ShortcutWidget::ShortcutWidget(QWidget* parent)
     : QLineEdit(parent)

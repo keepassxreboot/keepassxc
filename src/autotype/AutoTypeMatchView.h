@@ -20,12 +20,17 @@
 #define KEEPASSX_AUTOTYPEMATCHVIEW_H
 
 #include <QTableView>
+#include <QByteArrayData>
+#include <QList>
+#include <QString>
 
 #include "autotype/AutoTypeMatch.h"
 
 class AutoTypeMatchModel;
-
 class QSortFilterProxyModel;
+class QModelIndex;
+class QObject;
+class QWidget;
 
 class AutoTypeMatchView : public QTableView
 {

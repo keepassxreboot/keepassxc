@@ -16,12 +16,30 @@
  */
 
 #include "PickcharsDialog.h"
-#include "ui_PickcharsDialog.h"
-
-#include "gui/Icons.h"
 
 #include <QPushButton>
 #include <QShortcut>
+#include <QApplication>
+#include <QCheckBox>
+#include <QCursor>
+#include <QDialogButtonBox>
+#include <QFlags>
+#include <QGridLayout>
+#include <QLayoutItem>
+#include <QPoint>
+#include <QRect>
+#include <QSize>
+#include <QSizePolicy>
+#include <QSpacerItem>
+#include <QVariant>
+#include <QWidget>
+#include <QtCore>
+
+#include "ui_PickcharsDialog.h"
+#include "gui/Icons.h"
+#include "gui/PasswordEdit.h"
+
+class QShowEvent;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QScreen>
 #else

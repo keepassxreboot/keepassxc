@@ -19,6 +19,11 @@
 #define KEEPASSX_SHORTCUTWIDGET_H
 
 #include <QLineEdit>
+#include <QString>
+#include <QtCore>
+
+class QKeyEvent;
+class QWidget;
 
 class ShortcutWidget : public QLineEdit
 {

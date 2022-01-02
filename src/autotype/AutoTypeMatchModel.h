@@ -20,6 +20,11 @@
 #define KEEPASSX_AUTOTYPEMATCHMODEL_H
 
 #include <QAbstractTableModel>
+#include <QList>
+#include <QModelIndex>
+#include <QString>
+#include <QVariant>
+#include <QtCore>
 
 #include "autotype/AutoTypeMatch.h"
 
