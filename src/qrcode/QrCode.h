@@ -20,7 +20,6 @@
 
 #include <QScopedPointer>
 
-class QImage;
 class QIODevice;
 class QString;
 class QByteArray;
