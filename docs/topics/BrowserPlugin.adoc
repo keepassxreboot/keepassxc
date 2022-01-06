@@ -81,7 +81,7 @@ image::browser_extension_reload.png[,80%]
 .Confirm Access Dialog
 image::browser_confirm_access_dialog.png[,80%]
 
-5. Ensure the credentials you want use are checked, then click *(A)* Remember _(optional)_, then click _Allow Selected_ *(B)*.
+5. Ensure the credentials you want to use are checked, then click *(A)* Remember _(optional)_, then click _Allow Selected_ *(B)*.
 
 6. In your website, the KeePassXC icon will appear in the username field of the login form *(A)*. Click the icon to populate the field with your stored credentials. If you have more than one credential for this website, a dropdown will appear to choose the one to use.
 +
