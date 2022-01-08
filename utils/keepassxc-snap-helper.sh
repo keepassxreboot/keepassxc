@@ -52,7 +52,8 @@ JSON_CHROME=$(cat << EOF
     "type": "stdio",
     "allowed_origins": [
         "chrome-extension://iopaggbpplllidnfmcghoonnokmjoicf/",
-        "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/"
+        "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/",
+        "chrome-extension://pdffhmdngciaglkoonimfcmckehcpafo/"
     ]
 }
 EOF
@@ -99,6 +100,11 @@ setupTorBrowser() {
     INSTALL_DIR="${BASE_DIR}/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts"
 }
 
+setupEdge() {
+    JSON_OUT=${JSON_CHROME}
+    INSTALL_DIR="${BASE_DIR}/.config/microsoft-edge/NativeMessagingHosts"
+}
+
 # --------------------------------
 # Start of script
 # --------------------------------
@@ -113,6 +119,7 @@ BROWSER=$(whiptail \
             "4" "Vivaldi" \
             "5" "Brave" \
             "6" "Tor Browser" \
+            "7" "Microsoft Edge" \
             3>&1 1>&2 2>&3)
 
 clear
@@ -127,6 +134,7 @@ if [[ $exitstatus == 0 ]]; then
         4) setupVivaldi ;;
         5) setupBrave ;;
         6) setupTorBrowser ;;
+        7) setupEdge ;;
     esac
 
     # Install the JSON file
