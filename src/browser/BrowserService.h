@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ public:
 
     void setEnabled(bool enabled);
 
-    QString getKey(const QString& id);
+    QPair<bool, QString> getKey(const QString& id);
     QString storeKey(const QString& key);
     QString getDatabaseHash(bool legacy = false);
 

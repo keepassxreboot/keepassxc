@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -264,8 +264,9 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
         return getErrorReply(action, ERROR_KEEPASS_DATABASE_NOT_OPENED);
     }
 
-    const QString key = browserService()->getKey(id);
-    if (key.isEmpty() || key.compare(responseKey) != 0) {
+    const auto keyResponse = browserService()->getKey(id);
+    if (keyResponse.second.isEmpty()) {
+        m_associated = false;
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
@@ -275,6 +276,7 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
     QJsonObject message = buildMessage(newNonce);
     message["hash"] = hash;
     message["id"] = id;
+    message["associated"] = keyResponse.first ? TRUE_STR : FALSE_STR;
 
     return buildResponse(action, message, newNonce);
 }

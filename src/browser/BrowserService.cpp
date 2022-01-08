@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -391,14 +391,42 @@ QString BrowserService::storeKey(const QString& key)
     return id;
 }
 
-QString BrowserService::getKey(const QString& id)
+QPair<bool, QString> BrowserService::getKey(const QString& id)
 {
     auto db = getDatabase();
     if (!db) {
         return {};
     }
 
-    return db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + id);
+    const auto currentHash = db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + id);
+    const auto isAssociated = !currentHash.isEmpty();
+    auto result = qMakePair(isAssociated, currentHash);
+
+    // Return the result from current database
+    if (!browserSettings()->searchInAllDatabases()) {
+        return result;
+    }
+
+    // Get all open databases
+    QList<QSharedPointer<Database>> databases;
+    for (auto dbWidget : getMainWindow()->getOpenDatabases()) {
+        auto db = dbWidget->database();
+        if (db && !dbWidget->isLocked()) {
+            databases << db;
+        }
+    }
+
+    // Return the matching hash for current client id
+    for (const auto& db : databases) {
+        for (const QString& key : db->metadata()->customData()->keys()) {
+            if (key.startsWith(CustomData::BrowserKeyPrefix) && key == CustomData::BrowserKeyPrefix + id) {
+                result.second = db->metadata()->customData()->value(key);
+                return result;
+            }
+        }
+    }
+
+    return {};
 }
 
 QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
@@ -1404,8 +1432,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 
 void BrowserService::activeDatabaseChanged(DatabaseWidget* dbWidget)
 {
-    // Only emit these signals when we are not searching in all databases
-    if (dbWidget && !browserSettings()->searchInAllDatabases()) {
+    if (dbWidget) {
         if (dbWidget->isLocked()) {
             databaseLocked(dbWidget);
         } else {
