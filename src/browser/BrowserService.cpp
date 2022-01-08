@@ -393,12 +393,12 @@ QString BrowserService::storeKey(const QString& key)
 
 QPair<bool, QString> BrowserService::getKey(const QString& id)
 {
-    auto db = getDatabase();
-    if (!db) {
+    auto currentDatabase = getDatabase();
+    if (!currentDatabase) {
         return {};
     }
 
-    const auto currentHash = db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + id);
+    const auto currentHash = currentDatabase->metadata()->customData()->value(CustomData::BrowserKeyPrefix + id);
     const auto isAssociated = !currentHash.isEmpty();
     auto result = qMakePair(isAssociated, currentHash);
 
