@@ -239,9 +239,9 @@ QJsonArray BrowserService::getDatabaseEntries()
 
         for (const auto& entry : group->entries()) {
             QJsonObject jentry;
-            jentry["title"] = entry->title();
-            jentry["uuid"] = entry->uuidToHex();
-            jentry["url"] = entry->url();
+            jentry["title"] = entry->resolveMultiplePlaceholders(entry->title());
+            jentry["uuid"] = entry->resolveMultiplePlaceholders(entry->uuidToHex());
+            jentry["url"] = entry->resolveMultiplePlaceholders(entry->url());
             entries.push_back(jentry);
         }
     }
