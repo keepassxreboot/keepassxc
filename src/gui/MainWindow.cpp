@@ -1413,6 +1413,7 @@ void MainWindow::updateTrayIcon()
             actionToggle->setIcon(icons()->icon("keepassxc-monochrome-dark"));
 
             menu->addAction(m_ui->actionLockAllDatabases);
+            menu->addAction(m_ui->actionEntryAutoType);
 
 #ifdef Q_OS_MACOS
             auto actionQuit = new QAction(tr("Quit KeePassXC"), menu);
