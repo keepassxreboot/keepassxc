@@ -202,7 +202,7 @@ void DatabaseOpenWidget::openDatabase()
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_ui->passwordFormFrame->setEnabled(false);
     QCoreApplication::processEvents();
-    bool ok = m_db->open(m_filename, databaseKey, &error, false);
+    bool ok = m_db->open(m_filename, databaseKey, &error);
     QApplication::restoreOverrideCursor();
     m_ui->passwordFormFrame->setEnabled(true);
 

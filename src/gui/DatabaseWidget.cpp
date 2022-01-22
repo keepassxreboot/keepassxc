@@ -1153,10 +1153,6 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         db = m_databaseOpenWidget->database();
     }
     replaceDatabase(db);
-    if (db->isReadOnly()) {
-        showMessage(
-            tr("This database is opened in read-only mode. Autosave is disabled."), MessageWidget::Warning, false, -1);
-    }
 
     restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
     m_groupBeforeLock = QUuid();
@@ -1418,7 +1414,7 @@ void DatabaseWidget::onGroupChanged()
 
 void DatabaseWidget::onDatabaseModified()
 {
-    if (!m_blockAutoSave && config()->get(Config::AutoSaveAfterEveryChange).toBool() && !m_db->isReadOnly()) {
+    if (!m_blockAutoSave && config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
         save();
     } else {
         // Only block once, then reset
@@ -1844,7 +1840,7 @@ bool DatabaseWidget::save()
     }
 
     // Read-only and new databases ask for filename
-    if (m_db->isReadOnly() || m_db->filePath().isEmpty()) {
+    if (m_db->filePath().isEmpty()) {
         return saveAs();
     }
 
@@ -1998,7 +1994,6 @@ bool DatabaseWidget::saveBackup()
 
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function
-            m_db->setReadOnly(false);
             m_db->setFilePath(newFilePath);
             m_saveAttempts = 0;
 

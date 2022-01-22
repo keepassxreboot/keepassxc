@@ -513,20 +513,6 @@ void DatabaseTabWidget::showDatabaseSettings()
     currentDatabaseWidget()->switchToDatabaseSettings();
 }
 
-bool DatabaseTabWidget::isReadOnly(int index) const
-{
-    if (count() == 0) {
-        return false;
-    }
-
-    if (index == -1) {
-        index = currentIndex();
-    }
-
-    auto db = databaseWidgetFromIndex(index)->database();
-    return db && db->isReadOnly();
-}
-
 bool DatabaseTabWidget::isModified(int index) const
 {
     if (count() == 0) {
@@ -543,7 +529,7 @@ bool DatabaseTabWidget::isModified(int index) const
 
 bool DatabaseTabWidget::canSave(int index) const
 {
-    return !isReadOnly(index) && isModified(index);
+    return isModified(index);
 }
 
 bool DatabaseTabWidget::hasLockableDatabases() const
@@ -599,10 +585,6 @@ QString DatabaseTabWidget::tabName(int index)
 
     if (dbWidget->isLocked()) {
         tabName = tr("%1 [Locked]", "Database tab name modifier").arg(tabName);
-    }
-
-    if (db->isReadOnly()) {
-        tabName = tr("%1 [Read-only]", "Database tab name modifier").arg(tabName);
     }
 
     if (db->isModified()) {

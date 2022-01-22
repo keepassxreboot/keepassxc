@@ -41,7 +41,6 @@ public:
     DatabaseWidget* currentDatabaseWidget();
     DatabaseWidget* databaseWidgetFromIndex(int index) const;
 
-    bool isReadOnly(int index = -1) const;
     bool canSave(int index = -1) const;
     bool isModified(int index = -1) const;
     bool hasLockableDatabases() const;

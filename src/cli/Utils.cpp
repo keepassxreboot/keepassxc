@@ -182,7 +182,7 @@ namespace Utils
 
         auto db = QSharedPointer<Database>::create();
         QString error;
-        if (db->open(databaseFilename, compositeKey, &error, false)) {
+        if (db->open(databaseFilename, compositeKey, &error)) {
             return db;
         } else {
             err << error << endl;
