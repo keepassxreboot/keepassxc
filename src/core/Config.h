@@ -91,6 +91,8 @@ public:
         GUI_CompactMode,
         GUI_CheckForUpdates,
         GUI_CheckForUpdatesIncludeBetas,
+        GUI_ShowExpiredEntriesOnDatabaseUnlock,
+        GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays,
 
         GUI_MainWindowGeometry,
         GUI_MainWindowState,

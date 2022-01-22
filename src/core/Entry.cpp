@@ -441,7 +441,12 @@ int Entry::size() const
 
 bool Entry::isExpired() const
 {
-    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTimeUtc();
+    return willExpireInDays(0);
+}
+
+bool Entry::willExpireInDays(int days) const
+{
+    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTime().addDays(days);
 }
 
 bool Entry::isRecycled() const
