@@ -234,6 +234,73 @@
                 </item>
                </layout>
               </item>
+              <item>
+               <layout class="QGridLayout" name="showExpiredEntriesSubLayout">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetMaximumSize</enum>
+                </property>
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="showExpiredEntriesOnDatabaseUnlockCheckBox">
+                  <property name="text">
+                   <string>On database unlock, show entries that </string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QSpinBox" name="showExpiredEntriesOnDatabaseUnlockOffsetSpinBox">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <property name="accessibleName">
+                   <string>On database unlock, show entries that </string>
+                  </property>
+                  <property name="prefix">
+                   <string>will expire within </string>
+                  </property>
+                  <property name="suffix">
+                   <string> days</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>30</number>
+                  </property>
+                  <property name="value">
+                   <number>0</number>
+                  </property>
+                  <property name="specialValueText">
+                   <string>are expired</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <spacer name="showExpiredEntriesSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
              </layout>
             </widget>
            </item>
@@ -1138,6 +1205,8 @@
   <tabstop>rememberLastKeyFilesCheckBox</tabstop>
   <tabstop>checkForUpdatesOnStartupCheckBox</tabstop>
   <tabstop>checkForUpdatesIncludeBetasCheckBox</tabstop>
+  <tabstop>showExpiredEntriesOnDatabaseUnlockCheckBox</tabstop>
+  <tabstop>showExpiredEntriesOnDatabaseUnlockOffsetSpinBox</tabstop>
   <tabstop>autoSaveAfterEveryChangeCheckBox</tabstop>
   <tabstop>autoSaveOnExitCheckBox</tabstop>
   <tabstop>autoSaveNonDataChangesCheckBox</tabstop>

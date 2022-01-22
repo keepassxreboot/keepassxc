@@ -1119,7 +1119,29 @@ void DatabaseWidget::loadDatabase(bool accepted)
         replaceDatabase(openWidget->database());
         switchToMainView();
         processAutoOpen();
+
         restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
+
+        // Only show expired entries if first unlock and option is enabled
+        if (m_groupBeforeLock.isNull() && config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock).toBool()) {
+            int expirationOffset = config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays).toInt();
+            QList<Entry*> expiredEntries;
+            for (auto entry : m_db->rootGroup()->entriesRecursive()) {
+                if (entry->willExpireInDays(expirationOffset) && !entry->excludeFromReports() && !entry->isRecycled()) {
+                    expiredEntries << entry;
+                }
+            }
+
+            if (!expiredEntries.isEmpty()) {
+                m_entryView->displaySearch(expiredEntries);
+                m_entryView->setFirstEntryActive();
+                m_searchingLabel->setText(expirationOffset == 0
+                                              ? tr("Expired entries")
+                                              : tr("Entries expiring within %1 days").arg(expirationOffset));
+                m_searchingLabel->setVisible(true);
+            }
+        }
+
         m_groupBeforeLock = QUuid();
         m_entryBeforeLock = QUuid();
         m_saveAttempts = 0;
