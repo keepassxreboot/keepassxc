@@ -47,7 +47,6 @@ ShareObserver::Result ShareImport::containerInto(const QString& resolvedPath,
                                                  const KeeShareSettings::Reference& reference,
                                                  Group* targetGroup)
 {
-    // TODO: Read signing certificate as well, but don't check validity
     QByteArray dbData;
 
     auto uf = unzOpen64(resolvedPath.toLatin1().constData());
@@ -71,6 +70,7 @@ ShareObserver::Result ShareImport::containerInto(const QString& resolvedPath,
             return {reference.path, ShareObserver::Result::Error, file.errorString()};
         }
         dbData = file.readAll();
+        file.close();
     }
 
     QBuffer buffer(&dbData);

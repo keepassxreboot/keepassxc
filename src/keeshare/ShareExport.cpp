@@ -155,13 +155,6 @@ ShareObserver::Result ShareExport::intoContainer(const QString& resolvedPath,
                                                  const KeeShareSettings::Reference& reference,
                                                  const Group* group)
 {
-    QFile file(resolvedPath);
-    const bool fileOpened = file.open(QIODevice::WriteOnly);
-    if (!fileOpened) {
-        qWarning("Opening export file failed");
-        return {resolvedPath, ShareObserver::Result::Error, file.errorString()};
-    }
-
     QScopedPointer<Database> targetDb(extractIntoDatabase(reference, group));
     if (resolvedPath.endsWith(".kdbx.share")) {
         // Write database to memory and sign it
