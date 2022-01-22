@@ -1343,20 +1343,12 @@ Do you want to delete the entry?
         <translation>Error while reading the database: %1</translation>
     </message>
     <message>
-        <source>File cannot be written as it is opened in read-only mode.</source>
-        <translation>File cannot be written as it is opened in read-only mode.</translation>
-    </message>
-    <message>
         <source>%1
 Backup database located at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not save, database file is read-only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2209,11 +2201,6 @@ This is definitely a bug, please report it to the developers.</translation>
         <translation>%1 [Locked]</translation>
     </message>
     <message>
-        <source>%1 [Read-only]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [Read-only]</translation>
-    </message>
-    <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2369,10 +2356,6 @@ Disable safe saves and try again?</translation>
     <message>
         <source>Writing the database failed: %1</source>
         <translation type="unfinished">Writing the database failed: %1</translation>
-    </message>
-    <message>
-        <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Save database backup</source>
