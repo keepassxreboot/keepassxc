@@ -117,6 +117,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_ListViewState, {QS("GUI/ListViewState"), Local, {}}},
     {Config::GUI_SearchViewState, {QS("GUI/SearchViewState"), Local, {}}},
     {Config::GUI_SplitterState, {QS("GUI/SplitterState"), Local, {}}},
+    {Config::GUI_GroupSplitterState, {QS("GUI/GroupSplitterState"), Local, {}}},
     {Config::GUI_PreviewSplitterState, {QS("GUI/PreviewSplitterState"), Local, {}}},
     {Config::GUI_AutoTypeSelectDialogSize, {QS("GUI/AutoTypeSelectDialogSize"), Local, QSize(600, 250)}},
 

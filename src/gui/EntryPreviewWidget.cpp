@@ -284,6 +284,8 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     const QString expires =
         entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->entryExpirationLabel->setText(expires);
+    m_ui->entryTagsList->tags(m_currentEntry->tagList());
+    m_ui->entryTagsList->setReadOnly(true);
 }
 
 void EntryPreviewWidget::updateEntryAdvancedTab()

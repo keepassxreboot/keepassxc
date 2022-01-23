@@ -38,7 +38,9 @@ public:
         AttributeKV,
         Attachment,
         AttributeValue,
-        Group
+        Group,
+        Tag,
+        Is
     };
 
     struct SearchTerm

@@ -88,6 +88,7 @@ public:
     QString backgroundColor() const;
     QString overrideUrl() const;
     QString tags() const;
+    QStringList tagList() const;
     const TimeInfo& timeInfo() const;
     bool autoTypeEnabled() const;
     int autoTypeObfuscation() const;
@@ -113,7 +114,8 @@ public:
     QUuid previousParentGroupUuid() const;
     int size() const;
     QString path() const;
-    const QSharedPointer<PasswordHealth>& passwordHealth();
+    const QSharedPointer<PasswordHealth> passwordHealth();
+    const QSharedPointer<PasswordHealth> passwordHealth() const;
     bool excludeFromReports() const;
     void setExcludeFromReports(bool state);
 

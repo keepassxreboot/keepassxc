@@ -73,3 +73,7 @@ QPlainTextEdit, QTextEdit {
 QStatusBar {
     background-color: palette(window);
 }
+
+*[title="true"] {
+    font-weight: bold;
+}

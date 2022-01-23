@@ -2398,6 +2398,10 @@ Disable safe saves and try again?</translation>
         <source>Perform Auto-Type into the previously active window?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Database Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2884,6 +2888,14 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Edit Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tags:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tags list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3867,6 +3879,14 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Default Sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tags list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8498,6 +8518,21 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TagModel</name>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weak Passwords</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

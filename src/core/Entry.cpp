@@ -190,6 +190,12 @@ QString Entry::tags() const
     return m_data.tags;
 }
 
+QStringList Entry::tagList() const
+{
+    static QRegExp rx("(\\ |\\,|\\.|\\:|\\t|\\;)");
+    return tags().split(rx, QString::SkipEmptyParts);
+}
+
 const TimeInfo& Entry::timeInfo() const
 {
     return m_data.timeInfo;
@@ -210,10 +216,18 @@ QString Entry::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
-const QSharedPointer<PasswordHealth>& Entry::passwordHealth()
+const QSharedPointer<PasswordHealth> Entry::passwordHealth()
 {
     if (!m_data.passwordHealth) {
         m_data.passwordHealth.reset(new PasswordHealth(resolvePlaceholder(password())));
+    }
+    return m_data.passwordHealth;
+}
+
+const QSharedPointer<PasswordHealth> Entry::passwordHealth() const
+{
+    if (!m_data.passwordHealth) {
+        return QSharedPointer<PasswordHealth>::create(resolvePlaceholder(password()));
     }
     return m_data.passwordHealth;
 }
