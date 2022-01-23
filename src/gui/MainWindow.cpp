@@ -1337,7 +1337,11 @@ bool MainWindow::focusNextPrevChild(bool next)
         // Search Widget <-> Tab Widget <-> DbWidget
         if (next) {
             if (m_searchWidget->hasFocus()) {
-                m_ui->tabWidget->setFocus(Qt::TabFocusReason);
+                if (m_ui->tabWidget->count() > 1) {
+                    m_ui->tabWidget->setFocus(Qt::TabFocusReason);
+                } else {
+                    dbWidget->setFocus(Qt::TabFocusReason);
+                }
             } else if (m_ui->tabWidget->hasFocus()) {
                 dbWidget->setFocus(Qt::TabFocusReason);
             } else {
@@ -1349,7 +1353,11 @@ bool MainWindow::focusNextPrevChild(bool next)
             } else if (m_ui->tabWidget->hasFocus()) {
                 focusSearchWidget();
             } else {
-                m_ui->tabWidget->setFocus(Qt::BacktabFocusReason);
+                if (m_ui->tabWidget->count() > 1) {
+                    m_ui->tabWidget->setFocus(Qt::BacktabFocusReason);
+                } else {
+                    focusSearchWidget();
+                }
             }
         }
         return true;

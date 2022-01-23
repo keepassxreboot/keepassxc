@@ -98,6 +98,7 @@ public:
         GUI_SearchViewState,
         GUI_PreviewSplitterState,
         GUI_SplitterState,
+        GUI_GroupSplitterState,
         GUI_AutoTypeSelectDialogSize,
         GUI_CheckForUpdatesNextCheck,
 

@@ -17,3 +17,7 @@ DatabaseWidget #SearchBanner, DatabaseWidget #KeeShareBanner {
 QLineEdit {
     padding-left: 2px;
 }
+
+*[title="true"] {
+    font-weight: bold;
+}

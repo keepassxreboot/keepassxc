@@ -20,6 +20,7 @@
 #define KEEPASSX_DATABASEWIDGET_H
 
 #include <QFileSystemWatcher>
+#include <QListView>
 #include <QStackedWidget>
 
 #include "DatabaseOpenDialog.h"
@@ -117,10 +118,8 @@ public:
 
     QByteArray entryViewState() const;
     bool setEntryViewState(const QByteArray& state) const;
-    QList<int> mainSplitterSizes() const;
-    void setMainSplitterSizes(const QList<int>& sizes);
-    QList<int> previewSplitterSizes() const;
-    void setPreviewSplitterSizes(const QList<int>& sizes);
+    QHash<Config::ConfigKey, QList<int>> splitterSizes() const;
+    void setSplitterSizes(const QHash<Config::ConfigKey, QList<int>>& sizes);
     void setSearchStringForAutoType(const QString& search);
 
 signals:
@@ -148,11 +147,11 @@ signals:
     void listModeActivated();
     void searchModeAboutToActivate();
     void searchModeActivated();
-    void mainSplitterSizesChanged();
-    void previewSplitterSizesChanged();
+    void splitterSizesChanged();
     void entryViewStateChanged();
     void clearSearch();
     void requestGlobalAutoType(const QString& search);
+    void requestSearch(const QString& search);
 
 public slots:
     bool lock();
@@ -176,6 +175,7 @@ public slots:
     void copyURL();
     void copyNotes();
     void copyAttribute(QAction* action);
+    void filterByTag(const QModelIndex& index);
     void showTotp();
     void showTotpKeyQrCode();
     void copyTotp();
@@ -267,6 +267,7 @@ private:
 
     QPointer<QWidget> m_mainWidget;
     QPointer<QSplitter> m_mainSplitter;
+    QPointer<QSplitter> m_groupSplitter;
     QPointer<MessageWidget> m_messageWidget;
     QPointer<EntryPreviewWidget> m_previewView;
     QPointer<QSplitter> m_previewSplitter;
@@ -282,6 +283,7 @@ private:
     QPointer<KeePass1OpenWidget> m_keepass1OpenWidget;
     QPointer<OpVaultOpenWidget> m_opVaultOpenWidget;
     QPointer<GroupView> m_groupView;
+    QPointer<QListView> m_tagView;
     QPointer<EntryView> m_entryView;
 
     QScopedPointer<Group> m_newGroup;

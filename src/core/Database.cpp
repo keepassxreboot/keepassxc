@@ -52,7 +52,11 @@ Database::Database()
 
     // other signals
     connect(m_metadata, &Metadata::modified, this, &Database::markAsModified);
-    connect(this, &Database::databaseOpened, this, [this]() { updateCommonUsernames(); });
+    connect(this, &Database::databaseOpened, this, [this]() {
+        updateCommonUsernames();
+        updateTagList();
+    });
+    connect(this, &Database::modified, this, [this] { updateTagList(); });
     connect(this, &Database::databaseSaved, this, [this]() { updateCommonUsernames(); });
     connect(m_fileWatcher, &FileWatcher::fileChanged, this, &Database::databaseFileChanged);
 
@@ -504,6 +508,7 @@ void Database::releaseData()
 
     m_deletedObjects.clear();
     m_commonUsernames.clear();
+    m_tagList.clear();
 }
 
 /**
@@ -700,15 +705,44 @@ void Database::addDeletedObject(const QUuid& uuid)
     addDeletedObject(delObj);
 }
 
-QList<QString> Database::commonUsernames()
+const QStringList& Database::commonUsernames() const
 {
     return m_commonUsernames;
+}
+
+const QStringList& Database::tagList() const
+{
+    return m_tagList;
 }
 
 void Database::updateCommonUsernames(int topN)
 {
     m_commonUsernames.clear();
     m_commonUsernames.append(rootGroup()->usernamesRecursive(topN));
+}
+
+void Database::updateTagList()
+{
+    m_tagList.clear();
+    if (!m_rootGroup) {
+        emit tagListUpdated();
+        return;
+    }
+
+    // Search groups recursively looking for tags
+    // Use a set to prevent adding duplicates
+    QSet<QString> tagSet;
+    for (const auto group : m_rootGroup->groupsRecursive(true)) {
+        for (const auto entry : group->entries()) {
+            for (auto tag : entry->tagList()) {
+                tagSet.insert(tag);
+            }
+        }
+    }
+
+    m_tagList = tagSet.toList();
+    m_tagList.sort();
+    emit tagListUpdated();
 }
 
 const QUuid& Database::cipher() const

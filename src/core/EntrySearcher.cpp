@@ -18,6 +18,7 @@
 
 #include "EntrySearcher.h"
 
+#include "PasswordHealth.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 
@@ -152,7 +153,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
     auto hierarchy = entry->group()->hierarchy().join('/').prepend("/");
 
     // By default, empty term matches every entry.
-    // However when skipping protected fields, we will recject everything instead
+    // However when skipping protected fields, we will reject everything instead
     bool found = !m_skipProtected;
     for (const auto& term : m_searchTerms) {
         switch (term.field) {
@@ -195,11 +196,31 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                 found = term.regex.match(entry->group()->name()).hasMatch();
             }
             break;
+        case Field::Tag:
+            found = term.regex.match(entry->tags()).hasMatch();
+            break;
+        case Field::Is:
+            if (term.word.compare("expired", Qt::CaseInsensitive) == 0) {
+                found = entry->isExpired();
+                break;
+            } else if (term.word.compare("weak", Qt::CaseInsensitive) == 0) {
+                if (!entry->excludeFromReports() && !entry->password().isEmpty() && !entry->isExpired()) {
+                    const auto quality = entry->passwordHealth()->quality();
+                    if (quality == PasswordHealth::Quality::Bad || quality == PasswordHealth::Quality::Poor
+                        || quality == PasswordHealth::Quality::Weak) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            found = false;
+            break;
         default:
             // Terms without a specific field try to match title, username, url, and notes
             found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
+                    || term.regex.match(entry->resolvePlaceholder(entry->tags())).hasMatch()
                     || term.regex.match(entry->notes()).hasMatch();
         }
 
@@ -226,10 +247,13 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("pw"), Field::Password},
         {QStringLiteral("password"), Field::Password},
         {QStringLiteral("title"), Field::Title},
+        {QStringLiteral("t"), Field::Title},
         {QStringLiteral("u"), Field::Username}, // u: stands for username rather than url
         {QStringLiteral("url"), Field::Url},
         {QStringLiteral("username"), Field::Username},
-        {QStringLiteral("group"), Field::Group}};
+        {QStringLiteral("group"), Field::Group},
+        {QStringLiteral("tag"), Field::Tag},
+        {QStringLiteral("is"), Field::Is}};
 
     m_searchTerms.clear();
     auto results = m_termParser.globalMatch(searchString);

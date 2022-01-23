@@ -50,6 +50,7 @@
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
 #include "gui/reports/ReportsDialog.h"
+#include "gui/tag/TagModel.h"
 #include "keeshare/KeeShare.h"
 
 #ifdef WITH_XC_NETWORKING
@@ -65,6 +66,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_db(std::move(db))
     , m_mainWidget(new QWidget(this))
     , m_mainSplitter(new QSplitter(m_mainWidget))
+    , m_groupSplitter(new QSplitter(this))
     , m_messageWidget(new MessageWidget(this))
     , m_previewView(new EntryPreviewWidget(this))
     , m_previewSplitter(new QSplitter(m_mainWidget))
@@ -79,7 +81,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_databaseOpenWidget(new DatabaseOpenWidget(this))
     , m_keepass1OpenWidget(new KeePass1OpenWidget(this))
     , m_opVaultOpenWidget(new OpVaultOpenWidget(this))
-    , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
+    , m_groupView(new GroupView(m_db.data(), this))
+    , m_tagView(new QListView(this))
     , m_saveAttempts(0)
     , m_entrySearcher(new EntrySearcher(false))
 {
@@ -87,26 +90,51 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     m_messageWidget->setHidden(true);
 
-    auto* mainLayout = new QVBoxLayout();
+    auto mainLayout = new QVBoxLayout();
     mainLayout->addWidget(m_messageWidget);
-    auto* hbox = new QHBoxLayout();
+    auto hbox = new QHBoxLayout();
     mainLayout->addLayout(hbox);
     hbox->addWidget(m_mainSplitter);
     m_mainWidget->setLayout(mainLayout);
 
-    auto* rightHandSideWidget = new QWidget(m_mainSplitter);
-    auto* vbox = new QVBoxLayout();
-    vbox->setMargin(0);
-    vbox->addWidget(m_searchingLabel);
+    // Setup tags view and place under groups
+    auto tagModel = new TagModel(m_db);
+    m_tagView->setModel(tagModel);
+    m_tagView->setFrameStyle(QFrame::NoFrame);
+    m_tagView->setSelectionMode(QListView::SingleSelection);
+    m_tagView->setSelectionBehavior(QListView::SelectRows);
+    m_tagView->setCurrentIndex(tagModel->index(0));
+    connect(m_tagView, SIGNAL(activated(QModelIndex)), this, SLOT(filterByTag(QModelIndex)));
+    connect(m_tagView, SIGNAL(clicked(QModelIndex)), this, SLOT(filterByTag(QModelIndex)));
+
+    auto tagsWidget = new QWidget();
+    auto tagsLayout = new QVBoxLayout();
+    auto tagsTitle = new QLabel(tr("Database Tags"));
+    tagsTitle->setProperty("title", true);
+    tagsWidget->setLayout(tagsLayout);
+    tagsLayout->addWidget(tagsTitle);
+    tagsLayout->addWidget(m_tagView);
+
+    m_groupSplitter->setOrientation(Qt::Vertical);
+    m_groupSplitter->setChildrenCollapsible(true);
+    m_groupSplitter->addWidget(m_groupView);
+    m_groupSplitter->addWidget(tagsWidget);
+    m_groupSplitter->setStretchFactor(0, 70);
+    m_groupSplitter->setStretchFactor(1, 30);
+
+    auto rightHandSideWidget = new QWidget(m_mainSplitter);
+    auto rightHandSideVBox = new QVBoxLayout();
+    rightHandSideVBox->setMargin(0);
+    rightHandSideVBox->addWidget(m_searchingLabel);
 #ifdef WITH_XC_KEESHARE
-    vbox->addWidget(m_shareLabel);
+    rightHandSideVBox->addWidget(m_shareLabel);
 #endif
-    vbox->addWidget(m_previewSplitter);
-    rightHandSideWidget->setLayout(vbox);
+    rightHandSideVBox->addWidget(m_previewSplitter);
+    rightHandSideWidget->setLayout(rightHandSideVBox);
     m_entryView = new EntryView(rightHandSideWidget);
 
     m_mainSplitter->setChildrenCollapsible(false);
-    m_mainSplitter->addWidget(m_groupView);
+    m_mainSplitter->addWidget(m_groupSplitter);
     m_mainSplitter->addWidget(rightHandSideWidget);
     m_mainSplitter->setStretchFactor(0, 30);
     m_mainSplitter->setStretchFactor(1, 70);
@@ -165,8 +193,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     addChildWidget(m_opVaultOpenWidget);
 
     // clang-format off
-    connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
-    connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(previewSplitterSizesChanged()));
+    connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
+    connect(m_groupSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
+    connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
     connect(m_previewView, SIGNAL(errorOccurred(QString)), SLOT(showErrorMessage(QString)));
     connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*)));
@@ -298,24 +327,34 @@ bool DatabaseWidget::isEditWidgetModified() const
     return false;
 }
 
-QList<int> DatabaseWidget::mainSplitterSizes() const
+QHash<Config::ConfigKey, QList<int>> DatabaseWidget::splitterSizes() const
 {
-    return m_mainSplitter->sizes();
+    return {{Config::GUI_SplitterState, m_mainSplitter->sizes()},
+            {Config::GUI_PreviewSplitterState, m_previewSplitter->sizes()},
+            {Config::GUI_GroupSplitterState, m_groupSplitter->sizes()}};
 }
 
-void DatabaseWidget::setMainSplitterSizes(const QList<int>& sizes)
+void DatabaseWidget::setSplitterSizes(const QHash<Config::ConfigKey, QList<int>>& sizes)
 {
-    m_mainSplitter->setSizes(sizes);
-}
-
-QList<int> DatabaseWidget::previewSplitterSizes() const
-{
-    return m_previewSplitter->sizes();
-}
-
-void DatabaseWidget::setPreviewSplitterSizes(const QList<int>& sizes)
-{
-    m_previewSplitter->setSizes(sizes);
+    for (auto itr = sizes.constBegin(); itr != sizes.constEnd(); ++itr) {
+        // Less than two sizes indicates an invalid value
+        if (itr.value().size() < 2) {
+            continue;
+        }
+        switch (itr.key()) {
+        case Config::GUI_SplitterState:
+            m_mainSplitter->setSizes(itr.value());
+            break;
+        case Config::GUI_PreviewSplitterState:
+            m_previewSplitter->setSizes(itr.value());
+            break;
+        case Config::GUI_GroupSplitterState:
+            m_groupSplitter->setSizes(itr.value());
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 void DatabaseWidget::setSearchStringForAutoType(const QString& search)
@@ -389,6 +428,8 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     m_db = std::move(db);
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
+    auto tagModel = new TagModel(m_db);
+    m_tagView->setModel(tagModel);
 
     // Restore the new parent group pointer, if not found default to the root group
     // this prevents data loss when merging a database while creating a new entry
@@ -644,6 +685,13 @@ void DatabaseWidget::copyAttribute(QAction* action)
         setClipboardTextAndMinimize(
             currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
     }
+}
+
+void DatabaseWidget::filterByTag(const QModelIndex& index)
+{
+    m_tagView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+    const auto model = static_cast<TagModel*>(m_tagView->model());
+    emit requestSearch(model->data(index, Qt::UserRole).toString());
 }
 
 void DatabaseWidget::showTotpKeyQrCode()
@@ -1442,6 +1490,8 @@ void DatabaseWidget::endSearch()
         m_entryView->setFirstEntryActive();
         // Enforce preview view update (prevents stale information if focus group is empty)
         m_previewView->setEntry(currentSelectedEntry());
+        // Reset selection on tag view
+        m_tagView->selectionModel()->clearSelection();
     }
 
     m_searchingLabel->setVisible(false);
@@ -1512,9 +1562,12 @@ void DatabaseWidget::showEvent(QShowEvent* event)
 
 bool DatabaseWidget::focusNextPrevChild(bool next)
 {
-    // [parent] <-> GroupView <-> EntryView <-> EntryPreview <-> [parent]
+    // [parent] <-> GroupView <-> TagView <-> EntryView <-> EntryPreview <-> [parent]
     if (next) {
         if (m_groupView->hasFocus()) {
+            m_tagView->setFocus();
+            return true;
+        } else if (m_tagView->hasFocus()) {
             m_entryView->setFocus();
             return true;
         } else if (m_entryView->hasFocus()) {
@@ -1526,6 +1579,9 @@ bool DatabaseWidget::focusNextPrevChild(bool next)
             m_entryView->setFocus();
             return true;
         } else if (m_entryView->hasFocus()) {
+            m_tagView->setFocus();
+            return true;
+        } else if (m_tagView->hasFocus()) {
             m_groupView->setFocus();
             return true;
         }
@@ -1926,6 +1982,7 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
     // Lock out interactions
     m_entryView->setDisabled(true);
     m_groupView->setDisabled(true);
+    m_tagView->setDisabled(true);
     QApplication::processEvents();
 
     Database::SaveAction saveAction = Database::Atomic;
@@ -1967,6 +2024,7 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
     // Return control
     m_entryView->setDisabled(false);
     m_groupView->setDisabled(false);
+    m_tagView->setDisabled(false);
 
     if (focusWidget) {
         focusWidget->setFocus();

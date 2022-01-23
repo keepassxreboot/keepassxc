@@ -125,7 +125,8 @@ public:
     bool containsDeletedObject(const DeletedObject& uuid) const;
     void setDeletedObjects(const QList<DeletedObject>& delObjs);
 
-    QList<QString> commonUsernames();
+    const QStringList& commonUsernames() const;
+    const QStringList& tagList() const;
 
     QSharedPointer<const CompositeKey> key() const;
     bool setKey(const QSharedPointer<const CompositeKey>& key,
@@ -151,6 +152,7 @@ public slots:
     void markAsModified();
     void markAsClean();
     void updateCommonUsernames(int topN = 10);
+    void updateTagList();
     void markNonDataChange();
 
 signals:
@@ -166,6 +168,7 @@ signals:
     void databaseSaved();
     void databaseDiscarded();
     void databaseFileChanged();
+    void tagListUpdated();
 
 private:
     struct DatabaseData
@@ -228,7 +231,8 @@ private:
     bool m_hasNonDataChange = false;
     QString m_keyError;
 
-    QList<QString> m_commonUsernames;
+    QStringList m_commonUsernames;
+    QStringList m_tagList;
 
     QUuid m_uuid;
     static QHash<QUuid, QPointer<Database>> s_uuidMap;

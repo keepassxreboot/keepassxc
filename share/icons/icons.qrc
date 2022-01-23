@@ -72,6 +72,8 @@
         <file>application/scalable/actions/system-help.svg</file>
         <file>application/scalable/actions/system-search.svg</file>
         <file>application/scalable/actions/system-software-update.svg</file>
+        <file>application/scalable/actions/tag.svg</file>
+        <file>application/scalable/actions/tag-search.svg</file>
         <file>application/scalable/actions/trash.svg</file>
         <file>application/scalable/actions/url-copy.svg</file>
         <file>application/scalable/actions/user-guide.svg</file>

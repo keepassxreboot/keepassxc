@@ -27,6 +27,7 @@ set(EXCLUDED_FILES
         src/streams/qtiocompressor.\\*
         src/gui/KMessageWidget.\\*
         src/gui/MainWindowAdaptor.\\*
+        src/gui/tag/TagsEdit.\\*
         tests/modeltest.\\*
         # objective-c files
         src/core/ScreenLockListenerMac.\\*)
