@@ -37,6 +37,7 @@
 namespace
 {
     constexpr int clearFormsDelay = 30000;
+    constexpr int inputInactivityDelay = 60000;
 }
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
@@ -55,6 +56,14 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
         m_ui->editPassword->setText("");
         m_ui->editPassword->setShowPassword(false);
     });
+
+    m_inputInactivityTimer.setInterval(inputInactivityDelay);
+    connect(&m_inputInactivityTimer, &QTimer::timeout, this, [this] {
+        // Reset the password field after not receiving user input for a set time
+        m_ui->editPassword->setText("");
+        m_ui->editPassword->setShowPassword(false);
+    });
+    connect(m_ui->editPassword, &QLineEdit::textEdited, this, [this] { m_inputInactivityTimer.start(); });
 
     QFont font;
     font.setPointSize(font.pointSize() + 4);

@@ -74,6 +74,7 @@ private slots:
 private:
     bool m_pollingHardwareKey = false;
     QTimer m_hideTimer;
+    QTimer m_inputInactivityTimer;
 
     Q_DISABLE_COPY(DatabaseOpenWidget)
 };
