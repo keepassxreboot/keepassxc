@@ -38,7 +38,7 @@ namespace
 {
     constexpr int clearFormsDelay = 30000;
     constexpr int inputInactivityDelay = 60000;
-}
+} // namespace
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
