@@ -80,7 +80,7 @@ int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer
     } else {
         db2 = QSharedPointer<Database>::create();
         QString errorMessage;
-        if (!db2->open(fromDatabasePath, database->key(), &errorMessage, false)) {
+        if (!db2->open(fromDatabasePath, database->key(), &errorMessage)) {
             err << QObject::tr("Error reading merge file:\n%1").arg(errorMessage);
             return EXIT_FAILURE;
         }

@@ -1782,7 +1782,7 @@ void TestGui::checkDatabase(const QString& filePath, const QString& expectedDbNa
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     auto dbSaved = QSharedPointer<Database>::create();
-    QVERIFY(dbSaved->open(filePath, key, nullptr, false));
+    QVERIFY(dbSaved->open(filePath, key, nullptr));
     QCOMPARE(dbSaved->metadata()->name(), expectedDbName);
 }
 

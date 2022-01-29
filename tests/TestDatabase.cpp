@@ -144,11 +144,7 @@ void TestDatabase::testEmptyRecycleBinOnDisabled()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key, nullptr, false));
-
-    // Explicitly mark DB as read-write in case it was opened from a read-only drive.
-    // Prevents assertion failures on CI systems when the data dir is not writable
-    db->setReadOnly(false);
+    QVERIFY(db->open(filename, key, nullptr));
 
     QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
@@ -163,8 +159,7 @@ void TestDatabase::testEmptyRecycleBinOnNotCreated()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key, nullptr, false));
-    db->setReadOnly(false);
+    QVERIFY(db->open(filename, key, nullptr));
 
     QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
@@ -179,8 +174,7 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key, nullptr, false));
-    db->setReadOnly(false);
+    QVERIFY(db->open(filename, key, nullptr));
 
     QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
@@ -195,8 +189,7 @@ void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key, nullptr, false));
-    db->setReadOnly(false);
+    QVERIFY(db->open(filename, key, nullptr));
 
     QFile originalFile(filename);
     qint64 initialSize = originalFile.size();
