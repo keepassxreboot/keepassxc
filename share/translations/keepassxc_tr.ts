@@ -451,7 +451,7 @@
         <translation>Yedek hedefi</translation>
     </message>
     <message>
-        <source>Specifies the database backup file location. Occurences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
+        <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
         <translation>Veritabanı yedek dosyasının konumunu belirtir. &quot;{DB_FILENAME}&quot; kodu, kayıtlı veritabanının uzantısı olmayan dosya adı, {TIME:&lt;format&gt;} kodu, yedekleme zamanı ile değiştirilir. https://doc.qt.io/qt-5/qdatetime.html#toString adresine bakabilirsiniz.&lt;format&gt; Varsayılan biçem dizgesi &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
     </message>
     <message>
@@ -1341,10 +1341,6 @@ Bu kaydın silinmesini ister misiniz?
         <translation>Veritabanı okunurken sorun çıktı: %1</translation>
     </message>
     <message>
-        <source>File cannot be written as it is opened in read-only mode.</source>
-        <translation>Salt okunur kipte açıldığı için dosyaya yazılamıyor.</translation>
-    </message>
-    <message>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
@@ -1353,10 +1349,6 @@ Yedek veritabanının konumu %2</translation>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
         <translation>Kaydedilemedi. Veritabanı geçerli bir dosyayı göstermiyor.</translation>
-    </message>
-    <message>
-        <source>Could not save, database file is read-only.</source>
-        <translation>Kaydedilemedi. Veritabanı dosyası salt okunur.</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
@@ -2211,11 +2203,6 @@ Bu kesinlikle bir uygulama hatasıdır. Lütfen geliştiricilere bildirin.</tran
         <translation>%1 [Kilitli]</translation>
     </message>
     <message>
-        <source>%1 [Read-only]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [Salt okunur]</translation>
-    </message>
-    <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
         <translation>%1 açılamadı. Bulunamadı ya da erişilebilir değil.</translation>
     </message>
@@ -2373,10 +2360,6 @@ Güvenli kaydetme devre dışı bırakılarak yeniden denensin mi?</translation>
         <translation>Veritabanına yazılamadı: %1</translation>
     </message>
     <message>
-        <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation>Bu veritabanı salt okunur kipte açılmış. Otomatik kaydetme devre dışı.</translation>
-    </message>
-    <message>
         <source>Save database backup</source>
         <translation>Veritabanı yedeğini kaydet</translation>
     </message>
@@ -2399,6 +2382,10 @@ Güvenli kaydetme devre dışı bırakılarak yeniden denensin mi?</translation>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
         <translation>Önceki etkin pencereye otomatik yazılsın mı? </translation>
+    </message>
+    <message>
+        <source>Database Tags</source>
+        <translation>Veritabanı etiketleri</translation>
     </message>
 </context>
 <context>
@@ -2883,6 +2870,14 @@ Düzeltmek ister misiniz?</translation>
     <message>
         <source>Edit Entry</source>
         <translation>Kaydı düzenle</translation>
+    </message>
+    <message>
+        <source>Tags:</source>
+        <translation>Etiketler:</translation>
+    </message>
+    <message>
+        <source>Tags list</source>
+        <translation>Etiket listesi</translation>
     </message>
 </context>
 <context>
@@ -3858,6 +3853,14 @@ Var olan ek dosyanın üzerine yazılmasını ister misiniz?</translation>
     <message>
         <source>Default Sequence</source>
         <translation>Varsayılan sıra</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Etiketler</translation>
+    </message>
+    <message>
+        <source>Tags list</source>
+        <translation>Etiket listesi</translation>
     </message>
 </context>
 <context>
@@ -5341,7 +5344,7 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
 We recommend you use the AppImage available on our downloads page.</source>
         <translation>UYARI: Kullandığınız Qt sürümü KeePassXC ekran tuş takımının çökmesine neden olabilir.
-KeePassXC indirme sayfasında bulunan kurulum paketini kullanmanız önerilir.</translation>
+KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -7369,27 +7372,27 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
     <message>
         <source>Password has expired</source>
-        <translation>Parolanın süresi geçmiş</translation>
+        <translation>Parolanın geçerlilik süresi geçmiş</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
-        <translation>Parolanın %1 zamanında geçersiz olmuş</translation>
+        <translation>Parolanın geçerlilik süresi %1 zamanında geçmiş</translation>
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation>Parolanın %1 zamanında geçersiz olacak</translation>
+        <translation>Parolanın geçerlilik süresi %1 zamanında geçecek</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
-        <translation>Parolanın geçerlilik süresi dolmak üzere</translation>
+        <translation>Parolanın geçerlilik süresi geçmek üzere</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation><numerusform>Parola %1 gün sonra geçersiz olacak</numerusform><numerusform>Parola %1 gün sonra geçersiz olacak</numerusform></translation>
+        <translation><numerusform>Parolanın geçerlilik süresi %1 gün sonra geçecek</numerusform><numerusform>Parolanın geçerlilik süresi %1 gün sonra geçecek</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
-        <translation>Parola yakında geçersiz olacak</translation>
+        <translation>Parolanın geçerlilik süresi yakında geçecek</translation>
     </message>
     <message>
         <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
@@ -7621,7 +7624,7 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Geçerli olmayan kayıt sayısı</translation>
+        <translation>Geçerlilik süresi geçmiş kayıt sayısı</translation>
     </message>
     <message>
         <source>Unique passwords</source>
@@ -8038,7 +8041,7 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Geçerli olmayan kayıt sayısı</translation>
+        <translation>Geçerlilik süresi geçmiş kayıt sayısı</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
@@ -8453,6 +8456,21 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
 </context>
 <context>
+    <name>TagModel</name>
+    <message>
+        <source>All</source>
+        <translation>Tümü</translation>
+    </message>
+    <message>
+        <source>Expired</source>
+        <translation>Geçerlilik süresi geçmiş</translation>
+    </message>
+    <message>
+        <source>Weak Passwords</source>
+        <translation>Kolay parolalar</translation>
+    </message>
+</context>
+<context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
@@ -8468,7 +8486,7 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>&lt;b&gt;%n&lt;/b&gt; saniye sonra geçersiz olacak</numerusform><numerusform>&lt;b&gt;%n&lt;/b&gt; saniye sonra geçersiz olacak</numerusform></translation>
+        <translation><numerusform>&lt;b&gt;%n&lt;/b&gt; saniye sonra geçerlilik süresi geçmiş olacak</numerusform><numerusform>&lt;b&gt;%n&lt;/b&gt; saniye sonra geçerlilik süresi geçmiş olacak</numerusform></translation>
     </message>
 </context>
 <context>
