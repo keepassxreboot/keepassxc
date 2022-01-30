@@ -328,9 +328,7 @@ void BrowserService::showPasswordGenerator(const QJsonObject& errorMessage, cons
         connect(m_passwordGenerator.data(),
                 &PasswordGeneratorWidget::appliedPassword,
                 m_passwordGenerator.data(),
-                [=](const QString& password) {
-                    emit passwordGenerated(password, nonce);
-                });
+                [=](const QString& password) { emit passwordGenerated(password, nonce); });
     }
 
     raiseWindow();
