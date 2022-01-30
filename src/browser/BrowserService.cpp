@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -317,8 +317,11 @@ void BrowserService::showPasswordGenerator(const QJsonObject& errorMessage, cons
         m_passwordGenerator.reset(PasswordGeneratorWidget::popupGenerator());
 
         connect(m_passwordGenerator.data(), &PasswordGeneratorWidget::closed, m_passwordGenerator.data(), [=] {
+            if (!m_passwordGenerator->isPasswordGenerated()) {
+                m_browserHost->sendClientMessage(errorMessage);
+            }
+
             m_passwordGenerator.reset();
-            m_browserHost->sendClientMessage(errorMessage);
             hideWindow();
         });
 
