@@ -458,6 +458,22 @@
         <source>{DB_FILENAME}.old.kdbx</source>
         <translation>{DB_FILENAME}.old.kdbx</translation>
     </message>
+    <message>
+        <source>On database unlock, show entries that </source>
+        <translation>Veritabanının kilidi açıldığında, kayıtlar şöyle görüntülensin</translation>
+    </message>
+    <message>
+        <source> days</source>
+        <translation>gün</translation>
+    </message>
+    <message>
+        <source>are expired</source>
+        <translation>geçerlilik süresi geçmiş</translation>
+    </message>
+    <message>
+        <source>will expire within </source>
+        <translation>geçerlilik süresi dolacak</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -2386,6 +2402,14 @@ Güvenli kaydetme devre dışı bırakılarak yeniden denensin mi?</translation>
     <message>
         <source>Database Tags</source>
         <translation>Veritabanı etiketleri</translation>
+    </message>
+    <message>
+        <source>Expired entries</source>
+        <translation>Geçerlilik süresi geçmiş kayıtlar</translation>
+    </message>
+    <message>
+        <source>Entries expiring within %1 days</source>
+        <translation>%1 gün içinde geçerlilik süresi dolacak kayıtlar</translation>
     </message>
 </context>
 <context>
