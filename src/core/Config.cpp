@@ -81,6 +81,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::FaviconDownloadTimeout,{QS("FaviconDownloadTimeout"), Roaming, 10}},
     {Config::UpdateCheckMessageShown,{QS("UpdateCheckMessageShown"), Roaming, false}},
     {Config::UseTouchID,{QS("UseTouchID"), Roaming, false}},
+    {Config::UseWindowsHello,{QS("UseWindowsHello"), Roaming, false}},
 
     {Config::LastDatabases, {QS("LastDatabases"), Local, {}}},
     {Config::LastKeyFiles, {QS("LastKeyFiles"), Local, {}}},

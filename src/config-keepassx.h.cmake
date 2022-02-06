@@ -20,6 +20,7 @@
 #cmakedefine WITH_XC_KEESHARE
 #cmakedefine WITH_XC_UPDATECHECK
 #cmakedefine WITH_XC_TOUCHID
+#cmakedefine WITH_XC_WINHELLO
 #cmakedefine WITH_XC_FDOSECRETS
 
 #cmakedefine KEEPASSXC_BUILD_TYPE "@KEEPASSXC_BUILD_TYPE@"

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>588</width>
-    <height>448</height>
+    <height>463</height>
    </rect>
   </property>
   <property name="accessibleName">
@@ -74,7 +74,6 @@
           <property name="font">
            <font>
             <pointsize>12</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -483,45 +482,59 @@
                </layout>
               </item>
               <item>
-               <widget class="QWidget" name="touchIDContainer" native="true">
-                <layout class="QHBoxLayout" name="touchIDLayout">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <spacer name="horizontalSpacer">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+               <layout class="QHBoxLayout" name="quickUnlockLayout">
+                <item>
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QWidget" name="windowsHelloContainer" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                   <item>
+                    <widget class="QCheckBox" name="checkWindowsHello">
+                     <property name="text">
+                      <string>Windows Hello for Quick Unlock</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="touchIDContainer" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <property name="leftMargin">
+                    <number>0</number>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>0</height>
-                    </size>
+                   <property name="topMargin">
+                    <number>0</number>
                    </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="checkTouchID">
-                   <property name="text">
-                    <string>TouchID for Quick Unlock</string>
+                   <property name="rightMargin">
+                    <number>0</number>
                    </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QCheckBox" name="checkTouchID">
+                     <property name="text">
+                      <string>TouchID for Quick Unlock</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
                <layout class="QHBoxLayout" name="dialogButtonsLayout">

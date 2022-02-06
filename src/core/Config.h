@@ -63,6 +63,7 @@ public:
         FaviconDownloadTimeout,
         UpdateCheckMessageShown,
         UseTouchID,
+        UseWindowsHello,
 
         LastDatabases,
         LastKeyFiles,

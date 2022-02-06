@@ -31,6 +31,10 @@
 #include "touchid/TouchID.h"
 #endif
 
+#ifdef WITH_XC_WINHELLO
+#include "windowshello/WindowsHello.h"
+#endif
+
 #include <QDesktopServices>
 #include <QFont>
 
@@ -105,6 +109,14 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
         m_ui->checkTouchID->setVisible(false);
     }
 #endif
+
+#ifndef WITH_XC_WINHELLO
+//    m_ui->windowsHelloContainer->setVisible(false);
+#else
+    if(!WindowsHello::isAvailable()){
+        m_ui->windowsHelloContainer->setVisible(false);
+    }
+#endif
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget()
@@ -145,6 +157,9 @@ void DatabaseOpenWidget::load(const QString& filename)
     QHash<QString, QVariant> useTouchID = config()->get(Config::UseTouchID).toHash();
     m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
 
+    QHash<QString, QVariant> useWindowsHello = config()->get(Config::UseWindowsHello).toHash();
+    m_ui->checkWindowsHello->setChecked(useWindowsHello.value(m_filename, false).toBool());
+
 #ifdef WITH_XC_YUBIKEY
     // Only auto-poll for hardware keys if we previously used one with this database file
     if (config()->get(Config::RememberLastKeyFiles).toBool()) {
@@ -163,6 +178,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->keyFileLineEdit->clear();
     m_ui->keyFileLineEdit->setShowPassword(false);
     m_ui->checkTouchID->setChecked(false);
+    m_ui->checkWindowsHello->setChecked(false);
     m_ui->challengeResponseCombo->clear();
     m_db.reset();
 }
@@ -244,6 +260,24 @@ void DatabaseOpenWidget::openDatabase()
 
         config()->set(Config::UseTouchID, useTouchID);
 #endif
+
+#ifdef WITH_XC_WINHELLO
+        QHash<QString, QVariant> useWindowsHello = config()->get(Config::UseWindowsHello).toHash();
+
+        // check if Windows Hello can & should be used to unlock the database next time
+        if (m_ui->checkWindowsHello->isChecked() && WindowsHello::isAvailable()) {
+            // encrypt and store key blob
+            if (WindowsHello::storeKey(m_filename, PasswordKey(m_ui->editPassword->text()).rawKey())) {
+                useWindowsHello.insert(m_filename, true);
+            }
+        } else {
+            // when Windows Hello not available or unchecked, reset for the current database
+            WindowsHello::reset(m_filename);
+            useWindowsHello.insert(m_filename, false);
+        }
+
+        config()->set(Config::UseWindowsHello, useWindowsHello);
+#endif
         emit dialogFinished(true);
         clearForms();
     } else {
@@ -277,6 +311,11 @@ void DatabaseOpenWidget::openDatabase()
         // unable to unlock database, reset TouchID for the current database
         TouchID::getInstance().reset(m_filename);
 #endif
+
+#ifdef WITH_XC_WINHELLO
+        WindowsHello::reset(m_filename);
+#endif
+
     }
 }
 
@@ -298,6 +337,26 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
         // try to get, decrypt and use PasswordKey
         QByteArray passwordKey;
         if (TouchID::getInstance().getKey(m_filename, passwordKey)) {
+            // check if the user cancelled the operation
+            if (passwordKey.isNull()) {
+                return QSharedPointer<CompositeKey>();
+            }
+
+            databaseKey->addKey(PasswordKey::fromRawKey(passwordKey));
+        }
+    }
+#endif
+
+#ifdef WITH_XC_WINHELLO
+    // check if Windows Hello is available and enabled for unlocking the database
+    if (m_ui->checkWindowsHello->isChecked() && WindowsHello::isAvailable()
+        && m_ui->editPassword->text().isEmpty()) {
+        // clear empty password from composite key
+        databaseKey->clear();
+
+        // try to get, decrypt and use PasswordKey
+        QByteArray passwordKey;
+        if (WindowsHello::getKey(m_filename, passwordKey)) {
             // check if the user cancelled the operation
             if (passwordKey.isNull()) {
                 return QSharedPointer<CompositeKey>();
