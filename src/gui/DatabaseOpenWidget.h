@@ -73,6 +73,7 @@ private slots:
 
 private:
     bool m_pollingHardwareKey = false;
+    bool m_openDatabaseAfterHardwareKeyResponse = false;
     QTimer m_hideTimer;
 
     Q_DISABLE_COPY(DatabaseOpenWidget)

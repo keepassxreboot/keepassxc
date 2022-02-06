@@ -181,7 +181,11 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
     m_ui->editPassword->setText(pw);
     m_ui->keyFileLineEdit->setText(keyFile);
-    openDatabase();
+    if (m_pollingHardwareKey) {
+        m_openDatabaseAfterHardwareKeyResponse = true;
+    } else {
+        openDatabase();
+    }
 }
 
 void DatabaseOpenWidget::openDatabase()
@@ -454,6 +458,11 @@ void DatabaseOpenWidget::hardwareKeyResponse(bool found)
 
     m_ui->challengeResponseCombo->setCurrentIndex(selectedIndex);
     m_ui->challengeResponseCombo->setEnabled(true);
+
+    if (m_openDatabaseAfterHardwareKeyResponse) {
+        m_openDatabaseAfterHardwareKeyResponse = false;
+        openDatabase();
+    }
 }
 
 void DatabaseOpenWidget::openHardwareKeyHelp()
