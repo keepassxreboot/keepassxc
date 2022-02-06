@@ -99,6 +99,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     // Setup tags view and place under groups
     auto tagModel = new TagModel(m_db);
+    m_tagView->setObjectName("tagView");
     m_tagView->setModel(tagModel);
     m_tagView->setFrameStyle(QFrame::NoFrame);
     m_tagView->setSelectionMode(QListView::SingleSelection);
@@ -111,9 +112,11 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     auto tagsLayout = new QVBoxLayout();
     auto tagsTitle = new QLabel(tr("Database Tags"));
     tagsTitle->setProperty("title", true);
+    tagsWidget->setObjectName("tagWidget");
     tagsWidget->setLayout(tagsLayout);
     tagsLayout->addWidget(tagsTitle);
     tagsLayout->addWidget(m_tagView);
+    tagsLayout->setMargin(0);
 
     m_groupSplitter->setOrientation(Qt::Vertical);
     m_groupSplitter->setChildrenCollapsible(true);
@@ -133,7 +136,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     rightHandSideWidget->setLayout(rightHandSideVBox);
     m_entryView = new EntryView(rightHandSideWidget);
 
-    m_mainSplitter->setChildrenCollapsible(false);
+    m_mainSplitter->setChildrenCollapsible(true);
     m_mainSplitter->addWidget(m_groupSplitter);
     m_mainSplitter->addWidget(rightHandSideWidget);
     m_mainSplitter->setStretchFactor(0, 30);
@@ -1728,6 +1731,7 @@ void DatabaseWidget::reloadDatabaseFile()
     // Lock out interactions
     m_entryView->setDisabled(true);
     m_groupView->setDisabled(true);
+    m_tagView->setDisabled(true);
     QApplication::processEvents();
 
     QString error;
@@ -1773,6 +1777,7 @@ void DatabaseWidget::reloadDatabaseFile()
     // Return control
     m_entryView->setDisabled(false);
     m_groupView->setDisabled(false);
+    m_tagView->setDisabled(false);
 }
 
 int DatabaseWidget::numberOfSelectedEntries() const

@@ -377,7 +377,6 @@
     <addaction name="menuTheme"/>
     <addaction name="actionCompactMode"/>
     <addaction name="actionAlwaysOnTop"/>
-    <addaction name="actionShowGroupsPanel"/>
     <addaction name="actionShowPreviewPanel"/>
     <addaction name="actionShowToolbar"/>
     <addaction name="actionHideUsernames"/>
@@ -1003,17 +1002,6 @@
    </property>
    <property name="text">
     <string>Show Toolbar</string>
-   </property>
-  </action>
-  <action name="actionShowGroupsPanel">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Show Groups Panel</string>
    </property>
   </action>
   <action name="actionShowPreviewPanel">

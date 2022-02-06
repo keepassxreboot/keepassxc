@@ -5314,10 +5314,6 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Groups Panel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show Preview Panel</source>
         <translation type="unfinished"></translation>
     </message>
