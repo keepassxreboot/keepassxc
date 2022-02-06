@@ -231,7 +231,9 @@ function Invoke-GpgSignFiles([string[]] $files, [string] $key) {
 
     foreach ($_ in $files) {
         Write-Host "Signing file '$_' and creating DIGEST..."
-        Remove-Item "$_.sig"
+        if (Test-Path "$_.sig") {
+            Remove-Item "$_.sig"
+        }
         Invoke-Cmd "gpg" "--output `"$_.sig`" --armor --local-user `"$key`" --detach-sig `"$_`""
         $FileName = (Get-Item $_).Name
         (Get-FileHash "$_" SHA256).Hash + " *$FileName" | Out-File "$_.DIGEST" -NoNewline
