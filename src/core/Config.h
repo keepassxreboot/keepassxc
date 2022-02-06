@@ -134,6 +134,7 @@ public:
         Browser_UseCustomProxy,
         Browser_CustomProxyLocation,
         Browser_UpdateBinaryPath,
+        Browser_AllowGetDatabaseEntriesRequest,
         Browser_AllowExpiredCredentials,
         Browser_AlwaysAllowAccess,
         Browser_AlwaysAllowUpdate,

@@ -125,6 +125,7 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
     m_ui->customProxyLocation->setText(settings->replaceHomePath(settings->customProxyLocation()));
     m_ui->updateBinaryPath->setChecked(settings->updateBinaryPath());
+    m_ui->allowGetDatabaseEntriesRequest->setChecked(settings->allowGetDatabaseEntriesRequest());
     m_ui->allowExpiredCredentials->setChecked(settings->allowExpiredCredentials());
     m_ui->chromeSupport->setChecked(settings->browserSupport(BrowserShared::CHROME));
     m_ui->chromiumSupport->setChecked(settings->browserSupport(BrowserShared::CHROMIUM));
@@ -217,6 +218,7 @@ void BrowserSettingsWidget::saveSettings()
     settings->setCustomProxyLocation(browserSettings()->replaceTildeHomePath(m_ui->customProxyLocation->text()));
 
     settings->setUpdateBinaryPath(m_ui->updateBinaryPath->isChecked());
+    settings->setAllowGetDatabaseEntriesRequest(m_ui->allowGetDatabaseEntriesRequest->isChecked());
     settings->setAllowExpiredCredentials(m_ui->allowExpiredCredentials->isChecked());
     settings->setAlwaysAllowAccess(m_ui->alwaysAllowAccess->isChecked());
     settings->setAlwaysAllowUpdate(m_ui->alwaysAllowUpdate->isChecked());

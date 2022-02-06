@@ -155,6 +155,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Browser_UseCustomProxy, {QS("Browser/UseCustomProxy"), Roaming, false}},
     {Config::Browser_CustomProxyLocation, {QS("Browser/CustomProxyLocation"), Roaming, {}}},
     {Config::Browser_UpdateBinaryPath, {QS("Browser/UpdateBinaryPath"), Roaming, true}},
+    {Config::Browser_AllowGetDatabaseEntriesRequest, {QS("Browser/AllowGetDatabaseEntriesRequest"), Roaming, false}},
     {Config::Browser_AllowExpiredCredentials, {QS("Browser/AllowExpiredCredentials"), Roaming, false}},
     {Config::Browser_AlwaysAllowAccess, {QS("Browser/AlwaysAllowAccess"), Roaming, false}},
     {Config::Browser_AlwaysAllowUpdate, {QS("Browser/AlwaysAllowUpdate"), Roaming, false}},

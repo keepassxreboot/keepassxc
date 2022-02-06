@@ -1122,6 +1122,14 @@ Do you want to delete the entry?
         <source>Select native messaging host folder location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>

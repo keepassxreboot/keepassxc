@@ -222,6 +222,16 @@ void BrowserSettings::setUpdateBinaryPath(bool enabled)
     config()->set(Config::Browser_UpdateBinaryPath, enabled);
 }
 
+bool BrowserSettings::allowGetDatabaseEntriesRequest()
+{
+    return config()->get(Config::Browser_AllowGetDatabaseEntriesRequest).toBool();
+}
+
+void BrowserSettings::setAllowGetDatabaseEntriesRequest(bool enabled)
+{
+    config()->set(Config::Browser_AllowGetDatabaseEntriesRequest, enabled);
+}
+
 bool BrowserSettings::allowExpiredCredentials()
 {
     return config()->get(Config::Browser_AllowExpiredCredentials).toBool();
