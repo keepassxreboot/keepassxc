@@ -25,12 +25,14 @@ QCheckBox, QRadioButton {
     spacing: 10px;
 }
 
-DatabaseWidget, GroupView {
+DatabaseWidget, DatabaseWidget #groupView, DatabaseWidget #tagView {
     background-color: palette(window);
     border: none;
 }
 
-EntryPreviewWidget QLineEdit, EntryPreviewWidget QTextEdit {
+EntryPreviewWidget QLineEdit, EntryPreviewWidget QTextEdit,
+EntryPreviewWidget TagsEdit
+{
     background-color: palette(window);
     border: none;
 }

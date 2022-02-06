@@ -93,7 +93,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_Language, {QS("GUI/Language"), Roaming, QS("system")}},
     {Config::GUI_HideToolbar, {QS("GUI/HideToolbar"), Roaming, false}},
     {Config::GUI_MovableToolbar, {QS("GUI/MovableToolbar"), Roaming, false}},
-    {Config::GUI_HideGroupsPanel, {QS("GUI/HideGroupsPanel"), Roaming, false}},
     {Config::GUI_HidePreviewPanel, {QS("GUI/HidePreviewPanel"), Roaming, false}},
     {Config::GUI_AlwaysOnTop, {QS("GUI/GUI_AlwaysOnTop"), Local, false}},
     {Config::GUI_ToolButtonStyle, {QS("GUI/ToolButtonStyle"), Roaming, Qt::ToolButtonIconOnly}},
@@ -365,6 +364,7 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("GUI/DarkTrayIcon"), Config::Deleted},
 
     // 2.7.0
+    {QS("GUI/HideGroupsPanel"), Config::Deleted},
     {QS("LastAttachmentDir"), Config::Deleted},
     {QS("KeeShare/LastDir"), Config::Deleted},
     {QS("KeeShare/LastKeyDir"), Config::Deleted},

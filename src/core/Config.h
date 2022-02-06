@@ -74,7 +74,6 @@ public:
         GUI_Language,
         GUI_HideToolbar,
         GUI_MovableToolbar,
-        GUI_HideGroupsPanel,
         GUI_HidePreviewPanel,
         GUI_AlwaysOnTop,
         GUI_ToolButtonStyle,

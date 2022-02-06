@@ -58,13 +58,6 @@ GroupView::GroupView(Database* db, QWidget* parent)
     viewport()->setAcceptDrops(true);
     setDropIndicatorShown(true);
     setDefaultDropAction(Qt::MoveAction);
-    setVisible(!config()->get(Config::GUI_HideGroupsPanel).toBool());
-
-    connect(config(), &Config::changed, this, [this](Config::ConfigKey key) {
-        if (key == Config::GUI_HideGroupsPanel) {
-            setVisible(!config()->get(Config::GUI_HideGroupsPanel).toBool());
-        }
-    });
 }
 
 void GroupView::contextMenuShortcutPressed()
