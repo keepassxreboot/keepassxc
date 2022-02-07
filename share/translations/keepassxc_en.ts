@@ -656,6 +656,10 @@
         <source>Default sequence</source>
         <translation>Default sequence</translation>
     </message>
+    <message>
+        <source>(empty)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
