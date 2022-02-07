@@ -92,6 +92,9 @@ QVariant AutoTypeAssociationsModel::data(const QModelIndex& index, int role) con
     if (role == Qt::DisplayRole) {
         if (index.column() == 0) {
             QString window = m_autoTypeAssociations->get(index.row()).window;
+            if (window.isEmpty()) {
+                return tr("(empty)");
+            }
             if (m_entry) {
                 window = m_entry->maskPasswordPlaceholders(window);
                 window = m_entry->resolveMultiplePlaceholders(window);
