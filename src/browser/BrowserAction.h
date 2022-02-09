@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ class QJsonObject;
 class BrowserAction
 {
 public:
-    explicit BrowserAction();
+    explicit BrowserAction() = default;
     ~BrowserAction() = default;
 
     QJsonObject processClientMessage(const QJsonObject& json);
@@ -46,22 +46,11 @@ private:
     QJsonObject handleDeleteEntry(const QJsonObject& json, const QString& action);
     QJsonObject handleGlobalAutoType(const QJsonObject& json, const QString& action);
 
+private:
     QJsonObject buildMessage(const QString& nonce) const;
     QJsonObject buildResponse(const QString& action, const QJsonObject& message, const QString& nonce);
     QJsonObject getErrorReply(const QString& action, const int errorCode) const;
-    QString getErrorMessage(const int errorCode) const;
-
-    QString encryptMessage(const QJsonObject& message, const QString& nonce);
     QJsonObject decryptMessage(const QString& message, const QString& nonce);
-    QString encrypt(const QString& plaintext, const QString& nonce);
-    QByteArray decrypt(const QString& encrypted, const QString& nonce);
-
-    QString getBase64FromKey(const uchar* array, const uint len);
-    QByteArray getQByteArray(const uchar* array, const uint len) const;
-    QJsonObject getJsonObject(const uchar* pArray, const uint len) const;
-    QJsonObject getJsonObject(const QByteArray& ba) const;
-    QByteArray base64Decode(const QString& str);
-    QString incrementNonce(const QString& nonce);
 
 private:
     static const int MaxUrlLength;

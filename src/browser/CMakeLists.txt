@@ -1,5 +1,5 @@
 #  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-#  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ if(WITH_XC_BROWSER)
             BrowserEntryConfig.cpp
             BrowserEntrySaveDialog.cpp
             BrowserHost.cpp
+            BrowserMessageBuilder.cpp
             BrowserSettingsPage.cpp
             BrowserSettingsWidget.cpp
             BrowserService.cpp

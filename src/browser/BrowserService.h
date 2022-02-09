@@ -56,8 +56,9 @@ public:
     QJsonObject getDatabaseGroups();
     QJsonObject createNewGroup(const QString& groupName);
     QString getCurrentTotp(const QString& uuid);
-    void showPasswordGenerator(const QJsonObject& errorMessage, const QString& nonce);
+    void showPasswordGenerator(const QString& nonce, const QString& publicKey, const QString& secretKey);
     void sendPassword(const QJsonObject& message);
+    bool isPasswordGeneratorRequested() const;
 
     void addEntry(const QString& dbid,
                   const QString& login,
@@ -163,6 +164,7 @@ private:
 
     bool m_dialogActive;
     bool m_bringToFrontRequested;
+    bool m_passwordGeneratorRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
 
