@@ -655,6 +655,10 @@
         <source>Default sequence</source>
         <translation>Varsayılan sıra</translation>
     </message>
+    <message>
+        <source>(empty)</source>
+        <translation>(boş)</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
