@@ -85,7 +85,7 @@ public:
 private:
     Q_DISABLE_COPY(BrowserMessageBuilder);
 
-    // friend class TestBrowser;
+    friend class TestBrowser;
 };
 
 static inline BrowserMessageBuilder* browserMessageBuilder()
