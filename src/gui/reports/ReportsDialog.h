@@ -26,6 +26,7 @@
 #include <QString>
 #include <QtCore>
 
+#include "config-keepassx.h"
 #include "gui/DialogyWidget.h"
 
 class Database;

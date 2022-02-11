@@ -18,7 +18,7 @@ cmake_minimum_required(VERSION 3.3.0)
 
 project(KeePassXC)
 
-#set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE include-what-you-use -Xiwyu --mapping_file=/usr/share/include-what-you-use/qt5_11.imp -Xiwyu --mapping_file=/home/patrick/Code/keepassxc/keepassxc.imp -Xiwyu --mapping_file=/usr/share/include-what-you-use/stl.c.headers.imp)
+set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE include-what-you-use -Xiwyu --mapping_file=/usr/share/include-what-you-use/qt5_11.imp -Xiwyu --mapping_file=/home/patrick/Code/keepassxc/keepassxc.imp -Xiwyu --mapping_file=/usr/share/include-what-you-use/stl.c.headers.imp)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING

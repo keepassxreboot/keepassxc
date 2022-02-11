@@ -22,6 +22,7 @@
 #include "core/AsyncTask.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/CustomData.h"
 #include "gui/GuiTools.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"

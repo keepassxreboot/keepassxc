@@ -27,6 +27,7 @@
 #include <QPointer>
 #include <QString>
 #include <QVariant>
+#include "core/Config.h"
 
 class DatabaseWidget;
 

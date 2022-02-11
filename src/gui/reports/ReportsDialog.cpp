@@ -27,17 +27,18 @@
 #include "ReportsPageHealthcheck.h"
 #include "ReportsPageHibp.h"
 #include "ReportsPageStatistics.h"
+#include "ReportsWidgetHealthcheck.h"
+#include "ReportsWidgetHibp.h"
 #ifdef WITH_XC_BROWSER
 #include "ReportsPageBrowserStatistics.h"
 #include "ReportsWidgetBrowserStatistics.h"
 #endif
-#include "ReportsWidgetHealthcheck.h"
-#include "ReportsWidgetHibp.h"
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Entry.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/entry/EditEntryWidget.h"
+
 
 template <class T> class QSharedPointer;
 #ifdef Q_OS_MACOS
