@@ -21,6 +21,7 @@
 #include "gui/osutils/OSUtilsBase.h"
 #include <QAbstractNativeEventFilter>
 #include <QSharedPointer>
+#include <QtDBus/QDBusVariant>
 
 class NixUtils : public OSUtilsBase, QAbstractNativeEventFilter
 {
@@ -48,6 +49,9 @@ public:
         return false;
     }
 
+private slots:
+    void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
+
 private:
     explicit NixUtils(QObject* parent = nullptr);
     ~NixUtils() override;
@@ -65,6 +69,16 @@ private:
         uint nativeModifiers;
     };
     QHash<QString, QSharedPointer<globalShortcut>> m_globalShortcuts;
+
+    // defined as per "org.freedesktop.appearance color-scheme" spec in
+    // https://github.com/flatpak/xdg-desktop-portal/blob/d7a304a00697d7d608821253cd013f3b97ac0fb6/data/org.freedesktop.impl.portal.Settings.xml#L33-L45
+    enum ColorschemePref
+    {
+        PreferNone,
+        PreferDark,
+        PreferLight
+    };
+    ColorschemePref m_systemColorschemePref = ColorschemePref::PreferNone;
 
     Q_DISABLE_COPY(NixUtils)
 };
