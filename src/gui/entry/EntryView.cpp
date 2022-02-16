@@ -169,6 +169,7 @@ void EntryView::sortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
 
 void EntryView::dragMoveEvent(QDragMoveEvent* event)
 {
+    QTreeView::dragMoveEvent(event);
     if (event->isAccepted() && isSorted()) {
         event->ignore();
     } else {
