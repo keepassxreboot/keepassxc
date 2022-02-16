@@ -18,6 +18,7 @@
 #include "NixUtils.h"
 
 #include <QApplication>
+#include <QDBusInterface>
 #include <QDir>
 #include <QPointer>
 #include <QStandardPaths>
@@ -60,6 +61,15 @@ NixUtils::NixUtils(QObject* parent)
 {
     dpy = QX11Info::display();
     rootWindow = QX11Info::appRootWindow();
+
+    // notify about system color scheme changes
+    QDBusConnection sessionBus = QDBusConnection::sessionBus();
+    sessionBus.connect("org.freedesktop.portal.Desktop",
+                       "/org/freedesktop/portal/desktop",
+                       "org.freedesktop.portal.Settings",
+                       "SettingChanged",
+                       this,
+                       SLOT(handleColorSchemeChanged(QString, QString, QDBusVariant)));
 }
 
 NixUtils::~NixUtils()
@@ -68,6 +78,11 @@ NixUtils::~NixUtils()
 
 bool NixUtils::isDarkMode() const
 {
+    // prefer freedesktop "org.freedesktop.appearance color-scheme" setting
+    if (m_systemColorschemePref != ColorschemePref::PreferNone) {
+        return m_systemColorschemePref == ColorschemePref::PreferDark;
+    }
+
     if (!qApp || !qApp->style()) {
         return false;
     }
@@ -256,4 +271,12 @@ bool NixUtils::unregisterGlobalShortcut(const QString& name)
 
     m_globalShortcuts.remove(name);
     return true;
+}
+
+void NixUtils::handleColorSchemeChanged(QString ns, QString key, QDBusVariant value)
+{
+    if (ns == "org.freedesktop.appearance" && key == "color-scheme") {
+        m_systemColorschemePref = static_cast<ColorschemePref>(value.variant().toInt());
+        emit interfaceThemeChanged();
+    }
 }
