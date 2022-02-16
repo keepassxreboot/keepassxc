@@ -29,6 +29,7 @@
 #include <QMetaObject>
 #include <QMutexLocker>
 #include <utility>
+#include <QSet>
 
 #include "core/AsyncTask.h"
 #include "core/FileWatcher.h"

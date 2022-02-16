@@ -16,20 +16,37 @@
  */
 
 #include "ShareExport.h"
+
+#include <botan/pubkey.h>
+#include <zip.h>
+#include <QtCore/qglobal.h>
+#include <botan/pk_keys.h>
+#include <botan/secmem.h>
+#include <zlib.h>
+#include <QBuffer>
+#include <QByteArray>
+#include <QIODevice>
+#include <QList>
+#include <QScopedPointer>
+#include <QSharedPointer>
+#include <QStringList>
+#include <QUuid>
+#include <QtGlobal>
+#include <exception>
+#include <string>
+
 #include "core/EntryAttributes.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Random.h"
 #include "format/KeePass2Writer.h"
-#include "gui/Icons.h"
-#include "gui/MessageBox.h"
 #include "keeshare/KeeShare.h"
 #include "keys/PasswordKey.h"
 #include "keys/CompositeKey.h"
-
-#include <QBuffer>
-#include <botan/pubkey.h>
-#include <zip.h>
+#include "KeeShareSettings.h"
+#include "ShareObserver.h"
+#include "core/Database.h"
+#include "core/Entry.h"
 
 namespace
 {

@@ -18,10 +18,14 @@
 #define KEEPASSXC_SHAREEXPORT_H
 
 #include <QCoreApplication>
+#include <QString>
 
 #include "keeshare/ShareObserver.h"
 
-class Database;
+class Group;
+namespace KeeShareSettings {
+struct Reference;
+}  // namespace KeeShareSettings
 
 class ShareExport
 {

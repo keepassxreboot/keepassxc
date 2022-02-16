@@ -35,6 +35,7 @@
 
 #include "core/Global.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
+#include "widgets/AccessControlDialog.h"
 
 class QCheckBox;
 class QWidget;

@@ -18,14 +18,15 @@
 
 #include "EntrySearcher.h"
 
-#include "PasswordHealth.h"
 #include <QPair>
 #include <QRegularExpressionMatchIterator>
 #include <QStaticStringData>
 #include <QStringList>
 #include <QStringLiteral>
 #include <QtCore>
+#include <QSharedPointer>
 
+#include "PasswordHealth.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "core/Entry.h"

@@ -41,6 +41,7 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "config-keepassx.h"
 
 #ifdef WITH_XC_KEESHARE
 #include "keeshare/KeeShare.h"

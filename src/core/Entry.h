@@ -27,6 +27,7 @@
 #include <QScopedPointer>
 #include <QSharedPointer>
 #include <QString>
+#include <QStringList>
 
 #include "core/TimeInfo.h"
 #include "core/Compare.h"

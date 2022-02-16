@@ -15,14 +15,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "ShareImport.h"
+
+#include <unzip.h>
+#include <QtCore/qglobal.h>
+#include <QBuffer>
+#include <QByteArray>
+#include <QFile>
+#include <QIODevice>
+#include <QSharedPointer>
+#include <QStringList>
+#include <QtGlobal>
+
 #include "core/Merger.h"
 #include "format/KeePass2Reader.h"
 #include "keeshare/KeeShare.h"
 #include "keys/PasswordKey.h"
 #include "keys/CompositeKey.h"
-
-#include <QBuffer>
-#include <unzip.h>
+#include "KeeShareSettings.h"
+#include "ShareObserver.h"
+#include "core/Database.h"
+#include "core/Group.h"
 
 namespace
 {

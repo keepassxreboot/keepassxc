@@ -17,6 +17,8 @@
 
 #include "TagModel.h"
 
+#include <QIcon>
+
 #include "core/Database.h"
 #include "gui/Icons.h"
 

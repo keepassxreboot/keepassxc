@@ -54,8 +54,6 @@
 #include "core/EntryAttributes.h"
 #include "core/Global.h"
 
-template <class T> class QSharedPointer;
-
 const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
 const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";

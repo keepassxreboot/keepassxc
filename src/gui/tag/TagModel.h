@@ -20,8 +20,14 @@
 
 #include <QAbstractListModel>
 #include <QSharedPointer>
+#include <QModelIndex>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QtCore>
 
 class Database;
+template <class T> class QSharedPointer;
 
 class TagModel : public QAbstractListModel
 {

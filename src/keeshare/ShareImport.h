@@ -18,8 +18,14 @@
 #define KEEPASSXC_SHAREIMPORT_H
 
 #include <QCoreApplication>
+#include <QString>
 
 #include "keeshare/ShareObserver.h"
+
+class Group;
+namespace KeeShareSettings {
+struct Reference;
+}  // namespace KeeShareSettings
 
 class ShareImport
 {

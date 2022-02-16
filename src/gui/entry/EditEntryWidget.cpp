@@ -54,6 +54,8 @@
 #include <QVariant>
 #include <QWidget>
 #include <utility>
+#include <QSet>
+#include <QStringList>
 
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetAutoType.h"
@@ -82,6 +84,7 @@
 #include "gui/URLEdit.h"
 #include "gui/entry/EditEntryWidget_p.h"
 #include "gui/entry/EntryAttachmentsWidget.h"
+#include "gui/tag/TagsEdit.h"
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
 #include "sshagent/SSHAgent.h"

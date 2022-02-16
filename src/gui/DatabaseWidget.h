@@ -19,8 +19,6 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
-#include <QFileSystemWatcher>
-#include <QListView>
 #include <QStackedWidget>
 #include <QByteArray>
 #include <QList>
@@ -32,12 +30,11 @@
 #include <QUuid>
 #include <QtCore>
 
-#include "DatabaseOpenDialog.h"
 #include "config-keepassx.h"
 #include "gui/MessageWidget.h"
-#include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
 #include "gui/KMessageWidget.h"
+#include "core/Config.h"
 
 class DatabaseOpenWidget;
 class KeePass1OpenWidget;
@@ -45,7 +42,6 @@ class OpVaultOpenWidget;
 class DatabaseSettingsDialog;
 class ReportsDialog;
 class Database;
-class FileWatcher;
 class EditEntryWidget;
 class EditGroupWidget;
 class Entry;
@@ -53,16 +49,14 @@ class EntryView;
 class EntrySearcher;
 class Group;
 class GroupView;
-class QFile;
-class QMenu;
 class QSplitter;
 class QLabel;
-class MessageWidget;
 class EntryPreviewWidget;
 class CsvImportWizard;
 class QAction;
 class QWidget;
 template <class T> class QSharedPointer;
+class QListView;
 
 class DatabaseWidget : public QStackedWidget
 {

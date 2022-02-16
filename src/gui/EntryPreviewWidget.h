@@ -26,6 +26,7 @@
 #include <QtCore>
 
 #include "gui/DatabaseWidget.h"
+#include "config-keepassx.h"
 
 class Entry;
 class Group;

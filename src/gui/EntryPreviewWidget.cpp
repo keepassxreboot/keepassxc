@@ -57,6 +57,7 @@
 #include "gui/DatabaseIcons.h"
 #include "gui/entry/EntryAttachmentsWidget.h"
 #include "gui/widgets/ElidedLabel.h"
+#include "gui/tag/TagsEdit.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"

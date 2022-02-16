@@ -49,6 +49,9 @@
 #include <QVariant>
 #include <QWidget>
 #include <utility>
+#include <QFrame>
+#include <QListView>
+#include <QtWidgets>
 
 #include "autotype/AutoType.h"
 #include "core/EntrySearcher.h"

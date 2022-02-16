@@ -51,6 +51,7 @@
 #include "dbus/DBusConstants.h"
 #include "dbus/DBusMgr.h"
 #include "dbus/DBusObject.h"
+#include "dbus/DBusTypes.h"
 
 namespace FdoSecrets
 {

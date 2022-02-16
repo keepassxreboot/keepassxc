@@ -31,6 +31,7 @@
 #include <QUuid>
 #include <QVariantMap>
 #include <QtCore>
+#include <QStringList>
 
 #include "core/ModifiableObject.h"
 #include "crypto/kdf/AesKdf.h"

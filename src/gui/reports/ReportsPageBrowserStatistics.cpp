@@ -17,8 +17,13 @@
 
 #include "ReportsPageBrowserStatistics.h"
 
+#include <QObject>
+
 #include "ReportsWidgetBrowserStatistics.h"
 #include "gui/Icons.h"
+
+class Database;
+class QWidget;
 
 ReportsPageBrowserStatistics::ReportsPageBrowserStatistics()
     : m_browserWidget(new ReportsWidgetBrowserStatistics())

@@ -39,8 +39,7 @@
 #include "dbus/DBusClient.h"
 #include "dbus/DBusMgr.h"
 #include "dbus/DBusObject.h"
-#include "dbus/DBusTypes.h"
-#include "DBusTypes.h"
+#include "fdosecrets/dbus/DBusTypes.h"
 
 template <class T> class QSharedPointer;
 template <class T> class QWeakPointer;

@@ -16,8 +16,32 @@
  */
 
 #include "ReportsWidgetBrowserStatistics.h"
-#include "ui_ReportsWidgetBrowserStatistics.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QMenu>
+#include <QShortcut>
+#include <QSortFilterProxyModel>
+#include <QStandardItemModel>
+#include <QAction>
+#include <QCheckBox>
+#include <QHeaderView>
+#include <QItemSelectionModel>
+#include <QJsonValue>
+#include <QJsonValueRef>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QPair>
+#include <QPoint>
+#include <QPointer>
+#include <QStandardItem>
+#include <QStringList>
+#include <QTableView>
+#include <QTimer>
+#include <QtCore>
+#include <utility>
+
+#include "ui_ReportsWidgetBrowserStatistics.h"
 #include "browser/BrowserService.h"
 #include "core/AsyncTask.h"
 #include "core/Group.h"
@@ -26,13 +50,11 @@
 #include "gui/GuiTools.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
+#include "core/Database.h"
+#include "core/Entry.h"
 
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QMenu>
-#include <QShortcut>
-#include <QSortFilterProxyModel>
-#include <QStandardItemModel>
+class QShowEvent;
+template <class T> class QSharedPointer;
 
 namespace
 {

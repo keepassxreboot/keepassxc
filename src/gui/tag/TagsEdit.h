@@ -25,9 +25,20 @@
 #pragma once
 
 #include <QAbstractScrollArea>
-
 #include <memory>
-#include <vector>
+#include <QByteArrayData>
+#include <QSize>
+#include <QString>
+#include <QStringList>
+
+class QFocusEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QObject;
+class QPaintEvent;
+class QResizeEvent;
+class QTimerEvent;
+class QWidget;
 
 /// Tag multi-line editor widget
 /// `Space` commits a tag and initiates a new tag edition
@@ -73,6 +84,7 @@ private:
     bool isAcceptableInput(QKeyEvent const* event) const;
 
     struct Impl;
+
     std::unique_ptr<Impl> impl;
     bool m_readOnly;
 };

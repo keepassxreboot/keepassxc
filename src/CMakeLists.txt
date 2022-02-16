@@ -343,7 +343,7 @@ target_link_libraries(keepassx_core
 
 if(ENABLE_UNITY_BUILDS)
     set_target_properties(keepassx_core PROPERTIES UNITY_BUILD on)
-    set_source_files_properties(core/Tools.cpp gui/styles/base/BaseStyle.cpp gui/reports/ReportsWidgetHealthcheck.cpp gui/reports/ReportsWidgetHibp.cpp gui/Font.cpp gui/osutils/nixutils/NixUtils.cpp gui/osutils/nixutils/X11Funcs.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
+    set_source_files_properties(core/Tools.cpp gui/styles/base/BaseStyle.cpp gui/reports/ReportsWidgetHealthcheck.cpp gui/reports/ReportsWidgetHibp.cpp gui/Font.cpp gui/osutils/nixutils/NixUtils.cpp gui/osutils/nixutils/X11Funcs.cpp gui/tag/TagsEdit.cpp autotype/xcb/AutoTypeXCB.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
 
     set_target_properties(autotype PROPERTIES UNITY_BUILD on)
     set_target_properties(${keepassxcbrowser_LIB} PROPERTIES UNITY_BUILD ON)

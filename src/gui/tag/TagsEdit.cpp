@@ -23,19 +23,48 @@
 */
 
 #include "TagsEdit.h"
-#include "gui/MainWindow.h"
-#include <QApplication>
-#include <QCompleter>
-#include <QDebug>
-#include <QPainter>
-#include <QPainterPath>
-#include <QScrollBar>
-#include <QStyle>
-#include <QStyleHints>
-#include <QStyleOptionFrame>
-#include <QTextLayout>
 
+#include <QCompleter>
+#include <QPainter>
+#include <QScrollBar>
+#include <QStyleHints>
+#include <QTextLayout>
 #include <cassert>
+#include <QAbstractItemView>
+#include <QChar>
+#include <QFlags>
+#include <QFontMetrics>
+#include <QFrame>
+#include <QGuiApplication>
+#include <QKeyEvent>
+#include <QKeySequence>
+#include <QLineF>
+#include <QList>
+#include <QMargins>
+#include <QMouseEvent>
+#include <QNonConstOverload>
+#include <QPalette>
+#include <QPen>
+#include <QPoint>
+#include <QPointF>
+#include <QRect>
+#include <QRectF>
+#include <QSizeF>
+#include <QSizePolicy>
+#include <QTextCharFormat>
+#include <QTextLine>
+#include <QTimerEvent>
+#include <QVector>
+#include <QWidget>
+#include <QtCore>
+#include <QtGui>
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <type_traits>
+#include <utility>
+
+#include "gui/MainWindow.h"
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
 #define FONT_METRICS_WIDTH(fmt, ...) fmt.width(__VA_ARGS__)
