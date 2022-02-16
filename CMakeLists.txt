@@ -268,9 +268,6 @@ add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
 
-#add_gcc_compiler_cxxflags("--save-temps")
-#add_gcc_compiler_flags("--save-temps")
-
 if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     check_add_gcc_compiler_flag("-Wshadow-compatible-local")
     check_add_gcc_compiler_flag("-Wshadow-local")
