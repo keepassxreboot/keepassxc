@@ -391,7 +391,7 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
 {
     PasswordKey oldTransformedKey;
     if (m_data.key->isEmpty()) {
-        oldTransformedKey.setHash(m_data.transformedDatabaseKey->rawKey());
+        oldTransformedKey.setRawKey(m_data.transformedDatabaseKey->rawKey());
     }
 
     KeePass2Writer writer;
@@ -738,11 +738,11 @@ bool Database::challengeMasterSeed(const QByteArray& masterSeed)
 {
     m_keyError.clear();
     if (m_data.key) {
-        m_data.masterSeed->setHash(masterSeed);
+        m_data.masterSeed->setRawKey(masterSeed);
         QByteArray response;
         bool ok = m_data.key->challenge(masterSeed, response, &m_keyError);
         if (ok && !response.isEmpty()) {
-            m_data.challengeResponseKey->setHash(response);
+            m_data.challengeResponseKey->setRawKey(response);
         } else if (ok && response.isEmpty()) {
             // no CR key present, make sure buffer is empty
             m_data.challengeResponseKey.reset(new PasswordKey);
@@ -795,7 +795,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
 
     PasswordKey oldTransformedDatabaseKey;
     if (m_data.key && !m_data.key->isEmpty()) {
-        oldTransformedDatabaseKey.setHash(m_data.transformedDatabaseKey->rawKey());
+        oldTransformedDatabaseKey.setRawKey(m_data.transformedDatabaseKey->rawKey());
     }
 
     QByteArray transformedDatabaseKey;
@@ -808,7 +808,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
 
     m_data.key = key;
     if (!transformedDatabaseKey.isEmpty()) {
-        m_data.transformedDatabaseKey->setHash(transformedDatabaseKey);
+        m_data.transformedDatabaseKey->setRawKey(transformedDatabaseKey);
     }
     if (updateChangedTime) {
         m_metadata->setDatabaseKeyChanged(Clock::currentDateTimeUtc());
@@ -966,7 +966,7 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
     }
 
     setKdf(kdf);
-    m_data.transformedDatabaseKey->setHash(transformedDatabaseKey);
+    m_data.transformedDatabaseKey->setRawKey(transformedDatabaseKey);
     markAsModified();
 
     return true;

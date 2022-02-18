@@ -22,6 +22,7 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 
+#include <QDataStream>
 #include <QFile>
 #include <QXmlStreamReader>
 
@@ -147,6 +148,9 @@ bool FileKey::load(const QString& fileName, QString* errorMsg)
         if (errorMsg) {
             *errorMsg = file.errorString();
         }
+    } else {
+        // Store the file path for serialization
+        m_file = fileName;
     }
 
     return result;
@@ -158,6 +162,35 @@ bool FileKey::load(const QString& fileName, QString* errorMsg)
 QByteArray FileKey::rawKey() const
 {
     return QByteArray(m_key.data(), m_key.size());
+}
+
+void FileKey::setRawKey(const QByteArray& data)
+{
+    Q_ASSERT(data.size() == SHA256_SIZE);
+    m_key.assign(data.begin(), data.end());
+}
+
+QByteArray FileKey::serialize() const
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << uuid().toRfc4122() << rawKey() << static_cast<qint32>(m_type) << m_file;
+    return data;
+}
+
+void FileKey::deserialize(const QByteArray& data)
+{
+    QDataStream stream(data);
+    QByteArray uuidData;
+    stream >> uuidData;
+    if (uuid().toRfc4122() == uuidData) {
+        QByteArray key;
+        qint32 type;
+        stream >> key >> type >> m_file;
+
+        setRawKey(key);
+        m_type = static_cast<Type>(type);
+    }
 }
 
 /**

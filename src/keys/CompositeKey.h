@@ -37,6 +37,7 @@ public:
     bool isEmpty() const;
 
     QByteArray rawKey() const override;
+    void setRawKey(const QByteArray& data) override;
 
     Q_REQUIRED_RESULT bool transform(const Kdf& kdf, QByteArray& result, QString* error = nullptr) const;
     bool challenge(const QByteArray& seed, QByteArray& result, QString* error = nullptr) const;
@@ -46,6 +47,9 @@ public:
 
     void addChallengeResponseKey(const QSharedPointer<ChallengeResponseKey>& key);
     const QList<QSharedPointer<ChallengeResponseKey>>& challengeResponseKeys() const;
+
+    QByteArray serialize() const override;
+    void deserialize(const QByteArray& data) override;
 
 private:
     QByteArray rawKey(const QByteArray* transformSeed, bool* ok = nullptr, QString* error = nullptr) const;
