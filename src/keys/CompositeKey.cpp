@@ -17,12 +17,16 @@
  */
 
 #include "CompositeKey.h"
-#include <QDebug>
-#include <format/KeePass2.h>
 
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/Kdf.h"
+#include "format/KeePass2.h"
 #include "keys/ChallengeResponseKey.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
+
+#include <QDataStream>
+#include <QDebug>
 
 QUuid CompositeKey::UUID("76a7ae25-a542-4add-9849-7c06be945b94");
 
@@ -60,6 +64,11 @@ bool CompositeKey::isEmpty() const
 QByteArray CompositeKey::rawKey() const
 {
     return rawKey(nullptr);
+}
+
+void CompositeKey::setRawKey(const QByteArray& data)
+{
+    deserialize(data);
 }
 
 /**
@@ -186,4 +195,63 @@ void CompositeKey::addChallengeResponseKey(const QSharedPointer<ChallengeRespons
 const QList<QSharedPointer<ChallengeResponseKey>>& CompositeKey::challengeResponseKeys() const
 {
     return m_challengeResponseKeys;
+}
+
+QByteArray CompositeKey::serialize() const
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    // Write Composite Key UUID then each sub-key UUID and data
+    stream << uuid().toRfc4122();
+    for (auto const& key : m_keys) {
+        stream << key->uuid().toRfc4122() << key->serialize();
+    }
+    for (auto const& key : m_challengeResponseKeys) {
+        stream << key->uuid().toRfc4122() << key->serialize();
+    }
+
+    return data;
+}
+
+void CompositeKey::deserialize(const QByteArray& data)
+{
+    QByteArray uuidData;
+    QByteArray keyData;
+
+    QDataStream stream(data);
+    // Verify this is a valid composite key data stream
+    stream >> uuidData;
+    if (uuid().toRfc4122() != uuidData) {
+        return;
+    }
+
+    // Clear existing keys
+    m_keys.clear();
+    m_challengeResponseKeys.clear();
+
+    while (!stream.atEnd()) {
+        // Read the UUID first to construct the key
+        stream >> uuidData;
+        auto uuid = QUuid::fromRfc4122(uuidData);
+
+        if (uuid == ChallengeResponseKey::UUID) {
+            stream >> keyData;
+            auto key = QSharedPointer<ChallengeResponseKey>::create();
+            key->deserialize(keyData);
+            m_challengeResponseKeys.append(key);
+        } else if (uuid == PasswordKey::UUID) {
+            stream >> keyData;
+            auto key = QSharedPointer<PasswordKey>::create();
+            key->deserialize(keyData);
+            m_keys << key;
+        } else if (uuid == FileKey::UUID) {
+            stream >> keyData;
+            auto key = QSharedPointer<FileKey>::create();
+            key->deserialize(keyData);
+            m_keys << key;
+        } else {
+            // Unsupported key type, discard key data
+            stream >> keyData;
+        }
+    }
 }

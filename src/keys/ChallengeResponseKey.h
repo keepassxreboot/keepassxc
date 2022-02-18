@@ -29,9 +29,14 @@ public:
     ~ChallengeResponseKey() override = default;
 
     QByteArray rawKey() const override;
+    void setRawKey(const QByteArray&) override;
+    YubiKeySlot slotData() const;
 
     virtual bool challenge(const QByteArray& challenge);
     QString error() const;
+
+    QByteArray serialize() const override;
+    void deserialize(const QByteArray& data) override;
 
     static QUuid UUID;
 

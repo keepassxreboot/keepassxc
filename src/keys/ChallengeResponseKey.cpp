@@ -33,6 +33,16 @@ QByteArray ChallengeResponseKey::rawKey() const
     return QByteArray(m_key.data(), m_key.size());
 }
 
+void ChallengeResponseKey::setRawKey(const QByteArray&)
+{
+    // Nothing to do here
+}
+
+YubiKeySlot ChallengeResponseKey::slotData() const
+{
+    return m_keySlot;
+}
+
 QString ChallengeResponseKey::error() const
 {
     return m_error;
@@ -51,4 +61,22 @@ bool ChallengeResponseKey::challenge(const QByteArray& challenge)
     }
 
     return result == YubiKey::ChallengeResult::YCR_SUCCESS;
+}
+
+QByteArray ChallengeResponseKey::serialize() const
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << uuid().toRfc4122() << m_keySlot;
+    return data;
+}
+
+void ChallengeResponseKey::deserialize(const QByteArray& data)
+{
+    QDataStream stream(data);
+    QByteArray uuidData;
+    stream >> uuidData;
+    if (uuid().toRfc4122() == uuidData) {
+        stream >> m_keySlot;
+    }
 }

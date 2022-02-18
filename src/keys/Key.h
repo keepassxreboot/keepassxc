@@ -29,6 +29,9 @@ public:
     Q_DISABLE_COPY(Key);
     virtual ~Key() = default;
     virtual QByteArray rawKey() const = 0;
+    virtual void setRawKey(const QByteArray& data) = 0;
+    virtual QByteArray serialize() const = 0;
+    virtual void deserialize(const QByteArray& data) = 0;
     inline virtual QUuid uuid() const
     {
         return m_uuid;

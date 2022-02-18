@@ -45,10 +45,14 @@ public:
     bool load(QIODevice* device, QString* errorMsg = nullptr);
     bool load(const QString& fileName, QString* errorMsg = nullptr);
     QByteArray rawKey() const override;
+    void setRawKey(const QByteArray& data) override;
     Type type() const;
     static void createRandom(QIODevice* device, int size = 128);
     static void createXMLv2(QIODevice* device, int size = 32);
     static bool create(const QString& fileName, QString* errorMsg = nullptr);
+
+    QByteArray serialize() const override;
+    void deserialize(const QByteArray& data) override;
 
 private:
     static constexpr int SHA256_SIZE = 32;
@@ -60,6 +64,7 @@ private:
 
     Botan::secure_vector<char> m_key;
     Type m_type = None;
+    QString m_file;
 };
 
 #endif // KEEPASSX_FILEKEY_H
