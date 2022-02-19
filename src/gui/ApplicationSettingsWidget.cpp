@@ -260,6 +260,7 @@ void ApplicationSettingsWidget::loadSettings()
     showExpiredEntriesOnDatabaseUnlockToggled(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
 
     m_generalUi->autoTypeAskCheckBox->setChecked(config()->get(Config::Security_AutoTypeAsk).toBool());
+    m_generalUi->autoTypeRelockDatabaseCheckBox->setChecked(config()->get(Config::Security_RelockAutoType).toBool());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get(Config::GlobalAutoTypeKey).toInt());
@@ -268,6 +269,7 @@ void ApplicationSettingsWidget::loadSettings()
         if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
             m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
         }
+        m_generalUi->autoTypeRetypeTimeSpinBox->setValue(config()->get(Config::GlobalAutoTypeRetypeTime).toInt());
         m_generalUi->autoTypeShortcutWidget->setAttribute(Qt::WA_MacShowFocusRect, true);
         m_generalUi->autoTypeDelaySpinBox->setValue(config()->get(Config::AutoTypeDelay).toInt());
         m_generalUi->autoTypeStartDelaySpinBox->setValue(config()->get(Config::AutoTypeStartDelay).toInt());
@@ -297,7 +299,6 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get(Config::Security_LockDatabaseMinimize).toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(
         config()->get(Config::Security_LockDatabaseScreenLock).toBool());
-    m_secUi->relockDatabaseAutoTypeCheckBox->setChecked(config()->get(Config::Security_RelockAutoType).toBool());
     m_secUi->fallbackToSearch->setChecked(config()->get(Config::Security_IconDownloadFallback).toBool());
 
     m_secUi->passwordsHiddenCheckBox->setChecked(config()->get(Config::Security_PasswordsHidden).toBool());
@@ -392,11 +393,13 @@ void ApplicationSettingsWidget::saveSettings()
                   m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->value());
 
     config()->set(Config::Security_AutoTypeAsk, m_generalUi->autoTypeAskCheckBox->isChecked());
+    config()->set(Config::Security_RelockAutoType, m_generalUi->autoTypeRelockDatabaseCheckBox->isChecked());
 
     if (autoType()->isAvailable()) {
         config()->set(Config::GlobalAutoTypeKey, m_generalUi->autoTypeShortcutWidget->key());
         config()->set(Config::GlobalAutoTypeModifiers,
                       static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
+        config()->set(Config::GlobalAutoTypeRetypeTime, m_generalUi->autoTypeRetypeTimeSpinBox->value());
         config()->set(Config::AutoTypeDelay, m_generalUi->autoTypeDelaySpinBox->value());
         config()->set(Config::AutoTypeStartDelay, m_generalUi->autoTypeStartDelaySpinBox->value());
     }
@@ -410,7 +413,6 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_LockDatabaseIdleSeconds, m_secUi->lockDatabaseIdleSpinBox->value());
     config()->set(Config::Security_LockDatabaseMinimize, m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
     config()->set(Config::Security_LockDatabaseScreenLock, m_secUi->lockDatabaseOnScreenLockCheckBox->isChecked());
-    config()->set(Config::Security_RelockAutoType, m_secUi->relockDatabaseAutoTypeCheckBox->isChecked());
     config()->set(Config::Security_IconDownloadFallback, m_secUi->fallbackToSearch->isChecked());
 
     config()->set(Config::Security_PasswordsHidden, m_secUi->passwordsHiddenCheckBox->isChecked());

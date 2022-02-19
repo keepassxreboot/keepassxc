@@ -266,11 +266,14 @@
                   <property name="accessibleName">
                    <string>On database unlock, show entries that </string>
                   </property>
-                  <property name="prefix">
-                   <string>will expire within </string>
+                  <property name="specialValueText">
+                   <string>are expired</string>
                   </property>
                   <property name="suffix">
                    <string> days</string>
+                  </property>
+                  <property name="prefix">
+                   <string>will expire within </string>
                   </property>
                   <property name="minimum">
                    <number>0</number>
@@ -280,9 +283,6 @@
                   </property>
                   <property name="value">
                    <number>0</number>
-                  </property>
-                  <property name="specialValueText">
-                   <string>are expired</string>
                   </property>
                  </widget>
                 </item>
@@ -1021,6 +1021,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="autoTypeRelockDatabaseCheckBox">
+         <property name="text">
+          <string>Re-lock previously locked database after performing Auto-Type</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_4">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1045,57 +1052,32 @@
           <number>8</number>
          </property>
          <item row="2" column="0">
-          <widget class="QLabel" name="autoTypeDelayLabel">
+          <widget class="QLabel" name="autoTypeStartDelayLabel">
            <property name="text">
-            <string>Auto-Type typing delay:</string>
+            <string>Auto-Type start delay:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
            <property name="buddy">
-            <cstring>autoTypeDelaySpinBox</cstring>
+            <cstring>autoTypeStartDelaySpinBox</cstring>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         <item row="0" column="0">
+          <widget class="QLabel" name="autoTypeShortcutLabel">
+           <property name="text">
+            <string>Global Auto-Type shortcut:</string>
            </property>
-           <property name="accessibleName">
-            <string>Global auto-type shortcut</string>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>autoTypeShortcutWidget</cstring>
            </property>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QSpinBox" name="autoTypeDelaySpinBox">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="accessibleName">
-            <string>Auto-type character typing delay milliseconds</string>
-           </property>
-           <property name="suffix">
-            <string comment="Milliseconds"> ms</string>
-           </property>
-           <property name="prefix">
-            <string/>
-           </property>
-           <property name="maximum">
-            <number>1000</number>
-           </property>
-           <property name="value">
-            <number>25</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
           <widget class="QSpinBox" name="autoTypeStartDelaySpinBox">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1126,29 +1108,16 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="autoTypeShortcutLabel">
+         <item row="3" column="0">
+          <widget class="QLabel" name="autoTypeDelayLabel">
            <property name="text">
-            <string>Global Auto-Type shortcut:</string>
+            <string>Auto-Type typing delay:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
            <property name="buddy">
-            <cstring>autoTypeShortcutWidget</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="autoTypeStartDelayLabel">
-           <property name="text">
-            <string>Auto-Type start delay:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="buddy">
-            <cstring>autoTypeStartDelaySpinBox</cstring>
+            <cstring>autoTypeDelaySpinBox</cstring>
            </property>
           </widget>
          </item>
@@ -1164,6 +1133,67 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="accessibleName">
+            <string>Global auto-type shortcut</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="autoTypeDelaySpinBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="accessibleName">
+            <string>Auto-type character typing delay milliseconds</string>
+           </property>
+           <property name="suffix">
+            <string comment="Milliseconds"> ms</string>
+           </property>
+           <property name="prefix">
+            <string/>
+           </property>
+           <property name="maximum">
+            <number>1000</number>
+           </property>
+           <property name="value">
+            <number>25</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="autoTypeRetypeLabel">
+           <property name="text">
+            <string>Remember last typed entry for:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="autoTypeRetypeTimeSpinBox">
+           <property name="suffix">
+            <string> s</string>
+           </property>
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <number>60</number>
+           </property>
+           <property name="value">
+            <number>15</number>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

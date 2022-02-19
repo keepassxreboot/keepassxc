@@ -216,13 +216,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="relockDatabaseAutoTypeCheckBox">
-        <property name="text">
-         <string>Re-lock previously locked database after performing Auto-Type</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="passwordsRepeatVisibleCheckBox">
         <property name="text">
          <string>Require password repeat when it is visible</string>
@@ -320,7 +313,6 @@
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
   <tabstop>touchIDResetOnScreenLockCheckBox</tabstop>
   <tabstop>lockDatabaseMinimizeCheckBox</tabstop>
-  <tabstop>relockDatabaseAutoTypeCheckBox</tabstop>
   <tabstop>passwordsRepeatVisibleCheckBox</tabstop>
   <tabstop>passwordsHiddenCheckBox</tabstop>
   <tabstop>passwordShowDotsCheckBox</tabstop>

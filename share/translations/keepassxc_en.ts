@@ -476,6 +476,18 @@
         <source>will expire within </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source> s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation type="unfinished">Re-lock previously locked database after performing Auto-Type</translation>
+    </message>
+    <message>
+        <source>Remember last typed entry for:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -519,10 +531,6 @@
     <message>
         <source>Lock databases after minimizing the window</source>
         <translation>Lock databases after minimizing the window</translation>
-    </message>
-    <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Re-lock previously locked database after performing Auto-Type</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
