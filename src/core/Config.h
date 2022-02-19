@@ -60,6 +60,7 @@ public:
         AutoTypeHideExpiredEntry,
         GlobalAutoTypeKey,
         GlobalAutoTypeModifiers,
+        GlobalAutoTypeRetypeTime,
         FaviconDownloadTimeout,
         UpdateCheckMessageShown,
         UseTouchID,

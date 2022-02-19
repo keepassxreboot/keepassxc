@@ -21,6 +21,7 @@
 
 #include <QMutex>
 #include <QObject>
+#include <QTimer>
 #include <QWidget>
 
 #include "AutoTypeMatch.h"
@@ -61,6 +62,7 @@ signals:
     void globalAutoTypeTriggered(const QString& search);
     void autotypePerformed();
     void autotypeRejected();
+    void autotypeRetypeTimeout();
 
 private slots:
     void startGlobalAutoType(const QString& search);
@@ -98,7 +100,7 @@ private:
     WindowState m_windowState;
     WId m_windowForGlobal;
     AutoTypeMatch m_lastMatch;
-    qint64 m_lastMatchTime;
+    QTimer m_lastMatchRetypeTimer;
 
     Q_DISABLE_COPY(AutoType)
 };
