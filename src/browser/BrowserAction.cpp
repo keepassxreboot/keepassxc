@@ -27,10 +27,11 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QLocalSocket>
 
 const int BrowserAction::MaxUrlLength = 256;
 
-QJsonObject BrowserAction::processClientMessage(const QJsonObject& json)
+QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJsonObject& json)
 {
     if (json.isEmpty()) {
         return getErrorReply("", ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED);
@@ -56,13 +57,13 @@ QJsonObject BrowserAction::processClientMessage(const QJsonObject& json)
         }
     }
 
-    return handleAction(json);
+    return handleAction(socket, json);
 }
 
 // Private functions
 ///////////////////////
 
-QJsonObject BrowserAction::handleAction(const QJsonObject& json)
+QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject& json)
 {
     QString action = json.value("action").toString();
 
@@ -77,7 +78,7 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
     } else if (action.compare("get-logins") == 0) {
         return handleGetLogins(json, action);
     } else if (action.compare("generate-password") == 0) {
-        return handleGeneratePassword(json, action);
+        return handleGeneratePassword(socket, json, action);
     } else if (action.compare("set-login") == 0) {
         return handleSetLogin(json, action);
     } else if (action.compare("lock-database") == 0) {
@@ -279,20 +280,24 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     return buildResponse(action, message, newNonce);
 }
 
-QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const QString& action)
+QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action)
 {
     auto errorMessage = getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
     auto nonce = json.value("nonce").toString();
     auto incrementedNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    // Do not allow multiple requests from the same client. Response with an empty password.
-    if (browserService()->isPasswordGeneratorRequested()) {
-        QJsonObject message = browserMessageBuilder()->buildMessage(incrementedNonce);
-        message["password"] = "";
-        return buildResponse("generate-password", message, incrementedNonce);
+    const QString encrypted = json.value("message").toString();
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    browserService()->showPasswordGenerator(incrementedNonce, m_clientPublicKey, m_secretKey);
+    // Do not allow multiple requests from the same client. Response with an empty password.
+    if (browserService()->isPasswordGeneratorRequested()) {
+        return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+    }
+
+    browserService()->showPasswordGenerator(socket, incrementedNonce, m_clientPublicKey, m_secretKey);
     return QJsonObject();
 }
 

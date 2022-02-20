@@ -21,6 +21,7 @@
 #include <QString>
 
 class QJsonObject;
+class QLocalSocket;
 
 class BrowserAction
 {
@@ -28,16 +29,16 @@ public:
     explicit BrowserAction() = default;
     ~BrowserAction() = default;
 
-    QJsonObject processClientMessage(const QJsonObject& json);
+    QJsonObject processClientMessage(QLocalSocket* socket, const QJsonObject& json);
 
 private:
-    QJsonObject handleAction(const QJsonObject& json);
+    QJsonObject handleAction(QLocalSocket* socket, const QJsonObject& json);
     QJsonObject handleChangePublicKeys(const QJsonObject& json, const QString& action);
     QJsonObject handleGetDatabaseHash(const QJsonObject& json, const QString& action);
     QJsonObject handleAssociate(const QJsonObject& json, const QString& action);
     QJsonObject handleTestAssociate(const QJsonObject& json, const QString& action);
     QJsonObject handleGetLogins(const QJsonObject& json, const QString& action);
-    QJsonObject handleGeneratePassword(const QJsonObject& json, const QString& action);
+    QJsonObject handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action);
     QJsonObject handleSetLogin(const QJsonObject& json, const QString& action);
     QJsonObject handleLockDatabase(const QJsonObject& json, const QString& action);
     QJsonObject handleGetDatabaseGroups(const QJsonObject& json, const QString& action);
