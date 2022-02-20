@@ -292,9 +292,18 @@ QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJ
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    // Do not allow multiple requests from the same client. Response with an empty password.
+    auto requestId = decrypted.value("requestID").toString();
+
+    // Do not allow multiple requests from the same client
     if (browserService()->isPasswordGeneratorRequested()) {
-        return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+        auto errorReply = getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+
+        // Append requestID to the response if found
+        if (!requestId.isEmpty()) {
+            errorReply["requestID"] = requestId;
+        }
+
+        return errorReply;
     }
 
     browserService()->showPasswordGenerator(socket, incrementedNonce, m_clientPublicKey, m_secretKey);
