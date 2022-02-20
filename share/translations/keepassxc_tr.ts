@@ -655,6 +655,10 @@
         <source>Default sequence</source>
         <translation>Varsayılan sıra</translation>
     </message>
+    <message>
+        <source>(empty)</source>
+        <translation>(boş)</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
@@ -5305,10 +5309,6 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
     <message>
         <source>Show Toolbar</source>
         <translation>Araç çubuğu görüntülensin</translation>
-    </message>
-    <message>
-        <source>Show Groups Panel</source>
-        <translation>Gruplar panosu görüntülensin</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
