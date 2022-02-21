@@ -474,6 +474,18 @@
         <source>will expire within </source>
         <translation>geçerlilik süresi dolacak</translation>
     </message>
+    <message>
+        <source> s</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation>Otomatik yazma sonrasında önceden kilitli veritabanı yeniden kilitlensin</translation>
+    </message>
+    <message>
+        <source>Remember last typed entry for:</source>
+        <translation>Şunun için son yazılmış kayıt hatırlansın:</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -517,10 +529,6 @@
     <message>
         <source>Lock databases after minimizing the window</source>
         <translation>Simge durumuna küçültüldüğünde veritabanları kilitlensin</translation>
-    </message>
-    <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Otomatik yazma sonrasında önceden kilitli veritabanı yeniden kilitlensin</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
@@ -654,6 +662,10 @@
     <message>
         <source>Default sequence</source>
         <translation>Varsayılan sıra</translation>
+    </message>
+    <message>
+        <source>(empty)</source>
+        <translation>(boş)</translation>
     </message>
 </context>
 <context>
@@ -5305,10 +5317,6 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
     <message>
         <source>Show Toolbar</source>
         <translation>Araç çubuğu görüntülensin</translation>
-    </message>
-    <message>
-        <source>Show Groups Panel</source>
-        <translation>Gruplar panosu görüntülensin</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
