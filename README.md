@@ -35,7 +35,7 @@ KeePassXC has numerous features for novice and power users alike. Our goal is to
 * Command line interface (keepassxc-cli)
 * Auto-Open databases
 * KeeShare shared databases (import, export, and synchronize)
-* SSH Agent
+* SSH Agent integration
 * FreeDesktop.org Secret Service (replace Gnome keyring, etc.)
 * Additional encryption choices: Twofish and ChaCha20
 
