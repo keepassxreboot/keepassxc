@@ -36,13 +36,14 @@
 class AdaptiveIconEngine : public QIconEngine
 {
 public:
-    explicit AdaptiveIconEngine(QIcon baseIcon);
+    explicit AdaptiveIconEngine(QIcon baseIcon, QColor overrideColor = {});
     void paint(QPainter* painter, const QRect& rect, QIcon::Mode mode, QIcon::State state) override;
     QPixmap pixmap(const QSize& size, QIcon::Mode mode, QIcon::State state) override;
     QIconEngine* clone() const override;
 
 private:
     QIcon m_baseIcon;
+    QColor m_overrideColor;
 };
 
 Icons* Icons::m_instance(nullptr);
@@ -113,9 +114,10 @@ QIcon Icons::trayIconUnlocked()
     return trayIcon("unlocked");
 }
 
-AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon)
+AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon, QColor overrideColor)
     : QIconEngine()
     , m_baseIcon(std::move(baseIcon))
+    , m_overrideColor(overrideColor)
 {
 }
 
@@ -133,7 +135,10 @@ void AdaptiveIconEngine::paint(QPainter* painter, const QRect& rect, QIcon::Mode
 
     m_baseIcon.paint(&p, img.rect(), Qt::AlignCenter, mode, state);
 
-    if (getMainWindow()) {
+    if (m_overrideColor.isValid()) {
+        p.setCompositionMode(QPainter::CompositionMode_SourceIn);
+        p.fillRect(img.rect(), m_overrideColor);
+    } else if (getMainWindow()) {
         QPalette palette = getMainWindow()->palette();
         p.setCompositionMode(QPainter::CompositionMode_SourceIn);
 
@@ -188,7 +193,7 @@ QIcon Icons::icon(const QString& name, bool recolor, const QColor& overrideColor
 
     icon = QIcon::fromTheme(name);
     if (recolor) {
-        icon = QIcon(new AdaptiveIconEngine(icon));
+        icon = QIcon(new AdaptiveIconEngine(icon, overrideColor));
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
         icon.setIsMask(true);
 #endif

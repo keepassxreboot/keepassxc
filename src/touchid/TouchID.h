@@ -32,6 +32,8 @@ public:
 
     bool getKey(const QString& databasePath, QByteArray& passwordKey) const;
 
+    bool containsKey(const QString& databasePath) const;
+
     bool isAvailable();
 
     bool authenticate(const QString& message = "") const;

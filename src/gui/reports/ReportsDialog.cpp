@@ -121,14 +121,6 @@ void ReportsDialog::addPage(QSharedPointer<IReportsPage> page)
 
 void ReportsDialog::reject()
 {
-    for (const ExtraPage& extraPage : asConst(m_extraPages)) {
-        extraPage.saveSettings();
-    }
-
-#ifdef WITH_XC_TOUCHID
-    TouchID::getInstance().reset(m_db ? m_db->filePath() : "");
-#endif
-
     emit editFinished(true);
 }
 

@@ -39,6 +39,7 @@ public:
         Twofish_CBC,
         ChaCha20,
         Salsa20,
+        Aes256_GCM,
         InvalidMode = -1,
     };
 

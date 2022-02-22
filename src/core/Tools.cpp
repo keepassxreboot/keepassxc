@@ -99,8 +99,8 @@ namespace Tools
 #ifdef WITH_XC_YUBIKEY
         extensions += "\n- " + QObject::tr("YubiKey");
 #endif
-#ifdef WITH_XC_TOUCHID
-        extensions += "\n- " + QObject::tr("TouchID");
+#if defined(Q_OS_MACOS) || defined(Q_CC_MSVC)
+        extensions += "\n- " + QObject::tr("Quick Unlock");
 #endif
 #ifdef WITH_XC_FDOSECRETS
         extensions += "\n- " + QObject::tr("Secret Service Integration");

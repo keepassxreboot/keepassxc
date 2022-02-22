@@ -209,7 +209,6 @@ QByteArray CompositeKey::serialize() const
     for (auto const& key : m_challengeResponseKeys) {
         stream << key->uuid().toRfc4122() << key->serialize();
     }
-
     return data;
 }
 

@@ -57,11 +57,11 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
     }
 
     // generate random AES 256bit key and IV
-    QByteArray randomKey = randomGen()->randomArray(32);
-    QByteArray randomIV = randomGen()->randomArray(16);
+    QByteArray randomKey = randomGen()->randomArray(SymmetricCipher::keySize(SymmetricCipher::Aes256_GCM));
+    QByteArray randomIV = randomGen()->randomArray(SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM));
 
     SymmetricCipher aes256Encrypt;
-    if (!aes256Encrypt.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Encrypt, randomKey, randomIV)) {
+    if (!aes256Encrypt.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, randomKey, randomIV)) {
         debug("TouchID::storeKey - Error initializing encryption: %s",
               aes256Encrypt.errorString().toUtf8().constData());
         return false;
@@ -69,8 +69,9 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
 
     // encrypt and keep result in memory
     QByteArray encryptedMasterKey = passwordKey;
-    if (!aes256Encrypt.process(encryptedMasterKey)) {
+    if (!aes256Encrypt.finish(encryptedMasterKey)) {
         debug("TouchID::storeKey - Error encrypting: %s", aes256Encrypt.errorString().toUtf8().constData());
+        debug(aes256Encrypt.errorString().toUtf8().constData());
         return false;
     }
 
@@ -166,7 +167,7 @@ bool TouchID::getKey(const QString& databasePath, QByteArray& passwordKey) const
     }
 
     // checks if encrypted PasswordKey is available and is stored for the given database
-    if (!this->m_encryptedMasterKeys.contains(databasePath)) {
+    if (!containsKey(databasePath)) {
         debug("TouchID::getKey - No stored key found");
         return false;
     }
@@ -205,23 +206,29 @@ bool TouchID::getKey(const QString& databasePath, QByteArray& passwordKey) const
     CFRelease(valueData);
 
     // extract AES key and IV from data bytes
-    QByteArray key = dataBytes.left(32);
-    QByteArray iv = dataBytes.right(16);
+    QByteArray key = dataBytes.left(SymmetricCipher::keySize(SymmetricCipher::Aes256_GCM));
+    QByteArray iv = dataBytes.right(SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM));
 
     SymmetricCipher aes256Decrypt;
-    if (!aes256Decrypt.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Decrypt, key, iv)) {
+    if (!aes256Decrypt.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Decrypt, key, iv)) {
         debug("TouchID::getKey - Error initializing decryption: %s", aes256Decrypt.errorString().toUtf8().constData());
         return false;
     }
 
     // decrypt PasswordKey from memory using AES
     passwordKey = m_encryptedMasterKeys[databasePath];
-    if (!aes256Decrypt.process(passwordKey)) {
+    if (!aes256Decrypt.finish(passwordKey)) {
+        passwordKey.clear();
         debug("TouchID::getKey - Error decryption: %s", aes256Decrypt.errorString().toUtf8().constData());
         return false;
     }
 
     return true;
+}
+
+bool TouchID::containsKey(const QString& dbPath) const
+{
+    return m_encryptedMasterKeys.contains(dbPath);
 }
 
 /**
