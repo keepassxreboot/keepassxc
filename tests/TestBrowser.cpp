@@ -17,6 +17,7 @@
 
 #include "TestBrowser.h"
 
+#include "browser/BrowserMessageBuilder.h"
 #include "browser/BrowserSettings.h"
 #include "core/Group.h"
 #include "core/Tools.h"
@@ -61,7 +62,7 @@ void TestBrowser::testChangePublicKeys()
     json["publicKey"] = PUBLICKEY;
     json["nonce"] = NONCE;
 
-    auto response = m_browserAction->processClientMessage(json);
+    auto response = m_browserAction->processClientMessage(nullptr, json);
     QCOMPARE(response["action"].toString(), QString("change-public-keys"));
     QCOMPARE(response["publicKey"].toString() == PUBLICKEY, false);
     QCOMPARE(response["success"].toString(), TRUE_STR);
@@ -75,7 +76,7 @@ void TestBrowser::testEncryptMessage()
     m_browserAction->m_publicKey = SERVERPUBLICKEY;
     m_browserAction->m_secretKey = SERVERSECRETKEY;
     m_browserAction->m_clientPublicKey = PUBLICKEY;
-    auto encrypted = m_browserAction->encryptMessage(message, NONCE);
+    auto encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
 
     QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
 }
@@ -86,7 +87,7 @@ void TestBrowser::testDecryptMessage()
     m_browserAction->m_publicKey = SERVERPUBLICKEY;
     m_browserAction->m_secretKey = SERVERSECRETKEY;
     m_browserAction->m_clientPublicKey = PUBLICKEY;
-    auto decrypted = m_browserAction->decryptMessage(message, NONCE);
+    auto decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
 
     QCOMPARE(decrypted["action"].toString(), QString("test-action"));
 }
@@ -99,13 +100,13 @@ void TestBrowser::testGetBase64FromKey()
         pk[i] = i;
     }
 
-    auto response = m_browserAction->getBase64FromKey(pk, crypto_box_PUBLICKEYBYTES);
+    auto response = browserMessageBuilder()->getBase64FromKey(pk, crypto_box_PUBLICKEYBYTES);
     QCOMPARE(response, QString("AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8="));
 }
 
 void TestBrowser::testIncrementNonce()
 {
-    auto result = m_browserAction->incrementNonce(NONCE);
+    auto result = browserMessageBuilder()->incrementNonce(NONCE);
     QCOMPARE(result, QString("zRKdvTjL5bgWaKMCTut/8soM/uoMrFoZ"));
 }
 

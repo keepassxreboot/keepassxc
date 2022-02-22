@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,65 +16,22 @@
  */
 
 #include "BrowserAction.h"
-
+#include "BrowserMessageBuilder.h"
 #include "BrowserService.h"
 #include "BrowserSettings.h"
 #include "BrowserShared.h"
 #include "config-keepassx.h"
 #include "core/Global.h"
 #include "core/Tools.h"
-#include "gui/PasswordGeneratorWidget.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-
-#include <botan/sodium.h>
-
-using namespace Botan::Sodium;
-
-namespace
-{
-    enum
-    {
-        ERROR_KEEPASS_DATABASE_NOT_OPENED = 1,
-        ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED = 2,
-        ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED = 3,
-        ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE = 4,
-        ERROR_KEEPASS_TIMEOUT_OR_NOT_CONNECTED = 5,
-        ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED = 6,
-        ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE = 7,
-        ERROR_KEEPASS_ASSOCIATION_FAILED = 8,
-        ERROR_KEEPASS_KEY_CHANGE_FAILED = 9,
-        ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED = 10,
-        ERROR_KEEPASS_NO_SAVED_DATABASES_FOUND = 11,
-        ERROR_KEEPASS_INCORRECT_ACTION = 12,
-        ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED = 13,
-        ERROR_KEEPASS_NO_URL_PROVIDED = 14,
-        ERROR_KEEPASS_NO_LOGINS_FOUND = 15,
-        ERROR_KEEPASS_NO_GROUPS_FOUND = 16,
-        ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP = 17,
-        ERROR_KEEPASS_NO_VALID_UUID_PROVIDED = 18
-    };
-}
+#include <QLocalSocket>
 
 const int BrowserAction::MaxUrlLength = 256;
 
-BrowserAction::BrowserAction()
-{
-    QObject::connect(browserService(),
-                     &BrowserService::passwordGenerated,
-                     browserService(),
-                     [=](const QString& password, const QString& nonce) {
-                         auto newNonce = incrementNonce(nonce);
-                         QJsonObject message = buildMessage(newNonce);
-                         message["password"] = password;
-
-                         browserService()->sendPassword(buildResponse("generate-password", message, newNonce));
-                     });
-}
-
-QJsonObject BrowserAction::processClientMessage(const QJsonObject& json)
+QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJsonObject& json)
 {
     if (json.isEmpty()) {
         return getErrorReply("", ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED);
@@ -100,13 +57,13 @@ QJsonObject BrowserAction::processClientMessage(const QJsonObject& json)
         }
     }
 
-    return handleAction(json);
+    return handleAction(socket, json);
 }
 
 // Private functions
 ///////////////////////
 
-QJsonObject BrowserAction::handleAction(const QJsonObject& json)
+QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject& json)
 {
     QString action = json.value("action").toString();
 
@@ -121,7 +78,7 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
     } else if (action.compare("get-logins") == 0) {
         return handleGetLogins(json, action);
     } else if (action.compare("generate-password") == 0) {
-        return handleGeneratePassword(json, action);
+        return handleGeneratePassword(socket, json, action);
     } else if (action.compare("set-login") == 0) {
         return handleSetLogin(json, action);
     } else if (action.compare("lock-database") == 0) {
@@ -152,23 +109,18 @@ QJsonObject BrowserAction::handleChangePublicKeys(const QJsonObject& json, const
     }
 
     m_associated = false;
-    unsigned char pk[crypto_box_PUBLICKEYBYTES];
-    unsigned char sk[crypto_box_SECRETKEYBYTES];
-    crypto_box_keypair(pk, sk);
-
-    const QString publicKey = getBase64FromKey(pk, crypto_box_PUBLICKEYBYTES);
-    const QString secretKey = getBase64FromKey(sk, crypto_box_SECRETKEYBYTES);
-    if (publicKey.isEmpty() || secretKey.isEmpty()) {
+    auto keyPair = browserMessageBuilder()->getKeyPair();
+    if (keyPair.first.isEmpty() || keyPair.second.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED);
     }
 
     m_clientPublicKey = clientPublicKey;
-    m_publicKey = publicKey;
-    m_secretKey = secretKey;
+    m_publicKey = keyPair.first;
+    m_secretKey = keyPair.second;
 
-    QJsonObject response = buildMessage(incrementNonce(nonce));
+    QJsonObject response = browserMessageBuilder()->buildMessage(browserMessageBuilder()->incrementNonce(nonce));
     response["action"] = action;
-    response["publicKey"] = publicKey;
+    response["publicKey"] = keyPair.first;
 
     return response;
 }
@@ -190,9 +142,9 @@ QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const 
 
     QString command = decrypted.value("action").toString();
     if (!command.isEmpty() && command.compare("get-databasehash") == 0) {
-        const QString newNonce = incrementNonce(nonce);
+        const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-        QJsonObject message = buildMessage(newNonce);
+        QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
         message["hash"] = hash;
 
         // Update a legacy database hash if found
@@ -236,9 +188,9 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
         }
 
         m_associated = true;
-        const QString newNonce = incrementNonce(nonce);
+        const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-        QJsonObject message = buildMessage(newNonce);
+        QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
         message["hash"] = hash;
         message["id"] = id;
         return buildResponse(action, message, newNonce);
@@ -270,9 +222,9 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
     }
 
     m_associated = true;
-    const QString newNonce = incrementNonce(nonce);
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    QJsonObject message = buildMessage(newNonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
     message["hash"] = hash;
     message["id"] = id;
 
@@ -317,9 +269,9 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    const QString newNonce = incrementNonce(nonce);
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    QJsonObject message = buildMessage(newNonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
     message["count"] = users.count();
     message["entries"] = users;
     message["hash"] = hash;
@@ -328,12 +280,33 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     return buildResponse(action, message, newNonce);
 }
 
-QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const QString& action)
+QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action)
 {
     auto errorMessage = getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
     auto nonce = json.value("nonce").toString();
+    auto incrementedNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    browserService()->showPasswordGenerator(errorMessage, nonce);
+    const QString encrypted = json.value("message").toString();
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    auto requestId = decrypted.value("requestID").toString();
+
+    // Do not allow multiple requests from the same client
+    if (browserService()->isPasswordGeneratorRequested()) {
+        auto errorReply = getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+
+        // Append requestID to the response if found
+        if (!requestId.isEmpty()) {
+            errorReply["requestID"] = requestId;
+        }
+
+        return errorReply;
+    }
+
+    browserService()->showPasswordGenerator(socket, incrementedNonce, m_clientPublicKey, m_secretKey);
     return QJsonObject();
 }
 
@@ -379,9 +352,9 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
         result = browserService()->updateEntry(id, uuid, login, password, url, submitUrl);
     }
 
-    const QString newNonce = incrementNonce(nonce);
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    QJsonObject message = buildMessage(newNonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
     message["count"] = QJsonValue::Null;
     message["entries"] = QJsonValue::Null;
     message["error"] = result ? QStringLiteral("success") : QStringLiteral("error");
@@ -409,8 +382,8 @@ QJsonObject BrowserAction::handleLockDatabase(const QJsonObject& json, const QSt
     if (!command.isEmpty() && command.compare("lock-database") == 0) {
         browserService()->lockDatabase();
 
-        const QString newNonce = incrementNonce(nonce);
-        QJsonObject message = buildMessage(newNonce);
+        const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
+        QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
 
         return buildResponse(action, message, newNonce);
     }
@@ -443,9 +416,9 @@ QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, cons
         return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
     }
 
-    const QString newNonce = incrementNonce(nonce);
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    QJsonObject message = buildMessage(newNonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
     message["groups"] = groups;
 
     return buildResponse(action, message, newNonce);
@@ -477,9 +450,9 @@ QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const Q
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP);
     }
 
-    const QString newNonce = incrementNonce(nonce);
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    QJsonObject message = buildMessage(newNonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
     message["name"] = newGroup["name"];
     message["uuid"] = newGroup["uuid"];
 
@@ -512,9 +485,9 @@ QJsonObject BrowserAction::handleGetTotp(const QJsonObject& json, const QString&
 
     // Get the current TOTP
     const auto totp = browserService()->getCurrentTotp(uuid);
-    const QString newNonce = incrementNonce(nonce);
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    QJsonObject message = buildMessage(newNonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
     message["totp"] = totp;
 
     return buildResponse(action, message, newNonce);
@@ -546,8 +519,8 @@ QJsonObject BrowserAction::handleDeleteEntry(const QJsonObject& json, const QStr
 
     const auto result = browserService()->deleteEntry(uuid);
 
-    const QString newNonce = incrementNonce(nonce);
-    QJsonObject message = buildMessage(newNonce);
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
     message["success"] = result ? TRUE_STR : FALSE_STR;
 
     return buildResponse(action, message, newNonce);
@@ -575,202 +548,22 @@ QJsonObject BrowserAction::handleGlobalAutoType(const QJsonObject& json, const Q
 
     browserService()->requestGlobalAutoType(topLevelDomain);
 
-    const QString newNonce = incrementNonce(nonce);
-    QJsonObject message = buildMessage(newNonce);
+    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
     return buildResponse(action, message, newNonce);
-}
-
-QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorCode) const
-{
-    QJsonObject response;
-    response["action"] = action;
-    response["errorCode"] = QString::number(errorCode);
-    response["error"] = getErrorMessage(errorCode);
-    return response;
-}
-
-QJsonObject BrowserAction::buildMessage(const QString& nonce) const
-{
-    QJsonObject message;
-    message["version"] = KEEPASSXC_VERSION;
-    message["success"] = TRUE_STR;
-    message["nonce"] = nonce;
-    return message;
-}
-
-QJsonObject BrowserAction::buildResponse(const QString& action, const QJsonObject& message, const QString& nonce)
-{
-    QJsonObject response;
-    QString encryptedMessage = encryptMessage(message, nonce);
-    if (encryptedMessage.isEmpty()) {
-        return getErrorReply(action, ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE);
-    }
-
-    response["action"] = action;
-    response["message"] = encryptedMessage;
-    response["nonce"] = nonce;
-    return response;
-}
-
-QString BrowserAction::getErrorMessage(const int errorCode) const
-{
-    switch (errorCode) {
-    case ERROR_KEEPASS_DATABASE_NOT_OPENED:
-        return QObject::tr("Database not opened");
-    case ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED:
-        return QObject::tr("Database hash not available");
-    case ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED:
-        return QObject::tr("Client public key not received");
-    case ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE:
-        return QObject::tr("Cannot decrypt message");
-    case ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED:
-        return QObject::tr("Action cancelled or denied");
-    case ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE:
-        return QObject::tr("Message encryption failed.");
-    case ERROR_KEEPASS_ASSOCIATION_FAILED:
-        return QObject::tr("KeePassXC association failed, try again");
-    case ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED:
-        return QObject::tr("Encryption key is not recognized");
-    case ERROR_KEEPASS_INCORRECT_ACTION:
-        return QObject::tr("Incorrect action");
-    case ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED:
-        return QObject::tr("Empty message received");
-    case ERROR_KEEPASS_NO_URL_PROVIDED:
-        return QObject::tr("No URL provided");
-    case ERROR_KEEPASS_NO_LOGINS_FOUND:
-        return QObject::tr("No logins found");
-    case ERROR_KEEPASS_NO_GROUPS_FOUND:
-        return QObject::tr("No groups found");
-    case ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP:
-        return QObject::tr("Cannot create new group");
-    case ERROR_KEEPASS_NO_VALID_UUID_PROVIDED:
-        return QObject::tr("No valid UUID provided");
-    default:
-        return QObject::tr("Unknown error");
-    }
-}
-
-QString BrowserAction::encryptMessage(const QJsonObject& message, const QString& nonce)
-{
-    if (message.isEmpty() || nonce.isEmpty()) {
-        return QString();
-    }
-
-    const QString reply(QJsonDocument(message).toJson());
-    if (!reply.isEmpty()) {
-        return encrypt(reply, nonce);
-    }
-
-    return QString();
 }
 
 QJsonObject BrowserAction::decryptMessage(const QString& message, const QString& nonce)
 {
-    if (message.isEmpty() || nonce.isEmpty()) {
-        return QJsonObject();
-    }
-
-    QByteArray ba = decrypt(message, nonce);
-    if (ba.isEmpty()) {
-        return QJsonObject();
-    }
-
-    return getJsonObject(ba);
+    return browserMessageBuilder()->decryptMessage(message, nonce, m_clientPublicKey, m_secretKey);
 }
 
-QString BrowserAction::encrypt(const QString& plaintext, const QString& nonce)
+QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorCode) const
 {
-    const QByteArray ma = plaintext.toUtf8();
-    const QByteArray na = base64Decode(nonce);
-    const QByteArray ca = base64Decode(m_clientPublicKey);
-    const QByteArray sa = base64Decode(m_secretKey);
-
-    std::vector<unsigned char> m(ma.cbegin(), ma.cend());
-    std::vector<unsigned char> n(na.cbegin(), na.cend());
-    std::vector<unsigned char> ck(ca.cbegin(), ca.cend());
-    std::vector<unsigned char> sk(sa.cbegin(), sa.cend());
-
-    std::vector<unsigned char> e;
-    e.resize(BrowserShared::NATIVEMSG_MAX_LENGTH);
-
-    if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
-        return QString();
-    }
-
-    if (crypto_box_easy(e.data(), m.data(), m.size(), n.data(), ck.data(), sk.data()) == 0) {
-        QByteArray res = getQByteArray(e.data(), (crypto_box_MACBYTES + ma.length()));
-        return res.toBase64();
-    }
-
-    return QString();
+    return browserMessageBuilder()->getErrorReply(action, errorCode);
 }
 
-QByteArray BrowserAction::decrypt(const QString& encrypted, const QString& nonce)
+QJsonObject BrowserAction::buildResponse(const QString& action, const QJsonObject& message, const QString& nonce)
 {
-    const QByteArray ma = base64Decode(encrypted);
-    const QByteArray na = base64Decode(nonce);
-    const QByteArray ca = base64Decode(m_clientPublicKey);
-    const QByteArray sa = base64Decode(m_secretKey);
-
-    std::vector<unsigned char> m(ma.cbegin(), ma.cend());
-    std::vector<unsigned char> n(na.cbegin(), na.cend());
-    std::vector<unsigned char> ck(ca.cbegin(), ca.cend());
-    std::vector<unsigned char> sk(sa.cbegin(), sa.cend());
-
-    std::vector<unsigned char> d;
-    d.resize(BrowserShared::NATIVEMSG_MAX_LENGTH);
-
-    if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
-        return QByteArray();
-    }
-
-    if (crypto_box_open_easy(d.data(), m.data(), ma.length(), n.data(), ck.data(), sk.data()) == 0) {
-        return getQByteArray(d.data(), std::char_traits<char>::length(reinterpret_cast<const char*>(d.data())));
-    }
-
-    return QByteArray();
-}
-
-QString BrowserAction::getBase64FromKey(const uchar* array, const uint len)
-{
-    return getQByteArray(array, len).toBase64();
-}
-
-QByteArray BrowserAction::getQByteArray(const uchar* array, const uint len) const
-{
-    QByteArray qba;
-    qba.reserve(len);
-    for (uint i = 0; i < len; ++i) {
-        qba.append(static_cast<char>(array[i]));
-    }
-    return qba;
-}
-
-QJsonObject BrowserAction::getJsonObject(const uchar* pArray, const uint len) const
-{
-    QByteArray arr = getQByteArray(pArray, len);
-    QJsonParseError err;
-    QJsonDocument doc(QJsonDocument::fromJson(arr, &err));
-    return doc.object();
-}
-
-QJsonObject BrowserAction::getJsonObject(const QByteArray& ba) const
-{
-    QJsonParseError err;
-    QJsonDocument doc(QJsonDocument::fromJson(ba, &err));
-    return doc.object();
-}
-
-QByteArray BrowserAction::base64Decode(const QString& str)
-{
-    return QByteArray::fromBase64(str.toUtf8());
-}
-
-QString BrowserAction::incrementNonce(const QString& nonce)
-{
-    const QByteArray nonceArray = base64Decode(nonce);
-    std::vector<unsigned char> n(nonceArray.cbegin(), nonceArray.cend());
-
-    sodium_increment(n.data(), n.size());
-    return getQByteArray(n.data(), n.size()).toBase64();
+    return browserMessageBuilder()->buildResponse(action, message, nonce, m_clientPublicKey, m_secretKey);
 }
