@@ -37,8 +37,8 @@ EntryPreviewWidget TagsEdit
     border: none;
 }
 
-DatabaseOpenWidget #loginFrame {
-    border: 2px groove palette(mid);
+DatabaseOpenWidget #centralStack {
+    border: 1px solid palette(mid);
     background: palette(light);
 }
 

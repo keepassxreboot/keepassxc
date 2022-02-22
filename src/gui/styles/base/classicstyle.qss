@@ -1,4 +1,4 @@
-DatabaseOpenWidget #loginFrame {
+DatabaseOpenWidget #centralStack {
     border: 2px groove palette(mid);
     background: palette(light);
 }

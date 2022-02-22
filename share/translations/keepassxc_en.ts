@@ -509,24 +509,12 @@
         <translation>Lock databases after inactivity of</translation>
     </message>
     <message>
-        <source> min</source>
-        <translation> min</translation>
-    </message>
-    <message>
-        <source>Forget TouchID after inactivity of</source>
-        <translation>Forget TouchID after inactivity of</translation>
-    </message>
-    <message>
         <source>Convenience</source>
         <translation>Convenience</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
         <translation>Lock databases when session is locked or lid is closed</translation>
-    </message>
-    <message>
-        <source>Forget TouchID when session is locked or lid is closed</source>
-        <translation>Forget TouchID when session is locked or lid is closed</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
@@ -550,10 +538,6 @@
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Touch ID inactivity reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -587,6 +571,10 @@
     </message>
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1475,10 +1463,6 @@ Backup database located at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unlock failed and no password given</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1499,10 +1483,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Key file help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1575,6 +1555,26 @@ We recommend you update your KeePassXC installation.</source>
     </message>
     <message>
         <source>Database unlock canceled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlock Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Touch ID</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6838,10 +6838,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>TouchID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7768,6 +7764,18 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Browser Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Unlock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to create Windows Hello credential.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to sign challenge using Windows Hello.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8759,6 +8767,25 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Could not register global shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WindowsHello</name>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

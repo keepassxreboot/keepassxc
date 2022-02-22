@@ -63,7 +63,6 @@ public:
         GlobalAutoTypeRetypeTime,
         FaviconDownloadTimeout,
         UpdateCheckMessageShown,
-        UseTouchID,
 
         LastDatabases,
         LastKeyFiles,
@@ -120,11 +119,9 @@ public:
         Security_HidePasswordPreviewPanel,
         Security_AutoTypeAsk,
         Security_IconDownloadFallback,
-        Security_ResetTouchId,
-        Security_ResetTouchIdTimeout,
-        Security_ResetTouchIdScreenlock,
         Security_NoConfirmMoveEntryToRecycleBin,
         Security_EnableCopyOnDoubleClick,
+        Security_QuickUnlock,
 
         Browser_Enabled,
         Browser_ShowNotification,

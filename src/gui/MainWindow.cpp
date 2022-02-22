@@ -44,12 +44,6 @@
 #include "gui/SearchWidget.h"
 #include "gui/osutils/OSUtils.h"
 
-#ifdef Q_OS_MACOS
-#ifdef WITH_XC_TOUCHID
-#include "touchid/TouchID.h"
-#endif
-#endif
-
 #ifdef WITH_XC_UPDATECHECK
 #include "gui/UpdateCheckDialog.h"
 #include "updatecheck/UpdateChecker.h"
@@ -259,10 +253,6 @@ MainWindow::MainWindow()
 
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
-#ifdef WITH_XC_TOUCHID
-    m_touchIDinactivityTimer = new InactivityTimer(this);
-    connect(m_touchIDinactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(forgetTouchIDAfterInactivity()));
-#endif
     applySettingsChanges();
 
     m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
@@ -1537,21 +1527,6 @@ void MainWindow::applySettingsChanges()
         m_inactivityTimer->deactivate();
     }
 
-#ifdef WITH_XC_TOUCHID
-    if (config()->get(Config::Security_ResetTouchId).toBool()) {
-        // Calculate TouchID timeout in milliseconds
-        timeout = config()->get(Config::Security_ResetTouchIdTimeout).toInt() * 60 * 1000;
-        if (timeout <= 0) {
-            timeout = 30 * 60 * 1000;
-        }
-
-        m_touchIDinactivityTimer->setInactivityTimeout(timeout);
-        m_touchIDinactivityTimer->activate();
-    } else {
-        m_touchIDinactivityTimer->deactivate();
-    }
-#endif
-
     m_ui->toolBar->setHidden(config()->get(Config::GUI_HideToolbar).toBool());
     m_ui->toolBar->setMovable(config()->get(Config::GUI_MovableToolbar).toBool());
 
@@ -1715,13 +1690,6 @@ void MainWindow::lockDatabasesAfterInactivity()
     m_ui->tabWidget->lockDatabases();
 }
 
-void MainWindow::forgetTouchIDAfterInactivity()
-{
-#ifdef WITH_XC_TOUCHID
-    TouchID::getInstance().reset();
-#endif
-}
-
 bool MainWindow::isTrayIconEnabled() const
 {
     return m_trayIcon && m_trayIcon->isVisible();
@@ -1778,12 +1746,6 @@ void MainWindow::handleScreenLock()
     if (config()->get(Config::Security_LockDatabaseScreenLock).toBool()) {
         lockDatabasesAfterInactivity();
     }
-
-#ifdef WITH_XC_TOUCHID
-    if (config()->get(Config::Security_ResetTouchIdScreenlock).toBool()) {
-        forgetTouchIDAfterInactivity();
-    }
-#endif
 }
 
 QStringList MainWindow::kdbxFilesFromUrls(const QList<QUrl>& urls)

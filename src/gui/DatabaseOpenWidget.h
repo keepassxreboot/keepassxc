@@ -53,6 +53,10 @@ protected:
     void showEvent(QShowEvent* event) override;
     void hideEvent(QHideEvent* event) override;
     QSharedPointer<CompositeKey> buildDatabaseKey();
+    void setUserInteractionLock(bool state);
+    // Quick Unlock helper functions
+    bool isOnQuickUnlockScreen();
+    void resetQuickUnlock();
 
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
     QSharedPointer<Database> m_db;
@@ -73,6 +77,7 @@ private slots:
 
 private:
     bool m_pollingHardwareKey = false;
+    bool m_blockQuickUnlock = false;
     QTimer m_hideTimer;
 
     Q_DISABLE_COPY(DatabaseOpenWidget)

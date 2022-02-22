@@ -216,6 +216,9 @@ if(WIN32)
             ${keepassx_SOURCES}
             gui/osutils/winutils/ScreenLockListenerWin.cpp
             gui/osutils/winutils/WinUtils.cpp)
+    if (MSVC)
+        list(APPEND keepassx_SOURCES winhello/WindowsHello.cpp)
+    endif()
 endif()
 
 set(keepassx_SOURCES ${keepassx_SOURCES}
@@ -233,9 +236,6 @@ add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
 if(UNIX AND NOT APPLE)
     add_feature_info(FdoSecrets WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API.")
-endif()
-if(APPLE)
-    add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
 endif()
 
 add_subdirectory(browser)
@@ -308,7 +308,7 @@ if(WITH_XC_NETWORKING)
             updatecheck/UpdateChecker.cpp)
 endif()
 
-if(WITH_XC_TOUCHID)
+if(APPLE)
     list(APPEND keepassx_SOURCES touchid/TouchID.mm)
     # TODO: Remove -Wno-error once deprecation warnings have been resolved.
     set_source_files_properties(touchid/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast -Wno-error")
@@ -347,12 +347,9 @@ if(WITH_XC_KEESHARE)
 endif()
 
 if(APPLE)
-    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit -framework Carbon")
+    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication")
     if(Qt5MacExtras_FOUND)
         target_link_libraries(keepassx_core Qt5::MacExtras)
-    endif()
-    if(WITH_XC_TOUCHID)
-        target_link_libraries(keepassx_core "-framework Security -framework LocalAuthentication")
     endif()
 endif()
 if(HAIKU)
@@ -364,6 +361,9 @@ if(UNIX AND NOT APPLE)
 endif()
 if(WIN32)
     target_link_libraries(keepassx_core Wtsapi32.lib Ws2_32.lib)
+    if (MSVC)
+        target_link_libraries(keepassx_core WindowsApp.lib)
+    endif()
 endif()
 
 if(WIN32)
@@ -388,12 +388,8 @@ if(APPLE AND WITH_APP_BUNDLE)
     configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
     set_target_properties(${PROGNAME} PROPERTIES
             MACOSX_BUNDLE ON
-            MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
-
-    if(WITH_XC_TOUCHID)
-        set_target_properties(${PROGNAME} PROPERTIES
-                CPACK_BUNDLE_APPLE_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.entitlements")
-    endif()
+            MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist
+            CPACK_BUNDLE_APPLE_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.entitlements")
 
     if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
         install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"

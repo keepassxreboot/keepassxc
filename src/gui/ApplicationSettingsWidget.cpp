@@ -35,6 +35,9 @@
 #ifdef Q_OS_MACOS
 #include "touchid/TouchID.h"
 #endif
+#ifdef Q_CC_MSVC
+#include "winhello/WindowsHello.h"
+#endif
 
 class ApplicationSettingsWidget::ExtraPage
 {
@@ -129,8 +132,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_secUi->clearSearchSpinBox, SLOT(setEnabled(bool)));
     connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
             m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
-    connect(m_secUi->touchIDResetCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->touchIDResetSpinBox, SLOT(setEnabled(bool)));
     // clang-format on
 
     // Disable mouse wheel grab when scrolling
@@ -155,16 +156,14 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->faviconTimeoutSpinBox->setVisible(false);
 #endif
 
-#ifndef WITH_XC_TOUCHID
-    bool hideTouchID = true;
-#else
-    bool hideTouchID = !TouchID::getInstance().isAvailable();
+    bool showQuickUnlock = false;
+#if defined(Q_OS_MACOS)
+    showQuickUnlock = TouchID::getInstance().isAvailable();
+#elif defined(Q_CC_MSVC)
+    showQuickUnlock = getWindowsHello()->isAvailable();
+    connect(getWindowsHello(), &WindowsHello::availableChanged, m_secUi->quickUnlockCheckBox, &QCheckBox::setVisible);
 #endif
-    if (hideTouchID) {
-        m_secUi->touchIDResetCheckBox->setVisible(false);
-        m_secUi->touchIDResetSpinBox->setVisible(false);
-        m_secUi->touchIDResetOnScreenLockCheckBox->setVisible(false);
-    }
+    m_secUi->quickUnlockCheckBox->setVisible(showQuickUnlock);
 }
 
 ApplicationSettingsWidget::~ApplicationSettingsWidget()
@@ -313,10 +312,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->EnableCopyOnDoubleClickCheckBox->setChecked(
         config()->get(Config::Security_EnableCopyOnDoubleClick).toBool());
 
-    m_secUi->touchIDResetCheckBox->setChecked(config()->get(Config::Security_ResetTouchId).toBool());
-    m_secUi->touchIDResetSpinBox->setValue(config()->get(Config::Security_ResetTouchIdTimeout).toInt());
-    m_secUi->touchIDResetOnScreenLockCheckBox->setChecked(
-        config()->get(Config::Security_ResetTouchIdScreenlock).toBool());
+    m_secUi->quickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
@@ -425,9 +421,7 @@ void ApplicationSettingsWidget::saveSettings()
                   m_secUi->NoConfirmMoveEntryToRecycleBinCheckBox->isChecked());
     config()->set(Config::Security_EnableCopyOnDoubleClick, m_secUi->EnableCopyOnDoubleClickCheckBox->isChecked());
 
-    config()->set(Config::Security_ResetTouchId, m_secUi->touchIDResetCheckBox->isChecked());
-    config()->set(Config::Security_ResetTouchIdTimeout, m_secUi->touchIDResetSpinBox->value());
-    config()->set(Config::Security_ResetTouchIdScreenlock, m_secUi->touchIDResetOnScreenLockCheckBox->isChecked());
+    config()->set(Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox->isChecked());
 
     // Security: clear storage if related settings are disabled
     if (!config()->get(Config::RememberLastDatabases).toBool()) {

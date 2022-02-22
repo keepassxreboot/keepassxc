@@ -35,7 +35,7 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
     , m_tabBar(new QTabBar(this))
 {
     setWindowTitle(tr("Unlock Database - KeePassXC"));
-    setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::Dialog);
     // block input to the main window/application while the dialog is open
     setWindowModality(Qt::ApplicationModal);
 #ifdef Q_OS_WIN

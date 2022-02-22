@@ -30,14 +30,43 @@
 #ifdef Q_OS_MACOS
 #include "touchid/TouchID.h"
 #endif
+#ifdef Q_CC_MSVC
+#include "winhello/WindowsHello.h"
+#endif
 
+#include <QCheckBox>
 #include <QDesktopServices>
 #include <QFont>
 
 namespace
 {
     constexpr int clearFormsDelay = 30000;
-}
+
+    bool isQuickUnlockAvailable()
+    {
+        if (config()->get(Config::Security_QuickUnlock).toBool()) {
+#if defined(Q_CC_MSVC)
+            return getWindowsHello()->isAvailable();
+#elif defined(Q_OS_MACOS)
+            return TouchID::getInstance().isAvailable();
+#endif
+        }
+        return false;
+    }
+
+    bool canPerformQuickUnlock(const QString& filename)
+    {
+        if (isQuickUnlockAvailable()) {
+#if defined(Q_CC_MSVC)
+            return getWindowsHello()->hasKey(filename);
+#elif defined(Q_OS_MACOS)
+            return TouchID::getInstance().containsKey(filename);
+#endif
+        }
+        Q_UNUSED(filename);
+        return false;
+    }
+} // namespace
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -62,8 +91,16 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->labelHeadline->setFont(font);
     m_ui->labelHeadline->setText(tr("Unlock KeePassXC Database"));
 
+    m_ui->quickUnlockButton->setFont(font);
+    m_ui->quickUnlockButton->setIcon(
+        icons()->icon("fingerprint", true, palette().color(QPalette::Active, QPalette::HighlightedText)));
+    m_ui->quickUnlockButton->setIconSize({32, 32});
+
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
+    auto okBtn = m_ui->buttonBox->button(QDialogButtonBox::Ok);
+    okBtn->setText(tr("Unlock"));
+    okBtn->setDefault(true);
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
@@ -98,13 +135,9 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->hardwareKeyProgress->setVisible(false);
 #endif
 
-#ifndef WITH_XC_TOUCHID
-    m_ui->touchIDContainer->setVisible(false);
-#else
-    if (!TouchID::getInstance().isAvailable()) {
-        m_ui->checkTouchID->setVisible(false);
-    }
-#endif
+    // QuickUnlock actions
+    connect(m_ui->quickUnlockButton, &QPushButton::pressed, this, [this] { openDatabase(); });
+    connect(m_ui->resetQuickUnlockButton, &QPushButton::pressed, this, [this] { resetQuickUnlock(); });
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget()
@@ -114,7 +147,14 @@ DatabaseOpenWidget::~DatabaseOpenWidget()
 void DatabaseOpenWidget::showEvent(QShowEvent* event)
 {
     DialogyWidget::showEvent(event);
-    m_ui->editPassword->setFocus();
+    if (isOnQuickUnlockScreen()) {
+        m_ui->quickUnlockButton->setFocus();
+        if (!canPerformQuickUnlock(m_filename)) {
+            resetQuickUnlock();
+        }
+    } else {
+        m_ui->editPassword->setFocus();
+    }
     m_hideTimer.stop();
 }
 
@@ -142,8 +182,12 @@ void DatabaseOpenWidget::load(const QString& filename)
         }
     }
 
-    QHash<QString, QVariant> useTouchID = config()->get(Config::UseTouchID).toHash();
-    m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
+    if (canPerformQuickUnlock(m_filename)) {
+        m_ui->centralStack->setCurrentIndex(1);
+        m_ui->quickUnlockButton->setFocus();
+    } else {
+        m_ui->editPassword->setFocus();
+    }
 
 #ifdef WITH_XC_YUBIKEY
     // Only auto-poll for hardware keys if we previously used one with this database file
@@ -158,12 +202,13 @@ void DatabaseOpenWidget::load(const QString& filename)
 
 void DatabaseOpenWidget::clearForms()
 {
+    setUserInteractionLock(false);
     m_ui->editPassword->setText("");
     m_ui->editPassword->setShowPassword(false);
     m_ui->keyFileLineEdit->clear();
     m_ui->keyFileLineEdit->setShowPassword(false);
-    m_ui->checkTouchID->setChecked(false);
     m_ui->challengeResponseCombo->clear();
+    m_ui->centralStack->setCurrentIndex(0);
     m_db.reset();
 }
 
@@ -181,73 +226,70 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
     m_ui->editPassword->setText(pw);
     m_ui->keyFileLineEdit->setText(keyFile);
+    m_blockQuickUnlock = true;
     openDatabase();
 }
 
 void DatabaseOpenWidget::openDatabase()
 {
-    m_ui->messageWidget->hide();
+    // Cache this variable for future use then reset
+    bool blockQuickUnlock = m_blockQuickUnlock || isOnQuickUnlockScreen();
+    m_blockQuickUnlock = false;
 
-    QSharedPointer<CompositeKey> databaseKey = buildDatabaseKey();
+    setUserInteractionLock(true);
+    m_ui->messageWidget->hide();
+    QCoreApplication::processEvents();
+
+    const auto databaseKey = buildDatabaseKey();
     if (!databaseKey) {
+        setUserInteractionLock(false);
         return;
     }
 
-    m_ui->editPassword->setShowPassword(false);
-    QCoreApplication::processEvents();
-
-    m_db.reset(new Database());
     QString error;
-
-    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    m_ui->passwordFormFrame->setEnabled(false);
-    QCoreApplication::processEvents();
+    m_db.reset(new Database());
     bool ok = m_db->open(m_filename, databaseKey, &error);
-    QApplication::restoreOverrideCursor();
-    m_ui->passwordFormFrame->setEnabled(true);
-
-    if (ok && m_db->hasMinorVersionMismatch()) {
-        QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
-        msgBox->setIcon(QMessageBox::Warning);
-        msgBox->setWindowTitle(tr("Database Version Mismatch"));
-        msgBox->setText(tr("The database you are trying to open was most likely\n"
-                           "created by a newer version of KeePassXC.\n\n"
-                           "You can try to open it anyway, but it may be incomplete\n"
-                           "and saving any changes may incur data loss.\n\n"
-                           "We recommend you update your KeePassXC installation."));
-        auto btn = msgBox->addButton(tr("Open database anyway"), QMessageBox::ButtonRole::AcceptRole);
-        msgBox->setDefaultButton(btn);
-        msgBox->addButton(QMessageBox::Cancel);
-        msgBox->exec();
-        if (msgBox->clickedButton() != btn) {
-            m_db.reset(new Database());
-            m_ui->messageWidget->showMessage(tr("Database unlock canceled."), MessageWidget::MessageType::Error);
-            return;
-        }
-    }
 
     if (ok) {
-#ifdef WITH_XC_TOUCHID
-        QHash<QString, QVariant> useTouchID = config()->get(Config::UseTouchID).toHash();
-
-        // check if TouchID can & should be used to unlock the database next time
-        if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()) {
-            // encrypt and store key blob
-            if (TouchID::getInstance().storeKey(m_filename, PasswordKey(m_ui->editPassword->text()).rawKey())) {
-                useTouchID.insert(m_filename, true);
+        // Warn user about minor version mismatch to halt loading if necessary
+        if (m_db->hasMinorVersionMismatch()) {
+            QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
+            msgBox->setIcon(QMessageBox::Warning);
+            msgBox->setWindowTitle(tr("Database Version Mismatch"));
+            msgBox->setText(tr("The database you are trying to open was most likely\n"
+                               "created by a newer version of KeePassXC.\n\n"
+                               "You can try to open it anyway, but it may be incomplete\n"
+                               "and saving any changes may incur data loss.\n\n"
+                               "We recommend you update your KeePassXC installation."));
+            auto btn = msgBox->addButton(tr("Open database anyway"), QMessageBox::ButtonRole::AcceptRole);
+            msgBox->setDefaultButton(btn);
+            msgBox->addButton(QMessageBox::Cancel);
+            msgBox->exec();
+            if (msgBox->clickedButton() != btn) {
+                m_db.reset(new Database());
+                m_ui->messageWidget->showMessage(tr("Database unlock canceled."), MessageWidget::MessageType::Error);
+                setUserInteractionLock(false);
+                return;
             }
-        } else {
-            // when TouchID not available or unchecked, reset for the current database
-            TouchID::getInstance().reset(m_filename);
-            useTouchID.insert(m_filename, false);
         }
 
-        config()->set(Config::UseTouchID, useTouchID);
+        // Save Quick Unlock credentials if available
+        if (!blockQuickUnlock && isQuickUnlockAvailable()) {
+            auto keyData = databaseKey->serialize();
+#if defined(Q_CC_MSVC)
+            // Store the password using Windows Hello
+            getWindowsHello()->storeKey(m_filename, keyData);
+#elif defined(Q_OS_MACOS)
+            // Store the password using TouchID
+            TouchID::getInstance().storeKey(m_filename, keyData);
 #endif
+            m_ui->messageWidget->hideMessage();
+        }
+
         emit dialogFinished(true);
         clearForms();
     } else {
-        if (m_ui->editPassword->text().isEmpty() && !m_retryUnlockWithEmptyPassword) {
+        if (!isOnQuickUnlockScreen() && m_ui->editPassword->text().isEmpty() && !m_retryUnlockWithEmptyPassword) {
             QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
             msgBox->setIcon(QMessageBox::Critical);
             msgBox->setWindowTitle(tr("Unlock failed and no password given"));
@@ -262,9 +304,17 @@ void DatabaseOpenWidget::openDatabase()
 
             if (msgBox->clickedButton() == btn) {
                 m_retryUnlockWithEmptyPassword = true;
+                setUserInteractionLock(false);
                 openDatabase();
                 return;
             }
+        }
+
+        setUserInteractionLock(false);
+
+        // Reset quick unlock for the current database
+        if (isOnQuickUnlockScreen()) {
+            resetQuickUnlock();
         }
 
         m_retryUnlockWithEmptyPassword = false;
@@ -272,11 +322,6 @@ void DatabaseOpenWidget::openDatabase()
         // Focus on the password field and select the input for easy retry
         m_ui->editPassword->selectAll();
         m_ui->editPassword->setFocus();
-
-#ifdef WITH_XC_TOUCHID
-        // unable to unlock database, reset TouchID for the current database
-        TouchID::getInstance().reset(m_filename);
-#endif
     }
 }
 
@@ -284,29 +329,29 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 {
     auto databaseKey = QSharedPointer<CompositeKey>::create();
 
+    if (canPerformQuickUnlock(m_filename)) {
+        // try to retrieve the stored password using Windows Hello
+        QByteArray keyData;
+#ifdef Q_CC_MSVC
+        if (!getWindowsHello()->getKey(m_filename, keyData)) {
+            // Failed to retrieve Quick Unlock data
+            m_ui->messageWidget->showMessage(tr("Failed to authenticate with Windows Hello"), MessageWidget::Error);
+            return {};
+        }
+#elif defined(Q_OS_MACOS)
+        if (!TouchID::getInstance().getKey(m_filename, keyData)) {
+            // Failed to retrieve Quick Unlock data
+            m_ui->messageWidget->showMessage(tr("Failed to authenticate with Touch ID"), MessageWidget::Error);
+            return {};
+        }
+#endif
+        databaseKey->setRawKey(keyData);
+        return databaseKey;
+    }
+
     if (!m_ui->editPassword->text().isEmpty() || m_retryUnlockWithEmptyPassword) {
         databaseKey->addKey(QSharedPointer<PasswordKey>::create(m_ui->editPassword->text()));
     }
-
-#ifdef WITH_XC_TOUCHID
-    // check if TouchID is available and enabled for unlocking the database
-    if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()
-        && m_ui->editPassword->text().isEmpty()) {
-        // clear empty password from composite key
-        databaseKey->clear();
-
-        // try to get, decrypt and use PasswordKey
-        QByteArray passwordKey;
-        if (TouchID::getInstance().getKey(m_filename, passwordKey)) {
-            // check if the user cancelled the operation
-            if (passwordKey.isNull()) {
-                return QSharedPointer<CompositeKey>();
-            }
-
-            databaseKey->addKey(PasswordKey::fromRawKey(passwordKey));
-        }
-    }
-#endif
 
     auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();
     lastKeyFiles.remove(m_filename);
@@ -464,4 +509,33 @@ void DatabaseOpenWidget::openHardwareKeyHelp()
 void DatabaseOpenWidget::openKeyFileHelp()
 {
     QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs#faq-cat-keyfile"));
+}
+
+void DatabaseOpenWidget::setUserInteractionLock(bool state)
+{
+    if (state) {
+        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+        m_ui->centralStack->setEnabled(false);
+    } else {
+        // Ensure no override cursors remain
+        while (QApplication::overrideCursor()) {
+            QApplication::restoreOverrideCursor();
+        }
+        m_ui->centralStack->setEnabled(true);
+    }
+}
+
+bool DatabaseOpenWidget::isOnQuickUnlockScreen()
+{
+    return m_ui->centralStack->currentIndex() == 1;
+}
+
+void DatabaseOpenWidget::resetQuickUnlock()
+{
+#if defined(Q_CC_MSVC)
+    getWindowsHello()->reset(m_filename);
+#elif defined(Q_OS_MACOS)
+    TouchID::getInstance().reset(m_filename);
+#endif
+    load(m_filename);
 }

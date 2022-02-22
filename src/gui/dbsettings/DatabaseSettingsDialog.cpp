@@ -32,9 +32,6 @@
 #ifdef WITH_XC_FDOSECRETS
 #include "fdosecrets/DatabaseSettingsPageFdoSecrets.h"
 #endif
-#ifdef Q_OS_MACOS
-#include "touchid/TouchID.h"
-#endif
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -183,10 +180,6 @@ void DatabaseSettingsDialog::save()
     for (const ExtraPage& extraPage : asConst(m_extraPages)) {
         extraPage.saveSettings();
     }
-
-#ifdef WITH_XC_TOUCHID
-    TouchID::getInstance().reset(m_db ? m_db->filePath() : "");
-#endif
 
     emit editFinished(true);
 }

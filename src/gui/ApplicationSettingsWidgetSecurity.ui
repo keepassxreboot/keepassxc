@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>595</width>
-    <height>567</height>
+    <width>364</width>
+    <height>493</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -28,93 +28,7 @@
      <property name="title">
       <string>Timeouts</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,1">
-      <item row="0" column="1">
-       <widget class="QSpinBox" name="clearClipboardSpinBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="accessibleName">
-         <string>Clipboard clear seconds</string>
-        </property>
-        <property name="suffix">
-         <string comment="Seconds"> sec</string>
-        </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>999</number>
-        </property>
-        <property name="value">
-         <number>10</number>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QCheckBox" name="touchIDResetCheckBox">
-        <property name="text">
-         <string>Forget TouchID after inactivity of</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="touchIDResetSpinBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="accessibleName">
-         <string>Touch ID inactivity reset</string>
-        </property>
-        <property name="suffix">
-         <string> min</string>
-        </property>
-        <property name="maximum">
-         <number>1440</number>
-        </property>
-        <property name="value">
-         <number>30</number>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="lockDatabaseIdleCheckBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Lock databases after inactivity of</string>
-        </property>
-       </widget>
-      </item>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
       <item row="1" column="1">
        <widget class="QSpinBox" name="lockDatabaseIdleSpinBox">
         <property name="enabled">
@@ -140,6 +54,20 @@
         </property>
         <property name="value">
          <number>240</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="clearClipboardCheckBox">
+        <property name="text">
+         <string>Clear clipboard after</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="clearSearchCheckBox">
+        <property name="text">
+         <string>Clear search query after</string>
         </property>
        </widget>
       </item>
@@ -171,17 +99,57 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="clearClipboardCheckBox">
-        <property name="text">
-         <string>Clear clipboard after</string>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="clearClipboardSpinBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="accessibleName">
+         <string>Clipboard clear seconds</string>
+        </property>
+        <property name="suffix">
+         <string comment="Seconds"> sec</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>999</number>
+        </property>
+        <property name="value">
+         <number>10</number>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="clearSearchCheckBox">
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="lockDatabaseIdleCheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
-         <string>Clear search query after</string>
+         <string>Lock databases after inactivity of</string>
         </property>
        </widget>
       </item>
@@ -195,16 +163,16 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
+       <widget class="QCheckBox" name="quickUnlockCheckBox">
         <property name="text">
-         <string>Lock databases when session is locked or lid is closed</string>
+         <string>Enable database quick unlock (Touch ID / Windows Hello)</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="touchIDResetOnScreenLockCheckBox">
+       <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
         <property name="text">
-         <string>Forget TouchID when session is locked or lid is closed</string>
+         <string>Lock databases when session is locked or lid is closed</string>
         </property>
        </widget>
       </item>
@@ -308,10 +276,7 @@
   <tabstop>lockDatabaseIdleSpinBox</tabstop>
   <tabstop>clearSearchCheckBox</tabstop>
   <tabstop>clearSearchSpinBox</tabstop>
-  <tabstop>touchIDResetCheckBox</tabstop>
-  <tabstop>touchIDResetSpinBox</tabstop>
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
-  <tabstop>touchIDResetOnScreenLockCheckBox</tabstop>
   <tabstop>lockDatabaseMinimizeCheckBox</tabstop>
   <tabstop>passwordsRepeatVisibleCheckBox</tabstop>
   <tabstop>passwordsHiddenCheckBox</tabstop>
