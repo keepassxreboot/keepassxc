@@ -586,7 +586,7 @@ void PasswordGeneratorWidget::updateGenerator()
         if (m_ui->buttonAdvancedMode->isChecked()) {
             m_passwordGenerator->setCharClasses(classes);
             m_passwordGenerator->setCustomCharacterSet(m_ui->editAdditionalChars->text());
-            m_passwordGenerator->setCustomCharacterSet(m_ui->editExcludedChars->text());
+            m_passwordGenerator->setExcludedCharacterSet(m_ui->editExcludedChars->text());
         } else {
             m_passwordGenerator->setCharClasses(classes);
         }
