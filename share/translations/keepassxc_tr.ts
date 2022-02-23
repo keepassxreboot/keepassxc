@@ -474,6 +474,18 @@
         <source>will expire within </source>
         <translation>geçerlilik süresi dolacak</translation>
     </message>
+    <message>
+        <source> s</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation>Otomatik yazma sonrasında önceden kilitli veritabanı yeniden kilitlensin</translation>
+    </message>
+    <message>
+        <source>Remember last typed entry for:</source>
+        <translation>Şunun için son yazılmış kayıt hatırlansın:</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -495,14 +507,6 @@
         <translation>Vertiabanları şu kadar zaman sonra kilitlensin</translation>
     </message>
     <message>
-        <source> min</source>
-        <translation> dk</translation>
-    </message>
-    <message>
-        <source>Forget TouchID after inactivity of</source>
-        <translation>TouchID şu kadar zaman sonra unutulsun</translation>
-    </message>
-    <message>
         <source>Convenience</source>
         <translation>Kolaylıklar</translation>
     </message>
@@ -511,16 +515,8 @@
         <translation>Oturum kilitlendiğinde ya da kapak kapatıldığında veritabanları kilitlensin</translation>
     </message>
     <message>
-        <source>Forget TouchID when session is locked or lid is closed</source>
-        <translation>Oturum kilitlendiğinde ya da kapak kapatıldığında TouchID unutulsun</translation>
-    </message>
-    <message>
         <source>Lock databases after minimizing the window</source>
         <translation>Simge durumuna küçültüldüğünde veritabanları kilitlensin</translation>
-    </message>
-    <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Otomatik yazma sonrasında önceden kilitli veritabanı yeniden kilitlensin</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
@@ -541,10 +537,6 @@
     <message>
         <source>Clipboard clear seconds</source>
         <translation>Pano temizleme saniyesi</translation>
-    </message>
-    <message>
-        <source>Touch ID inactivity reset</source>
-        <translation>Touch ID etkileşimsizlik sıfırlaması</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
@@ -578,6 +570,10 @@
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
         <translation>Kullanıcı adı/parola kaydı sütunlarını kopyalamak için çift tıklama kullanılsın</translation>
+    </message>
+    <message>
+        <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
+        <translation>Kilit hızlı açılabilsin (Touch ID / Windows Hello)</translation>
     </message>
 </context>
 <context>
@@ -654,6 +650,10 @@
     <message>
         <source>Default sequence</source>
         <translation>Varsayılan sıra</translation>
+    </message>
+    <message>
+        <source>(empty)</source>
+        <translation>(boş)</translation>
     </message>
 </context>
 <context>
@@ -1462,10 +1462,6 @@ Yedek veritabanının konumu %2</translation>
         <translation>Donanımsal anahtar yardımı</translation>
     </message>
     <message>
-        <source>TouchID for Quick Unlock</source>
-        <translation>Kilit TouchID ile açılabilsin</translation>
-    </message>
-    <message>
         <source>Unlock failed and no password given</source>
         <translation>Kilit açılamadı ve herhangi bir parola yazılmadı</translation>
     </message>
@@ -1490,10 +1486,6 @@ Bu sorunu engellemek için, &quot;Veritabanı ayarları / Güvenlik&quot; bölü
     <message>
         <source>Key file help</source>
         <translation>Anahtar dosyası yardımı</translation>
-    </message>
-    <message>
-        <source>?</source>
-        <translation>?</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
@@ -1574,6 +1566,26 @@ KeePassXC kurulumunuzu güncellemeniz önerilir.</translation>
     <message>
         <source>Database unlock canceled.</source>
         <translation>Veritabanı kilidinin açılması iptal edildi.</translation>
+    </message>
+    <message>
+        <source>Unlock</source>
+        <translation>Kilidi aç</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello</source>
+        <translation>Windows Hello ile kimlik doğrulanamadı</translation>
+    </message>
+    <message>
+        <source>Unlock Database</source>
+        <translation>Veritabanı kilidini aç</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Touch ID</source>
+        <translation>Touch ID ile kimlik doğrulanamadı</translation>
     </message>
 </context>
 <context>
@@ -5307,10 +5319,6 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
         <translation>Araç çubuğu görüntülensin</translation>
     </message>
     <message>
-        <source>Show Groups Panel</source>
-        <translation>Gruplar panosu görüntülensin</translation>
-    </message>
-    <message>
         <source>Show Preview Panel</source>
         <translation>Ön izleme panosu görüntülensin</translation>
     </message>
@@ -6832,10 +6840,6 @@ Kernel: %3 %4</source>
         <translation>YubiKey</translation>
     </message>
     <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
         <source>None</source>
         <translation>Yok</translation>
     </message>
@@ -7713,6 +7717,18 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     <message>
         <source>Browser Statistics</source>
         <translation>Tarayıcı istatistikleri</translation>
+    </message>
+    <message>
+        <source>Quick Unlock</source>
+        <translation>Hızlı kilit açma</translation>
+    </message>
+    <message>
+        <source>Failed to create Windows Hello credential.</source>
+        <translation>Windows Hello kimlik doğrulama bilgileri oluşturulamadı</translation>
+    </message>
+    <message>
+        <source>Failed to sign challenge using Windows Hello.</source>
+        <translation>Soru Windows Hello kullanılarak imzalanamadı.</translation>
     </message>
 </context>
 <context>
@@ -8701,6 +8717,25 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Could not register global shortcut</source>
         <translation>Genel kısayol kaydı oluşturulamadı</translation>
+    </message>
+</context>
+<context>
+    <name>WindowsHello</name>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation>KeePassXC şifrelemesi hazırlanamadı.</translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation>Anahtar verileri şifrelenemedi.</translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation>Windows Hello kimlik doğrulama bilgileri alınamadı</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation>Anahtar verilerinin şifresi çözülemedi</translation>
     </message>
 </context>
 <context>
