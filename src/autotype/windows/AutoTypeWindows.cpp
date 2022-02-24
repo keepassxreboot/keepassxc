@@ -102,14 +102,18 @@ void AutoTypePlatformWin::sendChar(const QChar& ch, bool isKeyDown)
         return;
     }
 
-    if (HIBYTE(vkey) & 0x1) {
-        sendKey(Qt::Key_Shift, true);
-    }
-    if (HIBYTE(vkey) & 0x2) {
-        sendKey(Qt::Key_Control, true);
-    }
-    if (HIBYTE(vkey) & 0x4) {
-        sendKey(Qt::Key_Alt, true);
+    if (HIBYTE(vkey) & 0x6) {
+        sendKey(Qt::Key_AltGr, true);
+    } else {
+        if (HIBYTE(vkey) & 0x1) {
+            sendKey(Qt::Key_Shift, true);
+        }
+        if (HIBYTE(vkey) & 0x2) {
+            sendKey(Qt::Key_Control, true);
+        }
+        if (HIBYTE(vkey) & 0x4) {
+            sendKey(Qt::Key_Alt, true);
+        }
     }
 
     DWORD flags = KEYEVENTF_SCANCODE;
@@ -127,14 +131,18 @@ void AutoTypePlatformWin::sendChar(const QChar& ch, bool isKeyDown)
 
     ::SendInput(1, &in, sizeof(INPUT));
 
-    if (HIBYTE(vkey) & 0x1) {
-        sendKey(Qt::Key_Shift, false);
-    }
-    if (HIBYTE(vkey) & 0x2) {
-        sendKey(Qt::Key_Control, false);
-    }
-    if (HIBYTE(vkey) & 0x4) {
-        sendKey(Qt::Key_Alt, false);
+    if (HIBYTE(vkey) & 0x6) {
+        sendKey(Qt::Key_AltGr, false);
+    } else {
+        if (HIBYTE(vkey) & 0x1) {
+            sendKey(Qt::Key_Shift, false);
+        }
+        if (HIBYTE(vkey) & 0x2) {
+            sendKey(Qt::Key_Control, false);
+        }
+        if (HIBYTE(vkey) & 0x4) {
+            sendKey(Qt::Key_Alt, false);
+        }
     }
 }
 

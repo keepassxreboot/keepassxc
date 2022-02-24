@@ -267,6 +267,8 @@ WORD WinUtils::qtToNativeKeyCode(Qt::Key key)
         return VK_HELP;     // 0x2F
     case Qt::Key_Meta:
         return VK_LWIN;     // 0x5B
+    case Qt::Key_AltGr:
+        return VK_RMENU;    // 0xA5
 
     case Qt::Key_F1:
         return VK_F1;       // 0x70
