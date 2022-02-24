@@ -21,6 +21,7 @@
 #include "Utils.h"
 #include "core/Group.h"
 #include "core/PasswordGenerator.h"
+#include "core/Tools.h"
 
 #include <QCommandLineParser>
 
@@ -44,6 +45,15 @@ const QCommandLineOption Add::GenerateOption = QCommandLineOption(QStringList() 
                                                                                 << "generate",
                                                                   QObject::tr("Generate a password for the entry."));
 
+const QCommandLineOption Add::AttributeOption =
+    QCommandLineOption(QStringList() << "a" << "attribute", QObject::tr("Name of the attribute for the entry."), QObject::tr("attribute"));
+
+const QCommandLineOption Add::AttributeValueOption =
+    QCommandLineOption(QStringList() << "A" << "attribute-value", QObject::tr("Value of the attribute for the entry."), QObject::tr("attribute-value"));
+
+const QCommandLineOption Add::AttributeProtectOption =
+    QCommandLineOption(QStringList() << "P" << "protect", QObject::tr("Set the attribute to be protected."));
+
 Add::Add()
 {
     name = QString("add");
@@ -52,6 +62,9 @@ Add::Add()
     options.append(Add::UrlOption);
     options.append(Add::NotesOption);
     options.append(Add::PasswordPromptOption);
+    options.append(Add::AttributeOption);
+    options.append(Add::AttributeValueOption);
+    options.append(Add::AttributeProtectOption);
     positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to add."), QString("")});
 
     // Password generation options.
@@ -118,6 +131,27 @@ int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<Q
     } else if (parser->isSet(Add::GenerateOption)) {
         QString password = passwordGenerator->generatePassword();
         entry->setPassword(password);
+    }
+
+	if (!parser->value(Add::AttributeOption).isEmpty()) {
+
+		bool attributeProtect = false;
+		if(parser->isSet(Add::AttributeProtectOption)) {
+			attributeProtect = true;
+		}
+
+		QString attributeValue = "";
+		if(parser->isSet(Add::AttributeValueOption)) {
+			QByteArray qbaAttributeValue = parser->value(Add::AttributeValueOption).toUtf8();
+			if(!Tools::isBase64(qbaAttributeValue)){
+        		err << QObject::tr("Attribute value is not base64 encoded.") << endl;
+        		return EXIT_FAILURE;
+			}else{
+				attributeValue = QString( QByteArray::fromBase64(qbaAttributeValue) );
+			}
+		}
+
+		entry->attributes()->set(parser->value(Add::AttributeOption),attributeValue,attributeProtect);
     }
 
     QString errorMessage;

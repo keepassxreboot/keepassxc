@@ -22,6 +22,7 @@
 #include "Utils.h"
 #include "core/Group.h"
 #include "core/PasswordGenerator.h"
+#include "core/Tools.h"
 
 #include <QCommandLineParser>
 
@@ -29,6 +30,8 @@ const QCommandLineOption Edit::TitleOption = QCommandLineOption(QStringList() <<
                                                                               << "title",
                                                                 QObject::tr("Title for the entry."),
                                                                 QObject::tr("title"));
+const QCommandLineOption Edit::AttributeUnprotectOption =
+    QCommandLineOption(QStringList() << "unprotect", QObject::tr("Set the attribute to be not protected."));
 
 Edit::Edit()
 {
@@ -38,6 +41,10 @@ Edit::Edit()
     options.append(Add::UsernameOption);
     options.append(Add::UrlOption);
     options.append(Add::NotesOption);
+    options.append(Add::AttributeOption);
+    options.append(Add::AttributeValueOption);
+    options.append(Add::AttributeProtectOption);
+    options.append(Edit::AttributeUnprotectOption);
     options.append(Add::PasswordPromptOption);
     options.append(Edit::TitleOption);
     positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString("")});
@@ -90,10 +97,37 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     QString url = parser->value(Add::UrlOption);
     QString notes = parser->value(Add::NotesOption);
     QString title = parser->value(Edit::TitleOption);
+	QString attribute = parser->value(Add::AttributeOption);
     bool prompt = parser->isSet(Add::PasswordPromptOption);
-    if (username.isEmpty() && url.isEmpty() && notes.isEmpty() && title.isEmpty() && !prompt && !generate) {
+    if (username.isEmpty() && url.isEmpty() && notes.isEmpty() && title.isEmpty() && attribute.isEmpty() && !prompt && !generate) {
         err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
+    }
+	bool attributeProtect = parser->isSet(Add::AttributeProtectOption);
+	bool attributeUnprotect = parser->isSet(Edit::AttributeUnprotectOption);
+	if (attributeProtect && attributeUnprotect){
+        err << QObject::tr("Protect and unprotect flag cannot be used together.") << endl;
+        return EXIT_FAILURE;
+    }
+
+	QString attributeValue = "";
+	if (!attribute.isEmpty()) {
+
+		if(!attributeProtect && !attributeUnprotect) {
+			attributeProtect = entry->attributes()->isProtected(attribute);
+		}
+
+		if(parser->isSet(Add::AttributeValueOption)) {
+			QByteArray qbaAttributeValue = parser->value(Add::AttributeValueOption).toUtf8();
+			if(!Tools::isBase64(qbaAttributeValue)){
+        		err << QObject::tr("Attribute value is not base64 encoded.") << endl;
+        		return EXIT_FAILURE;
+			}else{
+				attributeValue = QString( QByteArray::fromBase64(qbaAttributeValue) );
+			}
+		}else{
+			attributeValue = entry->attribute(attribute);
+		}
     }
 
     entry->beginUpdate();
@@ -122,6 +156,10 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         QString password = passwordGenerator->generatePassword();
         entry->setPassword(password);
     }
+		
+	if (!attribute.isEmpty()) {
+		entry->attributes()->set(attribute,attributeValue,attributeProtect);
+	}
 
     entry->endUpdate();
 
