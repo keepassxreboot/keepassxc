@@ -68,8 +68,6 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
     m_ui->itemsTable->resizeColumnsToContents();
 
     // the info widget
-    m_ui->rememberMsg->setMessageType(MessageWidget::Information);
-    m_ui->rememberMsg->show(); // sync with m_rememberCheck->setChecked(true)
     m_ui->exePathWarn->setMessageType(MessageWidget::Warning);
     m_ui->exePathWarn->hide();
 
@@ -81,19 +79,28 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
         m_ui->buttonBox->addButton(detailsButtonText + QStringLiteral(" >>"), QDialogButtonBox::HelpRole);
     detailsButton->setCheckable(true);
 
+    QString tooltip = QStringLiteral("<p align='justify'>%1</p>")
+                          .arg(tr("Your decision will be remembered for the duration while both the requesting client "
+                                  "AND KeePassXC are running."));
+
     m_rememberCheck = new QCheckBox(tr("Remember"), this);
     m_rememberCheck->setObjectName("rememberCheck"); // for testing
     m_rememberCheck->setChecked(true);
     m_ui->buttonBox->addButton(m_rememberCheck, QDialogButtonBox::ActionRole);
+    m_rememberCheck->setToolTip(tooltip);
 
     auto allowButton = m_ui->buttonBox->addButton(tr("Allow Selected"), QDialogButtonBox::AcceptRole);
     allowButton->setDefault(true);
 
-    auto cancelButton = m_ui->buttonBox->addButton(tr("Deny All"), QDialogButtonBox::RejectRole);
+    auto cancelButton = m_ui->buttonBox->addButton(tr("Deny All && Future"), QDialogButtonBox::RejectRole);
+    cancelButton->setToolTip(tooltip);
+
+    auto allowAllButton = m_ui->buttonBox->addButton(tr("Allow All && &Future"), QDialogButtonBox::AcceptRole);
+    allowAllButton->setToolTip(tooltip);
 
     connect(cancelButton, &QPushButton::clicked, this, [this]() { done(DenyAll); });
     connect(allowButton, &QPushButton::clicked, this, [this]() { done(AllowSelected); });
-    connect(m_rememberCheck, &QCheckBox::clicked, this, &AccessControlDialog::rememberChecked);
+    connect(allowAllButton, &QPushButton::clicked, this, [this]() { done(AllowAll); });
     connect(detailsButton, &QPushButton::clicked, this, [=](bool checked) {
         m_ui->detailsContainer->setVisible(checked);
         if (checked) {
@@ -118,6 +125,9 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
         m_ui->exePathWarn->show();
         detailsButton->click();
     }
+
+    // adjust size after we initialize the button box
+    adjustSize();
 
     allowButton->setFocus();
 }
@@ -146,15 +156,6 @@ void AccessControlDialog::setupDetails(const FdoSecrets::PeerInfo& info)
     m_ui->detailsContainer->hide();
 }
 
-void AccessControlDialog::rememberChecked(bool checked)
-{
-    if (checked) {
-        m_ui->rememberMsg->animatedShow();
-    } else {
-        m_ui->rememberMsg->animatedHide();
-    }
-}
-
 void AccessControlDialog::denyEntryClicked(Entry* entry, const QModelIndex& index)
 {
     m_decisions.insert(entry, AuthDecision::Denied);
@@ -166,32 +167,35 @@ void AccessControlDialog::denyEntryClicked(Entry* entry, const QModelIndex& inde
 
 void AccessControlDialog::dialogFinished(int result)
 {
-    auto allow = m_rememberCheck->isChecked() ? AuthDecision::Allowed : AuthDecision::AllowedOnce;
-    auto deny = m_rememberCheck->isChecked() ? AuthDecision::Denied : AuthDecision::DeniedOnce;
+    auto decision = AuthDecision::Undecided;
+    auto futureDecision = AuthDecision::Undecided;
+    switch (result) {
+    case AllowSelected:
+        decision = m_rememberCheck->isChecked() ? AuthDecision::Allowed : AuthDecision::AllowedOnce;
+        break;
+    case AllowAll:
+        decision = AuthDecision::Allowed;
+        futureDecision = AuthDecision::Allowed;
+        break;
+    case DenyAll:
+        decision = AuthDecision::Denied;
+        futureDecision = AuthDecision::Denied;
+        break;
+    case Rejected:
+    default:
+        break;
+    }
 
     for (int row = 0; row != m_model->rowCount({}); ++row) {
         auto entry = m_model->data(m_model->index(row, 2), Qt::EditRole).value<Entry*>();
         auto selected = m_model->data(m_model->index(row, 0), Qt::CheckStateRole).value<Qt::CheckState>();
         Q_ASSERT(entry);
-        switch (result) {
-        case AllowSelected:
-            if (selected) {
-                m_decisions.insert(entry, allow);
-            } else {
-                m_decisions.insert(entry, AuthDecision::Undecided);
-            }
-            break;
-        case DenyAll:
-            m_decisions.insert(entry, deny);
-            break;
-        case Rejected:
-        default:
-            m_decisions.insert(entry, AuthDecision::Undecided);
-            break;
-        }
+
+        auto undecided = result == AllowSelected && !selected;
+        m_decisions.insert(entry, undecided ? AuthDecision::Undecided : decision);
     }
 
-    emit finished(m_decisions);
+    emit finished(m_decisions, futureDecision);
 }
 
 QHash<Entry*, AuthDecision> AccessControlDialog::decisions() const

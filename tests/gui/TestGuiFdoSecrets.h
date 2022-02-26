@@ -71,6 +71,7 @@ private slots:
     void testServiceUnlock();
     void testServiceUnlockDatabaseConcurrent();
     void testServiceUnlockItems();
+    void testServiceUnlockItemsIncludeFutureEntries();
     void testServiceLock();
     void testServiceLockConcurrent();
 
@@ -103,7 +104,7 @@ private slots:
 private:
     bool driveUnlockDialog();
     bool driveNewDatabaseWizard();
-    bool driveAccessControlDialog(bool remember = true);
+    bool driveAccessControlDialog(bool remember = true, bool includeFutureEntries = false);
     bool waitForSignal(QSignalSpy& spy, int expectedCount);
 
     void processEvents();

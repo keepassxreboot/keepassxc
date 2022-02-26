@@ -159,7 +159,7 @@ namespace FdoSecrets
         /**
          * Authorize client to access all items.
          */
-        void setAllAuthorized(bool authorized = true);
+        void setAllAuthorized(AuthDecision authorized);
 
         /**
          * Forget all previous authorization.
@@ -176,7 +176,7 @@ namespace FdoSecrets
         QPointer<DBusMgr> m_dbus;
         PeerInfo m_process;
 
-        bool m_authorizedAll{false};
+        AuthDecision m_authorizedAll{AuthDecision::Undecided};
 
         QSet<QUuid> m_allowed{};
         QSet<QUuid> m_denied{};

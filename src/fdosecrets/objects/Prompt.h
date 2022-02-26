@@ -169,7 +169,7 @@ namespace FdoSecrets
         QVariant currentResult() const override;
 
         void collectionUnlockFinished(bool accepted);
-        void itemUnlockFinished(const QHash<Entry*, AuthDecision>& results);
+        void itemUnlockFinished(const QHash<Entry*, AuthDecision>& results, AuthDecision forFutureEntries);
         void unlockItems();
 
         static constexpr auto FdoSecretsBackend = "FdoSecretsBackend";

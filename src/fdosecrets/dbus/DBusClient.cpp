@@ -73,8 +73,8 @@ namespace FdoSecrets
 
     bool DBusClient::itemKnown(const QUuid& uuid) const
     {
-        return m_authorizedAll || m_allowed.contains(uuid) || m_allowedOnce.contains(uuid) || m_denied.contains(uuid)
-               || m_deniedOnce.contains(uuid);
+        return m_authorizedAll != AuthDecision::Undecided || m_allowed.contains(uuid) || m_allowedOnce.contains(uuid)
+               || m_denied.contains(uuid) || m_deniedOnce.contains(uuid);
     }
 
     bool DBusClient::itemAuthorized(const QUuid& uuid) const
@@ -83,10 +83,16 @@ namespace FdoSecrets
             // everyone is authorized if this is not enabled
             return true;
         }
-        if (m_authorizedAll) {
-            // this client is trusted
+
+        // check if we have catch-all decision
+        if (m_authorizedAll == AuthDecision::Allowed) {
             return true;
         }
+        if (m_authorizedAll == AuthDecision::Denied) {
+            return false;
+        }
+
+        // individual decisions
         if (m_deniedOnce.contains(uuid) || m_denied.contains(uuid)) {
             // explicitly denied
             return false;
@@ -132,14 +138,21 @@ namespace FdoSecrets
         }
     }
 
-    void DBusClient::setAllAuthorized(bool authorized)
+    void DBusClient::setAllAuthorized(AuthDecision authorized)
     {
+        // once variants doesn't make sense here
+        if (authorized == AuthDecision::AllowedOnce) {
+            authorized = AuthDecision::Allowed;
+        }
+        if (authorized == AuthDecision::DeniedOnce) {
+            authorized = AuthDecision::Denied;
+        }
         m_authorizedAll = authorized;
     }
 
     void DBusClient::clearAuthorization()
     {
-        m_authorizedAll = false;
+        m_authorizedAll = AuthDecision::Undecided;
         m_allowed.clear();
         m_allowedOnce.clear();
         m_denied.clear();

@@ -26,7 +26,8 @@
 
 #include "gui/DatabaseWidget.h"
 
-#include <QToolBar>
+#include <QAction>
+#include <QToolButton>
 
 using FdoSecrets::DBusClientPtr;
 using FdoSecrets::SettingsClientModel;
@@ -34,7 +35,7 @@ using FdoSecrets::SettingsDatabaseModel;
 
 namespace
 {
-    class ManageDatabase : public QToolBar
+    class ManageDatabase : public QWidget
     {
         Q_OBJECT
 
@@ -42,18 +43,9 @@ namespace
 
     public:
         explicit ManageDatabase(FdoSecretsPlugin* plugin, QWidget* parent = nullptr)
-            : QToolBar(parent)
+            : QWidget(parent)
             , m_plugin(plugin)
         {
-            setFloatable(false);
-            setMovable(false);
-
-            // use a dummy widget to center the buttons
-            auto spacer = new QWidget(this);
-            spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-            spacer->setVisible(true);
-            addWidget(spacer);
-
             // db settings
             m_dbSettingsAct = new QAction(tr("Database settings"), this);
             m_dbSettingsAct->setIcon(icons()->icon(QStringLiteral("document-edit")));
@@ -63,14 +55,12 @@ namespace
                 if (!m_dbWidget) {
                     return;
                 }
-                auto db = m_dbWidget;
                 m_plugin->serviceInstance()->doSwitchToDatabaseSettings(m_dbWidget);
             });
-            addAction(m_dbSettingsAct);
 
             // unlock/lock
             m_lockAct = new QAction(tr("Unlock database"), this);
-            m_lockAct->setIcon(icons()->icon(QStringLiteral("object-locked")));
+            m_lockAct->setIcon(icons()->icon(QStringLiteral("object-unlocked")));
             m_lockAct->setToolTip(tr("Unlock database to show more information"));
             connect(m_lockAct, &QAction::triggered, this, [this]() {
                 if (!m_dbWidget) {
@@ -83,13 +73,23 @@ namespace
                 }
             });
 
-            addAction(m_lockAct);
+            // layout
+            auto dbSettingsBtn = new QToolButton(this);
+            dbSettingsBtn->setAutoRaise(true);
+            dbSettingsBtn->setDefaultAction(m_dbSettingsAct);
 
-            // use a dummy widget to center the buttons
-            spacer = new QWidget(this);
-            spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-            spacer->setVisible(true);
-            addWidget(spacer);
+            auto lockBtn = new QToolButton(this);
+            lockBtn->setAutoRaise(true);
+            lockBtn->setDefaultAction(m_lockAct);
+
+            auto layout = new QHBoxLayout(this);
+            layout->setContentsMargins(1, 1, 1, 1);
+            layout->setSpacing(1);
+
+            layout->addStretch();
+            layout->addWidget(dbSettingsBtn);
+            layout->addWidget(lockBtn);
+            layout->addStretch();
         }
 
         DatabaseWidget* dbWidget() const
@@ -127,14 +127,20 @@ namespace
                 return;
             }
             connect(m_dbWidget, &DatabaseWidget::databaseLocked, this, [this]() {
+                if (!m_lockAct || !m_dbSettingsAct) {
+                    return;
+                }
                 m_lockAct->setText(tr("Unlock database"));
-                m_lockAct->setIcon(icons()->icon(QStringLiteral("object-locked")));
+                m_lockAct->setIcon(icons()->icon(QStringLiteral("object-unlocked")));
                 m_lockAct->setToolTip(tr("Unlock database to show more information"));
                 m_dbSettingsAct->setEnabled(false);
             });
             connect(m_dbWidget, &DatabaseWidget::databaseUnlocked, this, [this]() {
+                if (!m_lockAct || !m_dbSettingsAct) {
+                    return;
+                }
                 m_lockAct->setText(tr("Lock database"));
-                m_lockAct->setIcon(icons()->icon(QStringLiteral("object-unlocked")));
+                m_lockAct->setIcon(icons()->icon(QStringLiteral("object-locked")));
                 m_lockAct->setToolTip(tr("Lock database"));
                 m_dbSettingsAct->setEnabled(true);
             });
@@ -147,7 +153,7 @@ namespace
         QAction* m_lockAct = nullptr;
     };
 
-    class ManageSession : public QToolBar
+    class ManageSession : public QWidget
     {
         Q_OBJECT
 
@@ -155,17 +161,8 @@ namespace
 
     public:
         explicit ManageSession(QWidget* parent = nullptr)
-            : QToolBar(parent)
+            : QWidget(parent)
         {
-            setFloatable(false);
-            setMovable(false);
-
-            // use a dummy widget to center the buttons
-            auto spacer = new QWidget(this);
-            spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-            spacer->setVisible(true);
-            addWidget(spacer);
-
             auto disconnectAct = new QAction(tr("Disconnect"), this);
             disconnectAct->setIcon(icons()->icon(QStringLiteral("dialog-close")));
             disconnectAct->setToolTip(tr("Disconnect this application"));
@@ -174,13 +171,33 @@ namespace
                     m_client->disconnectDBus();
                 }
             });
-            addAction(disconnectAct);
 
-            // use a dummy widget to center the buttons
-            spacer = new QWidget(this);
-            spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-            spacer->setVisible(true);
-            addWidget(spacer);
+            auto resetAct = new QAction(tr("Reset"), this);
+            resetAct->setIcon(icons()->icon(QStringLiteral("refresh")));
+            resetAct->setToolTip(tr("Reset any remembered decisions for this application"));
+            connect(resetAct, &QAction::triggered, this, [this]() {
+                if (m_client) {
+                    m_client->clearAuthorization();
+                }
+            });
+
+            // layout
+            auto disconnectBtn = new QToolButton(this);
+            disconnectBtn->setAutoRaise(true);
+            disconnectBtn->setDefaultAction(disconnectAct);
+
+            auto resetBtn = new QToolButton(this);
+            resetBtn->setAutoRaise(true);
+            resetBtn->setDefaultAction(resetAct);
+
+            auto layout = new QHBoxLayout(this);
+            layout->setContentsMargins(1, 1, 1, 1);
+            layout->setSpacing(1);
+
+            layout->addStretch();
+            layout->addWidget(resetBtn);
+            layout->addWidget(disconnectBtn);
+            layout->addStretch();
         }
 
         const DBusClientPtr& client() const
