@@ -123,16 +123,6 @@
     </widget>
    </item>
    <item>
-    <widget class="MessageWidget" name="rememberMsg" native="true">
-     <property name="text" stdset="0">
-      <string>Your decision for above entries will be remembered for the duration the requesting client is running.</string>
-     </property>
-     <property name="closeButtonVisible" stdset="0">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">

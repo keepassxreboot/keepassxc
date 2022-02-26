@@ -66,16 +66,16 @@ public:
     {
         Rejected,
         AllowSelected,
+        AllowAll,
         DenyAll,
     };
 
     QHash<Entry*, AuthDecision> decisions() const;
 
 signals:
-    void finished(const QHash<Entry*, AuthDecision>& results);
+    void finished(const QHash<Entry*, AuthDecision>& results, AuthDecision forFutureEntries);
 
 private slots:
-    void rememberChecked(bool checked);
     void denyEntryClicked(Entry* entry, const QModelIndex& index);
     void dialogFinished(int result);
 

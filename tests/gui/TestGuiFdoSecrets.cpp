@@ -608,6 +608,62 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
     DBUS_COMPARE(item->locked(), false);
 }
 
+void TestGuiFdoSecrets::testServiceUnlockItemsIncludeFutureEntries()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+    VERIFY(sess);
+
+    DBUS_COMPARE(item->locked(), true);
+
+    {
+        DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+        // nothing is unlocked immediately without user's action
+        COMPARE(unlocked, {});
+
+        auto prompt = getProxy<PromptProxy>(promptPath);
+        VERIFY(prompt);
+        QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+        VERIFY(spyPromptCompleted.isValid());
+
+        // nothing is unlocked yet
+        COMPARE(spyPromptCompleted.count(), 0);
+        DBUS_COMPARE(item->locked(), true);
+
+        // drive the prompt
+        DBUS_VERIFY(prompt->Prompt(""));
+        // remember and include future entries
+        VERIFY(driveAccessControlDialog(true, true));
+
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
+        {
+            auto args = spyPromptCompleted.takeFirst();
+            COMPARE(args.size(), 2);
+            COMPARE(args.at(0).toBool(), false);
+            COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)), {QDBusObjectPath(item->path())});
+        }
+
+        // unlocked
+        DBUS_COMPARE(item->locked(), false);
+    }
+
+    // check other entries are also unlocked
+    {
+        DBUS_GET(itemPaths, coll->items());
+        VERIFY(itemPaths.size() > 1);
+        auto anotherItem = getProxy<ItemProxy>(itemPaths.last());
+        VERIFY(anotherItem);
+        DBUS_COMPARE(anotherItem->locked(), false);
+    }
+}
+
 void TestGuiFdoSecrets::testServiceLock()
 {
     auto service = enableService();
@@ -1635,7 +1691,7 @@ TestGuiFdoSecrets::encryptPassword(QByteArray value, QString contentType, const 
     return m_clientCipher->encrypt(ss.unmarshal(m_plugin->dbus())).marshal();
 }
 
-bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember)
+bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember, bool includeFutureEntries)
 {
     processEvents();
     for (auto w : QApplication::topLevelWidgets()) {
@@ -1647,7 +1703,13 @@ bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember)
             auto rememberCheck = dlg->findChild<QCheckBox*>("rememberCheck");
             VERIFY(rememberCheck);
             rememberCheck->setChecked(remember);
-            dlg->done(AccessControlDialog::AllowSelected);
+
+            if (includeFutureEntries) {
+                dlg->done(AccessControlDialog::AllowAll);
+            } else {
+                dlg->done(AccessControlDialog::AllowSelected);
+            }
+
             processEvents();
             VERIFY(dlg->isHidden());
             return true;

@@ -303,7 +303,7 @@ namespace FdoSecrets
                     }
                     continue;
                 }
-                // attach a temporary property so later we can get the item
+                // attach a temporary property, so later we can get the item
                 // back from the dialog's result
                 entry->setProperty(FdoSecretsBackend, QVariant::fromValue(item.data()));
                 entries << entry;
@@ -317,11 +317,11 @@ namespace FdoSecrets
             connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
             ac->open();
         } else {
-            itemUnlockFinished({});
+            itemUnlockFinished({}, AuthDecision::Undecided);
         }
     }
 
-    void UnlockPrompt::itemUnlockFinished(const QHash<Entry*, AuthDecision>& decisions)
+    void UnlockPrompt::itemUnlockFinished(const QHash<Entry*, AuthDecision>& decisions, AuthDecision forFutureEntries)
     {
         auto client = m_client.lock();
         if (!client) {
@@ -344,6 +344,9 @@ namespace FdoSecrets
             } else {
                 m_numRejected += 1;
             }
+        }
+        if (forFutureEntries != AuthDecision::Undecided) {
+            client->setAllAuthorized(forFutureEntries);
         }
         // if anything is not unlocked, treat the whole prompt as dismissed
         // so the client has a chance to handle the error
