@@ -333,8 +333,6 @@ if ($Merge) {
     Write-Host "Please merge the release branch back into the develop branch now and then push your changes."
     Write-Host "Don't forget to also push the tags using 'git push --tags'."
 } elseif ($Build) {
-    $OutDir = (Resolve-Path $OutDir).Path
-    $BuildDir = "$OutDir\build-release"
     $Vcpkg = (Resolve-Path $Vcpkg).Path
 
     # Find Visual Studio and establish build environment
@@ -372,6 +370,9 @@ if ($Merge) {
 
     # Create directories
     New-Item "$OutDir" -ItemType Directory -Force | Out-Null
+    $OutDir = (Resolve-Path $OutDir).Path
+
+    $BuildDir = "$OutDir\build-release"
     New-Item "$BuildDir" -ItemType Directory -Force | Out-Null
 
     # Enter build directory
