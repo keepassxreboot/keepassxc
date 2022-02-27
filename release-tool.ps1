@@ -133,11 +133,6 @@ function Test-VersionInFiles {
                 -pattern "<release version=`"$Version`" date=`"\d{4}-\d{2}-\d{2}`">" -Quiet)) {
         throw "share/linux/org.keepassxc.KeePassXC.appdata.xml does not contain a section for $Version."
     }
-
-    # Check Snapcraft
-    if (!(Select-String "$SourceDir\snap\snapcraft.yaml" -pattern "version: $Version" -Quiet)) {
-        throw "snap/snapcraft.yaml has not been updated to $Version."
-    }
 }
 
 function Test-WorkingTreeClean {
