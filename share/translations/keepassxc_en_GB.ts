@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>You must restart the application to set the new language. Would you like to restart now?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monochrome</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -796,30 +800,30 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation type="unfinished"/>
+        <translation>Returns expired credentials. String [expired] is added to the title.</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation type="unfinished"/>
+        <translation>Allow returning expired credentials</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation type="unfinished"/>
+        <translation>All databases connected to the extension will return matching credentials.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Search in all opened databases for matching credentials</translation>
     </message>
     <message>
         <source>Sort matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sort matching credentials by title</translation>
     </message>
     <message>
         <source>Sort matching credentials by username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sort matching credentials by username</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -828,12 +832,12 @@ chrome-laptop.</translation>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Never ask before accessing credentials</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Never ask before updating credentials</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
@@ -854,7 +858,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
-        <translation type="unfinished"/>
+        <translation>Do not prompt for KeePassHTTP settings migration.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
@@ -862,7 +866,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Update native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>Update native messaging manifest files at startup</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
@@ -871,15 +875,15 @@ chrome-laptop.</translation>
     <message>
         <source>Use a custom proxy location:</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation type="unfinished"/>
+        <translation>Use a custom proxy location:</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation type="unfinished"/>
+        <translation>Custom proxy location field</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation type="unfinished"/>
+        <translation>Browser for custom proxy file</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -888,11 +892,11 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
-        <translation type="unfinished"/>
+        <translation>Use a custom browser configuration location:</translation>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation type="unfinished"/>
+        <translation>Browser type:</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -900,11 +904,11 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Config Location:</source>
-        <translation type="unfinished"/>
+        <translation>Config Location:</translation>
     </message>
     <message>
         <source>Custom browser location field</source>
-        <translation type="unfinished"/>
+        <translation>Custom browser location field</translation>
     </message>
     <message>
         <source>~/.custom/config/Mozilla/native-messaging-hosts/</source>
@@ -912,7 +916,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Browse for custom browser path</source>
-        <translation type="unfinished"/>
+        <translation>Browse for custom browser path</translation>
     </message>
     <message>
         <source>Custom extension ID:</source>
@@ -1048,27 +1052,27 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation type="unfinished"/>
+        <translation>Text qualification</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation type="unfinished"/>
+        <translation>Field separation</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation type="unfinished"/>
+        <translation>Number of header lines to discard</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation type="unfinished"/>
+        <translation>CSV import preview</translation>
     </message>
     <message>
         <source>Column Association</source>
-        <translation type="unfinished"/>
+        <translation>Column Association</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Last Modified</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1100,19 +1104,27 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation type="unfinished"/>
+        <translation>Header lines skipped</translation>
     </message>
     <message>
         <source>First line has field names</source>
-        <translation type="unfinished"/>
+        <translation>First line has field names</translation>
     </message>
     <message>
         <source>Not Present</source>
-        <translation type="unfinished"/>
+        <translation>Not Present</translation>
     </message>
     <message>
         <source>Column %1</source>
-        <translation type="unfinished"/>
+        <translation>Column %1</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Icon</translation>
     </message>
 </context>
 <context>
@@ -1160,19 +1172,20 @@ chrome-laptop.</translation>
     <message>
         <source>%1
 Backup database located at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1
+Backup database located at %2</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"/>
+        <translation>Could not save, database does not point to a valid file.</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation type="unfinished"/>
+        <translation>Could not save, database file is read-only.</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation type="unfinished"/>
+        <translation>Database file has unmerged changes.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1185,7 +1198,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation type="unfinished"/>
+        <translation>Database save is already in progress.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
@@ -1210,20 +1223,6 @@ Backup database located at %2</source>
         <translation>Refresh</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Legacy key file format</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Don&apos;t show this warning again</translation>
     </message>
@@ -1241,27 +1240,27 @@ Please consider generating a new key file.</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Failed to open key file: %1</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>Unlock KeePassXC Database</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>Enter Password:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Password field</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Hardware key slot selection</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>Browse for key file</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1269,31 +1268,23 @@ Please consider generating a new key file.</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Refresh hardware tokens</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
+        <translation>Hardware Key:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>Hardware key help</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Clear</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation type="unfinished"/>
+        <translation>Touch ID for Quick Unlock</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation type="unfinished"/>
+        <translation>Unlock failed and no password given</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
@@ -1304,33 +1295,35 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation type="unfinished"/>
+        <translation>Retry with empty password</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation type="unfinished"/>
+        <translation>Enter Additional Credentials (if any):</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file help</source>
-        <translation type="unfinished"/>
+        <translation>Key file help</translation>
     </message>
     <message>
         <source>?</source>
-        <translation type="unfinished"/>
+        <translation>?</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation type="unfinished"/>
+        <translation>Cannot use database file as key file</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation type="unfinished"/>
+        <translation>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
@@ -1338,7 +1331,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation type="unfinished"/>
+        <translation>Key file to unlock the database</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
@@ -1346,15 +1339,23 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation type="unfinished"/>
+        <translation>Detecting hardware keys…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation type="unfinished"/>
+        <translation>No hardware keys detected</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation type="unfinished"/>
+        <translation>Select hardware key…</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Old key file format</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -1388,7 +1389,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Database Credentials</translation>
     </message>
 </context>
 <context>
@@ -1499,19 +1500,19 @@ This is necessary to maintain compatibility with the browser plugin.</translatio
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation type="unfinished"/>
+        <translation>Stored browser keys</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>Remove selected key</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser custom data</source>
-        <translation type="unfinished"/>
+        <translation>Move KeePassHTTP attributes to KeePassXC-Browser custom data</translation>
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation type="unfinished"/>
+        <translation>Refresh database root group ID</translation>
     </message>
     <message>
         <source>Created</source>
@@ -1519,12 +1520,13 @@ This is necessary to maintain compatibility with the browser plugin.</translatio
     </message>
     <message>
         <source>Refresh database ID</source>
-        <translation type="unfinished"/>
+        <translation>Refresh database ID</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation type="unfinished"/>
+        <translation>Do you really want refresh the database ID?
+This is only necessary if your database is a copy of another and the browser extension cannot connect.</translation>
     </message>
 </context>
 <context>
@@ -1547,7 +1549,7 @@ Are you sure you want to continue without a password?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation type="unfinished"/>
+        <translation>Continue without password</translation>
     </message>
     <message>
         <source>No encryption key added</source>
@@ -1563,7 +1565,7 @@ Are you sure you want to continue without a password?</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation type="unfinished"/>
+        <translation>Failed to change database credentials</translation>
     </message>
 </context>
 <context>
@@ -1687,31 +1689,31 @@ If you keep this number, your database may be too easy to crack!</translation>
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation type="unfinished"/>
+        <translation>Change existing decryption time</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Decryption time in seconds</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation type="unfinished"/>
+        <translation>Database format</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Encryption algorithm</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation type="unfinished"/>
+        <translation>Key derivation function</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>Transform rounds</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>Memory usage</translation>
     </message>
     <message>
         <source>Parallelism</source>
@@ -1719,30 +1721,30 @@ If you keep this number, your database may be too easy to crack!</translation>
     </message>
     <message>
         <source>?? ms</source>
-        <translation type="unfinished"/>
+        <translation>?? ms</translation>
     </message>
     <message>
         <source>? s</source>
-        <translation type="unfinished"/>
+        <translation>? s</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation type="unfinished"/>
+        <translation>Exposed Entries</translation>
     </message>
     <message>
         <source>Don&apos;t expose this database</source>
-        <translation type="unfinished"/>
+        <translation>Don&apos;t expose this database</translation>
     </message>
     <message>
         <source>Expose entries under this group:</source>
-        <translation type="unfinished"/>
+        <translation>Expose entries under this group:</translation>
     </message>
     <message>
         <source>Enable Secret Service to access these settings.</source>
-        <translation type="unfinished"/>
+        <translation>Enable Secret Service to access these settings.</translation>
     </message>
 </context>
 <context>
@@ -1789,19 +1791,19 @@ If you keep this number, your database may be too easy to crack!</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>Database name field</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>Database description field</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation type="unfinished"/>
+        <translation>Default username field</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation type="unfinished"/>
+        <translation>Maximum number of history items per entry</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
@@ -1869,11 +1871,11 @@ This action is not reversible.</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>Database name field</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>Database description field</translation>
     </message>
 </context>
 <context>
@@ -2287,6 +2289,15 @@ Disable safe saves and try again?</translation>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2484,6 +2495,14 @@ Disable safe saves and try again?</translation>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2560,7 +2579,7 @@ Disable safe saves and try again?</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Password field</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
@@ -2605,6 +2624,10 @@ Disable safe saves and try again?</translation>
     <message>
         <source>Expires:</source>
         <translation>Expires:</translation>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2832,7 +2855,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Password field</translation>
     </message>
     <message>
         <source>Clear fields</source>
@@ -2903,6 +2926,10 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Group</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3402,11 +3429,6 @@ Are you sure to add this file?</source>
         <translation>[PROTECTED]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Enabled</translation>
     </message>
@@ -3426,6 +3448,15 @@ Are you sure to add this file?</source>
         <source>Advanced</source>
         <translation>Advanced</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3436,18 +3467,6 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Customise View</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Hide Usernames</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Hide Passwords</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Fit to window</translation>
@@ -3480,14 +3499,14 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation type="unfinished"/>
+    </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3737,7 +3756,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map entry name length</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
@@ -3929,39 +3948,39 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid EnableSearching value</translation>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation type="unfinished"/>
+        <translation>No group uuid found</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation type="unfinished"/>
+        <translation>Null DeleteObject uuid</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation type="unfinished"/>
+        <translation>Missing DeletedObject uuid or time</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation type="unfinished"/>
+        <translation>Null entry uuid</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry icon number</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation type="unfinished"/>
+        <translation>History element in history entry</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation type="unfinished"/>
+        <translation>No entry uuid found</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation type="unfinished"/>
+        <translation>History element with different uuid</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
@@ -3969,23 +3988,23 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>Entry string key or value missing</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>Entry binary key or value missing</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation type="unfinished"/>
+        <translation>Auto-type association window or sequence missing</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid bool value</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid date time value</translation>
     </message>
     <message>
         <source>Invalid color value</source>
@@ -3997,16 +4016,16 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid number value</translation>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid uuid value</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation type="unfinished"/>
+        <translation>Unable to decompress binary</translation>
     </message>
     <message>
         <source>XML error:
@@ -4053,7 +4072,7 @@ Line %2, column %3</source>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation type="unfinished"/>
+        <translation>Unable to read keyfile.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -4065,20 +4084,20 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation type="unfinished"/>
+        <translation>Unsupported KeePass database version.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>Unable to read encryption IV</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation type="unfinished"/>
+        <translation>Invalid number of groups</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation type="unfinished"/>
+        <translation>Invalid number of entries</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
@@ -4090,7 +4109,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>Invalid number of transform rounds</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
@@ -4106,7 +4125,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation type="unfinished"/>
+        <translation>Invalid group field type number</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
@@ -4114,23 +4133,23 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>Read group field data doesn&apos;t match size</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group id field size</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group creation time field size</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group modification time field size</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group access time field size</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
@@ -4138,51 +4157,51 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group icon field size</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group level field size</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation type="unfinished"/>
+        <translation>Invalid group field type</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation type="unfinished"/>
+        <translation>Missing group id or level</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation type="unfinished"/>
+        <translation>Missing entry field type number</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry field size</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>Read entry field data doesn&apos;t match size</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry uuid field size</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry group id field size</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry icon field size</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry creation time field size</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry modification time field size</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
@@ -4190,7 +4209,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry field type</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
@@ -4307,10 +4326,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Legacy key file format</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation type="unfinished"/>
@@ -4340,23 +4355,11 @@ Message: %2</source>
         <translation>Select a key file</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Browse...</source>
-        <translation>Browse...</translation>
+        <translation>Browse for key file</translation>
     </message>
     <message>
         <source>Generate a new key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -4377,10 +4380,23 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
+        <source>Old key file format</source>
+        <translation>Old key file format</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4842,6 +4858,18 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>{PASSWORD}{ENTER}</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Always on Top</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Hide Usernames</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Hide Passwords</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -4983,7 +5011,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Database Credentials</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
@@ -5089,27 +5117,27 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation type="unfinished"/>
+        <translation>Invalid key file, expecting an OpenSSH key</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
+        <translation>PEM boundary mismatch</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation type="unfinished"/>
+        <translation>Base64 decoding failed</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation type="unfinished"/>
+        <translation>Key file way too small.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation type="unfinished"/>
+        <translation>Key file magic header id invalid</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation type="unfinished"/>
+        <translation>Found zero keys</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
@@ -5117,15 +5145,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation type="unfinished"/>
+        <translation>Corrupted key file, reading private key failed</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation type="unfinished"/>
+        <translation>No private key payload to decrypt</translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation type="unfinished"/>
+        <translation>Trying to run KDF without cipher</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
@@ -5133,11 +5161,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation type="unfinished"/>
+        <translation>Key derivation failed, key file corrupted?</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation type="unfinished"/>
+        <translation>Decryption failed, wrong passphrase?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
@@ -5149,7 +5177,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>Can&apos;t write public key as it is empty</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
@@ -5157,7 +5185,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>Can&apos;t write private key as it is empty</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
@@ -5231,7 +5259,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Password field</translation>
     </message>
     <message>
         <source>Repeat password field</source>
@@ -5242,16 +5270,16 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>%p%</source>
-        <translation type="unfinished"/>
+        <translation>%p%</translation>
     </message>
     <message>
         <source>strength</source>
         <comment>Password strength</comment>
-        <translation type="unfinished"/>
+        <translation>strength</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation type="unfinished"/>
+        <translation>entropy</translation>
     </message>
     <message>
         <source>Password</source>
@@ -5263,7 +5291,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Numbers</source>
-        <translation type="unfinished"/>
+        <translation>Numbers</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
@@ -5279,7 +5307,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Length:</translation>
     </message>
     <message>
         <source>Passphrase</source>
@@ -5287,11 +5315,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation type="unfinished"/>
+        <translation>Wordlist:</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation type="unfinished"/>
+        <translation>Word Separator:</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5299,31 +5327,31 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation type="unfinished"/>
+        <translation>Entropy: %1 bit</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation type="unfinished"/>
+        <translation>Password Quality: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Poor</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Weak</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Good</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Excellent</translation>
     </message>
     <message>
         <source>Switch to advanced mode</source>
@@ -5363,10 +5391,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Hex</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5462,15 +5486,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Clear</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Special Characters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5600,7 +5624,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC association failed, try again</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
@@ -5608,7 +5632,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect action</translation>
     </message>
     <message>
         <source>Empty message received</source>
@@ -5640,7 +5664,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>path</source>
-        <translation type="unfinished"/>
+        <translation>path</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
@@ -5648,7 +5672,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"/>
+        <translation>username</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
@@ -5668,7 +5692,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"/>
+        <translation>length</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
@@ -5677,7 +5701,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation type="unfinished"/>
+        <translation>Path of the entry to clip.</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
@@ -5693,7 +5717,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>title</source>
-        <translation type="unfinished"/>
+        <translation>title</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
@@ -5712,18 +5736,14 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Perform advanced analysis on the password.</translation>
     </message>
     <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>
 
 Available commands:
 </source>
-        <translation type="unfinished"/>
+        <translation>
+
+Available commands:
+</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
@@ -5735,7 +5755,7 @@ Available commands:
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation type="unfinished"/>
+        <translation>Path of the group to list. Default is /</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
@@ -5771,7 +5791,7 @@ Available commands:
     </message>
     <message>
         <source>attribute</source>
-        <translation type="unfinished"/>
+        <translation>attribute</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
@@ -5779,19 +5799,19 @@ Available commands:
     </message>
     <message>
         <source>NULL device</source>
-        <translation type="unfinished"/>
+        <translation>NULL device</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation type="unfinished"/>
+        <translation>error reading from device</translation>
     </message>
     <message>
         <source>malformed string</source>
-        <translation type="unfinished"/>
+        <translation>malformed string</translation>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation type="unfinished"/>
+        <translation>missing closing quote</translation>
     </message>
     <message>
         <source>Group</source>
@@ -5815,7 +5835,7 @@ Available commands:
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Last Modified</translation>
     </message>
     <message>
         <source>Created</source>
@@ -6101,16 +6121,12 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 4)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Invalid Settings</source>
@@ -6192,10 +6208,6 @@ Available commands:
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Parent window handle</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6684,10 +6696,6 @@ Kernel: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation type="unfinished"/>
     </message>
@@ -6713,39 +6721,98 @@ Kernel: %3 %4</translation>
         <comment>seconds</comment>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Icon</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Locked databases.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation type="unfinished"/>
+        <translation>Internal zlib error when compressing: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Error writing to underlying device: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Error opening underlying device: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Error reading data from underlying device: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation type="unfinished"/>
+        <translation>Internal zlib error when decompressing: </translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation type="unfinished"/>
+        <translation>The gzip format not supported in this version of zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation type="unfinished"/>
+        <translation>Internal zlib error: </translation>
     </message>
 </context>
 <context>
@@ -6770,7 +6837,7 @@ Kernel: %3 %4</translation>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Poor</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
@@ -6779,7 +6846,7 @@ Kernel: %3 %4</translation>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Weak</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
@@ -7137,10 +7204,6 @@ Kernel: %3 %4</translation>
         <translation>Search</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Clear</translation>
-    </message>
-    <message>
         <source>Limit search to selected group</source>
         <translation>Limit search to selected group</translation>
     </message>
@@ -7419,10 +7482,6 @@ Kernel: %3 %4</translation>
         <source>Could not write export container</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7490,10 +7549,6 @@ Kernel: %3 %4</translation>
         <source>File does not exist</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>ShareObserver</name>
@@ -7534,11 +7589,11 @@ Kernel: %3 %4</translation>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation type="unfinished"/>
+        <translation>Timed Password</translation>
     </message>
     <message>
         <source>000000</source>
-        <translation type="unfinished"/>
+        <translation>000000</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -7602,7 +7657,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation type="unfinished"/>
+        <translation>Code size:</translation>
     </message>
     <message>
         <source>Secret Key:</source>
@@ -7720,7 +7775,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation type="unfinished"/>
+        <translation>Import from KeePass 1</translation>
     </message>
     <message>
         <source>Import from CSV</source>
@@ -7806,11 +7861,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Refresh hardware tokens</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Hardware key slot selection</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
@@ -7822,11 +7877,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation type="unfinished"/>
+        <translation>Detecting hardware keys…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation type="unfinished"/>
+        <translation>No hardware keys detected</translation>
     </message>
 </context>
 </TS>
