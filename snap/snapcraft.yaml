@@ -1,51 +1,36 @@
 name: keepassxc
-version: 2.7.0
+adopt-info: keepassxc
 grade: stable
-summary: Community-driven port of the Windows application “KeePass Password Safe”
-description: |
-  KeePassXC is an application for people with extremely high demands on secure
-  personal data management. It has a light interface, is cross-platform and
-  published under the terms of the GNU General Public License.
-confinement: strict
 base: core18
+confinement: strict
 compression: lzo
-
-plugs: # plugs for theming, font settings, cursor and to use gtk3 file chooser
-  gtk-3-themes:
-    interface: content
-    target: $SNAP/data-dir/themes
-    default-provider: gtk-common-themes:gtk-3-themes
-  icon-themes:
-    interface: content
-    target: $SNAP/data-dir/icons
-    default-provider: gtk-common-themes:icon-themes
-  sound-themes:
-    interface: content
-    target: $SNAP/data-dir/sounds
-    default-provider: gtk-common-themes:sounds-themes
 
 apps:
   keepassxc:
-    adapter: full
-    command: usr/bin/keepassxc -style fusion
-    command-chain:
-      - bin/desktop-launch
-      - bin/gtk3-env-launch
-    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb, wayland, desktop-legacy, desktop]
-    desktop: usr/share/applications/org.keepassxc.KeePassXC.desktop
-    environment:
-      DISABLE_WAYLAND: 1
+    command: keepassxc
+    common-id: org.keepassxc.KeePassXC.desktop
+    extensions: [kde-neon]
+    plugs: [kde-frameworks-5-plug, home, unity7, network, network-bind, removable-media, raw-usb]
   cli:
     command: keepassxc-cli
-    plugs: [x11, gsettings, home, removable-media, raw-usb]
+    extensions: [kde-neon]
+    plugs: [home, removable-media, raw-usb]
   proxy:
     command: keepassxc-proxy
+    extensions: [kde-neon]
     plugs: [home]
+    
+slots:
+  session-dbus-interface:
+    interface: dbus
+    name: org.keepassxc.KeePassXC.MainWindow
+    bus: session
 
 parts:
   keepassxc:
     source: .
     plugin: cmake
+    parse-info: [usr/share/metainfo/org.keepassxc.KeePassXC.appdata.xml]
     configflags:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
@@ -53,79 +38,31 @@ parts:
       - -DKEEPASSXC_BUILD_TYPE=Release
       - -DWITH_TESTS=OFF
       - -DWITH_XC_ALL=ON
+    build-snaps:
+      - kde-frameworks-5-core18-sdk
+      - kde-frameworks-5-core18
     build-packages:
       - g++
-      - libgcrypt20-dev
+      - libbotan-2-dev
       - libqt5x11extras5-dev
       - libqt5svg5-dev
-      - qtbase5-dev
       - qtbase5-private-dev
       - qttools5-dev
       - qttools5-dev-tools
       - zlib1g-dev
       - libxi-dev
       - libxtst-dev
-      - libyubikey-dev
-      - libykpers-1-dev
-      - libsodium-dev
-      - libargon2-0-dev
       - libqrencode-dev
+      - libusb-1.0-0-dev
       - libminizip-dev
       - asciidoctor
     stage-packages:
       - dbus
-      - qttranslations5-l10n # common translations
-      - libgcrypt20
-      - libykpers-1-1
-      - libargon2-0
-      - libsodium23
+      - botan
       - libxtst6
       - libqt5x11extras5
       - libqt5svg5
-      - try: [libqrencode3, libqrencode4]
       - libqt5concurrent5
-      - libquazip5-1
-      - libusb-1.0-0
-      - qtwayland5
-      - qt5-gtk-platformtheme # for theming, font settings, cursor and to use gtk3 file chooser
       - libqrencode3
+      - libusb-1.0-0
       - xclip
-    override-build: |
-      snapcraftctl build
-      sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
-    organize:
-      usr/share/qt5/translations/*.qm: usr/share/keepassxc/translations/
-    stage:
-      - -opt
-    after: [desktop-qt5]
-
-  launchers: # custom launcher to set QT_QPA_PLATFORMTHEME=gtk3 correctly
-    source: snap/local/launchers
-    plugin: dump
-    organize:
-      '*': bin/
-    stage:
-      - -bin/README.*
-
-  desktop-qt5:
-      source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-      source-subdir: qt
-      plugin: make
-      make-parameters: ["FLAVOR=qt5"]
-      build-packages:
-        - qtbase5-dev
-        - dpkg-dev
-      stage-packages:
-        - libxkbcommon0
-        - ttf-ubuntu-font-family
-        - dmz-cursor-theme
-        - light-themes
-        - adwaita-icon-theme
-        - gnome-themes-standard
-        - shared-mime-info
-        - libqt5gui5
-        - libgdk-pixbuf2.0-0
-        - libgtk2.0-0
-        - libqt5svg5 # for loading icon themes which are svg
-        - try: [appmenu-qt5] # not available on core18
-        - locales-all
