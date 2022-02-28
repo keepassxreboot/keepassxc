@@ -1,22 +1,22 @@
 name: keepassxc
 adopt-info: keepassxc
 grade: stable
-base: core18
+base: core20
 confinement: strict
 compression: lzo
 
 apps:
   keepassxc:
-    command: keepassxc
+    command: usr/bin/keepassxc
     common-id: org.keepassxc.KeePassXC.desktop
     extensions: [kde-neon]
-    plugs: [kde-frameworks-5-plug, home, unity7, network, network-bind, removable-media, raw-usb]
+    plugs: [home, unity7, network, network-bind, removable-media, raw-usb]
   cli:
-    command: keepassxc-cli
+    command: usr/bin/keepassxc-cli
     extensions: [kde-neon]
     plugs: [home, removable-media, raw-usb]
   proxy:
-    command: keepassxc-proxy
+    command: usr/bin/keepassxc-proxy
     extensions: [kde-neon]
     plugs: [home]
     
@@ -31,38 +31,31 @@ parts:
     source: .
     plugin: cmake
     parse-info: [usr/share/metainfo/org.keepassxc.KeePassXC.appdata.xml]
-    configflags:
+    cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DKEEPASSXC_DIST_TYPE=Snap
       - -DKEEPASSXC_BUILD_TYPE=Release
       - -DWITH_TESTS=OFF
       - -DWITH_XC_ALL=ON
-    build-snaps:
-      - kde-frameworks-5-core18-sdk
-      - kde-frameworks-5-core18
+      - -DWITH_XC_UPDATECHECK=OFF
     build-packages:
       - g++
       - libbotan-2-dev
-      - libqt5x11extras5-dev
-      - libqt5svg5-dev
-      - qtbase5-private-dev
-      - qttools5-dev
-      - qttools5-dev-tools
       - zlib1g-dev
-      - libxi-dev
-      - libxtst-dev
       - libqrencode-dev
       - libusb-1.0-0-dev
+      - libreadline-dev
+      - libpcsclite-dev
       - libminizip-dev
+      - libxi-dev
       - asciidoctor
     stage-packages:
       - dbus
-      - botan
-      - libxtst6
-      - libqt5x11extras5
-      - libqt5svg5
-      - libqt5concurrent5
-      - libqrencode3
+      - libbotan-2-12
+      - libqrencode4
       - libusb-1.0-0
+      - libreadline8
+      - libpcsclite1
+      - libminizip1
       - xclip
