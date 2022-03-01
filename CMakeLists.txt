@@ -33,6 +33,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 # Support Visual Studio Code
 include(CMakeToolsHelpers OPTIONAL)
 include(FeatureSummary)
+include(KPXCHelpers)
 
 include(CheckCCompilerFlag)
 include(CheckCXXCompilerFlag)
