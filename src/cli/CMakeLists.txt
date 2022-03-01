@@ -71,10 +71,13 @@ endif()
 
 if(APPLE AND WITH_APP_BUNDLE)
     set(CLI_APP_DIR "${CMAKE_BINARY_DIR}/src/${CLI_INSTALL_DIR}")
+
     add_custom_command(TARGET keepassxc-cli
             POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/keepassxc-cli ${CLI_APP_DIR}/keepassxc-cli
-            COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app -executable=${CLI_APP_DIR}/keepassxc-cli -no-plugins 2> /dev/null
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
-            COMMENT "Deploying keepassxc-cli")
+            COMMENT "Copying keepassxc-cli into app bundle")
+
+    kpxc_run_macdeployqt_on_installed_helper_binary(
+        "${PROGNAME}" "${CLI_INSTALL_DIR}/keepassxc-cli")
 endif()

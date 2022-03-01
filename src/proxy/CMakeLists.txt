@@ -34,9 +34,11 @@ if(WITH_XC_BROWSER)
         add_custom_command(TARGET keepassxc-proxy
                 POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/keepassxc-proxy ${PROXY_APP_DIR}/keepassxc-proxy
-                COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app -executable=${PROXY_APP_DIR}/keepassxc-proxy -no-plugins 2> /dev/null
                 WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
-                COMMENT "Deploying keepassxc-proxy")
+                COMMENT "Copying keepassxc-proxy into app bundle")
+
+        kpxc_run_macdeployqt_on_installed_helper_binary(
+            "${PROGNAME}" "${PROXY_INSTALL_DIR}/keepassxc-proxy")
     endif()
 
     if(WIN32)
