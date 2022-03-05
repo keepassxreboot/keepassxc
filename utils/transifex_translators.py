@@ -13,8 +13,6 @@ LANGS = {
     "da" : "dansk (Danish)",
     "de" : "Deutsch (German)",
     "el" : "ελληνικά (Greek)",
-    "en_GB" : "English (UK)",
-    "en_US" : "English (USA)",
     "eo" : "Esperanto (Esperanto)",
     "es" : "Español (Spanish)",
     "et" : "eesti (Estonian)",
