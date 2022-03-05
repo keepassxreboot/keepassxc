@@ -494,6 +494,10 @@ if(BOTAN2_VERSION VERSION_LESS "2.11.0")
     message(FATAL_ERROR "Botan2 2.11.0 or higher is required")
 endif()
 include_directories(SYSTEM ${BOTAN2_INCLUDE_DIR})
+# Find Argon2 -- Botan 2.18 and below does not support threaded Argon2
+find_library(ARGON2_LIBRARIES NAMES argon2)
+find_path(ARGON2_INCLUDE_DIR NAMES argon2.h PATH_SUFFIXES local/include)
+include_directories(SYSTEM ${ARGON2_INCLUDE_DIR})
 
 # Find zlib
 find_package(ZLIB REQUIRED)
