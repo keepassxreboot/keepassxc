@@ -336,6 +336,7 @@ target_link_libraries(keepassx_core
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
+        ${ARGON2_LIBRARIES}
         ${thirdparty_LIBRARIES}
 	)
 

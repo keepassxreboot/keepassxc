@@ -1,0 +1,7 @@
+{
+  "name": "argon2",
+  "version-string": "20190702",
+  "port-version": 1,
+  "description": "Reference C implementation of Argon2, the password-hashing function that won the Password Hashing Competition (PHC).",
+  "homepage": "https://github.com/P-H-C/phc-winner-argon2"
+}
