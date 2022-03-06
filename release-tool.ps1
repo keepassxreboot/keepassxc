@@ -37,7 +37,6 @@ param(
     [Parameter(ParameterSetName = "merge", Mandatory, Position = 1)]
     [Parameter(ParameterSetName = "build", Mandatory, Position = 1)]
     [Parameter(ParameterSetName = "sign", Mandatory, Position = 1)]
-    [ValidatePattern("^[0-9]\.[0-9]\.[0-9]$")]
     [string] $Version,
 
     [Parameter(ParameterSetName = "build", Mandatory)]
@@ -258,7 +257,7 @@ if ($ExtraPath) {
 $SourceDir = (Resolve-Path $SourceDir).Path
 
 # Check format of -Version
-if ($Version -notmatch "^\d+\.\d+\.\d+$") {
+if ($Version -notmatch "^\d+\.\d+\.\d+(-Beta\d*)?$") {
     throw "Invalid format for -Version input"
 }
 
@@ -349,7 +348,7 @@ if ($Merge) {
             Remove-Item $OutDir -Recurse
         }
         
-        if ($Version -match "-beta\\d+$") {
+        if ($Version -match "-beta\d*$") {
             $CMakeOptions = "$CMakeOptions -DKEEPASSXC_BUILD_TYPE=PreRelease"
         } else {
             $CMakeOptions = "$CMakeOptions -DKEEPASSXC_BUILD_TYPE=Release"
