@@ -43,34 +43,29 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <widget class="QToolButton" name="helpButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>14</width>
-         <height>14</height>
-        </size>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="toolTip">
         <string>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
 Ctrl+F - Toggle database search&lt;br/&gt;
 Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;/p&gt;</string>
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QToolButton {
+	border: none;
+	background: none;
+}</string>
        </property>
        <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="../../share/icons/icons.qrc">:/icons/application/scalable/actions/system-help.svg</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
+        <string notr="true">?</string>
        </property>
       </widget>
      </item>

@@ -65,3 +65,14 @@ AutoTypeAction::Result AutoTypeBegin::exec(AutoTypeExecutor* executor) const
 {
     return executor->execBegin(this);
 }
+
+AutoTypeMode::AutoTypeMode(AutoTypeExecutor::Mode mode)
+    : mode(mode)
+{
+}
+
+AutoTypeAction::Result AutoTypeMode::exec(AutoTypeExecutor* executor) const
+{
+    executor->mode = mode;
+    return AutoTypeAction::Result::Ok();
+}

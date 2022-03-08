@@ -45,7 +45,7 @@ public:
     void setSearchString(const QString& search);
 
 signals:
-    void matchActivated(AutoTypeMatch match);
+    void matchActivated(AutoTypeMatch match, bool virtualMode = false);
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
@@ -69,6 +69,7 @@ private:
     QTimer m_searchTimer;
     QPointer<QMenu> m_actionMenu;
 
+    bool m_virtualMode = false;
     bool m_accepted = false;
 };
 

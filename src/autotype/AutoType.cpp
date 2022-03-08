@@ -254,7 +254,10 @@ void AutoType::unregisterGlobalShortcut()
 /**
  * Core Autotype function that will execute actions
  */
-void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, const QString& sequence, WId window)
+void AutoType::executeAutoTypeActions(const Entry* entry,
+                                      const QString& sequence,
+                                      WId window,
+                                      AutoTypeExecutor::Mode mode)
 {
     QString error;
     auto actions = parseSequence(sequence, entry, error);
@@ -274,7 +277,8 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
         return;
     }
 
-    if (hideWindow) {
+    // Explicitly hide the main window if no target window is specified
+    if (window == 0) {
 #if defined(Q_OS_MACOS)
         // Check for accessibility permission
         if (!macUtils()->enableAccessibility()) {
@@ -289,19 +293,21 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
         macUtils()->raiseLastActiveWindow();
         m_plugin->hideOwnWindow();
 #else
-        getMainWindow()->minimizeOrHide();
+        if (getMainWindow()) {
+            getMainWindow()->minimizeOrHide();
+        }
 #endif
-    }
-
-    // Restore window state in case app stole focus
-    restoreWindowState();
-    QCoreApplication::processEvents();
-    m_plugin->raiseWindow(m_windowForGlobal);
-
-    // Used only for selected entry auto-type
-    if (!window) {
+        QCoreApplication::processEvents();
         window = m_plugin->activeWindow();
+    } else {
+        // Restore window state (macOS only) then raise the target window
+        restoreWindowState();
+        QCoreApplication::processEvents();
+        m_plugin->raiseWindow(window);
     }
+
+    // Restore executor mode
+    m_executor->mode = mode;
 
     int delay = qMax(100, config()->get(Config::AutoTypeStartDelay).toInt());
     Tools::wait(delay);
@@ -346,7 +352,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
  * Single Autotype entry-point function
  * Look up the Auto-Type sequence for the given entry then perfom Auto-Type in the active window
  */
-void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
+void AutoType::performAutoType(const Entry* entry)
 {
     if (!m_plugin) {
         return;
@@ -354,7 +360,7 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
 
     auto sequences = entry->autoTypeSequences();
     if (!sequences.isEmpty()) {
-        executeAutoTypeActions(entry, hideWindow, sequences.first());
+        executeAutoTypeActions(entry, sequences.first());
     }
 }
 
@@ -362,13 +368,13 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
  * Extra Autotype entry-point function
  * Perfom Auto-Type of the directly specified sequence in the active window
  */
-void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& sequence, QWidget* hideWindow)
+void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& sequence)
 {
     if (!m_plugin) {
         return;
     }
 
-    executeAutoTypeActions(entry, hideWindow, sequence);
+    executeAutoTypeActions(entry, sequence);
 }
 
 void AutoType::startGlobalAutoType(const QString& search)
@@ -467,12 +473,19 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         }
 
         connect(getMainWindow(), &MainWindow::databaseLocked, selectDialog, &AutoTypeSelectDialog::reject);
-        connect(selectDialog, &AutoTypeSelectDialog::matchActivated, this, [this](const AutoTypeMatch& match) {
-            m_lastMatch = match;
-            m_lastMatchRetypeTimer.start(config()->get(Config::GlobalAutoTypeRetypeTime).toInt() * 1000);
-            executeAutoTypeActions(match.first, nullptr, match.second, m_windowForGlobal);
-            resetAutoTypeState();
-        });
+        connect(selectDialog,
+                &AutoTypeSelectDialog::matchActivated,
+                this,
+                [this](const AutoTypeMatch& match, bool virtualMode) {
+                    m_lastMatch = match;
+                    m_lastMatchRetypeTimer.start(config()->get(Config::GlobalAutoTypeRetypeTime).toInt() * 1000);
+                    executeAutoTypeActions(match.first,
+                                           match.second,
+                                           m_windowForGlobal,
+                                           virtualMode ? AutoTypeExecutor::Mode::VIRTUAL
+                                                       : AutoTypeExecutor::Mode::NORMAL);
+                    resetAutoTypeState();
+                });
         connect(selectDialog, &QDialog::rejected, this, [this] {
             restoreWindowState();
             resetAutoTypeState();
@@ -488,7 +501,7 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         selectDialog->activateWindow();
     } else if (!matchList.isEmpty()) {
         // Only one match and not asking, do it!
-        executeAutoTypeActions(matchList.first().first, nullptr, matchList.first().second, m_windowForGlobal);
+        executeAutoTypeActions(matchList.first().first, matchList.first().second, m_windowForGlobal);
         resetAutoTypeState();
     } else {
         // We should never get here
@@ -717,6 +730,12 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
                 error = tr("Invalid conversion syntax: %1").arg(fullPlaceholder);
                 return {};
             }
+        } else if (placeholder.startsWith("mode=")) {
+            auto mode = AutoTypeExecutor::Mode::NORMAL;
+            if (placeholder.endsWith("virtual")) {
+                mode = AutoTypeExecutor::Mode::VIRTUAL;
+            }
+            actions << QSharedPointer<AutoTypeMode>::create(mode);
         } else if (placeholder == "beep" || placeholder.startsWith("vkey") || placeholder.startsWith("appactivate")
                    || placeholder.startsWith("c:")) {
             // Ignore these commands
