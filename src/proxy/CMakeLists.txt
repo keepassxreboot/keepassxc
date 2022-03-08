@@ -37,8 +37,8 @@ if(WITH_XC_BROWSER)
                 WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
                 COMMENT "Copying keepassxc-proxy into app bundle")
 
-        kpxc_run_macdeployqt_on_installed_helper_binary(
-            "${PROGNAME}" "${PROXY_INSTALL_DIR}/keepassxc-proxy")
+        set_property(GLOBAL APPEND PROPERTY
+            _MACDEPLOYQT_EXTRA_BINARIES "${PROXY_INSTALL_DIR}/keepassxc-proxy")
     endif()
 
     if(WIN32)

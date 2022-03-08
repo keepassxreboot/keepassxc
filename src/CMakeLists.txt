@@ -409,12 +409,6 @@ if(APPLE AND WITH_APP_BUNDLE)
     set(CPACK_STRIP_FILES ON)
     set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}")
     include(CPack)
-
-    add_custom_command(TARGET ${PROGNAME}
-            POST_BUILD
-            COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app 2> /dev/null
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
-            COMMENT "Deploying app bundle")
 endif()
 
 install(TARGETS ${PROGNAME}
@@ -530,3 +524,7 @@ if(WIN32)
     endif()
 
 endif()
+
+# The install commands in this subdirectory will be executed after all the install commands in the
+# current scope are ran. It is required for correct functtioning of macdeployqt.
+add_subdirectory(post_install)

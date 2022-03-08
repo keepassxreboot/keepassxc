@@ -77,7 +77,6 @@ if(APPLE AND WITH_APP_BUNDLE)
             COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/keepassxc-cli ${CLI_APP_DIR}/keepassxc-cli
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
             COMMENT "Copying keepassxc-cli into app bundle")
-
-    kpxc_run_macdeployqt_on_installed_helper_binary(
-        "${PROGNAME}" "${CLI_INSTALL_DIR}/keepassxc-cli")
+    set_property(GLOBAL APPEND PROPERTY
+        _MACDEPLOYQT_EXTRA_BINARIES "${CLI_INSTALL_DIR}/keepassxc-cli")
 endif()
