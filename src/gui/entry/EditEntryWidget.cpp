@@ -220,7 +220,7 @@ void EditEntryWidget::openAutotypeHelp()
 void EditEntryWidget::setupAutoType()
 {
     m_autoTypeUi->setupUi(m_autoTypeWidget);
-    addPage(tr("Auto-Type"), icons()->icon("key-enter"), m_autoTypeWidget);
+    addPage(tr("Auto-Type"), icons()->icon("auto-type"), m_autoTypeWidget);
 
     m_autoTypeUi->openHelpButton->setIcon(icons()->icon("system-help"));
 
