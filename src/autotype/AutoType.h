@@ -19,15 +19,15 @@
 #ifndef KEEPASSX_AUTOTYPE_H
 #define KEEPASSX_AUTOTYPE_H
 
+#include "AutoTypeAction.h"
+
 #include <QMutex>
-#include <QObject>
 #include <QTimer>
 #include <QWidget>
 
+#include "AutoTypeAction.h"
 #include "AutoTypeMatch.h"
 
-class AutoTypeAction;
-class AutoTypeExecutor;
 class AutoTypePlatformInterface;
 class Database;
 class Entry;
@@ -41,8 +41,8 @@ public:
     QStringList windowTitles();
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error = nullptr);
     void unregisterGlobalShortcut();
-    void performAutoType(const Entry* entry, QWidget* hideWindow = nullptr);
-    void performAutoTypeWithSequence(const Entry* entry, const QString& sequence, QWidget* hideWindow = nullptr);
+    void performAutoType(const Entry* entry);
+    void performAutoTypeWithSequence(const Entry* entry, const QString& sequence);
 
     static bool verifyAutoTypeSyntax(const QString& sequence, const Entry* entry, QString& error);
 
@@ -80,9 +80,9 @@ private:
     ~AutoType() override;
     void loadPlugin(const QString& pluginPath);
     void executeAutoTypeActions(const Entry* entry,
-                                QWidget* hideWindow = nullptr,
-                                const QString& customSequence = QString(),
-                                WId window = 0);
+                                const QString& sequence = QString(),
+                                WId window = 0,
+                                AutoTypeExecutor::Mode mode = AutoTypeExecutor::Mode::NORMAL);
     void restoreWindowState();
     void resetAutoTypeState();
 

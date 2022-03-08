@@ -140,7 +140,7 @@ void TestAutoType::testInternal()
 
 void TestAutoType::testSingleAutoType()
 {
-    m_autoType->performAutoType(m_entry1, nullptr);
+    m_autoType->performAutoType(m_entry1);
 
     QCOMPARE(m_test->actionCount(), 14);
     QCOMPARE(m_test->actionChars(),
