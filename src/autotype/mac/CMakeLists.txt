@@ -14,6 +14,6 @@ if(WITH_APP_BUNDLE)
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
             COMMENT "Copying autotype plugin into app bundle")
 
-    kpxc_run_macdeployqt_on_installed_helper_binary(
-        "${PROGNAME}" "${PLUGIN_INSTALL_DIR}/libkeepassxc-autotype-cocoa.so")
+    set_property(GLOBAL APPEND PROPERTY
+        _MACDEPLOYQT_EXTRA_BINARIES "${PLUGIN_INSTALL_DIR}/libkeepassxc-autotype-cocoa.so")
 endif()
