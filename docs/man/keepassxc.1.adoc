@@ -63,3 +63,6 @@ This manual page was originally written by Janek Bevendorff <janek@jbev.net>.
 include::includes/section-reporting-bugs.adoc[]
 
 include::includes/section-copyright.adoc[]
+
+== SEE ALSO
+*keepassxc-cli*(1)

@@ -331,3 +331,6 @@ This manual page was originally written by Manolis Agkopian <m.agkopian@gmail.co
 include::includes/section-reporting-bugs.adoc[]
 
 include::includes/section-copyright.adoc[]
+
+== SEE ALSO
+*keepassxc*(1)
