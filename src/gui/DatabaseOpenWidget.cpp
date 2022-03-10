@@ -312,16 +312,14 @@ void DatabaseOpenWidget::openDatabase()
 
         setUserInteractionLock(false);
 
-        // Reset quick unlock for the current database
-        if (isOnQuickUnlockScreen()) {
-            resetQuickUnlock();
-        }
-
         m_retryUnlockWithEmptyPassword = false;
         m_ui->messageWidget->showMessage(error, MessageWidget::MessageType::Error);
-        // Focus on the password field and select the input for easy retry
-        m_ui->editPassword->selectAll();
-        m_ui->editPassword->setFocus();
+
+        if (!isOnQuickUnlockScreen()) {
+            // Focus on the password field and select the input for easy retry
+            m_ui->editPassword->selectAll();
+            m_ui->editPassword->setFocus();
+        }
     }
 }
 
