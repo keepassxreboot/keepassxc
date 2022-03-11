@@ -169,6 +169,14 @@ func main() {
 		log.Fatalf("couldn't read challenge: %s", err)
 	}
 
+	if len(challenge) < 64 {
+		padd := make([]byte, 64-len(challenge))
+		for i, _ := range padd {
+			padd[i] = byte(64-len(challenge))
+		}
+		challenge = append(challenge[:], padd[:]...)
+	}
+
 	mac := hmac.New(sha1.New, secret)
 	mac.Write(challenge)
 
