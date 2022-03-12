@@ -49,7 +49,7 @@ public:
 
 private:
     static int windowLayer(CFDictionaryRef window);
-    static QString windowTitle(CFDictionaryRef window);
+    static QString windowStringProperty(CFDictionaryRef window, CFStringRef propertyRef);
 };
 
 class AutoTypeExecutorMac : public AutoTypeExecutor

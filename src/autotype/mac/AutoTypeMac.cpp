@@ -23,7 +23,6 @@
 
 #include <ApplicationServices/ApplicationServices.h>
 
-#define MAX_WINDOW_TITLE_LENGTH 1024
 #define INVALID_KEYCODE 0xFFFF
 
 AutoTypePlatformMac::AutoTypePlatformMac()
@@ -60,7 +59,15 @@ QStringList AutoTypePlatformMac::windowTitles()
                 continue;
             }
 
-            QString title = windowTitle(window);
+            QString title = windowStringProperty(window, kCGWindowName);
+            QString owner = windowStringProperty(window, kCGWindowOwnerName);
+
+            // Audio recording injects a "StatusIndicator" window owned by the "Window Server" process
+            // into to list in macOS 12.2 (see: https://github.com/keepassxreboot/keepassxc/issues/7418).
+            if (title == "StatusIndicator" && owner == "Window Server") {
+                continue;
+            }
+
             if (!title.isEmpty()) {
                 list.append(title);
             }
@@ -95,8 +102,16 @@ QString AutoTypePlatformMac::activeWindowTitle()
         for (CFIndex i = 0; i < count; i++) {
             CFDictionaryRef window = static_cast<CFDictionaryRef>(::CFArrayGetValueAtIndex(windowList, i));
             if (windowLayer(window) == 0) {
+                title = windowStringProperty(window, kCGWindowName);
+                QString owner = windowStringProperty(window, kCGWindowOwnerName);
+
+                // Audio recording injects a "StatusIndicator" window owned by the "Window Server" process
+                // into to list in macOS 12.2 (see: https://github.com/keepassxreboot/keepassxc/issues/7418).
+                if (title == "StatusIndicator" && owner == "Window Server") {
+                    continue;
+                }
+
                 // First toplevel window in list (front to back order)
-                title = windowTitle(window);
                 if (!title.isEmpty()) {
                     break;
                 }
@@ -190,20 +205,20 @@ int AutoTypePlatformMac::windowLayer(CFDictionaryRef window)
 }
 
 //
-// Get window title
+// Get window string property
 //
-QString AutoTypePlatformMac::windowTitle(CFDictionaryRef window)
+QString AutoTypePlatformMac::windowStringProperty(CFDictionaryRef window, CFStringRef propertyRef)
 {
-    char buffer[MAX_WINDOW_TITLE_LENGTH];
-    QString title;
+    char buffer[1024];
+    QString value;
 
-    CFStringRef titleRef = static_cast<CFStringRef>(::CFDictionaryGetValue(window, kCGWindowName));
-    if (titleRef != nullptr
-            && ::CFStringGetCString(titleRef, buffer, MAX_WINDOW_TITLE_LENGTH, kCFStringEncodingUTF8)) {
-        title = QString::fromUtf8(buffer);
+    CFStringRef valueRef = static_cast<CFStringRef>(::CFDictionaryGetValue(window, propertyRef));
+    if (valueRef != nullptr
+            && ::CFStringGetCString(valueRef, buffer, 1024, kCFStringEncodingUTF8)) {
+        value = QString::fromUtf8(buffer);
     }
 
-    return title;
+    return value;
 }
 
 //
