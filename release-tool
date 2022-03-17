@@ -21,6 +21,14 @@ printf "Copyright (C) 2021 KeePassXC Team <https://keepassxc.org/>\n\n"
 
 set -eE -o pipefail
 
+if [ "$(uname -s)" == "Linux" ]; then
+    OS_LINUX="1"
+elif [ "$(uname -s)" == "Darwin" ]; then
+    OS_MACOS="1"
+elif [ "$(uname -o)" == "Msys" ]; then
+    OS_WINDOWS="1"
+fi
+
 # -----------------------------------------------------------------------
 #                        global default values
 # -----------------------------------------------------------------------
@@ -35,7 +43,7 @@ TARGET_BRANCH="master"
 TAG_NAME=""
 DOCKER_IMAGE=""
 DOCKER_CONTAINER_NAME="keepassxc-build-container"
-CMAKE_GENERATOR="Ninja"
+CMAKE_GENERATOR="Unix Makefiles"
 CMAKE_OPTIONS=""
 CPACK_GENERATORS="WIX;ZIP"
 COMPILER="g++"
@@ -45,7 +53,6 @@ INSTALL_PREFIX="/usr/local"
 ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
 MACOSX_DEPLOYMENT_TARGET=10.13
-GREP="grep"
 TIMESTAMP_SERVER="http://timestamp.sectigo.com"
 
 # -----------------------------------------------------------------------
@@ -244,27 +251,13 @@ cleanup() {
 }
 
 exitError() {
-    logError "$1"
     cleanup
+    logError "$1"
     exit 1
-}
-
-exitTrap() {
-    exitError "Existing upon user request..."
 }
 
 cmdExists() {
     command -v "$1" &> /dev/null
-}
-
-checkGrepCompat() {
-    if ! grep -qPzo test <(echo test) 2> /dev/null; then
-        if [ -e /usr/local/opt/grep/libexec/gnubin/grep ]; then
-            GREP="/usr/local/opt/grep/libexec/gnubin/grep"
-        else
-            exitError "Incompatible grep implementation! If on macOS, please run 'brew install grep'."
-        fi
-    fi
 }
 
 checkSourceDirExists() {
@@ -286,7 +279,7 @@ checkGitRepository() {
 }
 
 checkReleaseDoesNotExist() {
-    if ! git tag | $GREP -q "^$TAG_NAME$"; then
+    if ! git tag | grep -q "^$TAG_NAME$"; then
         exitError "Release '$RELEASE_NAME' (tag: '$TAG_NAME') already exists!"
     fi
 }
@@ -315,15 +308,15 @@ checkVersionInCMake() {
     local minor_num="$(echo ${RELEASE_NAME} | cut -f2 -d.)"
     local patch_num="$(echo ${RELEASE_NAME} | cut -f3 -d. | cut -f1 -d-)"
 
-    if ! $GREP -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt; then
+    if ! grep -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt; then
         exitError "${app_name_upper}_VERSION_MAJOR not updated to '${major_num}' in CMakeLists.txt!"
     fi
 
-    if ! $GREP -q "${app_name_upper}_VERSION_MINOR \"${minor_num}\"" CMakeLists.txt; then
+    if ! grep -q "${app_name_upper}_VERSION_MINOR \"${minor_num}\"" CMakeLists.txt; then
         exitError "${app_name_upper}_VERSION_MINOR not updated to '${minor_num}' in CMakeLists.txt!"
     fi
 
-    if ! $GREP -q "${app_name_upper}_VERSION_PATCH \"${patch_num}\"" CMakeLists.txt; then
+    if ! grep -q "${app_name_upper}_VERSION_PATCH \"${patch_num}\"" CMakeLists.txt; then
         exitError "${app_name_upper}_VERSION_PATCH not updated to '${patch_num}' in CMakeLists.txt!"
     fi
 }
@@ -333,7 +326,7 @@ checkChangeLog() {
         exitError "No CHANGELOG file found!"
     fi
 
-    if ! $GREP -qPzo "## ${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n" CHANGELOG.md; then
+    if ! grep -qzo "## ${RELEASE_NAME} \([0-9]{4}-[0-9]{2}-[0-9]{2}\)\n" CHANGELOG.md; then
         exitError "'CHANGELOG.md' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
@@ -343,7 +336,7 @@ checkAppStreamInfo() {
         exitError "No AppStream info file found!"
     fi
 
-    if ! $GREP -qPzo "<release version=\"${RELEASE_NAME}\" date=\"\d{4}-\d{2}-\d{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml; then
+    if ! grep -qEzo "<release version=\"${RELEASE_NAME}\" date=\"[0-9]{4}-[0-9]{2}-[0-9]{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml; then
         exitError "'share/linux/org.keepassxc.KeePassXC.appdata.xml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
@@ -354,11 +347,11 @@ checkSnapcraft() {
         return
     fi
 
-    if ! $GREP -qPzo "version: ${RELEASE_NAME}" snap/snapcraft.yaml; then
+    if ! grep -qEzo "version: ${RELEASE_NAME}" snap/snapcraft.yaml; then
         exitError "'snapcraft.yaml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 
-    if ! $GREP -qPzo "KEEPASSXC_BUILD_TYPE=Release" snap/snapcraft.yaml; then
+    if ! grep -qEzo "KEEPASSXC_BUILD_TYPE=Release" snap/snapcraft.yaml; then
         exitError "'snapcraft.yaml' is not set for a release build!"
     fi
 }
@@ -391,7 +384,7 @@ checkXcodeSetup() {
 }
 
 checkQt5LUpdateExists() {
-    if cmdExists lupdate && ! $(lupdate -version | $GREP -q "lupdate version 5\."); then
+    if cmdExists lupdate && ! $(lupdate -version | grep -q "lupdate version 5\."); then
         if ! cmdExists lupdate-qt5; then
             exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
         fi
@@ -400,8 +393,6 @@ checkQt5LUpdateExists() {
 
 performChecks() {
     logInfo "Performing basic checks..."
-
-    checkGrepCompat
 
     checkSourceDirExists
 
@@ -454,7 +445,9 @@ if ! cmdExists realpath; then
 fi
 
 
-trap exitTrap SIGINT SIGTERM ERR
+trap 'exitError "Exited upon user request."' SIGINT SIGTERM
+trap 'exitError "Error occurred!"' ERR
+
 
 # -----------------------------------------------------------------------
 #                             check command
@@ -551,8 +544,8 @@ merge() {
         fi
     fi
 
-    CHANGELOG=$($GREP -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n\n)\n?(?:.|\n)+?\n(?=## )" CHANGELOG.md \
-                  | sed 's/^### //' | tr -d \\0)
+    CHANGELOG=$(grep -Ezo "## ${RELEASE_NAME} \([0-9]{4}-[0-9]{2}-[0-9]{2}\)\n\n(.|\n)+?\n\n## " CHANGELOG.md \
+                | tail -n+3 | sed '$d' | sed 's/^### //')
     COMMIT_MSG="Release ${RELEASE_NAME}"
 
     logInfo "Checking out target branch '${TARGET_BRANCH}'..."
@@ -887,7 +880,7 @@ build() {
     init
 
     # Resolve appsign key to absolute path if under Windows
-    if [[ "${build_key}" && "$(uname -o)" == "Msys" ]]; then
+    if [[ "${build_key}" && -n "$OS_WINDOWS" ]]; then
         build_key="$(realpath "${build_key}")"
     fi
 
@@ -902,17 +895,18 @@ build() {
         RELEASE_NAME="${RELEASE_NAME}-snapshot"
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Snapshot -DOVERRIDE_VERSION=${RELEASE_NAME}"
     else
-        checkGrepCompat
         checkWorkingTreeClean
-
-        if $(echo "$TAG_NAME" | $GREP -qP "\-(alpha|beta)\\d+\$"); then
+        if echo "$TAG_NAME" | grep -qE '\-(alpha|beta)[0-9]+$'; then
             CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=PreRelease"
             logInfo "Checking out pre-release tag '${TAG_NAME}'..."
         else
             CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Release"
             logInfo "Checking out release tag '${TAG_NAME}'..."
         fi
-        git checkout "$TAG_NAME" > /dev/null 2>&1
+
+        if ! git checkout "$TAG_NAME" > /dev/null 2>&1; then
+            exitError "Failed to check out target branch."
+        fi
     fi
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
@@ -946,7 +940,7 @@ build() {
             logWarn "xz not installed. Falling back to bz2..."
             xz="bzip2"
         fi
-        $xz -6 "${OUTPUT_DIR}/${tarball_name}"
+        $xz -6 -f "${OUTPUT_DIR}/${tarball_name}"
     fi
 
     logInfo "Creating build directory..."
@@ -957,7 +951,7 @@ build() {
     for p in ${BUILD_PLUGINS}; do
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_XC_$(echo $p | tr '[:lower:]' '[:upper:]')=On"
     done
-    if [ "$(uname -o 2> /dev/null)" == "GNU/Linux" ] && ${build_appimage}; then
+    if [ -n "$OS_LINUX" ] && ${build_appimage}; then
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_DIST_TYPE=AppImage"
         # linuxdeploy requires /usr as install prefix
         INSTALL_PREFIX="/usr"
@@ -975,7 +969,7 @@ build() {
     export CXX="$COMPILER"
 
     if [ -z "$DOCKER_IMAGE" ]; then
-        if [ "$(uname -s)" == "Darwin" ]; then
+        if [ -n "$OS_MACOS" ]; then
             # Building on macOS
             export MACOSX_DEPLOYMENT_TARGET
 
@@ -994,7 +988,7 @@ build() {
             fi
 
             mv "./${APP_NAME}-${RELEASE_NAME}.dmg" "../${APP_NAME}-${RELEASE_NAME}-$(uname -m).dmg"
-        elif [ "$(uname -o)" == "Msys" ]; then
+        elif [ -n "$OS_WINDOWS" ]; then
             # Building on Windows with Msys2
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
@@ -1006,7 +1000,7 @@ build() {
             # Appsign the executables if desired
             if ${build_appsign} && [ -f "${build_key}" ]; then
                 logInfo "Signing executable files"
-                appsign "-f" $(find src | $GREP -Pi 'keepassxc.*(.exe$|.dll$)') "-k" "${build_key}"
+                appsign "-f" $(find src | grep -Ei 'keepassxc.*(\.exe|\.dll)$') "-k" "${build_key}"
             fi
 
             # Call cpack directly instead of calling make package.
@@ -1065,7 +1059,7 @@ build() {
         logInfo "Build finished, Docker container terminated."
     fi
 
-    if [ "$(uname -o 2> /dev/null)" == "GNU/Linux" ] && ${build_appimage}; then
+    if [ -n "$OS_LINUX" ] && ${build_appimage}; then
         local appsign_flag=""
         local appsign_key_flag=""
         local docker_image_flag=""
@@ -1195,9 +1189,8 @@ appsign() {
         fi
     done
 
-    if [ "$(uname -s)" == "Darwin" ]; then
+    if [ -n "$OS_MACOS" ]; then
         checkXcodeSetup
-        checkGrepCompat
 
         local orig_dir="$(pwd)"
         local real_src_dir="$(realpath "${SRC_DIR}")"
@@ -1263,7 +1256,7 @@ appsign() {
             logInfo "File '${f}' successfully signed."
         done
 
-    elif [ "$(uname -o)" == "Msys" ]; then
+    elif [ -n "$OS_WINDOWS" ]; then
         if [[ ! -f "${key}" ]]; then
             exitError "Appsign key file was not found! (${key})"
         fi
@@ -1336,7 +1329,7 @@ notarize() {
         shift
     done
 
-    if [ "$(uname -s)" != "Darwin" ]; then
+    if [ -z "$OS_MACOS" ]; then
         exitError "Notarization is only supported on macOS!"
     fi
 
@@ -1364,14 +1357,14 @@ notarize() {
             --primary-bundle-id "org.keepassxc.keepassxc" \
             --username "${ac_username}" \
             --password "@keychain:${ac_keychain}" \
-            --file "${f}" 2> /dev/null)"
+            --file "${f}")"
 
         if [ 0 -ne $? ]; then
             logError "Submission failed!"
             exitError "Error message:\n${status}"
         fi
 
-        local ticket="$(echo "${status}" | $GREP -oP "[a-f0-9-]+$")"
+        local ticket="$(echo "${status}" | grep -oE '[a-f0-9-]+$')"
         logInfo "Submission successful. Ticket ID: ${ticket}."
 
         logInfo "Waiting for notarization to finish (this may take a while)..."
@@ -1382,10 +1375,10 @@ notarize() {
                 --username "${ac_username}" \
                 --password "@keychain:${ac_keychain}" 2> /dev/null)"
 
-            if echo "$status" | $GREP -q "Status Code: 0"; then
+            if echo "$status" | grep -q "Status Code: 0"; then
                 logInfo "\nNotarization successful."
                 break
-            elif echo "$status" | $GREP -q "Status Code"; then
+            elif echo "$status" | grep -q "Status Code"; then
                 logError "\nNotarization failed!"
                 exitError "Error message:\n${status}"
             fi
