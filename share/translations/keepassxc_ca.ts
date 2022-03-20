@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Reporteu errors a: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Informeu d&apos;errors a: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -151,7 +151,7 @@
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Configuració de l&apos;aplicació</translation>
+        <translation>Paràmetres de l&apos;aplicació</translation>
     </message>
     <message>
         <source>General</source>
@@ -402,7 +402,7 @@
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>Usa lletra monoespaiada per a les notes</translation>
+        <translation>Fer servir fonts monoespaiada per les notes</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
@@ -780,11 +780,11 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Permet els seleccionats</translation>
+        <translation>Permet la selecció</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>Denega-ho tot</translation>
+        <translation>Denegar tot</translation>
     </message>
     <message>
         <source>Disable for this site</source>
@@ -1639,7 +1639,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Suprimeix</translation>
+        <translation>Suprimiu</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>

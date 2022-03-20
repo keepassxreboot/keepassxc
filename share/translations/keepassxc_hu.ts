@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Biztos, hogy vissza akarja állítani az összes általános és biztonsági beállítást az alapértelmezésre?</translation>
+        <translation>Valóban visszaállítja az összes általános és biztonsági beállítást az alapértelmezésre?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
@@ -361,7 +361,7 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Favicon letöltési időtúllépés:</translation>
+        <translation>Weblapikon letöltési időtúllépés:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
@@ -467,7 +467,7 @@
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
@@ -512,7 +512,7 @@
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation>min</translation>
+        <translation> perc</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -824,7 +824,7 @@ Válassza ki a helyes adatbázist a hitelesítő adatok mentéséhez.</translati
 Do you want to create this group?
 </source>
         <translation>Az új „%1” csoport létrehozási kérése fogadva.
-Biztos, hogy létrehozza ezt a csoportot?</translation>
+Valóban létrehozza ezt a csoportot?</translation>
     </message>
     <message>
         <source>KeePassXC: New key association request</source>
@@ -919,7 +919,7 @@ This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
         <translation>A KeePassXC-Browser beállításait át kell helyezni az adatbázis-beállításokba.
 Ez szükséges a jelenlegi böngészőkapcsolatok fenntartásához.
-Biztos, hogy migrálja most a meglévő beállításokat?</translation>
+Valóban migrálja most a meglévő beállításokat?</translation>
     </message>
 </context>
 <context>
@@ -2821,7 +2821,7 @@ Szeretné kijavítani?</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Jelölőnégyzet átváltásával felfedhető a jegyzetek szalasz.</translation>
+        <translation>Jelölőnégyzet átváltásával felfedhető a jegyzetek szakasz.</translation>
     </message>
     <message>
         <source>Username field</source>
@@ -2865,7 +2865,7 @@ Szeretné kijavítani?</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>URL faviconjának letöltése</translation>
+        <translation>URL weblapikonjának letöltése</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -3275,11 +3275,11 @@ Támogatott kiterjesztések: %1.</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>URL faviconjának letöltése</translation>
+        <translation>URL weblapikonjának letöltése</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Favicon letöltése</translation>
+        <translation>Weblapikon letöltése</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
@@ -3307,7 +3307,7 @@ Támogatott kiterjesztések: %1.</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>A favicon letöltése sikertelen.</translation>
+        <translation>A weblapikon letöltése sikertelen.</translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -3514,7 +3514,7 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Valóban felül kívánja írni a meglévő „%1” fájl a melléklettel?</translation>
+        <translation>Valóban felüírja a meglévő „%1” fájlt a melléklettel?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -3564,10 +3564,10 @@ Valóban felülírható a meglévő melléklet?</translation>
 Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
-        <translation>%1 egy nagy fájl (%2 MB).
-Az adatbázis így nagyon nagy lesz és rontani fogja a teljesítményt.
+        <translation>A(z) %1 egy nagy fájl (%2 MB).
+Az adatbázis így nagyon nagy lesz, és rontani fogja a teljesítményt.
 
-Biztosan hozzáadható ez a fájl?</translation>
+Valóban hozzáadja ezt a fájlt?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
@@ -3836,7 +3836,7 @@ Hiba: %1</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>Automatikus beírás</translation>
+        <translation>Automatikus típus</translation>
     </message>
     <message>
         <source>Default Sequence</source>
@@ -4009,7 +4009,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n bejegyzést használ: %1</numerusform><numerusform>%n bejegyzést használ: %1</numerusform></translation>
+        <translation><numerusform>A(z) %1 %n bejegyzést használt</numerusform><numerusform>A(z) %1 %n bejegyzést használt</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4071,7 +4071,7 @@ This will leave your passwords and sensitive information vulnerable!
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Faviconok letöltése</translation>
+        <translation>Weblapikonok letöltése</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5039,7 +5039,7 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Minden favicon &amp;letöltése…</translation>
+        <translation>Minden weblapikon &amp;letöltése…</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -5123,7 +5123,7 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation>&amp;Favicon letöltése</translation>
+        <translation>&amp;Weblapikon letöltése</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -5732,7 +5732,7 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>Nem lehet írni a személyes kulcs, mivel üres</translation>
+        <translation>Nem lehet írni a személyes kulcsot, mivel üres</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
@@ -6193,7 +6193,7 @@ Valóban felülírja?</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation>Nincs URL biztosítva</translation>
+        <translation>Nincs URL megadva</translation>
     </message>
     <message>
         <source>No logins found</source>
@@ -7819,7 +7819,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Bejegyzés törlése…</numerusform><numerusform>Bejegyzések törlése…</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform>Bejegyzések törlése…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -7920,7 +7920,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation>Online vizsgálat vérehajtása</translation>
+        <translation>Online vizsgálat végrehajtása</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>

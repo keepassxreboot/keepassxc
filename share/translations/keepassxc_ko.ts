@@ -7422,7 +7422,7 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1(%2회, %3 KB)</translation>
+        <translation>Argon2%1(%2라운드, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>

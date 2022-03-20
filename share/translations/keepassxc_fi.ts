@@ -108,7 +108,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Ota SSH Agentti käyttöön</translation>
+        <translation>Ota SSH-agentin integraatio käyttöön</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -140,11 +140,11 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>SSH Agentin socketia ei ole. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
+        <translation>Yhteystieto SSH-agenttiin puuttuu. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>SSH Agent -yhteys toimii!</translation>
+        <translation>Yhteys SSH-agenttiin toimii!</translation>
     </message>
 </context>
 <context>
@@ -512,7 +512,7 @@
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation>minuuttia</translation>
+        <translation> minuuttia</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -4010,7 +4010,7 @@ Tämä jättää salasanasi ja minkä tahansa arkaluontoisen tiedon haavoittuvak
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n tietue käytetiin %1</numerusform><numerusform>%n tietuetta käytettiin %1</numerusform></translation>
+        <translation><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7821,7 +7821,7 @@ Ydin: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Poista tietue...</numerusform><numerusform>Poista tietueet...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform>Poista tietueet...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8180,7 +8180,7 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Agentti ei ole päällä, tunnisteita ei voi listata.</translation>
+        <translation>Agentti ei ole päällä, identiteettejä ei voi listata.</translation>
     </message>
 </context>
 <context>

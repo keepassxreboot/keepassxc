@@ -2796,7 +2796,7 @@ Would you like to correct it?</source>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Edit Entry</source>
-        <translation>Upravit záznam</translation>
+        <translation>Upravit položku</translation>
     </message>
     <message>
         <source>Notes field</source>
@@ -2987,7 +2987,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Napojení na webový prohlížeč</translation>
+        <translation>Napojení webového prohlížeče</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -7604,7 +7604,7 @@ Jádro systému: %3 %4</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation>Kontrolní součet se neshoduje! Soubor s klíčem může být poškozený.</translation>
+        <translation>Kontrolní součet se neshoduje! Soubor s klíčem může být poškozen.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>

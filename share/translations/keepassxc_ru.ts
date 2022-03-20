@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Сообщить об &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;ошибках&lt;/a&gt; по https://github.com</translation>
+        <translation>Сообщить об &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;ошибках&lt;/a&gt; на https://github.com</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Проект сопровождают:</translation>
+        <translation>Руководители проекта:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Предоставьте этому получателю возможность выдавать пользователям доступ к отчетам</translation>
+        <translation>Несуществующий/недоступный путь к исполняемому файлу. Пожалуйста, дважды проверьте, что клиент подлинный.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Действительно сбросить все общие параметры и параметры безопасности к значениям, заданным по умолчанию? </translation>
+        <translation>Вы уверены, что хотите сбросить все основные настройки и настройки безопасности на значения по умолчанию?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
@@ -234,7 +234,7 @@
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Автоматически запуск KeePassXC при запуске системы</translation>
+        <translation>Автоматически запускать KeePassXC при запуске системы</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -365,7 +365,7 @@
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>Тайм-аут получения значков веб-сайтов, задаётся в секундах</translation>
+        <translation>Тайм-аут получения значков с веб-сайтов, в секундах</translation>
     </message>
     <message>
         <source> sec</source>
@@ -1284,7 +1284,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Not Present</source>
-        <translation>Отсутствует</translation>
+        <translation>Отусуствует</translation>
     </message>
     <message>
         <source>Column %1</source>
@@ -1537,7 +1537,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Старый формат файла-ключа</translation>
+        <translation>Устаревший формат файла-ключа</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -3002,7 +3002,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Интеграция с браузером</translation>
+        <translation>Интеграция с браузерами</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -4007,7 +4007,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n запись использована %1</numerusform><numerusform>%n записи использованы %1</numerusform><numerusform>%n записей использованы %1</numerusform><numerusform>%n записи использованы %1</numerusform></translation>
+        <translation><numerusform>%n запись была использована %1</numerusform><numerusform>%n записей были использованы %1</numerusform><numerusform>%n записей были использованы %1</numerusform><numerusform>%n записей были использованы %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4147,7 +4147,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -4204,7 +4204,7 @@ If this reoccurs, then your database file may be corrupt.</source>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4376,7 +4376,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>Недопустимый размер идентификатора случайного потока</translation>
+        <translation>Недопустимый размер индентификатора случайного потока</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
@@ -4626,7 +4626,7 @@ Line %2, column %3</source>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4706,7 +4706,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Недопустимый размер поля времени создания записи</translation>
+        <translation>Недопустимный размер поля времени создания записи</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
@@ -5054,7 +5054,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>&amp;Безопасность базы данных…</translation>
+        <translation>&amp;Безопаснось базы данных…</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
@@ -5274,7 +5274,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Тёмная</translation>
+        <translation>Темная</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
@@ -7217,7 +7217,7 @@ Available commands:
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>ВНИМАНИЕ: Вы используете файл-ключ устаревшего формата, поддержка которого 
+        <translation>ВНИМАНИЕ: вы используете файл-ключ устаревшего формата, поддержка которого 
 может быть прекращена в будущем.
 
 По возможности создайте новый ключевой файл.</translation>
@@ -7521,7 +7521,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform></translation>
+        <translation><numerusform>Буфер обмена будет очищен через %1 секунду...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7623,7 +7623,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation>Неподдерживаемый тип файла-ключа: %1</translation>
+        <translation>Неподдерживаемый тип ключа: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
@@ -7802,7 +7802,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>Заголовок</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <source>Path</source>
@@ -7818,7 +7818,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Удаление записи...</numerusform><numerusform>Удаление записей...</numerusform><numerusform>Удаление записей...</numerusform><numerusform>Удаление записей...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform>Удаление записей...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>

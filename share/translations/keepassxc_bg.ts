@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Съобщаване за грешки: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Докладване на дефекти: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Екип:</translation>
+        <translation>Поддръжка на проекта:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -27,23 +27,23 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Контрибутури</translation>
+        <translation>Сътрудници</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Вижте контрибутурите в GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Вижте сътрудниците чрез GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Информация за отстраняване на грешки</translation>
+        <translation>Информация за отстраняване на дефекти</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Включвайте следната информация, когато съобщавате за грешка:</translation>
+        <translation>Включвайте следната информация, когато докладвате за дефект</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Копиране в клипборда</translation>
+        <translation>Копиране в междинната памет</translation>
     </message>
 </context>
 <context>
@@ -3278,7 +3278,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation>Прилага се и за подгрупи</translation>
+        <translation>Прилага се и за детски групи</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>

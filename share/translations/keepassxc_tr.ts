@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Katkıda bulunanlar</translation>
+        <translation>Emeği geçenler</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>

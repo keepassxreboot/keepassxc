@@ -3604,7 +3604,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parolă</translation>
+        <translation>Parola</translation>
     </message>
     <message>
         <source>URL</source>

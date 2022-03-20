@@ -1533,7 +1533,7 @@ Para impedir que esses erros apareçam, você deve ir em &quot;Configurações d
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Formato antigo de arquivo de chave</translation>
+        <translation>Formato antigo de arquivo-chave</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -3664,7 +3664,7 @@ Erro: %1</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Digitar</translation>
+        <translation>Autodigitação</translation>
     </message>
 </context>
 <context>
@@ -4003,7 +4003,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n entrada foi usada por %1</numerusform><numerusform>%n entradas foram usadas por %1</numerusform></translation>
+        <translation><numerusform>%n entrada(s) foram utilizadas por %1</numerusform><numerusform>%n entrada(s) foram utilizadas por %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7645,7 +7645,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation>bloquear todas os bancos de dados abertas</translation>
+        <translation>bloquear todas os bancos de dados abertos</translation>
     </message>
     <message>
         <source>key file of the database</source>
@@ -7812,7 +7812,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Excluir entrada...</numerusform><numerusform>Excluir entradas...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform>Excluir entradas...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
