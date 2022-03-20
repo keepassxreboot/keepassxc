@@ -188,7 +188,7 @@
              <string>Add new window association</string>
             </property>
             <property name="text">
-             <string>+</string>
+             <string comment="Add item">+</string>
             </property>
            </widget>
           </item>
@@ -216,7 +216,7 @@
              <string>Remove selected window association</string>
             </property>
             <property name="text">
-             <string>-</string>
+             <string comment="Remove item">-</string>
             </property>
            </widget>
           </item>

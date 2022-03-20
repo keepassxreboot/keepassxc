@@ -231,7 +231,7 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
                             && tmpFile.write(attachmentData) == attachmentData.size() && tmpFile.flush();
 
         if (!saveOk && errorMessage) {
-            *errorMessage = tr("%1 - %2").arg(key, tmpFile.errorString());
+            *errorMessage = QString("%1 - %2").arg(key, tmpFile.errorString());
             return false;
         }
 

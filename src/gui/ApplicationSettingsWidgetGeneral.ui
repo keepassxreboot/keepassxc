@@ -58,8 +58,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>664</width>
-            <height>1215</height>
+            <width>564</width>
+            <height>930</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -267,13 +267,13 @@
                    <string>On database unlock, show entries that </string>
                   </property>
                   <property name="specialValueText">
-                   <string>are expired</string>
+                   <string comment="On database unlock, show entries that...">have expired</string>
                   </property>
                   <property name="suffix">
-                   <string> days</string>
+                   <string comment="On database unlock, show entries that will expire within %1 days"> days</string>
                   </property>
                   <property name="prefix">
-                   <string>will expire within </string>
+                   <string comment="On database unlock, show entries that...">will expire within </string>
                   </property>
                   <property name="minimum">
                    <number>0</number>
@@ -1182,7 +1182,7 @@
          <item row="1" column="1">
           <widget class="QSpinBox" name="autoTypeRetypeTimeSpinBox">
            <property name="suffix">
-            <string> s</string>
+            <string comment="Seconds"> sec</string>
            </property>
            <property name="minimum">
             <number>0</number>

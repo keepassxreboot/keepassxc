@@ -22,7 +22,7 @@
       </font>
      </property>
      <property name="text">
-      <string>000000</string>
+      <string notr="true">000000</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
