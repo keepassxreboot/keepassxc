@@ -58,6 +58,8 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
         }
     });
 
+    m_ui->helpButton->setIcon(icons()->icon("system-help"));
+
     m_ui->search->installEventFilter(this);
 
     m_searchTimer.setInterval(300);
@@ -118,7 +120,7 @@ void AutoTypeSelectDialog::submitAutoTypeMatch(AutoTypeMatch match)
     if (match.first) {
         m_accepted = true;
         accept();
-        emit matchActivated(std::move(match));
+        emit matchActivated(std::move(match), m_virtualMode);
     }
 }
 
@@ -274,33 +276,53 @@ void AutoTypeSelectDialog::buildActionMenu()
     m_actionMenu->addAction(typeUsernameAction);
     m_actionMenu->addAction(typePasswordAction);
     m_actionMenu->addAction(typeTotpAction);
+#ifdef Q_OS_WIN
+    auto typeVirtualAction = new QAction(icons()->icon("auto-type"), tr("Use Virtual Keyboard"));
+    m_actionMenu->addAction(typeVirtualAction);
+#endif
     m_actionMenu->addAction(copyUsernameAction);
     m_actionMenu->addAction(copyPasswordAction);
     m_actionMenu->addAction(copyTotpAction);
 
-    auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_1, this);
-    connect(shortcut, &QShortcut::activated, typeUsernameAction, &QAction::trigger);
+    typeUsernameAction->setShortcut(Qt::CTRL + Qt::Key_1);
     connect(typeUsernameAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{USERNAME}";
         submitAutoTypeMatch(match);
     });
 
-    shortcut = new QShortcut(Qt::CTRL + Qt::Key_2, this);
-    connect(shortcut, &QShortcut::activated, typePasswordAction, &QAction::trigger);
+    typePasswordAction->setShortcut(Qt::CTRL + Qt::Key_2);
     connect(typePasswordAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{PASSWORD}";
         submitAutoTypeMatch(match);
     });
 
-    shortcut = new QShortcut(Qt::CTRL + Qt::Key_3, this);
-    connect(shortcut, &QShortcut::activated, typeTotpAction, &QAction::trigger);
+    typeTotpAction->setShortcut(Qt::CTRL + Qt::Key_3);
     connect(typeTotpAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{TOTP}";
         submitAutoTypeMatch(match);
     });
+
+#ifdef Q_OS_WIN
+    typeVirtualAction->setShortcut(Qt::CTRL + Qt::Key_4);
+    connect(typeVirtualAction, &QAction::triggered, this, [&] {
+        m_virtualMode = true;
+        activateCurrentMatch();
+    });
+#endif
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
+    // Unfortunately, Qt::AA_DontShowShortcutsInContextMenus is broken, have to manually enable them
+    typeUsernameAction->setShortcutVisibleInContextMenu(true);
+    typePasswordAction->setShortcutVisibleInContextMenu(true);
+    typeTotpAction->setShortcutVisibleInContextMenu(true);
+#ifdef Q_OS_WIN
+    typeVirtualAction->setShortcutVisibleInContextMenu(true);
+#endif
+#endif
 
     connect(copyUsernameAction, &QAction::triggered, this, [&] {
         auto entry = m_ui->view->currentMatch().first;

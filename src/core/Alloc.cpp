@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtGlobal>
 #include <botan/mem_ops.h>
 #include <cstdlib>
 #if defined(Q_OS_MACOS)

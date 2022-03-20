@@ -47,45 +47,11 @@
     </message>
 </context>
 <context>
-    <name>AccessControlDialog</name>
-    <message>
-        <source>KeePassXC -  Access Request</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Remember</source>
-        <translation>Onthouden</translation>
-    </message>
-    <message>
-        <source>Allow access to entries</source>
-        <translation>Toegang tot vermeldingen toestaan</translation>
-    </message>
-    <message>
-        <source>Allow Selected</source>
-        <translation>Selectie toestaan</translation>
-    </message>
-    <message>
-        <source>Deny All</source>
-        <translation>Alles weigeren</translation>
-    </message>
-</context>
-<context>
-    <name>AccessControlDialog::DenyButton</name>
-    <message>
-        <source>Deny for this program</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>AgentSettingsWidget</name>
+    <message>
+        <source>Use OpenSSH for Windows instead of Pageant</source>
+        <translation>Gebruik OpenSSH voor Windows in plaats van Pageant</translation>
+    </message>
     <message>
         <source>Enable SSH Agent integration</source>
         <translation>SSH Agent-integratie inschakelen</translation>
@@ -109,14 +75,6 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH Agent-verbinding werkt!</translation>
-    </message>
-    <message>
-        <source>Use Pageant</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -398,10 +356,6 @@
         <source>Tray icon type</source>
         <translation>Systeemvak-pictogram</translation>
     </message>
-    <message>
-        <source>Hide expired entries from Auto-Type</source>
-        <translation>Verlopen items verbergen voor Auto-Type</translation>
-    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -499,17 +453,37 @@
         <source>Use placeholder for empty password fields</source>
         <translation>Tijdelijke aanduiding gebruiken voor lege wachtwoordvelden</translation>
     </message>
-    <message>
-        <source>Move entries to recycle bin without confirmation</source>
-        <translation>Items zonder bevestiging naar de prullenbak verplaatsen</translation>
-    </message>
-    <message>
-        <source>Enable double click to copy the username/password entry columns</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>AutoType</name>
+    <message>
+        <source>Couldn&apos;t find an entry that matches the window title:</source>
+        <translation>Kon geen item vinden dat overeenkomt met de vensternaam:</translation>
+    </message>
+    <message>
+        <source>Auto-Type - KeePassXC</source>
+        <translation>Auto-type - KeePassXC</translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation>Auto-type</translation>
+    </message>
+    <message>
+        <source>The Syntax of your Auto-Type statement is incorrect!</source>
+        <translation>De syntaxis van de Auto-type opdracht is onjuist!</translation>
+    </message>
+    <message>
+        <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
+        <translation>Deze Auto-type opdracht bevat een zeer lange vertraging. Wil je echt doorgaan?</translation>
+    </message>
+    <message>
+        <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
+        <translation>Deze Auto-type opdracht bevat zeer trage toetsaanslagen. Wil je echt doorgaan?</translation>
+    </message>
+    <message>
+        <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
+        <translation>Deze Auto-type opdracht bevat elementen die zeer vaak worden herhaald. Wil je echt doorgaan?</translation>
+    </message>
     <message>
         <source>Permission Required</source>
         <translation>Toestemming vereist</translation>
@@ -517,55 +491,6 @@
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
         <translation>KeePassXC heeft de Toegankelijkheid-machtiging nodig om invoerniveau Auto-type te kunnen uitvoeren. Als je de machtiging al gegeven hebt, is het mogelijk dat je KeePassXC opnieuw moet opstarten.</translation>
-    </message>
-    <message>
-        <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Auto-Type Error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC heeft de Toegankelijkheid- en Schermopname-machtiging nodig om globale Auto-type te kunnen uitvoeren. Schermopname is benodigd om het venster te gebruiken om invoer te kunnen vinden. Als je de machtiging al gegeven hebt, is het mogelijk dat je KeePassXC opnieuw moet opstarten.</translation>
-    </message>
-    <message>
-        <source>Invalid entry provided</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Bracket imbalance detected, found extra { or }</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Too many repetitions detected, max is %1: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Very slow key press detected, max is %1: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Very long delay detected, max is %1: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid conversion type: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid conversion syntax: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid regular expression syntax %1
-%2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid placeholder: %1</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -603,22 +528,25 @@
     </message>
 </context>
 <context>
-    <name>AutoTypePlatformX11</name>
+    <name>AutoTypeMatchView</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation type="unfinished"/>
+        <source>Copy &amp;username</source>
+        <translation>&amp;Gebruikersnaam kopiëren</translation>
     </message>
     <message>
-        <source>Unable to get valid keycode for key: </source>
-        <translation type="unfinished"/>
+        <source>Copy &amp;password</source>
+        <translation>&amp;Wachtwoord kopiëren</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>Toestemming vereist</translation>
     </message>
     <message>
-        <source>Sequence aborted: Caps Lock is on</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Sequence aborted: Modifier keys held by user</source>
-        <translation type="unfinished"/>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC heeft de Toegankelijkheid- en Schermopname-machtiging nodig om globale Auto-type te kunnen uitvoeren. Schermopname is benodigd om het venster te gebruiken om invoer te kunnen vinden. Als je de machtiging al gegeven hebt, is het mogelijk dat je KeePassXC opnieuw moet opstarten.</translation>
     </message>
 </context>
 <context>
@@ -628,56 +556,12 @@
         <translation>Auto-type - KeePassXC</translation>
     </message>
     <message>
-        <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation type="unfinished"/>
+        <source>Select entry to Auto-Type:</source>
+        <translation>Kies item om automatisch in te vullen:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Search all open databases</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Search…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Type Sequence</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>Type {USERNAME}</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Type {PASSWORD}</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Type {TOTP}</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Copy Username</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Copy Password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Copy TOTP</source>
-        <translation type="unfinished"/>
+        <source>Search...</source>
+        <translation>Zoeken…</translation>
     </message>
 </context>
 <context>
@@ -834,16 +718,6 @@ chrome-laptop.</source>
 Geef de verbinding een unieke naam of ID, voorbeeld:
 chrome-laptop</translation>
     </message>
-    <message>
-        <source>KeePassXC: Delete entry</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>A request for deleting entry &quot;%1&quot; has been received.
-Do you want to delete the entry?
-</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
@@ -909,6 +783,14 @@ Do you want to delete the entry?
         <translation>Verzoek om ontgrendeling van de database als deze is vergrendeld</translation>
     </message>
     <message>
+        <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
+        <translation>Alleen items van hetzelfde schema (http://, https://, …) worden gegeven.</translation>
+    </message>
+    <message>
+        <source>Match URL scheme (e.g., https://...)</source>
+        <translation>Overeenkomstig URL-schema (bijv. https://...)</translation>
+    </message>
+    <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
         <translation>Geeft alleen de beste overeenkomsten terug voor een specifieke URL in plaats van alle items voor het hele domein.</translation>
     </message>
@@ -932,6 +814,16 @@ Do you want to delete the entry?
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
         <translation>Zoek in alle geopende databases naar overeenkomende inloggegevens</translation>
+    </message>
+    <message>
+        <source>Sort matching credentials by title</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation>Sorteer inloggegevens op titel</translation>
+    </message>
+    <message>
+        <source>Sort matching credentials by username</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation>Sorteer inloggegevens op gebruikersnaam</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -994,6 +886,11 @@ Do you want to delete the entry?
         <translation>Blader naar eigen Proxy configuratiebestand</translation>
     </message>
     <message>
+        <source>Browse...</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>Bladeren…</translation>
+    </message>
+    <message>
         <source>Use a custom browser configuration location:</source>
         <translation>Aangepaste locatie voor de browserconfiguratie gebruiken:</translation>
     </message>
@@ -1014,6 +911,10 @@ Do you want to delete the entry?
         <translation>Aangepast locatieveld van de browser</translation>
     </message>
     <message>
+        <source>~/.custom/config/Mozilla/native-messaging-hosts/</source>
+        <translation>~/.custom/config/Mozilla/native-messaging-hosts/</translation>
+    </message>
+    <message>
         <source>Browse for custom browser path</source>
         <translation>Blader naar een aangepast browserpad</translation>
     </message>
@@ -1031,7 +932,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download het voor %1 en %2 en %3. %4.</translation>
+        <translation>KeePassXC-Browser is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download het voor %1 en %2 en %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -1061,26 +962,13 @@ Do you want to delete the entry?
         <source>Select native messaging host folder location</source>
         <translation>Selecteer de locatie van de native messaging-hostmap</translation>
     </message>
-    <message>
-        <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Bladeren…</translation>
-    </message>
-    <message>
-        <source>~/.config/Mozilla/native-messaging-hosts/</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>CloneDialog</name>
+    <message>
+        <source>Clone Options</source>
+        <translation>Opties dupliceren</translation>
+    </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
         <translation>Voeg &apos; - Duplicaat&apos; toe aan naam</translation>
@@ -1092,10 +980,6 @@ Do you want to delete the entry?
     <message>
         <source>Copy history</source>
         <translation>Historie kopiëren</translation>
-    </message>
-    <message>
-        <source>Clone Entry Options</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1282,6 +1166,10 @@ Do you want to delete the entry?
         <translation>Bestand kan niet worden geschreven omdat het in de alleen-lezen modus is geopend.</translation>
     </message>
     <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation>Sleutel is niet getransformeerd. Dit is een fout, rapporteer deze alsjeblieft aan de ontwikkelaars!</translation>
+    </message>
+    <message>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
@@ -1315,10 +1203,6 @@ Back-up databestand op %2</translation>
     <message>
         <source>Could not save, database has not been initialized!</source>
         <translation>Niet opgeslagen, database is niet geïnitialiseerd!</translation>
-    </message>
-    <message>
-        <source>Key not transformed. This is a bug, please report it to the developers.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1379,6 +1263,10 @@ Back-up databestand op %2</translation>
         <translation>Blader naar sleutelbestand</translation>
     </message>
     <message>
+        <source>Browse...</source>
+        <translation>Bladeren…</translation>
+    </message>
+    <message>
         <source>Refresh hardware tokens</source>
         <translation>Hardwaretoken verversen</translation>
     </message>
@@ -1417,6 +1305,12 @@ Om deze fout te voorkomen ga je naar &quot;Database instellingen.../Beveiliging&
         <translation>Voer eventuele aanvullende inloggegevens in:</translation>
     </message>
     <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Je kunt een hardwarebeveiligingssleutel gebruiken, zoals een &lt;strong&gt;YubiKey&lt;/strong&gt; of &lt;strong&gt;OnlyKey&lt;/strong&gt; met posities (slots) geconfigureerd voor HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Klik voor meer informatie...&lt;/p&gt;</translation>
+    </message>
+    <message>
         <source>Key file help</source>
         <translation>Sleutelbestandhulp</translation>
     </message>
@@ -1433,6 +1327,10 @@ Om deze fout te voorkomen ga je naar &quot;Database instellingen.../Beveiliging&
 If you do not have a key file, please leave the field empty.</source>
         <translation>Je kunt je database niet als sleutelbestand gebruiken.
 Als je geen sleutelbestand hebt laat je het veld leeg.</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Naast een wachtwoord kan je een geheim bestand gebruiken om de beveiliging van je database te verbeteren. Dit bestand kan worden gegenereerd in de beveiligingsinstellingen van je database.&lt;/p&gt;&lt;p&gt;Dit is &lt;strong&gt;niet&lt;/strong&gt; jouw *.kdbx database-bestand!&lt;br&gt;Laat dit veld leeg als je geen sleutelbestand gebruikt.&lt;/p&gt;&lt;p&gt;Klik hier voor meer informatie...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
@@ -1459,21 +1357,8 @@ Als je geen sleutelbestand hebt laat je het veld leeg.</translation>
         <translation>Oud sleutelbestandsformaat</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <translation>Bladeren…</translation>
-    </message>
-    <message>
-        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Je gebruikt een oude sleutelbestandsindeling die KeePassXC&lt;br&gt;in de toekomst mogelijk niet meer ondersteunt.&lt;br&gt;&lt;br&gt;Overweeg om een nieuw sleutelbestand te genereren bij:&lt;br&gt;&lt;strong&gt;Database / Databasebeveiliging / Sleutelbestand wijzigen.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -1508,10 +1393,6 @@ Als je geen sleutelbestand hebt laat je het veld leeg.</translation>
     <message>
         <source>Database Credentials</source>
         <translation>Databasegegevens</translation>
-    </message>
-    <message>
-        <source>Maintenance</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1614,6 +1495,12 @@ Permissions to access entries will be revoked.</source>
         <translation>KeePassHTTP-kenmerken naar aangepaste gegevens verplaasen</translation>
     </message>
     <message>
+        <source>Do you really want to move all legacy browser integration data to the latest standard?
+This is necessary to maintain compatibility with the browser plugin.</source>
+        <translation>Wil je echt alle instellingen voor de oudere browserintegratie veranderen naar de nieuwste standaard?
+Dit is nodig om compatibiliteit met de browserextensie te behouden.</translation>
+    </message>
+    <message>
         <source>Stored browser keys</source>
         <translation>Opgeslagen browsersleutels</translation>
     </message>
@@ -1643,14 +1530,13 @@ This is only necessary if your database is a copy of another and the browser ext
         <translation>Wilt je echt de database-ID vernieuwen?
 Dit is alleen nodig als je database een kopie is van een andere en de browserextensie geen verbinding kan maken.</translation>
     </message>
-    <message>
-        <source>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
+    <message>
+        <source>Add additional protection...</source>
+        <translation>Aanvullende beveiliging toevoegen...</translation>
+    </message>
     <message>
         <source>No password set</source>
         <translation>Geen wachtwoord ingesteld</translation>
@@ -1682,10 +1568,6 @@ Weet je zeker dat je door wilt gaan zonder een wachtwoord?</translation>
     <message>
         <source>Failed to change database credentials</source>
         <translation>Veranderen van databasereferenties is mislukt</translation>
-    </message>
-    <message>
-        <source>Add additional protection…</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1761,6 +1643,14 @@ Weet je zeker dat je door wilt gaan zonder een wachtwoord?</translation>
         <translation>Aantal iteraties te hoog</translation>
     </message>
     <message>
+        <source>You are using a very high number of key transform rounds with Argon2.
+
+If you keep this number, your database may take hours or days (or even longer) to open!</source>
+        <translation>Je gebruikt een zeer groot aantal sleuteltransformatie-iteraties met Argon2.
+
+Als je dit aantal aanhoudt, kan het uren, dagen (of zelfs langer) duren om de database te openen!</translation>
+    </message>
+    <message>
         <source>Understood, keep number</source>
         <translation>Begrepen, aantal aanhouden</translation>
     </message>
@@ -1772,6 +1662,14 @@ Weet je zeker dat je door wilt gaan zonder een wachtwoord?</translation>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
         <translation>Aantal iteraties te laag</translation>
+    </message>
+    <message>
+        <source>You are using a very low number of key transform rounds with AES-KDF.
+
+If you keep this number, your database may be too easy to crack!</source>
+        <translation>Je gebruikt een zeer laag aantal sleuteltransformatie-iteraties met AES-KDF.
+
+Als je dit aantal aanhoudt is het mogelijk heel gemakkelijk om de database te kraken!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -1831,18 +1729,6 @@ Weet je zeker dat je door wilt gaan zonder een wachtwoord?</translation>
         <source>? s</source>
         <translation>? s</translation>
     </message>
-    <message>
-        <source>You are using a very high number of key transform rounds with Argon2.
-
-If you keep this number, your database may take hours, days, or even longer to open.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>You are using a very low number of key transform rounds with AES-KDF.
-
-If you keep this number, your database will not be protected from brute force attacks.</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
@@ -1865,6 +1751,10 @@ If you keep this number, your database will not be protected from brute force at
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
+    <message>
+        <source>Database Meta Data</source>
+        <translation>Database meta-gegevens</translation>
+    </message>
     <message>
         <source>Database name:</source>
         <translation>Naam van de database:</translation>
@@ -1939,10 +1829,6 @@ Deze actie is onomkeerbaar.</translation>
         <source>Enable compression (recommended)</source>
         <translation>Compressie inschakelen (aanbevolen)</translation>
     </message>
-    <message>
-        <source>Database Metadata</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
@@ -1974,49 +1860,6 @@ Deze actie is onomkeerbaar.</translation>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
         <translation> &gt; </translation>
-    </message>
-</context>
-<context>
-    <name>DatabaseSettingsWidgetMaintenance</name>
-    <message>
-        <source>Manage Custom Icons</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Delete selected icon(s)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Delete all custom icons not in use by any entry or group</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Purge unused icons</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Confirm Deletion</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Custom Icons Are In Use</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>All custom icons are in use by at least one entry or group.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Purged Unused Icons</source>
-        <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-        <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2141,6 +1984,22 @@ Dit is zeker een fout, rapporteer dit aan de ontwikkelaars.</translation>
 <context>
     <name>DatabaseWidget</name>
     <message>
+        <source>Searching...</source>
+        <translation>Bezig met zoeken…</translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
+        <translation>Weet je zeker dat je item &quot;%1&quot; definitief wil verwijderen?</translation>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation>Weet je zeker dat je item &quot;%1&quot; naar de prullenbak wil verplaatsen?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to move %n entry(s) to the recycle bin?</source>
+        <translation><numerusform>Wil je echt %n item naar de Prullenbak verplaatsen?</numerusform><numerusform>Wil je echt %n items naar de Prullenbak verplaatsen?</numerusform></translation>
+    </message>
+    <message>
         <source>Execute command?</source>
         <translation>Opdracht uitvoeren?</translation>
     </message>
@@ -2198,6 +2057,18 @@ Wil je de wijzigingen samenvoegen?</translation>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Weet je zeker dat je alles definitief uit de prullenbak wil verwijderen?</translation>
     </message>
+    <message numerus="yes">
+        <source>Do you really want to delete %n entry(s) for good?</source>
+        <translation><numerusform>Wilt u echt %n item(s) voorgoed verwijderen?</numerusform><numerusform>Weet je zeker dat je %n item(s) definitief wilt verwijderen?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete entry(s)?</source>
+        <translation><numerusform>Verwijderen entry(s)?</numerusform><numerusform>Item(s) verwijderen?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Move entry(s) to recycle bin?</source>
+        <translation><numerusform>Item(s) naar prullenbak verplaatsen?</numerusform><numerusform>Item(s) naar prullenbak verplaatsen?</numerusform></translation>
+    </message>
     <message>
         <source>Lock Database?</source>
         <translation>Database vergrendelen?</translation>
@@ -2251,6 +2122,14 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
         <translation>KeePass 2-database</translation>
     </message>
     <message>
+        <source>Replace references to entry?</source>
+        <translation>Referenties naar items vervangen?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
+        <translation><numerusform>Vermelding &quot;%1&quot; heeft %2 reference(s). Wilt u verwijzingen vervangen door waarden, dit bericht overslaan of verwijderen toch?</numerusform><numerusform>Item &quot;%1&quot; heeft %2 referentie(s). Wil je de verwijzingen vervangen door waarden, dit bericht overslaan, of toch verwijderen ?</numerusform></translation>
+    </message>
+    <message>
         <source>Delete group</source>
         <translation>Groep verwijderen</translation>
     </message>
@@ -2271,6 +2150,10 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
         <translation>Database werd niet gewijzigd door het samenvoegen.</translation>
     </message>
     <message>
+        <source>Shared group...</source>
+        <translation>Gedeelde groep...</translation>
+    </message>
+    <message>
         <source>Writing the database failed: %1</source>
         <translation>Het schrijven van de database is mislukt: %1</translation>
     </message>
@@ -2285,22 +2168,6 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     <message>
         <source>Could not find database file: %1</source>
         <translation>Databasebestand is niet aangetroffen: %1</translation>
-    </message>
-    <message>
-        <source>Searching…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shared group…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Confirm Auto-Type</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Perform Auto-Type into the previously active window?</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2435,22 +2302,6 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Een externe samenvoegbewerking heeft dit item ongeldig gemaakt.
 Helaas zijn alle aangebrachte wijzigingen verloren gegaan.</translation>
     </message>
-    <message>
-        <source>Auto-Type Validation Error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>An error occurred while validating the custom Auto-Type sequence:
-%1
-Would you like to correct it?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
-%2
-Would you like to correct it?</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2527,12 +2378,12 @@ Would you like to correct it?</source>
         <translation>Achtergrondkleurselectie</translation>
     </message>
     <message>
-        <source>Exclude from database reports</source>
-        <translation>Uitsluiten van databaserapportage</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements (e. g. password entropy or re-use). You can set the check mark if the password is beyond your control (e. g. if it needs to be a four-digit PIN) to prevent it from cluttering the reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Indien aangevinkt, zal het item niet verschijnen in rapportages zoals Health Check en HIBP, zelfs als het niet voldoet aan de kwaliteitseisen (bijv. wachtwoord-entropie of -hergebruik). Je kunt het vinkje plaatsen als je geen controle hebt over het wachtwoord (bijvoorbeeld als het een viercijferige pincode moet zijn) om te voorkomen dat de rapportages onoverzichtelijk worden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation type="unfinished"/>
+        <source>Exclude from database reports</source>
+        <translation>Uitsluiten van databaserapportage</translation>
     </message>
 </context>
 <context>
@@ -2771,6 +2622,10 @@ Would you like to correct it?</source>
         <translation>Opmerkingen:</translation>
     </message>
     <message>
+        <source>https://example.com</source>
+        <translation>https://example.com</translation>
+    </message>
+    <message>
         <source>Expires:</source>
         <translation>Verloopt:</translation>
     </message>
@@ -2834,6 +2689,11 @@ Would you like to correct it?</source>
         <translation>Extern bestand</translation>
     </message>
     <message>
+        <source>Browse...</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>Bladeren…</translation>
+    </message>
+    <message>
         <source>Attachment</source>
         <translation>Bijlage</translation>
     </message>
@@ -2864,11 +2724,6 @@ Would you like to correct it?</source>
     <message>
         <source>Select attachment file</source>
         <translation>Selecteer bijlage bestand</translation>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Bladeren…</translation>
     </message>
 </context>
 <context>
@@ -3016,7 +2871,7 @@ Ondersteund zijn: %1.</translation>
         <translation>Blader naar deelbestand</translation>
     </message>
     <message>
-        <source>Browse…</source>
+        <source>Browse...</source>
         <translation>Bladeren…</translation>
     </message>
 </context>
@@ -3090,6 +2945,10 @@ Ondersteund zijn: %1.</translation>
         <translation>Aangepast pictogram toevoegen</translation>
     </message>
     <message>
+        <source>Delete custom icon</source>
+        <translation>Aangepast pictogram verwijderen</translation>
+    </message>
+    <message>
         <source>Download favicon</source>
         <translation>Favicon downloaden</translation>
     </message>
@@ -3104,6 +2963,10 @@ Ondersteund zijn: %1.</translation>
     <message>
         <source>All files</source>
         <translation>Alle bestanden</translation>
+    </message>
+    <message>
+        <source>Confirm Delete</source>
+        <translation>Verwijdering bevestigen</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -3124,6 +2987,10 @@ Ondersteund zijn: %1.</translation>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
         <translation><numerusform>De volgende pictogram(men) mislukten:</numerusform><numerusform>De volgende pictogram(men) mislukten:</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
+        <translation><numerusform>Dit pictogram wordt gebruikt door %n item(s) en zal worden vervangen door het standaardpictogram. Weet je zeker dat je het wilt verwijderen?</numerusform><numerusform>Dit pictogram wordt gebruikt door %n item(s) en zal worden vervangen door het standaardpictogram. Weet je zeker dat je het wilt verwijderen?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -3162,12 +3029,12 @@ Ondersteund zijn: %1.</translation>
         <translation>Aangepast pictogram gebruiken</translation>
     </message>
     <message>
-        <source>Apply to this group only</source>
-        <translation>Alleen op deze groep toepassen</translation>
+        <source>Apply icon to...</source>
+        <translation>Pictogram toepassen op...</translation>
     </message>
     <message>
-        <source>Apply icon to…</source>
-        <translation type="unfinished"/>
+        <source>Apply to this group only</source>
+        <translation>Alleen op deze groep toepassen</translation>
     </message>
 </context>
 <context>
@@ -3244,17 +3111,6 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 - Duplicaat</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachments</name>
-    <message>
-        <source>%1 - %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3376,32 +3232,6 @@ Weet je zeker dat je dit bestand wilt toevoegen?</translation>
     <message>
         <source>Confirm Attachment</source>
         <translation>Bijlage bevestigen</translation>
-    </message>
-    <message>
-        <source>Rename selected attachment</source>
-        <translation>Geselecteerde bijlage hernoemen</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation>Hernoemen</translation>
-    </message>
-    <message>
-        <source>Attachment modified</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>The attachment '%1' was modified.
-Do you want to save the changes to your database?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Saving attachment failed</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Saving updated attachment failed.
-Error: %1</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3530,12 +3360,8 @@ Error: %1</source>
         <translation>Heeft bijlagen</translation>
     </message>
     <message>
-        <source>Password Strength</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Has TOTP</source>
-        <translation>Heeft TOTP</translation>
+        <source>Has TOTP one-time password</source>
+        <translation>Bevat TOTP eenmalig wachtwoord</translation>
     </message>
 </context>
 <context>
@@ -3605,6 +3431,10 @@ Error: %1</source>
         <translation>Nooit</translation>
     </message>
     <message>
+        <source>[PROTECTED]</source>
+        <translation>[BEVEILIGD]</translation>
+    </message>
+    <message>
         <source>Enabled</source>
         <translation>Geactiveerd</translation>
     </message>
@@ -3628,6 +3458,11 @@ Error: %1</source>
         <source>Default Sequence</source>
         <translation>Standaardreeks</translation>
     </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3650,59 +3485,15 @@ Error: %1</source>
         <source>Reset to defaults</source>
         <translation>Standaardwaarden opnieuw instellen</translation>
     </message>
-</context>
-<context>
-    <name>FdoSecrets::DBusMgr</name>
     <message>
-        <source>Failed to deliver message</source>
-        <translation type="unfinished"/>
+        <source>Has attachments</source>
+        <comment>Entry attachment icon toggle</comment>
+        <translation>Heeft bijlagen</translation>
     </message>
     <message>
-        <source>Failed to send reply on DBus</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <comment>Unknown PID</comment>
-        <translation>Onbekend</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <comment>Unknown executable path</comment>
-        <translation>Onbekend</translation>
-    </message>
-    <message>
-        <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
-        <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
-        <translation>&lt;i&gt;PID: %1, Uitvoerbaar bestand: %2&lt;/i&gt;</translation>
-    </message>
-    <message>
-        <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Een andere secret service is actief (%1).&lt;br/&gt;Stop/verwijder deze en probeer de Secret Service-integratie opnieuw te activeren.</translation>
-    </message>
-    <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation>Kan DBus-service niet registreren op %1.&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>Failed to register service on DBus at path &apos;%1&apos;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
-        <translation>Registratie van database op DBus onder de naam &apos;%1&apos; mislukt</translation>
-    </message>
-    <message>
-        <source>Failed to register session on DBus at path &apos;%1&apos;</source>
-        <translation>Kan sessie niet registreren op DBus op pad &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Failed to register item on DBus at path &apos;%1&apos;</source>
-        <translation>Kan item niet registreren op DBus op pad &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
-        <translation type="unfinished"/>
+        <source>Has TOTP</source>
+        <comment>Entry TOTP icon toggle</comment>
+        <translation>Heeft TOTP</translation>
     </message>
 </context>
 <context>
@@ -3714,21 +3505,14 @@ Error: %1</source>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation>Kan DBus-service niet registreren op %1.&lt;br/&gt;</translation>
+    </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-</context>
-<context>
-    <name>FdoSecrets::SettingsClientModel</name>
-    <message>
-        <source>Application</source>
-        <translation>Programma</translation>
-    </message>
-    <message>
-        <source>Manage</source>
-        <translation>Beheren</translation>
+        <translation><numerusform>%n Item is gebruikt door %1</numerusform><numerusform>%n Items zijn gebruikt door %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3755,10 +3539,14 @@ Error: %1</source>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::UnlockPrompt</name>
+    <name>FdoSecrets::SettingsSessionModel</name>
     <message>
-        <source>%1 (PID: %2)</source>
-        <translation type="unfinished"/>
+        <source>Application</source>
+        <translation>Programma</translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation>Beheren</translation>
     </message>
 </context>
 <context>
@@ -3767,6 +3555,25 @@ Error: %1</source>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</translation>
     </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown PID</comment>
+        <translation>Onbekend</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown executable path</comment>
+        <translation>Onbekend</translation>
+    </message>
+    <message>
+        <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
+        <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
+        <translation>&lt;i&gt;PID: %1, Uitvoerbaar bestand: %2&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
+        <translation>Een andere secret service is actief (%1).&lt;br/&gt;Stop/verwijder deze en probeer de Secret Service-integratie opnieuw te activeren.</translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -3774,10 +3581,6 @@ Error: %1</source>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[leeg]</translation>
-    </message>
-    <message>
-        <source>%1 - Clone</source>
-        <translation>%1 - Duplicaat</translation>
     </message>
 </context>
 <context>
@@ -3816,6 +3619,14 @@ Je kunt de DuckDuckGo website pictogram dienst inschakelen in de sectie &apos;Be
         <translation>Status</translation>
     </message>
     <message>
+        <source>Please wait, processing entry list...</source>
+        <translation>Even wachten, de items worden verwerkt...</translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Downloaden...</translation>
+    </message>
+    <message>
         <source>Ok</source>
         <translation>Oké</translation>
     </message>
@@ -3828,16 +3639,8 @@ Je kunt de DuckDuckGo website pictogram dienst inschakelen in de sectie &apos;Be
         <translation>Download is mislukt</translation>
     </message>
     <message>
-        <source>Please wait, processing entry list…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Downloading…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Downloading favicons (%1/%2)…</source>
-        <translation type="unfinished"/>
+        <source>Downloading favicons (%1/%2)...</source>
+        <translation>Favicons downloaden (%1/%2)...</translation>
     </message>
 </context>
 <context>
@@ -3897,11 +3700,6 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     <message>
         <source>Unable to calculate database key</source>
         <translation>Kan databasesleutel niet berekenen</translation>
-    </message>
-    <message>
-        <source>Invalid symmetric cipher IV size.</source>
-        <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Ongeldige grootte van symmetrisch versleutelingsalgoritme IV.</translation>
     </message>
 </context>
 <context>
@@ -4097,6 +3895,16 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
         <translation>Geen KeePass-database.</translation>
     </message>
     <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Het gekozen bestand is een oude KeePass 1 database (.kdb)
+
+Je kunt het importeren door te klikken op Database&gt;&apos;KeePass 1-database importeren&apos;.
+Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer openen met de oude KeePassX 0.4 versie.</translation>
+    </message>
+    <message>
         <source>Unsupported KeePass 2 database version.</source>
         <translation>Niet-ondersteunde KeePass 2-databaseversie.</translation>
     </message>
@@ -4111,13 +3919,6 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     <message>
         <source>Failed to read database file.</source>
         <translation>Lezen van databasebestand is mislukt.</translation>
-    </message>
-    <message>
-        <source>The selected file is an old KeePass 1 database (.kdb).
-
-You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4394,6 +4195,10 @@ Lijn %2, kolom %3</translation>
         <translation>Itemgegevens komen niet overeen met veldgrootte</translation>
     </message>
     <message>
+        <source>Invalid entry uuid field size</source>
+        <translation>Ongeldige veldgrootte van uuid</translation>
+    </message>
+    <message>
         <source>Invalid entry group id field size</source>
         <translation>Ongeldige veldgrootte van groepid</translation>
     </message>
@@ -4430,10 +4235,6 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     <message>
         <source>Unable to calculate database key</source>
         <translation>Kan databasesleutel niet berekenen</translation>
-    </message>
-    <message>
-        <source>Invalid entry UUID field size</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4501,6 +4302,26 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
         <source>Key Component set, click to change or remove</source>
         <translation>Sleutelcomponent verzameling, klik om te wijzigen of verwijderen</translation>
     </message>
+    <message>
+        <source>Add %1</source>
+        <comment>Add a key component</comment>
+        <translation>%1 toevoegen</translation>
+    </message>
+    <message>
+        <source>Change %1</source>
+        <comment>Change a key component</comment>
+        <translation>%1 aanpassen</translation>
+    </message>
+    <message>
+        <source>Remove %1</source>
+        <comment>Remove a key component</comment>
+        <translation>%1 verwijderen</translation>
+    </message>
+    <message>
+        <source>%1 set, click to change or remove</source>
+        <comment>Change or remove a key component</comment>
+        <translation>%1 ingesteld, klik om te wijzigen of verwijderen</translation>
+    </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
@@ -4511,6 +4332,10 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     <message>
         <source>Key File</source>
         <translation>Sleutelbestand</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Je kunt een sleutelbestand met willekeurige bytes toevoegen voor extra veiligheid.&lt;/p&gt; &lt;p&gt;Je moet het sleutelbestand geheim houden en nooit verliezen anders wordt je buitengesloten!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -4525,6 +4350,10 @@ Bericht: %2</translation>
     <message>
         <source>All files</source>
         <translation>Alle bestanden</translation>
+    </message>
+    <message>
+        <source>Create Key File...</source>
+        <translation>Sleutelbestand aanmaken…</translation>
     </message>
     <message>
         <source>Error creating key file</source>
@@ -4583,45 +4412,6 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
     <message>
         <source>Browse…</source>
         <translation>Bladeren…</translation>
-    </message>
-    <message>
-        <source>Add Key File</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Change Key File</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Remove Key File</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Key File set, click to change or remove</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Create Key File…</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>MacUtils</name>
-    <message>
-        <source>Invalid key code</source>
-        <translation>Ongeldige sleutelcode</translation>
-    </message>
-    <message>
-        <source>Global shortcut already registered to %1</source>
-        <translation>Globale snelkoppeling is al geregistreerd bij %1</translation>
-    </message>
-    <message>
-        <source>Could not register global shortcut</source>
-        <translation>Kan algemene snelkoppeling niet registreren</translation>
     </message>
 </context>
 <context>
@@ -4723,8 +4513,22 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
         <translation>Druk op de knop van je YubiKey!</translation>
     </message>
     <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation>WAARSCHUWING: Je gebruikt een niet-stabiele versie van KeePassXC!
+Deze versie is niet bedoeld voor dagelijks gebruik.
+Er is een hoog risico op beschadiging. Bewaar een back-up van jouw databases.</translation>
+    </message>
+    <message>
         <source>&amp;Donate</source>
         <translation>&amp;Doneren</translation>
+    </message>
+    <message>
+        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
+We recommend you use the AppImage available on our downloads page.</source>
+        <translation>WAARSCHUWING: Jouw Qt-versie kan KeePassXC laten crashen bij gebruik van een schermtoetsenbord!
+Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downloadpagina.</translation>
     </message>
     <message>
         <source>&amp;Import</source>
@@ -4765,6 +4569,12 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
     <message>
         <source>Import a CSV file</source>
         <translation>Een CSV-bestand importeren</translation>
+    </message>
+    <message>
+        <source>NOTE: You are using a pre-release version of KeePassXC!
+Expect some bugs and minor issues, this version is not meant for production use.</source>
+        <translation>Opmerking: Je gebruikt een pre-release versie van KeePassXC!
+Houd rekening met fouten en kleine problemen. Deze versie is niet bedoeld voor regulier gebruik.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
@@ -4895,6 +4705,10 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
         <translation>Database-be&amp;veiliging...</translation>
     </message>
     <message>
+        <source>Database &amp;Reports...</source>
+        <translation>Database-&amp;rapportage...</translation>
+    </message>
+    <message>
         <source>Statistics, health check, etc.</source>
         <translation>Statistieken, gezondheidscontrole, etc.</translation>
     </message>
@@ -4991,6 +4805,10 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
         <translation>Open de gebruikershandleiding</translation>
     </message>
     <message>
+        <source>Save Database Backup...</source>
+        <translation>Database-backup opslaan...</translation>
+    </message>
+    <message>
         <source>Add key to SSH Agent</source>
         <translation>Sleutel toevoegen aan SSH-agent</translation>
     </message>
@@ -5023,10 +4841,6 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
         <translation>Werkbalk weergeven</translation>
     </message>
     <message>
-        <source>Show Groups Panel</source>
-        <translation>Paneel Groepen weergeven</translation>
-    </message>
-    <message>
         <source>Show Preview Panel</source>
         <translation>Voorbeeldvenster weergeven</translation>
     </message>
@@ -5044,6 +4858,26 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
 Wil je KeePassXC nu opnieuw opstarten?</translation>
     </message>
     <message>
+        <source>Perform Auto-Type Sequence</source>
+        <translation>Auto-type tekenreeks uitvoeren</translation>
+    </message>
+    <message>
+        <source>{USERNAME}</source>
+        <translation>{GEBRUIKERSNAAM}</translation>
+    </message>
+    <message>
+        <source>{USERNAME}{ENTER}</source>
+        <translation>{GEBRUIKERSNAAM}{ENTER}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}</source>
+        <translation>{WACHTWOORD}</translation>
+    </message>
+    <message>
+        <source>{PASSWORD}{ENTER}</source>
+        <translation>{WACHTWOORD}{ENTER}</translation>
+    </message>
+    <message>
         <source>Always on Top</source>
         <translation>Altijd bovenop</translation>
     </message>
@@ -5054,34 +4888,6 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     <message>
         <source>Hide Passwords</source>
         <translation>Wachtwoorden verbergen</translation>
-    </message>
-    <message>
-        <source>Database &amp;Reports…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Save Database Backup…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Clone Group...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
-We recommend you use the AppImage available on our downloads page.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5188,13 +4994,13 @@ We recommend you use the AppImage available on our downloads page.</source>
 <context>
     <name>NewDatabaseWizard</name>
     <message>
+        <source>Create a new KeePassXC database...</source>
+        <translation>Nieuwe KeePassXC database aanmaken...</translation>
+    </message>
+    <message>
         <source>Root</source>
         <comment>Root group</comment>
         <translation>Alles</translation>
-    </message>
-    <message>
-        <source>Create a new KeePassXC database…</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5258,14 +5064,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Password Manager</source>
         <translation>Wachtwoordbeheer</translation>
-    </message>
-    <message>
-        <source>Global shortcut already registered to %1</source>
-        <translation>Globale snelkoppeling is al geregistreerd bij %1</translation>
-    </message>
-    <message>
-        <source>Could not register global shortcut</source>
-        <translation>Kan algemene snelkoppeling niet registreren</translation>
     </message>
 </context>
 <context>
@@ -5374,8 +5172,16 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>Geen inhoud persoonlijke sleutel om te decoderen</translation>
     </message>
     <message>
+        <source>Trying to run KDF without cipher</source>
+        <translation>Probeer KDF uit te voeren zonder versleutelingsalgoritme</translation>
+    </message>
+    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>Wachtwoord(-zin)  nodig om deze sleutel te ontcijferen</translation>
+    </message>
+    <message>
+        <source>Key derivation failed, key file corrupted?</source>
+        <translation>Sleutelafleiding mislukt, beschadigd sleutelbestand?</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
@@ -5424,18 +5230,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Unknown key type: %1</source>
         <translation>Onbekend sleuteltype: %1</translation>
-    </message>
-    <message>
-        <source>Key derivation failed: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to initialize cipher: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Decryption failed: %1</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5490,22 +5284,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Repeat password field</source>
         <translation>Wachtwoord herhaling veld</translation>
-    </message>
-    <message>
-        <source>Add Password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Change Password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Remove Password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password set, click to change or remove</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5636,10 +5414,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Niet te gebruiken karakters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Gegenereerd wachtwoord</translation>
     </message>
@@ -5728,6 +5502,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>Wachtwoord gebruiken</translation>
     </message>
     <message>
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
         <source>Regenerate password (%1)</source>
         <translation>Òpnieuw genereren (%1)</translation>
     </message>
@@ -5736,27 +5514,71 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>Speciale tekens</translation>
     </message>
     <message>
-        <source>Character Count:</source>
-        <translation>Aantal tekens:</translation>
-    </message>
-    <message>
-        <source>character</source>
-        <translation>teken</translation>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation>Uitgesloten tekens: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
-    <name>PickcharsDialog</name>
+    <name>QApplication</name>
     <message>
-        <source>KeePassXC - Pick Characters</source>
-        <translation type="unfinished"/>
+        <source>KeeShare</source>
+        <translation>KeeShare</translation>
     </message>
     <message>
-        <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
-        <translation type="unfinished"/>
+        <source>Statistics</source>
+        <translation>Statistieken</translation>
     </message>
     <message>
-        <source>Press &amp;Tab between characters</source>
-        <translation type="unfinished"/>
+        <source>Very weak password</source>
+        <translation>Zeer zwak wachtwoord</translation>
+    </message>
+    <message>
+        <source>Password entropy is %1 bits</source>
+        <translation>Wachtwoord-entropie is %1 bits</translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation>Zwak wachtwoord</translation>
+    </message>
+    <message>
+        <source>Used in %1/%2</source>
+        <translation>Gebruikt in %1/%2</translation>
+    </message>
+    <message>
+        <source>Password is used %1 times</source>
+        <translation>Wachtwoord is %1 keer gebruikt</translation>
+    </message>
+    <message>
+        <source>Password has expired</source>
+        <translation>Wachtwoord is verlopen</translation>
+    </message>
+    <message>
+        <source>Password expiry was %1</source>
+        <translation>Wachtwoord is %1 verlopen</translation>
+    </message>
+    <message>
+        <source>Password is about to expire</source>
+        <translation>Wachtwoord is bijna verlopen</translation>
+    </message>
+    <message>
+        <source>Password expires in %1 days</source>
+        <translation>Wachtwoord verloopt in %1 dagen</translation>
+    </message>
+    <message>
+        <source>Password will expire soon</source>
+        <translation>Wachtwoord verloopt snel</translation>
+    </message>
+    <message>
+        <source>Password expires on %1</source>
+        <translation>Wachtwoord verloopt op %1</translation>
+    </message>
+    <message>
+        <source>Health Check</source>
+        <translation>Gezondheid</translation>
+    </message>
+    <message>
+        <source>HIBP</source>
+        <translation>HIBP</translation>
     </message>
 </context>
 <context>
@@ -5900,6 +5722,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
         <translation>Pad van het te kopiëren item.</translation>
+    </message>
+    <message>
+        <source>Timeout in seconds before clearing the clipboard.</source>
+        <translation>Wachttijd (sec) voor het wissen van het klembord.</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
@@ -6215,6 +6041,10 @@ Beschikbare opdrachten:
         <translation>Type: Datum (herh)</translation>
     </message>
     <message>
+        <source>Type: Unknown%1</source>
+        <translation>Type: Onbekend %1</translation>
+    </message>
+    <message>
         <source>Entropy %1 (%2)</source>
         <translation>Entropie %1 (%2)</translation>
     </message>
@@ -6503,6 +6333,10 @@ Kernelversie: %3 %4</translation>
         <translation>Cryptografische bibliotheken:</translation>
     </message>
     <message>
+        <source>Cannot generate a password and prompt at the same time!</source>
+        <translation>Kan geen wachtwoord en prompt op hetzelfde moment genereren!</translation>
+    </message>
+    <message>
         <source>Adds a new group to a database.</source>
         <translation>Voegt een nieuwe groep toe aan een database.</translation>
     </message>
@@ -6537,6 +6371,10 @@ Kernelversie: %3 %4</translation>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
         <translation>Kon HIBP bestand niet openen %1: %2</translation>
+    </message>
+    <message>
+        <source>Evaluating database entries against HIBP file, this will take a while...</source>
+        <translation>De database items worden onderzocht met behulp van het HIBP-bestand, dit zal een tijdje duren...</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
@@ -6729,6 +6567,10 @@ Kernelversie: %3 %4</translation>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
         <translation>Kan het native messaging scriptbestand voor %1 niet opslaan.</translation>
+    </message>
+    <message>
+        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
+        <translation>Kopieer het gegeven kenmerk naar het klembord. Dit is &quot;wachtwoord&quot; tenzij anders gespecificeerd.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
@@ -6948,210 +6790,13 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation>Onverwachte sleutelbestandgegevens! Sleutelbestand is mogelijk beschadigd.</translation>
     </message>
-    <message>
-        <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Notes for the entry.</source>
-        <translation>Notities bij het item.</translation>
-    </message>
-    <message>
-        <source>Cannot generate a password and prompt at the same time.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Path to okon-cli to search a formatted HIBP file</source>
-        <translation>Pad naar okon-cli om een geformatteerd HIBP-bestand te zoeken</translation>
-    </message>
-    <message>
-        <source>okon-cli</source>
-        <translation>okon-cli</translation>
-    </message>
-    <message>
-        <source>Cannot find HIBP file: %1</source>
-        <translation>Kan HIBP-bestand niet vinden: %1</translation>
-    </message>
-    <message>
-        <source>Evaluating database entries using okon…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Evaluating database entries against HIBP file, this will take a while…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-        <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
-        <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
-        <translation>Kopieer het gegeven kenmerk naar het klembord. Dit is &quot;wachtwoord&quot; tenzij anders gespecificeerd.</translation>
-    </message>
-    <message>
-        <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Multiple entries matching:</source>
-        <translation>Meerdere overeenkomstige items:</translation>
-    </message>
-    <message>
-        <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Type: Unknown (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not start okon process: %1</source>
-        <translation>Kon okon-proces niet starten: %1</translation>
-    </message>
-    <message>
-        <source>Error: okon process did not finish</source>
-        <translation>Fout: okon-proces is niet voltooid</translation>
-    </message>
-    <message>
-        <source>Failed to load okon processed database: %1</source>
-        <translation>Kan okon-verwerkte database niet laden: %1</translation>
-    </message>
-    <message>
-        <source>Very weak password</source>
-        <translation>Zeer zwak wachtwoord</translation>
-    </message>
-    <message>
-        <source>Password entropy is %1 bits</source>
-        <translation>Wachtwoord-entropie is %1 bits</translation>
-    </message>
-    <message>
-        <source>Weak password</source>
-        <translation>Zwak wachtwoord</translation>
-    </message>
-    <message>
-        <source>Used in %1/%2</source>
-        <translation>Gebruikt in %1/%2</translation>
-    </message>
-    <message numerus="yes">
-        <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Password has expired</source>
-        <translation>Wachtwoord is verlopen</translation>
-    </message>
-    <message>
-        <source>Password expiry was %1</source>
-        <translation>Wachtwoord is %1 verlopen</translation>
-    </message>
-    <message>
-        <source>Password expires on %1</source>
-        <translation>Wachtwoord verloopt op %1</translation>
-    </message>
-    <message>
-        <source>Password is about to expire</source>
-        <translation>Wachtwoord is bijna verlopen</translation>
-    </message>
-    <message numerus="yes">
-        <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Password will expire soon</source>
-        <translation>Wachtwoord verloopt snel</translation>
-    </message>
-    <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>SymmetricCipher::init: Invalid cipher mode.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cipher not initialized prior to use.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot process 0 length data.</source>
-        <translation type="unfinished"/>
-    </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Weet je zeker dat je item &quot;%1&quot; definitief wil verwijderen?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Weet je zeker dat je item &quot;%1&quot; naar de prullenbak wil verplaatsen?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation>Referenties naar items vervangen?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Health Check</source>
-        <translation>Gezondheid</translation>
-    </message>
-    <message>
-        <source>HIBP</source>
-        <translation>HIBP</translation>
-    </message>
-    <message>
-        <source>Statistics</source>
-        <translation>Statistieken</translation>
+        <translation><numerusform>Het klembord wissen in %1 seconde(n)…</numerusform><numerusform>Het klembord wissen in %1 seconde(n)…</numerusform></translation>
     </message>
     <message>
         <source>lock all open databases</source>
         <translation>alle databases vergrendelen</translation>
-    </message>
-    <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Locked databases.</source>
@@ -7160,10 +6805,6 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
     <message>
         <source>Database failed to lock.</source>
         <translation>Database kan niet worden vergrendeld.</translation>
-    </message>
-    <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7246,6 +6887,10 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>Dit item wordt uitgesloten van rapportage</translation>
     </message>
     <message>
+        <source>Please wait, health data is being calculated...</source>
+        <translation>Even geduld, gezondheidsgegevens worden verzameld...</translation>
+    </message>
+    <message>
         <source>Congratulations, everything is healthy!</source>
         <translation>Gefeliciteerd, alles ziet er goed uit!</translation>
     </message>
@@ -7266,24 +6911,12 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>Reden</translation>
     </message>
     <message>
+        <source>Edit Entry...</source>
+        <translation>Item bewerken...</translation>
+    </message>
+    <message>
         <source>Exclude from reports</source>
         <translation>Uitsluiten van rapportage</translation>
-    </message>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please wait, health data is being calculated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Edit Entry…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-        <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7329,56 +6962,44 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>Dit item wordt uitgesloten van rapportage</translation>
     </message>
     <message>
-        <source>Exclude from reports</source>
-        <translation>Uitsluiten van rapportage</translation>
-    </message>
-    <message>
         <source>once</source>
-        <comment>Password exposure amount</comment>
         <translation>eenmalig</translation>
     </message>
     <message>
         <source>up to 10 times</source>
-        <comment>Password exposure amount</comment>
         <translation>tot 10 keer</translation>
     </message>
     <message>
         <source>up to 100 times</source>
-        <comment>Password exposure amount</comment>
         <translation>tot 100 keer</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
-        <comment>Password exposure amount</comment>
         <translation>tot 1000 keer</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
-        <comment>Password exposure amount</comment>
         <translation>tot 10.000 keer</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
-        <comment>Password exposure amount</comment>
         <translation>tot 100.000 keer</translation>
     </message>
     <message>
         <source>up to a million times</source>
-        <comment>Password exposure amount</comment>
         <translation>tot miljoen keer</translation>
     </message>
     <message>
         <source>millions of times</source>
-        <comment>Password exposure amount</comment>
         <translation>miljoen keer</translation>
     </message>
     <message>
-        <source>Edit Entry…</source>
-        <translation type="unfinished"/>
+        <source>Edit Entry...</source>
+        <translation>Item bewerken...</translation>
     </message>
-    <message numerus="yes">
-        <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    <message>
+        <source>Exclude from reports</source>
+        <translation>Uitsluiten van rapportage</translation>
     </message>
 </context>
 <context>
@@ -7394,6 +7015,10 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
     <message>
         <source>Value</source>
         <translation>Waarde</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>Even geduld, databasestatistieken worden berekend...</translation>
     </message>
     <message>
         <source>Database name</source>
@@ -7498,14 +7123,6 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Gemiddeld wachtwoordlengte is minder dan tien tekens. Langere wachtwoorden bieden meer veiligheid.</translation>
-    </message>
-    <message>
-        <source>Please wait, database statistics are being calculated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Database created</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7621,13 +7238,13 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>Zoek hulp</translation>
     </message>
     <message>
-        <source>Case sensitive</source>
-        <translation>Hoofdlettergevoelig</translation>
+        <source>Search (%1)...</source>
+        <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
+        <translation>Zoeken (%1)...</translation>
     </message>
     <message>
-        <source>Search (%1)…</source>
-        <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation type="unfinished"/>
+        <source>Case sensitive</source>
+        <translation>Hoofdlettergevoelig</translation>
     </message>
 </context>
 <context>
@@ -7645,6 +7262,14 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>Algemeen</translation>
     </message>
     <message>
+        <source>Show notification when credentials are requested</source>
+        <translation>Toon een melding wanneer inloggegevens worden gevraagd</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Als de prullenbak is ingeschakeld voor de database, worden items rechtstreeks naar de prullenbak verplaatst. Anders, zullen ze zonder bevestiging worden verwijderd.&lt;/p&gt;&lt;p&gt;Je wordt nog steeds gevraagd voor het verwijderen van items waarnaar wordt verwezen door andere items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <source>Exposed database groups:</source>
         <translation>Blootgestelde databasegroepen:</translation>
     </message>
@@ -7657,32 +7282,20 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>Deze programma&apos;s zijn momenteel verbonden:</translation>
     </message>
     <message>
+        <source>Don&apos;t confirm when entries are deleted by clients</source>
+        <translation>Niet om bevestiging vragen wanneer items worden verwijderd door clients</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; Failed to connect to DBus. Please check your DBus setup.</source>
+        <translation>&lt;b&gt;Fout:&lt;/b&gt; Geen verbinding met DBus. Controleer de DBus-instellingen.</translation>
+    </message>
+    <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
         <translation>&lt;b&gt;Waarschuwing:&lt;/b&gt; </translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Sla huidige wijzigingen op om de plug-in te activeren en het bewerken van deze sectie mogelijk te maken.</translation>
-    </message>
-    <message>
-        <source>Show notification when passwords are retrieved by clients</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Confirm when passwords are retrieved by clients</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Confirm when clients request entry deletion</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7708,8 +7321,16 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>Vingerafdruk:</translation>
     </message>
     <message>
+        <source>Certificate:</source>
+        <translation>Certificaat:</translation>
+    </message>
+    <message>
         <source>Signer</source>
         <translation>Ondertekenaar</translation>
+    </message>
+    <message>
+        <source>Key:</source>
+        <translation>Sleutel:</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -7754,6 +7375,10 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
     <message>
         <source>Fingerprint</source>
         <translation>Vingerafdruk</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>Certificaat</translation>
     </message>
     <message>
         <source>Trusted</source>
@@ -7807,6 +7432,10 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
     <message>
         <source>Only show warnings and errors</source>
         <translation>Alleen waarschuwingen en fouten weergeven</translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation>Sleutel</translation>
     </message>
     <message>
         <source>Signer name field</source>
@@ -7883,6 +7512,22 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
 <context>
     <name>ShareImport</name>
     <message>
+        <source>Import from container without signature</source>
+        <translation>Importeren vanuit een niet-ondertekende container</translation>
+    </message>
+    <message>
+        <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
+        <translation>De bron van de gedeelde container kan niet worden gecontroleerd omdat deze niet ondertekend is. Weet je zeker dat je vanuit %1 wilt importeren?</translation>
+    </message>
+    <message>
+        <source>Import from container with certificate</source>
+        <translation>Importeren vanuit een container met certificaat</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>Wil je %1 met vingerafdruk %2 vanaf %3 vertrouwen? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
         <source>Not this time</source>
         <translation>Deze keer niet</translation>
     </message>
@@ -7929,20 +7574,6 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
     <message>
         <source>File does not exist</source>
         <translation>Bestand bestaat niet</translation>
-    </message>
-    <message>
-        <source>KeeShare Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>The source of the shared container cannot be verified because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with certificate fingerprint:
-%2
-%3</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8026,6 +7657,18 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>TOTP-instellen</translation>
     </message>
     <message>
+        <source>Default RFC 6238 token settings</source>
+        <translation>Standaardinstellingen RFC 6238-token</translation>
+    </message>
+    <message>
+        <source>Steam token settings</source>
+        <translation>Steam-tokeninstellingen</translation>
+    </message>
+    <message>
+        <source>Use custom settings</source>
+        <translation>Aangepaste instellingen gebruiken</translation>
+    </message>
+    <message>
         <source>Custom Settings</source>
         <translation>Aangepaste instellingen</translation>
     </message>
@@ -8084,18 +7727,6 @@ Voorbeeld: JBSWY3DPEHPK3PXP</translation>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>Weet je zeker dat je de TOTP instellingen voor dit item wilt verwijderen?</translation>
     </message>
-    <message>
-        <source>Default settings (RFC 6238)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Steam® settings</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Custom settings:</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>URLEdit</name>
@@ -8111,28 +7742,48 @@ Voorbeeld: JBSWY3DPEHPK3PXP</translation>
         <translation>Controleren op updates</translation>
     </message>
     <message>
+        <source>Checking for updates...</source>
+        <translation>Controleren op updates...</translation>
+    </message>
+    <message>
         <source>Close</source>
         <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Update Error!</source>
+        <translation>Update-fout!</translation>
+    </message>
+    <message>
+        <source>An error occurred in retrieving update information.</source>
+        <translation>Er ging iets fout bij het ophalen van de update-informatie.</translation>
+    </message>
+    <message>
+        <source>Please try again later.</source>
+        <translation>Probeer het later nog eens.</translation>
     </message>
     <message>
         <source>Software Update</source>
         <translation>Software-update</translation>
     </message>
     <message>
-        <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <source>A new version of KeePassXC is available!</source>
+        <translation>Er is een nieuwe versie van KeePassXC!</translation>
     </message>
     <message>
-        <source>An error occurred when trying to retrieve update information, please try again later.</source>
-        <translation type="unfinished"/>
+        <source>KeePassXC %1 is now available — you have %2.</source>
+        <translation>KeePassXC %1 is nu beschikbaar — jij gebruikt %2.</translation>
     </message>
     <message>
-        <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <source>Download it at keepassxc.org</source>
+        <translation>Download het van keepassxc.org</translation>
     </message>
     <message>
-        <source>You have the latest version of KeePassXC</source>
-        <translation type="unfinished"/>
+        <source>You&apos;re up-to-date!</source>
+        <translation>Je bent up-to-date!</translation>
+    </message>
+    <message>
+        <source>KeePassXC %1 is currently the newest version available</source>
+        <translation>KeePassXC %1 is de nieuwste versie</translation>
     </message>
 </context>
 <context>
@@ -8175,25 +7826,22 @@ Voorbeeld: JBSWY3DPEHPK3PXP</translation>
     </message>
 </context>
 <context>
-    <name>WinUtils</name>
-    <message>
-        <source>Invalid key code</source>
-        <translation>Ongeldige sleutelcode</translation>
-    </message>
-    <message>
-        <source>Global shortcut already registered to %1</source>
-        <translation>Globale snelkoppeling is al geregistreerd bij %1</translation>
-    </message>
-    <message>
-        <source>Could not register global shortcut</source>
-        <translation>Kan algemene snelkoppeling niet registreren</translation>
-    </message>
-</context>
-<context>
     <name>YubiKey</name>
     <message>
         <source>%1 [%2] Configured Slot - %3</source>
         <translation>%1 [%2] Ingestelde positie - %3</translation>
+    </message>
+    <message>
+        <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
+        <translation>%1 [%2] Challenge Response - Positie %3 - %4</translation>
+    </message>
+    <message>
+        <source>Press</source>
+        <translation>Druk</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation>Passief</translation>
     </message>
     <message>
         <source>%1 Invalid slot specified - %2</source>
@@ -8216,26 +7864,12 @@ Voorbeeld: JBSWY3DPEHPK3PXP</translation>
         <translation>Er is een time-out opgetreden voor de hardwaresleutel tijdens het wachten op gebruikersinteractie.</translation>
     </message>
     <message>
+        <source>A USB error ocurred when accessing the hardware key: %1</source>
+        <translation>Er is een USB-fout opgetreden bij het openen van de hardwaresleutel: %1</translation>
+    </message>
+    <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation>Challenge-response is niet voltooid, de specifieke fout was: %1</translation>
-    </message>
-    <message>
-        <source>%1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Press</source>
-        <comment>Challenge-Response Key interaction request</comment>
-        <translation>Druk</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <comment>Challenge-Response Key no interaction required</comment>
-        <translation>Passief</translation>
-    </message>
-    <message>
-        <source>A USB error occurred when accessing the hardware key: %1</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8243,6 +7877,14 @@ Voorbeeld: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Refresh</source>
         <translation>Vernieuwen</translation>
+    </message>
+    <message>
+        <source>YubiKey Challenge-Response</source>
+        <translation>YubiKey challenge/response</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The YubiKey requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Als je zelf een &lt;a href=&quot;https://www.yubico.com/&quot;&gt; YubiKey&lt;/a&gt; hebt, kun je deze gebruiken voor extra beveiliging.&lt;/p&gt; &lt;p&gt;De YubiKey vereist dat een van zijn posities (slots) wordt geprogrammeerd als &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt; HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
@@ -8267,30 +7909,6 @@ Voorbeeld: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>No hardware keys detected</source>
         <translation>Geen hardwaresleutels gedetecteerd</translation>
-    </message>
-    <message>
-        <source>Challenge-Response</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Add Challenge-Response</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Change Challenge-Response</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Remove Challenge-Response</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge-Response set, click to change or remove</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

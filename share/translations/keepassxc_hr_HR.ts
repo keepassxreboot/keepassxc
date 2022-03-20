@@ -139,6 +139,10 @@
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
         <translation>Morate ponovo pokrenuti aplikaciju kako biste postavili novi jezik. Želite li ju ponovo pokrenuti sada?</translation>
     </message>
+    <message>
+        <source>Monochrome</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -1113,6 +1117,14 @@ chrome-laptop.</translation>
         <source>Column %1</source>
         <translation>Stupac %1</translation>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikona</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1210,20 +1222,6 @@ Sigurnosna kopija baza podataka nalazi se na %2</translation>
         <translation>Osvježi</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Zastarjeli format datoteke ključa</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Koristite zastarjeli format datoteke ključa koji može postati
-nepodržan u budućnosti.
-
-Razmislite o generiranju nove datoteke ključa.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Nemoj više pokazivati ovo upozorenje.</translation>
     </message>
@@ -1282,14 +1280,6 @@ Razmislite o generiranju nove datoteke ključa.</translation>
     <message>
         <source>TouchID for Quick Unlock</source>
         <translation>TouchID za Brzo Otključavanje</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Obriši</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation>Obriši datoteku ključa</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1357,6 +1347,14 @@ Ako nemate datoteku ključa, ostavite polje prazno.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Odaberite hardverski ključ...</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2284,6 +2282,15 @@ Disable safe saves and try again?</source>
         <source>[PROTECTED] Press Reveal to view or edit</source>
         <translation>[ZAŠTIĆENO] Pritisnite Otkrij za prikaz ili uređivanje</translation>
     </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2481,6 +2488,14 @@ Disable safe saves and try again?</source>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Koristi ovu stavku samo s HTTP Basic Auth</translation>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2602,6 +2617,10 @@ Disable safe saves and try again?</source>
     <message>
         <source>Expires:</source>
         <translation>Ističe:</translation>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2902,6 +2921,10 @@ Podržana proširenja su: %1.</translation>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation>Postavi zadani redoslijeda auto-tipkanja</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3393,11 +3416,6 @@ Are you sure to add this file?</source>
         <translation>[ZAŠTIĆENO]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Omogućeno</translation>
     </message>
@@ -3417,6 +3435,15 @@ Are you sure to add this file?</source>
         <source>Advanced</source>
         <translation>Napredno</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3427,18 +3454,6 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Sakrij korisnička imena</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Sakrij Lozinke</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation type="unfinished"/>
@@ -3471,14 +3486,14 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation type="unfinished"/>
+    </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4295,10 +4310,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Zastarjeli format datoteke ključa</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation type="unfinished"/>
@@ -4328,24 +4339,12 @@ Message: %2</source>
         <translation>Odaberite datoteku ključa </translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation>Odabir datoteke ključa</translation>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation>Potraži datoteku ključa</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Pretraživanje...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
         <translation>Proizvedi novu datoteku ključa</translation>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4366,14 +4365,24 @@ Are you sure you want to continue with this file?</source>
 Želite li zaista nastaviti s ovom datotekom?</translation>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
-        <translation>Koristite zastarjeli format datoteke ključa koji može postati
-nepodržan u budućnosti.
-
-Proizvedite novu datoteku ključa u sigurnosnim postavkama baze podataka.</translation>
+        <source>Old key file format</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4833,6 +4842,18 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>{PASSWORD}{ENTER}</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Sakrij korisnička imena</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Sakrij Lozinke</translation>
     </message>
 </context>
 <context>
@@ -5358,10 +5379,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Izostavi znakove: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;&quot;.</translation>
-    </message>
-    <message>
         <source>Generated password</source>
         <translation>Proizvedena lozinka</translation>
     </message>
@@ -5454,16 +5471,16 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Obriši</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation>Ponovo proizvedi lozinku (%1)</translation>
     </message>
     <message>
         <source>Special Characters</source>
         <translation>Posebni znakovi</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5702,16 +5719,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>UPOZORENJE: Koristite zastarjeli format datoteke ključa koji može postati
-nepodržan u budućnosti.
-
-Razmislite o generiranju nove datoteke ključa.</translation>
     </message>
     <message>
         <source>
@@ -6100,10 +6107,6 @@ Dostupne naredbe:
         <translation>%1: (redak, stupac) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – preporučeno)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6191,10 +6194,6 @@ Dostupne naredbe:
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Parent window handle</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6681,10 +6680,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-bit</translation>
     </message>
@@ -6709,6 +6704,65 @@ Kernel: %3 %4</source>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikona</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7134,10 +7188,6 @@ Kernel: %3 %4</source>
         <translation>Traži</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Obriši</translation>
-    </message>
-    <message>
         <source>Limit search to selected group</source>
         <translation type="unfinished"/>
     </message>
@@ -7416,10 +7466,6 @@ Kernel: %3 %4</source>
         <source>Could not write export container</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7486,10 +7532,6 @@ Kernel: %3 %4</source>
     <message>
         <source>File does not exist</source>
         <translation>Datoteka ne postoji</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -43,8 +43,9 @@ public:
     bool raiseWindow(WId window) override;
     AutoTypeExecutor* createExecutor() override;
 
-    void sendChar(const QChar& ch, bool isKeyDown);
-    void sendKey(Qt::Key key, bool isKeyDown);
+    void sendCharVirtual(const QChar& ch);
+    void sendChar(const QChar& ch);
+    void setKeyState(Qt::Key key, bool down);
 
 private:
     static bool isExtendedKey(DWORD nativeKeyCode);

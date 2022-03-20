@@ -137,7 +137,11 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>Du skal genstarte applikationen for at tage det nye sprog i brug. Vil du genstarte nu?</translation>
+    </message>
+    <message>
+        <source>Monochrome</source>
+        <translation>Monokrom</translation>
     </message>
 </context>
 <context>
@@ -249,31 +253,31 @@
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation type="unfinished"/>
+        <translation>Minimer vinduet efter databasen er låst op</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation type="unfinished"/>
+        <translation>Minimer ved åbning af en URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Skjul vindue ved kopiering til udklipsholder</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Minimer</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation type="unfinished"/>
+        <translation>Fald i baggrund</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation type="unfinished"/>
+        <translation>Favicon-download timeout:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Websted-ikon download timeout i sekunder</translation>
     </message>
     <message>
         <source> sec</source>
@@ -282,75 +286,75 @@
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation type="unfinished"/>
+        <translation>Knapstil på værktøjslinje</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation>Sprogvalg</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Global genvej til autoskriv</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>Skriveforsinkelse for autoskriv i millisekunder</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>Startforsinkelse for autoskriv i millisekunder</translation>
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation type="unfinished"/>
+        <translation>Start KeePassXC automatisk ved opstart af system</translation>
     </message>
     <message>
         <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
-        <translation type="unfinished"/>
+        <translation>Gem databasefiler sikkert (deaktiver hvis der opleves problemer med Dropbox, etc.)</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"/>
+        <translation>Brugerflade</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation type="unfinished"/>
+        <translation>Knapstil på værktøjslinje:</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation type="unfinished"/>
+        <translation>Brug monospatieret skrifttype til noter</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation type="unfinished"/>
+        <translation>Bakkeikontype:</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation type="unfinished"/>
+        <translation>Nulstil til standardindstillinger...</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation type="unfinished"/>
+        <translation>Skriveforsinkelse for autoskriv:</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation type="unfinished"/>
+        <translation>Global genvej til autoskriv</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation type="unfinished"/>
+        <translation>Startforsinkelse for autoskriv:</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Gem automatisk når databasen låses</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation type="unfinished"/>
+        <translation>Gem automatisk ikke-dataændringer når databasen låses</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation type="unfinished"/>
+        <translation>Bakkeikontype</translation>
     </message>
 </context>
 <context>
@@ -414,19 +418,19 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation>Brug DuckDuckGo til download af webstedsikoner</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"/>
+        <translation>Rydning af udklipsholder sekunder</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
-        <translation type="unfinished"/>
+        <translation>Nulstilling af TouchID ved inaktivitet</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation type="unfinished"/>
+        <translation>Timeout for databaselåsning sekunder</translation>
     </message>
     <message>
         <source> min</source>
@@ -435,19 +439,19 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation>Ryd søgeforespørgsel efter</translation>
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
-        <translation type="unfinished"/>
+        <translation>Kræv adgangskodegentagelse når den er synlig</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation type="unfinished"/>
+        <translation>Skjul adgangskoder når de redigeres</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation type="unfinished"/>
+        <translation>Brug pladsholder til tomme adgangskodefelter</translation>
     </message>
 </context>
 <context>
@@ -482,11 +486,11 @@
     </message>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>Tilladelse krævet</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC kræver tilgængelighedstilladelse for at udføre autoskrift på startniveau. Hvis du allerede har givet tilladelse, er du måske nødt til at genstarte KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -538,11 +542,11 @@
     <name>AutoTypePlatformMac</name>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>Tilladelse krævet</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC kræver tilgængeligheds - og skærmoptagelsestilladelse for at udføre global autoskrift. Hvis du allerede har givet tilladelse, er du måske nødt til at genstarte KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -564,35 +568,35 @@
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Browser adgangsanmodning</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
-        <translation type="unfinished"/>
+        <translation>%1 anmoder om adgang til følgende poster:</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
-        <translation type="unfinished"/>
+        <translation>Husk adgang til afmærkede poster</translation>
     </message>
     <message>
         <source>Remember</source>
-        <translation type="unfinished"/>
+        <translation>Husk</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation type="unfinished"/>
+        <translation>Tillad adgang til poster</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation type="unfinished"/>
+        <translation>Tillad valgte</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation type="unfinished"/>
+        <translation>Afvis alle</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation type="unfinished"/>
+        <translation>Deaktiver for dette websted</translation>
     </message>
 </context>
 <context>
@@ -708,7 +712,11 @@ Vil du migrere dine eksisterende indstillinger nu?</translation>
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation type="unfinished"/>
+        <translation>Du har modtaget en tilknytningsanmodning for den følgende database:
+%1
+
+Giv forbindelsen et unikt navn eller ID, for eksempel:
+chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -723,7 +731,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation type="unfinished"/>
+        <translation>Aktivér browser-integration</translation>
     </message>
     <message>
         <source>General</source>
@@ -731,7 +739,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation type="unfinished"/>
+        <translation>Browsere installeret som snaps er pt. ikke understøttet.</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
@@ -739,40 +747,40 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Vivaldi</source>
-        <translation type="unfinished"/>
+        <translation>Vivaldi</translation>
     </message>
     <message>
         <source>&amp;Edge</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Edge</translation>
     </message>
     <message>
         <source>Firefox</source>
-        <translation type="unfinished"/>
+        <translation>Firefox</translation>
     </message>
     <message>
         <source>Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>Tor Browser</translation>
     </message>
     <message>
         <source>Brave</source>
-        <translation type="unfinished"/>
+        <translation>Brave</translation>
     </message>
     <message>
         <source>Google Chrome</source>
-        <translation type="unfinished"/>
+        <translation>Google Chrome</translation>
     </message>
     <message>
         <source>Chromium</source>
-        <translation type="unfinished"/>
+        <translation>Chromium</translation>
     </message>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Vis en notifikation når der anmodes om legitimationsoplysninger</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation type="unfinished"/>
+        <translation>Anmod om at låse op for databasen, hvis den er låst</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
@@ -788,15 +796,15 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>Returnér kun de bedst matchende legitimationsoplysninger</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation type="unfinished"/>
+        <translation>Returnerer udløbne legitimationsoplysninger. Strengen [expired] tilføjes til titlen.</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation type="unfinished"/>
+        <translation>Tillad returnering af udløbne legitimationsoplysninger</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
@@ -810,12 +818,12 @@ chrome-laptop.</source>
     <message>
         <source>Sort matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sortér matchende loginoplysninger efter titel</translation>
     </message>
     <message>
         <source>Sort matching credentials by username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sortér matchende loginoplysninger efter brugernavn</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -824,12 +832,12 @@ chrome-laptop.</source>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Spørg aldrig før loginoplysninger hentes</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Spørg aldrig før loginoplysninger opdateres</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
@@ -888,11 +896,11 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation type="unfinished"/>
+        <translation>Browsertype:</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation type="unfinished"/>
+        <translation>Knapstil på værktøjslinje</translation>
     </message>
     <message>
         <source>Config Location:</source>
@@ -1110,6 +1118,14 @@ chrome-laptop.</source>
         <source>Column %1</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikon</translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
@@ -1160,11 +1176,11 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke gemme, database peger ikke på en gyldig fil.</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke gemme, databasefilen er skrivebeskyttet.</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
@@ -1181,11 +1197,11 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation type="unfinished"/>
+        <translation>Database er allerede ved at blive gemt.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke gemme, databasen er ikke blevet initialiseret!</translation>
     </message>
 </context>
 <context>
@@ -1206,20 +1222,6 @@ Backup database located at %2</source>
         <translation>Genopfrisk</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Udgået nøglefilformat</translation>
-    </message>
-    <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>Du bruger et udgået nøglefilformat, som muligvis
-ikke understøttes i fremtiden.
-
-Overvej at generere en ny nøglefil.</translation>
-    </message>
-    <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Vis ikke denne advarsel igen</translation>
     </message>
@@ -1237,19 +1239,19 @@ Overvej at generere en ny nøglefil.</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke åbne nøglefil: %1</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>Lås op for KeePassXC Database</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>Indtast adgangskode:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Adgangskodefelt</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
@@ -1269,47 +1271,43 @@ Overvej at generere en ny nøglefil.</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
+        <translation>Sikkerhedsnøgle:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>Hjælp til sikkerhedsnøgle</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Ryd</translation>
-    </message>
-    <message>
-        <source>Clear Key File</source>
-        <translation type="unfinished"/>
+        <translation>TouchID til Hurtigoplåsning</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation type="unfinished"/>
+        <translation>Oplåsning mislykkedes, og der er ikke angivet nogen adgangskode</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation type="unfinished"/>
+        <translation>Oplåsningen af databasen mislykkedes, og du indtastede ikke en adgangskode.
+Vil du prøve igen med en &quot;tom&quot; adgangskode i stedet?
+
+For at forhindre, at denne fejl vises, skal du gå til &quot;Databaseindstillinger / Sikkerhed&quot; og nulstille din adgangskode.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation type="unfinished"/>
+        <translation>Prøv igen med tom adgangskode</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation type="unfinished"/>
+        <translation>Indtast yderligere legitimationsoplysninger (hvis nogen):</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Du kan bruge en sikkerhedsnøgle som &lt;strong&gt;YubiKey&lt;/strong&gt; eller &lt;strong&gt;OnlyKey&lt;/strong&gt; med pladser konfigureret til HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Klik for mere information...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file help</source>
@@ -1321,20 +1319,21 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke åbne databasefil som nøglefil</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation type="unfinished"/>
+        <translation>Du kan ikke bruge din database som nøglefil.
+Hvis du ikke har en nøglefil, bedes du lade feltet være tomt.</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Udover en adgangskode kan du bruge en hemmelig fil til at forstærke din databases sikkerhed. Denne fil kan dannes i din databases sikkerhedsindstillinger.&lt;/p&gt;&lt;p&gt;Dette er &lt;strong&gt;ikke &lt;/strong&gt; din *.kdbx databasefil!&lt;br&gt;Hvis du ikke har en nøglefil, skal du lade dette felt være tomt.&lt;/p&gt;&lt;p&gt;Klik for mere information...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation type="unfinished"/>
+        <translation>Nøglefil til at låse databasen op</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
@@ -1342,15 +1341,23 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation type="unfinished"/>
+        <translation>Registrerer sikkerhedsnøgler...</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation type="unfinished"/>
+        <translation>Ingen sikkerhedsnøgle registreret</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation type="unfinished"/>
+        <translation>Vælg sikkerhedsnøgle...</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation>Gammelt nøglefilformat</translation>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation>Du bruger et gammelt nøglefilformat, som KeePassXC måske&lt;br&gt;ikke vil understøtte i fremtiden.&lt;br&gt;&lt;br&gt;Overvej at oprette en ny nøglefil ved at gå til:&lt;br&gt;&lt;strong&gt;Database / Databasesikkerhed / Skift nøglefil.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -1499,7 +1506,7 @@ Det er nødvendigt for at vedligeholde kompatibilitet med browserpluginet.</tran
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>Fjern valgte nøgle</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser custom data</source>
@@ -1543,7 +1550,7 @@ Er du sikker på, du vil fortsætte uden en adgangskode?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation type="unfinished"/>
+        <translation>Fortsæt uden adgangskode</translation>
     </message>
     <message>
         <source>No encryption key added</source>
@@ -1691,7 +1698,7 @@ Hvis du beholder dette antal, så kan din database være nem af knække!</transl
     </message>
     <message>
         <source>Database format</source>
-        <translation type="unfinished"/>
+        <translation>Databaseformat</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
@@ -1965,7 +1972,7 @@ Det er helt sikkert en fejl. Rapportér det venligst til udviklerne.</translatio
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Du er ved at eksportere din database til en ukrypteret fil. Dette vil gøre dine adgangskoder og følsomme oplysninger sårbare! Er du sikker på, at du vil fortsætte?</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -2150,15 +2157,15 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Denne database åbnes i skrivebeskyttet tilstand. Automatisk lagring er deaktiveret.</translation>
     </message>
     <message>
         <source>Save database backup</source>
-        <translation type="unfinished"/>
+        <translation>Gem sikkerhedskopi af database</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke finde databasefil: %1</translation>
     </message>
 </context>
 <context>
@@ -2273,14 +2280,23 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"/>
+        <translation>Ikke-gemte ændringer</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Ønsker du at gemme ændringer til denne post?</translation>
     </message>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation>Ugyldig indtastning</translation>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2480,6 +2496,14 @@ Så sikre gem fra og prøv igen?</translation>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2556,7 +2580,7 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Adgangskodefelt</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
@@ -2584,7 +2608,7 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation type="unfinished"/>
+        <translation>Brugernavnfelt</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
@@ -2600,7 +2624,11 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Udløber:</translation>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Rediger post</translation>
     </message>
 </context>
 <context>
@@ -2692,7 +2720,7 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <translation>Vælg vedhæftningsfil</translation>
     </message>
 </context>
 <context>
@@ -2786,7 +2814,7 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation type="unfinished"/>
+        <translation>Synkroniser</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
@@ -2828,7 +2856,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Adgangskodefelt</translation>
     </message>
     <message>
         <source>Clear fields</source>
@@ -2875,7 +2903,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Udløber:</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
@@ -2883,11 +2911,11 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation type="unfinished"/>
+        <translation>Autoskriv:</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation type="unfinished"/>
+        <translation>Søg:</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -2895,11 +2923,15 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Navn:</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Rediger gruppe</translation>
     </message>
 </context>
 <context>
@@ -3059,7 +3091,7 @@ Det kan få de påvirkede plugins til at svigte.</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>Bruger-ID</translation>
     </message>
     <message>
         <source>Plugin data</source>
@@ -3171,7 +3203,7 @@ Det kan få de påvirkede plugins til at svigte.</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation type="unfinished"/>
+        <translation>Tilføj ny vedhæftning</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
@@ -3288,15 +3320,15 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Entry title</source>
-        <translation type="unfinished"/>
+        <translation>Rediger titel</translation>
     </message>
     <message>
         <source>Entry notes</source>
-        <translation type="unfinished"/>
+        <translation>Rediger noter</translation>
     </message>
     <message>
         <source>Entry expires at</source>
-        <translation type="unfinished"/>
+        <translation>Post udløber den</translation>
     </message>
     <message>
         <source>Creation date</source>
@@ -3312,15 +3344,15 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Attached files</source>
-        <translation type="unfinished"/>
+        <translation>Vedhæftede filer</translation>
     </message>
     <message>
         <source>Entry size</source>
-        <translation type="unfinished"/>
+        <translation>Poststørrelse</translation>
     </message>
     <message>
         <source>Has attachments</source>
-        <translation type="unfinished"/>
+        <translation>Har vedhæftninger</translation>
     </message>
     <message>
         <source>Has TOTP one-time password</source>
@@ -3398,11 +3430,6 @@ Are you sure to add this file?</source>
         <translation>[BESKYTTET]</translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
-        <comment>attributes line</comment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Aktiveret</translation>
     </message>
@@ -3422,6 +3449,15 @@ Are you sure to add this file?</source>
         <source>Advanced</source>
         <translation>Avanceret</translation>
     </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
+        <comment>attributes line</comment>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3432,18 +3468,6 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>EntryView</name>
-    <message>
-        <source>Customize View</source>
-        <translation>Tilpas visning</translation>
-    </message>
-    <message>
-        <source>Hide Usernames</source>
-        <translation>Skjul brugernavne</translation>
-    </message>
-    <message>
-        <source>Hide Passwords</source>
-        <translation>Skjul adgangskoder</translation>
-    </message>
     <message>
         <source>Fit to window</source>
         <translation>Tilpas til vindue</translation>
@@ -3459,7 +3483,7 @@ Are you sure to add this file?</source>
     <message>
         <source>Has attachments</source>
         <comment>Entry attachment icon toggle</comment>
-        <translation type="unfinished"/>
+        <translation>Har vedhæftninger</translation>
     </message>
     <message>
         <source>Has TOTP</source>
@@ -3476,14 +3500,14 @@ Are you sure to add this file?</source>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation type="unfinished"/>
+    </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3502,7 +3526,7 @@ Are you sure to add this file?</source>
     </message>
     <message>
         <source>Unlock to show</source>
-        <translation type="unfinished"/>
+        <translation>Lås op for at vise</translation>
     </message>
     <message>
         <source>None</source>
@@ -3558,7 +3582,7 @@ Are you sure to add this file?</source>
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation type="unfinished"/>
+        <translation>Online validering af adgangskode mislykkedes</translation>
     </message>
 </context>
 <context>
@@ -3610,7 +3634,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation type="unfinished"/>
+        <translation>Downloader favicons (%1/%2)...</translation>
     </message>
 </context>
 <context>
@@ -4305,10 +4329,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation>&lt;p&gt;Du kan tilføje en nøglefil med tilfældige bytes for yderligere sikkerhed.&lt;/p&gt;&lt;p&gt;Du skal holde den hemmelig og aldrig miste den, ellers vil du være låst ude!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Legacy key file format</source>
-        <translation>Udgået nøglefilformat</translation>
-    </message>
-    <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
         <translation>Fejl ved indlæsning af nøglefilen &apos;%1&apos;
@@ -4339,23 +4359,11 @@ Meddelelse: %2</translation>
         <translation>Vælg en nøglefil</translation>
     </message>
     <message>
-        <source>Key file selection</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Browse for key file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Gennemse ...</translation>
-    </message>
-    <message>
         <source>Generate a new key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -4376,10 +4384,23 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You are using a legacy key file format which may become
-unsupported in the future.
-
-Generate a new key file in the database security settings.</source>
+        <source>Old key file format</source>
+        <translation>Gammelt nøglefilsformat</translation>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation>Bemærk: Brug IKKE en fil, der kan ændre sig, da det vil forhindre dig i at låse din database op.</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4591,11 +4612,11 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;Recent Databases</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Seneste databaser</translation>
     </message>
     <message>
         <source>&amp;Entries</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Poster</translation>
     </message>
     <message>
         <source>Copy Att&amp;ribute</source>
@@ -4611,59 +4632,59 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"/>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kontroller for opdateringer</translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Åbn database...</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Gem database</translation>
     </message>
     <message>
         <source>&amp;Close Database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Luk database</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ny database...</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Flet fra database...</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ny post...</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Rediger post</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Slet post</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ny gruppe...</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Rediger gruppe...</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Slet gruppe...</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation type="unfinished"/>
+        <translation>Download alle &amp;Favicons...</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
@@ -4671,7 +4692,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation type="unfinished"/>
+        <translation>Database&amp;sikkerhed…</translation>
     </message>
     <message>
         <source>Database &amp;Reports...</source>
@@ -4683,11 +4704,11 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Databaseindstillinger…</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Klon post</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
@@ -4695,7 +4716,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Move entry one step up</source>
-        <translation type="unfinished"/>
+        <translation>Ryk post et trin op</translation>
     </message>
     <message>
         <source>Move do&amp;wn</source>
@@ -4703,15 +4724,15 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Move entry one step down</source>
-        <translation type="unfinished"/>
+        <translation>Ryk post et tin ned</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
-        <translation type="unfinished"/>
+        <translation>Kopiér &amp;brugernavn</translation>
     </message>
     <message>
         <source>Copy &amp;Password</source>
-        <translation type="unfinished"/>
+        <translation>Kopiér &amp;Adgangskode</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
@@ -4719,7 +4740,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;Lock Databases</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Lås databaser</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
@@ -4747,7 +4768,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Show QR Code</source>
-        <translation type="unfinished"/>
+        <translation>Vis QR-kode</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
@@ -4755,7 +4776,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Report a &amp;Bug</source>
-        <translation type="unfinished"/>
+        <translation>Rapportér en &amp;fejl</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
@@ -4763,7 +4784,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation type="unfinished"/>
+        <translation>Online hjælp</translation>
     </message>
     <message>
         <source>Go to online documentation</source>
@@ -4775,7 +4796,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Save Database Backup...</source>
-        <translation type="unfinished"/>
+        <translation>Gem sikkerhedskopi af database...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -4787,35 +4808,35 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Compact Mode</source>
-        <translation type="unfinished"/>
+        <translation>Kompakt tilstand</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Automatisk</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation type="unfinished"/>
+        <translation>Lyst</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"/>
+        <translation>Mørkt</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation type="unfinished"/>
+        <translation>Klassisk</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Vis værktøjsbjælke</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation type="unfinished"/>
+        <translation>Vis forhåndsvisningspanel</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation type="unfinished"/>
+        <translation>Vis ikke igen for denne version</translation>
     </message>
     <message>
         <source>Restart Application?</source>
@@ -4831,11 +4852,11 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>{USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>{BRUGERNAVN}</translation>
     </message>
     <message>
         <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{BRUGERNAVN}{INDTAST}</translation>
     </message>
     <message>
         <source>{PASSWORD}</source>
@@ -4843,7 +4864,19 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>{ADGANGSKODE}{INDTAST}</translation>
+    </message>
+    <message>
+        <source>Always on Top</source>
+        <translation>Altid øverst</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Skjul brugernavne</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Skjul adgangskoder</translation>
     </message>
 </context>
 <context>
@@ -4854,7 +4887,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation type="unfinished"/>
+        <translation>Rediger databaseindstillinger</translation>
     </message>
     <message>
         <source>Unlock database</source>
@@ -4862,7 +4895,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation type="unfinished"/>
+        <translation>Lås database op for at vise mere information</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -5019,7 +5052,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
-        <translation type="unfinished"/>
+        <translation>Adgangskodeadministrator</translation>
     </message>
 </context>
 <context>
@@ -5191,11 +5224,11 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>Adgangskoder matcher ikke</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation type="unfinished"/>
+        <translation>Adgangskoderne matcher indtil videre</translation>
     </message>
     <message>
         <source>Toggle Password (%1)</source>
@@ -5207,7 +5240,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation type="unfinished"/>
+        <translation>Advarsel: Caps Lock aktiveret!</translation>
     </message>
 </context>
 <context>
@@ -5234,11 +5267,11 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Adgangskodefelt</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>Gentag feltet for adgangskode</translation>
     </message>
 </context>
 <context>
@@ -5369,12 +5402,8 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
         <translation>Hex</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Udeluk tegnene: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Generated password</source>
-        <translation type="unfinished"/>
+        <translation>Genereret adgangskode</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
@@ -5402,11 +5431,11 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Hex-adgangskoder</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation type="unfinished"/>
+        <translation>Længde af adgangskode</translation>
     </message>
     <message>
         <source>Word Case:</source>
@@ -5465,16 +5494,16 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Ryd</translation>
-    </message>
-    <message>
         <source>Regenerate password (%1)</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Special Characters</source>
         <translation>Specialtegn</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5713,16 +5742,6 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>Udfør avanceret analyse af adgangskoden.</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using a legacy key file format which may become
-unsupported in the future.
-
-Please consider generating a new key file.</source>
-        <translation>ADVARSEL: Du bruger et udgået nøglefilformat, som muligvis
-ikke understøttes i fremtiden.
-
-Overvej at generere en ny nøglefil.</translation>
     </message>
     <message>
         <source>
@@ -6112,10 +6131,6 @@ Tilgængelige kommandoer:
         <translation>%1: (række, kolonne) %2,%3</translation>
     </message>
     <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – anbefales)</translation>
-    </message>
-    <message>
         <source>AES-KDF (KDBX 4)</source>
         <translation>AES-KDF (KDBX 4)</translation>
     </message>
@@ -6204,10 +6219,6 @@ Tilgængelige kommandoer:
     <message>
         <source>read password of the database from stdin</source>
         <translation>læs adgangskode til databasen fra stdin</translation>
-    </message>
-    <message>
-        <source>Parent window handle</source>
-        <translation>Forældrevindue handle</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -6315,7 +6326,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation type="unfinished"/>
+        <translation>Tilføj en ny gruppe til en database</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
@@ -6355,7 +6366,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation type="unfinished"/>
+        <translation>Luk den aktuelt åbne database.</translation>
     </message>
     <message>
         <source>Display this help.</source>
@@ -6447,11 +6458,11 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation type="unfinished"/>
+        <translation>Flyt en post til en ny gruppe</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>Sti til posten, som skal flyttes.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
@@ -6471,7 +6482,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation type="unfinished"/>
+        <translation>Åbn en database.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
@@ -6487,23 +6498,23 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Slettede gruppe %1.</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation type="unfinished"/>
+        <translation>Det lykkedes ikke at åbne databasefil %1: ikke fundet</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation type="unfinished"/>
+        <translation>Det lykkedes ikke at åbne databasefil %1: ikke en almindelig fil</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation type="unfinished"/>
+        <translation>Det lykkedes ikke at åbne databasefil %1: ulæselig</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>Indtast adgangskode for at låse op for %1: </translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
@@ -6511,7 +6522,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
+        <translation>Indtast adgangskode for at kryptere database (valgfrit): </translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
@@ -6555,7 +6566,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Kopierer en posts parameter til udklipsholderen.</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
@@ -6695,10 +6706,6 @@ Kerne: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Argon2 (%1 rounds, %2 KB)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation type="unfinished"/>
     </message>
@@ -6723,6 +6730,65 @@ Kerne: %3 %4</translation>
         <source>%1 s</source>
         <comment>seconds</comment>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikon</translation>
+    </message>
+    <message>
+        <source>Unsupported key file version: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Checksum mismatch! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unexpected key file data! Key file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>lock all open databases</source>
+        <translation>lås alle åbne databaser</translation>
+    </message>
+    <message>
+        <source>Locked databases.</source>
+        <translation>Låste databaser.</translation>
+    </message>
+    <message>
+        <source>Database failed to lock.</source>
+        <translation>Låsning af database mislykkedes.</translation>
     </message>
 </context>
 <context>
@@ -6952,11 +7018,11 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>Sidst gemt</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>Ikke-gemte ændringer</translation>
     </message>
     <message>
         <source>yes</source>
@@ -6968,7 +7034,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation type="unfinished"/>
+        <translation>Databasen er blevet ændret, men ændringerne er endnu ikke blevet gemt på disken.</translation>
     </message>
     <message>
         <source>Number of groups</source>
@@ -7146,10 +7212,6 @@ Kerne: %3 %4</translation>
     <message>
         <source>Search</source>
         <translation>Søg</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Ryd</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
@@ -7430,10 +7492,6 @@ Kerne: %3 %4</translation>
         <source>Could not write export container</source>
         <translation>Kunne ikke skrive eksportbeholderen</translation>
     </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>Der opstod en uventet fejl ved eksport</translation>
-    </message>
 </context>
 <context>
     <name>ShareImport</name>
@@ -7500,10 +7558,6 @@ Kerne: %3 %4</translation>
     <message>
         <source>File does not exist</source>
         <translation>Filen findes ikke</translation>
-    </message>
-    <message>
-        <source>Unknown share container type</source>
-        <translation>Ukendt type delingsbeholder</translation>
     </message>
 </context>
 <context>
@@ -7751,7 +7805,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation type="unfinished"/>
+        <translation>Åbn en af de seneste databaser</translation>
     </message>
 </context>
 <context>
@@ -7782,7 +7836,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation type="unfinished"/>
+        <translation>Sikkerhedsnøgle er i øjeblikket i brug</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
@@ -7833,11 +7887,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation type="unfinished"/>
+        <translation>Registrerer sikkerhedsnøgler...</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation type="unfinished"/>
+        <translation>Ingen sikkerhedsnøgle registreret</translation>
     </message>
 </context>
 </TS>

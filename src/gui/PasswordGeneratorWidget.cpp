@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -294,6 +294,7 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 void PasswordGeneratorWidget::applyPassword()
 {
     saveSettings();
+    m_passwordGenerated = true;
     emit appliedPassword(m_ui->editNewPassword->text());
     emit closed();
 }
@@ -339,6 +340,11 @@ void PasswordGeneratorWidget::setPasswordVisible(bool visible)
 bool PasswordGeneratorWidget::isPasswordVisible() const
 {
     return m_ui->editNewPassword->isPasswordVisible();
+}
+
+bool PasswordGeneratorWidget::isPasswordGenerated() const
+{
+    return m_passwordGenerated;
 }
 
 void PasswordGeneratorWidget::deleteWordList()
@@ -580,7 +586,7 @@ void PasswordGeneratorWidget::updateGenerator()
         if (m_ui->buttonAdvancedMode->isChecked()) {
             m_passwordGenerator->setCharClasses(classes);
             m_passwordGenerator->setCustomCharacterSet(m_ui->editAdditionalChars->text());
-            m_passwordGenerator->setCustomCharacterSet(m_ui->editExcludedChars->text());
+            m_passwordGenerator->setExcludedCharacterSet(m_ui->editExcludedChars->text());
         } else {
             m_passwordGenerator->setCharClasses(classes);
         }

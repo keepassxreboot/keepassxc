@@ -88,18 +88,29 @@ void BrowserHost::readProxyMessage()
         return;
     }
 
-    emit clientMessageReceived(json.object());
+    emit clientMessageReceived(socket, json.object());
 }
 
-void BrowserHost::sendClientMessage(const QJsonObject& json)
+void BrowserHost::broadcastClientMessage(const QJsonObject& json)
 {
     QString reply(QJsonDocument(json).toJson(QJsonDocument::Compact));
     for (const auto socket : m_socketList) {
-        if (socket && socket->isValid() && socket->state() == QLocalSocket::ConnectedState) {
-            QByteArray arr = reply.toUtf8();
-            socket->write(arr.constData(), arr.length());
-            socket->flush();
-        }
+        sendClientData(socket, reply);
+    }
+}
+
+void BrowserHost::sendClientMessage(QLocalSocket* socket, const QJsonObject& json)
+{
+    QString reply(QJsonDocument(json).toJson(QJsonDocument::Compact));
+    sendClientData(socket, reply);
+}
+
+void BrowserHost::sendClientData(QLocalSocket* socket, const QString& data)
+{
+    if (socket && socket->isValid() && socket->state() == QLocalSocket::ConnectedState) {
+        QByteArray arr = data.toUtf8();
+        socket->write(arr.constData(), arr.length());
+        socket->flush();
     }
 }
 

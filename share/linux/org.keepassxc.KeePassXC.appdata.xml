@@ -50,6 +50,94 @@
     </screenshots>
 
     <releases>
+        <release version="2.7.0" date="2022-02-26">
+            <description>
+                <ul>
+                    <li>Implement KDBX 4.1 [#7114]</li>
+                    <li>Add direct write save option for cloud storage and GVFS [#6594]</li>
+                    <li>Prevent screen capture on Windows and macOS [#6030]</li>
+                    <li>Support quick unlock using Windows Hello [#7384]</li>
+                    <li>Support quick unlock using Apple Watch [#5526]</li>
+                    <li>Allow specifying database backup paths [#7035]</li>
+                    <li>Add tag functionality [#6487][#7436][#7446]</li>
+                    <li>Add password rating column to entry view [#4797]</li>
+                    <li>Add group clone action [#6124]</li>
+                    <li>Show modifications between entry history items [#6789]</li>
+                    <li>Ability to bulk-delete and purge unused custom icons [#5970]</li>
+                    <li>Support adding custom passphrase wordlists [#6799]</li>
+                    <li>Support passphrase wordlists in numbered and PGP-signed formats [#6791]</li>
+                    <li>Implement support for hardware keys via wireless NFC [#6895]</li>
+                    <li>SSH Agent: Add support for OpenSSH 8.2 FIDO/U2F keys [#6371]</li>
+                    <li>CLI: Implement attachment handling [#5538]</li>
+                    <li>CLI: Add support for okon in offline HIBP checks [#5478]</li>
+                    <li>CLI: Implement `search` command and remove `locate` [#6805]</li>
+                    <li>CLI: Add db statistic output to `db-info` command [#7032]</li>
+                    <li>CLI: Add -i/--include option to `generate` command. [#7112]</li>
+                    <li>CLI: Add a -n (--notes) option to `add` and `edit` commands [#4646]</li>
+                    <li>CLI: Add keyfile option to `import` command [#5402]</li>
+                    <li>CLI: Adding a best option to clip to copy a password of the best match [#4489]</li>
+                    <li>Browser: Add Microsoft Edge support on Linux [#7100]</li>
+                    <li>Browser: Support native password generator from the extension [#6529]</li>
+                    <li>Browser: Add group settings [#4180]</li>
+                    <li>Browser: Add feature to ignore entries for HTTP-Auth Logins [#5394]</li>
+                    <li>Browser: Support triggering Auto-Type from browser extension [#6272]</li>
+                    <li>Browser: Add delete-entry command to API [#6899]</li>
+                    <li>Browser: Add search 'by-path' url to API [#5535]</li>
+                    <li>Browser: search for entries by UUID to API [#4763]</li>
+                    <li>Browser: Support auto-download of favicon on entry addition [#7179]</li>
+                    <li>Auto-Type: Major improvements to Auto-Type [#5864][#7463][#7435][#7391][#7129][#6400][#6364][#6361][#5283]</li>
+                    <li>Auto-Type: Fix typing to virtual machines on Windows [#7366]</li>
+                    <li>Auto-Type: Re-implement X11 keysym emulation [#7098]</li>
+                    <li>Auto-Type: Support multiple Xkb layouts [#6247]</li>
+                    <li>Auto-Type: Abort keystroke if modifiers held on X11 [#6351][#6357]</li>
+                    <li>Auto-Type: Add TOTP option to entry level Auto-Type menu [#6675]</li>
+                    <li>FdoSecrets: Major Refactor and Code Consolidation [#5747][#5660][#7043][#6915]</li>
+                    <li>FdoSecrets: Implement unlock before search [#6943]</li>
+                    <li>Reports: Add browser statistics report [#7197]</li>
+                    <li>Port crypto backend to [Botan](https://github.com/randombit/botan) [#6209]</li>
+                    <li>Improve attachment handling and security [#6606][#5034][#7083]</li>
+                    <li>Allow selecting any open database in unlock dialog [#5427]</li>
+                    <li>KeeShare: Remove checking signed container and QuaZip dependency [#7223]</li>
+                    <li>Introduce security option to enable copy on double click (default off) [#6433]</li>
+                    <li>Add 'delete entry without confirm' functionality [#5812]</li>
+                    <li>Improve macOS and Windows platform integration [#5851]</li>
+                    <li>Lock only the current database by default [#6652]</li>
+                    <li>Show expired entries on DB unlock [#7290]</li>
+                    <li>Add countdown progress bar to TOTP preview [#6930]</li>
+                    <li>Enter favicon url directly on icons page [#6614]</li>
+                    <li>Set C++17 as standard in the build system [#7180]</li>
+                    <li>Internalize ykcore into code base [#6654]</li>
+                    <li>Transition to Visual Studio builds on Windows [#5874]</li>
+                    <li>Ability to delete entries from health check reports [#6537]</li>
+                    <li>Enhance remembering last-used directories [#6711]</li>
+                    <li>Implement org.freedesktop.appearance.color-scheme support on Linux [#7422]</li>
+                    <li>Support sorting HTML export [#7011]</li>
+                    <li>Add display number of characters in passphrases [#5449]</li>
+                    <li>Use Alt+Tab on macOS to switch between databases [#5407]</li>
+                    <li>Add feature to sort groups using shortcut keys [#6999]</li>
+                    <li>Add CTRL+Enter to apply password generator changes [#6414]</li>
+                    <li>Display `Database created` timestamp on statistics report [#6876]</li>
+                    <li>Browser: Improve best matching credentials setting [#6893]</li>
+                    <li>SSH Agent: Use both Pageant and OpenSSH agent simultaneously on Windows [#6288]</li>
+                    <li>SSH Agent: Allow using database path to resolve keys [#6365]</li>
+                    <li>SSH Agent: Show correct error messages in main window [#7166]</li>
+                    <li>Multiple fixes for MSI installer [#6630]</li>
+                    <li>Fix tab order for CSV import dialog to match screen order [#7315]</li>
+                    <li>Don't mark kdbx:// urls as invalid [#7221]</li>
+                    <li>Make selected text copyable instead of copying password [#7209]</li>
+                    <li>Detect timestamp resolution for CSV files [#7196]</li>
+                    <li>Fix crash while downloading favicon [#7104]</li>
+                    <li>Correct naming of newly generated keyx files [#7010]</li>
+                    <li>Place the 'Recycle Bin' at the bottom of the list when groups are sorted [#7004]</li>
+                    <li>Handle tilde with custom browser paths [#6659]</li>
+                    <li>Don't scroll up when deleting an entry [#6833]</li>
+                    <li>Set the MIME-Type to text/plain when using wl-copy on wayland [#6832]</li>
+                    <li>Fix adaptive icon painting [#5989][#6033]</li>
+                    <li>Fix favicon download from URL with non-standard port [#5509]</li>
+                    <li>Ignore recycle bin on KeePassHTTP migration [#5481]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.6.6" date="2021-06-11">
             <description>
                 <ul>

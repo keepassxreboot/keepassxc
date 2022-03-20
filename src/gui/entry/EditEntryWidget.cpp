@@ -220,7 +220,7 @@ void EditEntryWidget::openAutotypeHelp()
 void EditEntryWidget::setupAutoType()
 {
     m_autoTypeUi->setupUi(m_autoTypeWidget);
-    addPage(tr("Auto-Type"), icons()->icon("key-enter"), m_autoTypeWidget);
+    addPage(tr("Auto-Type"), icons()->icon("auto-type"), m_autoTypeWidget);
 
     m_autoTypeUi->openHelpButton->setIcon(icons()->icon("system-help"));
 
@@ -234,8 +234,6 @@ void EditEntryWidget::setupAutoType()
     connect(m_autoTypeUi->enableButton, SIGNAL(toggled(bool)), SLOT(updateAutoTypeEnabled()));
     connect(m_autoTypeUi->customSequenceButton, SIGNAL(toggled(bool)),
             m_autoTypeUi->sequenceEdit, SLOT(setEnabled(bool)));
-    connect(m_autoTypeUi->customSequenceButton, SIGNAL(toggled(bool)),
-            m_autoTypeUi->openHelpButton, SLOT(setEnabled(bool)));
     connect(m_autoTypeUi->openHelpButton, SIGNAL(clicked()), SLOT(openAutotypeHelp()));
     connect(m_autoTypeUi->customWindowSequenceButton, SIGNAL(toggled(bool)),
             m_autoTypeUi->windowSequenceEdit, SLOT(setEnabled(bool)));

@@ -192,8 +192,10 @@ QString Entry::tags() const
 
 QStringList Entry::tagList() const
 {
-    static QRegExp rx("(\\ |\\,|\\.|\\:|\\t|\\;)");
-    return tags().split(rx, QString::SkipEmptyParts);
+    static QRegExp rx("(\\ |\\,|\\t|\\;)");
+    auto taglist = tags().split(rx, QString::SkipEmptyParts);
+    std::sort(taglist.begin(), taglist.end());
+    return taglist;
 }
 
 const TimeInfo& Entry::timeInfo() const

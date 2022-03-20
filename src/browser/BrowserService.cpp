@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include "BrowserEntryConfig.h"
 #include "BrowserEntrySaveDialog.h"
 #include "BrowserHost.h"
+#include "BrowserMessageBuilder.h"
 #include "BrowserSettings.h"
 #include "core/Tools.h"
 #include "gui/MainWindow.h"
@@ -39,6 +40,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QListWidget>
+#include <QLocalSocket>
 #include <QProgressDialog>
 #include <QUrl>
 
@@ -64,6 +66,7 @@ BrowserService::BrowserService()
     , m_browserHost(new BrowserHost)
     , m_dialogActive(false)
     , m_bringToFrontRequested(false)
+    , m_passwordGeneratorRequested(false)
     , m_prevWindowState(WindowState::Normal)
     , m_keepassBrowserUUID(Tools::hexToUuid("de887cc3036343b8974b5911b8816224"))
 {
@@ -311,32 +314,53 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
     return {};
 }
 
-void BrowserService::showPasswordGenerator(const QJsonObject& errorMessage, const QString& nonce)
+void BrowserService::showPasswordGenerator(QLocalSocket* socket,
+                                           const QString& incrementedNonce,
+                                           const QString& publicKey,
+                                           const QString& secretKey)
 {
     if (!m_passwordGenerator) {
         m_passwordGenerator.reset(PasswordGeneratorWidget::popupGenerator());
 
         connect(m_passwordGenerator.data(), &PasswordGeneratorWidget::closed, m_passwordGenerator.data(), [=] {
+            if (!m_passwordGenerator->isPasswordGenerated()) {
+                auto errorMessage = browserMessageBuilder()->getErrorReply("generate-password",
+                                                                           ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+                m_browserHost->sendClientMessage(socket, errorMessage);
+            }
+
             m_passwordGenerator.reset();
-            m_browserHost->sendClientMessage(errorMessage);
             hideWindow();
+            m_passwordGeneratorRequested = false;
         });
 
         connect(m_passwordGenerator.data(),
                 &PasswordGeneratorWidget::appliedPassword,
                 m_passwordGenerator.data(),
-                [=](const QString& password) { emit passwordGenerated(password, nonce); });
+                [=](const QString& password) {
+                    QJsonObject message = browserMessageBuilder()->buildMessage(incrementedNonce);
+                    message["password"] = password;
+                    sendPassword(socket,
+                                 browserMessageBuilder()->buildResponse(
+                                     "generate-password", message, incrementedNonce, publicKey, secretKey));
+                });
     }
 
+    m_passwordGeneratorRequested = true;
     raiseWindow();
     m_passwordGenerator->raise();
     m_passwordGenerator->activateWindow();
 }
 
-void BrowserService::sendPassword(const QJsonObject& message)
+void BrowserService::sendPassword(QLocalSocket* socket, const QJsonObject& message)
 {
-    m_browserHost->sendClientMessage(message);
+    m_browserHost->sendClientMessage(socket, message);
     hideWindow();
+}
+
+bool BrowserService::isPasswordGeneratorRequested() const
+{
+    return m_passwordGeneratorRequested;
 }
 
 QString BrowserService::storeKey(const QString& key)
@@ -1379,7 +1403,7 @@ void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
     if (dbWidget) {
         QJsonObject msg;
         msg["action"] = QString("database-locked");
-        m_browserHost->sendClientMessage(msg);
+        m_browserHost->broadcastClientMessage(msg);
     }
 }
 
@@ -1393,7 +1417,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 
         QJsonObject msg;
         msg["action"] = QString("database-unlocked");
-        m_browserHost->sendClientMessage(msg);
+        m_browserHost->broadcastClientMessage(msg);
 
         auto db = dbWidget->database();
         if (checkLegacySettings(db)) {
@@ -1416,7 +1440,7 @@ void BrowserService::activeDatabaseChanged(DatabaseWidget* dbWidget)
     m_currentDatabaseWidget = dbWidget;
 }
 
-void BrowserService::processClientMessage(const QJsonObject& message)
+void BrowserService::processClientMessage(QLocalSocket* socket, const QJsonObject& message)
 {
     auto clientID = message["clientID"].toString();
     if (clientID.isEmpty()) {
@@ -1429,6 +1453,6 @@ void BrowserService::processClientMessage(const QJsonObject& message)
     }
 
     auto& action = m_browserClients.value(clientID);
-    auto response = action->processClientMessage(message);
-    m_browserHost->sendClientMessage(response);
+    auto response = action->processClientMessage(socket, message);
+    m_browserHost->sendClientMessage(socket, response);
 }

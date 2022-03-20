@@ -20,6 +20,9 @@
 #include "config-keepassx.h"
 
 #include <QStandardPaths>
+#if defined(KEEPASSXC_DIST_SNAP)
+#include <QProcessEnvironment>
+#endif
 
 namespace BrowserShared
 {

@@ -347,11 +347,7 @@ checkSnapcraft() {
         return
     fi
 
-    if ! grep -qEzo "version: ${RELEASE_NAME}" snap/snapcraft.yaml; then
-        exitError "'snapcraft.yaml' has not been updated to the '${RELEASE_NAME}' release!"
-    fi
-
-    if ! grep -qEzo "KEEPASSXC_BUILD_TYPE=Release" snap/snapcraft.yaml; then
+    if ! $GREP -qPzo "KEEPASSXC_BUILD_TYPE=Release" snap/snapcraft.yaml; then
         exitError "'snapcraft.yaml' is not set for a release build!"
     fi
 }

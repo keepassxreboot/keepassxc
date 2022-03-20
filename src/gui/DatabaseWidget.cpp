@@ -782,9 +782,9 @@ void DatabaseWidget::performAutoType(const QString& sequence)
         }
 
         if (sequence.isEmpty()) {
-            autoType()->performAutoType(currentEntry, window());
+            autoType()->performAutoType(currentEntry);
         } else {
-            autoType()->performAutoTypeWithSequence(currentEntry, sequence, window());
+            autoType()->performAutoTypeWithSequence(currentEntry, sequence);
         }
     }
 }

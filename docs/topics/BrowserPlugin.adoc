@@ -23,6 +23,8 @@ You can download the KeePassXC-Browser extension from your web browser. To downl
 
 2. Click the button to install/add the extension to the browser. Accept any confirmation dialogs.
 
+TIP: For the most up-to-date troubleshooting advice on all platforms, please read our https://github.com/keepassxreboot/keepassxc-browser/wiki/Troubleshooting-guide[Troubleshooting Guide].
+
 // tag::advanced[]
 NOTE: When Microsoft Edge is installed as a managed application, system administrators are required to deploy a custom native messaging configuration. Instructions for this are found in the advanced section below.
 // end::advanced[]
@@ -89,6 +91,12 @@ image::browser_confirm_access_dialog.png[,80%]
 image::browser_fill_credentials.png[,80%]
 
 // tag::advanced[]
+=== Browser statistics
+You can see a cross-section of all browser-related settings applied to entries within a database through the Browser Statistics report. To access these, use the _Database_ -> _Database reports..._ menu option then click on _Browser Statistics_ on the left-hand menu. From here you can see all entries with URLs applied to them, explicitly allowed and denied URLs, and any entries with custom browser settings.
+
+.Browser statistics
+image::browser_statistics.png[]
+
 === Advanced Usage
 You can configure unique browser integration behavior for each entry. This allows you to add multiple URLs to an entry, hide an entry from the browser integration, and more. To access these settings, open an entry for editing then click on _Browser Integration_ option in the left-hand menu *(1)*.
 
@@ -96,6 +104,11 @@ After opening the settings you can add any number of additional URLs by clicking
 
 .Entry browser settings
 image::browser_entry_settings.png[]
+
+To set options for all entries within a group, edit the group and go to the browser integration section *(1)*. Here you can explicitly disable access to all entries under a group hierarchy to the browser extension. You can set other useful options for groups of entries as well.
+
+.Group browser settings
+image::browser_group_settings.png[]
 
 Database-wide operations are available in the database settings. To access these use the _Database_ -> _Database settings..._ menu option. Click on _Browser Integration_ on the left-hand menu. From here you can disconnect all browsers, convert legacy KeePass-HTTP settings, reset all entry-level settings, and refresh the database root group ID (useful when making copies of your database file).
 

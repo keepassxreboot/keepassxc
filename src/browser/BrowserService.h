@@ -23,6 +23,8 @@
 #include "core/Entry.h"
 #include "gui/PasswordGeneratorWidget.h"
 
+class QLocalSocket;
+
 typedef QPair<QString, QString> StringPair;
 typedef QList<StringPair> StringPairList;
 
@@ -56,8 +58,12 @@ public:
     QJsonObject getDatabaseGroups();
     QJsonObject createNewGroup(const QString& groupName);
     QString getCurrentTotp(const QString& uuid);
-    void showPasswordGenerator(const QJsonObject& errorMessage, const QString& nonce);
-    void sendPassword(const QJsonObject& message);
+    void showPasswordGenerator(QLocalSocket* socket,
+                               const QString& nonce,
+                               const QString& publicKey,
+                               const QString& secretKey);
+    void sendPassword(QLocalSocket* socket, const QJsonObject& message);
+    bool isPasswordGeneratorRequested() const;
 
     void addEntry(const QString& dbid,
                   const QString& login,
@@ -97,7 +103,7 @@ public:
 
 signals:
     void requestUnlock();
-    void passwordGenerated(const QString& password, const QString& nonce);
+    void passwordGenerated(QLocalSocket* socket, const QString& password, const QString& nonce);
 
 public slots:
     void databaseLocked(DatabaseWidget* dbWidget);
@@ -105,7 +111,7 @@ public slots:
     void activeDatabaseChanged(DatabaseWidget* dbWidget);
 
 private slots:
-    void processClientMessage(const QJsonObject& message);
+    void processClientMessage(QLocalSocket* socket, const QJsonObject& message);
 
 private:
     enum Access
@@ -163,6 +169,7 @@ private:
 
     bool m_dialogActive;
     bool m_bringToFrontRequested;
+    bool m_passwordGeneratorRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
 

@@ -12,21 +12,27 @@ WARNING: Auto-Type will be disabled when run with a Wayland compositor on Linux.
 === Configure Global Auto-Type
 You can define a global Auto-Type hotkey that starts the Auto-Type process. To configure the hotkey, perform the following steps:
 
-1. Navigate to _Tools_ -> _Settings_ -> Auto-Type tab *(1)*. Click into the _Global Auto-Type shortcut_ box and press the desired key combination that will trigger the Auto-Type process *(2)*.
-+
+Navigate to _Tools_ -> _Settings_ -> Auto-Type tab *(1)*. Click into the _Global Auto-Type shortcut_ box and press the desired key combination that will trigger the Auto-Type process *(2)*.
+
 .Auto-Type settings
 image::autotype_settings.png[]
-+
+
 You can configure additional Auto-Type settings in this window such as start delay, inter-key typing delay, and matching options. If Auto-Type is not working well for you, try adjusting the default delays.
+
+You can also set the time to remember the last used entry between presses of the global Auto-Type hotkey. This is useful for typing parts of a sequence during complex login workflows without having to find the specific each time.
 
 === Configure Auto-Type Sequences
 Each entry in your database can have multiple Auto-Type sequences associated with various window titles. Simulated key presses can be sent to any other currently open window of your choice (web browser windows, login dialogs boxes, and so on). When the Global Auto-Type hotkey is pressed, KeePassXC will search your database for entries matching the current selected window title.
 
 NOTE: The default Auto-Type sequence is `{USERNAME}{TAB}{PASSWORD}{ENTER}`. This means that it first types the username of the selected entry, then presses the `Tab` key, then types the password of the entry and finally presses the `Enter` key.
 
+TIP: To change the default Auto-Type sequence for all entries of your database, edit the root (top-most) group of your database and set a specific sequence. Child groups and entries will inherit this sequence by default.
+
 To configure Auto-Type sequences for your entries, perform the following steps:
 
-1.	Navigate to the entries list and open the desired entry for editing. Click the _Auto-Type_ item from the left-hand menu bar *(1)*. Press the `+` button *(2)* to add a new sequence entry. Select the desired window using the drop-down menu, or simply type a window title in the box *(3)*. You can use wildcard `*` to match any value (e.g., when a window title contains a filename or website name).
+1.	Navigate to the entries list and open the desired entry for editing. Click the _Auto-Type_ item from the left-hand menu bar *(1)*. Press the `+` button *(2)* to add a new sequence entry. Select the desired window using the drop-down menu, or simply type a window title in the box *(3)*.
++
+TIP: You can use an asterisk (`\*`) to match any value (e.g., when a window title contains a dynamic filename or website name). Set the window title to `*` to match all windows. Leave the window title blank to offer additional default Auto-Type sequences, such as custom attributes.
 +
 .Auto-Type entry sequences
 image::autotype_entry_sequences.png[]
@@ -43,7 +49,7 @@ image::autotype_entry_sequences.png[]
 |{URL}      |URL
 |{NOTES}    |Notes
 |{TOTP}     |Current TOTP value (if configured)
-|{S:<ATTRIBUTE_NAME>}   |Value for the given attribute name
+|{S:ATTRIBUTE_NAME}   |Value for the given attribute name (e.g., {S:Address})
 |===
 +
 [grid=rows, frame=none, width=90%]
@@ -55,11 +61,12 @@ image::autotype_entry_sequences.png[]
 
 |{UP}, {DOWN}, {LEFT}, {RIGHT}  |Press the corresponding arrow key
 |{LEFTBRACE}, {RIGHTBRACE}      |Press `{` or `}`, respectively
-|{<KEY> X}     |Repeat <KEY> X times (e.g., {SPACE 5} inserts five spaces)
+|{&lt;KEY&gt; X}     |Repeat &lt;KEY&gt; X times (e.g., {SPACE 5} inserts five spaces)
 |{DELAY=X}     |Set delay between key presses to X milliseconds
 |{DELAY X}     |Pause typing for X milliseconds
 |{CLEARFIELD}  |Clear the input field
 |{PICKCHARS}   |Pick specific password characters from a dialog
+|{MODE=VIRTUAL} |(Experimental) Use virtual key presses on Windows, useful for virtual machines
 |===
 
 === Performing Global Auto-Type
@@ -80,7 +87,9 @@ Search the unlocked databases by activating Search Database radio button. Use th
 .Additional Auto-Type choices
 image::autotype_selection_dialog_type_menu.png[,70%]
 
-The option to type just the username, password, or current TOTP value is available by right clicking the desired row or expanding the Type Sequence button options.
+The option to type just the username, password, or current TOTP value is available by right-clicking the desired row or expanding the Type Sequence button options. You can also copy these values to the clipboard.
+
+TIP: On Windows, you will see an option to use a virtual keyboard in this sub-menu. This is an experimental feature that allows you to type into virtual machines by simulating actual keyboard presses. Some international keyboards may be unsupported due to limitations in the Windows API.
 
 === Performing Entry-Level Auto-Type
 You can quickly activate the default Auto-Type sequence for a particular entry using Entry-Level Auto-Type. For this operation, the KeePassXC window will be minimized and the Auto-Type sequence occurs in the previously selected window. You can perform Entry-Level Auto-Type from the toolbar icon *(A)*, entry context menu *(B)*, or by pressing `Ctrl+Shift+V`.

@@ -325,6 +325,8 @@ void DatabaseSettingsWidgetEncryption::benchmarkTransformRounds(int millisecs)
     kdf->setRounds(m_ui->transformRoundsSpinBox->value());
     if (IS_ARGON2(kdf->uuid())) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
+        // Set a small static number of rounds for the benchmark
+        argon2Kdf->setRounds(4);
         if (!argon2Kdf->setMemory(static_cast<quint64>(m_ui->memorySpinBox->value()) * (1 << 10))) {
             m_ui->memorySpinBox->setValue(static_cast<int>(argon2Kdf->memory() / (1 << 10)));
         }

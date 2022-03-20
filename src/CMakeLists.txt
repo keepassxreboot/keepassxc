@@ -206,10 +206,13 @@ endif()
 if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            gui/MainWindowAdaptor.cpp
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
             gui/osutils/nixutils/NixUtils.cpp
             gui/osutils/nixutils/X11Funcs.cpp)
+    qt5_add_dbus_adaptor(keepassx_SOURCES
+            gui/org.keepassxc.KeePassXC.MainWindow.xml
+            gui/MainWindow.h
+            MainWindow)
 endif()
 if(WIN32)
     set(keepassx_SOURCES
@@ -336,6 +339,7 @@ target_link_libraries(keepassx_core
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
+        ${ARGON2_LIBRARIES}
         ${thirdparty_LIBRARIES}
 	)
 
