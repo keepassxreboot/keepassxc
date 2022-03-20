@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ca" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ca">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -16,6 +16,14 @@
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeepassXC es distribueix sota els termes de la Llicència Pública General GNU (GPL) versió 2 o (segons la vostra opció) versió 3.</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>Mantenidors del projecte:</translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation>Agraïments de l&apos;equip de KeePassXC a debfx per crear el KeePassX original.</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -37,36 +45,98 @@
         <source>Copy to clipboard</source>
         <translation>Copia al porta-retalls</translation>
     </message>
+</context>
+<context>
+    <name>AccessControlDialog</name>
     <message>
-        <source>Project Maintainers:</source>
-        <translation>Mantenidors del projecte:</translation>
+        <source>KeePassXC -  Access Request</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Agraïments de l&apos;equip de KeePassXC a debfx per crear el KeePassX original.</translation>
+        <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>PID</source>
+        <translation>PID</translation>
+    </message>
+    <message>
+        <source>Executable</source>
+        <translation>Executable</translation>
+    </message>
+    <message>
+        <source>Command Line</source>
+        <translation>Línia d&apos;ordres</translation>
+    </message>
+    <message>
+        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember</source>
+        <translation>Recorda</translation>
+    </message>
+    <message>
+        <source>Allow Selected</source>
+        <translation>Permet la selecció</translation>
+    </message>
+    <message>
+        <source>Deny All</source>
+        <translation>Denegar tot</translation>
+    </message>
+</context>
+<context>
+    <name>AccessControlDialog::DenyButton</name>
+    <message>
+        <source>Deny for this program</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
-        <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation>Utilitza OpenSSH per a Windows enlloc de Pageant</translation>
-    </message>
-    <message>
         <source>Enable SSH Agent integration</source>
         <translation>Activar integració de l&apos;agent SSH</translation>
     </message>
     <message>
-        <source>SSH_AUTH_SOCK value</source>
+        <source>Use Pageant</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use OpenSSH</source>
+        <translation>Fes servir OpenSSH</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>SSH_AUTH_SOCK value</source>
+        <translation>Valor SSH_AUTH_SOCK</translation>
+    </message>
+    <message>
         <source>(empty)</source>
         <translation>(buit)</translation>
+    </message>
+    <message>
+        <source>SSH_SK_PROVIDER value</source>
+        <translation>Valor SSH_SK_PROVIDER</translation>
+    </message>
+    <message>
+        <source>SSH_SK_PROVIDER override</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
@@ -116,12 +186,8 @@
         <translation>Segueix l&apos;estil</translation>
     </message>
     <message>
-        <source>Reset Settings?</source>
-        <translation>Restableix la configuració?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Esteu segur que voleu reinicialitzar totes les configuracions generals i de seguretat als valors predeterminats?</translation>
+        <source>Monochrome</source>
+        <translation>Monocrom</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
@@ -140,7 +206,15 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Monochrome</source>
+        <source>Reset Settings?</source>
+        <translation>Restableix la configuració?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset all general and security settings to default?</source>
+        <translation>Esteu segur que voleu reinicialitzar totes les configuracions generals i de seguretat als valors predeterminats?</translation>
+    </message>
+    <message>
+        <source>Select backup storage directory</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -159,69 +233,16 @@
         <translation>Inicia només una instància del KeePassXC</translation>
     </message>
     <message>
+        <source>Automatically launch KeePassXC at system startup</source>
+        <translation>Executar KeePassXC a l&apos;inici del sistema</translation>
+    </message>
+    <message>
         <source>Minimize window at application startup</source>
         <translation>Minimitza la finestra en obrir l&apos;aplicació</translation>
     </message>
     <message>
-        <source>File Management</source>
-        <translation>Gestió de fitxers</translation>
-    </message>
-    <message>
-        <source>Backup database file before saving</source>
-        <translation>Fes una còpia de seguretat abans de desar</translation>
-    </message>
-    <message>
-        <source>Automatically save after every change</source>
-        <translation>Desa després de cada canvi de forma automàtica</translation>
-    </message>
-    <message>
-        <source>Automatically reload the database when modified externally</source>
-        <translation>Torna a carregar automàticament la base de dades quan sigui modificada de forma externa</translation>
-    </message>
-    <message>
-        <source>Entry Management</source>
-        <translation>Gestió d&apos;entrades</translation>
-    </message>
-    <message>
-        <source>Use group icon on entry creation</source>
-        <translation>Utilitza la icona del grup en crear una entrada</translation>
-    </message>
-    <message>
-        <source>Minimize instead of app exit</source>
-        <translation>Minimitza en lloc de sortir de l&apos;aplicació</translation>
-    </message>
-    <message>
-        <source>Show a system tray icon</source>
-        <translation>Mostreu una icona a la safata del sistema</translation>
-    </message>
-    <message>
-        <source>Hide window to system tray when minimized</source>
-        <translation>Amaga la finestra a la safata del sistema en minimitzar</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Compleció automàtica</translation>
-    </message>
-    <message>
-        <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Usa el títol de l&apos;entrada per coincidir amb la finestra per la compleció automàtica global</translation>
-    </message>
-    <message>
-        <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Usa l&apos;URL d&apos;entrada per lligar amb la finestra per la compleció automàtica global</translation>
-    </message>
-    <message>
-        <source>Always ask before performing Auto-Type</source>
-        <translation>Pregunta sempre abans d&apos;efectuar la compleció automàtica</translation>
-    </message>
-    <message>
-        <source> ms</source>
-        <comment>Milliseconds</comment>
-        <translation> ms</translation>
-    </message>
-    <message>
-        <source>Movable toolbar</source>
-        <translation>Barra d&apos;eines mòbil</translation>
+        <source>Minimize window after unlocking database</source>
+        <translation>Minimitza la finestra després de desbloquejar la base de dades</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
@@ -244,16 +265,83 @@
         <translation>Inclou les versions beta quan es comprovin les actualitzacions</translation>
     </message>
     <message>
-        <source>Language:</source>
-        <translation>Idioma:</translation>
+        <source>On database unlock, show entries that </source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>(restart program to activate)</source>
-        <translation>(reinicieu per activar-ho)</translation>
+        <source>have expired</source>
+        <comment>On database unlock, show entries that...</comment>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Minimize window after unlocking database</source>
-        <translation>Minimitza la finestra després de desbloquejar la base de dades</translation>
+        <source> days</source>
+        <comment>On database unlock, show entries that will expire within %1 days</comment>
+        <translation> dies</translation>
+    </message>
+    <message>
+        <source>will expire within </source>
+        <comment>On database unlock, show entries that...</comment>
+        <translation>caducarà en </translation>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation>Gestió de fitxers</translation>
+    </message>
+    <message>
+        <source>Automatically save after every change</source>
+        <translation>Desa després de cada canvi de forma automàtica</translation>
+    </message>
+    <message>
+        <source>Automatically save when locking database</source>
+        <translation>Desa automàticament en bloquejar la base de dades</translation>
+    </message>
+    <message>
+        <source>Automatically save non-data changes when locking database</source>
+        <translation>Desa automàticament els canvis que no són de dades en bloquejar la base de dades</translation>
+    </message>
+    <message>
+        <source>Automatically reload the database when modified externally</source>
+        <translation>Torna a carregar automàticament la base de dades quan sigui modificada de forma externa</translation>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation>Fes una còpia de seguretat abans de desar</translation>
+    </message>
+    <message>
+        <source>Backup destination</source>
+        <translation>Destí de la còpia de seguretat</translation>
+    </message>
+    <message>
+        <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>{DB_FILENAME}.old.kdbx</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose...</source>
+        <translation>Escull...</translation>
+    </message>
+    <message>
+        <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Temporary file moved into place</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Directly write to database file (dangerous)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation>Gestió d&apos;entrades</translation>
+    </message>
+    <message>
+        <source>Use group icon on entry creation</source>
+        <translation>Utilitza la icona del grup en crear una entrada</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
@@ -285,36 +373,28 @@
         <translation> s</translation>
     </message>
     <message>
+        <source>User Interface</source>
+        <translation>Interfície d&apos;usuari</translation>
+    </message>
+    <message>
         <source>Toolbar button style</source>
         <translation>Estil dels botons de la barra d&apos;eines</translation>
+    </message>
+    <message>
+        <source>Movable toolbar</source>
+        <translation>Barra d&apos;eines mòbil</translation>
     </message>
     <message>
         <source>Language selection</source>
         <translation>Selecció d&apos;idioma</translation>
     </message>
     <message>
-        <source>Global auto-type shortcut</source>
-        <translation>Drecera global de compleció automàtica</translation>
+        <source>Language:</source>
+        <translation>Idioma:</translation>
     </message>
     <message>
-        <source>Auto-type character typing delay milliseconds</source>
-        <translation>Retard d&apos;escriptura en mil·lisegons de la compleció automàtica</translation>
-    </message>
-    <message>
-        <source>Auto-type start delay milliseconds</source>
-        <translation>Retard d&apos;inici en mil·lisegons de la compleció automàtica</translation>
-    </message>
-    <message>
-        <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Executar KeePassXC a l&apos;inici del sistema</translation>
-    </message>
-    <message>
-        <source>Safely save database files (disable if experiencing problems with Dropbox, etc.)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>User Interface</source>
-        <translation>Interfície d&apos;usuari</translation>
+        <source>(restart program to activate)</source>
+        <translation>(reinicieu per activar-ho)</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
@@ -325,36 +405,85 @@
         <translation>Usa lletra monoespaiada per a les notes</translation>
     </message>
     <message>
+        <source>Minimize instead of app exit</source>
+        <translation>Minimitza en lloc de sortir de l&apos;aplicació</translation>
+    </message>
+    <message>
+        <source>Show a system tray icon</source>
+        <translation>Mostreu una icona a la safata del sistema</translation>
+    </message>
+    <message>
+        <source>Tray icon type</source>
+        <translation>Tipus d&apos;icona de la safata</translation>
+    </message>
+    <message>
         <source>Tray icon type:</source>
         <translation>Tipus d&apos;icona de la safata del sistema</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray when minimized</source>
+        <translation>Amaga la finestra a la safata del sistema en minimitzar</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
         <translation>Valors de configuració per defecte...</translation>
     </message>
     <message>
-        <source>Auto-Type typing delay:</source>
-        <translation>Retard d&apos;escriptura de la compleció automàtica:</translation>
+        <source>Auto-Type</source>
+        <translation>Compleció automàtica</translation>
     </message>
     <message>
-        <source>Global Auto-Type shortcut:</source>
-        <translation>Drecera global de compleció automàtica:</translation>
+        <source>Use entry title to match windows for global Auto-Type</source>
+        <translation>Usa el títol de l&apos;entrada per coincidir amb la finestra per la compleció automàtica global</translation>
+    </message>
+    <message>
+        <source>Use entry URL to match windows for global Auto-Type</source>
+        <translation>Usa l&apos;URL d&apos;entrada per lligar amb la finestra per la compleció automàtica global</translation>
+    </message>
+    <message>
+        <source>Always ask before performing Auto-Type</source>
+        <translation>Pregunta sempre abans d&apos;efectuar la compleció automàtica</translation>
+    </message>
+    <message>
+        <source>Hide expired entries from Auto-Type</source>
+        <translation>Amaga les entrades caducades del tecleig automàtic</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation>Torna a blocar la base de dades després d&apos;una compleció automàtica</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
         <translation>Retard d&apos;inici de la compleció automàtica:</translation>
     </message>
     <message>
-        <source>Automatically save when locking database</source>
-        <translation>Desa automàticament en bloquejar la base de dades</translation>
+        <source>Global Auto-Type shortcut:</source>
+        <translation>Drecera global de compleció automàtica:</translation>
     </message>
     <message>
-        <source>Automatically save non-data changes when locking database</source>
-        <translation>Desa automàticament els canvis que no són de dades en bloquejar la base de dades</translation>
+        <source>Auto-type start delay milliseconds</source>
+        <translation>Retard d&apos;inici en mil·lisegons de la compleció automàtica</translation>
     </message>
     <message>
-        <source>Tray icon type</source>
-        <translation>Tipus d&apos;icona de la safata</translation>
+        <source> ms</source>
+        <comment>Milliseconds</comment>
+        <translation> ms</translation>
+    </message>
+    <message>
+        <source>Auto-Type typing delay:</source>
+        <translation>Retard d&apos;escriptura de la compleció automàtica:</translation>
+    </message>
+    <message>
+        <source>Global auto-type shortcut</source>
+        <translation>Drecera global de compleció automàtica</translation>
+    </message>
+    <message>
+        <source>Auto-type character typing delay milliseconds</source>
+        <translation>Retard d&apos;escriptura en mil·lisegons de la compleció automàtica</translation>
+    </message>
+    <message>
+        <source>Remember last typed entry for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -364,8 +493,8 @@
         <translation>Temps excedits</translation>
     </message>
     <message>
-        <source>Clear clipboard after</source>
-        <translation>Esborra el porta-retalls després de</translation>
+        <source>Database lock timeout seconds</source>
+        <translation>Segons de temps d&apos;espera per a bloquejar la base de dades</translation>
     </message>
     <message>
         <source> sec</source>
@@ -373,64 +502,12 @@
         <translation> s</translation>
     </message>
     <message>
-        <source>Lock databases after inactivity of</source>
-        <translation>Bloca les bases de dades després d&apos;una inactivitat de</translation>
+        <source>Clear clipboard after</source>
+        <translation>Esborra el porta-retalls després de</translation>
     </message>
     <message>
-        <source> min</source>
-        <translation>min</translation>
-    </message>
-    <message>
-        <source>Forget TouchID after inactivity of</source>
-        <translation>Oblida el TouchID després d&apos;una inactivitat de</translation>
-    </message>
-    <message>
-        <source>Convenience</source>
-        <translation>Conveniència</translation>
-    </message>
-    <message>
-        <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Bloca les bases de dades quan la sessió es bloquegi o es tanqui la tapa</translation>
-    </message>
-    <message>
-        <source>Forget TouchID when session is locked or lid is closed</source>
-        <translation>Oblida el TouchID quan la sessió està blocada o la tapa està tancada</translation>
-    </message>
-    <message>
-        <source>Lock databases after minimizing the window</source>
-        <translation>Bloca les bases de dades després de minimitzar la finestra</translation>
-    </message>
-    <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Torna a blocar la base de dades després d&apos;una compleció automàtica</translation>
-    </message>
-    <message>
-        <source>Hide passwords in the entry preview panel</source>
-        <translation>Oculta les contrasenyes al panell de previsualització de l&apos;entrada</translation>
-    </message>
-    <message>
-        <source>Hide entry notes by default</source>
-        <translation>Oculta les notes de l&apos;entrada per defecte</translation>
-    </message>
-    <message>
-        <source>Privacy</source>
-        <translation>Privacitat</translation>
-    </message>
-    <message>
-        <source>Use DuckDuckGo service to download website icons</source>
-        <translation>Usa DuckDuckGo per a descarregar icones de llocs web</translation>
-    </message>
-    <message>
-        <source>Clipboard clear seconds</source>
-        <translation>Segons de la neteja del porta-retalls</translation>
-    </message>
-    <message>
-        <source>Touch ID inactivity reset</source>
-        <translation>Reinici per inactivitat del Touch ID</translation>
-    </message>
-    <message>
-        <source>Database lock timeout seconds</source>
-        <translation>Segons de temps d&apos;espera per a bloquejar la base de dades</translation>
+        <source>Clear search query after</source>
+        <translation>Elimina la teva cerca després de</translation>
     </message>
     <message>
         <source> min</source>
@@ -438,8 +515,28 @@
         <translation>min</translation>
     </message>
     <message>
-        <source>Clear search query after</source>
-        <translation>Elimina la teva cerca després de</translation>
+        <source>Clipboard clear seconds</source>
+        <translation>Segons de la neteja del porta-retalls</translation>
+    </message>
+    <message>
+        <source>Lock databases after inactivity of</source>
+        <translation>Bloca les bases de dades després d&apos;una inactivitat de</translation>
+    </message>
+    <message>
+        <source>Convenience</source>
+        <translation>Conveniència</translation>
+    </message>
+    <message>
+        <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Lock databases when session is locked or lid is closed</source>
+        <translation>Bloca les bases de dades quan la sessió es bloquegi o es tanqui la tapa</translation>
+    </message>
+    <message>
+        <source>Lock databases after minimizing the window</source>
+        <translation>Bloca les bases de dades després de minimitzar la finestra</translation>
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
@@ -453,36 +550,40 @@
         <source>Use placeholder for empty password fields</source>
         <translation>Usa un marcador per als camps de contrasenya buits</translation>
     </message>
+    <message>
+        <source>Hide passwords in the entry preview panel</source>
+        <translation>Oculta les contrasenyes al panell de previsualització de l&apos;entrada</translation>
+    </message>
+    <message>
+        <source>Hide entry notes by default</source>
+        <translation>Oculta les notes de l&apos;entrada per defecte</translation>
+    </message>
+    <message>
+        <source>Move entries to recycle bin without confirmation</source>
+        <translation>Mou les entrades a la paperera sense confirmació</translation>
+    </message>
+    <message>
+        <source>Enable double click to copy the username/password entry columns</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy</source>
+        <translation>Privacitat</translation>
+    </message>
+    <message>
+        <source>Use DuckDuckGo service to download website icons</source>
+        <translation>Usa DuckDuckGo per a descarregar icones de llocs web</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
-        <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>No hem trobat una entrada que coincidesca amb el títol de la finestra:</translation>
+        <source>The requested Auto-Type sequence cannot be used due to an error:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Auto-Type - KeePassXC</source>
-        <translation>Compleció automàtica - KeePassXC</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Compleció automàtica</translation>
-    </message>
-    <message>
-        <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>La sintaxi de la declaració de compleció automàtica és incorrecta!</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Aquesta ordre de compleció automàtica conté un retard molt llarg. Esteu segur que voleu continuar?</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Aquesta comanda de compleció automàtica conté pulsacions de tecles molt lentes. Esteu segur que voleu continuar?</translation>
-    </message>
-    <message>
-        <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Aquesta comanda de compleció automàtica conté arguments que es repeteixen molt sovint. Esteu segur que voleu continuar?</translation>
+        <source>Auto-Type Error</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Permission Required</source>
@@ -490,6 +591,47 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid entry provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bracket imbalance detected, found extra { or }</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Too many repetitions detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Very slow key press detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Very long delay detected, max is %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid conversion type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid conversion syntax: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid regular expression syntax %1
+%2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid placeholder: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -502,6 +644,10 @@
     <message>
         <source>Sequence</source>
         <translation>Seqüència</translation>
+    </message>
+    <message>
+        <source>(empty)</source>
+        <translation>(buit)</translation>
     </message>
     <message>
         <source>Default sequence</source>
@@ -528,24 +674,21 @@
     </message>
 </context>
 <context>
-    <name>AutoTypeMatchView</name>
+    <name>AutoTypePlatformX11</name>
     <message>
-        <source>Copy &amp;username</source>
-        <translation>Copia el nom d&apos;&amp;usuari</translation>
+        <source>Trying to send invalid keysym.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Copy &amp;password</source>
-        <translation>Copia la contrasenya</translation>
-    </message>
-</context>
-<context>
-    <name>AutoTypePlatformMac</name>
-    <message>
-        <source>Permission Required</source>
-        <translation>Permís necessari</translation>
+        <source>Sequence aborted: Caps Lock is on</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <source>Sequence aborted: Modifier keys held by user</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to get valid keycode for key: </source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -556,12 +699,61 @@
         <translation>Compleció automàtica - KeePassXC</translation>
     </message>
     <message>
-        <source>Select entry to Auto-Type:</source>
-        <translation>Seleccione l&apos;entrada per a la compleció automàtica:</translation>
+        <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Search...</source>
-        <translation>Cerca...</translation>
+        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
+Ctrl+F - Toggle database search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type Sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancel·lar</translation>
+    </message>
+    <message>
+        <source>Type {USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type {PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type {TOTP}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use Virtual Keyboard</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -623,8 +815,26 @@ Seleccioneu la base de dades correcta per desar les credencials.</translation>
 <context>
     <name>BrowserService</name>
     <message>
+        <source>KeePassXC: Create a new group</source>
+        <translation>KeePassXC: crea un grup nou</translation>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>KeePassXC: New key association request</source>
         <translation>KeePassXC: Nova petició de associació de clau</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -649,12 +859,22 @@ Voleu sobreescriure-la?</translation>
         <translation>Voleu actualitzar la informació en %1 - %2?</translation>
     </message>
     <message>
-        <source>Abort</source>
-        <translation>Avorta</translation>
+        <source>KeePassXC: Delete entry</source>
+        <translation>Suprimir entrada</translation>
+    </message>
+    <message>
+        <source>A request for deleting entry &quot;%1&quot; has been received.
+Do you want to delete the entry?
+</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Converting attributes to custom data…</source>
         <translation>Conversió d&apos;atributs a dades personalitzades...</translation>
+    </message>
+    <message>
+        <source>Abort</source>
+        <translation>Avorta</translation>
     </message>
     <message>
         <source>KeePassXC: Converted KeePassHTTP attributes</source>
@@ -678,35 +898,17 @@ Moved %2 keys to custom data.</source>
         <translation>La base de dades activa no conté cap entrada amb atributs KeePassHTTP</translation>
     </message>
     <message>
+        <source>Don&apos;t show this warning again</source>
+        <translation>No tornis a mostrar aquest avís</translation>
+    </message>
+    <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: crea un grup nou</translation>
-    </message>
-    <message>
-        <source>A request for creating a new group &quot;%1&quot; has been received.
-Do you want to create this group?
-</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Don&apos;t show this warning again</source>
-        <translation>No tornis a mostrar aquest avís</translation>
-    </message>
-    <message>
-        <source>You have received an association request for the following database:
-%1
-
-Give the connection a unique name or ID, for example:
-chrome-laptop.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -774,11 +976,11 @@ chrome-laptop.</source>
         <translation>Sol·licita desbloquejar la base de dades si està bloquejada</translation>
     </message>
     <message>
-        <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Només es retornen les entrades amb el mateix patró (http://, https://, ...)</translation>
+        <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Match URL scheme (e.g., https://...)</source>
+        <source>Match URL scheme (e.g., https://example.com)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -803,16 +1005,6 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Sort matching credentials by title</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Sort matching credentials by username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
         <translation type="unfinished"/>
     </message>
@@ -877,9 +1069,9 @@ chrome-laptop.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Browse...</source>
+        <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Navega...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
@@ -899,10 +1091,6 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Custom browser location field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>~/.custom/config/Mozilla/native-messaging-hosts/</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -957,8 +1145,8 @@ chrome-laptop.</source>
 <context>
     <name>CloneDialog</name>
     <message>
-        <source>Clone Options</source>
-        <translation>Clona les opcions</translation>
+        <source>Clone Entry Options</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
@@ -988,94 +1176,16 @@ chrome-laptop.</source>
         <translation>mida, files, columnes</translation>
     </message>
     <message>
-        <source>Encoding</source>
-        <translation>Codificació</translation>
-    </message>
-    <message>
-        <source>Codec</source>
-        <translation>Còdec</translation>
-    </message>
-    <message>
-        <source>Text is qualified by</source>
-        <translation>Text està qualificat per</translation>
-    </message>
-    <message>
-        <source>Fields are separated by</source>
-        <translation>Els camps estan separats per</translation>
-    </message>
-    <message>
-        <source>Comments start with</source>
-        <translation>Els comentaris comencen amb</translation>
-    </message>
-    <message>
-        <source>Consider &apos;\&apos; an escape character</source>
-        <translation>Considera &apos; \&apos; com un caràcter d&apos;escapada</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation>Visualització prèvia</translation>
-    </message>
-    <message>
-        <source>Imported from CSV file</source>
-        <translation>Importats d&apos;un fitxer CSV</translation>
-    </message>
-    <message>
-        <source>Original data: </source>
-        <translation>Dades originals: </translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <source>Error(s) detected in CSV file!</source>
-        <translation>S&apos;han detectat errors al fitxer CSV!</translation>
-    </message>
-    <message numerus="yes">
-        <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[% n més missatges s&apos;ha omès]</numerusform><numerusform>[s&apos;ha/n omès %n missatge/s més]</numerusform></translation>
-    </message>
-    <message>
-        <source>CSV import: writer has errors:
-%1</source>
-        <translation>Importació CSV: writer té errors:
-%1</translation>
-    </message>
-    <message>
-        <source>Text qualification</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Field separation</source>
-        <translation>Separador de camp</translation>
-    </message>
-    <message>
-        <source>Number of header lines to discard</source>
-        <translation>Nombre de línies de la capçalera a descartar</translation>
-    </message>
-    <message>
-        <source>CSV import preview</source>
-        <translation>Previsualització de la importació CSV</translation>
-    </message>
-    <message>
         <source>Column Association</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Last Modified</source>
-        <translation>Darrera modificació</translation>
     </message>
     <message>
         <source>Password</source>
         <translation>Contrasenya</translation>
     </message>
     <message>
-        <source>Created</source>
-        <translation>Creat</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Notes</translation>
+        <source>Username</source>
+        <translation>Nom d&apos;usuari</translation>
     </message>
     <message>
         <source>Title</source>
@@ -1090,16 +1200,76 @@ chrome-laptop.</source>
         <translation>URL</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Nom d&apos;usuari</translation>
+        <source>Notes</source>
+        <translation>Notes</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>Creat</translation>
+    </message>
+    <message>
+        <source>Last Modified</source>
+        <translation>Darrera modificació</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Icona</translation>
+    </message>
+    <message>
+        <source>Encoding</source>
+        <translation>Codificació</translation>
+    </message>
+    <message>
+        <source>Codec</source>
+        <translation>Còdec</translation>
+    </message>
+    <message>
+        <source>Text is qualified by</source>
+        <translation>Text està qualificat per</translation>
+    </message>
+    <message>
+        <source>Text qualification</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fields are separated by</source>
+        <translation>Els camps estan separats per</translation>
+    </message>
+    <message>
+        <source>Field separation</source>
+        <translation>Separador de camp</translation>
+    </message>
+    <message>
+        <source>Comments start with</source>
+        <translation>Els comentaris comencen amb</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Number of header lines to discard</source>
+        <translation>Nombre de línies de la capçalera a descartar</translation>
+    </message>
+    <message>
         <source>First line has field names</source>
         <translation>La primera línia té els noms dels camps</translation>
+    </message>
+    <message>
+        <source>Consider &apos;\&apos; an escape character</source>
+        <translation>Considera &apos; \&apos; com un caràcter d&apos;escapada</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Visualització prèvia</translation>
+    </message>
+    <message>
+        <source>CSV import preview</source>
+        <translation>Previsualització de la importació CSV</translation>
     </message>
     <message>
         <source>Not Present</source>
@@ -1110,20 +1280,34 @@ chrome-laptop.</source>
         <translation>Columna %1</translation>
     </message>
     <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
+        <source>Imported from CSV file</source>
+        <translation>Importats d&apos;un fitxer CSV</translation>
     </message>
     <message>
-        <source>Icon</source>
-        <translation>Icona</translation>
+        <source>Original data: </source>
+        <translation>Dades originals: </translation>
+    </message>
+    <message>
+        <source>Error(s) detected in CSV file!</source>
+        <translation>S&apos;han detectat errors al fitxer CSV!</translation>
+    </message>
+    <message numerus="yes">
+        <source>[%n more message(s) skipped]</source>
+        <translation><numerusform>[% n més missatges s&apos;ha omès]</numerusform><numerusform>[s&apos;ha/n omès %n missatge/s més]</numerusform></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>CSV import: writer has errors:
+%1</source>
+        <translation>Importació CSV: writer té errors:
+%1</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
-    <message numerus="yes">
-        <source>%n column(s)</source>
-        <translation><numerusform>%n columna(es)</numerusform><numerusform>%n columna(es)</numerusform></translation>
-    </message>
     <message>
         <source>%1, %2, %3</source>
         <comment>file info: bytes, rows, columns</comment>
@@ -1137,9 +1321,18 @@ chrome-laptop.</source>
         <source>%n row(s)</source>
         <translation><numerusform>%n fila(es)</numerusform><numerusform>%n fila(es)</numerusform></translation>
     </message>
+    <message numerus="yes">
+        <source>%n column(s)</source>
+        <translation><numerusform>%n columna(es)</numerusform><numerusform>%n columna(es)</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>Database</name>
+    <message>
+        <source>Passwords</source>
+        <comment>Root group name</comment>
+        <translation>Contrasenyes</translation>
+    </message>
     <message>
         <source>File %1 does not exist.</source>
         <translation>El fitxer %1 no existeix.</translation>
@@ -1153,39 +1346,8 @@ chrome-laptop.</source>
         <translation>S&apos;ha produït un error al llegir la base de dades: %1</translation>
     </message>
     <message>
-        <source>File cannot be written as it is opened in read-only mode.</source>
-        <translation>El fitxer no es pot escriure perquè s&apos;ha obert en mode només de lectura.</translation>
-    </message>
-    <message>
-        <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation>La clau no s&apos;ha transformat. Això és un error, notifica als desenvolupadors!</translation>
-    </message>
-    <message>
-        <source>%1
-Backup database located at %2</source>
-        <translation>%1
-Còpia de seguretat de la base de dades situada a %2</translation>
-    </message>
-    <message>
         <source>Could not save, database does not point to a valid file.</source>
         <translation>No s&apos;ha pogut desar, la base de dades no apunta a un fitxer vàlid.</translation>
-    </message>
-    <message>
-        <source>Could not save, database file is read-only.</source>
-        <translation>No s&apos;ha pogut desar, el fitxer de base de dades és de només lectura.</translation>
-    </message>
-    <message>
-        <source>Database file has unmerged changes.</source>
-        <translation>El fitxer de base de dades té canvis no fusionats.</translation>
-    </message>
-    <message>
-        <source>Recycle Bin</source>
-        <translation>Paperera</translation>
-    </message>
-    <message>
-        <source>Passwords</source>
-        <comment>Root group name</comment>
-        <translation>Contrasenyes</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
@@ -1194,6 +1356,24 @@ Còpia de seguretat de la base de dades situada a %2</translation>
     <message>
         <source>Could not save, database has not been initialized!</source>
         <translation>No s&apos;ha pogut desar, la base de dades no ha estat inicialitzada!</translation>
+    </message>
+    <message>
+        <source>Database file has unmerged changes.</source>
+        <translation>El fitxer de base de dades té canvis no fusionats.</translation>
+    </message>
+    <message>
+        <source>%1
+Backup database located at %2</source>
+        <translation>%1
+Còpia de seguretat de la base de dades situada a %2</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Recycle Bin</source>
+        <translation>Paperera</translation>
     </message>
 </context>
 <context>
@@ -1206,12 +1386,142 @@ Còpia de seguretat de la base de dades situada a %2</translation>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
+        <source>Unlock KeePassXC Database</source>
+        <translation>Desbloqueja la base de dades de KeePassXC</translation>
+    </message>
+    <message>
+        <source>Enter Password:</source>
+        <translation>Introduïu la contrasenya:</translation>
+    </message>
+    <message>
+        <source>Password field</source>
+        <translation>Camp de contrasenya</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>Introduïu credencials addionals (si cal):</translation>
+    </message>
+    <message>
         <source>Key File:</source>
         <translation>Fitxer clau:</translation>
     </message>
     <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key slot selection</source>
+        <translation>Selecció de la ranura de la motxilla</translation>
+    </message>
+    <message>
+        <source>Hardware Key:</source>
+        <translation>Motxilla:</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key help</source>
+        <translation>Ajuda de la motxilla</translation>
+    </message>
+    <message>
+        <source>Key file to unlock the database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse for key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh hardware tokens</source>
+        <translation>Refresca els testimonis de maquinari</translation>
+    </message>
+    <message>
         <source>Refresh</source>
         <translation>Actualitza</translation>
+    </message>
+    <message>
+        <source>Unlock Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancel·lar</translation>
+    </message>
+    <message>
+        <source>Unlock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database Version Mismatch</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The database you are trying to open was most likely
+created by a newer version of KeePassXC.
+
+You can try to open it anyway, but it may be incomplete
+and saving any changes may incur data loss.
+
+We recommend you update your KeePassXC installation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open database anyway</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database unlock canceled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unlock failed and no password given</source>
+        <translation>El desbloqueig ha fallat i no s&apos;ha donat cap contrasenya</translation>
+    </message>
+    <message>
+        <source>Unlocking the database failed and you did not enter a password.
+Do you want to retry with an &quot;empty&quot; password instead?
+
+To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Retry with empty password</source>
+        <translation>Torna-ho a provar amb la contrasenya buida</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to authenticate with Touch ID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to open key file: %1</source>
+        <translation>No s&apos;ha pogut obrir el fitxer de clau: %1</translation>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
@@ -1230,82 +1540,6 @@ Còpia de seguretat de la base de dades situada a %2</translation>
         <translation>Seleccioneu el fitxer de clau</translation>
     </message>
     <message>
-        <source>Failed to open key file: %1</source>
-        <translation>No s&apos;ha pogut obrir el fitxer de clau: %1</translation>
-    </message>
-    <message>
-        <source>Unlock KeePassXC Database</source>
-        <translation>Desbloqueja la base de dades de KeePassXC</translation>
-    </message>
-    <message>
-        <source>Enter Password:</source>
-        <translation>Introduïu la contrasenya:</translation>
-    </message>
-    <message>
-        <source>Password field</source>
-        <translation>Camp de contrasenya</translation>
-    </message>
-    <message>
-        <source>Hardware key slot selection</source>
-        <translation>Selecció de la ranura de la motxilla</translation>
-    </message>
-    <message>
-        <source>Browse for key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Browse...</source>
-        <translation>Navega...</translation>
-    </message>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>Refresca els testimonis de maquinari</translation>
-    </message>
-    <message>
-        <source>Hardware Key:</source>
-        <translation>Motxilla:</translation>
-    </message>
-    <message>
-        <source>Hardware key help</source>
-        <translation>Ajuda de la motxilla</translation>
-    </message>
-    <message>
-        <source>TouchID for Quick Unlock</source>
-        <translation>Usa el TouchID per desbloquejar ràpidament</translation>
-    </message>
-    <message>
-        <source>Unlock failed and no password given</source>
-        <translation>El desbloqueig ha fallat i no s&apos;ha donat cap contrasenya</translation>
-    </message>
-    <message>
-        <source>Unlocking the database failed and you did not enter a password.
-Do you want to retry with an &quot;empty&quot; password instead?
-
-To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Retry with empty password</source>
-        <translation>Torna-ho a provar amb la contrasenya buida</translation>
-    </message>
-    <message>
-        <source>Enter Additional Credentials (if any):</source>
-        <translation>Introduïu credencials addionals (si cal):</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Key file help</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot use database file as key file</source>
         <translation type="unfinished"/>
     </message>
@@ -1313,18 +1547,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Key file to unlock the database</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please touch the button on your YubiKey!</source>
-        <translation>Per favor, toqueu el botó en el seu YubiKey!</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
@@ -1336,14 +1558,6 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Old key file format</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database / Database Security / Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1369,6 +1583,10 @@ If you do not have a key file, please leave the field empty.</source>
         <translation>Seguretat</translation>
     </message>
     <message>
+        <source>Database Credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Encryption Settings</source>
         <translation>Configuració del xifrat</translation>
     </message>
@@ -1377,7 +1595,7 @@ If you do not have a key file, please leave the field empty.</source>
         <translation>Integració amb el navegador</translation>
     </message>
     <message>
-        <source>Database Credentials</source>
+        <source>Maintenance</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1388,8 +1606,36 @@ If you do not have a key file, please leave the field empty.</source>
         <translation>KeePassXC-Configuració del navegador</translation>
     </message>
     <message>
+        <source>Convert KeePassHTTP data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh database root group ID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Disconnect all browsers</source>
+        <translation>Desconnecta tots els navegadors</translation>
+    </message>
+    <message>
+        <source>Forget all site-specific settings on entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Stored keys</source>
         <translation>Claus emmagatzemades</translation>
+    </message>
+    <message>
+        <source>Stored browser keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove selected key</source>
+        <translation>Suprimeix la clau seleccionada</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1413,12 +1659,12 @@ This may prevent connection to the browser plugin.</source>
         <translation>Valor</translation>
     </message>
     <message>
-        <source>Enable Browser Integration to access these settings.</source>
-        <translation>Permet que la integració del navegador accedeixi a aquesta configuració.</translation>
+        <source>Created</source>
+        <translation>Creat</translation>
     </message>
     <message>
-        <source>Disconnect all browsers</source>
-        <translation>Desconnecta tots els navegadors</translation>
+        <source>Enable Browser Integration to access these settings.</source>
+        <translation>Permet que la integració del navegador accedeixi a aquesta configuració.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -1441,10 +1687,6 @@ Això pot impedir la connexió al connector del navegador.</translation>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Forget all site-specific settings on entries</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -1480,29 +1722,9 @@ Permissions to access entries will be revoked.</source>
         <translation>Desplaça els atributs de KeePassHTTP a dades personalitzades</translation>
     </message>
     <message>
-        <source>Do you really want to move all legacy browser integration data to the latest standard?
+        <source>Do you really want to convert all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Stored browser keys</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Remove selected key</source>
-        <translation>Suprimeix la clau seleccionada</translation>
-    </message>
-    <message>
-        <source>Move KeePassHTTP attributes to KeePassXC-Browser custom data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Refresh database root group ID</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Created</source>
-        <translation>Creat</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
@@ -1517,8 +1739,8 @@ This is only necessary if your database is a copy of another and the browser ext
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
-        <source>Add additional protection...</source>
-        <translation>Afegeix una protecció addicional...</translation>
+        <source>Add additional protection…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No password set</source>
@@ -1554,8 +1776,48 @@ Are you sure you want to continue without a password?</source>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
+        <source>Decryption Time:</source>
+        <translation>Temps de desxifrat:</translation>
+    </message>
+    <message>
+        <source>Change existing decryption time</source>
+        <translation>Canvia el temps de desxifrat existent</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Canvia</translation>
+    </message>
+    <message>
+        <source>Decryption time in seconds</source>
+        <translation>Temps de desxifrat en segons</translation>
+    </message>
+    <message>
+        <source>Higher values offer more protection, but opening the database will take longer.</source>
+        <translation>Els valors més alts ofereixen més protecció, però es trigarà més a obrir la base de dades.</translation>
+    </message>
+    <message>
+        <source>Database format:</source>
+        <translation>Format de la base de dades:</translation>
+    </message>
+    <message>
+        <source>Database format</source>
+        <translation>Format de la base de dades</translation>
+    </message>
+    <message>
+        <source>Format cannot be changed: Your database uses KDBX 4 features</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unless you need to open your database with other programs, always use the latest format.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Encryption Algorithm:</source>
         <translation>Algorisme de d’encriptatge:</translation>
+    </message>
+    <message>
+        <source>Encryption algorithm</source>
+        <translation>Algoritme de xifrat</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -1570,48 +1832,40 @@ Are you sure you want to continue without a password?</source>
         <translation>Funció de derivació de clau:</translation>
     </message>
     <message>
+        <source>Key derivation function</source>
+        <translation>Funció de derivació de clau</translation>
+    </message>
+    <message>
         <source>Transform rounds:</source>
         <translation>Transformar rondes:</translation>
+    </message>
+    <message>
+        <source>Transform rounds</source>
+        <translation>Rondes de transformació</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
         <translation>Ús de memòria:</translation>
     </message>
     <message>
+        <source>Memory usage</source>
+        <translation>Ús de la memòria</translation>
+    </message>
+    <message>
         <source>Parallelism:</source>
         <translation>Paral·lelisme:</translation>
     </message>
     <message>
-        <source>Decryption Time:</source>
-        <translation>Temps de desxifrat:</translation>
+        <source>Parallelism</source>
+        <translation>Paral·lelisme</translation>
     </message>
     <message>
-        <source>?? s</source>
-        <translation>?? s</translation>
+        <source>KDBX 4 (recommended)</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Change</source>
-        <translation>Canvia</translation>
-    </message>
-    <message>
-        <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation>Els valors més alts ofereixen més protecció, però es trigarà més a obrir la base de dades.</translation>
-    </message>
-    <message>
-        <source>Database format:</source>
-        <translation>Format de la base de dades:</translation>
-    </message>
-    <message>
-        <source>This is only important if you need to use your database with other programs.</source>
-        <translation>Això només és important si necessiteu utilitzar la vostra base de dades amb altres programes.</translation>
-    </message>
-    <message>
-        <source>KDBX 4.0 (recommended)</source>
-        <translation>KDBX 4.0 (recomanat)</translation>
-    </message>
-    <message>
-        <source>KDBX 3.1</source>
-        <translation>KDBX 3.1</translation>
+        <source>KDBX 3</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>unchanged</source>
@@ -1626,7 +1880,7 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
-If you keep this number, your database may take hours or days (or even longer) to open!</source>
+If you keep this number, your database may take hours, days, or even longer to open.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1645,7 +1899,7 @@ If you keep this number, your database may take hours or days (or even longer) t
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
-If you keep this number, your database may be too easy to crack!</source>
+If you keep this number, your database will not be protected from brute force attacks.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1665,46 +1919,6 @@ If you keep this number, your database may be too easy to crack!</source>
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
         <translation><numerusform>Thread (s)</numerusform><numerusform>Fil(s)</numerusform></translation>
-    </message>
-    <message>
-        <source>Change existing decryption time</source>
-        <translation>Canvia el temps de desxifrat existent</translation>
-    </message>
-    <message>
-        <source>Decryption time in seconds</source>
-        <translation>Temps de desxifrat en segons</translation>
-    </message>
-    <message>
-        <source>Database format</source>
-        <translation>Format de la base de dades</translation>
-    </message>
-    <message>
-        <source>Encryption algorithm</source>
-        <translation>Algoritme de xifrat</translation>
-    </message>
-    <message>
-        <source>Key derivation function</source>
-        <translation>Funció de derivació de clau</translation>
-    </message>
-    <message>
-        <source>Transform rounds</source>
-        <translation>Rondes de transformació</translation>
-    </message>
-    <message>
-        <source>Memory usage</source>
-        <translation>Ús de la memòria</translation>
-    </message>
-    <message>
-        <source>Parallelism</source>
-        <translation>Paral·lelisme</translation>
-    </message>
-    <message>
-        <source>?? ms</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>? s</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1729,28 +1943,48 @@ If you keep this number, your database may be too easy to crack!</source>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
-        <source>Database Meta Data</source>
-        <translation>Metadades de la base de dades</translation>
+        <source>Database Metadata</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Database name:</source>
         <translation>Nom de base de dades:</translation>
     </message>
     <message>
+        <source>Database name field</source>
+        <translation>Camp de nom de la base de dades</translation>
+    </message>
+    <message>
         <source>Database description:</source>
         <translation>Descripció de la base de dades:</translation>
+    </message>
+    <message>
+        <source>Database description field</source>
+        <translation>Camp de descripció de la base de dades</translation>
     </message>
     <message>
         <source>Default username:</source>
         <translation>Usuari per defecte:</translation>
     </message>
     <message>
+        <source>Default username field</source>
+        <translation>Camp d&apos;usuari predeterminat</translation>
+    </message>
+    <message>
         <source>History Settings</source>
         <translation>Configuració de l&apos;historial</translation>
     </message>
     <message>
+        <source>Maximum number of history items per entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Max. history items:</source>
         <translation>Nombre màxim d&apos;elements a l&apos;historial:</translation>
+    </message>
+    <message>
+        <source>Maximum size of history per entry</source>
+        <translation>Maximitzar el tamany de l&apos;històric per entrada</translation>
     </message>
     <message>
         <source>Max. history size:</source>
@@ -1769,24 +2003,8 @@ If you keep this number, your database may be too easy to crack!</source>
         <translation>Configuració addicional de la base de dades</translation>
     </message>
     <message>
-        <source>Database name field</source>
-        <translation>Camp de nom de la base de dades</translation>
-    </message>
-    <message>
-        <source>Database description field</source>
-        <translation>Camp de descripció de la base de dades</translation>
-    </message>
-    <message>
-        <source>Default username field</source>
-        <translation>Camp d&apos;usuari predeterminat</translation>
-    </message>
-    <message>
-        <source>Maximum number of history items per entry</source>
+        <source>Enable compression (recommended)</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Maximum size of history per entry</source>
-        <translation>Maximitzar el tamany de l&apos;històric per entrada</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
@@ -1800,10 +2018,6 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation>(antic)</translation>
-    </message>
-    <message>
-        <source>Enable compression (recommended)</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1839,18 +2053,61 @@ This action is not reversible.</source>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetMaintenance</name>
+    <message>
+        <source>Manage Custom Icons</source>
+        <translation>Gestionar les icones del client</translation>
+    </message>
+    <message>
+        <source>Delete selected icon(s)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete all custom icons not in use by any entry or group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purge unused icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Deletion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Icons Are In Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All custom icons are in use by at least one entry or group.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purged Unused Icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Purged %n icon(s) from the database.</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
         <translation>Nom de la base de dades:</translation>
     </message>
     <message>
-        <source>Description:</source>
-        <translation>Descripció:</translation>
-    </message>
-    <message>
         <source>Database name field</source>
         <translation>Camp de nom de la base de dades</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripció:</translation>
     </message>
     <message>
         <source>Database description field</source>
@@ -1859,6 +2116,15 @@ This action is not reversible.</source>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
+    <message>
+        <source>Database creation error</source>
+        <translation>Error de creació de la base de dades</translation>
+    </message>
+    <message>
+        <source>The created database has no key or KDF, refusing to save it.
+This is definitely a bug, please report it to the developers.</source>
+        <translation type="unfinished"/>
+    </message>
     <message>
         <source>KeePass 2 Database</source>
         <translation>Base de dades de KeePass 2</translation>
@@ -1872,20 +2138,32 @@ This action is not reversible.</source>
         <translation>Obre la base de dades</translation>
     </message>
     <message>
+        <source>Failed to open %1. It either does not exist or is not accessible.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>CSV file</source>
         <translation>Fitxer CSV</translation>
+    </message>
+    <message>
+        <source>Select CSV file</source>
+        <translation>Selecciona un fitxer CSV</translation>
     </message>
     <message>
         <source>Merge database</source>
         <translation>Fusiona la base de dades</translation>
     </message>
     <message>
+        <source>KeePass 1 database</source>
+        <translation>Base de dades de KeePass 1</translation>
+    </message>
+    <message>
         <source>Open KeePass 1 database</source>
         <translation>Obre base de dades de KeePass 1</translation>
     </message>
     <message>
-        <source>KeePass 1 database</source>
-        <translation>Base de dades de KeePass 1</translation>
+        <source>Open OPVault</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1896,17 +2174,16 @@ This action is not reversible.</source>
         <translation>Ha fallat l&apos;escriptura al fitxer CSV.</translation>
     </message>
     <message>
-        <source>Database creation error</source>
-        <translation>Error de creació de la base de dades</translation>
-    </message>
-    <message>
-        <source>The created database has no key or KDF, refusing to save it.
-This is definitely a bug, please report it to the developers.</source>
+        <source>Writing the HTML file failed.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Select CSV file</source>
-        <translation>Selecciona un fitxer CSV</translation>
+        <source>Export Confirmation</source>
+        <translation>Confirmació de l&apos;exportació</translation>
+    </message>
+    <message>
+        <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>New Database</source>
@@ -1922,57 +2199,28 @@ This is definitely a bug, please report it to the developers.</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [bloquejat]</translation>
     </message>
-    <message>
-        <source>%1 [Read-only]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [només de lectura]</translation>
-    </message>
-    <message>
-        <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Export database to HTML file</source>
-        <translation>Exporta la base de dades a un fitxer HTML</translation>
-    </message>
-    <message>
-        <source>HTML file</source>
-        <translation>Fitxer HTML</translation>
-    </message>
-    <message>
-        <source>Writing the HTML file failed.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Export Confirmation</source>
-        <translation>Confirmació de l&apos;exportació</translation>
-    </message>
-    <message>
-        <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Open OPVault</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Searching...</source>
-        <translation>Cercant...</translation>
+        <source>Database Tags</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Realment voleu suprimir l&apos;entrada &quot;%1&quot; per sempre?</translation>
+        <source>Searching…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Realment voleu moure l&apos;entrada &quot;%1&quot; a la paperera?</translation>
+        <source>Shared group…</source>
+        <translation type="unfinished"/>
     </message>
-    <message numerus="yes">
-        <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Realment voleu desplaçar% n entrada (s) a la Paperera de reciclatge?</numerusform><numerusform>Esteu segur que voleu moure %n entrada/es a la paperera de reciclatge?</numerusform></translation>
+    <message>
+        <source>Confirm Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type into the previously active window?</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1987,8 +2235,24 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>Recordar la meva elecció</translation>
     </message>
     <message>
+        <source>Delete group</source>
+        <translation>Suprimeix el grup</translation>
+    </message>
+    <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
         <translation>Realment voleu suprimir el grup &quot;%1&quot; per sempre?</translation>
+    </message>
+    <message>
+        <source>Move group to recycle bin?</source>
+        <translation>Vols moure el grup a la Paperera de reciclatge?</translation>
+    </message>
+    <message>
+        <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
+        <translation>Esteu segur que voleu moure el grup &quot;%1&quot; a la paperera de reciclatge?</translation>
+    </message>
+    <message>
+        <source>Expired entries</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No current database.</source>
@@ -1999,50 +2263,20 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>Cap base de dades, res a veure.</translation>
     </message>
     <message>
+        <source>Successfully merged the database files.</source>
+        <translation>S&apos;han fusionat correctament els arxius de base de dades.</translation>
+    </message>
+    <message>
+        <source>Database was not modified by merge operation.</source>
+        <translation>La base de dades no s&apos;ha modificat amb l&apos;operació de fusionat.</translation>
+    </message>
+    <message>
         <source>Search Results (%1)</source>
         <translation>Resultats de la cerca (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>No hi ha resultats</translation>
-    </message>
-    <message>
-        <source>File has changed</source>
-        <translation>El fitxer ha canviat</translation>
-    </message>
-    <message>
-        <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>El fitxer de base de dades ha canviat. Voleu carregar els canvis?</translation>
-    </message>
-    <message>
-        <source>Merge Request</source>
-        <translation>Petició de combinació</translation>
-    </message>
-    <message>
-        <source>The database file has changed and you have unsaved changes.
-Do you want to merge your changes?</source>
-        <translation>El fitxer de base de dades ha canviat i teniu canvis sense desar.
-Voleu fusionar els canvis?</translation>
-    </message>
-    <message>
-        <source>Empty recycle bin?</source>
-        <translation>Buida la paperera?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Esteu segur que voleu suprimir permanentment tot el contingut de la paperera?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Esteu segur que voleu suprimir% n entrades per al Good?</numerusform><numerusform>Esteu segur que voleu suprimir % n entrades permanentment?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>Voleu suprimir les entrades?</numerusform><numerusform>Voleu suprimir la/es entrada/es?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Mou l&apos;entrada (s) a la Paperera de reciclatge?</numerusform><numerusform>Mou l&apos;entrada(es) a la paperera de reciclatge?</numerusform></translation>
     </message>
     <message>
         <source>Lock Database?</source>
@@ -2069,6 +2303,24 @@ Voleu desar els canvis?</translation>
         <translation>Voleu desar els canvis?</translation>
     </message>
     <message>
+        <source>File has changed</source>
+        <translation>El fitxer ha canviat</translation>
+    </message>
+    <message>
+        <source>The database file has changed. Do you want to load the changes?</source>
+        <translation>El fitxer de base de dades ha canviat. Voleu carregar els canvis?</translation>
+    </message>
+    <message>
+        <source>Merge Request</source>
+        <translation>Petició de combinació</translation>
+    </message>
+    <message>
+        <source>The database file has changed and you have unsaved changes.
+Do you want to merge your changes?</source>
+        <translation>El fitxer de base de dades ha canviat i teniu canvis sense desar.
+Voleu fusionar els canvis?</translation>
+    </message>
+    <message>
         <source>Could not open the new database file while attempting to autoreload.
 Error: %1</source>
         <translation>No es pot obrir el nou fitxer de base de dades mentre intenteu la recàrrega automàtica.
@@ -2085,6 +2337,10 @@ Disable safe saves and try again?</source>
 Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
     </message>
     <message>
+        <source>Writing the database failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Passwords</source>
         <translation>Contrasenyes</translation>
     </message>
@@ -2097,52 +2353,24 @@ Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
         <translation>Base de dades de KeePass 2</translation>
     </message>
     <message>
-        <source>Replace references to entry?</source>
-        <translation>Voleu substituir les referències a l&apos;entrada?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>L&apos;entrada &quot;%1&quot; té %2 referències. Voleu sobreescriure les referències amb valors, ometre aquesta entrada o suprimir igualment?</numerusform><numerusform>L&apos;entrada &quot;%1&quot; té %2 referència/es. Voleu sobreescriure les referències amb valors, ometre aquesta entrada o suprimir igualment?</numerusform></translation>
-    </message>
-    <message>
-        <source>Delete group</source>
-        <translation>Suprimeix el grup</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>Vols moure el grup a la Paperera de reciclatge?</translation>
-    </message>
-    <message>
-        <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Esteu segur que voleu moure el grup &quot;%1&quot; a la paperera de reciclatge?</translation>
-    </message>
-    <message>
-        <source>Successfully merged the database files.</source>
-        <translation>S&apos;han fusionat correctament els arxius de base de dades.</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>La base de dades no s&apos;ha modificat amb l&apos;operació de fusionat.</translation>
-    </message>
-    <message>
-        <source>Shared group...</source>
-        <translation>Grup compartit...</translation>
-    </message>
-    <message>
-        <source>Writing the database failed: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation>Aquesta base de dades s&apos;ha obert en mode de només lectura. El desat automàtic està deshabilitat.</translation>
-    </message>
-    <message>
         <source>Save database backup</source>
         <translation>Desa una còpia de seguretat de la base de dades</translation>
     </message>
     <message>
+        <source>Empty recycle bin?</source>
+        <translation>Buida la paperera?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
+        <translation>Esteu segur que voleu suprimir permanentment tot el contingut de la paperera?</translation>
+    </message>
+    <message>
         <source>Could not find database file: %1</source>
         <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Entries expiring within %1 day(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2162,6 +2390,22 @@ Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Compleció automàtica</translation>
+    </message>
+    <message>
+        <source>Browser Integration</source>
+        <translation>Integració amb el navegador</translation>
+    </message>
+    <message>
+        <source>&lt;empty URL&gt;</source>
+        <translation>&lt;empty URL&gt;</translation>
+    </message>
+    <message>
+        <source>Confirm Removal</source>
+        <translation>Confirma l&apos;eliminació</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove this URL?</source>
+        <translation>Esteu segur que voleu suprimir aquesta URL?</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -2200,12 +2444,69 @@ Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
         <translation>Edita l&apos;entrada</translation>
     </message>
     <message>
+        <source>Some Browser Integration settings are overridden by group settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An external merge operation has invalidated this entry.
+Unfortunately, any changes made have been lost.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type Validation Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An error occurred while validating the custom Auto-Type sequence:
+%1
+Would you like to correct it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
+%2
+Would you like to correct it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation>L&apos;entrada s&apos;ha actualitzat correctament.</translation>
+    </message>
+    <message>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Would you like to save changes to this entry?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>New attribute</source>
         <translation>Nou atribut</translation>
     </message>
     <message>
+        <source>New attribute %1</source>
+        <translation>Atribut nou %1</translation>
+    </message>
+    <message>
         <source>Are you sure you want to remove this attribute?</source>
         <translation>Esteu segur que voleu suprimir aquest atribut?</translation>
+    </message>
+    <message>
+        <source>Reveal</source>
+        <translation>Revela</translation>
+    </message>
+    <message>
+        <source>[PROTECTED] Press Reveal to view or edit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>Oculta</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -2219,62 +2520,9 @@ Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
         <source>%n month(s)</source>
         <translation><numerusform>% n mes/s</numerusform><numerusform>%n mes/os</numerusform></translation>
     </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation>L&apos;entrada s&apos;ha actualitzat correctament.</translation>
-    </message>
-    <message>
-        <source>New attribute %1</source>
-        <translation>Atribut nou %1</translation>
-    </message>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>% n any/s</numerusform><numerusform>%n any/s</numerusform></translation>
-    </message>
-    <message>
-        <source>Confirm Removal</source>
-        <translation>Confirma l&apos;eliminació</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Integració amb el navegador</translation>
-    </message>
-    <message>
-        <source>&lt;empty URL&gt;</source>
-        <translation>&lt;empty URL&gt;</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove this URL?</source>
-        <translation>Esteu segur que voleu suprimir aquesta URL?</translation>
-    </message>
-    <message>
-        <source>Reveal</source>
-        <translation>Revela</translation>
-    </message>
-    <message>
-        <source>Hide</source>
-        <translation>Oculta</translation>
-    </message>
-    <message>
-        <source>Unsaved Changes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Would you like to save changes to this entry?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>[PROTECTED] Press Reveal to view or edit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid Entry</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>An external merge operation has invalidated this entry.
-Unfortunately, any changes made have been lost.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2282,38 +2530,6 @@ Unfortunately, any changes made have been lost.</source>
     <message>
         <source>Additional attributes</source>
         <translation>Atributs addicionals</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Afegiu</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Suprimiu</translation>
-    </message>
-    <message>
-        <source>Edit Name</source>
-        <translation>Edita el nom</translation>
-    </message>
-    <message>
-        <source>Protect</source>
-        <translation>Protegeix</translation>
-    </message>
-    <message>
-        <source>Reveal</source>
-        <translation>Revela</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>Fitxers adjunts</translation>
-    </message>
-    <message>
-        <source>Foreground Color:</source>
-        <translation>Color del primer pla:</translation>
-    </message>
-    <message>
-        <source>Background Color:</source>
-        <translation>Color de fons:</translation>
     </message>
     <message>
         <source>Attribute selection</source>
@@ -2328,36 +2544,68 @@ Unfortunately, any changes made have been lost.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Add</source>
+        <translation>Afegiu</translation>
+    </message>
+    <message>
         <source>Remove selected attribute</source>
         <translation>Suprimeix l&apos;atribut seleccionat</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Suprimiu</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Edit Name</source>
+        <translation>Edita el nom</translation>
+    </message>
+    <message>
         <source>Toggle attribute protection</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Protect</source>
+        <translation>Protegeix</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Foreground color selection</source>
-        <translation>Selecció del color de primer pla</translation>
+        <source>Reveal</source>
+        <translation>Revela</translation>
     </message>
     <message>
-        <source>Background color selection</source>
-        <translation>Selecció del color de fons</translation>
+        <source>Attachments</source>
+        <translation>Fitxers adjunts</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements (e. g. password entropy or re-use). You can set the check mark if the password is beyond your control (e. g. if it needs to be a four-digit PIN) to prevent it from cluttering the reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Exclude from database reports</source>
         <translation>Exclou dels informes de la base de dades</translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation>Color del primer pla:</translation>
+    </message>
+    <message>
+        <source>Foreground color selection</source>
+        <translation>Selecció del color de primer pla</translation>
+    </message>
+    <message>
+        <source>Background Color:</source>
+        <translation>Color de fons:</translation>
+    </message>
+    <message>
+        <source>Background color selection</source>
+        <translation>Selecció del color de fons</translation>
     </message>
 </context>
 <context>
@@ -2367,24 +2615,12 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Permetre la compleció automàtica per a aquesta entrada</translation>
     </message>
     <message>
-        <source>Window Associations</source>
-        <translation>Associacions de finestra</translation>
+        <source>Inherit default Auto-Type sequence from the group</source>
+        <translation>Hereda la seqüència de compleció automàtica del grup</translation>
     </message>
     <message>
-        <source>+</source>
-        <translation>+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation>-</translation>
-    </message>
-    <message>
-        <source>Window title:</source>
-        <translation>Títol de la finestra:</translation>
-    </message>
-    <message>
-        <source>Use a specific sequence for this association:</source>
-        <translation>Usa una seqüència específica per a aquesta associació:</translation>
+        <source>Use custom Auto-Type sequence:</source>
+        <translation>Usa una seqüència de compleció automàtica personalitzada:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
@@ -2393,6 +2629,10 @@ Unfortunately, any changes made have been lost.</source>
     <message>
         <source>Open Auto-Type help webpage</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Window Associations</source>
+        <translation>Associacions de finestra</translation>
     </message>
     <message>
         <source>Existing window associations</source>
@@ -2407,6 +2647,10 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Suprimeix l&apos;associació de finestres seleccionada</translation>
     </message>
     <message>
+        <source>Window title:</source>
+        <translation>Títol de la finestra:</translation>
+    </message>
+    <message>
         <source>You can use an asterisk (*) to match everything</source>
         <translation type="unfinished"/>
     </message>
@@ -2419,16 +2663,22 @@ Unfortunately, any changes made have been lost.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Use a specific sequence for this association:</source>
+        <translation>Usa una seqüència específica per a aquesta associació:</translation>
+    </message>
+    <message>
         <source>Custom Auto-Type sequence for this window</source>
         <translation>Seqüència de compleció automàtica personalitzada per a aquesta finestra</translation>
     </message>
     <message>
-        <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Hereda la seqüència de compleció automàtica del grup</translation>
+        <source>+</source>
+        <comment>Add item</comment>
+        <translation>+</translation>
     </message>
     <message>
-        <source>Use custom Auto-Type sequence:</source>
-        <translation>Usa una seqüència de compleció automàtica personalitzada:</translation>
+        <source>-</source>
+        <comment>Remove item</comment>
+        <translation>-</translation>
     </message>
 </context>
 <context>
@@ -2442,11 +2692,27 @@ Unfortunately, any changes made have been lost.</source>
         <translation>General</translation>
     </message>
     <message>
+        <source>Hide this entry from the browser extension</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Skip Auto-Submit for this entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Hide this entry from the browser extension</source>
+        <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use this entry only with HTTP Basic Auth</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use this entry with HTTP Basic Auth</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2465,41 +2731,9 @@ Unfortunately, any changes made have been lost.</source>
         <source>Edit</source>
         <translation>Edita</translation>
     </message>
-    <message>
-        <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use this entry only with HTTP Basic Auth</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do not use this entry with HTTP Basic Auth</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
-    <message>
-        <source>Show</source>
-        <translation>Mostra</translation>
-    </message>
-    <message>
-        <source>Restore</source>
-        <translation>Restaura</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Suprimeix</translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation>Suprimeix tots</translation>
-    </message>
     <message>
         <source>Entry history selection</source>
         <translation type="unfinished"/>
@@ -2509,59 +2743,59 @@ Unfortunately, any changes made have been lost.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Show</source>
+        <translation>Mostra</translation>
+    </message>
+    <message>
         <source>Restore entry to selected history state</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore</source>
+        <translation>Restaura</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Delete</source>
+        <translation>Suprimeix</translation>
+    </message>
+    <message>
         <source>Delete all history</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete all</source>
+        <translation>Suprimeix tots</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
+        <source>Edit Entry</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Contrasenya:</translation>
-    </message>
-    <message>
-        <source>Title:</source>
-        <translation>Títol:</translation>
-    </message>
-    <message>
-        <source>Presets</source>
-        <translation>Configuracions</translation>
+        <source>Notes field</source>
+        <translation>Camp de notes</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
         <translation>Activeu la casella de selecció per mostrar la secció notes.</translation>
     </message>
     <message>
-        <source>Username:</source>
-        <translation>Nom d&apos;usuari:</translation>
-    </message>
-    <message>
-        <source>Url field</source>
-        <translation>Camp d&apos;URL</translation>
-    </message>
-    <message>
-        <source>Download favicon for URL</source>
-        <translation>Descarrega el favicon de URL</translation>
-    </message>
-    <message>
-        <source>Password field</source>
-        <translation>Camp de contrasenya</translation>
+        <source>Username field</source>
+        <translation>Camp d&apos;usuari</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
         <translation>Commuta la visibilitat de les notes</translation>
+    </message>
+    <message>
+        <source>Notes:</source>
+        <translation>Notes:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2576,27 +2810,43 @@ Unfortunately, any changes made have been lost.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Notes field</source>
-        <translation>Camp de notes</translation>
+        <source>Presets</source>
+        <translation>Configuracions</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Contrasenya:</translation>
+    </message>
+    <message>
+        <source>URL:</source>
+        <translation>URL:</translation>
+    </message>
+    <message>
+        <source>Url field</source>
+        <translation>Camp d&apos;URL</translation>
+    </message>
+    <message>
+        <source>Download favicon for URL</source>
+        <translation>Descarrega el favicon de URL</translation>
+    </message>
+    <message>
+        <source>Title:</source>
+        <translation>Títol:</translation>
     </message>
     <message>
         <source>Title field</source>
         <translation>Camp de títol</translation>
     </message>
     <message>
-        <source>Username field</source>
-        <translation>Camp d&apos;usuari</translation>
+        <source>Username:</source>
+        <translation>Nom d&apos;usuari:</translation>
+    </message>
+    <message>
+        <source>Password field</source>
+        <translation>Camp de contrasenya</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Notes:</translation>
-    </message>
-    <message>
-        <source>https://example.com</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2604,7 +2854,11 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Caduca:</translation>
     </message>
     <message>
-        <source>Edit Entry</source>
+        <source>Tags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags list</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2615,44 +2869,32 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Formulari</translation>
     </message>
     <message>
-        <source>Remove key from agent after</source>
-        <translation>Suprimeix la clau de l&apos;agent després</translation>
-    </message>
-    <message>
-        <source> seconds</source>
-        <translation>segons</translation>
-    </message>
-    <message>
-        <source>Fingerprint</source>
-        <translation>Empremta digital</translation>
-    </message>
-    <message>
         <source>Remove key from agent when database is closed/locked</source>
         <translation>Elimina la clau de l&apos;agent quan la base de dades està tancada/bloquejada</translation>
-    </message>
-    <message>
-        <source>Public key</source>
-        <translation>Clau pública</translation>
-    </message>
-    <message>
-        <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Afegeix la clau a l&apos;agent quan la base de dades s&apos;obri o es desbloquegi</translation>
     </message>
     <message>
         <source>Comment</source>
         <translation>Comentari</translation>
     </message>
     <message>
+        <source>Add key to agent when database is opened/unlocked</source>
+        <translation>Afegeix la clau a l&apos;agent quan la base de dades s&apos;obri o es desbloquegi</translation>
+    </message>
+    <message>
         <source>Decrypt</source>
         <translation>Desxifrar</translation>
     </message>
     <message>
-        <source>n/a</source>
-        <translation>n/a</translation>
+        <source>Fingerprint</source>
+        <translation>Empremta digital</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
         <translation>Copia al porta-retalls</translation>
+    </message>
+    <message>
+        <source>Public key</source>
+        <translation>Clau pública</translation>
     </message>
     <message>
         <source>Private key</source>
@@ -2663,13 +2905,21 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Fitxer extern</translation>
     </message>
     <message>
-        <source>Browse...</source>
+        <source>Browser for key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Navega...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Attachment</source>
         <translation>Adjunt</translation>
+    </message>
+    <message>
+        <source>External key file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add to agent</source>
@@ -2680,24 +2930,28 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Suprimeix-lo de l&apos;agent</translation>
     </message>
     <message>
+        <source>Select attachment file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Require user confirmation when this key is used</source>
         <translation>Demana confirmació de l&apos;usuari quan s&apos;utilitzi aquesta clau</translation>
+    </message>
+    <message>
+        <source>n/a</source>
+        <translation>n/a</translation>
+    </message>
+    <message>
+        <source>Remove key from agent after</source>
+        <translation>Suprimeix la clau de l&apos;agent després</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
         <translation>Suprimeix la clau de l&apos;agent després dels segons especificats</translation>
     </message>
     <message>
-        <source>Browser for key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>External key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <source> seconds</source>
+        <translation>segons</translation>
     </message>
 </context>
 <context>
@@ -2709,6 +2963,10 @@ Unfortunately, any changes made have been lost.</source>
     <message>
         <source>Icon</source>
         <translation>Icona</translation>
+    </message>
+    <message>
+        <source>Browser Integration</source>
+        <translation>Integració amb el navegador</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -2723,6 +2981,10 @@ Unfortunately, any changes made have been lost.</source>
         <translation>Edita el grup</translation>
     </message>
     <message>
+        <source>Group has unsaved changes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>Habilita </translation>
     </message>
@@ -2734,52 +2996,95 @@ Unfortunately, any changes made have been lost.</source>
         <source>Inherit from parent group (%1)</source>
         <translation>Hereta de grup pare (%1)</translation>
     </message>
+</context>
+<context>
+    <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>Entry has unsaved changes</source>
-        <translation>L&apos;entrada té canvis sense desar</translation>
+        <source>Edit Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide entries from browser extension:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide entries from browser extension toggle for this and sub groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Skip Auto-Submit for entries:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Skip Auto-Submit toggle for this and sub groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use entries only with HTTP Basic Auth:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only HTTP Auth toggle for this and sub groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use entries with HTTP Basic Auth:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not use HTTP Auth toggle for this and sub groups</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
     <message>
-        <source>Type:</source>
-        <translation>Tipus:</translation>
+        <source>Sharing mode field</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Path:</source>
-        <translation>Camí:</translation>
+        <source>Password field</source>
+        <translation>Camp de contrasenya</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Tipus:</translation>
     </message>
     <message>
         <source>Password:</source>
         <translation>Contrasenya:</translation>
     </message>
     <message>
-        <source>Inactive</source>
-        <translation>Inactiu</translation>
+        <source>Path:</source>
+        <translation>Camí:</translation>
     </message>
     <message>
-        <source>KeeShare unsigned container</source>
+        <source>Path to share file field</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeeShare signed container</source>
+        <source>Browse for share file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Select import source</source>
+        <source>Browse…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Select export target</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select import/export file</source>
+        <source>Clear fields</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear</source>
         <translation>Neteja</translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation>Inactiu</translation>
     </message>
     <message>
         <source>Import</source>
@@ -2824,63 +3129,47 @@ Supported extensions are: %1.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Sharing mode field</source>
+        <source>KeeShare container</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Path to share file field</source>
+        <source>KeeShare signed container</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password field</source>
-        <translation>Camp de contrasenya</translation>
-    </message>
-    <message>
-        <source>Clear fields</source>
+        <source>Select import source</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Browse for share file</source>
+        <source>Select export target</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Navega...</translation>
+        <source>Select import/export file</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
-        <source>Name field</source>
+        <source>Edit Group</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Notes field</source>
-        <translation>Camp de notes</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Auto-Type toggle for this and sub groups</source>
+        <source>Expires:</source>
+        <translation>Caduca:</translation>
+    </message>
+    <message>
+        <source>Name field</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Expiration field</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Default auto-type sequence field</source>
-        <translation>Camp de seqüència de compleció automàtica per defecte</translation>
-    </message>
-    <message>
-        <source>Expires:</source>
-        <translation>Caduca:</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
@@ -2895,8 +3184,20 @@ Supported extensions are: %1.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Auto-Type toggle for this and sub groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Notes:</source>
         <translation>Notes:</translation>
+    </message>
+    <message>
+        <source>Default auto-type sequence field</source>
+        <translation>Camp de seqüència de compleció automàtica per defecte</translation>
+    </message>
+    <message>
+        <source>Notes field</source>
+        <translation>Camp de notes</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -2907,27 +3208,75 @@ Supported extensions are: %1.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Edit Group</source>
+        <source>Search toggle for this and sub groups</source>
         <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
-        <source>Add custom icon</source>
-        <translation>Afegeix una icona personalitzada</translation>
+        <source>Use default icon</source>
+        <translation>Usa la icona per defecte</translation>
     </message>
     <message>
-        <source>Delete custom icon</source>
-        <translation>Suprimeix la icona personalitzada</translation>
+        <source>Use custom icon</source>
+        <translation>Usa una icona personalitzada</translation>
+    </message>
+    <message>
+        <source>Choose icon…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the URL to use to search for a favicon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Favicon URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download favicon for URL</source>
+        <translation>Descarrega el favicon de URL</translation>
     </message>
     <message>
         <source>Download favicon</source>
         <translation>Descarrega el favicon</translation>
     </message>
     <message>
+        <source>Apply selected icon to subgroups and entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply icon to…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply to this group only</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Also apply to child groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Also apply to child entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Also apply to all children</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unable to fetch favicon.</source>
         <translation>No es pot descarregar el favicon.</translation>
+    </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing icon selected.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Images</source>
@@ -2936,10 +3285,6 @@ Supported extensions are: %1.</source>
     <message>
         <source>All files</source>
         <translation>Tots els fitxers</translation>
-    </message>
-    <message>
-        <source>Confirm Delete</source>
-        <translation>Confirma la supressió</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -2961,54 +3306,6 @@ Supported extensions are: %1.</source>
         <source>The following icon(s) failed:</source>
         <translation><numerusform>La icona (s) següent (es) ha fallat:</numerusform><numerusform>Han fallat la/les icona/es següent/s:</numerusform></translation>
     </message>
-    <message numerus="yes">
-        <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Download favicon for URL</source>
-        <translation>Descarrega el favicon de URL</translation>
-    </message>
-    <message>
-        <source>Apply selected icon to subgroups and entries</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Also apply to child groups</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Also apply to child entries</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Also apply to all children</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Existing icon selected.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use default icon</source>
-        <translation>Usa la icona per defecte</translation>
-    </message>
-    <message>
-        <source>Use custom icon</source>
-        <translation>Usa una icona personalitzada</translation>
-    </message>
-    <message>
-        <source>Apply icon to...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Apply to this group only</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -3017,20 +3314,44 @@ Supported extensions are: %1.</source>
         <translation>Creat:</translation>
     </message>
     <message>
+        <source>Datetime created</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Modified:</source>
         <translation>Modificat:</translation>
+    </message>
+    <message>
+        <source>Datetime modified</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Accessed:</source>
         <translation>Accedit:</translation>
     </message>
     <message>
+        <source>Datetime accessed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Uuid:</source>
         <translation>UUID:</translation>
     </message>
     <message>
+        <source>Unique ID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Plugin Data</source>
         <translation>Dades del connector</translation>
+    </message>
+    <message>
+        <source>Plugin data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove selected plugin data</source>
+        <translation>Suprimeix les dades del connector seleccionat</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -3053,36 +3374,19 @@ This may cause the affected plugins to malfunction.</source>
         <source>Value</source>
         <translation>Valor</translation>
     </message>
-    <message>
-        <source>Datetime created</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Datetime modified</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unique ID</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Plugin data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Remove selected plugin data</source>
-        <translation>Suprimeix les dades del connector seleccionat</translation>
-    </message>
 </context>
 <context>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 - Clon</translation>
+    </message>
+</context>
+<context>
+    <name>EntryAttachments</name>
+    <message>
+        <source>Cannot open file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3103,16 +3407,44 @@ This may cause the affected plugins to malfunction.</source>
         <translation>Formulari</translation>
     </message>
     <message>
+        <source>Attachments</source>
+        <translation>Fitxers adjunts</translation>
+    </message>
+    <message>
+        <source>Add new attachment</source>
+        <translation>Afegeix un nou adjunt</translation>
+    </message>
+    <message>
         <source>Add</source>
         <translation>Afegiu</translation>
+    </message>
+    <message>
+        <source>Remove selected attachment</source>
+        <translation>Suprimeix el fitxer adjunt seleccionat</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Suprimiu</translation>
     </message>
     <message>
+        <source>Rename selected attachment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open selected attachment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Obre</translation>
+    </message>
+    <message>
+        <source>Save selected attachment to disk</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Save</source>
@@ -3121,6 +3453,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Select files</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm remove</source>
+        <translation>Confirma l&apos;eliminació</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
@@ -3159,33 +3495,22 @@ This may cause the affected plugins to malfunction.</source>
 %1</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Confirm remove</source>
-        <translation>Confirma l&apos;eliminació</translation>
-    </message>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Attachments</source>
-        <translation>Fitxers adjunts</translation>
-    </message>
-    <message>
-        <source>Add new attachment</source>
-        <translation>Afegeix un nou adjunt</translation>
-    </message>
-    <message>
-        <source>Remove selected attachment</source>
-        <translation>Suprimeix el fitxer adjunt seleccionat</translation>
-    </message>
-    <message>
-        <source>Open selected attachment</source>
+        <source>Confirm Overwrite Attachment</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Save selected attachment to disk</source>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Attachment</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3196,7 +3521,21 @@ Are you sure to add this file?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Confirm Attachment</source>
+        <source>Attachment modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The attachment '%1' was modified.
+Do you want to save the changes to your database?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Saving attachment failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Saving updated attachment failed.
+Error: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3210,8 +3549,24 @@ Are you sure to add this file?</source>
 <context>
     <name>EntryHistoryModel</name>
     <message>
+        <source>Current (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Last modified</source>
         <translation>Darrera modificació</translation>
+    </message>
+    <message>
+        <source>Age</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Difference</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Mida</translation>
     </message>
     <message>
         <source>Title</source>
@@ -3222,8 +3577,48 @@ Are you sure to add this file?</source>
         <translation>Nom d&apos;usuari</translation>
     </message>
     <message>
+        <source>Password</source>
+        <translation>Contrasenya</translation>
+    </message>
+    <message>
         <source>URL</source>
         <translation>URL</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notes</translation>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Icona</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation>Venciment</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Fitxers adjunts</translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation>Compleció automàtica</translation>
     </message>
 </context>
 <context>
@@ -3232,6 +3627,10 @@ Are you sure to add this file?</source>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
         <translation>Ref: </translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Mai</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3246,16 +3645,12 @@ Are you sure to add this file?</source>
         <translation>Nom d&apos;usuari</translation>
     </message>
     <message>
-        <source>URL</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>Never</source>
-        <translation>Mai</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translation>Contrasenya</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -3294,6 +3689,10 @@ Are you sure to add this file?</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Password Strength</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Entry notes</source>
         <translation type="unfinished"/>
     </message>
@@ -3326,12 +3725,16 @@ Are you sure to add this file?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Has TOTP one-time password</source>
+        <source>Has TOTP</source>
         <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
+    <message>
+        <source>Display current TOTP value</source>
+        <translation type="unfinished"/>
+    </message>
     <message>
         <source>Close</source>
         <translation>Tanca</translation>
@@ -3341,36 +3744,52 @@ Are you sure to add this file?</source>
         <translation>General</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Nom d&apos;usuari</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translation>Contrasenya</translation>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation>Venciment</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>Attributes</source>
-        <translation>Atributs</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>Fitxers adjunts</translation>
     </message>
     <message>
         <source>Notes</source>
         <translation>Notes</translation>
     </message>
     <message>
+        <source>Expiration</source>
+        <translation>Venciment</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags list</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Nom d&apos;usuari</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avançat</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Fitxers adjunts</translation>
+    </message>
+    <message>
+        <source>Attributes</source>
+        <translation>Atributs</translation>
+    </message>
+    <message>
         <source>Autotype</source>
         <translation>Tecleig automàtic</translation>
+    </message>
+    <message>
+        <source>Default Sequence</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Window</source>
@@ -3385,6 +3804,10 @@ Are you sure to add this file?</source>
         <translation>S&apos;està cercant</translation>
     </message>
     <message>
+        <source>Share</source>
+        <translation>Comparteix</translation>
+    </message>
+    <message>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
@@ -3397,37 +3820,12 @@ Are you sure to add this file?</source>
         <translation>Mai</translation>
     </message>
     <message>
-        <source>[PROTECTED]</source>
-        <translation>[PROTEGIT]</translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation>Habilitat</translation>
     </message>
     <message>
         <source>Disabled</source>
         <translation>Inhabilitat</translation>
-    </message>
-    <message>
-        <source>Share</source>
-        <translation>Comparteix</translation>
-    </message>
-    <message>
-        <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avançat</translation>
-    </message>
-    <message>
-        <source>Default Sequence</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/td&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;</source>
-        <comment>attributes line</comment>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3451,74 +3849,56 @@ Are you sure to add this file?</source>
         <source>Reset to defaults</source>
         <translation>Reinicialitza-la als valors predeterminats</translation>
     </message>
+</context>
+<context>
+    <name>ExportDialog</name>
     <message>
-        <source>Has attachments</source>
-        <comment>Entry attachment icon toggle</comment>
+        <source>Export options</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Has TOTP</source>
-        <comment>Entry TOTP icon toggle</comment>
+        <source>Sort entries by...</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are about to export your database to an unencrypted file.
+This will leave your passwords and sensitive information vulnerable!
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>database order</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>name (ascending)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>name (descending)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to HTML file</source>
+        <translation>Exporta la base de dades a un fitxer HTML</translation>
+    </message>
+    <message>
+        <source>HTML file</source>
+        <translation>Fitxer HTML</translation>
     </message>
 </context>
 <context>
-    <name>FdoSecrets::Item</name>
+    <name>FdoSecrets::DBusMgr</name>
     <message>
-        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>FdoSecrets::Service</name>
-    <message>
-        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-        <source>%n Entry(s) was used by %1</source>
-        <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-</context>
-<context>
-    <name>FdoSecrets::SettingsDatabaseModel</name>
-    <message>
-        <source>File Name</source>
+        <source>Failed to deliver message</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Group</source>
-        <translation>Grup</translation>
-    </message>
-    <message>
-        <source>Manage</source>
-        <translation>Gestiona</translation>
-    </message>
-    <message>
-        <source>Unlock to show</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>FdoSecrets::SettingsSessionModel</name>
-    <message>
-        <source>Application</source>
-        <translation>Aplicació</translation>
-    </message>
-    <message>
-        <source>Manage</source>
-        <translation>Gestiona</translation>
-    </message>
-</context>
-<context>
-    <name>FdoSecretsPlugin</name>
-    <message>
-        <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
+        <source>Failed to send reply on DBus</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3540,6 +3920,81 @@ Are you sure to add this file?</source>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register service on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register session on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register item on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::Item</name>
+    <message>
+        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::Service</name>
+    <message numerus="yes">
+        <source>%n Entry(s) was used by %1</source>
+        <comment>%1 is the name of an application</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::SettingsClientModel</name>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::SettingsDatabaseModel</name>
+    <message>
+        <source>Unlock to show</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FdoSecrets::UnlockPrompt</name>
+    <message>
+        <source>%1 (PID: %2)</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FdoSecretsPlugin</name>
+    <message>
+        <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -3547,6 +4002,10 @@ Are you sure to add this file?</source>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[buit]</translation>
+    </message>
+    <message>
+        <source>%1 - Clone</source>
+        <translation>%1 - Clon</translation>
     </message>
 </context>
 <context>
@@ -3584,12 +4043,12 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <translation>Estat</translation>
     </message>
     <message>
-        <source>Please wait, processing entry list...</source>
+        <source>Please wait, processing entry list…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Downloading...</source>
-        <translation>Descarregant...</translation>
+        <source>Downloading…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Ok</source>
@@ -3604,8 +4063,8 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <translation>La descàrrega ha fallat</translation>
     </message>
     <message>
-        <source>Downloading favicons (%1/%2)...</source>
-        <translation>Descarregant els favicons (%1/%2)...</translation>
+        <source>Downloading favicons (%1/%2)…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3622,7 +4081,20 @@ You can enable the DuckDuckGo website icon service in the security section of th
 <context>
     <name>Kdbx3Reader</name>
     <message>
-        <source>missing database headers</source>
+        <source>Missing database headers</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to calculate database key</source>
+        <translation>Impossible calcular la clau de base dades</translation>
+    </message>
+    <message>
+        <source>Unable to issue challenge-response: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3634,29 +4106,21 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <translation>Mida de l&apos;identificador de capçalera no vàlida</translation>
     </message>
     <message>
-        <source>Invalid header field length</source>
-        <translation>Longitud del camp de capçalera no vàlida</translation>
-    </message>
-    <message>
-        <source>Invalid header data length</source>
-        <translation>Longitud de dades de la capçalera no vàlida</translation>
-    </message>
-    <message>
-        <source>Invalid credentials were provided, please try again.
-If this reoccurs, then your database file may be corrupt.</source>
+        <source>Invalid header field length: field %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unable to calculate database key</source>
-        <translation>Impossible calcular la clau de base dades</translation>
-    </message>
-    <message>
-        <source>Unable to issue challenge-response: %1</source>
+        <source>Invalid header data length: field %1, %2 expected, %3 found</source>
         <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Kdbx3Writer</name>
+    <message>
+        <source>Invalid symmetric cipher IV size.</source>
+        <comment>IV = Initialization Vector for symmetric cipher</comment>
+        <translation type="unfinished"/>
+    </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
         <translation type="unfinished"/>
@@ -3673,11 +4137,24 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Unable to calculate database key: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Invalid header checksum size</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>(HMAC mismatch)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3689,12 +4166,12 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation>Mida de l&apos;id de capçalera no vàlid</translation>
     </message>
     <message>
-        <source>Invalid header field length</source>
-        <translation>Longitud del camp de capçalera no vàlid</translation>
+        <source>Invalid header field length: field %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Invalid header data length</source>
-        <translation>Longitud de dades de la capçalera no vàlida</translation>
+        <source>Invalid header data length: field %1, %2 expected, %3 found</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -3713,7 +4190,11 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation>Mida de l&apos;identificador intern d&apos;encapçalament no vàlida</translation>
     </message>
     <message>
-        <source>Invalid inner header field length</source>
+        <source>Invalid inner header field length: field %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3780,19 +4261,6 @@ If this reoccurs, then your database file may be corrupt.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Invalid credentials were provided, please try again.
-If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>(HMAC mismatch)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
@@ -3806,17 +4274,25 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to serialize KDF parameters variant map</source>
-        <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
+        <source>Unable to calculate database key: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unable to calculate database key: %1</source>
+        <source>Failed to serialize KDF parameters variant map</source>
+        <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
         <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KdbxReader</name>
+    <message>
+        <source>Invalid cipher uuid length: %1 (length=%2)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to parse UUID: %1</source>
+        <translation type="unfinished"/>
+    </message>
     <message>
         <source>Unsupported cipher</source>
         <translation type="unfinished"/>
@@ -3854,33 +4330,22 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Not a KeePass database.</source>
-        <translation>No és una base de dades KeePass.</translation>
+        <source>Failed to read database file.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
-You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
+You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>El fitxer seleccionat és una base de dades KeePass 1 antiga (.kdb).
-
-Podeu importar-la fent clic a la base de dades &gt; &quot;importar base de dades KeePass 1...&quot;.
-Es tracta d&apos;una migració unidireccional. No obrir la base de dades importada amb la antiga versió KeePassX 0.4.</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Not a KeePass database.</source>
+        <translation>No és una base de dades KeePass.</translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher uuid length: %1 (length=%2)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unable to parse UUID: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to read database file.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3893,6 +4358,12 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     <message>
         <source>No root group</source>
         <translation>No hi ha cap grup arrel</translation>
+    </message>
+    <message>
+        <source>XML error:
+%1
+Line %2, column %3</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
@@ -3999,12 +4470,6 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>XML error:
-%1
-Line %2, column %3</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>KeeAgentSettings</name>
@@ -4032,12 +4497,12 @@ Line %2, column %3</source>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
-        <source>Unable to open the database.</source>
-        <translation>No es pot obrir la base de dades.</translation>
-    </message>
-    <message>
         <source>Import KeePass1 Database</source>
         <translation>Importa una base de dades de KeePass 1</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>No es pot obrir la base de dades.</translation>
     </message>
 </context>
 <context>
@@ -4090,6 +4555,19 @@ Line %2, column %3</source>
     <message>
         <source>Root</source>
         <translation>Arrel</translation>
+    </message>
+    <message>
+        <source>Unable to calculate database key</source>
+        <translation>Impossible calcular la clau de base dades</translation>
+    </message>
+    <message>
+        <source>unable to seek to content position</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4156,7 +4634,7 @@ Line %2, column %3</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Invalid entry uuid field size</source>
+        <source>Invalid entry UUID field size</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -4182,19 +4660,6 @@ Line %2, column %3</source>
     <message>
         <source>Invalid entry field type</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>unable to seek to content position</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid credentials were provided, please try again.
-If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unable to calculate database key</source>
-        <translation>Impossible calcular la clau de base dades</translation>
     </message>
 </context>
 <context>
@@ -4262,44 +4727,68 @@ If this reoccurs, then your database file may be corrupt.</source>
         <source>Key Component set, click to change or remove</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Add %1</source>
-        <comment>Add a key component</comment>
-        <translation>Afegeix %1</translation>
-    </message>
-    <message>
-        <source>Change %1</source>
-        <comment>Change a key component</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Remove %1</source>
-        <comment>Remove a key component</comment>
-        <translation>Suprimeix %1</translation>
-    </message>
-    <message>
-        <source>%1 set, click to change or remove</source>
-        <comment>Change or remove a key component</comment>
-        <translation>%1: feu clic per canviar o eliminar</translation>
-    </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
     <message>
+        <source>Generate a new key file</source>
+        <translation>Genera un fitxer clau nou</translation>
+    </message>
+    <message>
         <source>Generate</source>
         <translation>Genera</translation>
+    </message>
+    <message>
+        <source>Generate a new key file or choose an existing one to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse for key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Old key file format</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error loading the key file '%1'
+Message: %2</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key File</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Podeu afegir un fitxer clau que contingui bytes aleatoris per afegir seguretat.&lt;/p&gt;&lt;p&gt;L&apos;heu de mantenir secret i no perdre&apos;l, sinó us quedareu tancats a fora!&lt;/p&gt;</translation>
+        <source>Add Key File</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Error loading the key file '%1'
-Message: %2</source>
+        <source>Change Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key File set, click to change or remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -4311,8 +4800,8 @@ Message: %2</source>
         <translation>Tots els fitxers</translation>
     </message>
     <message>
-        <source>Create Key File...</source>
-        <translation>Crea un arxiu clau...</translation>
+        <source>Create Key File…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error creating key file</source>
@@ -4325,14 +4814,6 @@ Message: %2</source>
     <message>
         <source>Select a key file</source>
         <translation>Seleccioneu un fitxer clau</translation>
-    </message>
-    <message>
-        <source>Browse for key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Generate a new key file</source>
-        <translation>Genera un fitxer clau nou</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4351,24 +4832,19 @@ Message: %2</source>
 Are you sure you want to continue with this file?</source>
         <translation type="unfinished"/>
     </message>
+</context>
+<context>
+    <name>MacUtils</name>
     <message>
-        <source>Old key file format</source>
+        <source>Invalid key code</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
+        <source>Global shortcut already registered to %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Browse…</source>
+        <source>Could not register global shortcut</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4379,207 +4855,20 @@ Are you sure you want to continue with this file?</source>
         <translation>&amp;Base de dades</translation>
     </message>
     <message>
-        <source>&amp;Help</source>
-        <translation>&amp;Ajuda</translation>
-    </message>
-    <message>
-        <source>&amp;Groups</source>
-        <translation>&amp;Grups</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation>&amp;Eines</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation>Tanca</translation>
-    </message>
-    <message>
-        <source>&amp;About</source>
-        <translation>&amp;Quant a</translation>
-    </message>
-    <message>
-        <source>Database settings</source>
-        <translation>Configuració de la base de dades</translation>
-    </message>
-    <message>
-        <source>Copy username to clipboard</source>
-        <translation>Còpia el nom d&apos;usuari al porta-retalls</translation>
-    </message>
-    <message>
-        <source>Copy password to clipboard</source>
-        <translation>Còpia la contrasenya  al porta-retalls</translation>
-    </message>
-    <message>
-        <source>&amp;Settings</source>
-        <translation>&amp;Configuració</translation>
-    </message>
-    <message>
-        <source>&amp;Title</source>
-        <translation>&amp;Títol</translation>
-    </message>
-    <message>
-        <source>Copy title to clipboard</source>
-        <translation>Copia el títol al porta-retalls</translation>
-    </message>
-    <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
-        <source>Copy URL to clipboard</source>
-        <translation>Copia l&apos;URL al porta-retalls</translation>
-    </message>
-    <message>
-        <source>&amp;Notes</source>
-        <translation>&amp;Notes</translation>
-    </message>
-    <message>
-        <source>Copy notes to clipboard</source>
-        <translation>Copia les notes al porta-retalls</translation>
-    </message>
-    <message>
-        <source>Copy &amp;TOTP</source>
-        <translation>Còpia &amp;TOTP</translation>
-    </message>
-    <message>
-        <source>E&amp;mpty recycle bin</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Clear history</source>
-        <translation>Esborra l&apos;historial</translation>
-    </message>
-    <message>
-        <source>Access error for config file %1</source>
-        <translation>Error d&apos;accés al fitxer de configuració %1</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Configuració</translation>
-    </message>
-    <message>
-        <source>Toggle window</source>
-        <translation>Activar finestra</translation>
-    </message>
-    <message>
-        <source>Quit KeePassXC</source>
-        <translation>Tanca KeePassXC</translation>
-    </message>
-    <message>
-        <source>Please touch the button on your YubiKey!</source>
-        <translation>Per favor, toqueu el botó en el seu YubiKey!</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using an unstable build of KeePassXC!
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>ATENCIÓ: esteu utilitzant una versió inestable de KeePassXC!
-Hi ha un alt risc de corrupció, manteniu una còpia de seguretat de les vostres bases de dades.
-Aquesta versió no està pensada per usar-se en producció.</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation>Fes un &amp;donatiu</translation>
-    </message>
-    <message>
-        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
-We recommend you use the AppImage available on our downloads page.</source>
-        <translation type="unfinished"/>
+        <source>&amp;Recent Databases</source>
+        <translation>Bases de dades &amp;recents</translation>
     </message>
     <message>
         <source>&amp;Import</source>
         <translation>&amp; Importa</translation>
     </message>
     <message>
-        <source>Create a new database</source>
-        <translation>Crea una nova base de dades</translation>
-    </message>
-    <message>
-        <source>Merge from another KDBX database</source>
-        <translation>Fusiona amb una altra base de dades KDBX</translation>
-    </message>
-    <message>
-        <source>Add a new entry</source>
-        <translation>Afegeix una nova entrada</translation>
-    </message>
-    <message>
-        <source>View or edit entry</source>
-        <translation>Mostra o edita l&apos;entrada</translation>
-    </message>
-    <message>
-        <source>Add a new group</source>
-        <translation>Afegeix un grup nou</translation>
-    </message>
-    <message>
-        <source>Perform &amp;Auto-Type</source>
-        <translation>Fes una compleció automàtica</translation>
-    </message>
-    <message>
-        <source>Open &amp;URL</source>
-        <translation>Obre la &amp;URL</translation>
-    </message>
-    <message>
-        <source>Import a KeePass 1 database</source>
-        <translation>Importa una base de dades de KeePass 1</translation>
-    </message>
-    <message>
-        <source>Import a CSV file</source>
-        <translation>Importa un fitxer CSV</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC!
-Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>NOTA: esteu utilitzant una versió preliminar de KeePassXC!
-Podeu esperar alguns errors i incidències menors. Aquesta versió no està pensada per a un ús en producció.</translation>
-    </message>
-    <message>
-        <source>Check for updates on startup?</source>
-        <translation>Voleu comprovar si hi ha actualitzacions a l&apos;inici?</translation>
-    </message>
-    <message>
-        <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>Voleu que KeePassXC comprovi si hi ha actualitzacions a l&apos;inici?</translation>
-    </message>
-    <message>
-        <source>You can always check for updates manually from the application menu.</source>
-        <translation>Sempre pots comprovar si hi ha actualitzacions manualment als menús de l&apos;aplicació.</translation>
-    </message>
-    <message>
         <source>&amp;Export</source>
         <translation>&amp;Exporta</translation>
     </message>
     <message>
-        <source>Sort &amp;A-Z</source>
-        <translation>Ordena &amp;A-Z</translation>
-    </message>
-    <message>
-        <source>Sort &amp;Z-A</source>
-        <translation>Ordena &amp;Z-A</translation>
-    </message>
-    <message>
-        <source>&amp;Password Generator</source>
-        <translation>Generador de contrasenyes</translation>
-    </message>
-    <message>
-        <source>Import a 1Password Vault</source>
-        <translation>Importa un 1Password Vault</translation>
-    </message>
-    <message>
-        <source>&amp;Getting Started</source>
-        <translation>Primers passos</translation>
-    </message>
-    <message>
-        <source>&amp;User Guide</source>
-        <translation>Guia d&apos;&amp;usuari</translation>
-    </message>
-    <message>
-        <source>&amp;Keyboard Shortcuts</source>
-        <translation>Dreceres de teclat</translation>
-    </message>
-    <message>
-        <source>&amp;Recent Databases</source>
-        <translation>Bases de dades &amp;recents</translation>
+        <source>&amp;Help</source>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <source>&amp;Entries</source>
@@ -4594,12 +4883,28 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>TOTP</translation>
     </message>
     <message>
+        <source>&amp;Groups</source>
+        <translation>&amp;Grups</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation>&amp;Eines</translation>
+    </message>
+    <message>
         <source>View</source>
         <translation>Visualització</translation>
     </message>
     <message>
         <source>Theme</source>
         <translation>Tema</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation>Tanca</translation>
+    </message>
+    <message>
+        <source>&amp;About</source>
+        <translation>&amp;Quant a</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
@@ -4622,16 +4927,32 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>Base de dades &amp;nova</translation>
     </message>
     <message>
+        <source>Create a new database</source>
+        <translation>Crea una nova base de dades</translation>
+    </message>
+    <message>
         <source>&amp;Merge From Database…</source>
         <translation>Fusiona des d&apos;una base de dades…</translation>
+    </message>
+    <message>
+        <source>Merge from another KDBX database</source>
+        <translation>Fusiona amb una altra base de dades KDBX</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
         <translation>&amp;Nova entrada...</translation>
     </message>
     <message>
+        <source>Add a new entry</source>
+        <translation>Afegeix una nova entrada</translation>
+    </message>
+    <message>
         <source>&amp;Edit Entry…</source>
         <translation>&amp;Edita l&apos;entrada…</translation>
+    </message>
+    <message>
+        <source>View or edit entry</source>
+        <translation>Mostra o edita l&apos;entrada</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
@@ -4640,6 +4961,10 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     <message>
         <source>&amp;New Group…</source>
         <translation>&amp;Nou grup…</translation>
+    </message>
+    <message>
+        <source>Add a new group</source>
+        <translation>Afegeix un grup nou</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
@@ -4654,6 +4979,14 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>Baixa tots els &amp;Favicons…</translation>
     </message>
     <message>
+        <source>Sort &amp;A-Z</source>
+        <translation>Ordena &amp;A-Z</translation>
+    </message>
+    <message>
+        <source>Sort &amp;Z-A</source>
+        <translation>Ordena &amp;Z-A</translation>
+    </message>
+    <message>
         <source>Sa&amp;ve Database As…</source>
         <translation type="unfinished"/>
     </message>
@@ -4662,8 +4995,8 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>&amp;Seguretat de la base de dades...</translation>
     </message>
     <message>
-        <source>Database &amp;Reports...</source>
-        <translation>Informes de la base de dades...</translation>
+        <source>Database &amp;Reports…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
@@ -4672,6 +5005,10 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     <message>
         <source>&amp;Database Settings…</source>
         <translation>Configuració de la base de dades…</translation>
+    </message>
+    <message>
+        <source>Database settings</source>
+        <translation>Configuració de la base de dades</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
@@ -4698,16 +5035,68 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>Copia el nom d&apos;&amp;usuari</translation>
     </message>
     <message>
+        <source>Copy username to clipboard</source>
+        <translation>Còpia el nom d&apos;usuari al porta-retalls</translation>
+    </message>
+    <message>
         <source>Copy &amp;Password</source>
         <translation>Copia la contrasenya</translation>
+    </message>
+    <message>
+        <source>Copy password to clipboard</source>
+        <translation>Còpia la contrasenya  al porta-retalls</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>&amp;Configuració</translation>
+    </message>
+    <message>
+        <source>&amp;Password Generator</source>
+        <translation>Generador de contrasenyes</translation>
+    </message>
+    <message>
+        <source>Perform &amp;Auto-Type</source>
+        <translation>Fes una compleció automàtica</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
         <translation>Descarrega el &amp;Favicon</translation>
     </message>
     <message>
-        <source>&amp;Lock Databases</source>
-        <translation>Bloqueja les bases de dades</translation>
+        <source>Open &amp;URL</source>
+        <translation>Obre la &amp;URL</translation>
+    </message>
+    <message>
+        <source>&amp;Lock Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Lock &amp;All Databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Title</source>
+        <translation>&amp;Títol</translation>
+    </message>
+    <message>
+        <source>Copy title to clipboard</source>
+        <translation>Copia el títol al porta-retalls</translation>
+    </message>
+    <message>
+        <source>&amp;URL</source>
+        <translation>&amp;URL</translation>
+    </message>
+    <message>
+        <source>Copy URL to clipboard</source>
+        <translation>Copia l&apos;URL al porta-retalls</translation>
+    </message>
+    <message>
+        <source>&amp;Notes</source>
+        <translation>&amp;Notes</translation>
+    </message>
+    <message>
+        <source>Copy notes to clipboard</source>
+        <translation>Copia les notes al porta-retalls</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
@@ -4722,12 +5111,24 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Import a KeePass 1 database</source>
+        <translation>Importa una base de dades de KeePass 1</translation>
+    </message>
+    <message>
         <source>1Password Vault…</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Import a 1Password Vault</source>
+        <translation>Importa un 1Password Vault</translation>
+    </message>
+    <message>
         <source>CSV File…</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import a CSV file</source>
+        <translation>Importa un fitxer CSV</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -4742,8 +5143,24 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Copy &amp;TOTP</source>
+        <translation>Còpia &amp;TOTP</translation>
+    </message>
+    <message>
+        <source>E&amp;mpty recycle bin</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Donate</source>
+        <translation>Fes un &amp;donatiu</translation>
+    </message>
+    <message>
         <source>Report a &amp;Bug</source>
         <translation>Informeu d&apos;un error</translation>
+    </message>
+    <message>
+        <source>&amp;Getting Started</source>
+        <translation>Primers passos</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
@@ -4758,12 +5175,20 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>&amp;User Guide</source>
+        <translation>Guia d&apos;&amp;usuari</translation>
+    </message>
+    <message>
         <source>Open User Guide</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Save Database Backup...</source>
-        <translation>Desa una còpia de la base de dades...</translation>
+        <source>&amp;Keyboard Shortcuts</source>
+        <translation>Dreceres de teclat</translation>
+    </message>
+    <message>
+        <source>Save Database Backup…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -4802,38 +5227,6 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>Mostra el plafó de vista prèvia</translation>
     </message>
     <message>
-        <source>Don&apos;t show again for this version</source>
-        <translation>No mostrar un altre cop per a aquesta versió</translation>
-    </message>
-    <message>
-        <source>Restart Application?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Perform Auto-Type Sequence</source>
-        <translation>Fes un seqüència d&apos;autocompleció</translation>
-    </message>
-    <message>
-        <source>{USERNAME}</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>{USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>{PASSWORD}</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>{PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Always on Top</source>
         <translation>Sempre a la part superior</translation>
     </message>
@@ -4844,6 +5237,78 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     <message>
         <source>Hide Passwords</source>
         <translation>Oculta les contrasenyes</translation>
+    </message>
+    <message>
+        <source>Clone Group...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear history</source>
+        <translation>Esborra l&apos;historial</translation>
+    </message>
+    <message>
+        <source>Access error for config file %1</source>
+        <translation>Error d&apos;accés al fitxer de configuració %1</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show again for this version</source>
+        <translation>No mostrar un altre cop per a aquesta versió</translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC.
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>NOTE: You are using a pre-release version of KeePassXC.
+Expect some bugs and minor issues, this version is meant for testing purposes.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
+We recommend you use the AppImage available on our downloads page.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Restore Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Configuració</translation>
+    </message>
+    <message>
+        <source>Check for updates on startup?</source>
+        <translation>Voleu comprovar si hi ha actualitzacions a l&apos;inici?</translation>
+    </message>
+    <message>
+        <source>Would you like KeePassXC to check for updates on startup?</source>
+        <translation>Voleu que KeePassXC comprovi si hi ha actualitzacions a l&apos;inici?</translation>
+    </message>
+    <message>
+        <source>You can always check for updates manually from the application menu.</source>
+        <translation>Sempre pots comprovar si hi ha actualitzacions manualment als menús de l&apos;aplicació.</translation>
+    </message>
+    <message>
+        <source>Toggle window</source>
+        <translation>Activar finestra</translation>
+    </message>
+    <message>
+        <source>Quit KeePassXC</source>
+        <translation>Tanca KeePassXC</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart Application?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You must restart the application to apply this setting. Would you like to restart now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4950,7 +5415,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
 <context>
     <name>NewDatabaseWizard</name>
     <message>
-        <source>Create a new KeePassXC database...</source>
+        <source>Create a new KeePassXC database…</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -4966,6 +5431,10 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Encryption Settings</source>
+        <translation>Configuració del xifrat</translation>
+    </message>
+    <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
         <translation>Aquí podeu ajustar la configuració del xifrat de la base de dades. També ho podeu canviar més endavant a la configuració de la base de dades.</translation>
     </message>
@@ -4976,10 +5445,6 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     <message>
         <source>Simple Settings</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Encryption Settings</source>
-        <translation>Configuració del xifrat</translation>
     </message>
 </context>
 <context>
@@ -5019,6 +5484,14 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global shortcut already registered to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not register global shortcut</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5123,11 +5596,15 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Unsupported key type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>No private key payload to decrypt</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Trying to run KDF without cipher</source>
+        <source>Unknown cipher: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5135,7 +5612,23 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>Cal la contrasenya per desxifrar aquesta clau</translation>
     </message>
     <message>
-        <source>Key derivation failed, key file corrupted?</source>
+        <source>Key derivation failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to initialize cipher: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decryption failed: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5143,7 +5636,19 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>El desxifrat ha fallat, la frase de contrasenya és errònia?</translation>
     </message>
     <message>
+        <source>Unexpected EOF while reading key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsupported key part</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unexpected EOF while reading public key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5164,26 +5669,6 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unsupported key type: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown cipher: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cipher IV is too short for MD5 kdf</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown KDF: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown key type: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5217,12 +5702,36 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>Introduïu la contrasenya:</translation>
     </message>
     <message>
+        <source>Password field</source>
+        <translation>Camp de contrasenya</translation>
+    </message>
+    <message>
         <source>Confirm password:</source>
         <translation>Confirma la contrasenya:</translation>
     </message>
     <message>
+        <source>Repeat password field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Password</source>
         <translation>Contrasenya</translation>
+    </message>
+    <message>
+        <source>Add Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password set, click to change or remove</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
@@ -5232,20 +5741,12 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <source>Passwords do not match.</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Password field</source>
-        <translation>Camp de contrasenya</translation>
-    </message>
-    <message>
-        <source>Repeat password field</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
-        <source>%p%</source>
-        <translation>%p %</translation>
+        <source>Generate Password</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>strength</source>
@@ -5257,20 +5758,124 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>entropia</translation>
     </message>
     <message>
+        <source>Generated password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%p%</source>
+        <translation>%p %</translation>
+    </message>
+    <message>
+        <source>Regenerate password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Copia la contrasenya</translation>
+    </message>
+    <message>
         <source>Password</source>
         <translation>Contrasenya</translation>
+    </message>
+    <message>
+        <source>&amp;Length:</source>
+        <translation>&amp;Longitud:</translation>
+    </message>
+    <message>
+        <source>Password length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Switch to advanced mode</source>
+        <translation>Canvia al mode avançat</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avançat</translation>
     </message>
     <message>
         <source>Character Types</source>
         <translation>Tipus de caràcter</translation>
     </message>
     <message>
+        <source>Special characters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quotes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Punctuation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Dashes and Slashes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upper-case letters</source>
+        <translation>Lletra majúscula</translation>
+    </message>
+    <message>
         <source>Numbers</source>
         <translation>Números</translation>
     </message>
     <message>
+        <source>Lower-case letters</source>
+        <translation>Lletra minúscula</translation>
+    </message>
+    <message>
+        <source>Math Symbols</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Extended ASCII</source>
         <translation>ASCII estès</translation>
+    </message>
+    <message>
+        <source>Braces</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not include:</source>
+        <translation>No incloure:</translation>
+    </message>
+    <message>
+        <source>Additional characters to use for the generated password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional characters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add non-hex letters to &quot;do not include&quot; list</source>
+        <translation>Afegeix caràcters no-hexadecimals a la llista &quot;no incloure&quot;</translation>
+    </message>
+    <message>
+        <source>Hex Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hex</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Character set to exclude from generated password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Excluded characters</source>
+        <translation>Caràcters exclosos</translation>
+    </message>
+    <message>
+        <source>Also choose from:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -5281,28 +5886,121 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>Tria caràcters de tots els grups</translation>
     </message>
     <message>
-        <source>&amp;Length:</source>
-        <translation>&amp;Longitud:</translation>
-    </message>
-    <message>
         <source>Passphrase</source>
         <translation>Contrasenya</translation>
-    </message>
-    <message>
-        <source>Wordlist:</source>
-        <translation>Llista de paraules:</translation>
     </message>
     <message>
         <source>Word Separator:</source>
         <translation>Separador de paraula:</translation>
     </message>
     <message>
+        <source>Wordlist:</source>
+        <translation>Llista de paraules:</translation>
+    </message>
+    <message>
+        <source>Word Count:</source>
+        <translation>Nombre de paraules:</translation>
+    </message>
+    <message>
+        <source>Character Count:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Word Case:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete selected wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add custom wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>character</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Close</source>
         <translation>Tanca</translation>
     </message>
     <message>
+        <source>Esc</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Regenerate password (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>lower case</source>
+        <translation>minúscules</translation>
+    </message>
+    <message>
+        <source>UPPER CASE</source>
+        <translation>MAJÚSCULES</translation>
+    </message>
+    <message>
+        <source>Title Case</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>(SYSTEM)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Entropy: %1 bit</source>
         <translation>Entropia: %1 bit(s)</translation>
+    </message>
+    <message>
+        <source>Confirm Delete Wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to delete wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wordlists</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Tots els fitxers</translation>
+    </message>
+    <message>
+        <source>Select Custom Wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Overwrite Wordlist?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
+Do you want to overwrite it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to add wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Logograms</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Caràcters especials</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
@@ -5328,211 +6026,19 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <comment>Password quality</comment>
         <translation>Excel·lent</translation>
     </message>
-    <message>
-        <source>Switch to advanced mode</source>
-        <translation>Canvia al mode avançat</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avançat</translation>
-    </message>
-    <message>
-        <source>Braces</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Punctuation</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Quotes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Logograms</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Character set to exclude from generated password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do not include:</source>
-        <translation>No incloure:</translation>
-    </message>
-    <message>
-        <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>Afegeix caràcters no-hexadecimals a la llista &quot;no incloure&quot;</translation>
-    </message>
-    <message>
-        <source>Hex</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Generated password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Upper-case letters</source>
-        <translation>Lletra majúscula</translation>
-    </message>
-    <message>
-        <source>Lower-case letters</source>
-        <translation>Lletra minúscula</translation>
-    </message>
-    <message>
-        <source>Special characters</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Math Symbols</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Dashes and Slashes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Excluded characters</source>
-        <translation>Caràcters exclosos</translation>
-    </message>
-    <message>
-        <source>Hex Passwords</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Word Case:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Regenerate password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Copy password</source>
-        <translation>Copia la contrasenya</translation>
-    </message>
-    <message>
-        <source>lower case</source>
-        <translation>minúscules</translation>
-    </message>
-    <message>
-        <source>UPPER CASE</source>
-        <translation>MAJÚSCULES</translation>
-    </message>
-    <message>
-        <source>Title Case</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Generate Password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Also choose from:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Additional characters to use for the generated password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Additional characters</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Word Count:</source>
-        <translation>Nombre de paraules:</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Apply Password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Regenerate password (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Special Characters</source>
-        <translation>Caràcters especials</translation>
-    </message>
-    <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;O&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;|&quot;, &quot;G&quot;, &quot;6&quot;, &quot;B&quot;, &quot;8&quot;, &quot;﹒&quot;</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
-    <name>QApplication</name>
+    <name>PickcharsDialog</name>
     <message>
-        <source>KeeShare</source>
+        <source>KeePassXC - Pick Characters</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Statistics</source>
-        <translation>Estadístiques</translation>
-    </message>
-    <message>
-        <source>Very weak password</source>
+        <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password entropy is %1 bits</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Weak password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Used in %1/%2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password is used %1 times</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password has expired</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password expiry was %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password is about to expire</source>
-        <translation>La contrasenya està a punt de caducar</translation>
-    </message>
-    <message>
-        <source>Password expires in %1 days</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password will expire soon</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password expires on %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Health Check</source>
-        <translation>Comprovació de salut</translation>
-    </message>
-    <message>
-        <source>HIBP</source>
+        <source>Press &amp;Tab between characters</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5598,6 +6104,10 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>Acció cancel·lada o denegada</translation>
     </message>
     <message>
+        <source>Message encryption failed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>KeePassXC association failed, try again</source>
         <translation type="unfinished"/>
     </message>
@@ -5622,23 +6132,31 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>No groups found</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation>No es pot crear un grup nou</translation>
+    </message>
+    <message>
+        <source>No valid UUID provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Error desconegut</translation>
     </message>
     <message>
-        <source>Add a new entry to a database.</source>
+        <source>Browser Integration</source>
+        <translation>Integració amb el navegador</translation>
+    </message>
+    <message>
+        <source>Browser Plugin Failure</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Path of the database.</source>
-        <translation>Camí de la base de dades.</translation>
-    </message>
-    <message>
-        <source>Key file of the database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>path</source>
+        <source>Could not save the native messaging script file for %1.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5658,6 +6176,14 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation>URL</translation>
     </message>
     <message>
+        <source>Notes for the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notes</translation>
+    </message>
+    <message>
         <source>Prompt for the entry&apos;s password.</source>
         <translation type="unfinished"/>
     </message>
@@ -5666,7 +6192,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>length</source>
+        <source>Add a new entry to a database.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5674,169 +6200,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Path of the entry to clip.</source>
-        <comment>clip = copy to clipboard</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Edit an entry.</source>
-        <translation>Edita una entrada.</translation>
-    </message>
-    <message>
-        <source>Title for the entry.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>title</source>
-        <translation>títol</translation>
-    </message>
-    <message>
-        <source>Path of the entry to edit.</source>
-        <translation>Ruta de l&apos;entrada a editar.</translation>
-    </message>
-    <message>
-        <source>Estimate the entropy of a password.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password for which to estimate the entropy.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Perform advanced analysis on the password.</source>
-        <translation>Fes una anàlisi avançada de la contrasenya.</translation>
-    </message>
-    <message>
-        <source>
-
-Available commands:
-</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Name of the command to execute.</source>
-        <translation>Nom de l&apos;ordre a executar.</translation>
-    </message>
-    <message>
-        <source>List database entries.</source>
-        <translation>Llista les entrades de la base de dades.</translation>
-    </message>
-    <message>
-        <source>Path of the group to list. Default is /</source>
-        <translation>Camí del grup a llistar. Per defecte és /</translation>
-    </message>
-    <message>
-        <source>Find entries quickly.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Search term.</source>
-        <translation>Terme de cerca.</translation>
-    </message>
-    <message>
-        <source>Merge two databases.</source>
-        <translation>Fusiona dues bases de dades</translation>
-    </message>
-    <message>
-        <source>Path of the database to merge from.</source>
-        <translation>Camí de la base de dades de destí a fusionar.</translation>
-    </message>
-    <message>
-        <source>Use the same credentials for both database files.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Key file of the database to merge from.</source>
-        <translation>Fitxer clau de la base de dades amb la que es fusiona.</translation>
-    </message>
-    <message>
-        <source>Show an entry&apos;s information.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>attribute</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Name of the entry to show.</source>
-        <translation>Nom de l&apos;entrada a mostrar.</translation>
-    </message>
-    <message>
-        <source>NULL device</source>
-        <translation>Dispositiu nul</translation>
-    </message>
-    <message>
-        <source>error reading from device</source>
-        <translation>error de lectura del dispositiu</translation>
-    </message>
-    <message>
-        <source>malformed string</source>
-        <translation>cadena mal formada</translation>
-    </message>
-    <message>
-        <source>missing closing quote</source>
-        <translation>falta la cometa de tancament</translation>
-    </message>
-    <message>
-        <source>Group</source>
-        <translation>Grup</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Títol</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Nom d&apos;usuari</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Contrasenya</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Notes</translation>
-    </message>
-    <message>
-        <source>Last Modified</source>
-        <translation>Darrera modificació</translation>
-    </message>
-    <message>
-        <source>Created</source>
-        <translation>Creat</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Integració amb el navegador</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>Agent SSH</translation>
-    </message>
-    <message>
-        <source>Generate a new random diceware passphrase.</source>
-        <translation>Genera una frase de contrasenya nova amb llançament de daus.</translation>
-    </message>
-    <message>
-        <source>Word count for the diceware passphrase.</source>
-        <translation>Recompte de paraules per a la frase de contrasenya amb llançament de daus.</translation>
-    </message>
-    <message>
-        <source>Wordlist for the diceware generator.
-[Default: EFF English]</source>
-        <translation>Llista de paraules per al generador de llançament de daus.
-[Per defecte: EFF English]</translation>
-    </message>
-    <message>
-        <source>Generate a new random password.</source>
+        <source>Cannot generate a password and prompt at the same time.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5856,7 +6220,185 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Adds a new group to a database.</source>
+        <translation>Afegeix un grup nou a una base de dades.</translation>
+    </message>
+    <message>
+        <source>Path of the group to add.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group %1 already exists!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group %1 not found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully added group %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>FILENAME</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path to okon-cli to search a formatted HIBP file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>okon-cli</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Analyze passwords for weaknesses and problems.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot find HIBP file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Evaluating database entries using okon…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to open HIBP file %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Evaluating database entries against HIBP file, this will take a while…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Password for &apos;%1&apos; has been leaked!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export an attachment of an entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the entry with the target attachment.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name of the attachment to be exported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path to which the attachment should be exported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not find entry with path %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not find attachment with name %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not open output file %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully exported attachment %1 of entry %2 to %3.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Overwrite existing attachments.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Imports an attachment to an entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name of the attachment to be added.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the attachment to be imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachment %1 already exists for entry %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not open attachment file %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully imported attachment %1 as %2 to entry %3.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove an attachment of an entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name of the attachment to be removed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully removed attachment %1 from entry %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
+        <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy an entry&apos;s attribute to the clipboard.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the entry to clip.</source>
+        <comment>clip = copy to clipboard</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Invalid timeout value %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Multiple entries matching:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Using matching entry: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5864,7 +6406,23 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Entry with path %1 has no TOTP set up.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attribute &quot;%1&quot; not found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
         <translation type="unfinished"/>
     </message>
     <message numerus="yes">
@@ -5876,8 +6434,116 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Close the currently opened database.</source>
+        <translation>Tanca la base de dades oberta.</translation>
+    </message>
+    <message>
+        <source>Display this help.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Silence password prompt and other secondary outputs.</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key file of the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>path</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deactivate password key for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>slot[:serial]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Missing positional argument(s).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Too many arguments provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Target decryption time in MS for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set a password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create a new database.</source>
+        <translation>Crea una nova base de dades.</translation>
+    </message>
+    <message>
+        <source>Path of the database.</source>
+        <translation>Camí de la base de dades.</translation>
+    </message>
+    <message>
+        <source>Invalid decryption time %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Target decryption time must be between %1 and %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to set database password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading the key file failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No key is set. Aborting database creation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Benchmarking key derivation function for %1ms delay.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Setting %1 rounds for key derivation function.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>error while setting database key derivation settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File %1 already exists.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to save the database: %1.</source>
+        <translation>No s&apos;ha pogut desar la base de dades: %1</translation>
+    </message>
+    <message>
+        <source>Successfully created new database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation>Recompte de paraules per a la frase de contrasenya amb llançament de daus.</translation>
     </message>
     <message>
         <source>count</source>
@@ -5885,8 +6551,38 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Could not find entry with path %1.</source>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation>Llista de paraules per al generador de llançament de daus.
+[Per defecte: EFF English]</translation>
+    </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation>Genera una frase de contrasenya nova amb llançament de daus.</translation>
+    </message>
+    <message>
+        <source>Invalid word count %1</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The word list is too small (&lt; 1000 items)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title for the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>title</source>
+        <translation>títol</translation>
+    </message>
+    <message>
+        <source>Edit an entry.</source>
+        <translation>Edita una entrada.</translation>
+    </message>
+    <message>
+        <source>Path of the entry to edit.</source>
+        <translation>Ruta de l&apos;entrada a editar.</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
@@ -5903,6 +6599,18 @@ Available commands:
     <message>
         <source>Successfully edited entry %1.</source>
         <translation>L&apos;entrada %1 s&apos;ha editat correctament.</translation>
+    </message>
+    <message>
+        <source>Perform advanced analysis on the password.</source>
+        <translation>Fes una anàlisi avançada de la contrasenya.</translation>
+    </message>
+    <message>
+        <source>Password for which to estimate the entropy.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Estimate the entropy of a password.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Length %1</source>
@@ -5993,7 +6701,7 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Type: Unknown%1</source>
+        <source>Type: Unknown (%1)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6005,12 +6713,32 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to load key file %1: %2</source>
+        <source>Exit interactive mode.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Exports the content of a database to standard output in the specified format.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to export database to XML: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsupported format %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Length of the generated password</source>
         <translation>Longitud de la contrasenya generada</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use lowercase characters</source>
@@ -6019,6 +6747,10 @@ Available commands:
     <message>
         <source>Use uppercase characters</source>
         <translation>Usa caràcters en majúscules</translation>
+    </message>
+    <message>
+        <source>Use numbers</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use special characters</source>
@@ -6037,6 +6769,10 @@ Available commands:
         <translation>caràcters</translation>
     </message>
     <message>
+        <source>Use custom character set</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Exclude similar looking characters</source>
         <translation>Exclou caràcters d&apos;aspecte similar</translation>
     </message>
@@ -6045,331 +6781,15 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Recursively list the elements of the group.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot find group %1.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Error reading merge file:
-%1</source>
-        <translation>Error en la lectura del fitxer de fusió:
-%1</translation>
-    </message>
-    <message>
-        <source>Unable to save database to file : %1</source>
-        <translation>No s&apos;ha pogut desar la base de dades al fitxer: %1</translation>
-    </message>
-    <message>
-        <source>Unable to save database to file: %1</source>
-        <translation>No s&apos;ha pogut desar la base de dades al fitxer: %1</translation>
-    </message>
-    <message>
-        <source>Successfully recycled entry %1.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Successfully deleted entry %1.</source>
-        <translation>L&apos;entrada %1 s&apos;ha suprimit correctament.</translation>
-    </message>
-    <message>
-        <source>Show the entry&apos;s current TOTP.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ERROR: unknown attribute %1.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No program defined for clipboard manipulation</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>file empty</source>
-        <translation>fitxer buit</translation>
-    </message>
-    <message>
-        <source>%1: (row, col) %2,%3</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3,1)</translation>
-    </message>
-    <message>
-        <source>Invalid Settings</source>
-        <comment>TOTP</comment>
-        <translation>La configuració no és vàlida</translation>
-    </message>
-    <message>
-        <source>Invalid Key</source>
-        <comment>TOTP</comment>
-        <translation>Clau no vàlida</translation>
-    </message>
-    <message>
-        <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No groups found</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Create a new database.</source>
-        <translation>Crea una nova base de dades.</translation>
-    </message>
-    <message>
-        <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to save the database: %1.</source>
-        <translation>No s&apos;ha pogut desar la base de dades: %1</translation>
-    </message>
-    <message>
-        <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Creating KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Loading KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Path of the entry to remove.</source>
-        <translation>Ruta de l&apos;entrada a eliminar.</translation>
-    </message>
-    <message>
-        <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>El fitxer de bloqueig d&apos;instància única no és vàlid. Execute una instància nova.</translation>
-    </message>
-    <message>
-        <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>No s&apos;ha pogut crear l&apos;arxiu de bloqueig. Inhabilitat el mode de instància única.</translation>
-    </message>
-    <message>
-        <source>KeePassXC - cross-platform password manager</source>
-        <translation>KeePassXC - gestor de contrasenyes multi-plataforma</translation>
-    </message>
-    <message>
-        <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>Noms de les bases de dades de contrasenya per a obrir (*.kdbx)</translation>
-    </message>
-    <message>
-        <source>path to a custom config file</source>
-        <translation>camí cap a un fitxer personalitzat de configuració</translation>
-    </message>
-    <message>
-        <source>key file of the database</source>
-        <translation>Arxiu clau de la base de dades</translation>
-    </message>
-    <message>
-        <source>read password of the database from stdin</source>
-        <translation>llegiu la contrasenya de la base de dades des de l&apos;entrada estàndard (stdin)</translation>
-    </message>
-    <message>
-        <source>Another instance of KeePassXC is already running.</source>
-        <translation>Ja s&apos;està executant una altra instància de KeePassXC.</translation>
-    </message>
-    <message>
-        <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Error mentre es provava les funcions criptogràfiques.</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Error</source>
-        <translation>KeePassXC - Error</translation>
-    </message>
-    <message>
-        <source>Database password: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot create new group</source>
-        <translation>No es pot crear un grup nou</translation>
-    </message>
-    <message>
-        <source>Deactivate password key for the database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Displays debugging information.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Deactivate password key for the database to merge from.</source>
-        <translation>Desactiva la clau per la base de dades que volem fusionar.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Revision: %1</source>
-        <translation>Revisió: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distribució: %1</translation>
-    </message>
-    <message>
-        <source>Debugging mode is disabled.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Debugging mode is enabled.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Sistema operatiu: %1
-Arquitectura  de la CPU: %2
-Nucli: %3 %4</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Compleció automàtica</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Extensions habilitades:</translation>
-    </message>
-    <message>
-        <source>Cryptographic libraries:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Adds a new group to a database.</source>
-        <translation>Afegeix un grup nou a una base de dades.</translation>
-    </message>
-    <message>
-        <source>Path of the group to add.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Group %1 already exists!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Group %1 not found.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Successfully added group %1.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>FILENAME</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Analyze passwords for weaknesses and problems.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to open HIBP file %1: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Close the currently opened database.</source>
-        <translation>Tanca la base de dades oberta.</translation>
-    </message>
-    <message>
-        <source>Display this help.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>slot</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid word count %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>The word list is too small (&lt; 1000 items)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unable to export database to XML: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unsupported format %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use numbers</source>
+        <source>Generate a new random password.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid password length %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid password generator after applying all options</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6393,16 +6813,167 @@ Nucli: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Unable to import XML database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Successfully imported database.</source>
         <translation>La base de dades s&apos;ha importat correctament.</translation>
+    </message>
+    <message>
+        <source>Show a database&apos;s information.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UUID: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cipher: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KDF: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Recycle bin is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Recycle bin is not enabled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Ubicació</translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation>Desat per darrera vegada</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation>Canvis no desats</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>sí</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>no</translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation>Nombre de grups</translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation>Nombre d&apos;entrades</translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation>Nombre d&apos;entrades caducades</translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation>Contrasenyes úniques</translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation>Nombre de contrasenyes curtes</translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation>Nombre de contrasenyes febles</translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation>Longitud mitjana de les contrasenyes</translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation>%1 caràcters</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>
+
+Available commands:
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name of the command to execute.</source>
+        <translation>Nom de l&apos;ordre a executar.</translation>
+    </message>
+    <message>
+        <source>Displays debugging information.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid command %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Recursively list the elements of the group.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Flattens the output to single lines.</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>List database entries.</source>
+        <translation>Llista les entrades de la base de dades.</translation>
+    </message>
+    <message>
+        <source>Path of the group to list. Default is /</source>
+        <translation>Camí del grup a llistar. Per defecte és /</translation>
+    </message>
+    <message>
+        <source>Cannot find group %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use the same credentials for both database files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key file of the database to merge from.</source>
+        <translation>Fitxer clau de la base de dades amb la que es fusiona.</translation>
+    </message>
+    <message>
+        <source>Deactivate password key for the database to merge from.</source>
+        <translation>Desactiva la clau per la base de dades que volem fusionar.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
@@ -6411,6 +6982,28 @@ Nucli: %3 %4</translation>
     <message>
         <source>Yubikey slot for the second database.</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>slot</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge two databases.</source>
+        <translation>Fusiona dues bases de dades</translation>
+    </message>
+    <message>
+        <source>Path of the database to merge from.</source>
+        <translation>Camí de la base de dades de destí a fusionar.</translation>
+    </message>
+    <message>
+        <source>Error reading merge file:
+%1</source>
+        <translation>Error en la lectura del fitxer de fusió:
+%1</translation>
+    </message>
+    <message>
+        <source>Unable to save database to file : %1</source>
+        <translation>No s&apos;ha pogut desar la base de dades al fitxer: %1</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
@@ -6449,6 +7042,22 @@ Nucli: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Path of the entry to remove.</source>
+        <translation>Ruta de l&apos;entrada a eliminar.</translation>
+    </message>
+    <message>
+        <source>Unable to save database to file: %1</source>
+        <translation>No s&apos;ha pogut desar la base de dades al fitxer: %1</translation>
+    </message>
+    <message>
+        <source>Successfully recycled entry %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully deleted entry %1.</source>
+        <translation>L&apos;entrada %1 s&apos;ha suprimit correctament.</translation>
+    </message>
+    <message>
         <source>Path of the group to remove.</source>
         <translation>Ruta del grup a suprimir.</translation>
     </message>
@@ -6462,6 +7071,54 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find entries quickly.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search term.</source>
+        <translation>Terme de cerca.</translation>
+    </message>
+    <message>
+        <source>Show the entry&apos;s current TOTP.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show the attachments of the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>attribute</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show an entry&apos;s information.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name of the entry to show.</source>
+        <translation>Nom de l&apos;entrada a mostrar.</translation>
+    </message>
+    <message>
+        <source>ERROR: unknown attribute %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No attachments present.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments:</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6481,163 +7138,18 @@ Nucli: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Failed to load key file %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>WARNING: You are using an old key file format which KeePassXC may
+stop supporting in the future.
+
+Please consider generating a new key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>HIBP file, line %1: parse error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Secret Service Integration</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-        <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Invalid password generator after applying all options</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Show the protected attributes in clear text.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Browser Plugin Failure</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not save the native messaging script file for %1.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Attribute &quot;%1&quot; not found.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>slot[:serial]</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Target decryption time in MS for the database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>time</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Set the key file for the database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Set a password for the database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid decryption time %1.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Target decryption time must be between %1 and %2.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to set database password.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Setting %1 rounds for key derivation function.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>error while setting database key derivation settings.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unable to import XML database: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Show a database&apos;s information.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>UUID: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Description: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cipher: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KDF: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Recycle bin is enabled.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Recycle bin is not enabled.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid command %1.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6645,7 +7157,11 @@ Nucli: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Please touch the button on your YubiKey to continue…</source>
+        <source>Please present or touch your YubiKey to continue…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter password to encrypt database (optional): </source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6661,12 +7177,236 @@ Nucli: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>No program defined for clipboard manipulation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>All clipping programs failed. Tried %1
 </source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Creating KeyFile %1 failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading KeyFile %1 failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>HIBP file, line %1: parse error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not start okon process: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error: okon process did not finish</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to load okon processed database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Very weak password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password entropy is %1 bits</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Used in %1/%2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Password is used %1 time(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Password has expired</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password expiry was %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password expires on %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password is about to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Password expires in %1 day(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Password will expire soon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Build Type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Revision: %1</source>
+        <translation>Revisió: %1</translation>
+    </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation>Distribució: %1</translation>
+    </message>
+    <message>
+        <source>Debugging mode is disabled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Debugging mode is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Operating system: %1
+CPU architecture: %2
+Kernel: %3 %4</source>
+        <translation>Sistema operatiu: %1
+Arquitectura  de la CPU: %2
+Nucli: %3 %4</translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation>Compleció automàtica</translation>
+    </message>
+    <message>
+        <source>SSH Agent</source>
+        <translation>Agent SSH</translation>
+    </message>
+    <message>
+        <source>KeeShare</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>YubiKey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quick Unlock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Secret Service Integration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enabled extensions:</source>
+        <translation>Extensions habilitades:</translation>
+    </message>
+    <message numerus="yes">
+        <source>over %1 year(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>about %1 month(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 week(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 day(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 minute(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cryptographic libraries:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>AES (%1 rounds)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SymmetricCipher::init: Invalid cipher mode.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cipher not initialized prior to use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot process 0 length data.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>unknown executable (DBus address %1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (invalid executable path)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>NULL device</source>
+        <translation>Dispositiu nul</translation>
+    </message>
+    <message>
+        <source>error reading from device</source>
+        <translation>error de lectura del dispositiu</translation>
+    </message>
+    <message>
+        <source>file empty</source>
+        <translation>fitxer buit</translation>
+    </message>
+    <message>
+        <source>malformed string</source>
+        <translation>cadena mal formada</translation>
+    </message>
+    <message>
+        <source>missing closing quote</source>
+        <translation>falta la cometa de tancament</translation>
+    </message>
+    <message>
+        <source>%1: (row, col) %2,%3</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6680,6 +7420,66 @@ Nucli: %3 %4</translation>
     <message>
         <source>ChaCha20 256-bit</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2d (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2id (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing single-instance lock file is invalid. Launching new instance.</source>
+        <translation>El fitxer de bloqueig d&apos;instància única no és vàlid. Execute una instància nova.</translation>
+    </message>
+    <message>
+        <source>The lock file could not be created. Single-instance mode disabled.</source>
+        <translation>No s&apos;ha pogut crear l&apos;arxiu de bloqueig. Inhabilitat el mode de instància única.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Clearing the clipboard in %1 second(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Grup</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Títol</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Nom d&apos;usuari</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Contrasenya</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Icona</translation>
+    </message>
+    <message>
+        <source>Last Modified</source>
+        <translation>Darrera modificació</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>Creat</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
@@ -6696,35 +7496,56 @@ Nucli: %3 %4</translation>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>path to a custom local config file</source>
+        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to delete %n entry(s) for good?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to move %n entry(s) to the recycle bin?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Move entry(s) to recycle bin?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Replace references to entry?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>User name</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>WARNING: You are using an old key file format which KeePassXC may
-stop supporting in the future.
-
-Please consider generating a new key file.</source>
+        <source>Browser Statistics</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Argon2%1 (%2 rounds, %3 KB)</source>
+        <source>Health Check</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Argon2d (KDBX 4 – recommended)</source>
+        <source>HIBP</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Argon2id (KDBX 4)</source>
+        <source>Statistics</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation>Icona</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
@@ -6738,12 +7559,36 @@ Please consider generating a new key file.</source>
         <source>Unexpected key file data! Key file may be corrupt.</source>
         <translation type="unfinished"/>
     </message>
-    <message numerus="yes">
-        <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    <message>
+        <source>KeePassXC - cross-platform password manager</source>
+        <translation>KeePassXC - gestor de contrasenyes multi-plataforma</translation>
+    </message>
+    <message>
+        <source>filenames of the password databases to open (*.kdbx)</source>
+        <translation>Noms de les bases de dades de contrasenya per a obrir (*.kdbx)</translation>
+    </message>
+    <message>
+        <source>path to a custom config file</source>
+        <translation>camí cap a un fitxer personalitzat de configuració</translation>
+    </message>
+    <message>
+        <source>path to a custom local config file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>lock all open databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>key file of the database</source>
+        <translation>Arxiu clau de la base de dades</translation>
+    </message>
+    <message>
+        <source>read password of the database from stdin</source>
+        <translation>llegiu la contrasenya de la base de dades des de l&apos;entrada estàndard (stdin)</translation>
+    </message>
+    <message>
+        <source>allow app screen recordering and screenshots</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6752,6 +7597,44 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Database failed to lock.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Another instance of KeePassXC is already running.</source>
+        <translation>Ja s&apos;està executant una altra instància de KeePassXC.</translation>
+    </message>
+    <message>
+        <source>Fatal error while testing the cryptographic functions.</source>
+        <translation>Error mentre es provava les funcions criptogràfiques.</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Error</source>
+        <translation>KeePassXC - Error</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to prevent screenshots on a top level window!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database password: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Settings</source>
+        <comment>TOTP</comment>
+        <translation>La configuració no és vàlida</translation>
+    </message>
+    <message>
+        <source>Invalid Key</source>
+        <comment>TOTP</comment>
+        <translation>Clau no vàlida</translation>
+    </message>
+    <message>
+        <source>Failed to create Windows Hello credential.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to sign challenge using Windows Hello.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6790,7 +7673,90 @@ Please consider generating a new key file.</source>
     </message>
 </context>
 <context>
+    <name>ReportsWidgetBrowserStatistics</name>
+    <message>
+        <source>Exclude expired entries from the report</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show only entries which have URL set</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show only entries which have browser settings in custom data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Double-click entries to edit.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>List of entry URLs</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry has no URLs set</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allowed URLs</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry has no Browser Integration settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Denied URLs</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Excluded)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This entry is being excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, browser statistics is being calculated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with a URL, or none has browser extension settings saved.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Títol</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Camí</translation>
+    </message>
+    <message>
+        <source>URLs</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Exclude from reports</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ReportsWidgetHealthcheck</name>
+    <message>
+        <source>Exclude expired entries from the report</source>
+        <translation type="unfinished"/>
+    </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
         <translation type="unfinished"/>
@@ -6835,7 +7801,7 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Please wait, health data is being calculated...</source>
+        <source>Please wait, health data is being calculated…</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6859,8 +7825,12 @@ Please consider generating a new key file.</source>
         <translation>Motiu</translation>
     </message>
     <message>
-        <source>Edit Entry...</source>
-        <translation>Edita l&apos;entrada...</translation>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -6911,39 +7881,51 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>once</source>
+        <comment>Password exposure amount</comment>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>up to 10 times</source>
+        <comment>Password exposure amount</comment>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>up to 100 times</source>
+        <comment>Password exposure amount</comment>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>up to 1000 times</source>
+        <comment>Password exposure amount</comment>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>up to 10,000 times</source>
+        <comment>Password exposure amount</comment>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>up to 100,000 times</source>
+        <comment>Password exposure amount</comment>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>up to a million times</source>
+        <comment>Password exposure amount</comment>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>millions of times</source>
+        <comment>Password exposure amount</comment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Edit Entry...</source>
-        <translation>Edita l&apos;entrada...</translation>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -6965,7 +7947,7 @@ Please consider generating a new key file.</source>
         <translation>Valor</translation>
     </message>
     <message>
-        <source>Please wait, database statistics are being calculated...</source>
+        <source>Please wait, database statistics are being calculated…</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6979,6 +7961,10 @@ Please consider generating a new key file.</source>
     <message>
         <source>Location</source>
         <translation>Ubicació</translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Last saved</source>
@@ -7088,8 +8074,8 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No agent running, cannot remove identity.</source>
-        <translation>No hi ha cap agent en execució, no es pot suprimir la identitat.</translation>
+        <source>Key identity ownership conflict. Refusing to add.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
@@ -7108,8 +8094,12 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Key identity ownership conflict. Refusing to add.</source>
+        <source>Security keys are not supported by the agent or the security key provider is unavailable.</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No agent running, cannot remove identity.</source>
+        <translation>No hi ha cap agent en execució, no es pot suprimir la identitat.</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
@@ -7178,21 +8168,55 @@ Please consider generating a new key file.</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <source>Limit search to selected group</source>
-        <translation>Limitar la cerca al grup seleccionat</translation>
-    </message>
-    <message>
         <source>Search Help</source>
         <translation>Cerca l&apos;ajuda</translation>
     </message>
     <message>
-        <source>Search (%1)...</source>
+        <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>Cerca (%1)...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Case sensitive</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit search to selected group</source>
+        <translation>Limitar la cerca al grup seleccionat</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsClientModel</name>
+    <message>
+        <source>Application</source>
+        <translation>Aplicació</translation>
+    </message>
+    <message>
+        <source>PID</source>
+        <translation>PID</translation>
+    </message>
+    <message>
+        <source>DBus Address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation>Gestiona</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDatabaseModel</name>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Grup</translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation>Gestiona</translation>
     </message>
 </context>
 <context>
@@ -7210,11 +8234,39 @@ Please consider generating a new key file.</source>
         <translation>General</translation>
     </message>
     <message>
-        <source>Show notification when credentials are requested</source>
-        <translation>Mostra una notificació quan es demanen credencials</translation>
+        <source>Show notification when passwords are retrieved by clients</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm when passwords are retrieved by clients</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
+           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
+           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
+           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+          </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm when clients request entry deletion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
+           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
+           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
+           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+          </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Prompt to unlock database before searching</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -7228,14 +8280,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>These applications are currently connected:</source>
         <translation>Aquestes aplicacions estan ara connectades:</translation>
-    </message>
-    <message>
-        <source>Don&apos;t confirm when entries are deleted by clients</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; Failed to connect to DBus. Please check your DBus setup.</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
@@ -7253,275 +8297,66 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow export</source>
-        <translation>Permet l&apos;exportació</translation>
+        <source>Allow KeeShare imports</source>
+        <translation>Permet les importacions de KeeShare</translation>
     </message>
     <message>
         <source>Allow import</source>
         <translation>Permet la importació</translation>
     </message>
     <message>
-        <source>Own certificate</source>
-        <translation>Certificat propi</translation>
-    </message>
-    <message>
-        <source>Fingerprint:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Certificate:</source>
-        <translation>Certificat:</translation>
-    </message>
-    <message>
-        <source>Signer</source>
-        <translation>Signant</translation>
-    </message>
-    <message>
-        <source>Key:</source>
-        <translation>Clau:</translation>
-    </message>
-    <message>
-        <source>Generate</source>
-        <translation>Genera</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation>Importa</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation>Exporta</translation>
-    </message>
-    <message>
-        <source>Imported certificates</source>
-        <translation>Certificats importats</translation>
-    </message>
-    <message>
-        <source>Trust</source>
-        <translation>Confia</translation>
-    </message>
-    <message>
-        <source>Ask</source>
-        <translation>Pregunta</translation>
-    </message>
-    <message>
-        <source>Untrust</source>
-        <translation>Desconfia</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Suprimiu</translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation>Camí</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>Estat</translation>
-    </message>
-    <message>
-        <source>Fingerprint</source>
-        <translation>Empremta digital</translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation>Certificat</translation>
-    </message>
-    <message>
-        <source>Trusted</source>
-        <translation>De confiança</translation>
-    </message>
-    <message>
-        <source>Untrusted</source>
-        <translation>No és de confiança</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>key.share</source>
-        <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare key file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>All files</source>
-        <translation>Tots els fitxers</translation>
-    </message>
-    <message>
-        <source>Select path</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Exporting changed certificate</source>
-        <translation>Exportant el certificat modificat</translation>
-    </message>
-    <message>
-        <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation>El certificat exportat no és el mateix que el que està en ús. Voleu exportar el certificat actual?</translation>
-    </message>
-    <message>
-        <source>Signer:</source>
-        <translation>Signant:</translation>
-    </message>
-    <message>
-        <source>Allow KeeShare imports</source>
-        <translation>Permet les importacions de KeeShare</translation>
-    </message>
-    <message>
         <source>Allow KeeShare exports</source>
         <translation>Permet les exportacions de KeeShare</translation>
+    </message>
+    <message>
+        <source>Allow export</source>
+        <translation>Permet l&apos;exportació</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
         <translation>Mostra només els avisos i els errors</translation>
     </message>
     <message>
-        <source>Key</source>
-        <translation>Clau</translation>
+        <source>Own certificate</source>
+        <translation>Certificat propi</translation>
     </message>
     <message>
-        <source>Signer name field</source>
-        <translation type="unfinished"/>
+        <source>Signer:</source>
+        <translation>Signant:</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Import existing certificate</source>
+        <source>Generate</source>
+        <translation>Genera</translation>
+    </message>
+    <message>
+        <source>Fingerprint:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Export own certificate</source>
+        <source>Signer name field</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Known shares</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Trust selected certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Untrust selected certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Remove selected certificate</source>
-        <translation>Suprimeix el certificat seleccionat</translation>
+        <source>Fingerprint</source>
+        <translation>Empremta digital</translation>
     </message>
 </context>
 <context>
     <name>ShareExport</name>
     <message>
-        <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not write export container</source>
+        <source>Could not write export container.</source>
         <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
-        <source>Import from container without signature</source>
+        <source>Successful import</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Import from container with certificate</source>
-        <translation>Importa des del contenidor amb certificat</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation>Voleu confiar en %1 amb l&apos;empremta digital %2 de %3? {1?} {2?}</translation>
-    </message>
-    <message>
-        <source>Not this time</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Never</source>
-        <translation>Mai</translation>
-    </message>
-    <message>
-        <source>Always</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Just this time</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File is not readable</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Untrusted import prevented</source>
-        <translation>S&apos;ha evitat una importació que no era de confiança</translation>
-    </message>
-    <message>
-        <source>Successful signed import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Successful unsigned import</source>
-        <translation>La importació sense signar s&apos;ha realitzat amb èxit</translation>
-    </message>
-    <message>
-        <source>File does not exist</source>
-        <translation>El fitxer no existeix</translation>
     </message>
 </context>
 <context>
@@ -7539,6 +8374,14 @@ Please consider generating a new key file.</source>
         <translation>Importat de %1</translation>
     </message>
     <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Export to %1 failed (%2)</source>
         <translation>L&apos;exportació a %1 ha fallat (%2)</translation>
     </message>
@@ -7550,12 +8393,19 @@ Please consider generating a new key file.</source>
         <source>Export to %1</source>
         <translation>Exporta a %1</translation>
     </message>
+</context>
+<context>
+    <name>TagModel</name>
     <message>
-        <source>Multiple import source path to %1 in %2</source>
+        <source>All</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Conflicting export target path %1 in %2</source>
+        <source>Expired</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Weak Passwords</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7564,10 +8414,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>Timed Password</source>
         <translation>Contrasenya per temps</translation>
-    </message>
-    <message>
-        <source>000000</source>
-        <translation>000000</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -7605,35 +8451,6 @@ Please consider generating a new key file.</source>
         <translation>Organització TOTP</translation>
     </message>
     <message>
-        <source>Default RFC 6238 token settings</source>
-        <translation>Configuració per defecte amb token RFC 6238</translation>
-    </message>
-    <message>
-        <source>Steam token settings</source>
-        <translation>Configuració amb token d&apos;Steam</translation>
-    </message>
-    <message>
-        <source>Use custom settings</source>
-        <translation>Utilitza la configuració personalitzada</translation>
-    </message>
-    <message>
-        <source>Custom Settings</source>
-        <translation>Paràmetres a mida</translation>
-    </message>
-    <message>
-        <source>Time step:</source>
-        <translation>Intervals:</translation>
-    </message>
-    <message>
-        <source> sec</source>
-        <comment>Seconds</comment>
-        <translation> sec</translation>
-    </message>
-    <message>
-        <source>Code size:</source>
-        <translation>Mida del codi:</translation>
-    </message>
-    <message>
         <source>Secret Key:</source>
         <translation type="unfinished"/>
     </message>
@@ -7646,12 +8463,41 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Default settings (RFC 6238)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Steam® settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom settings:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Settings</source>
+        <translation>Paràmetres a mida</translation>
+    </message>
+    <message>
         <source>Algorithm:</source>
         <translation>Algoritme:</translation>
     </message>
     <message>
+        <source>Time step:</source>
+        <translation>Intervals:</translation>
+    </message>
+    <message>
         <source>Time step field</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> sec</source>
+        <comment>Seconds</comment>
+        <translation> sec</translation>
+    </message>
+    <message>
+        <source>Code size:</source>
+        <translation>Mida del codi:</translation>
     </message>
     <message>
         <source> digits</source>
@@ -7689,47 +8535,27 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>Comprovant si hi ha actualitzacions</translation>
     </message>
     <message>
-        <source>Checking for updates...</source>
-        <translation>Comprovant si hi ha actualitzacions...</translation>
+        <source>Checking for updates…</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Close</source>
         <translation>Tanca</translation>
     </message>
     <message>
-        <source>Update Error!</source>
-        <translation>Error d&apos;actualització!</translation>
-    </message>
-    <message>
-        <source>An error occurred in retrieving update information.</source>
-        <translation>S&apos;ha produït un error en recuperar la informació d&apos;actualització.</translation>
-    </message>
-    <message>
-        <source>Please try again later.</source>
-        <translation>Si us plau, proveu-ho altre cop més tard.</translation>
-    </message>
-    <message>
         <source>Software Update</source>
         <translation>Actualització de programari</translation>
     </message>
     <message>
-        <source>A new version of KeePassXC is available!</source>
-        <translation>Hi ha disponible una nova versió de KeePassXC!</translation>
-    </message>
-    <message>
-        <source>KeePassXC %1 is now available — you have %2.</source>
+        <source>An error occurred when trying to retrieve update information, please try again later.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Download it at keepassxc.org</source>
-        <translation>Descarregueu-ho a keepassxc.org</translation>
+        <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>You&apos;re up-to-date!</source>
-        <translation>Esteu actualitzats!</translation>
-    </message>
-    <message>
-        <source>KeePassXC %1 is currently the newest version available</source>
+        <source>You have the latest version of KeePassXC</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7752,6 +8578,10 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>Importa de KeePass 1</translation>
     </message>
     <message>
+        <source>Import from 1Password</source>
+        <translation>Importa des de 1Password</translation>
+    </message>
+    <message>
         <source>Import from CSV</source>
         <translation>Importa d&apos;un fitxer CSV</translation>
     </message>
@@ -7760,42 +8590,182 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>Bases de dades obertes recentment</translation>
     </message>
     <message>
+        <source>Open a recent database</source>
+        <translation>Obre una base de dades recent</translation>
+    </message>
+    <message>
         <source>Welcome to KeePassXC %1</source>
         <translation>Benvinguts/des al KeePassXC %1</translation>
     </message>
+</context>
+<context>
+    <name>WinUtils</name>
     <message>
-        <source>Import from 1Password</source>
-        <translation>Importa des de 1Password</translation>
+        <source>Invalid key code</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Open a recent database</source>
-        <translation>Obre una base de dades recent</translation>
+        <source>Global shortcut already registered to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not register global shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>WindowsHello</name>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>%1 [%2] Configured Slot - %3</source>
+        <source>%1 No interface, slot %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>%1 [%2] Challenge Response - Slot %3 - %4</source>
+        <source>General: </source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Press</source>
-        <translation>Prem</translation>
+        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>YubiKeyEditWidget</name>
+    <message>
+        <source>Refresh hardware tokens</source>
+        <translation>Refresca els testimonis de maquinari</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation>Passiu</translation>
+        <source>Refresh</source>
+        <translation>Actualitza</translation>
     </message>
+    <message>
+        <source>Hardware key slot selection</source>
+        <translation>Selecció de la ranura de la motxilla</translation>
+    </message>
+    <message>
+        <source>Could not find any hardware keys!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Selected hardware key slot does not support challenge-response!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Challenge-Response</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge-Response set, click to change or remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Detecting hardware keys…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No hardware keys detected</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>YubiKeyInterface</name>
     <message>
         <source>%1 Invalid slot specified - %2</source>
         <translation type="unfinished"/>
     </message>
+</context>
+<context>
+    <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>The YubiKey interface has not been initialized.</source>
+        <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The YubiKey PCSC interface has not been initialized.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key is currently in use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key was not found or is not configured.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>YubiKeyInterfaceUSB</name>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>(USB) %1 [%2] Configured Slot - %3</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>USB Challenge-Response Key interaction request</comment>
+        <translation>Prem</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>USB Challenge-Response Key no interaction required</comment>
+        <translation>Passiu</translation>
+    </message>
+    <message>
+        <source>The YubiKey USB interface has not been initialized.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -7811,50 +8781,11 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>A USB error ocurred when accessing the hardware key: %1</source>
+        <source>A USB error occurred when accessing the hardware key: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>YubiKeyEditWidget</name>
-    <message>
-        <source>Refresh</source>
-        <translation>Actualitza</translation>
-    </message>
-    <message>
-        <source>YubiKey Challenge-Response</source>
-        <translation>Comprovació-resposta YubiKey</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The YubiKey requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Si teniu una &lt;a href=&quot;https://www.yubico.com/&quot;&gt;Yubikey&lt;/a&gt;, la podeu usar com a seguretat addicional.&lt;/p&gt;&lt;p&gt;La YubiKey necessita que una de les seves ranures es programi com a &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt; comprovació-resposta HMAC-SHA1&lt;/a&gt;.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>Refresca els testimonis de maquinari</translation>
-    </message>
-    <message>
-        <source>Hardware key slot selection</source>
-        <translation>Selecció de la ranura de la motxilla</translation>
-    </message>
-    <message>
-        <source>Could not find any hardware keys!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Detecting hardware keys…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No hardware keys detected</source>
         <translation type="unfinished"/>
     </message>
 </context>
