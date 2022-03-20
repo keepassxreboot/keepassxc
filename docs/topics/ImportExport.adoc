@@ -21,10 +21,10 @@ To open the CSV file, perform the following steps:
 
 3. Navigate to the location of the your CSV file on your computer and open the file. The new database wizard will appear. Follow the steps of creating a new database in Chapter 1.
 
-4. After saving your new database file, the CSV import wizard will appear:
+4. After saving your new database file, the CSV import wizard will appear. On this dialog you can choose the various options for properly importing the data. You may need to select the _First line has field names_ checkbox before starting. Analyze the output in the preview at the bottom to determine the correct import settings.
 +
 .CSV Import Wizard
-image::csv_import.png[,80%]
+image::csv_import.png[]
 
 Your CSV file gets imported to KeePassXC and the data is converted to the KeePassXC format for further usage and maintenance. The new database file is saved on to your computer with the default `.kdbx` extension.
 
@@ -55,9 +55,9 @@ To import a KeePass 1 database file in KeePassXC, perform the following steps:
 6. The data from the `.kdb` file gets imported and converted to the new format, which is compatible with KeePassXC. You can now start using the new database file (`.kdbx`) in KeePassXC.
 
 == Exporting Databases
-KeePassXC supports multiple ways to export your database for transfer to another program or to print out and archive. To export your database into the KDB XML format, you must use the KeePassXC Command Line Interface program: `keepassxc-cli export <database.kdbx>`.
+KeePassXC supports multiple ways to export your database for transfer to another program or to print out and archive. To export your database into the KDB XML format, you must use the KeePassXC CLI: `keepassxc-cli export <database.kdbx>`.
 
-WARNING: Exporting your database will result in all of your passwords and sensitive information being stored unencrypted. We do not recommend saving your exported database for long periods of time as that can cause compromise.
+WARNING: Exporting your database will result in all of your passwords and sensitive information being stored in an unencrypted format. We do not recommend saving your exported database for long periods of time as that can cause a compromise of sensitive information.
 
 .Database export menu
 image::export_database.png[,80%]

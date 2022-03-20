@@ -11,7 +11,7 @@ To use sharing, you need to enable it for the application.
 
 1. Go to _Tools_ -> _Settings_. Select the KeeShare category on the left sidebar *(1)*.
 2. Check _Allow import_ if you want to import shared credentials. Check _Allow export_ if you want to share credentials. *(2)*
-3. (Optional) Click _Generate_ *(3)* to create your own certificate or _Import_ to select an existing one. The certificate allows you to sign shared databases. This ensures the integrity of the share and prevent import of untrusted information.
+3. (Optional) Click _Generate_ *(3)* to create your own signing certificate. If you are using signed shares then your signing certificate will be used to generate the signature. *_This feature is deprecated and will be removed in a future version._*
 
 .KeeShare Application Settings
 image::keeshare_application_settings.png[]
