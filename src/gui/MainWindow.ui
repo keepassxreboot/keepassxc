@@ -216,7 +216,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1072,10 +1072,10 @@
   </action>
   <action name="actionEntryRestore">
    <property name="text">
-    <string>Restore Entry(s)</string>
+    <string notr="true" extracomment="Translatable string with plural form set in CPP file">Restore Entry(s)</string>
    </property>
    <property name="toolTip">
-    <string>Restore Entry(s)</string>
+    <string notr="true" extracomment="Translatable string with plural form set in CPP file">Restore Entry(s)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+R</string>

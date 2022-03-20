@@ -58,7 +58,7 @@
          <item>
           <widget class="QLabel" name="decryptionTimeValueLabel">
            <property name="text">
-            <string>?? s</string>
+            <string notr="true">?? s</string>
            </property>
           </widget>
          </item>
@@ -120,7 +120,7 @@
             <item>
              <widget class="QLabel" name="minTimeLabel">
               <property name="text">
-               <string>?? ms</string>
+               <string notr="true">?? ms</string>
               </property>
              </widget>
             </item>
@@ -140,7 +140,7 @@
             <item>
              <widget class="QLabel" name="maxTimeLabel">
               <property name="text">
-               <string>? s</string>
+               <string notr="true">? s</string>
               </property>
              </widget>
             </item>

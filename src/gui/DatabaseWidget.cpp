@@ -1138,9 +1138,10 @@ void DatabaseWidget::loadDatabase(bool accepted)
             if (!expiredEntries.isEmpty()) {
                 m_entryView->displaySearch(expiredEntries);
                 m_entryView->setFirstEntryActive();
-                m_searchingLabel->setText(expirationOffset == 0
-                                              ? tr("Expired entries")
-                                              : tr("Entries expiring within %1 days").arg(expirationOffset));
+                m_searchingLabel->setText(
+                    expirationOffset == 0
+                        ? tr("Expired entries")
+                        : tr("Entries expiring within %1 day(s)", "", expirationOffset).arg(expirationOffset));
                 m_searchingLabel->setVisible(true);
             }
         }

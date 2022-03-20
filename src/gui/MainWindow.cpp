@@ -817,6 +817,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryRestore->setVisible(entriesSelected && recycleBinSelected);
             m_ui->actionEntryRestore->setEnabled(entriesSelected && recycleBinSelected);
             m_ui->actionEntryRestore->setText(tr("Restore Entry(s)", "", dbWidget->numberOfSelectedEntries()));
+            m_ui->actionEntryRestore->setToolTip(tr("Restore Entry(s)", "", dbWidget->numberOfSelectedEntries()));
             m_ui->actionEntryMoveUp->setVisible(!sorted);
             m_ui->actionEntryMoveDown->setVisible(!sorted);
             m_ui->actionEntryMoveUp->setEnabled(singleEntrySelected && !sorted && entryIndex > 0);

@@ -515,7 +515,7 @@
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="placeholderText">
-               <string>~/.config/Mozilla/native-messaging-hosts/</string>
+               <string notr="true">~/.config/mozilla/native-messaging-hosts/</string>
               </property>
              </widget>
             </item>
