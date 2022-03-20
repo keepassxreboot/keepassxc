@@ -17,7 +17,7 @@ This section contains full details on advanced features available in KeePassXC.
 |{URL}           |URL
 |{NOTES}         |Notes
 |{TOTP}          |Current TOTP value (if configured)
-|{S:<ATTRIBUTE_NAME>}   |Value for the given attribute (case sensitive)
+|{S:&lt;ATTRIBUTE_NAME&gt;}   |Value for the given attribute (case sensitive)
 |{URL:RMVSCM}	        |URL without scheme (e.g., https)
 |{URL:WITHOUTSCHEME}	|URL without scheme
 |{URL:SCM}	     |URL Scheme
@@ -49,9 +49,9 @@ This section contains full details on advanced features available in KeePassXC.
 
 === Entry Cross-Reference
 A reference to another entry's field is possible using the short-hand syntax:
-`{REF:<FIELD>@<SEARCH_IN>:<SEARCH_TEXT>}`
+`{REF:&lt;FIELD&gt;@&lt;SEARCH_IN&gt;:&lt;SEARCH_TEXT&gt;}`
 
-`<FIELD>` and `<SEARCH_IN>` can be one of following:
+`&lt;FIELD&gt;` and `&lt;SEARCH_IN&gt;` can be one of following:
 
 * T - Title
 * U - Username
@@ -77,7 +77,7 @@ Examples: +
 |{UP}, {DOWN}, {LEFT}, {RIGHT}  |Press the corresponding arrow key
 |{F1}, {F2}, ..., {F16}         |Press F1, F2, etc.
 |{LEFTBRACE}, {RIGHTBRACE}      |Press `{` or `}`, respectively
-|{<KEY> X}  |Repeat <KEY> X times (e.g., {SPACE 5} inserts five spaces)
+|{&lt;KEY&gt; X}  |Repeat &lt;KEY&gt; X times (e.g., {SPACE 5} inserts five spaces)
 |{DELAY=X}     |Set delay between key presses to X milliseconds
 |{DELAY X}     |Pause typing for X milliseconds
 |{CLEARFIELD}  |Clear the input field
@@ -86,9 +86,9 @@ Examples: +
 
 *Text Conversions:*
 
-*{T-CONV:/<PLACEHOLDER>/<METHOD>/}* +
+`{T-CONV:/&lt;PLACEHOLDER&gt;/&lt;METHOD&gt;/}` +
 Convert resolved placeholder (e.g., {USERNAME}, {PASSWORD}, etc.) using the following methods: UPPER, LOWER, BASE64, HEX, URI, URI-DEC.
 
-*{T-REPLACE-RX:/<PLACEHOLDER>/<SEARCH>/<REPLACE>/}* +
+`{T-REPLACE-RX:/&lt;PLACEHOLDER&gt;/&lt;SEARCH&gt;/&lt;REPLACE&gt;/}` +
 Use regular expressions to find and replace data from a resolved placeholder. Refer to match groups using $1, $2, etc.
 // end::content[]

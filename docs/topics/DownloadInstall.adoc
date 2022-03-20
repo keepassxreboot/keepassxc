@@ -43,6 +43,14 @@ image::install_wizard_1.png[,80%]
 .Install wizard (cont)
 image::install_wizard_2.png[,80%]
 
+The following options can be set when running the MSI in an unattended installation:
+
+* *LAUNCHAPPONEXIT* - Launch KeePassXC after install (default ON)
+* *AUTOSTARTPROGRAM* - KeePassXC will auto-start on login (default ON)
+* *INSTALLDESKTOPSHORTCUT* - A desktop icon will be installed (default OFF)
+
+Example: `msiexec.exe /q /i KeePassXC-Y.Y.Y-WinZZ.msi AUTOSTARTPROGRAM=0`
+
 === Linux
 You can easily download the KeePassXC installer for Linux. When you search for KeePassXC, multiple options are displayed as shown in the following screen:
 

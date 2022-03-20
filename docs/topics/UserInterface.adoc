@@ -12,11 +12,13 @@ image::main_interface.png[]
 
 *(A) Groups* - Organize your entries into discrete groups to bring order to all of your sensitive information. Groups can be nested under each other to create a hierarchy. Settings from parent groups get applied to their children. You can hide this panel on the View menu.
 
-*(B) Entries* - Entries contain all the information for each website or application you are storing in KeePassXC. This view shows all the entries in the selected group. Each column can be resized, reordered, and shown or hidden based on your preference. Right click the header row to see all available options.
+*(B) Tags* - Dynamic groups of entries that can be quickly displayed with one click. Any number of custom tags can be added when editing an entry. This panel also includes useful pre-defined searches, such as finding expired and weak passwords.
 
-*\(C) Preview* - Shows a preview of the selected group or entry. You can temporarily hide this preview using the close button on the right hand side or completely disabled in the application settings.
+*\(C) Entries* - Entries contain all the information you want to store for a website or application you are storing in KeePassXC. This view shows all the entries in the selected group. Each column can be resized, reordered, and shown or hidden based on your preference. Right-click the header row to see all available options.
 
-TIP: Double clicking on the text in the entries list copies that field to the clipboard. Double clicking the entry title will open the entry for editing.
+*(D) Preview* - Shows a preview of the selected group or entry. You can temporarily hide this preview using the close button on the right hand side or completely disabled in the application settings.
+
+TIP: You can enable double-click copying of entry username and password in the Application Security Settings. This is turned off by default starting with version 2.7.0.
 
 === Toolbar
 The toolbar provides a quick way to perform common tasks with your database. Some entries in the toolbar are dynamically disabled based on the information contained in the selected entry. Every common action in KeePassXC can be controlled with a keyboard shortcut as well.
@@ -24,12 +26,11 @@ The toolbar provides a quick way to perform common tasks with your database. Som
 .Toolbar overview
 image::toolbar.png[]
 
-*(A) Database* - Open Database, Save Database +
-*(B) Entries* - Create Entry, Edit Selected Entry, Delete Selected Entry +
+*(A) Database* - Open Database, Save Database, Lock Database +
+*(B) Entries* - Create Entry, Edit Entry, Delete Selected Entries +
 *\(C) Entry Data* - Copy Username, Copy Password, Copy URL, Perform Auto-Type +
-*(D) Lock All Databases* +
-*(E) Tools* - Password Generator, Application Settings +
-*(F) Search*
+*(D) Tools* - Password Generator, Application Settings +
+*(E) Search*
 
 === Application Settings
 Users can configure KeePassXC to their personal tastes with a wide variety of general and security settings that apply to the whole application. These settings are accessible from _Tools_ -> _Settings_ or the cog wheel icon from the toolbar. Settings include: startup options, file management, entry management, user interface, language, security timeouts, and convenience.
@@ -46,13 +47,8 @@ For users with smaller screens or those who desire seeing more entries at once, 
 .Compact mode comparison
 image::compact_mode_comparison.png[]
 
-==== Copy entry Columns on Double Click
-KeePassXC offers the possibility of copying certain entry columns, such as username and password, into your clipboard on double click, for a limited period of time.
-
-This feature can be enabled by checking the box "Enable double click to copy some entry columns" in the security settings:
-
-.Enable copying on double click
-image::enable_copy_dc.png[]
+=== Screenshot Security
+By default, KeePassXC prevents recordings and screenshots of the application window on Windows and macOS. This prevents inadvertent spillage of information during meetings and disallows other applications to capture the window contents. If you would like to enable screen capture, you must start the application with the `--allow-screencapture` command line flag.
 
 === Keyboard Shortcuts
 include::KeyboardShortcuts.adoc[tag=content, leveloffset=+1]
@@ -71,9 +67,11 @@ Options:
   -v, --version                Displays version information.
   --config <config>            path to a custom config file
   --localconfig <localconfig>  path to a custom local config file
+  --lock                       lock all open databases
   --keyfile <keyfile>          key file of the database
   --pw-stdin                   read password of the database from stdin
   --debug-info                 Displays debugging information.
+  --allow-screencapture        Allow screen recording and screenshots
 
 Arguments:
   filename(s)                  filenames of the password databases to open (*.kdbx)
