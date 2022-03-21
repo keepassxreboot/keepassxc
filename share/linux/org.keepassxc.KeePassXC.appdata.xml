@@ -50,7 +50,7 @@
     </screenshots>
 
     <releases>
-        <release version="2.7.0" date="2022-02-26">
+        <release version="2.7.0" date="2022-03-21">
             <description>
                 <ul>
                     <li>Implement KDBX 4.1 [#7114]</li>
@@ -85,7 +85,7 @@
                     <li>Browser: Add search 'by-path' url to API [#5535]</li>
                     <li>Browser: search for entries by UUID to API [#4763]</li>
                     <li>Browser: Support auto-download of favicon on entry addition [#7179]</li>
-                    <li>Auto-Type: Major improvements to Auto-Type [#5864][#7463][#7435][#7391][#7129][#6400][#6364][#6361][#5283]</li>
+                    <li>Auto-Type: Major improvements to Auto-Type [#5864][#7463][#7435][#7391][#7129][#6400][#6364][#6361][#5283][#7507]</li>
                     <li>Auto-Type: Fix typing to virtual machines on Windows [#7366]</li>
                     <li>Auto-Type: Re-implement X11 keysym emulation [#7098]</li>
                     <li>Auto-Type: Support multiple Xkb layouts [#6247]</li>
@@ -103,6 +103,7 @@
                     <li>Improve macOS and Windows platform integration [#5851]</li>
                     <li>Lock only the current database by default [#6652]</li>
                     <li>Show expired entries on DB unlock [#7290]</li>
+                    <li>Update D-Bus adaptor interface class name to match definition file [#7523]</li>
                     <li>Add countdown progress bar to TOTP preview [#6930]</li>
                     <li>Enter favicon url directly on icons page [#6614]</li>
                     <li>Set C++17 as standard in the build system [#7180]</li>
@@ -135,6 +136,8 @@
                     <li>Fix adaptive icon painting [#5989][#6033]</li>
                     <li>Fix favicon download from URL with non-standard port [#5509]</li>
                     <li>Ignore recycle bin on KeePassHTTP migration [#5481]</li>
+                    <li>Fix keepassxc-cr-recovery utility [#7521]</li>
+                    <li>Fix Auto-Type not working when audio recording indicator is active on macOS 12.2+ [#7526]</li>
                 </ul>
             </description>
         </release>

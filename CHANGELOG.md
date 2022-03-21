@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.7.0 (2022-03-20)
+## 2.7.0 (2022-03-21)
 
 ### Major Additions
 - Implement KDBX 4.1 [#7114]
@@ -35,7 +35,7 @@
 - Browser: Add search 'by-path' url to API [#5535]
 - Browser: search for entries by UUID to API [#4763]
 - Browser: Support auto-download of favicon on entry addition [#7179]
-- Auto-Type: Major improvements to Auto-Type [#5864][#7463][#7435][#7391][#7129][#6400][#6364][#6361][#5283]
+- Auto-Type: Major improvements to Auto-Type [#5864][#7463][#7435][#7391][#7129][#6400][#6364][#6361][#5283][#7507]
 - Auto-Type: Fix typing to virtual machines on Windows [#7366]
 - Auto-Type: Re-implement X11 keysym emulation [#7098]
 - Auto-Type: Support multiple Xkb layouts [#6247]
@@ -55,6 +55,7 @@
 - Improve macOS and Windows platform integration [#5851]
 - Lock only the current database by default [#6652]
 - Show expired entries on DB unlock [#7290]
+- Update D-Bus adaptor interface class name to match definition file [#7523]
 
 ### Other Changes and Fixes
 - Add countdown progress bar to TOTP preview [#6930]
@@ -89,6 +90,8 @@
 - Fix adaptive icon painting [#5989][#6033]
 - Fix favicon download from URL with non-standard port [#5509]
 - Ignore recycle bin on KeePassHTTP migration [#5481]
+- Fix keepassxc-cr-recovery utility [#7521]
+- Fix Auto-Type not working when audio recording indicator is active on macOS 12.2+ [#7526]
 
 ## 2.6.6 (2021-06-12)
 
