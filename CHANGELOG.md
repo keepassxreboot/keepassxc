@@ -1,6 +1,6 @@
 # Changelog
 
-## Release 2.7.0 (2022-02-26)
+## 2.7.0 (2022-03-20)
 
 ### Major Additions
 - Implement KDBX 4.1 [#7114]

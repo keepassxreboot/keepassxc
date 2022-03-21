@@ -39,7 +39,6 @@ GPG_KEY="CFB4C2166397D0D2"
 GPG_GIT_KEY=""
 OUTPUT_DIR="release"
 SOURCE_BRANCH=""
-TARGET_BRANCH="master"
 TAG_NAME=""
 DOCKER_IMAGE=""
 DOCKER_CONTAINER_NAME="keepassxc-build-container"
@@ -98,7 +97,6 @@ Options:
                        leave empty to let Git choose your default key
                        (default: '${GPG_GIT_KEY}')
   -r, --release-branch Source release branch to merge from (default: 'release/VERSION')
-      --target-branch  Target branch to merge to (default: '${TARGET_BRANCH}')
   -t, --tag-name       Override release tag name (defaults to version number)
   -h, --help           Show this help
 EOF
@@ -279,7 +277,7 @@ checkGitRepository() {
 }
 
 checkReleaseDoesNotExist() {
-    if ! git tag | grep -q "^$TAG_NAME$"; then
+    if [ $(git tag -l $TAG_NAME) ]; then
         exitError "Release '$RELEASE_NAME' (tag: '$TAG_NAME') already exists!"
     fi
 }
@@ -293,12 +291,6 @@ checkWorkingTreeClean() {
 checkSourceBranchExists() {
     if ! git rev-parse "$SOURCE_BRANCH" > /dev/null 2>&1; then
         exitError "Source branch '$SOURCE_BRANCH' does not exist!"
-    fi
-}
-
-checkTargetBranchExists() {
-    if ! git rev-parse "$TARGET_BRANCH" > /dev/null 2>&1; then
-        exitError "Target branch '$TARGET_BRANCH' does not exist!"
     fi
 }
 
@@ -326,7 +318,7 @@ checkChangeLog() {
         exitError "No CHANGELOG file found!"
     fi
 
-    if ! grep -qzo "## ${RELEASE_NAME} \([0-9]{4}-[0-9]{2}-[0-9]{2}\)\n" CHANGELOG.md; then
+    if ! grep -qEzo "## ${RELEASE_NAME} \([0-9]{4}-[0-9]{2}-[0-9]{2}\)" CHANGELOG.md; then
         exitError "'CHANGELOG.md' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
@@ -338,17 +330,6 @@ checkAppStreamInfo() {
 
     if ! grep -qEzo "<release version=\"${RELEASE_NAME}\" date=\"[0-9]{4}-[0-9]{2}-[0-9]{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml; then
         exitError "'share/linux/org.keepassxc.KeePassXC.appdata.xml' has not been updated to the '${RELEASE_NAME}' release!"
-    fi
-}
-
-checkSnapcraft() {
-    if [ ! -f snap/snapcraft.yaml ]; then
-        echo "Could not find snap/snapcraft.yaml!"
-        return
-    fi
-
-    if ! $GREP -qPzo "KEEPASSXC_BUILD_TYPE=Release" snap/snapcraft.yaml; then
-        exitError "'snapcraft.yaml' is not set for a release build!"
     fi
 }
 
@@ -403,7 +384,6 @@ performChecks() {
     checkReleaseDoesNotExist
     checkWorkingTreeClean
     checkSourceBranchExists
-    checkTargetBranchExists
 
     logInfo "Checking out '${SOURCE_BRANCH}'..."
     git checkout "$SOURCE_BRANCH" > /dev/null 2>&1
@@ -413,7 +393,6 @@ performChecks() {
     checkVersionInCMake
     checkChangeLog
     checkAppStreamInfo
-    checkSnapcraft
 
     logInfo "\e[1m\e[32mAll checks passed!\e[0m"
 }
@@ -499,10 +478,6 @@ merge() {
                 SOURCE_BRANCH="$2"
                 shift ;;
 
-            --target-branch)
-                TARGET_BRANCH="$2"
-                shift ;;
-
             -t|--tag-name)
                 TAG_NAME="$2"
                 shift ;;
@@ -540,22 +515,26 @@ merge() {
         fi
     fi
 
-    CHANGELOG=$(grep -Ezo "## ${RELEASE_NAME} \([0-9]{4}-[0-9]{2}-[0-9]{2}\)\n\n(.|\n)+?\n\n## " CHANGELOG.md \
+    local flags="-Pzo"
+    if [ -n "$OS_MACOS" ]; then
+        flags="-Ezo"
+    fi
+    CHANGELOG=$(grep ${flags} "## ${RELEASE_NAME} \([0-9]{4}-[0-9]{2}-[0-9]{2}\)\n\n(.|\n)+?\n\n## " CHANGELOG.md \
                 | tail -n+3 | sed '$d' | sed 's/^### //')
     COMMIT_MSG="Release ${RELEASE_NAME}"
-
-    logInfo "Checking out target branch '${TARGET_BRANCH}'..."
-    git checkout "$TARGET_BRANCH" > /dev/null 2>&1
-
-    logInfo "Merging '${SOURCE_BRANCH}' into '${TARGET_BRANCH}'..."
-
-    git merge "$SOURCE_BRANCH" --no-ff -m "$COMMIT_MSG" -m "${CHANGELOG}" "$SOURCE_BRANCH" -S"$GPG_GIT_KEY"
 
     logInfo "Creating tag '${TAG_NAME}'..."
     if [ -z  "$GPG_GIT_KEY" ]; then
         git tag -a "$TAG_NAME" -m "$COMMIT_MSG" -m "${CHANGELOG}" -s
     else
         git tag -a "$TAG_NAME" -m "$COMMIT_MSG" -m "${CHANGELOG}" -s -u "$GPG_GIT_KEY"
+    fi
+
+    logInfo "Fast-Forward latest tag..."
+    if [ -z  "$GPG_GIT_KEY" ]; then
+        git tag -sf -a "latest" -m "Latest stable release"
+    else
+        git tag -sf -u "$GPG_GIT_KEY" -a "latest" -m "Latest stable release"
     fi
 
     cleanup
