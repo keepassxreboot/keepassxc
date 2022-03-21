@@ -83,8 +83,6 @@ bool AutoTypePlatformWin::raiseWindow(WId window)
 //
 void AutoTypePlatformWin::sendChar(const QChar& ch)
 {
-    DWORD nativeFlags = KEYEVENTF_UNICODE;
-
     INPUT in[2];
     in[0].type = INPUT_KEYBOARD;
     in[0].ki.wVk = 0;
