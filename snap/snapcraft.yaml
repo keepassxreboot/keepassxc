@@ -42,6 +42,7 @@ parts:
     build-packages:
       - g++
       - libbotan-2-dev
+      - libargon2-dev
       - zlib1g-dev
       - libqrencode-dev
       - libusb-1.0-0-dev

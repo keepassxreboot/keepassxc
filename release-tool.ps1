@@ -83,8 +83,6 @@ param(
     [string] $Tag,
     [Parameter(ParameterSetName = "merge")]
     [string] $SourceBranch,
-    [Parameter(ParameterSetName = "merge")]
-    [string] $TargetBranch = "master",
     [Parameter(ParameterSetName = "build")]
     [string] $VSToolChain,
     [Parameter(ParameterSetName = "merge")]
@@ -279,8 +277,8 @@ if ($Merge) {
         $SourceBranch = & git branch --show-current
     }
 
-    if ($SourceBranch -notmatch "^release/.*|develop$") {
-        throw "Must be on develop or a release/* branch to continue merging."
+    if ($SourceBranch -notmatch "^release/.*$") {
+        throw "Must be on a release/* branch to continue."
     }
 
     # Update translation files
@@ -314,14 +312,11 @@ if ($Merge) {
         }
     }
 
-    Write-Host "Checking out target branch '$TargetBranch'..."
-    Invoke-Cmd "git" "checkout `"$TargetBranch`"" -quiet
-
-    Write-Host "Merging '$SourceBranch' into '$TargetBranch'..."
-    Invoke-Cmd "git" "merge `"$SourceBranch`" --no-ff -m `"Release $Version`" -m `"$Changelog`" `"$SourceBranch`" -S" -quiet
-
     Write-Host "Creating tag for '$Version'..."
     Invoke-Cmd "git" "tag -a `"$Version`" -m `"Release $Version`" -m `"$Changelog`" -s" -quiet
+
+    Write-Host "Moving latest tag..."
+    Invoke-Cmd "git" "tag -f -a `"latest`" -m `"Latest stable release`" -s" -quiet
 
     Write-Host "All done!"
     Write-Host "Please merge the release branch back into the develop branch now and then push your changes."

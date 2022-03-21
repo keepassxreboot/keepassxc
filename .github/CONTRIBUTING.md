@@ -91,10 +91,11 @@ Please join an existing language team or request a new one if there is none.
 
 The Branch Strategy is based on [git-flow-lite](http://nvie.com/posts/a-successful-git-branching-model/).
 
-* **master** – points to the latest public release
 * **develop** – points to the development of the next release, contains tested and reviewed code
 * **feature/**[name] – points to a branch with a new feature, one which is candidate for merge into develop (subject to rebase)
-* **hotfix/**[name] – points to a branch with a fix for a particular issue ID
+* **fix/**[name] – points to a branch with a fix for a particular issue ID
+
+Note: The **latest** tag is used to point to the most recent stable release.
 
 
 ### Git commit messages

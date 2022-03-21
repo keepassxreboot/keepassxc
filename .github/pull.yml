@@ -3,10 +3,6 @@
 # pull from: https://github.com/keepassxreboot/keepassxc
 version: "1"
 rules:
-  - base: master
-    upstream:  keepassxreboot:master
-    mergeMethod: hardreset
-
   - base: develop
     upstream:  keepassxreboot:develop
     mergeMethod: rebase
