@@ -77,10 +77,6 @@
         <translation>Parancssor</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>A fenti bejegyzésekre vonatkozó döntését a rendszer a kérő kliens futásának időtartamára megjegyzi.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Részletek</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Kijelöltek engedélyezése</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Összes megtagadása</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>A döntése megjegyzésre kerül arra az időtartamra amíg az igénylő kliens ÉS a KeePassXC is folytatja futását.</translation>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation>Összes &amp;&amp; jövőbeliek elutasítása  </translation>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation>Összes &amp;&amp; &amp;jövőbeliek engedélyezése</translation>
     </message>
 </context>
 <context>
@@ -271,12 +275,12 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>lejárt</translation>
     </message>
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation>napon belül</translation>
+        <translation> napon belül</translation>
     </message>
     <message>
         <source>will expire within </source>
@@ -710,7 +714,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Speciális keresési kifejezésekkel bármely bejegyzést megtalálhat a megnyitott adatbázisokban. Az alábbi gyorsbillentyűk hasznosak lehetnek:&lt;br/&gt;
+Ctrl+F – Átváltás az adatbázis-keresések között&lt;br/&gt;
+Ctrl+1 – Felhasználói név beírása&lt;br/&gt;
+Ctrl+2 – Jelszó beírása&lt;br/&gt;
+Ctrl+3 – TOTP beírása&lt;br/&gt;
+Ctrl+4 – Virtuális billentyűzet használata (csak Windowson)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -754,7 +763,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Virtuális billentyűzet használata</translation>
     </message>
 </context>
 <context>
@@ -1888,7 +1897,7 @@ Valóban jelszó nélkül folytatja?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (ajánlott)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2403,7 +2412,7 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 napon belül lejáró bejegyzések</numerusform><numerusform>%1 napon belül lejáró bejegyzések</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4135,7 +4144,7 @@ A DuckDuckGo weboldal ikon szolgáltatást az alkalmazás beállításai közöt
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Hiányzó adatbázis-fejlécek</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4161,11 +4170,11 @@ Ha ez újból előfordul, lehet hogy az adatbázisfájl sérült.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Érvénytelen fejlécmezőhossz: %1 mező</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Érvénytelen fejlécmezőhossz: %1 mező, várt: %2, kapott: %3</translation>
     </message>
 </context>
 <context>
@@ -4222,11 +4231,11 @@ Ha ez újból előfordul, lehet hogy az adatbázisfájl sérült.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Érvénytelen fejlécmezőhossz: %1 mező</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Érvénytelen fejlécmezőhossz: %1 mező, várt: %2, kapott: %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4246,11 +4255,11 @@ Ha ez újból előfordul, lehet hogy az adatbázisfájl sérült.</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Érvénytelen belső fejlécmezőhossz: %1 mező</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Érvénytelen belső fejlécmezőhossz: %1 mező, várt: %2, kapott: %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5338,7 +5347,7 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Bejegyzések helyreállítása</numerusform><numerusform>Bejegyzések helyreállítása</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5409,6 +5418,14 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     <message>
         <source>Disconnect this application</source>
         <translation>Alkalmazás leválasztása</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Visszaállítás</translation>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation>Minden megjegyzett döntés visszaállítása ehhez az applikációhoz</translation>
     </message>
 </context>
 <context>
@@ -7486,15 +7503,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
-        <translation>AES 256-bit</translation>
+        <translation>256 bites AES</translation>
     </message>
     <message>
         <source>Twofish 256-bit</source>
-        <translation>Twofish 256-bit</translation>
+        <translation>256 bites Twofish</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>256 bites ChaCha20</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7510,7 +7527,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>

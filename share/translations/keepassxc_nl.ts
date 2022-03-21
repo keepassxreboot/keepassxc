@@ -77,10 +77,6 @@
         <translation>Opdrachtregel</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>De beslissing voor bovenstaande invoer wordt onthouden voor de duur dat de verzoekende cliënt actief is.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Details</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Selectie toestaan</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Alles weigeren</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5410,6 +5414,14 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     <message>
         <source>Disconnect this application</source>
         <translation>Deze applicatie loskoppelen</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -77,10 +77,6 @@
         <translation>Kommandorad</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Ditt beslut för ovanstående poster kommer att kommas ihåg under den återstående tid som aktuell klient körs.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Detaljerat</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Tillåt markerade</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Neka alla</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>Ditt beslut kommer att sparas under den tid som både den begärande klienten OCH KeePassXC körs.</translation>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation>Neka alla &amp;&amp; framtida</translation>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation>Tillåt alla &amp;&amp; framtida</translation>
     </message>
 </context>
 <context>
@@ -271,7 +275,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>har upphört att gälla</translation>
     </message>
     <message>
         <source> days</source>
@@ -710,7 +714,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Du kan använda avancerad sökning för att hitta en post i dina öppna databaser. Följande genvägar är användbara:&lt;br/&gt;
+Ctrl+F - Databassökning på/av&lt;br/&gt;
+Ctrl+1 - Skriv användarnamn&lt;br/&gt;
+Ctrl+2 - Skriv lösenord&lt;br/&gt;
+Ctrl+3 - Skriv TOTP&lt;br/&gt;
+Ctrl+4 - Använd virtuellt tangentbord (Endast Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -754,7 +763,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Använd virtuellt tangentbord</translation>
     </message>
 </context>
 <context>
@@ -1891,7 +1900,7 @@ Vill du verkligen fortsätta utan lösenord?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (rekommenderas)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2406,7 +2415,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Poster som löper ut inom %1 dag</numerusform><numerusform>Poster som löper ut inom %1 dagar</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4137,7 +4146,7 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Saknade databasrubriker</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -5341,7 +5350,7 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Återställ post</numerusform><numerusform>Återställ poster</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5412,6 +5421,14 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     <message>
         <source>Disconnect this application</source>
         <translation>Koppla ifrån detta program</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Återställ</translation>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation>Återställ alla sparade beslut för detta program</translation>
     </message>
 </context>
 <context>
@@ -7497,7 +7514,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256 bitar</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7513,7 +7530,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>

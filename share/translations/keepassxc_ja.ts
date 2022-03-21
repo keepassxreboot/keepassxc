@@ -77,10 +77,6 @@
         <translation>コマンドライン</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>上記のエントリーに対する決定は、要求元のクライアントが実行されている間に記憶されます。</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>詳細</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>選択したものを許可</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>全て拒否</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5411,6 +5415,14 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     <message>
         <source>Disconnect this application</source>
         <translation>このアプリケーションを切断</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

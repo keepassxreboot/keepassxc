@@ -77,10 +77,6 @@
         <translation>Käsurida</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Otsust nende kirjete kohta mäletatakse seni, kuni taotluse esitanud klient töötab.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Üksikasjad</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Luba valituile</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Keela kõik</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5406,6 +5410,14 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     <message>
         <source>Disconnect this application</source>
         <translation>Katkesta ühendus selle rakendusega</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

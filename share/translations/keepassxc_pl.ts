@@ -77,10 +77,6 @@
         <translation>Wiersz poleceń</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Twoja decyzja dotycząca powyższych wpisów zostanie zapamiętana na czas działania klienta żądającego.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Szczegóły</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Zezwalaj wybranym</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Odmów wszystkim</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>Twoja decyzja zostanie zapamiętana na czas, gdy zarówno klient żądający, jak i KeePassXC będą uruchomione.</translation>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation>Odmów wszystkim i przyszłym</translation>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation>Zezwól wszystkim i &amp;przyszłym</translation>
     </message>
 </context>
 <context>
@@ -271,7 +275,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>wygasły</translation>
     </message>
     <message>
         <source> days</source>
@@ -1895,7 +1899,7 @@ Czy na pewno chcesz kontynuować bez hasła?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (zalecany)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2410,7 +2414,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Wpisy wygasają w ciągu %1 dnia</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4145,7 +4149,7 @@ Możesz włączyć usługę ikon witryn DuckDuckGo w sekcji bezpieczeństwa usta
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Brakuje nagłówków bazy danych</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4171,11 +4175,11 @@ Jeśli wystąpi to ponownie, plik bazy danych może być uszkodzony.</translatio
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola nagłówka: pole %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
     </message>
 </context>
 <context>
@@ -4232,11 +4236,11 @@ Jeśli wystąpi to ponownie, plik bazy danych może być uszkodzony.</translatio
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola nagłówka: pole %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4256,11 +4260,11 @@ Jeśli wystąpi to ponownie, plik bazy danych może być uszkodzony.</translatio
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola wewnętrznego nagłówka: pole %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość wewnętrznego pola nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5349,7 +5353,7 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Przywróć wpis</numerusform><numerusform>Przywróć wpisy</numerusform><numerusform>Przywróć wpisy</numerusform><numerusform>Przywróć wpisy</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5420,6 +5424,14 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     <message>
         <source>Disconnect this application</source>
         <translation>Rozłącz tę aplikację</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Zresetuj</translation>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation>Zresetuj wszystkie zapamiętane decyzje dla tej aplikacji</translation>
     </message>
 </context>
 <context>
@@ -7505,7 +7517,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bitowy</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7521,7 +7533,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>

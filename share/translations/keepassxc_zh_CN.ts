@@ -77,10 +77,6 @@
         <translation>命令行</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>您对以上条目的选择会在请求客户端运行期间被记住。</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>详情</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>允许选定</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>拒绝全部</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>在请求客户端与 KeePassXC 同时运行期间，您的选择会被记住。</translation>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation>禁止此后所有</translation>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation>允许此后所有(&amp;F)</translation>
     </message>
 </context>
 <context>
@@ -271,7 +275,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>已过期</translation>
     </message>
     <message>
         <source> days</source>
@@ -710,7 +714,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;您可以使用高级搜索，在已解锁的数据库中查找条目。以下是一些实用快捷键：&lt;br/&gt;
+Ctrl+F - 开关数据库搜索&lt;br/&gt;
+Ctrl+1 - 输入用户名&lt;br/&gt;
+Ctrl+2 - 输入密码&lt;br/&gt;
+Ctrl+3 - 输入 TOTP&lt;br/&gt;
+Ctrl+4 - 使用虚拟键盘（仅限 Windows）&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -754,7 +763,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>使用虚拟键盘</translation>
     </message>
 </context>
 <context>
@@ -1890,7 +1899,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4（推荐）</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2405,7 +2414,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>将在 ％1 天内过期的条目</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4136,7 +4145,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>缺少数据库标头</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4162,11 +4171,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>无效的标头字段长度：字段 %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>无效的标头数据长度：字段 %1，预期为 %2，实际为 %3</translation>
     </message>
 </context>
 <context>
@@ -4223,11 +4232,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>无效的标头字段长度：字段 %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>无效的标头数据长度：字段 %1，预期为 %2，实际为 %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4247,11 +4256,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>无效的内部标头字段长度：字段 %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>无效的内部标头数据长度：字段 %1，预期为 %2，实际为 %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5338,7 +5347,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>恢复条目</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5409,6 +5418,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Disconnect this application</source>
         <translation>断开此应用的连接</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation>重置此应用所有记住的选择</translation>
     </message>
 </context>
 <context>
@@ -7492,7 +7509,7 @@ CPU 架构：%2
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256 位</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7508,7 +7525,7 @@ CPU 架构：%2
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF（KDBX 3）</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>

@@ -77,10 +77,6 @@
         <translation>Linha de comandos</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>A sua escolha para as entradas acima será memorizada durante o tempo que o cliente solicitador estiver em execução.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Detalhes</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Permitir selecionados</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Recusar tudo</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>A sua escolha será memorizada enquanto o cliente e o KeePassXC estiverem em execução.</translation>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -271,7 +275,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>caducaram</translation>
     </message>
     <message>
         <source> days</source>
@@ -710,7 +714,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Pode utilizar a pesquisa avançada para localizar as entradas nas base de dados abertas. Os atalhos abaixo podem ser úteis:&lt;br/&gt;
+Ctrl+F - Alternar pesquisa nas bases de dados&lt;br/&gt;
+Ctrl+1 - Escrever nome de utilizador&lt;br/&gt;
+Ctrl+2 - Escrever palavra-passe&lt;br/&gt;
+Ctrl+3 - Escrever TOTP&lt;br/&gt;
+Ctrl+4 - Utilizar teclado virtual (apenas Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -754,7 +763,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Utilizar teclado virtual</translation>
     </message>
 </context>
 <context>
@@ -1890,7 +1899,7 @@ Tem a certeza de que deseja continuar?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (recomendado) </translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2405,7 +2414,7 @@ Desativar salvaguardas e tentar novamente?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Entradas a caducar dentro de %1 dia</numerusform><numerusform>Entradas a caducar dentro de %1 dias</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4138,7 +4147,7 @@ Pode ativar o serviço DuckDuckGo na secção &apos;Segurança&apos; das defini�
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Cabeçalhos em falta</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4164,11 +4173,11 @@ Caso isto volte a acontecer, pode ser que a base de dados esteja danificada.</tr
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho de cabeçalho inválido: campo %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho de cabeçalho inválido: campo %1, esperado %2 e encontrado %3</translation>
     </message>
 </context>
 <context>
@@ -4225,11 +4234,11 @@ Caso isto volte a acontecer, pode ser que a base de dados esteja danificada.</tr
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho de cabeçalho inválido: campo %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho de cabeçalho inválido: campo %1, esperado %2 e encontrado %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4249,11 +4258,11 @@ Caso isto volte a acontecer, pode ser que a base de dados esteja danificada.</tr
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho de cabeçalho interior inválido: campo %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho de cabeçalho interior inválido: campo %1, esperado %2 e encontrado %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5342,7 +5351,7 @@ Recomendamos que utilize a versão AppImage disponível no nosso site.</translat
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Restaurar entrada</numerusform><numerusform>Restaurar entradas</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5413,6 +5422,14 @@ Recomendamos que utilize a versão AppImage disponível no nosso site.</translat
     <message>
         <source>Disconnect this application</source>
         <translation>Desconectar esta aplicação</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Repor</translation>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation>Cancelar todas as escolhas efetuadas para esta aplicação</translation>
     </message>
 </context>
 <context>
@@ -7498,7 +7515,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7514,7 +7531,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>

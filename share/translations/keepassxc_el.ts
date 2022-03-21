@@ -77,10 +77,6 @@
         <translation>Γραμμή Εντολών</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Η απόφασή σας για τις παραπάνω καταχωρήσεις θα απομνημονευθεί για τη διάρκεια εκτέλεσης του αιτούντος προγραμμάτος-πελάτη.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Λεπτομέριες</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Επιτρέπονται τα Επιλεγμένα</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Άρνηση Όλων</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>Η απόφασή σας θα απομνημονευθεί για όσο διάστημα εκτελείται ο αιτών πελάτης ΚΑΙ το KeePassXC.</translation>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation>Άρνηση Όλων &amp;&amp; Μελλοντικά</translation>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation>Αποδοχή Όλων &amp;&amp; Μελλοντικά</translation>
     </message>
 </context>
 <context>
@@ -271,7 +275,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>έχουν λήξει</translation>
     </message>
     <message>
         <source> days</source>
@@ -710,7 +714,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Μπορείτε να χρησιμοποιήσετε σύνθετα ερωτήματα αναζήτησης για να βρείτε οποιαδήποτε καταχώρηση στις ανοιχτές βάσεις δεδομένων σας. Οι παρακάτω συντομεύσεις είναι χρήσιμες:&lt;br/&gt;
+Ctrl+F - Εναλλαγή αναζήτησης βάσης δεδομένων&lt;br/&gt;
+Ctrl+1 - Πληκτρολογήστε όνομα χρήστη&lt;br/&gt;
+Ctrl+2 - Πληκτρολογήστε τον κωδικό πρόσβασης&lt;br/&gt;
+Ctrl+3 - Πληκτρολογήστε TOTP&lt;br/&gt;
+Ctrl+4 - Χρήση εικονικού πληκτρολογίου (μόνο για Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -754,7 +763,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Χρησιμοποιήστε Εικονικό Πληκτρολόγιο</translation>
     </message>
 </context>
 <context>
@@ -1327,7 +1336,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n byte</numerusform><numerusform>%n bytes</numerusform></translation>
+        <translation><numerusform>%n byte(s)</numerusform><numerusform>%n byte(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
@@ -1890,7 +1899,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (συνιστάται)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2405,7 +2414,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Καταχωρήσεις που λήγουν εντός %1 ημεράς(ών)</numerusform><numerusform>Καταχωρήσεις που λήγουν εντός %1 ημεράς(ών)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4137,7 +4146,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Λείπουν κεφαλίδες βάσης δεδομένων</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4163,11 +4172,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Μη έγκυρο μήκος πεδίου κεφαλίδας: πεδίο %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Μη έγκυρο μήκος δεδομένων κεφαλίδας: πεδίο %1, %2 αναμένεται, %3 βρέθηκε</translation>
     </message>
 </context>
 <context>
@@ -4224,11 +4233,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Μη έγκυρο μήκος πεδίου κεφαλίδας: πεδίο %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Μη έγκυρο μήκος δεδομένων κεφαλίδας: πεδίο %1, %2 αναμένεται, %3 βρέθηκε</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4248,11 +4257,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Μη έγκυρο μήκος πεδίου εσωτερικής κεφαλίδας: πεδίο %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Μη έγκυρο μήκος δεδομένων εσωτερικής κεφαλίδας: πεδίο %1, %2 αναμενόμενο, %3 βρέθηκε</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5341,7 +5350,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Επαναφορά καταχώρησης(-ων)</numerusform><numerusform>Επαναφορά καταχώρησης(-ων)</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5412,6 +5421,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Disconnect this application</source>
         <translation>Αποσύνδεση αυτής της εφαρμογής</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Επαναφορά</translation>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation>Επαναφορά τυχόν απομνημοευμένων αποφάσεων για αυτήν την εφαρμογή</translation>
     </message>
 </context>
 <context>
@@ -7496,7 +7513,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7512,7 +7529,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>

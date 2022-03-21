@@ -77,10 +77,6 @@
         <translation>ညွှန်ကြားချက် စာကြောင်း</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>တောင်းဆိုနေသော လက်ခံစက်ကို လည်ပတ်နေစဉ် အထက်ပါဖြည့်သွင်းချက်များအတွက် သင့်ဆုံးဖြတ်ချက်ကို မှတ်ထားပါမည်။</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>အသေးစိတ် အချက်အလက်များ</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>ရွေးထားသည့်အရာများကို ခွင့်ပြုရန်</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>အားလုံးကို ငြင်းရန်</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5405,6 +5409,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Disconnect this application</source>
         <translation>ဤအက်ပလီကေးရှင်းကို ဆက်သွယ်မှုဖျက်ပါ</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

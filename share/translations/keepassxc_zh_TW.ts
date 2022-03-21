@@ -77,10 +77,6 @@
         <translation>指令列</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>您對以上項目的選擇會在請求客戶端執行期間被記住。</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>詳情</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>允許所選</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>全部拒絕</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5411,6 +5415,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Disconnect this application</source>
         <translation>中斷此程式的連結</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
