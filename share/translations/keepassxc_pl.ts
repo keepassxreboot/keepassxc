@@ -77,10 +77,6 @@
         <translation>Wiersz poleceń</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Twoja decyzja dotycząca powyższych wpisów zostanie zapamiętana na czas działania klienta żądającego.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Szczegóły</translation>
     </message>
@@ -90,11 +86,19 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Zezwalaj wybranym</translation>
+        <translation>Zezwól wybranym</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Odmów wszystkim</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>Twoja decyzja zostanie zapamiętana na czas, gdy zarówno klient żądający, jak i KeePassXC będą uruchomione.</translation>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation>Odmów wszystkim i przyszłym</translation>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation>Zezwól wszystkim i &amp;przyszłym</translation>
     </message>
 </context>
 <context>
@@ -203,7 +207,7 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Musisz zrestartować aplikację, aby ustawić nowy język. Czy chcesz teraz zrestartować?</translation>
+        <translation>Musisz uruchomić ponownie aplikację, aby ustawić nowy język. Czy chcesz teraz to zrobić?</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
@@ -271,7 +275,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>wygasły</translation>
     </message>
     <message>
         <source> days</source>
@@ -289,7 +293,7 @@
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Automatycznie zapisuj po każdej zmianie</translation>
+        <translation>Automatycznie zapisz po każdej zmianie</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
@@ -305,7 +309,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Twórz kopię zapasową pliku bazy danych przed zapisaniem</translation>
+        <translation>Utwórz kopię zapasową pliku bazy danych przed zapisaniem</translation>
     </message>
     <message>
         <source>Backup destination</source>
@@ -591,7 +595,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC wymaga uprawnienia Dostępności w celu wykonania autowpisywania na poziomie podstawowym. Jeśli już udzieliłeś uprawnienia, być może będziesz musiał zrestartować KeePassXC.</translation>
+        <translation>KeePassXC wymaga uprawnienia dostępności w celu wykonania podstawowego autowpisywania. Jeśli już udzielono uprawnienia, być może będzie wymagane ponowne uruchomienie KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -782,11 +786,11 @@ Ctrl+4 - Użyj klawiatury wirtualnej (tylko Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation>Zezwalaj na dostęp do wpisów</translation>
+        <translation>Zezwól na dostęp do wpisów</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Zezwalaj wybranym</translation>
+        <translation>Zezwól wybranym</translation>
     </message>
     <message>
         <source>Deny All</source>
@@ -794,7 +798,7 @@ Ctrl+4 - Użyj klawiatury wirtualnej (tylko Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>Wyłącz w tej witrynie</translation>
+        <translation>Wyłącz dla tej witryny</translation>
     </message>
 </context>
 <context>
@@ -854,13 +858,13 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Zastąpić istniejący klucz?</translation>
+        <translation>KeePassXC: Nadpisać istniejący klucz?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Współdzielony klucz szyfrujący o nazwie &quot;%1&quot; już istnieje.
-Czy chcesz go zastąpić?</translation>
+Czy chcesz go nadpisać?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -1014,7 +1018,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Zezwalaj na zwrot wygasłych danych uwierzytelniających</translation>
+        <translation>Zezwól na zwrot wygasłych danych uwierzytelniających</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
@@ -1124,11 +1128,11 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Ze względu na sandboxing Snap należy uruchomić skrypt, aby umożliwić integrację z przeglądarką.&lt;br /&gt;Możesz uzyskać ten skrypt z %1</translation>
+        <translation>Ze względu na sandboxing Snap należy uruchomić skrypt, aby umożliwić integrację przeglądarki.&lt;br /&gt;Możesz uzyskać ten skrypt z %1</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser jest niezbędny do integracji z przeglądarką. &lt;br /&gt;Pobierz go dla %1 oraz %2 i %3. %4</translation>
+        <translation>KeePassXC-Browser jest niezbędny do integracji przeglądarki. &lt;br /&gt;Pobierz go dla %1 oraz %2 i %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -1136,7 +1140,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Nie można znaleźć niestandardowej lokalizacji proxy! Integracja z przeglądarką NIE DZIAŁA bez aplikacji proxy.</translation>
+        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Nie można znaleźć niestandardowej lokalizacji proxy! Integracja przeglądarki NIE DZIAŁA bez aplikacji proxy.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
@@ -1167,7 +1171,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Dodaj &apos; - klon&apos; do nazwy</translation>
+        <translation>Dodaj &apos; - Klon&apos; do nazwy</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
@@ -1226,7 +1230,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Utworzone</translation>
+        <translation>Stworzone</translation>
     </message>
     <message>
         <source>Last Modified</source>
@@ -1689,7 +1693,7 @@ Może to uniemożliwić połączenie z wtyczką przeglądarki.</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Utworzone</translation>
+        <translation>Stworzone</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
@@ -1887,15 +1891,15 @@ Czy na pewno chcesz kontynuować bez hasła?</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>Równoległość:</translation>
+        <translation>Paralelizm:</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation>Równoległość</translation>
+        <translation>Paralelizm</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (zalecany)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2183,7 +2187,7 @@ Jest to z pewnością błąd, zgłoś go programistom.</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>Plik CSV</translation>
+        <translation>plik CSV</translation>
     </message>
     <message>
         <source>Select CSV file</source>
@@ -2410,7 +2414,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Wpisy wygasają w ciągu %1 dnia</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2856,7 +2860,7 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Presety</translation>
+        <translation>Ustawienia</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -3357,7 +3361,7 @@ Obsługiwane rozszerzenia to: %1.</translation>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Utworzone:</translation>
+        <translation>Stworzone:</translation>
     </message>
     <message>
         <source>Datetime created</source>
@@ -3722,7 +3726,7 @@ Błąd: %1</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Utworzone</translation>
+        <translation>Stworzone</translation>
     </message>
     <message>
         <source>Modified</source>
@@ -4145,7 +4149,7 @@ Możesz włączyć usługę ikon witryn DuckDuckGo w sekcji bezpieczeństwa usta
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Brakuje nagłówków bazy danych</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4171,11 +4175,11 @@ Jeśli wystąpi to ponownie, plik bazy danych może być uszkodzony.</translatio
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola nagłówka: pole %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
     </message>
 </context>
 <context>
@@ -4232,11 +4236,11 @@ Jeśli wystąpi to ponownie, plik bazy danych może być uszkodzony.</translatio
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola nagłówka: pole %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4256,11 +4260,11 @@ Jeśli wystąpi to ponownie, plik bazy danych może być uszkodzony.</translatio
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola wewnętrznego nagłówka: pole %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa długość pola wewnętrznego nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5001,7 +5005,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation>Utwórz nową bazę danych</translation>
+        <translation>Stwórz nową bazę danych</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
@@ -5325,7 +5329,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation>Nie pokazuj więcej w tej wersji</translation>
+        <translation>Nie pokazuj więcej dla tej wersji</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
@@ -5349,7 +5353,7 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Przywróć wpis</numerusform><numerusform>Przywróć wpisy</numerusform><numerusform>Przywróć wpisy</numerusform><numerusform>Przywróć wpisy</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5381,11 +5385,11 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation>Zrestartować aplikację?</translation>
+        <translation>Uruchomić ponownie aplikację?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Musisz zrestartować aplikację, aby zastosować to ustawienie. Czy chcesz teraz zrestartować?</translation>
+        <translation>Musisz uruchomić ponownie aplikację, aby zastosować to ustawienie. Czy chcesz teraz to zrobić?</translation>
     </message>
 </context>
 <context>
@@ -5421,6 +5425,14 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
         <source>Disconnect this application</source>
         <translation>Rozłącz tę aplikację</translation>
     </message>
+    <message>
+        <source>Reset</source>
+        <translation>Zresetuj</translation>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation>Zresetuj wszystkie zapamiętane decyzje dla tej aplikacji</translation>
+    </message>
 </context>
 <context>
     <name>Merger</name>
@@ -5434,7 +5446,7 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation>Zastąpienie %1 [%2]</translation>
+        <translation>Nadpisywanie %1 [%2]</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
@@ -6494,7 +6506,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation>BŁĄD: Atrybut %1 jest niejednoznaczny, jest zgodny z %2.</translation>
+        <translation>BŁĄD: atrybut %1 jest niejednoznaczny, jest zgodny z %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
@@ -6570,7 +6582,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation>Utwórz nową bazę danych.</translation>
+        <translation>Stwórz nową bazę danych.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -6709,11 +6721,11 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation>Typ: Siłowy</translation>
+        <translation>Typ: Bruteforce</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation>Typ: Słownikowy</translation>
+        <translation>Type: Słownikowy</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
@@ -6745,7 +6757,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>Typ: Siłowy(Powt.)</translation>
+        <translation>Typ: Bruteforce(Powt.)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
@@ -7047,7 +7059,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Użyj tych samych danych uwierzytelniających dla obu plików bazy danych.</translation>
+        <translation>Użyj tych samych poświadczeń dla obu plików bazy danych.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
@@ -7193,7 +7205,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation>BŁĄD: Nieznany atrybut %1.</translation>
+        <translation>BŁĄD: nieznany atrybut %1.</translation>
     </message>
     <message>
         <source>No attachments present.</source>
@@ -7445,7 +7457,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1 (%2 rund, %3 KB)</translation>
+        <translation>Argon2%1 (%2 rundy, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
@@ -7505,7 +7517,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bitowy</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7521,7 +7533,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7565,7 +7577,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Utworzone</translation>
+        <translation>Stworzone</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
@@ -7675,7 +7687,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>allow app screen recordering and screenshots</source>
-        <translation>zezwalaj na aplikację nagrywania ekranu i zrzuty ekranu</translation>
+        <translation>zezwól na aplikację nagrywania ekranu i zrzuty ekranu</translation>
     </message>
     <message>
         <source>Locked databases.</source>
@@ -8392,19 +8404,19 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>Zezwalaj na importowanie KeeShare</translation>
+        <translation>Zezwól na importowanie KeeShare</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>Pozwól importować</translation>
+        <translation>Zezwól importować</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>Zezwalaj na eksportowanie KeeShare</translation>
+        <translation>Zezwól na eksportowanie KeeShare</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation>Pozwól eksportować</translation>
+        <translation>Zezwól na eksport</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
@@ -8662,7 +8674,7 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>Utwórz nową bazę danych</translation>
+        <translation>Stwórz nową bazę danych</translation>
     </message>
     <message>
         <source>Open existing database</source>
@@ -8682,7 +8694,7 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Ostatnie bazy danych</translation>
+        <translation>Niedawne bazy danych</translation>
     </message>
     <message>
         <source>Open a recent database</source>

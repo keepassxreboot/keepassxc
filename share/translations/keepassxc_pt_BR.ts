@@ -77,10 +77,6 @@
         <translation>Linha de comando</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>A sua escolha para as entradas acima será memorizada durante o tempo que o cliente solicitador estiver em execução.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Detalhes</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Permitir Selecionados</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Negar Todos</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1533,7 +1537,7 @@ Para impedir que esses erros apareçam, você deve ir em &quot;Configurações d
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Formato antigo de arquivo-chave</translation>
+        <translation>Formato antigo de arquivo de chave</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -3664,7 +3668,7 @@ Erro: %1</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Autodigitação</translation>
+        <translation>Auto-Digitar</translation>
     </message>
 </context>
 <context>
@@ -4003,7 +4007,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n entrada(s) foram utilizadas por %1</numerusform><numerusform>%n entrada(s) foram utilizadas por %1</numerusform></translation>
+        <translation><numerusform>%n entrada foi usada por %1</numerusform><numerusform>%n entradas foram usadas por %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5404,6 +5408,14 @@ Recomendamos que você use o AppImage disponível em nossa página de downloads.
     <message>
         <source>Disconnect this application</source>
         <translation>Desconectar este aplicativo</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7645,7 +7657,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation>bloquear todas os bancos de dados abertos</translation>
+        <translation>bloquear todas os bancos de dados abertas</translation>
     </message>
     <message>
         <source>key file of the database</source>
@@ -7812,7 +7824,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform>Excluir entradas...</numerusform></translation>
+        <translation><numerusform>Excluir entrada...</numerusform><numerusform>Excluir entradas...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>

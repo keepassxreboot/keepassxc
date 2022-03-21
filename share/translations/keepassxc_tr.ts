@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Emeği geçenler</translation>
+        <translation>Katkıda bulunanlar</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
@@ -77,10 +77,6 @@
         <translation>Komut satırı</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Yukarıdaki kayıtlar için kararınız, istekte bulunan istemci çalıştığı sürece hatırlanacak.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Ayrıntılar</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Seçilmişlere izin ver</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Tümünü reddet</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>Kararınız, hem istekte bulunan istemci hem de KeePassXC çalışırken hatırlanacak.</translation>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation>Tümünü ve gelecektekileri reddet</translation>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation>Tümünü ve gelecektekileri onayla</translation>
     </message>
 </context>
 <context>
@@ -271,7 +275,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>süresi geçmiş</translation>
     </message>
     <message>
         <source> days</source>
@@ -281,7 +285,7 @@
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>geçerlilik süresi dolacak</translation>
+        <translation>süresi geçecek</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -446,7 +450,7 @@
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>Geçerlilik süresi geçmiş kayıtlar otomatik yazmada gizlensin</translation>
+        <translation>Süresi geçmiş kayıtlar otomatik yazmada gizlensin</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
@@ -710,7 +714,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Açık veritabanlarından bir kayıt bulmak için gelişmiş arama sorguları kullanabilirsiniz. Şu kısayol tuşları kullanışlıdır:&lt;br/&gt;
+Ctrl+F - Veritabanı aramasını değşitir&lt;br/&gt;
+Ctrl+1 - Kullanıcı adını yaz&lt;br/&gt;
+Ctrl+2 - Parolayı yaz&lt;br/&gt;
+Ctrl+3 - Tek kullanımlık parolayı yaz&lt;br/&gt;
+Ctrl+4 - Sanal tuş takımını kullan (yalnız Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -754,7 +763,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Sanal tuş takımını kullan</translation>
     </message>
 </context>
 <context>
@@ -1005,11 +1014,11 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Geçerlilik süresi geçmiş kimlik doğrulama bilgilerini döndürür. Başlığa [süresi geçmiş] ifadesi eklenir.</translation>
+        <translation>Süresi geçmiş kimlik doğrulama bilgilerini döndürür. Başlığa [süresi geçmiş] ifadesi eklenir.</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Geçerlilik süresi geçmiş kimlik bilgileri döndürülebilsin</translation>
+        <translation>Süresi geçmiş kimlik bilgileri döndürülebilsin</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
@@ -1890,7 +1899,7 @@ Bir parola ayarlamadan ilerlemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (önerilen)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2287,7 +2296,7 @@ Bu kesinlikle bir uygulama hatasıdır. Lütfen geliştiricilere bildirin.</tran
     </message>
     <message>
         <source>Expired entries</source>
-        <translation>Geçerlilik süresi geçmiş kayıtlar</translation>
+        <translation>Süresi geçmiş kayıtlar</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2405,7 +2414,7 @@ Güvenli kaydetme devre dışı bırakılarak yeniden denensin mi?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 gün içinde süresi geçecek kayıtlar</numerusform><numerusform>%1 gün içinde süresi geçecek kayıtlar</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4138,7 +4147,7 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo web sitesi simge hizm
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı üst bilgileri eksik</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4164,11 +4173,11 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Üst bilgi alanının uzunluğu geçersiz: %1 alanı</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Üst bilgi veri uzunluğu geçersiz: %1 alanı, %2 bekleniyordu, %3 bulundu</translation>
     </message>
 </context>
 <context>
@@ -4225,11 +4234,11 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Üst bilgi alanının uzunluğu geçersiz: %1 alanı</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Üst bilgi veri uzunluğu geçersiz: %1 alanı, %2 bekleniyordu, %3 bulundu</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4249,11 +4258,11 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>İç üst bilgi alanının uzunluğu geçersiz: %1 alanı</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>İç üst bilgi veri uzunluğu geçersiz: %1 alanı, %2 bekleniyordu, %3 bulundu</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5342,7 +5351,7 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Kaydı geri yükle</numerusform><numerusform>Kayıtları geri yükle</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5413,6 +5422,14 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     <message>
         <source>Disconnect this application</source>
         <translation>Bu uygulamanın bağlanntısını kes</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Sıfırla</translation>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation>Bu uygulama için hatırlanan kararları sıfırla</translation>
     </message>
 </context>
 <context>
@@ -6958,7 +6975,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Geçerlilik süresi geçmiş kayıt sayısı</translation>
+        <translation>Süresi geçmiş kayıt sayısı</translation>
     </message>
     <message>
         <source>Unique passwords</source>
@@ -7314,7 +7331,7 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
     <message>
         <source>Password has expired</source>
-        <translation>Parolanın geçerlilik süresi geçmiş</translation>
+        <translation>Parolanın süresi geçmiş</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
@@ -7322,11 +7339,11 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation>Parolanın geçerlilik süresi %1 zamanında geçecek</translation>
+        <translation>Parolanın süresi %1 zamanında geçecek</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
-        <translation>Parolanın geçerlilik süresi geçmek üzere</translation>
+        <translation>Parolanın süresi geçmek üzere</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
@@ -7334,7 +7351,7 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
     <message>
         <source>Password will expire soon</source>
-        <translation>Parolanın geçerlilik süresi yakında geçecek</translation>
+        <translation>Parolanın süresi yakında geçecek</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -7498,7 +7515,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7514,7 +7531,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7755,7 +7772,7 @@ Kernel: %3 %4</source>
     <name>ReportsWidgetBrowserStatistics</name>
     <message>
         <source>Exclude expired entries from the report</source>
-        <translation>Geçerlilik süresi geçmiş kayıtlar rapora katılmasın</translation>
+        <translation>Süresi geçmiş kayıtlar rapora katılmasın</translation>
     </message>
     <message>
         <source>Show only entries which have URL set</source>
@@ -7834,7 +7851,7 @@ Kernel: %3 %4</source>
     <name>ReportsWidgetHealthcheck</name>
     <message>
         <source>Exclude expired entries from the report</source>
-        <translation>Geçerlilik süresi geçmiş kayıtlar rapora katılmasın</translation>
+        <translation>Süresi geçmiş kayıtlar rapora katılmasın</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
@@ -8075,11 +8092,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Geçerlilik süresi geçmiş kayıt sayısı</translation>
+        <translation>Süresi geçmiş kayıt sayısı</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation>Veritabanında geçerlilik süresi geçmiş kayıtlar var.</translation>
+        <translation>Veritabanında süresi geçmiş kayıtlar var.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
@@ -8489,7 +8506,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Expired</source>
-        <translation>Geçerlilik süresi geçmiş</translation>
+        <translation>Süresi geçmiş</translation>
     </message>
     <message>
         <source>Weak Passwords</source>

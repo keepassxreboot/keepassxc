@@ -77,10 +77,6 @@
         <translation>Opdrachtregel</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>De beslissing voor bovenstaande invoer wordt onthouden voor de duur dat de verzoekende cliënt actief is.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Details</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Selectie toestaan</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Alles weigeren</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1123,7 +1127,7 @@ Wil je de bestaande instellingen nu migreren?</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download het voor %1 en %2 en %3. %4.</translation>
+        <translation>KeePassXC-Browser is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download het voor %1 en %2 en %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -2125,7 +2129,7 @@ Deze actie is onomkeerbaar.</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation><numerusform>%n-pictogram(en) uit de database verwijderd.</numerusform><numerusform>%n pictogram(en) zijn uit de database verwijderd.</numerusform></translation>
+        <translation><numerusform>Wist %n-pictogram(en) uit de database.</numerusform><numerusform>%n Pictogram(en) uit de database gewist.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4008,7 +4012,7 @@ Dit maakt jouw wachtwoorden en gevoelige informatie kwetsbaar!</translation>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n Post(en) werd gebruikt door %1</numerusform><numerusform>%n Item(s) gebruikt door %1</numerusform></translation>
+        <translation><numerusform>%n Item is gebruikt door %1</numerusform><numerusform>%n Items zijn gebruikt door %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4142,7 +4146,7 @@ Je kunt de DuckDuckGo website pictogram dienst inschakelen in de sectie &apos;Be
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Kan challenge-response niet starten: %1</translation>
+        <translation>Kan challenge-antwoord niet uitgeven: %1</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
@@ -4176,7 +4180,7 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Kan challenge-response niet starten: %1</translation>
+        <translation>Kan challenge-antwoord niet uitgeven: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -5410,6 +5414,14 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     <message>
         <source>Disconnect this application</source>
         <translation>Deze applicatie loskoppelen</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7307,7 +7319,7 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation><numerusform>Wachtwoord is %1 keer gebruikt</numerusform><numerusform>Wachtwoord is %1 keer gebruikt</numerusform></translation>
+        <translation><numerusform>Wachtwoord wordt %1 keer gebruikt</numerusform><numerusform>Wachtwoord wordt %1 keer gebruikt</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7327,7 +7339,7 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation><numerusform>Wachtwoord verloopt in %1 dag(en)</numerusform><numerusform>Wachtwoord verloopt in %1 dag(en)</numerusform></translation>
+        <translation><numerusform>Wachtwoord verloopt over %1 dag(en)</numerusform><numerusform>Wachtwoord verloopt over %1 dag(en)</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7419,7 +7431,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
-        <translation><numerusform>%1 minuut(en)</numerusform><numerusform>%1 minuten</numerusform></translation>
+        <translation><numerusform>%1 minuut(en)</numerusform><numerusform>%1 minuut(en)</numerusform></translation>
     </message>
     <message>
         <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
@@ -7523,7 +7535,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Het klemboard wordt over %1 seconde gewist...</numerusform><numerusform>Het klembord wordt over %1 seconden gewist...</numerusform></translation>
+        <translation><numerusform>Het klembord wissen in %1 seconde(n)…</numerusform><numerusform>Het klembord wissen in %1 seconde(n)…</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7577,7 +7589,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Wilt u %n-item(s) echt voorgoed verwijderen?</numerusform><numerusform>Wil je %n item(s) voorgoed verwijderen?</numerusform></translation>
+        <translation><numerusform>Wilt u echt %n item(s) voorgoed verwijderen?</numerusform><numerusform>Wilt je echt %n item(s) voorgoed verwijderen?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
@@ -7589,11 +7601,11 @@ Kernelversie: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Wilt u %n entry(s) echt naar de prullenbak verplaatsen?</numerusform><numerusform>Wil je %n item(s) echt naar de prullenbak verplaatsen?</numerusform></translation>
+        <translation><numerusform>Wil je echt %n entry(s) naar de prullenbak verplaatsen?</numerusform><numerusform>Wil je echt %n item(s) naar de prullenbak verplaatsen?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Invoer(en) verplaatsen naar prullenbak?</numerusform><numerusform>Item(s) verplaatsen naar prullenbak?</numerusform></translation>
+        <translation><numerusform>Item(s) verplaatsen naar prullenbak?</numerusform><numerusform>Item(s) verplaatsen naar prullenbak?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7601,7 +7613,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>Item &quot;%1&quot; heeft %2 referentie. Wil je de verwijzing vervangen door waarden, dit bericht overslaan of toch verwijderen ?</numerusform><numerusform>Item &quot;%1&quot; heeft %2 referenties. Wil je de verwijzingen vervangen door waarden, dit bericht overslaan of toch verwijderen ?</numerusform></translation>
+        <translation><numerusform>Vermelding &quot;%1&quot; heeft %2 referentie(s). Wilt u verwijzingen overschrijven met waarden, dit item overslaan of toch verwijderen?</numerusform><numerusform>Vermelding &quot;%1&quot; heeft %2 referentie(s). Wilt je deze overschrijven met waarden, dit item overslaan of toch verwijderen?</numerusform></translation>
     </message>
     <message>
         <source>User name</source>
@@ -7906,7 +7918,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Item verwijderen...</numerusform><numerusform>Items verwijderen...</numerusform></translation>
+        <translation><numerusform>Item(s) verwijderen...</numerusform><numerusform>Item(s) verwijderen...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8001,7 +8013,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Item verwijderen...</numerusform><numerusform>Items verwijderen...</numerusform></translation>
+        <translation><numerusform>Item(s) verwijderen...</numerusform><numerusform>Item(s) verwijderen...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8749,7 +8761,7 @@ Voorbeeld: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Geselecteerde hardwaresleutel-positie ondersteunt geen challenge-response!</translation>
+        <translation>Geselecteerde hardwaresleutel-positie ondersteunt geen challenge-respons!</translation>
     </message>
     <message>
         <source>Challenge-Response</source>

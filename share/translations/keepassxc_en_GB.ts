@@ -77,10 +77,6 @@
         <translation>Command Line</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Your decision for above entries will be remembered for the duration the requesting client is running.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Details</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Allow Selected</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Deny All</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -564,7 +568,7 @@
     </message>
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
-        <translation>Enable double click to copy the username/password entry columns</translation>
+        <translation>Enable double-click to copy the username/password entry columns</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -1372,7 +1376,7 @@ Would you like to migrate your existing settings now?</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>Could not save, database has not been initialised!</translation>
+        <translation>Could not save. Database has not been initialised!</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
@@ -2828,7 +2832,7 @@ Would you like to correct it?</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Toggle the tick box to reveal the notes section.</translation>
+        <translation>Toggle the checkbox to reveal the notes section.</translation>
     </message>
     <message>
         <source>Username field</source>
@@ -3231,7 +3235,7 @@ Supported extensions are: %1.</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation>Auto-Type toggle for this and subgroups</translation>
+        <translation>Auto-Type toggle for this group and subgroups</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -5419,6 +5423,14 @@ We recommend you use the AppImage available on our downloads page.</translation>
         <source>Disconnect this application</source>
         <translation>Disconnect this application</translation>
     </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Merger</name>
@@ -7572,12 +7584,12 @@ Kernel: %3 %4</translation>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation><numerusform>%1ms</numerusform><numerusform>%1ms</numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation><numerusform>%1s</numerusform><numerusform>%1s</numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1s</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>

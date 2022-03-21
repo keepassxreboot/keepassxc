@@ -77,10 +77,6 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>위 항목에 대한 결정 사항은 요청하는 클라이언트가 실행 중인 동안에 기억될 것입니다.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation type="unfinished"/>
     </message>
@@ -93,8 +89,16 @@
         <translation>선택 허용</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>모두 거부</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5399,6 +5403,14 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Disconnect this application</source>
         <translation>이 프로그램 연결 해제</translation>
     </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Merger</name>
@@ -7422,7 +7434,7 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1(%2라운드, %3 KB)</translation>
+        <translation>Argon2%1(%2회, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>

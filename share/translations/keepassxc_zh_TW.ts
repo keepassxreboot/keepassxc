@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>回報錯誤請至: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>回報錯誤請至：&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -77,10 +77,6 @@
         <translation>指令列</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>您對以上項目的選擇會在請求客戶端執行期間被記住。</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>詳情</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>允許所選</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>全部拒絕</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -254,7 +258,7 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>記住資料庫的金鑰檔與 dongle 軟體狗</translation>
+        <translation>記住資料庫的金鑰檔與硬體金鑰</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -4822,7 +4826,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation>您選擇的金鑰檔案格式版本過舊，KeePassXC&lt;br&gt;將來有可能停止支援。&lt;br&gt;&lt;br&gt;請考慮產生一組新的金鑰檔案。</translation>
+        <translation>您選擇的金鑰檔案格式版本過舊，KeePassXC 可能&lt;br&gt;在未來停止支援。&lt;br&gt;&lt;br&gt;請考慮產生一組新的金鑰檔案。</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -5411,6 +5415,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Disconnect this application</source>
         <translation>中斷此程式的連結</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6832,7 +6844,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation>排除的字元集合</translation>
+        <translation>排除的字元組合</translation>
     </message>
     <message>
         <source>chars</source>
@@ -7219,8 +7231,8 @@ Available commands:
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>警告：您使用的金鑰檔案格式為舊版本，將來有可能
-不再被 KeePassXC 支援。
+        <translation>警告：您使用的金鑰檔案格式版本過舊，KeePassXC 可能
+在未來停止支援。
 
 請考慮產生一組新的金鑰檔案。</translation>
     </message>
@@ -7524,7 +7536,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>將於 %1 秒後清空剪貼簿…</numerusform></translation>
+        <translation><numerusform>將於 %1 秒後清空剪貼簿...</numerusform></translation>
     </message>
     <message>
         <source>Group</source>

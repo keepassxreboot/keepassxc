@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC は GNU 一般公衆利用許諾書 (GPL) バージョン 2 または (希望によっては) バージョン 3 のいずれかを選択可能な条件のもとで配布されています。</translation>
+        <translation>KeePassXC は GNU General Public License (GPL) version 2 または version 3 のいずれかを選択可能な条件のもとで配布されています。</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>バグを報告するときに以下の情報を &quot;英語で&quot; 含めてください:</translation>
+        <translation>バグを報告する際に下記の情報を含めてください:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -77,10 +77,6 @@
         <translation>コマンドライン</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>上記のエントリーに対する決定は、要求元のクライアントが実行されている間に記憶されます。</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>詳細</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>選択したものを許可</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>全て拒否</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1131,7 +1135,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;エラー:&lt;/b&gt; カスタムプロキシの場所が見つかりませんでした。&lt;br/&gt;ブラウザー統合はプロキシアプリケーション無しでは動作しません。</translation>
+        <translation>&lt;b&gt;エラー:&lt;/b&gt; カスタムプロキシの場所が見つかりませんでした。&lt;br/&gt;ブラウザー統合はプロキシアプリケーションなしでは動作しません。</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
@@ -1568,7 +1572,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
         <translation>データベースファイルをキーファイルとして使用することはできません。
-キーファイルが無い場合は、フィールドを空のままにしてください。</translation>
+キーファイルがない場合は、フィールドを空のままにしてください。</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
@@ -1776,13 +1780,13 @@ This is only necessary if your database is a copy of another and the browser ext
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>[警告] パスワードを設定していません。パスワード無しでのデータベースの使用は極力避けるべきです。
+        <translation>[警告] パスワードを設定していません。パスワードなしでのデータベースの使用は極力避けるべきです。
 
-パスワード無しで続行してもよろしいですか？</translation>
+パスワードなしで続行してもよろしいですか？</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation>パスワード無しで続行</translation>
+        <translation>パスワードなしで続行</translation>
     </message>
     <message>
         <source>No encryption key added</source>
@@ -2156,7 +2160,7 @@ This action is not reversible.</source>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
-        <translation>作成したデータベースはキーや KDF が無いため保存しません。
+        <translation>作成したデータベースはキーや KDF がないため保存しません。
 これは確実にバグなので、開発者への報告をお願いします。</translation>
     </message>
     <message>
@@ -4893,7 +4897,7 @@ Message: %2</source>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>選択したキーファイルはパスワードデータベースファイルだと思われます。キーファイルは絶対に変更されることが無い、静的なファイルである必要があります。変更される可能性があるファイルでは、データベースに永久にアクセスできなくなる恐れがあります。
+        <translation>選択したキーファイルはパスワードデータベースファイルだと思われます。キーファイルは絶対に変更されることがない、静的なファイルである必要があります。変更される可能性があるファイルでは、データベースに永久にアクセスできなくなる恐れがあります。
 このファイルで続行してもよろしいですか？</translation>
     </message>
 </context>
@@ -5360,7 +5364,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>ウィンドウ切り替え</translation>
+        <translation>ウィンドウ切替</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
@@ -5412,6 +5416,14 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
         <source>Disconnect this application</source>
         <translation>このアプリケーションを切断</translation>
     </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Merger</name>
@@ -5461,7 +5473,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation>親要素が無い %1 [%2] を削除</translation>
+        <translation>親要素がない %1 [%2] を削除</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
@@ -5567,7 +5579,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation>ヘッダーが無い不正な OpData01 です</translation>
+        <translation>ヘッダーがない不正な OpData01 です</translation>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
@@ -6371,7 +6383,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
-        <translation>パス %1 のエントリーが見つかりませんでした。</translation>
+        <translation>パス %1 のエントリーを見つけられませんでした。</translation>
     </message>
     <message>
         <source>Could not find attachment with name %1.</source>
@@ -7169,7 +7181,7 @@ Available commands:
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>表示する属性の名前。このオプションはいくつでも指定することができ、各属性は指定した順に一行に一つずつ表示されます。属性の指定が無い場合は既定の属性の概要が表示されます。</translation>
+        <translation>表示する属性の名前。このオプションはいくつでも指定することができ、各属性は指定した順に一行に一つずつ表示されます。属性の指定がない場合は既定の属性の概要が表示されます。</translation>
     </message>
     <message>
         <source>attribute</source>

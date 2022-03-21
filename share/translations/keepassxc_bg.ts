@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Докладване на дефекти: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Съобщаване за грешки: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Поддръжка на проекта:</translation>
+        <translation>Екип:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -27,23 +27,23 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Сътрудници</translation>
+        <translation>Контрибутури</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Вижте сътрудниците чрез GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Вижте контрибутурите в GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Информация за отстраняване на дефекти</translation>
+        <translation>Информация за отстраняване на грешки</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Включвайте следната информация, когато докладвате за дефект</translation>
+        <translation>Включвайте следната информация, когато съобщавате за грешка:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Копиране в междинната памет</translation>
+        <translation>Копиране в клипборда</translation>
     </message>
 </context>
 <context>
@@ -77,10 +77,6 @@
         <translation>Команден ред</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Details</source>
         <translation type="unfinished"/>
     </message>
@@ -93,8 +89,16 @@
         <translation>Разреши избраните</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Забрани всички</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3278,7 +3282,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation>Прилага се и за детски групи</translation>
+        <translation>Прилага се и за подгрупи</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
@@ -5384,6 +5388,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Disconnect this application</source>
         <translation>Разедини това приложение</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

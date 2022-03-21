@@ -77,10 +77,6 @@
         <translation>Komentorivi</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Valintasi ylläoleville tietueille muistetaan tämän asiakkaan istunnon ajan.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Yksityiskohdat</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Salli valitut</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Estä kaikilta</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -108,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Ota SSH-agentin integraatio käyttöön</translation>
+        <translation>Ota SSH Agentti käyttöön</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -140,11 +144,11 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Yhteystieto SSH-agenttiin puuttuu. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
+        <translation>SSH Agentin socketia ei ole. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>Yhteys SSH-agenttiin toimii!</translation>
+        <translation>SSH Agent -yhteys toimii!</translation>
     </message>
 </context>
 <context>
@@ -271,7 +275,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>ovat vanhentuneet</translation>
     </message>
     <message>
         <source> days</source>
@@ -512,7 +516,7 @@
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation> minuuttia</translation>
+        <translation>minuuttia</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -710,7 +714,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Voit käyttää haun lisäasetuksia löytääksesi tietueita avoimesta tietokannasta. Seuraavat pikanäppäimet ovat hyödyllisiä:&lt;br/&gt;
+Ctrl+F - Etsi tietokannasta&lt;br/&gt;
+Ctrl+1 - Kirjoita käyttäjänimi&lt;br/&gt;
+Ctrl+2 - Kirjoita salasana&lt;br/&gt;
+Ctrl+3 - Kirjoita TOTP&lt;br/&gt;
+Ctrl+4 - Käytä virtuaalista näppäimistöä (vain Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -754,7 +763,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Käytä virtuaalista näppäimistöä</translation>
     </message>
 </context>
 <context>
@@ -1889,7 +1898,7 @@ Oletko varma, että haluat jatkaa ilman salasanaa?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4.0 (suositeltu)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -4010,7 +4019,7 @@ Tämä jättää salasanasi ja minkä tahansa arkaluontoisen tiedon haavoittuvak
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform></translation>
+        <translation><numerusform>%n tietue käytetiin %1</numerusform><numerusform>%n tietuetta käytettiin %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4136,7 +4145,7 @@ Voit käyttää DuckDuckGo:ta ikonien lataukseen ohjelmiston turvallisuusasetuks
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan otsaketiedot puuttuvat</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4162,11 +4171,11 @@ Jos tämä toistuu, tietokantasi voi olla viallinen.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen otsaketietojen kentän koko: kenttä %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen otsaketietojen datan pituus: kenttä %1, %2 odotettiin, %3 löydettiin</translation>
     </message>
 </context>
 <context>
@@ -4223,11 +4232,11 @@ Jos tämä toistuu, tietokantasi voi olla viallinen.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen otsaketietojen kentän koko: kenttä %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen otsaketietojen datan pituus: kenttä %1, %2 odotettiin, %3 löydettiin</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4247,11 +4256,11 @@ Jos tämä toistuu, tietokantasi voi olla viallinen.</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen sisemmän otsaketiedon kentän pituus: kenttä %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen sisempien otsaketietojen datan pituus: kenttä %1, %2 odotettiin, %3 löydettiin</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5411,6 +5420,14 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     <message>
         <source>Disconnect this application</source>
         <translation>Katkaise yhteys tältä ohjelmalta</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7496,7 +7513,7 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20: 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7512,7 +7529,7 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7821,7 +7838,7 @@ Ydin: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform>Poista tietueet...</numerusform></translation>
+        <translation><numerusform>Poista tietue...</numerusform><numerusform>Poista tietueet...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8180,7 +8197,7 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Agentti ei ole päällä, identiteettejä ei voi listata.</translation>
+        <translation>Agentti ei ole päällä, tunnisteita ei voi listata.</translation>
     </message>
 </context>
 <context>

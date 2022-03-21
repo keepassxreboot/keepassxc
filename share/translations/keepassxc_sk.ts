@@ -77,10 +77,6 @@
         <translation>Príkazový riadok</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Vaše rozhodnutie o týchto položkách bude zapamätané, kým je žiadajúci klient spustený.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Podrobnosti</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Povoliť vybraným</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Zakázať všetkým</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2742,7 +2746,7 @@ Chcete to opraviť?</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Toto nastavenie neposielať do prehliadača pre dialógy HTTP Auth. Ak je zapnuté, bežné prihlasovacie formuláre nebudú túto položku poskytovať na výber.</translation>
+        <translation>Toto nastavenie neposielať do prehliadača pre dialógy HTTP Auth. Ak je zapnuté, bežné prihlasovacie formuláre nebudú na výber poskytovať túto položku.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
@@ -5062,7 +5066,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
-        <translation>Štatistiky, Kontrola zdravia, apod.</translation>
+        <translation>Štatistiky, kontrola zdravia, apod.</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
@@ -5409,6 +5413,14 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
     <message>
         <source>Disconnect this application</source>
         <translation>Odpojiť túto palikáciu</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7817,7 +7829,7 @@ Jadro: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform>Odstrániť položky…</numerusform></translation>
+        <translation><numerusform>Odstrániť položku…</numerusform><numerusform>Odstrániť položky…</numerusform><numerusform>Odstrániť položky…</numerusform><numerusform>Odstrániť položky…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>

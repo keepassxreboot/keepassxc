@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Informeu d&apos;errors a: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Reporteu errors a: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -77,10 +77,6 @@
         <translation>Línia d&apos;ordres</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Details</source>
         <translation type="unfinished"/>
     </message>
@@ -93,8 +89,16 @@
         <translation>Permet la selecció</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Denegar tot</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -151,7 +155,7 @@
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Paràmetres de l&apos;aplicació</translation>
+        <translation>Configuració de l&apos;aplicació</translation>
     </message>
     <message>
         <source>General</source>
@@ -402,7 +406,7 @@
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>Fer servir fonts monoespaiada per les notes</translation>
+        <translation>Usa lletra monoespaiada per a les notes</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
@@ -780,11 +784,11 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Permet la selecció</translation>
+        <translation>Permet els seleccionats</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>Denegar tot</translation>
+        <translation>Denega-ho tot</translation>
     </message>
     <message>
         <source>Disable for this site</source>
@@ -1639,7 +1643,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Suprimiu</translation>
+        <translation>Suprimeix</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
@@ -5342,6 +5346,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Disconnect this application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
         <translation type="unfinished"/>
     </message>
 </context>

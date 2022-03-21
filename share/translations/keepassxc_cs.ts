@@ -77,10 +77,6 @@
         <translation>Příkazový řádek</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation>Vaše rozhodnutí ohledně výše uvedených položek bude zapamatováno po dobu chodu klienta, který si vyžádal.</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Podrobnosti</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Povolit vybrané</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Odepřít vše</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2796,7 +2800,7 @@ Would you like to correct it?</source>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Edit Entry</source>
-        <translation>Upravit položku</translation>
+        <translation>Upravit záznam</translation>
     </message>
     <message>
         <source>Notes field</source>
@@ -2987,7 +2991,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Napojení webového prohlížeče</translation>
+        <translation>Napojení na webový prohlížeč</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -5386,6 +5390,14 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Disconnect this application</source>
         <translation>Odpojit tuto aplikaci</translation>
     </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Merger</name>
@@ -7604,7 +7616,7 @@ Jádro systému: %3 %4</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation>Kontrolní součet se neshoduje! Soubor s klíčem může být poškozen.</translation>
+        <translation>Kontrolní součet se neshoduje! Soubor s klíčem může být poškozený.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>

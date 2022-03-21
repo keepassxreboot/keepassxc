@@ -77,10 +77,6 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Details</source>
         <translation type="unfinished"/>
     </message>
@@ -93,7 +89,15 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Deny All</source>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3604,7 +3608,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <source>URL</source>
@@ -5376,6 +5380,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Disconnect this application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
         <translation type="unfinished"/>
     </message>
 </context>

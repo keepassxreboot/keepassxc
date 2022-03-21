@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC didistribusikan di bawah Lisensi Publik Umum GNU (GPL) versi 2 atau (sesuai pilihan anda) versi 3.</translation>
+        <translation>KeePassXC didistribusikan di bawah Lisensi Publik Umum GNU (GPL) versi 2 atau (sesuai pilihan Anda) versi 3.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Sertakan informasi berikut setiap anda melaporkan bug:</translation>
+        <translation>Sertakan informasi berikut setiap Anda melaporkan bug:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -77,10 +77,6 @@
         <translation>Baris Perintah</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Detail</translation>
     </message>
@@ -93,8 +89,16 @@
         <translation>Izinkan Yang Dipilih</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Tolak Semua</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -203,7 +207,7 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Anda harus memulai ulang aplikasi untuk menerapkan bahasa. Apakah anda ingin memulai ulang sekarang?</translation>
+        <translation>Anda harus memulai ulang aplikasi untuk menerapkan bahasa. Apakah Anda ingin memulai ulang sekarang?</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
@@ -211,7 +215,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Apakah anda yakin ingin mengatur ulang pengaturan umum dan keamanan ke nilai bawaan?</translation>
+        <translation>Apakah Anda yakin ingin mengatur ulang pengaturan umum dan keamanan ke nilai bawaan?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
@@ -494,7 +498,7 @@
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation>Lama waktu habis penguncian basis data</translation>
+        <translation>Lama waktu habis penguncian basisdata</translation>
     </message>
     <message>
         <source> sec</source>
@@ -591,7 +595,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC membutuhkan izin Aksesibilitas untuk menjalankan Ketik-Otomatis entri. Jika anda sudah memberikan izin, anda perlu memulai ulang KeePassXC.</translation>
+        <translation>KeePassXC membutuhkan izin Aksesibilitas untuk menjalankan Ketik-Otomatis entri. Jika Anda sudah memberikan izin, Anda perlu memulai ulang KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -823,7 +827,7 @@ Silakan pilih basisdata yang digunakan untuk menyimpan kredensial.</translation>
 Do you want to create this group?
 </source>
         <translation>Permintaan untuk membuat grup &quot;%1&quot; telah diterima.
-Apakah anda ingin membuat grup ini?
+Apakah Anda ingin membuat grup ini?
 </translation>
     </message>
     <message>
@@ -854,7 +858,7 @@ chrome-laptop.</translation>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Kunci enkripsi bersama dengan nama &quot;%1&quot; sudah ada.
-Apakah anda ingin menimpanya ulang?</translation>
+Apakah Anda ingin menimpanya ulang?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -862,7 +866,7 @@ Apakah anda ingin menimpanya ulang?</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>Apakah anda ingin memperbarui informasi di dalam %1 - %2?</translation>
+        <translation>Apakah Anda ingin memperbarui informasi di dalam %1 - %2?</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
@@ -916,9 +920,9 @@ Memindahkan %2 ke data khusus.</translation>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation>Pengaturan KeePassXC-Browser anda perlu dipindahkan ke dalam pengaturan basisdata.
-Hal ini diperlukan untuk mempertahankan koneksi peramban anda saat ini.
-Apakah anda ingin memindahkan pengaturan yang ada sekarang?</translation>
+        <translation>Pengaturan KeePassXC-Browser Anda perlu dipindahkan ke dalam pengaturan basisdata.
+Hal ini diperlukan untuk mempertahankan koneksi peramban Anda saat ini.
+Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
 </context>
 <context>
@@ -929,7 +933,7 @@ Apakah anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Ini dibutuhkan untuk mengakses basisdata anda menggunakan KeePassXC-Browser</translation>
+        <translation>Ini dibutuhkan untuk mengakses basisdata Anda menggunakan KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1062,7 +1066,7 @@ Apakah anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Gunakan lokasi proksi khusus jika anda memasang proksi secara manual.</translation>
+        <translation>Gunakan lokasi proksi khusus jika Anda memasang proksi secara manual.</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
@@ -1116,7 +1120,7 @@ Apakah anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Karena adanya sandbox Snap, anda harus menjalankan skrip untuk mengaktifkan integrasi peramban.&lt;br /&gt;Anda bisa mendapatkan skrip ini dari %1</translation>
+        <translation>Karena adanya sandbox Snap, Anda harus menjalankan skrip untuk mengaktifkan integrasi peramban.&lt;br /&gt;Anda bisa mendapatkan skrip ini dari %1</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
@@ -1506,9 +1510,9 @@ We recommend you update your KeePassXC installation.</source>
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation>Membuka kunci basisdata gagal dan anda tidak memasukkan kata sandi.
-Apakah anda ingin mencoba kembali dengan kata sandi &quot;kosong&quot;?
-Untuk mencegah munculnya kesalahan ini, anda harus ke &quot;Pengaturan Basisdata / Keamanan&quot; dan mengatur ulang kata sandi anda.</translation>
+        <translation>Membuka kunci basisdata gagal dan Anda tidak memasukkan kata sandi.
+Apakah Anda ingin mencoba kembali dengan kata sandi &quot;kosong&quot;?
+Untuk mencegah munculnya kesalahan ini, Anda harus ke &quot;Pengaturan Basisdata / Keamanan&quot; dan mengatur ulang kata sandi Anda.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
@@ -1557,8 +1561,8 @@ Untuk mencegah munculnya kesalahan ini, anda harus ke &quot;Pengaturan Basisdata
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation>Anda tidak bisa menggunakan berkas basisdata anda sebagai berkas kunci,
-Jika anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
+        <translation>Anda tidak bisa menggunakan berkas basisdata Anda sebagai berkas kunci,
+Jika Anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
@@ -1660,7 +1664,7 @@ Jika anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
-        <translation>Apakah anda yakin ingin menghapus kunci yang dipilih?
+        <translation>Apakah Anda yakin ingin menghapus kunci yang dipilih?
 Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     </message>
     <message>
@@ -1682,7 +1686,7 @@ Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation>Apakah anda ingin memutus koneksi semua peramban?
+        <translation>Apakah Anda ingin memutus koneksi semua peramban?
 Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     </message>
     <message>
@@ -1704,7 +1708,7 @@ Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>Apakah anda ingin melupakan semua pengaturan spesifik situs pada semua entri?
+        <translation>Apakah Anda ingin melupakan semua pengaturan spesifik situs pada semua entri?
 Izin untuk mengakses entri akan dicabut.</translation>
     </message>
     <message>
@@ -1747,8 +1751,8 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Apakah anda yakin ingin menyegarkan ID basisdata?
-Ini hanya diperlukan jika basisdata anda adalah salinan dari basisdata yang lain dan ekstensi peramban tidak bisa tersambung.</translation>
+        <translation>Apakah Anda yakin ingin menyegarkan ID basisdata?
+Ini hanya diperlukan jika basisdata Anda adalah salinan dari basisdata yang lain dan ekstensi peramban tidak bisa tersambung.</translation>
     </message>
 </context>
 <context>
@@ -1767,7 +1771,7 @@ Ini hanya diperlukan jika basisdata anda adalah salinan dari basisdata yang lain
 Are you sure you want to continue without a password?</source>
         <translation>PERINGATAN! Anda belum mengatur sandi. Menggunakan basisdata tanpa sandi amat sangat tidak disarankan!
 
-Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
+Apakah Anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>Continue without password</source>
@@ -1779,7 +1783,7 @@ Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Anda harus menambahkan paling tidak satu kunci enkripsi untuk mengamankan basisdata anda!</translation>
+        <translation>Anda harus menambahkan paling tidak satu kunci enkripsi untuk mengamankan basisdata Anda!</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -2030,7 +2034,7 @@ If you keep this number, your database will not be protected from brute force at
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation>Apakah anda yakin ingin menghapus keranjang sampah dan semua isinya?
+        <translation>Apakah Anda yakin ingin menghapus keranjang sampah dan semua isinya?
 Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
@@ -2202,7 +2206,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Anda akan mengekspor basisdata anda ke berkas tanpa enkripsi. Ini akan membuat sandi dan informasi sensitif lainnya menjadi sangat rentan. Apakah anda yakin ingin melanjutkan?</translation>
+        <translation>Anda akan mengekspor basisdata Anda ke berkas tanpa enkripsi. Ini akan membuat sandi dan informasi sensitif lainnya menjadi sangat rentan. Apakah Anda yakin ingin melanjutkan?</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -2247,7 +2251,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>Apakah anda yakin ingin menjalankan perintah berikut?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Apakah Anda yakin ingin menjalankan perintah berikut?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
@@ -2259,7 +2263,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Apakah anda yakin ingin menghapus grup &quot;%1&quot; untuk selamanya?</translation>
+        <translation>Apakah Anda yakin ingin menghapus grup &quot;%1&quot; untuk selamanya?</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
@@ -2267,7 +2271,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Apakah anda yakin ingin memindahkan grup &quot;%1&quot; ke keranjang sampah?</translation>
+        <translation>Apakah Anda yakin ingin memindahkan grup &quot;%1&quot; ke keranjang sampah?</translation>
     </message>
     <message>
         <source>Expired entries</source>
@@ -2336,8 +2340,8 @@ Simpan perubahan?</translation>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>Berkas basisdata telah berubah dan anda memiliki ubahan yang belum disimpan.
-Apakah anda ingin menggabungkan ubahan anda?</translation>
+        <translation>Berkas basisdata telah berubah dan Anda memiliki ubahan yang belum disimpan.
+Apakah Anda ingin menggabungkan ubahan Anda?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
@@ -2381,7 +2385,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Apakah anda yakin ingin menghapus semuanya secara permanen dari keranjang sampah?</translation>
+        <translation>Apakah Anda yakin ingin menghapus semuanya secara permanen dari keranjang sampah?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
@@ -2424,7 +2428,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>Apakah anda yakin ingin membuang URL ini?</translation>
+        <translation>Apakah Anda yakin ingin membuang URL ini?</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -2501,7 +2505,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>Apakah anda yakin ingin menyimpan perubahan ke entri ini?</translation>
+        <translation>Apakah Anda yakin ingin menyimpan perubahan ke entri ini?</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -2513,7 +2517,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Apakah anda yakin ingin membuang atribut ini?</translation>
+        <translation>Apakah Anda yakin ingin membuang atribut ini?</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -3120,7 +3124,7 @@ Would you like to correct it?</source>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation>Versi KeePassXC anda tidak mendukung fitur berbagi untuk tipe kontainer ini.
+        <translation>Versi KeePassXC Anda tidak mendukung fitur berbagi untuk tipe kontainer ini.
 Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
@@ -3384,7 +3388,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>Apakah anda yakin ingin menghapus data pengaya?
+        <translation>Apakah Anda yakin ingin menghapus data pengaya?
 Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message>
@@ -3481,7 +3485,7 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Apakah anda yakin ingin membuang %n lampiran?</numerusform></translation>
+        <translation><numerusform>Apakah Anda yakin ingin membuang %n lampiran?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3495,7 +3499,7 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Apakah anda yakin ingin menimpa ulang berkas &quot;%1&quot; yang ada dengan berkas lampiran?</translation>
+        <translation>Apakah Anda yakin ingin menimpa ulang berkas &quot;%1&quot; yang ada dengan berkas lampiran?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -3544,9 +3548,9 @@ Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
         <translation>%1 adalah berkas yang sangat besar (%2 MB).
-Basisdata anda akan menjadi sangat besar dan akan mengurangi performa kinerja.
+Basisdata Anda akan menjadi sangat besar dan akan mengurangi performa kinerja.
 
-Apakah anda yakin ingin menambahkan berkas ini?</translation>
+Apakah Anda yakin ingin menambahkan berkas ini?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
@@ -4125,7 +4129,7 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -4182,7 +4186,7 @@ Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4601,7 +4605,7 @@ Baris %2, kolom %3</translation>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4865,8 +4869,8 @@ Pesan: %2</translation>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>Kunci berkas yang dipilih terlihat seperti kata sandi basisdata. Kunci berkas harus berkas statis yang tidak pernah berubah atau anda akan kehilangan akses ke basisdata anda selamanya.
-Apakah anda yakin ingin melanjutkan dengan berkas ini?</translation>
+        <translation>Kunci berkas yang dipilih terlihat seperti kata sandi basisdata. Kunci berkas harus berkas statis yang tidak pernah berubah atau Anda akan kehilangan akses ke basisdata Anda selamanya.
+Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
 </context>
 <context>
@@ -5320,7 +5324,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>Apakah anda ingin KeePassXC memeriksa pembaruan setiap memulai aplikasi?</translation>
+        <translation>Apakah Anda ingin KeePassXC memeriksa pembaruan setiap memulai aplikasi?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
@@ -5344,7 +5348,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Anda harus memulai ulang aplikasi untuk menerapkan pengaturan ini. Apakah anda ingin memulai ulang sekarang?</translation>
+        <translation>Anda harus memulai ulang aplikasi untuk menerapkan pengaturan ini. Apakah Anda ingin memulai ulang sekarang?</translation>
     </message>
 </context>
 <context>
@@ -5379,6 +5383,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Disconnect this application</source>
         <translation>Putuskan koneksi aplikasi ini</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5472,7 +5484,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Di sini anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
+        <translation>Di sini Anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, Anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
@@ -5502,7 +5514,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Di sini anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
+        <translation>Di sini Anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, Anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
     </message>
 </context>
 <context>
@@ -5513,7 +5525,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>Silakan masukkan nama dan deskripsi opsional untuk basisdata anda yang baru:</translation>
+        <translation>Silakan masukkan nama dan deskripsi opsional untuk basisdata Anda yang baru:</translation>
     </message>
 </context>
 <context>
@@ -5771,7 +5783,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Kata sandi adalah metode utama untuk mengamankan basisdata anda.&lt;/p&gt;&lt;p&gt;Kata sandi yang bagus adalah unik dan panjang. KeePassXC dapat menghasilkan satu untuk anda.&lt;/p&gt; </translation>
+        <translation>&lt;p&gt;Kata sandi adalah metode utama untuk mengamankan basisdata Anda.&lt;/p&gt;&lt;p&gt;Kata sandi yang bagus adalah unik dan panjang. KeePassXC dapat menghasilkan satu untuk Anda.&lt;/p&gt; </translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -7205,7 +7217,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation>Apakah anda ingin membuat basisdata dengan kata sandi kosong? [y/N]:</translation>
+        <translation>Apakah Anda ingin membuat basisdata dengan kata sandi kosong? [y/N]:</translation>
     </message>
     <message>
         <source>Repeat password: </source>
@@ -7880,11 +7892,11 @@ Kernel: %3 %4</translation>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>PERHATIAN: Laporan ini membutuhkan pengiriman informasi ke layanan online Have I Been Pwned (https://haveibeenpwned.com). Jika anda melanjutkan, kata sandi basisdata anda akan diacak secara kriptografis dan lima karakter pertama dari hash tersebut akan dikirim dengan aman ke layanan ini. Basisdata anda tetap aman dan tidak dapat dibangun kembali dari informasi ini. Namun, jumlah kata sandi yang anda kirim dan alamat IP anda akan terpapar ke layanan ini.</translation>
+        <translation>PERHATIAN: Laporan ini membutuhkan pengiriman informasi ke layanan online Have I Been Pwned (https://haveibeenpwned.com). Jika Anda melanjutkan, kata sandi basisdata Anda akan diacak secara kriptografis dan lima karakter pertama dari hash tersebut akan dikirim dengan aman ke layanan ini. Basisdata Anda tetap aman dan tidak dapat dibangun kembali dari informasi ini. Namun, jumlah kata sandi yang Anda kirim dan alamat IP Anda akan terpapar ke layanan ini.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation>Lakukan Analisis Online</translation>
+        <translation>Jalankan Analisis Daring</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
@@ -8558,7 +8570,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>Apakah anda yakin ingin menghapus pengaturan TOTP untuk entri ini?</translation>
+        <translation>Apakah Anda yakin ingin menghapus pengaturan TOTP untuk entri ini?</translation>
     </message>
 </context>
 <context>
@@ -8603,7 +8615,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Mulai menyimpan sandi anda dengan aman di dalam basisdata KeePassXC</translation>
+        <translation>Mulai menyimpan sandi Anda dengan aman di dalam basisdata KeePassXC</translation>
     </message>
     <message>
         <source>Create new database</source>

@@ -39,11 +39,11 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Повідомляючи про проблему, завжди долучайте наступну інформацію:</translation>
+        <translation>Повідомляючи про проблему, завжди долучайте таку інформацію:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Скопіювати в буфер обміну</translation>
+        <translation>Скопіювати в кишеню</translation>
     </message>
 </context>
 <context>
@@ -78,10 +78,6 @@
         <translation>Командна строка</translation>
     </message>
     <message>
-        <source>Your decision for above entries will be remembered for the duration the requesting client is running.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Деталі</translation>
     </message>
@@ -94,8 +90,16 @@
         <translation>Дозволити обрані</translation>
     </message>
     <message>
-        <source>Deny All</source>
-        <translation>Заборонити всі</translation>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny All &amp;&amp; Future</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -141,7 +145,7 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Немає доступних сокетів для SSH Agent. Або переконайтеся, що змінна оточення SSH_AUTH_SOCK існує, або вкажіть перевизначення для неї.</translation>
+        <translation>Немає доступних гнізд для SSH Agent. Або переконайтеся, що змінна оточення SSH_AUTH_SOCK існує, або вкажіть перевизначення для неї.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
@@ -176,7 +180,7 @@
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation>Текст поруч зі значком</translation>
+        <translation>Текст поруч із значком</translation>
     </message>
     <message>
         <source>Text under icon</source>
@@ -243,7 +247,7 @@
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Згортати вікно після розблокування бази даних</translation>
+        <translation>Згортати вікно після розблокування сховища</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
@@ -306,7 +310,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Створити резервну копію бази даних перед збереженням</translation>
+        <translation>Створювати резервну копію сховища перед збереженням</translation>
     </message>
     <message>
         <source>Backup destination</source>
@@ -350,7 +354,7 @@
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>Ховати вікно після копіювання у буфер обміну</translation>
+        <translation>Ховати вікно після копіювання у кишеню</translation>
     </message>
     <message>
         <source>Minimize</source>
@@ -472,7 +476,7 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Затримка введення символів під час автозаповнення:</translation>
+        <translation>Затримка вводження символів під час автозаповнення:</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
@@ -480,7 +484,7 @@
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>Затримка в мілісекундах перед введенням символів під час автозаповнення</translation>
+        <translation>Затримка в мілісекундах перед вводженням символів під час автозаповнення</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
@@ -840,7 +844,7 @@ chrome-laptop.</source>
         <translation>Ви одержали запит на сполучення з таким сховищем:
 %1
 
-Надайте сполученню унікальне ім&apos;я або ідентифікатор, наприклад:
+Надайте сполученню унікальну назву або ідентифікатор, наприклад:
 chrome-на-ноутбуці.</translation>
     </message>
     <message>
@@ -877,7 +881,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Converting attributes to custom data…</source>
-        <translation>Перетворення ознак користувацьких даних…</translation>
+        <translation>Перетворення ознак на користувацькі дані…</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -890,7 +894,7 @@ Do you want to delete the entry?
     <message>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
-        <translation>Ознаки %1 запису(-ів) успішно перетворені.
+        <translation>Ознаки %1 запису(-ів) успішно перетворено.
 %2 ключів переміщено до користувацьких даних.</translation>
     </message>
     <message numerus="yes">
@@ -911,7 +915,7 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: знайдено застаріле налаштування сполучення з переглядачами</translation>
+        <translation>KeePassXC: знайдено застарілі параметри сполучення з переглядачами</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
@@ -1125,7 +1129,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation>Нижче Ви можете знайти довідку з використання розширення переглядача</translation>
+        <translation>Нижче Ви можете знайти довідку з використання для розширення переглядача</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
@@ -1179,7 +1183,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>filename</source>
-        <translation>ім&apos;я файлу</translation>
+        <translation>назва файлу</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
@@ -1707,7 +1711,7 @@ This may prevent connection to the browser plugin.</source>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
         <translation>Ви дійсно бажаєте позбутися особливого налаштування всіх сайтів у кожному записі?
-Дозволи доступу до записів будуть скасовані.</translation>
+Дозволи доступу до записів буде скасовано.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -1749,8 +1753,8 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Ви дійсно бажаєте оновити ID сховища?
-Це необхідно лише тоді, коли ваше сховище є копією іншого і не вдається під&apos;єднати розширення браузера.</translation>
+        <translation>Ви дійсно бажаєте оновити ідентифікатор сховища?
+Це необхідно лише тоді, коли Ваше сховище є копією іншого і не вдається під&apos;єднати розширення переглядача.</translation>
     </message>
 </context>
 <context>
@@ -1927,7 +1931,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>Спроба перетворити ключ згідно з новими налаштуваннями ФОК зазнала невдачі; ФОК залишилась без змін.</translation>
+        <translation>Спроба перетворити ключ згідно з новими параметрами ФОК зазнала невдачі; ФОК залишилась без змін.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
@@ -2325,7 +2329,7 @@ Save changes?</source>
     </message>
     <message>
         <source>File has changed</source>
-        <translation>Файл був змінений</translation>
+        <translation>Файл було змінено</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
@@ -2470,7 +2474,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation>Хибний запис</translation>
+        <translation>Непридатний запис</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
@@ -2603,7 +2607,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Вкладення</translation>
+        <translation>Додатки</translation>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
@@ -2723,7 +2727,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Надсилати це налаштування до браузера лише в діалогах автентифікації HTTP. Якщо увімкнено, цей запис не буде показано для звичайних форм входу.</translation>
+        <translation>Надсилати цей параметр до переглядача лише в діалогах автентифікації HTTP. Якщо увімкнено, цей запис не буде показано для звичайних форм входу.</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
@@ -2937,7 +2941,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Attachment</source>
-        <translation>Вкладення</translation>
+        <translation>Додаток</translation>
     </message>
     <message>
         <source>External key file</source>
@@ -2953,7 +2957,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation>Вибрати файл вкладення</translation>
+        <translation>Вибрати файл додатку</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
@@ -2969,7 +2973,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation>Видалити ключ з агенту після вказаної кількості секунд</translation>
+        <translation>Видалити ключ з в&apos;язки посередника після вказаної кількості секунд</translation>
     </message>
     <message>
         <source> seconds</source>
@@ -3432,11 +3436,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Вкладення</translation>
+        <translation>Додаток</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation>Долучити нове вкладення</translation>
+        <translation>Долучити новий додаток</translation>
     </message>
     <message>
         <source>Add</source>
@@ -3444,7 +3448,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation>Видалити вибране вкладення</translation>
+        <translation>Видалити вибраний додаток</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -3460,7 +3464,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation>Відкрити вибране вкладення</translation>
+        <translation>Відкрити вибраний додаток</translation>
     </message>
     <message>
         <source>Open</source>
@@ -3468,7 +3472,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation>Зберегти вибране вкладення на диск</translation>
+        <translation>Зберегти вибраний додаток на диск</translation>
     </message>
     <message>
         <source>Save</source>
@@ -3484,11 +3488,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Ви дійсно бажаєте видалити %n вкладення?</numerusform><numerusform>Ви дійсно бажаєте видалити %n вкладення?</numerusform><numerusform>Ви дійсно бажаєте видалити %n вкладень?</numerusform><numerusform>Ви дійсно бажаєте видалити %n вкладень?</numerusform></translation>
+        <translation><numerusform>Ви дійсно бажаєте видалити %n додаток?</numerusform><numerusform>Ви дійсно бажаєте видалити %n додатки?</numerusform><numerusform>Ви дійсно бажаєте видалити %n додатків?</numerusform><numerusform>Ви дійсно бажаєте видалити %n додатків?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation>Зберегти вкладення</translation>
+        <translation>Зберегти додаток</translation>
     </message>
     <message>
         <source>Unable to create directory:
@@ -3498,7 +3502,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Ви дійсно бажаєте перезаписати наявний файл «%1» цим вкладенням?</translation>
+        <translation>Ви дійсно бажаєте перезаписати наявний файл «%1» цим додатком?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -3507,19 +3511,19 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation>Неможливо зберегти вкладення:
+        <translation>Неможливо зберегти додаток:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation>Неможливо відкрити вкладення:
+        <translation>Неможливо відкрити додаток:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>Неможливо відкрити вкладення:
+        <translation>Неможливо відкрити додаток:
 %1</translation>
     </message>
     <message numerus="yes">
@@ -3708,7 +3712,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Вкладення</translation>
+        <translation>Додаток</translation>
     </message>
     <message>
         <source>Size</source>
@@ -3748,7 +3752,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Attached files</source>
-        <translation>Вкладені файли</translation>
+        <translation>Додані файли</translation>
     </message>
     <message>
         <source>Entry size</source>
@@ -3756,7 +3760,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Has attachments</source>
-        <translation>Містить вкладення</translation>
+        <translation>Містить додатки</translation>
     </message>
     <message>
         <source>Has TOTP</source>
@@ -3811,7 +3815,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Вкладення</translation>
+        <translation>Додатки</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -3835,7 +3839,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Searching</source>
-        <translation>Пошук</translation>
+        <translation>Триває пошук</translation>
     </message>
     <message>
         <source>Share</source>
@@ -4027,7 +4031,7 @@ This will leave your passwords and sensitive information vulnerable!
     <name>FdoSecretsPlugin</name>
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
-        <translation>Служба таємниць Fdo: %1</translation>
+        <translation>&lt;b&gt;Служба таємниць Fdo:&lt;/b&gt; %1</translation>
     </message>
 </context>
 <context>
@@ -4220,7 +4224,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation>Знайдені застарілі поля заголовка у файлі KDBX4.</translation>
+        <translation>Знайдено застарілі поля заголовка у файлі KDBX4.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
@@ -5386,6 +5390,14 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Disconnect this application</source>
         <translation>Від&apos;єднати цей застосунок</translation>
     </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset any remembered decisions for this application</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Merger</name>
@@ -5403,7 +5415,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>об&apos;єднано зі старішим записом зі сховища &quot;%1&quot;</translation>
+        <translation>об&apos;єднано зі старішим записом із сховища &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
@@ -5624,7 +5636,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Непридатний логічний код файлу ключа</translation>
+        <translation>Непридатний логічний код файлового ключа</translation>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -5814,7 +5826,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Copy password</source>
-        <translation>Копіювати пароль</translation>
+        <translation>Скопіювати пароль</translation>
     </message>
     <message>
         <source>Password</source>
@@ -6228,7 +6240,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation>Запитати введення пароля для запису.</translation>
+        <translation>Запитувати введення пароля для запису.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
@@ -6288,7 +6300,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation>ІМʼЯ ФАЙЛУ</translation>
+        <translation>НАЗВА ФАЙЛУ</translation>
     </message>
     <message>
         <source>Path to okon-cli to search a formatted HIBP file</source>
@@ -6320,7 +6332,7 @@ Do you want to overwrite it?</source>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>Пароль для «%1» став відомим в %2 випадку!</numerusform><numerusform>Пароль для «%1» став відомим у %2 випадках!</numerusform><numerusform>Пароль для «%1» став відомим у %2 випадках!</numerusform><numerusform>Пароль для «%1» став відомим у %2 випадках!</numerusform></translation>
+        <translation><numerusform>Пароль для «%1» став відомим у %2 випадку!</numerusform><numerusform>Пароль для «%1» став відомим у %2 випадках!</numerusform><numerusform>Пароль для «%1» став відомим у %2 випадках!</numerusform><numerusform>Пароль для «%1» став відомим у %2 випадках!</numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
@@ -6421,7 +6433,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation>Скопіювати атрибут запису в буфер обміну.</translation>
+        <translation>Скопіювати ознаку запису в кишеню.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
@@ -6470,7 +6482,7 @@ Do you want to overwrite it?</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Очищення кишені через %1 секунду...</numerusform><numerusform>Очищення кишені через %1 секунди...</numerusform><numerusform>Очищення кишені через %1 секунд...</numerusform><numerusform>Очищення буфера обміну через %1 секунд...</numerusform></translation>
+        <translation><numerusform>Очищення кишені через %1 секунду...</numerusform><numerusform>Очищення кишені через %1 секунди...</numerusform><numerusform>Очищення кишені через %1 секунд...</numerusform><numerusform>Очищення кишені через %1 секунд...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -6490,7 +6502,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>Файловий ключа для сховища.</translation>
+        <translation>Файловий ключ для сховища.</translation>
     </message>
     <message>
         <source>path</source>
@@ -6566,7 +6578,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation>Встановлення %1 циклів для обчислення функції ключа.</translation>
+        <translation>Для обчислення функції ключа буде використано %1 циклів.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
@@ -7215,7 +7227,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation>Ви дійсно бажаєте створити сховище з порожнім паролем? [y/N]:</translation>
+        <translation>Ви дійсно бажаєте створити сховище з порожнім паролем? [y - так / N - ні]:</translation>
     </message>
     <message>
         <source>Repeat password: </source>
@@ -7361,7 +7373,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation>Сполучення з Таємною службою</translation>
+        <translation>Сполучення зі «Службою таємниць».</translation>
     </message>
     <message>
         <source>None</source>
@@ -7437,7 +7449,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>NULL device</source>
-        <translation>NULL пристрій</translation>
+        <translation>пристрій NULL</translation>
     </message>
     <message>
         <source>error reading from device</source>
@@ -7831,12 +7843,12 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Poor — password should be changed</source>
-        <translation>Слабка – пароль слід змінити</translation>
+        <translation>Погана – пароль слід змінити</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Низька</translation>
+        <translation>Слабка</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
@@ -8034,7 +8046,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation>Сховище було змінено, але поточні зміни ще не було записано на диск.</translation>
+        <translation>Сховище було змінено, але поточні зміни ще не записані на диск.</translation>
     </message>
     <message>
         <source>Number of groups</source>
@@ -8277,7 +8289,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation>Увімкнути сполучення KeePassXC з Таємною службою Freedesktop.org</translation>
+        <translation>Увімкнути сполучення KeePassXC зі «Службою таємниць» Freedesktop.org</translation>
     </message>
     <message>
         <source>General</source>
@@ -8337,7 +8349,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Зберегти поточні зміни, щоб увімкнути модуль і уможливити редагування в цьому розділі.</translation>
+        <translation>Збережіть поточні зміни, щоб увімкнути модуль і уможливити редагування в цьому розділі.</translation>
     </message>
 </context>
 <context>
@@ -8717,7 +8729,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Обрана комірка апаратного ключа не підтримує виклик-відповідь!</translation>
+        <translation>Обране гніздо апаратного ключа не підтримує виклик-відповідь!</translation>
     </message>
     <message>
         <source>Challenge-Response</source>
@@ -8749,7 +8761,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>Не виявлено апаратних ключів</translation>
+        <translation>Апаратних ключів не виявлено</translation>
     </message>
 </context>
 <context>
