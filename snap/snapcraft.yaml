@@ -50,6 +50,7 @@ parts:
       - libpcsclite-dev
       - libminizip-dev
       - libxi-dev
+      - libxtst-dev
       - asciidoctor
     stage-packages:
       - dbus
@@ -59,4 +60,5 @@ parts:
       - libreadline8
       - libpcsclite1
       - libminizip1
+      - libxtst6
       - xclip
