@@ -245,6 +245,9 @@ macro(check_add_gcc_compiler_flag FLAG)
 endmacro(check_add_gcc_compiler_flag)
 
 add_definitions(-DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
+if(NOT IS_DEBUG_BUILD)
+    add_definitions(-DQT_NO_DEBUG_OUTPUT)
+endif()
 
 if(WITH_APP_BUNDLE)
     add_definitions(-DWITH_APP_BUNDLE)

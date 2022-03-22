@@ -404,7 +404,6 @@ void AutoType::startGlobalAutoType(const QString& search)
                 tr("KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global "
                    "Auto-Type. Screen Recording is necessary to use the window title to find entries. If you "
                    "already granted permission, you may have to restart KeePassXC."));
-            qDebug() << "Oh noes macOS.";
             return;
         }
     }
