@@ -313,7 +313,7 @@ namespace Utils
             // Other platforms understand UTF-8
             if (clipProcess->write(text.toUtf8()) == -1) {
 #endif
-                qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
+                qWarning("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
             }
             clipProcess->waitForBytesWritten();
             clipProcess->closeWriteChannel();

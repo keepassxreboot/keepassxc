@@ -197,7 +197,7 @@ namespace
                             rv = SCardBeginTransaction(handle);
                         }
 #endif
-                        qDebug("Smardcard was reset and had to be reconnected");
+                        qDebug("Smartcard was reset and had to be reconnected");
                     } else {
                         // This does not mean that the payload returned SCARD_S_SUCCESS
                         //  just that the card was not reset during communication.
@@ -208,7 +208,7 @@ namespace
                 }
                 if (i == 0) {
                     rv = SCARD_W_RESET_CARD;
-                    qDebug("Smardcard was reset and failed to reconnect after 3 tries");
+                    qDebug("Smartcard was reset and failed to reconnect after 3 tries");
                 }
             }
         }

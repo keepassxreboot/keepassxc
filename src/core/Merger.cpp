@@ -66,8 +66,6 @@ QStringList Merger::merge()
     changes << mergeDeletions(m_context);
     changes << mergeMetadata(m_context);
 
-    // qDebug("Merged %s", qPrintable(changes.join("\n\t")));
-
     // At this point we have a list of changes we may want to show the user
     if (!changes.isEmpty()) {
         m_context.m_targetDb->markAsModified();
