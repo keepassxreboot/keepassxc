@@ -297,8 +297,6 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
             getMainWindow()->minimizeOrHide();
         }
 #endif
-        QCoreApplication::processEvents();
-        window = m_plugin->activeWindow();
     } else {
         // Restore window state (macOS only) then raise the target window
         restoreWindowState();
@@ -311,6 +309,11 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
 
     int delay = qMax(100, config()->get(Config::AutoTypeStartDelay).toInt());
     Tools::wait(delay);
+
+    // Grab the current active window after everything settles
+    if (window == 0) {
+        window = m_plugin->activeWindow();
+    }
 
     for (const auto& action : asConst(actions)) {
         if (m_plugin->activeWindow() != window) {
