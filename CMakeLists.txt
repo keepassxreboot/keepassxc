@@ -522,7 +522,7 @@ if(UNIX)
             HAVE_MALLOC_H)
 
     check_cxx_source_compiles("#include <malloc.h>
-    int main() { malloc_usable_size(NULL, 0); return 0; }"
+    int main() { malloc_usable_size(NULL); return 0; }"
             HAVE_MALLOC_USABLE_SIZE)
 
     check_cxx_source_compiles("#include <sys/resource.h>
