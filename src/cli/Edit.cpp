@@ -53,6 +53,7 @@ Edit::Edit()
     options.append(Generate::ExcludeCharsOption);
     options.append(Generate::ExcludeSimilarCharsOption);
     options.append(Generate::IncludeEveryGroupOption);
+    options.append(Generate::CustomCharacterSetOption);
 }
 
 int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

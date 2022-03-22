@@ -65,6 +65,7 @@ Add::Add()
     options.append(Generate::ExcludeCharsOption);
     options.append(Generate::ExcludeSimilarCharsOption);
     options.append(Generate::IncludeEveryGroupOption);
+    options.append(Generate::CustomCharacterSetOption);
 }
 
 int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
