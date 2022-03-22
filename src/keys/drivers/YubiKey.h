@@ -46,7 +46,8 @@ public:
     static YubiKey* instance();
     bool isInitialized();
 
-    void findValidKeys();
+    bool findValidKeys();
+    void findValidKeysAsync();
 
     QList<YubiKeySlot> foundKeys();
     QString getDisplayName(YubiKeySlot slot);
@@ -84,8 +85,6 @@ private:
     QTimer m_interactionTimer;
     bool m_initialized = false;
     QString m_error;
-    int m_interfaces_detect_completed = -1;
-    bool m_interfaces_detect_found = false;
     QMutex m_interfaces_detect_mutex;
 
     Q_DISABLE_COPY(YubiKey)

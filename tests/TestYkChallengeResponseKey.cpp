@@ -43,10 +43,6 @@ void TestYubiKeyChallengeResponse::testDetectDevices()
 {
     YubiKey::instance()->findValidKeys();
 
-    // Wait for the hardware to respond
-    QSignalSpy detected(YubiKey::instance(), SIGNAL(detectComplete(bool)));
-    QTRY_VERIFY_WITH_TIMEOUT(detected.count() > 0, 2000);
-
     // Look at the information retrieved from the key(s)
     for (auto key : YubiKey::instance()->foundKeys()) {
         auto displayName = YubiKey::instance()->getDisplayName(key);

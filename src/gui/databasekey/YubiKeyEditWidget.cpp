@@ -122,7 +122,7 @@ void YubiKeyEditWidget::pollYubikey()
     m_compUi->comboChallengeResponse->setEnabled(false);
     m_compUi->yubikeyProgress->setVisible(true);
 
-    YubiKey::instance()->findValidKeys();
+    YubiKey::instance()->findValidKeysAsync();
 #endif
 }
 
