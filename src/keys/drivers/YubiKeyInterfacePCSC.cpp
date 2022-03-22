@@ -17,9 +17,8 @@
 
 #include "YubiKeyInterfacePCSC.h"
 
+#include "core/Tools.h"
 #include "crypto/Random.h"
-
-#include <QtConcurrent>
 
 // MSYS2 does not define these macros
 // So set them to the value used by pcsc-lite
@@ -530,109 +529,98 @@ YubiKeyInterfacePCSC* YubiKeyInterfacePCSC::instance()
     return m_instance;
 }
 
-void YubiKeyInterfacePCSC::findValidKeys()
+bool YubiKeyInterfacePCSC::findValidKeys()
 {
     m_error.clear();
     if (!isInitialized()) {
-        return;
+        return false;
     }
+    // Remove all known keys
+    m_foundKeys.clear();
 
-    QtConcurrent::run([this] {
-        // This mutex protects the smartcard against concurrent transmissions
-        if (!m_mutex.tryLock(1000)) {
-            emit detectComplete(false);
-            return;
+    // Connect to each reader and look for cards
+    auto readers_list = getReaders(m_sc_context);
+    foreach (const QString& reader_name, readers_list) {
+
+        /* Some Yubikeys present their PCSC interface via USB as well
+           Although this would not be a problem in itself,
+           we filter these connections because in USB mode,
+           the PCSC challenge-response interface is usually locked
+           Instead, the other USB (HID) interface should pick up and
+           interface the key.
+           For more info see the comment block further below. */
+        if (reader_name.contains("yubikey", Qt::CaseInsensitive)) {
+            continue;
         }
 
-        // Remove all known keys
-        m_foundKeys.clear();
+        SCARDHANDLE hCard;
+        SCUINT dwActiveProtocol = SCARD_PROTOCOL_UNDEFINED;
+        auto rv = SCardConnect(m_sc_context,
+                               reader_name.toStdString().c_str(),
+                               SCARD_SHARE_SHARED,
+                               SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
+                               &hCard,
+                               &dwActiveProtocol);
 
-        // Connect to each reader and look for cards
-        auto readers_list = getReaders(m_sc_context);
-        foreach (const QString& reader_name, readers_list) {
+        if (rv == SCARD_S_SUCCESS) {
+            // Read the potocol and the ATR record
+            char pbReader[MAX_READERNAME] = {0};
+            SCUINT dwReaderLen = sizeof(pbReader);
+            SCUINT dwState = 0;
+            SCUINT dwProt = SCARD_PROTOCOL_UNDEFINED;
+            uint8_t pbAtr[MAX_ATR_SIZE] = {0};
+            SCUINT dwAtrLen = sizeof(pbAtr);
 
-            /* Some Yubikeys present their PCSC interface via USB as well
-               Although this would not be a problem in itself,
-               we filter these connections because in USB mode,
-               the PCSC challenge-response interface is usually locked
-               Instead, the other USB (HID) interface should pick up and
-               interface the key.
-               For more info see the comment block further below. */
-            if (reader_name.contains("yubikey", Qt::CaseInsensitive)) {
-                continue;
-            }
+            rv = SCardStatus(hCard, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
+            if (rv == SCARD_S_SUCCESS && (dwProt == SCARD_PROTOCOL_T0 || dwProt == SCARD_PROTOCOL_T1)) {
+                // Find which AID to use
+                SCardAID satr;
+                if (findAID(hCard, m_aid_codes, satr)) {
+                    // Build the UI name using the display name found in the ATR map
+                    QByteArray atr(reinterpret_cast<char*>(pbAtr), dwAtrLen);
+                    QString name("Unknown Key");
+                    if (m_atr_names.contains(atr)) {
+                        name = m_atr_names.value(atr);
+                    }
+                    // Add the firmware version and the serial number
+                    uint8_t version[3] = {0};
+                    getStatus(satr, version);
+                    name +=
+                        QString(" v%1.%2.%3")
+                            .arg(QString::number(version[0]), QString::number(version[1]), QString::number(version[2]));
 
-            SCARDHANDLE hCard;
-            SCUINT dwActiveProtocol = SCARD_PROTOCOL_UNDEFINED;
-            auto rv = SCardConnect(m_sc_context,
-                                   reader_name.toStdString().c_str(),
-                                   SCARD_SHARE_SHARED,
-                                   SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
-                                   &hCard,
-                                   &dwActiveProtocol);
+                    unsigned int serial = 0;
+                    getSerial(satr, serial);
 
-            if (rv == SCARD_S_SUCCESS) {
-                // Read the potocol and the ATR record
-                char pbReader[MAX_READERNAME] = {0};
-                SCUINT dwReaderLen = sizeof(pbReader);
-                SCUINT dwState = 0;
-                SCUINT dwProt = SCARD_PROTOCOL_UNDEFINED;
-                uint8_t pbAtr[MAX_ATR_SIZE] = {0};
-                SCUINT dwAtrLen = sizeof(pbAtr);
-
-                rv = SCardStatus(hCard, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
-                if (rv == SCARD_S_SUCCESS && (dwProt == SCARD_PROTOCOL_T0 || dwProt == SCARD_PROTOCOL_T1)) {
-                    // Find which AID to use
-                    SCardAID satr;
-                    if (findAID(hCard, m_aid_codes, satr)) {
-                        // Build the UI name using the display name found in the ATR map
-                        QByteArray atr(reinterpret_cast<char*>(pbAtr), dwAtrLen);
-                        QString name("Unknown Key");
-                        if (m_atr_names.contains(atr)) {
-                            name = m_atr_names.value(atr);
-                        }
-                        // Add the firmware version and the serial number
-                        uint8_t version[3] = {0};
-                        getStatus(satr, version);
-                        name += QString(" v%1.%2.%3")
-                                    .arg(QString::number(version[0]),
-                                         QString::number(version[1]),
-                                         QString::number(version[2]));
-
-                        unsigned int serial = 0;
-                        getSerial(satr, serial);
-
-                        /* This variable indicates that the key is locked / timed out.
-                            When using the key via NFC, the user has to re-present the key to clear the timeout.
-                            Also, the key can be programmatically reset (see below).
-                            When using the key via USB (where the Yubikey presents as a PCSC reader in itself),
-                            the non-HMAC-SHA1 slots (eg. OTP) are incorrectly recognized as locked HMAC-SHA1 slots.
-                            Due to this conundrum, we exclude "locked" keys from the key enumeration,
-                            but only if the reader is the "virtual yubikey reader device".
-                            This also has the nice side effect of de-duplicating interfaces when a key
-                            Is connected via USB and also accessible via PCSC */
-                        bool wouldBlock = false;
-                        /* When the key is used via NFC, the lock state / time-out is cleared when
-                            the smartcard connection is re-established / the applet is selected
-                            so the next call to performTestChallenge actually clears the lock.
-                            Due to this the key is unlocked, and we display it as such.
-                            When the key times out in the time between the key listing and
-                            the database unlock /save, an interaction request will be displayed. */
-                        for (int slot = 1; slot <= 2; ++slot) {
-                            if (performTestChallenge(&satr, slot, &wouldBlock)) {
-                                auto display = tr("(PCSC) %1 [%2] Challenge-Response - Slot %3")
-                                                   .arg(name, QString::number(serial), QString::number(slot));
-                                m_foundKeys.insert(serial, {slot, display});
-                            }
+                    /* This variable indicates that the key is locked / timed out.
+                        When using the key via NFC, the user has to re-present the key to clear the timeout.
+                        Also, the key can be programmatically reset (see below).
+                        When using the key via USB (where the Yubikey presents as a PCSC reader in itself),
+                        the non-HMAC-SHA1 slots (eg. OTP) are incorrectly recognized as locked HMAC-SHA1 slots.
+                        Due to this conundrum, we exclude "locked" keys from the key enumeration,
+                        but only if the reader is the "virtual yubikey reader device".
+                        This also has the nice side effect of de-duplicating interfaces when a key
+                        Is connected via USB and also accessible via PCSC */
+                    bool wouldBlock = false;
+                    /* When the key is used via NFC, the lock state / time-out is cleared when
+                        the smartcard connection is re-established / the applet is selected
+                        so the next call to performTestChallenge actually clears the lock.
+                        Due to this the key is unlocked, and we display it as such.
+                        When the key times out in the time between the key listing and
+                        the database unlock /save, an interaction request will be displayed. */
+                    for (int slot = 1; slot <= 2; ++slot) {
+                        if (performTestChallenge(&satr, slot, &wouldBlock)) {
+                            auto display = tr("(PCSC) %1 [%2] Challenge-Response - Slot %3")
+                                               .arg(name, QString::number(serial), QString::number(slot));
+                            m_foundKeys.insert(serial, {slot, display});
                         }
                     }
                 }
             }
         }
+    }
 
-        m_mutex.unlock();
-        emit detectComplete(!m_foundKeys.isEmpty());
-    });
+    return !m_foundKeys.isEmpty();
 }
 
 bool YubiKeyInterfacePCSC::testChallenge(YubiKeySlot slot, bool* wouldBlock)
@@ -704,7 +692,7 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
         }
 
         if (--tries > 0) {
-            QThread::msleep(250);
+            Tools::sleep(250);
         }
     }
 

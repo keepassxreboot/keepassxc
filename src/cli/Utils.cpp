@@ -167,14 +167,14 @@ namespace Utils
                 }
             }
 
-            auto conn = QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
-                err << QObject::tr("Please present or touch your YubiKey to continue…") << "\n\n" << flush;
+            QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
+                err << QObject::tr("Please present or touch your YubiKey to continue.") << "\n\n" << flush;
             });
 
             auto key = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey({serial, slot}));
             compositeKey->addChallengeResponseKey(key);
 
-            QObject::disconnect(conn);
+            YubiKey::instance()->findValidKeys();
         }
 #else
         Q_UNUSED(yubiKeySlot);

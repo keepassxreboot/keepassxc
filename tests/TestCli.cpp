@@ -2075,10 +2075,6 @@ void TestCli::testYubiKeyOption()
 
     YubiKey::instance()->findValidKeys();
 
-    // Wait for the hardware to respond
-    QSignalSpy detected(YubiKey::instance(), SIGNAL(detectComplete(bool)));
-    QTRY_VERIFY_WITH_TIMEOUT(detected.count() > 0, 2000);
-
     auto keys = YubiKey::instance()->foundKeys();
     if (keys.isEmpty()) {
         QSKIP("No YubiKey devices were detected.");
@@ -2094,7 +2090,7 @@ void TestCli::testYubiKeyOption()
     for (auto key : keys) {
         if (YubiKey::instance()->testChallenge(key, &wouldBlock) && !wouldBlock) {
             YubiKey::instance()->challenge(key, challenge, response);
-            if (std::memcmp(response.data(), expected.data(), expected.size())) {
+            if (std::memcmp(response.data(), expected.data(), expected.size()) == 0) {
                 pKey = key;
                 break;
             }
@@ -2110,7 +2106,11 @@ void TestCli::testYubiKeyOption()
     Add addCmd;
 
     setInput("a");
-    execCmd(listCmd, {"ls", "-y", "2", m_yubiKeyProtectedDbFile->fileName()});
+    execCmd(listCmd,
+            {"ls",
+             "-y",
+             QString("%1:%2").arg(QString::number(pKey.second), QString::number(pKey.first)),
+             m_yubiKeyProtectedDbFile->fileName()});
     m_stderr->readLine(); // skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
     QCOMPARE(m_stdout->readAll(),

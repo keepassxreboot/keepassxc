@@ -33,7 +33,7 @@ class YubiKeyInterfaceUSB : public YubiKeyInterface
 public:
     static YubiKeyInterfaceUSB* instance();
 
-    void findValidKeys() override;
+    bool findValidKeys() override;
 
     YubiKey::ChallengeResult
     challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response) override;
