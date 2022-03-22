@@ -60,6 +60,7 @@ private slots:
 
 private:
     void buildActionMenu();
+    void setDelayedSearch(bool state);
 
     QScopedPointer<Ui::AutoTypeSelectDialog> m_ui;
 

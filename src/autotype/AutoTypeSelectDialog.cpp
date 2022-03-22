@@ -62,7 +62,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
 
     m_ui->search->installEventFilter(this);
 
-    m_searchTimer.setInterval(300);
+    m_searchTimer.setInterval(0);
     m_searchTimer.setSingleShot(true);
 
     connect(m_ui->search, SIGNAL(textChanged(QString)), &m_searchTimer, SLOT(start()));
@@ -71,7 +71,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
 
     m_ui->searchCheckBox->setShortcut(Qt::CTRL + Qt::Key_F);
     connect(m_ui->searchCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
-        Q_UNUSED(checked);
+        setDelayedSearch(checked);
         performSearch();
     });
 
@@ -107,12 +107,18 @@ void AutoTypeSelectDialog::setMatches(const QList<AutoTypeMatch>& matches,
 
     // always perform search when updating matches to refresh view
     performSearch();
+    setDelayedSearch(noMatches);
 }
 
 void AutoTypeSelectDialog::setSearchString(const QString& search)
 {
     m_ui->search->setText(search);
     m_ui->searchCheckBox->setChecked(true);
+}
+
+void AutoTypeSelectDialog::setDelayedSearch(bool state)
+{
+    m_searchTimer.setInterval(state ? 150 : 0);
 }
 
 void AutoTypeSelectDialog::submitAutoTypeMatch(AutoTypeMatch match)
