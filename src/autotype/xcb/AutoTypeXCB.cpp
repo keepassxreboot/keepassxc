@@ -26,6 +26,15 @@
 #include <X11/Xutil.h>
 #include <X11/extensions/XTest.h>
 
+/* map of ASCII non-dead keys to equivalent dead keys that need to be repeated */
+static const QPair<KeySym, KeySym> deadMap[] = {
+    {XK_acute, XK_dead_acute},
+    {XK_grave, XK_dead_grave},
+    {XK_asciicircum, XK_dead_circumflex},
+    {XK_asciitilde, XK_dead_tilde},
+    {XK_asciitilde, XK_dead_perispomeni},
+};
+
 AutoTypePlatformX11::AutoTypePlatformX11()
 {
     // Qt handles XCB slightly differently so we open our own connection
@@ -391,9 +400,10 @@ void AutoTypePlatformX11::SendModifiers(unsigned int mask, bool press)
  * Determines the keycode and modifier mask for the given
  * keysym.
  */
-bool AutoTypePlatformX11::GetKeycode(KeySym keysym, int* keycode, int* group, unsigned int* mask)
+bool AutoTypePlatformX11::GetKeycode(KeySym keysym, int* keycode, int* group, unsigned int* mask, bool* repeat)
 {
     const KeyDesc* desc = nullptr;
+    bool isDead = false;
 
     for (const auto& key : m_keymap) {
         if (key.sym == keysym) {
@@ -404,10 +414,28 @@ bool AutoTypePlatformX11::GetKeycode(KeySym keysym, int* keycode, int* group, un
         }
     }
 
+    // try to find the best dead key mapping if we're unlucky to have one
+    if (!desc) {
+        for (const auto& map : deadMap) {
+            if (map.first == keysym) {
+                for (const auto& key : m_keymap) {
+                    if (key.sym == map.second) {
+                        // same as above, we try to match the group so no breaking out
+                        if (desc == nullptr || key.group == *group) {
+                            desc = &key;
+                            isDead = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     if (desc) {
         *keycode = desc->code;
         *group = desc->group;
         *mask = desc->mask;
+        *repeat = isDead;
         return true;
     }
 
@@ -416,6 +444,7 @@ bool AutoTypePlatformX11::GetKeycode(KeySym keysym, int* keycode, int* group, un
         *keycode = m_remapKeycode;
         *group = 0;
         *mask = 0;
+        *repeat = false;
         return true;
     }
 
@@ -463,6 +492,7 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
     int group;
     int group_active;
     unsigned int wanted_mask;
+    bool repeat;
 
     /* pull current active layout group */
     XkbStateRec state;
@@ -490,7 +520,7 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
     }
 
     /* determine keycode, group and mask for the given keysym */
-    if (!GetKeycode(keysym, &keycode, &group, &wanted_mask)) {
+    if (!GetKeycode(keysym, &keycode, &group, &wanted_mask, &repeat)) {
         return AutoTypeAction::Result::Failed(tr("Unable to get valid keycode for key: ")
                                               + QString(XKeysymToString(keysym)));
     }
@@ -506,12 +536,16 @@ AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int 
         XFlush(m_dpy);
     }
 
-    /* hold modifiers and press key */
+    /* hold modifiers */
     SendModifiers(press_mask, true);
-    SendKeyEvent(keycode, true);
 
-    /* release key and release modifiers */
-    SendKeyEvent(keycode, false);
+    /* press and release key, with repeat if necessary */
+    for (int i = 0; i < (repeat ? 2 : 1); i++) {
+        SendKeyEvent(keycode, true);
+        SendKeyEvent(keycode, false);
+    }
+
+    /* release modifiers */
     SendModifiers(press_mask, false);
 
     /* reset layout group if necessary */
