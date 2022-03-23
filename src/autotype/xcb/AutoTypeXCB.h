@@ -61,7 +61,7 @@ private:
     bool RemapKeycode(KeySym keysym);
     void SendKeyEvent(unsigned keycode, bool press);
     void SendModifiers(unsigned int mask, bool press);
-    bool GetKeycode(KeySym keysym, int* keycode, int* group, unsigned int* mask);
+    bool GetKeycode(KeySym keysym, int* keycode, int* group, unsigned int* mask, bool* repeat);
 
     static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 
