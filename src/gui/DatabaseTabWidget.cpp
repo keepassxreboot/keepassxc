@@ -18,6 +18,7 @@
 #include "DatabaseTabWidget.h"
 
 #include <QFileInfo>
+#include <QTabBar>
 
 #include "autotype/AutoType.h"
 #include "core/Tools.h"
@@ -26,7 +27,6 @@
 #include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
-#include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
 #include "gui/HtmlExporter.h"
 #include "gui/MessageBox.h"
@@ -42,7 +42,9 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     , m_dbWidgetPendingLock(nullptr)
     , m_databaseOpenDialog(new DatabaseOpenDialog(this))
 {
-    auto* tabBar = new DragTabBar(this);
+    auto* tabBar = new QTabBar(this);
+    tabBar->setAcceptDrops(true);
+    tabBar->setChangeCurrentOnDrag(true);
     setTabBar(tabBar);
     setDocumentMode(true);
 

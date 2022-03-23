@@ -107,7 +107,6 @@ set(keepassx_SOURCES
         gui/DatabaseWidgetStateSync.cpp
         gui/EntryPreviewWidget.cpp
         gui/DialogyWidget.cpp
-        gui/DragTabBar.cpp
         gui/EditWidget.cpp
         gui/EditWidgetIcons.cpp
         gui/EditWidgetProperties.cpp
