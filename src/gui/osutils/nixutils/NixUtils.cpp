@@ -24,13 +24,15 @@
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
-#include <QX11Info>
 
 #include <qpa/qplatformnativeinterface.h>
 
 #include "X11Funcs.h"
 #include <X11/XKBlib.h>
 #include <xcb/xproto.h>
+
+#ifdef WITH_XC_AUTOTYPE
+#include <QX11Info>
 
 namespace
 {
@@ -44,6 +46,7 @@ namespace
         return 1;
     }
 } // namespace
+#endif
 
 QPointer<NixUtils> NixUtils::m_instance = nullptr;
 
@@ -59,8 +62,10 @@ NixUtils* NixUtils::instance()
 NixUtils::NixUtils(QObject* parent)
     : OSUtilsBase(parent)
 {
+#ifdef WITH_XC_AUTOTYPE
     dpy = QX11Info::display();
     rootWindow = QX11Info::appRootWindow();
+#endif
 
     // notify about system color scheme changes
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
@@ -214,6 +219,7 @@ bool NixUtils::triggerGlobalShortcut(uint keycode, uint modifiers)
 
 bool NixUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)
 {
+#ifdef WITH_XC_AUTOTYPE
     auto keycode = XKeysymToKeycode(dpy, qcharToNativeKeyCode(key));
     auto modifierscode = qtToNativeModifiers(modifiers);
 
@@ -255,6 +261,13 @@ bool NixUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::Keyb
     gs->nativeModifiers = modifierscode;
     m_globalShortcuts.insert(name, gs);
     return true;
+#else
+    (void)name;
+    (void)key;
+    (void)modifiers;
+    *error = tr("Auto-Type disabled at compile time");
+    return false;
+#endif
 }
 
 bool NixUtils::unregisterGlobalShortcut(const QString& name)
@@ -263,6 +276,7 @@ bool NixUtils::unregisterGlobalShortcut(const QString& name)
         return false;
     }
 
+#ifdef WITH_XC_AUTOTYPE
     auto gs = m_globalShortcuts.value(name);
     XUngrabKey(dpy, gs->nativeKeyCode, gs->nativeModifiers, rootWindow);
     XUngrabKey(dpy, gs->nativeKeyCode, gs->nativeModifiers | Mod2Mask, rootWindow);
@@ -270,6 +284,7 @@ bool NixUtils::unregisterGlobalShortcut(const QString& name)
     XUngrabKey(dpy, gs->nativeKeyCode, gs->nativeModifiers | Mod2Mask | LockMask, rootWindow);
 
     m_globalShortcuts.remove(name);
+#endif
     return true;
 }
 

@@ -440,7 +440,10 @@ include(CLangFormat)
 
 set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools)
 if(UNIX AND NOT APPLE)
-    find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus X11Extras REQUIRED)
+    find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus REQUIRED)
+    if(WITH_XC_AUTOTYPE)
+        find_package(Qt5 COMPONENTS ${QT_COMPONENTS} X11Extras REQUIRED)
+    endif()
 elseif(APPLE)
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED HINTS
             /usr/local/opt/qt/lib/cmake
