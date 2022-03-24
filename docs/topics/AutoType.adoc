@@ -68,6 +68,18 @@ image::autotype_entry_sequences.png[]
 |{PICKCHARS}   |Pick specific password characters from a dialog
 |{MODE=VIRTUAL} |(Experimental) Use virtual key presses on Windows, useful for virtual machines
 |===
++
+[grid=rows, frame=none, width=90%]
+|===
+|Modifier |Description
+
+|+        |SHIFT
+|^        |CTRL
+|%        |ALT
+|#        |WIN/CMD
+|===
+
+TIP: Use modifiers to hold down special keys before typing the next character. For example, to type *CTRL+SHIFT+D* use: `^+d`. This is useful if you need to activate certain actions in a program or on your desktop.
 
 === Performing Global Auto-Type
 The global Auto-Type keyboard shortcut is used when you have focus on the window you want to type into. To make use of this feature, you must have previously configured an Auto-Type hotkey.

@@ -297,7 +297,7 @@ AutoTypeAction::Result AutoTypeExecutorWin::execType(const AutoTypeKey* action)
         m_platform->setKeyState(action->key, true);
         m_platform->setKeyState(action->key, false);
     } else {
-        if (mode == Mode::VIRTUAL) {
+        if (mode == Mode::VIRTUAL || action->modifiers != Qt::NoModifier) {
             m_platform->sendCharVirtual(action->character);
         } else {
             m_platform->sendChar(action->character);
