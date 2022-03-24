@@ -84,6 +84,15 @@ Examples: +
 |{PICKCHARS}   |Pick specific password characters from a dialog
 |===
 
+[grid=rows, frame=none, width=90%]
+|===
+|Modifier |Description
+
+|+        |SHIFT
+|^        |CTRL
+|%        |ALT
+|#        |WIN/CMD
+|===
 *Text Conversions:*
 
 `{T-CONV:/&lt;PLACEHOLDER&gt;/&lt;METHOD&gt;/}` +
