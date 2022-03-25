@@ -232,7 +232,7 @@ void EntryHistoryModel::calculateHistoryModifications()
             || curr->timeInfo().expiryTime() != compare->timeInfo().expiryTime()) {
             modifiedFields << tr("Expiration");
         }
-        if (curr->totpSettingsString() != compare->totpSettingsString()) {
+        if (curr->totp() != compare->totp()) {
             modifiedFields << tr("TOTP");
         }
         if (*curr->customData() != *compare->customData()) {
