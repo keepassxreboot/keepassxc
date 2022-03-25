@@ -3679,6 +3679,10 @@ Error: %1</source>
         <source>Auto-Type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>

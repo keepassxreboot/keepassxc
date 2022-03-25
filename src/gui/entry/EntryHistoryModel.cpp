@@ -246,6 +246,9 @@ void EntryHistoryModel::calculateHistoryModifications()
             || curr->defaultAutoTypeSequence() != compare->defaultAutoTypeSequence()) {
             modifiedFields << tr("Auto-Type");
         }
+        if (curr->tags() != compare->tags()) {
+            modifiedFields << tr("Tags");
+        }
 
         m_historyModifications << modifiedFields.join(", ");
 
