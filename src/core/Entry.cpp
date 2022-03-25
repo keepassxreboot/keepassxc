@@ -1139,7 +1139,7 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
     // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing
 
     QRegularExpressionMatch match = EntryAttributes::matchReference(placeholder);
-    if (!match.hasMatch()) {
+    if (!match.hasMatch() || !m_group || !m_group->database()) {
         return placeholder;
     }
 
@@ -1149,8 +1149,6 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
 
     const EntryReferenceType searchInType = Entry::referenceType(searchIn);
 
-    Q_ASSERT(m_group);
-    Q_ASSERT(m_group->database());
     const Entry* refEntry = m_group->database()->rootGroup()->findEntryBySearchTerm(searchText, searchInType);
 
     if (refEntry) {
