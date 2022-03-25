@@ -105,10 +105,12 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
                                                     &error);
     } else {
 #endif
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101201
         sacObject = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
                                                     kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
                                                     kSecAccessControlTouchIDCurrentSet, // depr: kSecAccessControlBiometryCurrentSet,
                                                     &error);
+#endif
 #if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
     }
 #endif
@@ -236,6 +238,9 @@ bool TouchID::containsKey(const QString& dbPath) const
  */
 bool TouchID::isAvailable()
 {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101201
+	return false;
+#else
     // cache result
     if (this->m_available != TOUCHID_UNDEFINED) {
         return (this->m_available == TOUCHID_AVAILABLE);
@@ -264,6 +269,7 @@ bool TouchID::isAvailable()
         this->m_available = TOUCHID_NOT_AVAILABLE;
         return false;
     }
+#endif
 }
 
 typedef enum
@@ -294,7 +300,9 @@ bool TouchID::authenticate(const QString& message) const
             policyCode = LAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch;
         } else {
 #endif
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101201
             policyCode = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+#endif
 #if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
         }
 #endif
