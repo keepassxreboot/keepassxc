@@ -27,7 +27,14 @@
 
 #include <QBuffer>
 #include <botan/pubkey.h>
-#include <zip.h>
+#include <minizip/zip.h>
+
+// Compatibility with minizip-ng
+#ifdef MZ_VERSION_BUILD
+#undef Z_BEST_COMPRESSION
+#define Z_BEST_COMPRESSION MZ_COMPRESS_LEVEL_BEST
+#define zipOpenNewFileInZip64 zipOpenNewFileInZip_64
+#endif
 
 namespace
 {
