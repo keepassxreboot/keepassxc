@@ -17,6 +17,5 @@ if(WITH_XC_KEESHARE)
 
     add_library(keeshare STATIC ${keeshare_SOURCES})
     target_link_libraries(keeshare PUBLIC Qt5::Core Qt5::Widgets ${BOTAN2_LIBRARIES} ${ZLIB_LIBRARIES} PRIVATE ${MINIZIP_LIBRARIES})
-    target_include_directories(keeshare SYSTEM PRIVATE ${MINIZIP_INCLUDE_DIR})
     include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 endif(WITH_XC_KEESHARE)

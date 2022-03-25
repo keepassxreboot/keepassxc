@@ -21,7 +21,7 @@
 #include "keys/PasswordKey.h"
 
 #include <QBuffer>
-#include <unzip.h>
+#include <minizip/unzip.h>
 
 namespace
 {
