@@ -411,7 +411,7 @@ struct TagsEdit::Impl
     void setupCompleter()
     {
         completer->setWidget(ifce);
-        connect(completer.get(), qOverload<QString const&>(&QCompleter::activated), [this](QString const& text) {
+        connect(completer.get(), static_cast<void (QCompleter::*)(QString const&)>(&QCompleter::activated), [this](QString const& text) {
             currentText(text);
         });
     }
