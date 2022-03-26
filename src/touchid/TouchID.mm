@@ -2,6 +2,7 @@
 
 #include "touchid/TouchID.h"
 
+#ifdef WITH_XC_TOUCHID
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
 #include "crypto/CryptoHash.h"
@@ -24,6 +25,7 @@ inline QString hash(const QString& value)
     QByteArray result = CryptoHash::hash(value.toUtf8(), CryptoHash::Sha256).toHex();
     return QString(result);
 }
+#endif //defined(WITH_XC_TOUCHID)
 
 /**
  * Singleton
@@ -35,6 +37,7 @@ TouchID& TouchID::getInstance()
     return instance;
 }
 
+#ifdef WITH_XC_TOUCHID
 /**
  * Generates a random AES 256bit key and uses it to encrypt the PasswordKey that
  * protects the database. The encrypted PasswordKey is kept in memory while the
@@ -230,12 +233,16 @@ bool TouchID::containsKey(const QString& dbPath) const
 {
     return m_encryptedMasterKeys.contains(dbPath);
 }
+#endif //defined(WITH_XC_TOUCHID)
 
 /**
  * Dynamic check if TouchID is available on the current machine.
  */
 bool TouchID::isAvailable()
 {
+#ifndef WITH_XC_TOUCHID
+	return false;
+#else
     // cache result
     if (this->m_available != TOUCHID_UNDEFINED) {
         return (this->m_available == TOUCHID_AVAILABLE);
@@ -264,8 +271,10 @@ bool TouchID::isAvailable()
         this->m_available = TOUCHID_NOT_AVAILABLE;
         return false;
     }
+#endif //defined(WITH_XC_TOUCHID)
 }
 
+#ifdef WITH_XC_TOUCHID
 typedef enum
 {
     kTouchIDResultNone,
@@ -329,3 +338,4 @@ void TouchID::reset(const QString& databasePath)
 
     this->m_encryptedMasterKeys.remove(databasePath);
 }
+#endif //defined(WITH_XC_TOUCHID)

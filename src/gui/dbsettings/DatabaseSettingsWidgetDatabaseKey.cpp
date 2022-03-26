@@ -200,7 +200,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
 
     m_db->setKey(newKey, true, false, false);
 
-#if defined(Q_OS_MACOS)
+#if defined(Q_OS_MACOS) && defined(WITH_XC_TOUCHID)
     TouchID::getInstance().reset(m_db->filePath());
 #elif defined(Q_CC_MSVC)
     getWindowsHello()->reset(m_db->filePath());

@@ -59,7 +59,7 @@ namespace
         if (isQuickUnlockAvailable()) {
 #if defined(Q_CC_MSVC)
             return getWindowsHello()->hasKey(filename);
-#elif defined(Q_OS_MACOS)
+#elif defined(Q_OS_MACOS) && defined (WITH_XC_TOUCHID)
             return TouchID::getInstance().containsKey(filename);
 #endif
         }
@@ -279,7 +279,7 @@ void DatabaseOpenWidget::openDatabase()
 #if defined(Q_CC_MSVC)
             // Store the password using Windows Hello
             getWindowsHello()->storeKey(m_filename, keyData);
-#elif defined(Q_OS_MACOS)
+#elif defined(Q_OS_MACOS) && defined(WITH_XC_TOUCHID)
             // Store the password using TouchID
             TouchID::getInstance().storeKey(m_filename, keyData);
 #endif
@@ -336,7 +336,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
             m_ui->messageWidget->showMessage(tr("Failed to authenticate with Windows Hello"), MessageWidget::Error);
             return {};
         }
-#elif defined(Q_OS_MACOS)
+#elif defined(Q_OS_MACOS) && defined(WITH_XC_TOUCHID)
         if (!TouchID::getInstance().getKey(m_filename, keyData)) {
             // Failed to retrieve Quick Unlock data
             m_ui->messageWidget->showMessage(tr("Failed to authenticate with Touch ID"), MessageWidget::Error);
@@ -532,7 +532,7 @@ void DatabaseOpenWidget::resetQuickUnlock()
 {
 #if defined(Q_CC_MSVC)
     getWindowsHello()->reset(m_filename);
-#elif defined(Q_OS_MACOS)
+#elif defined(Q_OS_MACOS) && defined(WITH_XC_TOUCHID)
     TouchID::getInstance().reset(m_filename);
 #endif
     load(m_filename);

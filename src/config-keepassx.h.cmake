@@ -19,6 +19,7 @@
 #cmakedefine WITH_XC_SSHAGENT
 #cmakedefine WITH_XC_KEESHARE
 #cmakedefine WITH_XC_UPDATECHECK
+#cmakedefine WITH_XC_TOUCHID
 #cmakedefine WITH_XC_FDOSECRETS
 #cmakedefine WITH_XC_DOCS
 
