@@ -1,6 +1,7 @@
 #define SECURITY_ACCOUNT_PREFIX QString("KeepassXC_TouchID_Keys_")
 
 #include "touchid/TouchID.h"
+#include "config-keepassx.h"
 
 #ifdef WITH_XC_TOUCHID
 #include "crypto/Random.h"
