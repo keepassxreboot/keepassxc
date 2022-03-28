@@ -67,7 +67,7 @@ modules:
       - "PREFIX=${FLATPAK_DEST} LIBRARY_REL=lib make install"
     post-install:
       - "install -Dm644 LICENSE ${FLATPAK_DEST}/share/licenses/libargon2/LICENSE"
-  - shared-modules/libusb/libusb.json
+  - modules/libusb.yml
   - name: libyubikey
     sources:
       - type: git

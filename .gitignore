@@ -21,6 +21,7 @@ desktop.ini
 /*.snap
 /*_source.tar.bz2
 .flatpak-builder/
+.fenv/
 
 # MSVC Files
 CMakeSettings.json

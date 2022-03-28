@@ -1,0 +1,13 @@
+name: libusb
+config-opts:
+  - "--disable-static"
+cleanup:
+  - "/lib/*.la"
+  - "/lib/pkgconfig"
+  - "/include"
+sources:
+  - type: archive
+    url: https://github.com/libusb/libusb/archive/v1.0.25.tar.gz
+    sha256: f9c4b7dad27a6196ca9ec3c6ec7fa446194342de326c71e030eb2c480895e169
+post-install:
+  - install -Dm644 COPYING /app/share/licenses/libusb/COPYING
