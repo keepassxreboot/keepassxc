@@ -20,6 +20,7 @@ desktop.ini
 /prime/
 /*.snap
 /*_source.tar.bz2
+.flatpak-builder/
 
 # MSVC Files
 CMakeSettings.json
