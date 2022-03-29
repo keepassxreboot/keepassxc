@@ -81,16 +81,6 @@ modules:
     buildsystem: cmake-ninja
     post-install:
       - install -Dm644 -t /app/share/licenses/libquazip COPYING
-  - name: asciidoctor
-    sources:
-      - type: file
-        url: "https://rubygems.org/downloads/asciidoctor-2.0.10.gem"
-        sha256: 7f3df92816f75344d36bb15e49a6fbc07ac0999a1cd2938fd0802ea587964aac
-    buildsystem: simple
-    build-commands:
-      - gem install --ignore-dependencies --no-user-install --verbose --local --install-dir /app/lib/ruby/gems/2.6.0 --bindir /app/bin asciidoctor-2.0.10.gem
-    cleanup:
-      - "*"
   - name: botan
     buildsystem: simple
     build-commands:
@@ -134,9 +124,8 @@ modules:
       - "-DWITH_XC_SSHAGENT=ON"
       - "-DWITH_XC_KEESHARE=ON"
       - "-DWITH_XC_FDOSECRETS=OFF"
+      - "-DWITH_XC_DOCS=OFF"
     buildsystem: cmake
-    build-options:
-      arch: {}
     post-install:
       - install -Dm755 ./utils/flatpak-command-wrapper.sh /app/bin/keepassxc-wrapper
       - "for f in COPYING LICENSE*; do\n  install -Dm644 $f /app/share/licenses/org.keepassxc.KeePassXC/$f\ndone\n"
