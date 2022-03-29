@@ -441,6 +441,7 @@ void EditEntryWidget::setupEntryUpdate()
 #ifdef WITH_XC_NETWORKING
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFaviconButtonEnable(QString)));
 #endif
+    connect(m_mainUi->tagsList, SIGNAL(tagsEdited()), this, SLOT(setModified()));
     connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), this, SLOT(setModified()));
     connect(m_mainUi->notesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));

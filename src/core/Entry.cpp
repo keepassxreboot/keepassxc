@@ -192,7 +192,7 @@ QString Entry::tags() const
 
 QStringList Entry::tagList() const
 {
-    static QRegExp rx("(\\ |\\,|\\t|\\;)");
+    static QRegExp rx("(\\,|\\t|\\;)");
     auto taglist = tags().split(rx, QString::SkipEmptyParts);
     std::sort(taglist.begin(), taglist.end());
     return taglist;
