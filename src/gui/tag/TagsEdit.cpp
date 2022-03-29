@@ -25,6 +25,7 @@
 #include "TagsEdit.h"
 #include "gui/MainWindow.h"
 #include <QApplication>
+#include <QClipboard>
 #include <QCompleter>
 #include <QDebug>
 #include <QPainter>
@@ -701,6 +702,7 @@ void TagsEdit::mousePressEvent(QMouseEvent* event)
             if (i <= impl->editing_index) {
                 --impl->editing_index;
             }
+            emit tagsEdited();
             found = true;
             break;
         }
@@ -797,6 +799,15 @@ void TagsEdit::keyPressEvent(QKeyEvent* event)
     } else if (event == QKeySequence::SelectNextChar) {
         impl->moveCursor(impl->text_layout.nextCursorPosition(impl->cursor), true);
         event->accept();
+    } else if (event == QKeySequence::Paste) {
+        auto clipboard = QApplication::clipboard();
+        if (clipboard) {
+            for (auto tagtext : clipboard->text().split(",")) {
+                impl->currentText().insert(impl->cursor, tagtext);
+                impl->editNewTag(impl->editing_index + 1);
+            }
+        }
+        event->accept();
     } else {
         switch (event->key()) {
         case Qt::Key_Left:
@@ -839,7 +850,10 @@ void TagsEdit::keyPressEvent(QKeyEvent* event)
             }
             event->accept();
             break;
-        case Qt::Key_Space:
+        case Qt::Key_Return:
+        case Qt::Key_Enter:
+        case Qt::Key_Comma:
+        case Qt::Key_Semicolon:
             if (!impl->currentText().isEmpty()) {
                 impl->editNewTag(impl->editing_index + 1);
             }

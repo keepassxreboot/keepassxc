@@ -107,6 +107,8 @@ void TestGui::init()
     config()->set(Config::GUI_ShowTrayIcon, true);
     // Disable the update check first time alert
     config()->set(Config::UpdateCheckMessageShown, true);
+    // Disable quick unlock
+    config()->set(Config::Security_QuickUnlock, false);
 
     // Copy the test database file to the temporary file
     auto origFilePath = QDir(KEEPASSX_TEST_DATA_DIR).absoluteFilePath("NewDatabase.kdbx");
@@ -451,15 +453,15 @@ void TestGui::testEditEntry()
     // Test tags
     auto* tags = editEntryWidget->findChild<TagsEdit*>("tagsList");
     QTest::keyClicks(tags, "_tag1");
-    QTest::keyClick(tags, Qt::Key_Space);
+    QTest::keyClick(tags, Qt::Key_Return);
     QCOMPARE(tags->tags().last(), QString("_tag1"));
-    QTest::keyClick(tags, Qt::Key_Space);
-    QTest::keyClicks(tags, "_tag2"); // adds another tag
-    QCOMPARE(tags->tags().last(), QString("_tag2"));
+    QTest::keyClicks(tags, "tag 2"); // adds another tag
+    QTest::keyClick(tags, Qt::Key_Return);
+    QCOMPARE(tags->tags().last(), QString("tag 2"));
     QTest::keyClick(tags, Qt::Key_Backspace); // Back into editing last tag
-    QTest::keyClicks(tags, "gers");
-    QTest::keyClick(tags, Qt::Key_Space);
-    QCOMPARE(tags->tags().last(), QString("_taggers"));
+    QTest::keyClicks(tags, "_is!awesome");
+    QTest::keyClick(tags, Qt::Key_Return);
+    QCOMPARE(tags->tags().last(), QString("tag 2_is!awesome"));
 
     // Test entry colors (simulate choosing a color)
     editEntryWidget->setCurrentPage(1);
