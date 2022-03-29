@@ -3,7 +3,7 @@ id: org.keepassxc.KeePassXC
 runtime: org.kde.Platform
 runtime-version: "5.15"
 sdk: org.kde.Sdk
-command: keepassxc-wrapper
+command: keepassxc
 cleanup:
   - "*.a"
   - "*.h"
@@ -127,7 +127,9 @@ modules:
       - "-DWITH_XC_DOCS=OFF"
     buildsystem: cmake
     post-install:
-      - install -Dm755 ./utils/flatpak-command-wrapper.sh /app/bin/keepassxc-wrapper
-      - "for f in COPYING LICENSE*; do\n  install -Dm644 $f /app/share/licenses/org.keepassxc.KeePassXC/$f\ndone\n"
+      - |
+        for f in COPYING LICENSE*; do
+          install -Dm644 $f /app/share/licenses/org.keepassxc.KeePassXC/$f
+        done
     cleanup:
       - /share/man
