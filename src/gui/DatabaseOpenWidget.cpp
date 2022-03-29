@@ -237,6 +237,7 @@ void DatabaseOpenWidget::openDatabase()
     m_blockQuickUnlock = false;
 
     setUserInteractionLock(true);
+    m_ui->editPassword->setShowPassword(false);
     m_ui->messageWidget->hide();
     QCoreApplication::processEvents();
 
