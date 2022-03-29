@@ -108,6 +108,15 @@ modules:
         url: https://github.com/randombit/botan.git
         tag: 2.14.0
         commit: 3a26a33de2459c40cdfb766f4035a60cf449ab1c
+  - name: pcsclite
+    config-opts:
+      - --sbindir=/app/bin
+    sources:
+      - type: archive
+        url: https://github.com/LudovicRousseau/PCSC/archive/1.9.5/PCSC-1.9.5.tar.gz
+        sha256: 4c8cd8fa86004fd3c2fe252f2505d607f1752133d2ff1841f7e8b54fb94b4f73
+    cleanup:
+      - /bin
   - name: keepassxc
     sources:
       - type: git
