@@ -36,6 +36,17 @@ finish-args:
   - "--talk-name=org.gtk.vfs.*"
 modules:
   - modules/libusb.yml
+  - name: minizip
+    subdir: contrib/minizip
+    sources:
+      - type: archive
+        url: https://zlib.net/zlib-1.2.12.tar.gz
+        sha256: 91844808532e5ce316b3c010929493c0244f3d37593afd6de04f71821d5136d9
+      - type: script
+        dest: contrib/minizip/
+        dest-filename: autogen.sh
+        commands:
+          - autoreconf -ifv
   - name: libargon2
     sources:
       - type: archive
@@ -49,14 +60,6 @@ modules:
       - "PREFIX=${FLATPAK_DEST} LIBRARY_REL=lib make install"
     post-install:
       - "install -Dm644 LICENSE ${FLATPAK_DEST}/share/licenses/libargon2/LICENSE"
-  - name: libsodium
-    sources:
-      - type: git
-        url: "https://github.com/jedisct1/libsodium.git"
-        commit: 940ef42797baa0278df6b7fd9e67c7590f87744b
-        tag: 1.0.18-RELEASE
-    post-install:
-      - install -Dm644 -t /app/share/licenses/libsodium LICENSE
   - name: libqrencode
     sources:
       - type: archive
@@ -70,17 +73,6 @@ modules:
       - install -Dm644 -t /app/share/licenses/libqrencode COPYING
     cleanup:
       - /share/man
-  - name: libquazip
-    sources:
-      - type: git
-        url: "https://github.com/stachenov/quazip.git"
-        commit: 100578f686b7da029a19c0bc9ad3c93f80adb2bb
-        tag: v1.1
-    config-opts:
-      - "-DCMAKE_CXX_FLAGS=$CFLAGS -fPIC"
-    buildsystem: cmake-ninja
-    post-install:
-      - install -Dm644 -t /app/share/licenses/libquazip COPYING
   - name: botan
     buildsystem: simple
     build-commands:
