@@ -529,8 +529,16 @@ bool DatabaseOpenWidget::isOnQuickUnlockScreen()
     return m_ui->centralStack->currentIndex() == 1;
 }
 
+/**
+ * Reset installed quick unlock secrets.
+ *
+ * It's safe to call this method even if quick unlock is unavailable.
+ */
 void DatabaseOpenWidget::resetQuickUnlock()
 {
+    if (!isQuickUnlockAvailable()) {
+        return;
+    }
 #if defined(Q_CC_MSVC)
     getWindowsHello()->reset(m_filename);
 #elif defined(Q_OS_MACOS)
