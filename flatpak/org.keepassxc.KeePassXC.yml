@@ -35,25 +35,7 @@ finish-args:
   - "--talk-name=org.gtk.vfs"
   - "--talk-name=org.gtk.vfs.*"
 modules:
-  - name: libyubikey
-    sources:
-      - type: archive
-        url: "https://github.com/Yubico/yubico-c/archive/refs/tags/libyubikey-1.13.tar.gz"
-        sha256: dd046c83e67560206b0b3301ee8053922b516e3975b895804582eb8d7bdd1d79
-      - type: shell
-        commands:
-          - "autoreconf --install"
-    buildsystem: autotools
-    build-commands:
-      - "./configure"
-  - name: libsodium
-    sources:
-      - type: git
-        url: "https://github.com/jedisct1/libsodium.git"
-        commit: bfcfa87f2d211bc072a56b203015122f7678bf04
-    buildsystem: autotools
-    post-install:
-      - "install -Dm644 LICENSE ${FLATPAK_DEST}/share/licenses/libsodium/LICENSE"
+  - modules/libusb.yml
   - name: libargon2
     sources:
       - type: archive
@@ -67,45 +49,6 @@ modules:
       - "PREFIX=${FLATPAK_DEST} LIBRARY_REL=lib make install"
     post-install:
       - "install -Dm644 LICENSE ${FLATPAK_DEST}/share/licenses/libargon2/LICENSE"
-  - modules/libusb.yml
-  - name: libyubikey
-    sources:
-      - type: git
-        url: "https://github.com/Yubico/yubico-c.git"
-        commit: 0b4f3909416a5a5c4d5bbf5104682218fe3c7218
-        tag: libyubikey-1.13
-      - type: script
-        commands:
-          - autoreconf --install
-        dest-filename: autogen.sh
-      - type: patch
-        path: patch/yubikey-c/0001-Add-configure-option-to-disable-documentation.patch
-    config-opts:
-      - "--disable-documentation"
-    post-install:
-      - install -Dm644 -t /app/share/licenses/libyubikey COPYING
-    cleanup:
-      - /bin
-  - name: libykpers-1
-    sources:
-      - type: git
-        url: "https://github.com/Yubico/yubikey-personalization.git"
-        commit: 8dfad10ecea2ddf6e099b8c5e5392c5964821eaa
-        tag: v1.20.0
-      - type: script
-        commands:
-          - autoreconf --install
-        dest-filename: autogen.sh
-      - type: patch
-        path: patch/libykpers-1/0001-Add-configure-option-to-disable-documentation.patch
-      - type: patch
-        path: patch/libykpers-1/0002-make-header-declarations-extern.patch
-    config-opts:
-      - "--disable-documentation"
-    post-install:
-      - install -Dm644 -t /app/share/licenses/libykpers-1 COPYING
-    cleanup:
-      - /bin
   - name: libsodium
     sources:
       - type: git
@@ -114,25 +57,6 @@ modules:
         tag: 1.0.18-RELEASE
     post-install:
       - install -Dm644 -t /app/share/licenses/libsodium LICENSE
-  - name: libargon2
-    sources:
-      - type: git
-        url: "https://github.com/P-H-C/phc-winner-argon2.git"
-        commit: 62358ba2123abd17fccf2a108a301d4b52c01a7c
-        tag: "20190702"
-    make-args:
-      - PREFIX=/app
-      - OPTTARGET=none
-      - LIBRARY_REL=lib
-    make-install-args:
-      - PREFIX=/app
-      - OPTTARGET=none
-      - LIBRARY_REL=lib
-    no-autogen: true
-    post-install:
-      - install -Dm644 -t /app/share/licenses/libargon2 LICENSE
-    cleanup:
-      - /bin
   - name: libqrencode
     sources:
       - type: archive
@@ -167,6 +91,23 @@ modules:
       - gem install --ignore-dependencies --no-user-install --verbose --local --install-dir /app/lib/ruby/gems/2.6.0 --bindir /app/bin asciidoctor-2.0.10.gem
     cleanup:
       - "*"
+  - name: botan
+    buildsystem: simple
+    build-commands:
+      - "python3 ./configure.py \
+          --disable-cc-tests \
+          --disable-static-library \
+          --prefix=/app \
+          --with-openssl \
+          --with-zlib \
+          --without-documentation"
+      - make -j${FLATPAK_BUILDER_N_JOBS}
+      - make install
+    sources:
+      - type: git
+        url: https://github.com/randombit/botan.git
+        tag: 2.14.0
+        commit: 3a26a33de2459c40cdfb766f4035a60cf449ab1c
   - name: keepassxc
     sources:
       - type: git
