@@ -94,7 +94,7 @@
                     <li>FdoSecrets: Major Refactor and Code Consolidation [#5747][#5660][#7043][#6915]</li>
                     <li>FdoSecrets: Implement unlock before search [#6943]</li>
                     <li>Reports: Add browser statistics report [#7197]</li>
-                    <li>Port crypto backend to [Botan](https://github.com/randombit/botan) [#6209]</li>
+                    <li>Port crypto backend to Botan [#6209]</li>
                     <li>Improve attachment handling and security [#6606][#5034][#7083]</li>
                     <li>Allow selecting any open database in unlock dialog [#5427]</li>
                     <li>KeeShare: Remove checking signed container and QuaZip dependency [#7223]</li>
