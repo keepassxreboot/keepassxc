@@ -224,8 +224,8 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
             QString("%1/XXXXXXXXXXXX%2").arg(QProcessEnvironment::systemEnvironment().value("SNAP_USER_DATA"), ext);
 #elif defined(KEEPASSXC_DIST_FLATPAK)
         const QString tmpFileTemplate =
-            QString("%1/app/%2/XXXXXX.%3").arg(QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation),
-                    "org.keepassxc.KeePassXC", ext);
+            QString("%1/app/%2/XXXXXX.%3")
+                .arg(QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation), "org.keepassxc.KeePassXC", ext);
 #else
         const QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXXXXXXXX").append(ext));
 #endif

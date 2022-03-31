@@ -28,9 +28,9 @@
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QProcessEnvironment>
+#include <QRegularExpression>
 #include <QSettings>
 #include <QStandardPaths>
-#include <QRegularExpression>
 
 using namespace BrowserShared;
 
@@ -272,7 +272,7 @@ QString NativeMessageInstaller::constructFlatpakPath() const
 {
     // Find and extract the host flatpak data directory (in /var)
     QString path;
-    QSettings settings("/.flatpak-info",QSettings::IniFormat);
+    QSettings settings("/.flatpak-info", QSettings::IniFormat);
     settings.beginGroup("Instance");
     QString appPath = settings.value("app-path").toString();
 
