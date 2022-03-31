@@ -225,7 +225,7 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
 #elif defined(KEEPASSXC_DIST_FLATPAK)
         const QString tmpFileTemplate =
             QString("%1/app/%2/XXXXXX.%3").arg(QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation),
-                    "org.keepassxc.KeePassXC", filename);
+                    "org.keepassxc.KeePassXC", ext);
 #else
         const QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXXXXXXXX").append(ext));
 #endif
