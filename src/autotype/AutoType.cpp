@@ -72,19 +72,20 @@ namespace
                                                         {"multiply", Qt::Key_Asterisk},
                                                         {"divide", Qt::Key_Slash},
                                                         {"leftbrace", Qt::Key_BraceLeft},
-                                                        {"{", Qt::Key_BraceLeft},
+                                                        {"{", Qt::Key_unknown},
                                                         {"rightbrace", Qt::Key_BraceRight},
-                                                        {"}", Qt::Key_BraceRight},
+                                                        {"}", Qt::Key_unknown},
                                                         {"leftparen", Qt::Key_ParenLeft},
-                                                        {"(", Qt::Key_ParenLeft},
+                                                        {"(", Qt::Key_unknown},
                                                         {"rightparen", Qt::Key_ParenRight},
-                                                        {")", Qt::Key_ParenRight},
-                                                        {"[", Qt::Key_BracketLeft},
-                                                        {"]", Qt::Key_BracketRight},
-                                                        {"+", Qt::Key_Plus},
-                                                        {"%", Qt::Key_Percent},
-                                                        {"^", Qt::Key_AsciiCircum},
-                                                        {"~", Qt::Key_AsciiTilde},
+                                                        {")", Qt::Key_unknown},
+                                                        {"[", Qt::Key_unknown},
+                                                        {"]", Qt::Key_unknown},
+                                                        {"+", Qt::Key_unknown},
+                                                        {"%", Qt::Key_unknown},
+                                                        {"^", Qt::Key_unknown},
+                                                        {"~", Qt::Key_unknown},
+                                                        {"#", Qt::Key_unknown},
                                                         {"numpad0", Qt::Key_0},
                                                         {"numpad1", Qt::Key_1},
                                                         {"numpad2", Qt::Key_2},
@@ -612,7 +613,12 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
                 error = tr("Too many repetitions detected, max is %1: %2").arg(maxRepetition).arg(fullPlaceholder);
                 return {};
             }
-            auto action = QSharedPointer<AutoTypeKey>::create(g_placeholderToKey[placeholder], modifiers);
+            QSharedPointer<AutoTypeKey> action;
+            if (g_placeholderToKey[placeholder] == Qt::Key_unknown) {
+                action = QSharedPointer<AutoTypeKey>::create(placeholder[0], modifiers);
+            } else {
+                action = QSharedPointer<AutoTypeKey>::create(g_placeholderToKey[placeholder], modifiers);
+            }
             for (int i = 1; i <= repeat && i <= maxRepetition; ++i) {
                 actions << action;
             }
