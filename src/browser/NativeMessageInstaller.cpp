@@ -235,40 +235,12 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     return QStringLiteral("%1%2/%3.json").arg(basePath, getTargetPath(browser), HOST_NAME);
 }
 
-/**
- * Gets the path to keepassxc-proxy binary
- *
- * @param location Custom proxy path
- * @return path Path to keepassxc-proxy
- */
-QString NativeMessageInstaller::getProxyPath() const
-{
-    if (browserSettings()->useCustomProxy()) {
-        return browserSettings()->customProxyLocation();
-    }
-
-    QString path;
-#if defined(KEEPASSXC_DIST_APPIMAGE)
-    path = QProcessEnvironment::systemEnvironment().value("APPIMAGE");
-#elif defined(KEEPASSXC_DIST_FLATPAK)
-    path = NativeMessageInstaller::constructFlatpakPath();
-#else
-    path = QCoreApplication::applicationDirPath() + QStringLiteral("/keepassxc-proxy");
-#ifdef Q_OS_WIN
-    path.append(QStringLiteral(".exe"));
-#endif // #ifdef Q_OS_WIN
-
-#endif // #ifdef KEEPASSXC_DIST_APPIMAGE
-    return QDir::toNativeSeparators(path);
-}
-
+#ifdef KEEPASSXC_DIST_FLATPAK
 /** Constructs a host accessible proxy path for use with flatpak
  *
  * @return path Path to host accessible wrapper script (org.keepassxc.KeePassXC)
  */
-
-#ifdef KEEPASSXC_DIST_FLATPAK
-QString NativeMessageInstaller::constructFlatpakPath() const
+QString constructFlatpakPath()
 {
     // Find and extract the host flatpak data directory (in /var)
     QString path;
@@ -290,6 +262,33 @@ QString NativeMessageInstaller::constructFlatpakPath() const
     return path;
 }
 #endif
+
+/**
+ * Gets the path to keepassxc-proxy binary
+ *
+ * @param location Custom proxy path
+ * @return path Path to keepassxc-proxy
+ */
+QString NativeMessageInstaller::getProxyPath() const
+{
+    if (browserSettings()->useCustomProxy()) {
+        return browserSettings()->customProxyLocation();
+    }
+
+    QString path;
+#if defined(KEEPASSXC_DIST_APPIMAGE)
+    path = QProcessEnvironment::systemEnvironment().value("APPIMAGE");
+#elif defined(KEEPASSXC_DIST_FLATPAK)
+    path = constructFlatpakPath();
+#else
+    path = QCoreApplication::applicationDirPath() + QStringLiteral("/keepassxc-proxy");
+#ifdef Q_OS_WIN
+    path.append(QStringLiteral(".exe"));
+#endif // #ifdef Q_OS_WIN
+
+#endif // #ifdef KEEPASSXC_DIST_APPIMAGE
+    return QDir::toNativeSeparators(path);
+}
 
 /**
  * Constructs the JSON script file used with native messaging
