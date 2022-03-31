@@ -17,7 +17,6 @@
 
 #include "EntryAttachmentsWidget.h"
 #include "ui_EntryAttachmentsWidget.h"
-#include "config-keepassx.h"
 
 #include <QDir>
 #include <QDropEvent>
