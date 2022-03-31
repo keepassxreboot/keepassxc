@@ -28,18 +28,21 @@ QDateTime operator+(const QDateTime& dateTime, const TimeDelta& delta);
 class TimeDelta
 {
 public:
+    static TimeDelta fromHours(int hours);
     static TimeDelta fromDays(int days);
     static TimeDelta fromMonths(int months);
     static TimeDelta fromYears(int years);
 
     TimeDelta();
-    TimeDelta(int days, int months, int years);
+    TimeDelta(int hours, int days, int months, int years);
 
+    int getHours() const;
     int getDays() const;
     int getMonths() const;
     int getYears() const;
 
 private:
+    int m_hours;
     int m_days;
     int m_months;
     int m_years;
