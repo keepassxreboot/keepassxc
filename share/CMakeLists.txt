@@ -47,7 +47,7 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
     else()
         set(APP_ICON "keepassxc")
         set(MIME_ICON "application-x-keepassxc")
-        configure_file(linux/keepassxc.xml.in keepassxc.xml @ONLY)
+        configure_file(linux/keepassxc.xml.in linux/keepassxc.xml @ONLY)
         install(FILES linux/keepassxc.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
 
         install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
