@@ -27,7 +27,7 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
     if(KEEPASSXC_DIST_FLATPAK)
         set(APP_ICON "${ID}")
         set(MIME_ICON "${ID}-application-x-keepassxc")
-        configure_file(linux/keepassxc.xml.in linux/${ID}.xml @ONLY)
+        configure_file(linux/keepassxc.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/${ID}.xml @ONLY)
         install(FILES linux/${ID}.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
 
         file(GLOB_RECURSE ICON_FILES LIST_DIRECTORIES false
@@ -47,7 +47,7 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
     else()
         set(APP_ICON "keepassxc")
         set(MIME_ICON "application-x-keepassxc")
-        configure_file(linux/keepassxc.xml.in linux/keepassxc.xml @ONLY)
+        configure_file(linux/keepassxc.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/keepassxc.xml @ONLY)
         install(FILES linux/keepassxc.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
 
         install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
@@ -57,7 +57,7 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
                 FILES_MATCHING PATTERN "application-x-keepassxc.svg" PATTERN "status"
                 EXCLUDE PATTERN "actions" EXCLUDE PATTERN "categories" EXCLUDE)
     endif(KEEPASSXC_DIST_FLATPAK)
-    configure_file(linux/${ID}.desktop.in linux/${ID}.desktop @ONLY)
+    configure_file(linux/${ID}.desktop.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/${ID}.desktop @ONLY)
     install(FILES linux/${ID}.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES linux/${ID}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 endif(UNIX AND NOT APPLE AND NOT HAIKU)
