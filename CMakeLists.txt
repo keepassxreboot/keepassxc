@@ -17,7 +17,7 @@
 cmake_minimum_required(VERSION 3.3.0)
 
 project(KeePassXC)
-set(ID "org.keepassxc.${PROJECT_NAME}")
+set(APP_ID "org.keepassxc.${PROJECT_NAME}")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
