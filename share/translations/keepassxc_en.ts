@@ -2537,10 +2537,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation type="unfinished">
@@ -2557,6 +2553,13 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
