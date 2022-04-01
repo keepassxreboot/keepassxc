@@ -170,6 +170,8 @@ set(keepassx_SOURCES
         gui/reports/ReportsPageHibp.cpp
         gui/reports/ReportsWidgetStatistics.cpp
         gui/reports/ReportsPageStatistics.cpp
+        gui/reports/ReportsPage2FA.cpp
+        gui/reports/ReportsWidget2FA.cpp
         gui/osutils/OSUtilsBase.cpp
         gui/osutils/ScreenLockListener.cpp
         gui/osutils/ScreenLockListenerPrivate.cpp
