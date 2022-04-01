@@ -9,12 +9,19 @@
         <mimetype>application/x-keepass2</mimetype>
     </mimetypes>
     <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
+    <summary xml:lang="de">Von der Community entwickelter Port der Windows Anwendung “KeePass Password Safe”</summary>
     <developer_name>KeePassXC Team</developer_name>
     <description>
         <p>
             KeePassXC is an application for people with extremely high demands on secure
             personal data management. It has a light interface, is cross-platform and
             published under the terms of the GNU General Public License.
+        </p>
+        <p xml:lang="de">
+            KeePassXC ist eine Anwendung für Menschen, die extrem hohe Anforderungen
+            an die sichere Verwaltung von persönlichen Daten stellen. Sie hat eine leichtgewichtige
+            Benutzeroberfläche, ist auf vielen verschiedenen Plattformen verfügbar und
+            wird unter den Bedingungen der GNU General Public License veröffentlicht.
         </p>
     </description>
 
