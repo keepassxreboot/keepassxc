@@ -31,10 +31,15 @@ readonly arg2='keepassxc-browser@keepassxc.org'
 
 # Browser integration is enabled if unix socket exists
 if [[ -S "${XDG_RUNTIME_DIR}/app/${appId}/${appId}.BrowserServer" ]]; then
-  if [[ "$1" =~ "${arg1}" ]] || [[ "$2" =~ "${arg2}" ]]; then
+  if [[ "$1" == "${arg1}" ]] || [[ "$2" == "${arg2}" ]]; then
     exec keepassxc-proxy "$@"
   fi
 fi
 
-# If no arguments are matched or browser integration is off execute keepassxc
+# If the first argument is "cli", execute keepassxc-cli instead.
+if [[ "$1" == "cli" ]]; then
+  exec keepassxc-cli "${@:2}"
+fi
+
+# If no arguments are matched or browser integration is off, execute keepassxc
 exec keepassxc "$@"
