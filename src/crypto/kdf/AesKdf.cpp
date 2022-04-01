@@ -62,30 +62,19 @@ QVariantMap AesKdf::writeParameters()
 
 bool AesKdf::transform(const QByteArray& raw, QByteArray& result) const
 {
-    QByteArray resultLeft;
-    QByteArray resultRight;
-
-    QFuture<bool> future = QtConcurrent::run(transformKeyRaw, raw.left(16), m_seed, m_rounds, &resultLeft);
-
-    bool rightResult = transformKeyRaw(raw.right(16), m_seed, m_rounds, &resultRight);
-    bool leftResult = future.result();
-
-    if (!rightResult || !leftResult) {
-        return false;
-    }
-
-    QByteArray transformed;
-    transformed.append(resultLeft);
-    transformed.append(resultRight);
-
-    result = CryptoHash::hash(transformed, CryptoHash::Sha256);
-    return true;
+    return transformKeyRaw(raw, m_seed, m_rounds, &result);
 }
 
 bool AesKdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, int rounds, QByteArray* result)
 {
-    *result = key;
-    return SymmetricCipher::aesKdf(seed, rounds, *result);
+    if (!result) {
+        return false;
+    }
+
+    auto out = key;
+    SymmetricCipher::aesKdf(seed, rounds, out);
+    *result = CryptoHash::hash(out, CryptoHash::Sha256);
+    return true;
 }
 
 QSharedPointer<Kdf> AesKdf::clone() const
