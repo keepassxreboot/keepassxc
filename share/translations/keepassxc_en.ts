@@ -152,6 +152,10 @@
         <source>SSH Agent connection is working!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>

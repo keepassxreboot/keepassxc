@@ -26,8 +26,9 @@ AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 #ifndef Q_OS_WIN
-    m_ui->usePageantCheckBox->setVisible(false);
-    m_ui->useOpenSSHCheckBox->setVisible(false);
+    m_ui->usePageantRadioButton->setVisible(false);
+    m_ui->useOpenSSHRadioButton->setVisible(false);
+    m_ui->useBothRadioButton->setVisible(false);
 #else
     m_ui->sshAuthSockWidget->setVisible(false);
 #endif
@@ -47,8 +48,9 @@ void AgentSettingsWidget::loadSettings()
 
     m_ui->enableSSHAgentCheckBox->setChecked(sshAgentEnabled);
 #ifdef Q_OS_WIN
-    m_ui->usePageantCheckBox->setChecked(sshAgent()->usePageant());
-    m_ui->useOpenSSHCheckBox->setChecked(sshAgent()->useOpenSSH());
+    m_ui->usePageantRadioButton->setChecked(sshAgent()->usePageant());
+    m_ui->useOpenSSHRadioButton->setChecked(sshAgent()->useOpenSSH());
+    m_ui->useBothRadioButton->setChecked(sshAgent()->usePageant() && sshAgent()->useOpenSSH());
     sshAgentEnabled = sshAgentEnabled && (sshAgent()->usePageant() || sshAgent()->useOpenSSH());
 #else
     auto sshAuthSock = sshAgent()->socketPath(false);
@@ -93,8 +95,8 @@ void AgentSettingsWidget::saveSettings()
     auto sshSecurityKeyProviderOverride = m_ui->sshSecurityKeyProviderOverrideEdit->text();
     sshAgent()->setSecurityKeyProviderOverride(sshSecurityKeyProviderOverride);
 #ifdef Q_OS_WIN
-    sshAgent()->setUsePageant(m_ui->usePageantCheckBox->isChecked());
-    sshAgent()->setUseOpenSSH(m_ui->useOpenSSHCheckBox->isChecked());
+    sshAgent()->setUsePageant(m_ui->usePageantRadioButton->isChecked() || m_ui->useBothRadioButton->isChecked());
+    sshAgent()->setUseOpenSSH(m_ui->useOpenSSHRadioButton->isChecked() || m_ui->useBothRadioButton->isChecked());
 #endif
     sshAgent()->setEnabled(m_ui->enableSSHAgentCheckBox->isChecked());
 }
