@@ -36,6 +36,10 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
 {
     setWindowTitle(tr("Unlock Database - KeePassXC"));
     setWindowFlags(Qt::Dialog);
+#ifdef Q_OS_LINUX
+    // Linux requires this to overcome some Desktop Environments (also no Quick Unlock)
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+#endif
     // block input to the main window/application while the dialog is open
     setWindowModality(Qt::ApplicationModal);
 #ifdef Q_OS_WIN
