@@ -215,12 +215,20 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
         basePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     }
     return QStringLiteral("%1/%2_%3.json").arg(basePath, HOST_NAME, getBrowserName(browser));
+#elif defined(KEEPASSXC_DIST_FLATPAK)
+    // Flatpak sandboxes do not have access to the XDG_DATA_HOME and XDG_CONFIG_HOME variables
+    // defined in the host, so we must hardcode them here.
+    if (browser == SupportedBrowsers::TOR_BROWSER) {
+        basePath = QDir::homePath() + "/.local/share";
+    } else if (browser == SupportedBrowsers::FIREFOX) {
+        basePath = QDir::homePath();
+    } else {
+        basePath = QDir::homePath() + "/.config";
+    }
 #elif defined(Q_OS_LINUX)
     if (browser == SupportedBrowsers::TOR_BROWSER) {
-        // Tor Browser launcher stores its config in ~/.local/share/...
         basePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     } else if (browser == SupportedBrowsers::FIREFOX) {
-        // Firefox stores its config in ~/
         basePath = QDir::homePath();
     } else {
         basePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
