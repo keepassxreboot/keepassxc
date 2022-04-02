@@ -297,6 +297,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>TagsEdit</class>
+   <extends>QWidget</extends>
+   <header>gui/tag/TagsEdit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>PasswordEdit</class>
    <extends>QLineEdit</extends>
    <header>gui/PasswordEdit.h</header>
@@ -306,12 +312,6 @@
    <class>URLEdit</class>
    <extends>QLineEdit</extends>
    <header>gui/URLEdit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TagsEdit</class>
-   <extends>QAbstractScrollArea</extends>
-   <header>gui/tag/TagsEdit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
