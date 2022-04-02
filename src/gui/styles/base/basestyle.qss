@@ -35,6 +35,7 @@ EntryPreviewWidget TagsEdit
 {
     background-color: palette(window);
     border: none;
+    padding-left: 0px;
 }
 
 DatabaseOpenWidget #centralStack {
