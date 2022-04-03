@@ -678,7 +678,7 @@ void Entry::setTags(const QString& tags)
     }
     // Remove duplicates
     auto tagSet = QSet<QString>::fromList(taglist);
-    taglist = tagSet.toList();
+    taglist = tagSet.values();
     // Sort alphabetically
     taglist.sort();
     set(m_data.tags, taglist);
