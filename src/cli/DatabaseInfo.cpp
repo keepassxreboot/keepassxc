@@ -18,6 +18,7 @@
 #include "DatabaseInfo.h"
 
 #include "Utils.h"
+#include "core/Clock.h"
 #include "core/DatabaseStats.h"
 #include "core/Global.h"
 #include "core/Group.h"
@@ -52,9 +53,9 @@ int DatabaseInfo::executeWithDatabase(QSharedPointer<Database> database, QShared
 
     DatabaseStats stats(database);
     out << QObject::tr("Location") << ": " << database->filePath() << endl;
-    out << QObject::tr("Database created") << ": "
-        << database->rootGroup()->timeInfo().creationTime().toString(Qt::DefaultLocaleShortDate) << endl;
-    out << QObject::tr("Last saved") << ": " << stats.modified.toString(Qt::DefaultLocaleShortDate) << endl;
+    out << QObject::tr("Database created") << ": " << Clock::toString(database->rootGroup()->timeInfo().creationTime())
+        << endl;
+    out << QObject::tr("Last saved") << ": " << Clock::toString(stats.modified) << endl;
     out << QObject::tr("Unsaved changes") << ": " << (database->isModified() ? QObject::tr("yes") : QObject::tr("no"))
         << endl;
     out << QObject::tr("Number of groups") << ": " << QString::number(stats.groupCount) << endl;
