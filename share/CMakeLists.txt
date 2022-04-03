@@ -27,8 +27,8 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
     if(KEEPASSXC_DIST_FLATPAK)
         set(APP_ICON_NAME "${APP_ID}")
         set(MIME_ICON "${APP_ID}-application-x-keepassxc")
-        configure_file(linux/keepassxc.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/${APP_ID}.xml @ONLY)
-        install(FILES linux/${APP_ID}.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
+        configure_file(linux/keepassxc.xml.in ${CMAKE_CURRENT_BUILD_DIR}/linux/${APP_ID}.xml @ONLY)
+        install(FILES ${CMAKE_CURRENT_BUILD_DIR}/linux/${APP_ID}.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
 
         file(GLOB_RECURSE ICON_FILES LIST_DIRECTORIES false
              "icons/application/*/keepassxc*.png"
@@ -47,8 +47,8 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
     else()
         set(APP_ICON_NAME "keepassxc")
         set(MIME_ICON "application-x-keepassxc")
-        configure_file(linux/keepassxc.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/keepassxc.xml @ONLY)
-        install(FILES linux/keepassxc.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
+        configure_file(linux/keepassxc.xml.in ${CMAKE_CURRENT_BUILD_DIR}/linux/keepassxc.xml @ONLY)
+        install(FILES ${CMAKE_CURRENT_BUILD_DIR}/linux/keepassxc.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
 
         install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
                 FILES_MATCHING PATTERN "keepassx*.png" PATTERN "keepassx*.svg"
@@ -57,8 +57,8 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
                 FILES_MATCHING PATTERN "application-x-keepassxc.svg" PATTERN "status"
                 EXCLUDE PATTERN "actions" EXCLUDE PATTERN "categories" EXCLUDE)
     endif(KEEPASSXC_DIST_FLATPAK)
-    configure_file(linux/${APP_ID}.desktop.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/${APP_ID}.desktop @ONLY)
-    install(FILES linux/${APP_ID}.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+    configure_file(linux/${APP_ID}.desktop.in ${CMAKE_CURRENT_BUILD_DIR}/linux/${APP_ID}.desktop @ONLY)
+    install(FILES ${CMAKE_CURRENT_BUILD_DIR}/linux/${APP_ID}.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES linux/${APP_ID}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 endif(UNIX AND NOT APPLE AND NOT HAIKU)
 
