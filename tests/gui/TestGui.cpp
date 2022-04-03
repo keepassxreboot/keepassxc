@@ -648,6 +648,75 @@ void TestGui::testAddEntry()
     QTRY_COMPARE(entryView->model()->rowCount(), 3);
 }
 
+void TestGui::testPasswordEntryEntropy_data()
+{
+    QTest::addColumn<QString>("password");
+    QTest::addColumn<QString>("expectedEntropyLabel");
+    QTest::addColumn<QString>("expectedStrengthLabel");
+
+    QTest::newRow("Empty password") << ""
+                                    << "Entropy: 0.00 bit"
+                                    << "Password Quality: Poor";
+
+    QTest::newRow("Well-known password") << "hello"
+                                         << "Entropy: 6.38 bit"
+                                         << "Password Quality: Poor";
+
+    QTest::newRow("Password composed of well-known words.") << "helloworld"
+                                                            << "Entropy: 13.10 bit"
+                                                            << "Password Quality: Poor";
+
+    QTest::newRow("Password composed of well-known words with number.") << "password1"
+                                                                        << "Entropy: 4.00 bit"
+                                                                        << "Password Quality: Poor";
+
+    QTest::newRow("Password out of small character space.") << "D0g.................."
+                                                            << "Entropy: 19.02 bit"
+                                                            << "Password Quality: Poor";
+
+    QTest::newRow("XKCD, easy substitutions.") << "Tr0ub4dour&3"
+                                               << "Entropy: 30.87 bit"
+                                               << "Password Quality: Poor";
+
+    QTest::newRow("XKCD, word generator.") << "correcthorsebatterystaple"
+                                           << "Entropy: 47.98 bit"
+                                           << "Password Quality: Weak";
+
+    QTest::newRow("Random characters, medium length.") << "YQC3kbXbjC652dTDH"
+                                                       << "Entropy: 95.83 bit"
+                                                       << "Password Quality: Good";
+
+    QTest::newRow("Random characters, long.") << "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km"
+                                              << "Entropy: 174.59 bit"
+                                              << "Password Quality: Excellent";
+
+    QTest::newRow("Long password using Zxcvbn chunk estimation")
+        << "quintet-tamper-kinswoman-humility-vengeful-haven-tastiness-aspire-widget-ipad-cussed-reaffirm-ladylike-"
+           "ashamed-anatomy-daybed-jam-swear-strudel-neatness-stalemate-unbundle-flavored-relation-emergency-underrate-"
+           "registry-getting-award-unveiled-unshaken-stagnate-cartridge-magnitude-ointment-hardener-enforced-scrubbed-"
+           "radial-fiddling-envelope-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-tiptop-doily"
+        << "Entropy: 1205.85 bit"
+        << "Password Quality: Excellent";
+
+    QTest::newRow("Longer password above Zxcvbn threshold")
+        << "quintet-tamper-kinswoman-humility-vengeful-haven-tastiness-aspire-widget-ipad-cussed-reaffirm-ladylike-"
+           "ashamed-anatomy-daybed-jam-swear-strudel-neatness-stalemate-unbundle-flavored-relation-emergency-underrate-"
+           "registry-getting-award-unveiled-unshaken-stagnate-cartridge-magnitude-ointment-hardener-enforced-scrubbed-"
+           "radial-fiddling-envelope-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-tiptop-doily-hefty-"
+           "untie-fidgeting-radiance-twilight-freebase-sulphuric-parrot-decree-monotype-nautical-pout-sip-geometric-"
+           "crunching-deviancy-festival-hacking-rage-unify-coronary-zigzagged-dwindle-possum-lilly-exhume-daringly-"
+           "barbell-rage-animate-lapel-emporium-renounce-justifier-relieving-gauze-arrive-alive-collected-immobile-"
+           "unleash-snowman-gift-expansion-marbles-requisite-excusable-flatness-displace-caloric-sensuous-moustache-"
+           "sensuous-capillary-aversion-contents-cadet-giggly-amenity-peddling-spotting-drier-mooned-rudder-peroxide-"
+           "posting-oppressor-scrabble-scorer-whomever-paprika-slapstick-said-spectacle-capture-debate-attire-emcee-"
+           "unfocused-sympathy-doily-election-ambulance-polish-subtype-grumbling-neon-stooge-reanalyze-rockfish-"
+           "disparate-decorated-washroom-threefold-muzzle-buckwheat-kerosene-swell-why-reprocess-correct-shady-"
+           "impatient-slit-banshee-scrubbed-dreadful-unlocking-urologist-hurried-citable-fragment-septic-lapped-"
+           "prankish-phantom-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-lapel-emporium-renounce"
+        << "Entropy: 4210.27 bit"
+        << "Password Quality: Excellent";
+}
+
 void TestGui::testPasswordEntryEntropy()
 {
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
@@ -689,45 +758,13 @@ void TestGui::testPasswordEntryEntropy()
                auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
                auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
 
-               generatedPassword->setText("");
-               QTest::keyClicks(generatedPassword, "hello");
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 6.38 bit"));
-               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+               QFETCH(QString, password);
+               QFETCH(QString, expectedEntropyLabel);
+               QFETCH(QString, expectedStrengthLabel);
 
-               generatedPassword->setText("");
-               QTest::keyClicks(generatedPassword, "helloworld");
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 13.10 bit"));
-               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
-
-               generatedPassword->setText("");
-               QTest::keyClicks(generatedPassword, "password1");
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 4.00 bit"));
-               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
-
-               generatedPassword->setText("");
-               QTest::keyClicks(generatedPassword, "D0g..................");
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 19.02 bit"));
-               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
-
-               generatedPassword->setText("");
-               QTest::keyClicks(generatedPassword, "Tr0ub4dour&3");
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 30.87 bit"));
-               QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
-
-               generatedPassword->setText("");
-               QTest::keyClicks(generatedPassword, "correcthorsebatterystaple");
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 47.98 bit"));
-               QCOMPARE(strengthLabel->text(), QString("Password Quality: Weak"));
-
-               generatedPassword->setText("");
-               QTest::keyClicks(generatedPassword, "YQC3kbXbjC652dTDH");
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 95.83 bit"));
-               QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
-
-               generatedPassword->setText("");
-               QTest::keyClicks(generatedPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 174.59 bit"));
-               QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
+               generatedPassword->setText(password);
+               QCOMPARE(entropyLabel->text(), expectedEntropyLabel);
+               QCOMPARE(strengthLabel->text(), expectedStrengthLabel);
 
                QTest::mouseClick(generatedPassword, Qt::LeftButton);
                QTest::keyClick(generatedPassword, Qt::Key_Escape););
@@ -786,9 +823,11 @@ void TestGui::testDicewareEntryEntropy()
                // Verify entropy and strength
                auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
                auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
+               auto* wordLengthLabel = pwGeneratorWidget->findChild<QLabel*>("charactersInPassphraseLabel");
 
-               QCOMPARE(entropyLabel->text(), QString("Entropy: 77.55 bit"));
+               QTRY_COMPARE_WITH_TIMEOUT(entropyLabel->text(), QString("Entropy: 77.55 bit"), 200);
                QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+               QCOMPARE(wordLengthLabel->text().toInt(), pwGeneratorWidget->getGeneratedPassword().size());
 
                QTest::mouseClick(generatedPassword, Qt::LeftButton);
                QTest::keyClick(generatedPassword, Qt::Key_Escape););
