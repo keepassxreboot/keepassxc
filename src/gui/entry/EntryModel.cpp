@@ -250,8 +250,13 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return 0;
         }
         case Expires:
+            return entry->timeInfo().expires() ? entry->timeInfo().expiryTime()
             // There seems to be no better way of expressing 'infinity'
-            return entry->timeInfo().expires() ? entry->timeInfo().expiryTime() : QDateTime(QDate(9999, 1, 1));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+                                               : QDate(9999, 1, 1).startOfDay();
+#else
+                                               : QDateTime(QDate(9999, 1, 1));
+#endif
         case Created:
             return entry->timeInfo().creationTime();
         case Modified:
