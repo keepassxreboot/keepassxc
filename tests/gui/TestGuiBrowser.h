@@ -46,7 +46,7 @@ private:
     void clickIndex(const QModelIndex& index,
                     QAbstractItemView* view,
                     Qt::MouseButton button,
-                    Qt::KeyboardModifiers stateKey = 0);
+                    Qt::KeyboardModifiers stateKey = {});
 
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<DatabaseTabWidget> m_tabWidget;

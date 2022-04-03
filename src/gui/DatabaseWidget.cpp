@@ -2329,7 +2329,7 @@ bool DatabaseWidget::saveAs()
                                      + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
     }
     const QString newFilePath = fileDialog()->getSaveFileName(
-        this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr);
+        this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"));
 
     bool ok = false;
     if (!newFilePath.isEmpty()) {
@@ -2422,9 +2422,7 @@ bool DatabaseWidget::saveBackup()
         const QString newFilePath = fileDialog()->getSaveFileName(this,
                                                                   tr("Save database backup"),
                                                                   FileDialog::getLastDir("backup", oldFilePath),
-                                                                  tr("KeePass 2 Database").append(" (*.kdbx)"),
-                                                                  nullptr,
-                                                                  nullptr);
+                                                                  tr("KeePass 2 Database").append(" (*.kdbx)"));
 
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function

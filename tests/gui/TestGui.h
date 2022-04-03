@@ -84,7 +84,7 @@ private:
     void clickIndex(const QModelIndex& index,
                     QAbstractItemView* view,
                     Qt::MouseButton button,
-                    Qt::KeyboardModifiers stateKey = 0);
+                    Qt::KeyboardModifiers stateKey = {});
     void checkSaveDatabase();
     void checkStatusBarText(const QString& textFragment);
     void prepareAndTriggerRemoteSync(const QString& sourceToSync);
