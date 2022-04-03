@@ -303,7 +303,7 @@ namespace Utils
             QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
 
             // Skip empty parts, otherwise the program may clip the empty string
-            QStringList progArgs = prog.second.split(" ", QString::SkipEmptyParts);
+            QStringList progArgs = prog.second.split(" ", Qt::SkipEmptyParts);
 
             clipProcess->start(prog.first, progArgs);
             clipProcess->waitForStarted();
