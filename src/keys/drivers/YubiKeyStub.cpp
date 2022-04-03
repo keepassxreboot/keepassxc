@@ -38,7 +38,12 @@ bool YubiKey::isInitialized()
     return false;
 }
 
-void YubiKey::findValidKeys()
+bool YubiKey::findValidKeys()
+{
+    return false;
+}
+
+void YubiKey::findValidKeysAsync()
 {
 }
 

@@ -3679,6 +3679,10 @@ Error: %1</source>
         <source>Auto-Type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -7234,10 +7238,6 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation type="unfinished"></translation>
     </message>
@@ -7758,6 +7758,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

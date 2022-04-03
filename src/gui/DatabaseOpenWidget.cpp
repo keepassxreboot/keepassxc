@@ -456,7 +456,7 @@ void DatabaseOpenWidget::pollHardwareKey()
     m_ui->hardwareKeyProgress->setVisible(true);
     m_pollingHardwareKey = true;
 
-    YubiKey::instance()->findValidKeys();
+    YubiKey::instance()->findValidKeysAsync();
 }
 
 void DatabaseOpenWidget::hardwareKeyResponse(bool found)

@@ -37,6 +37,11 @@ QMultiMap<unsigned int, QPair<int, QString>> YubiKeyInterface::foundKeys()
 
 bool YubiKeyInterface::hasFoundKey(YubiKeySlot slot)
 {
+    // A serial number of 0 implies use the first key
+    if (slot.first == 0 && !m_foundKeys.isEmpty()) {
+        return true;
+    }
+
     for (const auto& key : m_foundKeys.values(slot.first)) {
         if (slot.second == key.first) {
             return true;

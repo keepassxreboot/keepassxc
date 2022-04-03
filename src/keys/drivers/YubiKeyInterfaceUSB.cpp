@@ -24,8 +24,6 @@
 #include "thirdparty/ykcore/ykdef.h"
 #include "thirdparty/ykcore/ykstatus.h"
 
-#include <QtConcurrent>
-
 namespace
 {
     constexpr int MAX_KEYS = 4;
@@ -109,88 +107,80 @@ YubiKeyInterfaceUSB* YubiKeyInterfaceUSB::instance()
     return m_instance;
 }
 
-void YubiKeyInterfaceUSB::findValidKeys()
+bool YubiKeyInterfaceUSB::findValidKeys()
 {
     m_error.clear();
     if (!isInitialized()) {
-        return;
+        return false;
     }
 
-    QtConcurrent::run([this] {
-        if (!m_mutex.tryLock(1000)) {
-            emit detectComplete(false);
-            return;
-        }
+    // Remove all known keys
+    m_foundKeys.clear();
 
-        // Remove all known keys
-        m_foundKeys.clear();
+    // Try to detect up to 4 connected hardware keys
+    for (int i = 0; i < MAX_KEYS; ++i) {
+        auto yk_key = openKey(i);
+        if (yk_key) {
+            auto serial = getSerial(yk_key);
+            if (serial == 0) {
+                closeKey(yk_key);
+                continue;
+            }
 
-        // Try to detect up to 4 connected hardware keys
-        for (int i = 0; i < MAX_KEYS; ++i) {
-            auto yk_key = openKey(i);
-            if (yk_key) {
-                auto serial = getSerial(yk_key);
-                if (serial == 0) {
-                    closeKey(yk_key);
+            auto st = ykds_alloc();
+            yk_get_status(yk_key, st);
+            int vid, pid;
+            yk_get_key_vid_pid(yk_key, &vid, &pid);
+
+            QString name = m_pid_names.value(pid, tr("Unknown"));
+            if (vid == 0x1d50) {
+                name = QStringLiteral("OnlyKey");
+            }
+            name += QString(" v%1.%2.%3")
+                        .arg(QString::number(ykds_version_major(st)),
+                             QString::number(ykds_version_minor(st)),
+                             QString::number(ykds_version_build(st)));
+
+            bool wouldBlock;
+            for (int slot = 1; slot <= 2; ++slot) {
+                auto config = (slot == 1 ? CONFIG1_VALID : CONFIG2_VALID);
+                if (!(ykds_touch_level(st) & config)) {
+                    // Slot is not configured
                     continue;
                 }
-
-                auto st = ykds_alloc();
-                yk_get_status(yk_key, st);
-                int vid, pid;
-                yk_get_key_vid_pid(yk_key, &vid, &pid);
-
-                QString name = m_pid_names.value(pid, tr("Unknown"));
-                if (vid == 0x1d50) {
-                    name = QStringLiteral("OnlyKey");
+                // Don't actually challenge a YubiKey Neo or below, they always require button press
+                // if it is enabled for the slot resulting in failed detection
+                if (pid <= NEO_OTP_U2F_CCID_PID) {
+                    auto display = tr("(USB) %1 [%2] Configured Slot - %3")
+                                       .arg(name, QString::number(serial), QString::number(slot));
+                    m_foundKeys.insert(serial, {slot, display});
+                } else if (performTestChallenge(yk_key, slot, &wouldBlock)) {
+                    auto display =
+                        tr("(USB) %1 [%2] Challenge-Response - Slot %3 - %4")
+                            .arg(name,
+                                 QString::number(serial),
+                                 QString::number(slot),
+                                 wouldBlock ? tr("Press", "USB Challenge-Response Key interaction request")
+                                            : tr("Passive", "USB Challenge-Response Key no interaction required"));
+                    m_foundKeys.insert(serial, {slot, display});
                 }
-                name += QString(" v%1.%2.%3")
-                            .arg(QString::number(ykds_version_major(st)),
-                                 QString::number(ykds_version_minor(st)),
-                                 QString::number(ykds_version_build(st)));
-
-                bool wouldBlock;
-                for (int slot = 1; slot <= 2; ++slot) {
-                    auto config = (slot == 1 ? CONFIG1_VALID : CONFIG2_VALID);
-                    if (!(ykds_touch_level(st) & config)) {
-                        // Slot is not configured
-                        continue;
-                    }
-                    // Don't actually challenge a YubiKey Neo or below, they always require button press
-                    // if it is enabled for the slot resulting in failed detection
-                    if (pid <= NEO_OTP_U2F_CCID_PID) {
-                        auto display = tr("(USB) %1 [%2] Configured Slot - %3")
-                                           .arg(name, QString::number(serial), QString::number(slot));
-                        m_foundKeys.insert(serial, {slot, display});
-                    } else if (performTestChallenge(yk_key, slot, &wouldBlock)) {
-                        auto display =
-                            tr("(USB) %1 [%2] Challenge-Response - Slot %3 - %4")
-                                .arg(name,
-                                     QString::number(serial),
-                                     QString::number(slot),
-                                     wouldBlock ? tr("Press", "USB Challenge-Response Key interaction request")
-                                                : tr("Passive", "USB Challenge-Response Key no interaction required"));
-                        m_foundKeys.insert(serial, {slot, display});
-                    }
-                }
-
-                ykds_free(st);
-                closeKey(yk_key);
-
-                Tools::wait(100);
-            } else if (yk_errno == YK_ENOKEY) {
-                // No more keys are connected
-                break;
-            } else if (yk_errno == YK_EUSBERR) {
-                qWarning("Hardware key USB error: %s", yk_usb_strerror());
-            } else {
-                qWarning("Hardware key error: %s", yk_strerror(yk_errno));
             }
-        }
 
-        m_mutex.unlock();
-        emit detectComplete(!m_foundKeys.isEmpty());
-    });
+            ykds_free(st);
+            closeKey(yk_key);
+
+            Tools::wait(100);
+        } else if (yk_errno == YK_ENOKEY) {
+            // No more keys are connected
+            break;
+        } else if (yk_errno == YK_EUSBERR) {
+            qWarning("Hardware key USB error: %s", yk_usb_strerror());
+        } else {
+            qWarning("Hardware key error: %s", yk_strerror(yk_errno));
+        }
+    }
+
+    return !m_foundKeys.isEmpty();
 }
 
 /**

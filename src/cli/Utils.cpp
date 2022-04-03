@@ -167,14 +167,14 @@ namespace Utils
                 }
             }
 
-            auto conn = QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
-                err << QObject::tr("Please present or touch your YubiKey to continue…") << "\n\n" << flush;
+            QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
+                err << QObject::tr("Please present or touch your YubiKey to continue.") << "\n\n" << flush;
             });
 
             auto key = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey({serial, slot}));
             compositeKey->addChallengeResponseKey(key);
 
-            QObject::disconnect(conn);
+            YubiKey::instance()->findValidKeys();
         }
 #else
         Q_UNUSED(yubiKeySlot);
@@ -313,7 +313,7 @@ namespace Utils
             // Other platforms understand UTF-8
             if (clipProcess->write(text.toUtf8()) == -1) {
 #endif
-                qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
+                qWarning("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
             }
             clipProcess->waitForBytesWritten();
             clipProcess->closeWriteChannel();

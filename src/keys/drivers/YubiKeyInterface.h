@@ -36,7 +36,7 @@ public:
     bool hasFoundKey(YubiKeySlot slot);
     QString getDisplayName(YubiKeySlot slot);
 
-    virtual void findValidKeys() = 0;
+    virtual bool findValidKeys() = 0;
     virtual YubiKey::ChallengeResult
     challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response) = 0;
     virtual bool testChallenge(YubiKeySlot slot, bool* wouldBlock) = 0;

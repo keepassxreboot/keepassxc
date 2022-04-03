@@ -50,7 +50,7 @@ class YubiKeyInterfacePCSC : public YubiKeyInterface
 public:
     static YubiKeyInterfacePCSC* instance();
 
-    void findValidKeys() override;
+    bool findValidKeys() override;
 
     YubiKey::ChallengeResult
     challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response) override;
