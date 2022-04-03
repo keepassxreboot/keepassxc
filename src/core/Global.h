@@ -42,6 +42,15 @@
 #define FILE_CASE_SENSITIVE Qt::CaseSensitive
 #endif
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+// "Backport" a few things to the 'Qt' namespace as required for older Qt
+// versions.
+namespace Qt
+{
+    const QString::SplitBehavior SkipEmptyParts = QString::SkipEmptyParts;
+} // namespace Qt
+#endif
+
 static const auto TRUE_STR = QStringLiteral("true");
 static const auto FALSE_STR = QStringLiteral("false");
 
