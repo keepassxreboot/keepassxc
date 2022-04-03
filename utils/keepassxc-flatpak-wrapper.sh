@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Flatpak Multiple Commands Wrapper
-# Copyright (C) 2017 KeePassXC team <https://keepassxc.org/>
+# Copyright (C) 2022 KeePassXC team <https://keepassxc.org/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,14 +31,17 @@ readonly arg2='keepassxc-browser@keepassxc.org'
 
 # Browser integration is enabled if unix socket exists
 if [[ -S "${XDG_RUNTIME_DIR}/app/${appId}/${appId}.BrowserServer" ]]; then
-  if [[ "$1" == "${arg1}" ]] || [[ "$2" == "${arg2}" ]]; then
-    exec keepassxc-proxy "$@"
-  fi
+    # Using the =~ operator is intended to allow small variations
+    # in the parameters, like and ending slash.
+    # shellcheck disable=2076
+    if [[ "$1" =~ "${arg1}" ]] || [[ "$2" =~ "${arg2}" ]]; then
+        exec keepassxc-proxy "$@"
+    fi
 fi
 
 # If the first argument is "cli", execute keepassxc-cli instead.
 if [[ "$1" == "cli" ]]; then
-  exec keepassxc-cli "${@:2}"
+    exec keepassxc-cli "${@:2}"
 fi
 
 # If no arguments are matched or browser integration is off, execute keepassxc
