@@ -20,6 +20,7 @@
 
 #include "core/Config.h"
 #include "core/Database.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
@@ -281,7 +282,7 @@ QString Entry::effectiveAutoTypeSequence() const
 
 /**
  * Retrieve the Auto-Type sequences matches for a given windowTitle
- * This returns a list with priority ordering. If you don't want duplicates call .toSet() on it.
+ * This returns a list with priority ordering. If you don't want duplicates, convert it to a QSet<QString>.
  */
 QList<QString> Entry::autoTypeSequences(const QString& windowTitle) const
 {
@@ -658,8 +659,7 @@ void Entry::setTags(const QString& tags)
         *itr = itr->trimmed();
     }
     // Remove duplicates
-    auto tagSet = QSet<QString>::fromList(taglist);
-    taglist = tagSet.values();
+    taglist = Tools::asSet(taglist).values();
     // Sort alphabetically
     taglist.sort();
     set(m_data.tags, taglist);
