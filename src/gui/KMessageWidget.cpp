@@ -280,7 +280,11 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
     auto closeButtonPixmap = d->closeButtonPixmap;
     QPainter painter;
     painter.begin(&closeButtonPixmap);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    painter.setRenderHints(QPainter::Antialiasing);
+#else
     painter.setRenderHints(QPainter::HighQualityAntialiasing);
+#endif
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
     painter.fillRect(QRect(0, 0, 16, 16), fg);
     painter.end();
