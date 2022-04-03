@@ -21,10 +21,32 @@
 #include "PasswordHealth.h"
 #include "zxcvbn.h"
 
-PasswordHealth::PasswordHealth(double entropy)
-    : m_score(entropy)
-    , m_entropy(entropy)
+namespace
 {
+    const static int ZXCVBN_ESTIMATE_THRESHOLD = 256;
+} // namespace
+
+PasswordHealth::PasswordHealth(double entropy)
+{
+    init(entropy);
+}
+
+PasswordHealth::PasswordHealth(const QString& pwd)
+{
+    auto entropy = 0.0;
+    entropy += ZxcvbnMatch(pwd.left(ZXCVBN_ESTIMATE_THRESHOLD).toUtf8(), nullptr, nullptr);
+    if (pwd.length() > ZXCVBN_ESTIMATE_THRESHOLD) {
+        // Add the average entropy per character for any characters above the estimate threshold
+        auto average = entropy / ZXCVBN_ESTIMATE_THRESHOLD;
+        entropy += average * (pwd.length() - ZXCVBN_ESTIMATE_THRESHOLD);
+    }
+    init(entropy);
+}
+
+void PasswordHealth::init(double entropy)
+{
+    m_score = m_entropy = entropy;
+
     switch (quality()) {
     case Quality::Bad:
     case Quality::Poor:
@@ -41,11 +63,6 @@ PasswordHealth::PasswordHealth(double entropy)
         // No reason or details for good and excellent passwords
         break;
     }
-}
-
-PasswordHealth::PasswordHealth(const QString& pwd)
-    : PasswordHealth(ZxcvbnMatch(pwd.toUtf8(), nullptr, nullptr))
-{
 }
 
 void PasswordHealth::setScore(int score)

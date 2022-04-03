@@ -20,6 +20,7 @@
 #define KEEPASSX_PASSWORDGENERATORWIDGET_H
 
 #include <QComboBox>
+#include <QTimer>
 
 #include "core/PassphraseGenerator.h"
 #include "core/PasswordGenerator.h"
@@ -57,6 +58,10 @@ public:
 
     static PasswordGeneratorWidget* popupGenerator(QWidget* parent = nullptr);
 
+signals:
+    void appliedPassword(const QString& password);
+    void closed();
+
 public slots:
     void regeneratePassword();
     void applyPassword();
@@ -65,19 +70,14 @@ public slots:
     void deleteWordList();
     void addWordList();
 
-signals:
-    void appliedPassword(const QString& password);
-    void closed();
-
 private slots:
     void updateButtonsEnabled(const QString& password);
-    void updatePasswordStrength(const QString& password);
+    void updatePasswordStrength();
     void setAdvancedMode(bool advanced);
     void excludeHexChars();
 
     void passwordLengthChanged(int length);
     void passphraseLengthChanged(int length);
-    void colorStrengthIndicator(const PasswordHealth& health);
 
     void updateGenerator();
 
