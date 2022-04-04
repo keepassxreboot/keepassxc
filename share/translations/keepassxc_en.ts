@@ -1968,15 +1968,7 @@ If you keep this number, your database will not be protected from brute force at
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2006,6 +1998,35 @@ This action is not reversible.</source>
     </message>
     <message>
         <source> (old)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
