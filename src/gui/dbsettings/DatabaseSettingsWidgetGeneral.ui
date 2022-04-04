@@ -100,20 +100,26 @@
         <item row="0" column="0">
          <widget class="QCheckBox" name="historyMaxItemsCheckBox">
           <property name="toolTip">
-           <string>Maximum number of history items per entry</string>
+           <string>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</string>
           </property>
           <property name="text">
-           <string>Max. history items:</string>
+           <string>Limit the amount of history items per entry to:</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
          <widget class="QCheckBox" name="historyMaxSizeCheckBox">
           <property name="toolTip">
-           <string>Maximum size of history per entry</string>
+           <string>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</string>
           </property>
           <property name="text">
-           <string>Max. history size:</string>
+           <string>Limit the total size of history items per entry to:</string>
           </property>
          </widget>
         </item>
@@ -151,6 +157,12 @@
         </item>
         <item row="2" column="0">
          <widget class="QCheckBox" name="recycleBinEnabledCheckBox">
+          <property name="toolTip">
+           <string>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</string>
+          </property>
           <property name="text">
            <string>Use recycle bin</string>
           </property>
