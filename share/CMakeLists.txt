@@ -23,15 +23,43 @@ install(FILES ${wordlists_files} DESTINATION ${DATA_INSTALL_DIR}/wordlists)
 file(COPY "wordlists" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 if(UNIX AND NOT APPLE AND NOT HAIKU)
-    install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
-            FILES_MATCHING PATTERN "keepassx*.png" PATTERN "keepassx*.svg"
-            PATTERN "status" EXCLUDE PATTERN "actions" EXCLUDE PATTERN "categories" EXCLUDE)
-    install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
-            FILES_MATCHING PATTERN "application-x-keepassxc.png" PATTERN "application-x-keepassxc.svg"
-            PATTERN "status" EXCLUDE PATTERN "actions" EXCLUDE PATTERN "categories" EXCLUDE)
-    install(FILES linux/org.keepassxc.KeePassXC.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
-    install(FILES linux/org.keepassxc.KeePassXC.appdata.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
-    install(FILES linux/keepassxc.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
+    # Flatpak requires all host accessible files to use filenames based upon the app id
+    if(KEEPASSXC_DIST_FLATPAK)
+        set(APP_ICON_NAME "${APP_ID}")
+        set(MIME_ICON "${APP_ID}-application-x-keepassxc")
+        configure_file(linux/keepassxc.xml.in ${CMAKE_CURRENT_BINARY_DIR}/linux/${APP_ID}.xml @ONLY)
+        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/linux/${APP_ID}.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
+
+        file(GLOB_RECURSE ICON_FILES LIST_DIRECTORIES false
+             "icons/application/*/keepassxc*.png"
+             "icons/application/*/*keepassxc*.svg")
+        foreach(icon_match ${ICON_FILES})
+            get_filename_component(icon_name ${icon_match} NAME)
+            get_filename_component(icon_dir ${icon_match} DIRECTORY)
+            # Prefix all icons with application id: "org.keepassxc.KeePassXC"
+            string(REGEX REPLACE "^keepassxc(.*)?(\\.png|\\.svg)$" "${APP_ID}\\1\\2" icon_name ${icon_name})
+            string(REGEX REPLACE "^(application-x-keepassxc\\.svg)$" "${APP_ID}-\\1" icon_name ${icon_name})
+            # Find icon sub dir ex. "scalable/mimetypes/"
+            file(RELATIVE_PATH icon_subdir ${CMAKE_CURRENT_SOURCE_DIR}/icons/application ${icon_dir})
+            install(FILES ${icon_match} DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/${icon_subdir}
+                    RENAME ${icon_name})
+        endforeach()
+    else()
+        set(APP_ICON_NAME "keepassxc")
+        set(MIME_ICON "application-x-keepassxc")
+        configure_file(linux/keepassxc.xml.in ${CMAKE_CURRENT_BINARY_DIR}/linux/keepassxc.xml @ONLY)
+        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/linux/keepassxc.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
+
+        install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
+                FILES_MATCHING PATTERN "keepassx*.png" PATTERN "keepassx*.svg"
+                PATTERN "status" EXCLUDE PATTERN "actions" EXCLUDE PATTERN "categories" EXCLUDE)
+        install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
+                FILES_MATCHING PATTERN "application-x-keepassxc.svg" PATTERN "status"
+                EXCLUDE PATTERN "actions" EXCLUDE PATTERN "categories" EXCLUDE)
+    endif(KEEPASSXC_DIST_FLATPAK)
+    configure_file(linux/${APP_ID}.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/linux/${APP_ID}.desktop @ONLY)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/linux/${APP_ID}.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+    install(FILES linux/${APP_ID}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 endif(UNIX AND NOT APPLE AND NOT HAIKU)
 
 if(APPLE)
