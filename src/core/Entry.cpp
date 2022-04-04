@@ -801,7 +801,6 @@ void Entry::truncateHistory()
     int histMaxSize = db->metadata()->historyMaxSize();
     if (histMaxSize > -1) {
         int size = 0;
-        QSet<QByteArray> foundAttachments = attachments()->values();
 
         QMutableListIterator<Entry*> i(m_history);
         i.toBack();
@@ -811,7 +810,6 @@ void Entry::truncateHistory()
             // don't calculate size if it's already above the maximum
             if (size <= histMaxSize) {
                 size += historyItem->size();
-                foundAttachments += historyItem->attachments()->values();
             }
 
             if (size > histMaxSize) {
