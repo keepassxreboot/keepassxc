@@ -755,10 +755,10 @@ void Entry::addHistoryItem(Entry* entry)
     emitModified();
 }
 
-void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
+int Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
 {
     if (historyEntries.isEmpty()) {
-        return;
+        return 0;
     }
 
     for (Entry* entry : historyEntries) {
@@ -771,6 +771,8 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
     }
 
     emitModified();
+
+    return historyEntries.length();
 }
 
 void Entry::truncateHistory()

@@ -2133,6 +2133,49 @@ This action is not reversible.</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>History Cleanup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No old history entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Old history entries removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Removed %n old history entry(s) from the database</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Remove all but the single latest history item from each entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove all history items from each entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove history items older than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from each entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perform Cleanup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All history entries are younger than the specified age.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
@@ -8583,6 +8626,44 @@ Kernel: %3 %4</source>
     <message>
         <source>Weak Passwords</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimeDeltaUI</name>
+    <message numerus="yes">
+        <source>hour(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>day(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>week(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>month(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>year(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>

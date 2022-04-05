@@ -111,6 +111,7 @@ public:
     CustomData* customData();
     const CustomData* customData() const;
 
+    static const int DefaultMaintenanceHistoryDays;
     static const int DefaultHistoryMaxItems;
     static const int DefaultHistoryMaxSize;
 

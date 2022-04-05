@@ -24,7 +24,9 @@
 
 #include <QApplication>
 #include <QCryptographicHash>
+#include <algorithm>
 
+const int Metadata::DefaultMaintenanceHistoryDays = 365;
 const int Metadata::DefaultHistoryMaxItems = 10;
 const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;
 
@@ -43,7 +45,7 @@ Metadata::Metadata(QObject* parent)
 void Metadata::init()
 {
     m_data.generator = QStringLiteral("KeePassXC");
-    m_data.maintenanceHistoryDays = 365;
+    m_data.maintenanceHistoryDays = DefaultMaintenanceHistoryDays;
     m_data.masterKeyChangeRec = -1;
     m_data.masterKeyChangeForce = -1;
     m_data.historyMaxItems = DefaultHistoryMaxItems;
@@ -314,7 +316,9 @@ void Metadata::setDefaultUserNameChanged(const QDateTime& value)
 
 void Metadata::setMaintenanceHistoryDays(int value)
 {
-    set(m_data.maintenanceHistoryDays, value);
+    // KeePass2 has a hardcoded maximum of 3650 days.
+    // for compatibility we make sure not to use bigger numbers.
+    set(m_data.maintenanceHistoryDays, std::min(value, 3650));
 }
 
 void Metadata::setColor(const QString& value)

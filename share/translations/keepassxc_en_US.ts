@@ -8522,6 +8522,44 @@ Kernel: %3 %4</translation>
     </message>
 </context>
 <context>
+    <name>TimeDeltaUI</name>
+    <message numerus="yes">
+        <source>hour(s)</source>
+        <translation>
+            <numerusform>hour</numerusform>
+            <numerusform>hours</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>day(s)</source>
+        <translation>
+            <numerusform>day</numerusform>
+            <numerusform>days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>week(s)</source>
+        <translation>
+            <numerusform>week</numerusform>
+            <numerusform>weeks</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>month(s)</source>
+        <translation>
+            <numerusform>month</numerusform>
+            <numerusform>months</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>year(s)</source>
+        <translation>
+            <numerusform>year</numerusform>
+            <numerusform>years</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>

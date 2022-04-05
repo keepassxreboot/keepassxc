@@ -161,7 +161,7 @@ public:
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
     void addHistoryItem(Entry* entry);
-    void removeHistoryItems(const QList<Entry*>& historyEntries);
+    int removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
 
     bool equals(const Entry* other, CompareItemOptions options = CompareItemDefault) const;

@@ -57,6 +57,7 @@ set(keepassx_SOURCES
         core/Resources.cpp
         core/SignalMultiplexer.cpp
         core/TimeDelta.cpp
+        core/TimeDeltaUI.cpp
         core/TimeInfo.cpp
         core/Tools.cpp
         core/Translator.cpp

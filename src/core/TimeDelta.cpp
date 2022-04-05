@@ -16,6 +16,7 @@
  */
 
 #include "TimeDelta.h"
+#include "Clock.h"
 
 #include <QDateTime>
 
@@ -81,4 +82,11 @@ int TimeDelta::getMonths() const
 int TimeDelta::getYears() const
 {
     return m_years;
+}
+
+int TimeDelta::toDays() const
+{
+    QDateTime now = Clock::currentDateTime();
+    QDateTime future = now + *this;
+    return now.daysTo(future);
 }
