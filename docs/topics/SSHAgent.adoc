@@ -74,7 +74,7 @@ image::sshagent_application_settings.png[]
 On the settings page you can enable the integration by checking _Enable SSH Agent integration_.
 When the integration is enabled coming back to the settings page also shows if connection to the agent is working.
 
-On Windows you have the option to select between _Pageant_ and _OpenSSH for Windows_ and on other platforms the settings page shows the current value of _SSH_AUTH_SOCK_ environment variable which is used to connect to the running agent and an option to manually override the automatically detected path.
+On Windows, you have the option to select _Pageant_ and/or _OpenSSH for Windows_. On macOS and Linux, the system ssh-agent will be used automatically and the settings page shows the current value of _SSH_AUTH_SOCK_ environment variable which is used to connect to the running agent and an option to manually override the automatically detected path.
 
 If the value of _SSH_AUTH_SOCK_ is empty it means the agent is not properly configured and KeePassXC will be unable to connect to it unless you provide a static override path to the socket.
 

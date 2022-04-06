@@ -170,7 +170,7 @@ image::clone_entry.png[]
 2. The clone dialog will appear.
 +
 .Clone entry dialog
-image::clone_entry_dialog.png[,70%]
+image::clone_entry_dialog.png[,50%]
   * Select the Append ‘ - Clone’ to title check-box to create a new entry with the word Clone as the suffix to the name of the new entry.
   * Select the Replace username and password with references check-box to create the new entry where the username and the password fields contain the references to the username and password to the master entry.
   * Select the Copy history checkbox to copy the history of the master entry to the clone.
