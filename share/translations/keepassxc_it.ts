@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>La connessione dell&apos;agente SSH sta funzionando!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Utilizzare entrambi gli agenti</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2408,7 +2412,7 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Voci che scadono entro %1 giorno(i)</numerusform><numerusform>Voci che scadono entro %1 giorno(i)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2551,10 +2555,6 @@ Vuoi correggerla?</translation>
         <source>Hide</source>
         <translation>Nascondi</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Domani</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n settimana</numerusform><numerusform>%n settimane</numerusform></translation>
@@ -2566,6 +2566,10 @@ Vuoi correggerla?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>anno (i) %n</numerusform><numerusform>%n anno(i)</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n ora(e)</numerusform><numerusform>%n ora(e)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3675,6 +3679,10 @@ Errore: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Completamento automatico</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Etichette</translation>
     </message>
 </context>
 <context>
@@ -5345,7 +5353,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ripristina voce(i)</numerusform><numerusform>Ripristina voce(i)</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -7247,10 +7255,6 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
         <translation>Seriale YubiKey %1 non valido</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Si prega di presentare o toccare il vostro YubiKey per continuare...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Immettere la password per crittografare il database (facoltativo):</translation>
     </message>
@@ -7727,6 +7731,10 @@ Kernel: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Impossibile firmare la prova utilizzando Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Per favore presenta o tocca la tua YubiKey per continuare.</translation>
     </message>
 </context>
 <context>

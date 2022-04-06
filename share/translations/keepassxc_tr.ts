@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>SSH istemci bütünleşmesini etkinleştir</translation>
+        <translation>SSH istemci bütünleşmesi kullanılsın</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH istemci bağlantısı çalışıyor!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>İki uygulama da kullanılsın</translation>
     </message>
 </context>
 <context>
@@ -246,7 +250,7 @@
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Veritabanı kilidini açıldığında simge durumuna küçültülsün</translation>
+        <translation>Veritabanı kilidi açıldığında simge durumuna küçültülsün</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
@@ -270,7 +274,7 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>Veritabanının kilidi açıldığında, kayıtlar şöyle görüntülensin</translation>
+        <translation>Veritabanının kilidi açıldığında, şu kayıtlar görüntülensin</translation>
     </message>
     <message>
         <source>have expired</source>
@@ -285,7 +289,7 @@
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>süresi geçecek</translation>
+        <translation>Süresinin geçmesine </translation>
     </message>
     <message>
         <source>File Management</source>
@@ -293,15 +297,15 @@
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Her değişiklik sonrası otomatik kaydedilsin</translation>
+        <translation>Her değişiklik sonrası otomatik olarak kaydedilsin</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Veritabanını kilitlendiğinde otomatik kaydedilsin</translation>
+        <translation>Veritabanı kilitlendiğinde otomatik olarak kaydedilsin</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Veritabanını kilitlendiğinde veri dışı değişiklikleri otomatik kaydedilsin</translation>
+        <translation>Veritabanı kilitlendiğinde veri dışı değişiklikleri otomatik olarak kaydedilsin</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -357,11 +361,11 @@
     </message>
     <message>
         <source>Minimize</source>
-        <translation>Simge durumuna küçült</translation>
+        <translation>Simge durumuna küçültülsün</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation>Arka plana bırak</translation>
+        <translation>Arka plana atılsın</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
@@ -487,7 +491,7 @@
     </message>
     <message>
         <source>Remember last typed entry for:</source>
-        <translation>Şunun için son yazılmış kayıt hatırlansın:</translation>
+        <translation>Son yazılmış kaydın hatırlanma süresi:</translation>
     </message>
 </context>
 <context>
@@ -1002,7 +1006,7 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation>Adres bağlantısına uygun olan (https://ornek.com gibi)</translation>
+        <translation>Adres bağlantısına uyulsun (https://ornek.com gibi)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -1062,7 +1066,7 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
-        <translation>KeePassHTTP ayarlarının aktarılması sorulmaz.</translation>
+        <translation>KeePassHTTP ayarlarının aktarılması sorulmasın.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
@@ -1132,7 +1136,7 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>Tarayıcı bütünleşmesinin çalışması için KeePassXC-Browser gereklidir. &lt;br /&gt; %1, %2, %3 ve %4 tarayıcıları için indirebilirsiniz.</translation>
+        <translation>Tarayıcı bütünleşmesinin çalışması için KeePassXC-Browser gereklidir. &lt;br /&gt;%1, %2 ve %3 tarayıcıları için indirebilirsiniz. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -2557,10 +2561,6 @@ Düzeltmek ister misiniz?</translation>
         <source>Hide</source>
         <translation>Gizle</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Yarın</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n hafta</numerusform><numerusform>%n hafta</numerusform></translation>
@@ -2572,6 +2572,10 @@ Düzeltmek ister misiniz?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n yıl</numerusform><numerusform>%n yıl</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n saat</numerusform><numerusform>%n saat</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3681,6 +3685,10 @@ Hata: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Otomatik yazma</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Etiketler</translation>
     </message>
 </context>
 <context>
@@ -4939,7 +4947,7 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>&amp;Dışa Aktar</translation>
+        <translation>&amp;Dışa aktar</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -7252,10 +7260,6 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
         <translation>%1 YubiKey seri numarası geçersiz</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Lütfen, ilerlemek için YubiKey anahtarını takın ya da üzerindeki düğmeye dokunun…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Veritabanını şifrelemek için parolayı yazın (isteğe bağlı):</translation>
     </message>
@@ -7732,6 +7736,10 @@ Kernel: %3 %4</source>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Soru Windows Hello kullanılarak imzalanamadı.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Lütfen, ilerlemek için YubiKey anahtarını takın ya da üzerindeki düğmeye dokunun.</translation>
     </message>
 </context>
 <context>
@@ -8398,7 +8406,7 @@ Kernel: %3 %4</source>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation>Aktif</translation>
+        <translation>Kullanım</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
@@ -8422,7 +8430,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation>Kendi sertifikası</translation>
+        <translation>Kişisel sertifika</translation>
     </message>
     <message>
         <source>Signer:</source>

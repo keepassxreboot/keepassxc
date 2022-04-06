@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Jouw beslissing wordt onthouden voor de duur dat zowel de aanvragende client ALS KeePassXC actief zijn.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Alles afwijzen, nu &amp;&amp; toekomst</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Alles toestaan, nu &amp;&amp; toekomst</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH Agent-verbinding werkt!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -275,7 +279,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>zijn verlopen</translation>
     </message>
     <message>
         <source> days</source>
@@ -714,7 +718,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Gebruik geavanceerde zoekopdrachten om items in de geopende databases te vinden. De volgende sneltoetsen zijn handig:&lt;br/&gt;
+Ctrl+F - Zoeken in database in-/uitschakelen&lt;br/&gt;
+Ctrl+1 - Typ gebruikersnaam&lt;br/&gt;
+Ctrl+2 - Typ wachtwoord&lt;br/&gt;
+Ctrl+3 - Typ TOTP&lt;br/&gt;
+Ctrl+4 - Virtueel toetsenbord gebruiken (alleen Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -758,7 +767,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Virtueel toetsenbord gebruiken</translation>
     </message>
 </context>
 <context>
@@ -1893,7 +1902,7 @@ Weet je zeker dat je door wilt gaan zonder een wachtwoord?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (aanbevolen)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2408,7 +2417,7 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Items die binnen %1 dag aflopen</numerusform><numerusform>Items die binnen %1 dag(en) aflopen</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2551,10 +2560,6 @@ Wil je dit corrigeren?</translation>
         <source>Hide</source>
         <translation>Verbergen</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Morgen</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n week</numerusform><numerusform>%n weken</numerusform></translation>
@@ -2566,6 +2571,10 @@ Wil je dit corrigeren?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n jaar</numerusform><numerusform>%n jaren</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3674,6 +3683,10 @@ Fout: %1</translation>
         <source>Auto-Type</source>
         <translation>Auto-type</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Labels</translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -3912,7 +3925,7 @@ Fout: %1</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation>Sorteer items op...</translation>
+        <translation>Items sorteren op...</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
@@ -4138,7 +4151,7 @@ Je kunt de DuckDuckGo website pictogram dienst inschakelen in de sectie &apos;Be
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Ontbrekende databaseheaders</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4164,11 +4177,11 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige headerlengte: veld %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige lengte van hearder-gegevens: veld %1, %2 verwacht, %3 aangetroffen</translation>
     </message>
 </context>
 <context>
@@ -4225,11 +4238,11 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige headerlengte: veld %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige lengte van hearder-gegevens: veld %1, %2 verwacht, %3 aangetroffen</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4249,11 +4262,11 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige lengte van het binnenste headerveld: veld %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige gegevenslengte binnenste headertekst: veld %1, %2 verwacht, %3 aangetroffen</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5046,11 +5059,11 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation>Sorteer &amp;A-Z</translation>
+        <translation>Sorteren &amp;A-Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation>Sorteer &amp;Z-A</translation>
+        <translation>Sorteren &amp;Z-A</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
@@ -5182,11 +5195,11 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
-        <translation>1Password vault...</translation>
+        <translation>1Password kluis...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation>Importeer een 1Password vault</translation>
+        <translation>Een 1Password kluis importeren</translation>
     </message>
     <message>
         <source>CSV File…</source>
@@ -5342,7 +5355,7 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Vermelding(en) herstellen</numerusform><numerusform>Item(s) herstellen</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5417,11 +5430,11 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Opnieuw instellen</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>Alle onthouden beslissingen voor deze toepassing opnieuw instellen</translation>
     </message>
 </context>
 <context>
@@ -7244,10 +7257,6 @@ Overweeg om een nieuw sleutelbestand te genereren.</translation>
         <translation>Ongeldig YubiKey nummer %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Presenteer je YubiKey of druk er op om door te gaan...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Voer een wachtwoord in om de database te versleutelen (optioneel):</translation>
     </message>
@@ -7507,7 +7516,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7523,7 +7532,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7724,6 +7733,10 @@ Kernelversie: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Kan challenge niet ondertekenen met Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

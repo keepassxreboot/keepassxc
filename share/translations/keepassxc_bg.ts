@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Вижте контрибутурите в GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Вижте сътрудниците в GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH Agent връзката работи!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2532,10 +2536,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Скриване</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Утре</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n седмица(а)</numerusform><numerusform>%n седмица(и)</numerusform></translation>
@@ -2547,6 +2547,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n година(а)</numerusform><numerusform>%n година(е)</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3654,6 +3658,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Auto-Type</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7212,10 +7220,6 @@ Please consider generating a new key file.</source>
         <translation>Невалиден YubiKey сериен номер %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Въведете парола за шифроване на база данни (незадължително):</translation>
     </message>
@@ -7690,6 +7694,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

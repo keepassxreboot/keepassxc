@@ -50,7 +50,7 @@
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Cererea permisului</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
@@ -148,6 +148,10 @@
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use both agents</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2530,10 +2534,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Ascunde</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Mâine</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>% n săptămână (i)</numerusform><numerusform>% n săptămână (i)</numerusform><numerusform>%n săptămână(i)</numerusform></translation>
@@ -2545,6 +2545,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>% n an (i)</numerusform><numerusform>% n an (i)</numerusform><numerusform>%n an(i)</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3649,6 +3653,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Auto tiparire</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7207,10 +7215,6 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Introduceți parola pentru criptarea bazei de date (opțional):</translation>
     </message>
@@ -7685,6 +7689,10 @@ Nucleu (Kernel): %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>การเชื่อมต่อ SSH Agent ใช้งานได้!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -721,7 +725,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>ค้นหา...</translation>
     </message>
     <message>
         <source>Type Sequence</source>
@@ -2222,7 +2226,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Searching…</source>
-        <translation type="unfinished"/>
+        <translation>กำลังค้นหา...</translation>
     </message>
     <message>
         <source>Shared group…</source>
@@ -2522,10 +2526,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>ซ่อน</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>พรุ่งนี้</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n สัปดาห์</numerusform></translation>
@@ -2537,6 +2537,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n ปี</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3239,7 +3243,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Choose icon…</source>
-        <translation type="unfinished"/>
+        <translation>เลือกไอคอน...</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
@@ -3448,7 +3452,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"/>
+        <translation>เปลี่ยนชื่อ</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
@@ -3581,11 +3585,11 @@ Error: %1</source>
     </message>
     <message>
         <source>Age</source>
-        <translation type="unfinished"/>
+        <translation>อายุ</translation>
     </message>
     <message>
         <source>Difference</source>
-        <translation type="unfinished"/>
+        <translation>แตกต่าง</translation>
     </message>
     <message>
         <source>Size</source>
@@ -3621,7 +3625,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>สี</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3642,6 +3646,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Auto-Type</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3903,7 +3911,7 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>ไม่รู้จัก</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
@@ -4071,7 +4079,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Downloading…</source>
-        <translation type="unfinished"/>
+        <translation>กำลังดาวน์โหลด...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -7195,10 +7203,6 @@ Please consider generating a new key file.</source>
         <translation>เลขชุด YubiKey ไม่ถูกรูปแบบ %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation type="unfinished"/>
     </message>
@@ -7673,6 +7677,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

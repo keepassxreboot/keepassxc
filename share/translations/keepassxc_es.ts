@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Su decisión será recordada mientras el cliente solicitante y KeePassXC están en ejecución ambos.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Denegar todo y futuro</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Permitir todo y &amp;futuro</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>¡La conexión del agente de SSH está funcionando!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -275,7 +279,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>ha expirado</translation>
     </message>
     <message>
         <source> days</source>
@@ -714,7 +718,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Puede usar búsquedas de consultas avanzadas para encontrar cualquier apunte en su base de datos abierta. Los siguientes atajos de teclado son útiles:&lt;br/&gt;
+Ctrl+F - Intercambiar búsqueda de base de datos&lt;br/&gt;
+Ctrl+1 - Escribir nombre de usuario&lt;br/&gt;
+Ctrl+2 - Escribir contraseña&lt;br/&gt;
+Ctrl+3 - Escribir TOTP&lt;br/&gt;
+Ctrl+4 - Usar teclado virtual (solo Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -758,7 +767,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Usar teclado virtual</translation>
     </message>
 </context>
 <context>
@@ -1894,7 +1903,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (recomendado)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2551,10 +2560,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Ocultar</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Mañana</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n semana</numerusform><numerusform>%n semanas</numerusform></translation>
@@ -2566,6 +2571,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n año</numerusform><numerusform>%n años</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3676,6 +3685,10 @@ Error: %1</translation>
         <source>Auto-Type</source>
         <translation>Autoescritura</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Etiquetas</translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -4141,7 +4154,7 @@ Puede habilitar el servicio de iconos del sitio web DuckDuckGo en la sección se
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Faltan cabeceras de base de datos</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4167,11 +4180,11 @@ Si ocurre nuevamente entonces su archivo de base de datos puede estar corrupto.<
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Longitud de campo de cabecera inválido %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Longitud de campo de cabecera inválido: campo %1, %2 experado, %3 encontrado</translation>
     </message>
 </context>
 <context>
@@ -4228,11 +4241,11 @@ Si ocurre nuevamente entonces su archivo de base de datos puede estar corrupto.<
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Longitud de campo de cabecera inválido %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Longitud de campo de cabecera inválido: campo %1, %2 experado, %3 encontrado</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4252,11 +4265,11 @@ Si ocurre nuevamente entonces su archivo de base de datos puede estar corrupto.<
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Longitud de campo de cabecera interrna inválida: campo %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Longitud de campo de cabecera interrna inválida: campo %1, experado %2, encontrado %3 </translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5419,11 +5432,11 @@ Le recomendamos que utilice la AppImage disponible en nuestra página de descarg
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Restablecer</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>Restablecer cualquier decisión recordada para esta aplicación</translation>
     </message>
 </context>
 <context>
@@ -7246,10 +7259,6 @@ Considere generar un nuevo fichero clave.</translation>
         <translation>Serie de YubiKey inválido %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Presente o toque su YubiKey para continuar...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Introduzca la contraseña para cifrar la base de datos (opcional):</translation>
     </message>
@@ -7509,7 +7518,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7525,7 +7534,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7726,6 +7735,10 @@ Núcleo: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Fallo al completar reto usando Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

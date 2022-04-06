@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>SSH-agent-forbindelsen virker!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2529,10 +2533,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>I morgen</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n uge</numerusform><numerusform>%n uger</numerusform></translation>
@@ -2544,6 +2544,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n år</numerusform><numerusform>%n år</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3647,6 +3651,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Autoskriv</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7202,10 +7210,6 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Indtast adgangskode for at kryptere database (valgfrit): </translation>
     </message>
@@ -7680,6 +7684,10 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>Spojenie Agenta SSH funkčné!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2545,10 +2549,6 @@ Chcete to opraviť?</translation>
         <source>Hide</source>
         <translation>Skryť</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Zajtra</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n týždeň</numerusform><numerusform>%n týždne</numerusform><numerusform>%n týždňov</numerusform><numerusform>%n týždňov</numerusform></translation>
@@ -2560,6 +2560,10 @@ Chcete to opraviť?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n rok</numerusform><numerusform>%n roky</numerusform><numerusform>%n rokov</numerusform><numerusform>%n rokov</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3671,6 +3675,10 @@ Chyba: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Automatické vypĺňanie</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7242,10 +7250,6 @@ Prosím, zvážte vygenerovanie nového súboru kľúča.</translation>
         <translation>Neplatné sériové číslo Yubikey %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Prosím, pripojte alebo stlačte tlačidlo svojho YubiKey na pokračovanie*…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Zadajte heslo na zašifrovanie databázy (voliteľné):</translation>
     </message>
@@ -7720,6 +7724,10 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

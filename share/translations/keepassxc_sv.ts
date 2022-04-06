@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>SSH-tjänstens anslutning arbetar!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Använd båda agenterna</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2558,10 +2562,6 @@ Vill du korrigera det?</translation>
         <source>Hide</source>
         <translation>Dölj</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Imorgon</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n vecka</numerusform><numerusform>%n veckor</numerusform></translation>
@@ -2573,6 +2573,10 @@ Vill du korrigera det?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n år</numerusform><numerusform>%n år</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%1 timma</numerusform><numerusform>%1 timmar</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3681,6 +3685,10 @@ Fel: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Autoskriv</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Taggar</translation>
     </message>
 </context>
 <context>
@@ -7251,10 +7259,6 @@ inte kommer att stödja i framtiden.
         <translation>Ogiltigt YubiKey serienummer %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Presentera eller rör vid din YubiKey för att fortsätta...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Ange lösenord för att avkryptera databasen (valfritt): </translation>
     </message>
@@ -7731,6 +7735,10 @@ Kärna: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Kunde inte signera challenge med Windows Hello</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Anslut eller tryck på din YubiKey för att fortsätta.</translation>
     </message>
 </context>
 <context>

@@ -3,11 +3,11 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>אודות KeepPassXC</translation>
+        <translation>על אודות KeepPassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>אודות</translation>
+        <translation>על אודות</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>ההחלטה שנעשתה תזכר בכל משך פעולתם של הלקוח המבקש ו־ KeePassXC יחד.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>דחיית הכול וגם בעתיד</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>אפשור הכול וגם בעתיד</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>חיבור סוכן SSH פועל!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -275,7 +279,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>פג־תוקף</translation>
     </message>
     <message>
         <source> days</source>
@@ -487,7 +491,7 @@
     </message>
     <message>
         <source>Remember last typed entry for:</source>
-        <translation>זכור את הערך האחרון שהוקלד עבור:</translation>
+        <translation>זכירת הרשומה האחרונה שהוקלדה עבור:</translation>
     </message>
 </context>
 <context>
@@ -714,7 +718,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;ניתן להשתמש בשאילתות חיפוש מתקדם למציאת כול ערך במסדי הנתונים הפתוחים. קיצורי הדרך הבאים שימושיים:&lt;br/&gt;
+Ctrl+F - החלפת חיפוש מסד הנתונים&lt;br/&gt;
+Ctrl+1 - הקלדת שם משתמש&lt;br/&gt;
+Ctrl+2 - הקלדת סיסמה&lt;br/&gt;
+Ctrl+3 - הקלדת TOTP&lt;br/&gt;
+Ctrl+4 - שימוש במקלדת מדומה (וינדוס בלבד)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -758,7 +767,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>שימוש במקלדת מדומה</translation>
     </message>
 </context>
 <context>
@@ -1891,7 +1900,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (מומלץ)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2406,7 +2415,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>רשומות שתוקפן יפוג בתוך יום %1</numerusform><numerusform>רשומות שתוקפן יפוג בתוך %1 ימים</numerusform><numerusform>רשומות שתוקפן יפוג בתוך %1 ימים</numerusform><numerusform>רשומות שתוקפן יפוג בתוך %1 ימים</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2457,7 +2466,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation>ל/ר</translation>
+        <translation>ל/י</translation>
     </message>
     <message>
         <source>(encrypted)</source>
@@ -2549,10 +2558,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>הסתרה</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>מחר</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>שבוע %n</numerusform><numerusform>%n שבועות</numerusform><numerusform>%n שבועות</numerusform><numerusform>%n שבועות</numerusform></translation>
@@ -2564,6 +2569,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>שנה %n</numerusform><numerusform>%n שנים</numerusform><numerusform>%n שנים</numerusform><numerusform>%n שנים</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2980,7 +2989,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation>ל/ר</translation>
+        <translation>ל/י</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
@@ -3676,6 +3685,10 @@ Error: %1</source>
         <source>Auto-Type</source>
         <translation>הקלדה־אוטומטית</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>תגים</translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -4142,7 +4155,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>חסרות כותרות מסד־נתונים</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4168,11 +4181,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>אורך שדה כותרת לא תקין: שדה %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>אורך נתוני כותרת לא תקין: שדה %1, ציפיה ל־%2, נמצא %3</translation>
     </message>
 </context>
 <context>
@@ -4229,11 +4242,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>אורך שדה כותרת לא תקין: שדה %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>אורך נתוני כותרת לא תקין: שדה %1, ציפיה ל־%2, נמצא %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4253,11 +4266,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>אורך שדה כותרת פנימי לא תקין: שדה %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>אורך נתוני כותרת פנימית לא תקין: שדה %1, ציפיה ל־%2, נמצא %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -4486,7 +4499,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>לא נמצאה uuid רשומת</translation>
+        <translation>לא נמצאה uuid רשומה</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
@@ -5278,7 +5291,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Light</source>
-        <translation>אור</translation>
+        <translation>בהיר</translation>
     </message>
     <message>
         <source>Dark</source>
@@ -5346,7 +5359,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>שחזור רשומה</numerusform><numerusform>שחזור רשומות</numerusform><numerusform>שחזור רשומות</numerusform><numerusform>שחזור רשומות</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5420,11 +5433,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>איפוס</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>איפוס כלל ההגדרות המומלצות ביישומון זה</translation>
     </message>
 </context>
 <context>
@@ -7247,10 +7260,6 @@ Please consider generating a new key file.</source>
         <translation>YubiKey סידורי %1 לא תקין</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>נא להציג או לגעת ב־YubiKey על מנת להמשך...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>נא להזין ססמה להצפנת מסד־נתונים (חלופי): </translation>
     </message>
@@ -7509,7 +7518,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-ביט</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7525,7 +7534,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7726,6 +7735,10 @@ Kernel: %3 %4</source>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>האימות נכשל עם Windows Hello</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>La connexion de l’agent SSH fonctionne.</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2532,10 +2536,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Cacher</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Demain</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n semaine</numerusform><numerusform>%n semaine(s)</numerusform></translation>
@@ -2547,6 +2547,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>% an</numerusform><numerusform>%n an(s)</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3651,6 +3655,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Saisie automatique</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7211,10 +7219,6 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
         <translation>Le numéro de série Yubikey %1 est invalide</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Saisissez un mot de passe pour chiffrer la base de données (facultatif) :</translation>
     </message>
@@ -7690,6 +7694,10 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

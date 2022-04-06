@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>回報錯誤請至：&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>回報錯誤請至: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>在請求客戶端與 KeePassXC 同時執行期間，您的選擇會被記住。</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>禁止之後所有</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>允許之後所有 (&amp;F)</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH 代理連線正在運作！</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>同時使用兩種代理</translation>
     </message>
 </context>
 <context>
@@ -275,7 +279,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>已過期</translation>
     </message>
     <message>
         <source> days</source>
@@ -714,7 +718,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;您可以使用進階搜索，在開啟的資料庫中尋找項目。以下是一些實用快捷鍵：&lt;br/&gt;
+Ctrl+F - 資料庫搜索開關&lt;br/&gt;
+Ctrl+1 - 輸入使用者名稱&lt;br/&gt;
+Ctrl+2 - 輸入密碼&lt;br/&gt;
+Ctrl+3 - 輸入 TOTP&lt;br/&gt;
+Ctrl+4 - 使用虛擬鍵盤（僅限 Windows）&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -758,7 +767,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>使用虛擬鍵盤</translation>
     </message>
 </context>
 <context>
@@ -1894,7 +1903,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (建議)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2409,7 +2418,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>將在 %1 天內過期的項目</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2552,10 +2561,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>隱藏</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>明天</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n 個禮拜</numerusform></translation>
@@ -2567,6 +2572,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n 年</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n 小時</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3675,6 +3684,10 @@ Error: %1</source>
         <source>Auto-Type</source>
         <translation>自動輸入</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>標籤</translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -4140,7 +4153,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>缺少資料庫標頭</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4166,11 +4179,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>無效的標頭欄位長度：欄位 %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>無效的標頭資料長度：欄位 %1，預期為 %2，實際為 %3</translation>
     </message>
 </context>
 <context>
@@ -4227,11 +4240,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>無效的標頭欄位長度：標頭 %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>無效的標頭資料長度：欄位 %1，預期為 %2，實際為 %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4251,11 +4264,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>無效的內部標頭欄位長度：欄位 %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>無效的內部標頭資料長度：欄位 %1，預期為 %2，實際為 %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -4826,7 +4839,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation>您選擇的金鑰檔案格式版本過舊，KeePassXC 可能&lt;br&gt;在未來停止支援。&lt;br&gt;&lt;br&gt;請考慮產生一組新的金鑰檔案。</translation>
+        <translation>您選擇的金鑰檔案格式版本過舊，KeePassXC&lt;br&gt;將來有可能停止支援。&lt;br&gt;&lt;br&gt;請考慮產生一組新的金鑰檔案。</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -5344,7 +5357,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>還原項目</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5418,11 +5431,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>重置</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>重置此應用所有記住的選擇</translation>
     </message>
 </context>
 <context>
@@ -6700,7 +6713,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Entropy %1</source>
-        <translation>熵值</translation>
+        <translation>熵值 %1</translation>
     </message>
     <message>
         <source>Log10 %1</source>
@@ -6844,7 +6857,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation>排除的字元組合</translation>
+        <translation>排除的字元集合</translation>
     </message>
     <message>
         <source>chars</source>
@@ -7231,8 +7244,8 @@ Available commands:
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>警告：您使用的金鑰檔案格式版本過舊，KeePassXC 可能
-在未來停止支援。
+        <translation>警告：您使用的金鑰檔案格式為舊版本，將來有可能
+不再被 KeePassXC 支援。
 
 請考慮產生一組新的金鑰檔案。</translation>
     </message>
@@ -7243,10 +7256,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>Invalid YubiKey serial %1</source>
         <translation>無效的 YubiKey 序號 %1</translation>
-    </message>
-    <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>請感應或接觸您的 YubiKey 以繼續…</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
@@ -7508,7 +7517,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7524,7 +7533,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7536,7 +7545,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>將於 %1 秒後清空剪貼簿...</numerusform></translation>
+        <translation><numerusform>將於 %1 秒後清空剪貼簿…</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7726,6 +7735,10 @@ Kernel: %3 %4</source>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>使用 Windows Hello 簽署挑戰失敗。</translation>
     </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>請感應或接觸您的 YubiKey 以繼續。</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7833,7 +7846,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>刪除項目？</numerusform></translation>
+        <translation><numerusform>刪除項目…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -7919,7 +7932,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>刪除項目？</numerusform></translation>
+        <translation><numerusform>刪除項目…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8014,7 +8027,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>刪除項目？</numerusform></translation>
+        <translation><numerusform>刪除項目…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>

@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>Ligação ao agente SSH a funcionar!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Utilizar ambos os agentes</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2557,10 +2561,6 @@ Gostaria de a corrigir?</translation>
         <source>Hide</source>
         <translation>Ocultar</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Amanhã</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n semana</numerusform><numerusform>%n semanas</numerusform></translation>
@@ -2572,6 +2572,10 @@ Gostaria de a corrigir?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n ano</numerusform><numerusform>%n anos</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n hora</numerusform><numerusform>%n horas</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3681,6 +3685,10 @@ Erro: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Escrita automática</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Etiquetas</translation>
     </message>
 </context>
 <context>
@@ -7252,10 +7260,6 @@ Deve considerar a geração de um novo ficheiro-chave.</translation>
         <translation>N.º de série YubiKey inválido %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Introduza ou toque na sua YubiKey para continuar...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Introduza a palavra-passe para cifrar a base de dados (opcional): </translation>
     </message>
@@ -7732,6 +7736,10 @@ Kernel: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Não foi possível iniciar sessão com Windows Hello</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Introduza ou toque na sua YubiKey para continuar.</translation>
     </message>
 </context>
 <context>

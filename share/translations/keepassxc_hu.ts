@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>Az SSH-ügynök kapcsolat működik!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Mindkét ügynök használata</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2555,10 +2559,6 @@ Szeretné kijavítani?</translation>
         <source>Hide</source>
         <translation>Elrejtés</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Holnap</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n hét</numerusform><numerusform>%n hét</numerusform></translation>
@@ -2570,6 +2570,10 @@ Szeretné kijavítani?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n év</numerusform><numerusform>%n év</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n óra</numerusform><numerusform>%n óra</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3679,6 +3683,10 @@ Hiba: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Automatikus beírás</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Címkék</translation>
     </message>
 </context>
 <context>
@@ -7248,10 +7256,6 @@ Fontolja meg, hogy új kulcsfájlt állítson elő.</translation>
         <translation>Érvénytelen YubiKey sorozatszám: %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Kérjük, tegye elérhetővé vagy érintse meg a YubiKey-t a folytatáshoz…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Adjon meg egy jelszót az adatbázis titkosításához (válaszható):</translation>
     </message>
@@ -7728,6 +7732,10 @@ Kernel: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Nem sikerült a bejelentkezés a Windows Hello-val.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Tegye elérhetővé vagy érintse meg a YubiKeyt a folytatáshoz.</translation>
     </message>
 </context>
 <context>

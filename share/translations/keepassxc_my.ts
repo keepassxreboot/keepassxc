@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>SSH အေးဂျင့် ချိတ်ဆက်မှု အလုပ်လုပ်နေသည်။</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2546,10 +2550,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>ဝှက်ရန်</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>မနက်ဖြန်</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n ပတ်</numerusform></translation>
@@ -2561,6 +2561,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n နှစ်</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3668,6 +3672,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>အလိုအလျောက် စာရိုက်ခြင်း</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7235,10 +7243,6 @@ Please consider generating a new key file.</source>
         <translation>မမှန်ကန်သော YubiKey အစဉ် %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>ကျေးဇူးပြု၍ ဆက်လုပ်ရန် သင့် YubiKey ကို တင်ပြပါ သို့မဟုတ် နှိပ်ပါ…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>ဒေတာဘေ့စ်ကို ကုဒ်ဖြင့်ပြောင်းရန် စကားဝှက် ရိုက်ထည့်ပါ (ချန်ထားနိုင်သည်) -</translation>
     </message>
@@ -7714,6 +7718,10 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

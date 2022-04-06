@@ -151,6 +151,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>З&apos;єднання з SSH Agent працює!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2534,10 +2538,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Сховати</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Завтра</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n тиждень</numerusform><numerusform>%n тижня</numerusform><numerusform>%n тижнів</numerusform><numerusform>%n тижнів</numerusform></translation>
@@ -2549,6 +2549,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n рік</numerusform><numerusform>%n роки</numerusform><numerusform>%n років</numerusform><numerusform>%n років</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3657,6 +3661,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Автозаповнення</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7218,10 +7226,6 @@ Please consider generating a new key file.</source>
         <translation>Непридатний серійний номер YubiKey %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Введіть пароль для шифрування сховища (необов&apos;язково): </translation>
     </message>
@@ -7697,6 +7701,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

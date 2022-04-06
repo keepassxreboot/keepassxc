@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>Η σύνδεση SSH Agent λειτουργεί!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Χρησιμοποιήστε και τους δύο agents</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2557,10 +2561,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Απόκρυψη</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Αύριο</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n εβδομάδα</numerusform><numerusform>%n εβδομάδες</numerusform></translation>
@@ -2572,6 +2572,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n χρόνος</numerusform><numerusform>%n χρόνια</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n ώρα(-ες)</numerusform><numerusform>%n ώρα(-ες)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3681,6 +3685,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Αυτόματη-Γραφή</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Ετικέτες</translation>
     </message>
 </context>
 <context>
@@ -7251,10 +7259,6 @@ Please consider generating a new key file.</source>
         <translation>Μη έγκυρος σειριακός αριθμός YubiKey %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Παρακαλώ παρουσιάστε ή αγγίξτε το YubiKey για να συνεχίσετε…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Εισαγάγετε κωδικό πρόσβασης για την κρυπτογράφηση της βάσης δεδομένων (προαιρετικά): </translation>
     </message>
@@ -7731,6 +7735,10 @@ Kernel: %3 %4</source>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Απέτυχε η υπογραφή πρόκλησης χρησιμοποιώντας το Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Παρακαλώ παρουσιάστε ή αγγίξτε το YubiKey για να συνεχίσετε.</translation>
     </message>
 </context>
 <context>

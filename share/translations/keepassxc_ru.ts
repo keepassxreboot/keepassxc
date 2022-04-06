@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Ваше решение будет сохранено на все время, пока запущены и запрашивающий клиент, и KeePassXC.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Запретить все &amp;&amp; будущие</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить все &amp;&amp; будущие</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>Соединение с агентом SSH активно.</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Использовать оба агента</translation>
     </message>
 </context>
 <context>
@@ -275,7 +279,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>истекли</translation>
     </message>
     <message>
         <source> days</source>
@@ -714,7 +718,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Вы можете использовать расширенные поисковые запросы, чтобы найти любую запись в открытых вами базах данных. Полезно использовать следующие сочетания клавиш:&lt;br/&gt;
+Ctrl+F — включить или отключить поиск по базам данных&lt;br/&gt;
+Ctrl+1 — ввести имя пользователя&lt;br/&gt;
+Ctrl+2 — ввести пароль&lt;br/&gt;
+Ctrl+3 — ввести TOTP&lt;br/&gt;
+Ctrl+4 - использовать виртуальную клавиатуру (только для Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -758,7 +767,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Использовать виртуальную клавиатуру</translation>
     </message>
 </context>
 <context>
@@ -1891,7 +1900,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (рекомендуется)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2406,7 +2415,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Записи, истекающие в течение %1 дня</numerusform><numerusform>Записи, истекающие в течение %1 дней</numerusform><numerusform>Записи, истекающие в течение %1 дней</numerusform><numerusform>Записи, истекающие в течение %1 дней</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2548,10 +2557,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Скрыть</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Завтра</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n нед</numerusform><numerusform>%n нед</numerusform><numerusform>%n нед</numerusform><numerusform>%n нед.</numerusform></translation>
@@ -2563,6 +2568,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n год</numerusform><numerusform>%n лет</numerusform><numerusform>%n лет</numerusform><numerusform>%n лет</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n час</numerusform><numerusform>%n часа</numerusform><numerusform>%n часов</numerusform><numerusform>%n часов</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3674,6 +3683,10 @@ Error: %1</source>
         <source>Auto-Type</source>
         <translation>Автоввод</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Теги</translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -4137,7 +4150,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Отсутствуют заголовки базы данных</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4163,11 +4176,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимая длина поля заголовка: поле %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимая длина данных заголовка: поле %1, ожидается %2, найдено %3</translation>
     </message>
 </context>
 <context>
@@ -4224,11 +4237,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимая длина поля заголовка: поле %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимая длина данных заголовка: поле %1, ожидается %2, найдено %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4248,11 +4261,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимая длина поля внутреннего заголовка: поле %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимая длина данных внутреннего заголовка: поле %1, ожидается %2, найдено %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5342,7 +5355,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Восстановить запись</numerusform><numerusform>Восстановить запись(-и)</numerusform><numerusform>Восстановить запись(-и)</numerusform><numerusform>Восстановить запись(-и)</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5416,11 +5429,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Сброс</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>Сбросить все сохраненные решения для этого приложения</translation>
     </message>
 </context>
 <context>
@@ -7243,10 +7256,6 @@ Please consider generating a new key file.</source>
         <translation>Неверный серийный номер Yubikey %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Пожалуйста, поднесите или коснитесь YubiKey, чтобы продолжить...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Введите пароль для шифрования базы данных (необязательно):</translation>
     </message>
@@ -7505,7 +7514,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-бит</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7521,7 +7530,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7721,6 +7730,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation>Не удалось подписать вызов с помощью Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

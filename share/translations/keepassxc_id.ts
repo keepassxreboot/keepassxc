@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Sertakan informasi berikut setiap Anda melaporkan bug:</translation>
+        <translation>Sertakan informasi berikut setiap kali Anda melaporkan kutu:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>Koneksi Agen SSH berhasil!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -270,12 +274,12 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation type="unfinished"/>
+        <translation>Pada pembukaan kunci basisdata, tampilkan entri yang</translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>telah kedaluwarsa</translation>
     </message>
     <message>
         <source> days</source>
@@ -532,7 +536,7 @@
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation type="unfinished"/>
+        <translation>Aktifkan buka kunci cepat (Touch ID / Windows Hello)</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
@@ -611,7 +615,7 @@
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Terlalu banyak pengulangan yang terdeteksi, maksimal adalah %1: %2</translation>
     </message>
     <message>
         <source>Very slow key press detected, max is %1: %2</source>
@@ -717,7 +721,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation type="unfinished"/>
+        <translation>Cari semua basisdata terbuka</translation>
     </message>
     <message>
         <source>Search…</source>
@@ -1262,7 +1266,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation type="unfinished"/>
+        <translation>Garis tajukan terlewat</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
@@ -1465,7 +1469,7 @@ Lokasi cadangan basisdata ada di %2</translation>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation type="unfinished"/>
+        <translation>Buka Kunci Basisdata</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1473,7 +1477,7 @@ Lokasi cadangan basisdata ada di %2</translation>
     </message>
     <message>
         <source>Unlock</source>
-        <translation type="unfinished"/>
+        <translation>Buka Kunci</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -1499,7 +1503,7 @@ We recommend you update your KeePassXC installation.</source>
     </message>
     <message>
         <source>Database unlock canceled.</source>
-        <translation type="unfinished"/>
+        <translation>Pembukaan kunci basisdata dibatalkan.</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1536,7 +1540,7 @@ Untuk mencegah munculnya kesalahan ini, Anda harus ke &quot;Pengaturan Basisdata
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Anda menggunakan sebuah format berkas kunci lama yang mungkin &lt;br&gt; tidak akan didukung lagi oleh KeePassXC di masa depan. &lt;br&gt;&lt;br&gt; Mohon buat sebuah berkas kunci baru dengan menuju ke: &lt;br&gt;&lt;strong&gt;Basisdata &amp;gt; Keamanan Basisdata &amp;gt; Ubah Berkas Kunci.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
@@ -1612,7 +1616,7 @@ Jika Anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
     <message>
         <source>Maintenance</source>
-        <translation type="unfinished"/>
+        <translation>Pemeliharaan</translation>
     </message>
 </context>
 <context>
@@ -1965,7 +1969,7 @@ If you keep this number, your database will not be protected from brute force at
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Metadata</source>
-        <translation type="unfinished"/>
+        <translation>Metadata Basisdata</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -2094,7 +2098,7 @@ Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
         <source>Confirm Deletion</source>
-        <translation type="unfinished"/>
+        <translation>Konfirmasi Penghapusan</translation>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
@@ -2227,7 +2231,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     <name>DatabaseWidget</name>
     <message>
         <source>Database Tags</source>
-        <translation type="unfinished"/>
+        <translation>Tanda Basisdata</translation>
     </message>
     <message>
         <source>Searching…</source>
@@ -2275,7 +2279,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Entri kedaluwarsa</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2531,10 +2535,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Sembunyikan</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Besok</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n minggu</numerusform></translation>
@@ -2546,6 +2546,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n tahun</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3652,6 +3656,10 @@ Error: %1</source>
         <source>Auto-Type</source>
         <translation>Ketik-Otomatis</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -4123,7 +4131,7 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tidak dapat mengeluarkan respons tantangan: %1</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
@@ -4157,7 +4165,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tidak dapat mengeluarkan respons tantangan: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4172,7 +4180,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tidak dapat mengkalkulasi kunci basisdata: %1</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
@@ -4310,7 +4318,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tidak dapat mengkalkulasi kunci basisdata: %1</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
@@ -4704,11 +4712,11 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation type="unfinished"/>
+        <translation>Referensi pembagian tidak valid</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation type="unfinished"/>
+        <translation>Bagian tidak aktif %1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
@@ -4778,11 +4786,11 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation type="unfinished"/>
+        <translation>Buat sebuah berkas kunci baru atau pilih yang sudah ada untuk melindungi basisdata Anda.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation type="unfinished"/>
+        <translation>Catatan: JANGAN gunakan berkas yang dapat berubah karena itu akan mencegah Anda membuka kunci basisdata Anda!</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -4798,7 +4806,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Anda memilih sebuah berkas kunci dalam sebuah format lama yang mungkin tidak didukung lagi oleh KeePassXC &lt;br&gt; dalam masa depan. &lt;br&gt;&lt;br&gt; Mohon buat sebuah berkas kunci yang baru saja.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -4932,7 +4940,7 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Lihat</translation>
+        <translation>Tampilan</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -5112,7 +5120,7 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation type="unfinished"/>
+        <translation>Kunci &amp;Semua Basisdata</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -5228,7 +5236,7 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation type="unfinished"/>
+        <translation>Simpan Cadangan Basisdata...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -5298,12 +5306,15 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
         <source>WARNING: You are using an unstable build of KeePassXC.
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>PERINGATAN: Anda menggunakan versi tidak stabil dari KeePassXC.
+Kemungkinan besar akan terjadi korup, pelihara cadangan basisdata Anda.
+Versi ini tidak dimaksudkan untuk penggunaan sehari-hari.</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC.
 Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>CATATAN: Anda menggunakan versi pra-rilis KeePassXC.
+Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaan percobaan.</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
@@ -5503,7 +5514,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation type="unfinished"/>
+        <translation>Kredensial yang hanya diketahui oleh Anda yang melindungi basisdata Anda.</translation>
     </message>
 </context>
 <context>
@@ -5563,7 +5574,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation type="unfinished"/>
+        <translation>Bentuk OpData01 tidak benar karena HMAC yang salah</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
@@ -5661,7 +5672,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Key derivation failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Derivasi kunci gagal: %1</translation>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
@@ -5677,7 +5688,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Decryption failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Pendekripsian gagal: %1</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
@@ -6418,7 +6429,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation type="unfinished"/>
+        <translation>Salin TOTP saat ini ke papan klip (setara dengan &quot;-a totp&quot;).</translation>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
@@ -6523,7 +6534,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Target waktu pendekripsian dalam MD untuk basisdata.</translation>
     </message>
     <message>
         <source>time</source>
@@ -6575,7 +6586,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
-        <translation type="unfinished"/>
+        <translation>terjadi kesalahan ketika mengatur pengaturan derivasi kunci basisdata.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
@@ -6596,7 +6607,7 @@ Do you want to overwrite it?</source>
     <message>
         <source>count</source>
         <comment>CLI parameter</comment>
-        <translation type="unfinished"/>
+        <translation>jumlah</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
@@ -6946,7 +6957,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation type="unfinished"/>
+        <translation>Penggunaan ulang kata sandi maksimal</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
@@ -6958,7 +6969,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Entri dikecualikan dari laporan</translation>
     </message>
     <message>
         <source>Average password length</source>
@@ -7036,7 +7047,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>slot</source>
-        <translation type="unfinished"/>
+        <translation>slot</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
@@ -7197,7 +7208,10 @@ Perintah yang tersedia:
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>PERINGATAN: Anda menggunakan sebuah format berkas kunci lama yang mungkin
+tidak akan didukung lagi oleh KeePassXC di masa depan.
+
+Mohon buat berkas kunci yang baru saja.</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
@@ -7206,10 +7220,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>Invalid YubiKey serial %1</source>
         <translation>Serial YubiKey tidak valid %1</translation>
-    </message>
-    <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
@@ -7358,7 +7368,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>Buka Kunci Cepat</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
@@ -7406,11 +7416,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
-        <translation type="unfinished"/>
+        <translation>AES (%1 ronde)</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1 (%2 ronde, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
@@ -7470,15 +7480,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d (KDBX 4 – direkomendasikan)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id (KDBX 4)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
@@ -7498,7 +7508,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Menghapus papan klip dalam %1 detik...</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7600,15 +7610,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Versi berkas kunci tidak didukung: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Checksum tidak cocok! Berkas kunci mungkin korup.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Data berkas kunci tidak terduga! Berkas kunci mungkin korup.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
@@ -7624,7 +7634,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>jalur ke berkas konfigurasi lokal khusus</translation>
     </message>
     <message>
         <source>lock all open databases</source>
@@ -7664,7 +7674,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation type="unfinished"/>
+        <translation>Peringatan: Gagal mencegah tangkapan layar pada jendela tingkat atas!</translation>
     </message>
     <message>
         <source>Database password: </source>
@@ -7686,6 +7696,10 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7814,7 +7828,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation type="unfinished"/>
+        <translation>Layangi di atas alasan untuk menampilkan detail lanjutan. Klik dua kali pada entri untuk mengedit.</translation>
     </message>
     <message>
         <source>Bad</source>
@@ -7908,7 +7922,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
-        <translation type="unfinished"/>
+        <translation>Selamat, tidak ada kata sandi yang terekspos!</translation>
     </message>
     <message>
         <source>Title</source>
@@ -7920,7 +7934,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation type="unfinished"/>
+        <translation>Kata sandi terekspos...</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -7987,7 +8001,7 @@ Kernel: %3 %4</translation>
     <name>ReportsWidgetStatistics</name>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation type="unfinished"/>
+        <translation>Layang di atas garis dengan ikon kesalahan untuk informasi lanjut.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -8067,7 +8081,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation type="unfinished"/>
+        <translation>Penggunaan ulang kata sandi maksimal</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
@@ -8087,15 +8101,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Disarankan menggunakan kata sandi panjang dan acak dengan peringkat &apos;bagus&apos; atau &apos;bagus sekali&apos;</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Entri dikecualikan dari laporan</translation>
     </message>
     <message>
         <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
-        <translation type="unfinished"/>
+        <translation>Tidak termasuk entri dari laporan mis. karena mereka diketahui untuk memiliki kata sandi yang buruk, bukan hal bermasalah tetapi Anda seharusnya mengawasinya.</translation>
     </message>
     <message>
         <source>Average password length</source>
@@ -8154,7 +8168,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation type="unfinished"/>
+        <translation>Tidak ada agen yang berjalan, tidak dapat mendaftarkan identitas.</translation>
     </message>
 </context>
 <context>
@@ -8189,7 +8203,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Fields</source>
-        <translation type="unfinished"/>
+        <translation>Kolom</translation>
     </message>
     <message>
         <source>Term Wildcards</source>
@@ -8318,11 +8332,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
-        <translation type="unfinished"/>
+        <translation>Tanya untuk membuka basisdata sebelum mencari</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation type="unfinished"/>
+        <translation>Grup basisdata yang terekspos:</translation>
     </message>
     <message>
         <source>Authorization</source>
@@ -8389,7 +8403,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Signer name field</source>
-        <translation type="unfinished"/>
+        <translation>Kolom nama penandatangan</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -8449,11 +8463,11 @@ Kernel: %3 %4</translation>
     <name>TagModel</name>
     <message>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Semua</translation>
     </message>
     <message>
         <source>Expired</source>
-        <translation type="unfinished"/>
+        <translation>Kedaluwarsa</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
@@ -8511,7 +8525,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation type="unfinished"/>
+        <translation>Kolom kunci rahasia</translation>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
@@ -8552,7 +8566,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation type="unfinished"/>
+        <translation>angka</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
@@ -8604,7 +8618,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;strong&gt;Sebuah versi baru tersedia.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 dapat &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;diunduh di sini&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
@@ -8715,7 +8729,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
-        <translation type="unfinished"/>
+        <translation>Tidak dapat menemukan kunci perangkat keras apa pun!</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
@@ -8781,7 +8795,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
-        <translation type="unfinished"/>
+        <translation>Kunci perangkat keras terkunci atau kehabisan waktu. Buka kunci atau presentasikan ulang untuk melanjutkan.</translation>
     </message>
     <message>
         <source>Hardware key was not found or is not configured.</source>

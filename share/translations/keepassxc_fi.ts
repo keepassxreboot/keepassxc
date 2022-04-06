@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>SSH Agent -yhteys toimii!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2555,10 +2559,6 @@ Haluatko korjata sen?</translation>
         <source>Hide</source>
         <translation>Piilota</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Huomenna</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n viikko</numerusform><numerusform>%n viikkoa</numerusform></translation>
@@ -2570,6 +2570,10 @@ Haluatko korjata sen?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n vuosi</numerusform><numerusform>%n vuotta</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3679,6 +3683,10 @@ Virhe: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Automaattisyöttö</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tagit</translation>
     </message>
 </context>
 <context>
@@ -7250,10 +7258,6 @@ Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
         <translation>Virheellinen Yubikeyn serial %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Ole hyvä ja käytä Yubikeyssä jatkaaksesi...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Syötä salasana salataksesi tietokannan (valinnainen): </translation>
     </message>
@@ -7730,6 +7734,10 @@ Ydin: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Vastauksen allekirjoitus Windows Hellolle epäonnistui</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>SSH 代理连接工作正常！</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>同时使用两种代理</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2557,10 +2561,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>明天</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n 周</numerusform></translation>
@@ -2572,6 +2572,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n 年</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n 小时</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3679,6 +3683,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>自动输入</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>标签</translation>
     </message>
 </context>
 <context>
@@ -7247,10 +7255,6 @@ Please consider generating a new key file.</source>
         <translation>无效的 YubiKey 序号 %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>请感应或触摸您的 YubiKey 以继续…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>输入用于加密数据库的密码（可选）：</translation>
     </message>
@@ -7726,6 +7730,10 @@ CPU 架构：%2
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>使用 Windows Hello 签名挑战失败。</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>请感应或触摸您的 YubiKey 以继续。</translation>
     </message>
 </context>
 <context>

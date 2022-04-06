@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Vaše rozhodnutí bude zapamatováno po dobu chodu jak požadujícího klienta A KeePassXC.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Zamítnout vše a jakékoli budoucí</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Povolit vše a jakékoli &amp;budoucí</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>Spojení s SSH agentem funguje!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Použít oba agenty</translation>
     </message>
 </context>
 <context>
@@ -275,7 +279,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>platnost skončila</translation>
     </message>
     <message>
         <source> days</source>
@@ -611,11 +615,11 @@
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Zjištěno příliš mnoho opakování, nejvýše je umožněno %1: %2</translation>
     </message>
     <message>
         <source>Very slow key press detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Zjištěn velmi pomalý stisk klávesy, nejdéle je umožněno %1: %2</translation>
     </message>
     <message>
         <source>Very long delay detected, max is %1: %2</source>
@@ -632,7 +636,8 @@
     <message>
         <source>Invalid regular expression syntax %1
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Neplatná forma zápisu regulárního výrahu %1
+%2</translation>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
@@ -725,7 +730,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Zadejte posloupnost</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -733,15 +738,15 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>Zadat {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>Zadat {PASSWORD}</translation>
     </message>
     <message>
         <source>Type {TOTP}</source>
-        <translation type="unfinished"/>
+        <translation>Zadat {TOTP}</translation>
     </message>
     <message>
         <source>Copy Username</source>
@@ -757,7 +762,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Použít virtuální klávesnici</translation>
     </message>
 </context>
 <context>
@@ -876,7 +881,9 @@ Přejete si ho přepsat?</translation>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation type="unfinished"/>
+        <translation>Byl obdržen požadavek na smazání položky „%1“.
+Opravdu chcete tuto položku smazat?
+</translation>
     </message>
     <message>
         <source>Converting attributes to custom data…</source>
@@ -1465,7 +1472,7 @@ Záložní databáze se nachází v %2</translation>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation type="unfinished"/>
+        <translation>Odemknout databázi</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1473,11 +1480,11 @@ Záložní databáze se nachází v %2</translation>
     </message>
     <message>
         <source>Unlock</source>
-        <translation type="unfinished"/>
+        <translation>Odemknout</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
+        <translation>Pokud chcete pokračovat, připojte váš YubiKey nebo dotkněte se tlačítka na něm…</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
@@ -1521,11 +1528,11 @@ Abyste tomu, aby se tato chyba objevovala, je třeba přejít do „Nastavení d
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se ověřit se prostřednictvím Windows Hello</translation>
     </message>
     <message>
         <source>Failed to authenticate with Touch ID</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se ověřit se prostřednictvím Touch ID</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
@@ -1624,7 +1631,7 @@ Pokud nemáte žádný soubor, který by se zaručeně neměnil (a byl tedy vhod
     </message>
     <message>
         <source>Convert KeePassHTTP data</source>
-        <translation type="unfinished"/>
+        <translation>Převést KeePassHTTP data</translation>
     </message>
     <message>
         <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
@@ -1883,7 +1890,7 @@ Opravdu chcete pokračovat bez hesla?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (doporučeno)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2115,7 +2122,7 @@ Tuto akci nelze vzít zpět.</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ikona odstraněna z databáze.</numerusform><numerusform>%n ikony odstraněny z databáze.</numerusform><numerusform>%n ikon odstraněno z databáze.</numerusform><numerusform>%n ikony odstraněny z databáze.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2483,7 +2490,7 @@ Všechny provedené změny byly bohužel ztraceny.</translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
-        <translation type="unfinished"/>
+        <translation>Chyba při ověřování automatického zadávání</translation>
     </message>
     <message>
         <source>An error occurred while validating the custom Auto-Type sequence:
@@ -2533,10 +2540,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Skrýt</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Zítra</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n týden</numerusform><numerusform>%n týdny</numerusform><numerusform>%n týdnů</numerusform><numerusform>%n týdny</numerusform></translation>
@@ -2548,6 +2551,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n rok</numerusform><numerusform>%n roky</numerusform><numerusform>%n let</numerusform><numerusform>%n roky</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n hodina</numerusform><numerusform>%n hodiny</numerusform><numerusform>%n hodin</numerusform><numerusform>%n hodiny</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3034,7 +3041,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Hide entries from browser extension:</source>
-        <translation type="unfinished"/>
+        <translation>Skrýt položky před rozšířením pro prohlížeč:</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
@@ -3042,7 +3049,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
-        <translation type="unfinished"/>
+        <translation>Přeskočit automatické odeslání pro tyto položky:</translation>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
@@ -3657,6 +3664,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Automatické vyplňování</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Štítky</translation>
     </message>
 </context>
 <context>
@@ -5346,7 +5357,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
+        <translation>Pokud chcete pokračovat, připojte váš YubiKey nebo dotkněte se tlačítka na něm…</translation>
     </message>
     <message>
         <source>Restart Application?</source>
@@ -7218,10 +7229,6 @@ Zvažte prosím vytvoření nového souboru s klíčem.</translation>
         <translation>Neplatné sériové číslo %1 YubiKey</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Zadejte heslo pro zašifrování databáze (volitelné):</translation>
     </message>
@@ -7698,6 +7705,10 @@ Jádro systému: %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

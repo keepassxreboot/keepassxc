@@ -50,15 +50,15 @@
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>KeePassXC - Demande d&apos;accès</translation>
+        <translation>KeePassXC – Demande d’accès</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Chemin d’exécutable inexistant ou inaccessible. Veuillez vérifier s&apos;il s&apos;agit réellement d&apos;un client de confiance.</translation>
+        <translation>Le chemin de l’exécutable est inexistant ou inaccessible. Veuillez vérifier s’il s’agit d’un client de confiance.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;demande l&apos;accès aux entrées suivantes :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;demande l’accès aux entrées suivantes :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Name</source>
@@ -86,19 +86,19 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Autoriser les sélections</translation>
+        <translation>Autoriser les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Votre décision sera mémorisée pour la durée tant que le client qui effectue la demande et KeePassXC fonctionnent tous deux.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Tout refuser et dans le future</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Tout accepter et dans le futur</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>La connexion de l’agent SSH fonctionne.</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Utiliser les deux agents</translation>
     </message>
 </context>
 <context>
@@ -270,17 +274,17 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>Pour les bases de données déverrouillées, montrer les entrées qui </translation>
+        <translation>Lors du déverrouillage d’une base de données, montrer les entrées qui </translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>ont expiré</translation>
     </message>
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation>jours</translation>
+        <translation> jours</translation>
     </message>
     <message>
         <source>will expire within </source>
@@ -317,27 +321,27 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Spécifie l&apos;emplacement du fichier de sauvegarde de la base de données. Les occurrences de &quot;{DB_FILENAME}&quot; sont remplacées par le nom de fichier de la base de données sauvegardée sans extension. {TIME:&lt;format&gt;}  est remplacé par l&apos;heure de sauvegarde, cf https://doc.qt.io/qt-5/qdatetime.html#toString. Par défaut, &lt;format&gt;utilise le format &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
+        <translation>Spécifie l’emplacement du fichier de sauvegarde de la base de données. Les occurrences de « {DB_FILENAME} » sont remplacées par le nom de fichier de la base de données sauvegardée sans extension. {TIME:&lt;format&gt;} est remplacé par l’heure de sauvegarde (consulter https://doc.qt.io/qt-5/qdatetime.html#toString). Par défaut, &lt;format&gt;utilise par défaut le format « dd_MM_yyyy_hh-mm-ss ».</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
-        <translation>{DB_FILENAME}.old.kdbx</translation>
+        <translation>{DB_FILENAME}.ancienne.kdbx</translation>
     </message>
     <message>
         <source>Choose...</source>
-        <translation>Choisissez...</translation>
+        <translation>Choisir…</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
-        <translation>Utiliser une méthode d&apos;enregistrement alternative (peut résoudre les problèmes avec Dropbox, Google Drive, GVFS, etc).</translation>
+        <translation>Utiliser une méthode d’enregistrement de remplacement (peut résoudre des problèmes avec Dropbox, Google Drive, GVFS, etc.).</translation>
     </message>
     <message>
         <source>Temporary file moved into place</source>
-        <translation>Fichier temporaire est mis en place</translation>
+        <translation>Le fichier temporaire a été déplacé</translation>
     </message>
     <message>
         <source>Directly write to database file (dangerous)</source>
-        <translation>Écrire directement dans la base de données (dangereux)</translation>
+        <translation>Écrire directement dans le fichier de la base de données (dangereux)</translation>
     </message>
     <message>
         <source>Entry Management</source>
@@ -450,7 +454,7 @@
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>Cacher les entrées expirées pour la saisie automatique</translation>
+        <translation>Cacher à la saisie automatique les entrées expirées</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
@@ -568,7 +572,7 @@
     </message>
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
-        <translation>Activer le double-clic pour copier le nom d&apos;utilisateur/mot de passe des colonnes d&apos;entrées</translation>
+        <translation>Activer le double-clic pour copier le nom d’utilisateur et le mot de passe des colonnes d’entrées</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -583,7 +587,7 @@
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation>La séquence de saisie automatique demandée ne peut être effectuée à la suite d&apos;une erreur :</translation>
+        <translation>La séquence de saisie automatique demandée ne peut pas être utilisée à cause d’une erreur :</translation>
     </message>
     <message>
         <source>Auto-Type Error</source>
@@ -599,45 +603,45 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC nécessite la permission d&apos;accessibilité et d&apos;enregistrement d’écran pour la saisie automatique globale. L’enregistrement d&apos;écran est requis afin d’utiliser le titre des fenêtres pour trouver des entrées. Si vous avez déjà accordé cette permission, il vous faudra peut-être redémarrer KeePassXC.</translation>
+        <translation>KeePassXC a besoin de l’autorisation Accessibilité et Enregistreur d’écran pour la saisie automatique globale. L’enregistrement de l’écran est nécessaire afin d’utiliser le titre des fenêtres pour trouver des entrées. Si vous avez déjà accordé l’autorisation, il vous faudra peut-être redémarrer KeePassXC.</translation>
     </message>
     <message>
         <source>Invalid entry provided</source>
-        <translation>Entrée invalide</translation>
+        <translation>L’entrée indiquée est invalide</translation>
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
-        <translation>Mauvaise parité de parenthèses détectée, une parenthèse { ou } en plus a été trouvée</translation>
+        <translation>Une disparité d’accolade a été détectée. Une { ou } supplémentaire a été trouvée</translation>
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
-        <translation>Trop de répétitions détectées, le maximum est %1: %2</translation>
+        <translation>Trop de répétitions ont été détectées. Le maximum est %1 : %2</translation>
     </message>
     <message>
         <source>Very slow key press detected, max is %1: %2</source>
-        <translation>Appui de touche très lent détecté, le maximum est de %1 : %2</translation>
+        <translation>Un appui de touche très lent a été détecté. Le maximum est %1 : %2</translation>
     </message>
     <message>
         <source>Very long delay detected, max is %1: %2</source>
-        <translation>Pause très longue détectée, le maximum est de %1 : %2</translation>
+        <translation>Un pause très longue a été détectée. Le maximum est %1 : %2</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
-        <translation>Type de conversion invalide : %1</translation>
+        <translation>Le type de conversion est invalide : %1</translation>
     </message>
     <message>
         <source>Invalid conversion syntax: %1</source>
-        <translation>Syntaxe de conversion invalide : %1</translation>
+        <translation>La syntaxe de conversion est invalide : %1</translation>
     </message>
     <message>
         <source>Invalid regular expression syntax %1
 %2</source>
-        <translation>Syntaxe d&apos;expression régulière invalide %1
+        <translation>La syntaxe de l’expression rationnelle est invalide %1
 %2</translation>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
-        <translation>Variable invalide : %1</translation>
+        <translation>L’espace réservé est invalide : %1</translation>
     </message>
 </context>
 <context>
@@ -682,7 +686,7 @@
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Trying to send invalid keysym.</source>
-        <translation>Tentative d&apos;envoi d&apos;un code de caractère invalide.</translation>
+        <translation>Tentative d&apos;envoi d&apos;un keysym invalide.</translation>
     </message>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -714,7 +718,13 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Vous pouvez utiliser des requêtes évoluées de recherche pour trouver une entrée dans vos bases de données. Les raccourcis suivants sont utiles :&lt;br/&gt;
+Ctrl+F - Activer ou désactiver la recherche dans la base de données&lt;br/&gt;
+Ctrl+1 - Saisir le nom d’utilisateur&lt;br/&gt;
+Ctrl+2 - Saisir le mot de passe&lt;br/&gt;
+Ctrl+3 - Saisir le TOTP&lt;br/&gt;
+Ctrl+4 - Utiliser le clavier virtuel (Windows seulement)&lt;/p&gt;
+</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -758,7 +768,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser le clavier virtuel</translation>
     </message>
 </context>
 <context>
@@ -1890,7 +1900,7 @@ Voulez-vous vraiment poursuivre sans mot de passe ?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (recommandé)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2405,7 +2415,7 @@ Désactiver les enregistrements sécurisés et réessayer ?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Entrées expirant dans %1 jour</numerusform><numerusform>Entrées expirant dans %1 jours</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2548,10 +2558,6 @@ La corriger ?</translation>
         <source>Hide</source>
         <translation>Cacher</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Demain</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n semaine</numerusform><numerusform>%n semaines</numerusform></translation>
@@ -2563,6 +2569,10 @@ La corriger ?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>% an</numerusform><numerusform>%n ans</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n heure</numerusform><numerusform>%n heure</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3671,6 +3681,10 @@ Erreur : %1</translation>
         <source>Auto-Type</source>
         <translation>Saisie automatique</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Mots-clefs :</translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -4135,7 +4149,7 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Des en-têtes de base de données manquent</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4161,11 +4175,11 @@ Si le problème se reproduit, le fichier de la base de données pourrait être c
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>La longueur du champ d’en-tête est invalide : champ %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>La longueur des données d’en-tête est invalide : champ %1, %2 attendue, %3 trouvée</translation>
     </message>
 </context>
 <context>
@@ -4222,11 +4236,11 @@ Si le problème se reproduit, le fichier de la base de données pourrait être c
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>La longueur du champ d’en-tête est invalide : champ %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>La longueur des données d’en-tête est invalide : champ %1, %2 attendue, %3 trouvée</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4246,11 +4260,11 @@ Si le problème se reproduit, le fichier de la base de données pourrait être c
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>La longueur du champ d’en-tête interne est invalide : champ %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>La longueur des données d’en-tête interne est invalide : champ %1, %2 attendue, %3 trouvée</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5338,7 +5352,7 @@ Nous vous recommandons d&apos;utiliser l&apos;AppImage disponible sur notre page
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Restaurer l’entrée</numerusform><numerusform>Restaurer les entrées</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5412,11 +5426,11 @@ Nous vous recommandons d&apos;utiliser l&apos;AppImage disponible sur notre page
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Réinitialiser</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>Mémoriser toutes les décisions pour cette application</translation>
     </message>
 </context>
 <context>
@@ -7238,10 +7252,6 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
         <translation>Le numéro de série Yubikey %1 est invalide</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Veuillez insérer ou toucher votre YubiKey pour continuer...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Saisissez un mot de passe pour chiffrer la base de données (facultatif) :</translation>
     </message>
@@ -7501,7 +7511,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256 bits</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7517,7 +7527,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7718,6 +7728,10 @@ Noyau : %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Échec de signature de la question avec Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

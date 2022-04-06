@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Deny All &amp;&amp; Future</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Allow All &amp;&amp; &amp;Future</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH Agent connection is working!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Use both agents</translation>
     </message>
 </context>
 <context>
@@ -2557,10 +2561,6 @@ Would you like to correct it?</translation>
         <source>Hide</source>
         <translation>Hide</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Tomorrow</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n week</numerusform><numerusform>%n weeks</numerusform></translation>
@@ -2572,6 +2572,10 @@ Would you like to correct it?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n year</numerusform><numerusform>%n years</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n hour</numerusform><numerusform>%n hours</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3681,6 +3685,10 @@ Error: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Auto-Type</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tags</translation>
     </message>
 </context>
 <context>
@@ -5425,11 +5433,11 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Reset</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>Reset any remembered decisions for this application</translation>
     </message>
 </context>
 <context>
@@ -7252,10 +7260,6 @@ Please consider generating a new key file.</translation>
         <translation>Invalid YubiKey serial %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Please present or touch your YubiKey to continue…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Enter password to encrypt database (optional): </translation>
     </message>
@@ -7732,6 +7736,10 @@ Kernel: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Failed to sign challenge using Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Please present or touch your YubiKey to continue.</translation>
     </message>
 </context>
 <context>

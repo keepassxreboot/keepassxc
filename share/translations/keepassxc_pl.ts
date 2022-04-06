@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>Połączenie agenta SSH działa!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Użyj obu agentów</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2557,10 +2561,6 @@ Czy chcesz go poprawić?</translation>
         <source>Hide</source>
         <translation>Ukryj</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Jutro</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n tydzień</numerusform><numerusform>%n tygodnie</numerusform><numerusform>%n tygodni</numerusform><numerusform>%n tygodni</numerusform></translation>
@@ -2572,6 +2572,10 @@ Czy chcesz go poprawić?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n rok</numerusform><numerusform>%n lata</numerusform><numerusform>%n lat</numerusform><numerusform>%n lat</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n godzina</numerusform><numerusform>%n godziny</numerusform><numerusform>%n godzin</numerusform><numerusform>%n godzin</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3683,6 +3687,10 @@ Błąd: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Autowpisywanie</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tagi</translation>
     </message>
 </context>
 <context>
@@ -7254,10 +7262,6 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
         <translation>Nieprawidłowy numer seryjny YubiKey %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Proszę okazać lub dotknąć swój YubiKey, aby kontynuować…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Wprowadź hasło do szyfrowania bazy danych (opcjonalnie): </translation>
     </message>
@@ -7734,6 +7738,10 @@ Jądro: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Nie udało się podpisać wyzwania przy użyciu Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Proszę okazać lub dotknąć YubiKey, aby kontynuować.</translation>
     </message>
 </context>
 <context>

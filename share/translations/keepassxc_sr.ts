@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>Веза SSH агента ради!</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2533,10 +2537,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Сакриј</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Сутра</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n недеља(е)</numerusform><numerusform>%n недеља(е)</numerusform><numerusform>%n недеља(е)</numerusform></translation>
@@ -2548,6 +2548,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n година(е)</numerusform><numerusform>%n година(е)</numerusform><numerusform>%n година(е)</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3655,6 +3659,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>Аутоматско-куцање</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7215,10 +7223,6 @@ Please consider generating a new key file.</source>
         <translation>Неважећи YubiKey серијал %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Унесите лозинку за шифровање базе података (опционално):</translation>
     </message>
@@ -7693,6 +7697,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

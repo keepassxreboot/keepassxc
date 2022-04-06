@@ -150,6 +150,10 @@
         <source>SSH Agent connection is working!</source>
         <translation>SSH エージェント接続が動作中です！</translation>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -2551,10 +2555,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>隠す</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>明日</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n 週間</numerusform></translation>
@@ -2566,6 +2566,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n 年</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3674,6 +3678,10 @@ Error: %1</source>
     <message>
         <source>Auto-Type</source>
         <translation>自動入力</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>タグ</translation>
     </message>
 </context>
 <context>
@@ -7246,10 +7254,6 @@ Please consider generating a new key file.</source>
         <translation>YubiKey のシリアル %1 は不正です</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>YubiKey にタッチして続行、または YubiKey を正しく設定してください…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>データベースを暗号化するためのパスワードを入力してください (オプション): </translation>
     </message>
@@ -7725,6 +7729,10 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>

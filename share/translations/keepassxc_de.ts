@@ -92,15 +92,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Ihre Entscheidung wird so lange gemerkt, wie sowohl der anfragende Client als auch KeePassXC laufen.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Alle verweigern &amp;&amp; Zukünftige</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Alle erlauben &amp;&amp; Zukünftige</translation>
     </message>
 </context>
 <context>
@@ -151,6 +151,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH-Agent-Verbindung funktioniert!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Beide Agents verwenden</translation>
     </message>
 </context>
 <context>
@@ -2558,10 +2562,6 @@ Korrigieren?</translation>
         <source>Hide</source>
         <translation>Verstecken</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Morgen</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n Woche</numerusform><numerusform>%n Woche(n)</numerusform></translation>
@@ -2573,6 +2573,10 @@ Korrigieren?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n Jahre</numerusform><numerusform>%n Jahr(e)</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n Stunde</numerusform><numerusform>%n Stunden</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3682,6 +3686,10 @@ Fehler: %1</translation>
     <message>
         <source>Auto-Type</source>
         <translation>Auto-Type</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tags</translation>
     </message>
 </context>
 <context>
@@ -5425,11 +5433,11 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>Zurücksetzen aller bereits getroffenen Entscheidungen für diese Anwendung</translation>
     </message>
 </context>
 <context>
@@ -7252,10 +7260,6 @@ Bitte erwägen Sie, eine neue Schlüsseldatei zu erzeugen.</translation>
         <translation>Ungültige YubiKey-Seriennummer %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Bitte halten oder berühren Sie Ihren YubiKey, um fortzufahren…</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Passwort eingeben, um Datenbank zu verschlüsseln (optional):</translation>
     </message>
@@ -7347,7 +7351,7 @@ Bitte erwägen Sie, eine neue Schlüsseldatei zu erzeugen.</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation><numerusform>Passwort läuft in %1 Tag ab</numerusform><numerusform>Passwort läuft in %1 Tag(en) ab</numerusform></translation>
+        <translation><numerusform>Passwort läuft in %1 Tag ab</numerusform><numerusform>Passwort läuft in %1 Tagen ab</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7419,23 +7423,23 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
-        <translation><numerusform>über %1 Jahr</numerusform><numerusform>über %1 Jahr(e)</numerusform></translation>
+        <translation><numerusform>über %1 Jahr</numerusform><numerusform>über %1 Jahre</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>about %1 month(s)</source>
-        <translation><numerusform>ca. %1 Monat</numerusform><numerusform>ca. %1 Monat(e)</numerusform></translation>
+        <translation><numerusform>ca. %1 Monat</numerusform><numerusform>ca. %1 Monate</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation><numerusform>%1 Woche</numerusform><numerusform>%1 Woche(n)</numerusform></translation>
+        <translation><numerusform>%1 Woche</numerusform><numerusform>%1 Wochen</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
-        <translation><numerusform>%1 Tag</numerusform><numerusform>%1 Tag(e)</numerusform></translation>
+        <translation><numerusform>%1 Tag</numerusform><numerusform>%1 Tage</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 hour(s)</source>
-        <translation><numerusform>%1 Stunde</numerusform><numerusform>%1 Stunde(n)</numerusform></translation>
+        <translation><numerusform>%1 Stunde</numerusform><numerusform>%1 Stunden</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
@@ -7732,6 +7736,10 @@ Kernel: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Anmeldung mit Windows Hello fehlgeschlagen.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Bitte halten oder berühren Sie Ihren YubiKey, um fortzufahren.</translation>
     </message>
 </context>
 <context>

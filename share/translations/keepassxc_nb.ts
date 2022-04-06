@@ -90,7 +90,7 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Avgjørelsen din blir husket så lenge klienten OG KeePassXC kjører.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
@@ -149,6 +149,10 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH-agentforbindelse fungerer!</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -275,7 +279,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>er utløpt</translation>
     </message>
     <message>
         <source> days</source>
@@ -714,7 +718,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Du kan bruke avanserte søkespørringer til å finne en hvilken som helst oppføring i de åpne databasene. Følgende snarveier er nyttige:&lt;br/&gt;
+CTRL+F – Aktiver/deaktiver databasesøk&lt;br/&gt;
+Ctrl+1 – Skriv brukernavn&lt;br/&gt;
+Ctrl+2 – Skriv passord&lt;br/&gt;
+CTRL+3 – Skriv TOTP&lt;br/&gt;
+Ctrl+4 – Bruk virtuelt tastatur (bare Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -758,7 +767,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Bruk virtuelt tastatur</translation>
     </message>
 </context>
 <context>
@@ -1892,7 +1901,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (anbefalt)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2550,10 +2559,6 @@ Vil du rette den?</translation>
         <source>Hide</source>
         <translation>Skjul</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>I morgen</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n uke(r)</numerusform><numerusform>%n uke(r)</numerusform></translation>
@@ -2565,6 +2570,10 @@ Vil du rette den?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n år</numerusform><numerusform>%n år</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3675,6 +3684,10 @@ Feil: %1</translation>
         <source>Auto-Type</source>
         <translation>Autoskriv</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tagger</translation>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -4140,7 +4153,7 @@ Du kan aktivere DuckDuckGo-ikonetjenesten i sikkerhetsdelen av applikasjonsinnst
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Manglende database-headere</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4166,11 +4179,11 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig feltlengde i hode-id: felt %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig lengde i hodedata: felt %1, %2 forventet, %3 funnet</translation>
     </message>
 </context>
 <context>
@@ -4227,11 +4240,11 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig feltlengde i hode-id: felt %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig lengde i hodedata: felt %1, %2 forventet, %3 funnet</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4251,11 +4264,11 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig lengde på indre hodefelt: felt %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig datalengde for indre hode: felt %1, %2 forventet, %3 funnet</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5418,11 +5431,11 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Nullstill</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>Tilbakestill huskede beslutninger for dette programmet</translation>
     </message>
 </context>
 <context>
@@ -7245,10 +7258,6 @@ Vurder å lage en ny nøkkelfil.</translation>
         <translation>Ugyldig YubiKey-serienummer %1</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Hold inntil eller berør din YubiKey for å fortsette ...</translation>
-    </message>
-    <message>
         <source>Enter password to encrypt database (optional): </source>
         <translation>Skriv inn passord for å kryptere databasen (valgfritt): </translation>
     </message>
@@ -7508,7 +7517,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-biter</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7524,7 +7533,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7725,6 +7734,10 @@ Kjerne: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Signering av utfordring ved hjelp av Windows Hello feilet.</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
