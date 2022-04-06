@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.7.1 (2022-04-05)
+
+### Changes
+- Show when tags are changed in entry history [#7638]
+- Improve tags editing and allow spaces in tags [#7708]
+- Improve layout of entry preview panel [#7767]
+- Incorporate patches to support Flatpak distribution [#7728]
+- Add expiration presets for 12 and 24 hours [#7738]
+
+### Fixes
+- Fix crash when building history change list [#7638]
+- Fix hiding password on database unlock [#7725]
+- Fix AES KDF slow transform speed [#7755]
+- Auto-Type: Correct timing issue on macOS and Linux that prevented typing [#7588]
+- Auto-Type: Fix use of Ctrl/Alt/Shift/Win modifiers on Windows [#7629]
+- Auto-Type: Reduce/eliminate delay when searching for entries [#7598]
+- Auto-Type: Map ASCII dead keys on Linux for international keyboards [#7614]
+- CLI: Fix detection of hardware keys (YubiKey) [#7593]
+- CLI: Add missing parameter `-c` to add/edit entries command [#7594]
+- Secret Service: Fix crash when multiple prompts are shown [#7786]
+- SSH Agent: Fix default agent selection on Windows [#7764]
+- Fix database unlock dialog not being the top window on Linux [#7771]
+- Fix drag/drop entries between tabs on Wayland [#7628]
+- Fix compiling with minizip-ng [#7638]
+
 ## 2.7.0 (2022-03-21)
 
 ### Major Additions

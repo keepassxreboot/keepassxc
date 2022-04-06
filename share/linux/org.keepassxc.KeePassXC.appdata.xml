@@ -50,6 +50,31 @@
     </screenshots>
 
     <releases>
+        <release version="2.7.1" date="2022-04-05">
+            <description>
+                <ul>
+                    <li>Show when tags are changed in entry history [#7638]</li>
+                    <li>Improve tags editing and allow spaces in tags [#7708]</li>
+                    <li>Improve layout of entry preview panel [#7767]</li>
+                    <li>Incorporate patches to support Flatpak distribution [#7728]</li>
+                    <li>Add expiration presets for 12 and 24 hours [#7738]</li>
+                    <li>Fix crash when building history change list [#7638]</li>
+                    <li>Fix hiding password on database unlock [#7725]</li>
+                    <li>Fix AES KDF slow transform speed [#7755]</li>
+                    <li>Auto-Type: Correct timing issue on macOS and Linux that prevented typing [#7588]</li>
+                    <li>Auto-Type: Fix use of Ctrl/Alt/Shift/Win modifiers on Windows [#7629]</li>
+                    <li>Auto-Type: Reduce/eliminate delay when searching for entries [#7598]</li>
+                    <li>Auto-Type: Map ASCII dead keys on Linux for international keyboards [#7614]</li>
+                    <li>CLI: Fix detection of hardware keys (YubiKey) [#7593]</li>
+                    <li>CLI: Add missing parameter `-c` to add/edit entries command [#7594]</li>
+                    <li>Secret Service: Fix crash when multiple prompts are shown [#7786]</li>
+                    <li>SSH Agent: Fix default agent selection on Windows [#7764]</li>
+                    <li>Fix database unlock dialog not being the top window on Linux [#7771]</li>
+                    <li>Fix drag/drop entries between tabs on Wayland [#7628]</li>
+                    <li>Fix compiling with minizip-ng [#7638]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.7.0" date="2022-03-21">
             <description>
                 <ul>
