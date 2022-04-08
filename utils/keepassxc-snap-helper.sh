@@ -122,9 +122,10 @@ BROWSER=$(whiptail \
             "7" "Microsoft Edge" \
             3>&1 1>&2 2>&3)
 
+exitstatus=$?
+
 clear
 
-exitstatus=$?
 if [[ $exitstatus == 0 ]]; then
     # Configure settings for the chosen browser
     case $BROWSER in
