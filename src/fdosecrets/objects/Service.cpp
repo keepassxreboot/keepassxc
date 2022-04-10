@@ -259,14 +259,16 @@ namespace FdoSecrets
             // item locked state already covers its collection's locked state
             for (const auto& item : asConst(items)) {
                 bool l;
-                ret = item->locked(client, l);
-                if (ret.err()) {
-                    return ret;
-                }
-                if (l) {
-                    locked.append(item);
-                } else {
-                    unlocked.append(item);
+                if (item) {
+                    ret = item->locked(client, l);
+                    if (ret.err()) {
+                        return ret;
+                    }
+                    if (l) {
+                        locked.append(item);
+                    } else {
+                        unlocked.append(item);
+                    }
                 }
             }
         }
