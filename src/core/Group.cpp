@@ -166,7 +166,7 @@ QString Group::effectiveAutoTypeSequence() const
     const Group* group = this;
     do {
         if (group->autoTypeEnabled() == Group::Disable) {
-            return QString();
+            return {};
         }
 
         sequence = group->defaultAutoTypeSequence();

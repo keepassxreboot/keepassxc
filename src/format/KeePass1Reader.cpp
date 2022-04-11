@@ -391,7 +391,7 @@ QByteArray KeePass1Reader::key(const QByteArray& password, const QByteArray& key
 
     if (!result) {
         raiseError(tr("Key transformation failed"));
-        return QByteArray();
+        return {};
     }
 
     CryptoHash hash(CryptoHash::Sha256);
@@ -927,7 +927,7 @@ QDateTime KeePass1Reader::dateFromPackedStruct(const QByteArray& data)
 
     // check for the special "never" datetime
     if (dateTime == QDateTime(QDate(2999, 12, 28), QTime(23, 59, 59), Qt::UTC)) {
-        return QDateTime();
+        return {};
     } else {
         return dateTime;
     }
@@ -943,13 +943,13 @@ bool KeePass1Reader::isMetaStream(const Entry* entry)
 QByteArray KeePass1Reader::readKeyfile(QIODevice* device)
 {
     if (device->size() == 0) {
-        return QByteArray();
+        return {};
     }
 
     if (device->size() == 32) {
         QByteArray data = device->read(32);
         if (data.size() != 32) {
-            return QByteArray();
+            return {};
         }
 
         return data;
@@ -959,7 +959,7 @@ QByteArray KeePass1Reader::readKeyfile(QIODevice* device)
         QByteArray data = device->read(64);
 
         if (data.size() != 64) {
-            return QByteArray();
+            return {};
         }
 
         if (Tools::isHex(data)) {
@@ -974,7 +974,7 @@ QByteArray KeePass1Reader::readKeyfile(QIODevice* device)
 
     do {
         if (!Tools::readFromDevice(device, buffer)) {
-            return QByteArray();
+            return {};
         }
         cryptoHash.addData(buffer);
     } while (!buffer.isEmpty());

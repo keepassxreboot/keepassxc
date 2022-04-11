@@ -1837,7 +1837,7 @@ QStringList DatabaseWidget::customEntryAttributes() const
 {
     Entry* entry = m_entryView->currentEntry();
     if (!entry) {
-        return QStringList();
+        return {};
     }
 
     return entry->attributes()->customKeys();

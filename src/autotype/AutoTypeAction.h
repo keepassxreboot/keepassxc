@@ -38,17 +38,17 @@ public:
 
         static Result Ok()
         {
-            return Result(true, false, QString());
+            return {true, false, QString()};
         }
 
         static Result Retry(const QString& error)
         {
-            return Result(false, true, error);
+            return {false, true, error};
         }
 
         static Result Failed(const QString& error)
         {
-            return Result(false, false, error);
+            return {false, false, error};
         }
 
         bool isOk() const

@@ -30,7 +30,7 @@ ChallengeResponseKey::ChallengeResponseKey(YubiKeySlot keySlot)
 
 QByteArray ChallengeResponseKey::rawKey() const
 {
-    return QByteArray(m_key.data(), m_key.size());
+    return {m_key.data(), static_cast<int>(m_key.size())};
 }
 
 void ChallengeResponseKey::setRawKey(const QByteArray&)

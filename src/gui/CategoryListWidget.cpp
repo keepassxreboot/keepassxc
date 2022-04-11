@@ -64,8 +64,8 @@ QSize CategoryListWidget::sizeHint() const
 
 QSize CategoryListWidget::minimumSizeHint() const
 {
-    return QSize(m_itemDelegate->minWidth() + m_ui->categoryList->frameWidth() * 2,
-                 m_ui->categoryList->sizeHintForRow(0) * 2);
+    return {m_itemDelegate->minWidth() + m_ui->categoryList->frameWidth() * 2,
+            m_ui->categoryList->sizeHintForRow(0) * 2};
 }
 
 int CategoryListWidget::addCategory(const QString& labelText, const QIcon& icon)

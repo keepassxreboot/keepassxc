@@ -3979,14 +3979,14 @@ QSize BaseStyle::sizeFromContents(ContentsType type,
         if (!btn->icon.isNull() || !btn->text.isEmpty())
             margins =
                 proxy()->pixelMetric(isRadio ? PM_RadioButtonLabelSpacing : PM_CheckBoxLabelSpacing, option, widget);
-        return QSize(size.width() + w + margins, qMax(size.height(), h));
+        return {size.width() + w + margins, qMax(size.height(), h)};
     }
     case CT_MenuBarItem: {
         int fontHeight = option ? option->fontMetrics.height() : size.height();
         auto w = static_cast<int>(fontHeight * Ph::MenuBar_HorizontalPaddingFontRatio);
         auto h = static_cast<int>(fontHeight * Ph::MenuBar_VerticalPaddingFontRatio);
         int line = Ph::dpiScaled(1);
-        return QSize(size.width() + w * 2, size.height() + h * 2 + line);
+        return {size.width() + w * 2, size.height() + h * 2 + line};
     }
     case CT_MenuItem: {
         auto menuItem = qstyleoption_cast<const QStyleOptionMenuItem*>(option);
@@ -4113,7 +4113,7 @@ QSize BaseStyle::sizeFromContents(ContentsType type,
             xadd += 2;
             yadd += 2;
         }
-        return QSize(size.width() + xadd, size.height() + yadd);
+        return {size.width() + xadd, size.height() + yadd};
     }
     case CT_ItemViewItem: {
         auto vopt = qstyleoption_cast<const QStyleOptionViewItem*>(option);
@@ -4335,7 +4335,7 @@ QRect BaseStyle::subControlRect(ComplexControl control,
             break;
         case SC_SpinBoxDown:
             if (spinbox->buttonSymbols == QAbstractSpinBox::NoButtons)
-                return QRect();
+                return {};
 
             rect = QRect(x, center, buttonWidth, spinbox->rect.bottom() - center - fw + 1);
             break;
@@ -4429,13 +4429,13 @@ QRect BaseStyle::subControlRect(ComplexControl control,
     case CC_ComboBox: {
         auto cb = qstyleoption_cast<const QStyleOptionComboBox*>(option);
         if (!cb)
-            return QRect();
+            return {};
         int frame = cb->frame ? proxy()->pixelMetric(PM_ComboBoxFrameWidth, cb, widget) : 0;
         QRect r = option->rect;
         r.adjust(frame, frame, -frame, -frame);
         int dim = qMin(r.width(), r.height());
         if (dim < 1)
-            return QRect();
+            return {};
         switch (subControl) {
         case SC_ComboBoxFrame:
             return cb->rect;
