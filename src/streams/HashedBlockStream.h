@@ -29,7 +29,7 @@ class HashedBlockStream : public LayeredStream
 public:
     explicit HashedBlockStream(QIODevice* baseDevice);
     HashedBlockStream(QIODevice* baseDevice, qint32 blockSize);
-    ~HashedBlockStream();
+    ~HashedBlockStream() override;
 
     bool reset() override;
     void close() override;

@@ -82,7 +82,7 @@ signals:
 
 protected:
     explicit OSUtilsBase(QObject* parent = nullptr);
-    virtual ~OSUtilsBase();
+    ~OSUtilsBase() override;
 };
 
 #endif // KEEPASSXC_OSUTILSBASE_H

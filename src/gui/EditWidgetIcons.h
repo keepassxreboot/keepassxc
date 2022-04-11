@@ -62,7 +62,7 @@ class EditWidgetIcons : public QWidget
 
 public:
     explicit EditWidgetIcons(QWidget* parent = nullptr);
-    ~EditWidgetIcons();
+    ~EditWidgetIcons() override;
 
     IconStruct state();
     void reset();

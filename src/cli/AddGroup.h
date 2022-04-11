@@ -24,9 +24,9 @@ class AddGroup : public DatabaseCommand
 {
 public:
     AddGroup();
-    ~AddGroup();
+    ~AddGroup() override;
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 };
 
 #endif // KEEPASSXC_ADDGROUP_H

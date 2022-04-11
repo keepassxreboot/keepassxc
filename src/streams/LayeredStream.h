@@ -26,7 +26,7 @@ class LayeredStream : public QIODevice
 
 public:
     explicit LayeredStream(QIODevice* baseDevice);
-    virtual ~LayeredStream();
+    ~LayeredStream() override;
 
     bool isSequential() const override;
     bool open(QIODevice::OpenMode mode) override;

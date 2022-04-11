@@ -79,7 +79,7 @@ class Entry : public ModifiableObject
 
 public:
     Entry();
-    ~Entry();
+    ~Entry() override;
     const QUuid& uuid() const;
     const QString uuidToHex() const;
     int iconNumber() const;

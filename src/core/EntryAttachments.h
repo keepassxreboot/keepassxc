@@ -34,7 +34,7 @@ class EntryAttachments : public ModifiableObject
 
 public:
     explicit EntryAttachments(QObject* parent = nullptr);
-    virtual ~EntryAttachments();
+    ~EntryAttachments() override;
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
     QSet<QByteArray> values() const;
