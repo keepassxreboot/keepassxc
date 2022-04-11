@@ -29,7 +29,7 @@ class HmacBlockStream : public LayeredStream
 public:
     explicit HmacBlockStream(QIODevice* baseDevice, QByteArray key);
     HmacBlockStream(QIODevice* baseDevice, QByteArray key, qint32 blockSize);
-    ~HmacBlockStream();
+    ~HmacBlockStream() override;
 
     bool reset() override;
     void close() override;

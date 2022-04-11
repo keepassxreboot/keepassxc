@@ -37,7 +37,7 @@ class CsvImportWidget : public QWidget
 
 public:
     explicit CsvImportWidget(QWidget* parent = nullptr);
-    ~CsvImportWidget();
+    ~CsvImportWidget() override;
     void load(const QString& filename, Database* const db);
 
 signals:

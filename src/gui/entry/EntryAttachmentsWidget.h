@@ -37,7 +37,7 @@ class EntryAttachmentsWidget : public QWidget
     Q_PROPERTY(bool isButtonsVisible READ isButtonsVisible WRITE setButtonsVisible NOTIFY buttonsVisibleChanged)
 public:
     explicit EntryAttachmentsWidget(QWidget* parent = nullptr);
-    ~EntryAttachmentsWidget();
+    ~EntryAttachmentsWidget() override;
 
     const EntryAttachments* attachments() const;
     bool isReadOnly() const;

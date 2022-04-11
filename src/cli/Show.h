@@ -25,7 +25,7 @@ class Show : public DatabaseCommand
 public:
     Show();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 
     static const QCommandLineOption TotpOption;
     static const QCommandLineOption AttributesOption;

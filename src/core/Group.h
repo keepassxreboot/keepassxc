@@ -78,7 +78,7 @@ public:
     };
 
     Group();
-    ~Group();
+    ~Group() override;
 
     const QUuid& uuid() const;
     const QString uuidToHex() const;

@@ -51,7 +51,7 @@ private slots:
     void updateElidedText();
 
 private:
-    void resizeEvent(QResizeEvent* event);
+    void resizeEvent(QResizeEvent* event) override;
 
     Qt::TextElideMode m_elideMode;
     QString m_rawText;

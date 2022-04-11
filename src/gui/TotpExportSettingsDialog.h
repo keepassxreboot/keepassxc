@@ -32,7 +32,7 @@ class TotpExportSettingsDialog : public QDialog
 
 public:
     explicit TotpExportSettingsDialog(DatabaseWidget* parent = nullptr, Entry* entry = nullptr);
-    ~TotpExportSettingsDialog();
+    ~TotpExportSettingsDialog() override;
 
 private slots:
     void copyToClipboard();

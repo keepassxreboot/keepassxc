@@ -48,7 +48,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
-    ~MainWindow();
+    ~MainWindow() override;
 
     QList<DatabaseWidget*> getOpenDatabases();
     void restoreConfigState();

@@ -39,7 +39,7 @@ class EditWidget : public DialogyWidget
 
 public:
     explicit EditWidget(QWidget* parent = nullptr);
-    ~EditWidget();
+    ~EditWidget() override;
 
     void addPage(const QString& labelText, const QIcon& icon, QWidget* widget);
     bool hasPage(QWidget* widget);

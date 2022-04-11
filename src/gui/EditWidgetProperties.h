@@ -38,7 +38,7 @@ class EditWidgetProperties : public QWidget
 
 public:
     explicit EditWidgetProperties(QWidget* parent = nullptr);
-    ~EditWidgetProperties();
+    ~EditWidgetProperties() override;
 
     void setFields(const TimeInfo& timeInfo, const QUuid& uuid);
     void setCustomData(CustomData* customData);

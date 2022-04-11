@@ -30,7 +30,7 @@ class SymmetricCipherStream : public LayeredStream
 
 public:
     SymmetricCipherStream(QIODevice* baseDevice);
-    ~SymmetricCipherStream();
+    ~SymmetricCipherStream() override;
     bool
     init(SymmetricCipher::Mode mode, SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
     bool open(QIODevice::OpenMode mode) override;

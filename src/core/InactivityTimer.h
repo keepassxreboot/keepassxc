@@ -37,7 +37,7 @@ signals:
     void inactivityDetected();
 
 protected:
-    bool eventFilter(QObject* watched, QEvent* event);
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private slots:
     void timeout();

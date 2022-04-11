@@ -45,7 +45,7 @@ public:
     };
 
     explicit PasswordGeneratorWidget(QWidget* parent = nullptr);
-    ~PasswordGeneratorWidget();
+    ~PasswordGeneratorWidget() override;
 
     void loadSettings();
     void saveSettings();
@@ -86,7 +86,7 @@ private:
     bool m_passwordGenerated = false;
     int m_firstCustomWordlistIndex;
 
-    void closeEvent(QCloseEvent* event);
+    void closeEvent(QCloseEvent* event) override;
     PasswordGenerator::CharClasses charClasses();
     PasswordGenerator::GeneratorFlags generatorFlags();
 

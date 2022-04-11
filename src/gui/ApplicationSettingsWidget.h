@@ -46,7 +46,7 @@ class ApplicationSettingsWidget : public EditWidget
 
 public:
     explicit ApplicationSettingsWidget(QWidget* parent = nullptr);
-    ~ApplicationSettingsWidget();
+    ~ApplicationSettingsWidget() override;
     void addSettingsPage(ISettingsPage* page);
     void loadSettings();
 

@@ -55,7 +55,7 @@ class EditGroupWidget : public EditWidget
 
 public:
     explicit EditGroupWidget(QWidget* parent = nullptr);
-    ~EditGroupWidget();
+    ~EditGroupWidget() override;
 
     void loadGroup(Group* group, bool create, const QSharedPointer<Database>& database);
     void clear();
