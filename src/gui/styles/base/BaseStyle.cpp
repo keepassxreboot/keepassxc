@@ -1156,11 +1156,11 @@ namespace Phantom
             points[0] = QPointF(0.0, 0.55);
             points[1] = QPointF(0.4, 1.0);
             points[2] = QPointF(1.0, 0);
-            for (int i = 0; i < 3; ++i) {
-                QPointF pnt = points[i];
+            for (auto& point : points) {
+                QPointF pnt = point;
                 pnt.setX(pnt.x() * dimx + x);
                 pnt.setY(pnt.y() * dimy + y);
-                points[i] = pnt;
+                point = pnt;
             }
             scratchPen.setBrush(swatch.brush(color));
             scratchPen.setCapStyle(Qt::RoundCap);
