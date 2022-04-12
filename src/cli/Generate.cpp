@@ -98,7 +98,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
         passwordGenerator->setLength(passwordLength.toInt());
     }
 
-    PasswordGenerator::CharClasses classes = 0x0;
+    PasswordGenerator::CharClasses classes;
 
     if (parser->isSet(Generate::LowerCaseOption)) {
         classes |= PasswordGenerator::LowerLetters;
@@ -116,7 +116,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
         classes |= PasswordGenerator::EASCII;
     }
 
-    PasswordGenerator::GeneratorFlags flags = 0x0;
+    PasswordGenerator::GeneratorFlags flags;
 
     if (parser->isSet(Generate::ExcludeSimilarCharsOption)) {
         flags |= PasswordGenerator::ExcludeLookAlike;

@@ -39,7 +39,7 @@ void TestKeePass1Reader::initTestCase()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb");
 
     KeePass1Reader reader;
-    m_db = reader.readDatabase(filename, "masterpw", 0);
+    m_db = reader.readDatabase(filename, "masterpw", nullptr);
     QVERIFY(m_db);
     QVERIFY(!reader.hasError());
 }
@@ -213,7 +213,7 @@ void TestKeePass1Reader::testTwofish()
 
     QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
 
-    auto db = reader.readDatabase(dbFilename, "masterpw", 0);
+    auto db = reader.readDatabase(dbFilename, "masterpw", nullptr);
     QVERIFY(db);
     QVERIFY(!reader.hasError());
     QCOMPARE(db->rootGroup()->children().size(), 1);
@@ -229,7 +229,7 @@ void TestKeePass1Reader::testCP1252Password()
     QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
     QString password = QString::fromUtf8("\xe2\x80\x9e\x70\x61\x73\x73\x77\x6f\x72\x64\xe2\x80\x9d");
 
-    auto db = reader.readDatabase(dbFilename, password, 0);
+    auto db = reader.readDatabase(dbFilename, password, nullptr);
     QVERIFY(db);
     QVERIFY(!reader.hasError());
     QCOMPARE(db->rootGroup()->children().size(), 1);
