@@ -72,9 +72,7 @@ NixUtils::NixUtils(QObject* parent)
                        SLOT(handleColorSchemeChanged(QString, QString, QDBusVariant)));
 }
 
-NixUtils::~NixUtils()
-{
-}
+NixUtils::~NixUtils() = default;
 
 bool NixUtils::isDarkMode() const
 {

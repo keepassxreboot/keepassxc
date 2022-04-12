@@ -133,9 +133,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_editWidgetProperties->setCustomData(m_customData.data());
 }
 
-EditEntryWidget::~EditEntryWidget()
-{
-}
+EditEntryWidget::~EditEntryWidget() = default;
 
 void EditEntryWidget::setupMain()
 {

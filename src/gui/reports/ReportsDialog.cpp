@@ -95,9 +95,7 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
 }
 
-ReportsDialog::~ReportsDialog()
-{
-}
+ReportsDialog::~ReportsDialog() = default;
 
 void ReportsDialog::load(const QSharedPointer<Database>& db)
 {

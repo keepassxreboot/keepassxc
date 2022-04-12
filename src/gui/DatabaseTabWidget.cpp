@@ -65,9 +65,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
 #endif
 }
 
-DatabaseTabWidget::~DatabaseTabWidget()
-{
-}
+DatabaseTabWidget::~DatabaseTabWidget() = default;
 
 void DatabaseTabWidget::toggleTabbar()
 {

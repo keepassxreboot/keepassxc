@@ -92,9 +92,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
 #endif
 }
 
-EntryPreviewWidget::~EntryPreviewWidget()
-{
-}
+EntryPreviewWidget::~EntryPreviewWidget() = default;
 
 void EntryPreviewWidget::clear()
 {

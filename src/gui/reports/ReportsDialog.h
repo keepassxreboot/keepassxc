@@ -41,9 +41,7 @@ namespace Ui
 class IReportsPage
 {
 public:
-    virtual ~IReportsPage()
-    {
-    }
+    virtual ~IReportsPage() = default;
     virtual QString name() = 0;
     virtual QIcon icon() = 0;
     virtual QWidget* createWidget() = 0;

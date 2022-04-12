@@ -22,9 +22,7 @@ ReportsWidget::ReportsWidget(QWidget* parent)
 {
 }
 
-ReportsWidget::~ReportsWidget()
-{
-}
+ReportsWidget::~ReportsWidget() = default;
 
 /**
  * Load the database to be configured by this page and initialize the page.

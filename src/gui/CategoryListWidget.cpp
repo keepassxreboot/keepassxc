@@ -43,9 +43,7 @@ CategoryListWidget::CategoryListWidget(QWidget* parent)
     // clang-format on
 }
 
-CategoryListWidget::~CategoryListWidget()
-{
-}
+CategoryListWidget::~CategoryListWidget() = default;
 
 QSize CategoryListWidget::sizeHint() const
 {

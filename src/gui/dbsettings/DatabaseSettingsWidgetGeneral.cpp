@@ -33,9 +33,7 @@ DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
 }
 
-DatabaseSettingsWidgetGeneral::~DatabaseSettingsWidgetGeneral()
-{
-}
+DatabaseSettingsWidgetGeneral::~DatabaseSettingsWidgetGeneral() = default;
 
 void DatabaseSettingsWidgetGeneral::initialize()
 {

@@ -29,9 +29,7 @@ PasswordEditWidget::PasswordEditWidget(QWidget* parent)
     initComponent();
 }
 
-PasswordEditWidget::~PasswordEditWidget()
-{
-}
+PasswordEditWidget::~PasswordEditWidget() = default;
 
 bool PasswordEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
 {

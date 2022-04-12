@@ -44,9 +44,7 @@ ExportDialog::ExportDialog(QSharedPointer<const Database> db, DatabaseTabWidget*
                                      MessageWidget::Warning);
 }
 
-ExportDialog::~ExportDialog()
-{
-}
+ExportDialog::~ExportDialog() = default;
 
 QString ExportDialog::getStrategyName(ExportSortingStrategy strategy)
 {

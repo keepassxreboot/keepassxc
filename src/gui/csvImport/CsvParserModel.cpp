@@ -26,9 +26,7 @@ CsvParserModel::CsvParserModel(QObject* parent)
 {
 }
 
-CsvParserModel::~CsvParserModel()
-{
-}
+CsvParserModel::~CsvParserModel() = default;
 
 void CsvParserModel::setFilename(const QString& filename)
 {

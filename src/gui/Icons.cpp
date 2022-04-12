@@ -48,9 +48,7 @@ private:
 
 Icons* Icons::m_instance(nullptr);
 
-Icons::Icons()
-{
-}
+Icons::Icons() = default;
 
 QString Icons::applicationIconName()
 {

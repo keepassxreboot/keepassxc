@@ -452,9 +452,7 @@ Config::Config(QObject* parent)
     init(configFiles.first, configFiles.second);
 }
 
-Config::~Config()
-{
-}
+Config::~Config() = default;
 
 void Config::init(const QString& configFileName, const QString& localConfigFileName)
 {

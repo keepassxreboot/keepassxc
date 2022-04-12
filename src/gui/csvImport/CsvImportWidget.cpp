@@ -88,9 +88,7 @@ void CsvImportWidget::skippedChanged(int rows)
     updateTableview();
 }
 
-CsvImportWidget::~CsvImportWidget()
-{
-}
+CsvImportWidget::~CsvImportWidget() = default;
 
 void CsvImportWidget::configParser()
 {

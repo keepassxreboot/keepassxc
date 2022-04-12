@@ -115,9 +115,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     loadSettings();
 }
 
-PasswordGeneratorWidget::~PasswordGeneratorWidget()
-{
-}
+PasswordGeneratorWidget::~PasswordGeneratorWidget() = default;
 
 void PasswordGeneratorWidget::closeEvent(QCloseEvent* event)
 {

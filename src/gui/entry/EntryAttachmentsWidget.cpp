@@ -75,9 +75,7 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     updateButtonsEnabled();
 }
 
-EntryAttachmentsWidget::~EntryAttachmentsWidget()
-{
-}
+EntryAttachmentsWidget::~EntryAttachmentsWidget() = default;
 
 const EntryAttachments* EntryAttachmentsWidget::attachments() const
 {

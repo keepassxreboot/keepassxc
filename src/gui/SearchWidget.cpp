@@ -76,9 +76,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     }
 }
 
-SearchWidget::~SearchWidget()
-{
-}
+SearchWidget::~SearchWidget() = default;
 
 bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
 {

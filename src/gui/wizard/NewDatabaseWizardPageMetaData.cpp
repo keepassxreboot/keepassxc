@@ -27,6 +27,4 @@ NewDatabaseWizardPageMetaData::NewDatabaseWizardPageMetaData(QWidget* parent)
     setSubTitle(tr("Please fill in the display name and an optional description for your new database:"));
 }
 
-NewDatabaseWizardPageMetaData::~NewDatabaseWizardPageMetaData()
-{
-}
+NewDatabaseWizardPageMetaData::~NewDatabaseWizardPageMetaData() = default;

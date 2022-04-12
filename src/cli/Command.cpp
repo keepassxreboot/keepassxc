@@ -102,9 +102,7 @@ Command::Command()
     options.append(Command::QuietOption);
 }
 
-Command::~Command()
-{
-}
+Command::~Command() = default;
 
 QString Command::getDescriptionLine()
 {

@@ -26,9 +26,7 @@ TagModel::TagModel(QSharedPointer<Database> db, QObject* parent)
     setDatabase(db);
 }
 
-TagModel::~TagModel()
-{
-}
+TagModel::~TagModel() = default;
 
 void TagModel::setDatabase(QSharedPointer<Database> db)
 {
