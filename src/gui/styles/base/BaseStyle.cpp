@@ -788,7 +788,7 @@ namespace Phantom
             m.rightMarginForArrow = static_cast<int>(fontHeight * MenuItem_RightMarginForArrowFontRatio);
             m.topMargin = static_cast<int>(fontHeight * MenuItem_VerticalMarginsFontRatio);
             m.bottomMargin = static_cast<int>(fontHeight * MenuItem_VerticalMarginsFontRatio);
-            int checkVMargin = static_cast<int>(fontHeight * MenuItem_CheckMarkVerticalInsetFontRatio);
+            auto checkVMargin = static_cast<int>(fontHeight * MenuItem_CheckMarkVerticalInsetFontRatio);
             int checkHeight = fontHeight - checkVMargin * 2;
             if (checkHeight < 0)
                 checkHeight = 0;
@@ -817,7 +817,7 @@ namespace Phantom
         menuItemCheckRect(const MenuItemMetrics& metrics, Qt::LayoutDirection direction, QRect itemRect, bool hasArrow)
         {
             QRect r = menuItemContentRect(metrics, itemRect, hasArrow);
-            int checkVMargin = static_cast<int>(metrics.fontHeight * MenuItem_CheckMarkVerticalInsetFontRatio);
+            auto checkVMargin = static_cast<int>(metrics.fontHeight * MenuItem_CheckMarkVerticalInsetFontRatio);
             if (checkVMargin < 0)
                 checkVMargin = 0;
             r.setSize(QSize(metrics.checkWidth, metrics.fontHeight));
@@ -1671,7 +1671,7 @@ void BaseStyle::drawPrimitive(PrimitiveElement elem,
         if (arrow == Qt::DownArrow && !qstyleoption_cast<const QStyleOptionToolButton*>(option) && widget) {
             auto tbutton = qobject_cast<const QToolButton*>(widget);
             if (tbutton && tbutton->popupMode() != QToolButton::InstantPopup && tbutton->defaultAction()) {
-                int dim = static_cast<int>(qMin(rw, rh) * 0.25);
+                auto dim = static_cast<int>(qMin(rw, rh) * 0.25);
                 aw -= dim;
                 ah -= dim;
                 // We have another hack in PE_IndicatorButtonDropDown where we shift
@@ -2472,7 +2472,7 @@ void BaseStyle::drawControl(ControlElement element,
             QPixmap pixmap = header->icon.pixmap(window,
                                                  QSize(iconExtent, iconExtent),
                                                  (header->state & State_Enabled) ? QIcon::Normal : QIcon::Disabled);
-            int pixw = static_cast<int>(pixmap.width() / pixmap.devicePixelRatio());
+            auto pixw = static_cast<int>(pixmap.width() / pixmap.devicePixelRatio());
             QRect aligned = alignedRect(
                 header->direction, QFlag(header->iconAlignment), pixmap.size() / pixmap.devicePixelRatio(), rect);
             QRect inter = aligned.intersected(rect);
@@ -2745,8 +2745,8 @@ void BaseStyle::drawControl(ControlElement element,
             }
             QWindow* window = widget ? widget->windowHandle() : nullptr;
             QPixmap pixmap = menuItem->icon.pixmap(window, iconSize, mode, state);
-            const int pixw = static_cast<int>(pixmap.width() / pixmap.devicePixelRatio());
-            const int pixh = static_cast<int>(pixmap.height() / pixmap.devicePixelRatio());
+            const auto pixw = static_cast<int>(pixmap.width() / pixmap.devicePixelRatio());
+            const auto pixh = static_cast<int>(pixmap.height() / pixmap.devicePixelRatio());
             QRect pixmapRect = QStyle::alignedRect(option->direction, Qt::AlignCenter, QSize(pixw, pixh), iconRect);
             painter->drawPixmap(pixmapRect.topLeft(), pixmap);
         }
@@ -2883,8 +2883,8 @@ void BaseStyle::drawControl(ControlElement element,
             QIcon::State state = button->state & State_On ? QIcon::On : QIcon::Off;
             auto window = widget ? widget->window()->windowHandle() : nullptr;
             QPixmap pixmap = button->icon.pixmap(window, button->iconSize, mode, state);
-            int pixmapWidth = static_cast<int>(pixmap.width() / pixmap.devicePixelRatio());
-            int pixmapHeight = static_cast<int>(pixmap.height() / pixmap.devicePixelRatio());
+            auto pixmapWidth = static_cast<int>(pixmap.width() / pixmap.devicePixelRatio());
+            auto pixmapHeight = static_cast<int>(pixmap.height() / pixmap.devicePixelRatio());
             int labelWidth = pixmapWidth;
             int labelHeight = pixmapHeight;
             // 4 is hardcoded in QPushButton::sizeHint()
@@ -3276,7 +3276,7 @@ void BaseStyle::drawComplexControl(ComplexControl control,
 
         {
             // Fill title
-            QColor titlebarColor = QColor(active ? highlight : palette.background().color());
+            auto titlebarColor = QColor(active ? highlight : palette.background().color());
             painter->fillRect(option->rect.adjusted(1, 1, -1, 0), titlebarColor);
             // Frame and rounded corners
             painter->setPen(titleBarFrameBorder);
@@ -3983,8 +3983,8 @@ QSize BaseStyle::sizeFromContents(ContentsType type,
     }
     case CT_MenuBarItem: {
         int fontHeight = option ? option->fontMetrics.height() : size.height();
-        int w = static_cast<int>(fontHeight * Ph::MenuBar_HorizontalPaddingFontRatio);
-        int h = static_cast<int>(fontHeight * Ph::MenuBar_VerticalPaddingFontRatio);
+        auto w = static_cast<int>(fontHeight * Ph::MenuBar_HorizontalPaddingFontRatio);
+        auto h = static_cast<int>(fontHeight * Ph::MenuBar_VerticalPaddingFontRatio);
         int line = Ph::dpiScaled(1);
         return QSize(size.width() + w * 2, size.height() + h * 2 + line);
     }
@@ -4176,7 +4176,8 @@ QSize BaseStyle::sizeFromContents(ContentsType type,
         auto pbopt = qstyleoption_cast<const QStyleOptionButton*>(option);
         if (!pbopt || pbopt->text.isEmpty())
             break;
-        int hpad = static_cast<int>(pbopt->fontMetrics.height() * Phantom::PushButton_HorizontalPaddingFontHeightRatio);
+        auto hpad =
+            static_cast<int>(pbopt->fontMetrics.height() * Phantom::PushButton_HorizontalPaddingFontHeightRatio);
         newSize.rwidth() += hpad * 2;
         if (widget && qobject_cast<const QDialogButtonBox*>(widget->parent())) {
             int dialogButtonMinWidth = Phantom::dpiScaled(80);

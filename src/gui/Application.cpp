@@ -281,7 +281,7 @@ void Application::processIncomingConnection()
 
 void Application::socketReadyRead()
 {
-    QLocalSocket* socket = qobject_cast<QLocalSocket*>(sender());
+    auto socket = qobject_cast<QLocalSocket*>(sender());
     if (!socket) {
         return;
     }

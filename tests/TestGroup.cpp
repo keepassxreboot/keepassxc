@@ -56,9 +56,9 @@ void TestGroup::cleanup()
 
 void TestGroup::testParenting()
 {
-    Database* db = new Database();
+    auto db = new Database();
     QPointer<Group> rootGroup = db->rootGroup();
-    Group* tmpRoot = new Group();
+    auto tmpRoot = new Group();
 
     QPointer<Group> g1 = new Group();
     QPointer<Group> g2 = new Group();
@@ -98,8 +98,8 @@ void TestGroup::testParenting()
     QVERIFY(g1->children().at(1) == g3);
     QVERIFY(g3->children().contains(g4));
 
-    Group* g5 = new Group();
-    Group* g6 = new Group();
+    auto g5 = new Group();
+    auto g6 = new Group();
     g5->setParent(db->rootGroup());
     g6->setParent(db->rootGroup());
     QVERIFY(db->rootGroup()->children().at(1) == g5);
@@ -129,8 +129,8 @@ void TestGroup::testParenting()
 
 void TestGroup::testSignals()
 {
-    Database* db = new Database();
-    Database* db2 = new Database();
+    auto db = new Database();
+    auto db2 = new Database();
     QPointer<Group> root = db->rootGroup();
 
     QSignalSpy spyAboutToAdd(db, SIGNAL(groupAboutToAdd(Group*, int)));
@@ -147,8 +147,8 @@ void TestGroup::testSignals()
     QSignalSpy spyAboutToMove2(db2, SIGNAL(groupAboutToMove(Group*, Group*, int)));
     QSignalSpy spyMoved2(db2, SIGNAL(groupMoved()));
 
-    Group* g1 = new Group();
-    Group* g2 = new Group();
+    auto g1 = new Group();
+    auto g2 = new Group();
 
     g1->setParent(root);
     QCOMPARE(spyAboutToAdd.count(), 1);
@@ -212,8 +212,8 @@ void TestGroup::testSignals()
     QCOMPARE(spyAboutToMove2.count(), 0);
     QCOMPARE(spyMoved2.count(), 0);
 
-    Group* g3 = new Group();
-    Group* g4 = new Group();
+    auto g3 = new Group();
+    auto g4 = new Group();
 
     g3->setParent(root);
     QCOMPARE(spyAboutToAdd.count(), 3);
@@ -247,7 +247,7 @@ void TestGroup::testSignals()
 
 void TestGroup::testEntries()
 {
-    Group* group = new Group();
+    auto group = new Group();
 
     QPointer<Entry> entry1 = new Entry();
     entry1->setGroup(group);
@@ -269,8 +269,8 @@ void TestGroup::testDeleteSignals()
 {
     QScopedPointer<Database> db(new Database());
     Group* groupRoot = db->rootGroup();
-    Group* groupChild = new Group();
-    Group* groupChildChild = new Group();
+    auto groupChild = new Group();
+    auto groupChildChild = new Group();
     groupRoot->setObjectName("groupRoot");
     groupChild->setObjectName("groupChild");
     groupChildChild->setObjectName("groupChildChild");
@@ -284,8 +284,8 @@ void TestGroup::testDeleteSignals()
     QCOMPARE(spyAboutToRemove.count(), 2);
     QCOMPARE(spyRemoved.count(), 2);
 
-    Group* group = new Group();
-    Entry* entry = new Entry();
+    auto group = new Group();
+    auto entry = new Entry();
     entry->setGroup(group);
     QSignalSpy spyEntryAboutToRemove(group, SIGNAL(entryAboutToRemove(Entry*)));
     QSignalSpy spyEntryRemoved(group, SIGNAL(entryRemoved(Entry*)));
@@ -298,9 +298,9 @@ void TestGroup::testDeleteSignals()
 
     QScopedPointer<Database> db2(new Database());
     Group* groupRoot2 = db2->rootGroup();
-    Group* group2 = new Group();
+    auto group2 = new Group();
     group2->setParent(groupRoot2);
-    Entry* entry2 = new Entry();
+    auto entry2 = new Entry();
     entry2->setGroup(group2);
     QSignalSpy spyEntryAboutToRemove2(group2, SIGNAL(entryAboutToRemove(Entry*)));
     QSignalSpy spyEntryRemoved2(group2, SIGNAL(entryRemoved(Entry*)));
@@ -476,15 +476,15 @@ void TestGroup::testFindEntry()
 {
     QScopedPointer<Database> db(new Database());
 
-    Entry* entry1 = new Entry();
+    auto entry1 = new Entry();
     entry1->setTitle(QString("entry1"));
     entry1->setGroup(db->rootGroup());
     entry1->setUuid(QUuid::createUuid());
 
-    Group* group1 = new Group();
+    auto group1 = new Group();
     group1->setName("group1");
 
-    Entry* entry2 = new Entry();
+    auto entry2 = new Entry();
 
     entry2->setTitle(QString("entry2"));
     entry2->setGroup(group1);
@@ -558,11 +558,11 @@ void TestGroup::testFindGroupByPath()
 {
     QScopedPointer<Database> db(new Database());
 
-    Group* group1 = new Group();
+    auto group1 = new Group();
     group1->setName("group1");
     group1->setParent(db->rootGroup());
 
-    Group* group2 = new Group();
+    auto group2 = new Group();
     group2->setName("group2");
     group2->setParent(group1);
 
@@ -626,7 +626,7 @@ void TestGroup::testPrint()
     output = db->rootGroup()->print(true);
     QCOMPARE(output, QString("[empty]\n"));
 
-    Entry* entry1 = new Entry();
+    auto entry1 = new Entry();
     entry1->setTitle(QString("entry1"));
     entry1->setGroup(db->rootGroup());
     entry1->setUuid(QUuid::createUuid());
@@ -634,24 +634,24 @@ void TestGroup::testPrint()
     output = db->rootGroup()->print();
     QCOMPARE(output, QString("entry1\n"));
 
-    Group* group1 = new Group();
+    auto group1 = new Group();
     group1->setName("group1");
     group1->setParent(db->rootGroup());
 
-    Entry* entry2 = new Entry();
+    auto entry2 = new Entry();
     entry2->setTitle(QString("entry2"));
     entry2->setGroup(group1);
     entry2->setUuid(QUuid::createUuid());
 
-    Group* group2 = new Group();
+    auto group2 = new Group();
     group2->setName("group2");
     group2->setParent(db->rootGroup());
 
-    Group* subGroup = new Group();
+    auto subGroup = new Group();
     subGroup->setName("subgroup");
     subGroup->setParent(group2);
 
-    Entry* entry3 = new Entry();
+    auto entry3 = new Entry();
     entry3->setTitle(QString("entry3"));
     entry3->setGroup(subGroup);
     entry3->setUuid(QUuid::createUuid());
@@ -691,13 +691,13 @@ void TestGroup::testPrint()
 
 void TestGroup::testAddEntryWithPath()
 {
-    Database* db = new Database();
+    auto db = new Database();
 
-    Group* group1 = new Group();
+    auto group1 = new Group();
     group1->setName("group1");
     group1->setParent(db->rootGroup());
 
-    Group* group2 = new Group();
+    auto group2 = new Group();
     group2->setName("group2");
     group2->setParent(group1);
 
@@ -742,19 +742,19 @@ void TestGroup::testIsRecycled()
     Database db;
     db.metadata()->setRecycleBinEnabled(true);
 
-    Group* group1 = new Group();
+    auto group1 = new Group();
     group1->setName("group1");
     group1->setParent(db.rootGroup());
 
-    Group* group2 = new Group();
+    auto group2 = new Group();
     group2->setName("group2");
     group2->setParent(db.rootGroup());
 
-    Group* group3 = new Group();
+    auto group3 = new Group();
     group3->setName("group3");
     group3->setParent(group2);
 
-    Group* group4 = new Group();
+    auto group4 = new Group();
     group4->setName("group4");
     group4->setParent(db.rootGroup());
 
@@ -814,64 +814,64 @@ void TestGroup::testEquals()
 void TestGroup::testChildrenSort()
 {
     auto createTestGroupWithUnorderedChildren = []() -> Group* {
-        Group* parent = new Group();
+        auto parent = new Group();
 
-        Group* group1 = new Group();
+        auto group1 = new Group();
         group1->setName("B");
         group1->setParent(parent);
-        Group* group2 = new Group();
+        auto group2 = new Group();
         group2->setName("e");
         group2->setParent(parent);
-        Group* group3 = new Group();
+        auto group3 = new Group();
         group3->setName("Test999");
         group3->setParent(parent);
-        Group* group4 = new Group();
+        auto group4 = new Group();
         group4->setName("A");
         group4->setParent(parent);
-        Group* group5 = new Group();
+        auto group5 = new Group();
         group5->setName("z");
         group5->setParent(parent);
-        Group* group6 = new Group();
+        auto group6 = new Group();
         group6->setName("045");
         group6->setParent(parent);
-        Group* group7 = new Group();
+        auto group7 = new Group();
         group7->setName("60");
         group7->setParent(parent);
-        Group* group8 = new Group();
+        auto group8 = new Group();
         group8->setName("04test");
         group8->setParent(parent);
-        Group* group9 = new Group();
+        auto group9 = new Group();
         group9->setName("Test12");
         group9->setParent(parent);
-        Group* group10 = new Group();
+        auto group10 = new Group();
         group10->setName("i");
         group10->setParent(parent);
 
-        Group* subGroup1 = new Group();
+        auto subGroup1 = new Group();
         subGroup1->setName("sub_xte");
         subGroup1->setParent(group10);
-        Group* subGroup2 = new Group();
+        auto subGroup2 = new Group();
         subGroup2->setName("sub_010");
         subGroup2->setParent(group10);
-        Group* subGroup3 = new Group();
+        auto subGroup3 = new Group();
         subGroup3->setName("sub_000");
         subGroup3->setParent(group10);
-        Group* subGroup4 = new Group();
+        auto subGroup4 = new Group();
         subGroup4->setName("sub_M");
         subGroup4->setParent(group10);
-        Group* subGroup5 = new Group();
+        auto subGroup5 = new Group();
         subGroup5->setName("sub_p");
         subGroup5->setParent(group10);
-        Group* subGroup6 = new Group();
+        auto subGroup6 = new Group();
         subGroup6->setName("sub_45p");
         subGroup6->setParent(group10);
-        Group* subGroup7 = new Group();
+        auto subGroup7 = new Group();
         subGroup7->setName("sub_6p");
         subGroup7->setParent(group10);
-        Group* subGroup8 = new Group();
+        auto subGroup8 = new Group();
         subGroup8->setName("sub_tt");
         subGroup8->setParent(group10);
-        Group* subGroup9 = new Group();
+        auto subGroup9 = new Group();
         subGroup9->setName("sub_t0");
         subGroup9->setParent(group10);
 
@@ -996,11 +996,11 @@ void TestGroup::testHierarchy()
     Group group1;
     group1.setName("group1");
 
-    Group* group2 = new Group();
+    auto group2 = new Group();
     group2->setName("group2");
     group2->setParent(&group1);
 
-    Group* group3 = new Group();
+    auto group3 = new Group();
     group3->setName("group3");
     group3->setParent(group2);
 
@@ -1028,12 +1028,12 @@ void TestGroup::testApplyGroupIconRecursively()
     // Create a database with two nested groups with one entry each
     Database database;
 
-    Group* subgroup = new Group();
+    auto subgroup = new Group();
     subgroup->setName("Subgroup");
     subgroup->setParent(database.rootGroup());
     QVERIFY(subgroup);
 
-    Group* subsubgroup = new Group();
+    auto subsubgroup = new Group();
     subsubgroup->setName("Subsubgroup");
     subsubgroup->setParent(subgroup);
     QVERIFY(subsubgroup);
@@ -1125,7 +1125,7 @@ void TestGroup::testUsernamesRecursive()
     Database database;
 
     // Create a subgroup
-    Group* subgroup = new Group();
+    auto subgroup = new Group();
     subgroup->setName("Subgroup");
     subgroup->setParent(database.rootGroup());
 
@@ -1152,16 +1152,16 @@ void TestGroup::testMoveUpDown()
     Group* root = database.rootGroup();
     QVERIFY(root);
 
-    Entry* entry0 = new Entry();
+    auto entry0 = new Entry();
     QVERIFY(entry0);
     entry0->setGroup(root);
-    Entry* entry1 = new Entry();
+    auto entry1 = new Entry();
     QVERIFY(entry1);
     entry1->setGroup(root);
-    Entry* entry2 = new Entry();
+    auto entry2 = new Entry();
     QVERIFY(entry2);
     entry2->setGroup(root);
-    Entry* entry3 = new Entry();
+    auto entry3 = new Entry();
     QVERIFY(entry3);
     entry3->setGroup(root);
     // default order, straight

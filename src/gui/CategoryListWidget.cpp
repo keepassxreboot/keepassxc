@@ -70,7 +70,7 @@ QSize CategoryListWidget::minimumSizeHint() const
 
 int CategoryListWidget::addCategory(const QString& labelText, const QIcon& icon)
 {
-    QListWidgetItem* item = new QListWidgetItem(m_ui->categoryList);
+    auto item = new QListWidgetItem(m_ui->categoryList);
     item->setText(labelText);
     item->setIcon(icon);
     m_ui->categoryList->addItem(item);

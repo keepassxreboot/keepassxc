@@ -591,7 +591,7 @@ void TestEntry::testResolveClonedEntry()
 
 void TestEntry::testIsRecycled()
 {
-    Entry* entry = new Entry();
+    auto entry = new Entry();
     QVERIFY(!entry->isRecycled());
 
     Database db;
@@ -604,10 +604,10 @@ void TestEntry::testIsRecycled()
     db.recycleEntry(entry);
     QVERIFY(entry->isRecycled());
 
-    Group* group1 = new Group();
+    auto group1 = new Group();
     group1->setParent(root);
 
-    Entry* entry1 = new Entry();
+    auto entry1 = new Entry();
     entry1->setGroup(group1);
     QVERIFY(!entry1->isRecycled());
     db.recycleGroup(group1);
@@ -620,16 +620,16 @@ void TestEntry::testMoveUpDown()
     Group* root = db.rootGroup();
     QVERIFY(root);
 
-    Entry* entry0 = new Entry();
+    auto entry0 = new Entry();
     QVERIFY(entry0);
     entry0->setGroup(root);
-    Entry* entry1 = new Entry();
+    auto entry1 = new Entry();
     QVERIFY(entry1);
     entry1->setGroup(root);
-    Entry* entry2 = new Entry();
+    auto entry2 = new Entry();
     QVERIFY(entry2);
     entry2->setGroup(root);
-    Entry* entry3 = new Entry();
+    auto entry3 = new Entry();
     QVERIFY(entry3);
     entry3->setGroup(root);
     // default order, straight

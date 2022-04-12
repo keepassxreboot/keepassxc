@@ -865,7 +865,7 @@ bool Entry::equals(const Entry* other, CompareItemOptions options) const
 
 Entry* Entry::clone(CloneFlags flags) const
 {
-    Entry* entry = new Entry();
+    auto entry = new Entry();
     entry->setUpdateTimeinfo(false);
     if (flags & CloneNewUuid) {
         entry->m_uuid = QUuid::createUuid();
