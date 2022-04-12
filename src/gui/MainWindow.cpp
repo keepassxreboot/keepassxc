@@ -21,8 +21,8 @@
 
 #include <QCloseEvent>
 #include <QDesktopServices>
-#include <QFileInfo>
 #include <QDir>
+#include <QFileInfo>
 #include <QList>
 #include <QMimeData>
 #include <QShortcut>

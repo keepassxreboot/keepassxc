@@ -17,8 +17,8 @@
  */
 
 #include <QCommandLineParser>
-#include <QFile>
 #include <QDir>
+#include <QFile>
 #include <QWindow>
 
 #include "cli/Utils.h"
