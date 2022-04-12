@@ -17,6 +17,7 @@
  */
 
 #include <QCommandLineParser>
+#include <QDir>
 #include <QFile>
 #include <QWindow>
 
@@ -180,7 +181,7 @@ int main(int argc, char** argv)
         }
 
         if (!filename.isEmpty() && QFile::exists(filename) && !filename.endsWith(".json", Qt::CaseInsensitive)) {
-            mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+            mainWindow.openDatabase(QDir::toNativeSeparators(filename), password, parser.value(keyfileOption));
         }
     }
 
