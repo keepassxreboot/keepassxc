@@ -80,7 +80,6 @@ private slots:
 
     void onConfigChanged(Config::ConfigKey key);
 
-private:
     void severConnections();
     void makeConnections(const Group* group);
 

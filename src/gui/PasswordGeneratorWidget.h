@@ -57,7 +57,6 @@ public:
 
     static PasswordGeneratorWidget* popupGenerator(QWidget* parent = nullptr);
 
-public slots:
     void regeneratePassword();
     void applyPassword();
     void copyPassword();
@@ -81,7 +80,6 @@ private slots:
 
     void updateGenerator();
 
-private:
     bool m_standalone = false;
     bool m_passwordGenerated = false;
     int m_firstCustomWordlistIndex;

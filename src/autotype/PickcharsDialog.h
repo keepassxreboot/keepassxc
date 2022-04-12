@@ -42,7 +42,7 @@ private slots:
     void upPressed();
     void downPressed();
 
-private:
+
     QSharedPointer<Ui::PickcharsDialog> m_ui;
     int m_lastSelected;
 };

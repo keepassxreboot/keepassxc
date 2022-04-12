@@ -37,7 +37,6 @@ public:
 
     static Clipboard* instance();
 
-public slots:
     void clearCopiedText();
 
 signals:
@@ -46,7 +45,6 @@ signals:
 private slots:
     void countdownTick();
 
-private:
     explicit Clipboard(QObject* parent = nullptr);
 
     static Clipboard* m_instance;

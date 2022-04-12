@@ -63,7 +63,6 @@ protected:
     QString m_filename;
     bool m_retryUnlockWithEmptyPassword = false;
 
-protected slots:
     virtual void openDatabase();
     void reject();
 
@@ -75,7 +74,6 @@ private slots:
     void openHardwareKeyHelp();
     void openKeyFileHelp();
 
-private:
     bool m_pollingHardwareKey = false;
     bool m_blockQuickUnlock = false;
     QTimer m_hideTimer;

@@ -47,7 +47,6 @@ public:
     void initializePage() override;
     bool validatePage() override;
 
-public slots:
     void toggleAdvancedSettings();
 
 protected:

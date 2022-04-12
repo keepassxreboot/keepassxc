@@ -64,7 +64,6 @@ signals:
 private slots:
     void attachmentFileModified(const QString& path);
 
-private:
     void disconnectAndEraseExternalFile(const QString& path);
 
     QMap<QString, QByteArray> m_attachments;

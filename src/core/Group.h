@@ -203,7 +203,6 @@ signals:
 private slots:
     void updateTimeinfo();
 
-private:
     template <class P, class V> bool set(P& property, const V& value);
 
     void setParent(Database* db);

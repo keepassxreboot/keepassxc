@@ -36,7 +36,6 @@ public:
     QString rawText() const;
     QString url() const;
 
-public slots:
     void setElideMode(Qt::TextElideMode elideMode);
     void setRawText(const QString& rawText);
     void setUrl(const QString& url);
@@ -49,8 +48,6 @@ signals:
 
 private slots:
     void updateElidedText();
-
-private:
     void resizeEvent(QResizeEvent* event) override;
 
     Qt::TextElideMode m_elideMode;

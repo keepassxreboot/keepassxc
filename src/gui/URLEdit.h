@@ -34,7 +34,6 @@ public:
 private slots:
     void updateStylesheet();
 
-private:
     QPointer<QAction> m_errorAction;
 };
 

@@ -223,8 +223,7 @@ public:
      * @since 5.0
      */
     bool isShowAnimationRunning() const;
-    
-public slots:
+
     /**
      * Set the text of the message widget to @p text.
      * If the message widget is already visible, the text changes on the fly.

@@ -38,7 +38,6 @@ private slots:
     void copyToClipboard();
     void autoClose();
 
-private:
     int m_secTillClose;
     QString m_totpUri;
     QTimer* m_timer;

@@ -54,7 +54,6 @@ public:
     static AutoType* instance();
     static void createTestInstance();
 
-public slots:
     void performGlobalAutoType(const QList<QSharedPointer<Database>>& dbList, const QString& search = {});
     void raiseWindow();
 
@@ -68,7 +67,6 @@ private slots:
     void startGlobalAutoType(const QString& search);
     void unloadPlugin();
 
-private:
     enum WindowState
     {
         Normal,

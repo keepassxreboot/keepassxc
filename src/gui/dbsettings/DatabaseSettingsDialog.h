@@ -73,7 +73,6 @@ private slots:
     void pageChanged();
     void toggleAdvancedMode(bool advanced);
 
-private:
     enum Page
     {
         General = 0,

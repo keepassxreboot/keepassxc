@@ -71,7 +71,6 @@ private slots:
     void entryActivationSignalReceived(Entry* entry);
     void switchToMainView(bool previousDialogAccepted);
 
-private:
     QSharedPointer<Database> m_db;
     const QScopedPointer<Ui::ReportsDialog> m_ui;
     const QSharedPointer<ReportsPageHealthcheck> m_healthPage;

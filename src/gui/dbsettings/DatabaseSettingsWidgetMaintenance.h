@@ -42,7 +42,6 @@ public:
         return false;
     }
 
-public slots:
     void initialize() override;
     void uninitialize() override{};
     inline bool save() override
@@ -55,7 +54,6 @@ private slots:
     void removeCustomIcon();
     void purgeUnusedCustomIcons();
 
-private:
     void populateIcons(QSharedPointer<Database> db);
     void removeSingleCustomIcon(QSharedPointer<Database> database, QModelIndex index);
 

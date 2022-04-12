@@ -255,7 +255,6 @@ private slots:
     void reloadDatabaseFile();
     void restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& EntryUuid);
 
-private:
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
     void processAutoOpen();

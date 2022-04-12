@@ -35,7 +35,6 @@ public:
     void setRepeatPartner(PasswordEdit* repeatEdit);
     bool isPasswordVisible() const;
 
-public slots:
     void setShowPassword(bool show);
     void updateRepeatStatus();
 
@@ -51,7 +50,6 @@ private slots:
     void setParentPasswordEdit(PasswordEdit* parent);
     void checkCapslockState();
 
-private:
     QPointer<QAction> m_errorAction;
     QPointer<QAction> m_correctAction;
     QPointer<QAction> m_toggleVisibleAction;

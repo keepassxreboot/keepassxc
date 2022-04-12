@@ -79,7 +79,6 @@ signals:
 private slots:
     void handleSettingsChanged(Config::ConfigKey key);
 
-private:
     static KeeShare* m_instance;
 
     explicit KeeShare(QObject* parent);

@@ -70,7 +70,6 @@ private:
                                                            Entry* targetEntry,
                                                            Group::MergeMode mergeMethod);
 
-private:
     MergeContext m_context;
     Group::MergeMode m_mode;
 };

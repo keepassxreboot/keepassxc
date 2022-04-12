@@ -42,7 +42,6 @@ signals:
 private slots:
     void parseFinished(bool accepted);
 
-private:
     QPointer<Database> m_db;
     CsvImportWidget* m_parse;
     QGridLayout* m_layout;

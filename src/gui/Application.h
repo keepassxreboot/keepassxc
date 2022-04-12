@@ -66,7 +66,6 @@ private slots:
     void processIncomingConnection();
     void socketReadyRead();
 
-private:
 #if defined(Q_OS_UNIX)
     /**
      * Register Unix signals such as SIGINT and SIGTERM for clean shutdown.

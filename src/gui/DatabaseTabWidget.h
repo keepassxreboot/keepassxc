@@ -45,7 +45,6 @@ public:
     bool isModified(int index = -1) const;
     bool hasLockableDatabases() const;
 
-public slots:
     void lockAndSwitchToFirstUnlockedDatabase(int index = -1);
     void addDatabaseTab(const QString& filePath,
                         bool inBackground = false,
@@ -102,7 +101,6 @@ private slots:
     void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
     void handleExportError(const QString& reason);
 
-private:
     QSharedPointer<Database> execNewDatabaseWizard();
     void updateLastDatabases(const QString& filename);
     bool warnOnExport();

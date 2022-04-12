@@ -76,7 +76,6 @@ private slots:
     void showSearchMenu();
     void resetSearchClearTimer();
 
-private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
     PopupHelpWidget* m_helpWidget;
     QTimer* m_searchTimer;

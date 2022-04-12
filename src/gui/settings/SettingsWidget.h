@@ -41,7 +41,6 @@ public:
     virtual void setAdvancedMode(bool advanced);
     virtual bool advancedMode() const;
 
-public slots:
     /**
      * Initialize settings widget.
      */

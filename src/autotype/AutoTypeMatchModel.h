@@ -56,7 +56,6 @@ private slots:
     void entryRemoved();
     void entryDataChanged(Entry* entry);
 
-private:
     void severConnections();
     void makeConnections(const Group* group);
 

@@ -85,7 +85,6 @@ signals:
 private slots:
     void updateLastModified(QDateTime lastModified = {});
 
-private:
     QHash<QString, CustomDataItem> m_data;
 };
 

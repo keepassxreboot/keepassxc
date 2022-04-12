@@ -43,7 +43,6 @@ public:
     bool isReadOnly() const;
     bool isButtonsVisible() const;
 
-public slots:
     void linkAttachments(EntryAttachments* attachments);
     void unlinkAttachments();
     void setReadOnly(bool readOnly);
@@ -66,7 +65,6 @@ private slots:
     void updateButtonsEnabled();
     void attachmentModifiedExternally(const QString& key, const QString& filePath);
 
-private:
     bool insertAttachments(const QStringList& fileNames, QString& errorMessage);
 
     QStringList confirmAttachmentSelection(const QStringList& filenames);

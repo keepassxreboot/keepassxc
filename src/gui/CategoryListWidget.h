@@ -53,7 +53,6 @@ protected:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
-protected slots:
     void updateCategoryScrollButtons();
     void scrollCategoriesDown();
     void scrollCategoriesUp();

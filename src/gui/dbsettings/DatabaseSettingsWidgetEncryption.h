@@ -43,7 +43,6 @@ public:
     }
     void setAdvancedMode(bool advanced) override;
 
-public slots:
     void initialize() override;
     void uninitialize() override;
     bool save() override;
@@ -67,7 +66,6 @@ private slots:
     void activateChangeDecryptionTime();
     void markDirty();
 
-private:
     enum FormatSelection
     {
         KDBX4,

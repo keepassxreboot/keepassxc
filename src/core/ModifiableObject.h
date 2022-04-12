@@ -26,7 +26,6 @@ class ModifiableObject : public QObject
 public:
     using QObject::QObject;
 
-public:
     /**
      * @brief check if the modified signal is enabled.
      * Note that this is NOT the same as m_emitModified.
@@ -34,7 +33,6 @@ public:
      */
     bool modifiedSignalEnabled() const;
 
-public slots:
     /**
      * @brief set whether the modified signal should be emitted from this object and all its children.
      *

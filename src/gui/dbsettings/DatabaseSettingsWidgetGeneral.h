@@ -40,7 +40,6 @@ public:
         return false;
     }
 
-public slots:
     void initialize() override;
     void uninitialize() override;
     bool save() override;

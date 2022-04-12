@@ -48,7 +48,6 @@ signals:
 private slots:
     void exportDatabase();
 
-private:
     QString getStrategyName(ExportSortingStrategy strategy);
 
     QScopedPointer<Ui::ExportDialog> m_ui;

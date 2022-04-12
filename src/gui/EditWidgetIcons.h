@@ -95,7 +95,6 @@ private slots:
     void updateRadioButtonCustomIcons();
     void confirmApplyIconTo(QAction* action);
 
-private:
     QMenu* createApplyIconToMenu();
 
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;

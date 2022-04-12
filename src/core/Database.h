@@ -150,7 +150,6 @@ public:
 
     static Database* databaseByUuid(const QUuid& uuid);
 
-public slots:
     void markAsModified();
     void markAsClean();
     void updateCommonUsernames(int topN = 10);

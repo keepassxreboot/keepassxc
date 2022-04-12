@@ -50,7 +50,6 @@ protected:
 private slots:
     void openDatabaseFromFile(QListWidgetItem* item);
 
-private:
     const QScopedPointer<Ui::WelcomeWidget> m_ui;
     void removeFromLastDatabases(QListWidgetItem* item);
 };

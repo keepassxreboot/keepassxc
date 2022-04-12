@@ -30,7 +30,6 @@ public:
     explicit DatabaseWidgetStateSync(QObject* parent = nullptr);
     ~DatabaseWidgetStateSync() override;
 
-public slots:
     void setActive(DatabaseWidget* dbWidget);
     void restoreListView();
     void restoreSearchView();
@@ -41,7 +40,6 @@ private slots:
     void updateViewState();
     void sync();
 
-private:
     static QList<int> variantToIntList(const QVariant& variant);
     static QVariant intListToVariant(const QList<int>& list);
 

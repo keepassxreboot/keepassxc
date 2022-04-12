@@ -48,7 +48,6 @@ private slots:
     void createKeyFile();
     void browseKeyFile();
 
-private:
     const QScopedPointer<Ui::KeyFileEditWidget> m_compUi;
     QPointer<QWidget> m_compEditWidget;
     const QPointer<DatabaseSettingsWidget> m_parent;

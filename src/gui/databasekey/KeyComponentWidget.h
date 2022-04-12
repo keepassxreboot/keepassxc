@@ -116,7 +116,6 @@ private slots:
     void resetComponentEditWidget();
     void updateSize();
 
-private:
     bool m_isComponentAdded = false;
     Page m_previousPage = Page::AddNew;
     QPointer<QWidget> m_componentWidget;

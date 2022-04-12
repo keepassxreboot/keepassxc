@@ -272,7 +272,6 @@ private slots:
     void updateModifiedSinceBegin();
     void updateTotp();
 
-private:
     QString resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const;
     QString resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
     QString resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const;

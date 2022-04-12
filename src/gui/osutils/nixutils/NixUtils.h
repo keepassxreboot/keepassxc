@@ -52,7 +52,6 @@ public:
 private slots:
     void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
 
-private:
     explicit NixUtils(QObject* parent = nullptr);
     ~NixUtils() override;
 

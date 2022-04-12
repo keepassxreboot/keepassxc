@@ -36,7 +36,7 @@ public:
     bool isExpanded();
     bool canExpand();
 
-public slots:
+
     void setExpanded(bool state);
 
 protected:

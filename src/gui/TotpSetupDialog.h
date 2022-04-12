@@ -43,7 +43,6 @@ private slots:
     void toggleCustom(bool status);
     void saveSettings();
 
-private:
     QScopedPointer<Ui::TotpSetupDialog> m_ui;
     Entry* m_entry;
 };

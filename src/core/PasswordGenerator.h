@@ -55,7 +55,6 @@ public:
     };
     Q_DECLARE_FLAGS(GeneratorFlags, GeneratorFlag)
 
-public:
     PasswordGenerator();
 
     void setLength(int length);

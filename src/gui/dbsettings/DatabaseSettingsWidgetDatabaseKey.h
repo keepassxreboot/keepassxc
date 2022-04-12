@@ -49,7 +49,6 @@ public:
         return false;
     }
 
-public slots:
     void initialize() override;
     void uninitialize() override;
     bool save() override;
@@ -59,7 +58,6 @@ private slots:
     void showAdditionalKeyOptions();
     void markDirty();
 
-private:
     void setAdditionalKeyOptionsVisible(bool show);
 
     // clang-format off

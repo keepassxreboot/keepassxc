@@ -45,7 +45,6 @@ protected:
 private slots:
     void calculateStats();
 
-private:
     QScopedPointer<Ui::ReportsWidgetStatistics> m_ui;
 
     bool m_statsCalculated = false;

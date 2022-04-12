@@ -146,7 +146,6 @@ private slots:
     void updateProgressBar(int percentage, QString message);
     void focusSearchWidget();
 
-private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
 
     static const QString BaseWindowTitle;

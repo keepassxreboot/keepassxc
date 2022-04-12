@@ -49,7 +49,6 @@ protected:
 private slots:
     void setPassword(const QString& password);
 
-private:
     const QScopedPointer<Ui::PasswordEditWidget> m_compUi;
     QPointer<QWidget> m_compEditWidget;
 };

@@ -49,7 +49,6 @@ private slots:
     void aboutToReset();
     void reset();
 
-private:
     void updateAttributes();
 
     EntryAttributes* m_entryAttributes;

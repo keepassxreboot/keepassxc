@@ -40,7 +40,7 @@ public:
 private slots:
     void updateTagList();
 
-private:
+
     QSharedPointer<Database> m_db;
     QStringList m_tagList;
 };

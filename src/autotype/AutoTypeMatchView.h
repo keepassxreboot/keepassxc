@@ -48,7 +48,6 @@ signals:
 protected:
     void keyPressEvent(QKeyEvent* event) override;
 
-protected slots:
     void currentChanged(const QModelIndex& current, const QModelIndex& previous) override;
 
 private:

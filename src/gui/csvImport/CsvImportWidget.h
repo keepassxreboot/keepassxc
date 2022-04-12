@@ -52,7 +52,6 @@ private slots:
     void setRootGroup();
     void reject();
 
-private:
     Q_DISABLE_COPY(CsvImportWidget)
     const QScopedPointer<Ui::CsvImportWidget> m_ui;
     CsvParserModel* const m_parserModel;

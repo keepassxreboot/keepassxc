@@ -41,7 +41,6 @@ private Q_SLOTS:
     void updateSeconds();
     void copyToClipboard();
 
-private:
     QScopedPointer<Ui::TotpDialog> m_ui;
 
     void resetCounter();

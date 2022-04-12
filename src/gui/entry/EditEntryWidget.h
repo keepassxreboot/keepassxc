@@ -133,7 +133,6 @@ private slots:
     void updateCurrentURL();
 #endif
 
-private:
     void setupMain();
     void setupAdvanced();
     void setupIcon();

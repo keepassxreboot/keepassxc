@@ -36,7 +36,6 @@ public:
     explicit EntryPreviewWidget(QWidget* parent = nullptr);
     ~EntryPreviewWidget() override;
 
-public slots:
     void setEntry(Entry* selectedEntry);
     void setGroup(Group* selectedGroup);
     void setDatabaseMode(DatabaseWidget::Mode mode);
@@ -67,7 +66,6 @@ private slots:
     void updateTabIndexes();
     void openEntryUrl();
 
-private:
     void removeTab(QTabWidget* tabWidget, QWidget* widget);
     void setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled);
 

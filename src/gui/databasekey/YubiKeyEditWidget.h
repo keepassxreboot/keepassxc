@@ -48,7 +48,6 @@ private slots:
     void hardwareKeyResponse(bool found);
     void pollYubikey();
 
-private:
     const QScopedPointer<Ui::YubiKeyEditWidget> m_compUi;
     QPointer<QWidget> m_compEditWidget;
     bool m_isDetected = false;

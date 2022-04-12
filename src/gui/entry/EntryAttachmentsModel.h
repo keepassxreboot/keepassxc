@@ -55,7 +55,6 @@ private slots:
     void reset();
     void setReadOnly(bool readOnly);
 
-private:
     QPointer<EntryAttachments> m_entryAttachments;
     QStringList m_headers;
     bool m_readOnly = false;

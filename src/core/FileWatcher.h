@@ -44,7 +44,6 @@ public slots:
 private slots:
     void checkFileChanged();
 
-private:
     QByteArray calculateChecksum();
     bool shouldIgnoreChanges();
 

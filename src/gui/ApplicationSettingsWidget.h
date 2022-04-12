@@ -65,7 +65,6 @@ private slots:
     void showExpiredEntriesOnDatabaseUnlockToggled(bool checked);
     void selectBackupDirectory();
 
-private:
     QWidget* const m_secWidget;
     QWidget* const m_generalWidget;
     const QScopedPointer<Ui::ApplicationSettingsWidgetSecurity> m_secUi;

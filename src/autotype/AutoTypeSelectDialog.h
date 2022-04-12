@@ -58,7 +58,6 @@ private slots:
     void activateCurrentMatch();
     void updateActionMenu(const AutoTypeMatch& match);
 
-private:
     void buildActionMenu();
     void setDelayedSearch(bool state);
 

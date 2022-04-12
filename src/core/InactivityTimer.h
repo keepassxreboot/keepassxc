@@ -42,7 +42,6 @@ protected:
 private slots:
     void timeout();
 
-private:
     QTimer* m_timer;
     bool m_active;
     QMutex m_emitMutx;
