@@ -21,6 +21,7 @@
 
 #include <QCloseEvent>
 #include <QDesktopServices>
+#include <QDir>
 #include <QFileInfo>
 #include <QList>
 #include <QMimeData>
@@ -1388,7 +1389,7 @@ bool MainWindow::saveLastDatabases()
         QStringList openDatabases;
         for (int i = 0; i < m_ui->tabWidget->count(); ++i) {
             auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(i);
-            openDatabases.append(dbWidget->database()->filePath());
+            openDatabases.append(QDir::toNativeSeparators(dbWidget->database()->filePath()));
         }
 
         config()->set(Config::LastOpenedDatabases, openDatabases);
