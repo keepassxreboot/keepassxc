@@ -164,7 +164,7 @@ void TestEntryModel::testAttachmentsModel()
 
     QSignalSpy spyReset(model, SIGNAL(modelReset()));
     entryAttachments->clear();
-    model->setEntryAttachments(0);
+    model->setEntryAttachments(nullptr);
     QCOMPARE(spyReset.count(), 2);
     QCOMPARE(model->rowCount(), 0);
 
@@ -217,7 +217,7 @@ void TestEntryModel::testAttributesModel()
 
     QSignalSpy spyReset(model, SIGNAL(modelReset()));
     entryAttributes->clear();
-    model->setEntryAttributes(0);
+    model->setEntryAttributes(nullptr);
     QCOMPARE(spyReset.count(), 2);
     QCOMPARE(model->rowCount(), 0);
 
