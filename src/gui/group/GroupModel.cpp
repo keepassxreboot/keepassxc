@@ -333,7 +333,7 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
         return nullptr;
     }
 
-    QMimeData* data = new QMimeData();
+    auto data = new QMimeData();
     QByteArray encoded;
     QDataStream stream(&encoded, QIODevice::WriteOnly);
 

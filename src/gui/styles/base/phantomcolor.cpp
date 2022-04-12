@@ -398,9 +398,9 @@ namespace Phantom
 
     QColor qcolor_of_rgb(qreal r, qreal g, qreal b)
     {
-        int r_ = static_cast<int>(std::lround(srgb_of_linear(r) * 255.0));
-        int g_ = static_cast<int>(std::lround(srgb_of_linear(g) * 255.0));
-        int b_ = static_cast<int>(std::lround(srgb_of_linear(b) * 255.0));
+        auto r_ = static_cast<int>(std::lround(srgb_of_linear(r) * 255.0));
+        auto g_ = static_cast<int>(std::lround(srgb_of_linear(g) * 255.0));
+        auto b_ = static_cast<int>(std::lround(srgb_of_linear(b) * 255.0));
         return {r_, g_, b_};
     }
 

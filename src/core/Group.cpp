@@ -890,7 +890,7 @@ Group* Group::findChildByName(const QString& name)
  */
 Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) const
 {
-    Group* clonedGroup = new Group();
+    auto clonedGroup = new Group();
 
     clonedGroup->setUpdateTimeinfo(false);
 

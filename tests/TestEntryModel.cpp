@@ -42,23 +42,23 @@ void TestEntryModel::initTestCase()
 
 void TestEntryModel::test()
 {
-    Group* group1 = new Group();
-    Group* group2 = new Group();
+    auto group1 = new Group();
+    auto group2 = new Group();
 
-    Entry* entry1 = new Entry();
+    auto entry1 = new Entry();
     entry1->setGroup(group1);
     entry1->setTitle("testTitle1");
 
-    Entry* entry2 = new Entry();
+    auto entry2 = new Entry();
     entry2->setGroup(group1);
     entry2->setTitle("testTitle2");
 
-    EntryModel* model = new EntryModel(this);
+    auto model = new EntryModel(this);
 
     QSignalSpy spyAboutToBeMoved(model, SIGNAL(rowsAboutToBeMoved(QModelIndex, int, int, QModelIndex, int)));
     QSignalSpy spyMoved(model, SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)));
 
-    ModelTest* modelTest = new ModelTest(model, this);
+    auto modelTest = new ModelTest(model, this);
 
     model->setGroup(group1);
 
@@ -79,7 +79,7 @@ void TestEntryModel::test()
     QSignalSpy spyAboutToRemove(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex, int, int)));
     QSignalSpy spyRemoved(model, SIGNAL(rowsRemoved(QModelIndex, int, int)));
 
-    Entry* entry3 = new Entry();
+    auto entry3 = new Entry();
     entry3->setGroup(group1);
 
     QCOMPARE(spyAboutToBeMoved.count(), 0);
@@ -130,10 +130,10 @@ void TestEntryModel::test()
 
 void TestEntryModel::testAttachmentsModel()
 {
-    EntryAttachments* entryAttachments = new EntryAttachments(this);
+    auto entryAttachments = new EntryAttachments(this);
 
-    EntryAttachmentsModel* model = new EntryAttachmentsModel(this);
-    ModelTest* modelTest = new ModelTest(model, this);
+    auto model = new EntryAttachmentsModel(this);
+    auto modelTest = new ModelTest(model, this);
 
     QCOMPARE(model->rowCount(), 0);
     model->setEntryAttachments(entryAttachments);
@@ -175,10 +175,10 @@ void TestEntryModel::testAttachmentsModel()
 
 void TestEntryModel::testAttributesModel()
 {
-    EntryAttributes* entryAttributes = new EntryAttributes(this);
+    auto entryAttributes = new EntryAttributes(this);
 
-    EntryAttributesModel* model = new EntryAttributesModel(this);
-    ModelTest* modelTest = new ModelTest(model, this);
+    auto model = new EntryAttributesModel(this);
+    auto modelTest = new ModelTest(model, this);
 
     QCOMPARE(model->rowCount(), 0);
     model->setEntryAttributes(entryAttributes);
@@ -227,8 +227,8 @@ void TestEntryModel::testAttributesModel()
 
 void TestEntryModel::testDefaultIconModel()
 {
-    DefaultIconModel* model = new DefaultIconModel(this);
-    ModelTest* modelTest = new ModelTest(model, this);
+    auto model = new DefaultIconModel(this);
+    auto modelTest = new ModelTest(model, this);
 
     QCOMPARE(model->rowCount(), databaseIcons()->count());
 
@@ -238,8 +238,8 @@ void TestEntryModel::testDefaultIconModel()
 
 void TestEntryModel::testCustomIconModel()
 {
-    CustomIconModel* model = new CustomIconModel(this);
-    ModelTest* modelTest = new ModelTest(model, this);
+    auto model = new CustomIconModel(this);
+    auto modelTest = new ModelTest(model, this);
 
     QCOMPARE(model->rowCount(), 0);
 
@@ -264,12 +264,12 @@ void TestEntryModel::testCustomIconModel()
 
 void TestEntryModel::testAutoTypeAssociationsModel()
 {
-    AutoTypeAssociationsModel* model = new AutoTypeAssociationsModel(this);
-    ModelTest* modelTest = new ModelTest(model, this);
+    auto model = new AutoTypeAssociationsModel(this);
+    auto modelTest = new ModelTest(model, this);
 
     QCOMPARE(model->rowCount(), 0);
 
-    AutoTypeAssociations* associations = new AutoTypeAssociations(this);
+    auto associations = new AutoTypeAssociations(this);
     model->setAutoTypeAssociations(associations);
 
     QCOMPARE(model->rowCount(), 0);
@@ -300,14 +300,14 @@ void TestEntryModel::testAutoTypeAssociationsModel()
 
 void TestEntryModel::testProxyModel()
 {
-    EntryModel* modelSource = new EntryModel(this);
-    SortFilterHideProxyModel* modelProxy = new SortFilterHideProxyModel(this);
+    auto modelSource = new EntryModel(this);
+    auto modelProxy = new SortFilterHideProxyModel(this);
     modelProxy->setSourceModel(modelSource);
 
-    ModelTest* modelTest = new ModelTest(modelProxy, this);
+    auto modelTest = new ModelTest(modelProxy, this);
 
-    Database* db = new Database();
-    Entry* entry = new Entry();
+    auto db = new Database();
+    auto entry = new Entry();
     entry->setTitle("Test Title");
     entry->setGroup(db->rootGroup());
 
@@ -358,18 +358,18 @@ void TestEntryModel::testProxyModel()
 
 void TestEntryModel::testDatabaseDelete()
 {
-    EntryModel* model = new EntryModel(this);
-    ModelTest* modelTest = new ModelTest(model, this);
+    auto model = new EntryModel(this);
+    auto modelTest = new ModelTest(model, this);
 
-    Database* db1 = new Database();
-    Group* group1 = new Group();
+    auto db1 = new Database();
+    auto group1 = new Group();
     group1->setParent(db1->rootGroup());
 
-    Entry* entry1 = new Entry();
+    auto entry1 = new Entry();
     entry1->setGroup(group1);
 
-    Database* db2 = new Database();
-    Entry* entry2 = new Entry();
+    auto db2 = new Database();
+    auto entry2 = new Entry();
     entry2->setGroup(db2->rootGroup());
 
     model->setEntries(QList<Entry*>() << entry1 << entry2);

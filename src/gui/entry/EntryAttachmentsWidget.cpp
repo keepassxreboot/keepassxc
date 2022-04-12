@@ -390,14 +390,14 @@ bool EntryAttachmentsWidget::eventFilter(QObject* watched, QEvent* e)
     if (watched == m_ui->attachmentsView->viewport() && !isReadOnly()) {
         const QEvent::Type eventType = e->type();
         if (eventType == QEvent::DragEnter || eventType == QEvent::DragMove) {
-            QDropEvent* dropEv = static_cast<QDropEvent*>(e);
+            auto dropEv = static_cast<QDropEvent*>(e);
             const QMimeData* mimeData = dropEv->mimeData();
             if (mimeData->hasUrls()) {
                 dropEv->acceptProposedAction();
                 return true;
             }
         } else if (eventType == QEvent::Drop) {
-            QDropEvent* dropEv = static_cast<QDropEvent*>(e);
+            auto dropEv = static_cast<QDropEvent*>(e);
             const QMimeData* mimeData = dropEv->mimeData();
             if (mimeData->hasUrls()) {
                 dropEv->acceptProposedAction();

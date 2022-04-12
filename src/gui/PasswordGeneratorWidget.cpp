@@ -83,7 +83,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     // set font size of password quality and entropy labels dynamically to 80% of
     // the default font size, but make it no smaller than 8pt
     QFont defaultFont;
-    int smallerSize = static_cast<int>(defaultFont.pointSize() * 0.8f);
+    auto smallerSize = static_cast<int>(defaultFont.pointSize() * 0.8f);
     if (smallerSize >= 8) {
         defaultFont.setPointSize(smallerSize);
         m_ui->entropyLabel->setFont(defaultFont);

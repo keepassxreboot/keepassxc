@@ -82,7 +82,7 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
         QBuffer buffer;
         qrc.writeSvg(&buffer, logicalDpiX());
         m_totpSvgWidget->load(buffer.data());
-        const int minsize = static_cast<int>(logicalDpiX() * 2.5);
+        const auto minsize = static_cast<int>(logicalDpiX() * 2.5);
         m_totpSvgWidget->setMinimumSize(minsize, minsize);
     } else {
         auto errorBox = new QMessageBox(parent);

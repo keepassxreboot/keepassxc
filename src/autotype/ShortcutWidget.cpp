@@ -90,7 +90,7 @@ void ShortcutWidget::keyEvent(QKeyEvent* event)
         return;
     }
 
-    Qt::Key key = static_cast<Qt::Key>(event->key());
+    auto key = static_cast<Qt::Key>(event->key());
 
     if (key <= 0 || key == Qt::Key_unknown) {
         return;

@@ -899,7 +899,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                                this);
             msgbox.setDefaultButton(QMessageBox::No);
 
-            QCheckBox* checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
+            auto checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
             msgbox.setCheckBox(checkbox);
             bool remember = false;
             QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {

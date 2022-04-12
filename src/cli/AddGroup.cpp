@@ -57,7 +57,7 @@ int AddGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedPoin
         return EXIT_FAILURE;
     }
 
-    Group* newGroup = new Group();
+    auto newGroup = new Group();
     newGroup->setUuid(QUuid::createUuid());
     newGroup->setName(groupName);
     newGroup->setParent(parentGroup);

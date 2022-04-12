@@ -41,7 +41,7 @@ static void estimate(const char* pwd, bool advanced)
 {
     auto& out = Utils::STDOUT;
 
-    int len = static_cast<int>(strlen(pwd));
+    auto len = static_cast<int>(strlen(pwd));
     if (!advanced) {
         const auto e = PasswordHealth(pwd).entropy();
         // clang-format off

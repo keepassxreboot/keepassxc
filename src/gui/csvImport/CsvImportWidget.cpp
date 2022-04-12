@@ -196,7 +196,7 @@ void CsvImportWidget::writeDatabase()
         if (not m_parserModel->data(m_parserModel->index(r, 1)).isValid()) {
             continue;
         }
-        Entry* entry = new Entry();
+        auto entry = new Entry();
         entry->setUuid(QUuid::createUuid());
         entry->setGroup(splitGroups(m_parserModel->data(m_parserModel->index(r, 0)).toString()));
         entry->setTitle(m_parserModel->data(m_parserModel->index(r, 1)).toString());
@@ -325,7 +325,7 @@ Group* CsvImportWidget::splitGroups(const QString& label)
     for (const QString& groupName : groupList) {
         Group* children = hasChildren(current, groupName);
         if (children == nullptr) {
-            Group* brandNew = new Group();
+            auto brandNew = new Group();
             brandNew->setParent(current);
             brandNew->setName(groupName);
             brandNew->setUuid(QUuid::createUuid());

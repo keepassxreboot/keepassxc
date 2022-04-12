@@ -91,7 +91,7 @@ void ScreenLockListenerDBus::login1SessionObjectReceived(QDBusMessage response)
         qDebug() << "org.freedesktop.login1.Manager.GetSession did not return a QDBusObjectPath";
         return;
     }
-    QDBusObjectPath path = arg0.value<QDBusObjectPath>();
+    auto path = arg0.value<QDBusObjectPath>();
     QDBusConnection systemBus = QDBusConnection::systemBus();
 
     systemBus.connect("", // service

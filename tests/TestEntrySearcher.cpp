@@ -44,21 +44,21 @@ void TestEntrySearcher::testSearch()
      *     - group211
      *       - group2111
      */
-    Group* group1 = new Group();
-    Group* group2 = new Group();
-    Group* group3 = new Group();
+    auto group1 = new Group();
+    auto group2 = new Group();
+    auto group3 = new Group();
 
     group1->setParent(m_rootGroup);
     group2->setParent(m_rootGroup);
     group3->setParent(m_rootGroup);
 
-    Group* group11 = new Group();
+    auto group11 = new Group();
 
     group11->setParent(group1);
 
-    Group* group21 = new Group();
-    Group* group211 = new Group();
-    Group* group2111 = new Group();
+    auto group21 = new Group();
+    auto group211 = new Group();
+    auto group2111 = new Group();
 
     group21->setParent(group2);
     group211->setParent(group21);
@@ -66,39 +66,39 @@ void TestEntrySearcher::testSearch()
 
     group1->setSearchingEnabled(Group::Disable);
 
-    Entry* eRoot = new Entry();
+    auto eRoot = new Entry();
     eRoot->setTitle("test search term test");
     eRoot->setGroup(m_rootGroup);
 
-    Entry* eRoot2 = new Entry();
+    auto eRoot2 = new Entry();
     eRoot2->setNotes("test term test");
     eRoot2->setGroup(m_rootGroup);
 
     // Searching is disabled for these
-    Entry* e1 = new Entry();
+    auto e1 = new Entry();
     e1->setUsername("test search term test");
     e1->setGroup(group1);
 
-    Entry* e11 = new Entry();
+    auto e11 = new Entry();
     e11->setNotes("test search term test");
     e11->setGroup(group11);
     // End searching disabled
 
-    Entry* e2111 = new Entry();
+    auto e2111 = new Entry();
     e2111->setTitle("test search term test");
     e2111->setGroup(group2111);
 
-    Entry* e2111b = new Entry();
+    auto e2111b = new Entry();
     e2111b->setNotes("test search test");
     e2111b->setUsername("user123");
     e2111b->setPassword("testpass");
     e2111b->setGroup(group2111);
 
-    Entry* e3 = new Entry();
+    auto e3 = new Entry();
     e3->setUrl("test search term test");
     e3->setGroup(group3);
 
-    Entry* e3b = new Entry();
+    auto e3b = new Entry();
     e3b->setTitle("test search test 123");
     e3b->setUsername("test@email.com");
     e3b->setPassword("realpass");
@@ -153,7 +153,7 @@ void TestEntrySearcher::testSearch()
 
 void TestEntrySearcher::testAndConcatenationInSearch()
 {
-    Entry* entry = new Entry();
+    auto entry = new Entry();
     entry->setNotes("abc def ghi");
     entry->setTitle("jkl");
     entry->setGroup(m_rootGroup);
@@ -179,7 +179,7 @@ void TestEntrySearcher::testAndConcatenationInSearch()
 
 void TestEntrySearcher::testAllAttributesAreSearched()
 {
-    Entry* entry = new Entry();
+    auto entry = new Entry();
     entry->setGroup(m_rootGroup);
 
     entry->setTitle("testTitle");
@@ -276,35 +276,35 @@ void TestEntrySearcher::testGroup()
      * - group2
      *   - subgroup2 (1 entry)
      */
-    Group* group1 = new Group();
-    Group* group2 = new Group();
+    auto group1 = new Group();
+    auto group2 = new Group();
 
     group1->setParent(m_rootGroup);
     group1->setName("group1");
     group2->setParent(m_rootGroup);
     group2->setName("group2");
 
-    Group* subgroup1 = new Group();
+    auto subgroup1 = new Group();
     subgroup1->setName("subgroup1");
     subgroup1->setParent(group1);
 
-    Group* subgroup2 = new Group();
+    auto subgroup2 = new Group();
     subgroup2->setName("subgroup2");
     subgroup2->setParent(group2);
 
-    Entry* eGroup1 = new Entry();
+    auto eGroup1 = new Entry();
     eGroup1->setTitle("Entry Group 1");
     eGroup1->setGroup(group1);
 
-    Entry* eSub1 = new Entry();
+    auto eSub1 = new Entry();
     eSub1->setTitle("test search term test");
     eSub1->setGroup(subgroup1);
 
-    Entry* eSub2 = new Entry();
+    auto eSub2 = new Entry();
     eSub2->setNotes("test test");
     eSub2->setGroup(subgroup1);
 
-    Entry* eSub3 = new Entry();
+    auto eSub3 = new Entry();
     eSub3->setNotes("test term test");
     eSub3->setGroup(subgroup2);
 
