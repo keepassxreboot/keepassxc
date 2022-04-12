@@ -25,7 +25,7 @@
 #elif defined(HAVE_MALLOC_H)
 #include <malloc.h>
 #else
-#include <stdlib.h>
+#include <cstdlib>
 #endif
 
 #if defined(NDEBUG) && !defined(__cpp_sized_deallocation)

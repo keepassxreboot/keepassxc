@@ -35,7 +35,7 @@
 #include <QStandardPaths>
 
 #if defined(Q_OS_UNIX)
-#include <signal.h>
+#include <csignal>
 #include <sys/socket.h>
 #include <unistd.h>
 #endif
