@@ -26,7 +26,6 @@ ShortcutWidget::ShortcutWidget(QWidget* parent)
     : QLineEdit(parent)
     , m_key(static_cast<Qt::Key>(0))
     , m_modifiers(nullptr)
-    , m_locked(false)
 {
     setReadOnly(true);
 }

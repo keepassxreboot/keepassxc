@@ -34,18 +34,10 @@
 
 #include <QKeyEvent>
 
-IconStruct::IconStruct()
-    : uuid(QUuid())
-    , number(0)
-    , applyTo(ApplyIconToOptions::THIS_ONLY)
-{
-}
-
 EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetIcons())
     , m_db(nullptr)
-    , m_applyIconTo(ApplyIconToOptions::THIS_ONLY)
     , m_defaultIconModel(new DefaultIconModel(this))
     , m_customIconModel(new CustomIconModel(this))
 #ifdef WITH_XC_NETWORKING

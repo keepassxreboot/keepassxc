@@ -51,7 +51,6 @@ public:
     SimpleLineReader()
         : inStream(stdin, QIODevice::ReadOnly)
         , outStream(stdout, QIODevice::WriteOnly)
-        , finished(false)
     {
     }
 
@@ -74,17 +73,14 @@ public:
 private:
     TextStream inStream;
     TextStream outStream;
-    bool finished;
+    bool finished{false};
 };
 
 #if defined(USE_READLINE)
 class ReadlineLineReader : public LineReader
 {
 public:
-    ReadlineLineReader()
-        : finished(false)
-    {
-    }
+    ReadlineLineReader() = default;
 
     QString readLine(QString prompt) override
     {
@@ -105,7 +101,7 @@ public:
     }
 
 private:
-    bool finished;
+    bool finished{false};
 };
 #endif
 

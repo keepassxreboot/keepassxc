@@ -52,9 +52,9 @@ private slots:
 private:
     void updateAttributes();
 
-    EntryAttributes* m_entryAttributes;
+    EntryAttributes* m_entryAttributes{nullptr};
     QList<QString> m_attributes;
-    bool m_nextRenameDataChange;
+    bool m_nextRenameDataChange{false};
 };
 
 #endif // KEEPASSX_ENTRYATTRIBUTESMODEL_H

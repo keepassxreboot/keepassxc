@@ -49,11 +49,11 @@ Q_DECLARE_METATYPE(ApplyIconToOptions)
 
 struct IconStruct
 {
-    IconStruct();
+    IconStruct() = default;
 
     QUuid uuid;
-    int number;
-    ApplyIconToOptions applyTo;
+    int number{0};
+    ApplyIconToOptions applyTo{ApplyIconToOptions::THIS_ONLY};
 };
 
 class EditWidgetIcons : public QWidget
@@ -101,7 +101,7 @@ private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
     QSharedPointer<Database> m_db;
     QUuid m_currentUuid;
-    ApplyIconToOptions m_applyIconTo;
+    ApplyIconToOptions m_applyIconTo{ApplyIconToOptions::THIS_ONLY};
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
 #ifdef WITH_XC_NETWORKING

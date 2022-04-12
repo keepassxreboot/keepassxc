@@ -49,7 +49,7 @@ public:
 
 private:
     int m_wordCount;
-    PassphraseWordCase m_wordCase;
+    PassphraseWordCase m_wordCase{LOWERCASE};
     QString m_separator;
     QVector<QString> m_wordlist;
 };

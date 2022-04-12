@@ -53,7 +53,7 @@ private slots:
 private:
     void resizeEvent(QResizeEvent* event) override;
 
-    Qt::TextElideMode m_elideMode;
+    Qt::TextElideMode m_elideMode{Qt::ElideMiddle};
     QString m_rawText;
     QString m_url;
 };

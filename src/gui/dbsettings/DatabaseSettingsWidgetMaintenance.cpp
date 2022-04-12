@@ -28,7 +28,6 @@ DatabaseSettingsWidgetMaintenance::DatabaseSettingsWidgetMaintenance(QWidget* pa
     : DatabaseSettingsWidget(parent)
     , m_ui(new Ui::DatabaseSettingsWidgetMaintenance())
     , m_customIconModel(new CustomIconModel(this))
-    , m_deletionDecision(MessageBox::NoButton)
 {
     m_ui->setupUi(this);
 

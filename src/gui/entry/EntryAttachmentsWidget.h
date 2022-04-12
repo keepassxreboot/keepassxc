@@ -77,8 +77,8 @@ private:
     QPointer<EntryAttachments> m_entryAttachments;
     QPointer<EntryAttachmentsModel> m_attachmentsModel;
     QStringList m_pendingChanges;
-    bool m_readOnly;
-    bool m_buttonsVisible;
+    bool m_readOnly{false};
+    bool m_buttonsVisible{true};
 };
 
 #endif // ENTRYATTACHMENTSWIDGET_H

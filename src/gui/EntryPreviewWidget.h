@@ -75,12 +75,12 @@ private:
     static QString hierarchy(const Group* group, const QString& title);
 
     const QScopedPointer<Ui::EntryPreviewWidget> m_ui;
-    bool m_locked;
+    bool m_locked{false};
     QPointer<Entry> m_currentEntry;
     QPointer<Group> m_currentGroup;
     QTimer m_totpTimer;
-    quint8 m_selectedTabEntry;
-    quint8 m_selectedTabGroup;
+    quint8 m_selectedTabEntry{0};
+    quint8 m_selectedTabGroup{0};
 };
 
 #endif // KEEPASSX_DETAILSWIDGET_H

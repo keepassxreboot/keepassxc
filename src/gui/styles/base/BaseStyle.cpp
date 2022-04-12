@@ -678,7 +678,7 @@ public:
     // PhSwatch from, so that if we get called with the same QPalette again next
     // time (which is probably going to be the case), it'll match and we can take
     // the fast path.
-    quint64 headSwatchFastKey;
+    quint64 headSwatchFastKey{0};
 
     Phantom::PhSwatchCache swatchCache;
     QPen checkBox_pen_scratch;
@@ -1392,10 +1392,7 @@ namespace Phantom
     } // namespace
 } // namespace Phantom
 
-BaseStylePrivate::BaseStylePrivate()
-    : headSwatchFastKey(0)
-{
-}
+BaseStylePrivate::BaseStylePrivate() = default;
 
 BaseStyle::BaseStyle()
     : d(new BaseStylePrivate)

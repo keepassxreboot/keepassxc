@@ -23,10 +23,7 @@
 #include <QString>
 #include <QSvgGenerator>
 
-QrCodePrivate::QrCodePrivate()
-    : m_qrcode(nullptr)
-{
-}
+QrCodePrivate::QrCodePrivate() = default;
 
 QrCodePrivate::~QrCodePrivate()
 {

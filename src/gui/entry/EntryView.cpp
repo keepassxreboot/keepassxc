@@ -60,8 +60,6 @@ EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
     , m_model(new EntryModel(this))
     , m_sortModel(new SortFilterHideProxyModel(this))
-    , m_lastIndex(-1)
-    , m_lastOrder(Qt::AscendingOrder)
     , m_headerMenu(new QMenu(this))
 {
     m_sortModel->setSourceModel(m_model);

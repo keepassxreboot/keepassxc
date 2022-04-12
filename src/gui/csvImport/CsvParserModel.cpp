@@ -22,7 +22,6 @@
 
 CsvParserModel::CsvParserModel(QObject* parent)
     : QAbstractTableModel(parent)
-    , m_skipped(0)
 {
 }
 

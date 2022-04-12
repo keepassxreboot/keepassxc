@@ -42,14 +42,7 @@ private:
     QByteArray m_keyfileData;
 };
 
-KeePass1Reader::KeePass1Reader()
-    : m_tmpParent(nullptr)
-    , m_device(nullptr)
-    , m_encryptionFlags(0)
-    , m_transformRounds(0)
-    , m_error(false)
-{
-}
+KeePass1Reader::KeePass1Reader() = default;
 
 QSharedPointer<Database>
 KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice)

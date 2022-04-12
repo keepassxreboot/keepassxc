@@ -295,9 +295,9 @@ private:
     QList<Entry*> m_history; // Items sorted from oldest to newest
 
     QScopedPointer<Entry> m_tmpHistoryItem;
-    bool m_modifiedSinceBegin;
+    bool m_modifiedSinceBegin{false};
     QPointer<Group> m_group;
-    bool m_updateTimeinfo;
+    bool m_updateTimeinfo{true};
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Entry::CloneFlags)

@@ -47,13 +47,7 @@ TimeDelta TimeDelta::fromYears(int years)
     return TimeDelta(0, 0, 0, years);
 }
 
-TimeDelta::TimeDelta()
-    : m_hours(0)
-    , m_days(0)
-    , m_months(0)
-    , m_years(0)
-{
-}
+TimeDelta::TimeDelta() = default;
 
 TimeDelta::TimeDelta(int hours, int days, int months, int years)
     : m_hours(hours)

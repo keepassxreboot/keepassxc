@@ -24,7 +24,6 @@ namespace
 
 ElidedLabel::ElidedLabel(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent, f)
-    , m_elideMode(Qt::ElideMiddle)
 {
     connect(this, SIGNAL(elideModeChanged(Qt::TextElideMode)), this, SLOT(updateElidedText()));
     connect(this, SIGNAL(rawTextChanged(QString)), this, SLOT(updateElidedText()));

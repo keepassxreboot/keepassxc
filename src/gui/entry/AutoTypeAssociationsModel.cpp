@@ -21,7 +21,6 @@
 
 AutoTypeAssociationsModel::AutoTypeAssociationsModel(QObject* parent)
     : QAbstractListModel(parent)
-    , m_autoTypeAssociations(nullptr)
     , m_entry(nullptr)
 {
 }

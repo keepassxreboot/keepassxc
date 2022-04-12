@@ -72,13 +72,13 @@ private:
      * Register Unix signals such as SIGINT and SIGTERM for clean shutdown.
      */
     void registerUnixSignals();
-    QSocketNotifier* m_unixSignalNotifier;
+    QSocketNotifier* m_unixSignalNotifier{nullptr};
     static void handleUnixSignal(int sig);
     static int unixSignalSocket[2];
 #endif
-    bool m_alreadyRunning;
+    bool m_alreadyRunning{false};
     bool m_darkTheme = false;
-    QLockFile* m_lockFile;
+    QLockFile* m_lockFile{nullptr};
     QLocalServer m_lockServer;
     QString m_socketName;
 };

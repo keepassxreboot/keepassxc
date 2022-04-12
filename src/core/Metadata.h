@@ -188,7 +188,7 @@ private:
 
     QPointer<CustomData> m_customData;
 
-    bool m_updateDatetime;
+    bool m_updateDatetime{true};
 };
 
 #endif // KEEPASSX_METADATA_H

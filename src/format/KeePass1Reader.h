@@ -63,20 +63,20 @@ private:
     static bool isMetaStream(const Entry* entry);
 
     QSharedPointer<Database> m_db;
-    Group* m_tmpParent;
-    QIODevice* m_device;
-    quint32 m_encryptionFlags;
+    Group* m_tmpParent{nullptr};
+    QIODevice* m_device{nullptr};
+    quint32 m_encryptionFlags{0};
     QByteArray m_masterSeed;
     QByteArray m_encryptionIV;
     QByteArray m_contentHashHeader;
     QByteArray m_transformSeed;
-    quint32 m_transformRounds;
+    quint32 m_transformRounds{0};
     QHash<quint32, Group*> m_groupIds;
     QHash<Group*, quint32> m_groupLevels;
     QHash<QByteArray, Entry*> m_entryUuids;
     QHash<Entry*, quint32> m_entryGroupIds;
 
-    bool m_error;
+    bool m_error{false};
     QString m_errorStr;
 };
 

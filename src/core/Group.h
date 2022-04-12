@@ -226,7 +226,7 @@ private:
 
     QPointer<Group> m_parent;
 
-    bool m_updateTimeinfo;
+    bool m_updateTimeinfo{true};
 
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();

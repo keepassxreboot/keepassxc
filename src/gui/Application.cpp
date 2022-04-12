@@ -48,11 +48,6 @@ namespace
 
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
-#ifdef Q_OS_UNIX
-    , m_unixSignalNotifier(nullptr)
-#endif
-    , m_alreadyRunning(false)
-    , m_lockFile(nullptr)
 #if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
 {
 #else

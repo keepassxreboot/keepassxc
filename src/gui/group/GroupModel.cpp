@@ -29,7 +29,6 @@
 
 GroupModel::GroupModel(Database* db, QObject* parent)
     : QAbstractItemModel(parent)
-    , m_db(nullptr)
 {
     changeDatabase(db);
 }

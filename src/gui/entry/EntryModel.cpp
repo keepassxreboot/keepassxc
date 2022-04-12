@@ -34,9 +34,7 @@
 
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
-    , m_group(nullptr)
     , HiddenContentDisplay(QString("\u25cf").repeated(6))
-    , DateFormat(Qt::DefaultLocaleShortDate)
 {
     connect(config(), &Config::changed, this, &EntryModel::onConfigChanged);
 }

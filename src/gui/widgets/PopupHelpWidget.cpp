@@ -25,7 +25,6 @@ PopupHelpWidget::PopupHelpWidget(QWidget* parent)
     : QFrame(parent)
     , m_appWindow(getMainWindow())
     , m_offset({0, 0})
-    , m_corner(Qt::BottomLeftCorner)
 {
     Q_ASSERT(parent);
 

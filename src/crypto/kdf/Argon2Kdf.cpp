@@ -33,7 +33,6 @@
  */
 Argon2Kdf::Argon2Kdf(Type type)
     : Kdf::Kdf(type == Type::Argon2d ? KeePass2::KDF_ARGON2D : KeePass2::KDF_ARGON2ID)
-    , m_version(0x13)
     , m_memory(1 << 16)
     , m_parallelism(static_cast<quint32>(QThread::idealThreadCount()))
 {

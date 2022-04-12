@@ -92,13 +92,13 @@ private:
     QMutex m_inAutoType;
     QMutex m_inGlobalAutoTypeDialog;
     QPluginLoader* m_pluginLoader;
-    AutoTypePlatformInterface* m_plugin;
-    AutoTypeExecutor* m_executor;
+    AutoTypePlatformInterface* m_plugin{nullptr};
+    AutoTypeExecutor* m_executor{nullptr};
     static AutoType* m_instance;
 
     QString m_windowTitleForGlobal;
-    WindowState m_windowState;
-    WId m_windowForGlobal;
+    WindowState m_windowState{WindowState::Normal};
+    WId m_windowForGlobal{0};
     AutoTypeMatch m_lastMatch;
     QTimer m_lastMatchRetypeTimer;
 

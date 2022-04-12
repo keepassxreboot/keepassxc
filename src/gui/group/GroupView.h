@@ -55,7 +55,7 @@ private:
     void recInitExpanded(Group* group);
 
     GroupModel* const m_model;
-    bool m_updatingExpanded;
+    bool m_updatingExpanded{false};
 };
 
 #endif // KEEPASSX_GROUPVIEW_H

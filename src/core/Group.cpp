@@ -38,7 +38,6 @@ const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
 
 Group::Group()
     : m_customData(new CustomData(this))
-    , m_updateTimeinfo(true)
 {
     m_data.iconNumber = DefaultIconNumber;
     m_data.isExpanded = true;

@@ -78,8 +78,8 @@ private:
 
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
-    int m_lastIndex;
-    Qt::SortOrder m_lastOrder;
+    int m_lastIndex{-1};
+    Qt::SortOrder m_lastOrder{Qt::AscendingOrder};
     bool m_inSearchMode = false;
     bool m_columnsNeedRelayout = true;
 

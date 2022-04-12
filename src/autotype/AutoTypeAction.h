@@ -29,12 +29,7 @@ public:
     class Result
     {
     public:
-        Result()
-            : m_isOk(false)
-            , m_canRetry(false)
-            , m_error(QString())
-        {
-        }
+        Result() = default;
 
         static Result Ok()
         {
@@ -67,8 +62,8 @@ public:
         }
 
     private:
-        bool m_isOk;
-        bool m_canRetry;
+        bool m_isOk{};
+        bool m_canRetry{};
         QString m_error;
 
         Result(bool isOk, bool canRetry, const QString& error)

@@ -20,8 +20,7 @@
 #include "crypto/Random.h"
 
 Kdf::Kdf(const QUuid& uuid)
-    : m_rounds(KDF_DEFAULT_ROUNDS)
-    , m_seed(QByteArray(KDF_MAX_SEED_SIZE, 0))
+    : m_seed(QByteArray(KDF_MAX_SEED_SIZE, 0))
     , m_uuid(uuid)
 {
 }

@@ -23,7 +23,6 @@
 InactivityTimer::InactivityTimer(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
-    , m_active(false)
 {
     m_timer->setSingleShot(true);
     connect(m_timer, SIGNAL(timeout()), SLOT(timeout()));

@@ -18,8 +18,6 @@
 #include "TimeInfo.h"
 
 TimeInfo::TimeInfo()
-    : m_expires(false)
-    , m_usageCount(0)
 {
     QDateTime now = Clock::currentDateTimeUtc();
     m_lastModificationTime = now;

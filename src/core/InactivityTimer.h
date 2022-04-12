@@ -44,7 +44,7 @@ private slots:
 
 private:
     QTimer* m_timer;
-    bool m_active;
+    bool m_active{false};
     QMutex m_emitMutx;
 };
 

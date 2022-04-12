@@ -75,5 +75,5 @@ private:
 
     struct Impl;
     std::unique_ptr<Impl> impl;
-    bool m_readOnly;
+    bool m_readOnly{false};
 };

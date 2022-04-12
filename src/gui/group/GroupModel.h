@@ -61,7 +61,7 @@ private slots:
     void groupMoved();
 
 private:
-    Database* m_db;
+    Database* m_db{nullptr};
 };
 
 #endif // KEEPASSX_GROUPMODEL_H

@@ -47,7 +47,7 @@ private:
 
     QPointer<DatabaseWidget> m_activeDbWidget;
 
-    bool m_blockUpdates;
+    bool m_blockUpdates{false};
     QHash<Config::ConfigKey, QList<int>> m_splitterSizes;
 
     QByteArray m_listViewState;

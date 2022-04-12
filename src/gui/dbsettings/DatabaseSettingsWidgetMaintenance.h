@@ -19,6 +19,7 @@
 #define KEEPASSXC_DATABASESETTINGSWIDGETMAINTENANCE_H
 
 #include "DatabaseSettingsWidget.h"
+#include "gui/MessageBox.h"
 
 class QItemSelection;
 class CustomIconModel;
@@ -64,7 +65,7 @@ protected:
 
 private:
     CustomIconModel* const m_customIconModel;
-    uint64_t m_deletionDecision;
+    uint64_t m_deletionDecision{MessageBox::NoButton};
 };
 
 #endif // KEEPASSXC_DATABASESETTINGSWIDGETMAINTENANCE_H

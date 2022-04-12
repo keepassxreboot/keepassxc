@@ -119,10 +119,6 @@ AutoType* AutoType::m_instance = nullptr;
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_pluginLoader(new QPluginLoader(this))
-    , m_plugin(nullptr)
-    , m_executor(nullptr)
-    , m_windowState(WindowState::Normal)
-    , m_windowForGlobal(0)
     , m_lastMatch(nullptr, QString())
     , m_lastMatchRetypeTimer(nullptr)
 {

@@ -79,21 +79,22 @@ public:
     const int compressionLevel;
     const ZlibSize bufferSize;
     ZlibByte *buffer;
-    State state;
-    QtIOCompressor::StreamFormat streamFormat;
+    State state{Closed};
+    QtIOCompressor::StreamFormat streamFormat{QtIOCompressor::ZlibFormat};
 };
 
 /*!
     \internal
 */
-QtIOCompressorPrivate::QtIOCompressorPrivate(QtIOCompressor *q_ptr, QIODevice *device, int compressionLevel, int bufferSize)
-:q_ptr(q_ptr)
-,device(device)
-,compressionLevel(compressionLevel)
-,bufferSize(bufferSize)
-,buffer(new ZlibByte[bufferSize])
-,state(Closed)
-,streamFormat(QtIOCompressor::ZlibFormat)
+QtIOCompressorPrivate::QtIOCompressorPrivate(QtIOCompressor* q_ptr,
+                                             QIODevice* device,
+                                             int compressionLevel,
+                                             int bufferSize)
+    : q_ptr(q_ptr)
+    , device(device)
+    , compressionLevel(compressionLevel)
+    , bufferSize(bufferSize)
+    , buffer(new ZlibByte[bufferSize])
 {
     // Use default zlib memory management.
     zlibStream.zalloc = Z_NULL;

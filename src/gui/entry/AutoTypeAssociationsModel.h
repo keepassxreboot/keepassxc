@@ -48,7 +48,7 @@ public slots:
     void reset();
 
 private:
-    AutoTypeAssociations* m_autoTypeAssociations;
+    AutoTypeAssociations* m_autoTypeAssociations{nullptr};
     QPointer<const Entry> m_entry;
 };
 

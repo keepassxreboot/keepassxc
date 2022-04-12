@@ -52,8 +52,8 @@ private:
     QDateTime m_creationTime;
     QDateTime m_lastAccessTime;
     QDateTime m_expiryTime;
-    bool m_expires;
-    int m_usageCount;
+    bool m_expires{false};
+    int m_usageCount{0};
     QDateTime m_locationChanged;
 };
 

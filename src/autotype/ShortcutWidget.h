@@ -41,7 +41,7 @@ private:
 
     Qt::Key m_key;
     Qt::KeyboardModifiers m_modifiers;
-    bool m_locked;
+    bool m_locked{false};
 };
 
 #endif // KEEPASSX_SHORTCUTWIDGET_H

@@ -24,7 +24,7 @@
 
 struct QrCodePrivate
 {
-    QRcode* m_qrcode;
+    QRcode* m_qrcode{nullptr};
 
     QrCodePrivate();
     ~QrCodePrivate();

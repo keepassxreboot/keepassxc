@@ -35,7 +35,6 @@ static const Metadata::CustomIconData NULL_ICON{};
 Metadata::Metadata(QObject* parent)
     : ModifiableObject(parent)
     , m_customData(new CustomData(this))
-    , m_updateDatetime(true)
 {
     init();
     connect(m_customData, &CustomData::modified, this, &Metadata::modified);

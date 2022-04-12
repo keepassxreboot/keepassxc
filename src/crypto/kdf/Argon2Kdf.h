@@ -47,7 +47,7 @@ public:
 
     int benchmark(int msec) const override;
 
-    quint32 m_version;
+    quint32 m_version{0x13};
     quint64 m_memory;
     quint32 m_parallelism;
 };

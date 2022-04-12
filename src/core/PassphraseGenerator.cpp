@@ -29,7 +29,6 @@ const char* PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
 
 PassphraseGenerator::PassphraseGenerator()
     : m_wordCount(DefaultWordCount)
-    , m_wordCase(LOWERCASE)
     , m_separator(DefaultSeparator)
 {
     setDefaultWordList();

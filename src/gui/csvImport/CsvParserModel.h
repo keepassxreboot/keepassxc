@@ -47,7 +47,7 @@ public slots:
     void setSkippedRows(int skipped);
 
 private:
-    int m_skipped;
+    int m_skipped{0};
     QString m_filename;
     QStringList m_columnHeader;
     // first column of model must be empty (aka combobox row "Not present in CSV file")

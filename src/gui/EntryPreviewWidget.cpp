@@ -38,11 +38,8 @@ namespace
 EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EntryPreviewWidget())
-    , m_locked(false)
     , m_currentEntry(nullptr)
     , m_currentGroup(nullptr)
-    , m_selectedTabEntry(0)
-    , m_selectedTabGroup(0)
 {
     m_ui->setupUi(this);
 

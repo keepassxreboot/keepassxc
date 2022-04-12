@@ -85,13 +85,13 @@ private:
     void severConnections();
     void makeConnections(const Group* group);
 
-    Group* m_group;
+    Group* m_group{nullptr};
     QList<Entry*> m_entries;
     QList<Entry*> m_orgEntries;
     QSet<const Group*> m_allGroups;
 
     const QString HiddenContentDisplay;
-    const Qt::DateFormat DateFormat;
+    const Qt::DateFormat DateFormat{Qt::DefaultLocaleShortDate};
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

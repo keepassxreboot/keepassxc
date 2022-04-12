@@ -40,7 +40,7 @@ private:
     QPointer<QWidget> m_appWindow;
 
     QPoint m_offset;
-    Qt::Corner m_corner;
+    Qt::Corner m_corner{Qt::BottomLeftCorner};
 };
 
 #endif // KEEPASSXC_POPUPHELPWIDGET_H

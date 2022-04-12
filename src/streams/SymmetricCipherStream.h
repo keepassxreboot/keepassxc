@@ -49,12 +49,12 @@ private:
 
     const QScopedPointer<SymmetricCipher> m_cipher;
     QByteArray m_buffer;
-    int m_bufferPos;
-    bool m_bufferFilling;
-    bool m_error;
-    bool m_isInitialized;
-    bool m_dataWritten;
-    bool m_streamCipher;
+    int m_bufferPos{0};
+    bool m_bufferFilling{false};
+    bool m_error{false};
+    bool m_isInitialized{false};
+    bool m_dataWritten{false};
+    bool m_streamCipher{false};
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERSTREAM_H

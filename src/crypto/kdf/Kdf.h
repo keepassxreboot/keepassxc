@@ -62,7 +62,7 @@ public:
     static const int MAX_ENCRYPTION_TIME = 5000;
 
 protected:
-    int m_rounds;
+    int m_rounds{KDF_DEFAULT_ROUNDS};
     QByteArray m_seed;
 
 private:

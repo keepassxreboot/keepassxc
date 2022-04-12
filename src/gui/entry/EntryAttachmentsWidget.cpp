@@ -36,8 +36,6 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     , m_ui(new Ui::EntryAttachmentsWidget)
     , m_entryAttachments(nullptr)
     , m_attachmentsModel(new EntryAttachmentsModel(this))
-    , m_readOnly(false)
-    , m_buttonsVisible(true)
 {
     m_ui->setupUi(this);
 

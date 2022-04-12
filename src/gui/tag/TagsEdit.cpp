@@ -141,13 +141,6 @@ struct TagsEdit::Impl
     explicit Impl(TagsEdit* ifce)
         : ifce(ifce)
         , tags{Tag()}
-        , editing_index(0)
-        , cursor(0)
-        , blink_timer(0)
-        , blink_status(true)
-        , select_start(0)
-        , select_size(0)
-        , cross_deleter(true)
         , completer(std::make_unique<QCompleter>())
     {
     }
@@ -570,14 +563,14 @@ struct TagsEdit::Impl
 
     TagsEdit* const ifce;
     QList<Tag> tags;
-    int editing_index;
-    int cursor;
-    int blink_timer;
-    bool blink_status;
+    int editing_index{0};
+    int cursor{0};
+    int blink_timer{0};
+    bool blink_status{true};
     QTextLayout text_layout;
-    int select_start;
-    int select_size;
-    bool cross_deleter;
+    int select_start{0};
+    int select_size{0};
+    bool cross_deleter{true};
     std::unique_ptr<QCompleter> completer;
     int hscroll{0};
 };
@@ -585,7 +578,6 @@ struct TagsEdit::Impl
 TagsEdit::TagsEdit(QWidget* parent)
     : QAbstractScrollArea(parent)
     , impl(std::make_unique<Impl>(this))
-    , m_readOnly(false)
 {
     QSizePolicy size_policy(QSizePolicy::Ignored, QSizePolicy::Preferred);
     size_policy.setHeightForWidth(true);

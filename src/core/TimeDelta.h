@@ -42,10 +42,10 @@ public:
     int getYears() const;
 
 private:
-    int m_hours;
-    int m_days;
-    int m_months;
-    int m_years;
+    int m_hours{0};
+    int m_days{0};
+    int m_months{0};
+    int m_years{0};
 };
 
 Q_DECLARE_METATYPE(TimeDelta)

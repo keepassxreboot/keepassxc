@@ -106,7 +106,7 @@ private:
     /*! Used to blank the memory after the keys have been used. */
     void zeroKeys();
 
-    bool m_error;
+    bool m_error{false};
     QString m_errorStr;
     QByteArray m_masterKey;
     QByteArray m_masterHmacKey;

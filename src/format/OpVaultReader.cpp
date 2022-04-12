@@ -31,7 +31,6 @@
 
 OpVaultReader::OpVaultReader(QObject* parent)
     : QObject(parent)
-    , m_error(false)
 {
 }
 

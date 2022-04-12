@@ -20,12 +20,6 @@
 SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice)
     : LayeredStream(baseDevice)
     , m_cipher(new SymmetricCipher())
-    , m_bufferPos(0)
-    , m_bufferFilling(false)
-    , m_error(false)
-    , m_isInitialized(false)
-    , m_dataWritten(false)
-    , m_streamCipher(false)
 {
 }
 
