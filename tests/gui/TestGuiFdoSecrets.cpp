@@ -33,6 +33,7 @@
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
+#include "gui/PasswordWidget.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 #include "util/FdoSecretsProxy.h"
 #include "util/TemporaryFile.h"
@@ -1768,8 +1769,10 @@ bool TestGuiFdoSecrets::driveNewDatabaseWizard()
             COMPARE(wizard->currentId(), 2);
 
             // enter password
-            auto* passwordEdit = wizard->findChild<QLineEdit*>("enterPasswordEdit");
-            auto* passwordRepeatEdit = wizard->findChild<QLineEdit*>("repeatPasswordEdit");
+            auto* passwordEdit =
+                wizard->findChild<PasswordWidget*>("enterPasswordEdit")->findChild<QLineEdit*>("passwordEdit");
+            auto* passwordRepeatEdit =
+                wizard->findChild<PasswordWidget*>("repeatPasswordEdit")->findChild<QLineEdit*>("passwordEdit");
             VERIFY(passwordEdit);
             VERIFY(passwordRepeatEdit);
             QTest::keyClicks(passwordEdit, "test");
@@ -1797,7 +1800,7 @@ bool TestGuiFdoSecrets::driveUnlockDialog()
     processEvents();
     auto dbOpenDlg = m_tabWidget->findChild<DatabaseOpenDialog*>();
     VERIFY(dbOpenDlg);
-    auto editPassword = dbOpenDlg->findChild<QLineEdit*>("editPassword");
+    auto editPassword = dbOpenDlg->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
     VERIFY(editPassword);
     editPassword->setFocus();
     QTest::keyClicks(editPassword, "a");

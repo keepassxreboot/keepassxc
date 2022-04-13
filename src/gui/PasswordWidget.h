@@ -16,50 +16,70 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDEDIT_H
-#define KEEPASSX_PASSWORDEDIT_H
+#ifndef KEEPASSX_PASSWORDWIDGET_H
+#define KEEPASSX_PASSWORDWIDGET_H
 
 #include <QAction>
 #include <QLineEdit>
 #include <QPointer>
+#include <QWidget>
 
-class QDialog;
+namespace Ui
+{
+    class PasswordWidget;
+}
 
-class PasswordEdit : public QLineEdit
+class PasswordWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PasswordEdit(QWidget* parent = nullptr);
+    explicit PasswordWidget(QWidget* parent = nullptr);
+    ~PasswordWidget() override;
     void enablePasswordGenerator();
-    void setRepeatPartner(PasswordEdit* repeatEdit);
+    void setRepeatPartner(PasswordWidget* repeatEdit);
+    void setQualityVisible(bool state);
+
     bool isPasswordVisible() const;
+    QString text();
+
+signals:
+    void textChanged(QString text);
 
 public slots:
+    void setText(const QString& text);
     void setShowPassword(bool show);
-    void updateRepeatStatus();
+
+    void clear();
+    void selectAll();
+    void setReadOnly(bool state);
+    void setEchoMode(QLineEdit::EchoMode mode);
+    void setClearButtonEnabled(bool enabled);
 
 protected:
     bool event(QEvent* event) override;
 
-signals:
-    void capslockToggled(bool capslockOn);
-
 private slots:
     void autocompletePassword(const QString& password);
     void popupPasswordGenerator();
-    void setParentPasswordEdit(PasswordEdit* parent);
-    void checkCapslockState();
+    void updateRepeatStatus();
+    void updatePasswordStrength(const QString& password);
 
 private:
+    void checkCapslockState();
+    void setParentPasswordEdit(PasswordWidget* parent);
+
+    const QScopedPointer<Ui::PasswordWidget> m_ui;
+
     QPointer<QAction> m_errorAction;
     QPointer<QAction> m_correctAction;
     QPointer<QAction> m_toggleVisibleAction;
     QPointer<QAction> m_passwordGeneratorAction;
     QPointer<QAction> m_capslockAction;
-    QPointer<PasswordEdit> m_repeatPasswordEdit;
-    QPointer<PasswordEdit> m_parentPasswordEdit;
+    QPointer<PasswordWidget> m_repeatPasswordEdit;
+    QPointer<PasswordWidget> m_parentPasswordEdit;
+
     bool m_capslockState = false;
 };
 
-#endif // KEEPASSX_PASSWORDEDIT_H
+#endif // KEEPASSX_PASSWORDWIDGET_H

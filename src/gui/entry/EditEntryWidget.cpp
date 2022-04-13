@@ -131,6 +131,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 
     m_editWidgetProperties->setCustomData(m_customData.data());
+
+    m_mainUi->passwordEdit->setQualityVisible(true);
 }
 
 EditEntryWidget::~EditEntryWidget()

@@ -16,9 +16,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "PasswordEdit.h"
+#include "PasswordWidget.h"
+#include "ui_PasswordWidget.h"
 
 #include "core/Config.h"
+#include "core/PasswordHealth.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
 #include "gui/PasswordGeneratorWidget.h"
@@ -26,19 +28,24 @@
 #include "gui/styles/StateColorPalette.h"
 
 #include <QEvent>
+#include <QLineEdit>
 #include <QTimer>
 #include <QToolTip>
 
-PasswordEdit::PasswordEdit(QWidget* parent)
-    : QLineEdit(parent)
+PasswordWidget::PasswordWidget(QWidget* parent)
+    : QWidget(parent)
+    , m_ui(new Ui::PasswordWidget())
 {
+    m_ui->setupUi(this);
+    setFocusProxy(m_ui->passwordEdit);
+
     const QIcon errorIcon = icons()->icon("dialog-error");
-    m_errorAction = addAction(errorIcon, QLineEdit::TrailingPosition);
+    m_errorAction = m_ui->passwordEdit->addAction(errorIcon, QLineEdit::TrailingPosition);
     m_errorAction->setVisible(false);
     m_errorAction->setToolTip(tr("Passwords do not match"));
 
     const QIcon correctIcon = icons()->icon("dialog-ok");
-    m_correctAction = addAction(correctIcon, QLineEdit::TrailingPosition);
+    m_correctAction = m_ui->passwordEdit->addAction(correctIcon, QLineEdit::TrailingPosition);
     m_correctAction->setVisible(false);
     m_correctAction->setToolTip(tr("Passwords match so far"));
 
@@ -63,8 +70,8 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     m_toggleVisibleAction->setCheckable(true);
     m_toggleVisibleAction->setShortcut(modifier + Qt::Key_H);
     m_toggleVisibleAction->setShortcutContext(Qt::WidgetShortcut);
-    addAction(m_toggleVisibleAction, QLineEdit::TrailingPosition);
-    connect(m_toggleVisibleAction, &QAction::triggered, this, &PasswordEdit::setShowPassword);
+    m_ui->passwordEdit->addAction(m_toggleVisibleAction, QLineEdit::TrailingPosition);
+    connect(m_toggleVisibleAction, &QAction::triggered, this, &PasswordWidget::setShowPassword);
 
     m_passwordGeneratorAction = new QAction(
         icons()->icon("password-generator"),
@@ -72,44 +79,98 @@ PasswordEdit::PasswordEdit(QWidget* parent)
         this);
     m_passwordGeneratorAction->setShortcut(modifier + Qt::Key_G);
     m_passwordGeneratorAction->setShortcutContext(Qt::WidgetShortcut);
-    addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
+    m_ui->passwordEdit->addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
     m_passwordGeneratorAction->setVisible(false);
 
     m_capslockAction =
         new QAction(icons()->icon("dialog-warning", true, StateColorPalette().color(StateColorPalette::Error)),
                     tr("Warning: Caps Lock enabled!"),
                     this);
-    addAction(m_capslockAction, QLineEdit::LeadingPosition);
+    m_ui->passwordEdit->addAction(m_capslockAction, QLineEdit::LeadingPosition);
     m_capslockAction->setVisible(false);
+
+    // Reset the password strength bar, hidden by default
+    updatePasswordStrength("");
+    m_ui->qualityProgressBar->setVisible(false);
+
+    connect(m_ui->passwordEdit, &QLineEdit::textChanged, this, [this](const QString& pwd) {
+        updatePasswordStrength(pwd);
+        emit textChanged(pwd);
+    });
 }
 
-void PasswordEdit::setRepeatPartner(PasswordEdit* repeatEdit)
+PasswordWidget::~PasswordWidget()
+{
+}
+
+void PasswordWidget::setQualityVisible(bool state)
+{
+    m_ui->qualityProgressBar->setVisible(state);
+}
+
+QString PasswordWidget::text()
+{
+    return m_ui->passwordEdit->text();
+}
+
+void PasswordWidget::setText(const QString& text)
+{
+    m_ui->passwordEdit->setText(text);
+}
+
+void PasswordWidget::setEchoMode(QLineEdit::EchoMode mode)
+{
+    m_ui->passwordEdit->setEchoMode(mode);
+}
+
+void PasswordWidget::clear()
+{
+    m_ui->passwordEdit->clear();
+}
+
+void PasswordWidget::setClearButtonEnabled(bool enabled)
+{
+    m_ui->passwordEdit->setClearButtonEnabled(enabled);
+}
+
+void PasswordWidget::selectAll()
+{
+    m_ui->passwordEdit->selectAll();
+}
+
+void PasswordWidget::setReadOnly(bool state)
+{
+    m_ui->passwordEdit->setReadOnly(state);
+}
+
+void PasswordWidget::setRepeatPartner(PasswordWidget* repeatEdit)
 {
     m_repeatPasswordEdit = repeatEdit;
     m_repeatPasswordEdit->setParentPasswordEdit(this);
 
-    connect(this, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(autocompletePassword(QString)));
-    connect(this, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(updateRepeatStatus()));
-    connect(m_repeatPasswordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(updateRepeatStatus()));
+    connect(
+        m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(autocompletePassword(QString)));
+    connect(m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(updateRepeatStatus()));
 }
 
-void PasswordEdit::setParentPasswordEdit(PasswordEdit* parent)
+void PasswordWidget::setParentPasswordEdit(PasswordWidget* parent)
 {
     m_parentPasswordEdit = parent;
     // Hide actions
     m_toggleVisibleAction->setVisible(false);
     m_passwordGeneratorAction->setVisible(false);
+    connect(m_ui->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(updateRepeatStatus()));
 }
 
-void PasswordEdit::enablePasswordGenerator()
+void PasswordWidget::enablePasswordGenerator()
 {
     if (!m_passwordGeneratorAction->isVisible()) {
         m_passwordGeneratorAction->setVisible(true);
-        connect(m_passwordGeneratorAction, &QAction::triggered, this, &PasswordEdit::popupPasswordGenerator);
+        connect(m_passwordGeneratorAction, &QAction::triggered, this, &PasswordWidget::popupPasswordGenerator);
     }
 }
 
-void PasswordEdit::setShowPassword(bool show)
+void PasswordWidget::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
     m_toggleVisibleAction->setIcon(icons()->onOffIcon("password-show", show));
@@ -126,12 +187,12 @@ void PasswordEdit::setShowPassword(bool show)
     }
 }
 
-bool PasswordEdit::isPasswordVisible() const
+bool PasswordWidget::isPasswordVisible() const
 {
-    return echoMode() == QLineEdit::Normal;
+    return m_ui->passwordEdit->echoMode() == QLineEdit::Normal;
 }
 
-void PasswordEdit::popupPasswordGenerator()
+void PasswordWidget::popupPasswordGenerator()
 {
     auto generator = PasswordGeneratorWidget::popupGenerator(this);
     generator->setPasswordVisible(isPasswordVisible());
@@ -143,7 +204,7 @@ void PasswordEdit::popupPasswordGenerator()
     }
 }
 
-void PasswordEdit::updateRepeatStatus()
+void PasswordWidget::updateRepeatStatus()
 {
     static const auto stylesheetTemplate = QStringLiteral("QLineEdit { background: %1; }");
     if (!m_parentPasswordEdit) {
@@ -170,24 +231,25 @@ void PasswordEdit::updateRepeatStatus()
     }
 }
 
-void PasswordEdit::autocompletePassword(const QString& password)
+void PasswordWidget::autocompletePassword(const QString& password)
 {
-    if (!config()->get(Config::Security_PasswordsRepeatVisible).toBool() && echoMode() == QLineEdit::Normal) {
+    if (!config()->get(Config::Security_PasswordsRepeatVisible).toBool()
+        && m_ui->passwordEdit->echoMode() == QLineEdit::Normal) {
         setText(password);
     }
 }
 
-bool PasswordEdit::event(QEvent* event)
+bool PasswordWidget::event(QEvent* event)
 {
     if (isVisible()
         && (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease
             || event->type() == QEvent::FocusIn)) {
         checkCapslockState();
     }
-    return QLineEdit::event(event);
+    return QWidget::event(event);
 }
 
-void PasswordEdit::checkCapslockState()
+void PasswordWidget::checkCapslockState()
 {
     if (m_parentPasswordEdit) {
         return;
@@ -201,13 +263,63 @@ void PasswordEdit::checkCapslockState()
         // Force repaint to avoid rendering glitches of QLineEdit contents
         repaint();
 
-        emit capslockToggled(m_capslockState);
-
         if (newCapslockState) {
             QTimer::singleShot(
                 150, [this] { QToolTip::showText(mapToGlobal(rect().bottomLeft()), m_capslockAction->text()); });
         } else if (QToolTip::isVisible()) {
             QToolTip::hideText();
         }
+    }
+}
+
+void PasswordWidget::updatePasswordStrength(const QString& password)
+{
+    if (password.isEmpty()) {
+        m_ui->qualityProgressBar->setValue(0);
+        m_ui->qualityProgressBar->setToolTip((tr("")));
+        return;
+    }
+
+    PasswordHealth health(password);
+
+    m_ui->qualityProgressBar->setValue(std::min(int(health.entropy()), m_ui->qualityProgressBar->maximum()));
+
+    QString style = m_ui->qualityProgressBar->styleSheet();
+    QRegularExpression re("(QProgressBar::chunk\\s*\\{.*?background-color:)[^;]+;",
+                          QRegularExpression::CaseInsensitiveOption | QRegularExpression::DotMatchesEverythingOption);
+    style.replace(re, "\\1 %1;");
+
+    StateColorPalette qualityPalette;
+
+    switch (health.quality()) {
+    case PasswordHealth::Quality::Bad:
+    case PasswordHealth::Quality::Poor:
+        m_ui->qualityProgressBar->setStyleSheet(
+            style.arg(qualityPalette.color(StateColorPalette::HealthCritical).name()));
+
+        m_ui->qualityProgressBar->setToolTip(tr("Quality: %1").arg(tr("Poor", "Password quality")));
+
+        break;
+
+    case PasswordHealth::Quality::Weak:
+        m_ui->qualityProgressBar->setStyleSheet(style.arg(qualityPalette.color(StateColorPalette::HealthBad).name()));
+
+        m_ui->qualityProgressBar->setToolTip(tr("Quality: %1").arg(tr("Weak", "Password quality")));
+
+        break;
+    case PasswordHealth::Quality::Good:
+        m_ui->qualityProgressBar->setStyleSheet(style.arg(qualityPalette.color(StateColorPalette::HealthOk).name()));
+
+        m_ui->qualityProgressBar->setToolTip(tr("Quality: %1").arg(tr("Good", "Password quality")));
+
+        break;
+    case PasswordHealth::Quality::Excellent:
+
+        m_ui->qualityProgressBar->setStyleSheet(
+            style.arg(qualityPalette.color(StateColorPalette::HealthExcellent).name()));
+
+        m_ui->qualityProgressBar->setToolTip(tr("Quality: %1").arg(tr("Excellent", "Password quality")));
+
+        break;
     }
 }
