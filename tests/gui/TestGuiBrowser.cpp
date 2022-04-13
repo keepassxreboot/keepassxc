@@ -35,6 +35,7 @@
 #include "gui/DatabaseTabWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+#include "gui/PasswordWidget.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 
@@ -90,7 +91,8 @@ void TestGuiBrowser::init()
 
     auto* databaseOpenWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("databaseOpenWidget");
     QVERIFY(databaseOpenWidget);
-    auto* editPassword = databaseOpenWidget->findChild<QLineEdit*>("editPassword");
+    auto* editPassword =
+        databaseOpenWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
     QVERIFY(editPassword);
     editPassword->setFocus();
 

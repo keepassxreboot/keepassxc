@@ -51,7 +51,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="PasswordEdit" name="passwordEdit">
+      <widget class="PasswordWidget" name="passwordEdit">
        <property name="sizePolicy">
         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -190,9 +190,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PasswordEdit</class>
+   <class>PasswordWidget</class>
    <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
+   <header>gui/PasswordWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
