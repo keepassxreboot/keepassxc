@@ -1427,10 +1427,6 @@ Backup database located at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1440,11 +1436,6 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1579,6 +1570,15 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Select hardware key…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5750,29 +5750,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5951,10 +5928,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6081,6 +6054,57 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Password Quality: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -145,7 +145,7 @@
              </widget>
             </item>
             <item>
-             <widget class="PasswordEdit" name="editPassword">
+             <widget class="PasswordWidget" name="editPassword">
               <property name="accessibleName">
                <string>Password field</string>
               </property>
@@ -380,7 +380,7 @@
                    <number>0</number>
                   </property>
                   <item row="0" column="1">
-                   <widget class="PasswordEdit" name="keyFileLineEdit">
+                   <widget class="PasswordWidget" name="keyFileLineEdit">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -617,9 +617,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PasswordEdit</class>
+   <class>PasswordWidget</class>
    <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
+   <header>gui/PasswordWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
