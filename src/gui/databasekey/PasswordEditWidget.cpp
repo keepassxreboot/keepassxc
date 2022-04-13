@@ -78,6 +78,9 @@ void PasswordEditWidget::initComponentEditWidget(QWidget* widget)
     Q_UNUSED(widget);
     Q_ASSERT(m_compEditWidget);
     m_compUi->enterPasswordEdit->setFocus();
+
+    m_compUi->enterPasswordEdit->setQualityVisible(true);
+    m_compUi->repeatPasswordEdit->setQualityVisible(false);
 }
 
 void PasswordEditWidget::initComponent()

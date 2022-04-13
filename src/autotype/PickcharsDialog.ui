@@ -34,7 +34,7 @@
     <layout class="QGridLayout" name="charsGrid"/>
    </item>
    <item>
-    <widget class="PasswordEdit" name="selectedChars">
+    <widget class="PasswordWidget" name="selectedChars">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -74,9 +74,10 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PasswordEdit</class>
+   <class>PasswordWidget</class>
    <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
+   <header>gui/PasswordWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
