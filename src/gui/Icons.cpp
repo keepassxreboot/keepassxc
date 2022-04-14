@@ -189,7 +189,11 @@ QIcon Icons::icon(const QString& name, bool recolor, const QColor& overrideColor
     //
     // See issue #4963: https://github.com/keepassxreboot/keepassxc/issues/4963
     // and qt5ct issue #80: https://sourceforge.net/p/qt5ct/tickets/80/
-    QIcon::setThemeName("application");
+    if (config()->get(Config::GUI_ApplicationTheme) == QVariant::fromValue<QString>("classic")) {
+        QIcon::setFallbackThemeName("application");
+    } else {
+        QIcon::setThemeName("application");
+    }
 #endif
 
     QString cacheName =
@@ -201,7 +205,7 @@ QIcon Icons::icon(const QString& name, bool recolor, const QColor& overrideColor
     }
 
     icon = QIcon::fromTheme(name);
-    if (recolor) {
+    if (recolor && config()->get(Config::GUI_ApplicationTheme) != QVariant::fromValue<QString>("classic")) {
         icon = QIcon(new AdaptiveIconEngine(icon, overrideColor));
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
         icon.setIsMask(true);
@@ -224,7 +228,11 @@ Icons* Icons::instance()
 
         Q_INIT_RESOURCE(icons);
         QIcon::setThemeSearchPaths(QStringList{":/icons"} << QIcon::themeSearchPaths());
-        QIcon::setThemeName("application");
+        if (config()->get(Config::GUI_ApplicationTheme) == QVariant::fromValue<QString>("classic")) {
+            QIcon::setFallbackThemeName("application");
+        } else {
+            QIcon::setThemeName("application");
+        }
     }
 
     return m_instance;
