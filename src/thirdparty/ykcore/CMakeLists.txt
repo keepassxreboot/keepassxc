@@ -27,13 +27,15 @@ if(WIN32)
 elseif(UNIX AND NOT APPLE)
     target_sources(ykcore PRIVATE ykcore_libusb-1.0.c)
 
+    find_package(Threads REQUIRED)
+
     find_library(LIBUSB_LIBRARY NAMES usb-1.0)
     find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "libusb-1.0" "libusb")
     if(NOT LIBUSB_LIBRARY OR NOT LIBUSB_INCLUDE_DIR)
         message(FATAL_ERROR "libusb-1.0 dev package required, but not found")
     endif()
 
-    target_link_libraries(ykcore PRIVATE ${LIBUSB_LIBRARY})
+    target_link_libraries(ykcore PRIVATE Threads::Threads ${LIBUSB_LIBRARY})
     target_include_directories(ykcore PRIVATE ${LIBUSB_INCLUDE_DIR})
     target_compile_definitions(ykcore PRIVATE _GNU_SOURCE)
 elseif(APPLE)
