@@ -18,6 +18,7 @@
 #include "List.h"
 
 #include "Utils.h"
+#include "core/Global.h"
 #include "core/Group.h"
 
 #include <QCommandLineParser>
@@ -52,17 +53,17 @@ int List::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     // No group provided, defaulting to root group.
     if (args.size() == 1) {
-        out << database->rootGroup()->print(recursive, flatten) << flush;
+        out << database->rootGroup()->print(recursive, flatten) << Qt::flush;
         return EXIT_SUCCESS;
     }
 
     const QString& groupPath = args.at(1);
     Group* group = database->rootGroup()->findGroupByPath(groupPath);
     if (!group) {
-        err << QObject::tr("Cannot find group %1.").arg(groupPath) << endl;
+        err << QObject::tr("Cannot find group %1.").arg(groupPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
-    out << group->print(recursive, flatten) << flush;
+    out << group->print(recursive, flatten) << Qt::flush;
     return EXIT_SUCCESS;
 }

@@ -39,12 +39,12 @@
 
 #include <QCheckBox>
 #include <QCryptographicHash>
-#include <QHostAddress>
 #include <QInputDialog>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QListWidget>
 #include <QLocalSocket>
+#include <QLocale>
 #include <QProgressDialog>
 #include <QUrl>
 
@@ -594,7 +594,7 @@ QString BrowserService::storeKey(const QString& key)
     hideWindow();
     db->metadata()->customData()->set(CustomData::BrowserKeyPrefix + id, key);
     db->metadata()->customData()->set(QString("%1_%2").arg(CustomData::Created, id),
-                                      Clock::currentDateTime().toString(Qt::SystemLocaleShortDate));
+                                      QLocale::system().toString(Clock::currentDateTime(), QLocale::ShortFormat));
     return id;
 }
 

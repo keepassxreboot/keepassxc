@@ -19,6 +19,7 @@
 
 #include "config-keepassx.h"
 #include "core/Global.h"
+#include "core/Tools.h"
 #include "crypto/Random.h"
 
 #include <QDesktopServices>
@@ -50,7 +51,7 @@ bool EntryAttachments::hasKey(const QString& key) const
 
 QSet<QByteArray> EntryAttachments::values() const
 {
-    return asConst(m_attachments).values().toSet();
+    return Tools::asSet(m_attachments.values());
 }
 
 QByteArray EntryAttachments::value(const QString& key) const

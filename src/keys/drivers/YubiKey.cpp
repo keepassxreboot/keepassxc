@@ -23,7 +23,6 @@
 #include <QtConcurrent>
 
 YubiKey::YubiKey()
-    : m_interfaces_detect_mutex(QMutex::Recursive)
 {
     int num_interfaces = 0;
 

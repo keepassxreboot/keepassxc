@@ -16,6 +16,8 @@
  */
 #include "Clock.h"
 
+#include <QLocale>
+
 QSharedPointer<Clock> Clock::m_instance;
 
 QDateTime Clock::currentDateTimeUtc()
@@ -76,6 +78,12 @@ QDateTime Clock::parse(const QString& text, Qt::DateFormat format)
 QDateTime Clock::parse(const QString& text, const QString& format)
 {
     return QDateTime::fromString(text, format);
+}
+
+QString Clock::toString(const QDateTime& dateTime)
+{
+    static QLocale locale;
+    return locale.toString(dateTime, QLocale::ShortFormat);
 }
 
 Clock::~Clock() = default;

@@ -102,7 +102,7 @@ int main(int argc, char** argv)
     if (parser.isSet(debugInfoOption)) {
         QTextStream out(stdout, QIODevice::WriteOnly);
         QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
-        out << debugInfo << endl;
+        out << debugInfo << Qt::endl;
         return EXIT_SUCCESS;
     }
 
@@ -198,7 +198,7 @@ int main(int argc, char** argv)
             // we always need consume a line of STDIN if --pw-stdin is set to clear out the
             // buffer for native messaging, even if the specified file does not exist
             QTextStream out(stdout, QIODevice::WriteOnly);
-            out << QObject::tr("Database password: ") << flush;
+            out << QObject::tr("Database password: ") << Qt::flush;
             password = Utils::getPassword();
         }
         mainWindow.openDatabase(filename, password, parser.value(keyfileOption));

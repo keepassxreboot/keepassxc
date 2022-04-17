@@ -19,6 +19,7 @@
 #include "BrowserEntryConfig.h"
 
 #include "core/Entry.h"
+#include "core/Global.h"
 #include "core/Tools.h"
 
 #include <QJsonDocument>
@@ -34,22 +35,22 @@ BrowserEntryConfig::BrowserEntryConfig(QObject* parent)
 
 QStringList BrowserEntryConfig::allowedHosts() const
 {
-    return m_allowedHosts.toList();
+    return m_allowedHosts.values();
 }
 
 void BrowserEntryConfig::setAllowedHosts(const QStringList& allowedHosts)
 {
-    m_allowedHosts = allowedHosts.toSet();
+    m_allowedHosts = Tools::asSet(allowedHosts);
 }
 
 QStringList BrowserEntryConfig::deniedHosts() const
 {
-    return m_deniedHosts.toList();
+    return m_deniedHosts.values();
 }
 
 void BrowserEntryConfig::setDeniedHosts(const QStringList& deniedHosts)
 {
-    m_deniedHosts = deniedHosts.toSet();
+    m_deniedHosts = Tools::asSet(deniedHosts);
 }
 
 bool BrowserEntryConfig::isAllowed(const QString& host) const

@@ -22,6 +22,7 @@
 #include "core/Metadata.h"
 
 #include <QCoreApplication>
+#include <QMultiHash>
 #include <QXmlStreamReader>
 
 class QIODevice;
@@ -109,7 +110,7 @@ protected:
     QHash<QUuid, Entry*> m_entries;
 
     QHash<QString, QByteArray> m_binaryPool;
-    QHash<QString, QPair<Entry*, QString>> m_binaryMap;
+    QMultiHash<QString, QPair<Entry*, QString>> m_binaryMap;
     QByteArray m_headerHash;
 
     bool m_error = false;
