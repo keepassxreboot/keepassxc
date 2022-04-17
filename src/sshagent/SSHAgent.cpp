@@ -544,6 +544,7 @@ void SSHAgent::databaseUnlocked(QSharedPointer<Database> db)
     }
 
     for (Entry* e : db->rootGroup()->entriesRecursive()) {
+        // TODO we could call getKeyFromEntry here instead.
         if (db->metadata()->recycleBinEnabled() && e->group() == db->metadata()->recycleBin()) {
             continue;
         }
