@@ -18,6 +18,7 @@
 #include "Generate.h"
 
 #include "Utils.h"
+#include "core/Global.h"
 #include "core/PasswordGenerator.h"
 
 #include <QCommandLineParser>
@@ -92,7 +93,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
     if (passwordLength.isEmpty()) {
         passwordGenerator->setLength(PasswordGenerator::DefaultLength);
     } else if (passwordLength.toInt() <= 0) {
-        err << QObject::tr("Invalid password length %1").arg(passwordLength) << endl;
+        err << QObject::tr("Invalid password length %1").arg(passwordLength) << Qt::endl;
         return {};
     } else {
         passwordGenerator->setLength(passwordLength.toInt());
@@ -138,7 +139,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
     passwordGenerator->setExcludedCharacterSet(parser->value(Generate::ExcludeCharsOption));
 
     if (!passwordGenerator->isValid()) {
-        err << QObject::tr("Invalid password generator after applying all options") << endl;
+        err << QObject::tr("Invalid password generator after applying all options") << Qt::endl;
         return {};
     }
 
@@ -159,7 +160,7 @@ int Generate::execute(const QStringList& arguments)
 
     auto& out = Utils::STDOUT;
     QString password = passwordGenerator->generatePassword();
-    out << password << endl;
+    out << password << Qt::endl;
 
     return EXIT_SUCCESS;
 }

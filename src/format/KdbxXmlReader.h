@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #include "core/Metadata.h"
 
 #include <QCoreApplication>
+#include <QMultiHash>
+#include <QStringView>
 #include <QXmlStreamReader>
 
 class QIODevice;
@@ -92,7 +94,7 @@ protected:
     virtual Group* getGroup(const QUuid& uuid);
     virtual Entry* getEntry(const QUuid& uuid);
 
-    virtual bool isTrueValue(const QStringRef& value);
+    virtual bool isTrueValue(QStringView value);
     virtual void raiseError(const QString& errorMessage);
 
     const quint32 m_kdbxVersion;
@@ -109,7 +111,7 @@ protected:
     QHash<QUuid, Entry*> m_entries;
 
     QHash<QString, QByteArray> m_binaryPool;
-    QHash<QString, QPair<Entry*, QString>> m_binaryMap;
+    QMultiHash<QString, QPair<Entry*, QString>> m_binaryMap;
     QByteArray m_headerHash;
 
     bool m_error = false;

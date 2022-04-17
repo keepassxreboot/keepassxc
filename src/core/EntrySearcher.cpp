@@ -203,7 +203,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         case Field::Is:
             if (term.word.startsWith("expired", Qt::CaseInsensitive)) {
                 auto days = 0;
-                auto parts = term.word.split("-", QString::SkipEmptyParts);
+                auto parts = term.word.split("-", Qt::SkipEmptyParts);
                 if (parts.length() >= 2) {
                     days = parts[1].toInt();
                 }

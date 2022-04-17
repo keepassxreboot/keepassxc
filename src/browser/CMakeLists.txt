@@ -41,5 +41,5 @@ if(WITH_XC_BROWSER)
     endif()
 
     add_library(keepassxcbrowser STATIC ${keepassxcbrowser_SOURCES})
-    target_link_libraries(keepassxcbrowser Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network ${BOTAN_LIBRARIES})
+    target_link_libraries(keepassxcbrowser Qt6::Core Qt6::Concurrent Qt6::Widgets Qt6::Network ${BOTAN_LIBRARIES})
 endif()

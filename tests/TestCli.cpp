@@ -687,9 +687,9 @@ void TestCli::testClip()
     // Password with timeout
     setInput("a");
     // clang-format off
-    QFuture<void> future = QtConcurrent::run(&clipCmd,
-                                             static_cast<int(Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
-                                             QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
+    auto future = QtConcurrent::run(static_cast<int(Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
+                                    &clipCmd,
+                                    QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
     // clang-format on
 
     QTRY_COMPARE(clipboard->text(), QString("Password"));
@@ -699,8 +699,8 @@ void TestCli::testClip()
 
     // TOTP with timeout
     setInput("a");
-    future = QtConcurrent::run(&clipCmd,
-                               static_cast<int (Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
+    future = QtConcurrent::run(static_cast<int (Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
+                               &clipCmd,
                                QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
 
     QTRY_VERIFY(isTotp(clipboard->text()));

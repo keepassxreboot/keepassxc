@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,11 +20,13 @@
 
 #include "ASN1Key.h"
 #include "BinaryStream.h"
+#include "core/Global.h"
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
 
 #include <QRegularExpression>
 #include <QStringList>
+#include <QStringView>
 
 #include <botan/pwdhash.h>
 
@@ -179,7 +181,7 @@ const QString OpenSSHKey::privateKey()
 
     auto base64Key = QString::fromUtf8(sshKey.toBase64());
     for (int i = 0; i < base64Key.size(); i += 70) {
-        out += base64Key.midRef(i, 70);
+        out += QStringView{base64Key}.mid(i, 70);
         out += "\n";
     }
 
@@ -226,7 +228,7 @@ void OpenSSHKey::clearPrivate()
 bool OpenSSHKey::extractPEM(const QByteArray& in, QByteArray& out)
 {
     QString pem = QString::fromLatin1(in);
-    QStringList rows = pem.split(QRegularExpression("(?:\r?\n|\r)"), QString::SkipEmptyParts);
+    QStringList rows = pem.split(QRegularExpression("(?:\r?\n|\r)"), Qt::SkipEmptyParts);
 
     if (rows.length() < 3) {
         m_error = tr("Invalid key file, expecting an OpenSSH key");
@@ -306,7 +308,7 @@ bool OpenSSHKey::parsePKCS1PEM(const QByteArray& in)
             return false;
         }
 
-        if (QString::fromLatin1(magic) != "openssh-key-v1") {
+        if (QString::fromLatin1(magic.toStdString().c_str()) != "openssh-key-v1") {
             m_error = tr("Key file magic header id invalid");
             return false;
         }
