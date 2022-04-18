@@ -72,7 +72,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         bool ok;
         timeout = args.at(2).toInt(&ok);
         if (!ok) {
-            err << QObject::tr("Invalid timeout value %1.").arg(args.at(2)) << endl;
+            err << QObject::tr("Invalid timeout value %1.").arg(args.at(2)) << Qt::endl;
             return EXIT_FAILURE;
         }
     }
@@ -83,14 +83,14 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         const auto& searchTerm = args.at(1);
         const auto results = searcher.search(QString("title:%1").arg(searchTerm), database->rootGroup(), true);
         if (results.count() > 1) {
-            err << QObject::tr("Multiple entries matching:") << endl;
+            err << QObject::tr("Multiple entries matching:") << Qt::endl;
             for (const Entry* result : results) {
-                err << result->path().prepend('/') << endl;
+                err << result->path().prepend('/') << Qt::endl;
             }
             return EXIT_FAILURE;
         } else {
             entryPath = (results.isEmpty()) ? searchTerm : results[0]->path().prepend('/');
-            out << QObject::tr("Using matching entry: %1").arg(entryPath) << endl;
+            out << QObject::tr("Using matching entry: %1").arg(entryPath) << Qt::endl;
         }
     } else {
         entryPath = args.at(1);
@@ -98,12 +98,12 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     auto* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
+        err << QObject::tr("Entry %1 not found.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (parser->isSet(AttributeOption) && parser->isSet(TotpOption)) {
-        err << QObject::tr("ERROR: Please specify one of --attribute or --totp, not both.") << endl;
+        err << QObject::tr("ERROR: Please specify one of --attribute or --totp, not both.") << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -112,7 +112,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     bool found = false;
     if (parser->isSet(TotpOption) || selectedAttribute == "totp") {
         if (!entry->hasTotp()) {
-            err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
+            err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << Qt::endl;
             return EXIT_FAILURE;
         }
 
@@ -127,7 +127,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         if (attrs.size() > 1) {
             err << QObject::tr("ERROR: attribute %1 is ambiguous, it matches %2.")
                        .arg(selectedAttribute, QLocale().createSeparatedList(attrs))
-                << endl;
+                << Qt::endl;
             return EXIT_FAILURE;
         } else if (attrs.size() == 1) {
             found = true;
@@ -137,7 +137,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     }
 
     if (!found) {
-        out << QObject::tr("Attribute \"%1\" not found.").arg(selectedAttribute) << endl;
+        out << QObject::tr("Attribute \"%1\" not found.").arg(selectedAttribute) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -146,7 +146,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return exitCode;
     }
 
-    out << QObject::tr("Entry's \"%1\" attribute copied to the clipboard!").arg(selectedAttribute) << endl;
+    out << QObject::tr("Entry's \"%1\" attribute copied to the clipboard!").arg(selectedAttribute) << Qt::endl;
 
     if (timeout <= 0) {
         return exitCode;
@@ -156,13 +156,13 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     while (timeout > 0) {
         out << '\r' << QString(lastLine.size(), ' ') << '\r';
         lastLine = QObject::tr("Clearing the clipboard in %1 second(s)...", "", timeout).arg(timeout);
-        out << lastLine << flush;
+        out << lastLine << Qt::flush;
         Tools::sleep(1000);
         --timeout;
     }
     Utils::clipText("");
     out << '\r' << QString(lastLine.size(), ' ') << '\r';
-    out << QObject::tr("Clipboard cleared!") << endl;
+    out << QObject::tr("Clipboard cleared!") << Qt::endl;
 
     return EXIT_SUCCESS;
 }
