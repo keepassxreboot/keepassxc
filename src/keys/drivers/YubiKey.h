@@ -21,9 +21,16 @@
 
 #include <QHash>
 #include <QMultiMap>
-#include <QMutex>
 #include <QObject>
 #include <QTimer>
+#include <qmutex.h>
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+#include <QRecursiveMutex>
+#else
+#include <QMutex>
+#endif
+
 #include <botan/secmem.h>
 
 typedef QPair<unsigned int, int> YubiKeySlot;
@@ -87,7 +94,11 @@ private:
     bool m_initialized = false;
     QString m_error;
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    static QRecursiveMutex s_interfaceMutex;
+#else
     static QMutex s_interfaceMutex;
+#endif
 
     KeyMap m_usbKeys;
     KeyMap m_pcscKeys;

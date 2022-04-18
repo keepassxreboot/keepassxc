@@ -24,7 +24,11 @@
 #include <QSet>
 #include <QtConcurrent>
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+QRecursiveMutex YubiKey::s_interfaceMutex;
+#else
 QMutex YubiKey::s_interfaceMutex(QMutex::Recursive);
+#endif
 
 YubiKey::YubiKey()
 {
