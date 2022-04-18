@@ -19,7 +19,6 @@
 #include "YubiKeyInterface.h"
 
 YubiKeyInterface::YubiKeyInterface()
-    : m_mutex(QMutex::Recursive)
 {
     m_interactionTimer.setSingleShot(true);
     m_interactionTimer.setInterval(300);
