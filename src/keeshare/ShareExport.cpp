@@ -141,7 +141,7 @@ namespace
     {
         if (key.key->algo_name() == "RSA") {
             try {
-                Botan::PK_Signer signer(*key.key, "EMSA3(SHA-256)");
+                Botan::PK_Signer signer(*key.key, *randomGen()->getRng(), "EMSA3(SHA-256)");
                 signer.update(reinterpret_cast<const uint8_t*>(data.constData()), data.size());
                 auto s = signer.signature(*randomGen()->getRng());
 
