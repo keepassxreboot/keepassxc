@@ -21,6 +21,7 @@
 #define KEEPASSX_GLOBAL_H
 
 #include <QString>
+#include <QTextStream>
 
 #if defined(Q_OS_WIN)
 #if defined(KEEPASSX_BUILDING_CORE)
@@ -48,6 +49,14 @@
 namespace Qt
 {
     const QString::SplitBehavior SkipEmptyParts = QString::SkipEmptyParts;
+    inline QTextStream& endl(QTextStream& s)
+    {
+        return ::endl(s);
+    }
+    inline QTextStream& flush(QTextStream& s)
+    {
+        return ::flush(s);
+    }
 } // namespace Qt
 #endif
 
