@@ -7015,7 +7015,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation>%1 character(s)</translation>
+        <translation>%1 characters</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
@@ -8156,7 +8156,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation>%1 character(s)</translation>
+        <translation>%1 characters</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
@@ -8553,7 +8553,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation>Closing in %1 second(s).</translation>
+        <translation>Closing in %1 seconds.</translation>
     </message>
 </context>
 <context>
