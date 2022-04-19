@@ -307,9 +307,8 @@ void Application::socketReadyRead()
     quint32 id;
     in >> id;
 
-    // TODO: move constants to enum
     switch (id) {
-    case 1:
+    case IpcMessages::OPEN_DATABASE:
         in >> fileNames;
         for (const QString& fileName : asConst(fileNames)) {
             const QFileInfo fInfo(fileName);
@@ -319,8 +318,12 @@ void Application::socketReadyRead()
         }
 
         break;
-    case 2:
+    case IpcMessages::LOCK_DATABASE:
         getMainWindow()->lockAllDatabases();
+        break;
+
+    case IpcMessages::MINIMIZE:
+        getMainWindow()->minimizeOrHide();
         break;
     }
 
@@ -355,7 +358,7 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_0);
     out << quint32(0); // reserve space for block size
-    out << quint32(1); // ID for file name send. TODO: move to enum
+    out << quint32(IpcMessages::OPEN_DATABASE);
     out << fileNames; // send file names to be opened
     out.device()->seek(0);
     out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
@@ -387,7 +390,7 @@ bool Application::sendLockToInstance()
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_0);
     out << quint32(0); // reserve space for block size
-    out << quint32(2); // ID for database lock. TODO: move to enum
+    out << quint32(IpcMessages::LOCK_DATABASE);
     out.device()->seek(0);
     out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
 
@@ -415,4 +418,33 @@ void Application::restart()
     }
 
     exit(RESTART_EXITCODE);
+}
+
+/**
+ * Send minimization message to the running UI instance
+ *
+ * @return true if all operations succeeded (connection made, data sent, connection closed)
+ */
+bool Application::sendMinimize()
+{
+    QLocalSocket client;
+    client.connectToServer(m_socketName);
+    const bool connected = client.waitForConnected(WaitTimeoutMSec);
+    if (!connected) {
+        return false;
+    }
+
+    QByteArray data;
+    QDataStream out(&data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_0);
+    out << quint32(0); // reserve space for block size
+    out << quint32(IpcMessages::MINIMIZE);
+    out.device()->seek(0);
+    out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
+
+    const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
+    client.disconnectFromServer();
+    const bool disconnected =
+        client.state() == QLocalSocket::UnconnectedState || client.waitForDisconnected(WaitTimeoutMSec);
+    return writeOk && disconnected;
 }

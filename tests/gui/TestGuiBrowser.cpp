@@ -70,7 +70,7 @@ void TestGuiBrowser::initTestCase()
     // Disable the update check first time alert
     config()->set(Config::UpdateCheckMessageShown, true);
 
-    m_mainWindow.reset(new MainWindow());
+    m_mainWindow.reset(new MainWindow(false));
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
 }

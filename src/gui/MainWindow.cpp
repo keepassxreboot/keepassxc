@@ -84,8 +84,9 @@ MainWindow* getMainWindow()
     return g_MainWindow;
 }
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(bool startMinimized)
     : m_ui(new Ui::MainWindow())
+    , m_startMinimized(startMinimized)
 {
     g_MainWindow = this;
 
@@ -1737,10 +1738,15 @@ void MainWindow::hideYubiKeyPopup()
 void MainWindow::bringToFront()
 {
     ensurePolished();
-    setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
-    show();
-    raise();
-    activateWindow();
+    if (m_startMinimized) {
+        setWindowState(Qt::WindowMinimized);
+        showMinimized();
+    } else {
+        setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+        show();
+        raise();
+        activateWindow();
+    }
 }
 
 void MainWindow::handleScreenLock()

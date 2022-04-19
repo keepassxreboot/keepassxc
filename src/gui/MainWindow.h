@@ -47,7 +47,7 @@ class MainWindow : public QMainWindow
 #endif
 
 public:
-    MainWindow();
+    MainWindow(bool startMinimized);
     ~MainWindow();
 
     QList<DatabaseWidget*> getOpenDatabases();
@@ -191,6 +191,7 @@ private:
     QTimer m_updateCheckTimer;
     QTimer m_trayIconTriggerTimer;
     QSystemTrayIcon::ActivationReason m_trayIconTriggerReason;
+    bool m_startMinimized = false;
 
     friend class MainWindowEventFilter;
 };

@@ -50,6 +50,7 @@ public:
 
     bool sendFileNamesToRunningInstance(const QStringList& fileNames);
     bool sendLockToInstance();
+    bool sendMinimize();
 
     void restart();
 
@@ -81,6 +82,13 @@ private:
     QLockFile* m_lockFile;
     QLocalServer m_lockServer;
     QString m_socketName;
+
+    enum IpcMessages
+    {
+        OPEN_DATABASE = 1,
+        LOCK_DATABASE = 2,
+        MINIMIZE
+    };
 };
 
 #define kpxcApp qobject_cast<Application*>(Application::instance())
