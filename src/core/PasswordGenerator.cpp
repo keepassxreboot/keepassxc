@@ -214,7 +214,7 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
     if (m_classes & Math) {
         PasswordGroup group;
 
-        // !*+-<=>?
+        // !*+<=>?
         group.append(33);
         group.append(42);
         group.append(43);
