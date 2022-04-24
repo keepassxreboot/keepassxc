@@ -97,7 +97,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="cancelButton">
+      <widget class="QPushButton" name="denyButton">
        <property name="text">
         <string>Deny All</string>
        </property>

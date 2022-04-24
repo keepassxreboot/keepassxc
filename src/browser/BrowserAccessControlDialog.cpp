@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,25 +21,41 @@
 #include <QUrl>
 
 #include "core/Entry.h"
+#include <QCloseEvent>
 
 BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::BrowserAccessControlDialog())
+    , m_entriesAccepted(false)
 {
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     m_ui->setupUi(this);
 
-    connect(m_ui->allowButton, SIGNAL(clicked()), SLOT(accept()));
-    connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
+    connect(m_ui->allowButton, SIGNAL(clicked()), SLOT(acceptSelections()));
+    connect(m_ui->denyButton, SIGNAL(clicked()), SLOT(rejectSelections()));
+    connect(this, SIGNAL(rejected()), this, SIGNAL(closed()));
 }
 
 BrowserAccessControlDialog::~BrowserAccessControlDialog()
 {
 }
 
-void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QString& urlString, bool httpAuth)
+void BrowserAccessControlDialog::closeEvent(QCloseEvent* event)
 {
+    // Emits closed signal when clicking X from title bar
+    emit closed();
+    event->accept();
+}
+
+void BrowserAccessControlDialog::setItems(const QList<Entry*>& entriesToConfirm,
+                                          const QList<Entry*>& allowedEntries,
+                                          const QString& urlString,
+                                          bool httpAuth)
+{
+    m_entriesToConfirm = entriesToConfirm;
+    m_allowedEntries = allowedEntries;
+
     QUrl url(urlString);
     m_ui->siteLabel->setText(m_ui->siteLabel->text().arg(
         url.toDisplayString(QUrl::RemoveUserInfo | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment)));
@@ -47,11 +63,11 @@ void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QStr
     m_ui->rememberDecisionCheckBox->setVisible(!httpAuth);
     m_ui->rememberDecisionCheckBox->setChecked(false);
 
-    m_ui->itemsTable->setRowCount(items.count());
+    m_ui->itemsTable->setRowCount(entriesToConfirm.count());
     m_ui->itemsTable->setColumnCount(2);
 
     int row = 0;
-    for (const auto& entry : items) {
+    for (const auto& entry : entriesToConfirm) {
         auto item = new QTableWidgetItem();
         item->setText(entry->title() + " - " + entry->username());
         item->setData(Qt::UserRole, row);
@@ -61,11 +77,13 @@ void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QStr
 
         auto disableButton = new QPushButton(tr("Disable for this site"));
         disableButton->setAutoDefault(false);
+
         connect(disableButton, &QAbstractButton::pressed, [&, item] {
             emit disableAccess(item);
             m_ui->itemsTable->removeRow(item->row());
+
             if (m_ui->itemsTable->rowCount() == 0) {
-                reject();
+                emit closed();
             }
         });
         m_ui->itemsTable->setCellWidget(row, 1, disableButton);
@@ -82,6 +100,11 @@ void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QStr
 bool BrowserAccessControlDialog::remember() const
 {
     return m_ui->rememberDecisionCheckBox->isChecked();
+}
+
+bool BrowserAccessControlDialog::entriesAccepted() const
+{
+    return m_entriesAccepted;
 }
 
 QList<QTableWidgetItem*> BrowserAccessControlDialog::getSelectedEntries() const
@@ -106,4 +129,20 @@ QList<QTableWidgetItem*> BrowserAccessControlDialog::getNonSelectedEntries() con
         }
     }
     return notSelected;
+}
+
+void BrowserAccessControlDialog::acceptSelections()
+{
+    auto selectedEntries = getSelectedEntries();
+
+    m_entriesAccepted = true;
+    emit acceptEntries(selectedEntries, m_entriesToConfirm, m_allowedEntries);
+    emit closed();
+}
+
+void BrowserAccessControlDialog::rejectSelections()
+{
+    auto rejectedEntries = getNonSelectedEntries();
+    emit rejectEntries(rejectedEntries, m_entriesToConfirm);
+    emit closed();
 }
