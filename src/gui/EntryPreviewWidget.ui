@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>481</width>
+    <width>508</width>
     <height>257</height>
    </rect>
   </property>
@@ -195,7 +195,7 @@
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <widget class="QWidget" name="entryGeneralWidget" native="true">
-             <layout class="QGridLayout" name="gridLayout">
+             <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,1">
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -455,19 +455,6 @@
                  <size>
                   <width>10</width>
                   <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="4" column="0">
-               <spacer name="verticalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
                  </size>
                 </property>
                </spacer>
@@ -751,13 +738,16 @@
            <item>
             <widget class="QTreeWidget" name="entryAutotypeTree">
              <property name="focusPolicy">
-              <enum>Qt::ClickFocus</enum>
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="frameShadow">
               <enum>QFrame::Sunken</enum>
              </property>
              <property name="showDropIndicator" stdset="0">
               <bool>true</bool>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::NoSelection</enum>
              </property>
              <property name="rootIsDecorated">
               <bool>true</bool>
@@ -897,7 +887,7 @@
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
             <widget class="QWidget" name="groupGeneralWidget" native="true">
-             <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0">
+             <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,1">
               <property name="leftMargin">
                <number>0</number>
               </property>
