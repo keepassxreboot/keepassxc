@@ -3890,6 +3890,10 @@ Error: %1</source>
         <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>

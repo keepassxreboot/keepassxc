@@ -642,19 +642,19 @@ void DatabaseWidget::copyPassword()
     bool clearClipboard = config()->get(Config::Security_ClearClipboard).toBool();
 
     auto plainTextEdit = qobject_cast<QPlainTextEdit*>(focusWidget());
-    if (plainTextEdit) {
+    if (plainTextEdit && plainTextEdit->textCursor().hasSelection()) {
         clipboard()->setText(plainTextEdit->textCursor().selectedText(), clearClipboard);
         return;
     }
 
     auto label = qobject_cast<QLabel*>(focusWidget());
-    if (label) {
+    if (label && label->hasSelectedText()) {
         clipboard()->setText(label->selectedText(), clearClipboard);
         return;
     }
 
     auto textEdit = qobject_cast<QTextEdit*>(focusWidget());
-    if (textEdit) {
+    if (textEdit && textEdit->textCursor().hasSelection()) {
         clipboard()->setText(textEdit->textCursor().selectedText(), clearClipboard);
         return;
     }
