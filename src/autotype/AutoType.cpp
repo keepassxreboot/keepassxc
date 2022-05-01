@@ -335,7 +335,9 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
             }
 
             if (!result.canRetry() || i == max_retries) {
-                MessageBox::critical(getMainWindow(), tr("Auto-Type Error"), result.errorString());
+                if (getMainWindow()) {
+                    MessageBox::critical(getMainWindow(), tr("Auto-Type Error"), result.errorString());
+                }
                 emit autotypeRejected();
                 m_inAutoType.unlock();
                 return;
