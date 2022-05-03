@@ -60,7 +60,7 @@ namespace
     const QString TARGET_DIR_FIREFOX =
         QStringLiteral("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
     const QString TARGET_DIR_LIBREWOLF =
-        QStringLiteral("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
+        QStringLiteral("HKEY_CURRENT_USER\\Software\\LibreWolf\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
     const QString TARGET_DIR_VIVALDI = TARGET_DIR_CHROME;
     const QString TARGET_DIR_TOR_BROWSER = TARGET_DIR_FIREFOX;
     const QString TARGET_DIR_BRAVE = TARGET_DIR_CHROME;
