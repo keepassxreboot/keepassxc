@@ -100,4 +100,29 @@ Convert resolved placeholder (e.g., {USERNAME}, {PASSWORD}, etc.) using the foll
 
 `{T-REPLACE-RX:/&lt;PLACEHOLDER&gt;/&lt;SEARCH&gt;/&lt;REPLACE&gt;/}` +
 Use regular expressions to find and replace data from a resolved placeholder. Refer to match groups using $1, $2, etc.
+
+=== Backup Path Placeholders
+[grid=rows, frame=none, width=90%]
+|===
+|Database Backup Path Placeholder |Description
+
+|{DB_FILENAME}  |The database's filename without extension
+|{TIME}        |The current time formatted as dd_MM_yyyy_hh-mm-ss.
+|{TIME:<format>}        |The current time formatted according to the format string specified by <format>. See https://doc.qt.io/qt-5/qtime.html#toString for a list of available placeholders.
+|===
+
+[grid=rows, frame=none, width=90%]
+|===
+|Backup path example |Location of backup(s)
+
+|`{DB_FILENAME}-{TIME}.bak.kdbx` |`C:\Users\MyUsername\MyDatabase-02_01_2022_03-04-05.bak.kdbx` +
+`C:\Users\MyUsername\MyDatabase-05_01_2022_12-10-00.bak.kdbx`
+|`backups\\{DB_FILENAME}.bak.kdbx` |`C:\Users\MyUsername\backups\MyDatabase.bak.kdbx`
+|`C:\Backups\{TIME:dd.MM.yyyy}\\{DB_FILENAME}.kdbx` |`C:\Backups\02.01.2022\MyDatabase.kdbx` +
+`C:\Backups\05.01.2022\MyDatabase.kdbx`
+|`C:\Backups\\{DB_FILENAME}\{TIME:MM-dd-yyyy}.kdbx` |`C:\Backups\MyDatabase\01-02-2022.kdbx` +
+`C:\Backups\MyDatabase\01-05-2022.kdbx`
+|===
+
+
 // end::content[]

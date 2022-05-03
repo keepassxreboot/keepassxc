@@ -84,7 +84,7 @@ There are three ways that KeePassXC can handle database files. This behavior is 
 
 3. *Direct-write saves* write directly to the existing database file. This is an unsafe operation since any interruption can leave your entire database inaccessible. We only recommend using this option when interfacing with Linux GVFS services (e.g. Google Cloud on Gnome) and other types of storage services that host a virtual drive system.
 
-In addition to these save options, KeePassXC can create a backup of your existing database file just prior to saving. This backup can be placed in a custom folder with a custom file naming scheme.
+In addition to these save options, KeePassXC can create a backup of your existing database file just prior to saving. This backup  will be saved at the path specified in the *Backup destination* field. This path can be absolute or relative. The latter will be resolved according to the databases path. It is possible to specify a custom naming scheme with placeholders. See xref:UserGuide.adoc#_backup_path_placeholders[Backup Path Placeholders] for available placeholders and examples.
 
 image::save_options.png[]
 // end::advanced[]
