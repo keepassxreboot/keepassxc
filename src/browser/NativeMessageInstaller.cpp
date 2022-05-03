@@ -236,9 +236,7 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
 #elif defined(Q_OS_LINUX)
     if (browser == SupportedBrowsers::TOR_BROWSER) {
         basePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-    } else if (browser == SupportedBrowsers::FIREFOX) {
-        basePath = QDir::homePath();
-    } else if (browser == SupportedBrowsers::LIBREWOLF) {
+    } else if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::LIBREWOLF) {
         basePath = QDir::homePath();
     } else {
         basePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
