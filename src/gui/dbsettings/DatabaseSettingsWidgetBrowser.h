@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2018 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -59,7 +59,6 @@ private slots:
     void updateSharedKeyList();
     void removeSharedEncryptionKeys();
     void removeStoredPermissions();
-    void convertAttributesToCustomData();
     void refreshDatabaseID();
     void editIndex(const QModelIndex& index);
     void editFinished(QStandardItem* item);

@@ -1,6 +1,7 @@
 /*
- *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2013 Francois Ferrand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -88,7 +89,6 @@ public:
                                    const StringPairList& keyList,
                                    const bool httpAuth = false);
     void requestGlobalAutoType(const QString& search);
-    static void convertAttributesToCustomData(QSharedPointer<Database> db);
 
     static const QString KEEPASSXCBROWSER_NAME;
     static const QString KEEPASSXCBROWSER_OLD_NAME;
@@ -157,15 +157,10 @@ private:
     QSharedPointer<Database> selectedDatabase();
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
-    bool checkLegacySettings(QSharedPointer<Database> db);
     QStringList getEntryURLs(const Entry* entry);
     void hideWindow() const;
     void raiseWindow(const bool force = false);
-
     void updateWindowState();
-
-    static bool moveSettingsToCustomData(Entry* entry, const QString& name);
-    static int moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db);
 
     QPointer<BrowserHost> m_browserHost;
     QHash<QString, QSharedPointer<BrowserAction>> m_browserClients;

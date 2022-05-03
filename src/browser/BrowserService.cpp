@@ -1,6 +1,7 @@
 /*
- *  Copyright (C) 2013 Francois Ferrand
  *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2013 Francois Ferrand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -781,79 +782,6 @@ BrowserService::searchEntries(const QString& siteUrl, const QString& formUrl, co
     return entries;
 }
 
-void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> db)
-{
-    if (!db) {
-        return;
-    }
-
-    QList<Entry*> entries = db->rootGroup()->entriesRecursive();
-    QProgressDialog progress(tr("Converting attributes to custom data…"), tr("Abort"), 0, entries.count());
-    progress.setWindowModality(Qt::WindowModal);
-
-    int counter = 0;
-    int keyCounter = 0;
-    for (auto* entry : entries) {
-        if (progress.wasCanceled()) {
-            return;
-        }
-
-        if (moveSettingsToCustomData(entry, KEEPASSHTTP_NAME)) {
-            ++counter;
-        }
-
-        if (moveSettingsToCustomData(entry, KEEPASSXCBROWSER_OLD_NAME)) {
-            ++counter;
-        }
-
-        if (moveSettingsToCustomData(entry, KEEPASSXCBROWSER_NAME)) {
-            ++counter;
-        }
-
-        if (entry->title() == KEEPASSHTTP_NAME || entry->title().contains(KEEPASSXCBROWSER_NAME, Qt::CaseInsensitive)) {
-            keyCounter += moveKeysToCustomData(entry, db);
-            db->recycleEntry(entry);
-        }
-
-        progress.setValue(progress.value() + 1);
-    }
-    progress.reset();
-
-    if (counter > 0) {
-        MessageBox::information(nullptr,
-                                tr("KeePassXC: Converted KeePassHTTP attributes"),
-                                tr("Successfully converted attributes from %1 entry(s).\n"
-                                   "Moved %2 keys to custom data.",
-                                   "")
-                                    .arg(counter)
-                                    .arg(keyCounter),
-                                MessageBox::Ok);
-    } else if (counter == 0 && keyCounter > 0) {
-        MessageBox::information(nullptr,
-                                tr("KeePassXC: Converted KeePassHTTP attributes"),
-                                tr("Successfully moved %n keys to custom data.", "", keyCounter),
-                                MessageBox::Ok);
-    } else {
-        MessageBox::information(nullptr,
-                                tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
-                                tr("The active database does not contain an entry with KeePassHTTP attributes."),
-                                MessageBox::Ok);
-    }
-
-    // Rename password groupName
-    Group* rootGroup = db->rootGroup();
-    if (!rootGroup) {
-        return;
-    }
-
-    for (auto* g : rootGroup->groupsRecursive(true)) {
-        if (g->name() == KEEPASSHTTP_GROUP_NAME) {
-            g->setName(KEEPASSXCBROWSER_GROUP_NAME);
-            break;
-        }
-    }
-}
-
 void BrowserService::requestGlobalAutoType(const QString& search)
 {
     emit osUtils->globalShortcutTriggered("autotype", search);
@@ -1264,84 +1192,6 @@ QSharedPointer<Database> BrowserService::selectedDatabase()
     return getDatabase();
 }
 
-bool BrowserService::moveSettingsToCustomData(Entry* entry, const QString& name)
-{
-    if (entry->attributes()->contains(name)) {
-        QString attr = entry->attributes()->value(name);
-        entry->beginUpdate();
-        if (!attr.isEmpty()) {
-            entry->customData()->set(KEEPASSXCBROWSER_NAME, attr);
-        }
-        entry->attributes()->remove(name);
-        entry->endUpdate();
-        return true;
-    }
-    return false;
-}
-
-int BrowserService::moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db)
-{
-    int keyCounter = 0;
-    for (const auto& key : entry->attributes()->keys()) {
-        if (key.contains(CustomData::BrowserLegacyKeyPrefix)) {
-            QString publicKey = key;
-            publicKey.remove(CustomData::BrowserLegacyKeyPrefix);
-
-            // Add key to database custom data
-            if (db && !db->metadata()->customData()->contains(CustomData::BrowserKeyPrefix + publicKey)) {
-                db->metadata()->customData()->set(CustomData::BrowserKeyPrefix + publicKey,
-                                                  entry->attributes()->value(key));
-                ++keyCounter;
-            }
-        }
-    }
-
-    return keyCounter;
-}
-
-bool BrowserService::checkLegacySettings(QSharedPointer<Database> db)
-{
-    if (!db || !browserSettings()->isEnabled() || browserSettings()->noMigrationPrompt()) {
-        return false;
-    }
-
-    bool legacySettingsFound = false;
-    QList<Entry*> entries = db->rootGroup()->entriesRecursive();
-    for (const auto& e : entries) {
-        if (e->isRecycled()) {
-            continue;
-        }
-
-        if ((e->attributes()->contains(KEEPASSHTTP_NAME) || e->attributes()->contains(KEEPASSXCBROWSER_NAME))
-            || (e->title() == KEEPASSHTTP_NAME || e->title().contains(KEEPASSXCBROWSER_NAME, Qt::CaseInsensitive))) {
-            legacySettingsFound = true;
-            break;
-        }
-    }
-
-    if (!legacySettingsFound) {
-        return false;
-    }
-
-    auto* checkbox = new QCheckBox(tr("Don't show this warning again"));
-    QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {
-        browserSettings()->setNoMigrationPrompt(static_cast<Qt::CheckState>(state) == Qt::CheckState::Checked);
-    });
-
-    auto dialogResult =
-        MessageBox::warning(nullptr,
-                            tr("KeePassXC: Legacy browser integration settings detected"),
-                            tr("Your KeePassXC-Browser settings need to be moved into the database settings.\n"
-                               "This is necessary to maintain your current browser connections.\n"
-                               "Would you like to migrate your existing settings now?"),
-                            MessageBox::Yes | MessageBox::No,
-                            MessageBox::NoButton,
-                            MessageBox::Raise,
-                            checkbox);
-
-    return dialogResult == MessageBox::Yes;
-}
-
 QStringList BrowserService::getEntryURLs(const Entry* entry)
 {
     QStringList urlList;
@@ -1440,11 +1290,6 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
         QJsonObject msg;
         msg["action"] = QString("database-unlocked");
         m_browserHost->broadcastClientMessage(msg);
-
-        auto db = dbWidget->database();
-        if (checkLegacySettings(db)) {
-            convertAttributesToCustomData(db);
-        }
     }
 }
 
