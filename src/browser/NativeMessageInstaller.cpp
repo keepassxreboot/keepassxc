@@ -45,6 +45,7 @@ namespace
     const QString TARGET_DIR_CHROME = QStringLiteral("/Library/Application Support/Google/Chrome/NativeMessagingHosts");
     const QString TARGET_DIR_CHROMIUM = QStringLiteral("/Library/Application Support/Chromium/NativeMessagingHosts");
     const QString TARGET_DIR_FIREFOX = QStringLiteral("/Library/Application Support/Mozilla/NativeMessagingHosts");
+    const QString TARGET_DIR_LIBREWOLF = QStringLiteral("/Library/Application Support/LibreWolf/NativeMessagingHosts");
     const QString TARGET_DIR_VIVALDI = QStringLiteral("/Library/Application Support/Vivaldi/NativeMessagingHosts");
     const QString TARGET_DIR_TOR_BROWSER =
         QStringLiteral("/Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts");
@@ -58,6 +59,8 @@ namespace
         QStringLiteral("HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
     const QString TARGET_DIR_FIREFOX =
         QStringLiteral("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
+    const QString TARGET_DIR_LIBREWOLF =
+        QStringLiteral("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
     const QString TARGET_DIR_VIVALDI = TARGET_DIR_CHROME;
     const QString TARGET_DIR_TOR_BROWSER = TARGET_DIR_FIREFOX;
     const QString TARGET_DIR_BRAVE = TARGET_DIR_CHROME;
@@ -67,6 +70,7 @@ namespace
     const QString TARGET_DIR_CHROME = QStringLiteral("/google-chrome/NativeMessagingHosts");
     const QString TARGET_DIR_CHROMIUM = QStringLiteral("/chromium/NativeMessagingHosts");
     const QString TARGET_DIR_FIREFOX = QStringLiteral("/.mozilla/native-messaging-hosts");
+    const QString TARGET_DIR_LIBREWOLF = QStringLiteral("/.librewolf/native-messaging-hosts");
     const QString TARGET_DIR_VIVALDI = QStringLiteral("/vivaldi/NativeMessagingHosts");
     const QString TARGET_DIR_TOR_BROWSER = QStringLiteral(
         "/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts");
@@ -152,6 +156,8 @@ QString NativeMessageInstaller::getTargetPath(SupportedBrowsers browser) const
         return TARGET_DIR_CHROMIUM;
     case SupportedBrowsers::FIREFOX:
         return TARGET_DIR_FIREFOX;
+    case SupportedBrowsers::LIBREWOLF:
+        return TARGET_DIR_LIBREWOLF;
     case SupportedBrowsers::VIVALDI:
         return TARGET_DIR_VIVALDI;
     case SupportedBrowsers::TOR_BROWSER:
@@ -183,6 +189,8 @@ QString NativeMessageInstaller::getBrowserName(SupportedBrowsers browser) const
         return QStringLiteral("chromium");
     case SupportedBrowsers::FIREFOX:
         return QStringLiteral("firefox");
+    case SupportedBrowsers::LIBREWOLF:
+        return QStringLiteral("librewolf");
     case SupportedBrowsers::VIVALDI:
         return QStringLiteral("vivaldi");
     case SupportedBrowsers::TOR_BROWSER:
@@ -222,6 +230,8 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
         basePath = QDir::homePath() + "/.local/share";
     } else if (browser == SupportedBrowsers::FIREFOX) {
         basePath = QDir::homePath();
+    } else if (browser == SupportedBrowsers::LIBREWOLF) {
+        basePath = QDir::homePath();
     } else {
         basePath = QDir::homePath() + "/.config";
     }
@@ -229,6 +239,8 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     if (browser == SupportedBrowsers::TOR_BROWSER) {
         basePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     } else if (browser == SupportedBrowsers::FIREFOX) {
+        basePath = QDir::homePath();
+    } else if (browser == SupportedBrowsers::LIBREWOLF) {
         basePath = QDir::homePath();
     } else {
         basePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
@@ -314,7 +326,7 @@ QJsonObject NativeMessageInstaller::constructFile(SupportedBrowsers browser)
     script["type"] = QStringLiteral("stdio");
 
     QJsonArray arr;
-    if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER
+    if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER || browser == SupportedBrowsers::LIBREWOLF
         || (browser == SupportedBrowsers::CUSTOM
             && browserSettings()->customBrowserType() == SupportedBrowsers::FIREFOX)) {
         for (const QString& extension : ALLOWED_EXTENSIONS) {
