@@ -29,6 +29,7 @@ namespace BrowserShared
         CHROME = 0,
         CHROMIUM,
         FIREFOX,
+        LIBREWOLF,
         VIVALDI,
         TOR_BROWSER,
         BRAVE,
