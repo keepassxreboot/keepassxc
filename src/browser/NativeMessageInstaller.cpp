@@ -228,9 +228,7 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     // defined in the host, so we must hardcode them here.
     if (browser == SupportedBrowsers::TOR_BROWSER) {
         basePath = QDir::homePath() + "/.local/share";
-    } else if (browser == SupportedBrowsers::FIREFOX) {
-        basePath = QDir::homePath();
-    } else if (browser == SupportedBrowsers::LIBREWOLF) {
+    } else if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::LIBREWOLF)
         basePath = QDir::homePath();
     } else {
         basePath = QDir::homePath() + "/.config";
