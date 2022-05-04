@@ -119,14 +119,14 @@ public:
     /**
      * Constructs a KMessageWidget with the specified @p parent.
      */
-    explicit KMessageWidget(QWidget *parent = 0);
-    
+    explicit KMessageWidget(QWidget* parent = nullptr);
+
     /**
      * Constructs a KMessageWidget with the specified @p parent and
      * contents @p text.
      */
-    explicit KMessageWidget(const QString &text, QWidget *parent = 0);
-    
+    explicit KMessageWidget(const QString& text, QWidget* parent = nullptr);
+
     /**
      * Destructor.
      */
