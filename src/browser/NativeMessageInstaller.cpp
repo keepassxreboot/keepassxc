@@ -230,9 +230,11 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
         basePath = QDir::homePath() + "/.local/share";
     } else if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::LIBREWOLF)
         basePath = QDir::homePath();
-    } else {
-        basePath = QDir::homePath() + "/.config";
-    }
+}
+else
+{
+    basePath = QDir::homePath() + "/.config";
+}
 #elif defined(Q_OS_LINUX)
     if (browser == SupportedBrowsers::TOR_BROWSER) {
         basePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
@@ -322,7 +324,8 @@ QJsonObject NativeMessageInstaller::constructFile(SupportedBrowsers browser)
     script["type"] = QStringLiteral("stdio");
 
     QJsonArray arr;
-    if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER || browser == SupportedBrowsers::LIBREWOLF
+    if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER
+        || browser == SupportedBrowsers::LIBREWOLF
         || (browser == SupportedBrowsers::CUSTOM
             && browserSettings()->customBrowserType() == SupportedBrowsers::FIREFOX)) {
         for (const QString& extension : ALLOWED_EXTENSIONS) {
