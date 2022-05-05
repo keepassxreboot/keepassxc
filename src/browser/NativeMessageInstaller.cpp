@@ -230,11 +230,9 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
         basePath = QDir::homePath() + "/.local/share";
     } else if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::LIBREWOLF)
         basePath = QDir::homePath();
-}
-else
-{
-    basePath = QDir::homePath() + "/.config";
-}
+    } else {
+        basePath = QDir::homePath() + "/.config";
+    }
 #elif defined(Q_OS_LINUX)
     if (browser == SupportedBrowsers::TOR_BROWSER) {
         basePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
