@@ -276,7 +276,12 @@ namespace FdoSecrets
             EntrySearcher(caseSensitive, skipProtected).search(terms, m_exposedGroup, forceSearch);
         items.reserve(foundEntries.size());
         for (const auto& entry : foundEntries) {
-            items << m_entryToItem.value(entry);
+            const auto item = m_entryToItem.value(entry);
+            // it's possible that we don't have a corresponding item for the entry
+            // this can happen when the recycle bin is below the exposed group.
+            if (item) {
+                items << item;
+            }
         }
         return {};
     }
@@ -458,7 +463,7 @@ namespace FdoSecrets
         });
         // Another possibility is the group being moved to recycle bin.
         connect(m_exposedGroup.data(), &Group::modified, this, [this]() {
-            if (inRecycleBin(m_exposedGroup->parentGroup())) {
+            if (inRecycleBin(m_exposedGroup)) {
                 // reset the exposed group to none
                 FdoSecrets::settings()->setExposedGroup(m_backend->database().data(), {});
             }
@@ -677,11 +682,7 @@ namespace FdoSecrets
     bool Collection::inRecycleBin(Group* group) const
     {
         Q_ASSERT(m_backend);
-
-        if (!group) {
-            // the root group's parent is nullptr, we treat it as not in recycle bin.
-            return false;
-        }
+        Q_ASSERT(group);
 
         if (!m_backend->database()->metadata()) {
             return false;

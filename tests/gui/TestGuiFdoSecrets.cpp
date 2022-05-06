@@ -1564,6 +1564,39 @@ void TestGuiFdoSecrets::testModifyingExposedGroup()
     }
 }
 
+void TestGuiFdoSecrets::testNoExposeRecycleBin()
+{
+    // when the recycle bin is underneath the exposed group
+    // be careful not to expose entries in there
+
+    FdoSecrets::settings()->setExposedGroup(m_db, m_db->rootGroup()->uuid());
+    m_db->metadata()->setRecycleBinEnabled(true);
+
+    auto entry = m_db->rootGroup()->entries().first();
+    VERIFY(entry);
+    m_db->recycleEntry(entry);
+    processEvents();
+
+    auto service = enableService();
+    VERIFY(service);
+
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+
+    // exposing subgroup does not expose entries in other groups
+    DBUS_GET(itemPaths, coll->items());
+    QSet<Entry*> exposedEntries;
+    for (const auto& itemPath : itemPaths) {
+        exposedEntries << m_plugin->dbus()->pathToObject<Item>(itemPath)->backend();
+    }
+    VERIFY(!exposedEntries.contains(entry));
+
+    // searching should not return the entry
+    DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", entry->title()}}));
+    COMPARE(locked, {});
+    COMPARE(unlocked, {});
+}
+
 void TestGuiFdoSecrets::lockDatabaseInBackend()
 {
     m_dbWidget->lock();
