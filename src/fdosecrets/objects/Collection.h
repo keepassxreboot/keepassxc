@@ -107,6 +107,9 @@ namespace FdoSecrets
         DatabaseWidget* backend() const;
         QString backendFilePath() const;
         Service* service() const;
+        /**
+         * similar to Group::isRecycled, but we also return true when the group itself is the recycle bin
+         */
         bool inRecycleBin(Group* group) const;
         bool inRecycleBin(Entry* entry) const;
 

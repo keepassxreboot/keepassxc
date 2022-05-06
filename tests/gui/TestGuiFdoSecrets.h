@@ -97,6 +97,7 @@ private slots:
 
     void testExposeSubgroup();
     void testModifyingExposedGroup();
+    void testNoExposeRecycleBin();
 
     void testHiddenFilename();
     void testDuplicateName();
