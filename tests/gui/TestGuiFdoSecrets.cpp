@@ -1094,6 +1094,31 @@ void TestGuiFdoSecrets::testItemCreate()
     }
 }
 
+void TestGuiFdoSecrets::testItemCreateUnlock()
+{
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+    VERIFY(sess);
+
+    // NOTE: entries are no longer valid after locking
+    lockDatabaseInBackend();
+
+    QSignalSpy spyItemCreated(coll.data(), SIGNAL(ItemCreated(QDBusObjectPath)));
+    VERIFY(spyItemCreated.isValid());
+
+    // create item
+    StringStringMap attributes{
+        {"application", "fdosecrets-test"},
+        {"attr-i[bute]", "![some] -value*"},
+    };
+
+    auto item = createItem(sess, coll, "abc", "Password", attributes, false, false, true);
+    VERIFY(item);
+}
+
 void TestGuiFdoSecrets::testItemChange()
 {
     auto service = enableService();
@@ -1678,7 +1703,8 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
                                                         const QString& pass,
                                                         const StringStringMap& attr,
                                                         bool replace,
-                                                        bool expectPrompt)
+                                                        bool expectPrompt,
+                                                        bool expectUnlockPrompt)
 {
     VERIFY(sess);
     VERIFY(coll);
@@ -1703,6 +1729,10 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
 
     // drive the prompt
     DBUS_VERIFY(prompt->Prompt(""));
+
+    bool unlockFound = driveUnlockDialog();
+    COMPARE(unlockFound, expectUnlockPrompt);
+
     bool found = driveAccessControlDialog();
     COMPARE(found, expectPrompt);
 
@@ -1800,6 +1830,9 @@ bool TestGuiFdoSecrets::driveUnlockDialog()
     processEvents();
     auto dbOpenDlg = m_tabWidget->findChild<DatabaseOpenDialog*>();
     VERIFY(dbOpenDlg);
+    if (!dbOpenDlg->isVisible()) {
+        return false;
+    }
     auto editPassword = dbOpenDlg->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
     VERIFY(editPassword);
     editPassword->setFocus();
