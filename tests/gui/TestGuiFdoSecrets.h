@@ -67,6 +67,7 @@ private slots:
     void testServiceEnableNoExposedDatabase();
     void testServiceSearch();
     void testServiceSearchBlockingUnlock();
+    void testServiceSearchBlockingUnlockMultiple();
     void testServiceSearchForce();
     void testServiceUnlock();
     void testServiceUnlockDatabaseConcurrent();
@@ -104,7 +105,7 @@ private slots:
     void testDuplicateName();
 
 private:
-    bool driveUnlockDialog();
+    bool driveUnlockDialog(DatabaseWidget* target = nullptr);
     bool driveNewDatabaseWizard();
     bool driveAccessControlDialog(bool remember = true, bool includeFutureEntries = false);
     bool waitForSignal(QSignalSpy& spy, int expectedCount);
