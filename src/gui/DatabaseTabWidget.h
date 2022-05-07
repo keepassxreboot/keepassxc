@@ -75,6 +75,7 @@ public slots:
     void closeDatabaseFromSender();
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent);
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent, const QString& filePath);
+    void unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent);
     void relockPendingDatabase();
 
     void showDatabaseSecurity();
@@ -106,7 +107,6 @@ private:
     QSharedPointer<Database> execNewDatabaseWizard();
     void updateLastDatabases(const QString& filename);
     bool warnOnExport();
-    void unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent);
     void displayUnlockDialog();
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
