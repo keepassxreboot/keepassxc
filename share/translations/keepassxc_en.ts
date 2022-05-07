@@ -896,6 +896,14 @@ Do you want to delete the entry?
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Do you want to update the information in %1 - %2?
+
+The selected entry is a reference of &quot;%3&quot;.
+Select Overwrite to change password to the current referenced entry.
+Select Save to change the password of the original entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
