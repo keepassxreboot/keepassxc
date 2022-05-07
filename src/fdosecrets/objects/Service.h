@@ -128,6 +128,7 @@ namespace FdoSecrets
     private slots:
         void ensureDefaultAlias();
 
+        void onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
         void onDatabaseTabOpened(DatabaseWidget* dbWidget, bool emitSignal);
         void monitorDatabaseExposedGroup(DatabaseWidget* dbWidget);
 
@@ -135,8 +136,6 @@ namespace FdoSecrets
         void onCollectionAliasAdded(const QString& alias);
 
         void onCollectionAliasRemoved(const QString& alias);
-
-        void onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
     private:
         bool initialize();
@@ -166,7 +165,8 @@ namespace FdoSecrets
         QList<Session*> m_sessions{};
 
         bool m_insideEnsureDefaultAlias{false};
-        QSet<const DatabaseWidget*> m_unlockingDb{}; // list of db being unlocking
+        // list of db currently has unlock dialog shown
+        QHash<const DatabaseWidget*, QMetaObject::Connection> m_unlockingDb{};
         QSet<const DatabaseWidget*> m_lockingDb{}; // list of db being locking
     };
 

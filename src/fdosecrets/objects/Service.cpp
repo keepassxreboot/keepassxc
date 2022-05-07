@@ -523,18 +523,37 @@ namespace FdoSecrets
             return;
         }
 
-        // mark the db as being unlocked to prevent multiple dialogs for the same db
+        // check if the db is already being unlocked to prevent multiple dialogs for the same db
         if (m_unlockingDb.contains(dbWidget)) {
             return;
         }
-        m_unlockingDb.insert(dbWidget);
 
+        // insert a dummy one here, just to prevent multiple dialogs
+        // the real one will be inserted in onDatabaseUnlockDialogFinished
+        m_unlockingDb[dbWidget] = {};
+
+        // actually show the dialog
         m_databases->unlockDatabaseInDialog(dbWidget, DatabaseOpenDialog::Intent::None);
     }
 
     void Service::onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget)
     {
-        m_unlockingDb.remove(dbWidget);
-        emit doneUnlockDatabaseInDialog(accepted, dbWidget);
+        if (!m_unlockingDb.contains(dbWidget)) {
+            // not our concern
+            return;
+        }
+
+        if (!accepted) {
+            emit doneUnlockDatabaseInDialog(false, dbWidget);
+            m_unlockingDb.remove(dbWidget);
+        } else {
+            // delay the done signal to when the database is actually done with unlocking
+            // this is a oneshot connection to prevent superfluous signals
+            auto conn = connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [dbWidget, this]() {
+                emit doneUnlockDatabaseInDialog(true, dbWidget);
+                disconnect(m_unlockingDb.take(dbWidget));
+            });
+            m_unlockingDb[dbWidget] = conn;
+        }
     }
 } // namespace FdoSecrets
