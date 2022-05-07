@@ -210,8 +210,7 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult
-    Collection::searchItems(const DBusClientPtr& client, const StringStringMap& attributes, QList<Item*>& items)
+    DBusResult Collection::searchItems(const DBusClientPtr&, const StringStringMap& attributes, QList<Item*>& items)
     {
         items.clear();
 
@@ -220,24 +219,6 @@ namespace FdoSecrets
             return ret;
         }
 
-        if (backendLocked() && settings()->unlockBeforeSearch()) {
-            // do a blocking unlock prompt first.
-            // while technically not correct, this should improve compatibility.
-            // see issue #4443
-            auto prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{this}, QSet<Item*>{});
-            if (!prompt) {
-                return QDBusError::InternalError;
-            }
-            // we don't know the windowId to show the prompt correctly,
-            // but the default of showing over the KPXC main window should be good enough
-            ret = prompt->prompt(client, "");
-            // blocking wait
-            QEventLoop loop;
-            connect(prompt, &PromptBase::completed, &loop, &QEventLoop::quit);
-            loop.exec();
-        }
-
-        // check again because the prompt may be cancelled
         if (backendLocked()) {
             // searchItems should work, whether `this` is locked or not.
             // however, we can't search items the same way as in gnome-keying,

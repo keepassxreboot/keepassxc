@@ -183,7 +183,7 @@ void TestGuiFdoSecrets::init()
     m_dbFile.reset(new TemporaryFile());
     // Write the temp storage to a temp database file for use in our tests
     VERIFY(m_dbFile->open());
-    COMPARE(m_dbFile->write(m_dbData), static_cast<qint64>((m_dbData.size())));
+    COMPARE(m_dbFile->write(m_dbData), static_cast<qint64>(m_dbData.size()));
     m_dbFile->close();
 
     // make sure window is activated or focus tests may fail
@@ -198,6 +198,12 @@ void TestGuiFdoSecrets::init()
     // by default expose the root group
     FdoSecrets::settings()->setExposedGroup(m_db, m_db->rootGroup()->uuid());
     VERIFY(m_dbWidget->save());
+
+    // enforce consistent default settings at the beginning
+    FdoSecrets::settings()->setUnlockBeforeSearch(false);
+    FdoSecrets::settings()->setShowNotification(false);
+    FdoSecrets::settings()->setConfirmAccessItem(false);
+    FdoSecrets::settings()->setEnabled(false);
 }
 
 // Every test ends with closing the temp database without saving
@@ -385,6 +391,62 @@ void TestGuiFdoSecrets::testServiceSearchBlockingUnlock()
         COMPARE(unlocked.size(), 1);
         auto item = getProxy<ItemProxy>(unlocked.first());
         DBUS_COMPARE(item->label(), title);
+    }
+}
+
+void TestGuiFdoSecrets::testServiceSearchBlockingUnlockMultiple()
+{
+    // setup: two databases, both locked, one with exposed db, the other not.
+
+    // add another database tab with a database with no exposed group
+    // to avoid modify the original, copy to a temp file first
+    QFile sourceDbFile(QStringLiteral(KEEPASSX_TEST_DATA_DIR "/NewDatabase2.kdbx"));
+    QByteArray dbData;
+    VERIFY(sourceDbFile.open(QIODevice::ReadOnly));
+    VERIFY(Tools::readAllFromDevice(&sourceDbFile, dbData));
+    sourceDbFile.close();
+
+    QTemporaryFile anotherFile;
+    VERIFY(anotherFile.open());
+    COMPARE(anotherFile.write(dbData), static_cast<qint64>(dbData.size()));
+    anotherFile.close();
+
+    m_tabWidget->addDatabaseTab(anotherFile.fileName(), false);
+    auto anotherWidget = m_tabWidget->currentDatabaseWidget();
+
+    auto service = enableService();
+    VERIFY(service);
+
+    // when there are multiple locked databases,
+    // repeatly show the dialog until there is at least one unlocked collection
+    FdoSecrets::settings()->setUnlockBeforeSearch(true);
+
+    // when only unlocking the one with no exposed group, a second dialog is shown
+    lockDatabaseInBackend();
+    {
+        bool unlockDialogWorks = false;
+        QTimer::singleShot(50, [&]() {
+            unlockDialogWorks = driveUnlockDialog(anotherWidget);
+            QTimer::singleShot(50, [&]() { unlockDialogWorks &= driveUnlockDialog(); });
+        });
+
+        DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", "Sample Entry"}}));
+        VERIFY(unlockDialogWorks);
+        COMPARE(locked, {});
+        COMPARE(unlocked.size(), 1);
+    }
+
+    // when unlocking the one with exposed group, the other one remains locked
+    lockDatabaseInBackend();
+    {
+        bool unlockDialogWorks = false;
+        QTimer::singleShot(50, [&]() { unlockDialogWorks = driveUnlockDialog(m_dbWidget); });
+
+        DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", "Sample Entry"}}));
+        VERIFY(unlockDialogWorks);
+        COMPARE(locked, {});
+        COMPARE(unlocked.size(), 1);
+        VERIFY(anotherWidget->isLocked());
     }
 }
 
@@ -1625,7 +1687,7 @@ void TestGuiFdoSecrets::testNoExposeRecycleBin()
 
 void TestGuiFdoSecrets::lockDatabaseInBackend()
 {
-    m_dbWidget->lock();
+    m_tabWidget->lockDatabases();
     m_db.reset();
     processEvents();
 }
@@ -1825,7 +1887,7 @@ bool TestGuiFdoSecrets::driveNewDatabaseWizard()
     return ret;
 }
 
-bool TestGuiFdoSecrets::driveUnlockDialog()
+bool TestGuiFdoSecrets::driveUnlockDialog(DatabaseWidget* target)
 {
     processEvents();
     auto dbOpenDlg = m_tabWidget->findChild<DatabaseOpenDialog*>();
@@ -1833,6 +1895,8 @@ bool TestGuiFdoSecrets::driveUnlockDialog()
     if (!dbOpenDlg->isVisible()) {
         return false;
     }
+    dbOpenDlg->setActiveDatabaseTab(target);
+
     auto editPassword = dbOpenDlg->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
     VERIFY(editPassword);
     editPassword->setFocus();
