@@ -65,7 +65,7 @@ namespace FdoSecrets
         Q_INVOKABLE DBusResult searchItems(const DBusClientPtr& client,
                                            const StringStringMap& attributes,
                                            QList<Item*>& unlocked,
-                                           QList<Item*>& locked) const;
+                                           QList<Item*>& locked);
 
         Q_INVOKABLE DBusResult unlock(const DBusClientPtr& client,
                                       const QList<DBusObject*>& objects,
@@ -125,6 +125,12 @@ namespace FdoSecrets
          */
         void doUnlockDatabaseInDialog(DatabaseWidget* dbWidget);
 
+        /**
+         * Async, connect to signal doneUnlockDatabaseInDialog for finish notification
+         * @param dbWidget
+         */
+        void doUnlockAnyDatabaseInDialog();
+
     private slots:
         void ensureDefaultAlias();
 
@@ -154,6 +160,8 @@ namespace FdoSecrets
          */
         Collection* findCollection(const DatabaseWidget* db) const;
 
+        DBusResult unlockedCollections(QList<Collection*>& unlocked) const;
+
     private:
         FdoSecretsPlugin* m_plugin{nullptr};
         QPointer<DatabaseTabWidget> m_databases{};
@@ -165,6 +173,7 @@ namespace FdoSecrets
         QList<Session*> m_sessions{};
 
         bool m_insideEnsureDefaultAlias{false};
+        bool m_unlockingAnyDatabase{false};
         // list of db currently has unlock dialog shown
         QHash<const DatabaseWidget*, QMetaObject::Connection> m_unlockingDb{};
         QSet<const DatabaseWidget*> m_lockingDb{}; // list of db being locking
