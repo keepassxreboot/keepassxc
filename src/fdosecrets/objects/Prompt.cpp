@@ -210,7 +210,6 @@ namespace FdoSecrets
         m_collections.reserve(colls.size());
         for (const auto& coll : asConst(colls)) {
             m_collections << coll;
-            connect(coll, &Collection::doneUnlockCollection, this, &UnlockPrompt::collectionUnlockFinished);
         }
         for (const auto& item : asConst(items)) {
             m_items[item->collection()] << item;
@@ -234,6 +233,7 @@ namespace FdoSecrets
         bool waitingForCollections = false;
         for (const auto& c : asConst(m_collections)) {
             if (c) {
+                connect(c, &Collection::doneUnlockCollection, this, &UnlockPrompt::collectionUnlockFinished);
                 // doUnlock is nonblocking, execution will continue in collectionUnlockFinished
                 // it is ok to call doUnlock multiple times before it's actually unlocked by the user
                 c->doUnlock();
@@ -242,7 +242,7 @@ namespace FdoSecrets
         }
 
         // unlock items directly if no collection unlocking pending
-        // o.w. do it in collectionUnlockFinished
+        // o.w. doing it in collectionUnlockFinished
         if (!waitingForCollections) {
             unlockItems();
         }
@@ -400,18 +400,49 @@ namespace FdoSecrets
             return PromptResult::accepted(false);
         }
 
-        bool locked = true;
-        auto ret = m_coll->locked(locked);
-        if (locked) {
-            // collection was locked
-            return DBusResult{DBUS_ERROR_SECRET_IS_LOCKED};
-        }
-
         // save a weak reference to the client which may be used asynchronously later
         m_client = client;
 
+        // give the user a chance to unlock the collection
+        // UnlockPrompt will handle the case of collection already unlocked
+        auto prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{m_coll.data()}, QSet<Item*>{});
+        if (!prompt) {
+            return DBusResult{QDBusError::InternalError};
+        }
+        // postpone anything after the prompt
+        connect(prompt, &PromptBase::completed, this, [this, windowId](bool dismissed) {
+            if (dismissed) {
+                finishPrompt(dismissed);
+            } else {
+                auto res = createItem(windowId);
+                if (res.err()) {
+                    qWarning() << "FdoSecrets:" << res;
+                    finishPrompt(true);
+                }
+            }
+        });
+
+        auto ret = prompt->prompt(client, windowId);
+        if (ret.err()) {
+            return ret;
+        }
+        return PromptResult::Pending;
+    }
+
+    DBusResult CreateItemPrompt::createItem(const QString& windowId)
+    {
+        auto client = m_client.lock();
+        if (!client) {
+            // client already gone
+            return {};
+        }
+
+        if (!m_coll) {
+            return DBusResult{DBUS_ERROR_SECRET_NO_SUCH_OBJECT};
+        }
+
         // get itemPath to create item and
-        // try finding an existing item using attributes
+        // try to find an existing item using attributes
         QString itemPath{};
         auto iterAttr = m_properties.find(DBUS_INTERFACE_SECRET_ITEM + ".Attributes");
         if (iterAttr != m_properties.end()) {
@@ -425,7 +456,7 @@ namespace FdoSecrets
 
             // check existing item using attributes
             QList<Item*> existing;
-            ret = m_coll->searchItems(client, attributes, existing);
+            auto ret = m_coll->searchItems(client, attributes, existing);
             if (ret.err()) {
                 return ret;
             }
@@ -444,31 +475,29 @@ namespace FdoSecrets
         }
 
         // the item may be locked due to authorization
-        ret = m_item->locked(client, locked);
+        // give the user a chance to unlock the item
+        auto prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{}, QSet<Item*>{m_item});
+        if (!prompt) {
+            return DBusResult{QDBusError::InternalError};
+        }
+        // postpone anything after the confirmation
+        connect(prompt, &PromptBase::completed, this, [this](bool dismissed) {
+            if (dismissed) {
+                finishPrompt(dismissed);
+            } else {
+                auto res = updateItem();
+                if (res.err()) {
+                    qWarning() << "FdoSecrets:" << res;
+                    finishPrompt(true);
+                }
+            }
+        });
+
+        auto ret = prompt->prompt(client, windowId);
         if (ret.err()) {
             return ret;
         }
-        if (locked) {
-            // give the user a chance to unlock the item
-            auto prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{}, QSet<Item*>{m_item});
-            if (!prompt) {
-                return DBusResult{QDBusError::InternalError};
-            }
-            // postpone anything after the confirmation
-            connect(prompt, &PromptBase::completed, this, [this]() {
-                auto res = updateItem();
-                finishPrompt(res.err());
-            });
-
-            ret = prompt->prompt(client, windowId);
-            if (ret.err()) {
-                return ret;
-            }
-            return PromptResult::Pending;
-        }
-
-        // the item can be updated directly
-        return updateItem();
+        return {};
     }
 
     DBusResult CreateItemPrompt::updateItem()
@@ -493,6 +522,9 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
+
+        // finally can finish the prompt without dismissing it
+        finishPrompt(false);
         return {};
     }
 } // namespace FdoSecrets

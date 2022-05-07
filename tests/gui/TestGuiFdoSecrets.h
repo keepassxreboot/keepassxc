@@ -84,6 +84,7 @@ private slots:
     void testCollectionChange();
 
     void testItemCreate();
+    void testItemCreateUnlock();
     void testItemChange();
     void testItemReplace();
     void testItemReplaceExistingLocked();
@@ -122,7 +123,8 @@ private:
                                          const QString& pass,
                                          const FdoSecrets::wire::StringStringMap& attr,
                                          bool replace,
-                                         bool expectPrompt = false);
+                                         bool expectPrompt = false,
+                                         bool expectUnlockPrompt = false);
     FdoSecrets::wire::Secret
     encryptPassword(QByteArray value, QString contentType, const QSharedPointer<SessionProxy>& sess);
     template <typename Proxy> QSharedPointer<Proxy> getProxy(const QDBusObjectPath& path) const
