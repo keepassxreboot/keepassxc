@@ -1045,6 +1045,10 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <source>Register</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Do you want to update the information in %1 - %2?&lt;br&gt;&lt;br&gt;The selected entry is a reference of &quot;%3&quot;.&lt;br&gt;Select Overwrite to change password to the current referenced entry.&lt;br&gt;Select Save to change the password of the original entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
@@ -1646,10 +1650,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>authenticate to access the database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
