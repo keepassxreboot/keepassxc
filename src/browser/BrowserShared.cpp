@@ -33,18 +33,15 @@ namespace BrowserShared
 #if defined(KEEPASSXC_DIST_SNAP)
         return QProcessEnvironment::systemEnvironment().value("SNAP_USER_COMMON") + serverName;
 #elif defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
-        // Use XDG_RUNTIME_DIR if available, else use /tmp.
+        // This returns XDG_RUNTIME_DIR or else a temporary subdirectory.
         QString path = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
-        if (path.isEmpty()) {
-            path = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-        }
 
         // Put the socket in a dedicated directory.
         // This directory will be easily mountable by sandbox containers.
         QString subPath = path + "/app/org.keepassxc.KeePassXC/";
         QDir().mkpath(subPath);
-        QString socketPath = subPath + serverName;
 
+        QString socketPath = subPath + serverName;
 #ifndef KEEPASSXC_DIST_FLATPAK
         // Create a symlink at the legacy location for backwards compatibility.
         QFile::link(socketPath, path + serverName);
