@@ -63,6 +63,7 @@ public:
         GlobalAutoTypeRetypeTime,
         FaviconDownloadTimeout,
         UpdateCheckMessageShown,
+        DefaultDatabaseFileName,
 
         LastDatabases,
         LastKeyFiles,

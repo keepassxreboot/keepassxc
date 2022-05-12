@@ -1980,8 +1980,10 @@ bool DatabaseWidget::saveAs()
 
     QString oldFilePath = m_db->filePath();
     if (!QFileInfo::exists(oldFilePath)) {
+        QString defaultFileName = config()->get(Config::DefaultDatabaseFileName).toString();
         oldFilePath =
-            QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/" + tr("Passwords").append(".kdbx"));
+            QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/"
+                                     + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
     }
     const QString newFilePath = fileDialog()->getSaveFileName(
         this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr);
@@ -2068,8 +2070,10 @@ bool DatabaseWidget::saveBackup()
     while (true) {
         QString oldFilePath = m_db->filePath();
         if (!QFileInfo::exists(oldFilePath)) {
-            oldFilePath = QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/"
-                                                   + tr("Passwords").append(".kdbx"));
+            QString defaultFileName = config()->get(Config::DefaultDatabaseFileName).toString();
+            oldFilePath = QDir::toNativeSeparators(
+                config()->get(Config::LastDir).toString() + "/"
+                + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
         }
 
         const QString newFilePath = fileDialog()->getSaveFileName(this,
