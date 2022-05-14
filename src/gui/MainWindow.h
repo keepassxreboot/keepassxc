@@ -69,6 +69,8 @@ signals:
 public slots:
     void openDatabase(const QString& filePath, const QString& password = {}, const QString& keyfile = {});
     void appExit();
+    bool isHardwareKeySupported();
+    bool refreshHardwareKeys();
     void displayGlobalMessage(const QString& text,
                               MessageWidget::MessageType type,
                               bool showClosebutton = true,
