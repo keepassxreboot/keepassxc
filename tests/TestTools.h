@@ -31,6 +31,8 @@ private slots:
     void testValidUuid();
     void testBackupFilePatternSubstitution_data();
     void testBackupFilePatternSubstitution();
+    void testEscapeRegex();
+    void testEscapeRegex_data();
     void testConvertToRegex();
     void testConvertToRegex_data();
 };
