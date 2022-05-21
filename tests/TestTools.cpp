@@ -165,6 +165,34 @@ void TestTools::testBackupFilePatternSubstitution()
     QCOMPARE(Tools::substituteBackupFilePath(pattern, dbFilePath), expectedSubstitution);
 }
 
+void TestTools::testEscapeRegex_data()
+{
+    QTest::addColumn<QString>("input");
+    QTest::addColumn<QString>("expected");
+
+    QString all_regular_characters = "0123456789";
+    for (char c = 'a'; c != 'z'; ++c) {
+        all_regular_characters += QChar::fromLatin1(c);
+    }
+    for (char c = 'A'; c != 'Z'; ++c) {
+        all_regular_characters += QChar::fromLatin1(c);
+    }
+
+    QTest::newRow("Regular characters should not be escaped") << all_regular_characters << all_regular_characters;
+    QTest::newRow("Special characters should be escaped") << R"(.^$*+-?()[]{}|\)"
+                                                          << R"(\.\^\$\*\+\-\?\(\)\[\]\{\}\|\\)";
+    QTest::newRow("Null character") << QString::fromLatin1("ab\0c", 4) << "ab\\0c";
+}
+
+void TestTools::testEscapeRegex()
+{
+    QFETCH(QString, input);
+    QFETCH(QString, expected);
+
+    auto actual = Tools::escapeRegex(input);
+    QCOMPARE(actual, expected);
+}
+
 void TestTools::testConvertToRegex()
 {
     QFETCH(QString, input);
@@ -185,16 +213,29 @@ void TestTools::testConvertToRegex_data()
 
     QTest::newRow("No Options") << input << static_cast<int>(Tools::RegexConvertOpts::DEFAULT)
                                 << QString(R"(te|st*t?[5]^(test);',.)");
+    // Escape regex
+    QTest::newRow("Escape Regex") << input << static_cast<int>(Tools::RegexConvertOpts::ESCAPE_REGEX)
+                                  << Tools::escapeRegex(input);
+    QTest::newRow("Escape Regex and exact match")
+        << input << static_cast<int>(Tools::RegexConvertOpts::ESCAPE_REGEX | Tools::RegexConvertOpts::EXACT_MATCH)
+        << "^(?:" + Tools::escapeRegex(input) + ")$";
+
+    // Exact match does not escape the pattern
     QTest::newRow("Exact Match") << input << static_cast<int>(Tools::RegexConvertOpts::EXACT_MATCH)
-                                 << QString(R"(^te|st*t?[5]^(test);',.$)");
+                                 << QString(R"(^(?:te|st*t?[5]^(test);',.)$)");
+
+    // Exact match with improper regex
+    QTest::newRow("Exact Match") << ")av(" << static_cast<int>(Tools::RegexConvertOpts::EXACT_MATCH)
+                                 << QString(R"(^(?:)av()$)");
+
     QTest::newRow("Exact Match & Wildcard")
         << input << static_cast<int>(Tools::RegexConvertOpts::EXACT_MATCH | Tools::RegexConvertOpts::WILDCARD_ALL)
-        << QString(R"(^te|st.*t.\[5\]\^\(test\);'\,\.$)");
+        << QString(R"(^(?:te|st.*t.\[5\]\^\(test\)\;\'\,\.)$)");
     QTest::newRow("Wildcard Single Match") << input << static_cast<int>(Tools::RegexConvertOpts::WILDCARD_SINGLE_MATCH)
-                                           << QString(R"(te\|st\*t.\[5\]\^\(test\);'\,\.)");
+                                           << QString(R"(te\|st\*t.\[5\]\^\(test\)\;\'\,\.)");
     QTest::newRow("Wildcard OR") << input << static_cast<int>(Tools::RegexConvertOpts::WILDCARD_LOGICAL_OR)
-                                 << QString(R"(te|st\*t\?\[5\]\^\(test\);'\,\.)");
+                                 << QString(R"(te|st\*t\?\[5\]\^\(test\)\;\'\,\.)");
     QTest::newRow("Wildcard Unlimited Match")
         << input << static_cast<int>(Tools::RegexConvertOpts::WILDCARD_UNLIMITED_MATCH)
-        << QString(R"(te\|st.*t\?\[5\]\^\(test\);'\,\.)");
+        << QString(R"(te\|st.*t\?\[5\]\^\(test\)\;\'\,\.)");
 }
