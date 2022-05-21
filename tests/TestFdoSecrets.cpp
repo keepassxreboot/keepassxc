@@ -82,6 +82,11 @@ void TestFdoSecrets::testSpecialCharsInAttributeValue()
         QCOMPARE(res.count(), 1);
         QCOMPARE(res[0]->title(), QStringLiteral("titleB"));
     }
+    {
+        const auto term = Collection::attributeToTerm("testAttribute", "v|");
+        const auto res = EntrySearcher().search({term}, root.data());
+        QCOMPARE(res.count(), 0);
+    }
 }
 
 void TestFdoSecrets::testDBusPathParse()

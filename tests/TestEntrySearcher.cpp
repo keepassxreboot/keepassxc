@@ -224,7 +224,7 @@ void TestEntrySearcher::testSearchTermParser()
     QCOMPARE(terms.length(), 2);
 
     QCOMPARE(terms[0].field, EntrySearcher::Field::Url);
-    QCOMPARE(terms[0].regex.pattern(), QString("^.*\\.google\\.com$"));
+    QCOMPARE(terms[0].regex.pattern(), QString("^(?:.*\\.google\\.com)$"));
 
     QCOMPARE(terms[1].field, EntrySearcher::Field::Username);
     QCOMPARE(terms[1].regex.pattern(), QString("\\d+\\w{2}"));
@@ -237,7 +237,7 @@ void TestEntrySearcher::testSearchTermParser()
 
     QCOMPARE(terms[0].field, EntrySearcher::Field::AttributeValue);
     QCOMPARE(terms[0].word, QString("abc"));
-    QCOMPARE(terms[0].regex.pattern(), QString("^efg$"));
+    QCOMPARE(terms[0].regex.pattern(), QString("^(?:efg)$"));
 
     QCOMPARE(terms[1].field, EntrySearcher::Field::AttributeValue);
     QCOMPARE(terms[1].word, QString("def"));

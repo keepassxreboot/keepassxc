@@ -1,6 +1,10 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 Lennart Glauer <mail@lennart-glauer.de>
+ *  Copyright (C) 2020 Giuseppe D'Angelo <dangelog@gmail.com>.
+ *  Copyright (C) 2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com,
+ *  author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+ *  Copyright (C) 2021 The Qt Company Ltd.
  *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -296,8 +300,59 @@ namespace Tools
         return true;
     }
 
-    // Escape regex symbols
-    auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#|*?]))re");
+    /****************************************************************************
+     *
+     * Copyright (C) 2020 Giuseppe D'Angelo <dangelog@gmail.com>.
+     * Copyright (C) 2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com,
+     * author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+     * Copyright (C) 2021 The Qt Company Ltd. Contact: https://www.qt.io/licensing/
+     *
+     * This function is part of the QtCore module of the Qt Toolkit. And subject to the
+     * following licenses.
+     *
+     * GNU General Public License Usage
+     * Alternatively, this function may be used under the terms of the GNU
+     * General Public License version 2.0 or (at your option) the GNU General
+     * Public license version 3 or any later version approved by the KDE Free
+     * Qt Foundation. The licenses are as published by the Free Software
+     * Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
+     * included in the packaging of this file. Please review the following
+     * information to ensure the GNU General Public License requirements will
+     * be met: https://www.gnu.org/licenses/gpl-2.0.html and
+     * https://www.gnu.org/licenses/gpl-3.0.html.
+     */
+    QString escapeRegex(const QString& str)
+    {
+        QString result;
+        const auto count = str.size();
+        result.reserve(count * 2);
+
+        // everything but [a-zA-Z0-9_] gets escaped,
+        // cf. perldoc -f quotemeta
+        for (int i = 0; i < count; ++i) {
+            const QChar current = str.at(i);
+
+            if (current == QChar::Null) {
+                // unlike Perl, a literal NUL must be escaped with
+                // "\\0" (backslash + 0) and not "\\\0" (backslash + NUL),
+                // because pcre16_compile uses a NUL-terminated string
+                result.append(u'\\');
+                result.append(u'0');
+            } else if ((current < u'a' || current > u'z') && (current < u'A' || current > u'Z')
+                       && (current < u'0' || current > u'9') && current != u'_') {
+                result.append(u'\\');
+                result.append(current);
+                if (current.isHighSurrogate() && i < (count - 1)) {
+                    result.append(str.at(++i));
+                }
+            } else {
+                result.append(current);
+            }
+        }
+
+        result.squeeze();
+        return result;
+    }
 
     QRegularExpression convertToRegex(const QString& string, int opts)
     {
@@ -305,7 +360,7 @@ namespace Tools
 
         // Wildcard support (*, ?, |)
         if (opts & RegexConvertOpts::WILDCARD_ALL || opts & RegexConvertOpts::ESCAPE_REGEX) {
-            pattern.replace(regexEscape, "\\\\1");
+            pattern = escapeRegex(pattern);
 
             if (opts & RegexConvertOpts::WILDCARD_UNLIMITED_MATCH) {
                 pattern.replace("\\*", ".*");
@@ -318,9 +373,9 @@ namespace Tools
             }
         }
 
-        // Exact modifier
         if (opts & RegexConvertOpts::EXACT_MATCH) {
-            pattern = "^" + pattern + "$";
+            // Exact modifier
+            pattern = "^(?:" + pattern + ")$";
         }
 
         auto regex = QRegularExpression(pattern);

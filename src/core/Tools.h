@@ -45,18 +45,33 @@ namespace Tools
     QString envSubstitute(const QString& filepath,
                           QProcessEnvironment environment = QProcessEnvironment::systemEnvironment());
 
+    /**
+     * Escapes all characters in regex such that they do not receive any special treatment when used
+     * in a regular expression. Essentially, this function escapes any characters not in a-zA-Z0-9.
+     * @param regex The unescaped regular expression string.
+     * @return An escaped string safe to use in a regular expression.
+     */
+    QString escapeRegex(const QString& regex);
+
     enum RegexConvertOpts
     {
         DEFAULT = 0,
-        WILDCARD_UNLIMITED_MATCH = 0x1,
-        WILDCARD_SINGLE_MATCH = 0x2,
-        WILDCARD_LOGICAL_OR = 0x4,
+        WILDCARD_UNLIMITED_MATCH = 1,
+        WILDCARD_SINGLE_MATCH = 1 << 2,
+        WILDCARD_LOGICAL_OR = 1 << 3,
         WILDCARD_ALL = WILDCARD_UNLIMITED_MATCH | WILDCARD_SINGLE_MATCH | WILDCARD_LOGICAL_OR,
-        EXACT_MATCH = 0x8,
-        CASE_SENSITIVE = 0x16,
-        ESCAPE_REGEX = 0x32,
+        EXACT_MATCH = 1 << 4,
+        CASE_SENSITIVE = 1 << 5,
+        ESCAPE_REGEX = 1 << 6,
     };
 
+    /**
+     * Converts input string to a regular expression according to the options specified in opts.
+     * Note that, unless ESCAPE_REGEX is set, convertToRegex assumes a proper regular expression as input.
+     * @param string The input string. Assumed to be a proper regular expression unless ESCAPE_REGEX is set.
+     * @param opts Tools::RegexConvertOpts options the regex will be converted with.
+     * @return The regular expression built from string and opts.
+     */
     QRegularExpression convertToRegex(const QString& string, int opts = RegexConvertOpts::DEFAULT);
 
     template <typename RandomAccessIterator, typename T>
