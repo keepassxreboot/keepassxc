@@ -6157,7 +6157,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation>Pusty</translation>
+        <translation>Opróżnij</translation>
     </message>
     <message>
         <source>Remove</source>
