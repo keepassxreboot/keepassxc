@@ -185,13 +185,22 @@ void MacUtils::registerNativeEventFilter()
 bool MacUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)
 {
     auto keycode = qtToNativeKeyCode(key);
-    auto modifierscode = qtToNativeModifiers(modifiers, false);
     if (keycode == INVALID_KEYCODE) {
         if (error) {
             *error = tr("Invalid key code");
         }
         return false;
     }
+
+    // Qt inverts CMD and CTRL on macOS under the hood, undo this
+    if (modifiers & Qt::MetaModifier && !(modifiers & Qt::ControlModifier)) {
+        modifiers &= ~Qt::MetaModifier;
+        modifiers |= Qt::ControlModifier;
+    } else if (modifiers & Qt::ControlModifier && !(modifiers & Qt::MetaModifier)) {
+        modifiers &= ~Qt::ControlModifier;
+        modifiers |= Qt::MetaModifier;
+    }
+    auto modifierscode = qtToNativeModifiers(modifiers, false);
 
     // Check if this key combo is registered to another shortcut
     QHashIterator<QString, QSharedPointer<globalShortcut>> i(m_globalShortcuts);
@@ -440,7 +449,6 @@ uint16 MacUtils::qtToNativeKeyCode(Qt::Key key)
         return kVK_F16;
 
     default:
-        Q_ASSERT(false);
         return INVALID_KEYCODE;
     }
 }
@@ -469,13 +477,13 @@ CGEventFlags MacUtils::qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool
         nativeModifiers = CGEventFlags(nativeModifiers | shiftMod);
     }
     if (modifiers & Qt::ControlModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | cmdMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | controlMod);
     }
     if (modifiers & Qt::AltModifier) {
         nativeModifiers = CGEventFlags(nativeModifiers | optionMod);
     }
     if (modifiers & Qt::MetaModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | controlMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | cmdMod);
     }
 
     return nativeModifiers;
