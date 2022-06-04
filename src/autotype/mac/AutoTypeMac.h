@@ -45,7 +45,7 @@ public:
     bool raiseOwnWindow() override;
 
     void sendChar(const QChar& ch, bool isKeyDown);
-    void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers);
+    void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers = 0);
 
 private:
     static int windowLayer(CFDictionaryRef window);
