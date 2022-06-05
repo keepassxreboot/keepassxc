@@ -219,6 +219,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
         auto inheritSkipSubmit = false;
         auto inheritOnlyHttp = false;
         auto inheritNoHttp = false;
+        auto inheritOmitWww = false;
 
         auto parent = group->parentGroup();
         if (parent) {
@@ -226,12 +227,14 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
             inheritSkipSubmit = parent->resolveCustomDataTriState(BrowserService::OPTION_SKIP_AUTO_SUBMIT);
             inheritOnlyHttp = parent->resolveCustomDataTriState(BrowserService::OPTION_ONLY_HTTP_AUTH);
             inheritNoHttp = parent->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH);
+            inheritOmitWww = parent->resolveCustomDataTriState(BrowserService::OPTION_OMIT_WWW);
         }
 
         addTriStateItems(m_browserUi->browserIntegrationHideEntriesComboBox, inheritHideEntries);
         addTriStateItems(m_browserUi->browserIntegrationSkipAutoSubmitComboBox, inheritSkipSubmit);
         addTriStateItems(m_browserUi->browserIntegrationOnlyHttpAuthComboBox, inheritOnlyHttp);
         addTriStateItems(m_browserUi->browserIntegrationNotHttpAuthComboBox, inheritNoHttp);
+        addTriStateItems(m_browserUi->browserIntegrationOmitWwwCombobox, inheritOmitWww);
 
         m_browserUi->browserIntegrationHideEntriesComboBox->setCurrentIndex(
             indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, false)));
@@ -241,6 +244,8 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
             indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_ONLY_HTTP_AUTH, false)));
         m_browserUi->browserIntegrationNotHttpAuthComboBox->setCurrentIndex(
             indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH, false)));
+        m_browserUi->browserIntegrationOmitWwwCombobox->setCurrentIndex(
+            indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_OMIT_WWW, false)));
     }
 #endif
 
@@ -309,6 +314,9 @@ void EditGroupWidget::apply()
         m_temporaryGroup->setCustomDataTriState(
             BrowserService::OPTION_NOT_HTTP_AUTH,
             triStateFromIndex(m_browserUi->browserIntegrationNotHttpAuthComboBox->currentIndex()));
+        m_temporaryGroup->setCustomDataTriState(
+            BrowserService::OPTION_OMIT_WWW,
+            triStateFromIndex(m_browserUi->browserIntegrationOmitWwwCombobox->currentIndex()));
     }
 #endif
 

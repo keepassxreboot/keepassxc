@@ -281,7 +281,7 @@ void TestBrowser::compareEntriesByPath(QSharedPointer<Database> db, QList<Entry*
     for (Entry* entry : entries) {
         QString testUrl = "keepassxc://by-path/" + path + entry->title();
         /* Look for an entry with that path. First using handleEntry, then through the search */
-        QCOMPARE(m_browserService->handleEntry(entry, testUrl, ""), true);
+        QCOMPARE(m_browserService->shouldIncludeEntry(entry, testUrl, ""), true);
         auto result = m_browserService->searchEntries(db, testUrl, "");
         QCOMPARE(result.length(), 1);
         QCOMPARE(result[0], entry);
@@ -311,7 +311,7 @@ void TestBrowser::testSearchEntriesByUUID()
     for (Entry* entry : entries) {
         QString testUrl = "keepassxc://by-uuid/" + entry->uuidToHex();
         /* Look for an entry with that UUID. First using handleEntry, then through the search */
-        QCOMPARE(m_browserService->handleEntry(entry, testUrl, ""), true);
+        QCOMPARE(m_browserService->shouldIncludeEntry(entry, testUrl, ""), true);
         auto result = m_browserService->searchEntries(db, testUrl, "");
         QCOMPARE(result.length(), 1);
         QCOMPARE(result[0], entry);
@@ -329,7 +329,7 @@ void TestBrowser::testSearchEntriesByUUID()
         QString testUrl = "keepassxc://by-uuid/" + uuid;
 
         for (Entry* entry : entries) {
-            QCOMPARE(m_browserService->handleEntry(entry, testUrl, ""), false);
+            QCOMPARE(m_browserService->shouldIncludeEntry(entry, testUrl, ""), false);
         }
 
         auto result = m_browserService->searchEntries(db, testUrl, "");
@@ -436,6 +436,16 @@ void TestBrowser::testSubdomainsAndPaths()
     QCOMPARE(result.length(), 4);
     QCOMPARE(result[0]->url(), QString("https://www.github.com/login/page.xml"));
     QCOMPARE(result[1]->url(), QString("https://github.com")); // Accepts any subdomain
+    QCOMPARE(result[2]->url(), QString("http://www.github.com"));
+    QCOMPARE(result[3]->url(), QString("www.github.com/"));
+
+    // With www subdomain omitted
+    root->setCustomDataTriState(BrowserService::OPTION_OMIT_WWW, Group::Enable);
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    root->setCustomDataTriState(BrowserService::OPTION_OMIT_WWW, Group::Inherit);
+    QCOMPARE(result.length(), 4);
+    QCOMPARE(result[0]->url(), QString("https://www.github.com/login/page.xml"));
+    QCOMPARE(result[1]->url(), QString("https://github.com"));
     QCOMPARE(result[2]->url(), QString("http://www.github.com"));
     QCOMPARE(result[3]->url(), QString("www.github.com/"));
 
