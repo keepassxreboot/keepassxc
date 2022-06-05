@@ -202,6 +202,7 @@ void DatabaseTabWidget::lockAndSwitchToFirstUnlockedDatabase(int index)
         for (int i = 0, c = count(); i < c; ++i) {
             if (!databaseWidgetFromIndex(i)->isLocked()) {
                 setCurrentIndex(i);
+                emitActiveDatabaseChanged();
                 return;
             }
         }
