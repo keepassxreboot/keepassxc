@@ -1428,8 +1428,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 
 void BrowserService::activeDatabaseChanged(DatabaseWidget* dbWidget)
 {
-    // Only emit these signals when we are not searching in all databases
-    if (dbWidget && !browserSettings()->searchInAllDatabases()) {
+    if (dbWidget) {
         if (dbWidget->isLocked()) {
             databaseLocked(dbWidget);
         } else {
