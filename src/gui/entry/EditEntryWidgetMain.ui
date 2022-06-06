@@ -56,80 +56,37 @@
     <property name="verticalSpacing">
      <number>8</number>
     </property>
-    <item row="7" column="1">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QPlainTextEdit" name="notesEdit">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>1</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="accessibleName">
-         <string>Notes field</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="notesHint">
-        <property name="visible">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Toggle the checkbox to reveal the notes section.</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignTop</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="1">
-     <widget class="QComboBox" name="usernameComboBox">
-      <property name="accessibleName">
-       <string>Username field</string>
+    <item row="2" column="0">
+     <widget class="QLabel" name="usernameLabel">
+      <property name="text">
+       <string>Username:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QCheckBox" name="notesEnabled">
-        <property name="toolTip">
-         <string>Toggle notes visible</string>
-        </property>
-        <property name="accessibleName">
-         <string>Toggle notes visible</string>
-        </property>
-        <property name="text">
-         <string>Notes:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
+    <item row="0" column="0">
+     <widget class="QLabel" name="titleLabel">
+      <property name="text">
+       <string>Title:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
     </item>
     <item row="6" column="1">
+     <widget class="TagsEdit" name="tagsList" native="true">
+      <property name="focusPolicy">
+       <enum>Qt::StrongFocus</enum>
+      </property>
+      <property name="accessibleName">
+       <string>Tags list</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
        <number>8</number>
@@ -168,17 +125,43 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="passwordLabel">
-      <property name="text">
-       <string>Password:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
+    <item row="8" column="1">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QPlainTextEdit" name="notesEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="accessibleName">
+         <string>Notes field</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="notesHint">
+        <property name="visible">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Toggle the checkbox to reveal the notes section.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignTop</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item row="3" column="0">
+    <item row="4" column="0">
      <widget class="QLabel" name="urlLabel">
       <property name="text">
        <string>URL:</string>
@@ -188,7 +171,14 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
+    <item row="2" column="1">
+     <widget class="QComboBox" name="usernameComboBox">
+      <property name="accessibleName">
+       <string>Username field</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout_6">
       <property name="spacing">
        <number>8</number>
@@ -215,34 +205,57 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="titleLabel">
+    <item row="6" column="0">
+     <widget class="QLabel" name="tagsLabel">
       <property name="text">
-       <string>Title:</string>
+       <string>Tags:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="titleEdit">
-      <property name="accessibleName">
-       <string>Title field</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="usernameLabel">
+    <item row="3" column="0">
+     <widget class="QLabel" name="passwordLabel">
       <property name="text">
-       <string>Username:</string>
+       <string>Password:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item row="8" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCheckBox" name="notesEnabled">
+        <property name="toolTip">
+         <string>Toggle notes visible</string>
+        </property>
+        <property name="accessibleName">
+         <string>Toggle notes visible</string>
+        </property>
+        <property name="text">
+         <string>Notes:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="1">
      <widget class="PasswordWidget" name="passwordEdit">
       <property name="accessibleName">
        <string>Password field</string>
@@ -252,7 +265,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
+    <item row="7" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
        <number>0</number>
@@ -272,23 +285,25 @@
       </item>
      </layout>
     </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="tagsLabel">
-      <property name="text">
-       <string>Tags:</string>
+    <item row="0" column="1">
+     <widget class="EntryPlaceholderTextEdit" name="titleEdit">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>30</height>
+       </size>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
       </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="TagsEdit" name="tagsList" native="true">
-      <property name="focusPolicy">
-       <enum>Qt::StrongFocus</enum>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
       </property>
-      <property name="accessibleName">
-       <string>Tags list</string>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
      </widget>
     </item>
@@ -314,9 +329,13 @@
    <header>gui/URLEdit.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>EntryPlaceholderTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>gui/entry/EntryPlaceholderTextEdit.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>titleEdit</tabstop>
   <tabstop>usernameComboBox</tabstop>
   <tabstop>passwordEdit</tabstop>
   <tabstop>urlEdit</tabstop>

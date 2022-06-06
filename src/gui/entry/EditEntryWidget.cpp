@@ -436,6 +436,8 @@ void EditEntryWidget::setupHistory()
 void EditEntryWidget::setupEntryUpdate()
 {
     // Entry tab
+    connect(m_mainUi->titleEdit, SIGNAL(accepted()), this, SLOT(acceptEntry()));
+    connect(m_mainUi->titleEdit, SIGNAL(canceled()), this, SLOT(cancel()));
     connect(m_mainUi->titleEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->usernameComboBox->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
@@ -819,6 +821,7 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_db = std::move(database);
     m_create = create;
     m_history = history;
+    m_mainUi->titleEdit->setEntry(m_entry);
 
     connect(m_entry, &Entry::modified, this, [this] { m_entryModifiedTimer.start(); });
 
@@ -890,7 +893,6 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_autoTypeUi->windowTitleCombo->lineEdit()->setReadOnly(m_history);
     m_autoTypeUi->windowSequenceEdit->setReadOnly(m_history);
     m_historyWidget->setEnabled(!m_history);
-
     m_mainUi->titleEdit->setText(entry->title());
     m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
@@ -1157,7 +1159,8 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_attachments.data());
     entry->customData()->copyDataFrom(m_customData.data());
-    entry->setTitle(m_mainUi->titleEdit->text().replace(newLineRegex, " "));
+    entry->setTitle(m_mainUi->titleEdit->toPlainText().replace(newLineRegex, " "));
+
     entry->setUsername(m_mainUi->usernameComboBox->lineEdit()->text().replace(newLineRegex, " "));
     entry->setUrl(m_mainUi->urlEdit->text().replace(newLineRegex, " "));
     entry->setPassword(m_mainUi->passwordEdit->text());

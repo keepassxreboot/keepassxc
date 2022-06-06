@@ -145,6 +145,7 @@ set(keepassx_SOURCES
         gui/entry/EntryHistoryModel.cpp
         gui/entry/EntryModel.cpp
         gui/entry/EntryView.cpp
+        gui/entry/EntryPlaceholderTextEdit.cpp
         gui/export/ExportDialog.cpp
         gui/group/EditGroupWidget.cpp
         gui/group/GroupModel.cpp
