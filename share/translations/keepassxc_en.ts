@@ -644,6 +644,10 @@
         <source>Invalid placeholder: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
