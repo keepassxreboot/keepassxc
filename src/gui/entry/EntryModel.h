@@ -20,6 +20,7 @@
 
 #include <QAbstractTableModel>
 #include <QPixmap>
+#include <QSet>
 
 #include "core/Config.h"
 
@@ -87,7 +88,7 @@ private:
     Group* m_group;
     QList<Entry*> m_entries;
     QList<Entry*> m_orgEntries;
-    QList<const Group*> m_allGroups;
+    QSet<const Group*> m_allGroups;
 
     const QString HiddenContentDisplay;
     const Qt::DateFormat DateFormat;
