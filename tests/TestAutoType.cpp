@@ -337,7 +337,7 @@ void TestAutoType::testAutoTypeSyntaxChecks()
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:FOO}{S:HELLO WORLD}", entry, error), error.toLatin1());
     QVERIFY2(!AutoType::verifyAutoTypeSyntax("{S:SPECIAL_TOKEN{}}", entry, error), error.toLatin1());
 
-    QVERIFY2(!AutoType::verifyAutoTypeSyntax("{BEEP 3 3}", entry, error), error.toLatin1());
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{BEEP 3 3}", entry, error), error.toLatin1());
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{BEEP 3}", entry, error), error.toLatin1());
 
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{VKEY 0x01}", entry, error), error.toLatin1());
