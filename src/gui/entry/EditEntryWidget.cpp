@@ -821,7 +821,7 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_db = std::move(database);
     m_create = create;
     m_history = history;
-    m_mainUi->titleEdit->setEntry(m_entry);
+    m_mainUi->titleEdit->setEntry(m_entry, m_entry->title());
 
     connect(m_entry, &Entry::modified, this, [this] { m_entryModifiedTimer.start(); });
 

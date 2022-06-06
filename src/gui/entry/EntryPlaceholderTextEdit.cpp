@@ -238,11 +238,11 @@ void EntryPlaceholderTextEdit::applyAutoCompletion(QString placeholderName)
     redrawPlaceHolders();
 }
 
-void EntryPlaceholderTextEdit::setEntry(Entry* e)
+void EntryPlaceholderTextEdit::setEntry(Entry* e, const QString& text)
 {
     if (!e) return;
     m_entry = e;
-    setText(e->title());
+    setText(text);
     redrawPlaceHolders();
 }
 
@@ -306,9 +306,9 @@ void EntryPlaceholderTextEdit::redrawPlaceHolders()
     QTextCursor cur{textCursor()};
     const int originalPos = cur.position();
     QStringList replacedList;
-    QString styledTitle = toPlainText().replace(" ", "&nbsp;"); // 2 consecutive spaces do not display in HTML
+    QString styledText = toPlainText().replace(" ", "&nbsp;"); // 2 consecutive spaces do not display in HTML
     QRegularExpression rx("{[^}{]+}");
-    QRegularExpressionMatchIterator i = rx.globalMatch(styledTitle);
+    QRegularExpressionMatchIterator i = rx.globalMatch(styledText);
     while (i.hasNext())
     {
         QRegularExpressionMatch match = i.next();
@@ -322,13 +322,13 @@ void EntryPlaceholderTextEdit::redrawPlaceHolders()
         if (!replacedList.contains(placeholder) && substitution != placeholder) {
             const bool isSubstitutionInvalid = substitution.isEmpty() || substitution=="-1";
             const QString styledPh = ph.getStyledString(isSubstitutionInvalid);
-            styledTitle.replace(placeholder, styledPh);
+            styledText.replace(placeholder, styledPh);
             replacedList << placeholder;
         }
     }
     if (replacedList.size() > 0)
     {
-        setHtml(styledTitle);
+        setHtml(styledText);
         cur.setPosition(originalPos);
         setTextCursor(cur);
     }

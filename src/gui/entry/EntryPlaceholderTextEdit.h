@@ -89,7 +89,7 @@ class EntryPlaceholderTextEdit : public QTextEdit
 public:
     explicit EntryPlaceholderTextEdit(QWidget* parent);
 
-    void setEntry(Entry* e);
+    void setEntry(Entry* e, const QString& text);
 
 signals:
     void textChanged(QString newContent);
