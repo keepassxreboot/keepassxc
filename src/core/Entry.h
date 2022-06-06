@@ -224,6 +224,9 @@ public:
     static const QString AutoTypeSequenceUsername;
     static const QString AutoTypeSequencePassword;
 
+    static QStringList placeholdersList();
+    static EntryReferenceType referenceType(const QString& referenceStr);
+
     /**
      * Creates a duplicate of this entry except that the returned entry isn't
      * part of any group.
@@ -279,7 +282,6 @@ private:
     QString referenceFieldValue(EntryReferenceType referenceType) const;
 
     static QString buildReference(const QUuid& uuid, const QString& field);
-    static EntryReferenceType referenceType(const QString& referenceStr);
 
     template <class T> bool set(T& property, const T& value);
 
@@ -295,6 +297,8 @@ private:
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
     bool m_updateTimeinfo;
+
+    static const QMap<QString, PlaceholderType> m_placeholdersMap;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Entry::CloneFlags)

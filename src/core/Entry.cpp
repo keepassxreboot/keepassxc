@@ -35,6 +35,43 @@ const int Entry::ResolveMaximumDepth = 10;
 const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
 const QString Entry::AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
 
+const QMap<QString, Entry::PlaceholderType> Entry::m_placeholdersMap = {
+    {QStringLiteral("{TITLE}"), Entry::PlaceholderType::Title},
+    {QStringLiteral("{USERNAME}"), Entry::PlaceholderType::UserName},
+    {QStringLiteral("{PASSWORD}"), Entry::PlaceholderType::Password},
+    {QStringLiteral("{NOTES}"), Entry::PlaceholderType::Notes},
+    {QStringLiteral("{TOTP}"), Entry::PlaceholderType::Totp},
+    {QStringLiteral("{URL}"), Entry::PlaceholderType::Url},
+    {QStringLiteral("{URL:RMVSCM}"), Entry::PlaceholderType::UrlWithoutScheme},
+    {QStringLiteral("{URL:WITHOUTSCHEME}"), Entry::PlaceholderType::UrlWithoutScheme},
+    {QStringLiteral("{URL:SCM}"), Entry::PlaceholderType::UrlScheme},
+    {QStringLiteral("{URL:SCHEME}"), Entry::PlaceholderType::UrlScheme},
+    {QStringLiteral("{URL:HOST}"), Entry::PlaceholderType::UrlHost},
+    {QStringLiteral("{URL:PORT}"), Entry::PlaceholderType::UrlPort},
+    {QStringLiteral("{URL:PATH}"), Entry::PlaceholderType::UrlPath},
+    {QStringLiteral("{URL:QUERY}"), Entry::PlaceholderType::UrlQuery},
+    {QStringLiteral("{URL:FRAGMENT}"), Entry::PlaceholderType::UrlFragment},
+    {QStringLiteral("{URL:USERINFO}"), Entry::PlaceholderType::UrlUserInfo},
+    {QStringLiteral("{URL:USERNAME}"), Entry::PlaceholderType::UrlUserName},
+    {QStringLiteral("{URL:PASSWORD}"), Entry::PlaceholderType::UrlPassword},
+    {QStringLiteral("{DT_SIMPLE}"), Entry::PlaceholderType::DateTimeSimple},
+    {QStringLiteral("{DT_YEAR}"), Entry::PlaceholderType::DateTimeYear},
+    {QStringLiteral("{DT_MONTH}"), Entry::PlaceholderType::DateTimeMonth},
+    {QStringLiteral("{DT_DAY}"), Entry::PlaceholderType::DateTimeDay},
+    {QStringLiteral("{DT_HOUR}"), Entry::PlaceholderType::DateTimeHour},
+    {QStringLiteral("{DT_MINUTE}"), Entry::PlaceholderType::DateTimeMinute},
+    {QStringLiteral("{DT_SECOND}"), Entry::PlaceholderType::DateTimeSecond},
+    {QStringLiteral("{DT_UTC_SIMPLE}"), Entry::PlaceholderType::DateTimeUtcSimple},
+    {QStringLiteral("{DT_UTC_YEAR}"), Entry::PlaceholderType::DateTimeUtcYear},
+    {QStringLiteral("{DT_UTC_MONTH}"), Entry::PlaceholderType::DateTimeUtcMonth},
+    {QStringLiteral("{DT_UTC_DAY}"), Entry::PlaceholderType::DateTimeUtcDay},
+    {QStringLiteral("{DT_UTC_HOUR}"), Entry::PlaceholderType::DateTimeUtcHour},
+    {QStringLiteral("{DT_UTC_MINUTE}"), Entry::PlaceholderType::DateTimeUtcMinute},
+    {QStringLiteral("{DT_UTC_SECOND}"), Entry::PlaceholderType::DateTimeUtcSecond},
+    {QStringLiteral("{DB_DIR}"), Entry::PlaceholderType::DbDir}
+};
+
+
 Entry::Entry()
     : m_attributes(new EntryAttributes(this))
     , m_attachments(new EntryAttachments(this))
@@ -1344,43 +1381,18 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
     if (placeholder.startsWith(QLatin1Literal("{REF:"))) {
         return PlaceholderType::Reference;
     }
+    return m_placeholdersMap.value(placeholder.toUpper(), PlaceholderType::Unknown);
+}
 
-    static const QMap<QString, PlaceholderType> placeholders{
-        {QStringLiteral("{TITLE}"), PlaceholderType::Title},
-        {QStringLiteral("{USERNAME}"), PlaceholderType::UserName},
-        {QStringLiteral("{PASSWORD}"), PlaceholderType::Password},
-        {QStringLiteral("{NOTES}"), PlaceholderType::Notes},
-        {QStringLiteral("{TOTP}"), PlaceholderType::Totp},
-        {QStringLiteral("{URL}"), PlaceholderType::Url},
-        {QStringLiteral("{URL:RMVSCM}"), PlaceholderType::UrlWithoutScheme},
-        {QStringLiteral("{URL:WITHOUTSCHEME}"), PlaceholderType::UrlWithoutScheme},
-        {QStringLiteral("{URL:SCM}"), PlaceholderType::UrlScheme},
-        {QStringLiteral("{URL:SCHEME}"), PlaceholderType::UrlScheme},
-        {QStringLiteral("{URL:HOST}"), PlaceholderType::UrlHost},
-        {QStringLiteral("{URL:PORT}"), PlaceholderType::UrlPort},
-        {QStringLiteral("{URL:PATH}"), PlaceholderType::UrlPath},
-        {QStringLiteral("{URL:QUERY}"), PlaceholderType::UrlQuery},
-        {QStringLiteral("{URL:FRAGMENT}"), PlaceholderType::UrlFragment},
-        {QStringLiteral("{URL:USERINFO}"), PlaceholderType::UrlUserInfo},
-        {QStringLiteral("{URL:USERNAME}"), PlaceholderType::UrlUserName},
-        {QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword},
-        {QStringLiteral("{DT_SIMPLE}"), PlaceholderType::DateTimeSimple},
-        {QStringLiteral("{DT_YEAR}"), PlaceholderType::DateTimeYear},
-        {QStringLiteral("{DT_MONTH}"), PlaceholderType::DateTimeMonth},
-        {QStringLiteral("{DT_DAY}"), PlaceholderType::DateTimeDay},
-        {QStringLiteral("{DT_HOUR}"), PlaceholderType::DateTimeHour},
-        {QStringLiteral("{DT_MINUTE}"), PlaceholderType::DateTimeMinute},
-        {QStringLiteral("{DT_SECOND}"), PlaceholderType::DateTimeSecond},
-        {QStringLiteral("{DT_UTC_SIMPLE}"), PlaceholderType::DateTimeUtcSimple},
-        {QStringLiteral("{DT_UTC_YEAR}"), PlaceholderType::DateTimeUtcYear},
-        {QStringLiteral("{DT_UTC_MONTH}"), PlaceholderType::DateTimeUtcMonth},
-        {QStringLiteral("{DT_UTC_DAY}"), PlaceholderType::DateTimeUtcDay},
-        {QStringLiteral("{DT_UTC_HOUR}"), PlaceholderType::DateTimeUtcHour},
-        {QStringLiteral("{DT_UTC_MINUTE}"), PlaceholderType::DateTimeUtcMinute},
-        {QStringLiteral("{DT_UTC_SECOND}"), PlaceholderType::DateTimeUtcSecond},
-        {QStringLiteral("{DB_DIR}"), PlaceholderType::DbDir}};
-
-    return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
+QStringList Entry::placeholdersList()
+{
+    QStringList types;
+    QMap<QString, Entry::PlaceholderType>::const_iterator i = m_placeholdersMap.constBegin();
+    while (i != m_placeholdersMap.constEnd()) {
+        types.append(i.key());
+        ++i;
+    }
+    return types;
 }
 
 QString Entry::resolveUrl(const QString& url) const
