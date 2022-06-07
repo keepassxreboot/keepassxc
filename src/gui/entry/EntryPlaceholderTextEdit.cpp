@@ -27,7 +27,7 @@ EntryPlaceholder::EntryPlaceholder(const QString& placeholder)
         }
     }
     // Parse placeholder parts
-    const QStringList parts = ph.split(QLatin1Char(':'), Qt::SkipEmptyParts);
+    const QStringList parts = ph.split(QLatin1Char(':'), QString::SplitBehavior::SkipEmptyParts);
     const int sz = parts.size();
     if (sz==1) {
         // simple placeholder
@@ -42,7 +42,7 @@ EntryPlaceholder::EntryPlaceholder(const QString& placeholder)
         // REF placeholder only
         m_key = parts[0];
         m_value = parts[2];
-        const QStringList crossRef = parts[1].split(QLatin1Char('@'), Qt::SkipEmptyParts);
+        const QStringList crossRef = parts[1].split(QLatin1Char('@'), QString::SplitBehavior::SkipEmptyParts);
         if (crossRef.size()==2) {
             m_crossReferenceField = crossRef[0];
             m_crossReferenceSearchIn = crossRef[1];
