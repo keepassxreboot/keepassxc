@@ -1159,7 +1159,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_attachments.data());
     entry->customData()->copyDataFrom(m_customData.data());
-    entry->setTitle(m_mainUi->titleEdit->toPlainText().replace(newLineRegex, " "));
+    entry->setTitle(m_mainUi->titleEdit->text().replace(newLineRegex, " "));
 
     entry->setUsername(m_mainUi->usernameComboBox->lineEdit()->text().replace(newLineRegex, " "));
     entry->setUrl(m_mainUi->urlEdit->text().replace(newLineRegex, " "));

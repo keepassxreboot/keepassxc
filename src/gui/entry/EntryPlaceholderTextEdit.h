@@ -90,6 +90,7 @@ public:
     explicit EntryPlaceholderTextEdit(QWidget* parent);
 
     void setEntry(Entry* e, const QString& text);
+    QString text() const { return toPlainText(); }
 
 signals:
     void textChanged(QString newContent);
