@@ -140,7 +140,7 @@ Once obtained, right-click the desired entry *(1)*, choose _TOTP_ -> _Set up TOT
 .TOTP Setup Process
 image::totp_setup.png[]
 
-After an entry is configured with TOTP, you will see a clock icon in that entry's row and have the ability to reveal the current code in the preview pane. Additionally, you can navigate to the entry's _TOTP_ menu to show the code in a separate window. You can also view the secret and configuration as a QR code for exporting to a mobile device. TOTP codes can be entered into forms with the browser extension, with Auto-Type by using the `{TOTP}` placeholder, or via menu options in the Auto-Type selection dialog. TOTP can also be placed along with the password by adding `{TOTP}` in the password field.
+After an entry is configured with TOTP, you will see a clock icon in that entry's row and have the ability to reveal the current code in the preview pane. Additionally, you can navigate to the entry's _TOTP_ menu to show the code in a separate window. You can also view the secret and configuration as a QR code for exporting to a mobile device. TOTP codes can be entered into forms with the browser extension, with Auto-Type by using the `{TOTP}` placeholder, or via menu options in the Auto-Type selection dialog. TOTP can also be placed along with the password by adding `{TOTP}` in the password field of the entry.
 
 .TOTP Usage
 image::totp_usage_examples.png[]
