@@ -25,6 +25,8 @@
     <url type="faq">https://keepassxc.org/docs#faq</url>
     <url type="help">https://keepassxc.org/docs</url>
     <url type="translate">https://www.transifex.com/keepassxc/keepassxc</url>
+    <url type="vcs-browser">https://github.com/keepassxreboot/keepassxc</url>
+    <url type="contribute">https://keepassxc.org/docs#contribute</url>
 
     <screenshots>
         <screenshot type="default">
