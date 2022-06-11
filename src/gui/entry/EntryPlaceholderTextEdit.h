@@ -30,17 +30,31 @@ class Entry;
 class QListWidget;
 class QListWidgetItem;
 
-
 struct EntryPlaceholder
 {
     EntryPlaceholder(const QString& placeholder);
 
-    QString getString() const { return m_fullText; }
+    QString getString() const
+    {
+        return m_fullText;
+    }
     QString getStyledString(const bool emptyTargetValue) const;
-    QString getKey() const { return m_key; }
-    QString getValue() const { return m_value; }
-    QString getRefField() const { return m_crossReferenceField; }
-    QString getRefSearchIn() const { return m_crossReferenceSearchIn; }
+    QString getKey() const
+    {
+        return m_key;
+    }
+    QString getValue() const
+    {
+        return m_value;
+    }
+    QString getRefField() const
+    {
+        return m_crossReferenceField;
+    }
+    QString getRefSearchIn() const
+    {
+        return m_crossReferenceSearchIn;
+    }
 
 private:
     QString m_fullText;
@@ -49,7 +63,6 @@ private:
     QString m_crossReferenceField;
     QString m_crossReferenceSearchIn;
 };
-
 
 class EntryPlaceholderCompletionPopup : public QWidget
 {
@@ -81,7 +94,6 @@ private:
     Q_DISABLE_COPY(EntryPlaceholderCompletionPopup)
 };
 
-
 class EntryPlaceholderTextEdit : public QTextEdit
 {
     Q_OBJECT
@@ -90,7 +102,10 @@ public:
     explicit EntryPlaceholderTextEdit(QWidget* parent);
 
     void setEntry(Entry* e, const QString& text);
-    QString text() const { return toPlainText(); }
+    QString text() const
+    {
+        return toPlainText();
+    }
 
 signals:
     void textChanged(QString newContent);
@@ -98,7 +113,7 @@ signals:
     void canceled();
 
 protected:
-    virtual void keyPressEvent(QKeyEvent *e) override;
+    virtual void keyPressEvent(QKeyEvent* e) override;
 
 private slots:
     void trackCursorPosition();

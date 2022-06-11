@@ -68,9 +68,7 @@ const QMap<QString, Entry::PlaceholderType> Entry::m_placeholdersMap = {
     {QStringLiteral("{DT_UTC_HOUR}"), Entry::PlaceholderType::DateTimeUtcHour},
     {QStringLiteral("{DT_UTC_MINUTE}"), Entry::PlaceholderType::DateTimeUtcMinute},
     {QStringLiteral("{DT_UTC_SECOND}"), Entry::PlaceholderType::DateTimeUtcSecond},
-    {QStringLiteral("{DB_DIR}"), Entry::PlaceholderType::DbDir}
-};
-
+    {QStringLiteral("{DB_DIR}"), Entry::PlaceholderType::DbDir}};
 
 Entry::Entry()
     : m_attributes(new EntryAttributes(this))

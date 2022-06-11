@@ -1,49 +1,45 @@
 #include "EntryPlaceholderTextEdit.h"
 
 #include <QCoreApplication>
-#include <QtGlobal>
 #include <QKeyEvent>
-#include <QMenu>
 #include <QListWidget>
-#include <QStringList>
+#include <QMenu>
 #include <QRegularExpression>
+#include <QStringList>
+#include <QtGlobal>
 
 #include "core/Entry.h"
 #include "gui/Icons.h"
-
 
 EntryPlaceholder::EntryPlaceholder(const QString& placeholder)
     : m_fullText(placeholder)
 {
     QString ph = placeholder;
     // Remove brackets
-    if (!ph.isEmpty())
-    {
-        if (ph[0]=='{') {
+    if (!ph.isEmpty()) {
+        if (ph[0] == '{') {
             ph = ph.mid(1);
         }
-        if (ph[ph.size()-1]=='}') {
-            ph = ph.mid(0, ph.size()-1);
+        if (ph[ph.size() - 1] == '}') {
+            ph = ph.mid(0, ph.size() - 1);
         }
     }
     // Parse placeholder parts
     const QStringList parts = ph.split(QLatin1Char(':'), QString::SplitBehavior::SkipEmptyParts);
     const int sz = parts.size();
-    if (sz==1) {
+    if (sz == 1) {
         // simple placeholder
         m_value = parts[0];
-    }
-    else if (sz==2) {
+    } else if (sz == 2) {
         // key-value pair placeholder (URL or S placeholders)
         m_key = parts[0];
         m_value = parts[1];
-    }
-    else if (sz==3) {
+    } else if (sz == 3) {
         // REF placeholder only
         m_key = parts[0];
         m_value = parts[2];
         const QStringList crossRef = parts[1].split(QLatin1Char('@'), QString::SplitBehavior::SkipEmptyParts);
-        if (crossRef.size()==2) {
+        if (crossRef.size() == 2) {
             m_crossReferenceField = crossRef[0];
             m_crossReferenceSearchIn = crossRef[1];
         }
@@ -62,12 +58,10 @@ QString EntryPlaceholder::getStyledString(const bool emptyTargetValue) const
 
     if (m_key.isEmpty()) {
         htmlTag.append(m_value);
-    }
-    else if (m_key=="S" || m_key=="URL") {
-        htmlTag.append(m_key+":"+m_value);
-    }
-    else if (m_key=="REF") {
-        htmlTag.append(m_key+":"+m_crossReferenceField+"@"+m_crossReferenceSearchIn+":"+m_value);
+    } else if (m_key == "S" || m_key == "URL") {
+        htmlTag.append(m_key + ":" + m_value);
+    } else if (m_key == "REF") {
+        htmlTag.append(m_key + ":" + m_crossReferenceField + "@" + m_crossReferenceSearchIn + ":" + m_value);
     }
 
     htmlTag.append("}").append("</").append(emptyTargetValue ? "span" : "b").append(">");
@@ -79,7 +73,7 @@ EntryPlaceholderCompletionPopup::EntryPlaceholderCompletionPopup(QWidget* parent
 {
     // Setup autocompletion popup
     setAttribute(Qt::WA_QuitOnClose, false);
-    setFixedSize(150,200);
+    setFixedSize(150, 200);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     setWindowModality(Qt::NonModal);
 
@@ -88,7 +82,7 @@ EntryPlaceholderCompletionPopup::EntryPlaceholderCompletionPopup(QWidget* parent
     placeholders.append("{S:}");
     m_autoCompletionList = new QListWidget(this);
     for (const QString& placeholder : placeholders) {
-        const QString phName = placeholder.mid(1, placeholder.size()-2);
+        const QString phName = placeholder.mid(1, placeholder.size() - 2);
         m_autoCompletionPlaceholdersList.append(phName);
         new QListWidgetItem(phName, m_autoCompletionList);
     }
@@ -114,17 +108,18 @@ void EntryPlaceholderCompletionPopup::itemClicked(QListWidgetItem* item)
 
 void EntryPlaceholderCompletionPopup::populateCompletionChoices(const QString& filter)
 {
-    if (isHidden()) return;
+    if (isHidden())
+        return;
     m_autoCompletionList->clear();
 
     if (!filter.endsWith(":")) {
         for (const QString& placeholder : m_autoCompletionPlaceholdersList) {
-            if (filter.isEmpty() || filter=="{" || placeholder.startsWith(filter.mid(1))) {
+            if (filter.isEmpty() || filter == "{" || placeholder.startsWith(filter.mid(1))) {
                 new QListWidgetItem(placeholder, m_autoCompletionList);
             }
         }
     }
-    if (count()==0) {
+    if (count() == 0) {
         hide();
     }
 }
@@ -173,7 +168,10 @@ EntryPlaceholderTextEdit::EntryPlaceholderTextEdit(QWidget* parent)
     viewport()->setCursor(Qt::IBeamCursor);
 
     connect(this, SIGNAL(cursorPositionChanged()), SLOT(trackCursorPosition()));
-    connect(m_autoCompletionPopup, &EntryPlaceholderCompletionPopup::autoCompletionChoiceSelected, this, &EntryPlaceholderTextEdit::applyAutoCompletion);
+    connect(m_autoCompletionPopup,
+            &EntryPlaceholderCompletionPopup::autoCompletionChoiceSelected,
+            this,
+            &EntryPlaceholderTextEdit::applyAutoCompletion);
 }
 
 // triggers each time the cursor position changes (not the mouse cursor position, the TEXT cursor position)
@@ -183,7 +181,7 @@ void EntryPlaceholderTextEdit::trackCursorPosition()
     const QString txtBefore = toPlainText().mid(0, pos);
     const QString txtAfter = toPlainText().mid(pos, -1);
     const QString placeholderPreCursor = getPlaceholderBeforeCursor();
-    QChar lastCharBefore = txtBefore.isEmpty() ? QChar() : txtBefore[txtBefore.size()-1];
+    QChar lastCharBefore = txtBefore.isEmpty() ? QChar() : txtBefore[txtBefore.size() - 1];
     QChar firstCharAfter = txtAfter.isEmpty() ? QChar() : txtAfter[0];
 
     // Check whether the auto-complete popup needs to move, or to be hidden/shown
@@ -192,18 +190,16 @@ void EntryPlaceholderTextEdit::trackCursorPosition()
         pt.setY(pt.y() + 7);
         pt.setX(pt.x() + 5);
 
-        if (lastCharBefore=='{') {
-            m_autoCompletionPopup->move( mapToGlobal(pt) );
+        if (lastCharBefore == '{') {
+            m_autoCompletionPopup->move(mapToGlobal(pt));
             m_autoCompletionPopup->show();
-        }
-        else if (lastCharBefore=='}' || firstCharAfter=='{') {
+        } else if (lastCharBefore == '}' || firstCharAfter == '{') {
             m_autoCompletionPopup->hide();
             return;
-        }
-        else if (placeholderPreCursor.size()>0) {
+        } else if (placeholderPreCursor.size() > 0) {
             const bool phIsValid = m_autoCompletionPopup->matchAutoComplete(placeholderPreCursor.mid(1, -1));
             if (phIsValid) {
-                m_autoCompletionPopup->move( mapToGlobal(pt) );
+                m_autoCompletionPopup->move(mapToGlobal(pt));
                 m_autoCompletionPopup->show();
             }
         }
@@ -228,7 +224,8 @@ void EntryPlaceholderTextEdit::applyAutoCompletion(QString placeholderName)
     const int pos = cur.position();
     const int startPos = pos + 1 /* for the { char */ - placeholderPreCursor.size();
     const int nbCharsToReplace = placeholderPreCursor.size() + placeholderPostCursor.size();
-    const int newCursorPos = pos + 1 /* for the } char */ - placeholderPreCursor.size() + placeholderName.size() + (replaceExistingPlaceholder ? 1 : 0) /* for the extra space */;
+    const int newCursorPos = pos + 1 /* for the } char */ - placeholderPreCursor.size() + placeholderName.size()
+                             + (replaceExistingPlaceholder ? 1 : 0) /* for the extra space */;
 
     QString txt = toPlainText();
     txt.replace(startPos, nbCharsToReplace, placeholder);
@@ -240,7 +237,8 @@ void EntryPlaceholderTextEdit::applyAutoCompletion(QString placeholderName)
 
 void EntryPlaceholderTextEdit::setEntry(Entry* e, const QString& text)
 {
-    if (!e) return;
+    if (!e)
+        return;
     m_entry = e;
     setText(text);
     redrawPlaceHolders();
@@ -255,41 +253,35 @@ void EntryPlaceholderTextEdit::keyPressEvent(QKeyEvent* e)
     if (key == Qt::Key_Enter || key == Qt::Key_Return) {
         if (m_autoCompletionPopup->isHidden()) {
             emit accepted();
-        }
-        else {
+        } else {
             applyAutoCompletion(currentAutoCompleteItemText);
         }
         return;
     }
     if (key == Qt::Key_Up) {
         const int idx = currentAutoCompleteItemIndex;
-        if (idx > 0)
-        {
-            m_autoCompletionPopup->setCurrentIndex(idx-1);
+        if (idx > 0) {
+            m_autoCompletionPopup->setCurrentIndex(idx - 1);
         }
         return;
     }
     if (key == Qt::Key_Down) {
         const int idx = currentAutoCompleteItemIndex;
-        if (idx < m_autoCompletionPopup->count()-1)
-        {
-            m_autoCompletionPopup->setCurrentIndex(idx+1);
+        if (idx < m_autoCompletionPopup->count() - 1) {
+            m_autoCompletionPopup->setCurrentIndex(idx + 1);
         }
         return;
     }
     if (key == Qt::Key_Tab) {
-        if (!m_autoCompletionPopup->isHidden())
-        {
+        if (!m_autoCompletionPopup->isHidden()) {
             applyAutoCompletion(currentAutoCompleteItemText);
         }
         return;
     }
     if (key == Qt::Key_Escape) {
-        if (!m_autoCompletionPopup->isHidden())
-        {
+        if (!m_autoCompletionPopup->isHidden()) {
             m_autoCompletionPopup->hide();
-        }
-        else {
+        } else {
             emit canceled();
         }
         return;
@@ -302,32 +294,31 @@ void EntryPlaceholderTextEdit::keyPressEvent(QKeyEvent* e)
 // Do not use paintEvent, because we are modifying the text (HTML content)
 void EntryPlaceholderTextEdit::redrawPlaceHolders()
 {
-    if (!m_entry) return;
+    if (!m_entry)
+        return;
     QTextCursor cur{textCursor()};
     const int originalPos = cur.position();
     QStringList replacedList;
     QString styledText = toPlainText().replace(" ", "&nbsp;"); // 2 consecutive spaces do not display in HTML
     QRegularExpression rx("{[^}{]+}");
     QRegularExpressionMatchIterator i = rx.globalMatch(styledText);
-    while (i.hasNext())
-    {
+    while (i.hasNext()) {
         QRegularExpressionMatch match = i.next();
         EntryPlaceholder ph{match.captured()};
         const QString placeholder = ph.getString();
         const auto phType = m_entry->placeholderType(placeholder);
-        if (phType==Entry::PlaceholderType::NotPlaceholder || phType==Entry::PlaceholderType::Unknown) {
+        if (phType == Entry::PlaceholderType::NotPlaceholder || phType == Entry::PlaceholderType::Unknown) {
             continue;
         }
         QString substitution = m_entry->resolvePlaceholder(placeholder);
         if (!replacedList.contains(placeholder) && substitution != placeholder) {
-            const bool isSubstitutionInvalid = substitution.isEmpty() || substitution=="-1";
+            const bool isSubstitutionInvalid = substitution.isEmpty() || substitution == "-1";
             const QString styledPh = ph.getStyledString(isSubstitutionInvalid);
             styledText.replace(placeholder, styledPh);
             replacedList << placeholder;
         }
     }
-    if (replacedList.size() > 0)
-    {
+    if (replacedList.size() > 0) {
         setHtml(styledText);
         cur.setPosition(originalPos);
         setTextCursor(cur);
@@ -339,12 +330,10 @@ QString EntryPlaceholderTextEdit::getPlaceholderBeforeCursor() const
     const int pos = textCursor().position();
     const QString txtBefore = toPlainText().mid(0, pos);
 
-    if (pos>0) {
-        for (int i=txtBefore.size()-1; i>=0; --i)
-        {
-            if (txtBefore[i]=='{')
-            {
-                return txtBefore.mid(i, pos-1);
+    if (pos > 0) {
+        for (int i = txtBefore.size() - 1; i >= 0; --i) {
+            if (txtBefore[i] == '{') {
+                return txtBefore.mid(i, pos - 1);
             }
         }
     }
@@ -357,17 +346,14 @@ QString EntryPlaceholderTextEdit::getPlaceholderAfterCursor() const
     const QString txtAfter = toPlainText().mid(pos, -1);
 
     if (txtAfter.size() > 0) {
-        if (txtAfter[0]==" ") {
+        if (txtAfter[0] == " ") {
             return "";
         }
-        for (int i=0; i<=txtAfter.size(); ++i)
-        {
-            if (txtAfter[i]=='{' || txtAfter[i]=='}')
-            {
+        for (int i = 0; i <= txtAfter.size(); ++i) {
+            if (txtAfter[i] == '{' || txtAfter[i] == '}') {
                 return txtAfter.mid(0, i);
             }
         }
     }
     return "";
 }
-
