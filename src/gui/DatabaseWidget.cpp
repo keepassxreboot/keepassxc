@@ -1565,12 +1565,12 @@ Group* DatabaseWidget::currentGroup() const
 
 void DatabaseWidget::closeEvent(QCloseEvent* event)
 {
-    if (!isLocked() && !lock()) {
+    if (!lock() || m_databaseOpenWidget->unlockingDatabase()) {
         event->ignore();
         return;
     }
-    m_databaseOpenWidget->resetQuickUnlock();
 
+    m_databaseOpenWidget->resetQuickUnlock();
     event->accept();
 }
 

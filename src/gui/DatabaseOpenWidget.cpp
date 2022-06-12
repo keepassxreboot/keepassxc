@@ -35,6 +35,7 @@
 #endif
 
 #include <QCheckBox>
+#include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFont>
 
@@ -166,6 +167,11 @@ void DatabaseOpenWidget::hideEvent(QHideEvent* event)
     if (!isVisible()) {
         m_hideTimer.start();
     }
+}
+
+bool DatabaseOpenWidget::unlockingDatabase()
+{
+    return m_unlockingDatabase;
 }
 
 void DatabaseOpenWidget::load(const QString& filename)
@@ -522,6 +528,7 @@ void DatabaseOpenWidget::setUserInteractionLock(bool state)
         }
         m_ui->centralStack->setEnabled(true);
     }
+    m_unlockingDatabase = state;
 }
 
 bool DatabaseOpenWidget::isOnQuickUnlockScreen()
