@@ -2568,7 +2568,7 @@ La corriger ?</translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>% an</numerusform><numerusform>%n ans</numerusform></translation>
+        <translation><numerusform>%n an</numerusform><numerusform>%n ans</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
@@ -7593,7 +7593,7 @@ Noyau : %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Voulez-vous vraiment définitivement supprimer % entrée ?</numerusform><numerusform>Voulez-vous vraiment définitivement supprimer % entrées ?</numerusform></translation>
+        <translation><numerusform>Voulez-vous vraiment définitivement supprimer %n entrée ?</numerusform><numerusform>Voulez-vous vraiment définitivement supprimer %n entrées ?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>

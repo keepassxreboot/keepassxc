@@ -2546,7 +2546,7 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>% an</numerusform><numerusform>%n an(s)</numerusform></translation>
+        <translation><numerusform>%n an</numerusform><numerusform>%n an(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
