@@ -128,15 +128,15 @@ void NixUtils::setLaunchAtStartup(bool enable)
 
         const QString appImagePath = QString::fromLocal8Bit(qgetenv("APPIMAGE"));
         const bool isAppImage = !appImagePath.isNull() && QFile::exists(appImagePath);
-        const QString executeablePath = isAppImage ? appImagePath : QApplication::applicationFilePath();
+        const QString executeablePathOrName = isAppImage ? appImagePath : QApplication::applicationName().toLower();
 
         QTextStream stream(&desktopFile);
         stream.setCodec("UTF-8");
         stream << QStringLiteral("[Desktop Entry]") << '\n'
                << QStringLiteral("Name=") << QApplication::applicationDisplayName() << '\n'
                << QStringLiteral("GenericName=") << tr("Password Manager") << '\n'
-               << QStringLiteral("Exec=") << executeablePath << '\n'
-               << QStringLiteral("TryExec=") << executeablePath << '\n'
+               << QStringLiteral("Exec=") << executeablePathOrName << '\n'
+               << QStringLiteral("TryExec=") << executeablePathOrName << '\n'
                << QStringLiteral("Icon=") << QApplication::applicationName().toLower() << '\n'
                << QStringLiteral("StartupWMClass=keepassxc") << '\n'
                << QStringLiteral("StartupNotify=true") << '\n'
