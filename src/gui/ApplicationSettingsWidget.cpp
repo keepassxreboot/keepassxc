@@ -134,6 +134,15 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
     // clang-format on
 
+    connect(m_generalUi->minimizeAfterUnlockCheckBox, &QCheckBox::toggled, this, [this](bool state) {
+        if (state) {
+            m_secUi->lockDatabaseMinimizeCheckBox->setChecked(false);
+        }
+        m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
+            state ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
+        m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!state);
+    });
+
     // Disable mouse wheel grab when scrolling
     // This prevents combo box and spinner values from changing without explicit focus
     auto mouseWheelFilter = new MouseWheelEventFilter(this);
@@ -296,7 +305,8 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_secUi->lockDatabaseIdleCheckBox->setChecked(config()->get(Config::Security_LockDatabaseIdle).toBool());
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get(Config::Security_LockDatabaseIdleSeconds).toInt());
-    m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get(Config::Security_LockDatabaseMinimize).toBool());
+    m_secUi->lockDatabaseMinimizeCheckBox->setChecked(m_secUi->lockDatabaseMinimizeCheckBox->isEnabled()
+                                                      && config()->get(Config::Security_LockDatabaseMinimize).toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(
         config()->get(Config::Security_LockDatabaseScreenLock).toBool());
     m_secUi->fallbackToSearch->setChecked(config()->get(Config::Security_IconDownloadFallback).toBool());
