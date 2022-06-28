@@ -1326,7 +1326,7 @@ void MainWindow::changeEvent(QEvent* event)
         }
 
         if (config()->get(Config::Security_LockDatabaseMinimize).toBool()) {
-            m_ui->tabWidget->lockDatabases();
+            m_ui->tabWidget->lockDatabasesDelayed();
         }
     } else {
         QMainWindow::changeEvent(event);
@@ -1674,7 +1674,7 @@ void MainWindow::hideWindow()
     }
 
     if (config()->get(Config::Security_LockDatabaseMinimize).toBool()) {
-        m_ui->tabWidget->lockDatabases();
+        m_ui->tabWidget->lockDatabasesDelayed();
     }
 }
 
