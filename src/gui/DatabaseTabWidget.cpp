@@ -63,6 +63,9 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
 #ifdef Q_OS_MACOS
     connect(macUtils(), SIGNAL(lockDatabases()), SLOT(lockDatabases()));
 #endif
+
+    m_lockDelayTimer.setSingleShot(true);
+    connect(&m_lockDelayTimer, &QTimer::timeout, this, [this] { lockDatabases(); });
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()
@@ -647,6 +650,18 @@ bool DatabaseTabWidget::lockDatabases()
     }
 
     return numLocked == c;
+}
+
+void DatabaseTabWidget::lockDatabasesDelayed()
+{
+    // Delay at least 1 second and up to 20 seconds depending on clipboard state.
+    // This allows for Auto-Type, Browser Extension, and clipboard to function
+    // even with "Lock on Minimize" setting enabled.
+    int lockDelay = qBound(1, clipboard()->secondsToClear(), 20);
+    m_lockDelayTimer.setInterval(lockDelay * 1000);
+    if (!m_lockDelayTimer.isActive()) {
+        m_lockDelayTimer.start();
+    }
 }
 
 /**

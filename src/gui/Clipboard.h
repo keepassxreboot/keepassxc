@@ -34,6 +34,7 @@ class Clipboard : public QObject
 
 public:
     void setText(const QString& text, bool clear = true);
+    int secondsToClear();
 
     static Clipboard* instance();
 
@@ -51,8 +52,10 @@ private:
 
     static Clipboard* m_instance;
 
+    void sendCountdownStatus();
+
     QTimer* m_timer;
-    int m_secondsElapsed = 0;
+    int m_secondsToClear = 0;
 
 #ifdef Q_OS_MACOS
     // This object lives for the whole program lifetime and we cannot delete it on exit,

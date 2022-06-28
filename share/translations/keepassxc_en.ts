@@ -227,6 +227,10 @@
         <source>Select backup storage directory</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
