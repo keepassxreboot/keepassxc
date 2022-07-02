@@ -206,8 +206,11 @@ if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
-            gui/osutils/nixutils/NixUtils.cpp
+            gui/osutils/nixutils/NixUtils.cpp)
+    if(WITH_XC_X11)
+        list(APPEND keepassx_SOURCES
             gui/osutils/nixutils/X11Funcs.cpp)
+    endif()
     qt5_add_dbus_adaptor(keepassx_SOURCES
             gui/org.keepassxc.KeePassXC.MainWindow.xml
             gui/MainWindow.h
@@ -359,7 +362,10 @@ if(HAIKU)
     target_link_libraries(keepassx_core network)
 endif()
 if(UNIX AND NOT APPLE)
-    target_link_libraries(keepassx_core Qt5::DBus Qt5::X11Extras X11)
+    target_link_libraries(keepassx_core Qt5::DBus)
+    if(WITH_XC_X11)
+        target_link_libraries(keepassx_core Qt5::X11Extras X11)
+    endif()
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
 if(WIN32)
