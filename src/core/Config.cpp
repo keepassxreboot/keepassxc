@@ -53,7 +53,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     // General
     {Config::SingleInstance,{QS("SingleInstance"), Roaming, true}},
     {Config::RememberLastDatabases,{QS("RememberLastDatabases"), Roaming, true}},
-    {Config::NumberOfRememberedLastDatabases,{QS("NumberOfRememberedLastDatabases"), Roaming, 5}},
+    {Config::NumberOfRememberedLastDatabases,{QS("NumberOfRememberedLastDatabases"), Roaming, 20}},
     {Config::RememberLastKeyFiles,{QS("RememberLastKeyFiles"), Roaming, true}},
     {Config::OpenPreviousDatabasesOnStartup,{QS("OpenPreviousDatabasesOnStartup"), Roaming, true}},
     {Config::AutoSaveAfterEveryChange,{QS("AutoSaveAfterEveryChange"), Roaming, true}},
