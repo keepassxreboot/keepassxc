@@ -62,6 +62,8 @@ if(UNIX AND NOT APPLE)
 endif()
 option(WITH_XC_DOCS "Enable building of documentation" ON)
 
+set(WITH_XC_X11 ON CACHE BOOL "Enable building with X11 deps")
+
 if(APPLE)
     # Perform the platform checks before applying the stricter compiler flags.
     # Otherwise the kSecAccessControlTouchIDCurrentSet deprecation warning will result in an error.
@@ -108,6 +110,11 @@ endif()
 if(NOT WITH_XC_NETWORKING AND WITH_XC_UPDATECHECK)
     message(STATUS "Disabling WITH_XC_UPDATECHECK because WITH_XC_NETWORKING is disabled")
     set(WITH_XC_UPDATECHECK OFF)
+endif()
+
+if(UNIX AND NOT APPLE AND NOT WITH_XC_X11)
+    message(STATUS "Disabling WITH_XC_AUTOTYPE because WITH_XC_X11 is disabled")
+    set(WITH_XC_AUTOTYPE OFF)
 endif()
 
 set(KEEPASSXC_VERSION_MAJOR "2")
@@ -466,7 +473,10 @@ include(CLangFormat)
 
 set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools)
 if(UNIX AND NOT APPLE)
-    find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus X11Extras REQUIRED)
+    if(WITH_XC_X11)
+        list(APPEND QT_COMPONENTS X11Extras)
+    endif()
+    find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus REQUIRED)
 elseif(APPLE)
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED HINTS
             /usr/local/opt/qt/lib/cmake
