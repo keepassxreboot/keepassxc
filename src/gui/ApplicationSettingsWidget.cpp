@@ -191,6 +191,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->singleInstanceCheckBox->setChecked(config()->get(Config::SingleInstance).toBool());
     m_generalUi->launchAtStartup->setChecked(osUtils->isLaunchAtStartupEnabled());
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get(Config::RememberLastDatabases).toBool());
+    m_generalUi->rememberLastDatabasesSpinbox->setValue(config()->get(Config::NumberOfRememberedLastDatabases).toInt());
     m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get(Config::RememberLastKeyFiles).toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
         config()->get(Config::OpenPreviousDatabasesOnStartup).toBool());
@@ -336,6 +337,7 @@ void ApplicationSettingsWidget::saveSettings()
 
     config()->set(Config::SingleInstance, m_generalUi->singleInstanceCheckBox->isChecked());
     config()->set(Config::RememberLastDatabases, m_generalUi->rememberLastDatabasesCheckBox->isChecked());
+    config()->set(Config::NumberOfRememberedLastDatabases, m_generalUi->rememberLastDatabasesSpinbox->value());
     config()->set(Config::RememberLastKeyFiles, m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
     config()->set(Config::OpenPreviousDatabasesOnStartup,
                   m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
@@ -520,6 +522,7 @@ void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
         m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(false);
     }
 
+    m_generalUi->rememberLastDatabasesSpinbox->setEnabled(checked);
     m_generalUi->rememberLastKeyFilesCheckBox->setEnabled(checked);
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setEnabled(checked);
 }
