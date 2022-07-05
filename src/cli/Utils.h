@@ -22,6 +22,7 @@
 
 class CompositeKey;
 class Database;
+class Entry;
 class EntryAttributes;
 class FileKey;
 class PasswordKey;
@@ -32,6 +33,10 @@ namespace Utils
     extern QTextStream STDERR;
     extern QTextStream STDIN;
     extern QTextStream DEVNULL;
+
+    static const QString UuidFieldName = "Uuid";
+    static const QString TagsFieldName = "Tags";
+    static const QStringList EntryFieldNames(QStringList() << UuidFieldName << TagsFieldName);
 
     void setDefaultTextStreams();
 
@@ -55,6 +60,10 @@ namespace Utils
      * (case-insensitive).
      */
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name);
+    /**
+     * Get the value of a top-level Entry field using its name.
+     */
+    QString getTopLevelField(const Entry* entry, const QString& fieldName);
 }; // namespace Utils
 
 #endif // KEEPASSXC_UTILS_H
