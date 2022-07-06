@@ -79,7 +79,7 @@ QString CsvExporter::exportGroup(const Group* group, QString groupPath)
     if (!groupPath.isEmpty()) {
         groupPath.append("/");
     }
-    groupPath.append(group->name());
+    groupPath.append(group->name().replace("/", "\\"));
 
     const QList<Entry*>& entryList = group->entries();
     for (const Entry* entry : entryList) {

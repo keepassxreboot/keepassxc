@@ -322,7 +322,8 @@ Group* CsvImportWidget::splitGroups(const QString& label)
         groupList.removeFirst();
     }
 
-    for (const QString& groupName : groupList) {
+    for (QString& groupName : groupList) {
+        groupName.replace("\\","/");
         Group* children = hasChildren(current, groupName);
         if (children == nullptr) {
             auto brandNew = new Group();
