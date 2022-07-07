@@ -16,5 +16,6 @@
 == COPYRIGHT
 Copyright \(C) 2016-2020 KeePassXC Team <team@keepassxc.org>
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License, either version 2 or version 3.
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License, either version 2 or version 3.
 There is NO WARRANTY, to the extent permitted by law.
