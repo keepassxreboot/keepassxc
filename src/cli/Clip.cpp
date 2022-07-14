@@ -116,6 +116,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             return EXIT_FAILURE;
         }
 
+        selectedAttribute = "totp";
         found = true;
         value = entry->totp();
     } else if (Utils::EntryFieldNames.contains(selectedAttribute)) {
