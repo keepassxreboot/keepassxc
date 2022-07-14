@@ -671,6 +671,7 @@ void TestCli::testClip()
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "--totp"});
     QTRY_VERIFY(isTotp(clipboard->text()));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Entry's \"totp\" attribute copied to the clipboard!\n"));
 
     // Test Unicode
     setInput("a");
