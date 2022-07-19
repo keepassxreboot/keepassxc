@@ -954,7 +954,7 @@ BrowserService::Access
 BrowserService::checkAccess(const Entry* entry, const QString& siteHost, const QString& formHost, const QString& realm)
 {
     if (entry->isExpired()) {
-        return browserSettings()->allowExpiredCredentials() ? Allowed : Denied;
+        return browserSettings()->allowExpiredCredentials() ? Unknown : Denied;
     }
 
     BrowserEntryConfig config;
