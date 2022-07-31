@@ -1,12 +1,21 @@
 with (import <nixpkgs> {});
+
 mkShell {
   buildInputs = [
-    cmake
-    readline
-    openssl
-    # botan
-    qrencode
+    curl
+    botan2
+    # libXi
+    # libXtst
+    # libargon2
+    minizip
     pcsclite
-    libusb
+    qrencode
+    # qtbase
+    # qtsvg
+    # qtx11extras
+    readline
+    zlib
   ];
+  # ++ optional stdenv.isLinux libusb1
+  # ++ optional stdenv.isDarwin qtmacextras;
 }
