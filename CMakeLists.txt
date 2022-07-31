@@ -479,14 +479,14 @@ if(UNIX AND NOT APPLE)
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus REQUIRED)
 elseif(APPLE)
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED HINTS
-            /usr/local/opt/qt/lib/cmake
-            /usr/local/Cellar/qt/*/lib/cmake
-            /opt/homebrew/opt/qt/lib/cmake
+            /usr/local/opt/qt@5/lib/cmake
+            /usr/local/Cellar/qt@5/*/lib/cmake
+            /opt/homebrew/opt/qt@5/lib/cmake
             ENV PATH)
     find_package(Qt5 COMPONENTS MacExtras HINTS
-            /usr/local/opt/qt/lib/cmake
-            /usr/local/Cellar/qt/*/lib/cmake
-            /opt/homebrew/opt/qt/lib/cmake
+            /usr/local/opt/qt@5/lib/cmake
+            /usr/local/Cellar/qt@5/*/lib/cmake
+            /opt/homebrew/opt/qt@5/lib/cmake
             ENV PATH)
 else()
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED)
@@ -497,6 +497,10 @@ if(Qt5Core_VERSION VERSION_LESS "5.2.0")
 endif()
 
 get_filename_component(Qt5_PREFIX ${Qt5_DIR}/../../.. REALPATH)
+if(APPLE)
+    # Add includes under Qt5 Prefix in case Qt6 is also installed
+    include_directories(SYSTEM ${Qt5_PREFIX}/include)
+endif()
 
 # Process moc automatically
 set(CMAKE_AUTOMOC ON)
