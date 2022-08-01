@@ -14,18 +14,18 @@ mkShell {
   buildInputs = [
     curl
     botan2
-    # libXtst
-    # libXi
-    # libargon2
+    xorg.libXtst
+    xorg.libXi
+    libargon2
     minizip
     pcsclite
     qrencode
-    # qtbase
-    # qtsvg
-    # qtx11extras
+    libsForQt5.qt5.qtbase
+    libsForQt5.qt5.qtsvg
+    libsForQt5.qt5.qtx11extras
     readline
     zlib
   ]
-  ++ lib.optional stdenv.isLinux libusb1;
-  # ++ lib.optional stdenv.isDarwin qtmacextras;
+  ++ lib.optional stdenv.isLinux libusb1
+  ++ lib.optional stdenv.isDarwin libsForQt5.qt5.qtmacextras;
 }
