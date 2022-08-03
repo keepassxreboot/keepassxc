@@ -129,7 +129,7 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
     // - Not all flags are available in all OS versions, so we have to check it at compile time
     // - Requesting Biometry/TouchID when to fingerprint sensor is available will result in runtime error
     SecAccessControlCreateFlags accessControlFlags = 0;
-    if (m_isTouchIdAvailable) {
+    if (isTouchIdAvailable()) {
 #if XC_COMPILER_SUPPORT(APPLE_BIOMETRY)
        // Prefer the non-deprecated flag when available
        accessControlFlags = kSecAccessControlBiometryCurrentSet;
@@ -138,7 +138,7 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
 #endif
     }
 
-   if (m_isWatchAvailable) {
+   if (isWatchAvailable()) {
 #if XC_COMPILER_SUPPORT(WATCH_UNLOCK)
       accessControlFlags = accessControlFlags | kSecAccessControlOr | kSecAccessControlWatch;
 #endif
@@ -262,16 +262,8 @@ bool TouchID::containsKey(const QString& dbPath) const
     return m_encryptedMasterKeys.contains(dbPath);
 }
 
-void TouchID::checkHardwareAvailability()
-{
-   m_isTouchIdAvailable = checkTouchIdAvailability();
-   m_isWatchAvailable = checkWatchAvailability();
-   debug("TouchID available: %d", m_isTouchIdAvailable);
-   debug("Apple Watch available: %d", m_isWatchAvailable);
-}
-
 //! @return true if Apple Watch is available for authentication.
-bool TouchID::checkWatchAvailability()
+bool TouchID::isWatchAvailable()
 {
 #if XC_COMPILER_SUPPORT(WATCH_UNLOCK)
    @try {
@@ -281,6 +273,7 @@ bool TouchID::checkWatchAvailability()
 
       bool canAuthenticate = [context canEvaluatePolicy:policyCode error:nil];
       [context release];
+      debug("Apple Wach available: %d", canAuthenticate);
       return canAuthenticate;
    } @catch (NSException *) {
       return false;
@@ -291,7 +284,7 @@ bool TouchID::checkWatchAvailability()
 }
 
 //! @return true if Touch ID is available for authentication.
-bool TouchID::checkTouchIdAvailability()
+bool TouchID::isTouchIdAvailable()
 {
 #if XC_COMPILER_SUPPORT(TOUCH_ID)
    @try {
@@ -301,6 +294,7 @@ bool TouchID::checkTouchIdAvailability()
 
       bool canAuthenticate = [context canEvaluatePolicy:policyCode error:nil];
       [context release];
+      debug("Touch ID available: %d", canAuthenticate);
       return canAuthenticate;
    } @catch (NSException *) {
       return false;
@@ -310,16 +304,13 @@ bool TouchID::checkTouchIdAvailability()
 #endif
 }
 
-/**
- * Dynamic check if TouchID is available on the current machine.
- */
+//! @return true if either TouchID or Apple Watch is available at the moment.
 bool TouchID::isAvailable()
 {
-   if (!m_availabilityChecked) {
-      checkHardwareAvailability();
-      m_availabilityChecked = true;
-   }
-   return m_isTouchIdAvailable || m_isWatchAvailable;
+   // note: we cannot cache the check results because the configuration
+   // is dynamic in its nature. User can close the laptop lid or take off
+   // the watch, thus making one (or both )of the authentication types unavailable.
+   return isWatchAvailable() || isTouchIdAvailable();
 }
 
 /**

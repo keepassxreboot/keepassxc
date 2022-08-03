@@ -21,22 +21,17 @@ public:
     bool storeKey(const QString& databasePath, const QByteArray& passwordKey);
     bool getKey(const QString& databasePath, QByteArray& passwordKey) const;
     bool containsKey(const QString& databasePath) const;
-    bool isAvailable();
     void reset(const QString& databasePath = "");
 
+    static bool isAvailable();
+    static bool isWatchAvailable();
+    static bool isTouchIdAvailable();
+    
 private:
-    void checkHardwareAvailability();
-    static bool checkWatchAvailability();
-    static bool checkTouchIdAvailability();
-
     static void deleteKeyEntry(const QString& accountName);
     static QString databaseKeyName(const QString& databasePath);
 
 private:
-    bool m_availabilityChecked{false};
-    bool m_isTouchIdAvailable{false};
-    bool m_isWatchAvailable{false};
-
     QHash<QString, QByteArray> m_encryptedMasterKeys;
 };
 
