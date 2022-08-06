@@ -5,6 +5,8 @@
 #include "crypto/CryptoHash.h"
 #include "config-keepassx.h"
 
+#include <botan/mem_ops.h>
+
 #include <Foundation/Foundation.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <LocalAuthentication/LocalAuthentication.h>
@@ -115,9 +117,6 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
         return false;
     }
 
-    // memorize which database the stored key is for
-    m_encryptedMasterKeys.insert(databasePath, encryptedMasterKey);
-
     const QString keyName = databaseKeyName(databasePath);
 
     deleteKeyEntry(keyName); // Try to delete the existing key entry
@@ -177,12 +176,16 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
     CFRelease(attributes);
 
     if (status != errSecSuccess) {
-        m_encryptedMasterKeys.remove(databasePath);
         return false;
     }
 
-    debug("TouchID::storeKey - Success!");
+    // Cleanse the key information from the memory
+    Botan::secure_scrub_memory(randomKey.data(), randomKey.size());
+    Botan::secure_scrub_memory(randomIV.data(), randomIV.size());
 
+    // memorize which database the stored key is for
+    m_encryptedMasterKeys.insert(databasePath, encryptedMasterKey);
+    debug("TouchID::storeKey - Success!");
     return true;
 }
 
@@ -254,6 +257,10 @@ bool TouchID::getKey(const QString& databasePath, QByteArray& passwordKey) const
         return false;
     }
 
+    // Cleanse the key information from the memory
+    Botan::secure_scrub_memory(key.data(), key.size());
+    Botan::secure_scrub_memory(iv.data(), iv.size());
+
     return true;
 }
 
@@ -261,6 +268,12 @@ bool TouchID::containsKey(const QString& dbPath) const
 {
     return m_encryptedMasterKeys.contains(dbPath);
 }
+
+// TODO: Both functions below should probably handle the returned errors to
+// provide more information on availability. E.g.: the closed laptop lid results
+// in an error (because touch id is not unavailable). That error could be
+// displayed to the user when we first check for availability instead of just
+// hiding the checkbox.
 
 //! @return true if Apple Watch is available for authentication.
 bool TouchID::isWatchAvailable()
@@ -270,10 +283,17 @@ bool TouchID::isWatchAvailable()
       LAContext *context = [[LAContext alloc] init];
 
       LAPolicy policyCode = LAPolicyDeviceOwnerAuthenticationWithWatch;
+      NSError *error;
 
-      bool canAuthenticate = [context canEvaluatePolicy:policyCode error:nil];
+      bool canAuthenticate = [context canEvaluatePolicy:policyCode error:&error];
       [context release];
-      debug("Apple Wach available: %d", canAuthenticate);
+      if (error) {
+         debug("Apple Wach available: %d (%ld / %s / %s)", canAuthenticate,
+               (long)error.code, error.description.UTF8String,
+               error.localizedDescription.UTF8String);
+      } else {
+          debug("Apple Wach available: %d", canAuthenticate);
+      }
       return canAuthenticate;
    } @catch (NSException *) {
       return false;
@@ -291,10 +311,17 @@ bool TouchID::isTouchIdAvailable()
       LAContext *context = [[LAContext alloc] init];
 
       LAPolicy policyCode = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+      NSError *error;
 
-      bool canAuthenticate = [context canEvaluatePolicy:policyCode error:nil];
+      bool canAuthenticate = [context canEvaluatePolicy:policyCode error:&error];
       [context release];
-      debug("Touch ID available: %d", canAuthenticate);
+      if (error) {
+         debug("Touch ID available: %d (%ld / %s / %s)", canAuthenticate,
+               (long)error.code, error.description.UTF8String,
+               error.localizedDescription.UTF8String);
+      } else {
+          debug("Touch ID available: %d", canAuthenticate);
+      }
       return canAuthenticate;
    } @catch (NSException *) {
       return false;
@@ -309,8 +336,10 @@ bool TouchID::isAvailable()
 {
    // note: we cannot cache the check results because the configuration
    // is dynamic in its nature. User can close the laptop lid or take off
-   // the watch, thus making one (or both )of the authentication types unavailable.
-   return isWatchAvailable() || isTouchIdAvailable();
+   // the watch, thus making one (or both) of the authentication types unavailable.
+   const bool watchAvailable = isWatchAvailable();
+   const bool touchIdAvailable = isTouchIdAvailable();
+   return  watchAvailable || touchIdAvailable;
 }
 
 /**

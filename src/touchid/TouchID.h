@@ -23,11 +23,12 @@ public:
     bool containsKey(const QString& databasePath) const;
     void reset(const QString& databasePath = "");
 
-    static bool isAvailable();
+    bool isAvailable();
+
+private:
     static bool isWatchAvailable();
     static bool isTouchIdAvailable();
-    
-private:
+
     static void deleteKeyEntry(const QString& accountName);
     static QString databaseKeyName(const QString& databasePath);
 
