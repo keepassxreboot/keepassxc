@@ -209,12 +209,6 @@ bool Application::event(QEvent* event)
         emit openFile(static_cast<QFileOpenEvent*>(event)->file());
         return true;
     }
-#ifdef Q_OS_MACOS
-    // restore main window when clicking on the docker icon
-    else if (event->type() == QEvent::ApplicationActivate) {
-        emit applicationActivated();
-    }
-#endif
 
     return QApplication::event(event);
 }
