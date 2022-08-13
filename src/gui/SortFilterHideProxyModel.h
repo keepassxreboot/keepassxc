@@ -32,6 +32,7 @@ public:
 
 protected:
     bool filterAcceptsColumn(int sourceColumn, const QModelIndex& sourceParent) const override;
+    bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
 
 private:
     QBitArray m_hiddenColumns;
