@@ -27,7 +27,7 @@ namespace FdoSecrets
     struct Secret;
     class DBusMgr;
 
-    // types used directly in Qt DBus system
+    // types used directly in Qt D-Bus system
     namespace wire
     {
         struct Secret
@@ -87,7 +87,7 @@ namespace FdoSecrets
     };
 
     /**
-     * @brief Convert parameter type to on-the-wire type and associated dbus signature.
+     * @brief Convert parameter type to on-the-wire type and associated D-Bus signature.
      * This is NOT a generic version, and only handles types used in org.freedesktop.secrets
      * @param id
      * @return ParamData

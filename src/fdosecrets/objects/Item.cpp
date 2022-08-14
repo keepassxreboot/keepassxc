@@ -74,7 +74,7 @@ namespace FdoSecrets
         , m_backend(backend)
     {
         connect(m_backend, &Entry::modified, this, &Item::itemChanged);
-        // Remove from dbus when deleted
+        // Remove from D-Bus when deleted
         connect(m_backend->group(), &Group::entryAboutToRemove, this, [this](Entry* toBeRemoved) {
             if (m_backend == toBeRemoved) {
                 removeFromDBus();
@@ -384,7 +384,7 @@ namespace FdoSecrets
         emit itemAboutToDelete();
 
         // Unregister current path early, do not rely on deleteLater's call to destructor
-        // as in case of Entry moving between groups, new Item will be created at the same DBus path
+        // as in case of Entry moving between groups, new Item will be created at the same D-Bus path
         // before the current Item is deleted in the event loop.
         dbus()->unregisterObject(this);
 

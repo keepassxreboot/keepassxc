@@ -34,7 +34,7 @@ namespace FdoSecrets
     class Service;
 
     /**
-     * @brief A common base class for all dbus-exposed objects.
+     * @brief A common base class for all D-Bus-exposed objects.
      */
     class DBusObject : public QObject
     {
@@ -72,7 +72,7 @@ namespace FdoSecrets
     };
 
     /**
-     * @brief A dbus error or not
+     * @brief A D-Bus error or not
      */
     class DBusResult : public QString
     {
@@ -104,7 +104,7 @@ namespace FdoSecrets
     };
 
     /**
-     * Encode the string value to a DBus object path safe representation,
+     * Encode the string value to a D-Bus object path safe representation,
      * using a schema similar to URI encoding, but with percentage(%) replaced with
      * underscore(_). All characters except [A-Za-z0-9] are encoded. For non-ascii
      * characters, UTF-8 encoding is first applied and each of the resulting byte
