@@ -426,7 +426,7 @@ namespace FdoSecrets
 
         emit collectionAboutToDelete();
 
-        // remove from dbus early
+        // remove from D-Bus early
         dbus()->unregisterObject(this);
 
         // cleanup connection on Database

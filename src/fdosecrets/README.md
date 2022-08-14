@@ -1,16 +1,16 @@
 # Freedesktop.org Secret Storage Spec Server Side API
 
 This plugin implements the [Secret Storage specification][secrets] version 0.2. While running KeePassXC, it acts as a
-Secret Service server, registered on DBus, so clients like seahorse, python-secretstorage, or other implementations
+Secret Service server, registered on D-Bus, so clients like seahorse, python-secretstorage, or other implementations
 can connect and access the exposed database in KeePassXC.
 
 [secrets]: (https://www.freedesktop.org/wiki/Specifications/secret-storage-spec/)
 
 ## Configurable settings
 
-* The user can specify if a database is exposed on DBus, and which group is exposed.
+* The user can specify if a database is exposed on D-Bus, and which group is exposed.
 * Whether to show desktop notification is shown when an entry's secret is retrieved.
-* Whether to confirm for entries deleted from DBus
+* Whether to confirm for entries deleted from D-Bus
 * Whether to confirm each entry's access
 
 ## Implemented Attributes on Item Object
@@ -29,9 +29,9 @@ In addition, all non-protected custom attributes are also exposed.
 
 ## Implementation
 
-* `FdoSecrets::Service` is the top level DBus service
+* `FdoSecrets::Service` is the top level D-Bus service
 * There is one and only one `FdoSecrets::Collection` per opened database tab
-* Each entry under the exposed database group has a corresponding `FdoSecrets::Item` DBus object.
+* Each entry under the exposed database group has a corresponding `FdoSecrets::Item` D-Bus object.
 
 ### Signal connections
 

@@ -39,17 +39,17 @@ namespace FdoSecrets
     class DBusResult;
 
     /**
-     * DBusMgr takes care of the interaction between dbus and business logic objects (DBusObject). It handles the
+     * DBusMgr takes care of the interaction between D-Bus and business logic objects (DBusObject). It handles the
      * following
      * - Registering/unregistering service name
      * - Registering/unregistering paths
-     * - Relay signals from DBusObject to dbus
-     * - Manage per-client states, mapping from dbus caller address to Client
-     * - Deliver method calls from dbus to DBusObject
+     * - Relay signals from DBusObject to D-Bus
+     * - Manage per-client states, mapping from D-Bus caller address to Client
+     * - Deliver method calls from D-Bus to DBusObject
      *
      * Special note in implementation of method delivery:
      * There are two sets of vocabulary classes in use for method delivery.
-     * The Qt DBus system uses QDBusVariant/QDBusObjectPath and other primitive types in QDBusMessage::arguments(),
+     * The Qt D-Bus system uses QDBusVariant/QDBusObjectPath and other primitive types in QDBusMessage::arguments(),
      * i.e. the on-the-wire types.
      * The DBusObject invokable methods uses QVariant/DBusObject* and other primitive types in parameters (parameter
      * types). FdoSecrets::typeToWireType establishes the mapping from parameter types to on-the-wire types. The
@@ -64,7 +64,7 @@ namespace FdoSecrets
      * by DBusObject
      *   * prepare output argument storage
      *   * call the method
-     *   * convert types to what Qt DBus expects
+     *   * convert types to what Qt D-Bus expects
      *
      * The MethodData is pre-computed using Qt meta object system by finding methods with signature matching a certain
      * pattern:
@@ -82,7 +82,7 @@ namespace FdoSecrets
         explicit DBusMgr();
 
         /**
-         * @brief Must be called after all dbus types are registered
+         * @brief Must be called after all D-Bus types are registered
          */
         void populateMethodCache();
 
@@ -107,7 +107,7 @@ namespace FdoSecrets
          */
         QString reportExistingService() const;
 
-        // expose on dbus and handle signals
+        // expose on D-Bus and handle signals
         bool registerObject(Service* service);
         bool registerObject(Collection* coll);
         bool registerObject(Session* sess);
@@ -312,7 +312,7 @@ namespace FdoSecrets
         void removeClient(DBusClient* client);
 
         QDBusServiceWatcher m_watcher{};
-        // mapping from the unique dbus peer address to client object
+        // mapping from the unique D-Bus peer address to client object
         QHash<QString, DBusClientPtr> m_clients{};
 
         DBusClientPtr m_overrideClient;

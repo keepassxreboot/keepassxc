@@ -47,7 +47,7 @@ namespace FdoSecrets
          * @param name the collection name
          * @return pointer to created instance, or nullptr when error happens.
          * This may be caused by
-         *   - DBus path registration error
+         *   - D-Bus path registration error
          */
         static Collection* Create(Service* parent, const QString& name);
         ~Collection() override;
@@ -127,7 +127,7 @@ namespace FdoSecrets
 
         Item* doNewItem(const DBusClientPtr& client, QString itemPath);
 
-        // Only delete from dbus, will remove self. Do not affect database in KPXC
+        // Only delete from D-Bus, will remove self. Do not affect database in KPXC
         void removeFromDBus();
 
         void reloadBackend();

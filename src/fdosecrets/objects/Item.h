@@ -53,7 +53,7 @@ namespace FdoSecrets
          * @param backend the `Entry` containing the data
          * @return pointer to newly created Item, or nullptr if error
          * This may be caused by
-         *   - DBus path registration error
+         *   - D-Bus path registration error
          */
         static Item* Create(Collection* parent, Entry* backend);
         ~Item() override;
@@ -114,7 +114,7 @@ namespace FdoSecrets
         // will actually delete the entry in KPXC
         bool doDelete(const DBusClientPtr& client) const;
 
-        // Only delete from dbus, will remove self. Do not affect database in KPXC
+        // Only delete from D-Bus, will remove self. Do not affect database in KPXC
         void removeFromDBus();
 
     private slots:

@@ -232,7 +232,7 @@ namespace FdoSecrets
 
     void DBusMgr::populateMethodCache()
     {
-        // these are the methods we expose on DBus
+        // these are the methods we expose on D-Bus
         populateMethodCache(Service::staticMetaObject);
         populateMethodCache(Collection::staticMetaObject);
         populateMethodCache(Item::staticMetaObject);
@@ -296,8 +296,8 @@ namespace FdoSecrets
     {
         bool ok = m_conn.send(reply);
         if (!ok) {
-            qDebug() << "Failed to send on DBus:" << reply;
-            emit error(tr("Failed to send reply on DBus"));
+            qDebug() << "Failed to send on D-Bus:" << reply;
+            emit error(tr("Failed to send reply on D-Bus"));
         }
         return ok;
     }
@@ -423,16 +423,16 @@ namespace FdoSecrets
     {
         if (!m_conn.registerService(DBUS_SERVICE_SECRET)) {
             const auto existing = reportExistingService();
-            qDebug() << "Failed to register DBus service at " << DBUS_SERVICE_SECRET;
+            qDebug() << "Failed to register D-Bus service at " << DBUS_SERVICE_SECRET;
             qDebug() << existing;
-            emit error(tr("Failed to register DBus service at %1.<br/>").arg(DBUS_SERVICE_SECRET) + existing);
+            emit error(tr("Failed to register D-Bus service at %1.<br/>").arg(DBUS_SERVICE_SECRET) + existing);
             return false;
         }
         connect(service, &DBusObject::destroyed, this, [this]() { m_conn.unregisterService(DBUS_SERVICE_SECRET); });
 
         if (!registerObject(DBUS_PATH_SECRETS, service)) {
-            qDebug() << "Failed to register service on DBus at path" << DBUS_PATH_SECRETS;
-            emit error(tr("Failed to register service on DBus at path '%1'").arg(DBUS_PATH_SECRETS));
+            qDebug() << "Failed to register service on D-Bus at path" << DBUS_PATH_SECRETS;
+            emit error(tr("Failed to register service on D-Bus at path '%1'").arg(DBUS_PATH_SECRETS));
             return false;
         }
 
@@ -453,8 +453,8 @@ namespace FdoSecrets
             path = DBUS_PATH_TEMPLATE_COLLECTION.arg(DBUS_PATH_SECRETS, name);
 
             if (!registerObject(path, coll)) {
-                qDebug() << "Failed to register database on DBus under name" << name;
-                emit error(tr("Failed to register database on DBus under the name '%1'").arg(name));
+                qDebug() << "Failed to register database on D-Bus under name" << name;
+                emit error(tr("Failed to register database on D-Bus under the name '%1'").arg(name));
                 return false;
             }
         }
@@ -469,7 +469,7 @@ namespace FdoSecrets
     {
         auto path = DBUS_PATH_TEMPLATE_SESSION.arg(DBUS_PATH_SECRETS, sess->id());
         if (!registerObject(path, sess)) {
-            emit error(tr("Failed to register session on DBus at path '%1'").arg(path));
+            emit error(tr("Failed to register session on D-Bus at path '%1'").arg(path));
             return false;
         }
         return true;
@@ -479,7 +479,7 @@ namespace FdoSecrets
     {
         auto path = DBUS_PATH_TEMPLATE_ITEM.arg(item->collection()->objectPath().path(), item->backend()->uuidToHex());
         if (!registerObject(path, item)) {
-            emit error(tr("Failed to register item on DBus at path '%1'").arg(path));
+            emit error(tr("Failed to register item on D-Bus at path '%1'").arg(path));
             return false;
         }
 
@@ -492,7 +492,7 @@ namespace FdoSecrets
     {
         auto path = DBUS_PATH_TEMPLATE_PROMPT.arg(DBUS_PATH_SECRETS, Tools::uuidToHex(QUuid::createUuid()));
         if (!registerObject(path, prompt)) {
-            emit error(tr("Failed to register prompt object on DBus at path '%1'").arg(path));
+            emit error(tr("Failed to register prompt object on D-Bus at path '%1'").arg(path));
             return false;
         }
 
@@ -514,8 +514,8 @@ namespace FdoSecrets
     {
         auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
         if (!registerObject(path, coll, false)) {
-            qDebug() << "Failed to register database on DBus under alias" << alias;
-            // usually this is reported back directly on dbus, so no need to show in UI
+            qDebug() << "Failed to register database on D-Bus under alias" << alias;
+            // usually this is reported back directly on D-Bus, so no need to show in UI
             return false;
         }
         // alias signals are handled together with collections' primary path in emitCollection*

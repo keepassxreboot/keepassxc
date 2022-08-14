@@ -107,7 +107,7 @@ namespace FdoSecrets
         OverrideParentWindow override(this, windowId);
 
         if (m_collection) {
-            // Collection removal is just disconnecting it from dbus.
+            // Collection removal is just disconnecting it from D-Bus.
             // GUI then reacts with potentially closing the database.
             m_collection->removeFromDBus();
         }

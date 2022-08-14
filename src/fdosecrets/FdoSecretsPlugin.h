@@ -56,7 +56,7 @@ public:
     FdoSecrets::Service* serviceInstance() const;
 
     /**
-     * @brief The dbus manager instance
+     * @brief The D-Bus manager instance
      * @return
      */
     const QSharedPointer<FdoSecrets::DBusMgr>& dbus() const;

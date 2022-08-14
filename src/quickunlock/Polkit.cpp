@@ -49,7 +49,7 @@ Polkit::Polkit()
     PolkitSubject::registerMetaType();
     PolkitAuthorizationResults::registerMetaType();
 
-    /* Note we explicitly use our own dbus path here, as the ::systemBus() method could be overridden
+    /* Note we explicitly use our own D-Bus path here, as the ::systemBus() method could be overridden
        through an environment variable to return an alternative bus path. This bus could have an application
        pretending to be polkit running on it, which could approve every authentication request
 
@@ -61,14 +61,14 @@ Polkit::Polkit()
 
     m_available = bus.isConnected();
     if (!m_available) {
-        qDebug() << "polkit: Failed to connect to system dbus (this may be due to a non-standard dbus path)";
+        qDebug() << "polkit: Failed to connect to system D-Bus (this may be due to a non-standard D-Bus path)";
         return;
     }
 
     m_available = bus.interface()->isServiceRegistered(polkit_service);
 
     if (!m_available) {
-        qDebug() << "polkit: Polkit is not registered on dbus";
+        qDebug() << "polkit: Polkit is not registered on D-Bus";
         return;
     }
 

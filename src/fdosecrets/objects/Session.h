@@ -38,7 +38,7 @@ namespace FdoSecrets
          * @param parent the owning Service
          * @return pointer to newly created Session, or nullptr if error
          * This may be caused by
-         *   - DBus path registration error
+         *   - D-Bus path registration error
          */
         static Session* Create(QSharedPointer<CipherPair> cipher, const QString& peer, Service* parent);
 
