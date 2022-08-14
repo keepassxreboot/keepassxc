@@ -141,7 +141,7 @@ namespace FdoSecrets
             }
         }
         auto db = dbWidget->database();
-        auto group = db->rootGroup()->findGroupByUuid(FdoSecrets::settings()->exposedGroup(db));
+        auto group = db->rootGroup()->findGroupByUuid(FdoSecrets::settings()->exposedGroup(db.data()));
         if (group) {
             switch (role) {
             case Qt::DisplayRole:

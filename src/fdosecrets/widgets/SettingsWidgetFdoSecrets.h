@@ -25,6 +25,8 @@
 class QAbstractItemView;
 
 class FdoSecretsPlugin;
+class FdoSecretsSettingsPage;
+class DatabaseWidget;
 
 namespace Ui
 {
@@ -34,7 +36,9 @@ class SettingsWidgetFdoSecrets : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWidget* parent = nullptr);
+    explicit SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin,
+                                      FdoSecretsSettingsPage* page,
+                                      QWidget* parent = nullptr);
     ~SettingsWidgetFdoSecrets() override;
 
 public slots:
@@ -52,6 +56,7 @@ protected:
 private:
     QScopedPointer<Ui::SettingsWidgetFdoSecrets> m_ui;
     FdoSecretsPlugin* m_plugin;
+    FdoSecretsSettingsPage* m_page;
     QTimer m_checkTimer;
 };
 

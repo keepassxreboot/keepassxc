@@ -429,7 +429,7 @@ namespace FdoSecrets
 
     bool DBusMgr::registerObject(Collection* coll)
     {
-        auto name = encodePath(coll->name());
+        auto name = encodePath(coll->dbusName());
         auto path = DBUS_PATH_TEMPLATE_COLLECTION.arg(DBUS_PATH_SECRETS, name);
         if (!registerObject(path, coll)) {
             // try again with a suffix
@@ -444,7 +444,6 @@ namespace FdoSecrets
         }
 
         connect(coll, &Collection::itemCreated, this, &DBusMgr::emitItemCreated);
-        connect(coll, &Collection::itemChanged, this, &DBusMgr::emitItemChanged);
         connect(coll, &Collection::itemDeleted, this, &DBusMgr::emitItemDeleted);
 
         return true;
@@ -467,6 +466,9 @@ namespace FdoSecrets
             emit error(tr("Failed to register item on DBus at path '%1'").arg(path));
             return false;
         }
+
+        connect(item, &Item::itemChanged, this, [this, item]() { emitItemChanged(item); });
+
         return true;
     }
 
@@ -544,7 +546,7 @@ namespace FdoSecrets
         sendDBusSignal(
             coll->objectPath().path(), DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemCreated"), args);
         // also send on all alias path
-        for (const auto& alias : coll->aliases()) {
+        for (const auto& alias : coll->service()->collectionAliases(coll)) {
             auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
             sendDBusSignal(path, DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemCreated"), args);
         }
@@ -559,7 +561,7 @@ namespace FdoSecrets
         sendDBusSignal(
             coll->objectPath().path(), DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemChanged"), args);
         // also send on all alias path
-        for (const auto& alias : coll->aliases()) {
+        for (const auto& alias : coll->service()->collectionAliases(coll)) {
             auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
             sendDBusSignal(path, DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemChanged"), args);
         }
@@ -574,7 +576,7 @@ namespace FdoSecrets
         sendDBusSignal(
             coll->objectPath().path(), DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemDeleted"), args);
         // also send on all alias path
-        for (const auto& alias : coll->aliases()) {
+        for (const auto& alias : coll->service()->collectionAliases(coll)) {
             auto path = DBUS_PATH_TEMPLATE_ALIAS.arg(DBUS_PATH_SECRETS, alias);
             sendDBusSignal(path, DBUS_INTERFACE_SECRET_COLLECTION, QStringLiteral("ItemDeleted"), args);
         }

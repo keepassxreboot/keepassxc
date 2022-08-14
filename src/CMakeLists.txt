@@ -292,14 +292,14 @@ if(WIN32)
 endif()
 
 if(WITH_XC_YUBIKEY)
-    list(APPEND keepassx_SOURCES 
+    list(APPEND keepassx_SOURCES
         keys/drivers/YubiKey.h
-        keys/drivers/YubiKey.cpp 
-        keys/drivers/YubiKeyInterface.cpp 
-        keys/drivers/YubiKeyInterfaceUSB.cpp 
+        keys/drivers/YubiKey.cpp
+        keys/drivers/YubiKeyInterface.cpp
+        keys/drivers/YubiKeyInterfaceUSB.cpp
         keys/drivers/YubiKeyInterfacePCSC.cpp)
 else()
-    list(APPEND keepassx_SOURCES 
+    list(APPEND keepassx_SOURCES
         keys/drivers/YubiKey.h
         keys/drivers/YubiKeyStub.cpp)
 endif()
