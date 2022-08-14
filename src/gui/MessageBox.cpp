@@ -189,14 +189,3 @@ void MessageBox::setNextAnswer(MessageBox::Button button)
 {
     m_nextAnswer = button;
 }
-
-MessageBox::OverrideParent::OverrideParent(QWindow* newParent)
-    : m_oldParent(MessageBox::m_overrideParent)
-{
-    MessageBox::m_overrideParent = newParent;
-}
-
-MessageBox::OverrideParent::~OverrideParent()
-{
-    MessageBox::m_overrideParent = m_oldParent;
-}

@@ -63,7 +63,8 @@
 #endif
 
 #ifdef WITH_XC_FDOSECRETS
-#include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/FdoSecretsPluginGUI.h"
+#include "fdosecrets/FdoSecretsSettingsPage.h"
 #endif
 
 #ifdef WITH_XC_YUBIKEY
@@ -218,12 +219,14 @@ MainWindow::MainWindow()
 #endif
 
 #ifdef WITH_XC_FDOSECRETS
-    auto fdoSS = new FdoSecretsPlugin(m_ui->tabWidget);
+    auto fdoSS = new FdoSecretsPluginGUI(m_ui->tabWidget);
     connect(fdoSS, &FdoSecretsPlugin::error, this, &MainWindow::showErrorMessage);
-    connect(fdoSS, &FdoSecretsPlugin::requestSwitchToDatabases, this, &MainWindow::switchToDatabases);
     connect(fdoSS, &FdoSecretsPlugin::requestShowNotification, this, &MainWindow::displayDesktopNotification);
     fdoSS->updateServiceState();
-    m_ui->settingsWidget->addSettingsPage(fdoSS);
+
+    auto fdoSSP = new FdoSecretsSettingsPage(fdoSS, m_ui->tabWidget);
+    connect(fdoSSP, &FdoSecretsSettingsPage::requestSwitchToDatabases, this, &MainWindow::switchToDatabases);
+    m_ui->settingsWidget->addSettingsPage(fdoSSP);
 #endif
 
 #ifdef WITH_XC_YUBIKEY

@@ -17,10 +17,11 @@
 
 #include "TestGuiFdoSecrets.h"
 
-#include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/FdoSecretsPluginGUI.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
+#include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/SessionCipher.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
 
@@ -153,7 +154,7 @@ void TestGuiFdoSecrets::initTestCase()
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     VERIFY(m_tabWidget);
-    m_plugin = FdoSecretsPlugin::getPlugin();
+    m_plugin = m_mainWindow->findChild<FdoSecretsPluginGUI*>();
     VERIFY(m_plugin);
     m_mainWindow->show();
 
@@ -197,7 +198,7 @@ void TestGuiFdoSecrets::init()
     m_db = m_dbWidget->database();
 
     // by default expose the root group
-    FdoSecrets::settings()->setExposedGroup(m_db, m_db->rootGroup()->uuid());
+    FdoSecrets::settings()->setExposedGroup(m_db.data(), m_db->rootGroup()->uuid());
     VERIFY(m_dbWidget->save());
 
     // enforce consistent default settings at the beginning
@@ -249,10 +250,10 @@ void TestGuiFdoSecrets::cleanupTestCase()
 
 void TestGuiFdoSecrets::testServiceEnable()
 {
-    QSignalSpy sigError(m_plugin, SIGNAL(error(QString)));
+    QSignalSpy sigError(m_plugin.data(), SIGNAL(error(QString)));
     VERIFY(sigError.isValid());
 
-    QSignalSpy sigStarted(m_plugin, SIGNAL(secretServiceStarted()));
+    QSignalSpy sigStarted(m_plugin.data(), SIGNAL(secretServiceStarted()));
     VERIFY(sigStarted.isValid());
 
     // make sure no one else is holding the service
@@ -287,7 +288,7 @@ void TestGuiFdoSecrets::testServiceEnable()
 void TestGuiFdoSecrets::testServiceEnableNoExposedDatabase()
 {
     // reset the exposed group and then enable the service
-    FdoSecrets::settings()->setExposedGroup(m_db, {});
+    FdoSecrets::settings()->setExposedGroup(m_db.data(), {});
     auto service = enableService();
     VERIFY(service);
 
@@ -384,7 +385,8 @@ void TestGuiFdoSecrets::testServiceSearchBlockingUnlock()
         // using a local QEventLoop.
         // so we do a little trick here to get the return value back
         bool unlockDialogWorks = false;
-        QTimer::singleShot(50, [&]() { unlockDialogWorks = driveUnlockDialog(); });
+        QObject guard;
+        QTimer::singleShot(50, &guard, [&]() { unlockDialogWorks = driveUnlockDialog(); });
 
         DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", title}}));
         VERIFY(unlockDialogWorks);
@@ -426,9 +428,10 @@ void TestGuiFdoSecrets::testServiceSearchBlockingUnlockMultiple()
     lockDatabaseInBackend();
     {
         bool unlockDialogWorks = false;
-        QTimer::singleShot(50, [&]() {
+        QObject guard;
+        QTimer::singleShot(50, &guard, [&]() {
             unlockDialogWorks = driveUnlockDialog(anotherWidget);
-            QTimer::singleShot(50, [&]() { unlockDialogWorks &= driveUnlockDialog(); });
+            QTimer::singleShot(50, &guard, [&]() { unlockDialogWorks &= driveUnlockDialog(); });
         });
 
         DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", "Sample Entry"}}));
@@ -441,7 +444,8 @@ void TestGuiFdoSecrets::testServiceSearchBlockingUnlockMultiple()
     lockDatabaseInBackend();
     {
         bool unlockDialogWorks = false;
-        QTimer::singleShot(50, [&]() { unlockDialogWorks = driveUnlockDialog(m_dbWidget); });
+        QObject guard;
+        QTimer::singleShot(50, &guard, [&]() { unlockDialogWorks = driveUnlockDialog(m_dbWidget); });
 
         DBUS_GET2(unlocked, locked, service->SearchItems({{"Title", "Sample Entry"}}));
         VERIFY(unlockDialogWorks);
@@ -505,16 +509,18 @@ void TestGuiFdoSecrets::testServiceUnlock()
     VERIFY(waitForSignal(spyPromptCompleted, 0));
     DBUS_COMPARE(coll->locked(), true);
 
+    bool unlockDialogWorks = false;
+    QObject guard;
+    QTimer::singleShot(50, &guard, [&]() { unlockDialogWorks = driveUnlockDialog(); });
+
     // show the prompt
     DBUS_VERIFY(prompt->Prompt(""));
 
     // still not unlocked before user action
-    VERIFY(waitForSignal(spyPromptCompleted, 0));
     DBUS_COMPARE(coll->locked(), true);
 
-    VERIFY(driveUnlockDialog());
-
     VERIFY(waitForSignal(spyPromptCompleted, 1));
+    VERIFY(unlockDialogWorks);
     {
         auto args = spyPromptCompleted.takeFirst();
         COMPARE(args.size(), 2);
@@ -548,6 +554,12 @@ void TestGuiFdoSecrets::testServiceUnlockDatabaseConcurrent()
     VERIFY(prompt);
     QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
     VERIFY(spyPromptCompleted.isValid());
+
+    // there should be only one unlock dialog
+    bool unlockDialogWorks = false;
+    QObject guard;
+    QTimer::singleShot(50, &guard, [&]() { unlockDialogWorks = driveUnlockDialog(); });
+
     DBUS_VERIFY(prompt->Prompt(""));
 
     // while the first prompt is running, another request come in
@@ -558,11 +570,9 @@ void TestGuiFdoSecrets::testServiceUnlockDatabaseConcurrent()
     VERIFY(spyPromptCompleted2.isValid());
     DBUS_VERIFY(prompt2->Prompt(""));
 
-    // there should be only one unlock dialog
-    VERIFY(driveUnlockDialog());
-
     // both prompts should complete
     VERIFY(waitForSignal(spyPromptCompleted, 1));
+    VERIFY(unlockDialogWorks);
     {
         auto args = spyPromptCompleted.takeFirst();
         COMPARE(args.size(), 2);
@@ -611,11 +621,15 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
         DBUS_COMPARE(item->locked(), true);
 
         // drive the prompt
+        bool accessControlDialogWorks = false;
+        QObject guard;
+        QTimer::singleShot(50, &guard, [&]() { accessControlDialogWorks = driveAccessControlDialog(false); });
+
         DBUS_VERIFY(prompt->Prompt(""));
         // only allow once
-        VERIFY(driveAccessControlDialog(false));
 
         VERIFY(waitForSignal(spyPromptCompleted, 1));
+        VERIFY(accessControlDialogWorks);
         {
             auto args = spyPromptCompleted.takeFirst();
             COMPARE(args.size(), 2);
@@ -649,11 +663,15 @@ void TestGuiFdoSecrets::testServiceUnlockItems()
         DBUS_COMPARE(item->locked(), true);
 
         // drive the prompt
+        bool accessControlDialogWorks = false;
+        QObject guard;
+        QTimer::singleShot(50, &guard, [&]() { accessControlDialogWorks = driveAccessControlDialog(true); });
+
         DBUS_VERIFY(prompt->Prompt(""));
         // only allow and remember
-        VERIFY(driveAccessControlDialog(true));
 
         VERIFY(waitForSignal(spyPromptCompleted, 1));
+        VERIFY(accessControlDialogWorks);
         {
             auto args = spyPromptCompleted.takeFirst();
             COMPARE(args.size(), 2);
@@ -702,11 +720,15 @@ void TestGuiFdoSecrets::testServiceUnlockItemsIncludeFutureEntries()
         DBUS_COMPARE(item->locked(), true);
 
         // drive the prompt
+        bool accessControlDialogWorks = false;
+        QObject guard;
+        QTimer::singleShot(50, &guard, [&]() { accessControlDialogWorks = driveAccessControlDialog(true, true); });
+
         DBUS_VERIFY(prompt->Prompt(""));
         // remember and include future entries
-        VERIFY(driveAccessControlDialog(true, true));
 
         VERIFY(waitForSignal(spyPromptCompleted, 1));
+        VERIFY(accessControlDialogWorks);
         {
             auto args = spyPromptCompleted.takeFirst();
             COMPARE(args.size(), 2);
@@ -1075,7 +1097,7 @@ void TestGuiFdoSecrets::testHiddenFilename()
     auto coll = getDefaultCollection(service);
     auto collObj = m_plugin->dbus()->pathToObject<Collection>(QDBusObjectPath(coll->path()));
     VERIFY(collObj);
-    COMPARE(collObj->name(), QStringLiteral(".Name"));
+    COMPARE(collObj->dbusName(), QStringLiteral(".Name"));
 }
 
 void TestGuiFdoSecrets::testDuplicateName()
@@ -1374,7 +1396,7 @@ void TestGuiFdoSecrets::testItemSecret()
     // get secret with notification
     FdoSecrets::settings()->setShowNotification(true);
     {
-        QSignalSpy spyShowNotification(m_plugin, SIGNAL(requestShowNotification(QString, QString, int)));
+        QSignalSpy spyShowNotification(m_plugin.data(), SIGNAL(requestShowNotification(QString, QString, int)));
         VERIFY(spyShowNotification.isValid());
 
         DBUS_GET(encrypted, item->GetSecret(QDBusObjectPath(sess->path())));
@@ -1521,7 +1543,7 @@ void TestGuiFdoSecrets::testItemRejectSetReferenceFields()
     VERIFY(rootEntry);
     auto subgroup = m_db->rootGroup()->findGroupByPath("/Homebanking/Subgroup");
     VERIFY(subgroup);
-    FdoSecrets::settings()->setExposedGroup(m_db, subgroup->uuid());
+    FdoSecrets::settings()->setExposedGroup(m_db.data(), subgroup->uuid());
     auto service = enableService();
     VERIFY(service);
     auto coll = getDefaultCollection(service);
@@ -1605,7 +1627,7 @@ void TestGuiFdoSecrets::testExposeSubgroup()
 {
     auto subgroup = m_db->rootGroup()->findGroupByPath("/Homebanking/Subgroup");
     VERIFY(subgroup);
-    FdoSecrets::settings()->setExposedGroup(m_db, subgroup->uuid());
+    FdoSecrets::settings()->setExposedGroup(m_db.data(), subgroup->uuid());
     auto service = enableService();
     VERIFY(service);
 
@@ -1626,7 +1648,7 @@ void TestGuiFdoSecrets::testModifyingExposedGroup()
     // test when exposed group is removed the collection is not exposed anymore
     auto subgroup = m_db->rootGroup()->findGroupByPath("/Homebanking");
     VERIFY(subgroup);
-    FdoSecrets::settings()->setExposedGroup(m_db, subgroup->uuid());
+    FdoSecrets::settings()->setExposedGroup(m_db.data(), subgroup->uuid());
     auto service = enableService();
     VERIFY(service);
 
@@ -1645,7 +1667,7 @@ void TestGuiFdoSecrets::testModifyingExposedGroup()
     }
 
     // test setting another exposed group, the collection will be exposed again
-    FdoSecrets::settings()->setExposedGroup(m_db, m_db->rootGroup()->uuid());
+    FdoSecrets::settings()->setExposedGroup(m_db.data(), m_db->rootGroup()->uuid());
     processEvents();
     {
         DBUS_GET(collPaths, service->collections());
@@ -1658,7 +1680,7 @@ void TestGuiFdoSecrets::testNoExposeRecycleBin()
     // when the recycle bin is underneath the exposed group
     // be careful not to expose entries in there
 
-    FdoSecrets::settings()->setExposedGroup(m_db, m_db->rootGroup()->uuid());
+    FdoSecrets::settings()->setExposedGroup(m_db.data(), m_db->rootGroup()->uuid());
     m_db->metadata()->setRecycleBinEnabled(true);
 
     auto entry = m_db->rootGroup()->entries().first();
@@ -1790,21 +1812,33 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<Ses
     QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
     VERIFY(spyPromptCompleted.isValid());
 
+    bool unlockDialogFound = false;
+    bool accessControlDialogFound = false;
+    QObject guard;
+    if (expectUnlockPrompt) {
+        QTimer::singleShot(50, &guard, [&]() {
+            unlockDialogFound = driveUnlockDialog();
+            if (expectPrompt) {
+                QTimer::singleShot(50, &guard, [&]() { accessControlDialogFound = driveAccessControlDialog(); });
+            }
+        });
+    }
+
+    else if (expectPrompt) {
+        QTimer::singleShot(50, &guard, [&]() { accessControlDialogFound = driveAccessControlDialog(); });
+    }
+
     // drive the prompt
     DBUS_VERIFY(prompt->Prompt(""));
 
-    bool unlockFound = driveUnlockDialog();
-    COMPARE(unlockFound, expectUnlockPrompt);
-
-    bool found = driveAccessControlDialog();
-    COMPARE(found, expectPrompt);
-
     VERIFY(waitForSignal(spyPromptCompleted, 1));
+    COMPARE(unlockDialogFound, expectUnlockPrompt);
+    COMPARE(accessControlDialogFound, expectPrompt);
+
     auto args = spyPromptCompleted.takeFirst();
     COMPARE(args.size(), 2);
     COMPARE(args.at(0).toBool(), false);
     itemPath = getSignalVariantArgument<QDBusObjectPath>(args.at(1));
-
     return getProxy<ItemProxy>(itemPath);
 }
 

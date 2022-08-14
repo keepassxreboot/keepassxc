@@ -48,9 +48,6 @@ namespace FdoSecrets
         void setUnlockBeforeSearch(bool unlockBeforeSearch);
 
         // Per db settings
-
-        QUuid exposedGroup(const QSharedPointer<Database>& db) const;
-        void setExposedGroup(const QSharedPointer<Database>& db, const QUuid& group);
         QUuid exposedGroup(Database* db) const;
         void setExposedGroup(Database* db, const QUuid& group);
 
