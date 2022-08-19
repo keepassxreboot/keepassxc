@@ -559,11 +559,7 @@ void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries, bool confirm)
 
 void DatabaseWidget::setFocus(Qt::FocusReason reason)
 {
-    if (reason == Qt::BacktabFocusReason) {
-        m_previewView->setFocus();
-    } else {
-        m_groupView->setFocus();
-    }
+    focusNextPrevChild(reason == Qt::TabFocusReason);
 }
 
 void DatabaseWidget::focusOnEntries(bool editIfFocused)
@@ -1617,31 +1613,32 @@ void DatabaseWidget::showEvent(QShowEvent* event)
 bool DatabaseWidget::focusNextPrevChild(bool next)
 {
     // [parent] <-> GroupView <-> TagView <-> EntryView <-> EntryPreview <-> [parent]
-    if (next) {
-        if (m_groupView->hasFocus()) {
-            m_tagView->setFocus();
-            return true;
-        } else if (m_tagView->hasFocus()) {
-            m_entryView->setFocus();
-            return true;
-        } else if (m_entryView->hasFocus()) {
-            m_previewView->setFocus();
-            return true;
-        }
+    QList<QWidget*> sequence = {m_groupView, m_tagView, m_entryView, m_previewView};
+    auto widget = qApp->focusWidget();
+
+    int idx;
+    do {
+        idx = sequence.indexOf(widget);
+        widget = widget->parentWidget();
+    } while (idx == -1 && widget);
+
+    if (idx == -1) {
+        idx = next ? 0 : sequence.size() - 1;
     } else {
-        if (m_previewView->hasFocus()) {
-            m_entryView->setFocus();
-            return true;
-        } else if (m_entryView->hasFocus()) {
-            m_tagView->setFocus();
-            return true;
-        } else if (m_tagView->hasFocus()) {
-            m_groupView->setFocus();
-            return true;
-        }
+        idx = next ? idx + 1 : idx - 1;
     }
 
-    // Defer to the parent widget to make a decision
+    // Find the next visible element in the sequence and set the focus
+    while (idx >= 0 && idx < sequence.size()) {
+        widget = sequence[idx];
+        if (widget->isVisible() && widget->height() > 0 && widget->width() > 0) {
+            widget->setFocus();
+            return widget;
+        }
+        idx = next ? idx + 1 : idx - 1;
+    }
+
+    // Ran out of options, defer to the parent widget
     return QStackedWidget::focusNextPrevChild(next);
 }
 
