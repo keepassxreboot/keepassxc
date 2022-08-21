@@ -66,6 +66,11 @@ It provides the ability to query and modify the entries of a KeePass database, d
   The key file will be created if the file that is referred to does not exist.
   If both the key file and password are empty, no database will be created.
 
+*db-edit* [_options_] <__database__>::
+  Edits a database.
+  When setting a key file, the key file will be created if the file that is referred to
+  does not exist.
+
 *db-info* [_options_] <__database__>::
   Show a database's information.
 
@@ -235,15 +240,23 @@ The same password generation options as documented for the generate command can 
   If a unique matching entry is found it will be copied to the clipboard.
   If multiple entries are found they will be listed to refine the search. (no clip performed)
 
-=== Create and Import options
-*-k*, *--set-key-file* <__path__>::
+=== Db-create, Db-edit and Import options
+*--set-key-file* <__path__>::
   Set the key file for the database.
 
 *-p*, *--set-password*::
   Set a password for the database.
 
+=== Db-create, Import options
 *-t*, *--decryption-time* <__time__>::
   Target decryption time in MS for the database.
+
+=== Db-edit options
+*--unset-password* <__path__>::
+  Removes the password for the database.
+
+*--unset-key-file* <__path__>::
+  Removes the key file for the database.
 
 === Show options
 *-a*, *--attributes* <__attribute__>...::
