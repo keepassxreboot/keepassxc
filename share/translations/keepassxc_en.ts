@@ -7812,6 +7812,10 @@ Kernel: %3 %4</source>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
