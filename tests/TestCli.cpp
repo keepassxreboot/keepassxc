@@ -2049,6 +2049,21 @@ void TestCli::testShow()
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-a", "Testattribute1", "/Sample Entry"});
     QCOMPARE(m_stdout->readAll(), QByteArray());
     QVERIFY(m_stderr->readAll().contains("ERROR: attribute Testattribute1 is ambiguous"));
+
+    setInput("a");
+    execCmd(showCmd, {"show", "--all", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("Title: Sample Entry\n"
+                        "UserName: User Name\n"
+                        "Password: PROTECTED\n"
+                        "URL: http://www.somesite.com/\n"
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"
+                        "TOTP Seed: PROTECTED\n"
+                        "TOTP Settings: 30;6\n"
+                        "TestAttribute1: b\n"
+                        "testattribute1: a\n"));
 }
 
 void TestCli::testInvalidDbFiles()
