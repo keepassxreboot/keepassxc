@@ -398,6 +398,10 @@ QJsonObject BrowserAction::handleGetDatabaseEntries(const QJsonObject& json, con
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
+    if (!browserSettings()->allowGetDatabaseEntriesRequest()) {
+        return getErrorReply(action, ERROR_KEEPASS_ACCESS_TO_ALL_ENTRIES_DENIED);
+    }
+
     const QJsonArray entries = browserService()->getDatabaseEntries();
     if (entries.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);

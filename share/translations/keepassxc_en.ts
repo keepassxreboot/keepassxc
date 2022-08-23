@@ -7933,6 +7933,10 @@ Kernel: %3 %4</source>
         <source>Invalid KDF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Access to all entries is denied</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>

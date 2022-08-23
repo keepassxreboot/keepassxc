@@ -231,10 +231,6 @@ QJsonArray BrowserService::getDatabaseEntries()
         return {};
     }
 
-    if (!browserSettings()->allowGetDatabaseEntriesRequest()) {
-      return {};
-    }
-
     QJsonArray entries;
     for (const auto& group : rootGroup->groupsRecursive(true)) {
         if (group == db->metadata()->recycleBin()) {
