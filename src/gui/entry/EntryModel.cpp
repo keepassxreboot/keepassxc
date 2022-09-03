@@ -291,7 +291,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             break;
         case Totp:
             if (entry->hasTotp()) {
-                return icons()->icon("chronometer");
+                return icons()->icon("totp");
             }
             break;
         case PasswordStrength:
@@ -388,7 +388,7 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
         case Paperclip:
             return icons()->icon("paperclip");
         case Totp:
-            return icons()->icon("chronometer");
+            return icons()->icon("totp");
         case PasswordStrength:
             return icons()->icon("lock-question");
         }

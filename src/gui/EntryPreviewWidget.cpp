@@ -45,7 +45,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     // Entry
-    m_ui->entryTotpButton->setIcon(icons()->icon("chronometer"));
+    m_ui->entryTotpButton->setIcon(icons()->icon("totp"));
     m_ui->entryCloseButton->setIcon(icons()->icon("dialog-close"));
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", true));

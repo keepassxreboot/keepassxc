@@ -294,7 +294,7 @@ void AutoTypeSelectDialog::buildActionMenu()
     auto typeTotpAction = new QAction(icons()->icon("auto-type"), tr("Type {TOTP}"), this);
     auto copyUsernameAction = new QAction(icons()->icon("username-copy"), tr("Copy Username"), this);
     auto copyPasswordAction = new QAction(icons()->icon("password-copy"), tr("Copy Password"), this);
-    auto copyTotpAction = new QAction(icons()->icon("chronometer"), tr("Copy TOTP"), this);
+    auto copyTotpAction = new QAction(icons()->icon("totp"), tr("Copy TOTP"), this);
     m_actionMenu->addAction(typeUsernameAction);
     m_actionMenu->addAction(typePasswordAction);
     m_actionMenu->addAction(typeTotpAction);
