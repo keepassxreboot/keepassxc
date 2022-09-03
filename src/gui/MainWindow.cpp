@@ -402,6 +402,13 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyUsername->setIcon(icons()->icon("username-copy"));
     m_ui->actionEntryCopyPassword->setIcon(icons()->icon("password-copy"));
     m_ui->actionEntryCopyURL->setIcon(icons()->icon("url-copy"));
+    m_ui->menuEntryCopyAttribute->setIcon(icons()->icon("attributes-copy"));
+    m_ui->menuEntryTotp->setIcon(icons()->icon("totp"));
+    m_ui->actionEntryTotp->setIcon(icons()->icon("totp"));
+    m_ui->actionEntryCopyTotp->setIcon(icons()->icon("totp-copy"));
+    m_ui->actionEntryTotpQRCode->setIcon(icons()->icon("qrcode"));
+    m_ui->actionEntrySetupTotp->setIcon(icons()->icon("totp-edit"));
+    m_ui->menuTags->setIcon(icons()->icon("tag-multiple"));
     m_ui->actionEntryDownloadIcon->setIcon(icons()->icon("favicon-download"));
     m_ui->actionGroupSortAsc->setIcon(icons()->icon("sort-alphabetical-ascending"));
     m_ui->actionGroupSortDesc->setIcon(icons()->icon("sort-alphabetical-descending"));
