@@ -147,6 +147,7 @@ private slots:
     void agentEnabled(bool enabled);
     void updateTrayIcon();
     void updateProgressBar(int percentage, QString message);
+    void updateEntryCountLabel();
     void focusSearchWidget();
 
 private:
@@ -182,6 +183,7 @@ private:
     QPointer<SearchWidget> m_searchWidget;
     QPointer<QProgressBar> m_progressBar;
     QPointer<QLabel> m_progressBarLabel;
+    QPointer<QLabel> m_statusBarLabel;
 
     Q_DISABLE_COPY(MainWindow)
 
