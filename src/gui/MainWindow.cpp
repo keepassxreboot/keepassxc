@@ -43,6 +43,7 @@
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
+#include "gui/entry/EntryView.h"
 #include "gui/osutils/OSUtils.h"
 
 #ifdef WITH_XC_UPDATECHECK
@@ -431,6 +432,11 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(SIGNAL(entrySelectionChanged()), this, SLOT(setMenuActionState()));
     m_actionMultiplexer.connect(SIGNAL(groupContextMenuRequested(QPoint)), this, SLOT(showGroupContextMenu(QPoint)));
     m_actionMultiplexer.connect(SIGNAL(entryContextMenuRequested(QPoint)), this, SLOT(showEntryContextMenu(QPoint)));
+    m_actionMultiplexer.connect(SIGNAL(groupChanged()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(databaseUnlocked()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(databaseModified()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(searchModeActivated()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(listModeActivated()), this, SLOT(updateEntryCountLabel()));
 
     // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget,
@@ -653,6 +659,7 @@ MainWindow::MainWindow()
     connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
     connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
 
+    // Setup the status bar
     statusBar()->setFixedHeight(24);
     m_progressBarLabel = new QLabel(statusBar());
     m_progressBarLabel->setVisible(false);
@@ -665,6 +672,8 @@ MainWindow::MainWindow()
     m_progressBar->setMaximum(100);
     statusBar()->addPermanentWidget(m_progressBar);
     connect(clipboard(), SIGNAL(updateCountdown(int, QString)), this, SLOT(updateProgressBar(int, QString)));
+    m_statusBarLabel = new QLabel(statusBar());
+    statusBar()->addPermanentWidget(m_statusBarLabel);
 
     restoreConfigState();
 }
@@ -1543,6 +1552,17 @@ void MainWindow::updateProgressBar(int percentage, QString message)
         m_progressBar->setVisible(true);
         m_progressBarLabel->setText(message);
         m_progressBarLabel->setVisible(true);
+    }
+}
+
+void MainWindow::updateEntryCountLabel()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget && dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode) {
+        int numEntries = dbWidget->entryView()->model()->rowCount();
+        m_statusBarLabel->setText(tr("%1 Entry(s)", "", numEntries).arg(numEntries));
+    } else {
+        m_statusBarLabel->setText("");
     }
 }
 
