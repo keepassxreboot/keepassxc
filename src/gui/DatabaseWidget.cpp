@@ -1128,13 +1128,13 @@ void DatabaseWidget::loadDatabase(bool accepted)
         // Only show expired entries if first unlock and option is enabled
         if (m_groupBeforeLock.isNull() && config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock).toBool()) {
             int expirationOffset = config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays).toInt();
+            if (expirationOffset <= 0) {
+                m_nextSearchLabelText = tr("Expired entries");
+            } else {
+                m_nextSearchLabelText =
+                    tr("Entries expiring within %1 day(s)", "", expirationOffset).arg(expirationOffset);
+            }
             requestSearch(QString("is:expired-%1").arg(expirationOffset));
-            QTimer::singleShot(150, this, [=] {
-                m_searchingLabel->setText(
-                    expirationOffset == 0
-                        ? tr("Expired entries")
-                        : tr("Entries expiring within %1 day(s)", "", expirationOffset).arg(expirationOffset));
-            });
         }
 
         m_groupBeforeLock = QUuid();
@@ -1426,7 +1426,10 @@ void DatabaseWidget::search(const QString& searchtext)
     m_lastSearchText = searchtext;
 
     // Display a label detailing our search results
-    if (!searchResult.isEmpty()) {
+    if (!m_nextSearchLabelText.isEmpty()) {
+        m_searchingLabel->setText(m_nextSearchLabelText);
+        m_nextSearchLabelText.clear();
+    } else if (!searchResult.isEmpty()) {
         m_searchingLabel->setText(tr("Search Results (%1)").arg(searchResult.size()));
     } else {
         m_searchingLabel->setText(tr("No Results"));
@@ -1545,6 +1548,7 @@ void DatabaseWidget::endSearch()
     m_searchingLabel->setText(tr("Searching…"));
 
     m_lastSearchText.clear();
+    m_nextSearchLabelText.clear();
 
     // Tell the search widget to clear
     emit clearSearch();
