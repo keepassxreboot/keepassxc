@@ -62,6 +62,25 @@ if(UNIX AND NOT APPLE)
 endif()
 option(WITH_XC_DOCS "Enable building of documentation" ON)
 
+if(APPLE)
+    # Perform the platform checks before applying the stricter compiler flags.
+    # Otherwise the kSecAccessControlTouchIDCurrentSet deprecation warning will result in an error.
+    try_compile(XC_APPLE_COMPILER_SUPPORT_BIOMETRY
+       ${CMAKE_CURRENT_BINARY_DIR}/tiometry_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_biometry_support.mm)
+    message(STATUS "Biometry compiler support: ${XC_APPLE_COMPILER_SUPPORT_BIOMETRY}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_TOUCH_ID
+       ${CMAKE_CURRENT_BINARY_DIR}/touch_id_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_touch_id_support.mm)
+    message(STATUS "Touch ID compiler support: ${XC_APPLE_COMPILER_SUPPORT_TOUCH_ID}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_WATCH
+       ${CMAKE_CURRENT_BINARY_DIR}/tiometry_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_watch_support.mm)
+    message(STATUS "Apple watch compiler support: ${XC_APPLE_COMPILER_SUPPORT_WATCH}")
+endif()
+
 if(WITH_CCACHE)
     # Use the Compiler Cache (ccache) program
     # (install with: sudo apt get ccache)
