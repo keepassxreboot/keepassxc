@@ -200,7 +200,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupSelectionChanged()), SLOT(onGroupChanged()));
-    connect(m_groupView, SIGNAL(groupSelectionChanged()), SIGNAL(groupChanged()));
     connect(m_groupView, &GroupView::groupFocused, this, [this] { m_previewView->setGroup(currentGroup()); });
     connect(m_entryView, SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
         SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
@@ -1041,12 +1040,6 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
         // Workaround: ensure entries are focused so search doesn't reset
         m_entryView->setFocus();
     }
-
-    if (sender() == m_entryView || sender() == m_editEntryWidget) {
-        onEntryChanged(m_entryView->currentEntry());
-    } else if (sender() == m_groupView || sender() == m_editGroupWidget) {
-        onGroupChanged();
-    }
 }
 
 void DatabaseWidget::switchToHistoryView(Entry* entry)
@@ -1508,6 +1501,8 @@ void DatabaseWidget::onGroupChanged()
         m_shareLabel->setVisible(false);
     }
 #endif
+
+    emit groupChanged();
 }
 
 void DatabaseWidget::onDatabaseModified()
