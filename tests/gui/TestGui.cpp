@@ -111,6 +111,8 @@ void TestGui::init()
     config()->set(Config::Security_QuickUnlock, false);
     // Disable atomic saves to prevent transient errors on some platforms
     config()->set(Config::UseAtomicSaves, false);
+    // Disable showing expired entries on unlock
+    config()->set(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock, false);
 
     // Copy the test database file to the temporary file
     auto origFilePath = QDir(KEEPASSX_TEST_DATA_DIR).absoluteFilePath("NewDatabase.kdbx");

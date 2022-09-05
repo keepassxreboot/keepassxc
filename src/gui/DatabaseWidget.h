@@ -302,6 +302,7 @@ private:
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;
     QString m_lastSearchText;
+    QString m_nextSearchLabelText;
     bool m_searchLimitGroup;
 
     // Autoreload
