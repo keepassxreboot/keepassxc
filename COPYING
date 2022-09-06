@@ -150,9 +150,6 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/bugreport.svg
        share/icons/application/scalable/actions/chevron-double-down.svg
        share/icons/application/scalable/actions/chevron-double-right.svg
-       share/icons/application/scalable/actions/totp.svg
-       share/icons/application/scalable/actions/totp-copy.svg
-       share/icons/application/scalable/actions/totp-edit.svg
        share/icons/application/scalable/actions/clipboard-text.svg
        share/icons/application/scalable/actions/configure.svg
        share/icons/application/scalable/actions/database-change-key.svg
@@ -217,6 +214,10 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/tag.svg
        share/icons/application/scalable/actions/tag-multiple.svg
        share/icons/application/scalable/actions/tag-search.svg
+       share/icons/application/scalable/actions/totp.svg
+       share/icons/application/scalable/actions/totp-copy.svg
+       share/icons/application/scalable/actions/totp-copy-password.svg
+       share/icons/application/scalable/actions/totp-edit.svg
        share/icons/application/scalable/actions/trash.svg
        share/icons/application/scalable/actions/url-copy.svg
        share/icons/application/scalable/actions/user-guide.svg
