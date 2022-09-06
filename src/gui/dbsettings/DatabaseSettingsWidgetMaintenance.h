@@ -20,6 +20,9 @@
 
 #include "DatabaseSettingsWidget.h"
 
+#include "core/TimeDeltaUI.h"
+#include <QScopedPointer>
+
 class QItemSelection;
 class CustomIconModel;
 class Database;
@@ -54,6 +57,7 @@ private slots:
     void selectionChanged();
     void removeCustomIcon();
     void purgeUnusedCustomIcons();
+    void cleanupHistory();
 
 private:
     void populateIcons(QSharedPointer<Database> db);
@@ -65,6 +69,7 @@ protected:
 private:
     CustomIconModel* const m_customIconModel;
     uint64_t m_deletionDecision;
+    QScopedPointer<TimeDeltaUI> m_historyCleanupAge;
 };
 
 #endif // KEEPASSXC_DATABASESETTINGSWIDGETMAINTENANCE_H

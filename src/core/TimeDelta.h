@@ -41,6 +41,8 @@ public:
     int getMonths() const;
     int getYears() const;
 
+    int toDays() const;
+
 private:
     int m_hours;
     int m_days;

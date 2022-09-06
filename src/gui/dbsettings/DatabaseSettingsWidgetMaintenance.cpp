@@ -18,8 +18,10 @@
 #include "DatabaseSettingsWidgetMaintenance.h"
 #include "ui_DatabaseSettingsWidgetMaintenance.h"
 
+#include "core/Clock.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/TimeDelta.h"
 #include "gui/IconModels.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
@@ -29,8 +31,11 @@ DatabaseSettingsWidgetMaintenance::DatabaseSettingsWidgetMaintenance(QWidget* pa
     , m_ui(new Ui::DatabaseSettingsWidgetMaintenance())
     , m_customIconModel(new CustomIconModel(this))
     , m_deletionDecision(MessageBox::NoButton)
+    , m_historyCleanupAge(nullptr)
 {
     m_ui->setupUi(this);
+
+    m_historyCleanupAge.reset(new TimeDeltaUI(m_ui->historyCleanupSpinBox, m_ui->historyCleanupComboBox));
 
     m_ui->customIconsView->setModel(m_customIconModel);
 
@@ -40,6 +45,7 @@ DatabaseSettingsWidgetMaintenance::DatabaseSettingsWidgetMaintenance(QWidget* pa
             SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             this,
             SLOT(selectionChanged()));
+    connect(m_ui->historyCleanupButton, SIGNAL(clicked()), SLOT(cleanupHistory()));
 }
 
 DatabaseSettingsWidgetMaintenance::~DatabaseSettingsWidgetMaintenance()
@@ -60,6 +66,11 @@ void DatabaseSettingsWidgetMaintenance::initialize()
         return;
     }
     populateIcons(database);
+
+    int maxAgeDays = database->metadata()->maintenanceHistoryDays();
+    m_historyCleanupAge->initialize(maxAgeDays, TimeDeltaUI::Unit::Days);
+
+    m_ui->radioButtonAllButLatest->setChecked(true);
 }
 
 void DatabaseSettingsWidgetMaintenance::selectionChanged()
@@ -220,4 +231,67 @@ void DatabaseSettingsWidgetMaintenance::purgeUnusedCustomIcons()
 
     MessageBox::information(
         this, tr("Purged Unused Icons"), tr("Purged %n icon(s) from the database.", "", purgeCounter), MessageBox::Ok);
+}
+
+void DatabaseSettingsWidgetMaintenance::cleanupHistory()
+{
+    auto database = DatabaseSettingsWidget::getDatabase();
+    if (!database) {
+        return;
+    }
+
+    int purgeCounter = 0;
+    auto maxAge = m_historyCleanupAge->toTimeDelta();
+    const QList<Entry*> allEntries = database->rootGroup()->entriesRecursive(false);
+
+    for (Entry* entry : allEntries) {
+        QList<Entry*> trash;
+
+        if (m_ui->radioButtonAllButLatest->isChecked()) {
+            trash = entry->historyItems();
+            if (!trash.isEmpty()) {
+                trash.removeLast();
+            }
+        }
+        else if (m_ui->radioButtonAllHistory->isChecked()) {
+            trash = entry->historyItems();
+        }
+        else {
+            Q_ASSERT(m_ui->radioButtonMaxAge->isChecked());
+
+            QDateTime now = Clock::currentDateTime();
+
+            QListIterator<Entry*> i(entry->historyItems());
+            while (i.hasNext()) {
+                Entry* current = i.next();
+                QDateTime lastModified = current->timeInfo().lastModificationTime().toLocalTime();
+                if (lastModified + maxAge < now) {
+                    trash << current;
+                }
+            }
+        }
+
+        purgeCounter += entry->removeHistoryItems(trash);
+    }
+
+    if (m_ui->radioButtonMaxAge->isChecked()) {
+        Metadata* meta = database->metadata();
+        if (maxAge.toDays() != meta->maintenanceHistoryDays()) {
+            meta->setMaintenanceHistoryDays(maxAge.toDays());
+            meta->setSettingsChanged(Clock::currentDateTimeUtc());
+        }
+    }
+
+    if (0 == purgeCounter) {
+        MessageBox::information(this,
+                                tr("No old history entries"),
+                                tr("All history entries are younger than the specified age."),
+                                MessageBox::Ok);
+        return;
+    }
+
+    MessageBox::information(this,
+                            tr("Old history entries removed"),
+                            tr("Removed %n old history entry(s) from the database", "", purgeCounter),
+                            MessageBox::Ok);
 }
