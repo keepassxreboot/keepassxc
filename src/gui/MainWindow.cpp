@@ -279,6 +279,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
     m_ui->actionEntryDownloadIcon->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
+    m_ui->actionEntryCopyPasswordTotp->setShortcut(Qt::CTRL + Qt::Key_Y);
     m_ui->actionEntryMoveUp->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Up);
     m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Down);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
@@ -308,6 +309,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryTotp->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryDownloadIcon->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyPasswordTotp->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryMoveUp->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryMoveDown->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
@@ -406,6 +408,7 @@ MainWindow::MainWindow()
     m_ui->menuEntryTotp->setIcon(icons()->icon("totp"));
     m_ui->actionEntryTotp->setIcon(icons()->icon("totp"));
     m_ui->actionEntryCopyTotp->setIcon(icons()->icon("totp-copy"));
+    m_ui->actionEntryCopyPasswordTotp->setIcon(icons()->icon("totp-copy-password"));
     m_ui->actionEntryTotpQRCode->setIcon(icons()->icon("qrcode"));
     m_ui->actionEntrySetupTotp->setIcon(icons()->icon("totp-edit"));
     m_ui->menuTags->setIcon(icons()->icon("tag-multiple"));
@@ -498,6 +501,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntrySetupTotp, SIGNAL(triggered()), SLOT(setupTotp()));
 
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTotp, SIGNAL(triggered()), SLOT(copyTotp()));
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyPasswordTotp, SIGNAL(triggered()), SLOT(copyPasswordTotp()));
     m_actionMultiplexer.connect(m_ui->actionEntryTotpQRCode, SIGNAL(triggered()), SLOT(showTotpKeyQrCode()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTitle, SIGNAL(triggered()), SLOT(copyTitle()));
     m_actionMultiplexer.connect(m_ui->actionEntryMoveUp, SIGNAL(triggered()), SLOT(moveEntryUp()));
@@ -942,6 +946,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
+            m_ui->actionEntryCopyPasswordTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntrySetupTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryTotpQRCode->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryDownloadIcon->setEnabled((entriesSelected && !singleEntrySelected)

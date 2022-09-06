@@ -648,6 +648,15 @@ void DatabaseWidget::copyPassword()
     }
 }
 
+void DatabaseWidget::copyPasswordTotp()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        setClipboardTextAndMinimize(
+            currentEntry->resolveMultiplePlaceholders(currentEntry->password()).append(currentEntry->totp()));
+    }
+}
+
 void DatabaseWidget::copyURL()
 {
     auto currentEntry = currentSelectedEntry();

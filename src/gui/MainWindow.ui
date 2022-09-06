@@ -312,6 +312,7 @@
       <string>TOTP</string>
      </property>
      <addaction name="actionEntryCopyTotp"/>
+     <addaction name="actionEntryCopyPasswordTotp"/>
      <addaction name="actionEntryTotp"/>
      <addaction name="actionEntryTotpQRCode"/>
      <addaction name="actionEntrySetupTotp"/>
@@ -886,6 +887,11 @@
   <action name="actionEntryCopyTotp">
    <property name="text">
     <string>Copy &amp;TOTP</string>
+   </property>
+  </action>
+    <action name="actionEntryCopyPasswordTotp">
+   <property name="text">
+    <string>Copy Password and TOTP</string>
    </property>
   </action>
   <action name="actionGroupEmptyRecycleBin">

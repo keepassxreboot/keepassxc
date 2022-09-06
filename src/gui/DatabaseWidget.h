@@ -181,6 +181,7 @@ public slots:
     void showTotp();
     void showTotpKeyQrCode();
     void copyTotp();
+    void copyPasswordTotp();
     void setupTotp();
 #ifdef WITH_XC_SSHAGENT
     void addToAgent();
