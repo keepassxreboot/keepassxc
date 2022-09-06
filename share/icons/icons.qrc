@@ -11,9 +11,6 @@
         <file>application/scalable/actions/bugreport.svg</file>
         <file>application/scalable/actions/chevron-double-down.svg</file>
         <file>application/scalable/actions/chevron-double-right.svg</file>
-        <file>application/scalable/actions/totp.svg</file>
-        <file>application/scalable/actions/totp-copy.svg</file>
-        <file>application/scalable/actions/totp-edit.svg</file>
         <file>application/scalable/actions/clipboard-text.svg</file>
         <file>application/scalable/actions/configure.svg</file>
         <file>application/scalable/actions/database-change-key.svg</file>
@@ -79,6 +76,10 @@
         <file>application/scalable/actions/tag.svg</file>
         <file>application/scalable/actions/tag-multiple.svg</file>
         <file>application/scalable/actions/tag-search.svg</file>
+        <file>application/scalable/actions/totp.svg</file>
+        <file>application/scalable/actions/totp-copy.svg</file>
+        <file>application/scalable/actions/totp-copy-password.svg</file>
+        <file>application/scalable/actions/totp-edit.svg</file>
         <file>application/scalable/actions/trash.svg</file>
         <file>application/scalable/actions/url-copy.svg</file>
         <file>application/scalable/actions/user-guide.svg</file>

@@ -5430,6 +5430,10 @@ We recommend you use the AppImage available on our downloads page.</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
