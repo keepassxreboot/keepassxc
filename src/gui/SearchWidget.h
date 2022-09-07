@@ -61,6 +61,7 @@ signals:
     void downPressed();
     void enterPressed();
     void lostFocus();
+    void saveSearch(const QString& text);
 
 public slots:
     void databaseChanged(DatabaseWidget* dbWidget = nullptr);

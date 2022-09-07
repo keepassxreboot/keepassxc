@@ -56,6 +56,11 @@
     <string>Search Help</string>
    </property>
   </action>
+  <action name="saveIcon">
+   <property name="text">
+    <string>Save Search</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>searchEdit</tabstop>

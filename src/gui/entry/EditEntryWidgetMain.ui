@@ -320,8 +320,8 @@
   <tabstop>usernameComboBox</tabstop>
   <tabstop>passwordEdit</tabstop>
   <tabstop>urlEdit</tabstop>
-  <tabstop>tagsList</tabstop>
   <tabstop>fetchFaviconButton</tabstop>
+  <tabstop>tagsList</tabstop>
   <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>
   <tabstop>expirePresets</tabstop>

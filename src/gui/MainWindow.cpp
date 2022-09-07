@@ -129,6 +129,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryCopyPassword);
     m_entryContextMenu->addAction(m_ui->menuEntryCopyAttribute->menuAction());
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
+    m_entryContextMenu->addAction(m_ui->menuTags->menuAction());
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
     m_entryContextMenu->addSeparator();
@@ -239,6 +240,11 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(
         m_copyAdditionalAttributeActions, SIGNAL(triggered(QAction*)), SLOT(copyAttribute(QAction*)));
     connect(m_ui->menuEntryCopyAttribute, SIGNAL(aboutToShow()), this, SLOT(updateCopyAttributesMenu()));
+
+    m_setTagsMenuActions = new QActionGroup(m_ui->menuTags);
+    m_setTagsMenuActions->setExclusive(false);
+    m_actionMultiplexer.connect(m_setTagsMenuActions, SIGNAL(triggered(QAction*)), SLOT(setTag(QAction*)));
+    connect(m_ui->menuTags, &QMenu::aboutToShow, this, &MainWindow::updateSetTagsMenu);
 
     Qt::Key globalAutoTypeKey = static_cast<Qt::Key>(config()->get(Config::GlobalAutoTypeKey).toInt());
     Qt::KeyboardModifiers globalAutoTypeModifiers =
@@ -791,6 +797,38 @@ void MainWindow::updateCopyAttributesMenu()
     }
 }
 
+void MainWindow::updateSetTagsMenu()
+{
+    // Remove all existing actions
+    m_ui->menuTags->clear();
+
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        // Enumerate tags applied to the selected entries
+        QSet<QString> selectedTags;
+        for (auto entry : dbWidget->entryView()->selectedEntries()) {
+            for (auto tag : entry->tagList()) {
+                selectedTags.insert(tag);
+            }
+        }
+
+        // Add known database tags as actions and set checked if
+        // a selected entry has that tag
+        for (auto tag : dbWidget->database()->tagList()) {
+            auto action = m_ui->menuTags->addAction(icons()->icon("tag"), tag);
+            action->setCheckable(true);
+            action->setChecked(selectedTags.contains(tag));
+            m_setTagsMenuActions->addAction(action);
+        }
+    }
+
+    // If no tags exist in the database then show a tip to the user
+    if (m_ui->menuTags->isEmpty()) {
+        auto action = m_ui->menuTags->addAction(tr("No Tags"));
+        action->setEnabled(false);
+    }
+}
+
 void MainWindow::openRecentDatabase(QAction* action)
 {
     openDatabase(action->data().toString());
@@ -870,6 +908,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
             m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
+            m_ui->menuTags->setEnabled(entriesSelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->menu()->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoTypeSequence->setText(

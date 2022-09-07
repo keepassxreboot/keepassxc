@@ -316,6 +316,11 @@
      <addaction name="actionEntryTotpQRCode"/>
      <addaction name="actionEntrySetupTotp"/>
     </widget>
+    <widget class="QMenu" name="menuTags">
+     <property name="title">
+      <string>Tags</string>
+     </property>
+    </widget>
     <addaction name="actionEntryNew"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryClone"/>
@@ -328,6 +333,7 @@
     <addaction name="actionEntryCopyPassword"/>
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="menuEntryTotp"/>
+    <addaction name="menuTags"/>
     <addaction name="separator"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="separator"/>

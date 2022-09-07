@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include <QDesktopServices>
 #include <QHostInfo>
+#include <QInputDialog>
 #include <QKeyEvent>
 #include <QPlainTextEdit>
 #include <QProcess>
@@ -50,7 +51,7 @@
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
 #include "gui/reports/ReportsDialog.h"
-#include "gui/tag/TagModel.h"
+#include "gui/tag/TagView.h"
 #include "keeshare/KeeShare.h"
 
 #ifdef WITH_XC_NETWORKING
@@ -82,7 +83,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_keepass1OpenWidget(new KeePass1OpenWidget(this))
     , m_opVaultOpenWidget(new OpVaultOpenWidget(this))
     , m_groupView(new GroupView(m_db.data(), this))
-    , m_tagView(new QListView(this))
+    , m_tagView(new TagView(this))
     , m_saveAttempts(0)
     , m_entrySearcher(new EntrySearcher(false))
 {
@@ -97,20 +98,15 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     hbox->addWidget(m_mainSplitter);
     m_mainWidget->setLayout(mainLayout);
 
-    // Setup tags view and place under groups
-    auto tagModel = new TagModel(m_db);
+    // Setup searches and tags view and place under groups
     m_tagView->setObjectName("tagView");
-    m_tagView->setModel(tagModel);
-    m_tagView->setFrameStyle(QFrame::NoFrame);
-    m_tagView->setSelectionMode(QListView::SingleSelection);
-    m_tagView->setSelectionBehavior(QListView::SelectRows);
-    m_tagView->setCurrentIndex(tagModel->index(0));
-    connect(m_tagView, SIGNAL(activated(QModelIndex)), this, SLOT(filterByTag(QModelIndex)));
-    connect(m_tagView, SIGNAL(clicked(QModelIndex)), this, SLOT(filterByTag(QModelIndex)));
+    m_tagView->setDatabase(m_db);
+    connect(m_tagView, SIGNAL(activated(QModelIndex)), this, SLOT(filterByTag()));
+    connect(m_tagView, SIGNAL(clicked(QModelIndex)), this, SLOT(filterByTag()));
 
     auto tagsWidget = new QWidget();
     auto tagsLayout = new QVBoxLayout();
-    auto tagsTitle = new QLabel(tr("Database Tags"));
+    auto tagsTitle = new QLabel(tr("Searches and Tags"));
     tagsTitle->setProperty("title", true);
     tagsWidget->setObjectName("tagWidget");
     tagsWidget->setLayout(tagsLayout);
@@ -206,13 +202,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_groupView, SIGNAL(groupSelectionChanged()), SLOT(onGroupChanged()));
     connect(m_groupView, SIGNAL(groupSelectionChanged()), SIGNAL(groupChanged()));
     connect(m_groupView, &GroupView::groupFocused, this, [this] { m_previewView->setGroup(currentGroup()); });
-    connect(m_entryView, &EntryView::entrySelectionChanged, this, [this](Entry * currentEntry) {
-        if (currentEntry) {
-            m_previewView->setEntry(currentEntry);
-        } else {
-            m_previewView->setGroup(groupView()->currentGroup());
-        }
-    });
     connect(m_entryView, SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
         SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
     connect(m_entryView, SIGNAL(entrySelectionChanged(Entry*)), SLOT(onEntryChanged(Entry*)));
@@ -431,8 +420,7 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     m_db = std::move(db);
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
-    auto tagModel = new TagModel(m_db);
-    m_tagView->setModel(tagModel);
+    m_tagView->setDatabase(m_db);
 
     // Restore the new parent group pointer, if not found default to the root group
     // this prevents data loss when merging a database while creating a new entry
@@ -690,11 +678,23 @@ void DatabaseWidget::copyAttribute(QAction* action)
     }
 }
 
-void DatabaseWidget::filterByTag(const QModelIndex& index)
+void DatabaseWidget::filterByTag()
 {
-    m_tagView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
-    const auto model = static_cast<TagModel*>(m_tagView->model());
-    emit requestSearch(model->data(index, Qt::UserRole).toString());
+    QStringList searchTerms;
+    const auto selections = m_tagView->selectionModel()->selectedIndexes();
+    for (const auto& index : selections) {
+        searchTerms << index.data(Qt::UserRole).toString();
+    }
+    emit requestSearch(searchTerms.join(" "));
+}
+
+void DatabaseWidget::setTag(QAction* action)
+{
+    auto tag = action->text();
+    auto state = action->isChecked();
+    for (auto entry : m_entryView->selectedEntries()) {
+        state ? entry->addTag(tag) : entry->removeTag(tag);
+    }
 }
 
 void DatabaseWidget::showTotpKeyQrCode()
@@ -1128,22 +1128,13 @@ void DatabaseWidget::loadDatabase(bool accepted)
         // Only show expired entries if first unlock and option is enabled
         if (m_groupBeforeLock.isNull() && config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock).toBool()) {
             int expirationOffset = config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays).toInt();
-            QList<Entry*> expiredEntries;
-            for (auto entry : m_db->rootGroup()->entriesRecursive()) {
-                if (entry->willExpireInDays(expirationOffset) && !entry->excludeFromReports() && !entry->isRecycled()) {
-                    expiredEntries << entry;
-                }
-            }
-
-            if (!expiredEntries.isEmpty()) {
-                m_entryView->displaySearch(expiredEntries);
-                m_entryView->setFirstEntryActive();
+            requestSearch(QString("is:expired-%1").arg(expirationOffset));
+            QTimer::singleShot(150, this, [=] {
                 m_searchingLabel->setText(
                     expirationOffset == 0
                         ? tr("Expired entries")
                         : tr("Entries expiring within %1 day(s)", "", expirationOffset).arg(expirationOffset));
-                m_searchingLabel->setVisible(true);
-            }
+            });
         }
 
         m_groupBeforeLock = QUuid();
@@ -1449,6 +1440,40 @@ void DatabaseWidget::search(const QString& searchtext)
     emit searchModeActivated();
 }
 
+void DatabaseWidget::saveSearch(const QString& searchtext)
+{
+    if (!m_db->isInitialized()) {
+        return;
+    }
+
+    // Pull the existing searches and prepend an empty string to allow
+    // the user to input a new search name without seeing the first one
+    QStringList searches(m_db->metadata()->savedSearches().keys());
+    searches.prepend("");
+
+    QInputDialog dialog(this);
+    connect(this, &DatabaseWidget::databaseLockRequested, &dialog, &QInputDialog::reject);
+
+    dialog.setComboBoxEditable(true);
+    dialog.setComboBoxItems(searches);
+    dialog.setOkButtonText(tr("Save"));
+    dialog.setLabelText(tr("Enter a unique name or overwrite an existing search from the list:"));
+    dialog.setWindowTitle(tr("Save Search"));
+    dialog.exec();
+
+    auto name = dialog.textValue();
+    if (!name.isEmpty()) {
+        m_db->metadata()->addSavedSearch(name, searchtext);
+    }
+}
+
+void DatabaseWidget::deleteSearch(const QString& name)
+{
+    if (m_db->isInitialized()) {
+        m_db->metadata()->deleteSavedSearch(name);
+    }
+}
+
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
     m_entrySearcher->setCaseSensitive(state);
@@ -1539,6 +1564,8 @@ void DatabaseWidget::onEntryChanged(Entry* entry)
 {
     if (entry) {
         m_previewView->setEntry(entry);
+    } else {
+        m_previewView->setGroup(groupView()->currentGroup());
     }
 
     emit entrySelectionChanged();

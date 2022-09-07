@@ -23,6 +23,7 @@
 #include <QHash>
 #include <QPointer>
 #include <QUuid>
+#include <QVariantMap>
 
 #include "core/CustomData.h"
 #include "core/Global.h"
@@ -150,6 +151,9 @@ public:
     void setHistoryMaxItems(int value);
     void setHistoryMaxSize(int value);
     void setUpdateDatetime(bool value);
+    void addSavedSearch(const QString& name, const QString& searchtext);
+    void deleteSavedSearch(const QString& name);
+    QVariantMap savedSearches();
     /*
      * Copy all attributes from other except:
      * - Group pointers/uuids
