@@ -2250,10 +2250,6 @@ This is definitely a bug, please report it to the developers.</source>
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Database Tags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Searching…</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2416,6 +2412,22 @@ Disable safe saves and try again?</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5403,6 +5415,21 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -8372,6 +8399,10 @@ Kernel: %3 %4</source>
         <source>Limit search to selected group</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8585,15 +8616,38 @@ Kernel: %3 %4</source>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Weak Passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

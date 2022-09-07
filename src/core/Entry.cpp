@@ -187,15 +187,12 @@ QString Entry::overrideUrl() const
 
 QString Entry::tags() const
 {
-    return m_data.tags;
+    return m_data.tags.join(",");
 }
 
 QStringList Entry::tagList() const
 {
-    static QRegExp rx("(\\,|\\t|\\;)");
-    auto taglist = tags().split(rx, QString::SkipEmptyParts);
-    std::sort(taglist.begin(), taglist.end());
-    return taglist;
+    return m_data.tags;
 }
 
 const TimeInfo& Entry::timeInfo() const
@@ -654,7 +651,42 @@ void Entry::setOverrideUrl(const QString& url)
 
 void Entry::setTags(const QString& tags)
 {
-    set(m_data.tags, tags);
+    static QRegExp rx("(\\,|\\t|\\;)");
+    auto taglist = tags.split(rx, QString::SkipEmptyParts);
+    // Trim whitespace before/after tag text
+    for (auto itr = taglist.begin(); itr != taglist.end(); ++itr) {
+        *itr = itr->trimmed();
+    }
+    // Remove duplicates
+    auto tagSet = QSet<QString>::fromList(taglist);
+    taglist = tagSet.toList();
+    // Sort alphabetically
+    taglist.sort();
+    set(m_data.tags, taglist);
+}
+
+void Entry::addTag(const QString& tag)
+{
+    auto cleanTag = tag.trimmed();
+    cleanTag.remove(QRegExp("(\\,|\\t|\\;)"));
+
+    auto taglist = m_data.tags;
+    if (!taglist.contains(cleanTag)) {
+        taglist.append(cleanTag);
+        taglist.sort();
+        set(m_data.tags, taglist);
+    }
+}
+
+void Entry::removeTag(const QString& tag)
+{
+    auto cleanTag = tag.trimmed();
+    cleanTag.remove(QRegExp("(\\,|\\t|\\;)"));
+
+    auto taglist = m_data.tags;
+    if (taglist.removeAll(tag) > 0) {
+        set(m_data.tags, taglist);
+    }
 }
 
 void Entry::setTimeInfo(const TimeInfo& timeInfo)

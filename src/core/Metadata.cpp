@@ -24,6 +24,7 @@
 
 #include <QApplication>
 #include <QCryptographicHash>
+#include <QJsonDocument>
 
 const int Metadata::DefaultHistoryMaxItems = 10;
 const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;
@@ -486,4 +487,27 @@ void Metadata::setSettingsChanged(const QDateTime& value)
 {
     Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_settingsChanged = value;
+}
+
+void Metadata::addSavedSearch(const QString& name, const QString& searchtext)
+{
+    auto searches = savedSearches();
+    searches.insert(name, searchtext);
+    auto json = QJsonDocument::fromVariant(searches);
+    m_customData->set("KPXC_SavedSearch", json.toJson());
+}
+
+void Metadata::deleteSavedSearch(const QString& name)
+{
+    auto searches = savedSearches();
+    searches.remove(name);
+    auto json = QJsonDocument::fromVariant(searches);
+    m_customData->set("KPXC_SavedSearch", json.toJson());
+}
+
+QVariantMap Metadata::savedSearches()
+{
+    auto searches = m_customData->value("KPXC_SavedSearch");
+    auto json = QJsonDocument::fromJson(searches.toUtf8());
+    return json.toVariant().toMap();
 }

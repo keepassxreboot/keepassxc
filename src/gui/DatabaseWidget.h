@@ -49,6 +49,7 @@ class QSplitter;
 class QLabel;
 class MessageWidget;
 class EntryPreviewWidget;
+class TagView;
 
 namespace Ui
 {
@@ -175,7 +176,8 @@ public slots:
     void copyURL();
     void copyNotes();
     void copyAttribute(QAction* action);
-    void filterByTag(const QModelIndex& index);
+    void filterByTag();
+    void setTag(QAction* action);
     void showTotp();
     void showTotpKeyQrCode();
     void copyTotp();
@@ -218,6 +220,8 @@ public slots:
 
     // Search related slots
     void search(const QString& searchtext);
+    void saveSearch(const QString& searchtext);
+    void deleteSearch(const QString& name);
     void setSearchCaseSensitive(bool state);
     void setSearchLimitGroup(bool state);
     void endSearch();
@@ -283,7 +287,7 @@ private:
     QPointer<KeePass1OpenWidget> m_keepass1OpenWidget;
     QPointer<OpVaultOpenWidget> m_opVaultOpenWidget;
     QPointer<GroupView> m_groupView;
-    QPointer<QListView> m_tagView;
+    QPointer<TagView> m_tagView;
     QPointer<EntryView> m_entryView;
 
     QScopedPointer<Group> m_newGroup;

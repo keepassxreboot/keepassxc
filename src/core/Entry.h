@@ -58,7 +58,7 @@ struct EntryData
     QString foregroundColor;
     QString backgroundColor;
     QString overrideUrl;
-    QString tags;
+    QStringList tags;
     bool autoTypeEnabled;
     int autoTypeObfuscation;
     QString defaultAutoTypeSequence;
@@ -157,6 +157,9 @@ public:
     void setTotp(QSharedPointer<Totp::Settings> settings);
     void setPreviousParentGroup(const Group* group);
     void setPreviousParentGroupUuid(const QUuid& uuid);
+
+    void addTag(const QString& tag);
+    void removeTag(const QString& tag);
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
