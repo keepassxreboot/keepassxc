@@ -481,8 +481,19 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
 QPair<QString, QString> Config::defaultConfigFiles()
 {
     // Check if we are running in portable mode, if so store the config files local to the app
+#ifdef Q_OS_WIN
+    // Enable QFileInfo::isWritable check on Windows
+    extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+    qt_ntfs_permission_lookup++;
+#endif
     auto portablePath = QCoreApplication::applicationDirPath().append("/%1");
-    if (QFile::exists(portablePath.arg(".portable"))) {
+    auto portableFile = portablePath.arg(".portable");
+    bool isPortable = QFile::exists(portableFile) && QFileInfo(portableFile).isWritable();
+#ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup--;
+#endif
+
+    if (isPortable) {
         return {portablePath.arg("config/keepassxc.ini"), portablePath.arg("config/keepassxc_local.ini")};
     }
 
