@@ -701,8 +701,8 @@ void Database::updateTagList()
     // Search groups recursively looking for tags
     // Use a set to prevent adding duplicates
     QSet<QString> tagSet;
-    for (const auto group : m_rootGroup->groupsRecursive(true)) {
-        for (const auto entry : group->entries()) {
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        if (!entry->isRecycled()) {
             for (auto tag : entry->tagList()) {
                 tagSet.insert(tag);
             }
@@ -712,6 +712,17 @@ void Database::updateTagList()
     m_tagList = tagSet.toList();
     m_tagList.sort();
     emit tagListUpdated();
+}
+
+void Database::removeTag(const QString& tag)
+{
+    if (!m_rootGroup) {
+        return;
+    }
+
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        entry->removeTag(tag);
+    }
 }
 
 const QUuid& Database::cipher() const
