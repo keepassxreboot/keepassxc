@@ -205,7 +205,7 @@ void TestEntrySearcher::testSearchTermParser()
     QCOMPARE(terms[0].exclude, true);
 
     QCOMPARE(terms[1].field, EntrySearcher::Field::Undefined);
-    QCOMPARE(terms[1].word, QString("quoted \\\"string\\\""));
+    QCOMPARE(terms[1].word, QString("quoted \"string\""));
     QCOMPARE(terms[1].exclude, false);
 
     QCOMPARE(terms[2].field, EntrySearcher::Field::Username);

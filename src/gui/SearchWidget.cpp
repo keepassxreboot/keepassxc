@@ -46,6 +46,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
     connect(m_ui->searchIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
+    connect(m_ui->saveIcon, &QAction::triggered, this, [this] { emit saveSearch(m_ui->searchEdit->text()); });
     connect(m_searchTimer, SIGNAL(timeout()), SLOT(startSearch()));
     connect(m_clearSearchTimer, SIGNAL(timeout()), SLOT(clearSearch()));
     connect(this, SIGNAL(escapePressed()), SLOT(clearSearch()));
@@ -69,6 +70,10 @@ SearchWidget::SearchWidget(QWidget* parent)
 
     m_ui->helpIcon->setIcon(icons()->icon("system-help"));
     m_ui->searchEdit->addAction(m_ui->helpIcon, QLineEdit::TrailingPosition);
+
+    m_ui->saveIcon->setIcon(icons()->icon("document-save"));
+    m_ui->searchEdit->addAction(m_ui->saveIcon, QLineEdit::TrailingPosition);
+    m_ui->saveIcon->setVisible(false);
 
     // Fix initial visibility of actions (bug in Qt)
     for (QToolButton* toolButton : m_ui->searchEdit->findChildren<QToolButton*>()) {
@@ -126,6 +131,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
 {
     // Connects basically only to the current DatabaseWidget, but allows to switch between instances!
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
+    mx.connect(this, SIGNAL(saveSearch(QString)), SLOT(saveSearch(QString)));
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
@@ -165,6 +171,7 @@ void SearchWidget::startSearch()
         m_searchTimer->stop();
     }
 
+    m_ui->saveIcon->setVisible(true);
     search(m_ui->searchEdit->text());
 }
 
@@ -208,6 +215,7 @@ void SearchWidget::focusSearch()
 void SearchWidget::clearSearch()
 {
     m_ui->searchEdit->clear();
+    m_ui->saveIcon->setVisible(false);
     emit searchCanceled();
 }
 

@@ -401,6 +401,7 @@ struct TagsEdit::Impl
     // and ensures Invariant-1.
     void editNewTag(int i)
     {
+        currentText() = currentText().trimmed();
         tags.insert(std::next(std::begin(tags), static_cast<std::ptrdiff_t>(i)), Tag());
         if (editing_index >= i) {
             ++editing_index;
@@ -644,6 +645,12 @@ void TagsEdit::focusOutEvent(QFocusEvent*)
     impl->calcRects(impl->tags);
     impl->completer->popup()->hide();
     viewport()->update();
+}
+
+void TagsEdit::hideEvent(QHideEvent* event)
+{
+    Q_UNUSED(event)
+    impl->completer->popup()->hide();
 }
 
 void TagsEdit::paintEvent(QPaintEvent*)

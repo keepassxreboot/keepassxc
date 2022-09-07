@@ -263,6 +263,15 @@ Entry* EntryView::currentEntry()
     }
 }
 
+QList<Entry*> EntryView::selectedEntries()
+{
+    QList<Entry*> list;
+    for (auto row : selectionModel()->selectedRows()) {
+        list.append(m_model->entryFromIndex(m_sortModel->mapToSource(row)));
+    }
+    return list;
+}
+
 int EntryView::numberOfSelectedEntries()
 {
     return selectionModel()->selectedRows().size();

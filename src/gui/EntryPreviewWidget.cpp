@@ -115,48 +115,72 @@ void EntryPreviewWidget::clear()
 
 void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 {
+    disconnect(m_currentEntry);
+    disconnect(m_currentGroup);
+
+    m_currentEntry = selectedEntry;
+    m_currentGroup = nullptr;
+
     if (!selectedEntry) {
         hide();
         return;
     }
 
-    m_currentEntry = selectedEntry;
-
-    updateEntryHeaderLine();
-    updateEntryTotp();
-    updateEntryGeneralTab();
-    updateEntryAdvancedTab();
-    updateEntryAutotypeTab();
-
-    setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
-
-    m_ui->stackedWidget->setCurrentWidget(m_ui->pageEntry);
-    const int tabIndex = m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry : GeneralTabIndex;
-    Q_ASSERT(m_ui->entryTabWidget->isTabEnabled(GeneralTabIndex));
-    m_ui->entryTabWidget->setCurrentIndex(tabIndex);
+    connect(selectedEntry, &Entry::modified, this, &EntryPreviewWidget::refresh);
+    refresh();
 }
 
 void EntryPreviewWidget::setGroup(Group* selectedGroup)
 {
+    disconnect(m_currentEntry);
+    disconnect(m_currentGroup);
+
+    m_currentEntry = nullptr;
+    m_currentGroup = selectedGroup;
+
     if (!selectedGroup) {
         hide();
         return;
     }
 
-    m_currentGroup = selectedGroup;
-    updateGroupHeaderLine();
-    updateGroupGeneralTab();
+    connect(m_currentGroup, &Group::modified, this, &EntryPreviewWidget::refresh);
+    refresh();
+}
+
+void EntryPreviewWidget::refresh()
+{
+    if (m_currentEntry) {
+        updateEntryHeaderLine();
+        updateEntryTotp();
+        updateEntryGeneralTab();
+        updateEntryAdvancedTab();
+        updateEntryAutotypeTab();
+
+        setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
+
+        m_ui->stackedWidget->setCurrentWidget(m_ui->pageEntry);
+        const int tabIndex =
+            m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry : GeneralTabIndex;
+        Q_ASSERT(m_ui->entryTabWidget->isTabEnabled(GeneralTabIndex));
+        m_ui->entryTabWidget->setCurrentIndex(tabIndex);
+    } else if (m_currentGroup) {
+        updateGroupHeaderLine();
+        updateGroupGeneralTab();
 
 #if defined(WITH_XC_KEESHARE)
-    updateGroupSharingTab();
+        updateGroupSharingTab();
 #endif
 
-    setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
+        setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
 
-    m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
-    const int tabIndex = m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup : GeneralTabIndex;
-    Q_ASSERT(m_ui->groupTabWidget->isTabEnabled(GeneralTabIndex));
-    m_ui->groupTabWidget->setCurrentIndex(tabIndex);
+        m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
+        const int tabIndex =
+            m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup : GeneralTabIndex;
+        Q_ASSERT(m_ui->groupTabWidget->isTabEnabled(GeneralTabIndex));
+        m_ui->groupTabWidget->setCurrentIndex(tabIndex);
+    } else {
+        hide();
+    }
 }
 
 void EntryPreviewWidget::setDatabaseMode(DatabaseWidget::Mode mode)
@@ -240,6 +264,8 @@ void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& 
     } else {
         if (!notes.isEmpty()) {
             notesWidget->setPlainText(QString("\u25cf").repeated(6));
+        } else {
+            notesWidget->setPlainText("");
         }
     }
 }

@@ -130,6 +130,7 @@ private slots:
     void clearLastDatabases();
     void updateLastDatabasesMenu();
     void updateCopyAttributesMenu();
+    void updateSetTagsMenu();
     void showEntryContextMenu(const QPoint& globalPos);
     void showGroupContextMenu(const QPoint& globalPos);
     void applySettingsChanges();
@@ -172,6 +173,7 @@ private:
     QPointer<QMenu> m_entryNewContextMenu;
     QPointer<QActionGroup> m_lastDatabasesActions;
     QPointer<QActionGroup> m_copyAdditionalAttributeActions;
+    QPointer<QActionGroup> m_setTagsMenuActions;
     QPointer<InactivityTimer> m_inactivityTimer;
     QPointer<InactivityTimer> m_touchIDinactivityTimer;
     int m_countDefaultAttributes;
