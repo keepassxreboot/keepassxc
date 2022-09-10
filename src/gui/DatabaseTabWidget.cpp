@@ -155,11 +155,12 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
                                        const QString& password,
                                        const QString& keyfile)
 {
-    QFileInfo fileInfo(filePath);
+    QString cleanFilePath = QDir::toNativeSeparators(filePath);
+    QFileInfo fileInfo(cleanFilePath);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
 
     if (canonicalFilePath.isEmpty()) {
-        emit messageGlobal(tr("Failed to open %1. It either does not exist or is not accessible.").arg(filePath),
+        emit messageGlobal(tr("Failed to open %1. It either does not exist or is not accessible.").arg(cleanFilePath),
                            MessageWidget::Error);
         return;
     }
@@ -178,10 +179,10 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
         }
     }
 
-    auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(filePath), this);
+    auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(cleanFilePath), this);
     addDatabaseTab(dbWidget, inBackground);
     dbWidget->performUnlockDatabase(password, keyfile);
-    updateLastDatabases(filePath);
+    updateLastDatabases(cleanFilePath);
 }
 
 /**
@@ -782,7 +783,7 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
         config()->remove(Config::LastDatabases);
     } else {
         QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
-        lastDatabases.prepend(filename);
+        lastDatabases.prepend(QDir::toNativeSeparators(filename));
         lastDatabases.removeDuplicates();
 
         while (lastDatabases.count() > config()->get(Config::NumberOfRememberedLastDatabases).toInt()) {
