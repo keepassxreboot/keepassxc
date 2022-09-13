@@ -32,6 +32,9 @@ const QCommandLineOption Show::ProtectedAttributesOption =
                                      << "show-protected",
                        QObject::tr("Show the protected attributes in clear text."));
 
+const QCommandLineOption Show::AllAttributesOption =
+    QCommandLineOption(QStringList() << "all", QObject::tr("Show all the attributes of the entry."));
+
 const QCommandLineOption Show::AttachmentsOption =
     QCommandLineOption(QStringList() << "show-attachments", QObject::tr("Show the attachments of the entry."));
 
@@ -51,6 +54,7 @@ Show::Show()
     options.append(Show::TotpOption);
     options.append(Show::AttributesOption);
     options.append(Show::ProtectedAttributesOption);
+    options.append(Show::AllAttributesOption);
     options.append(Show::AttachmentsOption);
     positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
 }
@@ -64,6 +68,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     const QString& entryPath = args.at(1);
     bool showTotp = parser->isSet(Show::TotpOption);
     bool showProtectedAttributes = parser->isSet(Show::ProtectedAttributesOption);
+    bool showAllAttributes = parser->isSet(Show::AllAttributesOption);
     QStringList attributes = parser->values(Show::AttributesOption);
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
@@ -77,15 +82,41 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return EXIT_FAILURE;
     }
 
-    // If no attributes specified, output the default attribute set.
-    bool showDefaultAttributes = attributes.isEmpty() && !showTotp;
-    if (showDefaultAttributes) {
+    bool attributesWereSpecified = true;
+    if (showAllAttributes) {
+        attributesWereSpecified = false;
         attributes = EntryAttributes::DefaultAttributes;
+        for (QString fieldName : Utils::EntryFieldNames) {
+            attributes.append(fieldName);
+        }
+        // Adding the custom attributes after the default attributes so that
+        // the default attributes are always shown first.
+        for (QString attributeName : entry->attributes()->keys()) {
+            if (EntryAttributes::DefaultAttributes.contains(attributeName)) {
+                continue;
+            }
+            attributes.append(attributeName);
+        }
+    } else if (attributes.isEmpty() && !showTotp) {
+        // If no attributes are specified, output the default attribute set.
+        attributesWereSpecified = false;
+        attributes = EntryAttributes::DefaultAttributes;
+        for (QString fieldName : Utils::EntryFieldNames) {
+            attributes.append(fieldName);
+        }
     }
 
     // Iterate over the attributes and output them line-by-line.
     bool encounteredError = false;
     for (const QString& attributeName : asConst(attributes)) {
+        if (Utils::EntryFieldNames.contains(attributeName)) {
+            if (!attributesWereSpecified) {
+                out << attributeName << ": ";
+            }
+            out << Utils::getTopLevelField(entry, attributeName) << endl;
+            continue;
+        }
+
         QStringList attrs = Utils::findAttributes(*entry->attributes(), attributeName);
         if (attrs.isEmpty()) {
             encounteredError = true;
@@ -99,10 +130,10 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             continue;
         }
         QString canonicalName = attrs[0];
-        if (showDefaultAttributes) {
+        if (!attributesWereSpecified) {
             out << canonicalName << ": ";
         }
-        if (entry->attributes()->isProtected(canonicalName) && showDefaultAttributes && !showProtectedAttributes) {
+        if (entry->attributes()->isProtected(canonicalName) && !attributesWereSpecified && !showProtectedAttributes) {
             out << "PROTECTED" << endl;
         } else {
             out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << endl;

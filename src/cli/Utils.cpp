@@ -18,6 +18,7 @@
 #include "Utils.h"
 
 #include "core/Database.h"
+#include "core/Entry.h"
 #include "core/EntryAttributes.h"
 #include "keys/FileKey.h"
 #ifdef WITH_XC_YUBIKEY
@@ -366,6 +367,17 @@ namespace Utils
         }
 
         return result;
+    }
+
+    QString getTopLevelField(const Entry* entry, const QString& fieldName)
+    {
+        if (fieldName == UuidFieldName) {
+            return entry->uuid().toString();
+        }
+        if (fieldName == TagsFieldName) {
+            return entry->tags();
+        }
+        return QString("");
     }
 
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name)

@@ -150,6 +150,7 @@ set(keepassx_SOURCES
         gui/group/GroupModel.cpp
         gui/group/GroupView.cpp
         gui/tag/TagModel.cpp
+        gui/tag/TagView.cpp
         gui/tag/TagsEdit.cpp
         gui/databasekey/KeyComponentWidget.cpp
         gui/databasekey/PasswordEditWidget.cpp
@@ -206,8 +207,11 @@ if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
-            gui/osutils/nixutils/NixUtils.cpp
+            gui/osutils/nixutils/NixUtils.cpp)
+    if(WITH_XC_X11)
+        list(APPEND keepassx_SOURCES
             gui/osutils/nixutils/X11Funcs.cpp)
+    endif()
     qt5_add_dbus_adaptor(keepassx_SOURCES
             gui/org.keepassxc.KeePassXC.MainWindow.xml
             gui/MainWindow.h
@@ -313,7 +317,7 @@ endif()
 if(APPLE)
     list(APPEND keepassx_SOURCES touchid/TouchID.mm)
     # TODO: Remove -Wno-error once deprecation warnings have been resolved.
-    set_source_files_properties(touchid/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast -Wno-error")
+    set_source_files_properties(touchid/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
 endif()
 
 configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
@@ -359,7 +363,10 @@ if(HAIKU)
     target_link_libraries(keepassx_core network)
 endif()
 if(UNIX AND NOT APPLE)
-    target_link_libraries(keepassx_core Qt5::DBus Qt5::X11Extras X11)
+    target_link_libraries(keepassx_core Qt5::DBus)
+    if(WITH_XC_X11)
+        target_link_libraries(keepassx_core Qt5::X11Extras X11)
+    endif()
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
 if(WIN32)

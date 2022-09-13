@@ -130,6 +130,7 @@ private slots:
     void clearLastDatabases();
     void updateLastDatabasesMenu();
     void updateCopyAttributesMenu();
+    void updateSetTagsMenu();
     void showEntryContextMenu(const QPoint& globalPos);
     void showGroupContextMenu(const QPoint& globalPos);
     void applySettingsChanges();
@@ -146,6 +147,7 @@ private slots:
     void agentEnabled(bool enabled);
     void updateTrayIcon();
     void updateProgressBar(int percentage, QString message);
+    void updateEntryCountLabel();
     void focusSearchWidget();
 
 private:
@@ -172,6 +174,7 @@ private:
     QPointer<QMenu> m_entryNewContextMenu;
     QPointer<QActionGroup> m_lastDatabasesActions;
     QPointer<QActionGroup> m_copyAdditionalAttributeActions;
+    QPointer<QActionGroup> m_setTagsMenuActions;
     QPointer<InactivityTimer> m_inactivityTimer;
     QPointer<InactivityTimer> m_touchIDinactivityTimer;
     int m_countDefaultAttributes;
@@ -180,6 +183,7 @@ private:
     QPointer<SearchWidget> m_searchWidget;
     QPointer<QProgressBar> m_progressBar;
     QPointer<QLabel> m_progressBarLabel;
+    QPointer<QLabel> m_statusBarLabel;
 
     Q_DISABLE_COPY(MainWindow)
 

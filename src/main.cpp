@@ -44,6 +44,10 @@ Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
 int main(int argc, char** argv)
 {
     QT_REQUIRE_VERSION(argc, argv, QT_VERSION_STR)
@@ -110,9 +114,29 @@ int main(int argc, char** argv)
         Config::createConfigFromFile(parser.value(configOption), parser.value(localConfigOption));
     }
 
+    // Extract file names provided on the command line for opening
+    QStringList fileNames;
+#ifdef Q_OS_WIN
+    // Get correct case for Windows filenames (fixes #7139)
+    for (const auto& file : parser.positionalArguments()) {
+        const auto fileInfo = QFileInfo(file);
+        WIN32_FIND_DATA findFileData;
+        HANDLE hFind;
+        hFind = FindFirstFile(fileInfo.absoluteFilePath().toUtf8(), &findFileData);
+        if (hFind != INVALID_HANDLE_VALUE) {
+            fileNames << QString("%1/%2").arg(fileInfo.absolutePath(), QString::fromUtf8(findFileData.cFileName));
+            FindClose(hFind);
+        }
+    }
+#else
+    for (const auto& file : parser.positionalArguments()) {
+        if (QFile::exists(file)) {
+            fileNames << QDir::toNativeSeparators(file);
+        }
+    }
+#endif
+
     // Process single instance and early exit if already running
-    // FIXME: this is a *mess* and it is entirely my fault. --wundrweapon
-    const QStringList fileNames = parser.positionalArguments();
     if (app.isAlreadyRunning()) {
         if (parser.isSet(lockOption)) {
             if (app.sendLockToInstance()) {
@@ -179,10 +203,7 @@ int main(int argc, char** argv)
             out << QObject::tr("Database password: ") << flush;
             password = Utils::getPassword();
         }
-
-        if (!filename.isEmpty() && QFile::exists(filename) && !filename.endsWith(".json", Qt::CaseInsensitive)) {
-            mainWindow.openDatabase(QDir::toNativeSeparators(filename), password, parser.value(keyfileOption));
-        }
+        mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
     }
 
     int exitCode = Application::exec();

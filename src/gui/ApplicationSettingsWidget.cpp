@@ -134,6 +134,15 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
     // clang-format on
 
+    connect(m_generalUi->minimizeAfterUnlockCheckBox, &QCheckBox::toggled, this, [this](bool state) {
+        if (state) {
+            m_secUi->lockDatabaseMinimizeCheckBox->setChecked(false);
+        }
+        m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
+            state ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
+        m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!state);
+    });
+
     // Disable mouse wheel grab when scrolling
     // This prevents combo box and spinner values from changing without explicit focus
     auto mouseWheelFilter = new MouseWheelEventFilter(this);
@@ -191,6 +200,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->singleInstanceCheckBox->setChecked(config()->get(Config::SingleInstance).toBool());
     m_generalUi->launchAtStartup->setChecked(osUtils->isLaunchAtStartupEnabled());
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get(Config::RememberLastDatabases).toBool());
+    m_generalUi->rememberLastDatabasesSpinbox->setValue(config()->get(Config::NumberOfRememberedLastDatabases).toInt());
     m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get(Config::RememberLastKeyFiles).toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
         config()->get(Config::OpenPreviousDatabasesOnStartup).toBool());
@@ -295,7 +305,8 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_secUi->lockDatabaseIdleCheckBox->setChecked(config()->get(Config::Security_LockDatabaseIdle).toBool());
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get(Config::Security_LockDatabaseIdleSeconds).toInt());
-    m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get(Config::Security_LockDatabaseMinimize).toBool());
+    m_secUi->lockDatabaseMinimizeCheckBox->setChecked(m_secUi->lockDatabaseMinimizeCheckBox->isEnabled()
+                                                      && config()->get(Config::Security_LockDatabaseMinimize).toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(
         config()->get(Config::Security_LockDatabaseScreenLock).toBool());
     m_secUi->fallbackToSearch->setChecked(config()->get(Config::Security_IconDownloadFallback).toBool());
@@ -336,6 +347,7 @@ void ApplicationSettingsWidget::saveSettings()
 
     config()->set(Config::SingleInstance, m_generalUi->singleInstanceCheckBox->isChecked());
     config()->set(Config::RememberLastDatabases, m_generalUi->rememberLastDatabasesCheckBox->isChecked());
+    config()->set(Config::NumberOfRememberedLastDatabases, m_generalUi->rememberLastDatabasesSpinbox->value());
     config()->set(Config::RememberLastKeyFiles, m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
     config()->set(Config::OpenPreviousDatabasesOnStartup,
                   m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
@@ -520,6 +532,7 @@ void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
         m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(false);
     }
 
+    m_generalUi->rememberLastDatabasesSpinbox->setEnabled(checked);
     m_generalUi->rememberLastKeyFilesCheckBox->setEnabled(checked);
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setEnabled(checked);
 }
