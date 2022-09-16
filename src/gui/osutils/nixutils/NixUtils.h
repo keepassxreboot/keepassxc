@@ -50,6 +50,7 @@ public:
     }
 
 private slots:
+    void handleColorSchemeRead(QDBusVariant value);
     void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
 
 private:
@@ -79,6 +80,9 @@ private:
         PreferLight
     };
     ColorschemePref m_systemColorschemePref = ColorschemePref::PreferNone;
+    bool m_systemColorschemePrefExists;
+
+    void setColorScheme(QDBusVariant value);
 
     Q_DISABLE_COPY(NixUtils)
 };
