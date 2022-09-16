@@ -74,6 +74,11 @@ NixUtils::NixUtils(QObject* parent)
                        "SettingChanged",
                        this,
                        SLOT(handleColorSchemeChanged(QString, QString, QDBusVariant)));
+
+    QDBusMessage msg = QDBusMessage::createMethodCall(
+        "org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop", "org.freedesktop.portal.Settings", "Read");
+    msg << QVariant("org.freedesktop.appearance") << QVariant("color-scheme");
+    sessionBus.callWithCallback(msg, this, SLOT(handleColorSchemeRead(QDBusVariant)));
 }
 
 NixUtils::~NixUtils()
@@ -83,7 +88,7 @@ NixUtils::~NixUtils()
 bool NixUtils::isDarkMode() const
 {
     // prefer freedesktop "org.freedesktop.appearance color-scheme" setting
-    if (m_systemColorschemePref != ColorschemePref::PreferNone) {
+    if (m_systemColorschemePrefExists) {
         return m_systemColorschemePref == ColorschemePref::PreferDark;
     }
 
@@ -299,10 +304,22 @@ bool NixUtils::unregisterGlobalShortcut(const QString& name)
     return true;
 }
 
+void NixUtils::handleColorSchemeRead(QDBusVariant value)
+{
+    value = qvariant_cast<QDBusVariant>(value.variant());
+    setColorScheme(value);
+}
+
 void NixUtils::handleColorSchemeChanged(QString ns, QString key, QDBusVariant value)
 {
     if (ns == "org.freedesktop.appearance" && key == "color-scheme") {
-        m_systemColorschemePref = static_cast<ColorschemePref>(value.variant().toInt());
-        emit interfaceThemeChanged();
+        setColorScheme(value);
     }
+}
+
+void NixUtils::setColorScheme(QDBusVariant value)
+{
+    m_systemColorschemePref = static_cast<ColorschemePref>(value.variant().toInt());
+    m_systemColorschemePrefExists = true;
+    emit interfaceThemeChanged();
 }
