@@ -19,10 +19,12 @@
 #define KEEPASSXC_URLTOOLS_H
 
 #include "config-keepassx.h"
-#include <QNetworkReply>
 #include <QObject>
 #include <QUrl>
 #include <QVariant>
+#if defined(WITH_XC_NETWORKING) || defined(WITH_XC_BROWSER)
+#include <QNetworkReply>
+#endif
 
 class UrlTools : public QObject
 {

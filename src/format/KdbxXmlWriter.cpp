@@ -24,8 +24,6 @@
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2RandomStream.h"
-#include "keeshare/KeeShare.h"
-#include "keeshare/KeeShareSettings.h"
 #include "streams/qtiocompressor.h"
 
 /**
@@ -114,8 +112,12 @@ void KdbxXmlWriter::fillBinaryIdxMap()
 #ifdef WITH_XC_KEESHARE
             // Namespace KeeShare attachments so they don't get deduplicated together with attachments
             // from other databases. Prevents potential filesize side channels.
-            if (auto shared = KeeShare::resolveSharedGroup(entry->group())) {
-                hash.addData(KeeShare::referenceOf(shared).uuid.toByteArray());
+            auto group = entry->group();
+            if (!group && entry->historyOwner()) {
+                group = entry->historyOwner()->group();
+            }
+            if (group && group->isShared()) {
+                hash.addData(group->uuid().toByteArray());
             } else {
                 hash.addData(m_db->uuid().toByteArray());
             }

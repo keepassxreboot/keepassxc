@@ -25,9 +25,9 @@
 #include "BrowserMessageBuilder.h"
 #include "BrowserSettings.h"
 #include "core/Tools.h"
-#include "core/UrlTools.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
+#include "gui/UrlTools.h"
 #include "gui/osutils/OSUtils.h"
 #ifdef WITH_XC_BROWSER_PASSKEYS
 #include "BrowserPasskeys.h"

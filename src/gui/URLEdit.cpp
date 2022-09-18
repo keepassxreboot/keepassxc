@@ -18,9 +18,8 @@
 
 #include "URLEdit.h"
 
-#include "core/Tools.h"
-#include "core/UrlTools.h"
 #include "gui/Icons.h"
+#include "gui/UrlTools.h"
 #include "gui/styles/StateColorPalette.h"
 
 URLEdit::URLEdit(QWidget* parent)

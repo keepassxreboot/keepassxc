@@ -98,6 +98,7 @@ public:
     bool isExpired() const;
     bool isRecycled() const;
     bool isEmpty() const;
+    bool isShared() const;
     CustomData* customData();
     const CustomData* customData() const;
     Group::TriState resolveCustomDataTriState(const QString& key, bool checkParent = true) const;

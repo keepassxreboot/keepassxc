@@ -168,6 +168,8 @@ public:
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
     void addHistoryItem(Entry* entry);
+    void setHistoryOwner(Entry* entry);
+    Entry* historyOwner() const;
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
 
@@ -294,6 +296,7 @@ private:
     QPointer<AutoTypeAssociations> m_autoTypeAssociations;
     QPointer<CustomData> m_customData;
     QList<Entry*> m_history; // Items sorted from oldest to newest
+    QPointer<Entry> m_historyOwner;
 
     QScopedPointer<Entry> m_tmpHistoryItem;
     bool m_modifiedSinceBegin;

@@ -18,7 +18,7 @@
 #ifndef KEEPASSXC_TESTURLTOOLS_H
 #define KEEPASSXC_TESTURLTOOLS_H
 
-#include "core/UrlTools.h"
+#include "gui/UrlTools.h"
 #include <QObject>
 #include <QPointer>
 

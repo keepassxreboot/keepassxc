@@ -19,7 +19,7 @@
 #include "BrowserMessageBuilder.h"
 #include "BrowserPasskeys.h"
 #include "core/Tools.h"
-#include "core/UrlTools.h"
+#include "gui/UrlTools.h"
 
 #include <QList>
 #include <QUrl>

@@ -90,7 +90,7 @@ macro(add_unit_test)
     endif()
 endmacro(add_unit_test)
 
-set(TEST_LIBRARIES keepassx_core Qt5::Test)
+set(TEST_LIBRARIES keepassxc_gui Qt5::Test)
 
 set(testsupport_SOURCES
         modeltest.cpp
@@ -143,7 +143,7 @@ add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testimports SOURCES TestImports.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 if(WITH_XC_NETWORKING)
     add_unit_test(NAME testupdatecheck SOURCES TestUpdateCheck.cpp
@@ -163,7 +163,7 @@ if(WITH_XC_SSHAGENT)
             LIBS sshagent ${TEST_LIBRARIES})
     if(NOT WIN32)
         add_unit_test(NAME testsshagent SOURCES TestSSHAgent.cpp
-                LIBS ${TEST_LIBRARIES})
+                LIBS sshagent ${TEST_LIBRARIES})
     endif()
 endif()
 
@@ -195,7 +195,7 @@ add_unit_test(NAME testcsvparser SOURCES TestCsvParser.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testrandomgenerator SOURCES TestRandomGenerator.cpp
-    LIBS testsupport ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
         LIBS ${TEST_LIBRARIES})
@@ -225,22 +225,16 @@ add_unit_test(NAME testconfig SOURCES TestConfig.cpp
 
 if(WITH_XC_FDOSECRETS)
     add_unit_test(NAME testfdosecrets SOURCES TestFdoSecrets.cpp
-        LIBS testsupport ${TEST_LIBRARIES})
+        LIBS testsupport fdosecrets ${TEST_LIBRARIES})
 endif()
 
 if(WITH_XC_BROWSER)
     add_unit_test(NAME testbrowser SOURCES TestBrowser.cpp
-        LIBS ${TEST_LIBRARIES})
+        LIBS browser ${TEST_LIBRARIES})
 
     if(WITH_XC_BROWSER_PASSKEYS)
-        # Prevent duplicate linking with macOS
-        if(APPLE)
-            add_unit_test(NAME testpasskeys SOURCES TestPasskeys.cpp
-                    LIBS ${TEST_LIBRARIES})
-        else()
-            add_unit_test(NAME testpasskeys SOURCES TestPasskeys.cpp
-                    LIBS keepassxcbrowser ${TEST_LIBRARIES})
-        endif()
+        add_unit_test(NAME testpasskeys SOURCES TestPasskeys.cpp
+            LIBS browser ${TEST_LIBRARIES})
     endif()
 endif()
 

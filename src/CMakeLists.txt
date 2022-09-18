@@ -16,7 +16,19 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-set(keepassx_SOURCES
+add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
+add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
+add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
+add_feature_info(Passkeys WITH_XC_BROWSER_PASSKEYS "Passkeys support for browser integration")
+add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
+add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
+add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
+if(UNIX AND NOT APPLE)
+    add_feature_info(FdoSecrets WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API.")
+endif()
+
+set(core_SOURCES
         core/Alloc.cpp
         core/AutoTypeAssociations.cpp
         core/Base32.cpp
@@ -47,7 +59,6 @@ set(keepassx_SOURCES
         core/Tools.cpp
         core/Totp.cpp
         core/Translator.cpp
-        core/UrlTools.cpp
         cli/Utils.cpp
         cli/TextStream.cpp
         crypto/Crypto.cpp
@@ -79,6 +90,18 @@ set(keepassx_SOURCES
         format/OpVaultReaderAttachments.cpp
         format/OpVaultReaderBandEntry.cpp
         format/OpVaultReaderSections.cpp
+        keys/CompositeKey.cpp
+        keys/FileKey.cpp
+        keys/PasswordKey.cpp
+        keys/ChallengeResponseKey.cpp
+        streams/HashedBlockStream.cpp
+        streams/HmacBlockStream.cpp
+        streams/LayeredStream.cpp
+        streams/qtiocompressor.cpp
+        streams/StoreDataStream.cpp
+        streams/SymmetricCipherStream.cpp)
+
+set(gui_SOURCES
         gui/styles/styles.qrc
         gui/styles/StateColorPalette.cpp
         gui/styles/base/phantomcolor.cpp
@@ -124,6 +147,7 @@ set(keepassx_SOURCES
         gui/TotpExportSettingsDialog.cpp
         gui/DatabaseOpenDialog.cpp
         gui/URLEdit.cpp
+        gui/UrlTools.cpp
         gui/WelcomeWidget.cpp
         gui/csvImport/CsvImportWidget.cpp
         gui/csvImport/CsvParserModel.cpp
@@ -180,42 +204,37 @@ set(keepassx_SOURCES
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
         gui/wizard/NewDatabaseWizardPageEncryption.cpp
         gui/wizard/NewDatabaseWizardPageDatabaseKey.cpp
-        keys/CompositeKey.cpp
-        keys/FileKey.cpp
-        keys/PasswordKey.cpp
-        keys/ChallengeResponseKey.cpp
-        streams/HashedBlockStream.cpp
-        streams/HmacBlockStream.cpp
-        streams/LayeredStream.cpp
-        streams/qtiocompressor.cpp
-        streams/StoreDataStream.cpp
-        streams/SymmetricCipherStream.cpp
-        quickunlock/QuickUnlockInterface.cpp)
+        quickunlock/QuickUnlockInterface.cpp
+        ../share/icons/icons.qrc
+        ../share/wizard/wizard.qrc)
+
 if(APPLE)
-    set(keepassx_SOURCES
-            ${keepassx_SOURCES}
-            core/MacPasteboard.cpp
+    list(APPEND gui_SOURCES
+            gui/osutils/macutils/MacPasteboard.cpp
             gui/osutils/macutils/MacUtils.cpp
             gui/osutils/macutils/ScreenLockListenerMac.cpp
             gui/osutils/macutils/AppKitImpl.mm
-            gui/osutils/macutils/AppKit.h)
+            gui/osutils/macutils/AppKit.h
+            quickunlock/TouchID.mm)
+
+    # TODO: Remove -Wno-error once deprecation warnings have been resolved.
+    set_source_files_properties(quickunlock/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
 endif()
+
 if(UNIX AND NOT APPLE)
-    set(keepassx_SOURCES
-            ${keepassx_SOURCES}
+    list(APPEND gui_SOURCES
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
             gui/osutils/nixutils/NixUtils.cpp)
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
-        set(keepassx_SOURCES
-                ${keepassx_SOURCES}
+        list(APPEND core_SOURCES
                 quickunlock/Polkit.cpp
                 quickunlock/PolkitDbusTypes.cpp)
     endif()
     if(WITH_XC_X11)
-        list(APPEND keepassx_SOURCES
+        list(APPEND gui_SOURCES
             gui/osutils/nixutils/X11Funcs.cpp)
     endif()
-    qt5_add_dbus_adaptor(keepassx_SOURCES
+    qt5_add_dbus_adaptor(gui_SOURCES
             gui/org.keepassxc.KeePassXC.MainWindow.xml
             gui/MainWindow.h
             MainWindow)
@@ -225,7 +244,7 @@ if(UNIX AND NOT APPLE)
         PROPERTIES
         INCLUDE "quickunlock/PolkitDbusTypes.h"
         )
-    qt5_add_dbus_interface(keepassx_SOURCES
+    qt5_add_dbus_interface(core_SOURCES
         quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
         polkit_dbus
     )
@@ -235,50 +254,33 @@ if(UNIX AND NOT APPLE)
 		message(FATAL_ERROR "Could not find libkeyutils")
     endif()
 endif()
+
 if(WIN32)
-    set(keepassx_SOURCES
-            ${keepassx_SOURCES}
+    list(APPEND gui_SOURCES
             gui/osutils/winutils/ScreenLockListenerWin.cpp
-            gui/osutils/winutils/WinUtils.cpp)
+            gui/osutils/winutils/WinUtils.cpp
+            ../share/windows/icon.rc)
     if (MSVC)
-        list(APPEND keepassx_SOURCES quickunlock/WindowsHello.cpp)
+        list(APPEND gui_SOURCES quickunlock/WindowsHello.cpp)
     endif()
 endif()
 
 if(WITH_XC_YUBIKEY)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/osutils/DeviceListener.cpp)
+    list(APPEND gui_SOURCES gui/osutils/DeviceListener.cpp)
     if(APPLE)
-        set(keepassx_SOURCES ${keepassx_SOURCES} gui/osutils/macutils/DeviceListenerMac.cpp)
+        list(APPEND gui_SOURCES gui/osutils/macutils/DeviceListenerMac.cpp)
     elseif(UNIX)
-        set(keepassx_SOURCES ${keepassx_SOURCES} gui/osutils/nixutils/DeviceListenerLibUsb.cpp)
+        list(APPEND gui_SOURCES gui/osutils/nixutils/DeviceListenerLibUsb.cpp)
     elseif(WIN32)
-        set(keepassx_SOURCES ${keepassx_SOURCES} gui/osutils/winutils/DeviceListenerWin.cpp)
+        list(APPEND gui_SOURCES gui/osutils/winutils/DeviceListenerWin.cpp)
     endif()
-endif()
-
-set(keepassx_SOURCES ${keepassx_SOURCES}
-        ../share/icons/icons.qrc
-        ../share/wizard/wizard.qrc)
-
-set(keepassx_SOURCES_MAINEXE main.cpp)
-
-add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
-add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
-add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
-add_feature_info(Passkeys WITH_XC_BROWSER_PASSKEYS "Passkeys support for browser integration")
-add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
-add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
-add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
-add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
-if(UNIX AND NOT APPLE)
-    add_feature_info(FdoSecrets WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API.")
 endif()
 
 add_subdirectory(browser)
 add_subdirectory(proxy)
 if(WITH_XC_BROWSER)
-    set(keepassxcbrowser_LIB keepassxcbrowser)
-    set(keepassx_SOURCES ${keepassx_SOURCES}
+    set(browser_LIB browser)
+    list(APPEND gui_SOURCES
             gui/dbsettings/DatabaseSettingsWidgetBrowser.cpp
             gui/entry/EntryURLModel.cpp
             gui/reports/ReportsWidgetBrowserStatistics.cpp
@@ -286,7 +288,7 @@ if(WITH_XC_BROWSER)
 endif()
 
 if(WITH_XC_BROWSER_PASSKEYS)
-    set(keepassx_SOURCES ${keepassx_SOURCES}
+    list(APPEND gui_SOURCES
             gui/reports/ReportsWidgetPasskeys.cpp
             gui/reports/ReportsPagePasskeys.cpp
             gui/passkeys/PasskeyExporter.cpp
@@ -318,7 +320,6 @@ endif()
 add_subdirectory(thirdparty)
 
 set(autotype_SOURCES
-        core/Tools.cpp
         autotype/AutoType.cpp
         autotype/AutoTypeAction.cpp
         autotype/AutoTypeMatchModel.cpp
@@ -327,57 +328,42 @@ set(autotype_SOURCES
         autotype/PickcharsDialog.cpp
         autotype/WindowSelectComboBox.cpp)
 
-if(WIN32)
-    set(keepassx_SOURCES_MAINEXE ${keepassx_SOURCES_MAINEXE} ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
-endif()
+add_library(autotype STATIC ${autotype_SOURCES})
+target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 
 if(WITH_XC_YUBIKEY)
-    list(APPEND keepassx_SOURCES
+    list(APPEND core_SOURCES
         keys/drivers/YubiKey.h
         keys/drivers/YubiKey.cpp
         keys/drivers/YubiKeyInterface.cpp
         keys/drivers/YubiKeyInterfaceUSB.cpp
         keys/drivers/YubiKeyInterfacePCSC.cpp)
 else()
-    list(APPEND keepassx_SOURCES
+    list(APPEND core_SOURCES
         keys/drivers/YubiKey.h
         keys/drivers/YubiKeyStub.cpp)
 endif()
 
 if(WITH_XC_NETWORKING)
-    list(APPEND keepassx_SOURCES
-            core/HibpDownloader.cpp
-            core/NetworkManager.cpp
+    list(APPEND gui_SOURCES
+            networking/HibpDownloader.cpp
+            networking/NetworkManager.cpp
+            networking/UpdateChecker.cpp
             gui/UpdateCheckDialog.cpp
             gui/IconDownloader.cpp
-            gui/IconDownloaderDialog.cpp
-            updatecheck/UpdateChecker.cpp)
-endif()
-
-if(APPLE)
-    list(APPEND keepassx_SOURCES quickunlock/TouchID.mm)
-    # TODO: Remove -Wno-error once deprecation warnings have been resolved.
-    set_source_files_properties(quickunlock/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
+            gui/IconDownloaderDialog.cpp)
 endif()
 
 configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
 configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
 
-add_library(autotype STATIC ${autotype_SOURCES})
-target_link_libraries(autotype Qt5::Core Qt5::Widgets)
-
-add_library(keepassx_core STATIC ${keepassx_SOURCES})
-
-set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
-target_link_libraries(keepassx_core
-        autotype
-        ${keepassxcbrowser_LIB}
+# Core Library Definition
+add_library(keepassxc_core STATIC ${core_SOURCES})
+set_target_properties(keepassxc_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
+target_link_libraries(keepassxc_core 
         ${qrcode_LIB}
-        ${fdosecrets_LIB}
         Qt5::Core
         Qt5::Concurrent
-        Qt5::Network
-        Qt5::Widgets
         ${BOTAN_LIBRARIES}
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
@@ -385,39 +371,45 @@ target_link_libraries(keepassx_core
         ${MINIZIP_LIBRARIES}
         ${ARGON2_LIBRARIES}
         ${KEYUTILS_LIBRARIES}
-        ${thirdparty_LIBRARIES}
-	)
+        ${thirdparty_LIBRARIES})
 
-if(WITH_XC_SSHAGENT)
-  target_link_libraries(keepassx_core sshagent)
-endif()
-if(WITH_XC_KEESHARE)
-  target_link_libraries(keepassx_core keeshare)
-endif()
+# GUI Library Definition
+add_library(keepassxc_gui STATIC ${gui_SOURCES})
+set_target_properties(keepassxc_gui PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
+target_link_libraries(keepassxc_gui
+        keepassxc_core
+        Qt5::Network
+        Qt5::Widgets
+        autotype
+        ${browser_LIB}
+        ${fdosecrets_LIB}
+        ${keeshare_LIB}
+        ${sshagent_LIB})
 
 if(APPLE)
-    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication")
+    target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication")
     if(Qt5MacExtras_FOUND)
-        target_link_libraries(keepassx_core Qt5::MacExtras)
+        target_link_libraries(keepassxc_gui Qt5::MacExtras)
     endif()
 endif()
 if(HAIKU)
-    target_link_libraries(keepassx_core network)
+    target_link_libraries(keepassxc_gui network)
 endif()
 if(UNIX AND NOT APPLE)
-    target_link_libraries(keepassx_core Qt5::DBus ${LIBUSB_LIBRARIES})
+    target_link_libraries(keepassxc_core Qt5::DBus ${LIBUSB_LIBRARIES})
     if(WITH_XC_X11)
-        target_link_libraries(keepassx_core Qt5::X11Extras X11)
+        target_link_libraries(keepassxc_gui Qt5::X11Extras X11)
     endif()
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
 if(WIN32)
-    target_link_libraries(keepassx_core Wtsapi32.lib Ws2_32.lib)
+    target_link_libraries(keepassxc_gui Wtsapi32.lib Ws2_32.lib)
     if (MSVC)
-        target_link_libraries(keepassx_core WindowsApp.lib)
+        target_link_libraries(keepassxc_gui WindowsApp.lib)
     endif()
 endif()
 
+# Main Executable Defintion
 if(WIN32)
     include(GenerateProductVersion)
     generate_product_version(
@@ -430,11 +422,11 @@ if(WIN32)
     )
 endif()
 
-add_executable(${PROGNAME} WIN32 ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
-target_link_libraries(${PROGNAME} keepassx_core)
-
+add_executable(${PROGNAME} WIN32 main.cpp ${WIN32_ProductVersionFiles})
+target_link_libraries(${PROGNAME} keepassxc_gui)
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
+# macOS App Bundle
 if(APPLE AND WITH_APP_BUNDLE)
     install(FILES ${CMAKE_SOURCE_DIR}/share/macosx/embedded.provisionprofile DESTINATION ${BUNDLE_INSTALL_DIR})
     configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
@@ -463,6 +455,7 @@ install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
+# Windows Installer Definition
 if(WIN32)
     if(${CMAKE_SIZEOF_VOID_P} EQUAL "8")
         set(OUTPUT_FILE_POSTFIX "Win64")
