@@ -17,10 +17,10 @@
 
 #include "UpdateChecker.h"
 
+#include "NetworkManager.h"
 #include "config-keepassx.h"
 #include "core/Clock.h"
 #include "core/Config.h"
-#include "core/NetworkManager.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>

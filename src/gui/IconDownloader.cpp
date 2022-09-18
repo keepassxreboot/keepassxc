@@ -17,8 +17,8 @@
 
 #include "IconDownloader.h"
 #include "core/Config.h"
-#include "core/NetworkManager.h"
-#include "core/UrlTools.h"
+#include "gui/UrlTools.h"
+#include "networking/NetworkManager.h"
 
 #include <QBuffer>
 #include <QHostInfo>

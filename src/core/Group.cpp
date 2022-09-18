@@ -247,6 +247,20 @@ bool Group::isEmpty() const
     return !hasChildren() && m_entries.isEmpty();
 }
 
+// TODO: Refactor this when KeeShare is refactored
+bool Group::isShared() const
+{
+    auto group = this;
+    do {
+        if (group->customData()->contains("KeeShare/Reference")) {
+            return true;
+        }
+        group = group->m_parent;
+    } while (group);
+
+    return false;
+}
+
 CustomData* Group::customData()
 {
     return m_customData;

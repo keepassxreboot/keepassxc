@@ -16,7 +16,7 @@
  */
 
 #include "HibpDownloader.h"
-#include "core/NetworkManager.h"
+#include "NetworkManager.h"
 
 #include <QCryptographicHash>
 #include <QNetworkReply>

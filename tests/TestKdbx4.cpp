@@ -24,10 +24,6 @@
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
-#ifdef WITH_XC_KEESHARE
-#include "keeshare/KeeShare.h"
-#include "keeshare/KeeShareSettings.h"
-#endif
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "mock/MockChallengeResponseKey.h"
@@ -441,13 +437,8 @@ void TestKdbx4Format::testAttachmentIndexStability()
     group2->setUuid(QUuid::createUuid());
     QVERIFY(!group2->uuid().isNull());
     group2->setParent(group1);
-#ifdef WITH_XC_KEESHARE
-    KeeShareSettings::Reference ref;
-    ref.type = KeeShareSettings::SynchronizeWith;
-    ref.path = "123";
-    KeeShare::setReferenceTo(group2, ref);
-    QVERIFY(KeeShare::isShared(group2));
-#endif
+    group2->customData()->set("KeeShare/Reference", "value doesn't matter");
+    QVERIFY(group2->isShared());
 
     auto attachment1 = QByteArray("qwerty");
     auto attachment2 = QByteArray("asdf");
@@ -510,9 +501,9 @@ void TestKdbx4Format::testAttachmentIndexStability()
     QCOMPARE(a2->value("a"), attachment1);
     QCOMPARE(a2->value("b"), attachment2);
 
-#ifdef WITH_XC_KEESHARE
-    QVERIFY(KeeShare::isShared(db2->rootGroup()->findEntryByUuid(uuid3)->group()));
-#endif
+    auto sharedGroup = db2->rootGroup()->findEntryByUuid(uuid3)->group();
+    QVERIFY(sharedGroup->isShared());
+
     auto a3 = db2->rootGroup()->findEntryByUuid(uuid3)->attachments();
     QCOMPARE(a3->keys().size(), 4);
     QCOMPARE(a3->values().size(), 3);

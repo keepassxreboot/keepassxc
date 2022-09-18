@@ -802,8 +802,19 @@ void Entry::addHistoryItem(Entry* entry)
 {
     Q_ASSERT(!entry->parent());
 
+    entry->setHistoryOwner(this);
     m_history.append(entry);
     emitModified();
+}
+
+void Entry::setHistoryOwner(Entry* entry)
+{
+    m_historyOwner = entry;
+}
+
+Entry* Entry::historyOwner() const
+{
+    return m_historyOwner;
 }
 
 void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)

@@ -16,7 +16,7 @@
 if(WITH_XC_BROWSER)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-    set(keepassxcbrowser_SOURCES
+    set(browser_SOURCES
             BrowserAccessControlDialog.cpp
             BrowserAction.cpp
             BrowserEntryConfig.cpp
@@ -32,7 +32,7 @@ if(WITH_XC_BROWSER)
             NativeMessageInstaller.cpp)
 
     if(WITH_XC_BROWSER_PASSKEYS)
-        list(APPEND keepassxcbrowser_SOURCES
+        list(APPEND browser_SOURCES
                 BrowserCbor.cpp
                 BrowserPasskeys.cpp
                 BrowserPasskeysClient.cpp
@@ -40,6 +40,6 @@ if(WITH_XC_BROWSER)
                 PasskeyUtils.cpp)
     endif()
 
-    add_library(keepassxcbrowser STATIC ${keepassxcbrowser_SOURCES})
-    target_link_libraries(keepassxcbrowser Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network ${BOTAN_LIBRARIES})
+    add_library(browser STATIC ${browser_SOURCES})
+    target_link_libraries(browser Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network ${BOTAN_LIBRARIES})
 endif()

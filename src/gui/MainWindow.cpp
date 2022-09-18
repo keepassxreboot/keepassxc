@@ -50,7 +50,7 @@
 
 #ifdef WITH_XC_UPDATECHECK
 #include "gui/UpdateCheckDialog.h"
-#include "updatecheck/UpdateChecker.h"
+#include "networking/UpdateChecker.h"
 #endif
 
 #ifdef WITH_XC_SSHAGENT
