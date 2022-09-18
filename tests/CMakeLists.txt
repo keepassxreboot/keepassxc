@@ -90,7 +90,7 @@ macro(add_unit_test)
     endif()
 endmacro(add_unit_test)
 
-set(TEST_LIBRARIES keepassx_core Qt5::Test)
+set(TEST_LIBRARIES keepassx_gui Qt5::Test)
 
 set(testsupport_SOURCES
         modeltest.cpp
