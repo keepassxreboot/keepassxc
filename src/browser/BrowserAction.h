@@ -15,10 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSERACTION_H
-#define BROWSERACTION_H
+#ifndef KEEPASSXC_BROWSERACTION_H
+#define KEEPASSXC_BROWSERACTION_H
 
 #include "BrowserMessageBuilder.h"
+#include "BrowserService.h"
 
 #include <QJsonArray>
 #include <QJsonObject>
@@ -41,6 +42,11 @@ struct BrowserRequest
     inline QJsonArray getArray(const QString& param) const
     {
         return decrypted.value(param).toArray();
+    }
+
+    inline QJsonObject getObject(const QString& param) const
+    {
+        return decrypted.value(param).toObject();
     }
 
     inline QString getString(const QString& param) const
@@ -73,12 +79,17 @@ private:
     QJsonObject handleGetTotp(const QJsonObject& json, const QString& action);
     QJsonObject handleDeleteEntry(const QJsonObject& json, const QString& action);
     QJsonObject handleGlobalAutoType(const QJsonObject& json, const QString& action);
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    QJsonObject handlePasskeysGet(const QJsonObject& json, const QString& action);
+    QJsonObject handlePasskeysRegister(const QJsonObject& json, const QString& action);
+#endif
 
 private:
     QJsonObject buildResponse(const QString& action, const QString& nonce, const Parameters& params = {});
     QJsonObject getErrorReply(const QString& action, const int errorCode) const;
     QJsonObject decryptMessage(const QString& message, const QString& nonce);
     BrowserRequest decodeRequest(const QJsonObject& json);
+    StringPairList getConnectionKeys(const BrowserRequest& browserRequest);
 
 private:
     static const int MaxUrlLength;
@@ -91,4 +102,4 @@ private:
     friend class TestBrowser;
 };
 
-#endif // BROWSERACTION_H
+#endif // KEEPASSXC_BROWSERACTION_H

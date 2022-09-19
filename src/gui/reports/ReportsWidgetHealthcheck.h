@@ -56,7 +56,7 @@ public slots:
     void deleteSelectedEntries();
 
 private:
-    void addHealthRow(QSharedPointer<PasswordHealth>, Group*, Entry*, bool knownBad);
+    void addHealthRow(QSharedPointer<PasswordHealth>, Group*, Entry*, bool excluded);
 
     QScopedPointer<Ui::ReportsWidgetHealthcheck> m_ui;
 

@@ -1,5 +1,4 @@
 #  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
-#  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,8 +29,14 @@ if(WITH_XC_BROWSER)
             BrowserSettings.cpp
             BrowserShared.cpp
             CustomTableWidget.cpp
-            NativeMessageInstaller.cpp
-            )
+            NativeMessageInstaller.cpp)
+
+    if(WITH_XC_BROWSER_PASSKEYS)
+        list(APPEND keepassxcbrowser_SOURCES
+                BrowserCbor.cpp
+                BrowserPasskeys.cpp
+                BrowserPasskeysConfirmationDialog.cpp)
+    endif()
 
     add_library(keepassxcbrowser STATIC ${keepassxcbrowser_SOURCES})
     target_link_libraries(keepassxcbrowser Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network ${BOTAN_LIBRARIES})

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>KeePassXC-Browser Save Entry</string>
+   <string>KeePassXC - Select Database</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

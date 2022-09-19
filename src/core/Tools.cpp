@@ -94,6 +94,9 @@ namespace Tools
 #ifdef WITH_XC_BROWSER
         extensions += "\n- " + QObject::tr("Browser Integration");
 #endif
+#ifdef WITH_XC_BROWSER_PASSKEYS
+        extensions += "\n- " + QObject::tr("Passkeys");
+#endif
 #ifdef WITH_XC_SSHAGENT
         extensions += "\n- " + QObject::tr("SSH Agent");
 #endif
@@ -406,6 +409,21 @@ namespace Tools
         } while (match.hasMatch());
 
         return subbed;
+    }
+
+    QString cleanFilename(QString filename)
+    {
+        // Remove forward slash from title on all platforms
+        filename.replace("/", "_");
+#ifdef Q_OS_WIN
+        // Remove invalid characters on Windows
+        filename.remove(QRegularExpression("[:*?\"<>|]"));
+#endif
+#ifdef Q_OS_MACOS
+        // MacOS does not support colons
+        filename.replace(":", "");
+#endif
+        return filename.trimmed();
     }
 
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties)

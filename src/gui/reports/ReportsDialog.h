@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,9 @@ class ReportsPageStatistics;
 #ifdef WITH_XC_BROWSER
 class ReportsPageBrowserStatistics;
 #endif
+#ifdef WITH_XC_BROWSER_PASSKEYS
+class ReportsPagePasskeys;
+#endif
 
 namespace Ui
 {
@@ -60,6 +63,9 @@ public:
 
     void load(const QSharedPointer<Database>& db);
     void addPage(QSharedPointer<IReportsPage> page);
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    void activatePasskeysPage();
+#endif
 
 signals:
     void editFinished(bool accepted);
@@ -77,6 +83,9 @@ private:
     const QSharedPointer<ReportsPageStatistics> m_statPage;
 #ifdef WITH_XC_BROWSER
     const QSharedPointer<ReportsPageBrowserStatistics> m_browserStatPage;
+#endif
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    const QSharedPointer<ReportsPagePasskeys> m_passkeysPage;
 #endif
     QPointer<EditEntryWidget> m_editEntryWidget;
     QWidget* m_sender = nullptr;

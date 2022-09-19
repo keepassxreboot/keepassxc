@@ -262,6 +262,9 @@
     <addaction name="actionDatabaseSettings"/>
     <addaction name="actionDatabaseSecurity"/>
     <addaction name="separator"/>
+    <addaction name="actionPasskeys"/>
+    <addaction name="actionImportPasskey"/>
+    <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
     <addaction name="menuImport"/>
     <addaction name="menuExport"/>
@@ -615,6 +618,34 @@
    </property>
    <property name="toolTip">
     <string>Database settings</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionPasskeys">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Passkeys…</string>
+   </property>
+   <property name="toolTip">
+    <string>Passkeys</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionImportPasskey">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Import Passkey</string>
+   </property>
+   <property name="toolTip">
+    <string>Import Passkey</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
