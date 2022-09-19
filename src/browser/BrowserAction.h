@@ -18,10 +18,34 @@
 #ifndef BROWSERACTION_H
 #define BROWSERACTION_H
 
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QString>
 
-class QJsonObject;
 class QLocalSocket;
+
+struct BrowserRequest
+{
+    QString hash;
+    QString nonce;
+    QString incrementedNonce;
+    QJsonObject decrypted;
+
+    inline bool isEmpty() const
+    {
+        return decrypted.isEmpty();
+    }
+
+    inline QJsonArray getArray(const QString& param) const
+    {
+        return decrypted.value(param).toArray();
+    }
+
+    inline QString getString(const QString& param) const
+    {
+        return decrypted.value(param).toString();
+    }
+};
 
 class BrowserAction
 {
@@ -52,6 +76,7 @@ private:
     QJsonObject buildResponse(const QString& action, const QJsonObject& message, const QString& nonce);
     QJsonObject getErrorReply(const QString& action, const int errorCode) const;
     QJsonObject decryptMessage(const QString& message, const QString& nonce);
+    BrowserRequest decodeRequest(const QJsonObject& json);
 
 private:
     static const int MaxUrlLength;

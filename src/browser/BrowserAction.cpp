@@ -18,18 +18,27 @@
 #include "BrowserAction.h"
 #include "BrowserMessageBuilder.h"
 #include "BrowserService.h"
-#include "BrowserSettings.h"
-#include "BrowserShared.h"
-#include "config-keepassx.h"
 #include "core/Global.h"
 #include "core/Tools.h"
 
-#include <QJsonArray>
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QLocalSocket>
 
 const int BrowserAction::MaxUrlLength = 256;
+
+static const QString BROWSER_REQUEST_ASSOCIATE = QStringLiteral("associate");
+static const QString BROWSER_REQUEST_CHANGE_PUBLIC_KEYS = QStringLiteral("change-public-keys");
+static const QString BROWSER_REQUEST_CREATE_NEW_GROUP = QStringLiteral("create-new-group");
+static const QString BROWSER_REQUEST_DELETE_ENTRY = QStringLiteral("delete-entry");
+static const QString BROWSER_REQUEST_GENERATE_PASSWORD = QStringLiteral("generate-password");
+static const QString BROWSER_REQUEST_GET_DATABASEHASH = QStringLiteral("get-databasehash");
+static const QString BROWSER_REQUEST_GET_DATABASE_GROUPS = QStringLiteral("get-database-group");
+static const QString BROWSER_REQUEST_GET_LOGINS = QStringLiteral("get-logins");
+static const QString BROWSER_REQUEST_GET_TOTP = QStringLiteral("get-totp");
+static const QString BROWSER_REQUEST_LOCK_DATABASE = QStringLiteral("lock-database");
+static const QString BROWSER_REQUEST_REQUEST_AUTOTYPE = QStringLiteral("request-autotype");
+static const QString BROWSER_REQUEST_SET_LOGIN = QStringLiteral("set-login");
+static const QString BROWSER_REQUEST_TEST_ASSOCIATE = QStringLiteral("test-associate");
 
 QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJsonObject& json)
 {
@@ -38,17 +47,17 @@ QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJso
     }
 
     bool triggerUnlock = false;
-    const QString trigger = json.value("triggerUnlock").toString();
+    const auto trigger = json.value("triggerUnlock").toString();
     if (!trigger.isEmpty() && trigger.compare(TRUE_STR) == 0) {
         triggerUnlock = true;
     }
 
-    const QString action = json.value("action").toString();
+    const auto action = json.value("action").toString();
     if (action.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
-    if (action.compare("change-public-keys") != 0 && action.compare("request-autotype") != 0
+    if (action.compare(BROWSER_REQUEST_CHANGE_PUBLIC_KEYS) != 0 && action.compare(BROWSER_REQUEST_REQUEST_AUTOTYPE) != 0
         && !browserService()->isDatabaseOpened()) {
         if (m_clientPublicKey.isEmpty()) {
             return getErrorReply(action, ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED);
@@ -67,31 +76,31 @@ QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject&
 {
     QString action = json.value("action").toString();
 
-    if (action.compare("change-public-keys") == 0) {
+    if (action.compare(BROWSER_REQUEST_CHANGE_PUBLIC_KEYS) == 0) {
         return handleChangePublicKeys(json, action);
-    } else if (action.compare("get-databasehash") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_GET_DATABASEHASH) == 0) {
         return handleGetDatabaseHash(json, action);
-    } else if (action.compare("associate") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_ASSOCIATE) == 0) {
         return handleAssociate(json, action);
-    } else if (action.compare("test-associate") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_TEST_ASSOCIATE) == 0) {
         return handleTestAssociate(json, action);
-    } else if (action.compare("get-logins") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_GET_LOGINS) == 0) {
         return handleGetLogins(json, action);
-    } else if (action.compare("generate-password") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_GENERATE_PASSWORD) == 0) {
         return handleGeneratePassword(socket, json, action);
-    } else if (action.compare("set-login") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_SET_LOGIN) == 0) {
         return handleSetLogin(json, action);
-    } else if (action.compare("lock-database") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_LOCK_DATABASE) == 0) {
         return handleLockDatabase(json, action);
-    } else if (action.compare("get-database-groups") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_GET_DATABASE_GROUPS) == 0) {
         return handleGetDatabaseGroups(json, action);
-    } else if (action.compare("create-new-group") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_CREATE_NEW_GROUP) == 0) {
         return handleCreateNewGroup(json, action);
-    } else if (action.compare("get-totp") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_GET_TOTP) == 0) {
         return handleGetTotp(json, action);
-    } else if (action.compare("delete-entry") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_DELETE_ENTRY) == 0) {
         return handleDeleteEntry(json, action);
-    } else if (action.compare("request-autotype") == 0) {
+    } else if (action.compare(BROWSER_REQUEST_REQUEST_AUTOTYPE) == 0) {
         return handleGlobalAutoType(json, action);
     }
 
@@ -101,8 +110,8 @@ QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject&
 
 QJsonObject BrowserAction::handleChangePublicKeys(const QJsonObject& json, const QString& action)
 {
-    const QString nonce = json.value("nonce").toString();
-    const QString clientPublicKey = json.value("publicKey").toString();
+    const auto nonce = json.value("nonce").toString();
+    const auto clientPublicKey = json.value("publicKey").toString();
 
     if (clientPublicKey.isEmpty() || nonce.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED);
@@ -118,7 +127,7 @@ QJsonObject BrowserAction::handleChangePublicKeys(const QJsonObject& json, const
     m_publicKey = keyPair.first;
     m_secretKey = keyPair.second;
 
-    QJsonObject response = browserMessageBuilder()->buildMessage(browserMessageBuilder()->incrementNonce(nonce));
+    auto response = browserMessageBuilder()->buildMessage(browserMessageBuilder()->incrementNonce(nonce));
     response["action"] = action;
     response["publicKey"] = keyPair.first;
 
@@ -127,36 +136,30 @@ QJsonObject BrowserAction::handleChangePublicKeys(const QJsonObject& json, const
 
 QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const QString& action)
 {
-    const QString hash = browserService()->getDatabaseHash();
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    if (hash.isEmpty()) {
+    if (browserRequest.hash.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED);
     }
 
-    QString command = decrypted.value("action").toString();
-    if (!command.isEmpty() && command.compare("get-databasehash") == 0) {
-        const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
-
-        QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
-        message["hash"] = hash;
+    const auto command = browserRequest.getString("action");
+    if (!command.isEmpty() && command.compare(BROWSER_REQUEST_GET_DATABASEHASH) == 0) {
+        auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
+        message["hash"] = browserRequest.hash;
 
         // Update a legacy database hash if found
-        const QJsonArray hashes = decrypted.value("connectedKeys").toArray();
+        const auto hashes = browserRequest.getArray("connectedKeys");
         if (!hashes.isEmpty()) {
-            const QString legacyHash = browserService()->getDatabaseHash(true);
+            const auto legacyHash = browserService()->getDatabaseHash(true);
             if (hashes.contains(legacyHash)) {
                 message["oldHash"] = legacyHash;
             }
         }
 
-        return buildResponse(action, message, newNonce);
+        return buildResponse(action, message, browserRequest.incrementedNonce);
     }
 
     return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
@@ -164,16 +167,12 @@ QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const 
 
 QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QString& action)
 {
-    const QString hash = browserService()->getDatabaseHash();
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    const QString key = decrypted.value("key").toString();
+    const auto key = browserRequest.getString("key");
     if (key.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
@@ -181,19 +180,18 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
     if (key.compare(m_clientPublicKey) == 0) {
         // Check for identification key. If it's not found, ensure backwards compatibility and use the current public
         // key
-        const QString idKey = decrypted.value("idKey").toString();
-        const QString id = browserService()->storeKey((idKey.isEmpty() ? key : idKey));
+        const auto idKey = browserRequest.getString("idKey");
+        const auto id = browserService()->storeKey((idKey.isEmpty() ? key : idKey));
         if (id.isEmpty()) {
             return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
         }
 
         m_associated = true;
-        const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-        QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
-        message["hash"] = hash;
+        auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
+        message["hash"] = browserRequest.hash;
         message["id"] = id;
-        return buildResponse(action, message, newNonce);
+        return buildResponse(action, message, browserRequest.incrementedNonce);
     }
 
     return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
@@ -201,97 +199,87 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
 
 QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QString& action)
 {
-    const QString hash = browserService()->getDatabaseHash();
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    const QString responseKey = decrypted.value("key").toString();
-    const QString id = decrypted.value("id").toString();
+    const auto responseKey = browserRequest.getString("key");
+    const auto id = browserRequest.getString("id");
     if (responseKey.isEmpty() || id.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_DATABASE_NOT_OPENED);
     }
 
-    const QString key = browserService()->getKey(id);
+    const auto key = browserService()->getKey(id);
     if (key.isEmpty() || key.compare(responseKey) != 0) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
     m_associated = true;
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
-    message["hash"] = hash;
+    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
+    message["hash"] = browserRequest.hash;
     message["id"] = id;
 
-    return buildResponse(action, message, newNonce);
+    return buildResponse(action, message, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QString& action)
 {
-    const QString hash = browserService()->getDatabaseHash();
-    const QString nonce = json.value("nonce").toString();
-    const auto incrementedNonce = browserMessageBuilder()->incrementNonce(nonce);
-    const QString encrypted = json.value("message").toString();
-
     if (!m_associated) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    const QString siteUrl = decrypted.value("url").toString();
+    const auto siteUrl = browserRequest.getString("url");
     if (siteUrl.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
     }
 
-    const QJsonArray keys = decrypted.value("keys").toArray();
+    const auto keys = browserRequest.getArray("keys");
 
     StringPairList keyList;
-    for (const QJsonValue val : keys) {
-        const QJsonObject keyObject = val.toObject();
+    for (const auto val : keys) {
+        const auto keyObject = val.toObject();
         keyList.push_back(qMakePair(keyObject.value("id").toString(), keyObject.value("key").toString()));
     }
 
-    const QString id = decrypted.value("id").toString();
-    const QString formUrl = decrypted.value("submitUrl").toString();
-    const QString auth = decrypted.value("httpAuth").toString();
+    const auto id = browserRequest.getString("id");
+    const auto formUrl = browserRequest.getString("submitUrl");
+    const auto auth = browserRequest.getString("httpAuth");
     const bool httpAuth = auth.compare(TRUE_STR) == 0;
 
-    const QJsonArray users = browserService()->findMatchingEntries(id, siteUrl, formUrl, "", keyList, httpAuth);
+    EntryParameters entryParameters;
+    entryParameters.dbid = id;
+    entryParameters.hash = browserRequest.hash, entryParameters.siteUrl = siteUrl;
+    entryParameters.formUrl = formUrl;
+
+    const QJsonArray users = browserService()->findEntries(entryParameters, keyList, httpAuth);
     if (users.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    QJsonObject message = browserMessageBuilder()->buildMessage(incrementedNonce);
+    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
     message["count"] = users.count();
     message["entries"] = users;
-    message["hash"] = hash;
+    message["hash"] = browserRequest.hash;
     message["id"] = id;
 
-    return buildResponse(action, message, incrementedNonce);
+    return buildResponse(action, message, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action)
 {
-    auto errorMessage = getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
-    auto nonce = json.value("nonce").toString();
-    auto incrementedNonce = browserMessageBuilder()->incrementNonce(nonce);
-
-    const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    auto requestId = decrypted.value("requestID").toString();
+    const auto requestId = browserRequest.getString("requestID");
 
     // Do not allow multiple requests from the same client
     if (browserService()->isPasswordGeneratorRequested()) {
@@ -305,86 +293,84 @@ QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJ
         return errorReply;
     }
 
-    browserService()->showPasswordGenerator(socket, incrementedNonce, m_clientPublicKey, m_secretKey);
-    return QJsonObject();
+    KeyPairMessage keyPairMessage = {socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
+
+    browserService()->showPasswordGenerator(keyPairMessage);
+    return {};
 }
 
 QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString& action)
 {
-    const QString hash = browserService()->getDatabaseHash();
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-
     if (!m_associated) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    const QString url = decrypted.value("url").toString();
+    const auto url = browserRequest.getString("url");
     if (url.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
     }
 
-    const QString id = decrypted.value("id").toString();
-    const QString login = decrypted.value("login").toString();
-    const QString password = decrypted.value("password").toString();
-    const QString submitUrl = decrypted.value("submitUrl").toString();
-    const QString uuid = decrypted.value("uuid").toString();
-    const QString group = decrypted.value("group").toString();
-    const QString groupUuid = decrypted.value("groupUuid").toString();
-    const QString downloadFavicon = decrypted.value("downloadFavicon").toString();
+    const auto id = browserRequest.getString("id");
+    const auto login = browserRequest.getString("login");
+    const auto password = browserRequest.getString("password");
+    const auto submitUrl = browserRequest.getString("submitUrl");
+    const auto uuid = browserRequest.getString("uuid");
+    const auto group = browserRequest.getString("group");
+    const auto groupUuid = browserRequest.getString("groupUuid");
+    const auto downloadFavicon = browserRequest.getString("downloadFavicon");
     const QString realm;
+
+    EntryParameters entryParameters;
+    entryParameters.dbid = id;
+    entryParameters.login = login;
+    entryParameters.password = password;
+    entryParameters.siteUrl = url;
+    entryParameters.formUrl = submitUrl;
+    entryParameters.realm = realm;
 
     bool result = true;
     if (uuid.isEmpty()) {
         auto dlFavicon = !downloadFavicon.isEmpty() && downloadFavicon.compare(TRUE_STR) == 0;
-        browserService()->addEntry(id, login, password, url, submitUrl, realm, group, groupUuid, dlFavicon);
+        browserService()->addEntry(entryParameters, group, groupUuid, dlFavicon);
     } else {
         if (!Tools::isValidUuid(uuid)) {
             return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
         }
 
-        result = browserService()->updateEntry(id, uuid, login, password, url, submitUrl);
+        result = browserService()->updateEntry(entryParameters, uuid);
     }
 
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
-
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
+    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
     message["count"] = QJsonValue::Null;
     message["entries"] = QJsonValue::Null;
     message["error"] = result ? QStringLiteral("success") : QStringLiteral("error");
-    message["hash"] = hash;
+    message["hash"] = browserRequest.hash;
 
-    return buildResponse(action, message, newNonce);
+    return buildResponse(action, message, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleLockDatabase(const QJsonObject& json, const QString& action)
 {
-    const QString hash = browserService()->getDatabaseHash();
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    if (hash.isEmpty()) {
+    if (browserRequest.hash.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED);
     }
 
-    QString command = decrypted.value("action").toString();
-    if (!command.isEmpty() && command.compare("lock-database") == 0) {
+    const auto command = browserRequest.getString("action");
+    if (!command.isEmpty() && command.compare(BROWSER_REQUEST_LOCK_DATABASE) == 0) {
         browserService()->lockDatabase();
 
-        const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
-        QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
-
-        return buildResponse(action, message, newNonce);
+        auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
+        return buildResponse(action, message, browserRequest.incrementedNonce);
     }
 
     return getErrorReply(action, ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED);
@@ -392,21 +378,17 @@ QJsonObject BrowserAction::handleLockDatabase(const QJsonObject& json, const QSt
 
 QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, const QString& action)
 {
-    const QString hash = browserService()->getDatabaseHash();
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-
     if (!m_associated) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    QString command = decrypted.value("action").toString();
-    if (command.isEmpty() || command.compare("get-database-groups") != 0) {
+    const auto command = browserRequest.getString("action");
+    if (command.isEmpty() || command.compare(BROWSER_REQUEST_GET_DATABASE_GROUPS) != 0) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
@@ -415,141 +397,118 @@ QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, cons
         return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
     }
 
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
-
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
+    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
     message["groups"] = groups;
 
-    return buildResponse(action, message, newNonce);
+    return buildResponse(action, message, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const QString& action)
 {
-    const QString hash = browserService()->getDatabaseHash();
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-
     if (!m_associated) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    QString command = decrypted.value("action").toString();
-    if (command.isEmpty() || command.compare("create-new-group") != 0) {
+    const auto command = browserRequest.getString("action");
+    if (command.isEmpty() || command.compare(BROWSER_REQUEST_CREATE_NEW_GROUP) != 0) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
-    QString group = decrypted.value("groupName").toString();
+    const auto group = browserRequest.getString("groupName");
     const QJsonObject newGroup = browserService()->createNewGroup(group);
     if (newGroup.isEmpty() || newGroup["name"].toString().isEmpty() || newGroup["uuid"].toString().isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP);
     }
 
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
-
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
+    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
     message["name"] = newGroup["name"];
     message["uuid"] = newGroup["uuid"];
 
-    return buildResponse(action, message, newNonce);
+    return buildResponse(action, message, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleGetTotp(const QJsonObject& json, const QString& action)
 {
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-
     if (!m_associated) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    QString command = decrypted.value("action").toString();
-    if (command.isEmpty() || command.compare("get-totp") != 0) {
+    const auto command = browserRequest.getString("action");
+    if (command.isEmpty() || command.compare(BROWSER_REQUEST_GET_TOTP) != 0) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
-    const QString uuid = decrypted.value("uuid").toString();
+    const auto uuid = browserRequest.getString("uuid");
     if (!Tools::isValidUuid(uuid)) {
         return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
     }
 
-    // Get the current TOTP
-    const auto totp = browserService()->getCurrentTotp(uuid);
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
+    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
+    message["totp"] = browserService()->getCurrentTotp(uuid);
 
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
-    message["totp"] = totp;
-
-    return buildResponse(action, message, newNonce);
+    return buildResponse(action, message, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleDeleteEntry(const QJsonObject& json, const QString& action)
 {
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-
     if (!m_associated) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    QString command = decrypted.value("action").toString();
-    if (command.isEmpty() || command.compare("delete-entry") != 0) {
+    const auto command = browserRequest.getString("action");
+    if (command.isEmpty() || command.compare(BROWSER_REQUEST_DELETE_ENTRY) != 0) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
-    const auto uuid = decrypted.value("uuid").toString();
+    const auto uuid = browserRequest.getString("uuid");
     if (!Tools::isValidUuid(uuid)) {
         return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
     }
 
     const auto result = browserService()->deleteEntry(uuid);
 
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
+    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
     message["success"] = result ? TRUE_STR : FALSE_STR;
 
-    return buildResponse(action, message, newNonce);
+    return buildResponse(action, message, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleGlobalAutoType(const QJsonObject& json, const QString& action)
 {
-    const QString nonce = json.value("nonce").toString();
-    const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    QString command = decrypted.value("action").toString();
-    if (command.isEmpty() || command.compare("request-autotype") != 0) {
+    const auto command = browserRequest.getString("action");
+    if (command.isEmpty() || command.compare(BROWSER_REQUEST_REQUEST_AUTOTYPE) != 0) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
-    const auto topLevelDomain = decrypted.value("search").toString();
+    const auto topLevelDomain = browserRequest.getString("search");
     if (topLevelDomain.length() > BrowserAction::MaxUrlLength) {
         return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
     }
 
     browserService()->requestGlobalAutoType(topLevelDomain);
 
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
-    return buildResponse(action, message, newNonce);
+    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
+    return buildResponse(action, message, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::decryptMessage(const QString& message, const QString& nonce)
@@ -565,4 +524,15 @@ QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorC
 QJsonObject BrowserAction::buildResponse(const QString& action, const QJsonObject& message, const QString& nonce)
 {
     return browserMessageBuilder()->buildResponse(action, message, nonce, m_clientPublicKey, m_secretKey);
+}
+
+BrowserRequest BrowserAction::decodeRequest(const QJsonObject& json)
+{
+    const auto nonce = json.value("nonce").toString();
+    const auto encrypted = json.value("message").toString();
+
+    return {browserService()->getDatabaseHash(),
+            nonce,
+            browserMessageBuilder()->incrementNonce(nonce),
+            decryptMessage(encrypted, nonce)};
 }
