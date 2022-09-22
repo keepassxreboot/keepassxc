@@ -113,14 +113,47 @@
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
-                <property name="text">
-                 <string>Remember previously used databases</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
+                  <property name="text">
+                   <string>Remember previously used databases</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="rememberLastDatabasesSpinbox">
+                  <property name="suffix">
+                   <string> recent files</string>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>25</number>
+                  </property>
+                  <property name="value">
+                   <number>5</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_9">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
               </item>
               <item>
                <layout class="QHBoxLayout" name="rememberDbSubLayout_2">
@@ -1231,6 +1264,7 @@
   <tabstop>systrayMinimizeOnStartup</tabstop>
   <tabstop>minimizeAfterUnlockCheckBox</tabstop>
   <tabstop>rememberLastDatabasesCheckBox</tabstop>
+  <tabstop>rememberLastDatabasesSpinbox</tabstop>
   <tabstop>openPreviousDatabasesOnStartupCheckBox</tabstop>
   <tabstop>rememberLastKeyFilesCheckBox</tabstop>
   <tabstop>checkForUpdatesOnStartupCheckBox</tabstop>
@@ -1240,8 +1274,12 @@
   <tabstop>autoSaveAfterEveryChangeCheckBox</tabstop>
   <tabstop>autoSaveOnExitCheckBox</tabstop>
   <tabstop>autoSaveNonDataChangesCheckBox</tabstop>
+  <tabstop>autoReloadOnChangeCheckBox</tabstop>
   <tabstop>backupBeforeSaveCheckBox</tabstop>
+  <tabstop>backupFilePath</tabstop>
+  <tabstop>backupFilePathPicker</tabstop>
   <tabstop>useAlternativeSaveCheckBox</tabstop>
+  <tabstop>alternativeSaveComboBox</tabstop>
   <tabstop>useGroupIconOnEntryCreationCheckBox</tabstop>
   <tabstop>minimizeOnOpenUrlCheckBox</tabstop>
   <tabstop>hideWindowOnCopyCheckBox</tabstop>
@@ -1250,8 +1288,8 @@
   <tabstop>faviconTimeoutSpinBox</tabstop>
   <tabstop>languageComboBox</tabstop>
   <tabstop>toolButtonStyleComboBox</tabstop>
-  <tabstop>monospaceNotesCheckBox</tabstop>
   <tabstop>toolbarMovableCheckBox</tabstop>
+  <tabstop>monospaceNotesCheckBox</tabstop>
   <tabstop>minimizeOnCloseCheckBox</tabstop>
   <tabstop>systrayShowCheckBox</tabstop>
   <tabstop>trayIconAppearance</tabstop>
@@ -1260,7 +1298,10 @@
   <tabstop>autoTypeEntryTitleMatchCheckBox</tabstop>
   <tabstop>autoTypeEntryURLMatchCheckBox</tabstop>
   <tabstop>autoTypeAskCheckBox</tabstop>
+  <tabstop>autoTypeHideExpiredEntryCheckBox</tabstop>
+  <tabstop>autoTypeRelockDatabaseCheckBox</tabstop>
   <tabstop>autoTypeShortcutWidget</tabstop>
+  <tabstop>autoTypeRetypeTimeSpinBox</tabstop>
   <tabstop>autoTypeStartDelaySpinBox</tabstop>
   <tabstop>autoTypeDelaySpinBox</tabstop>
  </tabstops>

@@ -43,6 +43,7 @@
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
+#include "gui/entry/EntryView.h"
 #include "gui/osutils/OSUtils.h"
 
 #ifdef WITH_XC_UPDATECHECK
@@ -129,6 +130,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryCopyPassword);
     m_entryContextMenu->addAction(m_ui->menuEntryCopyAttribute->menuAction());
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
+    m_entryContextMenu->addAction(m_ui->menuTags->menuAction());
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
     m_entryContextMenu->addSeparator();
@@ -240,6 +242,11 @@ MainWindow::MainWindow()
         m_copyAdditionalAttributeActions, SIGNAL(triggered(QAction*)), SLOT(copyAttribute(QAction*)));
     connect(m_ui->menuEntryCopyAttribute, SIGNAL(aboutToShow()), this, SLOT(updateCopyAttributesMenu()));
 
+    m_setTagsMenuActions = new QActionGroup(m_ui->menuTags);
+    m_setTagsMenuActions->setExclusive(false);
+    m_actionMultiplexer.connect(m_setTagsMenuActions, SIGNAL(triggered(QAction*)), SLOT(setTag(QAction*)));
+    connect(m_ui->menuTags, &QMenu::aboutToShow, this, &MainWindow::updateSetTagsMenu);
+
     Qt::Key globalAutoTypeKey = static_cast<Qt::Key>(config()->get(Config::GlobalAutoTypeKey).toInt());
     Qt::KeyboardModifiers globalAutoTypeModifiers =
         static_cast<Qt::KeyboardModifiers>(config()->get(Config::GlobalAutoTypeModifiers).toInt());
@@ -272,6 +279,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
     m_ui->actionEntryDownloadIcon->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
+    m_ui->actionEntryCopyPasswordTotp->setShortcut(Qt::CTRL + Qt::Key_Y);
     m_ui->actionEntryMoveUp->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Up);
     m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Down);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
@@ -301,6 +309,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryTotp->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryDownloadIcon->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyPasswordTotp->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryMoveUp->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryMoveDown->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
@@ -395,6 +404,14 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyUsername->setIcon(icons()->icon("username-copy"));
     m_ui->actionEntryCopyPassword->setIcon(icons()->icon("password-copy"));
     m_ui->actionEntryCopyURL->setIcon(icons()->icon("url-copy"));
+    m_ui->menuEntryCopyAttribute->setIcon(icons()->icon("attributes-copy"));
+    m_ui->menuEntryTotp->setIcon(icons()->icon("totp"));
+    m_ui->actionEntryTotp->setIcon(icons()->icon("totp"));
+    m_ui->actionEntryCopyTotp->setIcon(icons()->icon("totp-copy"));
+    m_ui->actionEntryCopyPasswordTotp->setIcon(icons()->icon("totp-copy-password"));
+    m_ui->actionEntryTotpQRCode->setIcon(icons()->icon("qrcode"));
+    m_ui->actionEntrySetupTotp->setIcon(icons()->icon("totp-edit"));
+    m_ui->menuTags->setIcon(icons()->icon("tag-multiple"));
     m_ui->actionEntryDownloadIcon->setIcon(icons()->icon("favicon-download"));
     m_ui->actionGroupSortAsc->setIcon(icons()->icon("sort-alphabetical-ascending"));
     m_ui->actionGroupSortDesc->setIcon(icons()->icon("sort-alphabetical-descending"));
@@ -425,6 +442,11 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(SIGNAL(entrySelectionChanged()), this, SLOT(setMenuActionState()));
     m_actionMultiplexer.connect(SIGNAL(groupContextMenuRequested(QPoint)), this, SLOT(showGroupContextMenu(QPoint)));
     m_actionMultiplexer.connect(SIGNAL(entryContextMenuRequested(QPoint)), this, SLOT(showEntryContextMenu(QPoint)));
+    m_actionMultiplexer.connect(SIGNAL(groupChanged()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(databaseUnlocked()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(databaseModified()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(searchModeActivated()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(listModeActivated()), this, SLOT(updateEntryCountLabel()));
 
     // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget,
@@ -479,6 +501,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntrySetupTotp, SIGNAL(triggered()), SLOT(setupTotp()));
 
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTotp, SIGNAL(triggered()), SLOT(copyTotp()));
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyPasswordTotp, SIGNAL(triggered()), SLOT(copyPasswordTotp()));
     m_actionMultiplexer.connect(m_ui->actionEntryTotpQRCode, SIGNAL(triggered()), SLOT(showTotpKeyQrCode()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTitle, SIGNAL(triggered()), SLOT(copyTitle()));
     m_actionMultiplexer.connect(m_ui->actionEntryMoveUp, SIGNAL(triggered()), SLOT(moveEntryUp()));
@@ -647,6 +670,7 @@ MainWindow::MainWindow()
     connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
     connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
 
+    // Setup the status bar
     statusBar()->setFixedHeight(24);
     m_progressBarLabel = new QLabel(statusBar());
     m_progressBarLabel->setVisible(false);
@@ -659,6 +683,8 @@ MainWindow::MainWindow()
     m_progressBar->setMaximum(100);
     statusBar()->addPermanentWidget(m_progressBar);
     connect(clipboard(), SIGNAL(updateCountdown(int, QString)), this, SLOT(updateProgressBar(int, QString)));
+    m_statusBarLabel = new QLabel(statusBar());
+    statusBar()->addPermanentWidget(m_statusBarLabel);
 
     restoreConfigState();
 }
@@ -716,6 +742,43 @@ void MainWindow::appExit()
     close();
 }
 
+/**
+ * Returns if application was built with hardware key support.
+ * Intented to be used by 3rd-party applications using DBus.
+ *
+ * @return True if built with hardware key support, false otherwise
+ */
+bool MainWindow::isHardwareKeySupported()
+{
+#ifdef WITH_XC_YUBIKEY
+    return true;
+#else
+    return false;
+#endif
+}
+
+/**
+ * Refreshes list of hardware keys known.
+ * Triggers the DatabaseOpenWidget to automatically select the key last used for a database if found.
+ * Intented to be used by 3rd-party applications using DBus.
+ *
+ * @return True if any key was found, false otherwise or if application lacks hardware key support
+ */
+bool MainWindow::refreshHardwareKeys()
+{
+#ifdef WITH_XC_YUBIKEY
+    auto yk = YubiKey::instance();
+    // find keys sync to allow returning if any key was found
+    bool found = yk->findValidKeys();
+    // emit signal so DatabaseOpenWidget can select last used key
+    // emit here manually because sync findValidKeys() cannot do that properly
+    emit yk->detectComplete(found);
+    return found;
+#else
+    return false;
+#endif
+}
+
 void MainWindow::updateLastDatabasesMenu()
 {
     m_ui->menuRecentDatabases->clear();
@@ -751,6 +814,38 @@ void MainWindow::updateCopyAttributesMenu()
         QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
         action->setData(QVariant(key));
         m_copyAdditionalAttributeActions->addAction(action);
+    }
+}
+
+void MainWindow::updateSetTagsMenu()
+{
+    // Remove all existing actions
+    m_ui->menuTags->clear();
+
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        // Enumerate tags applied to the selected entries
+        QSet<QString> selectedTags;
+        for (auto entry : dbWidget->entryView()->selectedEntries()) {
+            for (auto tag : entry->tagList()) {
+                selectedTags.insert(tag);
+            }
+        }
+
+        // Add known database tags as actions and set checked if
+        // a selected entry has that tag
+        for (auto tag : dbWidget->database()->tagList()) {
+            auto action = m_ui->menuTags->addAction(icons()->icon("tag"), tag);
+            action->setCheckable(true);
+            action->setChecked(selectedTags.contains(tag));
+            m_setTagsMenuActions->addAction(action);
+        }
+    }
+
+    // If no tags exist in the database then show a tip to the user
+    if (m_ui->menuTags->isEmpty()) {
+        auto action = m_ui->menuTags->addAction(tr("No Tags"));
+        action->setEnabled(false);
     }
 }
 
@@ -833,6 +928,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
             m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
+            m_ui->menuTags->setEnabled(entriesSelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->menu()->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoTypeSequence->setText(
@@ -850,6 +946,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
+            m_ui->actionEntryCopyPasswordTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntrySetupTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryTotpQRCode->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryDownloadIcon->setEnabled((entriesSelected && !singleEntrySelected)
@@ -1289,7 +1386,7 @@ void MainWindow::changeEvent(QEvent* event)
         }
 
         if (config()->get(Config::Security_LockDatabaseMinimize).toBool()) {
-            m_ui->tabWidget->lockDatabases();
+            m_ui->tabWidget->lockDatabasesDelayed();
         }
     } else {
         QMainWindow::changeEvent(event);
@@ -1470,6 +1567,17 @@ void MainWindow::updateProgressBar(int percentage, QString message)
     }
 }
 
+void MainWindow::updateEntryCountLabel()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget && dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode) {
+        int numEntries = dbWidget->entryView()->model()->rowCount();
+        m_statusBarLabel->setText(tr("%1 Entry(s)", "", numEntries).arg(numEntries));
+    } else {
+        m_statusBarLabel->setText("");
+    }
+}
+
 void MainWindow::obtainContextFocusLock()
 {
     m_contextMenuFocusLock = true;
@@ -1637,7 +1745,7 @@ void MainWindow::hideWindow()
     }
 
     if (config()->get(Config::Security_LockDatabaseMinimize).toBool()) {
-        m_ui->tabWidget->lockDatabases();
+        m_ui->tabWidget->lockDatabasesDelayed();
     }
 }
 

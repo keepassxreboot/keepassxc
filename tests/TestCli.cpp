@@ -662,10 +662,16 @@ void TestCli::testClip()
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-a", "username"});
     QTRY_COMPARE(clipboard->text(), QString("User Name"));
 
+    // Uuid (top-level field)
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-a", "Uuid"});
+    QTRY_COMPARE(clipboard->text(), QString("{9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}"));
+
     // TOTP
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "--totp"});
     QTRY_VERIFY(isTotp(clipboard->text()));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Entry's \"totp\" attribute copied to the clipboard!\n"));
 
     // Test Unicode
     setInput("a");
@@ -1937,7 +1943,9 @@ void TestCli::testShow()
                         "UserName: User Name\n"
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"));
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"));
 
     setInput("a");
     execCmd(showCmd, {"show", "-s", m_dbFile->fileName(), "/Sample Entry"});
@@ -1946,7 +1954,9 @@ void TestCli::testShow()
                         "UserName: User Name\n"
                         "Password: Password\n"
                         "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"));
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
@@ -1956,7 +1966,9 @@ void TestCli::testShow()
                         "UserName: User Name\n"
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"));
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Sample Entry"});
@@ -1968,6 +1980,8 @@ void TestCli::testShow()
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
                         "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"
                         "\n"
                         "Attachments:\n"
                         "  Sample attachment.txt (15.0 B)\n"));
@@ -1982,6 +1996,8 @@ void TestCli::testShow()
                         "Password: PROTECTED\n"
                         "URL: https://www.bank.com\n"
                         "Notes: Important note\n"
+                        "Uuid: {20b183fd-6878-4506-a50b-06d30792aa10}\n"
+                        "Tags: \n"
                         "\n"
                         "No attachments present.\n"));
 
@@ -1992,6 +2008,10 @@ void TestCli::testShow()
     setInput("a");
     execCmd(showCmd, {"show", "-a", "Password", m_dbFile->fileName(), "/Sample Entry"});
     QCOMPARE(m_stdout->readAll(), QByteArray("Password\n"));
+
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "Uuid", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("{9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"));
 
     setInput("a");
     execCmd(showCmd, {"show", "-a", "Title", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
@@ -2030,6 +2050,21 @@ void TestCli::testShow()
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-a", "Testattribute1", "/Sample Entry"});
     QCOMPARE(m_stdout->readAll(), QByteArray());
     QVERIFY(m_stderr->readAll().contains("ERROR: attribute Testattribute1 is ambiguous"));
+
+    setInput("a");
+    execCmd(showCmd, {"show", "--all", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("Title: Sample Entry\n"
+                        "UserName: User Name\n"
+                        "Password: PROTECTED\n"
+                        "URL: http://www.somesite.com/\n"
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"
+                        "TOTP Seed: PROTECTED\n"
+                        "TOTP Settings: 30;6\n"
+                        "TestAttribute1: b\n"
+                        "testattribute1: a\n"));
 }
 
 void TestCli::testInvalidDbFiles()

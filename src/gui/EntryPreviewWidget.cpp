@@ -45,7 +45,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     // Entry
-    m_ui->entryTotpButton->setIcon(icons()->icon("chronometer"));
+    m_ui->entryTotpButton->setIcon(icons()->icon("totp"));
     m_ui->entryCloseButton->setIcon(icons()->icon("dialog-close"));
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", true));
@@ -72,7 +72,16 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->toggleEntryNotesButton, SIGNAL(clicked(bool)), SLOT(setEntryNotesVisible(bool)));
     connect(m_ui->toggleGroupNotesButton, SIGNAL(clicked(bool)), SLOT(setGroupNotesVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
+    // Prevent the url from being focused after clicked to allow the Copy Password button to work properly
+    connect(m_ui->entryUrlLabel, &QLabel::linkActivated, this, [this] { m_ui->entryTabWidget->setFocus(); });
     connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpLabel()));
+
+    connect(m_ui->entryAttributesTable, &QTableWidget::itemDoubleClicked, this, [](QTableWidgetItem* item) {
+        auto userData = item->data(Qt::UserRole);
+        if (userData.isValid()) {
+            clipboard()->setText(userData.toString());
+        }
+    });
 
     connect(config(), &Config::changed, this, [this](Config::ConfigKey key) {
         if (key == Config::GUI_HidePreviewPanel) {
@@ -106,48 +115,72 @@ void EntryPreviewWidget::clear()
 
 void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 {
+    disconnect(m_currentEntry);
+    disconnect(m_currentGroup);
+
+    m_currentEntry = selectedEntry;
+    m_currentGroup = nullptr;
+
     if (!selectedEntry) {
         hide();
         return;
     }
 
-    m_currentEntry = selectedEntry;
-
-    updateEntryHeaderLine();
-    updateEntryTotp();
-    updateEntryGeneralTab();
-    updateEntryAdvancedTab();
-    updateEntryAutotypeTab();
-
-    setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
-
-    m_ui->stackedWidget->setCurrentWidget(m_ui->pageEntry);
-    const int tabIndex = m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry : GeneralTabIndex;
-    Q_ASSERT(m_ui->entryTabWidget->isTabEnabled(GeneralTabIndex));
-    m_ui->entryTabWidget->setCurrentIndex(tabIndex);
+    connect(selectedEntry, &Entry::modified, this, &EntryPreviewWidget::refresh);
+    refresh();
 }
 
 void EntryPreviewWidget::setGroup(Group* selectedGroup)
 {
+    disconnect(m_currentEntry);
+    disconnect(m_currentGroup);
+
+    m_currentEntry = nullptr;
+    m_currentGroup = selectedGroup;
+
     if (!selectedGroup) {
         hide();
         return;
     }
 
-    m_currentGroup = selectedGroup;
-    updateGroupHeaderLine();
-    updateGroupGeneralTab();
+    connect(m_currentGroup, &Group::modified, this, &EntryPreviewWidget::refresh);
+    refresh();
+}
+
+void EntryPreviewWidget::refresh()
+{
+    if (m_currentEntry) {
+        updateEntryHeaderLine();
+        updateEntryTotp();
+        updateEntryGeneralTab();
+        updateEntryAdvancedTab();
+        updateEntryAutotypeTab();
+
+        setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
+
+        m_ui->stackedWidget->setCurrentWidget(m_ui->pageEntry);
+        const int tabIndex =
+            m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry : GeneralTabIndex;
+        Q_ASSERT(m_ui->entryTabWidget->isTabEnabled(GeneralTabIndex));
+        m_ui->entryTabWidget->setCurrentIndex(tabIndex);
+    } else if (m_currentGroup) {
+        updateGroupHeaderLine();
+        updateGroupGeneralTab();
 
 #if defined(WITH_XC_KEESHARE)
-    updateGroupSharingTab();
+        updateGroupSharingTab();
 #endif
 
-    setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
+        setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
 
-    m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
-    const int tabIndex = m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup : GeneralTabIndex;
-    Q_ASSERT(m_ui->groupTabWidget->isTabEnabled(GeneralTabIndex));
-    m_ui->groupTabWidget->setCurrentIndex(tabIndex);
+        m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
+        const int tabIndex =
+            m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup : GeneralTabIndex;
+        Q_ASSERT(m_ui->groupTabWidget->isTabEnabled(GeneralTabIndex));
+        m_ui->groupTabWidget->setCurrentIndex(tabIndex);
+    } else {
+        hide();
+    }
 }
 
 void EntryPreviewWidget::setDatabaseMode(DatabaseWidget::Mode mode)
@@ -231,6 +264,8 @@ void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& 
     } else {
         if (!notes.isEmpty()) {
             notesWidget->setPlainText(QString("\u25cf").repeated(6));
+        } else {
+            notesWidget->setPlainText("");
         }
     }
 }
@@ -256,7 +291,6 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     auto hasNotes = !m_currentEntry->notes().isEmpty();
     auto hideNotes = config()->get(Config::Security_HideNotes).toBool();
 
-    m_ui->entryNotesTextEdit->setVisible(hasNotes);
     setEntryNotesVisible(hasNotes && !hideNotes);
     m_ui->toggleEntryNotesButton->setVisible(hasNotes && hideNotes
                                              && !m_ui->entryNotesTextEdit->toPlainText().isEmpty());
@@ -307,6 +341,8 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
         font.setBold(true);
         for (const QString& key : customAttributes) {
             m_ui->entryAttributesTable->setItem(i, 0, new QTableWidgetItem(key));
+            m_ui->entryAttributesTable->item(i, 0)->setFont(font);
+            m_ui->entryAttributesTable->item(i, 0)->setTextAlignment(Qt::AlignTop | Qt::AlignLeft);
 
             if (attributes->isProtected(key)) {
                 // only show the reveal button on protected attributes
@@ -314,40 +350,35 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
                 button->setCheckable(true);
                 button->setChecked(false);
                 button->setIcon(icons()->onOffIcon("password-show", false));
-                button->setProperty("value", attributes->value(key));
                 button->setProperty("row", i);
-                m_ui->entryAttributesTable->setCellWidget(i, 1, button);
-                m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(QString("\u25cf").repeated(6)));
-
+                button->setIconSize({12, 12});
                 connect(button, &QToolButton::clicked, this, [this](bool state) {
                     auto btn = qobject_cast<QToolButton*>(sender());
                     btn->setIcon(icons()->onOffIcon("password-show", state));
-                    auto row = btn->property("row").toInt();
+                    auto item = m_ui->entryAttributesTable->item(btn->property("row").toInt(), 2);
                     if (state) {
-                        m_ui->entryAttributesTable->item(row, 2)->setText(btn->property("value").toString());
+                        item->setText(item->data(Qt::UserRole).toString());
                     } else {
-                        m_ui->entryAttributesTable->item(row, 2)->setText(QString("\u25cf").repeated(6));
+                        item->setText(QString("\u25cf").repeated(6));
                     }
                     // Maintain button height while showing contents of cell
                     auto size = btn->size();
-                    m_ui->entryAttributesTable->resizeRowToContents(row);
+                    m_ui->entryAttributesTable->resizeRowToContents(item->row());
                     btn->setFixedSize(size);
                 });
+
+                m_ui->entryAttributesTable->setCellWidget(i, 1, button);
+                m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(QString("\u25cf").repeated(6)));
             } else {
                 m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(attributes->value(key)));
             }
 
-            m_ui->entryAttributesTable->item(i, 0)->setFont(font);
-            m_ui->entryAttributesTable->item(i, 0)->setTextAlignment(Qt::AlignTop | Qt::AlignLeft);
+            m_ui->entryAttributesTable->item(i, 2)->setData(Qt::UserRole, attributes->value(key));
+            m_ui->entryAttributesTable->item(i, 2)->setToolTip(tr("Double click to copy value"));
             m_ui->entryAttributesTable->item(i, 2)->setTextAlignment(Qt::AlignTop | Qt::AlignLeft);
 
             ++i;
         }
-        connect(m_ui->entryAttributesTable, &QTableWidget::cellDoubleClicked, this, [this](int row, int column) {
-            if (column == 2) {
-                clipboard()->setText(m_ui->entryAttributesTable->item(row, column)->text());
-            }
-        });
     }
 
     m_ui->entryAttributesTable->horizontalHeader()->setStretchLastSection(true);

@@ -76,12 +76,19 @@ void Clipboard::setText(const QString& text, bool clear)
         if (config()->get(Config::Security_ClearClipboard).toBool()) {
             int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
             if (timeout > 0) {
-                m_secondsElapsed = -1;
-                countdownTick();
+                m_secondsToClear = timeout;
+                sendCountdownStatus();
                 m_timer->start(1000);
+            } else {
+                clearCopiedText();
             }
         }
     }
+}
+
+int Clipboard::secondsToClear()
+{
+    return m_secondsToClear;
 }
 
 void Clipboard::clearCopiedText()
@@ -105,15 +112,18 @@ void Clipboard::clearCopiedText()
 
 void Clipboard::countdownTick()
 {
-    m_secondsElapsed++;
-    int timeout = config()->get(Config::Security_ClearClipboardTimeout).toInt();
-    int timeLeft = timeout - m_secondsElapsed;
-    if (timeLeft <= 0) {
+    if (--m_secondsToClear <= 0) {
         clearCopiedText();
     } else {
-        emit updateCountdown(100 * timeLeft / timeout,
-                             QObject::tr("Clearing the clipboard in %1 second(s)…", "", timeLeft).arg(timeLeft));
+        sendCountdownStatus();
     }
+}
+
+void Clipboard::sendCountdownStatus()
+{
+    emit updateCountdown(
+        100 * m_secondsToClear / config()->get(Config::Security_ClearClipboardTimeout).toInt(),
+        QObject::tr("Clearing the clipboard in %1 second(s)…", "", m_secondsToClear).arg(m_secondsToClear));
 }
 
 Clipboard* Clipboard::instance()

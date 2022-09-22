@@ -68,6 +68,7 @@ protected:
     void focusOutEvent(QFocusEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    void hideEvent(QHideEvent* event) override;
 
 private:
     bool isAcceptableInput(QKeyEvent const* event) const;

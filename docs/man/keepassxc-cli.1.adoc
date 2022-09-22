@@ -16,7 +16,7 @@
 
 = keepassxc-cli(1)
 KeePassXC Team <team@keepassxc.org>
-:docdate: 2020-08-31
+:docdate: 2022-08-20
 :doctype: manpage
 :mansource: KeePassXC {revnumber}
 :manmanual: General Commands Manual
@@ -251,6 +251,9 @@ The same password generation options as documented for the generate command can 
   This option can be specified more than once, with each attribute shown one-per-line in the given order.
   If no attributes are specified and *-t* is not specified, a summary of the default attributes is given.
   Protected attributes will be displayed in clear text if specified explicitly by this option.
+
+*--all*::
+  Show all the attributes of the entry.
 
 *-s*, *--show-protected*::
   Shows the protected attributes in clear text.
