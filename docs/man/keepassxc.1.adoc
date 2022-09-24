@@ -49,9 +49,6 @@ Your wallet works offline and requires no Internet connection.
 *--pw-stdin*::
   Read password of the database from stdin.
 
-*--pw*, *--parent-window* <__handle__>::
-  Parent window handle.
-
 *--debug-info*::
   Displays debugging information.
 
