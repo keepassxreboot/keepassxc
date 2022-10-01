@@ -485,6 +485,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
     connect(m_ui->actionExportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToCsv()));
     connect(m_ui->actionExportHtml, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToHtml()));
+    connect(m_ui->actionExportXML, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToXML()));
     connect(
         m_ui->actionLockDatabase, SIGNAL(triggered()), m_ui->tabWidget, SLOT(lockAndSwitchToFirstUnlockedDatabase()));
     connect(m_ui->actionLockDatabaseToolbar, SIGNAL(triggered()), m_ui->actionLockDatabase, SIGNAL(triggered()));
@@ -973,6 +974,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->menuExport->setEnabled(true);
             m_ui->actionExportCsv->setEnabled(true);
             m_ui->actionExportHtml->setEnabled(true);
+            m_ui->actionExportXML->setEnabled(true);
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
 #ifdef WITH_XC_SSHAGENT
             bool singleEntryHasSshKey =

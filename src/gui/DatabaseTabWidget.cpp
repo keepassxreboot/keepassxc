@@ -493,6 +493,40 @@ void DatabaseTabWidget::exportToHtml()
     exportDialog->exec();
 }
 
+void DatabaseTabWidget::exportToXML()
+{
+    auto db = databaseWidgetFromIndex(currentIndex())->database();
+    if (!db) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    if (!warnOnExport()) {
+        return;
+    }
+
+    auto fileName = fileDialog()->getSaveFileName(
+        this, tr("Export database to XML file"), FileDialog::getLastDir("xml"), tr("XML file").append(" (*.xml)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    FileDialog::saveLastDir("xml", fileName, true);
+
+    QByteArray xmlData;
+    QString err;
+    if (!db->extract(xmlData, &err)) {
+        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(err), MessageWidget::Error);
+    }
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(file.errorString()),
+                           MessageWidget::Error);
+    }
+    file.write(xmlData);
+}
+
 bool DatabaseTabWidget::warnOnExport()
 {
     auto ans =

@@ -216,7 +216,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -245,6 +245,12 @@
      </property>
      <addaction name="actionExportCsv"/>
      <addaction name="actionExportHtml"/>
+     <addaction name="actionExportXML"/>
+    </widget>
+    <widget class="QMenu" name="menu_Quit">
+     <property name="title">
+      <string>&amp;Quit</string>
+     </property>
     </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
@@ -1099,6 +1105,17 @@
    </property>
    <property name="text">
     <string>&amp;Lock Database</string>
+   </property>
+  </action>
+  <action name="actionExportXML">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;XML File…</string>
+   </property>
+   <property name="toolTip">
+    <string>XML File…</string>
    </property>
   </action>
  </widget>
