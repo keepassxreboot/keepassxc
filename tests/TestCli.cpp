@@ -1972,19 +1972,30 @@ void TestCli::testShow()
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Sample Entry"});
+
+    auto expected_file_size = Tools::humanReadableFileSize(readDatabase()
+                                                               ->rootGroup()
+                                                               ->findEntryByPath("/Sample Entry")
+                                                               ->attachments()
+                                                               ->value("Sample attachment.txt")
+                                                               .size(),
+                                                           1);
+
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
     QCOMPARE(m_stdout->readAll(),
-             QByteArray("Title: Sample Entry\n"
-                        "UserName: User Name\n"
-                        "Password: PROTECTED\n"
-                        "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"
-                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
-                        "Tags: \n"
-                        "\n"
-                        "Attachments:\n"
-                        "  Sample attachment.txt (15.0 B)\n"));
+             QString("Title: Sample Entry\n"
+                     "UserName: User Name\n"
+                     "Password: PROTECTED\n"
+                     "URL: http://www.somesite.com/\n"
+                     "Notes: Notes\n"
+                     "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                     "Tags: \n"
+                     "\n"
+                     "Attachments:\n"
+                     "  Sample attachment.txt (")
+                 .append(expected_file_size)
+                 .append(")\n"));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Homebanking/Subgroup/Subgroup Entry"});
