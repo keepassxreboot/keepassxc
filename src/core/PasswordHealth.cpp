@@ -101,7 +101,7 @@ PasswordHealth::Quality PasswordHealth::quality() const
         return Quality::Bad;
     } else if (m_score < 40) {
         return Quality::Poor;
-    } else if (m_score < 65) {
+    } else if (m_score < 75) {
         return Quality::Weak;
     } else if (m_score < 100) {
         return Quality::Good;
@@ -160,8 +160,8 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
 
         // Don't allow re-used passwords to be considered "good"
         // no matter how great their entropy is.
-        if (health->score() > 64) {
-            health->setScore(64);
+        if (health->score() > 74) {
+            health->setScore(74);
         }
     }
 
@@ -181,8 +181,8 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
             // reduce the score by 2 points for every day that
             // we get closer to expiry. days<=0 has already
             // been handled above ("isExpired()").
-            if (health->score() > 60) {
-                health->setScore(60);
+            if (health->score() > 70) {
+                health->setScore(70);
             }
 
             health->adjustScore((30 - days) * -2);
