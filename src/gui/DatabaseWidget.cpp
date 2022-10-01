@@ -1641,7 +1641,7 @@ bool DatabaseWidget::focusNextPrevChild(bool next)
     // Find the next visible element in the sequence and set the focus
     while (idx >= 0 && idx < sequence.size()) {
         widget = sequence[idx];
-        if (widget && widget->isVisible() && widget->height() > 0 && widget->width() > 0) {
+        if (widget && widget->isVisible() && widget->isEnabled() && widget->height() > 0 && widget->width() > 0) {
             widget->setFocus();
             return widget;
         }
