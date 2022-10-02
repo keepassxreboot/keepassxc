@@ -767,6 +767,13 @@
                </layout>
               </item>
               <item>
+               <widget class="QCheckBox" name="colorPasswordsCheckBox">
+                <property name="text">
+                 <string>Show passwords in color</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QCheckBox" name="monospaceNotesCheckBox">
                 <property name="text">
                  <string>Use monospaced font for notes</string>

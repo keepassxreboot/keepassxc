@@ -239,6 +239,7 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_generalUi->toolbarMovableCheckBox->setChecked(config()->get(Config::GUI_MovableToolbar).toBool());
     m_generalUi->monospaceNotesCheckBox->setChecked(config()->get(Config::GUI_MonospaceNotes).toBool());
+    m_generalUi->colorPasswordsCheckBox->setChecked(config()->get(Config::GUI_ColorPasswords).toBool());
 
     m_generalUi->toolButtonStyleComboBox->clear();
     m_generalUi->toolButtonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
@@ -383,6 +384,7 @@ void ApplicationSettingsWidget::saveSettings()
 
     config()->set(Config::GUI_MovableToolbar, m_generalUi->toolbarMovableCheckBox->isChecked());
     config()->set(Config::GUI_MonospaceNotes, m_generalUi->monospaceNotesCheckBox->isChecked());
+    config()->set(Config::GUI_ColorPasswords, m_generalUi->colorPasswordsCheckBox->isChecked());
 
     config()->set(Config::GUI_ToolButtonStyle, m_generalUi->toolButtonStyleComboBox->currentData().toString());
 

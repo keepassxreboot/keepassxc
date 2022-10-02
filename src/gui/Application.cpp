@@ -183,6 +183,7 @@ void Application::applyTheme()
         auto* s = new LightStyle;
         setPalette(s->standardPalette());
         setStyle(s);
+        m_darkTheme = false;
     } else if (appTheme == "dark") {
         auto* s = new DarkStyle;
         setPalette(s->standardPalette());
@@ -191,7 +192,9 @@ void Application::applyTheme()
     } else {
         // Classic mode, don't check for dark theme on Windows
         // because Qt 5.x does not support it
-#ifndef Q_OS_WIN
+#if defined(Q_OS_WIN)
+        m_darkTheme = false;
+#else
         m_darkTheme = osUtils->isDarkMode();
 #endif
         QFile stylesheetFile(":/styles/base/classicstyle.qss");
