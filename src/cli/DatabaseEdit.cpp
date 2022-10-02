@@ -110,7 +110,7 @@ QSharedPointer<CompositeKey> DatabaseEdit::getNewDatabaseKey(QSharedPointer<Data
 
     auto currentPasswordKey = database->key()->getKey(PasswordKey::UUID);
     auto currentFileKey = database->key()->getKey(FileKey::UUID);
-    auto currentChallengeResponseKey = database->key()->getKey(ChallengeResponseKey::UUID);
+    auto currentChallengeResponseKey = database->key()->getChallengeResponseKey(ChallengeResponseKey::UUID);
 
     if (removePassword && currentPasswordKey.isNull()) {
         err << QObject::tr("Cannot remove password: The database does not have a password.") << endl;
@@ -162,10 +162,10 @@ QSharedPointer<CompositeKey> DatabaseEdit::getNewDatabaseKey(QSharedPointer<Data
     }
 
     if (!currentChallengeResponseKey.isNull()) {
-        newDatabaseKey->addKey(currentChallengeResponseKey);
+        newDatabaseKey->addChallengeResponseKey(currentChallengeResponseKey);
     }
 
-    if (newDatabaseKey->keys().isEmpty()) {
+    if (newDatabaseKey->keys().isEmpty() && newDatabaseKey->challengeResponseKeys().isEmpty()) {
         err << QObject::tr("Cannot remove all the keys from a database.") << endl;
         return {};
     }

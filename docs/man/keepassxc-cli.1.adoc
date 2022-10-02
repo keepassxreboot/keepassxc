@@ -159,7 +159,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *--no-password*::
   Deactivates the password key for the database.
 
-*-y*, *--yubikey* <__slot__>::
+*-y*, *--yubikey* <__slot[:serial]__>::
   Specifies a yubikey slot for unlocking the database.
   In a merge operation this option is used to specify the YubiKey slot for the first database.
 
@@ -182,7 +182,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *--no-password-from*::
   Deactivates password key for the database to merge from.
 
-*--yubikey-from* <__slot__>::
+*--yubikey-from* <__slot[:serial]__>::
   YubiKey slot for the second database.
 
 *-s*, *--same-credentials*::
