@@ -315,24 +315,42 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="entryPasswordLabel">
+                 <widget class="QTextEdit" name="entryPasswordLabel">
                   <property name="minimumSize">
                    <size>
                     <width>150</width>
                     <height>0</height>
                    </size>
                   </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>30</height>
+                   </size>
+                  </property>
                   <property name="focusPolicy">
                    <enum>Qt::ClickFocus</enum>
                   </property>
-                  <property name="text">
-                   <string notr="true">password</string>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
                   </property>
-                  <property name="frame">
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="lineWidth">
+                   <number>0</number>
+                  </property>
+                  <property name="verticalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
+                  <property name="tabChangesFocus">
+                   <bool>true</bool>
+                  </property>
+                  <property name="undoRedoEnabled">
                    <bool>false</bool>
                   </property>
-                  <property name="dragEnabled">
-                   <bool>true</bool>
+                  <property name="lineWrapMode">
+                   <enum>QTextEdit::NoWrap</enum>
                   </property>
                   <property name="readOnly">
                    <bool>true</bool>
