@@ -19,6 +19,8 @@
 #include "EntryPreviewWidget.h"
 #include "ui_EntryPreviewWidget.h"
 
+#include "Application.h"
+#include "core/Config.h"
 #include "gui/Clipboard.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
@@ -232,14 +234,31 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
 {
     const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
     if (state) {
-        m_ui->entryPasswordLabel->setText(password);
-        m_ui->entryPasswordLabel->setCursorPosition(0);
-        m_ui->entryPasswordLabel->setFont(Font::fixedFont());
+        if (config()->get(Config::GUI_ColorPasswords).toBool()) {
+            // Show the password in color
+            // clang-format off
+            QString html;
+            const auto dark = kpxcApp->isDarkTheme();
+            for (const auto c : password) {
+                const auto color = c.isDigit()   ? (dark ? "lightblue" : "blue")
+                                   : c.isUpper() ? (dark ? "lightgreen" : "darkgreen")
+                                   : c.isLower() ? (dark ? "yellow" : "red")
+                                                 : (dark ? "white" : "black");
+                html += "<span style=\"color: " + QString(color) + ";\">" + QString(c).toHtmlEscaped() + "</span>";
+            }
+            // clang-format on
+            m_ui->entryPasswordLabel->setHtml(html);
+        } else {
+            // No color
+            m_ui->entryPasswordLabel->setPlainText(password.toHtmlEscaped());
+        }
     } else if (password.isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
-        m_ui->entryPasswordLabel->setText("");
+        m_ui->entryPasswordLabel->setPlainText("");
     } else {
-        m_ui->entryPasswordLabel->setText(QString("\u25cf").repeated(6));
+        m_ui->entryPasswordLabel->setPlainText(QString("\u25cf").repeated(6));
     }
+
+    m_ui->entryPasswordLabel->setFont(Font::fixedFont());
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", state));
 }
 
@@ -280,7 +299,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
         // Hide password
         setPasswordVisible(false);
         // Show the password toggle button if there are dots in the label
-        m_ui->togglePasswordButton->setVisible(!m_ui->entryPasswordLabel->text().isEmpty());
+        m_ui->togglePasswordButton->setVisible(!m_currentEntry->password().isEmpty());
         m_ui->togglePasswordButton->setChecked(false);
     } else {
         // Show password

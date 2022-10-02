@@ -105,6 +105,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_HideUsernames, {QS("GUI/HideUsernames"), Roaming, false}},
     {Config::GUI_HidePasswords, {QS("GUI/HidePasswords"), Roaming, true}},
     {Config::GUI_AdvancedSettings, {QS("GUI/AdvancedSettings"), Roaming, false}},
+    {Config::GUI_ColorPasswords, {QS("GUI/ColorPasswords"), Roaming, false}},
     {Config::GUI_MonospaceNotes, {QS("GUI/MonospaceNotes"), Roaming, false}},
     {Config::GUI_ApplicationTheme, {QS("GUI/ApplicationTheme"), Roaming, QS("auto")}},
     {Config::GUI_CompactMode, {QS("GUI/CompactMode"), Roaming, false}},
