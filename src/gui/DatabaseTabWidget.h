@@ -71,6 +71,7 @@ public slots:
     bool saveDatabaseBackup(int index = -1);
     void exportToCsv();
     void exportToHtml();
+    void exportToXML();
 
     bool lockDatabases();
     void lockDatabasesDelayed();

@@ -2246,6 +2246,18 @@ This is definitely a bug, please report it to the developers.</source>
         <comment>Database tab name modifier</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -5432,6 +5444,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XML File…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
