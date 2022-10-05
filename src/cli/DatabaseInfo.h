@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,22 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CREATE_H
-#define KEEPASSXC_CREATE_H
+#ifndef KEEPASSXC_DATABASEINFO_H
+#define KEEPASSXC_DATABASEINFO_H
 
-#include "Command.h"
+#include "DatabaseCommand.h"
 
-class Create : public Command
+class DatabaseInfo : public DatabaseCommand
 {
 public:
-    Create();
-    int execute(const QStringList& arguments) override;
+    DatabaseInfo();
 
-    static QSharedPointer<Database> initializeDatabaseFromOptions(const QSharedPointer<QCommandLineParser>& parser);
-
-    static const QCommandLineOption SetKeyFileOption;
-    static const QCommandLineOption SetPasswordOption;
-    static const QCommandLineOption DecryptionTimeOption;
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
 };
 
-#endif // KEEPASSXC_CREATE_H
+#endif // KEEPASSXC_DATABASEINFO_H

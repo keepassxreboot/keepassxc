@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Info.h"
+#include "DatabaseInfo.h"
 
 #include "Utils.h"
 #include "core/DatabaseStats.h"
@@ -25,13 +25,13 @@
 
 #include <QCommandLineParser>
 
-Info::Info()
+DatabaseInfo::DatabaseInfo()
 {
     name = QString("db-info");
     description = QObject::tr("Show a database's information.");
 }
 
-int Info::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser>)
+int DatabaseInfo::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser>)
 {
     auto& out = Utils::STDOUT;
 

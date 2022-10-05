@@ -17,7 +17,7 @@
 
 #include "Import.h"
 
-#include "Create.h"
+#include "DatabaseCreate.h"
 #include "Utils.h"
 
 #include <QCommandLineParser>
@@ -40,9 +40,10 @@ Import::Import()
     description = QObject::tr("Import the contents of an XML database.");
     positionalArguments.append({QString("xml"), QObject::tr("Path of the XML database export."), QString("")});
     positionalArguments.append({QString("database"), QObject::tr("Path of the new database."), QString("")});
-    options.append(Create::SetKeyFileOption);
-    options.append(Create::SetPasswordOption);
-    options.append(Create::DecryptionTimeOption);
+    options.append(DatabaseCreate::SetKeyFileOption);
+    options.append(DatabaseCreate::SetKeyFileShortOption);
+    options.append(DatabaseCreate::SetPasswordOption);
+    options.append(DatabaseCreate::DecryptionTimeOption);
 }
 
 int Import::execute(const QStringList& arguments)
@@ -64,7 +65,7 @@ int Import::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    QSharedPointer<Database> db = Create::initializeDatabaseFromOptions(parser);
+    QSharedPointer<Database> db = DatabaseCreate::initializeDatabaseFromOptions(parser);
     if (!db) {
         return EXIT_FAILURE;
     }
