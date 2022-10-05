@@ -28,6 +28,7 @@
 #include <QPlainTextEdit>
 #include <QProcess>
 #include <QSplitter>
+#include <QTextDocumentFragment>
 #include <QTextEdit>
 #include <core/Tools.h>
 
@@ -638,7 +639,7 @@ void DatabaseWidget::copyPassword()
 
     auto textEdit = qobject_cast<QTextEdit*>(focusWidget());
     if (textEdit && textEdit->textCursor().hasSelection()) {
-        clipboard()->setText(textEdit->textCursor().selectedText(), clearClipboard);
+        clipboard()->setText(textEdit->textCursor().selection().toPlainText(), clearClipboard);
         return;
     }
 
