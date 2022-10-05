@@ -170,6 +170,36 @@ void CompositeKey::addKey(const QSharedPointer<Key>& key)
 }
 
 /**
+ * Get the \link Key with the specified ID.
+ *
+ * @param keyId the ID of the key to get.
+ */
+QSharedPointer<Key> CompositeKey::getKey(const QUuid keyId) const
+{
+    for (const QSharedPointer<Key>& key : m_keys) {
+        if (key->uuid() == keyId) {
+            return key;
+        }
+    }
+    return {};
+}
+
+/**
+ * Get the \link ChallengeResponseKey with the specified ID.
+ *
+ * @param keyId the ID of the key to get.
+ */
+QSharedPointer<ChallengeResponseKey> CompositeKey::getChallengeResponseKey(const QUuid keyId) const
+{
+    for (const QSharedPointer<ChallengeResponseKey>& key : m_challengeResponseKeys) {
+        if (key->uuid() == keyId) {
+            return key;
+        }
+    }
+    return {};
+}
+
+/**
  * @return list of Keys which are part of this CompositeKey
  */
 const QList<QSharedPointer<Key>>& CompositeKey::keys() const

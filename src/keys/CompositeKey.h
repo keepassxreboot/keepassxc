@@ -43,6 +43,8 @@ public:
     bool challenge(const QByteArray& seed, QByteArray& result, QString* error = nullptr) const;
 
     void addKey(const QSharedPointer<Key>& key);
+    QSharedPointer<Key> getKey(const QUuid keyType) const;
+    QSharedPointer<ChallengeResponseKey> getChallengeResponseKey(const QUuid keyType) const;
     const QList<QSharedPointer<Key>>& keys() const;
 
     void addChallengeResponseKey(const QSharedPointer<ChallengeResponseKey>& key);
