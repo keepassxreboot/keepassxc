@@ -30,9 +30,11 @@ void TestIconDownloader::testIconDownloader_data()
     QTest::newRow("Unsupported schema") << "ftp://google.com" << QStringList{};
     QTest::newRow("Missing schema") << "keepassxc.org" << QStringList{"https://keepassxc.org/favicon.ico"};
     QTest::newRow("Missing host") << "https:///register" << QStringList{};
-    QTest::newRow("URL with path") << "https://keepassxc.org/register/here" << QStringList{keepassxc_favicon};
+    QTest::newRow("URL with path") << "https://keepassxc.org/register/here/"
+                                   << QStringList{"https://keepassxc.org/register/here/favicon.ico", keepassxc_favicon};
     QTest::newRow("URL with path and query")
-        << "https://keepassxc.org/register/here?login=me" << QStringList{keepassxc_favicon};
+        << "https://keepassxc.org/register/here?login=me"
+        << QStringList{"https://keepassxc.org/register/favicon.ico", keepassxc_favicon};
     QTest::newRow("URL with port") << "https://keepassxc.org:8080"
                                    << QStringList{"https://keepassxc.org:8080/favicon.ico"};
     QTest::newRow("2nd level domain") << "https://login.keepassxc.org"
@@ -54,11 +56,14 @@ void TestIconDownloader::testIconDownloader_data()
                                         << QStringList{"https://134.130.155.184/favicon.ico"};
     QTest::newRow("Raw IP") << "134.130.155.184" << QStringList{"https://134.130.155.184/favicon.ico"};
     QTest::newRow("Raw IP with schema and path")
-        << "https://134.130.155.184/with/path" << QStringList{"https://134.130.155.184/favicon.ico"};
+        << "https://134.130.155.184/with/path/"
+        << QStringList{"https://134.130.155.184/with/path/favicon.ico", "https://134.130.155.184/favicon.ico"};
     QTest::newRow("Raw IP with schema (https), path, and port")
-        << "https://134.130.155.184:8080/test" << QStringList{"https://134.130.155.184:8080/favicon.ico"};
+        << "https://134.130.155.184:8080/test/"
+        << QStringList{"https://134.130.155.184:8080/test/favicon.ico", "https://134.130.155.184:8080/favicon.ico"};
     QTest::newRow("Raw IP with schema (http), path, and port")
-        << "134.130.155.184:8080/test" << QStringList{"https://134.130.155.184:8080/favicon.ico"};
+        << "134.130.155.184:8080/test/"
+        << QStringList{"https://134.130.155.184:8080/test/favicon.ico", "https://134.130.155.184:8080/favicon.ico"};
     QTest::newRow("URL with username and password")
         << "https://user:password@keepassxc.org" << QStringList{"https://user:password@keepassxc.org/favicon.ico"};
     QTest::newRow("URL with username and password, several subdomains")
@@ -68,4 +73,7 @@ void TestIconDownloader::testIconDownloader_data()
                        "https://keepassxc.org/favicon.ico"};
     QTest::newRow("Raw IP with username and password")
         << "https://user:password@134.130.155.184" << QStringList{"https://user:password@134.130.155.184/favicon.ico"};
+    QTest::newRow("Relative path should be preserved")
+        << "https://test.com/rel-path/"
+        << QStringList{"https://test.com/rel-path/favicon.ico", "https://test.com/favicon.ico"};
 }

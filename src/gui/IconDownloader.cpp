@@ -130,6 +130,13 @@ void IconDownloader::setUrl(const QString& entryUrl)
         }
     }
 
+    // Add a pull that preserves the query if there is one.
+    if (!url.path().isEmpty()) {
+        // Appends /favicon.ico to the last segment of the path.
+        // stem/something/ will become stem/something/favicon.ico, and stem/something will become stem/favicon.ico
+        m_urlsToTry.append(url.resolved(QUrl("./favicon.ico")));
+    }
+
     // Add a direct pull of the website's own favicon.ico file
     QUrl favicon_url = url;
     favicon_url.setPath("/favicon.ico");
