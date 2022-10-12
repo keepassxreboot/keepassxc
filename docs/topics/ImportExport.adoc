@@ -19,7 +19,7 @@ To open the CSV file, perform the following steps:
 
 2. Click Import from CSV button on the welcome screen or use the menu Database > Import > CSV File.
 
-3. Navigate to the location of the your CSV file on your computer and open the file. The new database wizard will appear. Follow the steps of creating a new database in Chapter 1.
+3. Navigate to the location of your CSV file on your computer and open the file. The new database wizard will appear. Follow the steps of creating a new database in Chapter 1.
 
 4. After saving your new database file, the CSV import wizard will appear. On this dialog you can choose the various options for properly importing the data. You may need to select the _First line has field names_ checkbox before starting. Analyze the output in the preview at the bottom to determine the correct import settings.
 +
@@ -46,9 +46,9 @@ To import a KeePass 1 database file in KeePassXC, perform the following steps:
 
 2. Click Import from KeePass 1 button on the welcome screen or use the menu Database > Import > KeePass 1 Database.
 
-3. Navigate to the location of the your legacy KeePass 1 database file (`.kdb`) on your computer and open the file. You are prompted for the password and the Key file for your `.kdb` file.
+3. Navigate to the location of your legacy KeePass 1 database file (`.kdb`) on your computer and open the file. You are prompted for the password and the Key file for your `.kdb` file.
 
-4. Enter the password for your old `.kdb` file and click *OK*. You are prompted for provide a name for the new database format that KeePassXC recognizes.
+4. Enter the password for your old `.kdb` file and click *OK*. You are prompted to provide a name for the new database format that KeePassXC recognizes.
 
 5. Provide a name for the new database format, select a folder on your computer to save the file, and click Save.
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,17 +15,27 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_INFO_H
-#define KEEPASSXC_INFO_H
+#ifndef KEEPASSXC_DATABASEEDIT_H
+#define KEEPASSXC_DATABASEEDIT_H
 
 #include "DatabaseCommand.h"
 
-class Info : public DatabaseCommand
+class DatabaseEdit : public DatabaseCommand
 {
 public:
-    Info();
+    DatabaseEdit();
 
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+
+    static const QCommandLineOption UnsetKeyFileOption;
+    static const QCommandLineOption UnsetPasswordOption;
+
+private:
+    QSharedPointer<CompositeKey> getNewDatabaseKey(QSharedPointer<Database> database,
+                                                   bool updatePassword,
+                                                   bool removePassword,
+                                                   QString newFileKeyPath,
+                                                   bool removeKeyFile);
 };
 
-#endif // KEEPASSXC_INFO_H
+#endif // KEEPASSXC_DATABASEEDIT_H
