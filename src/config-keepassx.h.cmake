@@ -21,6 +21,7 @@
 #cmakedefine WITH_XC_UPDATECHECK
 #cmakedefine WITH_XC_FDOSECRETS
 #cmakedefine WITH_XC_DOCS
+#cmakedefine WITH_XC_X11
 
 #cmakedefine KEEPASSXC_BUILD_TYPE "@KEEPASSXC_BUILD_TYPE@"
 #cmakedefine KEEPASSXC_BUILD_TYPE_RELEASE
