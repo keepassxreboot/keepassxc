@@ -17,6 +17,8 @@
 
 #include "NixUtils.h"
 
+#include "config-keepassx.h"
+
 #include <QApplication>
 #include <QDBusInterface>
 #include <QDir>
@@ -24,7 +26,7 @@
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
-#ifdef WITH_XC_AUTOTYPE
+#ifdef WITH_XC_X11
 #include <QX11Info>
 
 #include <qpa/qplatformnativeinterface.h>
