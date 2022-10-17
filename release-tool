@@ -930,6 +930,13 @@ build() {
         # linuxdeploy requires /usr as install prefix
         INSTALL_PREFIX="/usr"
     fi
+    if [ -n "$OS_MACOS" ]; then
+      type brew &> /dev/null 2>&1
+      if [ $? -eq 0 ]; then
+        INSTALL_PREFIX=$(brew --prefix)
+      fi
+    fi
+
     # Do not build tests cases
     CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_TESTS=OFF"
 
