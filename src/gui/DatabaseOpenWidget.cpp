@@ -213,6 +213,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->editPassword->setShowPassword(false);
     m_ui->keyFileLineEdit->clear();
     m_ui->keyFileLineEdit->setShowPassword(false);
+    m_ui->keyFileLineEdit->setClearButtonEnabled(true);
     m_ui->challengeResponseCombo->clear();
     m_ui->centralStack->setCurrentIndex(0);
     m_db.reset();
@@ -440,12 +441,6 @@ void DatabaseOpenWidget::browseKeyFile()
     if (!filename.isEmpty()) {
         m_ui->keyFileLineEdit->setText(filename);
     }
-}
-
-void DatabaseOpenWidget::clearKeyFileText()
-{
-    m_ui->keyFileLineEdit->clear();
-    m_ui->keyFileLineEdit->setShowPassword(false);
 }
 
 void DatabaseOpenWidget::pollHardwareKey()

@@ -76,9 +76,11 @@ void DatabaseTabWidget::toggleTabbar()
 {
     if (count() > 1) {
         tabBar()->show();
+        setFocusPolicy(Qt::StrongFocus);
         emit tabVisibilityChanged(true);
     } else {
         tabBar()->hide();
+        setFocusPolicy(Qt::NoFocus);
         emit tabVisibilityChanged(false);
     }
 }

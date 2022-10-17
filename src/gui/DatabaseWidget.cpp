@@ -1620,13 +1620,18 @@ bool DatabaseWidget::focusNextPrevChild(bool next)
     // [parent] <-> GroupView <-> TagView <-> EntryView <-> EntryPreview <-> [parent]
     QList<QWidget*> sequence = {m_groupView, m_tagView, m_entryView, m_previewView};
     auto widget = qApp->focusWidget();
+    if (!widget) {
+        return QStackedWidget::focusNextPrevChild(next);
+    }
 
+    // Find the nearest parent widget in the sequence list
     int idx;
     do {
         idx = sequence.indexOf(widget);
         widget = widget->parentWidget();
     } while (idx == -1 && widget);
 
+    // Determine next/previous or wrap around
     if (idx == -1) {
         idx = next ? 0 : sequence.size() - 1;
     } else {
@@ -1636,7 +1641,7 @@ bool DatabaseWidget::focusNextPrevChild(bool next)
     // Find the next visible element in the sequence and set the focus
     while (idx >= 0 && idx < sequence.size()) {
         widget = sequence[idx];
-        if (widget->isVisible() && widget->height() > 0 && widget->width() > 0) {
+        if (widget && widget->isVisible() && widget->isEnabled() && widget->height() > 0 && widget->width() > 0) {
             widget->setFocus();
             return widget;
         }
