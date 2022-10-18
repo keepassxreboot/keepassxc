@@ -253,9 +253,6 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
         return false;
     }
 
-    // Prevent destructive operations while saving
-    QMutexLocker locker(&m_saveMutex);
-
     if (filePath == m_data.filePath) {
         // Fail-safe check to make sure we don't overwrite underlying file changes
         // that have not yet triggered a file reload/merge operation.
@@ -269,6 +266,9 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
 
     // Clear read-only flag
     m_fileWatcher->stop();
+
+    // Prevent destructive operations while saving
+    QMutexLocker locker(&m_saveMutex);
 
     QFileInfo fileInfo(filePath);
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
@@ -463,6 +463,7 @@ bool Database::import(const QString& xmlExportPath, QString* error)
 void Database::releaseData()
 {
     // Prevent data release while saving
+    Q_ASSERT(!isSaving());
     QMutexLocker locker(&m_saveMutex);
 
     if (m_modified) {
