@@ -413,9 +413,9 @@ struct TagsEdit::Impl
     void setupCompleter()
     {
         completer->setWidget(ifce);
-        connect(completer.get(), static_cast<void (QCompleter::*)(QString const&)>(&QCompleter::activated), [this](QString const& text) {
-            currentText(text);
-        });
+        connect(completer.get(),
+                static_cast<void (QCompleter::*)(QString const&)>(&QCompleter::activated),
+                [this](QString const& text) { currentText(text); });
     }
 
     QVector<QTextLayout::FormatRange> formatting() const
@@ -861,10 +861,16 @@ void TagsEdit::keyPressEvent(QKeyEvent* event)
         case Qt::Key_Enter:
         case Qt::Key_Comma:
         case Qt::Key_Semicolon:
+            // If completer is visible, accept the selection or hide if no selection
+            if (impl->completer->popup()->isVisible() && impl->completer->popup()->selectionModel()->hasSelection()) {
+                break;
+            }
+
+            // Make existing text into a tag
             if (!impl->currentText().isEmpty()) {
                 impl->editNewTag(impl->editing_index + 1);
+                event->accept();
             }
-            event->accept();
             break;
         default:
             unknown = true;
