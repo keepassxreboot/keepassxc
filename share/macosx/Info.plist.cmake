@@ -22,6 +22,8 @@
   <string>${PROJECT_NAME}</string>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
+  <key>CFBundleVersion</key>
+  <string>${KEEPASSXC_VERSION}</string>
   <key>CFBundleShortVersionString</key>
   <string>${KEEPASSXC_VERSION}</string>
   <key>CFBundleSignature</key>
