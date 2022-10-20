@@ -19,7 +19,7 @@ Optionally, build AFL from source:
 
 ## Building KeePassXC For Fuzzing
 
-A special "instrumented build" is used that allows the fuzzer to look into the program as it executes. We place it in its own build directory so it doesn't confused with the production build.
+A special "instrumented build" is used that allows the fuzzer to look into the program as it executes. We place it in its own build directory so it doesn't get confused with the production build.
 
     $ cd your_keepassxc_source_directory
     $ mkdir buildafl

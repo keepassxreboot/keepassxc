@@ -173,7 +173,7 @@ The last step is to setup an entry to contain the SSH Agent settings and key fil
 .SSH Agent Entry Settings Page
 image::sshagent_entry_settings.png[]
 
-If you chose to not auto-load the key on database unlock, you can manually make the key available by using the context menu from the entry list.
+If you chose to not autoload the key on database unlock, you can manually make the key available by using the context menu from the entry list.
 
 .SSH Agent Load Key from Context Menu
 image::sshagent_context_menu.png[]
