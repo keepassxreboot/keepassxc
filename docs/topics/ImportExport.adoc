@@ -4,7 +4,7 @@ include::.sharedheader[]
 
 // tag::content[]
 == Importing External Databases
-KeePassXC allows your to import external databases from the following options:
+KeePassXC allows you to import external databases from the following options:
 
 * Comma-Separated Values (CSV) file
 * 1Password OPVault

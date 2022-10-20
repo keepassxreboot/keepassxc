@@ -19,7 +19,7 @@ image::welcome_screen.png[]
 .Create database - General information
 image::new_db_wizard_1.png[,80%]
 
-3. Click Continue. The Encryption Settings screen appears, we don't recommend making any changes besides increasing or decreasing the decryption time using the slider. Setting the Decryption Time slider at a higher values means that the database will have higher level of protection but the time taken by the database to open will increase.
+3. Click Continue. The Encryption Settings screen appears, we don't recommend making any changes besides increasing or decreasing the decryption time using the slider. Setting the Decryption Time slider at higher values means that the database will have higher level of protection but the time taken by the database to open will increase.
 +
 .Create database - Encryption settings
 image::new_db_wizard_2.png[,80%]
@@ -44,7 +44,7 @@ To open an existing database, perform the following steps:
 .Open an existing database
 image::open_database.png[]
 
-2. Navigate to the location of the your database on your computer and open the database file. The database unlock screen will appear:
+2. Navigate to the location of the database on your computer and open the database file. The database unlock screen will appear:
 +
 .Database unlock screen
 image::unlock_database.png[]
@@ -84,7 +84,7 @@ There are three ways that KeePassXC can handle database files. This behavior is 
 
 3. *Direct-write saves* write directly to the existing database file. This is an unsafe operation since any interruption can leave your entire database inaccessible. We only recommend using this option when interfacing with Linux GVFS services (e.g. Google Cloud on Gnome) and other types of storage services that host a virtual drive system.
 
-In addition to these save options, KeePassXC can create a backup of your existing database file just prior to saving. This backup  will be saved at the path specified in the *Backup destination* field. This path can be absolute or relative. The latter will be resolved according to the databases path. It is possible to specify a custom naming scheme with placeholders. See xref:UserGuide.adoc#_backup_path_placeholders[Backup Path Placeholders] for available placeholders and examples.
+In addition to these save options, KeePassXC can create a backup of your existing database file just prior to saving. This backup will be saved at the path specified in the *Backup destination* field. This path can be absolute or relative. The latter will be resolved according to the databases path. It is possible to specify a custom naming scheme with placeholders. See xref:UserGuide.adoc#_backup_path_placeholders[Backup Path Placeholders] for available placeholders and examples.
 
 image::save_options.png[]
 // end::advanced[]
@@ -196,7 +196,7 @@ KeePassXC provides an enhanced and granular search features the enables you to s
 |*	        |Term is handled as a regular expression
 |===
 
-The following fields can be searched along with their abbreviated name in parenthesis:
+The following fields can be searched along with their abbreviated name in parentheses:
 
 * Title (t)
 * Username (u)
@@ -242,7 +242,7 @@ The following tables lists a few samples search queries for your reference:
 
 == Advanced Entry Options
 === Additional Attributes
-A lot of applications and web sites now require to provide additional information when you create accounts. The additional information is used to block hackers if any suspicious activity is detected. In addition, the additional information you provide can be used to reset passwords if you forget them. You can also store arbitrary information here that can be copied to the clipboard or Auto-Typed using the `{S:<ATTR_NAME>}` action code.
+A lot of applications and web sites now require providing additional information when you create accounts. The additional information is used to block hackers if any suspicious activity is detected. In addition, the additional information you provide can be used to reset passwords if you forget them. You can also store arbitrary information here that can be copied to the clipboard or Auto-Typed using the `{S:<ATTR_NAME>}` action code.
 
 To protect an attribute from being displayed by default, activate the _Protect_ checkbox *(A)*. To show the contents of the attribute while keeping it protected, press the _Reveal_ button *(B)*.
 
@@ -332,7 +332,7 @@ image::database_settings.png[]
  * *Max history items:* This is the maximum number of history items that are stored for each entry. When you set this to 0, no history will be saved. Set this value to a low value to prevent the database from getting too large (we recommend no more than 10).
  * *Max. history size:* When the history of an entry gets above this size, it is truncated. For example, this happens when entries have large attachments. Set this value small to prevent the database from getting too large (we recommend 6 MiB).
  * *Use recycle bin:* Select this check-box if you want deleted entries to move to the recycle bin instead of being permanently removed. The recycle bin will be created if it does not already exist after your first deletion. To delete entries permanently, you must empty the recycle bin manually.
- * *Enable compression:* KeePassXC databases can be compressed before being encrypted. Compression reduces the size of the database and does not have any appreciable affect on speed. It is  recommended to always save databases with compression.
+ * *Enable compression:* KeePassXC databases can be compressed before being encrypted. Compression reduces the size of the database and does not have any appreciable affect on speed. It is recommended to always save databases with compression.
 
 3. Click the Security button in the left-hand menu bar to change your database credentials and change encryption settings.
 +
@@ -346,7 +346,7 @@ image::database_security_credentials.png[]
 +
 WARNING: Consider creating a backup of your YubiKey. Please refer to <<Creating a YubiKey backup>>
 
-5. Encryption settings allows you to change the average time it takes to encrypt and decrypt the database. The longer time that is chosen, the harder it will be to brute force attack your database. *We recommend a setting of one second.*
+5. Encryption settings allow you to change the average time it takes to encrypt and decrypt the database. The longer time that is chosen, the harder it will be to brute force attack your database. *We recommend a setting of one second.*
 +
 .Database encryption
 image::database_security_encryption.png[]
@@ -362,7 +362,7 @@ The following key derivation functions are supported:
 
  * AES-KDF (KDBX 4 and KDBX 3.1): This key derivation function is based on iterating AES. Users can change the number of iterations. The more iterations, the harder are dictionary and guessing attacks, but also database loading/saving takes more time (linearly). KDBX 3.1 only supports AES-KDF; any other key derivation function, like for instance Argon2, requires KDBX 4.
 
- * Argon2 (KDBX 4 - recommended): KDBX 4, the Argon2 key derivation function can be used for transforming the composite master key (as protection against dictionary attacks). The main advantage of Argon2 over AES-KDF is that it provides a better resistance against GPU/ASIC attacks (due to being a memory-hard function). The number of iterations scales linearly with the required time. By increasing the memory parameter, GPU/ASIC attacks become harder and the required time increases. The parallelism parameter can be used to specify how many threads should be used. We recommend using Argon2id to prevent against  timing-based attacks. Argon2d offers maximum compatibility with other KeePass-based apps, the default settings provide sufficient protection against any known attacks.
+ * Argon2 (KDBX 4 - recommended): KDBX 4, the Argon2 key derivation function can be used for transforming the composite master key (as protection against dictionary attacks). The main advantage of Argon2 over AES-KDF is that it provides a better resistance against GPU/ASIC attacks (due to being a memory-hard function). The number of iterations scales linearly with the required time. By increasing the memory parameter, GPU/ASIC attacks become harder and the required time increases. The parallelism parameter can be used to specify how many threads should be used. We recommend using Argon2id to prevent against timing-based attacks. Argon2d offers maximum compatibility with other KeePass-based apps, the default settings provide sufficient protection against any known attacks.
 
 == Database Maintenance
 KeePassXC offers some maintenance features that can be applied to clean up your database. Navigate to _Database_ -> _Database settings_ then click on _Maintenance_ on the left hand panel. The following screen appears. On this screen you can delete multiple icons at once and purge any unused icons in your database.
