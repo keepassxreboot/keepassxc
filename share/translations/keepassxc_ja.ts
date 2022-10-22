@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Use both agents</source>
-        <translation type="unfinished"/>
+        <translation>両方のエージェントを使用する</translation>
     </message>
 </context>
 <context>
@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>バックアップディレクトリを選択</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -274,22 +278,22 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation type="unfinished"/>
+        <translation>データベースのロック解除時に次のエントリーを表示する</translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>期限切れを含む</translation>
     </message>
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation type="unfinished"/>
+        <translation> 日</translation>
     </message>
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>期限切れまであと </translation>
     </message>
     <message>
         <source>File Management</source>
@@ -321,7 +325,7 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation type="unfinished"/>
+        <translation>データベースのバックアップファイルの場所を指定してください。&quot;{DB_FILENAME}&quot; は保存されたデータベースのファイル名から拡張子を取り除いたものに置き換えられます。{TIME:&lt;format&gt;} はバックアップした時刻に置き換えられます。https://doc.qt.io/qt-5/qdatetime.html#toString を確認してください。&lt;format&gt; 既定のフォーマットは &quot;dd_MM_yyyy_hh-mm-ss&quot; です。</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -491,6 +495,14 @@
     </message>
     <message>
         <source>Remember last typed entry for:</source>
+        <translation>最後に入力したエントリーの記憶:</translation>
+    </message>
+    <message>
+        <source> recent files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -643,6 +655,10 @@
         <source>Invalid placeholder: %1</source>
         <translation>無効なプレースホルダーです: %1</translation>
     </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -718,7 +734,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;高度な検索クエリを使用して、開いているデータベースから任意のエントリーを検索できます。以下のショートカットが便利です:&lt;br/&gt;
+Ctrl+F - データベース検索切り替え&lt;br/&gt;
+Ctrl+1 - ユーザー名を入力&lt;br/&gt;
+Ctrl+2 - パスワードを入力&lt;br/&gt;
+Ctrl+3 - TOTP を入力&lt;br/&gt;
+Ctrl+4 - 仮想キーボードを使用 (Windows のみ)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -762,7 +783,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>仮想キーボードを使用する</translation>
     </message>
 </context>
 <context>
@@ -1426,10 +1447,6 @@ Backup database located at %2</source>
         <translation>キーファイル:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;パスワードだけでなくシークレットファイルを使用することで、データベースのセキュリティを向上させることができます。シークレットファイルはデータベースのセキュリティ設定で生成できます。&lt;/p&gt;&lt;p&gt;*.kdbx データベースファイルはシークレットファイル&lt;strong&gt;ではありません&lt;/strong&gt;！&lt;br&gt;キーファイルがない場合、このフィールドは空のままにしてください。&lt;/p&gt;&lt;p&gt;詳細についてはクリックしてください…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>キーファイルのヘルプ</translation>
     </message>
@@ -1440,12 +1457,6 @@ Backup database located at %2</source>
     <message>
         <source>Hardware Key:</source>
         <translation>ハードウェアキー:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;スロットを HMAC-SHA1 用に設定した &lt;strong&gt;YubiKey&lt;/strong&gt; や &lt;strong&gt;OnlyKey&lt;/strong&gt; をハードウェアセキュリティキーとして使用できます。&lt;/p&gt;
-&lt;p&gt;詳細についてはクリックしてください…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1473,7 +1484,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation type="unfinished"/>
+        <translation>データベースのロックを解除</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1589,6 +1600,16 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>ハードウェアキーを選択…</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;パスワードだけでなくシークレットファイルを使用することで、データベースのセキュリティを向上させることができます。シークレットファイルはデータベースのセキュリティ設定で生成できます。&lt;/p&gt;&lt;p&gt;*.kdbx データベースファイルはシークレットファイル&lt;strong&gt;ではありません&lt;/strong&gt;！&lt;br&gt;キーファイルがない場合、このフィールドは空のままにしてください。&lt;/p&gt;&lt;p&gt;詳細についてはクリックしてください…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;スロットを HMAC-SHA1 用に設定した &lt;strong&gt;YubiKey&lt;/strong&gt; や &lt;strong&gt;OnlyKey&lt;/strong&gt; をハードウェアセキュリティキーとして使用できます。&lt;/p&gt;
+&lt;p&gt;詳細についてはクリックしてください…&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1897,7 +1918,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4 (推奨)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2241,13 +2262,21 @@ This is definitely a bug, please report it to the developers.</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [ロック]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>データベースのタグ</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>検索中…</translation>
@@ -2294,7 +2323,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation type="unfinished"/>
+        <translation>期限切れのエントリー</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2412,7 +2441,23 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 日以内に期限切れとなるエントリー</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2569,7 +2614,7 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 時間</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2906,7 +2951,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Tags list</source>
-        <translation type="unfinished"/>
+        <translation>タグ一覧</translation>
     </message>
 </context>
 <context>
@@ -3060,7 +3105,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>これとサブグループのエントリーをブラウザー拡張機能から隠すかどうかを切り替える</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
@@ -3068,7 +3113,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>これとサブグループの自動送信をスキップするかどうかを切り替える</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
@@ -3076,7 +3121,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>これとサブグループを HTTP 認証のみにするかどうかを切り替える</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
@@ -3084,6 +3129,14 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
+        <translation>これとサブグループで HTTP 認証を使用しないかどうかを切り替える</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3657,7 +3710,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>カラー</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3669,7 +3722,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Custom Data</source>
-        <translation type="unfinished"/>
+        <translation>カスタムデータ</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -3824,7 +3877,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Tags list</source>
-        <translation type="unfinished"/>
+        <translation>タグ一覧</translation>
     </message>
     <message>
         <source>Username</source>
@@ -3889,6 +3942,10 @@ Error: %1</source>
     <message>
         <source>Disabled</source>
         <translation>無効</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4148,7 +4205,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>データベースのヘッダーがありません</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -5390,6 +5447,30 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>設定を適用するには、このアプリケーションを再起動する必要があります。今すぐ再起動しますか？</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>タグ</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5426,7 +5507,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>リセット</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
@@ -5762,29 +5843,6 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>パスワードが一致しません</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>今の所パスワードは一致しています</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>パスワードを切り替え (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>パスワードを生成 (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>警告: Caps Lock が有効になっています！</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5963,10 +6021,6 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
         <translation>次からも選択:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>除外される文字: &quot;0&quot;、&quot;1&quot;、&quot;l&quot;、&quot;I&quot;、&quot;O&quot;、&quot;|&quot;、&quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>よく似た文字を除外する</translation>
     </message>
@@ -6095,6 +6149,57 @@ Do you want to overwrite it?</source>
     <message>
         <source>Password Quality: %1</source>
         <translation>パスワードの品質: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>貧弱</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>弱い</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>良い</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>すばらしい</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>除外される文字: &quot;0&quot;、&quot;1&quot;、&quot;l&quot;、&quot;I&quot;、&quot;O&quot;、&quot;|&quot;、&quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>パスワードが一致しません</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>今の所パスワードは一致しています</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>パスワードを切り替え (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>パスワードを生成 (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>警告: Caps Lock が有効になっています！</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Poor</source>
@@ -7513,7 +7618,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256 ビット</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7529,7 +7634,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7627,7 +7732,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Browser Statistics</source>
-        <translation type="unfinished"/>
+        <translation>ブラウザーの統計</translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7735,6 +7840,63 @@ CPU アーキテクチャー: %2
         <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7790,7 +7952,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation type="unfinished"/>
+        <translation>エントリーのURLの一覧</translation>
     </message>
     <message>
         <source>Entry has no URLs set</source>
@@ -7798,7 +7960,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Allowed URLs</source>
-        <translation type="unfinished"/>
+        <translation>許可されたURL</translation>
     </message>
     <message>
         <source>Entry has no Browser Integration settings</source>
@@ -7806,7 +7968,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Denied URLs</source>
-        <translation type="unfinished"/>
+        <translation>拒否されたURL</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -8272,7 +8434,7 @@ CPU アーキテクチャー: %2
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>(%1) を検索…</translation>
+        <translation>検索 (%1)…</translation>
     </message>
     <message>
         <source>Case sensitive</source>
@@ -8281,6 +8443,10 @@ CPU アーキテクチャー: %2
     <message>
         <source>Limit search to selected group</source>
         <translation>選択したグループに検索対象を制限</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8500,16 +8666,39 @@ CPU アーキテクチャー: %2
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>全て</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>期限切れ</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>弱いパスワード</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8721,19 +8910,19 @@ Example: JBSWY3DPEHPK3PXP</source>
     <name>WindowsHello</name>
     <message>
         <source>Failed to init KeePassXC crypto.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXCの暗号の初期化に失敗しました。</translation>
     </message>
     <message>
         <source>Failed to encrypt key data.</source>
-        <translation type="unfinished"/>
+        <translation>鍵データの暗号化に失敗しました。</translation>
     </message>
     <message>
         <source>Failed to get Windows Hello credential.</source>
-        <translation type="unfinished"/>
+        <translation>Windows Hello の認証情報の取得に失敗しました。</translation>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
-        <translation type="unfinished"/>
+        <translation>鍵データの復号に失敗しました。</translation>
     </message>
 </context>
 <context>

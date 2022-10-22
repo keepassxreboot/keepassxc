@@ -124,7 +124,7 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>SSH_AUTH_SOCK 重写</translation>
+        <translation>SSH_AUTH_SOCK 覆写</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
@@ -144,7 +144,7 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置重写。</translation>
+        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置覆写。</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
@@ -224,6 +224,10 @@
     <message>
         <source>Select backup storage directory</source>
         <translation>选择备份存储文件夹</translation>
+    </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>如果启用解锁时最小化，则无法启用此设置。</translation>
     </message>
 </context>
 <context>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>记住上次输入的条目：</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>最近的文件</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>密码以彩色显示</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -642,6 +654,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>无效的占位符：%1</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>条目不包含用于 PICKCHARS 的属性：%1</translation>
     </message>
 </context>
 <context>
@@ -1431,10 +1447,6 @@ Backup database located at %2</source>
         <translation>密钥文件：</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;除了密码之外，您还可以使用机密文件来增强数据库的安全性。此文件可以在数据库的安全设置中生成。&lt;/p&gt;&lt;p&gt;这&lt;strong&gt;不是&lt;/strong&gt;您的 *.kdbx 数据库文件！&lt;br&gt;如果没有密钥文件，请将此字段留空。&lt;/p&gt;&lt;p&gt;点击获取更多信息…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>密钥文件帮助</translation>
     </message>
@@ -1445,12 +1457,6 @@ Backup database located at %2</source>
     <message>
         <source>Hardware Key:</source>
         <translation>硬件密钥：</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;您可以使用像 &lt;strong&gt;YubiKey&lt;/strong&gt; 或 &lt;strong&gt;OnlyKey&lt;/strong&gt; 这种带有 HMAC-SHA1 配置插槽的硬件安全密钥。&lt;/p&gt;
-&lt;p&gt;点击获取更多信息…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1595,6 +1601,16 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>选择硬件密钥...</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;除了密码之外，您还可以使用机密文件来增强数据库的安全性。此文件可以在数据库的安全设置中生成。&lt;/p&gt;&lt;p&gt;这&lt;strong&gt;不是&lt;/strong&gt;您的 *.kdbx 数据库文件！&lt;br&gt;如果没有密钥文件，请将此字段留空。&lt;/p&gt;&lt;p&gt;点击获取更多信息…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;您可以使用像 &lt;strong&gt;YubiKey&lt;/strong&gt; 或 &lt;strong&gt;OnlyKey&lt;/strong&gt; 这种带有 HMAC-SHA1 配置插槽的硬件安全密钥。&lt;/p&gt;
+&lt;p&gt;点击获取更多信息…&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2247,13 +2263,21 @@ This is definitely a bug, please report it to the developers.</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [锁定]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation>导出数据库到 XML 文件</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML 文件</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>写入 XML 文件失败</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>数据库标签</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>正在搜索…</translation>
@@ -2418,7 +2442,23 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>将在 ％1 天内过期的条目</numerusform></translation>
+        <translation><numerusform>将在 %1 天内过期的条目</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>搜索与标签</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>输入唯一名称或者覆盖列表中已存在的搜索：</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>保存搜索</translation>
     </message>
 </context>
 <context>
@@ -3092,6 +3132,14 @@ Would you like to correct it?</source>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>切换当前群组与子群组是否不用于 HTTP 认证</translation>
     </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>匹配时省略 WWW 子域名：</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>切换当前群组与子群组是否在匹配时省略 WWW 子域名</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
@@ -3515,7 +3563,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>您确定要删除 ％n 个附件吗？</numerusform></translation>
+        <translation><numerusform>您确定要删除 %n 个附件吗？</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3894,6 +3942,10 @@ Error: %1</source>
     <message>
         <source>Disabled</source>
         <translation>禁用</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>双击复制值</translation>
     </message>
 </context>
 <context>
@@ -5393,6 +5445,30 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>您必须重新启动应用才能应用此设置。要现在重新启动吗？</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>标签</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>无标签</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 项条目</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>复制密码和 TOTP</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML 文件…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>XML 文件…</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5765,29 +5841,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>密码不匹配</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>密码目前匹配</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>切换密码显示(%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>生成密码(%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>警告：已启用大写锁定！</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5966,10 +6019,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>也在此选择：</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>排除字符：“0”、“1”、“l”、“I”、“O”、“|”、“﹒”</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>排除相似的字符</translation>
     </message>
@@ -6098,6 +6147,57 @@ Do you want to overwrite it?</source>
     <message>
         <source>Password Quality: %1</source>
         <translation>密码强度：%1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>差劲</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>较弱</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>良好</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>优秀</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>排除字符：“0”、“1”、“l”、“I”、“O”、“|”、“﹒”</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>密码不匹配</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>密码目前匹配</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>切换密码显示(%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>生成密码(%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>警告：已启用大写锁定！</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>质量：%1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -7735,6 +7835,64 @@ CPU 架构：%2
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>请感应或触摸您的 YubiKey 以继续。</translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>显示条目的所有属性。</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>编辑一个数据库。</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>无法更改数据库密钥。</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>数据库未被修改。</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>已成功编辑数据库。</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>加载新密钥文件失败：%1</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>删除数据库的密码。</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>删除数据库的密钥文件。</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>无法同时使用 %1 和 %2。</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>无法从数据库中删除所有密钥 。</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>无法删除密码：数据库不含密码。</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>无法删除文件密钥：数据库不含文件密钥。</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>发现意料之外的密钥类型 %1</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>设置数据库的密钥文件。
+此选项已弃用，请用 --set-key-file 代替。</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8282,6 +8440,10 @@ CPU 架构：%2
         <source>Limit search to selected group</source>
         <translation>仅搜索选中的群组</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation>保存搜索</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8503,16 +8665,39 @@ CPU 架构：%2
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>所有</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>已过期</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>弱密码</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>所有条目</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>清除搜索</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>删除搜索</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>删除标签</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>确认删除标签</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>要删除数据库中所有条目包含的“%1”标签吗？</translation>
     </message>
 </context>
 <context>
@@ -8663,7 +8848,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>您的 KeePassXC 已经是最版本</translation>
+        <translation>您的 KeePassXC 已经是最新版本</translation>
     </message>
 </context>
 <context>

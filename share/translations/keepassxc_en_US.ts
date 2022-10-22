@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>Select backup storage directory</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>Remember last typed entry for:</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -642,6 +654,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Invalid placeholder: %1</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1431,10 +1447,6 @@ Backup database located at %2</translation>
         <translation>Key File:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Key file help</translation>
     </message>
@@ -1445,12 +1457,6 @@ Backup database located at %2</translation>
     <message>
         <source>Hardware Key:</source>
         <translation>Hardware Key:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1595,6 +1601,16 @@ If you do not have a key file, please leave the field empty.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Select hardware key…</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2247,13 +2263,21 @@ This is definitely a bug, please report it to the developers.</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Locked]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>Database Tags</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>Searching…</translation>
@@ -2419,6 +2443,22 @@ Disable safe saves and try again?</translation>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation><numerusform>Entries expiring within %1 day</numerusform><numerusform>Entries expiring within %1 days</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Save</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3091,6 +3131,14 @@ Would you like to correct it?</translation>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>Do not use HTTP Auth toggle for this and sub groups</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3896,6 +3944,10 @@ Error: %1</translation>
     <message>
         <source>Disabled</source>
         <translation>Disabled</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5397,6 +5449,30 @@ We recommend you use the AppImage available on our downloads page.</translation>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>You must restart the application to apply this setting. Would you like to restart now?</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tags</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5769,29 +5845,6 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Passwords do not match</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Passwords match so far</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Toggle Password (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Generate Password (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Warning: Caps Lock enabled!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5970,10 +6023,6 @@ We recommend you use the AppImage available on our downloads page.</translation>
         <translation>Also choose from:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Exclude look-alike characters</translation>
     </message>
@@ -6102,6 +6151,57 @@ Do you want to overwrite it?</translation>
     <message>
         <source>Password Quality: %1</source>
         <translation>Password Quality: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Poor</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Weak</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Good</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Excellent</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Passwords do not match</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Passwords match so far</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Toggle Password (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Generate Password (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Warning: Caps Lock enabled!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Poor</source>
@@ -7741,6 +7841,63 @@ Kernel: %3 %4</translation>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>Please present or touch your YubiKey to continue.</translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8288,6 +8445,10 @@ Kernel: %3 %4</translation>
         <source>Limit search to selected group</source>
         <translation>Limit search to selected group</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8509,16 +8670,39 @@ Kernel: %3 %4</translation>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>All</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>Expired</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>Weak Passwords</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

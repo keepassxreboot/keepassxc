@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Valintasi muistetaan pyynnön esittäneen päätteen JA KeePassXC käyntiajan.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Estä kaikki &amp;&amp; tulevat</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Salli kaikki &amp;&amp; &amp;tulevat</translation>
     </message>
 </context>
 <context>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Use both agents</source>
-        <translation type="unfinished"/>
+        <translation>Käytä molempia agentteja</translation>
     </message>
 </context>
 <context>
@@ -224,6 +224,10 @@
     <message>
         <source>Select backup storage directory</source>
         <translation>Valitse varmuuskopion hakemistopolku</translation>
+    </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Tätä asetusta ei voi ottaa käyttöön, kun ohjelman pienennys lukituksen avauksen jälkeen on otettu käyttöön.</translation>
     </message>
 </context>
 <context>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>Muista edellinen syötetty tietue:</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>viimeisimmät tiedostot</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -642,6 +654,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Virheellinen paikkamerkki: %1</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1430,10 +1446,6 @@ Tietokannan varmuuskopio paikannettu: %2</translation>
         <translation>Avaintiedosto:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Pääsalasanan lisäksi voit käyttää salaista tiedostoa tietokantasi tietoturvan vahvistamiseksi. Tämä tiedosto voidaan tarvittaessa luoda tietokantasi turvallisuusasetuksista.&lt;/p&gt;&lt;p&gt;Tämä salainen tiedosto &lt;strong&gt;ei&lt;/strong&gt; ole *.kdbx -tietokantatiedosto!&lt;br&gt;Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.&lt;/p&gt;&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Avaintiedoston ohje</translation>
     </message>
@@ -1444,12 +1456,6 @@ Tietokannan varmuuskopio paikannettu: %2</translation>
     <message>
         <source>Hardware Key:</source>
         <translation>Laiteavain:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Voit käyttää laiteavainta, kuten &lt;strong&gt;Yubikey:tä&lt;/strong&gt; tai &lt;strong&gt;Onlykey:tä&lt;/strong&gt; HMAC-SHA1 -asetuksella olevan paikan kanssa.&lt;/p&gt;
-&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1594,6 +1600,16 @@ Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Valitse laiteavain...</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Pääsalasanan lisäksi voit käyttää salaista tiedostoa tietokantasi tietoturvan vahvistamiseksi. Tämä tiedosto voidaan tarvittaessa luoda tietokantasi turvallisuusasetuksista.&lt;/p&gt;&lt;p&gt;Tämä salainen tiedosto &lt;strong&gt;ei&lt;/strong&gt; ole *.kdbx -tietokantatiedosto!&lt;br&gt;Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.&lt;/p&gt;&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Voit käyttää laiteavainta, kuten &lt;strong&gt;Yubikey:tä&lt;/strong&gt; tai &lt;strong&gt;Onlykey:tä&lt;/strong&gt; HMAC-SHA1 -asetuksella olevan paikan kanssa.&lt;/p&gt;
+&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2245,13 +2261,21 @@ Tämä on selkeä virhe, joten ota yhteyttä kehittäjätiimiin.</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Lukittu]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>Tietokannan tagit</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>Etsitään...</translation>
@@ -2416,7 +2440,23 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 päivän kuluttua vanhentuva tietue</numerusform><numerusform>%1 päivän kuluttua vanhentuva tietue</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Haut ja tunnisteet</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Tallenna haku</translation>
     </message>
 </context>
 <context>
@@ -2573,7 +2613,7 @@ Haluatko korjata sen?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n tunti</numerusform><numerusform>%n tuntia</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3089,6 +3129,14 @@ Haluatko korjata sen?</translation>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>Älä käytä HTTP Basic -autentikaatiota tälle ryhmälle ja aliryhmille</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3894,6 +3942,10 @@ Virhe: %1</translation>
     <message>
         <source>Disabled</source>
         <translation>Pois käytöstä</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>Tuplaklikkaa kopioidaksesi arvo</translation>
     </message>
 </context>
 <context>
@@ -5357,7 +5409,7 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Palauta tietue</numerusform><numerusform>Palauta tietueet</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5395,6 +5447,30 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Ohjelma täytyy käynnistää uudelleen, jotta asetus voidaan ottaa käyttöön. Haluatko käynnistää uudelleen nyt?</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tagit</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Tunnisteita ei ole</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 tietue</numerusform><numerusform>%1 tietuetta</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Kopioi salasana ja TOTP</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5431,11 +5507,11 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Nollaa</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>Nollaa tälle sovellukselle tallennetut valinnat</translation>
     </message>
 </context>
 <context>
@@ -5767,29 +5843,6 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Salasanat eivät täsmää</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Salasanat jotka ovat tähän mennessä samoja</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Ota salasana käyttöön (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Luo salasana (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Varoitus: Caps Lock on päällä!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5968,10 +6021,6 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <translation>Valitse myös:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Poissuljetut kirjaimet: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Poissulje samannäköiset merkit</translation>
     </message>
@@ -6100,6 +6149,57 @@ Haluatko ylikirjoittaa sen?</translation>
     <message>
         <source>Password Quality: %1</source>
         <translation>Salasanan laatu: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Huono</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Heikko</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Hyvä</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Erinomainen</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Poissuljetut kirjaimet: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Salasanat eivät täsmää</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Salasanat jotka ovat tähän mennessä samoja</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Ota salasana käyttöön (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Luo salasana (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Varoitus: Caps Lock on päällä!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>Laatu: %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -7737,6 +7837,63 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Jatka kytkemällä YubiKey-avaimesi tai koskettamalla sitä.</translation>
+    </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Näytä tietueen kaikki attribuutit.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8286,6 +8443,10 @@ Ydin: %3 %4</translation>
         <source>Limit search to selected group</source>
         <translation>Rajoita haku valittuun ryhmään</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Tallenna haku</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8507,16 +8668,39 @@ mutta arvo voi vaihdella ohjelmasta riippuen.)&lt;/p&gt;&lt;/body&gt;&lt;/html&g
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>Kaikki</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>Vanhentuneet</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>Heikot salasanat</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Kaikki tietueet</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>Tyhjennä haku</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>Poista haku</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>Poista tunniste</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>Vahvista tunnisteen poisto</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>Poistetaanko tunniste &quot;%1&quot; tietokannan kaikilta tietueilta?</translation>
     </message>
 </context>
 <context>

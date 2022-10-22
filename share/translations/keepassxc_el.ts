@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>Επιλογή καταλόγου αποθήκευσης αντιγράφων ασφαλείας</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Αυτή η ρύθμιση δεν μπορεί να ενεργοποιηθεί όταν είναι ενεργοποιημένη η ελαχιστοποίηση κατά το ξεκλείδωμα</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>Να θυμάστε την τελευταία πληκτρολογημένη καταχώρηση για:</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>πρόσφατα αρχεία</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>Εμφάνιση κωδικών πρόσβασης με χρώμα</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -642,6 +654,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Μη έγκυρο σύμβολο υποκατάστασης: %1</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>Η καταχώρηση δεν έχει χαρακτηριστικό για PICKCHARS: %1</translation>
     </message>
 </context>
 <context>
@@ -1431,10 +1447,6 @@ Backup database located at %2</source>
         <translation>Αρχείο Κλειδί:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Εκτός από έναν κωδικό πρόσβασης, μπορείτε να χρησιμοποιήσετε ένα μυστικό αρχείο για να βελτιώσετε την ασφάλεια της βάσης δεδομένων σας. Αυτό το αρχείο μπορεί να δημιουργηθεί στις ρυθμίσεις ασφαλείας της βάσης δεδομένων σας.&lt;/p&gt;&lt;p&gt;Αυτό &lt;strong&gt;δεν&lt;/strong&gt; είναι το αρχείο βάσης δεδομένων σας *.kdbx!&lt;br&gt;Εάν δεν έχετε αρχείο κλειδί, αφήστε αυτό το πεδίο κενό.&lt;/p&gt;&lt;p&gt;Κάντε κλικ για περισσότερες πληροφορίες...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Βοήθεια για το αρχείο κλειδί</translation>
     </message>
@@ -1445,12 +1457,6 @@ Backup database located at %2</source>
     <message>
         <source>Hardware Key:</source>
         <translation>Hardware Κλειδί:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Μπορείτε να χρησιμοποιήσετε ένα hardware κλειδί ασφαλείας, όπως ένα &lt;strong&gt;YubiKey&lt;/strong&gt; ή &lt;strong&gt;OnlyKey&lt;/strong&gt; με υποδοχές που έχουν ρυθμιστεί για HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Κάντε κλικ για περισσότερες πληροφορίες...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1595,6 +1601,16 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>Επιλογή hardware κλειδιού...</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Εκτός από έναν κωδικό πρόσβασης, μπορείτε να χρησιμοποιήσετε ένα μυστικό αρχείο για να βελτιώσετε την ασφάλεια της βάσης δεδομένων σας. Αυτό το αρχείο μπορεί να δημιουργηθεί στις ρυθμίσεις ασφαλείας της βάσης δεδομένων σας.&lt;/p&gt;&lt;p&gt;Αυτό &lt;strong&gt;δεν&lt;/strong&gt; είναι το αρχείο βάσης δεδομένων σας *.kdbx!&lt;br&gt;Εάν δεν έχετε αρχείο κλειδί, αφήστε αυτό το πεδίο κενό.&lt;/p&gt;&lt;p&gt;Κάντε κλικ για περισσότερες πληροφορίες...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Μπορείτε να χρησιμοποιήσετε ένα hardware κλειδί ασφαλείας, όπως ένα &lt;strong&gt;YubiKey&lt;/strong&gt; ή &lt;strong&gt;OnlyKey&lt;/strong&gt; με υποδοχές που έχουν ρυθμιστεί για HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Κάντε κλικ για περισσότερες πληροφορίες...&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2247,13 +2263,21 @@ This is definitely a bug, please report it to the developers.</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Κλειδωμένη]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation>Εξαγωγή βάσης δεδομένων σε αρχείο XML</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>Αρχείο XML</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>Η εγγραφή του αρχείου XML απέτυχε</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>Ετικέτες Βάσης δεδομένων</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>Αναζήτηση...</translation>
@@ -2419,6 +2443,22 @@ Disable safe saves and try again?</source>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation><numerusform>Καταχωρήσεις που λήγουν εντός %1 ημεράς(ών)</numerusform><numerusform>Καταχωρήσεις που λήγουν εντός %1 ημεράς(ών)</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Αναζητήσεις και Ετικέτες</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Εισαγάγετε ένα μοναδικό όνομα ή αντικαταστήστε μια υπάρχουσα αναζήτηση από τη λίστα:</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Αποθήκευση</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Αποθήκευση Αναζήτησης</translation>
     </message>
 </context>
 <context>
@@ -3091,6 +3131,14 @@ Would you like to correct it?</source>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>Μην χρησιμοποιείτε εναλλαγή HTTP Auth για αυτήν και υποομάδες</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>Παράλειψη του υποτομέα WWW από την αντιστοίχιση:</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>Παραλείψτε τον υποτομέα WWW από την αντιστοίχιση εναλλαγής για αυτήν και τις υποομάδες</translation>
     </message>
 </context>
 <context>
@@ -3896,6 +3944,10 @@ Error: %1</source>
     <message>
         <source>Disabled</source>
         <translation>Απενεργοποιημένη</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>Κάντε διπλό κλικ για να αντιγράψετε την τιμή</translation>
     </message>
 </context>
 <context>
@@ -5396,6 +5448,30 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Πρέπει να επανεκκινήσετε την εφαρμογή για να εφαρμόσετε αυτήν τη ρύθμιση. Θέλετε να κάνετε επανεκκίνηση τώρα;</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Ετικέτες</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Χωρίς Ετικέτες</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>% 1 Καταχώρηση(εις)</numerusform><numerusform>% 1 Καταχώρηση(εις)</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Αντιγραφή Κωδικού πρόσβασης και TOTP</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML Αρχείο…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>Αρχείο XML...</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5768,29 +5844,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Οι κωδικοί πρόσβασης δεν ταιριάζουν</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Οι κωδικοί πρόσβασης ταιριάζουν μέχρι στιγμής</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Εναλλαγή Κωδικού Πρόσβασης (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Δημιουργία Κωδικού Πρόσβασης (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Προειδοποίηση: Το Caps Lock είναι ενεργοποιημένο!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5969,10 +6022,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>Επιλέξτε επίσης από:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Εξαιρούμενοι χαρακτήρες: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;.&quot;.</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Εξαίρεση παρόμοιων χαρακτήρων</translation>
     </message>
@@ -6106,6 +6155,57 @@ Do you want to overwrite it?</source>
         <source>Poor</source>
         <comment>Password quality</comment>
         <translation>Φτωχός</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Αδύναμη</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Καλή</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Εξαιρετική</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Εξαιρούμενοι χαρακτήρες: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;.&quot;.</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Οι κωδικοί πρόσβασης δεν ταιριάζουν</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Οι κωδικοί πρόσβασης ταιριάζουν μέχρι στιγμής</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Εναλλαγή κωδικού πρόσβασης (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Δημιουργία Κωδικού Πρόσβασης (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Προειδοποίηση: Το Caps Lock είναι ενεργοποιημένο!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>Ποιότητα: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Φτωχή</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -7740,6 +7840,64 @@ Kernel: %3 %4</source>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>Παρακαλώ παρουσιάστε ή αγγίξτε το YubiKey για να συνεχίσετε.</translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Εμφάνιση όλων των χαρακτηριστικών της καταχώρησης.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>Επεξεργαστείτε μια βάση δεδομένων.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Δεν ήταν δυνατή η αλλαγή του κλειδιού βάσης δεδομένων.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Η βάση δεδομένων δεν τροποποιήθηκε.</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Έγινε επιτυχής επεξεργασία της βάσης δεδομένων.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Η φόρτωση του νέου αρχείου κλειδιού απέτυχε: %1</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>Καταργήστε τον κωδικό πρόσβασης για τη βάση δεδομένων.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>Καταργήστε τη ρύθμιση του αρχείου κλειδιού για τη βάση δεδομένων.</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>Δεν είναι δυνατή η ταυτόχρονη χρήση %1 και %2.</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Δεν είναι δυνατή η κατάργηση όλων των κλειδιών από μια βάση δεδομένων.</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>Δεν είναι δυνατή η αφαίρεση κωδικού πρόσβασης: Η βάση δεδομένων δεν έχει κωδικό πρόσβασης.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>Δεν είναι δυνατή η αφαίρεση του κλειδιού αρχείου: Η βάση δεδομένων δεν διαθέτει κλειδί αρχείου.</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>Βρέθηκε μη αναμενόμενος τύπος κλειδιού %1</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>Ορίστε το αρχείο κλειδιού για τη βάση δεδομένων.
+Αυτή η επιλογή έχει καταργηθεί, χρησιμοποιήστε τον --ορισμό-αρχειού-κλειδιού.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8287,6 +8445,10 @@ Kernel: %3 %4</source>
         <source>Limit search to selected group</source>
         <translation>Περιορισμός αναζήτησης στην επιλεγμένη ομάδα</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Αποθήκευση Αναζήτησης</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8508,16 +8670,39 @@ Kernel: %3 %4</source>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>Όλες</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>Έχουν λήξει</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>Αδύναμοι Κωδικοί πρόσβασης</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Όλες οι Καταχωρήσεις</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>Εκκαθάριση Αναζήτησης</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>Κατάργηση Αναζήτησης</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>Κατάργηση Ετικέτας</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>Επιβεβαιώστε την Κατάργηση Ετικέτας</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>Να καταργηθεί η ετικέτα &quot;%1&quot; από όλες τις καταχωρήσεις σε αυτήν τη βάση δεδομένων;</translation>
     </message>
 </context>
 <context>

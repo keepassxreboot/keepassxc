@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Włącz integrację agenta SSH</translation>
+        <translation>Włącz integrację z agentem SSH</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -224,6 +224,10 @@
     <message>
         <source>Select backup storage directory</source>
         <translation>Wybierz katalog przechowywania kopii zapasowych</translation>
+    </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>To ustawienie nie może być włączone, gdy włączona jest opcja minimalizacji przy odblokowaniu.</translation>
     </message>
 </context>
 <context>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>Pamiętaj ostatnio wpisany wpis przez:</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>ostatnie pliki</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>Pokaż hasła w kolorze</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -642,6 +654,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Nieprawidłowy symbol zastępczy: %1</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>Wpis nie ma atrybutu dla PICKCHARS: %1</translation>
     </message>
 </context>
 <context>
@@ -1132,11 +1148,11 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Ze względu na sandboxing Snap należy uruchomić skrypt, aby umożliwić integrację przeglądarki.&lt;br /&gt;Możesz uzyskać ten skrypt z %1</translation>
+        <translation>Ze względu na sandboxing Snap należy uruchomić skrypt, aby umożliwić integrację z przeglądarką.&lt;br /&gt;Możesz uzyskać ten skrypt z %1</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser jest niezbędny do integracji przeglądarki. &lt;br /&gt;Pobierz go dla %1 oraz %2 i %3. %4</translation>
+        <translation>KeePassXC-Browser jest niezbędny do integracji z przeglądarką. &lt;br /&gt;Pobierz go dla %1 oraz %2 i %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -1144,7 +1160,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Nie można znaleźć niestandardowej lokalizacji proxy! Integracja przeglądarki NIE DZIAŁA bez aplikacji proxy.</translation>
+        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Nie można znaleźć niestandardowej lokalizacji proxy! Integracja z przeglądarką NIE DZIAŁA bez aplikacji proxy.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
@@ -1431,10 +1447,6 @@ Zapasowa baza danych znajduje się w %2</translation>
         <translation>Plik klucza:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Oprócz hasła głównego można użyć pliku sekretnego w celu zwiększenia bezpieczeństwa bazy danych. Ten plik można wygenerować w ustawieniach zabezpieczeń bazy danych.&lt;/p&gt;&lt;p&gt;To &lt;strong&gt;nie&lt;/strong&gt; jest plik bazy danych *. kdbx!&lt;br&gt;Jeśli nie masz pliku klucza, pozostaw to pole puste.&lt;/p&gt;&lt;p&gt;Kliknij, aby uzyskać więcej informacji…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Pomoc dotycząca pliku klucza</translation>
     </message>
@@ -1445,12 +1457,6 @@ Zapasowa baza danych znajduje się w %2</translation>
     <message>
         <source>Hardware Key:</source>
         <translation>Klucz sprzętowy:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Możesz użyć sprzętowego klucza bezpieczeństwa, takiego jak &lt;strong&gt;YubiKey&lt;/strong&gt; albo &lt;strong&gt;OnlyKey&lt;/strong&gt; z gniazdami skonfigurowanymi dla HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Kliknij, aby uzyskać więcej informacji…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1595,6 +1601,16 @@ Jeśli nie masz pliku klucza, pozostaw puste pole.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Wybierz klucz sprzętowy…</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Oprócz hasła głównego można użyć pliku sekretnego w celu zwiększenia bezpieczeństwa bazy danych. Ten plik można wygenerować w ustawieniach zabezpieczeń bazy danych.&lt;/p&gt;&lt;p&gt;To &lt;strong&gt;nie&lt;/strong&gt; jest plik bazy danych *. kdbx!&lt;br&gt;Jeśli nie masz pliku klucza, pozostaw to pole puste.&lt;/p&gt;&lt;p&gt;Kliknij, aby uzyskać więcej informacji…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Możesz użyć sprzętowego klucza bezpieczeństwa, takiego jak &lt;strong&gt;YubiKey&lt;/strong&gt; albo &lt;strong&gt;OnlyKey&lt;/strong&gt; z gniazdami skonfigurowanymi dla HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Kliknij, aby uzyskać więcej informacji…&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2247,13 +2263,21 @@ Jest to z pewnością błąd, zgłoś go programistom.</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Zablokowana]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation>Eksportuj bazę danych do pliku XML</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>Plik XML</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>Nie udało się zapisać pliku XML</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>Tagi bazy danych</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>Wyszukiwanie…</translation>
@@ -2419,6 +2443,22 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation><numerusform>Wpisy wygasają w ciągu %1 dnia</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform><numerusform>Wpisy wygasają w ciągu %1 dni</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Wyszukiwania i tagi</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Wprowadź unikalną nazwę lub zastąp istniejące wyszukiwanie z listy:</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Zapisz</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Zapisz wyszukiwanie</translation>
     </message>
 </context>
 <context>
@@ -3066,7 +3106,7 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Ukryj wpisy przed przełączeniem rozszerzenia przeglądarki dla tej i podgrup</translation>
+        <translation>Przełączenie ukrywania wpisów przed rozszerzeniem przeglądarki dla tej i podgrup</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
@@ -3074,7 +3114,7 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
-        <translation>Pomiń przełączenie autoprzesyłania dla tej i podgrup</translation>
+        <translation>Przełączenie pomijania autoprzesyłania dla tej i podgrup</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
@@ -3082,7 +3122,7 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Tylko przełączenie uwierzytelniania HTTP dla tej i podgrup</translation>
+        <translation>Przełączenie tylko uwierzytelniania HTTP dla tej i podgrup</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
@@ -3090,7 +3130,15 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>Nie używaj przełączenia uwierzytelniania HTTP dla tej i podgrup</translation>
+        <translation>Przełączenie nieużywania uwierzytelniania HTTP dla tej i podgrup</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>Pomiń subdomenę WWW w dopasowaniu:</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>Przełączenie pomijania subdomeny WWW w dopasowaniu dla tej i podgrup</translation>
     </message>
 </context>
 <context>
@@ -3899,6 +3947,10 @@ Błąd: %1</translation>
         <source>Disabled</source>
         <translation>Wyłączone</translation>
     </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>Kliknij dwukrotnie, aby skopiować wartość</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3992,7 +4044,7 @@ To narazi Twoje hasła i poufne informacje na niebezpieczeństwo!
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Uruchomiona jest inna usługa sekretna (%1). Zatrzymaj ją/usuń przed ponownym włączeniem Integracji usługi sekretnej.</translation>
+        <translation>Uruchomiona jest inna usługa sekretna (%1). Zatrzymaj ją/usuń przed ponownym włączeniem integracji z usługą sekretną.</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
@@ -4930,7 +4982,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
+        <translation>Nie można zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>
@@ -5399,6 +5451,30 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Musisz uruchomić ponownie aplikację, aby zastosować to ustawienie. Czy chcesz teraz to zrobić?</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tagi</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Bez tagów</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 wpis</numerusform><numerusform>%1 wpisy</numerusform><numerusform>%1 wpisów</numerusform><numerusform>%1 wpisów</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Skopiuj hasło i TOTP</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>Plik &amp;XML…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>Plik XML…</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5589,7 +5665,7 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
+        <translation>Nie można zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>
@@ -5771,29 +5847,6 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Hasła nie są zgodne</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Hasła są do tej pory zgodne</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Przełącz hasło (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Wygeneruj hasło (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Ostrzeżenie: włączony Caps Lock!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5972,10 +6025,6 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
         <translation>Wybierz także:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Wykluczone znaki: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Wyklucz podobnie wyglądające znaki</translation>
     </message>
@@ -6125,6 +6174,57 @@ Czy chcesz ją nadpisać?</translation>
         <comment>Password quality</comment>
         <translation>Znakomita</translation>
     </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Wykluczone znaki: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Hasła nie są zgodne</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Hasła są do tej pory zgodne</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Przełącz hasło (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Wygeneruj hasło (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Ostrzeżenie: włączony Caps Lock!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>Jakość: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Uboga</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Słaba</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Dobra</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Znakomita</translation>
+    </message>
 </context>
 <context>
     <name>PickcharsDialog</name>
@@ -6157,7 +6257,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation>Pusty</translation>
+        <translation>Opróżnij</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -6228,7 +6328,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation>Nie znaleziono danych do logowania</translation>
+        <translation>Nie znaleziono danych logowania</translation>
     </message>
     <message>
         <source>No groups found</source>
@@ -6288,7 +6388,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Wygeneruj hasło dla wpisu.</translation>
+        <translation>Wygeneruj hasło do wpisu.</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
@@ -6554,7 +6654,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation>Dezaktywuj klucz hasła dla bazy danych.</translation>
+        <translation>Dezaktywuj klucz hasła do bazy danych.</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
@@ -6582,11 +6682,11 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation>Ustaw plik klucza dla bazy danych.</translation>
+        <translation>Ustaw plik klucza do bazy danych.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation>Ustaw hasło bazy danych.</translation>
+        <translation>Ustaw hasło do bazy danych.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
@@ -7413,7 +7513,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation>Integracja usługi sekretnej</translation>
+        <translation>Integracja z usługą sekretną</translation>
     </message>
     <message>
         <source>None</source>
@@ -7742,6 +7842,64 @@ Jądro: %3 %4</translation>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>Proszę okazać lub dotknąć YubiKey, aby kontynuować.</translation>
+    </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Pokaż atrybuty wpisu.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>Edytuj bazę danych.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Nie można zmienić klucza bazy danych.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Baza danych nie została zmodyfikowana.</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Pomyślnie edytowano bazę danych.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Ładowanie nowego pliku klucza nie powiodło się: %1</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>Usuń hasło do bazy danych.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>Usuń plik klucza do bazy danych.</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>Nie można jednocześnie używać %1 i %2.</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Nie można usunąć wszystkich kluczy z bazy danych.</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>Nie można usunąć hasła: baza danych nie ma hasła.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>Nie można usunąć pliku klucza: baza danych nie ma pliku klucza.</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>Znaleziono nieoczekiwany typ %1 klucza</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>Ustaw plik klucza do bazy danych.
+Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     </message>
 </context>
 <context>
@@ -8290,6 +8448,10 @@ Jądro: %3 %4</translation>
         <source>Limit search to selected group</source>
         <translation>Ogranicz wyszukiwanie do wybranych grup</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Zapisz wyszukiwanie</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8416,7 +8578,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>Zezwól importować</translation>
+        <translation>Zezwól na import</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
@@ -8463,7 +8625,7 @@ Jądro: %3 %4</translation>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation>Nie udało się zapisać kontenera eksportu.</translation>
+        <translation>Nie można zapisać kontenera eksportu.</translation>
     </message>
 </context>
 <context>
@@ -8511,16 +8673,39 @@ Jądro: %3 %4</translation>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>Wszystkie</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>Wygasłe</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>Słabe hasła</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Wszystkie wpisy</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>Wyczyść wyszukiwanie</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>Usuń wyszukiwanie</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>Usuń tag</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>Potwierdź usunięcie tagu</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>Usunąć tag &quot;%1&quot; ze wszystkich wpisów w tej bazie danych?</translation>
     </message>
 </context>
 <context>
@@ -8702,7 +8887,7 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Niedawne bazy danych</translation>
+        <translation>Ostatnie bazy danych</translation>
     </message>
     <message>
         <source>Open a recent database</source>
@@ -8725,7 +8910,7 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
+        <translation>Nie można zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>

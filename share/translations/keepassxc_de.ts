@@ -227,6 +227,10 @@
         <source>Select backup storage directory</source>
         <translation>Verzeichnis für die Datensicherung auswählen</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Diese Einstellung kann nicht aktiviert werden, wenn Minimieren beim Entsperren aktiviert ist.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -331,7 +335,7 @@
     </message>
     <message>
         <source>Choose...</source>
-        <translation>Auswählen …</translation>
+        <translation>Auswählen…</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
@@ -495,6 +499,14 @@
         <source>Remember last typed entry for:</source>
         <translation>Merke den zuletzt eingegebenen Eintrag für:</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>aktuelle Dateien</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>Passwörter farbig anzeigen</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -645,6 +657,10 @@
         <source>Invalid placeholder: %1</source>
         <translation>Ungültiger Platzhalter: %1</translation>
     </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>Eintrag hat kein Attribut für PICKCHARS: %1</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -733,7 +749,7 @@ Strg+4 - Virtuelle Tastatur verwenden (nur Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search…</source>
-        <translation>Suchen …</translation>
+        <translation>Suchen…</translation>
     </message>
     <message>
         <source>Type Sequence</source>
@@ -1097,7 +1113,7 @@ Möchten Sie Ihre bestehenden Einstellungen jetzt migrieren?</translation>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Durchsuchen ...</translation>
+        <translation>Durchsuchen…</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
@@ -1431,10 +1447,6 @@ Sicherungskopie der Datenbank ist in %2</translation>
         <translation>Schlüsseldatei:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Zusätzlich zu einem Passwort können Sie eine geheime Datei verwenden, um die Sicherheit Ihrer Datenbank zu erhöhen. Diese Datei kann in den Sicherheitseinstellungen Ihrer Datenbank erzeugt werden.&lt;/p&gt;&lt;/p&gt;Dies ist &lt;strong&gt;nicht&lt;/strong&gt; Ihre *.kdbx-Datenbankdatei!&lt;br&gt;Wenn Sie keine Schlüsseldatei haben, lassen Sie dieses Feld leer.&lt;/p&gt;&lt;p&gt;Klicken Sie für weitere Informationen…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Schlüsseldatei-Hilfe</translation>
     </message>
@@ -1445,12 +1457,6 @@ Sicherungskopie der Datenbank ist in %2</translation>
     <message>
         <source>Hardware Key:</source>
         <translation>Hardwareschlüssel:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Sie können einen Hardware-Sicherheitsschlüssel wie z. B. einen &lt;strong&gt;YubiKey&lt;/strong&gt; oder &lt;strong&gt;OnlyKey&lt;/strong&gt; mit für HMAC-SHA1 konfigurierten Steckplätzen verwenden.&lt;/p&gt;
-&lt;p&gt;Klicken Sie für weitere Informationen...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1595,6 +1601,16 @@ Wenn Sie keine Schlüsseldatei haben, lassen Sie das Feld bitte leer.</translati
     <message>
         <source>Select hardware key…</source>
         <translation>Hardwareschlüssel auswählen…</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Zusätzlich zu einem Passwort können Sie eine geheime Datei verwenden, um die Sicherheit Ihrer Datenbank zu erhöhen. Diese Datei kann in den Sicherheitseinstellungen Ihrer Datenbank erzeugt werden.&lt;/p&gt;&lt;/p&gt;Dies ist &lt;strong&gt;nicht&lt;/strong&gt; Ihre *.kdbx-Datenbankdatei!&lt;br&gt;Wenn Sie keine Schlüsseldatei haben, lassen Sie dieses Feld leer.&lt;/p&gt;&lt;p&gt;Klicken Sie für weitere Informationen…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Sie können einen Hardware-Sicherheitsschlüssel wie z. B. einen &lt;strong&gt;YubiKey&lt;/strong&gt; oder &lt;strong&gt;OnlyKey&lt;/strong&gt; mit für HMAC-SHA1 konfigurierten Steckplätzen verwenden.&lt;/p&gt;
+&lt;p&gt;Klicken Sie für weitere Informationen…&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1780,7 +1796,7 @@ Dies ist nur nötig, wenn Ihre Datenbank eine Kopie einer anderen ist und die Br
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
         <source>Add additional protection…</source>
-        <translation>Zusätzlichen Schutz hinzufügen ...</translation>
+        <translation>Zusätzlichen Schutz hinzufügen…</translation>
     </message>
     <message>
         <source>No password set</source>
@@ -2247,20 +2263,28 @@ Das ist definitiv ein Programmfehler, bitte benachrichtigen Sie die Entwickler.<
         <comment>Database tab name modifier</comment>
         <translation>%1 [Gesperrt]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation>Datenbank in XML-Datei exportieren</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML-Datei</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>Fehler beim Schreiben der XML-Datei.</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Database Tags</source>
-        <translation>Datenbank-Tags</translation>
-    </message>
-    <message>
         <source>Searching…</source>
-        <translation>Suche …</translation>
+        <translation>Suche…</translation>
     </message>
     <message>
         <source>Shared group…</source>
-        <translation>Gemeinsam genutzte Gruppe ...</translation>
+        <translation>Gemeinsam genutzte Gruppe…</translation>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
@@ -2420,6 +2444,22 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation><numerusform>Einträge, die innerhalb von %1 Tag ablaufen</numerusform><numerusform>Einträge, die innerhalb von %1 Tagen ablaufen</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Suchen und Tags</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Geben Sie einen eindeutigen Namen ein oder überschreiben Sie eine bestehende Suche aus der Liste:</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Suche speichern</translation>
     </message>
 </context>
 <context>
@@ -2965,7 +3005,7 @@ Korrigieren?</translation>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Durchsuchen ...</translation>
+        <translation>Durchsuchen…</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3063,7 +3103,7 @@ Korrigieren?</translation>
     </message>
     <message>
         <source>Hide entries from browser extension:</source>
-        <translation>Einträge aus Browser-Erweiterung ausblenden:</translation>
+        <translation>Einträge vor der Browsererweiterung verstecken:</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
@@ -3092,6 +3132,14 @@ Korrigieren?</translation>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>Den HTTP-Authentifizierungs-Schalter nicht für diese und Untergruppen verwenden</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>WWW-Subdomain beim Abgleich weglassen:</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>WWW-Subdomain aus dem entsprechenden Abgleich für diese und die Untergruppen weglassen</translation>
     </message>
 </context>
 <context>
@@ -3126,7 +3174,7 @@ Korrigieren?</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Durchsuchen ...</translation>
+        <translation>Durchsuchen…</translation>
     </message>
     <message>
         <source>Clear fields</source>
@@ -3303,7 +3351,7 @@ Unterstützte Erweiterungen sind: %1.</translation>
     </message>
     <message>
         <source>Apply icon to…</source>
-        <translation>Icon verwenden für ...</translation>
+        <translation>Icon verwenden für…</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
@@ -3898,6 +3946,10 @@ Fehler: %1</translation>
         <source>Disabled</source>
         <translation>Deaktiviert</translation>
     </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>Zum Kopieren des Wertes doppelklicken</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -3929,7 +3981,7 @@ Fehler: %1</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation>Einträge sortieren nach ...</translation>
+        <translation>Einträge sortieren nach…</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
@@ -4117,11 +4169,11 @@ Sie können den DuckDuckGo-Dienst im Abschnitt &quot;Sicherheit&quot; der Anwend
     </message>
     <message>
         <source>Please wait, processing entry list…</source>
-        <translation>Bitte warten, Eintragsliste wird verarbeitet ...</translation>
+        <translation>Bitte warten, Eintragsliste wird verarbeitet…</translation>
     </message>
     <message>
         <source>Downloading…</source>
-        <translation>Herunterladen ...</translation>
+        <translation>Herunterladen…</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4137,7 +4189,7 @@ Sie können den DuckDuckGo-Dienst im Abschnitt &quot;Sicherheit&quot; der Anwend
     </message>
     <message>
         <source>Downloading favicons (%1/%2)…</source>
-        <translation>Favicons (%1/%2) werden heruntergeladen ...</translation>
+        <translation>Favicons (%1/%2) werden heruntergeladen…</translation>
     </message>
 </context>
 <context>
@@ -4833,7 +4885,7 @@ Falls dies wiederholt passiert, dann könnte Ihre Datenbank beschädigt sein.</t
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Durchsuchen...</translation>
+        <translation>Durchsuchen…</translation>
     </message>
     <message>
         <source>Old key file format</source>
@@ -4947,7 +4999,7 @@ Wollen Sie wirklich mit dieser Datei fortfahren?</translation>
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>&amp;Export</translation>
+        <translation>&amp;Exportieren</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -5079,7 +5131,7 @@ Wollen Sie wirklich mit dieser Datei fortfahren?</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation>Datenbank-&amp;Berichte …</translation>
+        <translation>Datenbank-&amp;Berichte…</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
@@ -5271,7 +5323,7 @@ Wollen Sie wirklich mit dieser Datei fortfahren?</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation>Datenbank-Backup speichern</translation>
+        <translation>Datenbank-Backup speichern…</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -5323,7 +5375,7 @@ Wollen Sie wirklich mit dieser Datei fortfahren?</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation>Gruppe klonen …</translation>
+        <translation>Gruppe klonen…</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -5396,6 +5448,30 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Sie müssen die Anwendung neustarten, um diese Einstellung anzuwenden. Möchten Sie jetzt neustarten?</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tags</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Keine Tags</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 Eintrag</numerusform><numerusform>%1 Einträge</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Passwort und TOTP kopieren</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML-Datei…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>XML-Datei…</translation>
     </message>
 </context>
 <context>
@@ -5511,7 +5587,7 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database…</source>
-        <translation>Neue KeePassXC-Datenbank erstellen …</translation>
+        <translation>Neue KeePassXC-Datenbank erstellen…</translation>
     </message>
     <message>
         <source>Root</source>
@@ -5769,29 +5845,6 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Passwörter stimmen nicht überein</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Passwörter stimmen überein</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Passwort umschalten (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Passwort erzeugen (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Warnung: Feststelltaste aktiviert!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5970,10 +6023,6 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
         <translation>Auch wählen aus:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Ausgeschlossene Zeichen: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Gleichaussehende Zeichen ausschließen</translation>
     </message>
@@ -6102,6 +6151,57 @@ Möchten Sie diese überschreiben?</translation>
     <message>
         <source>Password Quality: %1</source>
         <translation>Passwort-Qualität: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Schlecht</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Schwach</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Gut</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Ausgezeichnet</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Ausgeschlossene Zeichen: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Passwörter stimmen nicht überein</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Passwörter stimmen bisher überein</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Passwort umschalten (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Passwort erzeugen (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Warnung: Feststelltaste aktiviert!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>Qualität: %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -6362,7 +6462,7 @@ Möchten Sie diese überschreiben?</translation>
     </message>
     <message>
         <source>Evaluating database entries using okon…</source>
-        <translation>Auswerten von Datenbankeinträgen mit okon ...</translation>
+        <translation>Auswerten von Datenbankeinträgen mit okon…</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
@@ -6370,7 +6470,7 @@ Möchten Sie diese überschreiben?</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while…</source>
-        <translation>Datenbankeinträge gegen HIBP-Datei auswerten, das dauert eine Weile ...</translation>
+        <translation>Datenbankeinträge gegen HIBP-Datei auswerten, das dauert eine Weile…</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
@@ -7547,7 +7647,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Zwischenablage wird in %1 Sekunde(n) gelöscht...</numerusform><numerusform>Zwischenablage wird in %1 Sekunde(n) gelöscht ...</numerusform></translation>
+        <translation><numerusform>Zwischenablage wird in %1 Sekunde(n) gelöscht…</numerusform><numerusform>Zwischenablage wird in %1 Sekunde(n) gelöscht…</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7741,6 +7841,64 @@ Kernel: %3 %4</translation>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>Bitte halten oder berühren Sie Ihren YubiKey, um fortzufahren.</translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Alle Eigenschaften des Eintrags anzeigen.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>Eine Datenbank bearbeiten.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Datenbankschlüssel konnte nicht geändert werden.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Datenbank wurde nicht geändert.</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Datenbank wurde erfolgreich bearbeitet.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Laden der neuen Schlüsseldatei fehlgeschlagen: %1</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>Löscht das Passwort für die Datenbank.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>Löscht die Schlüsseldatei für die Datenbank.</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>%1 und %2 können nicht gleichzeitig verwendet werden.</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Es können nicht alle Schlüssel aus einer Datenbank entfernt werden.</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>Passwort kann nicht entfernt werden: Die Datenbank hat kein Passwort.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>Der Dateischlüssel kann nicht entfernt werden: Die Datenbank hat keinen Dateischlüssel.</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>Unerwarteter Schlüsseltyp %1 gefunden</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>Legt die Schlüsseldatei für die Datenbank fest.
+Diese Option ist veraltet, verwenden Sie stattdessen --set-key-file.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7824,7 +7982,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
-        <translation>Bitte warten Sie, die Browser-Statistik wird gerade berechnet …</translation>
+        <translation>Bitte warten Sie, die Browserstatistik wird gerade berechnet…</translation>
     </message>
     <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
@@ -7844,11 +8002,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Eintrag bearbeiten ...</translation>
+        <translation>Eintrag bearbeiten…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Eintrag löschen...</numerusform><numerusform>Einträge löschen ...</numerusform></translation>
+        <translation><numerusform>Eintrag löschen...</numerusform><numerusform>Einträge löschen…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -7930,11 +8088,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Eintrag bearbeiten ...</translation>
+        <translation>Eintrag bearbeiten…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Eintrag löschen...</numerusform><numerusform>Einträge löschen ...</numerusform></translation>
+        <translation><numerusform>Eintrag löschen...</numerusform><numerusform>Einträge löschen…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8025,11 +8183,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Eintrag bearbeiten ...</translation>
+        <translation>Eintrag bearbeiten…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Eintrag löschen...</numerusform><numerusform>Einträge löschen ...</numerusform></translation>
+        <translation><numerusform>Eintrag löschen...</numerusform><numerusform>Einträge löschen…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8052,7 +8210,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated…</source>
-        <translation>Bitte warten Sie, die Datenbankstatistik wird berechnet ...</translation>
+        <translation>Bitte warten Sie, die Datenbankstatistik wird berechnet…</translation>
     </message>
     <message>
         <source>Database name</source>
@@ -8278,7 +8436,7 @@ Kernel: %3 %4</translation>
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>Suchen (%1) …</translation>
+        <translation>Suchen (%1)…</translation>
     </message>
     <message>
         <source>Case sensitive</source>
@@ -8287,6 +8445,10 @@ Kernel: %3 %4</translation>
     <message>
         <source>Limit search to selected group</source>
         <translation>Suche auf ausgewählte Gruppe beschränken</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Suche speichern</translation>
     </message>
 </context>
 <context>
@@ -8509,16 +8671,39 @@ Kernel: %3 %4</translation>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>Alle</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>Abgelaufen</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>Schwache Passwörter</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Alle Einträge</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>Suche löschen</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>Suche entfernen</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>Tag entfernen</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>Tag entfernen bestätigen</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>Tag &quot;%1&quot; aus allen Einträgen in dieser Datenbank entfernen?</translation>
     </message>
 </context>
 <context>
@@ -8648,7 +8833,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Checking for updates…</source>
-        <translation>Nach Updates suchen ...</translation>
+        <translation>Nach Updates suchen…</translation>
     </message>
     <message>
         <source>Close</source>

@@ -1,68 +1,68 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="id">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="lt">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>Tentang KeePassXC</translation>
+        <translation>Apie KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Tentang</translation>
+        <translation>Apie</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Laporkan bug di: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Praneškite apie klaidas adresu: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC didistribusikan di bawah Lisensi Publik Umum GNU (GPL) versi 2 atau (sesuai pilihan Anda) versi 3.</translation>
+        <translation>KeePassXC platinamas pagal GNU bendrosios viešosios licencijos (GPL) 2 versijos arba (jūsų pasirinkimu) 3 versijos sąlygas.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Pengelola Proyek:</translation>
+        <translation>Projekto prižiūrėtojai:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Terima kasih dari tim KeePassXC kepada debfx yang telah membuat KeepassX original.</translation>
+        <translation>Ypatinga &quot;KeePassXC&quot; komandos padėka debfx už originalaus &quot;KeePassX&quot; sukūrimą.</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Kontributor</translation>
+        <translation>Autoriai</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Lihat Semua Kontribusi di GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Peržiūrėkite &quot;GitHub&quot; indėlį&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Info Awakutu</translation>
+        <translation>Derinimo informacija</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Sertakan informasi berikut setiap kali Anda melaporkan kutu:</translation>
+        <translation>Kai pranešate apie klaidą, įtraukite šią informaciją:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Salin ke papan klip</translation>
+        <translation>Kopijuoti į mainų sritį</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>KeePassXC -  Permintaan Akses</translation>
+        <translation>&quot;KeePassXC&quot; - prieigos užklausa</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Non-existing/inaccessible executable path. Please double-check the client is legit.</translation>
+        <translation>Neegzistuojantis / neprieinamas vykdomosios programos kelias. Dukart patikrinkite, ar klientas yra tinkamas.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;meminta akses ke entri berikut:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;prašo prieigos prie šių įrašų:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nama</translation>
+        <translation>Pavadinimas</translation>
     </message>
     <message>
         <source>PID</source>
@@ -70,160 +70,160 @@
     </message>
     <message>
         <source>Executable</source>
-        <translation>Executable</translation>
+        <translation>Paleidėjas</translation>
     </message>
     <message>
         <source>Command Line</source>
-        <translation>Baris Perintah</translation>
+        <translation>Komandinė Eilutė</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Detail</translation>
+        <translation>Išsamiau</translation>
     </message>
     <message>
         <source>Remember</source>
-        <translation>Ingat</translation>
+        <translation>Prisiminti</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Izinkan Yang Dipilih</translation>
+        <translation>Leisti Pasirinktą</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</translation>
+        <translation>Jūsų sprendimas bus įsimintas tol, kol užklausą pateikęs klientas IR KeePassXC yra paleisti.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Deny All &amp;&amp; Future</translation>
+        <translation>Neleisti visiems &amp;&amp; ateityje</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation>Izinkan semua &amp;&amp; &amp; Ke Depannya</translation>
+        <translation>Leisti visiems &amp;&amp; &amp;Ateityje</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog::DenyButton</name>
     <message>
         <source>Deny for this program</source>
-        <translation>Tolakj untuk program ini</translation>
+        <translation>Neleisti šiai programai</translation>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Aktifkan Integrasi Agen SSH</translation>
+        <translation>Įjungti SSH agento integraciją</translation>
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation>Gunakan Pageant</translation>
+        <translation>Naudokite &quot;Pageant&quot;</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation>Gunakan OpenSSH</translation>
+        <translation>Naudoti OpenSSH</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>Timpa SSH_AUTH_SOCK</translation>
+        <translation>Nepaisyti SSH_AUTH_SOCK </translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>Nilai SSH_AUTH_SOCK</translation>
+        <translation>SSH_AUTH_SOCK vertė</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(kosong)</translation>
+        <translation>(tuščia)</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER value</source>
-        <translation>Nilai SSH_SK_PROVIDER</translation>
+        <translation>SSH_SK_PROVIDER vertė</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation>Timpaan SSH_SK_PROVIDER</translation>
+        <translation>Nepaisyti SSH_SK_PROVIDER </translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Tidak ada soket Agen SSH yang ditemukan. Pastikan variabel sistem SSH_AUTH_SOCK ada atau atur timpaan.</translation>
+        <translation>Nėra SSH Agento lizdo. Įsitikinkite, kad SSH_AUTH_SOCK aplinkos kintamasis egzistuoja, arba nustatykite jį pakeičiantį kintamąjį.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>Koneksi Agen SSH berhasil!</translation>
+        <translation>SSH Agento ryšys veikia!</translation>
     </message>
     <message>
         <source>Use both agents</source>
-        <translation>Gunakan kedua agen</translation>
+        <translation>Naudoti abu agentus</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Pengaturan Aplikasi</translation>
+        <translation>Programos nustatymai</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Umum</translation>
+        <translation>Bendra</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Keamanan</translation>
+        <translation>Saugumas</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Galat akses untuk berkas konfigurasi %1</translation>
+        <translation>Konfigūracijos failo %1 prieigos klaida</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation>Hanya ikon</translation>
+        <translation>Tik piktograma</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation>Hanya teks</translation>
+        <translation>Tik tekstas</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation>Teks di sebelah ikon</translation>
+        <translation>Tekstas šalia piktogramos</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation>Teks di bawah ikon</translation>
+        <translation>Tekstas po piktograma</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation>Ikuti gaya</translation>
+        <translation>Sekti stiliumi</translation>
     </message>
     <message>
         <source>Monochrome</source>
-        <translation>Monokrom</translation>
+        <translation>Vienspalvis</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation>Monokrom (terang)</translation>
+        <translation>Monochrominis (šviesus)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation>Monokrom (gelap)</translation>
+        <translation>Monochrominis (tamsus)</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation>Berwarna</translation>
+        <translation>Spalvotas</translation>
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Anda harus memulai ulang aplikasi untuk menerapkan bahasa. Apakah Anda ingin memulai ulang sekarang?</translation>
+        <translation>Norėdami nustatyti naują kalbą, turite iš naujo paleisti programą. Ar norite iš naujo paleisti programą dabar?</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>Atur Ulang Pengaturan?</translation>
+        <translation>Atstatyti nustatymus?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Apakah Anda yakin ingin mengatur ulang pengaturan umum dan keamanan ke nilai bawaan?</translation>
+        <translation>Ar tikrai norite atstatyti kaip buvo visus bendruosius ir saugumo nustatymus?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
-        <translation>Pilih direktori penyimpanan cadangan</translation>
+        <translation>Pasirinkite atsarginių kopijų saugojimo katalogą</translation>
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
@@ -234,98 +234,98 @@
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Pengaturan Dasar</translation>
+        <translation>Pagrindiniai nustatymai</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation>Memulai</translation>
+        <translation>Įjungimo</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Hanya mulai satu aplikasi KeePassXC</translation>
+        <translation>Paleisti tik vieną KeePassXC egzempliorių</translation>
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Otomatis jalankan KeePassXC pada saat perangkat dinyalakan</translation>
+        <translation>Automatiškai paleisti KeePassXC paleidžiant sistemą</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation>Minimalkan jendela saat memulai aplikasi</translation>
+        <translation>Paleidus programą, suskleisti langą</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Minimalkan jendela setelah membuka basisdata</translation>
+        <translation>Minimizuoti langą po duomenų bazės atrakinimo</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation>Ingat basisdata yang sebelumnya digunakan</translation>
+        <translation>Prisiminti anksčiau naudotas duomenų bazes</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation>Muat basisdata yang sebelumnya terbuka saat memulai</translation>
+        <translation>Įkelti anksčiau atidarytas duomenų bazes paleidimo metu</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Ingat berkas kunci dan dongle kemanan</translation>
+        <translation>Prisiminti duomenų bazės raktų failus ir saugumo raktus</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation>Periksa pembaruan saat memulai aplikasi sekali seminggu</translation>
+        <translation>Kartą per savaitę tikrinti, ar yra atnaujinimų paleidžiant programą</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation>Termasuk rilis beta saat memeriksa pembaruan</translation>
+        <translation>Įtraukti beta versijas, kai tikrinami atnaujinimai</translation>
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>Pada pembukaan kunci basisdata, tampilkan entri yang</translation>
+        <translation>Duomenų bazės atrakinimo metu rodyti įrašus, kurie </translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>telah kedaluwarsa</translation>
+        <translation>nustojo galioti</translation>
     </message>
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation>hari</translation>
+        <translation>dienos</translation>
     </message>
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>akan kedaluwarsa dalam masa</translation>
+        <translation>nustos galioti per</translation>
     </message>
     <message>
         <source>File Management</source>
-        <translation>Manajemen Berkas</translation>
+        <translation>Failų tvarkymas</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Otomatis simpan setelah setiap perubahan</translation>
+        <translation>Automatiškai įrašyti po kiekvieno pakeitimo</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Otomatis simpan saat mengunci basisdata</translation>
+        <translation>Automatiškai išsaugoti, kai užrakinama duomenų bazė</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Otomatis simpan perubahan non-data saat mengunci basisdata</translation>
+        <translation>Automatiškai išsaugoti ne duomenų pakeitimus, kai užrakinama duomenų bazė</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Muat ulang basisdata secara otomatis ketika diubah secara eksternal</translation>
+        <translation>Išoriškai modifikavus duomenų bazę, automatiškai įkelti ją iš naujo</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Cadangkan basisdata sebelum disimpan</translation>
+        <translation>Išsaugoti duomenų bazę prieš išsaugant</translation>
     </message>
     <message>
         <source>Backup destination</source>
-        <translation>Destinasi cadangan</translation>
+        <translation>Atsarginės kopijos darymo vieta</translation>
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
+        <translation>Nurodo duomenų bazės atsarginės kopijos failo vietą. Vietoj &quot;{DB_FILENAME}&quot; įrašomas išsaugotos duomenų bazės failo pavadinimas be plėtinio. {TIME:&lt;format&gt;} pakeičiamas atsarginės kopijos darymo laiku, žr. https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt;  Pagal numatytuosius nustatymus naudojama formato eilutė &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -333,173 +333,173 @@
     </message>
     <message>
         <source>Choose...</source>
-        <translation>Pilih...</translation>
+        <translation>Pasirinkti...</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
-        <translation>Gunakan metode penyimpanan alternatif (mungkin akan mengatasi masalah dengan Dropbox, Google Drive, GVFS, dll.)</translation>
+        <translation>Naudoti alternatyvų išsaugojimo būdą (gali išspręsti Dropbox, Google Drive, GVFS ir kt. problemas).</translation>
     </message>
     <message>
         <source>Temporary file moved into place</source>
-        <translation>Berkas temporer dipindah ke tempatnya</translation>
+        <translation>Laikinasis failas perkeltas į vietą</translation>
     </message>
     <message>
         <source>Directly write to database file (dangerous)</source>
-        <translation>Langsung simpan ke berkas basisdata (berbahaya)</translation>
+        <translation>Tiesioginis įrašymas į duomenų bazės failą (pavojinga)</translation>
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>Manajemen Entri</translation>
+        <translation>Įrašų tvarkymas</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Gunakan ikon grup pada pembuatan entri</translation>
+        <translation>Kuriant įrašus, naudoti grupės piktogramą</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation>Minimalkan saat membuka URL</translation>
+        <translation>Sumažinti atidarant URL adresą</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>Sembunyikan jendela saat menyalin ke papan klip</translation>
+        <translation>Paslėpti langą kopijuojant į iškarpinę</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation>Minimalkan</translation>
+        <translation>Sumažinti</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation>Beralih ke latar belakang</translation>
+        <translation>Nueikite į foną</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Batas waktu mengunduh favicon:</translation>
+        <translation>&quot;Favicon&quot; atsisiuntimo skirtasis laikas:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>Batas waktu mengunduh ikon situs web dalam detik</translation>
+        <translation>Svetainės piktogramos atsisiuntimo laiko limitas sekundėmis</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>det</translation>
+        <translation>sek.</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Antarmuka Pengguna</translation>
+        <translation>Naudotojo sąsaja</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Gaya tombol bilah perkakas</translation>
+        <translation>Įrankių juostos mygtukų stilius</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation>Bilah perkakas dapat dipindah</translation>
+        <translation>Perkeliama įrankių juosta</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation>Pemilihan bahasa</translation>
+        <translation>Kalbos pasirinkimas</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation>Bahasa:</translation>
+        <translation>Kalba:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation>(mulai ulang program untuk mengaktifkan)</translation>
+        <translation>(paleiskite programą iš naujo, kad aktyvuotumėte)</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation>Gaya tombol bilah alat:</translation>
+        <translation>Užduotinės mygtukų stilius</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>Gunakan fon monospace untuk catatan</translation>
+        <translation>Užrašams naudoti vienodo pločio šriftą </translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation>sembunyikan jendela ke baki sistem</translation>
+        <translation>Sumažinimas vietoj programėlės išėjimo</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Tampilkan ikon baki sistem</translation>
+        <translation>Rodyti sistemos dėklo piktogramą</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation>Tipe ikon baki</translation>
+        <translation>Dėtuvės piktogramos tipas</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>Tipe ikon baki:</translation>
+        <translation>Dėtuvės piktogramos tipas:</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Sembunyikan jendela ke baki sistem ketika diminimalkan</translation>
+        <translation>Suskleidus langą, slėpti jį į sistemos dėklą</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Mengatur ulang pengaturan ke bawaan…</translation>
+        <translation>Nustatyti nustatymus atgal į numatytuosius</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Ketik-Otomatis</translation>
+        <translation>Automatinis rinkimas</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Gunakan judul entri untuk mencocokkan jendela untuk Ketik-Otomatis global</translation>
+        <translation>Naudoti įrašo antraštę, norint sutapatinti langus visuotiniam Automatiniam rinkimui</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Gunakan URL entri untuk mencocokkan jendela untuk Ketik-Otomatis global</translation>
+        <translation>Naudoti įrašo URL, norint sutapatinti langus visuotiniam Automatiniam rinkimui</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Selalu bertanya sebelum menjalankan Ketik-Otomatis</translation>
+        <translation>Visada klausti prieš atliekant automatinį rinkimą</translation>
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>Sembunyikan entri kedaluwarsa dari Ketik-Otomatis</translation>
+        <translation>Paslėpti nebegaliojančius įrašus nuo Auto-Įvedimo</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Kunci ulang basisdata yang sebelumnya terkunci setelah menjalankan Ketik-Otomatis</translation>
+        <translation>Iš naujo užrakinti anksčiau užrakintą duomenų bazę atlikus automatinį rinkimą</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation>Tundaan mulai Ketik-Otomatis:</translation>
+        <translation>Auto-Įvedimo paleidimo uždelsimas:</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>Pintasan Ketik-Otomatis global:</translation>
+        <translation>Visuotinio automatinio rinkimo spartieji klavišai:</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>Tundaan mulai ketik-otomatis dalam milidetik</translation>
+        <translation>Auto-įvedimo paleidimo uždelsimas milisekundėmis</translation>
     </message>
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>md</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Tundaan pengetikan Ketik-Otomatis:</translation>
+        <translation>Auto-Įvedimo delsa</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>Pintasan ketik-otomatis global</translation>
+        <translation>Visuotinio automatinio rinkimo spartieji klavišai</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>Tundaan pengetikan karakter ketik-otomatis dalam milidetik</translation>
+        <translation>Automatinio rinkimo simbolių įvedimo vėlavimas milisekundėmis</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
-        <translation>Ingat entri yang terakhir diketikkan untuk:</translation>
+        <translation>Prisiminti paskutinį įvestą įrašą:</translation>
     </message>
     <message>
         <source> recent files</source>
-        <translation type="unfinished"/>
+        <translation> naujausi failai</translation>
     </message>
     <message>
         <source>Show passwords in color</source>
@@ -510,222 +510,221 @@
     <name>ApplicationSettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>Waktu Kedaluwarsa</translation>
+        <translation>Laiko limitai</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation>Lama waktu habis penguncian basisdata</translation>
+        <translation>Duomenų bazės užrakinimo laiko limitas sekundėmis</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>det</translation>
+        <translation>sek.</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Kosongkan papan klip setelah</translation>
+        <translation>Išvalyti iškarpinę po</translation>
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>Hapus kueri pencarian setelah</translation>
+        <translation>Išvalyti paieškos užklausą po</translation>
     </message>
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation> min</translation>
+        <translation>min.</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation>Detik menghapus papan klip</translation>
+        <translation>Sekundės iki iškarpinės išvalymo</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Kunci basisdata setelah tidak aktif selama</translation>
+        <translation>Užrakinti duomenų bazes, kai kompiuteris neaktyvus</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation>Kenyamanan</translation>
+        <translation>Patogumas</translation>
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation>Aktifkan buka kunci cepat (Touch ID / Windows Hello)</translation>
+        <translation>Naudoti greitąjį duomenų bazės atrakinimą (Touch ID / Windows Hello)</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Kunci basisdata ketika sesi dikunci atau lid ditutup</translation>
+        <translation>Užrakinti duomenų bazes, kai yra užrakinamas seansas ar uždaromas nešiojamojo kompiuterio dangtis</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Kunci basisdata setelah meminimalkan jendela</translation>
+        <translation>Suskleidus langą, užrakinti duomenų bazes</translation>
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
-        <translation>Membutuhkan pengulangan sandi ketika ruas bisa dilihat</translation>
+        <translation>Reikalauti pakartoti slaptažodį, kai jis yra matomas</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation>Sembunyikan sandi saat penyuntingan</translation>
+        <translation>Slėpti slaptažodžius juos redaguojant</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation>Gunakan placeholder untuk ruas sandi yang kosong</translation>
+        <translation>Naudoti žymeklį tuštiems slaptažodžių laukeliams</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation>Sembunyikan sandi di panel pratinjau entri</translation>
+        <translation>Paslėpti slaptažodžius įrašo peržiūros skydelyje</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Sembunyikan catatan secara bawaan</translation>
+        <translation>Pagal numatymą, slėpti įrašo pastabas</translation>
     </message>
     <message>
         <source>Move entries to recycle bin without confirmation</source>
-        <translation>Hapus entri ke keranjang sampah tanpa konfirmasi</translation>
+        <translation>Perkelti įrašus į šiukšliadėžę be patvirtinimo</translation>
     </message>
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
-        <translation>Klik dua kali untuk menyalin kolom entri nama pengguna/sandi</translation>
+        <translation>Įgalinkite dvigubą paspaudimą, kad nukopijuotumėte slapyvardžio ir slaptažodžio įrašų stulpelius</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation>Privasi</translation>
+        <translation>Privatumas</translation>
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation>Gunakan layanan DuckDuckGo untuk mengunduh ikon situs web</translation>
+        <translation>Naudoti DuckDuckGo paslaugą svetainių piktogramoms atsisiųsti</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation>The requested Auto-Type sequence cannot be used due to an error:</translation>
+        <translation>Prašomos automatinio rinkimo sekos negalima naudoti dėl klaidos:</translation>
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation>Galat Auto-Type</translation>
+        <translation>Auto-Įvedimo Klaida</translation>
     </message>
     <message>
         <source>Permission Required</source>
-        <translation>Membutuhkan Izin</translation>
+        <translation>Būtinas leidimas</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC membutuhkan izin Aksesibilitas untuk menjalankan Ketik-Otomatis entri. Jika Anda sudah memberikan izin, Anda perlu memulai ulang KeePassXC.</translation>
+        <translation>Kad KeePassXC galėtų atlikti pradinio lygio automatinį rinkimą, reikia prieigos leidimo. Jei leidimas jau suteiktas, gali tekti iš naujo paleisti KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC membutuhkan izin Aksesibilitas dan Perekaman Layar untuk menjalankan Ketik-Otomatis secara global. Perekaman Layar dibutuhkan untuk mengakses judul jendela dari entri terkait. Jika anda sudah memberikan izin, anda perlu memulai ulang KeePassXC.</translation>
+        <translation>Kad KeePassXC galėtų atlikti visuotinį automatinį rinkimą, reikia prieigos ir ekrano įrašymo leidimo. Ekrano įrašymas būtinas, kad būtų galima naudoti lango pavadinimą įrašams rasti. Jei leidimas jau suteiktas, gali tekti iš naujo paleisti KeePassXC.</translation>
     </message>
     <message>
         <source>Invalid entry provided</source>
-        <translation>Entri yang diberikan tidak sah</translation>
+        <translation>Pateiktas netinkamas įrašas</translation>
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
-        <translation>Terdeteksi kurung kurawal yang tak seimbang, ditemukan { atau } ekstra</translation>
+        <translation>Aptiktas skliaustų disbalansas, rasta papildomų { arba }</translation>
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
-        <translation>Terlalu banyak pengulangan yang terdeteksi, maksimal adalah %1: %2</translation>
+        <translation>Aptikta per daug pasikartojimų, maksimalus skaičius yra %1: %2</translation>
     </message>
     <message>
         <source>Very slow key press detected, max is %1: %2</source>
-        <translation>Terdeteksi penekanan tombol yang sangat lambat, maks adalah %1: %2</translation>
+        <translation>Aptiktas labai lėtas klavišo paspaudimas, maksimali trukmė %1: %2</translation>
     </message>
     <message>
         <source>Very long delay detected, max is %1: %2</source>
-        <translation>Terdeteksi tundaan sangat lama, maks adalah %1: %2</translation>
+        <translation>Aptiktas labai ilgas vėlavimas, maksimali trukmė %1: %2</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
-        <translation>Tipe konversi tidak valid: %1</translation>
+        <translation>Netinkamas vertimo tipas: %1</translation>
     </message>
     <message>
         <source>Invalid conversion syntax: %1</source>
-        <translation>Sintaks konversi tidak valid: %1</translation>
+        <translation>Netinkama vertimo sintaksė: %1</translation>
     </message>
     <message>
         <source>Invalid regular expression syntax %1
 %2</source>
-        <translation>Sintaks ekspresi reguler %1 tidak valid
-%2</translation>
+        <translation>Netinkama regexp sintaksė</translation>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
-        <translation>Invalid placeholder: %1</translation>
+        <translation>Netinkamas žymeklis: %1</translation>
     </message>
     <message>
         <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation type="unfinished"/>
+        <translation>Įrašas neturi PICKCHARS atributo: %1</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Jendela</translation>
+        <translation>Langas</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Urutan</translation>
+        <translation>Seka</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(kosong)</translation>
+        <translation>(tuščia)</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Urutan baku</translation>
+        <translation>Numatytoji seka</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
     <message>
         <source>Group</source>
-        <translation>Grup</translation>
+        <translation>Grupė</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Judul</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nama pengguna</translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Urutan</translation>
+        <translation>Seka</translation>
     </message>
 </context>
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Trying to send invalid keysym.</source>
-        <translation>Mencoba mengirim keysym yang tidak valid.</translation>
+        <translation>Keysym netinkamas</translation>
     </message>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
-        <translation>Urutan digugurkan: Caps Lock menyala</translation>
+        <translation>Seka nutraukta: įjungtas Caps Lock</translation>
     </message>
     <message>
         <source>Sequence aborted: Modifier keys held by user</source>
-        <translation>Urutan digugurkan: Tombol pengubah ditahan oleh pengguna</translation>
+        <translation>Seka nutraukta: modifikatorių raktai priklauso naudotojui</translation>
     </message>
     <message>
         <source>Unable to get valid keycode for key: </source>
-        <translation>Tidak bisa memperoleh kode tombol yang valid untuk tombol:</translation>
+        <translation>Nepavyksta gauti galiojančio rakto kodo</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Ketik-Otomatis - KeePassXC</translation>
+        <translation>Automatinis rinkimas - KeePassXC</translation>
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation>Klik ganda suatu baris untuk melakukan Ketik-Otomatis atau mencari suatu entri memakai pencarian:</translation>
+        <translation>Dukart spustelėkite eilutę, kad atliktumėte automatinį rinkimą arba raskite įrašą naudodami paiešką:</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
@@ -734,131 +733,131 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</translation>
+        <translation>Galite naudoti išplėstines paieškos užklausas, kad rastumėte bet kokį įrašą atvirose duomenų bazėse. Naudingi šie trumpieji klavišai:
+Ctrl+F - perjungti paiešką duomenų bazėje
+Ctrl+1 - įveskite vartotojo vardą
+Ctrl+2 - įveskite slaptažodį
+Ctrl+3 - Įveskite TOTP
+Ctrl+4 - naudoti virtualią klaviatūrą (tik Windows)</translation>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation>Cari semua basisdata terbuka</translation>
+        <translation>Paieška visose atvirose duomenų bazėse</translation>
     </message>
     <message>
         <source>Search…</source>
-        <translation>Cari…</translation>
+        <translation>Ieškoti...</translation>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation>Ketikkan Urutan</translation>
+        <translation>Rašymo Seka</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Batal</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation>Ketikkan {NAMA PENGGUNA}</translation>
+        <translation>Rašyti {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
-        <translation>Ketikkan {KATA SANDI}</translation>
+        <translation>Įvesti {PASSWORD}</translation>
     </message>
     <message>
         <source>Type {TOTP}</source>
-        <translation>Ketikkan {TOTP}</translation>
+        <translation>Įvesti {TOTP}</translation>
     </message>
     <message>
         <source>Copy Username</source>
-        <translation>Salinkan Nama Pengguna</translation>
+        <translation>Kopijuoti naudotojo vardą</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation>Salinkan Kata Sandi</translation>
+        <translation>Kopijuoti Slaptažodį</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
-        <translation>Salin TOTP</translation>
+        <translation>Kopijuoti TOTP</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation>Gunakan Papan Ketik Virtual</translation>
+        <translation>Naudoti Virtualią Klaviatūrą</translation>
     </message>
 </context>
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>KeePassXC - Permintaan Akses Peramban</translation>
+        <translation>KeePassXC - Naršyklės prieigos užklausa</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
-        <translation>%1 meminta akses ke entri berikut ini:</translation>
+        <translation>%1 prašo prieigos prie šių įrašų:</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
-        <translation>Ingat akses ke entri yang dipilih</translation>
+        <translation>Prisiminti prieigą prie pasirinktų įrašų</translation>
     </message>
     <message>
         <source>Remember</source>
-        <translation>Ingat</translation>
+        <translation>Prisiminti</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation>Izinkan akses ke entri</translation>
+        <translation>Leisti prieigą prie įrašų</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Izinkan Yang Dipilih</translation>
+        <translation>Leisti Pasirinktą</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>Tolak Semua</translation>
+        <translation>Atmesti Visus</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>Nonaktifkan untuk situs ini</translation>
+        <translation>Išjungti šiai svetainei</translation>
     </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>KeePassXC-Browser Save Entry</source>
-        <translation>Entri Penyimpanan KeePassXC-Browser</translation>
+        <translation>KeePassXC-Browser Išsaugoti įrašą</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>Gerai</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Batal</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation>Ada beberapa basisdata yang terbuka.
-Silakan pilih basisdata yang digunakan untuk menyimpan kredensial.</translation>
+        <translation>Turite atvertas kelias duomenų bazes.
+Prisijungimo duomenų įrašymui, pasirinkite teisingą duomenų bazę.</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: Buat grup baru</translation>
+        <translation>KeePassXC: Sukurti naują grupę</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation>Permintaan untuk membuat grup &quot;%1&quot; telah diterima.
-Apakah Anda ingin membuat grup ini?
+        <translation>Gauta užklausa sukurti naują grupę &quot;%1&quot;.
+Ar norite sukurti šią grupę?
 </translation>
     </message>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Permintaan asosiasi kunci baru</translation>
+        <translation>KeePassXC: Naujo rakto susiejimo užklausa</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -866,118 +865,117 @@ Apakah Anda ingin membuat grup ini?
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation>Anda telah menerima permintaan asosiasi untuk basisdata berikut:
+        <translation>Gavote asociacijos užklausą dėl šios duomenų bazės:
 %1
 
-Berikan koneksi nama yang unik atau ID, sebagai contoh:
+Suteikite ryšiui unikalų pavadinimą arba ID, pvz:
 chrome-laptop.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation>Simpan dan izinkan akses</translation>
+        <translation>Įrašyti ir leisti prieigą</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Timpa kunci yang ada?</translation>
+        <translation>KeePassXC: Perrašyti esamą raktą?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Kunci enkripsi bersama dengan nama &quot;%1&quot; sudah ada.
-Apakah Anda ingin menimpanya ulang?</translation>
+        <translation>Bendrinamas šifravimo raktas, pavadinimu &quot;%1&quot; jau yra.
+Ar norite jį perrašyti?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Perbarui Entri</translation>
+        <translation>KeePassXC: Atnaujinti įrašą</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>Apakah Anda ingin memperbarui informasi di dalam %1 - %2?</translation>
+        <translation>Ar norite atnaujinti informaciją ties %1 - %2?</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation>KeePassXC: Hapus entri</translation>
+        <translation>KeePassXC: Ištrinti įrašą</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation>A request for deleting entry &quot;%1&quot; has been received.
-Do you want to delete the entry?
-</translation>
+        <translation>Gauta užklausa ištrinti įrašą &quot;%1&quot;.
+Ar norite ištrinti įrašą?</translation>
     </message>
     <message>
         <source>Converting attributes to custom data…</source>
-        <translation>Mengkonversi atribut ke data khusus...</translation>
+        <translation>Konvertuojami požymiai į tinkintus duomenis…</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Batal</translation>
+        <translation>Nutraukti</translation>
     </message>
     <message>
         <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC: Konversi atribut KeePassHTTP</translation>
+        <translation>KeePassXC: Konvertuoti KeePassHTTP požymiai</translation>
     </message>
     <message>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
-        <translation>Berhasil mengonversi atribut dari %1 entri.
-Memindahkan %2 ke data khusus.</translation>
+        <translation>Sėkmingai konvertuoti požymiai iš %1 įrašo(-ų).
+Perkelta %2 raktų į tinkintus duomenis.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>Berhasil memindahkan %n kunci ke data khusus.</numerusform></translation>
+        <translation><numerusform>Sėkmingai perkėlė %n raktus į pasirinktinius duomenis.</numerusform><numerusform>Sėkmingai perkėlė %n raktus į pasirinktinius duomenis.</numerusform><numerusform>Sėkmingai perkėlė %n raktus į pasirinktinius duomenis.</numerusform><numerusform>Sėkmingai perkėlė %n raktus į pasirinktinius duomenis.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC: Tidak ada entri dengan atribut KeePassHTTP yang ditemukan!</translation>
+        <translation>KeePassXC: Nerasta jokio įrašo su KeePassHTTP požymiais!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>Basisdata yang aktif tidak berisi entri dengan atribut KeePassHTTP.</translation>
+        <translation>Aktyvioje duomenų bazėje nėra įrašo su KeePassHTTP požymiais.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>Jangan tampilkan peringatan ini lagi</translation>
+        <translation>Daugiau neberodyti šio įspėjimo</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: Mendeteksi pengaturan integrasi peramban lama</translation>
+        <translation>KeePassXC: aptikti senieji naršyklės integracijos nustatymai</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation>Pengaturan KeePassXC-Browser Anda perlu dipindahkan ke dalam pengaturan basisdata.
-Hal ini diperlukan untuk mempertahankan koneksi peramban Anda saat ini.
-Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
+        <translation>KeePassXC-Browser nustatymus reikia perkelti į duomenų bazės nustatymus.
+Tai būtina, kad išliktų dabartiniai naršyklės ryšiai.
+Ar norėtumėte perkelti esamus nustatymus dabar?</translation>
     </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
     <message>
         <source>Dialog</source>
-        <translation>Dialog</translation>
+        <translation>Dialogas</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Ini dibutuhkan untuk mengakses basisdata Anda menggunakan KeePassXC-Browser</translation>
+        <translation>Tai būtina norint pasiekti duomenų bazes naudojant KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation>Aktifkan integrasi peramban</translation>
+        <translation>Įjungti naršyklės integraciją</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Umum</translation>
+        <translation>Bendra</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation>Peramban yang dipasang sebagai snap saat ini tidak didukung.</translation>
+        <translation>Šiuo metu nepalaikomos naršyklės, įdiegtos kaip snapai.</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>Aktifkan integrasi untuk peramban ini:</translation>
+        <translation>Įjungti integraciją šioms naršyklėms:</translation>
     </message>
     <message>
         <source>Vivaldi</source>
@@ -993,7 +991,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Tor Browser</source>
-        <translation>Tor Browser</translation>
+        <translation>Tor Naršyklė</translation>
     </message>
     <message>
         <source>Brave</source>
@@ -1010,231 +1008,231 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Tampilkan notifikasi saat permintaan kredensial</translation>
+        <translation>Rodyti pranešimą, kai prašoma pateikti įgaliojimus</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation>Minta untuk membuka basisdata jika terkunci</translation>
+        <translation>Prašyti atrakinti duomenų bazę, jei ji užrakinta</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
-        <translation>Hanya entri dengan skema yang sama (http://, https://, ...) dikembalikan.</translation>
+        <translation>Grąžinami tik tos pačios schemos (http://, https://, ...) įrašai.</translation>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation>Match URL scheme (e.g., https://example.com)</translation>
+        <translation>Atitikti URL schemą (pvz., https://pavyzdys.lt/)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Hanya tampilkan kecocokan terbaik untuk URL tertentu bukan semua entri untuk keseluruhan domain.</translation>
+        <translation>Vietoj visos srities visų įrašų, grąžina tik geriausiai tam tikrą URL atitinkančius įrašus.</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation>Hanya tampilkan kredensial dengan kecocokan terbaik</translation>
+        <translation>Grąžinti tik geriausiai atitinkančius įgaliojimus</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Mengembalikan kredensial yang kedaluwarsa. Karakter [kedaluwarsa] ditambahkan ke judul.</translation>
+        <translation>Grąžina įgaliojimus, kurių galiojimo laikas pasibaigęs. Prie pavadinimo pridedama eilutė [pasibaigęs].</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Izinkan pengembalian kredensial kedaluwarsa</translation>
+        <translation>Leisti grąžinti pasibaigusius įgaliojimus</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation>Semua basisdata yang terhubung ke ekstensi akan mengembalikan kredensial yang cocok.</translation>
+        <translation>Visos prie plėtinio prijungtos duomenų bazės grąžins atitinkamus prisijungimo duomenis.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Cari kredensial yang cocok di semua basisdata yang terbuka</translation>
+        <translation>Ieškoti visose atidarytose duomenų bazėse tinkamų prisijungimo duomenų</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Tingkat Lanjut</translation>
+        <translation>Išplėstiniai</translation>
     </message>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Jangan pernah bertanya sebelum mengakses kredensial</translation>
+        <translation>Niekada neklausti prieš prieinant prie įgaliojimų</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Jangan pernah bertanya sebelum memperbarui kredensial</translation>
+        <translation>Niekada neklausti prieš atnaujinant įgaliojimus</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation>Jangan minta izin untuk Otentikasi Dasar HTTP</translation>
+        <translation>Neprašykite leidimo HTTP Basic Auth</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>Membuat atau memperbarui ruas lema secara otomatis tidak didukung.</translation>
+        <translation>Automatinis eilutės laukų kūrimas ar atnaujinimas nėra palaikomas.</translation>
     </message>
     <message>
         <source>Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>Tampilkan ruas lema tingkat lanjut yang dimulai dengan &quot;KPH: &quot;</translation>
+        <translation>Pateikite išplėstinius eilučių laukus, kurie prasideda &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation>Jangan pernah tampilkan popup yang menyarankan migrasi pengaturan KeePassHTTP versi lama.</translation>
+        <translation>Nerodykite iššokančiojo lango, siūlančio perkelti senus KeePassHTTP parametrus.</translation>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
-        <translation>Jangan ingatkan untuk migrasi pengaturan KeePassHTTP.</translation>
+        <translation>Neraginkite perkelti KeePassHTTP parametrų.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Otomatis perbarui jalur binari KeePassXC atau keepassxc-proxy ke skrip perpesanan native saat memulai.</translation>
+        <translation>Paleidžiant automatiškai atnaujina KeePassXC arba keepassxc-proxy dvejetainį kelią į vietinius pranešimų scenarijus.</translation>
     </message>
     <message>
         <source>Update native messaging manifest files at startup</source>
-        <translation>Perbarui berkas manifest perpesanan bawaan saat memulai</translation>
+        <translation>Vietinių pranešimų aprašo failų naujinimas paleidžiant</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Gunakan lokasi proksi khusus jika Anda memasang proksi secara manual.</translation>
+        <translation>Naudokite pasirinktinę tarpinio serverio vietą, jei tarpinį serverį įdiegėte rankiniu būdu.</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Gunakan lokasi proksi khusus:</translation>
+        <translation>Naudokite pasirinktinę tarpinio serverio vietą:</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation>Ruas lokasi proksi khusus</translation>
+        <translation>Pasirinktinis tarpinio serverio vietos laukas</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation>Peramban untuk berkas proksi khusus</translation>
+        <translation>Pasirinktinio tarpinio serverio failo naršyklė</translation>
     </message>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Telusuri…</translation>
+        <translation>Naršyti...</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
-        <translation>Gunakan lokasi konfigurasi peramban khusus:</translation>
+        <translation>Naudokite pasirinktinę naršyklės konfigūracijos vietą:</translation>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation>Tipe peramban:</translation>
+        <translation>Naršyklės tipas:</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Gaya tombol bilah perkakas</translation>
+        <translation>Įrankių juostos mygtukų stilius</translation>
     </message>
     <message>
         <source>Config Location:</source>
-        <translation>Lokasi Konfigurasi:</translation>
+        <translation>Konfigūracijos vieta:</translation>
     </message>
     <message>
         <source>Custom browser location field</source>
-        <translation>Ruas lokasi peramban khusus</translation>
+        <translation>Pasirinktinis naršyklės vietos laukas</translation>
     </message>
     <message>
         <source>Browse for custom browser path</source>
-        <translation>Jelajahi jalur peramban khusus</translation>
+        <translation>Naršykite pasirinktinį naršyklės kelią</translation>
     </message>
     <message>
         <source>Custom extension ID:</source>
-        <translation>ID ekstensi khusus:</translation>
+        <translation>Pasirinktinio plėtinio ID:</translation>
     </message>
     <message>
         <source>Custom extension ID</source>
-        <translation>ID ekstensi khusus</translation>
+        <translation>Pasirinktinis plėtinio ID</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Karena adanya sandbox Snap, Anda harus menjalankan skrip untuk mengaktifkan integrasi peramban.&lt;br /&gt;Anda bisa mendapatkan skrip ini dari %1</translation>
+        <translation>Dėl Snap smėlio dėžės reikia paleisti skriptą, kad būtų įjungti naršyklės integraciją.&lt;br /&gt;Šį skriptą galite gauti iš %1</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>Membutuhkan KeePassXC-Browser agar integrasi peramban bisa bekerja. &lt;br /&gt;Silakan unduh untuk %1 dan %2 dan %3. %4</translation>
+        <translation>KeePassXC-Browser reikalinga, kad naršyklės integracija veiktų. &lt;br /&gt;Atsisiųskite jį %1, %2 ir %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation>Lihat instruksi untuk penggunaan browser extension</translation>
+        <translation>Toliau skaitykite specialius naršyklės plėtinio naudojimo nurodymus</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Error:&lt;/b&gt;Lokasi proxy khusus tidak dapat ditemukan!&lt;br/&gt;Integrasi browser TIDAK DAPAT BEKERJA tanpa aplikasi proxy.</translation>
+        <translation>&lt;b&gt;Klaida:&lt;/b&gt; Negalima rasti pasirinktinės tarpinio serverio vietos!&lt;br/&gt;Naršyklės integracija NEVEIKS be tarpinio serverio programos.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Peringatan:&lt;/b&gt; Opsi berikut bisa berbahaya!</translation>
+        <translation>&lt;b&gt;Įspėjimas:&lt;/b&gt; Šie parametrai gali būti pavojingi!</translation>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation>Berkas Executable</translation>
+        <translation>Vykdomieji failai</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Visi failai</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>Pilih lokasi proksi khusus</translation>
+        <translation>Pasirinkite pasirinktinę tarpinio serverio vietą</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
-        <translation>Pilih lokasi folder hos perpesanan bawaan</translation>
+        <translation>Pasirinkite vietinę pranešimų pagrindinio kompiuterio aplanko vietą</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Entry Options</source>
-        <translation>Clone Entry Options</translation>
+        <translation>Klonuoti įrašo parinktis</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Tambahkan &apos; - Salinan&apos; ke judul</translation>
+        <translation>Pridėti prie pavadinimo &quot; - Dublikatas&quot;</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Ganti nama pengguna dan sandi dengan referensi</translation>
+        <translation>Pakeisti naudotojo vardą ir slaptažodį nuorodomis</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Salin riwayat</translation>
+        <translation>Kopijuoti istoriją</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation>Impor ruas CSV</translation>
+        <translation>Importuoti CSV laukus</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation>nama berkas</translation>
+        <translation>failo pavadinimas</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation>ukuran, baris, kolom</translation>
+        <translation>dydis, eilučių, stulpelių</translation>
     </message>
     <message>
         <source>Column Association</source>
-        <translation>Asosiasi Kolom</translation>
+        <translation>Stulpelio asociacija</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nama pengguna</translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Judul</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Grup</translation>
+        <translation>Grupė</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1242,7 +1240,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Catatan</translation>
+        <translation>Pastabos</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -1250,100 +1248,100 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Dibuat</translation>
+        <translation>Sukurta</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>Terakhir Diubah</translation>
+        <translation>Paskutinis keitimas</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Piktograma</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation>Enkode</translation>
+        <translation>Koduotė</translation>
     </message>
     <message>
         <source>Codec</source>
-        <translation>Kodek</translation>
+        <translation>Kodekas</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>Teks dikualifikasikan oleh</translation>
+        <translation>Tekstas yra parengtas pagal</translation>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation>Kualifikasi teks</translation>
+        <translation>Teksto kvalifikacija</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation>Ruas dipisahkan dengan</translation>
+        <translation>Laukai yra atskirti</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation>Pemisahan ruas</translation>
+        <translation>Lauko atskyrimas</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>Komentar dimulai dengan</translation>
+        <translation>Komentarai prasideda su</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation>Garis tajukan terlewat</translation>
+        <translation>Antraštės eilutės praleistos</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation>Jumlah baris tajuk untuk dibuang</translation>
+        <translation>Atmestinų antraščių eilučių skaičius</translation>
     </message>
     <message>
         <source>First line has field names</source>
-        <translation>Baris pertama memiliki nama ruas</translation>
+        <translation>Pirmoje eilutėje yra laukų pavadinimai</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>Anggap &apos;\&apos; sebagai karakter escape</translation>
+        <translation>Laikyti &quot;\&quot; kaitos ženklu</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Pratinjau</translation>
+        <translation>Peržiūra</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation>Pratinjau impor CSV</translation>
+        <translation>CSV importo peržiūra</translation>
     </message>
     <message>
         <source>Not Present</source>
-        <translation>Tidak Tersedia</translation>
+        <translation>Nėra</translation>
     </message>
     <message>
         <source>Column %1</source>
-        <translation>Kolom %1</translation>
+        <translation>Stulpelis %1</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation>Diimpor dari berkas CSV</translation>
+        <translation>Importuota iš CSV failo</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Data original:</translation>
+        <translation>Pradiniai duomenys: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
-        <translation>Mendeteksi kesalahan di dalam berkas CSV!</translation>
+        <translation>CSV faile aptikta klaida(-os)!</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[%n pesan dilewati]</numerusform></translation>
+        <translation><numerusform>[%n daugiau praleistų pranešimų]</numerusform><numerusform>[%n daugiau praleistų pranešimų]</numerusform><numerusform>[%n daugiau praleistų pranešimų]</numerusform><numerusform>[%n daugiau praleistų pranešimų]</numerusform></translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Galat</translation>
+        <translation>Klaida</translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
 %1</source>
-        <translation>Impor CSV: galat penulis:
+        <translation>CSV importas: rašytojas turi klaidų:
 %1</translation>
     </message>
 </context>
@@ -1356,15 +1354,15 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n byte</numerusform></translation>
+        <translation><numerusform>%n baitų</numerusform><numerusform>%n baitų</numerusform><numerusform>%n baitų</numerusform><numerusform>%n baitų</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation><numerusform>%n baris</numerusform></translation>
+        <translation><numerusform>%n eilutė (-ės)</numerusform><numerusform>%n eilutė (-ės)</numerusform><numerusform>%n eilutė (-ės)</numerusform><numerusform>%n eilutė (-ės)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n kolom</numerusform></translation>
+        <translation><numerusform>%n stulpelis</numerusform><numerusform>%n stulpeliai</numerusform><numerusform>%n stulpelių</numerusform><numerusform>%n stulpelių</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1372,135 +1370,135 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     <message>
         <source>Passwords</source>
         <comment>Root group name</comment>
-        <translation>Sandi</translation>
+        <translation>Slaptažodžiai</translation>
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation>Berkas %1 tidak ada.</translation>
+        <translation>Failo %1 nėra.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>Tidak bisa membuka berkas %1.</translation>
+        <translation>Nepavyko atverti failą %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation>Terjadi kesalahan saat membaca basisdata: %1</translation>
+        <translation>Klaida skaitant duomenų bazę: %1</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation>Tidak bisa menyimpan, basisdata tidak merujuk ke berkas yang valid.</translation>
+        <translation>Nepavyko išsaugoti, duomenų bazė nenurodo į tinkamą failą.</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation>Proses menyimpan basisdata sedang berjalan.</translation>
+        <translation>Duomenų bazės išsaugojimas jau vyksta.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>Tidak bisa menyimpan, basisdata belum aktif!</translation>
+        <translation>Nepavyko išsaugoti, duomenų bazė nebuvo inicializuota!</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation>Berkas basisdata memiliki perubahan yang belum digabung.</translation>
+        <translation>Duomenų bazės faile yra neįtrauktų pakeitimų.</translation>
     </message>
     <message>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
-Lokasi cadangan basisdata ada di %2</translation>
+Atsarginė duomenų bazė, esanti %2</translation>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers.</source>
-        <translation>Kunci tidak berubah. Ini adalah bug, harap laporkan ke developer.</translation>
+        <translation>Raktas nepakeistas. Tai klaida, praneškite apie ją kūrėjams.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
-        <translation>Keranjang Sampah</translation>
+        <translation>Šiukšlinė</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>Buka Kunci Basisdata - KeePassXC</translation>
+        <translation>Atrakinti duomenų bazę - KeePassXC</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation>Buka Kunci Basisdata KeePassXC</translation>
+        <translation>Atrakinti KeePassXC duomenų bazę</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation>Masukkan Sandi:</translation>
+        <translation>Įrašykite Slaptažodį:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Ruas sandi</translation>
+        <translation>Slaptažodžio laukas</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation>Masukkan Kredensial Tambahan (jika ada):</translation>
+        <translation>Įveskite papildomus įgaliojimus (jei yra):</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Berkas Kunci:</translation>
+        <translation>Rakto failas:</translation>
     </message>
     <message>
         <source>Key file help</source>
-        <translation>Bantuan berkas kunci</translation>
+        <translation>Rakto failo pagalba</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Pemilihan slot kunci perangkat keras</translation>
+        <translation>Aparatūros rakto lizdo pasirinkimas</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation>Kunci Perangkat Keras:</translation>
+        <translation>Aparatūros raktas:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation>Bantuan kunci perangkat keras</translation>
+        <translation>Aparatūros rakto pagalba</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation>Berkas kunci untuk membuka basisdata</translation>
+        <translation>Duomenų bazės atrakinimo rakto failas</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Telusuri berkas kunci</translation>
+        <translation>Ieškoti rakto failo</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Telusuri…</translation>
+        <translation>Naršyti...</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation>Segarkan token perangkat keras</translation>
+        <translation>Atnaujinti aparatinės įrangos žetonus</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Segarkan</translation>
+        <translation>Įkelti iš naujo</translation>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation>Buka Kunci Basisdata</translation>
+        <translation>Atrakinti Duomenų bazę</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Batal</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <source>Unlock</source>
-        <translation>Buka Kunci</translation>
+        <translation>Atrakinti</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Please present or touch your YubiKey to continue…</translation>
+        <translation>Norėdami tęsti, pateikite arba palieskite savo YubiKey raktą...</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
-        <translation>Versi Basis Data Tidak Cocok</translation>
+        <translation>Duomenų bazės versijos neatitikimas</translation>
     </message>
     <message>
         <source>The database you are trying to open was most likely
@@ -1510,415 +1508,416 @@ You can try to open it anyway, but it may be incomplete
 and saving any changes may incur data loss.
 
 We recommend you update your KeePassXC installation.</source>
-        <translation>The database you are trying to open was most likely
-created by a newer version of KeePassXC.
+        <translation>Duomenų bazė, kurią bandote atidaryti, greičiausiai buvo
+sukurta su naujesne KeePassXC versija.
 
-You can try to open it anyway, but it may be incomplete
-and saving any changes may incur data loss.
+Vis tiek galite pabandyti ją atidaryti, tačiau ji gali būti neišbaigta
+ir išsaugant bet kokius pakeitimus gali būti prarasti duomenys.
 
-We recommend you update your KeePassXC installation.</translation>
+Rekomenduojame atnaujinti KeePassXC diegimą.</translation>
     </message>
     <message>
         <source>Open database anyway</source>
-        <translation>Tetap buka pangkalan data</translation>
+        <translation>Vis tiek atidaryti duomenų bazę</translation>
     </message>
     <message>
         <source>Database unlock canceled.</source>
-        <translation>Pembukaan kunci basisdata dibatalkan.</translation>
+        <translation>Duomenų bazės atrakinimas atšauktas.</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation>Gagal membuka dan sandi tidak tersedia</translation>
+        <translation>Atrakinimas nepavyko ir slaptažodis nebuvo pateiktas</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation>Membuka kunci basisdata gagal dan Anda tidak memasukkan kata sandi.
-Apakah Anda ingin mencoba kembali dengan kata sandi &quot;kosong&quot;?
-Untuk mencegah munculnya kesalahan ini, Anda harus ke &quot;Pengaturan Basisdata / Keamanan&quot; dan mengatur ulang kata sandi Anda.</translation>
+        <translation>Nepavyko atrakinti duomenų bazės ir jūs neįvedėte slaptažodžio.
+Ar norite dar kartą pakartoti naudodami &quot;tuščią&quot; slaptažodį?
+
+Kad ši klaida nepasirodytų, turite eiti į &quot;Duomenų bazės nustatymai / saugumas&quot; ir iš naujo nustatyti slaptažodį.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation>Ulangi dengan sandi kosong</translation>
+        <translation>Bandyti vėl su tuščiu slaptažodžiu</translation>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello</source>
-        <translation>Gagal mengautentikasi dengan Windows Hello</translation>
+        <translation>Nepavyko autentifikuoti naudojant &quot;Windows Hello&quot;</translation>
     </message>
     <message>
         <source>Failed to authenticate with Touch ID</source>
-        <translation>Gagal mengautentikasi dengan Touch ID</translation>
+        <translation>Nepavyko autentifikuoti naudojant &quot;Touch ID&quot;</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation>Gagal untuk membuka berkas kunci: %1</translation>
+        <translation>Nepavyko atidaryti rakto failo: %1</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Format berkas kunci lama</translation>
+        <translation>Senas rakto failo formatas</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation>Anda menggunakan sebuah format berkas kunci lama yang mungkin &lt;br&gt; tidak akan didukung lagi oleh KeePassXC di masa depan. &lt;br&gt;&lt;br&gt; Mohon buat sebuah berkas kunci baru dengan menuju ke: &lt;br&gt;&lt;strong&gt;Basisdata &amp;gt; Keamanan Basisdata &amp;gt; Ubah Berkas Kunci.&lt;/strong&gt;&lt;br&gt;</translation>
+        <translation>Jūs naudojate seną rakto failo formatą, kurį keePassXC gali&lt;br&gt;nustokite remti ateityje.&lt;br&gt;&lt;br&gt;Apsvarstykite galimybę sugeneruoti naują rakto failą apsilankę:&lt;br&gt;&lt;strong&gt;Duomenų bazės &amp;gt; duomenų bazės saugos &amp;gt; keisti rakto failą.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>Jangan tampilkan peringatan ini lagi</translation>
+        <translation>Daugiau neberodyti šio įspėjimo</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Visi failai</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Berkas kunci</translation>
+        <translation>Rakto failai</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Pilih berkas kunci</translation>
+        <translation>Pasirinkite rakto failą</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation>Tidak bisa menggunakan berkas basisdata sebagai berkas kunci</translation>
+        <translation>Negalima naudoti duomenų bazės failo kaip rakto failo</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation>Anda tidak bisa menggunakan berkas basisdata Anda sebagai berkas kunci,
-Jika Anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
+        <translation>Duomenų bazės failo negalima naudoti kaip rakto failo.
+Jei rakto failos neturite, palikite šį lauką tuščią.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Mendeteksi kunci perangkat keras…</translation>
+        <translation>Aptinkame aparatūros raktus...</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>Tidak mendeteksi kunci perangkat keras</translation>
+        <translation>Neaptikti jokie aparatūros raktai</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>Pilih kunci perangkat keras…</translation>
+        <translation>Pasirinkti aparatūros raktą...</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Prie slaptažodžio, duomenų bazės saugumui padidinti galite naudoti slaptąjį failą. Šį failą galima sukurti duomenų bazės saugumo nustatymuose.&lt;/p&gt;&lt;p&gt;Tai &lt;strong&gt;nėra&lt;/strong&gt; jūsų *.kdbx duomenų bazės failas!&lt;br&gt;Jei neturite rakto failo, palikite šį lauką tuščią.&lt;/p&gt;&lt;p&gt;Spustelėkite, jei norite gauti daugiau informacijos...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Galite naudoti aparatūros saugos raktą, pvz. &lt;strong&gt;, &quot;YubiKey&quot;&lt;/strong&gt; arba &lt;strong&gt;&quot;OnlyKey&quot;&lt;/strong&gt; , su HMAC-SHA1 sukonfigūruotais lizdais.&lt;/p&gt;
+&lt;p&gt;Spustelėkite, jei norite gauti daugiau informacijos...&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
     <message>
         <source>Passwords</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodžiai</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation>Pengaturan Lanjutan</translation>
+        <translation>Išplėstiniai nustatymai</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Umum</translation>
+        <translation>Bendra</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Keamanan</translation>
+        <translation>Saugumas</translation>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation>Kredensial Basisdata</translation>
+        <translation>Duomenų bazės Įgaliojimai</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Pengaturan Enkripsi</translation>
+        <translation>Šifravimo nustatymai</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Integrasi Peramban</translation>
+        <translation>Naršyklės integracija</translation>
     </message>
     <message>
         <source>Maintenance</source>
-        <translation>Pemeliharaan</translation>
+        <translation>Priežiūra</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
-        <translation>Pengaturan KeePassXC-Browser</translation>
+        <translation>KeePassXC-Browser nustatymai</translation>
     </message>
     <message>
         <source>Convert KeePassHTTP data</source>
-        <translation>Konversi data KeePassHTTP</translation>
+        <translation>Konvertuoti KeePassHTTP duomenis</translation>
     </message>
     <message>
         <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</translation>
+        <translation>Konvertuokite senus &quot;KeePassHTTP&quot; atributus į su &quot;KeePassXC-Browser&quot; suderinamus pasirinktinius duomenis</translation>
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation>Segarkan ID grup root basisdata</translation>
+        <translation>Duomenų bazės šakninės grupės ID atnaujinimas</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation>Putuskan koneksi semua peramban</translation>
+        <translation>Atjungti visas naršykles</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation>Lupakan semua pengaturan spesifik situs pada entri</translation>
+        <translation>Pamiršti visus su konkrečia svetaine susijusius įrašų nustatymus</translation>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation>Kunci tersimpan</translation>
+        <translation>Saugomi raktai</translation>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation>Simpan kunci peramban</translation>
+        <translation>Išsaugoti naršyklės raktai</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation>Buang kunci yang dipilih</translation>
+        <translation>Pašalinti pasirinktą raktą</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Buang</translation>
+        <translation>Šalinti</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation>Hapus kunci yang dipilih?</translation>
+        <translation>Ištrinti pasirinktą raktą?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
-        <translation>Apakah Anda yakin ingin menghapus kunci yang dipilih?
-Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
+        <translation>Ar tikrai norite ištrinti pasirinktą raktą?
+Tai gali sutrukdyti prisijungti prie naršyklės priedo.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Kunci</translation>
+        <translation>Raktas</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Nilai</translation>
+        <translation>Reikšmė</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Dibuat</translation>
+        <translation>Sukurta</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>Aktifkan Integrasi Peramban untuk mengakses pengaturan ini.</translation>
+        <translation>Jei norite pasiekti šiuos nustatymus, įjunkite naršyklės integraciją.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation>Apakah Anda ingin memutus koneksi semua peramban?
-Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
+        <translation>Ar tikrai norite atjungti visas naršykles?
+Tai gali nebeleisti prisijungti prie naršyklės plėtinio.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Tidak ada kunci yang ditemukan</translation>
+        <translation>KeePassXC: Raktų nerasta</translation>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
-        <translation>TIdak ada kunci enkripsi bersama yang ditemukan di dalam pengaturan KeePassXC.</translation>
+        <translation>KeePassXC nustatymuose nerasta bendrų šifravimo raktų.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Buang kunci dari basisdata</translation>
+        <translation>KeePassXC: Pašalinti raktai iš duomenų bazės</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Berhasil membuang %n kunci enkripsi dari pengaturan KeePassXC.</numerusform></translation>
+        <translation><numerusform>Sėkmingai pašalintas (-i) %n šifravimo raktas (-ai) iš KeePassXC nustatymų.</numerusform><numerusform>Sėkmingai pašalintas (-i) %n šifravimo raktas (-ai) iš KeePassXC nustatymų.</numerusform><numerusform>Sėkmingai pašalintas (-i) %n šifravimo raktas (-ai) iš KeePassXC nustatymų.</numerusform><numerusform>Sėkmingai pašalintas (-i) %n šifravimo raktas (-ai) iš KeePassXC nustatymų.</numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>Apakah Anda ingin melupakan semua pengaturan spesifik situs pada semua entri?
-Izin untuk mengakses entri akan dicabut.</translation>
+        <translation>Ar tikrai norite pamiršti visus su konkrečia svetaine susijusius nustatymus kiekviename įraše?
+Bus panaikinti prieigos prie įrašų leidimai.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Membuang perizinan yang disimpan...</translation>
+        <translation>Šalinami saugomi leidimai…</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Batal</translation>
+        <translation>Nutraukti</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Buang izin</translation>
+        <translation>KeePassXC: Pašalinti leidimai</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Berhasil membuang perizinan dari %n entri.</numerusform></translation>
+        <translation><numerusform>Sėkmingai pašalinti leidimai iš %n įrašo (-ų).</numerusform><numerusform>Sėkmingai pašalinti leidimai iš %n įrašo (-ų).</numerusform><numerusform>Sėkmingai pašalinti leidimai iš %n įrašo (-ų).</numerusform><numerusform>Sėkmingai pašalinti leidimai iš %n įrašo (-ų).</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Tidak entri dengan izin yang ditemukan!</translation>
+        <translation>KeePassXC: Nerasta jokių įrašų su leidimais!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>Basisdata aktif tidak berisi entri dengan izin.</translation>
+        <translation>Aktyvioje duomenų bazėje nėra įrašo su leidimais.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>Pindahkan atribut KeePassHTTP ke data khusus</translation>
+        <translation>Perkelti KeePassHTTP požymius į tinkintus duomenis</translation>
     </message>
     <message>
         <source>Do you really want to convert all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</translation>
+        <translation>Ar tikrai norite konvertuoti visus senus naršyklės integracijos duomenis į naujausią standartą?
+Tai būtina norint išlaikyti suderinamumą su naršyklės plėtiniu.</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
-        <translation>Segarkan ID basisdata</translation>
+        <translation>Atnaujinti duomenų bazės ID</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Apakah Anda yakin ingin menyegarkan ID basisdata?
-Ini hanya diperlukan jika basisdata Anda adalah salinan dari basisdata yang lain dan ekstensi peramban tidak bisa tersambung.</translation>
+        <translation>Ar tikrai norite atnaujinti duomenų bazės ID?
+Tai būtina tik tuo atveju, jei jūsų duomenų bazė yra kito kopija ir naršyklės plėtinys negali prisijungti.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
         <source>Add additional protection…</source>
-        <translation>Tambahkan proteksi lain...</translation>
+        <translation>Pridėti papildomą apsaugą...</translation>
     </message>
     <message>
         <source>No password set</source>
-        <translation>Sandi belum di atur</translation>
+        <translation>Nenustatytas joks slaptažodis</translation>
     </message>
     <message>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>PERINGATAN! Anda belum mengatur sandi. Menggunakan basisdata tanpa sandi amat sangat tidak disarankan!
+        <translation>ĮSPĖJIMAS! Jūs nenustatėte slaptažodžio. Naudotis duomenų baze be slaptažodžio griežtai nerekomenduojama!
 
-Apakah Anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
+Ar tikrai norite tęsti darbą be slaptažodžio?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation>Lanjutkan tanpa sandi</translation>
+        <translation>Tęsti be slaptažodžio</translation>
     </message>
     <message>
         <source>No encryption key added</source>
-        <translation>Tidak ada kunci enkripsi yang ditambahkan</translation>
+        <translation>Nepridėtas joks šifravimo raktas</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Anda harus menambahkan paling tidak satu kunci enkripsi untuk mengamankan basisdata Anda!</translation>
+        <translation>Norėdami apsaugoti savo duomenų bazę, privalote pridėti bent vieną šifravimo raktą!</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>Galat tidak diketahui</translation>
+        <translation>Nežinoma klaida</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation>Gagal mengubah kredensial basisdata</translation>
+        <translation>Nepavyko pakeisti duomenų bazės prisijungimo duomenų</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Decryption Time:</source>
-        <translation>Waktu Dekripsi:</translation>
+        <translation>Iššifravimo laikas:</translation>
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation>Ubah waktu dekripsi yang ada</translation>
+        <translation>Pakeisti esamą iššifravimo laiką</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation>Ubah</translation>
+        <translation>Keisti</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation>Waktu dekripsi dalam detik</translation>
+        <translation>Iššifravimo laikas sekundėmis</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation>Nilai yang lebih tinggi memberikan perlindungan lebih, tetapi membuka basisdata akan menjadi lebih lama.</translation>
+        <translation>Didesni skaičiai užtikrina didesnę apsaugą, tačiau duomenų bazės atidarymas užtruks ilgiau.</translation>
     </message>
     <message>
         <source>Database format:</source>
-        <translation>Format basisdata:</translation>
+        <translation>Duomenų bazės formatas:</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation>Format basisdata</translation>
+        <translation>Duomenų bazės formatas</translation>
     </message>
     <message>
         <source>Format cannot be changed: Your database uses KDBX 4 features</source>
-        <translation>Format cannot be changed: Your database uses KDBX 4 features</translation>
+        <translation>Formatas negali būti pakeistas: Jūsų duomenų bazė naudoja KDBX 4 funkcijas</translation>
     </message>
     <message>
         <source>Unless you need to open your database with other programs, always use the latest format.</source>
-        <translation>Unless you need to open your database with other programs, always use the latest format.</translation>
+        <translation>Jei duomenų bazės nereikia atidaryti kitomis programomis, visada naudokite naujausią formatą.</translation>
     </message>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>Algoritma Enkripsi:</translation>
+        <translation>Šifravimo algoritmas:</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation>Algoritma enkripsi</translation>
+        <translation>Šifravimo algoritmas</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES:  256 Bit   (bawaan)</translation>
+        <translation>AES:  256 Bitų   (numatytasis)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation>Twofish:  256 Bit</translation>
+        <translation>Twofish:  256 Bitų</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation>Fungsi Derivasi Kunci:</translation>
+        <translation>Rakto išvedimo funkcija:</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation>Fungi derivasi kunci</translation>
+        <translation>Rakto išvedimo funkcija</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Jumlah transformasi:</translation>
+        <translation>Pasikeitimo ciklų:</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation>Transform rounds</translation>
+        <translation>Transformuokite raundus</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation>Penggunaan Memori:</translation>
+        <translation>Atminties naudojimas:</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation>Penggunaan memori</translation>
+        <translation>Atminties naudojimas</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>Paralelisme:</translation>
+        <translation>Lygiagretumas:</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation>Paralelisme</translation>
+        <translation>Lygiagretumas</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation>KDBX 4 (direkomendasikan)</translation>
+        <translation>KDBX 4 (rekomenduojama)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -1927,129 +1926,129 @@ Apakah Anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     <message>
         <source>unchanged</source>
         <comment>Database decryption time is unchanged</comment>
-        <translation>tidak berubah</translation>
+        <translation>nepakeistas</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation>Jumlah transformasi terlalu tinggi</translation>
+        <translation>Per didelis raundų skaičius</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours, days, or even longer to open.</source>
-        <translation>You are using a very high number of key transform rounds with Argon2.
+        <translation>Su &quot;Argon2&quot; naudojate labai daug pagrindinių transformacijų.
 
-If you keep this number, your database may take hours, days, or even longer to open.</translation>
+Jei išsaugosite šį numerį, duomenų bazės atidarymas gali užtrukti valandas, dienas ar net ilgiau.</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation>Mengerti, tetap simpan</translation>
+        <translation>Suprask, išlaikyk numerį</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Batal</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation>Jumlah transformasi terlalu rendah</translation>
+        <translation>Per mažas raundų skaičius</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database will not be protected from brute force attacks.</source>
-        <translation>You are using a very low number of key transform rounds with AES-KDF.
+        <translation>Jūs naudojate labai mažą skaičių pagrindinių transformacijos raundų su AES-KDF.
 
-If you keep this number, your database will not be protected from brute force attacks.</translation>
+Jei išlaikysite šį numerį, jūsų duomenų bazė nebus apsaugota nuo brutalios jėgos atakų.</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation>KDF tidak berubah</translation>
+        <translation>KDF nepakitęs</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>Gagal mentransformasi kunci menggunakan parameter KDF baru; KDF tidak berubah.</translation>
+        <translation>Nepavyko transformuoti rakto su naujais KDF parametrais; KDF nepakitęs.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform> gija</numerusform><numerusform> gijos</numerusform><numerusform> gijų</numerusform><numerusform> gija</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation>Entri Yang Diekspos</translation>
+        <translation>Atskleisti įrašai</translation>
     </message>
     <message>
         <source>Don&apos;t expose this database</source>
-        <translation>Jangan ekspos basisdata ini</translation>
+        <translation>Neatskleisti šios duomenų bazės</translation>
     </message>
     <message>
         <source>Expose entries under this group:</source>
-        <translation>Ekspos entri di bawah grup ini:</translation>
+        <translation>Atskleisti šios grupės įrašus:</translation>
     </message>
     <message>
         <source>Enable Secret Service to access these settings.</source>
-        <translation>Aktifkan Layanan Rahasia utnuk mengakses pengaturan ini.</translation>
+        <translation>Įgalinkite slaptąją tarnybą, kad galėtumėte pasiekti šiuos nustatymus.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Metadata</source>
-        <translation>Metadata Basisdata</translation>
+        <translation>Duomenų bazės metaduomenys</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>Nama basisdata:</translation>
+        <translation>Duomenų bazės pavadinimas:</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Ruas nama basisdata</translation>
+        <translation>Duomenų bazės pavadinimo laukas</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Deskripsi basisdata:</translation>
+        <translation>Duomenų bazės aprašas:</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>Ruas deskripsi basisdata</translation>
+        <translation>Duomenų bazės aprašymo laukas</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Nama pengguna baku:</translation>
+        <translation>Numatytasis naudotojo vardas:</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation>Ruas nama pengguna baku</translation>
+        <translation>Numatytas naudotojo vardo laukas</translation>
     </message>
     <message>
         <source>History Settings</source>
-        <translation>Pengaturan Riwayat</translation>
+        <translation>Istorijos nustatymai</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation>Jumlah maksimum item riwayat per entri</translation>
+        <translation>Didžiausias istorijos elementų skaičius viename įraše</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Maks. item riwayat:</translation>
+        <translation>Daugiausia istorijos elementų:</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation>Ukuran maksimum riwayat per entri</translation>
+        <translation>Didžiausias vieno įrašo istorijos dydis</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Maks. ukuran riwayat:</translation>
+        <translation>Didžiausias istorijos dydis:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2057,56 +2056,56 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation>Gunakan keranjang sampah</translation>
+        <translation>Naudoti šiukšlinę</translation>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Pengaturan Basisdata Tambahan</translation>
+        <translation>Papildomi duomenų bazės nustatymai</translation>
     </message>
     <message>
         <source>Enable compression (recommended)</source>
-        <translation>Aktifkan kompresi (direkomendasikan)</translation>
+        <translation>Įjungti suspaudimą (rekomenduojama)</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation>Hapus Keranjang Sampah</translation>
+        <translation>Ištrinti šiukšliadėžę</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation>Apakah Anda yakin ingin menghapus keranjang sampah dan semua isinya?
-Tidakan ini tidak bisa diurungkan.</translation>
+        <translation>Ar norite ištrinti dabartinę šiukšliadėžę ir visą jos turinį?
+Šis veiksmas negrįžtamas.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation>(lama)</translation>
+        <translation>(senas)</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation>Berbagi</translation>
+        <translation>Dalijimasis</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation>Breadcrumb</translation>
+        <translation>Duonos krumpliaratis</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Tipe</translation>
+        <translation>Tipas</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Jalur</translation>
+        <translation>Kelias</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation>Penanda Tangan Terakhir</translation>
+        <translation>Paskutinis pasirašytojas</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation>Sertifikat</translation>
+        <translation>Liudijimai</translation>
     </message>
     <message>
         <source> &gt; </source>
@@ -2118,149 +2117,149 @@ Tidakan ini tidak bisa diurungkan.</translation>
     <name>DatabaseSettingsWidgetMaintenance</name>
     <message>
         <source>Manage Custom Icons</source>
-        <translation>Manage Custom Icons</translation>
+        <translation>Pasirinktinių piktogramų tvarkymas</translation>
     </message>
     <message>
         <source>Delete selected icon(s)</source>
-        <translation>Delete selected icon(s)</translation>
+        <translation>Ištrinti pasirinktą (-as) piktogramą (-as)</translation>
     </message>
     <message>
         <source>Delete all custom icons not in use by any entry or group</source>
-        <translation>Delete all custom icons not in use by any entry or group</translation>
+        <translation>Ištrinti visas pasirinktines piktogramas, nenaudojamas jokiame įraše ar grupėje</translation>
     </message>
     <message>
         <source>Purge unused icons</source>
-        <translation>Purge unused icons</translation>
+        <translation>Išvalyti nenaudojamas piktogramas</translation>
     </message>
     <message>
         <source>Confirm Deletion</source>
-        <translation>Konfirmasi Penghapusan</translation>
+        <translation>Patvirtinkite Ištrynimą</translation>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</translation>
+        <translation>Bent viena iš pasirinktų piktogramų šiuo metu naudojama bent viename įraše arba grupėje. Visų paveiktų įrašų ir grupių piktogramos bus pakeistos numatytąja piktograma. Ar tikrai norite ištrinti šiuo metu naudojamas piktogramas?</translation>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
-        <translation>Custom Icons Are In Use</translation>
+        <translation>Naudojamos pasirinktinės piktogramos</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
-        <translation>All custom icons are in use by at least one entry or group.</translation>
+        <translation>Visos pasirinktinės piktogramos yra naudojamos bent viename įraše arba grupėje.</translation>
     </message>
     <message>
         <source>Purged Unused Icons</source>
-        <translation>Purged Unused Icons</translation>
+        <translation>Išvalyti nenaudojamas piktogramas</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Išvalyta %n piktograma (-os) iš duomenų bazės.</numerusform><numerusform>Išvalyta %n piktograma (-os) iš duomenų bazės.</numerusform><numerusform>Išvalyta %n piktograma (-os) iš duomenų bazės.</numerusform><numerusform>Išvalyta %n piktograma (-os) iš duomenų bazės.</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation>Nama Basisdata:</translation>
+        <translation>Duomenų bazės pavadinimas:</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Ruas nama basisdata</translation>
+        <translation>Duomenų bazės pavadinimo laukas</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Deskripsi:</translation>
+        <translation>Aprašas:</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>Ruas deskripsi basisdata</translation>
+        <translation>Duomenų bazės aprašymo laukas</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
-        <translation>Kesalahan dalam membuat basisdata</translation>
+        <translation>Duomenų bazės sukūrimo klaida</translation>
     </message>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
-        <translation>Basisdata yang dibuat tidak memiliki kunci atau KDF, aplikasi tidak bisa menyompannya.
-Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
+        <translation>Sukurtoje duomenų bazėje nėra rakto ar KDF, atsisakant jį išsaugoti.
+Tai tikrai klaida, praneškite apie tai kūrėjams.</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Basisdata KeePass 2</translation>
+        <translation>KeePass 2 duomenų bazė</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Visi failai</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Buka basisdata</translation>
+        <translation>Atverti duomenų bazę</translation>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation>Gagal untuk membuka %1. Mungkin tidak ada atau tidak bisa diakses.</translation>
+        <translation>Nepavyko atidaryti %1. Jis arba neegzistuoja, arba yra nepasiekiamas.</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>Berkas CSV</translation>
+        <translation>CSV failas</translation>
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation>Pilih berkas CSV</translation>
+        <translation>Pasirinkti CSV failą</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Gabung basisdata</translation>
+        <translation>Sulieti duomenų bazę</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>Basisdata KeePass 1</translation>
+        <translation>KeePass 1 duomenų bazė</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Buka basisdata KeePass 1</translation>
+        <translation>Atverkite KeePass 1 duomenų bazę</translation>
     </message>
     <message>
         <source>Open OPVault</source>
-        <translation>Buka OPVault</translation>
+        <translation>Atidarykite &quot;OPVault&quot;</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Ekspor basisdata ke berkas CSV</translation>
+        <translation>Eksportuoti duomenų bazę į CSV failą</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>Gagal membuat berkas CSV.</translation>
+        <translation>CSV failo įrašymas nepavyko.</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation>Gagal menyimpan ke berkas HTML.</translation>
+        <translation>Nepavyko įrašyti HTML failo.</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation>Konfirmasi Ekspor</translation>
+        <translation>Eksporto Patvirtinimas</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Anda akan mengekspor basisdata Anda ke berkas tanpa enkripsi. Ini akan membuat sandi dan informasi sensitif lainnya menjadi sangat rentan. Apakah Anda yakin ingin melanjutkan?</translation>
+        <translation>Ketinate eksportuoti duomenų bazę į neužšifruotą failą. Dėl to jūsų slaptažodžiai ir slapta informacija gali tapti pažeidžiami! Ar tikrai norite tęsti?</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation>Basisdata Baru</translation>
+        <translation>Nauja duomenų bazė</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [Basisdata Baru]</translation>
+        <translation>%1 [Nauja duomenų bazė]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [Dikunci]</translation>
+        <translation>%1 [Užrakinta]</translation>
     </message>
     <message>
         <source>Export database to XML file</source>
@@ -2279,169 +2278,169 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     <name>DatabaseWidget</name>
     <message>
         <source>Searching…</source>
-        <translation>Sedang mencari…</translation>
+        <translation>Ieškoma...</translation>
     </message>
     <message>
         <source>Shared group…</source>
-        <translation>Grup bersama…</translation>
+        <translation>Bendra grupė...</translation>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
-        <translation>Confirm Auto-Type</translation>
+        <translation>Patvirtinti Auto-Įvedimą</translation>
     </message>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
-        <translation>Perform Auto-Type into the previously active window?</translation>
+        <translation>Atlikti Auto-Rašymą į anksčiau aktyvų langą?</translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation>Jalankan perintah?</translation>
+        <translation>Vykdyti komandą?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>Apakah Anda yakin ingin menjalankan perintah berikut?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Ar tikrai norite vykdyti šią komandą?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>Ingat pilihan saya</translation>
+        <translation>Prisiminti mano pasirinkimą</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>Hapus grup</translation>
+        <translation>Ištrinti grupę</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Apakah Anda yakin ingin menghapus grup &quot;%1&quot; untuk selamanya?</translation>
+        <translation>Ar tikrai norite ištrinti grupę &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation>Pindahkan grup ke keranjang sampah?</translation>
+        <translation>Perkelti grupę į šiukšlinę?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Apakah Anda yakin ingin memindahkan grup &quot;%1&quot; ke keranjang sampah?</translation>
+        <translation>Ar tikrai norite perkelti grupę &quot;%1&quot; į šiukšlinę?</translation>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation>Entri kedaluwarsa</translation>
+        <translation>Nebegaliojantys įrašai</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Tidak ada basisdata.</translation>
+        <translation>Nėra esamos duomenų bazės.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>Tidak ada sumber basisdata, tidak perlu melakukan apa-apa.</translation>
+        <translation>Nėra šaltinio duomenų bazės, nėra ką atlikti.</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation>Berhasil menggabungkan berkas basisdata.</translation>
+        <translation>Duomenų bazės failai sėkmingai sulieti.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>Basisdata tidak ada perubahan yang diakibatkan oleh proses penggabungan.</translation>
+        <translation>Duomenų bazė nebuvo pakeista atliekant sujungimo operaciją.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation>Hasil Pencarian (%1)</translation>
+        <translation>Paieškos rezultatai (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation>Tidak Ada Hasil</translation>
+        <translation>Nėra rezultatų</translation>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation>Kunci Basisdata?</translation>
+        <translation>Užrakinti duomenų bazę?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>Anda sedang menyunting entri. Abaikan ubahan dan tetap mengunci?</translation>
+        <translation>Jūs redaguojate įrašą. Atmesti pakeitimus ir vis tiek užrakinti?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; telah dimodifikasi.
-Simpan perubahan?</translation>
+        <translation>&quot;%1&quot; buvo pakeista.
+Įrašyti pakeitimus?</translation>
     </message>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation>Basisdata telah diubah.
-Simpan perubahan?</translation>
+        <translation>Duomenų bazė buvo pakeista.
+Išsaugoti pakeitimus?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Simpan perubahan?</translation>
+        <translation>Įrašyti pakeitimus?</translation>
     </message>
     <message>
         <source>File has changed</source>
-        <translation>Berkas telah berubah</translation>
+        <translation>Failas pasikeitė</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>Berkas basisdata telah berubah. Apakah Anda ingin memuat perubahannya?</translation>
+        <translation>Duomenų bazės failas pasikeitė. Ar norite įkelti pakeitimus?</translation>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>Permintaan Penggabungan</translation>
+        <translation>Suliejimo užklausa</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>Berkas basisdata telah berubah dan Anda memiliki ubahan yang belum disimpan.
-Apakah Anda ingin menggabungkan ubahan Anda?</translation>
+        <translation>Duomenų bazės failas pasikeitė ir jūs turite neįrašytų pakeitimų.
+Ar norite sulieti savo pakeitimus?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
 Error: %1</source>
-        <translation>Tidak bisa membuka berkas basisdata baru saat mencoba untuk memuat ulang.
-Galat: %1</translation>
+        <translation>Nepavyko atidaryti naujos duomenų bazės failo bandant automatiškai įkelti.
+Klaida: %1</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation>Nonaktifkan penyimpanan aman?</translation>
+        <translation>Išjungti saugų išsaugojimą?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC telah beberapa kali gagal menyimpan basisdata. Hal ini mungkin disebabkan oleh layanan sinkronisasi berkas yang menghalangi berkas yang akan disimpan.
-Nonaktifkan penyimpanan aman dan coba lagi?</translation>
+        <translation>KeePassXC nepavyko išsaugoti duomenų bazės kelis kartus. Tikėtina, kad taip atsitiko dėl to, kad failų sinchronizavimo paslaugos užrakino išsaugojimo failą.
+Išjunkite saugų išsaugojimą ir bandykite dar kartą?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>Gagal menyimpan basisdata: %1</translation>
+        <translation>Nepavyko įrašyti duomenų bazės: %1</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodžiai</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Simpan basisdata sebagai</translation>
+        <translation>Įrašyti duomenų bazę kaip</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Basisdata KeePass 2</translation>
+        <translation>KeePass 2 duomenų bazė</translation>
     </message>
     <message>
         <source>Save database backup</source>
-        <translation>Simpan cadangan basisdata</translation>
+        <translation>Išsaugoti atsarginę duomenų bazės kopiją</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>Kosongkan keranjang sampah?</translation>
+        <translation>Išvalyti šiukšlinę?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Apakah Anda yakin ingin menghapus semuanya secara permanen dari keranjang sampah?</translation>
+        <translation>Ar tikrai norite negrįžtamai viską ištrinti iš savo šiukšlinės?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
-        <translation>Tidak bisa menemukan berkas basisdata: %1</translation>
+        <translation>Nepavyko rasti duomenų bazės failo: %1</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Įrašai, kurių galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Įrašai, kurių galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Įrašai, kurių galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Įrašai, kurių galiojimas baigiasi per %1 dieną (-as)</numerusform></translation>
     </message>
     <message>
         <source>Searches and Tags</source>
@@ -2453,34 +2452,34 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Simpan</translation>
+        <translation>Įrašyti</translation>
     </message>
     <message>
         <source>Save Search</source>
-        <translation>Simpan pencarian</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Entri</translation>
+        <translation>Įrašas</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Tingkat Lanjut</translation>
+        <translation>Išplėstiniai</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Piktograma</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Ketik-Otomatis</translation>
+        <translation>Automatinis rinkimas</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Integrasi Peramban</translation>
+        <translation>Naršyklės integracija</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
@@ -2488,279 +2487,279 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation>Konfirmasi Penghapusan</translation>
+        <translation>Patvirtinti pašalinimą</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>Apakah Anda yakin ingin membuang URL ini?</translation>
+        <translation>Ar tikrai norite pašalinti šį URL adresą?</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Properti</translation>
+        <translation>Savybės</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Riwayat</translation>
+        <translation>Istorija</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH Agent</translation>
+        <translation>SSH agentas</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>t/a</translation>
+        <translation>nėra</translation>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(terenkripsi)</translation>
+        <translation>(šifruota)</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation>Pilih kunci privat</translation>
+        <translation>Pasirinkti privatųjį raktą</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Riwayat entri</translation>
+        <translation>Įrašo istorija</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Tambah entri</translation>
+        <translation>Pridėti įrašą</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Sunting entri</translation>
+        <translation>Keisti įrašą</translation>
     </message>
     <message>
         <source>Some Browser Integration settings are overridden by group settings.</source>
-        <translation>Some Browser Integration settings are overridden by group settings.</translation>
+        <translation>Kai kurių naršyklės integravimo parametrų nepaiso grupės parametrai.</translation>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation>Entri Tidak Valid</translation>
+        <translation>Netinkamas įrašas</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation>An external merge operation has invalidated this entry.
-Unfortunately, any changes made have been lost.</translation>
+        <translation>Išorinė suliejimo operacija anuliavo šį įrašą.
+Deja, bet kokie padaryti pakeitimai buvo prarasti.</translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
-        <translation>Auto-Type Validation Error</translation>
+        <translation>Automatinio rinkimo patvirtinimo klaida</translation>
     </message>
     <message>
         <source>An error occurred while validating the custom Auto-Type sequence:
 %1
 Would you like to correct it?</source>
-        <translation>An error occurred while validating the custom Auto-Type sequence:
+        <translation>Patvirtinant pasirinktinę automatinio rinkimo seką įvyko klaida:
 %1
-Would you like to correct it?</translation>
+Ar norėtumėte ją ištaisyti?</translation>
     </message>
     <message>
         <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
 %2
 Would you like to correct it?</source>
-        <translation>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
+        <translation>Patvirtinant &quot;%1&quot; automatinio rinkimo seką įvyko klaida:
 %2
-Would you like to correct it?</translation>
+Ar norėtumėte ją ištaisyti?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation>Entri berhasil diperbarui.</translation>
+        <translation>Įrašas sėkmingai atnaujintas.</translation>
     </message>
     <message>
         <source>Unsaved Changes</source>
-        <translation>Perubahan Belum Disimpan</translation>
+        <translation>Neišsaugoti pakeitimai</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>Apakah Anda yakin ingin menyimpan perubahan ke entri ini?</translation>
+        <translation>Ar norite išsaugoti šio įrašo pakeitimus?</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Atribut baru</translation>
+        <translation>Naujas požymis</translation>
     </message>
     <message>
         <source>New attribute %1</source>
-        <translation>Atribut baru %1</translation>
+        <translation>Naujas požymis %1</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Apakah Anda yakin ingin membuang atribut ini?</translation>
+        <translation>Ar tikrai norite pašalinti šį požymi?</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Tampilkan</translation>
+        <translation>Atskleisti</translation>
     </message>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
-        <translation>[DILINDUNGI] Tekan Tampilkan untuk melihat atau menyunting</translation>
+        <translation>[APSAUGOTAS] Paspauskite Atskleisti, jei norite peržiūrėti arba redaguoti</translation>
     </message>
     <message>
         <source>Hide</source>
-        <translation>Sembunyikan</translation>
+        <translation>Slėpti</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n minggu</numerusform></translation>
+        <translation><numerusform>%n savaitė</numerusform><numerusform>%n savaitės</numerusform><numerusform>%n savaičių</numerusform><numerusform>%n savaičių</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n bulan</numerusform></translation>
+        <translation><numerusform>%n mėnesis</numerusform><numerusform>%n mėnesiai</numerusform><numerusform>%n mėnesių</numerusform><numerusform>%n mėnesių</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>%n tahun</numerusform></translation>
+        <translation><numerusform>%n metai (-ai)</numerusform><numerusform>%n metai (-ai)</numerusform><numerusform>%n metai (-ai)</numerusform><numerusform>%n metai (-ai)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n val.</numerusform><numerusform>%n val.</numerusform><numerusform>%n val.</numerusform><numerusform>%n val.</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Atribut tambahan</translation>
+        <translation>Papildomi požymiai</translation>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation>Pemilihan atribut</translation>
+        <translation>Atributo pasirinkimas</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation>Nilai atribut</translation>
+        <translation>Attribute value</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation>Tambah atribut baru</translation>
+        <translation>Pridėti naują atributą</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Tambah</translation>
+        <translation>Pridėti</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation>Buang atribut yang dipilih</translation>
+        <translation>Pašalinti pasirinktą atributą</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Buang</translation>
+        <translation>Šalinti</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation>Sunting nama atribut</translation>
+        <translation>Redaguoti atributo pavadinimą</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation>Sunting Nama</translation>
+        <translation>Taisyti pavadinimą</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation>Aktif/Nonaktifkan proteksi atribut</translation>
+        <translation>Perjungti atributų apsaugą</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation>Proteksi</translation>
+        <translation>Apsaugoti</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation>Tampilkan atribut yang dilindungi</translation>
+        <translation>Rodyti apsaugotą atributą</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Tampilkan</translation>
+        <translation>Atskleisti</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Lampiran</translation>
+        <translation>Priedai</translation>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</translation>
+        <translation>Jei pažymėta, įrašas nebus rodomas ataskaitose, pvz., būklės patikrinimas ir HIBP, net jei jis neatitinka kokybės reikalavimų.</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
-        <translation>Kecualikan dari laporan basisdata</translation>
+        <translation>Neįtraukti į duomenų bazės ataskaitas</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation>Warna Latar Depan:</translation>
+        <translation>Priekinio plano spalva:</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation>Pemilihan warna latar depan</translation>
+        <translation>Priekinio plano spalvų pasirinkimas</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation>Warna Latar Belakang:</translation>
+        <translation>Fono spalva:</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation>Pemilihan warna latar belakang</translation>
+        <translation>Fono spalvos pasirinkimas</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Aktifkan Ketik-Otomatis untuk entri ini</translation>
+        <translation>Įjungti šiam įrašui automatinį rinkimą</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Mengikuti urutan Ketik-Otomatis baku grup</translation>
+        <translation>Paveldėti numatytąją automatinio rinkimo seką iš grupės</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Gunakan urutan Ketik-Otomatis ubahsuai:</translation>
+        <translation>Naudoti tinkintą automatinio rinkimo seka:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation>Urutan Ketik-Otomatis khusus</translation>
+        <translation>Pasirinktinė automatinio tipo seka</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation>Buka laman bantuan Ketik-Otomatis</translation>
+        <translation>Atidaryti automatinio rinkimo pagalbos tinklalapį</translation>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation>Asosiasi Jendela</translation>
+        <translation>Lango asociacijos</translation>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation>Asosiasi jendela yang ada</translation>
+        <translation>Esamos langų sąsajos</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation>Tambah asosiasi jendela baru</translation>
+        <translation>Pridėti naują langų susiejimą</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation>Buang asosiasi jendela yang dipilih</translation>
+        <translation>Pašalinti pasirinktą langų susiejimą</translation>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Judul jendela:</translation>
+        <translation>Lango antraštė:</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation>Anda bisa menggunakan asterik (*) untuk mencocokkan semuanya</translation>
+        <translation>Galite naudoti žvaigždutę (*), kad viskas atitiktų</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation>Atur judul asosiasi jendela</translation>
+        <translation>Lango susiejimo pavadinimo nustatymas</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation>Anda bisa menggunakan asterik untuk mencocokkan semuanya</translation>
+        <translation>Galite naudoti žvaigždutę, kad viskas atitiktų</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>Gunakan sekuens spesifik untuk asosiasi ini:</translation>
+        <translation>Šiam susiejimui naudokite konkrečią seką:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation>Urutan Ketik-Otomatis khusus untuk jendela ini</translation>
+        <translation>Pasirinktinė šio lango automatinio rinkimo seka</translation>
     </message>
     <message>
         <source>+</source>
@@ -2777,137 +2776,137 @@ Would you like to correct it?</translation>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Pengaturan ini mempengaruhi perilaku entri dengan ekstensi peramban.</translation>
+        <translation>Šie nustatymai turi įtakos įrašo elgsenai su naršyklės plėtiniu.</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Umum</translation>
+        <translation>Bendra</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation>Sembunyikan entri ini dari ekstensi peramban</translation>
+        <translation>Paslėpti šį įrašą nuo naršyklės plėtinio</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation>Lewati Kirim-Otomatis untuk entri ini</translation>
+        <translation>Praleisti šio įrašo automatinį pateikimą</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Hanya kirim pengaturan ini ke peramban untuk dialog Otentikasi HTTP. Jika diaktifkan, formulir masuk yang normal tidak akan menampilkan entri ini untuk dipilih.</translation>
+        <translation>Siųskite šį parametrą tik į naršyklę HTTP Auth dialogo langams. Jei įjungta, įprastose prisijungimo formose šis pasirinkimo įrašas nebus rodomas.</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation>Hanya gunakan entri ini dengan Otentikasi Dasar HTTP</translation>
+        <translation>Naudokite šį įrašą tik su HTTP Basic Auth</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</translation>
+        <translation>Nesiųskite šio parametro į naršyklę HTTP Auth dialogams. Jei įjungta, HTTP Auth dialogo languose šis pasirinkimo įrašas nebus rodomas.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
-        <translation>Jangan gunakan entri ini dengan Otentikasi Dasar HTTP</translation>
+        <translation>Nenaudokite šio įrašo su HTTP Basic Auth</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation>URL tambahan</translation>
+        <translation>Papildomi URL adresai</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Tambah</translation>
+        <translation>Pridėti</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Buang</translation>
+        <translation>Šalinti</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Sunting</translation>
+        <translation>Keisti</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Entry history selection</source>
-        <translation>Pemilihan riwayat entri</translation>
+        <translation>Įrašo istorijos pasirinkimas</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation>Tampilkan entri pada status riwayat yang dipilih</translation>
+        <translation>Rodyti pasirinktos istorijos padėties įrašą</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Tampilkan</translation>
+        <translation>Rodyti</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation>Pulihkan entri ke status riwayat yang dipilih</translation>
+        <translation>Atkurti įrašą į pasirinktą istorijos padėtį</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Kembalikan</translation>
+        <translation>Atkurti</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation>Hapus status riwayat yang dipilih</translation>
+        <translation>Ištrinti pasirinktą istorijos padėtį</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Hapus</translation>
+        <translation>Ištrinti</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation>Hapus semua riwayat</translation>
+        <translation>Ištrinti visą istoriją</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Hapus semua</translation>
+        <translation>Ištrinti visus</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Edit Entry</source>
-        <translation>Sunting Entri</translation>
+        <translation>Redaguoti Įrašą</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>Ruas catatan</translation>
+        <translation>Pastabų laukas</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Pilih kotak centang untuk mengungkap bagian catatan.</translation>
+        <translation>Norėdami atskleisti pastabų sekciją, perjunkite žymimąjį langelį.</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation>Ruas nama pengguna</translation>
+        <translation>Naudojo vardo laukas</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation>Aktif/Nonaktifkan visibilitas cacatan</translation>
+        <translation>Perjungti pastabų matomumą</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Catatan:</translation>
+        <translation>Pastabos:</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>Ruas kedaluwarsa</translation>
+        <translation>Galiojimo laukas</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation>Prasetel Kedaluwarsa</translation>
+        <translation>Išankstiniai galiojimo pabaigos nustatymai</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation>Prasetel kedaluwarsa</translation>
+        <translation>Išankstiniai galiojimo pabaigos nustatymai</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Prasetel</translation>
+        <translation>Parinktys</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Sandi:</translation>
+        <translation>Slaptažodis:</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -2915,524 +2914,524 @@ Would you like to correct it?</translation>
     </message>
     <message>
         <source>Url field</source>
-        <translation>Ruas url</translation>
+        <translation>Url adreso laukas</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Untuk favicon untuk URL</translation>
+        <translation>Atsisiųsti piktogramą URL adresui</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Judul:</translation>
+        <translation>Antraštė:</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation>Ruas judul</translation>
+        <translation>Pavadinimo laukas</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Nama pengguna:</translation>
+        <translation>Naudotojo vardas:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Ruas sandi</translation>
+        <translation>Slaptažodžio laukas</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Aktif/Nonaktifkan kedaluwarsa</translation>
+        <translation>Perjungti galiojimo terminą</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation>Kedaluwarsa:</translation>
+        <translation>Baigiasi:</translation>
     </message>
     <message>
         <source>Tags:</source>
-        <translation>Tag:</translation>
+        <translation>Žymos:</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation>Daftar tag</translation>
+        <translation>Žymų sąrašas</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation>Formulir</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>Buang kunci dari agent saat basisdata ditutup/dikunci</translation>
+        <translation>Užvėrus/užrakinus duomenų bazę, šalinti raktą iš agento</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation>Komentar</translation>
+        <translation>Komentaras</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Tambahkan kunci ke agent saat basisdata dibuka/tak terkunci</translation>
+        <translation>Atvėrus/atrakinus duomenų bazę, pridėti raktą į agentą</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>Dekripsi</translation>
+        <translation>Iššifruoti</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>Tanda tangan</translation>
+        <translation>Kontrolinis kodas</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Salin ke papan klip</translation>
+        <translation>Kopijuoti į iškarpinę</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>Kunci publik</translation>
+        <translation>Viešasis raktas</translation>
     </message>
     <message>
         <source>Private key</source>
-        <translation>Kunci privat</translation>
+        <translation>Privatusis raktas</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation>Berkas eksternal</translation>
+        <translation>Išorinis failas</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation>Peramban untuk berkas kunci</translation>
+        <translation>Rakto failo naršyklė</translation>
     </message>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Telusuri…</translation>
+        <translation>Naršyti...</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation>Lampiran</translation>
+        <translation>Priedas</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation>Berkas kunci eksternal</translation>
+        <translation>Išorinis rakto failas</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation>Tambahkan ke agent</translation>
+        <translation>Pridėti į agentą</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation>Buang dari agent</translation>
+        <translation>Šalinti iš agento</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation>Pilih berkas lampiran</translation>
+        <translation>Pasirinkti priedo failą</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation>Membutuhkan konfirmasi pengguna saat kunci ini digunakan</translation>
+        <translation>Naudojant šį raktą, reikalauti naudotojo patvirtinimo</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>t/a</translation>
+        <translation>nėra</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation>Buang kunci dari agent setelah</translation>
+        <translation>Šalinti raktą iš agento po</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation>Hapus kunci dari agen setelah detik yang ditentukan</translation>
+        <translation>Pašalinkite raktą iš agento po nurodytų sekundžių</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation>detik</translation>
+        <translation> sekundžių</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Grup</translation>
+        <translation>Grupė</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Piktograma</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Integrasi Peramban</translation>
+        <translation>Naršyklės integracija</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Properti</translation>
+        <translation>Savybės</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Tambah grup</translation>
+        <translation>Pridėti grupę</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Sunting grup</translation>
+        <translation>Keisti grupę</translation>
     </message>
     <message>
         <source>Group has unsaved changes</source>
-        <translation>Grup memiliki perubahan yang belum disimpan</translation>
+        <translation>Grupė turi neišsaugotų pakeitimų</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Aktifkan</translation>
+        <translation>Įjungti</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Nonaktifkan</translation>
+        <translation>Išjungti</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Mengikuti grup induk (%1)</translation>
+        <translation>Paveldėti iš pirminės grupės (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
         <source>Edit Group</source>
-        <translation>Sunting Grup</translation>
+        <translation>Redaguoti Grupę</translation>
     </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
-        <translation>These settings affect to the group&apos;s behaviour with the browser extension.</translation>
+        <translation>Šie nustatymai turi įtakos grupės elgesiui su naršyklės plėtiniu.</translation>
     </message>
     <message>
         <source>Hide entries from browser extension:</source>
-        <translation>Hide entries from browser extension:</translation>
+        <translation>Slėpti įrašus nuo naršyklės plėtinio:</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Hide entries from browser extension toggle for this and sub groups</translation>
+        <translation>Slėpti įrašus iš naršyklės plėtinių perjungimo šiam ir pogrupiams</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
-        <translation>Skip Auto-Submit for entries:</translation>
+        <translation>Praleisti automatinį pateikimą įrašams:</translation>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
-        <translation>Skip Auto-Submit toggle for this and sub groups</translation>
+        <translation>Šio ir pogrupių perjungti jungiklį Praleisti automatinį pateikimą</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
-        <translation>Use entries only with HTTP Basic Auth:</translation>
+        <translation>Naudokite įrašus tik su HTTP Basic Auth:</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Only HTTP Auth toggle for this and sub groups</translation>
+        <translation>Tik HTTP Auth perjungimas šiam ir pogrupiams</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
-        <translation>Do not use entries with HTTP Basic Auth:</translation>
+        <translation>Nenaudokite įrašų su HTTP Basic Auth:</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>Do not use HTTP Auth toggle for this and sub groups</translation>
+        <translation>Nenaudokite HTTP Auth perjungimo šiam ir pogrupiams</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
-        <translation type="unfinished"/>
+        <translation>Praleiskite WWW padomenį nuo atitikimo:</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Praleiskite WWW padomenį nuo šio ir pogrupių atitikimo perjungimo</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
     <message>
         <source>Sharing mode field</source>
-        <translation>Ruas mode berbagi</translation>
+        <translation>Bendrinimo režimo laukas</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Ruas sandi</translation>
+        <translation>Slaptažodžio laukas</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Tipe:</translation>
+        <translation>Tipas:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Sandi:</translation>
+        <translation>Slaptažodis:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation>Jalur:</translation>
+        <translation>Kelias:</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation>Ruas jalur ke berkas yang dibagikan</translation>
+        <translation>Failo bendrinimo lauko kelias</translation>
     </message>
     <message>
         <source>Browse for share file</source>
-        <translation>Telusuri berkas berbagi</translation>
+        <translation>Bendrinimo failo naršymas</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Telusuri…</translation>
+        <translation>Naršyti...</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation>Kosongkan ruas</translation>
+        <translation>Išvalyti laukus</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Bersihkan</translation>
+        <translation>Išvalyti</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation>Tidak aktif</translation>
+        <translation>Neaktyvus</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Impor</translation>
+        <translation>Importuoti</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Ekspor</translation>
+        <translation>Eksportuoti</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation>Sinkronkan</translation>
+        <translation>Sinchronizuoti</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation>Versi KeePassXC Anda tidak mendukung fitur berbagi untuk tipe kontainer ini.
-Ekstensi yang didukung adalah: %1.</translation>
+        <translation>Jūsų &quot;KeePassXC&quot; versija nepalaiko šio konteinerio tipo bendrinimo.
+Palaikomi pratęsimai yra: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation>%1 telah diekspor oleh basisdata ini.</translation>
+        <translation>%1 jau eksportuojamas iš šios duomenų bazės.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation>%1 telah diimpor oleh basisdata ini.</translation>
+        <translation>%1 jau importuojamas į šią duomenų bazę.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation>%1 sedang diimpor dan diekspor oleh berbagai grup  dalam basisdata ini.</translation>
+        <translation>%1 šioje duomenų bazėje importuoja ir eksportuoja įvairios grupės.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation>Saat ini KeeShare dinonaktifkan. Anda dapat mengaktifkan impor/ekspor di pengaturan aplikasi.</translation>
+        <translation>KeeShare šiuo metu yra išjungtas. Galite įjungti importavimą / eksportavimą programos nustatymuose.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Ekspor basisdata saat ini dinonaktifkan oleh pengaturan aplikasi.</translation>
+        <translation>Duomenų bazės eksportas šiuo metu išjungtas pagal programos nustatymus.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Impor basisdata saat ini dinonaktifkan oleh pengaturan aplikasi.</translation>
+        <translation>Duomenų bazės importas šiuo metu išjungtas pagal programos nustatymus.</translation>
     </message>
     <message>
         <source>KeeShare container</source>
-        <translation>KeeShare container</translation>
+        <translation>KeeShare konteineris</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation>Kontainer KeeShare bertanda tangan</translation>
+        <translation>KeeShare pasirašytas konteineris</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation>Pilih sumber impor</translation>
+        <translation>Pasirinkti importo šaltinį</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation>Pilih target ekspor</translation>
+        <translation>Pasirinkti eksporto tikslą</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation>Pilih berkas impor/ekspor</translation>
+        <translation>Pasirinkti importo / eksporto failą</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Edit Group</source>
-        <translation>Sunting Grup</translation>
+        <translation>Redaguoti Grupę</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Aktif/Nonaktifkan kedaluwarsa</translation>
+        <translation>Perjungti galiojimo terminą</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation>Kedaluwarsa:</translation>
+        <translation>Baigiasi:</translation>
     </message>
     <message>
         <source>Name field</source>
-        <translation>Ruas nama</translation>
+        <translation>Pavadinimo laukas</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>Ruas kedaluwarsa</translation>
+        <translation>Galiojimo laukas</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation>Gunakan urutan Ketik-Otomatis bawaan dari grup induk</translation>
+        <translation>Naudoti numatytąją pagrindinės grupės automatinio rinkimo seką</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation>Ketik-Otomatis:</translation>
+        <translation>Auto-Įvedimas:</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation>Cari:</translation>
+        <translation>Ieškoti:</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation>Aktif/Nonaktifkan Ketik-Otomatis untuk ini dan sub grup</translation>
+        <translation>Automatinio rinkimo perjungimas šiai ir pagalbinėms grupėms</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Catatan:</translation>
+        <translation>Pastabos:</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation>Ruas urutan ketik-otomatis baku</translation>
+        <translation>Numatytos automatinio rinkimo sekos laukas</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>Ruas catatan</translation>
+        <translation>Pastabų laukas</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Nama:</translation>
+        <translation>Pavadinimas:</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
-        <translation>Tetapkan urutan Ketik-Otomatis yang baku</translation>
+        <translation>Nustatyti numatytąją Auto-Įvedimo seką</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation>Aktif/Nonaktifkan pencarian untuk ini dan sub grup</translation>
+        <translation>Ieškos perjungiklis šiam ir pogrupiams</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Gunakan ikon baku</translation>
+        <translation>Naudoti numatytąją piktogramą</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Gunakan ikon ubahsuai</translation>
+        <translation>Naudoti tinkintą piktogramą</translation>
     </message>
     <message>
         <source>Choose icon…</source>
-        <translation>Pilih ikon</translation>
+        <translation>Pasirinkti piktogramą...</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
-        <translation>Mengatur URL yang dipakai untuk mencari favicon</translation>
+        <translation>Nustatykite URL, kurį norite naudoti ieškodami favicon</translation>
     </message>
     <message>
         <source>Favicon URL</source>
-        <translation>URL Favicon</translation>
+        <translation>Piktogramos URL adresas</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Untuk favicon untuk URL</translation>
+        <translation>Atsisiųsti piktogramą URL adresui</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Unduh favicon</translation>
+        <translation>Atsisiųsti svetainės piktogramą</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation>Terapkan ikon yang dipilih ke subgrup dan entri</translation>
+        <translation>Taikyti pasirinktą piktogramą pogrupiams ir įrašams</translation>
     </message>
     <message>
         <source>Apply icon to…</source>
-        <translation>Terapkan ikon ke...</translation>
+        <translation>Taikyti piktogramą...</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
-        <translation>Hanya terapkan ke grup ini</translation>
+        <translation>Taikyti tik šiai grupei</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation>Juga terapkan ke grup di dalamnya</translation>
+        <translation>Taip pat taikoma vaikų grupėms</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation>Juga terapkan ke entri di dalamnya</translation>
+        <translation>Taip pat taikoma antriniams įrašams</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation>Juga terapkan ke semua grup dan entri</translation>
+        <translation>Taip pat taikoma visiems vaikams</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>Tidak bisa mengunduh favicon.</translation>
+        <translation>Nepavyko gauti svetainės piktogramos.</translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>Anda bisa mengaktifkan layanan ikon situs web oleh DuckDuckGo di Perkakas &gt; Pengaturan &gt; Keamanan</translation>
+        <translation>DuckDuckGo svetainių piktogramų paslaugą galite įjungti skiltyje Įrankiai -&gt; Nustatymai -&gt; Saugumas</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation>Ikon yang sudah ada dipilih.</translation>
+        <translation>Pasirinkta esama piktograma.</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Gambar</translation>
+        <translation>Paveikslai</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Visi failai</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation>Pilih Gambar</translation>
+        <translation>Pasirinkite paveikslėlį (-ius)</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>Berhasil memuat %1 dari %n ikon</numerusform></translation>
+        <translation><numerusform>Sėkmingai įkelta %1 iš %n piktogramos (-ių)</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramos (-ių)</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramos (-ių)</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramos (-ių)</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
-        <translation>Tidak ada ikon yang dimuat</translation>
+        <translation>Neįkelta jokių piktogramų</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n ikon sudah ada didalam basisdata</numerusform></translation>
+        <translation><numerusform>%n piktograma (-os) jau yra duomenų bazėje</numerusform><numerusform>%n piktograma (-os) jau yra duomenų bazėje</numerusform><numerusform>%n piktograma (-os) jau yra duomenų bazėje</numerusform><numerusform>%n piktograma (-os) jau yra duomenų bazėje</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>Ikon berikut gagal:</numerusform></translation>
+        <translation><numerusform>Ši piktograma patyrė nesėkmę:</numerusform><numerusform>Šios piktogramos patyrė nesėkmę:</numerusform><numerusform>Šios piktogramos patyrė nesėkmę:</numerusform><numerusform>Šios piktogramos patyrė nesėkmę:</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Dibuat:</translation>
+        <translation>Sukurta:</translation>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation>Tanggal waktu dibuat</translation>
+        <translation>Sukurtas datetime</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Dimodifikasi:</translation>
+        <translation>Keista:</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation>Tanggal waktu dimodifikasi</translation>
+        <translation>Datos laikas modifikuotas</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Diakses:</translation>
+        <translation>Prieiga:</translation>
     </message>
     <message>
         <source>Datetime accessed</source>
-        <translation>Tanggal waktu diakses</translation>
+        <translation>Datos laikas pasiekiamas</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -3440,257 +3439,260 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation>ID Unik</translation>
+        <translation>Unikalus ID</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>Data Pengaya</translation>
+        <translation>Papildinių duomenys</translation>
     </message>
     <message>
         <source>Plugin data</source>
-        <translation>Data pengaya</translation>
+        <translation>Papildinių duomenys</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation>Buang data pengaya yang dipilih</translation>
+        <translation>Pašalinti pasirinktus papildinių duomenis</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Buang</translation>
+        <translation>Šalinti</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>Hapus data pengaya?</translation>
+        <translation>Ištrinti papildinių duomenis?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>Apakah Anda yakin ingin menghapus data pengaya?
-Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
+        <translation>Ar tikrai norite ištrinti pasirinktus papildinių duomenis?
+Dėl to gali sutrikti paveiktų papildinių veikimas.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Kunci</translation>
+        <translation>Raktas</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Nilai</translation>
+        <translation>Reikšmė</translation>
     </message>
 </context>
 <context>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 - Salinan</translation>
+        <translation>%1 - Klonas</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation>Tidak bisa membuka berkas &quot;%1&quot;</translation>
+        <translation>Nepavyko atidaryti failo &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsModel</name>
     <message>
         <source>Name</source>
-        <translation>Nama</translation>
+        <translation>Pavadinimas</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Ukuran</translation>
+        <translation>Dydis</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Formulir</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Lampiran</translation>
+        <translation>Priedai</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation>Tambah lampiran baru</translation>
+        <translation>Pridėti naują priedą</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Tambah</translation>
+        <translation>Pridėti</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation>Buang lampiran yang dipilih</translation>
+        <translation>Pašalinti pasirinktą priedą</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Buang</translation>
+        <translation>Šalinti</translation>
     </message>
     <message>
         <source>Rename selected attachment</source>
-        <translation>Gantikan nama lampiran terpilih</translation>
+        <translation>Pervadinti pasirinktą priedą</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation>Ganti namanya</translation>
+        <translation>Pervadinti</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation>Buka lampiran yang dipilih</translation>
+        <translation>Atverti pasirinktą priedą</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Buka</translation>
+        <translation>Atverti</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation>Simpan lampiran yang dipilih ke diska</translation>
+        <translation>Įrašyti pasirinktą priedą į diską</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Simpan</translation>
+        <translation>Įrašyti</translation>
     </message>
     <message>
         <source>Select files</source>
-        <translation>Pilih berkas</translation>
+        <translation>Pasirinkti failus</translation>
     </message>
     <message>
         <source>Confirm remove</source>
-        <translation>Konfirmasi buang</translation>
+        <translation>Patvirtinti pašalinimą</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Apakah Anda yakin ingin membuang %n lampiran?</numerusform></translation>
+        <translation><numerusform>Ar tikrai norite pašalinti %n priedą?</numerusform><numerusform>Ar tikrai norite pašalinti %n priedus?</numerusform><numerusform>Ar tikrai norite pašalinti %n priedų?</numerusform><numerusform>Ar tikrai norite pašalinti %n priedų?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation>Simpan lampiran</translation>
+        <translation>Įrašyti priedus</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation>Tidak bisa membuat direktori:
+        <translation>Nepavyko sukurti katalogą:
 %1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Apakah Anda yakin ingin menimpa ulang berkas &quot;%1&quot; yang ada dengan berkas lampiran?</translation>
+        <translation>Ar tikrai norite perrašyti failą &quot;%1&quot; priedu?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation>Konfirmasi menimpa ulang</translation>
+        <translation>Patvirtinti perrašymą</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation>Tidak bisa menyimpan lampiran:
+        <translation>Nepavyko įrašyti priedus:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation>Tidak bisa membuka lampiran:
+        <translation>Nepavyko atverti priedą:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>Tidak bisa membuka lampiran:
+        <translation>Nepavyko atverti priedus:
 %1</translation>
     </message>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation><numerusform>Tidak bisa membuka berkas:
+        <translation><numerusform>Nepavyksta atidaryti failo (-ų):
+%1</numerusform><numerusform>Nepavyksta atidaryti failo (-ų):
+%1</numerusform><numerusform>Nepavyksta atidaryti failo (-ų):
+%1</numerusform><numerusform>Nepavyksta atidaryti failo (-ų):
 %1</numerusform></translation>
     </message>
     <message>
         <source>Confirm Overwrite Attachment</source>
-        <translation>Confirm Overwrite Attachment</translation>
+        <translation>Patvirtinti priedo perrašymą</translation>
     </message>
     <message>
         <source>Attachment &quot;%1&quot; already exists. 
 Would you like to overwrite the existing attachment?</source>
-        <translation>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</translation>
+        <translation>Priedas &quot;%1&quot; jau egzistuoja. 
+Ar norite perrašyti esamą priedą?</translation>
     </message>
     <message>
         <source>Confirm Attachment</source>
-        <translation>Konfirmasi Lampiran</translation>
+        <translation>Patvirtinti priedą</translation>
     </message>
     <message>
         <source>%1 is a big file (%2 MB).
 Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
-        <translation>%1 adalah berkas yang sangat besar (%2 MB).
-Basisdata Anda akan menjadi sangat besar dan akan mengurangi performa kinerja.
+        <translation>%1 yra didelis failas (%2 MB).
+Jūsų duomenų bazė gali tapti labai didelė ir gali sumažėti našumas.
 
-Apakah Anda yakin ingin menambahkan berkas ini?</translation>
+Ar tikrai norite pridėti šį failą?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation>Attachment modified</translation>
+        <translation>Priedas pakeistas</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation>The attachment &apos;%1&apos; was modified.
-Do you want to save the changes to your database?</translation>
+        <translation>Priedas &apos;%1&apos; buvo pakeistas.
+Ar norite išsaugoti pakeitimus savo duomenų bazėje?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation>Saving attachment failed</translation>
+        <translation>Nepavyko išsaugoti priedo</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation>Saving updated attachment failed.
-Error: %1</translation>
+        <translation>Nepavyko išsaugoti atnaujinto priedo.
+Klaida: %1</translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Nama</translation>
+        <translation>Pavadinimas</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Current (%1)</source>
-        <translation>Current (%1)</translation>
+        <translation>Dabartinis (%1)</translation>
     </message>
     <message>
         <source>Last modified</source>
-        <translation>Terakhir dimodifikasi</translation>
+        <translation>Paskutinis keitimas</translation>
     </message>
     <message>
         <source>Age</source>
-        <translation>Usia</translation>
+        <translation>Amžius</translation>
     </message>
     <message>
         <source>Difference</source>
-        <translation>Perbedaan</translation>
+        <translation>Skirtumas</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Ukuran</translation>
+        <translation>Dydis</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Judul</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nama pengguna</translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3698,23 +3700,23 @@ Error: %1</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Catatan</translation>
+        <translation>Pastabos</translation>
     </message>
     <message>
         <source>Custom Attributes</source>
-        <translation>Atribut Ubahan</translation>
+        <translation>Pasirinktiniai atributai</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Piktograma</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation>Warna</translation>
+        <translation>Spalva</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>Kedaluwarsa</translation>
+        <translation>Galiojimas</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -3722,19 +3724,19 @@ Error: %1</translation>
     </message>
     <message>
         <source>Custom Data</source>
-        <translation>Data Ubahan</translation>
+        <translation>Pasirinktiniai duomenys</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Lampiran</translation>
+        <translation>Priedai</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Ketik-Otomatis</translation>
+        <translation>Automatinis rinkimas</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Tag</translation>
+        <translation>Žymos</translation>
     </message>
 </context>
 <context>
@@ -3742,27 +3744,27 @@ Error: %1</translation>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>Ref: </translation>
+        <translation>Nuoroda: </translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Tidak Pernah</translation>
+        <translation>Niekada</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Grup</translation>
+        <translation>Grupė</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Judul</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nama pengguna</translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3770,118 +3772,118 @@ Error: %1</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Catatan</translation>
+        <translation>Pastabos</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Kedaluwarsa</translation>
+        <translation>Baigia galioti</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Dibuat</translation>
+        <translation>Sukurta</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>Diubah</translation>
+        <translation>Keista</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation>Diakses</translation>
+        <translation>Prieiga</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Lampiran</translation>
+        <translation>Priedai</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Ukuran</translation>
+        <translation>Dydis</translation>
     </message>
     <message>
         <source>Group name</source>
-        <translation>Nama grup</translation>
+        <translation>Grupės pavadinimas</translation>
     </message>
     <message>
         <source>Entry title</source>
-        <translation>Judul entri</translation>
+        <translation>Įrašo pavadinimas</translation>
     </message>
     <message>
         <source>Password Strength</source>
-        <translation>Kekuatan Kata Sandi</translation>
+        <translation>Slaptažodžio Stiprumas</translation>
     </message>
     <message>
         <source>Entry notes</source>
-        <translation>Catatan entri</translation>
+        <translation>Įrašo pastabos</translation>
     </message>
     <message>
         <source>Entry expires at</source>
-        <translation>Entri kedaluwarsa pada</translation>
+        <translation>Įrašas galioja iki</translation>
     </message>
     <message>
         <source>Creation date</source>
-        <translation>Tanggal dibuat</translation>
+        <translation>Sukūrimo data</translation>
     </message>
     <message>
         <source>Last modification date</source>
-        <translation>Tanggal diubah terakhir</translation>
+        <translation>Paskutinio pakeitimo data</translation>
     </message>
     <message>
         <source>Last access date</source>
-        <translation>Tanggal terakhir diakses</translation>
+        <translation>Paskutinės prieigos data</translation>
     </message>
     <message>
         <source>Attached files</source>
-        <translation>Berkas terlampir</translation>
+        <translation>Pridėti failai</translation>
     </message>
     <message>
         <source>Entry size</source>
-        <translation>Ukuran entri</translation>
+        <translation>Įrašo dydis</translation>
     </message>
     <message>
         <source>Has attachments</source>
-        <translation>Memiliki lampiran</translation>
+        <translation>Turi priedų</translation>
     </message>
     <message>
         <source>Has TOTP</source>
-        <translation>Memiliki TOTP</translation>
+        <translation>Turi TOTP</translation>
     </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
     <message>
         <source>Display current TOTP value</source>
-        <translation>Tampilkan nilai TOTP saat ini</translation>
+        <translation>Rodyti dabartinę TOTP reikšmę</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Tutup</translation>
+        <translation>Užverti</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Umum</translation>
+        <translation>Bendra</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Catatan</translation>
+        <translation>Pastabos</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>Kedaluwarsa</translation>
+        <translation>Galiojimas</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Tag</translation>
+        <translation>Žymos</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation>Daftar tag</translation>
+        <translation>Žymų sąrašas</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nama pengguna</translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3889,189 +3891,188 @@ Error: %1</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Tingkat Lanjut</translation>
+        <translation>Išplėstiniai</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Lampiran</translation>
+        <translation>Priedai</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Atribut</translation>
+        <translation>Požymiai</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>KetikOtomatis</translation>
+        <translation>Automatinis rinkimas</translation>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation>Sekuens Bawaan</translation>
+        <translation>Numatytoji seka</translation>
     </message>
     <message>
         <source>Window</source>
-        <translation>Jendela</translation>
+        <translation>Langas</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Urutan</translation>
+        <translation>Seka</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation>Pencarian</translation>
+        <translation>Paieška</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>Bagikan</translation>
+        <translation>Dalintis</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Cari</translation>
+        <translation>Paieška</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Bersihkan</translation>
+        <translation>Išvalyti</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Tidak Pernah</translation>
+        <translation>Niekada</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Diaktifkan</translation>
+        <translation>Įjungta</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Dinonaktifkan</translation>
+        <translation>Išjungta</translation>
     </message>
     <message>
         <source>Double click to copy value</source>
-        <translation type="unfinished"/>
+        <translation>Dukart spustelėkite, kad nukopijuotumėte reikšmę</translation>
     </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
-        <translation>URL tidak valid</translation>
+        <translation>Netinkamas URL</translation>
     </message>
 </context>
 <context>
     <name>EntryView</name>
     <message>
         <source>Fit to window</source>
-        <translation>Paskan ke jendela</translation>
+        <translation>Priderinti prie lango</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation>Paskan ke konten</translation>
+        <translation>Priderinti prie turinio</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation>Kembalikan ke setelan bawaan</translation>
+        <translation>Atstatyti į numatytuosius</translation>
     </message>
 </context>
 <context>
     <name>ExportDialog</name>
     <message>
         <source>Export options</source>
-        <translation>Opsi ekspor</translation>
+        <translation>Eksporto parinktys</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation>Sort entries by...</translation>
+        <translation>Rikiuoti įrašus pagal...</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
 This will leave your passwords and sensitive information vulnerable!
 </source>
-        <translation>You are about to export your database to an unencrypted file.
-This will leave your passwords and sensitive information vulnerable!
-</translation>
+        <translation>Ketinate eksportuoti duomenų bazę į neužšifruotą failą.
+Dėl to jūsų slaptažodžiai ir slapta informacija bus pažeidžiami!</translation>
     </message>
     <message>
         <source>database order</source>
-        <translation>database order</translation>
+        <translation>duomenų bazės tvarka</translation>
     </message>
     <message>
         <source>name (ascending)</source>
-        <translation>nama (urut naik)</translation>
+        <translation>pavadinimas (didėjimo tvarka)</translation>
     </message>
     <message>
         <source>name (descending)</source>
-        <translation>nama (urut turun)</translation>
+        <translation>pavadinimas (mažėjimo tvarka)</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation>unknown</translation>
+        <translation>nežinomas</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation>Ekspor basisdata ke berkas HTML</translation>
+        <translation>Eksportuoti duomenų bazę į HTML failą</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation>Berkas HTML</translation>
+        <translation>HTML failas</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::DBusMgr</name>
     <message>
         <source>Failed to deliver message</source>
-        <translation>Gagal mengirim pesan</translation>
+        <translation>Nepavyko pristatyti pranešimo</translation>
     </message>
     <message>
         <source>Failed to send reply on DBus</source>
-        <translation>Gagal mengirim jawaban pada DBus</translation>
+        <translation>Nepavyko išsiųsti atsakymo per &quot;DBus&quot;</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown PID</comment>
-        <translation>Tidak diketahui</translation>
+        <translation>Nežinoma</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown executable path</comment>
-        <translation>Tidak diketahui</translation>
+        <translation>Nežinoma</translation>
     </message>
     <message>
         <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
         <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
-        <translation>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</translation>
+        <translation>&lt;i&gt;PID: %1, vykdomasis failas: %2&lt;/i&gt;</translation>
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Layanan rahasia lain sedang berjalan (%1).&lt;br/&gt;Harap hentikan/hapus sebelum mengaktifkan kembali Integrasi Layanan Rahasia.</translation>
+        <translation>Veikia dar viena slaptoji tarnyba (%1).&lt;br/&gt;Prieš iš naujo įjungdami Slaptosios tarnybos integraciją, jį sustabdykite / pašalinkite.</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation>Gagal mendaftarkan layanan DBus pada %1.&lt;br/&gt;</translation>
+        <translation>Nepavyko užregistruoti DBus paslaugos %1.&lt;br/&gt;</translation>
     </message>
     <message>
         <source>Failed to register service on DBus at path &apos;%1&apos;</source>
-        <translation>Gagal mendaftarkan layanan pada DBus di path &apos;%1&apos;</translation>
+        <translation>Nepavyko užregistruoti paslaugos &quot;DBus&quot; kelyje &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
-        <translation>Failed to register database on DBus under the name &apos;%1&apos;</translation>
+        <translation>Nepavyko užregistruoti duomenų bazės DBus pavadinimu &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to register session on DBus at path &apos;%1&apos;</source>
-        <translation>Failed to register session on DBus at path &apos;%1&apos;</translation>
+        <translation>Nepavyko užsiregistruoti &quot;DBus&quot; kelyje &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to register item on DBus at path &apos;%1&apos;</source>
-        <translation>Failed to register item on DBus at path &apos;%1&apos;</translation>
+        <translation>Nepavyko užregistruoti prekės DBus kelyje &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
-        <translation>Failed to register prompt object on DBus at path &apos;%1&apos;</translation>
+        <translation>Nepavyko užregistruoti greito objekto DBus kelyje &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>Entri &quot;%1&quot; dari basisdata &quot;%2&quot; telah digunakan oleh %3</translation>
+        <translation>Įrašą &quot;%1&quot; iš duomenų bazės &quot;%2&quot; naudojo %3</translation>
     </message>
 </context>
 <context>
@@ -4079,29 +4080,29 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n Entri telah digunakan oleh %1</numerusform></translation>
+        <translation><numerusform>%n Įrašas (-ai) buvo naudojamas (-i) %1</numerusform><numerusform>%n Įrašas (-ai) buvo naudojamas (-i) %1</numerusform><numerusform>%n Įrašas (-ai) buvo naudojamas (-i) %1</numerusform><numerusform>%n Įrašas (-ai) buvo naudojamas (-i) %1</numerusform></translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsClientModel</name>
     <message>
         <source>Unknown</source>
-        <translation>Tidak diketahui</translation>
+        <translation>Nežinoma</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Non-existing/inaccessible executable path. Please double-check the client is legit.</translation>
+        <translation>Neegzistuojantis / neprieinamas vykdomosios programos kelias. Dukart patikrinkite, ar klientas yra tinkamas.</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsDatabaseModel</name>
     <message>
         <source>Unlock to show</source>
-        <translation>Buka kunci untuk menampilkan</translation>
+        <translation>Atrakinkite, kad peržiūrėti</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Nihil</translation>
+        <translation>Nėra</translation>
     </message>
 </context>
 <context>
@@ -4115,7 +4116,7 @@ This will leave your passwords and sensitive information vulnerable!
     <name>FdoSecretsPlugin</name>
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
-        <translation>&lt;b&gt;Layanan Rahasia Fdo:&lt;/b&gt; %1</translation>
+        <translation>&lt;b&gt;Fdo slaptoji tarnyba:&lt;/b&gt; %1</translation>
     </message>
 </context>
 <context>
@@ -4123,39 +4124,39 @@ This will leave your passwords and sensitive information vulnerable!
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation>[kosong]</translation>
+        <translation>[tuščia]</translation>
     </message>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 - Salinan</translation>
+        <translation>%1 - Klonas</translation>
     </message>
 </context>
 <context>
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation>Validasi sandi daring gagal</translation>
+        <translation>Nepavyko patvirtinti slaptažodžio internete</translation>
     </message>
 </context>
 <context>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Unduh Favicon</translation>
+        <translation>Atsisiųsti Piktogramas</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Batal</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation>Mengalami masalah ketika mengunduh ikon?
-Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dalam pengaturan aplikasi.</translation>
+        <translation>Susiduriate su sunkumais atsisiunčiant piktogramas?
+DuckDuckGo svetainės piktogramų paslaugą galite įjungti programos nustatymų saugumo skyriuje.</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Tutup</translation>
+        <translation>Užverti</translation>
     </message>
     <message>
         <source>URL</source>
@@ -4163,79 +4164,79 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
     </message>
     <message>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation>Būsena</translation>
     </message>
     <message>
         <source>Please wait, processing entry list…</source>
-        <translation>Please wait, processing entry list…</translation>
+        <translation>Palaukite, apdorojamas įrašų sąrašas...</translation>
     </message>
     <message>
         <source>Downloading…</source>
-        <translation>Mengunduh...</translation>
+        <translation>Atsisiunčiama...</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>Gerai</translation>
     </message>
     <message>
         <source>Already Exists</source>
-        <translation>Sudah Ada</translation>
+        <translation>Jau Egzistuoja</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation>Gagal Mengunduh</translation>
+        <translation>Atsisiųsti Nepavyko</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)…</source>
-        <translation>Mengunduh favicon (%1/%2)...</translation>
+        <translation>Atsisiunčiamos piktogramos (%1/%2)...</translation>
     </message>
 </context>
 <context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Tutup</translation>
+        <translation>&amp;Užverti</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation>Tutup pesan</translation>
+        <translation>Užverti žinutę</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation>Missing database headers</translation>
+        <translation>Trūksta duomenų bazės antraščių</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>TIdak bisa mengkalkulasi kunci basisdata</translation>
+        <translation>Nepavyko apskaičiuoti duomenų bazės rakto</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Tidak dapat mengeluarkan respons tantangan: %1</translation>
+        <translation>Nepavyko pateikti atsakymo į iššūkius: %1</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
+        <translation>Pateikti neteisingi prisijungimo duomenys, bandykite dar kartą.
+Jei tai kartojasi, jūsų duomenų bazės failas gali būti sugadintas.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
-        <translation>Header tidak cocok dengan hash</translation>
+        <translation>Antraštė neatitinka maišą</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Ukuran id tajuk tidak valid</translation>
+        <translation>Neteisingas antraštės id dydis</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Invalid header field length: field %1</translation>
+        <translation>Neteisingas antraštės lauko ilgis: laukas %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Invalid header data length: field %1, %2 expected, %3 found</translation>
+        <translation>Neteisingas antraštės duomenų ilgis: laukas %1, %2 laukiamas, %3 rastas</translation>
     </message>
 </context>
 <context>
@@ -4243,773 +4244,773 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Ukuran cipher IV simetrik tidak valid.</translation>
+        <translation>Neteisingas simetriškas šifro IV dydis.</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Tidak dapat mengeluarkan respons tantangan: %1</translation>
+        <translation>Nepavyko pateikti atsakymo į iššūkius: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>TIdak bisa mengkalkulasi kunci basisdata</translation>
+        <translation>Nepavyko apskaičiuoti duomenų bazės rakto</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>kehilangan tajuk basisdata</translation>
+        <translation>trūksta duomenų bazės antraščių</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation>Tidak dapat mengkalkulasi kunci basisdata: %1</translation>
+        <translation>Nepavyko apskaičiuoti duomenų bazės rakto: %1</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>Ukuran checksum tajuk tidak valid</translation>
+        <translation>Neteisingas antraštės kontrolinės sumos dydis</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation>Tajuk SHA256 tidak cocok</translation>
+        <translation>Antraštės SHA256 neatitikimas</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
+        <translation>Pateikti neteisingi prisijungimo duomenys, bandykite dar kartą.
+Jei tai kartojasi, jūsų duomenų bazės failas gali būti sugadintas.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation>(HMAC tidak cocok)</translation>
+        <translation>(HMAC nesutampa)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation>Cipher tidak dikenal</translation>
+        <translation>Nežinomas šifras</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Ukuran id tajuk tidak valid</translation>
+        <translation>Neteisingas antraštės id dydis</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Invalid header field length: field %1</translation>
+        <translation>Neteisingas antraštės lauko ilgis: laukas %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Invalid header data length: field %1, %2 expected, %3 found</translation>
+        <translation>Neteisingas antraštės duomenų ilgis: laukas %1, %2 laukiamas, %3 rastas</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Gagal membuka buffer untuk parameter KDF di dalam tajuk</translation>
+        <translation>Nepavyko atidaryti KDF parametrų buferio antraštėje</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation>Fungsi derivasi kunci tidak didukung (KDF) atau parameter tidak valid</translation>
+        <translation>Nepalaikoma rakto išvedimo funkcija (KDF) arba negaliojantys parametrai</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation>Ditemukan ruas tajuk legacy di dalam berkas KDBX4.</translation>
+        <translation>Senstelėję antraštės laukai, rasti KDBX4 faile.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Invalid inner header id size</translation>
+        <translation>Neteisingas vidinės antraštės id dydis</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation>Invalid inner header field length: field %1</translation>
+        <translation>Neteisingas vidinio antraštės lauko ilgis: laukas %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation>Invalid inner header data length: field %1, %2 expected, %3 found</translation>
+        <translation>Neteisingas vidinis antraštės duomenų ilgis: laukas %1, %2 laukiamas, %3 rastas</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>Invalid inner header binary size</translation>
+        <translation>Neteisingas vidinės antraštės dvejetainis dydis</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Versi map variasi KeePass tidak didukung.</translation>
+        <translation>Nepalaikoma KeePass varianto žemėlapio versija.</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Panjang nama entri map variasi tidak valid</translation>
+        <translation>Netinkamas varianto žemėlapio įrašo pavadinimo ilgis</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Data nama entri map variasi tidak valid</translation>
+        <translation>Negaliojantys varianto žemėlapio įvesties pavadinimo duomenys</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Panjang nilai entri map variasi tidak valid</translation>
+        <translation>Neteisingas varianto žemėlapio įvesties reikšmės ilgis</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Data nilai entri map variasi tidak valid</translation>
+        <translation>Neleistini variantų žemėlapio įvesties reikšmės duomenys</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Panjang nilai entri Bool map variasi tidak valid</translation>
+        <translation>Netinkamas varianto žemėlapis &quot;Bool&quot; įvesties reikšmės ilgis</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Panjang nilai entri Int32 map variasi tidak valid</translation>
+        <translation>Neteisingas varianto žemėlapis Int32 įvesties reikšmės ilgis</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Panjang nilai entri UInt32 map variasi tidak valid</translation>
+        <translation>Neteisingas varianto žemėlapis UInt32 įėjimo vertės ilgis</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Panjang nilai entri Int64 map variasi tidak valid</translation>
+        <translation>Neteisingas varianto žemėlapis Int64 įrašo reikšmės ilgis</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Panjang nilai entri UInt64 map variasi tidak valid</translation>
+        <translation>Neteisingas varianto žemėlapis UInt64 įėjimo reikšmės ilgis</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Tipe entri map variasi tidak valid</translation>
+        <translation>Netinkamas varianto žemėlapio įrašo tipas</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ukuran tipe entri map variasi tidak valid</translation>
+        <translation>Netinkamas varianto žemėlapio lauko tipo dydis</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation>Algoritma cipher simetrik tidak valid.</translation>
+        <translation>Neteisingas simetriškas šifro algoritmas.</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Ukuran cipher IV simetrik tidak valid.</translation>
+        <translation>Neteisingas simetriškas šifro IV dydis.</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation>Tidak dapat mengkalkulasi kunci basisdata: %1</translation>
+        <translation>Nepavyko apskaičiuoti duomenų bazės rakto: %1</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Gagal menserialisasi map variasi parameter KDF</translation>
+        <translation>Nepavyko serializuoti KDF parametrų varianto žemėlapio</translation>
     </message>
 </context>
 <context>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
-        <translation>Invalid cipher uuid length: %1 (length=%2)</translation>
+        <translation>Neteisingas šifro ilgis: %1 (ilgis=%2)</translation>
     </message>
     <message>
         <source>Unable to parse UUID: %1</source>
-        <translation>Tidak bisa mengurai UUID: %1</translation>
+        <translation>Nepavyko išanalizuoti UUID: %1</translation>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation>Cipher tidak didukung</translation>
+        <translation>Nepalaikomas šifras</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>Invalid compression flags length</translation>
+        <translation>Netinkamas glaudinimo vėliavėlių ilgis</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation>Algoritma kompresi tidak didukung</translation>
+        <translation>Nepalaikomas glaudinimo algoritmas</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation>Invalid master seed size</translation>
+        <translation>Netinkamas pagrindinės sėklos dydis</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Invalid transform seed size</translation>
+        <translation>Netinkamas transformacijos sėklos dydis</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation>Invalid transform rounds size</translation>
+        <translation>Netinkamas transformacijos raundų dydis</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation>Ukuran byte awal tidak valid</translation>
+        <translation>Netinkamas pradžios baitų dydis</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>Ukuran id stream acak tidak valid</translation>
+        <translation>Neteisingas atsitiktinio srauto ID dydis</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation>Invalid inner random stream cipher</translation>
+        <translation>Neteisingas vidinis atsitiktinio srauto šifras</translation>
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation>Gagal membaca berkas basisdata.</translation>
+        <translation>Nepavyko nuskaityti duomenų bazės failo.</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>The selected file is an old KeePass 1 database (.kdb).
+        <translation>Pasirinktas failas yra sena KeePass 1 duomenų bazė (.kdb).
 
-You can import it by clicking on Database &gt; &apos;Import KeePass 1 database…&apos;.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</translation>
+Jį galite importuoti spustelėję Duomenų bazės &gt; &quot;Importuoti KeePass 1 duomenų bazę...&quot;.
+Tai vienpusė migracija. Negalėsite atidaryti importuotos duomenų bazės naudodami seną KeePassX 0.4 versiją.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Bukan basisdata KeePass.</translation>
+        <translation>Ne KeePass duomenų bazė.</translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>Versi basisdata KeePass 2 tidak didukung.</translation>
+        <translation>Nepalaikoma KeePass 2 duomenų bazės versija.</translation>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation>Gagal mengurai XML: %1</translation>
+        <translation>XML nagrinėjimo nesėkmė: %1</translation>
     </message>
     <message>
         <source>No root group</source>
-        <translation>Tidak ada grup root</translation>
+        <translation>Nėra šakninės grupės</translation>
     </message>
     <message>
         <source>XML error:
 %1
 Line %2, column %3</source>
-        <translation>Galat XML:
+        <translation>XML klaida:
 %1
-Baris %2, kolom %3</translation>
+%2 eilutė, %3 stulpelis</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation>Kehilangan data atau uuid ikon</translation>
+        <translation>Trūksta piktogramos uuid ar duomenų</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation>Kehilangan nilai atau kunci data khusus</translation>
+        <translation>Trūksta pasirinktinio duomenų rakto arba reikšmės</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation>Beberapa elemen grup</translation>
+        <translation>Keletas grupės elementų</translation>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation>Uuid grup null</translation>
+        <translation>Neapibrėžta grupė uuid</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>Nomor ikon grup tidak valid</translation>
+        <translation>Neteisingas grupės piktogramos numeris</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation>Nilai EnableAutoType tidak valid</translation>
+        <translation>Neteisinga EnableAutoType reikšmė</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation>Nilai EnableSearching tidak valid</translation>
+        <translation>Neteisinga įgalinti ieškos reikšmę</translation>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation>Tidak ditemukan uuid grup</translation>
+        <translation>Nerastas grupės uuid</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation>Uuid DeleteObject null</translation>
+        <translation>Null DeleteObject uuid</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation>Kehilangan waktu atau uuid DeletedObject</translation>
+        <translation>Trūksta DeletedObject uuid arba laiko</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation>Uuid entri null</translation>
+        <translation>Nulinis įrašas uuid</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Nomor ikon entri tidak valid</translation>
+        <translation>Neteisingas įrašo piktogramos numeris</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation>Elemen riwayat di dalam entri riwayat</translation>
+        <translation>Istorijos elementas istorijos įraše</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>Tidak ditemukan uuid entri</translation>
+        <translation>Nerastas įrašo uuid</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation>Elemen riwayat dengan uuid yang berbeda</translation>
+        <translation>Istorijos elementas su skirtingu uuid</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation>Ditemukan atribut khusus ganda</translation>
+        <translation>Rastas dubliuotas tinkintas požymis</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Kehilangan nilai atau kunci lema entri</translation>
+        <translation>Trūksta įrašo eilutės rakto arba reikšmės</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>Kehilangan nilai atau kunci binari entri</translation>
+        <translation>Trūksta įrašo dvejetainio rakto arba reikšmės</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>Kehilangan asosiasi jendela atau urutan ketik-otomatis</translation>
+        <translation>Trūksta automatinio rinkimo susiejimo lango arba sekos</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation>Nilai bool tidak valid</translation>
+        <translation>Neteisinga buliaus reikšmė</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation>Waktu tanggal tidak valid</translation>
+        <translation>Neteisinga datos laiko reikšmė</translation>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation>Warna tidak valid</translation>
+        <translation>Neteisinga spalvos reikšmė</translation>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation>Warna rgb tidak valid</translation>
+        <translation>Neteisinga spalvos rgb dalis</translation>
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation>Angka tidak valid</translation>
+        <translation>Neteisinga skaitmeninė reikšmė</translation>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation>Uuid tidak valid</translation>
+        <translation>Neteisinga uuid reikšmė</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation>Tidak bisa mengurai kompresi binari</translation>
+        <translation>Nepavyksta dekompresuoti dvejetainio režimo</translation>
     </message>
 </context>
 <context>
     <name>KeeAgentSettings</name>
     <message>
         <source>Invalid KeeAgent settings file structure.</source>
-        <translation>Invalid KeeAgent settings file structure.</translation>
+        <translation>Neteisinga &quot;KeeAgent&quot; nustatymų failų struktūra.</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
-        <translation>Kunci privat adalah lampiran tetapi tidak ada lampiran yang tersedia.</translation>
+        <translation>Privatus raktas yra priedas, bet jokių priedų nepateikta.</translation>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation>Kunci privat kosong</translation>
+        <translation>Privatus raktas yra tuščias</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>Berkas terlalu besar untuk jadi kunci privat</translation>
+        <translation>Failas per didelis, kad būtų privatusis raktas</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>Gagal membuka kunci privat</translation>
+        <translation>Nepavyko atverti privačiojo rakto</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation>Impor Basisdata KeePass1</translation>
+        <translation>Importuoti KeePass1 duomenų bazę</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Tidak bisa membuka basisdata.</translation>
+        <translation>Nepavyko atverti duomenų bazės.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Tidak bisa membaca berkas kunci.</translation>
+        <translation>Nepavyko perskaityti rakto failo.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Bukan basisdata KeePass.</translation>
+        <translation>Ne KeePass duomenų bazė.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Algoritma enkripsi tidak didukung.</translation>
+        <translation>Nepalaikomas šifravimo algoritmas.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Versi basisdata KeePass tidak didukung.</translation>
+        <translation>Nepalaikoma KeePass duomenų bazės versija.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Tidak bisa membaca enkripsi IV</translation>
+        <translation>Nepavyko perskaityti šifravimo IV</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation>Jumlah grup tidak valid</translation>
+        <translation>Neteisingas grupių skaičius</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation>Jumlah entri tidak valid</translation>
+        <translation>Neteisingas įrašų skaičius</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation>Ukuran hash konten tidak valid</translation>
+        <translation>Neteisingas turinio maišos dydis</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Invalid transform seed size</translation>
+        <translation>Netinkamas transformacijos sėklos dydis</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation>Invalid number of transform rounds</translation>
+        <translation>Neteisingas transformacijos raundų skaičius</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation>Unable to construct group tree</translation>
+        <translation>Nepavyko sukurti grupės medžio</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation>Šaknis</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>TIdak bisa mengkalkulasi kunci basisdata</translation>
+        <translation>Nepavyko apskaičiuoti duomenų bazės rakto</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
-        <translation>unable to seek to content position</translation>
+        <translation>negali siekti turinio pozicijos</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
+        <translation>Pateikti neteisingi prisijungimo duomenys, bandykite dar kartą.
+Jei tai kartojasi, jūsų duomenų bazės failas gali būti sugadintas.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>Transformasi kunci gagal</translation>
+        <translation>Rakto transformacija nepavyko</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>Angka tipe ruas grup tidak valid</translation>
+        <translation>Neteisingas grupės lauko tipo numeris</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation>Ukuran ruas grup tidak valid</translation>
+        <translation>Netinkamas grupės lauko dydis</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation>Data ruas grup baca tidak cocok dengan ukurannya</translation>
+        <translation>Skaitymo grupės lauko duomenys neatitinka dydžio</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation>Ukuran ruas id grup salah</translation>
+        <translation>Neteisingas grupės ID lauko dydis</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>Ukuran ruas waktu pembuatan grup salah</translation>
+        <translation>Neteisingas grupės kūrimo laiko lauko dydis</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>Ukuran ruas waktu perubahan grup salah</translation>
+        <translation>Neteisingas grupės modifikavimo laiko lauko dydis</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation>Ukuran ruas waktu akses grup salah</translation>
+        <translation>Neteisingas grupės prieigos laiko lauko dydis</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation>Ukuran ruas waktu kedaluwarsa grup salah</translation>
+        <translation>Neteisingas grupės galiojimo pabaigos laiko lauko dydis</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation>Ukuran ruas ikon grup salah</translation>
+        <translation>Neteisingas grupės piktogramos lauko dydis</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation>Ukuran ruas level grup salah</translation>
+        <translation>Neteisingas grupės lygio lauko dydis</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation>Tipe ruas grup tidak valid</translation>
+        <translation>Neteisingas grupės lauko tipas</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation>Kehilangan level atau id grup</translation>
+        <translation>Trūksta grupės ID arba lygio</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Kehilangan nomor tipe ruas entri</translation>
+        <translation>Trūksta įrašo lauko tipo numerio</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>Ukuran ruas entri tidak valid</translation>
+        <translation>Neteisingas įrašo lauko dydis</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation>Data ruas entri baca tidak cocok dengan ukurannya</translation>
+        <translation>Skaitymo įvedimo lauko duomenys neatitinka dydžio</translation>
     </message>
     <message>
         <source>Invalid entry UUID field size</source>
-        <translation>Invalid entry UUID field size</translation>
+        <translation>Netinkamas įrašo UUID lauko dydis</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>Ukuran ruas id grup entri tidak valid</translation>
+        <translation>Netinkamas įrašo grupės ID lauko dydis</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Ukuran ruas ikon entri tidak valid</translation>
+        <translation>Netinkamas įrašo piktogramos lauko dydis</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Ukuran ruas waktu pembuatan entri tidak valid</translation>
+        <translation>Netinkamas įrašo kūrimo laiko lauko dydis</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>Ukuran ruas waktu perubahan entri tidak valid</translation>
+        <translation>Netinkamas įrašo modifikavimo laiko lauko dydis</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Ukuran ruas waktu kedaluwarsa entri tidak valid</translation>
+        <translation>Negaliojantis įrašo galiojimo laikas lauko dydis</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Tipe ruas entri tidak valid</translation>
+        <translation>Neteisingas įrašo lauko tipas</translation>
     </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation>Referensi pembagian tidak valid</translation>
+        <translation>Neteisinga bendrinimo nuoroda</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation>Bagian tidak aktif %1</translation>
+        <translation>Neaktyvi dalis %1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>Diimpor dari %1</translation>
+        <translation>Importuota iš %1</translation>
     </message>
     <message>
         <source>Exported to %1</source>
-        <translation>Diekspor ke %1</translation>
+        <translation>Eksportuota į %1</translation>
     </message>
     <message>
         <source>Synchronized with %1</source>
-        <translation>Disinkronkan dengan %1</translation>
+        <translation>Sinchronizuota su %1</translation>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation>Impor dinonaktifkan di dalam pengaturan</translation>
+        <translation>Importas išjungtas nustatymuose</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation>Ekspor dinonaktifkan di dalam pengaturan</translation>
+        <translation>Eksportas išjungtas nustatymuose</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation>Inactive share</translation>
+        <translation>Neaktyvus bendrinimas</translation>
     </message>
     <message>
         <source>Imported from</source>
-        <translation>Diimpor dari</translation>
+        <translation>Importuota iš</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation>Diekspor dari</translation>
+        <translation>Eksportuota į</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation>Disinkronkan dengan</translation>
+        <translation>Sinchronizuota su</translation>
     </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
     <message>
         <source>Key Component</source>
-        <translation>Komponen Kunci</translation>
+        <translation>Pagrindinis komponentas</translation>
     </message>
     <message>
         <source>Key Component Description</source>
-        <translation>Deskripsi Komponen Kunci</translation>
+        <translation>Pagrindinio komponento aprašymas</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Batal</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
-        <translation>Komponen Kunci sudah diatur, klik untuk mengubah atau buang</translation>
+        <translation>Pagrindinių komponentų rinkinys, spustelėkite, kad pakeistumėte arba pašalintumėte</translation>
     </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
     <message>
         <source>Generate a new key file</source>
-        <translation>Buat berkas kunci baru</translation>
+        <translation>Generuoti naują rakto failą</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Buat</translation>
+        <translation>Generuoti</translation>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation>Buat sebuah berkas kunci baru atau pilih yang sudah ada untuk melindungi basisdata Anda.</translation>
+        <translation>Sukurti naują rakto failą arba pasirinkti esamą, kad apsaugoti duomenų bazę.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation>Catatan: JANGAN gunakan berkas yang dapat berubah karena itu akan mencegah Anda membuka kunci basisdata Anda!</translation>
+        <translation>astaba: NENAUDOKITE failo, kuris gali pasikeisti, nes dėl to nebegalėsite atrakinti duomenų bazės.</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Telusuri berkas kunci</translation>
+        <translation>Ieškoti rakto failo</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Telusuri…</translation>
+        <translation>Naršyti...</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Format berkas kunci lama</translation>
+        <translation>Senas rakto failo formatas</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation>Anda memilih sebuah berkas kunci dalam sebuah format lama yang mungkin tidak didukung lagi oleh KeePassXC &lt;br&gt; dalam masa depan. &lt;br&gt;&lt;br&gt; Mohon buat sebuah berkas kunci yang baru saja.</translation>
+        <translation>Pasirinkote seno formato rakto failą, kurio KeePassXC&lt;br&gt;ateityje gali nebepalaikyti.&lt;br&gt;&lt;br&gt;Apsvarstykite galimybę vietoj jo sukurti naują rakto failą.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation>Galat memuat berkas kunci &apos;%1&apos;
-Pesan: %2</translation>
+        <translation>Klaida įkeliant rakto failą &apos;%1&apos;
+Žinutė: %2</translation>
     </message>
     <message>
         <source>Key File</source>
-        <translation>Berkas Kunci</translation>
+        <translation>Rakto failas</translation>
     </message>
     <message>
         <source>Add Key File</source>
-        <translation>Tambah Berkas Kunci</translation>
+        <translation>Pridėti Rakto Failą</translation>
     </message>
     <message>
         <source>Change Key File</source>
-        <translation>Ubah Berkas Kunci</translation>
+        <translation>Keisti Rakto Failą</translation>
     </message>
     <message>
         <source>Remove Key File</source>
-        <translation>Hapus Berkas Kunci</translation>
+        <translation>Pašalinti Rakto Failą</translation>
     </message>
     <message>
         <source>Key File set, click to change or remove</source>
-        <translation>Berkas Kunci telah diatur, klik untuk mengubah atau menghapus</translation>
+        <translation>Rakto Failas nustatytas, spustelėkite, jei norite pakeisti arba pašalinti</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Galite pridėti rakto failą su atsitiktiniais baitais, kad užtikrintumėte papildomą saugumą.&lt;/p&gt;&lt;p&gt;Turite jį laikyti paslaptyje ir niekada neprarasti, antraip būsite užblokuoti.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Berkas kunci</translation>
+        <translation>Rakto failai</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Visi failai</translation>
     </message>
     <message>
         <source>Create Key File…</source>
-        <translation>Buat Berkas Kunci...</translation>
+        <translation>Sukurti Rakto Failą...</translation>
     </message>
     <message>
         <source>Error creating key file</source>
-        <translation>Galat membuat berkas kunci</translation>
+        <translation>Klaida kuriant rakto failą</translation>
     </message>
     <message>
         <source>Unable to create key file: %1</source>
-        <translation>Tidak bisa membuat berkas: %1</translation>
+        <translation>Nepavyko sukurti rakto failo: %1</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Pilih berkas kunci</translation>
+        <translation>Pasirinkite rakto failą</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation>Berkas Kunci Tidak Valid</translation>
+        <translation>Neteisingas Rakto Failas</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation>Anda tidak dapat menggunakan basisdata sekarang sebagai kunci berkasnya sendiri. Harap pilih berkas berbeda atau hasilkan kunci berkas baru.</translation>
+        <translation>Dabartinės duomenų bazės negalima naudoti kaip rakto failo. Pasirinkite kitą failą arba sukurkite naują rakto failą.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation>Berkas Kunci Mencurigakan</translation>
+        <translation>įtartinas raktų failas</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>Kunci berkas yang dipilih terlihat seperti kata sandi basisdata. Kunci berkas harus berkas statis yang tidak pernah berubah atau Anda akan kehilangan akses ke basisdata Anda selamanya.
-Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
+        <translation>Pasirinktas rakto failas atrodo kaip slaptažodžių duomenų bazės failas. Rakto failas turi būti statinis failas, kuris niekada nesikeičia, nes priešingu atveju visiems laikams prarasite prieigą prie savo duomenų bazės.
+Ar tikrai norite tęsti darbą su šiuo failu?</translation>
     </message>
 </context>
 <context>
     <name>MacUtils</name>
     <message>
         <source>Invalid key code</source>
-        <translation>Invalid key code</translation>
+        <translation>Netinkamas rakto kodas</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Pintasan global telah didaftarkan ke %1</translation>
+        <translation>Visuotinis spartusis klavišas jau užregistruotas į %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Tidak bisa mendaftar pintasan global</translation>
+        <translation>Nepavyko užregistruoti visuotinio sparčiojo klavišo</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation>Basis&amp;data</translation>
+        <translation>&amp;Duomenų bazė</translation>
     </message>
     <message>
         <source>&amp;Recent Databases</source>
-        <translation>Basisdata Ba&amp;ru-baru Ini</translation>
+        <translation>&amp;Neseniai naudotos duomenų bazės</translation>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation>&amp;Impor</translation>
+        <translation>&amp;Importuoti</translation>
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>&amp;Ekspor</translation>
+        <translation>&amp;Eksportuoti</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Bantuan</translation>
+        <translation>Ž&amp;inynas</translation>
     </message>
     <message>
         <source>&amp;Entries</source>
-        <translation>&amp;Entri</translation>
+        <translation>&amp;Įrašai</translation>
     </message>
     <message>
         <source>Copy Att&amp;ribute</source>
-        <translation>Salin At&amp;ribut</translation>
+        <translation>Kopijuoti atr&amp;ibutą</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -5017,15 +5018,15 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>&amp;Grup</translation>
+        <translation>&amp;Grupės</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Perkakas</translation>
+        <translation>Į&amp;rankiai</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Tampilan</translation>
+        <translation>Rodinys</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -5033,187 +5034,187 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Keluar</translation>
+        <translation>&amp;Baigti</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;Tentang</translation>
+        <translation>&amp;Apie</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
-        <translation>Periksa &amp;Pembaruan</translation>
+        <translation>&amp;Tikrinti ar yra atnaujinimų</translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>&amp;Buka Basisdata…</translation>
+        <translation>&amp;Atidaryti duomenų bazę...</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
-        <translation>&amp;Simpan Basisdata</translation>
+        <translation>&amp;Išsaugoti duomenų bazę</translation>
     </message>
     <message>
         <source>&amp;Close Database</source>
-        <translation>&amp;Tutup Basisdata</translation>
+        <translation>&amp;Uždaryti duomenų bazę</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>Basisdata &amp;Baru…</translation>
+        <translation>&amp;Nauja duomenų bazė...</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation>Buat basisdata baru</translation>
+        <translation>Sukurti naują duomenų bazę</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>&amp;Gabung Dari Basisdata…</translation>
+        <translation>&amp;Įtraukti iš duomenų bazės...</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation>Gabung dari basisdata KDBX lainnya</translation>
+        <translation>Sulieti iš kitos KDBX duomenų bazės</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>Entri &amp;Baru…</translation>
+        <translation>&amp;Naujas įrašas…</translation>
     </message>
     <message>
         <source>Add a new entry</source>
-        <translation>Tambahkan entri baru</translation>
+        <translation>Pridėti naują įrašą</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>&amp;Sunting Entri…</translation>
+        <translation>&amp;Redaguoti įrašą...</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation>Lihat atau sunting entri</translation>
+        <translation>Rodyti ar taisyti įrašą</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation>&amp;Hapus Entri…</translation>
+        <translation>&amp;Ištrinti įrašą...</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>Grup &amp;Baru…</translation>
+        <translation>&amp;Nauja grupė...</translation>
     </message>
     <message>
         <source>Add a new group</source>
-        <translation>Tambahkan grup baru</translation>
+        <translation>Pridėti naują grupę</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>&amp;Sunting Grup…</translation>
+        <translation>&amp;Redaguoti grupę...</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;Hapus Grup…</translation>
+        <translation>&amp;Ištrinti grupę...</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Unduh Semua &amp;Favicon…</translation>
+        <translation>Atsisiųsti visas piktogramas...</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation>Urutkan &amp;A-Z</translation>
+        <translation>Rušiuoti nuo &amp;A-Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation>Urutkan &amp;Z-A</translation>
+        <translation>Rušiuoti nuo &amp;Z-A</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>Sim&amp;pan Basisdata Sebagai…</translation>
+        <translation>Iš&amp;saugoti duomenų bazę kaip...</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>&amp;Keamanan Basisdata…</translation>
+        <translation>&amp;Duomenų bazės saugumas...</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation>Database &amp;Reports…</translation>
+        <translation>Duomenu bazės &amp;ataskaitos...</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
-        <translation>Statistik, cek kesehatan, dll.</translation>
+        <translation>Statistika, sveikatos patikrinimas ir kt.</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation>Pengaturan Basis&amp;data…</translation>
+        <translation>&amp;Duomenų bazės nustatymai...</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Pengaturan basisdata</translation>
+        <translation>Duomenų bazės nustatymai</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation>&amp;Gandakan Entri…</translation>
+        <translation>&amp;Klonuoti įrašą...</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
-        <translation>Pindah ke &amp;atas</translation>
+        <translation>Perkelti a&amp;ukštyn</translation>
     </message>
     <message>
         <source>Move entry one step up</source>
-        <translation>Pindah entri 1 level ke atas</translation>
+        <translation>Perkelti įrašą vienu laipteliu aukščiau</translation>
     </message>
     <message>
         <source>Move do&amp;wn</source>
-        <translation>Pindah ke &amp;bawah</translation>
+        <translation>Perkelti že&amp;miau</translation>
     </message>
     <message>
         <source>Move entry one step down</source>
-        <translation>Pindah entri 1 level ke bawah</translation>
+        <translation>Perkelti įrašą vienu laipteliu žemiau</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
-        <translation>Salin &amp;Nama Pengguna</translation>
+        <translation>Kopijuoti &amp;slapyvardį</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Salin nama pengguna ke papan klip</translation>
+        <translation>Kopijuoti naudotojo vardą į iškarpinę</translation>
     </message>
     <message>
         <source>Copy &amp;Password</source>
-        <translation>Salin &amp;Sandi</translation>
+        <translation>Kopijuoti &amp;slaptažodį</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Salin sandi ke papan klip</translation>
+        <translation>Kopijuoti slaptažodį į iškarpinę</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Pengaturan</translation>
+        <translation>&amp;Nustatymai</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation>&amp;Pembuat Sandi</translation>
+        <translation>&amp;Slaptažodžių generatorius</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Jalankan &amp;Ketik-Otomatis</translation>
+        <translation>Atlikti &amp;automatinį rinkimą</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation>Unduh &amp;Favicon</translation>
+        <translation>Atsisiųsti &amp;piktogramą</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation>Buka &amp;URL</translation>
+        <translation>Atverti &amp;URL</translation>
     </message>
     <message>
         <source>&amp;Lock Database</source>
-        <translation>&amp;Kunci Pangkalan Data</translation>
+        <translation>&amp;Užrakinti duomenų bazę</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation>Kunci &amp;Semua Basisdata</translation>
+        <translation>Užrakinti &amp;visas duomenų bazes</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation>&amp;Judul</translation>
+        <translation>&amp;Antraštė</translation>
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation>Salin judul ke papan klip</translation>
+        <translation>Kopijuoti pavadinimą į iškarpinę</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -5221,235 +5222,235 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation>Salin URL ke papan klip</translation>
+        <translation>Kopijuoti URL į iškarpinę</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>&amp;Catatan</translation>
+        <translation>&amp;Pastabos</translation>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation>Salin catatan ke papan klip</translation>
+        <translation>Kopijuoti pastabas į iškarpinę</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation>Berkas &amp;CSV…</translation>
+        <translation>&amp;CSV failas...</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation>Berkas &amp;HTML…</translation>
+        <translation>&amp;HTML failas...</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
-        <translation>Basisdata KeePass 1…</translation>
+        <translation>KeePass 1 Duomenų bazė...</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation>Impor basisdata KeePass 1</translation>
+        <translation>Importuoti KeePass 1 duomenų bazę</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
-        <translation>Brankas 1Password…</translation>
+        <translation>1Password saugykla...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation>Impor Brankas 1Password</translation>
+        <translation>Importuoti 1Password saugyklą</translation>
     </message>
     <message>
         <source>CSV File…</source>
-        <translation>Berkas CSV…</translation>
+        <translation>CSV Failas...</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
-        <translation>Impor berkas CSV</translation>
+        <translation>Importuoti CSV failą</translation>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation>Tampilkan TOTP</translation>
+        <translation>Rodyti NTVS</translation>
     </message>
     <message>
         <source>Show QR Code</source>
-        <translation>Tampilkan Kode QR</translation>
+        <translation>Rodyti QR Kodą</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation>Siapkan TOTP…</translation>
+        <translation>Nustatyti TOTP...</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation>Salin &amp;TOTP</translation>
+        <translation>Kopijuoti &amp;NTVS</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>Kosongkan keranjang sa&amp;mpah</translation>
+        <translation>Iš&amp;valyti šiukšlinę</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation>&amp;Donasi</translation>
+        <translation>&amp;Paaukoti</translation>
     </message>
     <message>
         <source>Report a &amp;Bug</source>
-        <translation>Laporkan &amp;Bug</translation>
+        <translation>Pranešti apie &amp;klaidą</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation>&amp;Memulai</translation>
+        <translation>&amp;Kaip pradėti</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
-        <translation>Buka Panduan Memulai</translation>
+        <translation>Atidaryti pradžios vadovą</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation>&amp;Bantuan Daring</translation>
+        <translation>&amp;Internetinė pagalba</translation>
     </message>
     <message>
         <source>Go to online documentation</source>
-        <translation>Kunjungi dokumentasi daring</translation>
+        <translation>Eiti į internetinę dokumentaciją</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation>Pand&amp;uan Pengguna</translation>
+        <translation>&amp;Naudotojo vadovas</translation>
     </message>
     <message>
         <source>Open User Guide</source>
-        <translation>Buka Panduan Pengguna</translation>
+        <translation>Atidaryti naudotojo vadovą</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation>Pintasan &amp;Kibor</translation>
+        <translation>&amp;Klaviatūros spartieji klavišai</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation>Simpan Cadangan Basisdata...</translation>
+        <translation>Išsaugoti duomenų bazės atsarginę kopiją...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
-        <translation>Tambahkan kunci ke Agen SSH</translation>
+        <translation>Pridėti raktą prie SSH agento</translation>
     </message>
     <message>
         <source>Remove key from SSH Agent</source>
-        <translation>Buang kunci dari Agen SSH</translation>
+        <translation>Pašalinti raktą iš SSH agento</translation>
     </message>
     <message>
         <source>Compact Mode</source>
-        <translation>Mode Ringkas</translation>
+        <translation>Kompaktiškas režimas</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Otomatis</translation>
+        <translation>Automatinis</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation>Terang</translation>
+        <translation>Šviesi</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Gelap</translation>
+        <translation>Tamsi</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation>Klasik (Native-platform)</translation>
+        <translation>Klasikinis (platformos gimtoji)</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation>Tampilkan Bilah Alat</translation>
+        <translation>Rodyti įrankių juostą</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation>Tampilkan Panel Pratinjau</translation>
+        <translation>Rodyti Peržiūros Skydelį</translation>
     </message>
     <message>
         <source>Always on Top</source>
-        <translation>Selalu di Atas</translation>
+        <translation>Visada ant Viršaus</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Sembunyikan Nama Pengguna</translation>
+        <translation>Slėpti naudotojo vardus</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>Sembunyikan Sandi</translation>
+        <translation>Slėpti slaptažodžius</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation>Clone Group...</translation>
+        <translation>Klonuoti Grupę...</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation>Bersihkan riwayat</translation>
+        <translation>Išvalyti istoriją</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Galat akses untuk berkas konfigurasi %1</translation>
+        <translation>Konfigūracijos failo %1 prieigos klaida</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation>Jangan tampilkan lagu untuk versi ini</translation>
+        <translation>Daugiau nerodyti šioje versijoje</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation>PERINGATAN: Anda menggunakan versi tidak stabil dari KeePassXC.
-Kemungkinan besar akan terjadi korup, pelihara cadangan basisdata Anda.
-Versi ini tidak dimaksudkan untuk penggunaan sehari-hari.</translation>
+        <translation>ĮSPĖJIMAS: Jūs naudojate nestabilią KeePassXC versiją.
+Egzistuoja didelė pažeidimų rizika, turėkite atsarginę duomenų bazių kopiją.
+Ši versija neskirta naudoti darbui.</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC.
 Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>CATATAN: Anda menggunakan versi pra-rilis KeePassXC.
-Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaan percobaan.</translation>
+        <translation>PASTABA: Jūs naudojate ankstyvąją KeePassXC versiją.
+Tikėkitės klaidų ir nedidelių problemų, ši versija skirta testavimo tikslams.</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
-We recommend you use the AppImage available on our downloads page.</translation>
+        <translation>ĮSPĖJIMAS: Dėl jūsų Qt versijos &quot;KeePassXC&quot; gali sugesti naudojant ekrano klaviatūrą.
+Rekomenduojame naudoti &quot;AppImage&quot;, pasiekiamą mūsų atsisiuntimų puslapyje.</translation>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Atkurti įrašą (-us)</numerusform><numerusform>Atkurti įrašą (-us)</numerusform><numerusform>Atkurti įrašą (-us)</numerusform><numerusform>Atkurti įrašą (-us)</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Pengaturan</translation>
+        <translation>Nustatymai</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation>Periksa pembaruan saat memulai?</translation>
+        <translation>Tikrinti ar yra atnaujinimų paleidimo metu?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>Apakah Anda ingin KeePassXC memeriksa pembaruan setiap memulai aplikasi?</translation>
+        <translation>Ar norite, kad KeePassXC patikrintų, ar yra atnaujinimų paleidimo metu?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation>Anda selalu bisa memeriksa pembaruan secara manual dari menu aplikasi.</translation>
+        <translation>Ar yra atnaujinimų visada galite patikrinti rankiniu būdu iš programos meniu.</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Jungkit jendela</translation>
+        <translation>Perjungti langą</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>Keluar KeePassXC</translation>
+        <translation>Išeiti iš KeePassXC</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Please present or touch your YubiKey to continue…</translation>
+        <translation>Norėdami tęsti, pateikite arba palieskite savo YubiKey raktą...</translation>
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation>Mulai Ulang Aplikasi?</translation>
+        <translation>Perleisti Programą?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Anda harus memulai ulang aplikasi untuk menerapkan pengaturan ini. Apakah Anda ingin memulai ulang sekarang?</translation>
+        <translation>Norėdami pritaikyti šį nustatymą, turite iš naujo paleisti programą. Ar norite iš naujo paleisti programą dabar?</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Tag</translation>
+        <translation>Žymos</translation>
     </message>
     <message>
         <source>No Tags</source>
@@ -5457,11 +5458,11 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
-        <translation>Salin Sandi dan TOTP</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;XML File…</source>
@@ -5476,223 +5477,223 @@ We recommend you use the AppImage available on our downloads page.</translation>
     <name>ManageDatabase</name>
     <message>
         <source>Database settings</source>
-        <translation>Pengaturan basisdata</translation>
+        <translation>Duomenų bazės nustatymai</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation>Sunting pengaturan basisdata</translation>
+        <translation>Keisti duomenų bazės nustatymus</translation>
     </message>
     <message>
         <source>Unlock database</source>
-        <translation>Buka kunci basisdata</translation>
+        <translation>Atrakinti duomenų bazę</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation>Buka kunci basisdata untuk menampilkan lebih banyak informasi</translation>
+        <translation>Atrakinkite duomenų bazę, kad būtų rodoma daugiau informacijos</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Kunci basisdata</translation>
+        <translation>Užrakinti duomenų bazę</translation>
     </message>
 </context>
 <context>
     <name>ManageSession</name>
     <message>
         <source>Disconnect</source>
-        <translation>Putuskan koneksi</translation>
+        <translation>Atsijungti</translation>
     </message>
     <message>
         <source>Disconnect this application</source>
-        <translation>Putuskan koneksi aplikasi ini</translation>
+        <translation>Atjungti šią programą</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Reset</translation>
+        <translation>Atstatyti</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation>Reset any remembered decisions for this application</translation>
+        <translation>Iš naujo nustatyti visus įsimintus šios programos pasirinkimus</translation>
     </message>
 </context>
 <context>
     <name>Merger</name>
     <message>
         <source>Creating missing %1 [%2]</source>
-        <translation>Creating missing %1 [%2]</translation>
+        <translation>Kuriamas trūkstamas %1 [%2]</translation>
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
-        <translation>Memindahkan %1 [%2]</translation>
+        <translation>Perkėlimas į kitą vietą %1 [%2]</translation>
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation>Menyimpan ulang %1 [%2]</translation>
+        <translation>Perrašymas %1 [%2]</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>entri lama yang digabung dari basisdata &quot;%1&quot;</translation>
+        <translation>senesnis įrašas prijungtas iš duomenų bazės &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
-        <translation>Menambahkan cadangan untuk target lama %1 [%2]</translation>
+        <translation>Senesnio tikslo %1 atsarginės kopijos pridėjimas [%2]</translation>
     </message>
     <message>
         <source>Adding backup for older source %1 [%2]</source>
-        <translation>Menambahkan cadangan untuk sumber lama %1 [%2]</translation>
+        <translation>Senesnio šaltinio %1 atsarginės kopijos pridėjimas [%2]</translation>
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Reapplying older target entry on top of newer source %1 [%2]</translation>
+        <translation>Senesnio tikslinio įrašo pakartotinis taikymas naujesniame šaltinyje %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Reapplying older source entry on top of newer target %1 [%2]</translation>
+        <translation>Senesnio šaltinio įrašo pakartotinis taikymas ant naujesnio tikslinio %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>Menyinkronkan dengan sumber yang lebih baru %1 [%2]</translation>
+        <translation>Sinchronizuojama iš naujesnio šaltinio %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
-        <translation>Menyinkronkan dengan sumber yang lebih lama %1 [%2]</translation>
+        <translation>Sinchronizuojama iš senesnio šaltinio %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation>Deleting child %1 [%2]</translation>
+        <translation>Vaiko %1 trynimas [%2]</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation>Deleting orphan %1 [%2]</translation>
+        <translation>Našlaičio %1 [%2] išbraukimas</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
-        <translation>Mengubah objek yang telah dihapus</translation>
+        <translation>Pakeisti ištrinti objektai</translation>
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation>Menambahkan ikon %1 yang hilang</translation>
+        <translation>Pridedama trūkstama piktograma %1</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation> Data khusus yang dihapus %1[%2]</translation>
+        <translation>Pašalinti pasirinktiniai duomenys %1 [%2]</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation>Menambahkan data khusus %1[%2]</translation>
+        <translation>Pasirinktinių duomenų %1 pridėjimas [%2]</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database…</source>
-        <translation>Create a new KeePassXC database…</translation>
+        <translation>Sukurti naują KeePassXC duomenų bazę...</translation>
     </message>
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation>Root</translation>
+        <translation>Šaknis</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPage</name>
     <message>
         <source>WizardPage</source>
-        <translation>LamanPemandu</translation>
+        <translation>WizardPage</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Pengaturan Enkripsi</translation>
+        <translation>Šifravimo nustatymai</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Di sini Anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, Anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
+        <translation>Čia galite derinti duomenų bazės šifravimo nustatymus. Nesijaudinkite, vėliau galėsite juos keisti duomenų bazės nustatymuose.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation>Pengaturan Lanjutan</translation>
+        <translation>Išplėstiniai nustatymai</translation>
     </message>
     <message>
         <source>Simple Settings</source>
-        <translation>Pengaturan Dasar</translation>
+        <translation>Paprasti nustatymai</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation>Kredensial Basisdata</translation>
+        <translation>Duomenų bazės Įgaliojimai</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>Kredensial yang hanya diketahui oleh Anda yang melindungi basisdata Anda.</translation>
+        <translation>Tik jums žinomas įgaliojimų rinkinys, kuriuo apsaugoma jūsų duomenų bazė.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation>Pengaturan Enkripsi</translation>
+        <translation>Šifravimo nustatymai</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Di sini Anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, Anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
+        <translation>Čia galite derinti duomenų bazės šifravimo nustatymus. Nesijaudinkite, vėliau galėsite juos keisti duomenų bazės nustatymuose.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>Informasi Basisdata Umum</translation>
+        <translation>Bendra duomenų bazės informacija</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>Silakan masukkan nama dan deskripsi opsional untuk basisdata Anda yang baru:</translation>
+        <translation>Užpildykite rodomą pavadinimą ir pasirinktinį naujos duomenų bazės aprašymą:</translation>
     </message>
 </context>
 <context>
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
-        <translation>Pengelola Sandi</translation>
+        <translation>Slaptažodžių Tvarkyklė</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Pintasan global telah didaftarkan ke %1</translation>
+        <translation>Visuotinis spartusis klavišas jau užregistruotas į %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Tidak bisa mendaftar pintasan global</translation>
+        <translation>Nepavyko užregistruoti visuotinio sparčiojo klavišo</translation>
     </message>
 </context>
 <context>
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation>Invalid OpData01, does not contain header</translation>
+        <translation>Negalioja opData01, nėra antraštės</translation>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation>Tidak dapat membaca semua IV bytes, seharusnya 16 tetapi mendapat %1</translation>
+        <translation>Negalėdamas perskaityti visų IV baitų, norėjo 16, bet gavo %1</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation>Unable to init cipher for opdata01: %1</translation>
+        <translation>Nepavyko init šifro opdata01: %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
-        <translation>Tidak dapat membaca semua HMAC signature bytes</translation>
+        <translation>Nepavyko nuskaityti visų HMAC parašo baitų</translation>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation>Bentuk OpData01 tidak benar karena HMAC yang salah</translation>
+        <translation>Netinkamai suformuotas OpData01 dėl nepavykusio HMAC</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation>Unable to process clearText in place</translation>
+        <translation>Nepavyko apdoroti clearText vietoje</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation>Expected %1 bytes of clear-text, found %2</translation>
+        <translation>Numatomas %1 baitas skaidraus teksto, nustatytas %2</translation>
     </message>
 </context>
 <context>
@@ -5700,7 +5701,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     <message>
         <source>Read Database did not produce an instance
 %1</source>
-        <translation>Read Database did not produce an instance
+        <translation>&quot;Read Database&quot; nesukūrė egzemplioriaus
 %1</translation>
     </message>
 </context>
@@ -5708,205 +5709,205 @@ We recommend you use the AppImage available on our downloads page.</translation>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation>Direktori .opvault harus ada</translation>
+        <translation>Katalogas .opvault turi egzistuoti</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation>Direktori .opvault harus bisa dibaca</translation>
+        <translation>Katalogas .opvault turi būti skaitomas</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation>Direktori .opvault/default harus ada</translation>
+        <translation>Katalogas .opvault/default turi egzistuoti</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation>Direktori .opvault/default harus bisa dibaca</translation>
+        <translation>Katalogas .opvault/default turi būti skaitomas</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation>Tidak dapat mendekodekan kuncimaster: %1</translation>
+        <translation>Nepavyksta iššifruoti &quot;masterKey&quot;: %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation>Unable to derive master key: %1</translation>
+        <translation>Nepavyko išvesti pagrindinio rakto: %1</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Berkas kunci tidak valid, mengharapkan kunci OpenSSH</translation>
+        <translation>Neteisingas rakto failas, tikimasi OpenSSH rakto</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation>PEM boundary tidak cocok.</translation>
+        <translation>PEM ribos neatitikimas</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation>Dekode base64 gagal</translation>
+        <translation>Base64 dekodavimas patyrė nesėkmę</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>Berkas kunci terlalu kecil.</translation>
+        <translation>Rakto failas buvo per mažas.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Key file magic header id invalid</translation>
+        <translation>Neteisingas rakto failo magiškosios antraštės id</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation>Tidak ada key yang ditemukan</translation>
+        <translation>Rasta nulis raktų</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation>Gagal membaca kunci publik.</translation>
+        <translation>Nepavyko perskaityti viešojo rakto.</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>Berkas kunci rusak, gagal membaca kunci privat</translation>
+        <translation>Sugadintas rakto failas, privačiojo rakto skaitymas nepavyko</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
-        <translation>Jenis key tidak didukung: %1</translation>
+        <translation>Nepalaikomas rakto tipas: %1</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation>Tidak ada isi dari private key untuk didekripsi</translation>
+        <translation>Nėra jokios privačiojo rakto naudingosios apkrovos, kurią iššifruoti</translation>
     </message>
     <message>
         <source>Unknown cipher: %1</source>
-        <translation>Cipher tidak diketahui: %1</translation>
+        <translation>Nežinomas šifras: %1</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation>Membutuhkan frasa sandi untuk mendekripsi kunci ini</translation>
+        <translation>Norint iššifruoti šį raktą, reikalinga slaptafrazė</translation>
     </message>
     <message>
         <source>Key derivation failed: %1</source>
-        <translation>Derivasi kunci gagal: %1</translation>
+        <translation>Rakto išvedimas nepavyko: %1</translation>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>Cipher IV terlalu pendek untuk MD5 kdf</translation>
+        <translation>Iv šifras yra per trumpas MD5 kdf</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
-        <translation>KDF tidak diketahui: %1</translation>
+        <translation>Nežinomas KDF: %1</translation>
     </message>
     <message>
         <source>Failed to initialize cipher: %1</source>
-        <translation>Failed to initialize cipher: %1</translation>
+        <translation>Nepavyko inicializuoti šifro: %1</translation>
     </message>
     <message>
         <source>Decryption failed: %1</source>
-        <translation>Pendekripsian gagal: %1</translation>
+        <translation>Nepavyko iššifruoti: %1</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>Dekripsi gagal, frasa sandi salah?</translation>
+        <translation>Iššifravimas nepavyko, neteisinga slaptafrazė?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading key</source>
-        <translation>Unexpected EOF while reading key</translation>
+        <translation>Netikėtas EOF skaitymo klavišas</translation>
     </message>
     <message>
         <source>Unsupported key part</source>
-        <translation>Unsupported key part</translation>
+        <translation>Nepalaikoma rakto dalis</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation>EOF yang tidak terduga saat membaca kunci publik</translation>
+        <translation>Netikėta failo pabaiga, skaitant viešąjį raktą</translation>
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation>Jenis key tidak diketahui: %1</translation>
+        <translation>Nežinomas rakto tipas: %1</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>EOF yang tidak terduga saat membaca kunci privat</translation>
+        <translation>Netikėta failo pabaiga, skaitant privatųjį raktą</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation>Tidak bisa membuat public key karena tidak ada isinya</translation>
+        <translation>Nepavyksta rašyti viešojo rakto, nes jis tuščias</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation>EOF yang tidak terduga saat menulis kunci publik</translation>
+        <translation>Netikėta failo pabaiga, rašant viešąjį raktą</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>Tidak bisa membuat private key karena tidak ada isinya</translation>
+        <translation>Nepavyksta rašyti privačiojo rakto, nes jis tuščias</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>EOF yang tidak terduga saat menulis kunci privat</translation>
+        <translation>Netikėta failo pabaiga, rašant privatųjį raktą</translation>
     </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
-        <translation>Masukkan sandi:</translation>
+        <translation>Įrašykite slaptažodį:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Ruas sandi</translation>
+        <translation>Slaptažodžio laukas</translation>
     </message>
     <message>
         <source>Confirm password:</source>
-        <translation>Konfirmasi sandi:</translation>
+        <translation>Patvirtinkite slaptažodį:</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation>Ruas pengulangan sandi</translation>
+        <translation>Slaptažodžio pakartojimo laukas</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <source>Add Password</source>
-        <translation>Tambahkan Kata Sandi</translation>
+        <translation>Pridėti Slaptažodį</translation>
     </message>
     <message>
         <source>Change Password</source>
-        <translation>Change Password</translation>
+        <translation>Keisti Slaptažodį</translation>
     </message>
     <message>
         <source>Remove Password</source>
-        <translation>Remove Password</translation>
+        <translation>Pašalinti Slaptažodį</translation>
     </message>
     <message>
         <source>Password set, click to change or remove</source>
-        <translation>Password set, click to change or remove</translation>
+        <translation>Slaptažodis nustatytas, spustelėkite, jei norite pakeisti arba pašalinti</translation>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Kata sandi adalah metode utama untuk mengamankan basisdata Anda.&lt;/p&gt;&lt;p&gt;Kata sandi yang bagus adalah unik dan panjang. KeePassXC dapat menghasilkan satu untuk Anda.&lt;/p&gt; </translation>
+        <translation>&lt;p&gt;Slaptažodis yra pagrindinis būdas apsaugoti jūsų duomenų bazę.&lt;/p&gt;&lt;p&gt;Geri slaptažodžiai yra ilgi ir unikalūs. KeePassXC gali jį sugeneruoti už jus.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
-        <translation>Sandi tidak sama.</translation>
+        <translation>Slaptažodžiai nesutampa.</translation>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Generate Password</source>
-        <translation>Buat Sandi</translation>
+        <translation>Generuoti Slaptažodį</translation>
     </message>
     <message>
         <source>strength</source>
         <comment>Password strength</comment>
-        <translation>kekuatan</translation>
+        <translation>stiprumas</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation>entropi</translation>
+        <translation>entropija</translation>
     </message>
     <message>
         <source>Generated password</source>
-        <translation>Sandi yang dibuat</translation>
+        <translation>Sugeneruotas slaptažodis</translation>
     </message>
     <message>
         <source>%p%</source>
@@ -5914,95 +5915,95 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation>Buat ulang sandi</translation>
+        <translation>Regeneruoti slaptažodį</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation>Salin sandi</translation>
+        <translation>Kopijuoti slaptažodį</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation>&amp;Panjang:</translation>
+        <translation>&amp;Ilgis:</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation>Panjang sandi</translation>
+        <translation>Slaptažodžio ilgis</translation>
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation>Beralih ke mode lanjutan</translation>
+        <translation>Perjungti į išplėstinę veikseną</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Tingkat Lanjut</translation>
+        <translation>Išplėstiniai</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Tipe Karakter</translation>
+        <translation>Simbolių tipai</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation>Karakter spesial</translation>
+        <translation>Specialieji simboliai</translation>
     </message>
     <message>
         <source>Quotes</source>
-        <translation>Tanda Petik</translation>
+        <translation>Kabutės</translation>
     </message>
     <message>
         <source>Punctuation</source>
-        <translation>Tanda Baca</translation>
+        <translation>Skyryba</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation>Garis Tengah dan Miring</translation>
+        <translation>Brūkšneliai ir pasvirieji brūkšniai</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation>Huruf besar</translation>
+        <translation>Didžiosios raidės</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Angka</translation>
+        <translation>Skaičiai</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation>Huruf kecil</translation>
+        <translation>Mažosios raidės</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation>Simbol Matematika</translation>
+        <translation>Matematikos Simboliai</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation>ASCII Lanjutan</translation>
+        <translation>Papildomi ASCII</translation>
     </message>
     <message>
         <source>Braces</source>
-        <translation>Tanda Kurung</translation>
+        <translation>Petnešos</translation>
     </message>
     <message>
         <source>Do not include:</source>
-        <translation>Jangan sertakan:</translation>
+        <translation>Neįtraukti:</translation>
     </message>
     <message>
         <source>Additional characters to use for the generated password</source>
-        <translation>Karakter tambahan yang digunakan untuk membuat sandi</translation>
+        <translation>Papildomi simboliai, kuriuos naudoti sugeneruotam slaptažodžiui</translation>
     </message>
     <message>
         <source>Additional characters</source>
-        <translation>Karakter tambahan</translation>
+        <translation>Papildomi simboliai</translation>
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>Tambahkan huruf bukan-hex ke daftar &quot;jangan sertakan&quot;</translation>
+        <translation>Pridėkite ne šešiakampes raides į sąrašą &quot;neįtraukti&quot;</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation>Sandi Hex</translation>
+        <translation>Šešiakampiai slaptažodžiai</translation>
     </message>
     <message>
         <source>Hex</source>
@@ -6010,63 +6011,63 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
-        <translation>Karakter yang dikecualikan dari sandi yang dibuat</translation>
+        <translation>Simbolių rinkinys, kurį reikia išskirti iš sugeneruoto slaptažodžio</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation>Karakter yang dikecualikan</translation>
+        <translation>Neįtraukti simboliai</translation>
     </message>
     <message>
         <source>Also choose from:</source>
-        <translation>Juga pilih dari:</translation>
+        <translation>Taip pat pasirinkti iš:</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Kecualikan karakter mirip</translation>
+        <translation>Pašalinti panašiai atrodančius simbolius</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation>Pilih karakter dari setiap grup</translation>
+        <translation>Parinkti simbolius iš kiekvienos grupės</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Frasa Sandi</translation>
+        <translation>Slaptafrazė</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Pemisah Kata:</translation>
+        <translation>Žodžių skirtukas:</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Daftar Kata:</translation>
+        <translation>Žodžių sąrašas:</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation>Jumlah Kata:</translation>
+        <translation>Žodžių skaičius:</translation>
     </message>
     <message>
         <source>Character Count:</source>
-        <translation>Cacah Karakter:</translation>
+        <translation>Simbolių skaičius:</translation>
     </message>
     <message>
         <source>Word Case:</source>
-        <translation>Besar Kecil Kata:</translation>
+        <translation>Žodžio atvejis:</translation>
     </message>
     <message>
         <source>Delete selected wordlist</source>
-        <translation>Delete selected wordlist</translation>
+        <translation>Ištrinti pasirinktą žodžių sąrašą</translation>
     </message>
     <message>
         <source>Add custom wordlist</source>
-        <translation>Add custom wordlist</translation>
+        <translation>Pridėti pasirinktinį žodžių sąrašą</translation>
     </message>
     <message>
         <source>character</source>
-        <translation>karakter</translation>
+        <translation>simbolis</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Tutup</translation>
+        <translation>Užverti</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -6074,297 +6075,297 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Apply Password</source>
-        <translation>Terapkan kata sandi</translation>
+        <translation>Taikyti slaptažodį</translation>
     </message>
     <message>
         <source>Regenerate password (%1)</source>
-        <translation>Buat ulang sandi (%1)</translation>
+        <translation>Regeneruoti slaptažodį (%1)</translation>
     </message>
     <message>
         <source>lower case</source>
-        <translation>huruf kecil</translation>
+        <translation>mažosios raidės</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation>HURUF BESAR</translation>
+        <translation>DIDŽIOSIOS RAIDĖS</translation>
     </message>
     <message>
         <source>Title Case</source>
-        <translation>Besar Kecil Judul</translation>
+        <translation>Pavadinimo atvejis</translation>
     </message>
     <message>
         <source>(SYSTEM)</source>
-        <translation>(SYSTEM)</translation>
+        <translation>(SISTEMA)</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>Entropi: %1 bit</translation>
+        <translation>Entropija: %1 bitų</translation>
     </message>
     <message>
         <source>Confirm Delete Wordlist</source>
-        <translation>Confirm Delete Wordlist</translation>
+        <translation>Patvirtinti žodžių sąrašo ištrinimą</translation>
     </message>
     <message>
         <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>Do you really want to delete the wordlist &quot;%1&quot;?</translation>
+        <translation>Ar tikrai norite ištrinti žodžių sąrašą &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Failed to delete wordlist</source>
-        <translation>Failed to delete wordlist</translation>
+        <translation>Nepavyko ištrinti žodžių sąrašo</translation>
     </message>
     <message>
         <source>Wordlists</source>
-        <translation>Wordlists</translation>
+        <translation>Žodžių sąrašai</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Visi failai</translation>
     </message>
     <message>
         <source>Select Custom Wordlist</source>
-        <translation>Select Custom Wordlist</translation>
+        <translation>Pasirinkite pasirinktinį žodžių sąrašą</translation>
     </message>
     <message>
         <source>Overwrite Wordlist?</source>
-        <translation>Overwrite Wordlist?</translation>
+        <translation>Perrašyti žodžių sąrašą?</translation>
     </message>
     <message>
         <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
 Do you want to overwrite it?</source>
-        <translation>Wordlist &quot;%1&quot; already exists as a custom wordlist.
-Do you want to overwrite it?</translation>
+        <translation>&quot;Wordlist&quot; &quot;%1&quot; jau egzistuoja kaip pasirinktinis žodžių sąrašas.
+Ar norite jį perrašyti?</translation>
     </message>
     <message>
         <source>Failed to add wordlist</source>
-        <translation>Failed to add wordlist</translation>
+        <translation>Nepavyko pridėti žodžių sąrašo</translation>
     </message>
     <message>
         <source>Logograms</source>
-        <translation>Logogram</translation>
+        <translation>Logogramos</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Karakter Spesial</translation>
+        <translation>Specialūs simboliai</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Kualitas Sandi: %1</translation>
+        <translation>Slaptažodžio kokybė: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Buruk</translation>
+        <translation>Blogas</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Lemah</translation>
+        <translation>Silpnas</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>Baik</translation>
+        <translation>Geras</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>Sempurna</translation>
+        <translation>Puikus</translation>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Karakter yang dikecualikan: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+        <translation>Neįtraukti simboliai: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;.</translation>
     </message>
 </context>
 <context>
     <name>PasswordWidget</name>
     <message>
         <source>Passwords do not match</source>
-        <translation>Sandi tidak sama</translation>
+        <translation>Slaptažodžiai nesutampa</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation>Kata sandi cocok sejauh ini</translation>
+        <translation>Kol kas slaptažodžiai sutampa</translation>
     </message>
     <message>
         <source>Toggle Password (%1)</source>
-        <translation>Aktif/Nonaktifkan Sandi (%1)</translation>
+        <translation>Perjungti slaptažodį (%1)</translation>
     </message>
     <message>
         <source>Generate Password (%1)</source>
-        <translation>Buat Sandi (%1)</translation>
+        <translation>Generuoti Slaptažodį (%1)</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation>Peringatan: Caps Lock aktif!</translation>
+        <translation>Įspėjimas: įjungtas &quot;Caps Lock&quot;!</translation>
     </message>
     <message>
         <source>Quality: %1</source>
-        <translation>Kualitas: %1</translation>
+        <translation>Kokybė: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Buruk</translation>
+        <translation>Blogas</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Lemah</translation>
+        <translation>Silpnas</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>Baik</translation>
+        <translation>Geras</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>Sempurna</translation>
+        <translation>Puikus</translation>
     </message>
 </context>
 <context>
     <name>PickcharsDialog</name>
     <message>
         <source>KeePassXC - Pick Characters</source>
-        <translation>KeePassXC - Pick Characters</translation>
+        <translation>KeePassXC - Rinkitės simbolius</translation>
     </message>
     <message>
         <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
-        <translation>Select characters to type, navigate with arrow keys, Ctrl + S submits.</translation>
+        <translation>Pasirinkite simbolius, kuriuos norite įvesti, naršykite rodyklių klavišais, pateikia Ctrl + S.</translation>
     </message>
     <message>
         <source>Press &amp;Tab between characters</source>
-        <translation>Press &amp;Tab between characters</translation>
+        <translation>Paspauskite ir tabuliuokite tarp simbolių</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation>Timpa</translation>
+        <translation>Perrašyti</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Hapus</translation>
+        <translation>Ištrinti</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Pindah</translation>
+        <translation>Perkelti</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation>Kosong</translation>
+        <translation>Tuščia</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Buang</translation>
+        <translation>Šalinti</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation>Lewati</translation>
+        <translation>Praleisti</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Nonaktifkan</translation>
+        <translation>Išjungti</translation>
     </message>
     <message>
         <source>Merge</source>
-        <translation>Gabung</translation>
+        <translation>Sujungti</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation>Lanjutkan</translation>
+        <translation>Tęsti</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation>Basisdata tidak terbuka</translation>
+        <translation>Duomenų bazė neatverta</translation>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation>Hash basisdata tidak tersedia</translation>
+        <translation>Duomenų bazės maiša yra neprieinama</translation>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation>Kunci publik klien tidak diterima</translation>
+        <translation>Kliento viešasis raktas negautas</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation>Tidak bisa mendekripsi pesan</translation>
+        <translation>Nepavyksta iššifruoti žinutės</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation>Tindakan dibatalkan atau ditolak</translation>
+        <translation>Veiksmo atsisakyta arba jis atmestas</translation>
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation>Enkripsi pesan gagal.</translation>
+        <translation>Nepavyko užšifruoti žinutės.</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation>Asosiasi KeePassXC gagal, coba lagi</translation>
+        <translation>KeePassXC asociacija nepavyko, bandykite dar kartą</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation>Kunci enkripsi tidak dikenali</translation>
+        <translation>Šifravimo raktas yra neatpažintas</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation>Tindakan salah</translation>
+        <translation>Neteisingas veiksmas</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation>Pesan kosong diterima</translation>
+        <translation>Gauta tuščia žinutė</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation>URL tidak ada</translation>
+        <translation>Nepateiktas URL</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation>Tidak ditemukan log masuk</translation>
+        <translation>Nerasta prisijungimų</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation>Tidak ada grup yang ditemukan</translation>
+        <translation>Nerasta jokių grupių</translation>
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation>Tidak bisa membuat grup baru</translation>
+        <translation>Negalima sukurti naujos grupės</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation>No valid UUID provided</translation>
+        <translation>Nepateikiamas galiojantis UUID</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>Galat tidak diketahui</translation>
+        <translation>Nežinoma klaida</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Integrasi Peramban</translation>
+        <translation>Naršyklės integracija</translation>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
-        <translation>Kegagalan Pengaya Peramban</translation>
+        <translation>Naršyklės plėtinio gedimas</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation>Could not save the native messaging script file for %1.</translation>
+        <translation>Nepavyko įrašyti vietinio pranešimų scenarijaus failo % 1.</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>Nama pengguna untuk entri.</translation>
+        <translation>Įrašo naudotojo vardas.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>nama pengguna</translation>
+        <translation>naudotojo vardas</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation>URL untuk entri.</translation>
+        <translation>Įrašo URL.</translation>
     </message>
     <message>
         <source>URL</source>
@@ -6372,79 +6373,79 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
-        <translation>Notes for the entry.</translation>
+        <translation>Įrašo pastabos.</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Catatan</translation>
+        <translation>Pastabos</translation>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation>Ingatkan sandi entri.</translation>
+        <translation>Klausti įrašo slaptažodžio.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Buat sandi entri.</translation>
+        <translation>Generuoti įrašui slaptažodį.</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>Tambahkan entri baru ke basisdata.</translation>
+        <translation>Pridėti naują įrašą į duomenų bazę.</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation>Jalur entri yang akan ditambahkan.</translation>
+        <translation>Įrašo, kurį pridėti, kelias.</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time.</source>
-        <translation>Cannot generate a password and prompt at the same time.</translation>
+        <translation>Negalima generuoti slaptažodžio ir užklausos tuo pačiu metu.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
-        <translation>Tidak bisa membuat entri dengan jalur %1.</translation>
+        <translation>Nepavyko sukurti įrašo su keliu %1.</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation>Masukkan sandi untuk entri baru:</translation>
+        <translation>Įveskite naujo įrašo slaptažodį: </translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation>Gagal menyimpan basisdata %1.</translation>
+        <translation>Rašymas į duomenų bazę patyrė nesėkmę %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation>Berhasil menambahkan entri %1.</translation>
+        <translation>Sėkmingai pridėtas įrašas %1.</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation>Menambahkan grup baru ke basisdata.</translation>
+        <translation>Į duomenų bazę įtraukia naują grupę.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation>Jalur dari grup yang ingin ditambahkan.</translation>
+        <translation>Pridedamos grupės kelias.</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
-        <translation>Grup %1 sudah ada!</translation>
+        <translation>Grupė %1 jau egzistuoja!</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation>Grup %1 tidak ditemukan.</translation>
+        <translation>Grupė %1 nerasta.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
-        <translation>Berhasil menambahkan grup %1.</translation>
+        <translation>Sėkmingai pridėta grupė %1.</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation>Periksa apakah ada kata sandi yang dibocorkan secara publik. NAMABERKAS harus menjadi jalur dari daftar berkas kata sandi hash SHA-1 yang bocor dalam format HIBP, sebagaimana tersedia dari https://haveibeenpwned.com/Passwords.</translation>
+        <translation>Patikrinkite, ar kokie nors slaptažodžiai nebuvo viešai nutekinti. FILENAME turi būti failo, kuriame sha-1 pateikiamos nutekėjusių slaptažodžių maišos HIBP formatu, kelias, kaip galima iš https://haveibeenpwned.com/Passwords.</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation>NAMABERKAS</translation>
+        <translation>FILENAME</translation>
     </message>
     <message>
         <source>Path to okon-cli to search a formatted HIBP file</source>
-        <translation>Path to okon-cli to search a formatted HIBP file</translation>
+        <translation>Kelias į okon-cli ieškoti suformatuoto HIBP failo</translation>
     </message>
     <message>
         <source>okon-cli</source>
@@ -6452,368 +6453,368 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation>Menganalisa kata sandi untuk kelemahan dan masalah.</translation>
+        <translation>Analizuoti slaptažodžius, ieškant trūkumų ir problemų.</translation>
     </message>
     <message>
         <source>Cannot find HIBP file: %1</source>
-        <translation>Cannot find HIBP file: %1</translation>
+        <translation>Nepavyko rasti HIBP failo: %1</translation>
     </message>
     <message>
         <source>Evaluating database entries using okon…</source>
-        <translation>Evaluating database entries using okon…</translation>
+        <translation>Vertiname duomenų bazės įrašus naudojant okon...</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation>Gagal membuka berkas HIBP %1: %2</translation>
+        <translation>Nepavyko atidaryti HIBP failo %1: %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while…</source>
-        <translation>Evaluating database entries against HIBP file, this will take a while…</translation>
+        <translation>Vertiname duomenų bazės įrašus pagal HIBP failą, tai užtruks...</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>Kata sandi untuk &apos;%1&apos; telah bocor %2 kali!</numerusform></translation>
+        <translation><numerusform>&quot;%1&quot; slaptažodis buvo nutekintas %2 kartus per (-ius)!</numerusform><numerusform>&quot;%1&quot; slaptažodis buvo nutekintas %2 kartus per (-ius)!</numerusform><numerusform>&quot;%1&quot; slaptažodis buvo nutekintas %2 kartus per (-ius)!</numerusform><numerusform>&quot;%1&quot; slaptažodis buvo nutekintas %2 kartus per (-ius)!</numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation>Password for &apos;%1&apos; has been leaked!</translation>
+        <translation>&apos;%1&apos; slaptažodis buvo nutekintas!</translation>
     </message>
     <message>
         <source>Export an attachment of an entry.</source>
-        <translation>Export an attachment of an entry.</translation>
+        <translation>Eksportuoti įrašo priedą.</translation>
     </message>
     <message>
         <source>Path of the entry with the target attachment.</source>
-        <translation>Path of the entry with the target attachment.</translation>
+        <translation>Įrašo su numatytu priedu kelias.</translation>
     </message>
     <message>
         <source>Name of the attachment to be exported.</source>
-        <translation>Name of the attachment to be exported.</translation>
+        <translation>Eksportuojamo priedo pavadinimas.</translation>
     </message>
     <message>
         <source>Path to which the attachment should be exported.</source>
-        <translation>Path to which the attachment should be exported.</translation>
+        <translation>Kelias, į kurį turėtų būti eksportuojamas priedas.</translation>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
-        <translation>Tidak bisa menemukan entri dengan jalur %1.</translation>
+        <translation>Nepavyko rasti įrašo su keliu %1.</translation>
     </message>
     <message>
         <source>Could not find attachment with name %1.</source>
-        <translation>Could not find attachment with name %1.</translation>
+        <translation>Nepavyko rasti priedo su pavadinimu %1.</translation>
     </message>
     <message>
         <source>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</source>
-        <translation>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</translation>
+        <translation>Eksporto tikslas nenurodytas. Naudokite &apos;--stdout&apos; arba nurodykite &apos;export-file&apos;.</translation>
     </message>
     <message>
         <source>Could not open output file %1.</source>
-        <translation>Could not open output file %1.</translation>
+        <translation>Nepavyko atidaryti išvesties failo %1.</translation>
     </message>
     <message>
         <source>Successfully exported attachment %1 of entry %2 to %3.</source>
-        <translation>Successfully exported attachment %1 of entry %2 to %3.</translation>
+        <translation>Sėkmingai eksportuotas %1 įrašo %2 priedas į %3.</translation>
     </message>
     <message>
         <source>Overwrite existing attachments.</source>
-        <translation>Overwrite existing attachments.</translation>
+        <translation>Perrašyti esamus priedus.</translation>
     </message>
     <message>
         <source>Imports an attachment to an entry.</source>
-        <translation>Imports an attachment to an entry.</translation>
+        <translation>Importuoja priedą į įrašą.</translation>
     </message>
     <message>
         <source>Path of the entry.</source>
-        <translation>Path of the entry.</translation>
+        <translation>Įrašo kelias.</translation>
     </message>
     <message>
         <source>Name of the attachment to be added.</source>
-        <translation>Name of the attachment to be added.</translation>
+        <translation>Pridedamo priedo pavadinimas.</translation>
     </message>
     <message>
         <source>Path of the attachment to be imported.</source>
-        <translation>Path of the attachment to be imported.</translation>
+        <translation>Importuojamo priedo kelias.</translation>
     </message>
     <message>
         <source>Attachment %1 already exists for entry %2.</source>
-        <translation>Attachment %1 already exists for entry %2.</translation>
+        <translation>Įraše %2 jau egzistuoja priedas %1.</translation>
     </message>
     <message>
         <source>Could not open attachment file %1.</source>
-        <translation>Could not open attachment file %1.</translation>
+        <translation>Nepavyko atidaryti priedo failo %1.</translation>
     </message>
     <message>
         <source>Successfully imported attachment %1 as %2 to entry %3.</source>
-        <translation>Successfully imported attachment %1 as %2 to entry %3.</translation>
+        <translation>Sėkmingai importuotas priedas %1 kaip %2 į įrašą %3.</translation>
     </message>
     <message>
         <source>Remove an attachment of an entry.</source>
-        <translation>Remove an attachment of an entry.</translation>
+        <translation>Pašalinti įrašo priedą.</translation>
     </message>
     <message>
         <source>Name of the attachment to be removed.</source>
-        <translation>Name of the attachment to be removed.</translation>
+        <translation>Šalinamo priedo pavadinimas.</translation>
     </message>
     <message>
         <source>Successfully removed attachment %1 from entry %2.</source>
-        <translation>Successfully removed attachment %1 from entry %2.</translation>
+        <translation>Sėkmingai pašalintas priedas %1 iš įrašo %2.</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
         <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
-        <translation>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</translation>
+        <translation>Kopijuoti nurodytą atributą į iškarpinę. Jei nenurodyta, numatytoji reikšmė yra &quot;slaptažodis&quot;.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation>Salin TOTP saat ini ke papan klip (setara dengan &quot;-a totp&quot;).</translation>
+        <translation>Kopijuoti dabartinį TOTP į iškarpinę (atitinka &quot;-a totp&quot;).</translation>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
-        <translation>Must match only one entry, otherwise a list of possible matches is shown.</translation>
+        <translation>Turi atitikti tik vieną įrašą, priešingu atveju rodomas galimų atitikmenų sąrašas.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation>Salin atribut entri ke papan klip.</translation>
+        <translation>Kopijuoti įrašo atributą į iškarpinę.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation>Jalur entri yang akan di salin.</translation>
+        <translation>Įrašo, kurį iškirpti, kelias.</translation>
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</translation>
+        <translation>Laiko tarpas prieš išvalant iškarpinę (numatytoji reikšmė %1 sekundės, jei norite neriboto laiko, nustatykite 0).</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
-        <translation>Nilai waktu habis tidak valid %1.</translation>
+        <translation>Netinkama laiko tarpo reikšmė %1.</translation>
     </message>
     <message>
         <source>Multiple entries matching:</source>
-        <translation>Multiple entries matching:</translation>
+        <translation>Keli įrašai atitinka:</translation>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation>Using matching entry: %1</translation>
+        <translation>Naudojamas atitinkantis įrašas: %1</translation>
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation>Entri %1 tidak ditemukan.</translation>
+        <translation>Įrašas %1 nerastas.</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation>ERROR: Harap tentukan salah satu dari --attribute atau -totp, bukan keduanya.</translation>
+        <translation>KLAIDA: Prašome nurodyti vieną iš --attribute arba --totp, bet ne abu.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
-        <translation>Entri dengan jalur %1 belum memiliki TOTP.</translation>
+        <translation>Įraše, kurio kelias %1, nenustatytas TOTP.</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation>ERROR: attribute %1 is ambiguous, it matches %2.</translation>
+        <translation>KLAIDA: atributas %1 yra dviprasmiškas, jis atitinka %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
-        <translation>Atribut &quot;%1&quot; tidak ditemukan.</translation>
+        <translation>Atributas &quot;%1&quot; nerastas.</translation>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</translation>
+        <translation>Įrašo atributas &quot;%1&quot; nukopijuotas į iškarpinę!</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Menghapus entri papan klip dalam %1 detik...</numerusform></translation>
+        <translation><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
-        <translation>Entri papan klip dihapus!</translation>
+        <translation>Iškarpinė išvalyta!</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation>Tutup basisdata yang saat ini dibuka.</translation>
+        <translation>Uždaryti šiuo metu atidarytą duomenų bazę.</translation>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation>Tampilkan bantuan ini.</translation>
+        <translation>Rodyti šią pagalbą.</translation>
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
-        <translation>Jangan tampilkan pengingat sandi dan kaluaran sekunder lainnya.</translation>
+        <translation>Tylėkite slaptažodžio raginimą ir kitus antrinius išėjimus.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>Berkas kunci dari basisdata.</translation>
+        <translation>Duomenų bazės rakto failas.</translation>
     </message>
     <message>
         <source>path</source>
-        <translation>jalur</translation>
+        <translation>kelias</translation>
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation>Nonaktifkan kunci kata sandi untuk basisdata.</translation>
+        <translation>Deaktyvuoti duomenų bazės slaptažodžio raktą.</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</translation>
+        <translation>Yubikey lizdas ir neprivalomas serialas, naudojamas prieigai prie duomenų bazės (pvz., 1:7370001).</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
-        <translation>slot[:serial]</translation>
+        <translation>lizdas[:serija]</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation>Missing positional argument(s).</translation>
+        <translation>Trūksta pozicinio (-ių) argumento (-ų).</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation>Too many arguments provided.</translation>
+        <translation>Pateikta per daug argumentų.</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation>Target waktu pendekripsian dalam MD untuk basisdata.</translation>
+        <translation>Norimas duomenų bazės iššifravimo laikas ms.</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>waktu</translation>
+        <translation>laikas</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation>Atur berkas kunci untuk basisdata.</translation>
+        <translation>Nustatyti duomenų bazės raktų failą.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation>Atur kata sandi untuk basisdata.</translation>
+        <translation>Nustatyti duomenų bazės slaptažodį.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation>Buat basisdata baru.</translation>
+        <translation>Sukurti naują duomenų bazę.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Jalur ke basisdata.</translation>
+        <translation>Duomenų bazės kelias.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
-        <translation>Waktu dekripsi tidak valid %1.</translation>
+        <translation>Netinkamas iššifravimo laikas %1.</translation>
     </message>
     <message>
         <source>Target decryption time must be between %1 and %2.</source>
-        <translation>Waktu dekripsi target harus antara %1 dan %2.</translation>
+        <translation>Norimas iššifravimo laikas turi būti nuo %1 iki %2.</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
-        <translation>Gagal mengatur kata sandi basisdata.</translation>
+        <translation>Nepavyko nustatyti duomenų bazės slaptažodžio.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation>Pemuatan berkas kunci gagal</translation>
+        <translation>Rakto failo įkėlimas nepavyko</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation>Tidak ada kunci yang diatur. Membatalkan pembuatan basisdata.</translation>
+        <translation>Nenustatytas joks raktas. Duomenų bazės sukūrimas nutraukiamas.</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation>Benchmarking key derivation function for %1ms delay.</translation>
+        <translation>Lyginamosios analizės rakto išvedimo funkcija % 1 ms delsai.</translation>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation>Setting %1 rounds for key derivation function.</translation>
+        <translation>Klavišo išvedimo funkcijos %1 raundų nustatymas.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
-        <translation>terjadi kesalahan ketika mengatur pengaturan derivasi kunci basisdata.</translation>
+        <translation>klaida nustatant duomenų bazės rakto išvesties parametrus.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation>Berkas %1 sudah ada.</translation>
+        <translation>Failas %1 jau yra.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation>Gagal menyimpan basisdata: %1.</translation>
+        <translation>Nepavyko įrašyti duomenų bazės: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation>Berhasil membuat basisdata baru.</translation>
+        <translation>Nauja duomenų bazė sėkmingai sukurta.</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>Jumlah kata untuk frasa sandi diceware.</translation>
+        <translation>Žodžių skaičius kauliukų slaptafrazei.</translation>
     </message>
     <message>
         <source>count</source>
         <comment>CLI parameter</comment>
-        <translation>jumlah</translation>
+        <translation>kiekis</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation>Daftar kata untuk generator diceware.
-[Bawaan: Inggris EFF]</translation>
+        <translation>Kauliukų generatorius Wordlist.
+[Numatytasis nustatymas: EŽF anglų k.]</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>Buat frasa sandi diceware acak yang baru.</translation>
+        <translation>Sukurkite naują atsitiktinę kauliukų programų slaptafrazę.</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation>Jumlah kata tidak valid %1</translation>
+        <translation>Neteisingas žodžių skaičius %1</translation>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
-        <translation>Daftar kata terlalu kecil (&lt;1000 item)</translation>
+        <translation>Žodžių sąrašas per mažas (&lt; 1000 items)</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation>Judul entri.</translation>
+        <translation>Įrašo pavadinimas.</translation>
     </message>
     <message>
         <source>title</source>
-        <translation>judul</translation>
+        <translation>antraštė</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation>Sunting sebuah entri.</translation>
+        <translation>Taisyti įrašą.</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>Jalur entri yang akan disunting.</translation>
+        <translation>Įrašo, kurį taisyti, kelias.</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
-        <translation>Not changing any field for entry %1.</translation>
+        <translation>Nekeisti jokio įrašo %1 lauko.</translation>
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation>Masukkan sandi baru untuk entri:</translation>
+        <translation>Įveskite naują slaptažodį įrašui:</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>Gagal menyimpan basisdata: %1</translation>
+        <translation>Nepavyko įrašyti duomenų bazės: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
-        <translation>Berhasil menyunting entri %1.</translation>
+        <translation>Sėkmingai redaguotas įrašas %1.</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation>Jalankan analisis tingkat lanjut pada sandi.</translation>
+        <translation>Atlikti išplėstinę slaptažodžio analizę</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation>Sandi untuk diestimasi entropinya.</translation>
+        <translation>Slaptažodis, kurio entropiją apskaičiuoti</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation>Estimasi entropi sandi.</translation>
+        <translation>Apskaičiuoti slaptažodžio entropiją.</translation>
     </message>
     <message>
         <source>Length %1</source>
-        <translation>Panjang %1</translation>
+        <translation>Ilgis %1</translation>
     </message>
     <message>
         <source>Entropy %1</source>
-        <translation>Entropi %1</translation>
+        <translation>Entropija %1</translation>
     </message>
     <message>
         <source>Log10 %1</source>
@@ -6821,203 +6822,203 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation>Multi-word extra bits %1</translation>
+        <translation>Kelių žodžių papildomi bitai %1</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation>Tipe: Bruteforce</translation>
+        <translation>Tipas: Bruteforce</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation>Tipe: Dictionary</translation>
+        <translation>Tipas: Žodynas</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
-        <translation>Tipe: Dict+Leet</translation>
+        <translation>Tipas: Diktas + Leetas</translation>
     </message>
     <message>
         <source>Type: User Words</source>
-        <translation>Tipe: User Words</translation>
+        <translation>Tipas: Vartotojo žodžiai</translation>
     </message>
     <message>
         <source>Type: User+Leet</source>
-        <translation>Tipe: User+Leet</translation>
+        <translation>Tipas: Naudotojas + Leet</translation>
     </message>
     <message>
         <source>Type: Repeated</source>
-        <translation>Tipe: Repeated</translation>
+        <translation>Tipas:Kartotinis</translation>
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation>Tipe: Sequence</translation>
+        <translation>Tipas: Seka</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
-        <translation>Tipe: Spatial</translation>
+        <translation>Tipas: Erdvinis</translation>
     </message>
     <message>
         <source>Type: Date</source>
-        <translation>Tipe: Tanggal</translation>
+        <translation>Tipas: Data</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>Type: Bruteforce(Rep)</translation>
+        <translation>Tipas: Bruteforce(Rep)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation>Type: Dictionary(Rep)</translation>
+        <translation>Tipas: Žodynas(Rep)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation>Type: Dict+Leet(Rep)</translation>
+        <translation>Tipas: Dict + Leet (Rep)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation>Type: User Words(Rep)</translation>
+        <translation>Tipas: Vartotojo žodžiai (Rep)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation>Type: User+Leet(Rep)</translation>
+        <translation>Tipas: User+Leet(Rep)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation>Type: Repeated(Rep)</translation>
+        <translation>Tipas:Kartotinis(Rep)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation>Type: Sequence(Rep)</translation>
+        <translation>Tipas: Seka(Rep)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation>Type: Spatial(Rep)</translation>
+        <translation>Tipas:Erdvinis(Rep)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation>Type: Date(Rep)</translation>
+        <translation>Tipas: Data (Rep)</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
-        <translation>Type: Unknown (%1)</translation>
+        <translation>Tipas: Nežinomas (%1)</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
-        <translation>Entropi %1 (%2)</translation>
+        <translation>Entropija %1 (%2)</translation>
     </message>
     <message>
         <source>*** Password length (%1) != sum of length of parts (%2) ***</source>
-        <translation>*** Panjang kata sandi (%1) != jumlah panjang bagian (%2) ***</translation>
+        <translation>Slaptažodžio ilgis (%1) != dalių ilgio suma (%2) ***</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation>Keluar dari mode interaktif.</translation>
+        <translation>Išeikite iš interaktyvaus režimo.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation>Format yang digunakan ketika mengekspor. Pilihan yang tersedia adalah &apos;xml&apos; atau &apos;csv&apos;. Standarnya adalah &apos;xml&apos;.</translation>
+        <translation>Formatas, kurį naudoti eksportuojant. Galima pasirinkti &apos;xml&apos; arba &apos;csv&apos;. Numatytasis yra &apos;xml&apos;.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation>Ekspor konten dari basisdata ke keluaran standar dalam format yang ditentukan.</translation>
+        <translation>Eksportuoja duomenų bazės turinį į standartinę išvestį nurodytu formatu.</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation>Tidak bisa mengekspor basisdata ke XML: %1</translation>
+        <translation>Nepavyko eksportuoti duomenų bazės į XML: %1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation>Format tidak didukung %1</translation>
+        <translation>Nepalaikomas formatas %1</translation>
     </message>
     <message>
         <source>Length of the generated password</source>
-        <translation>Panjang dari sandi yang dibuat</translation>
+        <translation>Sugeneruoto slaptažodžio ilgis</translation>
     </message>
     <message>
         <source>length</source>
-        <translation>panjang</translation>
+        <translation>ilgis</translation>
     </message>
     <message>
         <source>Use lowercase characters</source>
-        <translation>Gunakan karakter huruf kecil</translation>
+        <translation>Naudoti mažąsias raides</translation>
     </message>
     <message>
         <source>Use uppercase characters</source>
-        <translation>Gunakan karakter huruf besar</translation>
+        <translation>Naudoti didžiąsias raides</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation>Gunakan angka</translation>
+        <translation>Naudoti skaičius</translation>
     </message>
     <message>
         <source>Use special characters</source>
-        <translation>Gunakan karakter spesial</translation>
+        <translation>Naudoti specialius simbolius</translation>
     </message>
     <message>
         <source>Use extended ASCII</source>
-        <translation>Gunakan ASCII lanjutan</translation>
+        <translation>Naudoti išplėstinį ASCII</translation>
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation>Kecualikan karakter</translation>
+        <translation>Neįtraukti simbolių rinkinio</translation>
     </message>
     <message>
         <source>chars</source>
-        <translation>karakter</translation>
+        <translation>ženklai</translation>
     </message>
     <message>
         <source>Use custom character set</source>
-        <translation>Use custom character set</translation>
+        <translation>Naudoti pasirinktinį simbolių rinkinį</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
-        <translation>Kecualikan karakter yang mirip</translation>
+        <translation>Neįtraukti panašiai atrodančių simbolių</translation>
     </message>
     <message>
         <source>Include characters from every selected group</source>
-        <translation>Sertakan karakter dari setiap grup yang dipilih</translation>
+        <translation>Įtraukti kiekvienos pasirinktos grupės simbolius</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation>Buat kata sandi baru secara acak.</translation>
+        <translation>Generuoti naują atsitiktinį slaptažodį.</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation>Panjang sandi tidak valid %1</translation>
+        <translation>Netinkamas slaptažodžio ilgis %1</translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation>Invalid password generator after applying all options</translation>
+        <translation>Netinkamas slaptažodžių generatorius pritaikius visas parinktis</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation>Tampilkan bantuan perintah.</translation>
+        <translation>Rodyti komandų pagalbą.</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>Perintah yang tersedia:</translation>
+        <translation>Galimos komandos:</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation>Impor konten dari basisdata XML.</translation>
+        <translation>Importuoti XML duomenų bazės turinį.</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation>Jalur ke berkas XML hasil ekspor basisdata.</translation>
+        <translation>XML duomenų bazės eksporto kelias.</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation>Jalur dari basisdata baru.</translation>
+        <translation>Naujos duomenų bazės kelias.</translation>
     </message>
     <message>
         <source>Unable to import XML database: %1</source>
-        <translation>Tidak bisa mengimpor basisdata XML: %1</translation>
+        <translation>Nepavyko importuoti XML duomenų bazės: %1</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation>Berhasil mengimpor basisdata.</translation>
+        <translation>Sėkmingai importuota duomenų bazė.</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
-        <translation>Tampilkan informasi basisdata.</translation>
+        <translation>Rodyti duomenų bazės informaciją.</translation>
     </message>
     <message>
         <source>UUID: </source>
@@ -7025,15 +7026,15 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation>Nama:</translation>
+        <translation>Pavadinimas:</translation>
     </message>
     <message>
         <source>Description: </source>
-        <translation>Deskripsi:</translation>
+        <translation>Aprašymas:</translation>
     </message>
     <message>
         <source>Cipher: </source>
-        <translation>Sandi Cipher:</translation>
+        <translation>Šifras:</translation>
     </message>
     <message>
         <source>KDF: </source>
@@ -7041,83 +7042,83 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Recycle bin is enabled.</source>
-        <translation>Keranjang sampah diaktifkan.</translation>
+        <translation>Šiukšliadėžė yra įjungta.</translation>
     </message>
     <message>
         <source>Recycle bin is not enabled.</source>
-        <translation>Keranjang sampah tidak diaktifkan.</translation>
+        <translation>Šiukšliadėžė nėra įjungta.</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Lokasi</translation>
+        <translation>Vieta</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation>Database created</translation>
+        <translation>Duomenų bazė sukurta</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation>Terakhir disimpan</translation>
+        <translation>Paskutinį kartą išsaugota</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation>Berubahan belum disimpan</translation>
+        <translation>Neišsaugoti pakeitimai</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation>ya</translation>
+        <translation>taip</translation>
     </message>
     <message>
         <source>no</source>
-        <translation>tidak</translation>
+        <translation>ne</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation>Jumlah grup</translation>
+        <translation>Grupių skaičius</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation>Jumlah entri</translation>
+        <translation>Įrašų skaičius</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Jumlah entri yang kedaluwarsa</translation>
+        <translation>Nebegaliojančių įrašų skaičius</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation>Kata sandi unik</translation>
+        <translation>Unikalūs slaptažodžiai</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation>Kata sandi tidak unik</translation>
+        <translation>Pasikartojantys slaptažodžiai</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation>Penggunaan ulang kata sandi maksimal</translation>
+        <translation>Maksimalus pakartotinis slaptažodžio naudojimas</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation>Jumlah kata sandi singkat</translation>
+        <translation>Trumpų slaptažodžių skaičius</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation>Jumlah kata sandi yang lemah</translation>
+        <translation>Silpnų slaptažodžių skaičius</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation>Entri dikecualikan dari laporan</translation>
+        <translation>Įrašai, neįtraukti į ataskaitas</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation>Panjang rata-rata kata sandi</translation>
+        <translation>Vidutinis slaptažodžio ilgis</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation>%1 karakter</translation>
+        <translation>%1 simboliai</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation>Perintah tidak diketahui %1</translation>
+        <translation>Nežinoma komanda %1</translation>
     </message>
     <message>
         <source>
@@ -7126,374 +7127,373 @@ Available commands:
 </source>
         <translation>
 
-Perintah yang tersedia:
+Prieinamos komandos:
 </translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation>Nama perintah untuk dijalankan.</translation>
+        <translation>Komandos, kurią vykdyti, pavadinimas.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation>Tampilkan informasi pengawakutuan.</translation>
+        <translation>Rodo derinimo informaciją.</translation>
     </message>
     <message>
         <source>Invalid command %1.</source>
-        <translation>Perintah tidak valid %1.</translation>
+        <translation>Netinkama komanda %1.</translation>
     </message>
     <message>
         <source>Recursively list the elements of the group.</source>
-        <translation>Tampilkan daftar semua elemen dari grup.</translation>
+        <translation>Rekursyviai išvardyti grupės elementus.</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation>Ratakan keluaran menjadi satu baris.</translation>
+        <translation>Sulygina išvestį iki vienų eilučių.</translation>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation>Daftar entri basisdata.</translation>
+        <translation>Išvardyti duomenų bazės įrašus.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation>Jalur grup untuk ditampilkan. Bawaan adalah /</translation>
+        <translation>Grupės, kurią išvardyti, kelias. Numatytasis yra /</translation>
     </message>
     <message>
         <source>Cannot find group %1.</source>
-        <translation>Tidak bisa menemukan grup %1.</translation>
+        <translation>Nepavyksta rasti grupės %1.</translation>
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Gunakan kredensial yang sama untuk kedua berkas basisdata.</translation>
+        <translation>Abiems duomenų bazių failams naudoti tuos pačius prisijungimo duomenis.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>Berkas kunci dari basisdata yang akan digabungkan.</translation>
+        <translation>Duomenų bazės, iš kurios sulieti, rakto failas.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation>Nonaktifkan kunci kata sandi untuk menggabungkan basisdata.</translation>
+        <translation>Deaktyvuokite duomenų bazės slaptažodžio raktą, iš kurio bus atliekamas sujungimas.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation>Hanya cetak perubahan yang terdeteksi oleh operasi gabungan.</translation>
+        <translation>Rašyti tik tuos pakeitimus, kurie buvo aptikti atliekant sujungimo operaciją.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation>Slot Yubikey untuk basisdata kedua.</translation>
+        <translation>Yubikey lizdas antrajai duomenų bazei.</translation>
     </message>
     <message>
         <source>slot</source>
-        <translation>slot</translation>
+        <translation>Lizdas</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation>Gabungkan dua basisdata.</translation>
+        <translation>Sulieti dvi duomenų bazes.</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation>Jalur sumber basisdata untuk digabungkan.</translation>
+        <translation>Duomenų bazės, iš kurios sulieti, kelias.</translation>
     </message>
     <message>
         <source>Error reading merge file:
 %1</source>
-        <translation>Terjadi kesalahan saat menggabungkan berkas:
+        <translation>Klaida skaitant sujungimo failą:
 %1</translation>
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation>Tidak bisa menyimpan basisdata ke berkas : %1</translation>
+        <translation>Nepavyko įrašyti duomenų bazę į failą : %1</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation>Berhasil menggabungkan %1 ke %2.</translation>
+        <translation>Sėkmingai prijungtas %1 prie %2.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>Basisdata tidak ada perubahan yang diakibatkan oleh proses penggabungan.</translation>
+        <translation>Duomenų bazė nebuvo pakeista atliekant sujungimo operaciją.</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation>Pindah entri ke grup baru</translation>
+        <translation>Perkelia įrašą į naują grupę.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation>Jalur dari entri yang ingin dipindahkan</translation>
+        <translation>Perkeliamo įrašo kelias.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation>Jalur dari destinasi grup.</translation>
+        <translation>Paskirtos grupės kelias.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation>Tidak bisa menemukan grup dengan jalur %1.</translation>
+        <translation>Nepavyko rasti grupės su keliu %1.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation>Entri sudah ada di dalam grup %1.</translation>
+        <translation>Įrašas jau yra grupėje %1.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation>Berhasil memindahkan entri %1 ke grup %2</translation>
+        <translation>Įrašas %1 sėkmingai perkeltas į grupę %2.</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation>Buka basisdata.</translation>
+        <translation>Atidaryti duomenų bazę.</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation>Jalur entri untuk dibuang.</translation>
+        <translation>Įrašo, kurį šalinti, kelias.</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation>Tidak bisa menyimpan basisdata ke berkas: %1</translation>
+        <translation>Nepavyko įrašyti duomenų bazę į failą: %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation>Berhasil mendaur ulang entri: %1.</translation>
+        <translation>Sėkmingai perdirbtas įvežimas %1.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation>Berhasil menghapus entri %1.</translation>
+        <translation>Sėkmingai ištrintas įrašas %1.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation>Jalur dari grup yang ingin dihapus.</translation>
+        <translation>Šalinamos grupės kelias.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation>Tidak dapat menghapus grup root dari  basisdata.</translation>
+        <translation>Negalima pašalinti šakninės grupės iš duomenų bazės.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation>Berhasil memulihkan grup %1.</translation>
+        <translation>Sėkmingai perdirbta grupė %1.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation>Berhasil menghapus grup %1.</translation>
+        <translation>Sėkmingai pašalinta grupė %1.</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation>Temukan entri dengan cepat.</translation>
+        <translation>Greitai rasti įrašus.</translation>
     </message>
     <message>
         <source>Search term.</source>
-        <translation>Lema pencarian.</translation>
+        <translation>Paieškos žodis.</translation>
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation>Tampilkan TOTP entri.</translation>
+        <translation>Rodyti dabartinį įrašo TOTP.</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation>Tampilkan atribut yang dilindungi dalam teks yang jelas.</translation>
+        <translation>Rodyti saugomus atributus atviru tekstu.</translation>
     </message>
     <message>
         <source>Show the attachments of the entry.</source>
-        <translation>Show the attachments of the entry.</translation>
+        <translation>Rodyti įrašo priedus.</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>Nama atribut yang akan ditampilkan. Opsi ini bisa digunakan lebih dari sekali, dengan masing-masing atribut ditampilkan satu per baris sesuai dengan urutannya. Jika tidak ada atribut, ringkasan atribut bawaan akan ditampilkan.</translation>
+        <translation>Požymių, kuriuos rodyti, pavadinimai. Ši parinktis gali būti nurodyta daugiau nei vieną kartą, kiekvienoje eilutėje nurodyta tvarka rodant po atskirą požymį. Jei nėra nurodyti jokie požymiai, bus nurodyta numatytųjų požymių santrauka.</translation>
     </message>
     <message>
         <source>attribute</source>
-        <translation>atribut</translation>
+        <translation>požymis</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation>Tampilkan informasi entri.</translation>
+        <translation>Rodyti įrašo informaciją.</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation>Nama entri untuk ditampilkan.</translation>
+        <translation>Įrašo, kurį rodyti, pavadinimas.</translation>
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation>GALAT: atribut tidak diketahui %1.</translation>
+        <translation>KLAIDA: nežinomas požymis %1.</translation>
     </message>
     <message>
         <source>No attachments present.</source>
-        <translation>No attachments present.</translation>
+        <translation>Nėra jokių priedų.</translation>
     </message>
     <message>
         <source>Attachments:</source>
-        <translation>Attachments:</translation>
+        <translation>Priedai:</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation>Gagal membuka berkas basisdata %1: tidak ditemukan</translation>
+        <translation>Nepavyko atidaryti duomenų bazės failo %1: nerastas</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation>Gagal membuka berkas basisdata %1: bukan berkas biasa</translation>
+        <translation>Nepavyko atidaryti duomenų bazės failo %1: ne paprastas failas</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation>Gagal membuka berkas basisdata %1: tidak terbaca</translation>
+        <translation>Nepavyko atidaryti duomenų bazės failo %1: neperskaitomas</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation>Masukkan sandi untuk membuka %1:</translation>
+        <translation>Įveskite slaptažodį, kad atrakintumėte %1: </translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
-        <translation>Gagal memuat berkas kunci %1: %2</translation>
+        <translation>Nepavyko įkelti rakto failo %1: %2</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>PERINGATAN: Anda menggunakan sebuah format berkas kunci lama yang mungkin
-tidak akan didukung lagi oleh KeePassXC di masa depan.
+        <translation>ĮSPĖJIMAS: Jūs naudojate seną rakto failo formatą, kurio KeePassXC gali
+ateityje nebepalaikyti.
 
-Mohon buat berkas kunci yang baru saja.</translation>
+Apsvarstykite galimybę sukurti naują rakto failą.</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation>Slot YubiKey tidak valid %1</translation>
+        <translation>Neteisingas YubiKey lizdas %1</translation>
     </message>
     <message>
         <source>Invalid YubiKey serial %1</source>
-        <translation>Serial YubiKey tidak valid %1</translation>
+        <translation>Neteisingas YubiKey serijos %1</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation>Masukkan sandi untuk mengenkripsi basisdata (opsional):</translation>
+        <translation>Įveskite slaptažodį duomenų bazei šifruoti (neprivaloma): </translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation>Apakah Anda ingin membuat basisdata dengan kata sandi kosong? [y/N]:</translation>
+        <translation>Ar norite sukurti duomenų bazę su tuščiu slaptažodžiu? [y/N]: </translation>
     </message>
     <message>
         <source>Repeat password: </source>
-        <translation>Ulangi kata sandi:</translation>
+        <translation>Pakartokite slaptažodį:</translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation>Error: kata sandi tidak sesuai.</translation>
+        <translation>Klaida: slaptažodžiai nesutampa.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
-        <translation>Tidak ada program yang bisa digunakan untuk manipulasi papan klip</translation>
+        <translation>Nėra nustatytos programos, skirtos darbui su iškarpine</translation>
     </message>
     <message>
         <source>All clipping programs failed. Tried %1
 </source>
-        <translation>All clipping programs failed. Tried %1
-</translation>
+        <translation>Visos iškarpų programos nepavyko. Bandė %1</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation>Membuat BerkasKunci %1 gagal: %2</translation>
+        <translation>Nepavyko sukurti rakto failo %1: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation>Memuat BerkasKunci %1 gagal: %2</translation>
+        <translation>Nepavyko įkelti raktų failo %1: %2</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
-        <translation>Berkas HIBP, baris %1: galat urai</translation>
+        <translation>HIBP failas, eilutė %1: analizės klaida</translation>
     </message>
     <message>
         <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
-        <translation>To use okon, you must provide a post-processed file (e.g. file.okon)</translation>
+        <translation>Norėdami naudoti okon, turite pateikti failą po apdorojimo (pvz., file.okon)</translation>
     </message>
     <message>
         <source>Could not start okon process: %1</source>
-        <translation>Could not start okon process: %1</translation>
+        <translation>Nepavyko pradėti okono proceso: %1</translation>
     </message>
     <message>
         <source>Error: okon process did not finish</source>
-        <translation>Error: okon process did not finish</translation>
+        <translation>Klaida: okono procesas nebaigė</translation>
     </message>
     <message>
         <source>Failed to load okon processed database: %1</source>
-        <translation>Failed to load okon processed database: %1</translation>
+        <translation>Nepavyko įkelti okon apdorotos duomenų bazės: %1</translation>
     </message>
     <message>
         <source>Very weak password</source>
-        <translation>Kata sandi sangat lemah</translation>
+        <translation>Labai silpnas slaptažodis</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>
-        <translation>Entropi sandi adalah %1 bit</translation>
+        <translation>Slaptažodžio entropija yra %1 bitų</translation>
     </message>
     <message>
         <source>Weak password</source>
-        <translation>Kata sandi lemah</translation>
+        <translation>Silpnas slaptažodis</translation>
     </message>
     <message>
         <source>Used in %1/%2</source>
-        <translation>Digunakan di %1/%2</translation>
+        <translation>Naudojamas %1/%2</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Slaptažodis naudojamas %1 kartą (-ius)</numerusform><numerusform>Slaptažodis naudojamas %1 kartą (-ius)</numerusform><numerusform>Slaptažodis naudojamas %1 kartą (-ius)</numerusform><numerusform>Slaptažodis naudojamas %1 kartą (-ius)</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
-        <translation>Kata sandi kedaluwarsa</translation>
+        <translation>Slaptažodis nebegalioja</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
-        <translation>Sandi kedaluwarsa pada %1</translation>
+        <translation>Slaptažodžio galiojimo laikas buvo %1</translation>
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation>Kata sandi kedaluwarsa pada %1</translation>
+        <translation>Slaptažodžio galiojimo laikas baigiasi %1</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
-        <translation>Kata sandi akan kedaluwarsa</translation>
+        <translation>Netrukus baigsis slaptažodžio galiojimo laikas</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Slaptažodžio galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Slaptažodžio galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Slaptažodžio galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Slaptažodžio galiojimas baigiasi per %1 dieną (-as)</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
-        <translation>Kata sandi akan segera kedaluwarsa</translation>
+        <translation>Slaptažodis netrukus nustos galioti</translation>
     </message>
     <message>
         <source>Version %1</source>
-        <translation>Versi %1</translation>
+        <translation>Versija %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation>Tipe Build: %1</translation>
+        <translation>Darinio tipas: %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>Revisi: %1</translation>
+        <translation>Revizija: %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation>Distribusi: %1</translation>
+        <translation>Platinimas: %1</translation>
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation>Mode debugging dinonaktifkan.</translation>
+        <translation>Derinimo režimas yra išjungtas.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation>Mode debugging diaktifkan.</translation>
+        <translation>Įjungtas derinimo režimas.</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation>Sistem operasi: %1
-Arsitektur CPU: %2
-Kernel: %3 %4</translation>
+        <translation>Operacinė sistema: %1
+Procesoriaus architektūra: %2
+Branduolys: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Ketik-Otomatis</translation>
+        <translation>Automatinis rinkimas</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH Agent</translation>
+        <translation>SSH agentas</translation>
     </message>
     <message>
         <source>KeeShare</source>
@@ -7505,123 +7505,123 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Quick Unlock</source>
-        <translation>Buka Kunci Cepat</translation>
+        <translation>Greitas atrakinimas</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation>Integrasi Layanan Rahasia</translation>
+        <translation>Slaptosios tarnybos integracija</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Nihil</translation>
+        <translation>Nėra</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>Ekstensi aktif:</translation>
+        <translation>Įjungti plėtiniai:</translation>
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>per %1 metus (-us)</numerusform><numerusform>per %1 metus (-us)</numerusform><numerusform>per %1 metus (-us)</numerusform><numerusform>per %1 metus (-us)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>about %1 month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>apie %1 mėnesį (-ius)</numerusform><numerusform>apie %1 mėnesį (-ius)</numerusform><numerusform>apie %1 mėnesį (-ius)</numerusform><numerusform>apie %1 mėnesį (-ius)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 savaitė (-ės)</numerusform><numerusform>%1 savaitė (-ės)</numerusform><numerusform>%1 savaitė (-ės)</numerusform><numerusform>%1 savaitė (-ės)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 diena (-os)</numerusform><numerusform>%1 diena (-os)</numerusform><numerusform>%1 diena (-os)</numerusform><numerusform>%1 diena (-os)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 val.</numerusform><numerusform>%1 val.</numerusform><numerusform>%1 val.</numerusform><numerusform>%1 val.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 minutė (-os)</numerusform><numerusform>%1 minutė (-os)</numerusform><numerusform>%1 minutė (-os)</numerusform><numerusform>%1 minutė (-os)</numerusform></translation>
     </message>
     <message>
         <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan library must be at least 2.11.x, found %1.%2.%3</translation>
+        <translation>Botanikos biblioteka turi būti bent 2.11.x, randama %1.%2.%3</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation>Pustaka kriptografi:</translation>
+        <translation>Kriptografinės bibliotekos:</translation>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
-        <translation>AES (%1 ronde)</translation>
+        <translation>AES (%1 raundai)</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1 (%2 ronde, %3 KB)</translation>
+        <translation>Argon2%1 (%2 raundai, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
-        <translation>SymmetricCipher::init: Invalid cipher mode.</translation>
+        <translation>SymmetricCipher::init: Neteisingas šifro režimas.</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
-        <translation>SymmetricCipher::init: Invalid IV size of %1 for %2.</translation>
+        <translation>SymmetricCipher::init: Negaliojantis IV dydis %1, kai %2.</translation>
     </message>
     <message>
         <source>Cipher not initialized prior to use.</source>
-        <translation>Cipher not initialized prior to use.</translation>
+        <translation>Šifras prieš naudojimą nebuvo inicijuotas.</translation>
     </message>
     <message>
         <source>Cannot process 0 length data.</source>
-        <translation>Cannot process 0 length data.</translation>
+        <translation>Negalima apdoroti 0 ilgio duomenų.</translation>
     </message>
     <message>
         <source>unknown executable (DBus address %1)</source>
-        <translation>unknown executable (DBus address %1)</translation>
+        <translation>nežinomas vykdomasis failas (DBus adresas %1)</translation>
     </message>
     <message>
         <source>%1 (invalid executable path)</source>
-        <translation>%1 (invalid executable path)</translation>
+        <translation>%1 (neteisingas vykdomasis kelias)</translation>
     </message>
     <message>
         <source>NULL device</source>
-        <translation>Perangkat NULL</translation>
+        <translation>NIEKINIS įrenginys</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation>galat membaca dari perangkat</translation>
+        <translation>klaida skaitant iš įrenginio</translation>
     </message>
     <message>
         <source>file empty</source>
-        <translation>berkas kosong</translation>
+        <translation>failas tuščias</translation>
     </message>
     <message>
         <source>malformed string</source>
-        <translation>lema rusak</translation>
+        <translation>netaisyklinga eilutė</translation>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation>kehilangan tanda kutip tutup</translation>
+        <translation>trūksta užveriamosios kabutės</translation>
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
-        <translation>%1: (baris, kolom) %2,%3</translation>
+        <translation>%1: (eil., stulp.) %2,%3</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
-        <translation>AES 256-bit</translation>
+        <translation>AES 256 bitų</translation>
     </message>
     <message>
         <source>Twofish 256-bit</source>
-        <translation>Twofish 256-bit</translation>
+        <translation>Dvi žuvys 256 bitų</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation>ChaCha20 256-bit</translation>
+        <translation>ChaCha20 256 bitų</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation>Argon2d (KDBX 4 – direkomendasikan)</translation>
+        <translation>Argon2d (KDBX 4 – rekomenduojama)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
@@ -7637,31 +7637,31 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>Existing single-instance lock file is invalid. Launching new instance.</translation>
+        <translation>Esamas vieno egzemplioriaus užrakto failas yra neteisingas. Paleidžiamas naujas egzempliorius.</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>Berkas penguncian tidak bisa dibuat. Mode aplikasi tunggal dinonaktifkan.</translation>
+        <translation>Nepavyko sukurti užrakto. Vieno egzemplioriaus veiksena išjungta.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Menghapus papan klip dalam %1 detik...</numerusform></translation>
+        <translation><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Grup</translation>
+        <translation>Grupė</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Judul</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nama pengguna</translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Sandi</translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -7669,175 +7669,175 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Piktograma</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>Terakhir Diubah</translation>
+        <translation>Paskutinis keitimas</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Dibuat</translation>
+        <translation>Sukurta</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
-        <translation>Benchmark %1 delay</translation>
+        <translation>Palyginti %1 vėlavimą</translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation><numerusform>%1 mili detik</numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation><numerusform>%1 detik</numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Apakah anda yakin ingin menghapus entri &quot;%1&quot; untuk selamanya?</translation>
+        <translation>Ar tikrai norite visam laikui ištrinti įrašą &quot;%1&quot;?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Ar tikrai norite visam laikui ištrinti %n įrašą (-us)?</numerusform><numerusform>Ar tikrai norite visam laikui ištrinti %n įrašą (-us)?</numerusform><numerusform>Ar tikrai norite visam laikui ištrinti %n įrašą (-us)?</numerusform><numerusform>Ar tikrai norite visam laikui ištrinti %n įrašą (-us)?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Ištrinti įrašą (-us)?</numerusform><numerusform>Ištrinti įrašą (-us)?</numerusform><numerusform>Ištrinti įrašą (-us)?</numerusform><numerusform>Ištrinti įrašą (-us)?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Apakah anda yakin ingin memindahkan &quot;%1&quot; ke keranjang sampah?</translation>
+        <translation>Ar tikrai norite perkelti įrašą &quot;%1&quot; į šiukšliadėžę?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Ar tikrai norite perkelti %n įrašą (-us) į šiukšliadėžę?</numerusform><numerusform>Ar tikrai norite perkelti %n įrašą (-us) į šiukšliadėžę?</numerusform><numerusform>Ar tikrai norite perkelti %n įrašą (-us) į šiukšliadėžę?</numerusform><numerusform>Ar tikrai norite perkelti %n įrašą (-us) į šiukšliadėžę?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Perkelti įrašą (-us) į šiukšliadėžę?</numerusform><numerusform>Perkelti įrašą (-us) į šiukšliadėžę?</numerusform><numerusform>Perkelti įrašą (-us) į šiukšliadėžę?</numerusform><numerusform>Perkelti įrašą (-us) į šiukšliadėžę?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation>Ganti referensi ke entri?</translation>
+        <translation>Pakeisti nuorodas į įrašą?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Įrašas &quot;%1&quot; turi %2 nuorodą (-as). Ar norite perrašyti nuorodas reikšmėmis, praleisti šį įrašą ar vis tiek ištrinti?</numerusform><numerusform>Įrašas &quot;%1&quot; turi %2 nuorodą (-as). Ar norite perrašyti nuorodas reikšmėmis, praleisti šį įrašą ar vis tiek ištrinti?</numerusform><numerusform>Įrašas &quot;%1&quot; turi %2 nuorodą (-as). Ar norite perrašyti nuorodas reikšmėmis, praleisti šį įrašą ar vis tiek ištrinti?</numerusform><numerusform>Įrašas &quot;%1&quot; turi %2 nuorodą (-as). Ar norite perrašyti nuorodas reikšmėmis, praleisti šį įrašą ar vis tiek ištrinti?</numerusform></translation>
     </message>
     <message>
         <source>User name</source>
-        <translation>Nama pengguna</translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>Browser Statistics</source>
-        <translation>Statistik Peramban</translation>
+        <translation>Naršyklės statistika</translation>
     </message>
     <message>
         <source>Health Check</source>
-        <translation>Pemeriksaan Kesehatan</translation>
+        <translation>Būklės patikrinimas</translation>
     </message>
     <message>
         <source>HIBP</source>
-        <translation>HIBP</translation>
+        <translation>HIBP (angl.</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation>Statistik</translation>
+        <translation>Statistika</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation>Versi berkas kunci tidak didukung: %1</translation>
+        <translation>Nepalaikoma rakto failo versija: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation>Checksum tidak cocok! Berkas kunci mungkin korup.</translation>
+        <translation>Kontrolinės sumos nesutapimas! Rakto failas gali būti sugadintas.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
-        <translation>Data berkas kunci tidak terduga! Berkas kunci mungkin korup.</translation>
+        <translation>Netikėti rakto failo duomenys! Rakto failas gali būti sugadintas.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation>KeePassXC - pengelola sandi lintas platform</translation>
+        <translation>KeePassXC - daugiaplatformė slaptažodžių tvarkytuvė</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>nama berkas basisdata sandi untuk dibuka (*.kdbx)</translation>
+        <translation>norimų atverti slaptažodžių duomenų bazių failų pavadinimai (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>jalur ke berkas konfigurasi khusus</translation>
+        <translation>kelias į tinkintą konfigūracijos failą</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation>jalur ke berkas konfigurasi lokal khusus</translation>
+        <translation>kelias į pasirinktinį vietinį konfigūracijos failą</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation>kunci semua basisdata yang terbuka</translation>
+        <translation>užrakinti visas atidarytas duomenų bazes</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>berkas kunci basisdata</translation>
+        <translation>duomenų bazės rakto failas</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>baca sandi basisdata dari stdin</translation>
+        <translation>nuskaityti duomenų bazės slaptažodį iš stdin</translation>
     </message>
     <message>
         <source>allow app screen recordering and screenshots</source>
-        <translation>allow app screen recordering and screenshots</translation>
+        <translation>leisti programėlės ekrano įrašymą ir ekrano nuotraukų darymą</translation>
     </message>
     <message>
         <source>Locked databases.</source>
-        <translation>Basisdata terkunci.</translation>
+        <translation>Užrakintos duomenų bazės.</translation>
     </message>
     <message>
         <source>Database failed to lock.</source>
-        <translation>Basisdata gagal dikunci.</translation>
+        <translation>Duomenų bazės nepavyko užrakinti.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
-        <translation>Aplikasi KeePassXC lainnya sudah berjalan.</translation>
+        <translation>Jau yra paleistas kitas KeePassXC egzempliorius.</translation>
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Galat saat menguji fungsi kriptografi.</translation>
+        <translation>Lemtingoji klaida, testuojant šifravimo funkcijas.</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation>KeePassXC - Galat</translation>
+        <translation>KeePassXC - Klaida</translation>
     </message>
     <message>
         <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>Peringatan: Gagal mencegah tangkapan layar pada jendela tingkat atas!</translation>
+        <translation>Įspėjimas: Nepavyko išvengti ekrano nuotraukų viršutiniame lange!</translation>
     </message>
     <message>
         <source>Database password: </source>
-        <translation>Sandi basisdata:</translation>
+        <translation>Duomenų bazės slaptažodis: </translation>
     </message>
     <message>
         <source>Invalid Settings</source>
         <comment>TOTP</comment>
-        <translation>Pengaturan Tidak Valid</translation>
+        <translation>Neteisingi nustatymai</translation>
     </message>
     <message>
         <source>Invalid Key</source>
         <comment>TOTP</comment>
-        <translation>Kunci Tidak Valid</translation>
+        <translation>Neteisingas raktas</translation>
     </message>
     <message>
         <source>Failed to create Windows Hello credential.</source>
-        <translation>Failed to create Windows Hello credential.</translation>
+        <translation>Nepavyko sukurti &quot;Windows Hello&quot; kredencialų.</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
-        <translation>Failed to sign challenge using Windows Hello.</translation>
+        <translation>Nepavyko pasirašyti iššūkio naudojant &quot;Windows Hello&quot;.</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
-        <translation>Please present or touch your YubiKey to continue.</translation>
+        <translation>Norėdami tęsti, pristatykite arba palieskite savo YubiKey.</translation>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
@@ -7901,558 +7901,558 @@ This options is deprecated, use --set-key-file instead.</source>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Galat zlib internal ketika memampatkan:</translation>
+        <translation>Vidinė zlib klaida, glaudinant: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Terjadi kesalahan saat menyimpan ke perangkat:</translation>
+        <translation>Klaida, įrašant į bazinį įrenginį: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Terjadi kesalahan saat membuka perangkat:</translation>
+        <translation>Klaida, atveriant bazinį įrenginį: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Terjadi kesalahan saat membaca data dari perangkat:</translation>
+        <translation>Klaida, skaitant iš bazinio įrenginio: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Galat zlib internal ketika dekompres:</translation>
+        <translation>Vidinė zlib klaida, išskleidžiant: </translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Format gzip tidak didukung pada versi zlib ini.</translation>
+        <translation>Šioje zlib versijoje gzip formatas yra nepalaikomas.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Galat zlib internal:</translation>
+        <translation>Vidinė zlib klaida: </translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
     <message>
         <source>Exclude expired entries from the report</source>
-        <translation>Kecualikan entri kedaluwarsa dari laporan</translation>
+        <translation>Į ataskaitą neįtraukti įrašų, kurių galiojimo laikas pasibaigęs</translation>
     </message>
     <message>
         <source>Show only entries which have URL set</source>
-        <translation>Show only entries which have URL set</translation>
+        <translation>Rodyti tik tuos įrašus, kurių URL nustatytas</translation>
     </message>
     <message>
         <source>Show only entries which have browser settings in custom data</source>
-        <translation>Show only entries which have browser settings in custom data</translation>
+        <translation>Rodyti tik tuos įrašus, kurių naršyklės parametrai yra pasirinktiniuose duomenyse</translation>
     </message>
     <message>
         <source>Double-click entries to edit.</source>
-        <translation>Double-click entries to edit.</translation>
+        <translation>Norint redaguoti įrašus, dukart spustelėkite juos.</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation>List of entry URLs</translation>
+        <translation>Įrašų URL adresų sąrašas</translation>
     </message>
     <message>
         <source>Entry has no URLs set</source>
-        <translation>Entry has no URLs set</translation>
+        <translation>Įraše nėra nustatytų URL adresų</translation>
     </message>
     <message>
         <source>Allowed URLs</source>
-        <translation>Allowed URLs</translation>
+        <translation>Leidžiami URL adresai</translation>
     </message>
     <message>
         <source>Entry has no Browser Integration settings</source>
-        <translation>Entry has no Browser Integration settings</translation>
+        <translation>Įraše nėra naršyklės integracijos nustatymų</translation>
     </message>
     <message>
         <source>Denied URLs</source>
-        <translation>Denied URLs</translation>
+        <translation>Uždrausti URL adresai</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Dikecualikan)</translation>
+        <translation> (Išskirtas)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Entri ini sedang dikecualikan dari laporan</translation>
+        <translation>Šis įrašas neįtraukiamas į ataskaitas</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
-        <translation>Please wait, browser statistics is being calculated…</translation>
+        <translation>Prašome palaukti, skaičiuojama naršyklės statistika...</translation>
     </message>
     <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
-        <translation>No entries with a URL, or none has browser extension settings saved.</translation>
+        <translation>Nėra įrašų su URL adresu arba nė viename iš jų nėra išsaugotų naršyklės plėtinio nustatymų.</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Judul</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Jalur</translation>
+        <translation>Kelias</translation>
     </message>
     <message>
         <source>URLs</source>
-        <translation>URLs</translation>
+        <translation>URL adresai</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Edit Entry…</translation>
+        <translation>Redaguoti Įrašą...</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Kecualikan dari laporan</translation>
+        <translation>Neįtraukti į ataskaitas</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
     <message>
         <source>Exclude expired entries from the report</source>
-        <translation>Kecualikan entri kedaluwarsa dari laporan</translation>
+        <translation>Į ataskaitą neįtraukti įrašų, kurių galiojimo laikas pasibaigęs</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>Tampilkan juga entri yang telah dikecualikan dari laporan</translation>
+        <translation>Taip pat rodyti įrašus, kurie nebuvo įtraukti į ataskaitas</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation>Layangi di atas alasan untuk menampilkan detail lanjutan. Klik dua kali pada entri untuk mengedit.</translation>
+        <translation>Užveskite pelės žymeklį virš priežasties, kad parodytumėte papildomą informaciją. Dukart spustelėkite įrašus, kuriuos norite redaguoti.</translation>
     </message>
     <message>
         <source>Bad</source>
         <comment>Password quality</comment>
-        <translation>Buruk</translation>
+        <translation>Blogas</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
-        <translation>Buruk — kata sandi harus diubah</translation>
+        <translation>Blogas - slaptažodis turi būti pakeistas</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Buruk</translation>
+        <translation>Blogas</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
-        <translation>Kurang baik — kata sandi harus diubah</translation>
+        <translation>Prastas — slaptažodis turėtų būti pakeistas</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Lemah</translation>
+        <translation>Silpnas</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation>Lemah — pertimbangkan untuk mengubah kata sandi</translation>
+        <translation>Silpnas — apsvarstykite galimybę pakeisti slaptažodį</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Dikecualikan)</translation>
+        <translation> (Išskirtas)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Entri ini sedang dikecualikan dari laporan</translation>
+        <translation>Šis įrašas neįtraukiamas į ataskaitas</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
-        <translation>Please wait, health data is being calculated…</translation>
+        <translation>Palaukite, sveikatos duomenys skaičiuojami...</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
-        <translation>Selamat, semuanya sehat!</translation>
+        <translation>Sveikiname, viskas sveika!</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Judul</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Jalur</translation>
+        <translation>Kelias</translation>
     </message>
     <message>
         <source>Score</source>
-        <translation>Skor</translation>
+        <translation>Vertinimas pagal</translation>
     </message>
     <message>
         <source>Reason</source>
-        <translation>Alasan</translation>
+        <translation>Priežastis</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Edit Entry…</translation>
+        <translation>Redaguoti Įrašą...</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Kecualikan dari laporan</translation>
+        <translation>Neįtraukti į ataskaitas</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>PERHATIAN: Laporan ini membutuhkan pengiriman informasi ke layanan online Have I Been Pwned (https://haveibeenpwned.com). Jika Anda melanjutkan, kata sandi basisdata Anda akan diacak secara kriptografis dan lima karakter pertama dari hash tersebut akan dikirim dengan aman ke layanan ini. Basisdata Anda tetap aman dan tidak dapat dibangun kembali dari informasi ini. Namun, jumlah kata sandi yang Anda kirim dan alamat IP Anda akan terpapar ke layanan ini.</translation>
+        <translation>ATSARGIAI: Šioje ataskaitoje reikalaujama siųsti informaciją į internetinę paslaugą &quot;Have I Been Pwned&quot; (https://haveibeenpwned.com). Jei tęsite, jūsų duomenų bazės slaptažodžiai bus kriptografiškai maišomi, o pirmieji penki šių maišų simboliai bus saugiai išsiųsti į šią paslaugą. Jūsų duomenų bazė išlieka saugi ir jos negalima atkurti iš šios informacijos. Tačiau ši paslauga bus taikoma jūsų siunčiamų slaptažodžių skaičiui ir jūsų IP adresui.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation>Jalankan Analisis Daring</translation>
+        <translation>Atlikite internetinę analizę</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>Tampilkan juga entri yang telah dikecualikan dari laporan</translation>
+        <translation>Taip pat rodyti įrašus, kurie nebuvo įtraukti į ataskaitas</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation>Versi KeePassXC ini tidak memiliki fungsi konektivitas jaringan. Konektivitas jaringan diperlukan untuk memeriksa kata sandi Anda terhadap basisdata Have I Been Pwned.</translation>
+        <translation>Ši &quot;KeePassXC&quot; versija neturi tinklo funkcijų. Norint patikrinti savo slaptažodžius pagal &quot;Have I Been Pwned&quot; duomenų bazes, reikalingas tinklas.</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
-        <translation>Selamat, tidak ada kata sandi yang terekspos!</translation>
+        <translation>Sveikiname, nėra atskleistų slaptažodžių!</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Judul</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Jalur</translation>
+        <translation>Kelias</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation>Kata sandi terekspos...</translation>
+        <translation>Slaptažodis atskleistas...</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Dikecualikan)</translation>
+        <translation> (Išskirtas)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Entri ini sedang dikecualikan dari laporan</translation>
+        <translation>Šis įrašas neįtraukiamas į ataskaitas</translation>
     </message>
     <message>
         <source>once</source>
         <comment>Password exposure amount</comment>
-        <translation>sekali</translation>
+        <translation>kartą</translation>
     </message>
     <message>
         <source>up to 10 times</source>
         <comment>Password exposure amount</comment>
-        <translation>hingga 10 kali</translation>
+        <translation>iki 10 kartų</translation>
     </message>
     <message>
         <source>up to 100 times</source>
         <comment>Password exposure amount</comment>
-        <translation>hingga 100 kali</translation>
+        <translation>iki 100 kartų</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>hingga 1000 kali</translation>
+        <translation>iki 1000 kartų</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>hingga 10,000 kali</translation>
+        <translation>iki 10,000 kartų</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>hingga 100,000 kali</translation>
+        <translation>iki 100,000 kartų</translation>
     </message>
     <message>
         <source>up to a million times</source>
         <comment>Password exposure amount</comment>
-        <translation>hingga 1 juta kali</translation>
+        <translation>iki milijono kartų</translation>
     </message>
     <message>
         <source>millions of times</source>
         <comment>Password exposure amount</comment>
-        <translation>jutaan kali</translation>
+        <translation>milijonus kartų</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Edit Entry…</translation>
+        <translation>Redaguoti Įrašą...</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Kecualikan dari laporan</translation>
+        <translation>Neįtraukti į ataskaitas</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetStatistics</name>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation>Layang di atas garis dengan ikon kesalahan untuk informasi lanjut.</translation>
+        <translation>Norėdami gauti daugiau informacijos, užveskite pelės žymeklį ant eilučių su klaidų piktogramomis.</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nama</translation>
+        <translation>Pavadinimas</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Nilai</translation>
+        <translation>Reikšmė</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated…</source>
-        <translation>Please wait, database statistics are being calculated…</translation>
+        <translation>Palaukite, skaičiuojami duomenų bazės statistiniai duomenys...</translation>
     </message>
     <message>
         <source>Database name</source>
-        <translation>Nama basisdata</translation>
+        <translation>Duomenų bazės pavadinimas</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Deskripsi</translation>
+        <translation>Aprašymas</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Lokasi</translation>
+        <translation>Vieta</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation>Database created</translation>
+        <translation>Duomenų bazė sukurta</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation>Terakhir disimpan</translation>
+        <translation>Paskutinį kartą išsaugota</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation>Berubahan belum disimpan</translation>
+        <translation>Neišsaugoti pakeitimai</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation>ya</translation>
+        <translation>taip</translation>
     </message>
     <message>
         <source>no</source>
-        <translation>tidak</translation>
+        <translation>ne</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation>Basisdata telah dimodifikasi, tetapi perubahan belum disimpan ke penyimpanan.</translation>
+        <translation>Duomenų bazė buvo pakeista, tačiau pakeitimai dar neįrašyti į diską.</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation>Jumlah grup</translation>
+        <translation>Grupių skaičius</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation>Jumlah entri</translation>
+        <translation>Įrašų skaičius</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Jumlah entri yang kedaluwarsa</translation>
+        <translation>Nebegaliojančių įrašų skaičius</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation>Basisdata berisi entri yang sudah kedaluwarsa.</translation>
+        <translation>Duomenų bazėje yra įrašų, kurių galiojimo laikas pasibaigęs.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation>Kata sandi unik</translation>
+        <translation>Unikalūs slaptažodžiai</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation>Kata sandi tidak unik</translation>
+        <translation>Pasikartojantys slaptažodžiai</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation>Lebih dari 10% kata sandi digunakan kembali. Gunakan kata sandi unik jika memungkinkan.</translation>
+        <translation>Daugiau nei 10% slaptažodžių naudojami pakartotinai. Jei įmanoma, naudokite unikalius slaptažodžius.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation>Penggunaan ulang kata sandi maksimal</translation>
+        <translation>Maksimalus pakartotinis slaptažodžio naudojimas</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation>Beberapa kata sandi digunakan lebih dari tiga kali. Gunakan kata sandi unik jika memungkinkan.</translation>
+        <translation>Kai kurie slaptažodžiai naudojami daugiau nei tris kartus. Jei įmanoma, naudokite unikalius slaptažodžius.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation>Jumlah kata sandi singkat</translation>
+        <translation>Trumpų slaptažodžių skaičius</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation>Panjang kata sandi minimum yang disarankan minimal 8 karakter.</translation>
+        <translation>Rekomenduojamas mažiausias slaptažodžio ilgis - bent 8 simboliai.</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation>Jumlah kata sandi yang lemah</translation>
+        <translation>Silpnų slaptažodžių skaičius</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation>Disarankan menggunakan kata sandi panjang dan acak dengan peringkat &apos;bagus&apos; atau &apos;bagus sekali&apos;</translation>
+        <translation>Rekomenduojame naudoti ilgus, atsitiktine tvarka sukurtus slaptažodžius, įvertintus &quot;gerai&quot; arba &quot;puikiai&quot;.</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation>Entri dikecualikan dari laporan</translation>
+        <translation>Įrašai, neįtraukti į ataskaitas</translation>
     </message>
     <message>
         <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
-        <translation>Tidak termasuk entri dari laporan mis. karena mereka diketahui untuk memiliki kata sandi yang buruk, bukan hal bermasalah tetapi Anda seharusnya mengawasinya.</translation>
+        <translation>Įrašų neįtraukimas į ataskaitas, pvz., dėl to, kad žinoma, jog jų slaptažodis prastas, nebūtinai yra problema, tačiau turėtumėte juos stebėti.</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation>Panjang rata-rata kata sandi</translation>
+        <translation>Vidutinis slaptažodžio ilgis</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation>%1 karakter</translation>
+        <translation>%1 simboliai</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation>Panjang rata-rata kata sandi kurang dari sepuluh karakter. Kata sandi yang lebih panjang memberikan keamanan yang lebih.</translation>
+        <translation>Vidutinis slaptažodžio ilgis - mažiau nei dešimt simbolių. Ilgesni slaptažodžiai užtikrina didesnį saugumą.</translation>
     </message>
 </context>
 <context>
     <name>SSHAgent</name>
     <message>
         <source>Agent connection failed.</source>
-        <translation>Koneksi agen gagal.</translation>
+        <translation>Agento ryšys nepavyko.</translation>
     </message>
     <message>
         <source>Agent protocol error.</source>
-        <translation>Galat protokol agen.</translation>
+        <translation>Agento protokolo klaida.</translation>
     </message>
     <message>
         <source>No agent running, cannot add identity.</source>
-        <translation>Tidak ada agen yang berjalan, tidak dapat menambahkan identitas.</translation>
+        <translation>Joks agentas neveikia, negali pridėti tapatybės.</translation>
     </message>
     <message>
         <source>Key identity ownership conflict. Refusing to add.</source>
-        <translation>Key identity ownership conflict. Refusing to add.</translation>
+        <translation>Pagrindinės tapatybės nuosavybės konfliktas. Atsisakymas pridėti.</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation>Agen menolak identitas ini. Alasan yang mungkin meliputi:</translation>
+        <translation>Agentas atsisakė šios tapatybės. Galimos priežastys:</translation>
     </message>
     <message>
         <source>The key has already been added.</source>
-        <translation>Kunci sudah ditambahkan.</translation>
+        <translation>Raktas jau buvo pridėtas.</translation>
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation>Restricted lifetime is not supported by the agent (check options).</translation>
+        <translation>Agentas nepalaiko apriboto naudojimo trukmės (patikrinkite parinktis).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation>A confirmation request is not supported by the agent (check options).</translation>
+        <translation>Patvirtinimo užklausos agentas nepalaiko (patikrinkite parinktis).</translation>
     </message>
     <message>
         <source>Security keys are not supported by the agent or the security key provider is unavailable.</source>
-        <translation>Security keys are not supported by the agent or the security key provider is unavailable.</translation>
+        <translation>Agentas nepalaiko saugos raktų arba saugos raktų teikėjas nepasiekiamas.</translation>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
-        <translation>Tidak ada agen yang berjalan, tidak dapat menghapus identitas.</translation>
+        <translation>Joks agentas neveikia, negali pašalinti tapatybės.</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Tidak ada agen yang berjalan, tidak dapat mendaftarkan identitas.</translation>
+        <translation>Joks agentas neveikia, negali išvardyti tapatybių.</translation>
     </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
     <message>
         <source>Search Help</source>
-        <translation>Cari Bantuan</translation>
+        <translation>Paieškos pagalba</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation>Kata pencarian seperti berikut ini: [modifiers][field:][&quot;]term[&quot;]</translation>
+        <translation>Paieškos terminai yra tokie: [modifikatoriai][laukas:][&quot;]terminas[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
-        <translation>Every search term must match (ie, logical AND)</translation>
+        <translation>Kiekvienas paieškos terminas turi atitikti (ty loginis IR)</translation>
     </message>
     <message>
         <source>Modifiers</source>
-        <translation>Modifiers</translation>
+        <translation>Modifikatoriai</translation>
     </message>
     <message>
         <source>exclude term from results</source>
-        <translation>kecualikan kata dari hasil pencarian</translation>
+        <translation>neįtraukti termino į rezultatus</translation>
     </message>
     <message>
         <source>match term exactly</source>
-        <translation>match term exactly</translation>
+        <translation>rungtynių terminas tiksliai</translation>
     </message>
     <message>
         <source>use regex in term</source>
-        <translation>use regex in term</translation>
+        <translation>naudoti regex terminą</translation>
     </message>
     <message>
         <source>Fields</source>
-        <translation>Kolom</translation>
+        <translation>Laukai</translation>
     </message>
     <message>
         <source>Term Wildcards</source>
-        <translation>Term Wildcards</translation>
+        <translation>Terminas Pakaitos simboliai</translation>
     </message>
     <message>
         <source>match anything</source>
-        <translation>match anything</translation>
+        <translation>prilygti bet kam</translation>
     </message>
     <message>
         <source>match one</source>
-        <translation>match one</translation>
+        <translation>suderinti vieną</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation>logical OR</translation>
+        <translation>loginis ARBA</translation>
     </message>
     <message>
         <source>Examples</source>
-        <translation>Contoh</translation>
+        <translation>Pavyzdžiai</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation>Cari</translation>
+        <translation>Paieška</translation>
     </message>
     <message>
         <source>Search Help</source>
-        <translation>Cari Bantuan</translation>
+        <translation>Paieškos pagalba</translation>
     </message>
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>Cari (%1)...</translation>
+        <translation>Ieškoti (%1)...</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Sensitif besar kecil huruf</translation>
+        <translation>Skiriant raidžių registrą</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation>Batasi pencarian ke grup yang dipilih</translation>
+        <translation>Riboti paiešką iki pasirinktos grupės</translation>
     </message>
     <message>
         <source>Save Search</source>
-        <translation>Simpan pencarian</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
     <message>
         <source>Application</source>
-        <translation>Aplikasi</translation>
+        <translation>Programa</translation>
     </message>
     <message>
         <source>PID</source>
@@ -8460,53 +8460,53 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>DBus Address</source>
-        <translation>DBus Address</translation>
+        <translation>DBus adresas</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>Kelola</translation>
+        <translation>Tvarkyti</translation>
     </message>
 </context>
 <context>
     <name>SettingsDatabaseModel</name>
     <message>
         <source>File Name</source>
-        <translation>Nama Berkas</translation>
+        <translation>Failo vardas</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Grup</translation>
+        <translation>Grupė</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>Kelola</translation>
+        <translation>Tvarkyti</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation>Pilihan</translation>
+        <translation>Parinktys</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation>Aktifkan KeepassXC Freedesktop.org Integrasi Layanan Rahasia</translation>
+        <translation>Įgalinti &quot;KeepassXC&quot; Freedesktop.org slaptosios tarnybos integraciją</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Umum</translation>
+        <translation>Bendra</translation>
     </message>
     <message>
         <source>Show notification when passwords are retrieved by clients</source>
-        <translation>Show notification when passwords are retrieved by clients</translation>
+        <translation>Rodyti pranešimą, kai klientai gauna slaptažodžius</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Jei įjungta, bet koks bandymas perskaityti slaptažodį turi būti patvirtintas. Priešingu atveju klientai gali skaityti slaptažodžius be patvirtinimo, kai duomenų bazė atrakinta.&lt;/p&gt;&lt;p&gt;Ši parinktis taikoma tik prieigai prie įrašo slaptažodžio. Klientai visada gali išvardyti atidarytų duomenų bazių elementus ir užklausti jų atributų.</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
-        <translation>Confirm when passwords are retrieved by clients</translation>
+        <translation>Patvirtinti, kai klientai gauna slaptažodžius</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
@@ -8516,13 +8516,13 @@ This options is deprecated, use --set-key-file instead.</source>
           </source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
            font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Šis parametras veikia
+           nepaisykite šiukšlinės raginimų išjungimo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </translation>
     </message>
     <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation>Confirm when clients request entry deletion</translation>
+        <translation>Patvirtinti, kai klientai prašo ištrinti įrašą</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
@@ -8530,150 +8530,150 @@ This options is deprecated, use --set-key-file instead.</source>
            crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
            different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tai pagerina suderinamumą su tam tikromis programomis
+           kurie ieško slaptažodžio prieš tai neatrakindami duomenų bazės.&lt;/p&gt;&lt;p&gt;Tačiau tai taip pat gali būti įgalinimas
+           sugesti klientą, jei duomenų bazės negalima atrakinti per tam tikrą skirtąjį laiką. (Paprastai 25-eri, bet gali būti
+           skirtingos vertės, nustatytos programose.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
-        <translation>Tanya untuk membuka basisdata sebelum mencari</translation>
+        <translation>Prašyti atrakinti duomenų bazę prieš pradedant paiešką</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation>Grup basisdata yang terekspos:</translation>
+        <translation>Atskleistos duomenų bazės grupės:</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation>Otorisasi</translation>
+        <translation>Leidimas</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
-        <translation>Aplikasi ini sedang terhubung:</translation>
+        <translation>Šiuo metu šios programos yra prijungtos:</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Peringatan:&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Įspėjimas:&lt;/b&gt; </translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Save current changes to activate the plugin and enable editing of this section.</translation>
+        <translation>Išsaugoti esamus pakeitimus, kad papildinys būtų įjungtas ir būtų galima redaguoti šį skyrių.</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation>Aktif</translation>
+        <translation>Aktyvus</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>Izinkan impor KeeShare</translation>
+        <translation>Leisti &quot;KeeShare&quot; importą</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>Izinkan impor</translation>
+        <translation>Leisti importuoti</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>Izinkan ekspor KeeShare</translation>
+        <translation>Leisti &quot;KeeShare&quot; eksportuoti</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation>Izinkan ekspor</translation>
+        <translation>Leisti eksportuoti</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation>Hanya tampilkan peringatan dan error</translation>
+        <translation>Rodyti tik įspėjimus ir klaidas</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation>Sertifikat milik pribadi</translation>
+        <translation>Nuosavas sertifikatas</translation>
     </message>
     <message>
         <source>Signer:</source>
-        <translation>Signer:</translation>
+        <translation>Pasirašančiojo:</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation>Hasilkan sertifikat baru</translation>
+        <translation>Sukurkite naują sertifikatą</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Buat</translation>
+        <translation>Generuoti</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation>Sidik Jari:</translation>
+        <translation>Kontrolinis kodas:</translation>
     </message>
     <message>
         <source>Signer name field</source>
-        <translation>Kolom nama penandatangan</translation>
+        <translation>Pasirašančiojo vardo laukas</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>Tanda tangan</translation>
+        <translation>Kontrolinis kodas</translation>
     </message>
 </context>
 <context>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation>Could not write export container.</translation>
+        <translation>Nepavyko parašyti eksporto konteinerio.</translation>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
         <source>Successful import</source>
-        <translation>Successful import</translation>
+        <translation>Sėkmingas importavimas</translation>
     </message>
 </context>
 <context>
     <name>ShareObserver</name>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation>Impor dari %1 gagal (%2)</translation>
+        <translation>Importavimas iš %1 nepavyko (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation>Impor dari %1 berhasil (%2)</translation>
+        <translation>Importavimas iš %1 sėkmingas (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>Diimpor dari %1</translation>
+        <translation>Importuota iš %1</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation>Multiple import source path to %1 in %2</translation>
+        <translation>Kelių importo šaltinių kelias iki %1 in %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation>Conflicting export target path %1 in %2</translation>
+        <translation>Prieštaringas eksporto tikslinis planas %1 ,,2%</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation>Ekspor ke %1 gagal (%2)</translation>
+        <translation>Eksportavimas į %1 nepavyko (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation>Ekspor ke %1 berhasil (%2)</translation>
+        <translation>Eksportavimas į %1 sėkmingas (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation>Ekspor ke %1</translation>
+        <translation>Eksportas į %1</translation>
     </message>
 </context>
 <context>
     <name>TagModel</name>
     <message>
         <source>Expired</source>
-        <translation>Kedaluwarsa</translation>
+        <translation>Pasibaigęs</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
-        <translation>Kata Sandi Lemah</translation>
+        <translation>Silpni slaptažodžiai</translation>
     </message>
     <message>
         <source>All Entries</source>
@@ -8707,381 +8707,381 @@ This options is deprecated, use --set-key-file instead.</source>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation>Sandi Berwaktu</translation>
+        <translation>Numatytosios trukmės slaptažodis</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Salin</translation>
+        <translation>Kopijuoti</translation>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Kedaluwarsa dalam &lt;b&gt;%n&lt;/b&gt; detik</numerusform></translation>
+        <translation><numerusform>Nustoja galioti &lt;b&gt;%n&lt;/b&gt; sekunde (-ose)</numerusform><numerusform>Nustoja galioti &lt;b&gt;%n&lt;/b&gt; sekunde (-ose)</numerusform><numerusform>Nustoja galioti &lt;b&gt;%n&lt;/b&gt; sekunde (-ose)</numerusform><numerusform>Nustoja galioti &lt;b&gt;%n&lt;/b&gt; sekunde (-ose)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>TotpExportSettingsDialog</name>
     <message>
         <source>Copy</source>
-        <translation>Salin</translation>
+        <translation>Kopijuoti</translation>
     </message>
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation>CATATAN: Pengaturan TOTP ini sangat khusus dan mungkin tidak akan bekerja dengan otentikator lainnya.</translation>
+        <translation>PASTABA: Šie TOTP nustatymai yra pasirinktiniai ir gali neveikti su kitais autentifikatoriais.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation>Ada kesalahan saat membuat kode QR.</translation>
+        <translation>Buvo klaida kuriant QR kodą.</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation>Akan ditutup dalam %1 detik.</translation>
+        <translation>Užveriama po %1 sekundžių.</translation>
     </message>
 </context>
 <context>
     <name>TotpSetupDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation>Siapkan TOTP</translation>
+        <translation>Nustatyti NTVS</translation>
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation>Kunci Rahasia:</translation>
+        <translation>Slaptas raktas:</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation>Kunci rahasia harus dalam format Base32</translation>
+        <translation>Slaptas raktas turi būti &quot;Base32&quot; formato</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation>Kolom kunci rahasia</translation>
+        <translation>Slapto rakto laukas</translation>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
-        <translation>Default settings (RFC 6238)</translation>
+        <translation>Numatytieji nustatymai (RFC 6238)</translation>
     </message>
     <message>
         <source>Steam® settings</source>
-        <translation>Steam® settings</translation>
+        <translation>Garo® nustatymai</translation>
     </message>
     <message>
         <source>Custom settings:</source>
-        <translation>Custom settings:</translation>
+        <translation>Pasirinktiniai nustatymai:</translation>
     </message>
     <message>
         <source>Custom Settings</source>
-        <translation>Pengaturan Khusus</translation>
+        <translation>Pasirinktiniai nustatymai</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation>Algoritma:</translation>
+        <translation>Algoritmas:</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation>Interval waktu:</translation>
+        <translation>Laiko žingsnis:</translation>
     </message>
     <message>
         <source>Time step field</source>
-        <translation>Time step field</translation>
+        <translation>Laiko žingsnio laukas</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>det</translation>
+        <translation>sek.</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>Ukuran kode:</translation>
+        <translation>Kodo dydis:</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation>angka</translation>
+        <translation> Skaitmenų</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation>TOTP Secret tidak valid</translation>
+        <translation>Negaliojanti TOTP paslaptis</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation>Anda telah memasukkan kunci rahasia yang tidak valid. Kuncinya harus dalam format Base32.
-Contoh: JBSWY3DPEHPK3PXP</translation>
+        <translation>Įvedėte netinkamą slaptą raktą. Raktas turi būti &quot;Base32&quot; formatu.
+Pavyzdys: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation>Konfirmasi Penghapusan Pengaturan TOTP</translation>
+        <translation>Patvirtinkite pašalinti TOTP nustatymus</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>Apakah Anda yakin ingin menghapus pengaturan TOTP untuk entri ini?</translation>
+        <translation>Ar tikrai norite ištrinti šio įrašo TOTP nustatymus?</translation>
     </message>
 </context>
 <context>
     <name>URLEdit</name>
     <message>
         <source>Invalid URL</source>
-        <translation>URL tidak valid</translation>
+        <translation>Netinkamas URL</translation>
     </message>
 </context>
 <context>
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation>Memeriksa pembaruan</translation>
+        <translation>Tikriname ar yra atnaujinimų</translation>
     </message>
     <message>
         <source>Checking for updates…</source>
-        <translation>Checking for updates…</translation>
+        <translation>Tikriname ar yra atnaujinimų...</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Tutup</translation>
+        <translation>Užverti</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation>Pembaruan Perangkat Lunak</translation>
+        <translation>Programinės įrangos atnaujinimas</translation>
     </message>
     <message>
         <source>An error occurred when trying to retrieve update information, please try again later.</source>
-        <translation>An error occurred when trying to retrieve update information, please try again later.</translation>
+        <translation>Bandant gauti atnaujinimo informaciją įvyko klaida, bandykite dar kartą vėliau.</translation>
     </message>
     <message>
         <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
-        <translation>&lt;strong&gt;Sebuah versi baru tersedia.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 dapat &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;diunduh di sini&lt;/a&gt;.</translation>
+        <translation>&lt;strong&gt;Yra nauja versija.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 galima &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;atsisiųsti čia&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>You have the latest version of KeePassXC</translation>
+        <translation>Jūs turite naujausią KeePassXC versiją</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Mulai menyimpan sandi Anda dengan aman di dalam basisdata KeePassXC</translation>
+        <translation>Pradėkite saugiai laikyti savo slaptažodžius KeePassXC duomenų bazėje</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>Buat basisdata baru</translation>
+        <translation>Sukurti naują duomenų bazę</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation>Buka basisdata yang ada</translation>
+        <translation>Atverti esamą duomenų bazę</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation>Impor dari KeePass 1</translation>
+        <translation>Importuoti iš KeePass </translation>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation>Impor dari 1Password</translation>
+        <translation>Importuoti iš 1Password</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation>Impor dari CSV</translation>
+        <translation>Importuoti iš CSV</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Basisdata baru-baru ini</translation>
+        <translation>Paskiausios duomenų bazės</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation>Buka basisdata terbaru</translation>
+        <translation>Atidaryti neseniai naudotą duomenų bazę</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation>Selamat datang di KeePassXC %1</translation>
+        <translation>Sveiki atvykę į KeePassXC %1</translation>
     </message>
 </context>
 <context>
     <name>WinUtils</name>
     <message>
         <source>Invalid key code</source>
-        <translation>Invalid key code</translation>
+        <translation>Netinkamas rakto kodas</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Pintasan global telah didaftarkan ke %1</translation>
+        <translation>Visuotinis spartusis klavišas jau užregistruotas į %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Tidak bisa mendaftar pintasan global</translation>
+        <translation>Nepavyko užregistruoti visuotinio sparčiojo klavišo</translation>
     </message>
 </context>
 <context>
     <name>WindowsHello</name>
     <message>
         <source>Failed to init KeePassXC crypto.</source>
-        <translation>Failed to init KeePassXC crypto.</translation>
+        <translation>Nepavyko init KeePassXC kriptografiškai.</translation>
     </message>
     <message>
         <source>Failed to encrypt key data.</source>
-        <translation>Failed to encrypt key data.</translation>
+        <translation>Nepavyko užšifruoti rakto duomenų.</translation>
     </message>
     <message>
         <source>Failed to get Windows Hello credential.</source>
-        <translation>Failed to get Windows Hello credential.</translation>
+        <translation>Nepavyko gauti &quot;Windows Hello&quot; kredencialų.</translation>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
-        <translation>Failed to decrypt key data.</translation>
+        <translation>Nepavyko iššifruoti rakto duomenų.</translation>
     </message>
 </context>
 <context>
     <name>YubiKey</name>
     <message>
         <source>%1 No interface, slot %2</source>
-        <translation>%1 No interface, slot %2</translation>
+        <translation>%1 Nėra sąsajos, laiko tarpsnis %2</translation>
     </message>
     <message>
         <source>General: </source>
-        <translation>Umum:</translation>
+        <translation>Bendra: </translation>
     </message>
     <message>
         <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Could not find interface for hardware key with serial number %1. Please connect it to continue.</translation>
+        <translation>Nepavyko rasti aparatinės įrangos rakto sąsajos su serijos numeriu %1. Norėdami tęsti, prijunkite jį prie jo.</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation>Segarkan token perangkat keras</translation>
+        <translation>Atnaujinti aparatinės įrangos žetonus</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Segarkan</translation>
+        <translation>Įkelti iš naujo</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Pemilihan slot kunci perangkat keras</translation>
+        <translation>Aparatūros rakto lizdo pasirinkimas</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
-        <translation>Tidak dapat menemukan kunci perangkat keras apa pun!</translation>
+        <translation>Nepavyko rasti jokių aparatūros raktų!</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Selected hardware key slot does not support challenge-response!</translation>
+        <translation>Pasirinktas aparatinės įrangos raktų lizdas nepalaiko atsako į iššūkius!</translation>
     </message>
     <message>
         <source>Challenge-Response</source>
-        <translation>Challenge-Response</translation>
+        <translation>Iššūkis-atsakas</translation>
     </message>
     <message>
         <source>Add Challenge-Response</source>
-        <translation>Add Challenge-Response</translation>
+        <translation>Pridėti atsaką į iššūkį</translation>
     </message>
     <message>
         <source>Change Challenge-Response</source>
-        <translation>Change Challenge-Response</translation>
+        <translation>Pakeiskite iššūkį-atsaką</translation>
     </message>
     <message>
         <source>Remove Challenge-Response</source>
-        <translation>Remove Challenge-Response</translation>
+        <translation>Pašalinkite atsaką į iššūkį</translation>
     </message>
     <message>
         <source>Challenge-Response set, click to change or remove</source>
-        <translation>Challenge-Response set, click to change or remove</translation>
+        <translation>Iššūkio atsakymo rinkinys, spustelėkite, kad pakeistumėte arba pašalintumėte</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Jei turite &lt;a href=&quot;https://www.yubico.com/&quot;&gt;&quot;YubiKey&quot;&lt;/a&gt; arba &lt;a href=&quot;https://onlykey.io&quot;&gt;&quot;OnlyKey&quot;&lt;/a&gt;, galite jį naudoti papildomam saugumui užtikrinti.&lt;/p&gt;&lt;p&gt;Raktas reikalauja, kad vienas iš jo lizdų būtų užprogramuotas kaip &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 iššūkis-atsakas&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Mendeteksi kunci perangkat keras…</translation>
+        <translation>Aptinkame aparatūros raktus...</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>Tidak mendeteksi kunci perangkat keras</translation>
+        <translation>Neaptikti jokie aparatūros raktai</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterface</name>
     <message>
         <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 Invalid slot specified - %2</translation>
+        <translation>%1 Nurodytas netinkamas laiko tarpsnis – %2</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
         <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] Challenge-Response - Slot %3</translation>
+        <translation>(PCSC) %1 [%2] Atsakas į iššūkius – laiko tarpsnis %3</translation>
     </message>
     <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>The YubiKey PCSC interface has not been initialized.</translation>
+        <translation>YubiKey PCSC sąsaja nebuvo inicijuota.</translation>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation>Kunci perangkat keras sedang digunakan saat ini.</translation>
+        <translation>Šiuo metu naudojamas aparatūros raktas.</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Could not find or access hardware key with serial number %1. Please present it to continue. </translation>
+        <translation>Nepavyko rasti arba pasiekti aparatūros rakto su serijos numeriu %1. Prašome jį pristatyti, kad tęstumėte. </translation>
     </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
-        <translation>Kunci perangkat keras terkunci atau kehabisan waktu. Buka kunci atau presentasikan ulang untuk melanjutkan.</translation>
+        <translation>Aparatūros raktas užrakintas arba nustatytas nustatytas laiku. Atrakinkite arba iš naujo pateikite jį, kad tęstumėte.</translation>
     </message>
     <message>
         <source>Hardware key was not found or is not configured.</source>
-        <translation>Hardware key was not found or is not configured.</translation>
+        <translation>Aparatūros raktas nerastas arba nėra sukonfigūruotas.</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>Failed to complete a challenge-response, the PCSC error code was: %1</translation>
+        <translation>Nepavyko užbaigti iššūkio atsakymo, PCSC klaidos kodas buvo: %1</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
     <message>
         <source>Unknown</source>
-        <translation>Tidak diketahui</translation>
+        <translation>Nežinoma</translation>
     </message>
     <message>
         <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation>(USB) %1 [%2] Configured Slot - %3</translation>
+        <translation>(USB) %1 [%2] Sukonfigūruotas lizdas – %3</translation>
     </message>
     <message>
         <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</translation>
+        <translation>(USB) %1 [%2] Atsakas į iššūkį - lizdas %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
-        <translation>Tekan</translation>
+        <translation>Paspausti</translation>
     </message>
     <message>
         <source>Passive</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
-        <translation>Pasif</translation>
+        <translation>Pasyvus</translation>
     </message>
     <message>
         <source>The YubiKey USB interface has not been initialized.</source>
-        <translation>The YubiKey USB interface has not been initialized.</translation>
+        <translation>YubiKey USB sąsaja nebuvo inicijuota.</translation>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation>Kunci perangkat keras sedang digunakan saat ini.</translation>
+        <translation>Šiuo metu naudojamas aparatūros raktas.</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation>Could not find hardware key with serial number %1. Please plug it in to continue.</translation>
+        <translation>Nepavyko rasti aparatūros rakto su serijos numeriu %1. Norėdami tęsti, prijunkite jį prie jo.</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation>Hardware key timed out waiting for user interaction.</translation>
+        <translation>Aparatinės įrangos rakto laikas baigėsi laukiant vartotojo sąveikos.</translation>
     </message>
     <message>
         <source>A USB error occurred when accessing the hardware key: %1</source>
-        <translation>A USB error occurred when accessing the hardware key: %1</translation>
+        <translation>Prisijungus prie aparatūros rakto įvyko USB klaida: %1</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation>Failed to complete a challenge-response, the specific error was: %1</translation>
+        <translation>Nepavykus užbaigti iššūkio atsakymo, konkreti klaida buvo tokia: %1</translation>
     </message>
 </context>
 </TS>

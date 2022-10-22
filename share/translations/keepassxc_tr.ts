@@ -175,11 +175,11 @@
     </message>
     <message>
         <source>Icon only</source>
-        <translation>Yalnız simge</translation>
+        <translation>Yalnızca simge</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation>Yalnız yazı</translation>
+        <translation>Yalnızca yazı</translation>
     </message>
     <message>
         <source>Text beside icon</source>
@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>Yedek kayıt klasörünü seçin</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Kilit açıldığında küçültülsün seçeneği etkinken bu seçenek etkinleştirilemez.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -262,7 +266,7 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Veritabanı anahtar dosyaları ve güvenlik donanımları hatırlansın</translation>
+        <translation>Veritabanı anahtar dosyaları ve e-anahtarlar hatırlansın</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>Son yazılmış kaydın hatırlanma süresi:</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>son kullanılan dosyalar</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>Parolalar renkli görüntülensin</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -643,6 +655,10 @@
         <source>Invalid placeholder: %1</source>
         <translation>Yer belirteci geçersiz: %1</translation>
     </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>Kayıtta PICKCHARS için öznitelik yok: %1</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -686,7 +702,7 @@
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Trying to send invalid keysym.</source>
-        <translation>Geçersiz tuş simgesi gönderilmeye çalışıldı.</translation>
+        <translation>Geçersiz keysym değeri gönderilmeye çalışıldı.</translation>
     </message>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -723,7 +739,7 @@ Ctrl+F - Veritabanı aramasını değşitir&lt;br/&gt;
 Ctrl+1 - Kullanıcı adını yaz&lt;br/&gt;
 Ctrl+2 - Parolayı yaz&lt;br/&gt;
 Ctrl+3 - Tek kullanımlık parolayı yaz&lt;br/&gt;
-Ctrl+4 - Sanal tuş takımını kullan (yalnız Windows)&lt;/p&gt;</translation>
+Ctrl+4 - Sanal klavyeyi kullan (yalnızca Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -767,7 +783,7 @@ Ctrl+4 - Sanal tuş takımını kullan (yalnız Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation>Sanal tuş takımını kullan</translation>
+        <translation>Sanal klavyeyi kullan</translation>
     </message>
 </context>
 <context>
@@ -1002,7 +1018,7 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
-        <translation>Yalnız aynı bağlantıya uygun (http://, https://, …) sonuçlar döndürülür.</translation>
+        <translation>Yalnızca aynı bağlantıya uygun (http://, https://, …) sonuçlar döndürülür.</translation>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
@@ -1010,11 +1026,11 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Etki alanındaki tüm kayıtlar yerine yalnız belirli bir adrese uygun olan kayıtları döndürür.</translation>
+        <translation>Etki alanındaki tüm kayıtlar yerine yalnızca belirli bir adrese uygun olan kayıtları döndürür.</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation>Yalnız en uygun kimlik bilgileri döndürülsün</translation>
+        <translation>Yalnızca en uygun kimlik bilgileri döndürülsün</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
@@ -1431,10 +1447,6 @@ Yedek veritabanının konumu %2</translation>
         <translation>Anahtar dosyası:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Veritabanınızın güvenliğini artırmak için parolaya ek olarak gizli bir dosya kullanabilirsiniz. Bu dosyayı veritabanınızın güvenlik ayarları bölümünden oluşturulabilirsiniz.&lt;/p&gt;&lt;p&gt;Bu dosya, *.kdbx veritabanı dosyanızdan &lt;strong&gt;farklıdır&lt;/strong&gt;. Bir anahtar dosyanız yoksa bu alanı boş bırakın.&lt;p&gt;Ayrıntılı bilgi almak için tıklayın…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Anahtar dosyası yardımı</translation>
     </message>
@@ -1445,12 +1457,6 @@ Yedek veritabanının konumu %2</translation>
     <message>
         <source>Hardware Key:</source>
         <translation>Donanımsal anahtar:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt; &lt;strong&gt;YubiKey&lt;/strong&gt; ya da &lt;strong&gt;OnlyKey&lt;/strong&gt; gibi donanımsal güvenlik anahtarlarını HMAC-SHA1 için ayarlanmış yuvalarda kullanabilirsiniz.&lt;/p&gt;
-&lt;p&gt;Ayrıntılı bilgi almak için tıklayın…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1595,6 +1601,16 @@ Bir anahtar dosyanız yoksa, lütfen alanı boş bırakın.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Donanımsal anahtarı seçin…</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Veritabanınızın güvenliğini artırmak için parolaya ek olarak gizli bir dosya kullanabilirsiniz. Bu dosyayı veritabanınızın güvenlik ayarları bölümünden oluşturulabilirsiniz.&lt;/p&gt;&lt;p&gt;Bu dosya, *.kdbx veritabanı dosyanızdan &lt;strong&gt;farklıdır&lt;/strong&gt;. Bir anahtar dosyanız yoksa bu alanı boş bırakın.&lt;p&gt;Ayrıntılı bilgi almak için tıklayın…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt; &lt;strong&gt;YubiKey&lt;/strong&gt; ya da &lt;strong&gt;OnlyKey&lt;/strong&gt; gibi donanımsal güvenlik anahtarlarını HMAC-SHA1 için ayarlanmış yuvalarda kullanabilirsiniz.&lt;/p&gt;
+&lt;p&gt;Ayrıntılı bilgi almak için tıklayın…&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1773,7 +1789,7 @@ Bu işlem tarayıcı uzantısıyla uyumluluğu korumak için gereklidir.</transl
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
         <translation>Veritabanı kimliğini yenilemek istediğiniz emin misiniz?
-Bu işlem yalnız veritabanınız başka bir veritabanının kopyası ise ve tarayıcı uzantısı bağlanmtı kuramıyorsa gerekir.</translation>
+Bu işlem yalnızca veritabanınız başka bir veritabanının kopyası ise ve tarayıcı uzantısı bağlanmtı kuramıyorsa gerekir.</translation>
     </message>
 </context>
 <context>
@@ -2247,13 +2263,21 @@ Bu kesinlikle bir uygulama hatasıdır. Lütfen geliştiricilere bildirin.</tran
         <comment>Database tab name modifier</comment>
         <translation>%1 [Kilitli]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation>Veritabanını XML dosyasına aktar</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML dosyası</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>XML dosyası yazılamadı</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>Veritabanı etiketleri</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>Aranıyor…</translation>
@@ -2419,6 +2443,22 @@ Güvenli kaydetme devre dışı bırakılarak yeniden denensin mi?</translation>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation><numerusform>%1 gün içinde süresi geçecek kayıtlar</numerusform><numerusform>%1 gün içinde süresi geçecek kayıtlar</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Aramalar ve etiketler</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Eşsiz bir ad yazın ya da listede var olan bir aramayı değiştirin:</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Aramayı kaydet</translation>
     </message>
 </context>
 <context>
@@ -2754,11 +2794,11 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Bu ayar tarayıcıya yalnız HRRP Auth pencereleri için gönderilir. Bu seçenek etkinleştirildiğinde, bu kayıt normal oturum açma formlarında seçilmek üzere görüntülenmez.</translation>
+        <translation>Bu ayar tarayıcıya yalnızca HRRP Auth pencereleri için gönderilir. Bu seçenek etkinleştirildiğinde, bu kayıt normal oturum açma formlarında seçilmek üzere görüntülenmez.</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation>Bu kayıt yalnız HTTP temel kimlik doğrulaması ile kullanılsın</translation>
+        <translation>Bu kayıt yalnızca HTTP temel kimlik doğrulaması ile kullanılsın</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
@@ -3082,7 +3122,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Bu grup ve alt gruplarında yalnız HTTP kimlik doğrulaması kullanılır</translation>
+        <translation>Bu grup ve alt gruplarında yalnızca HTTP kimlik doğrulaması kullanılır</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
@@ -3092,12 +3132,20 @@ Düzeltmek ister misiniz?</translation>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>Bu grup ve alt gruplarında HTTP kimlik doğrulaması kullanılmaz</translation>
     </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>WWW alt etki alanı eşleşmeye katılmasın:</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>Bu alt grupları için WWW alt etki alanının eşleşmeye katılma durumunu değiştirir</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
     <message>
         <source>Sharing mode field</source>
-        <translation>Paylaşma kipi alanı</translation>
+        <translation>Paylaşım kipi alanı</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -3306,7 +3354,7 @@ Desteklenen uzantılar: %1.</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
-        <translation>Yalnız bu gruba uygula</translation>
+        <translation>Yalnızca bu gruba uygula</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
@@ -3897,6 +3945,10 @@ Hata: %1</translation>
         <source>Disabled</source>
         <translation>Devre dışı</translation>
     </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>Değeri kopyalamak için çift tıklayın</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -4163,7 +4215,7 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo web sitesi simge hizm
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Soru-yanıt gönderilemedi: %1</translation>
+        <translation>Soru/yanıt gönderilemedi: %1</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
@@ -4197,7 +4249,7 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Soru-yanıt gönderilemedi: %1</translation>
+        <translation>Soru/yanıt gönderilemedi: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4656,7 +4708,7 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>Grup alanı türünün numarası geçersiz</translation>
+        <translation>Grup alanı türü numarası geçersiz</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
@@ -4668,31 +4720,31 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation>Grup kodu alanının boyutu hatalı</translation>
+        <translation>Grup kodu alanının boyutu uygunsuz</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>Grup oluşturulma zamanı alanının boyutu hatalı</translation>
+        <translation>Grup oluşturulma zamanı alanının boyutu uygunsuz</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>Grup değiştirilme zamanı alanının boyutu hatalı</translation>
+        <translation>Grup değiştirilme zamanı alanının boyutu uygunsuz</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation>Grup erişilme zamanı alanının boyutu hatalı</translation>
+        <translation>Grup erişilme zamanı alanının boyutu uygunsuz</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation>Grup geçerlilik sonu alanının boyutu hatalı</translation>
+        <translation>Grup geçerlilik sonu alanının boyutu uygunsuz</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation>Grup simge alanının boyutu geçersiz</translation>
+        <translation>Grup simge alanının boyutu uygunsuz</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation>Grup düzey alanının boyutu geçersiz</translation>
+        <translation>Grup düzey alanının boyutu uygunsuz</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
@@ -4704,7 +4756,7 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Kayıt alanının türü numarası eksik</translation>
+        <translation>Kayıt alanı türü numarası eksik</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
@@ -5267,7 +5319,7 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation>&amp;Tuş takımı kısayolları</translation>
+        <translation>&amp;Klavye kısayolları</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
@@ -5354,7 +5406,7 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation>UYARI: Kullandığınız Qt sürümü KeePassXC ekran tuş takımının çökmesine neden olabilir.
+        <translation>UYARI: Kullandığınız Qt sürümü KeePassXC ekran klavyesinin çökmesine neden olabilir.
 KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.</translation>
     </message>
     <message numerus="yes">
@@ -5396,6 +5448,30 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Bu ayarın etkin olması için uygulamayı yeniden başlatmalısınız. Şimdi yeniden başlatmak ister misiniz ?</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Etiketler</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Herhangi bir etiket yok</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 kayıt</numerusform><numerusform>%1 kayıt</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Parola ve tek kullanımlık parolayı kopyala</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML dosyası…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>XML dosyası…</translation>
     </message>
 </context>
 <context>
@@ -5550,7 +5626,7 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>Veritabanınızı koruyan, yalnız sizin bildiğiniz kimlik doğrulama bilgileri kümesi </translation>
+        <translation>Veritabanınızı koruyan, yalnızca sizin bildiğiniz kimlik doğrulama bilgileri kümesi </translation>
     </message>
 </context>
 <context>
@@ -5769,29 +5845,6 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Parola ile onayı aynı değil</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Parola ile onayı şimdilik aynı</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Parolayı görüntüle/gizle (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Parola oluştur (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Uyarı: Büyük harf kilidine basılmış!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5970,10 +6023,6 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
         <translation>Aynı şuradan seçilsin:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Katılmayacak karakterler: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Benzer görünen karakterler katılmasın</translation>
     </message>
@@ -6123,6 +6172,57 @@ Do you want to overwrite it?</source>
         <comment>Password quality</comment>
         <translation>Çok zor</translation>
     </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Katılmayacak karakterler: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Parola ile onayı aynı değil</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Parola ile onayı şimdilik aynı</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Parolayı görüntüle/gizle (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Parola oluştur (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Uyarı: Büyük harf kilidine basılmış!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>Kalite: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Çok kolay</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Kolay</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Zor</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Çok zor</translation>
+    </message>
 </context>
 <context>
     <name>PickcharsDialog</name>
@@ -6214,7 +6314,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation>Hatalı işlem</translation>
+        <translation>Uygunsuz işlem</translation>
     </message>
     <message>
         <source>Empty message received</source>
@@ -6471,7 +6571,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
-        <translation>Yalnız bir kayıt ile eşleşmelidir. Yoksa olası eşleşmelerin listesi görüntülenir.</translation>
+        <translation>Yalnızca bir kayıt ile eşleşmelidir. Yoksa olası eşleşmelerin listesi görüntülenir.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
@@ -6650,12 +6750,12 @@ Do you want to overwrite it?</source>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation>Diceware oluşturucu için sözcük listesi.
+        <translation>Diceware üreteci için sözcük listesi.
 [Varsayılan: EFF İngilizce]</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>Yeni bir rastgele diceware parolası oluştur.</translation>
+        <translation>Yeni bir rastgele Diceware parolası oluştur.</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
@@ -7471,7 +7571,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Cipher not initialized prior to use.</source>
-        <translation>Şifre kullanmadan önce hazırlanmadı.</translation>
+        <translation>Şifre kullanılmadan önce hazırlanamadı.</translation>
     </message>
     <message>
         <source>Cannot process 0 length data.</source>
@@ -7741,6 +7841,64 @@ Kernel: %3 %4</source>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>Lütfen, ilerlemek için YubiKey anahtarını takın ya da üzerindeki düğmeye dokunun.</translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Kaydın tüm özniteliklerini görüntüler.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>Bir veritabanını düzenle.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Veritabanı anahtarı değiştirilemedi.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Veritabanı değiştirilmedi.</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Veritabanı düzenlendi.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Yeni anahtar dosyası yüklenemedi: %1</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>Veritabanının parolasını kaldır.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>Veritabanının anahtar dosyasını kaldır.</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>%1 ve %2 aynı anda kullanılamaz.</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Bir veritabanındaki tüm anahtarlar kaldırılamaz.</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>Parola kaldırılamadı. Veritabanının bir parolası yok.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>Dosya anahtarı kaldırılamadı. Veritabanının bir dosya anahtarı yok.</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>Beklenmeyen %1 anahtar türü bulundu</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>Veritabanının anahtar dosyasını ayarla.
+Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7784,11 +7942,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Show only entries which have URL set</source>
-        <translation>Yalnız adresi olan kayıtlar görüntülensin</translation>
+        <translation>Yalnızca adresi olan kayıtlar görüntülensin</translation>
     </message>
     <message>
         <source>Show only entries which have browser settings in custom data</source>
-        <translation>Yalnız özel verilerinde tarayıcı ayarları olan kayıtlar görüntülensin</translation>
+        <translation>Yalnızca özel verilerinde tarayıcı ayarları olan kayıtlar görüntülensin</translation>
     </message>
     <message>
         <source>Double-click entries to edit.</source>
@@ -7945,7 +8103,7 @@ Kernel: %3 %4</source>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>UYARI: Bu rapor için &quot;Have I Been Pwned&quot; çevrimiçi hizmetine (https://haveibeenpwned.com) bilgi gönderilmesi gerekir.  İlerlediğinizde, veritabanı parolalarınız şifreli olarak karıştırılır ve bu karmanın ilk beş karakteri güvenli olarak bu hizmete gönderilir. Veritabanınız güvende kalır ve gönderilen bilgiler ile yeniden oluşturulamaz. Yalnız, gönderdiğiniz parolaların sayısı ve IP adresiniz bu hizmete bildirilir.</translation>
+        <translation>UYARI: Bu rapor için &quot;Have I Been Pwned&quot; çevrimiçi hizmetine (https://haveibeenpwned.com) bilgi gönderilmesi gerekir.  İlerlediğinizde, veritabanı parolalarınız şifreli olarak karıştırılır ve bu karmanın ilk beş karakteri güvenli olarak bu hizmete gönderilir. Veritabanınız güvende kalır ve gönderilen bilgiler ile yeniden oluşturulamaz. Yalnızca, gönderdiğiniz parolaların sayısı ve IP adresiniz bu hizmete bildirilir.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
@@ -8288,6 +8446,10 @@ Kernel: %3 %4</source>
         <source>Limit search to selected group</source>
         <translation>Arama seçilmiş grupla sınırlansın</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Aramayı kaydet</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8343,7 +8505,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek etkinleştirildiğinde, herhangi bir parola okuma girişimi onaylanmalıdır. Yoksa, veritabanı kilidi açıldığında uygulamalar parolaları onay almadan okuyabilir.&lt;/p&gt;&lt;p&gt;Bu seçenek yalnız bir kaydın parolasına erişim iznini kapsar. Uygualamalar her zaman açıkta kalan veritabanlarının ögelerini öğrenebilir ve özniteliklerini sorgulayabilir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek etkinleştirildiğinde, herhangi bir parola okuma girişimi onaylanmalıdır. Yoksa, veritabanı kilidi açıldığında uygulamalar parolaları onay almadan okuyabilir.&lt;/p&gt;&lt;p&gt;Bu seçenek yalnızca bir kaydın parolasına erişim iznini kapsar. Uygualamalar her zaman açıkta kalan veritabanlarının ögelerini öğrenebilir ve özniteliklerini sorgulayabilir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
@@ -8426,7 +8588,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation>Yalnız uyarılar ve hatalar görüntülensin</translation>
+        <translation>Yalnızca uyarılar ve hatalar görüntülensin</translation>
     </message>
     <message>
         <source>Own certificate</source>
@@ -8509,16 +8671,39 @@ Kernel: %3 %4</source>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>Tümü</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>Süresi geçmiş</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>Kolay parolalar</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Tüm kayıtlar</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>Aramayı temizle</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>Aramayı sil</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>Etiketi sil</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>Etiketi silmeyi onayla</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>&quot;%1&quot; etiketini bu veritabanındaki tüm kayıtlardan silmek istediğinize emin misiniz?</translation>
     </message>
 </context>
 <context>
@@ -8780,31 +8965,31 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Seçilmiş donanımsal anahtar yuvası soru-yanıt özelliğini desteklemiyor!</translation>
+        <translation>Seçilmiş donanımsal anahtar yuvası soru/yanıt özelliğini desteklemiyor!</translation>
     </message>
     <message>
         <source>Challenge-Response</source>
-        <translation>Soru-yanıt</translation>
+        <translation>Soru/yanıt</translation>
     </message>
     <message>
         <source>Add Challenge-Response</source>
-        <translation>Soru-yanıt ekle</translation>
+        <translation>Soru/yanıt ekle</translation>
     </message>
     <message>
         <source>Change Challenge-Response</source>
-        <translation>Soru-yanıtı değiştir</translation>
+        <translation>Soru/yanıtı değiştir</translation>
     </message>
     <message>
         <source>Remove Challenge-Response</source>
-        <translation>Soru-yanıtı kaldır</translation>
+        <translation>Soru/yanıtı kaldır</translation>
     </message>
     <message>
         <source>Challenge-Response set, click to change or remove</source>
-        <translation>Soru-yanıt ayarlandı. Değiştirmek ya da kaldırmak için tıklayın</translation>
+        <translation>Soru/yanıt ayarlandı. Değiştirmek ya da kaldırmak için tıklayın</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Bir &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; ya da &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt; aygıtınız varsa, ek güvenlik sağlamak için kullanabilirsiniz.&lt;/p&gt;&lt;p&gt;Anahtar yuvalarından birinin &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Soru-Yanıt&lt;/a&gt; olarak programlanması gerekir.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Bir &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; ya da &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt; aygıtınız varsa, ek güvenlik sağlamak için kullanabilirsiniz.&lt;/p&gt;&lt;p&gt;Anahtar yuvalarından birinin &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 soru/yanıt&lt;/a&gt; olarak programlanması gerekir.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
@@ -8826,7 +9011,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     <name>YubiKeyInterfacePCSC</name>
     <message>
         <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] soru-yanıt - %3. yuva</translation>
+        <translation>(PCSC) %1 [%2] soru/yanıt - %3. yuva</translation>
     </message>
     <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
@@ -8850,7 +9035,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>Bir soru-yanıt tamamlanamadı. PCSC hata kodu: %1</translation>
+        <translation>Bir soru/yanıt tamamlanamadı. PCSC hata kodu: %1</translation>
     </message>
 </context>
 <context>
@@ -8865,7 +9050,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] soru-yanıt - %3. yuva - %4</translation>
+        <translation>(USB) %1 [%2] soru/yanıt - %3. yuva - %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -8899,7 +9084,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation>Soru-yanıt tamamlanamadı. Oluşan hata: %1</translation>
+        <translation>Soru/yanıt tamamlanamadı. Oluşan hata: %1</translation>
     </message>
 </context>
 </TS>

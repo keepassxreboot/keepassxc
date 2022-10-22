@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>Válassza ki a biztonsági mentés könyvtárát.</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Ez a beállítás nem kapcsolható be, ha a minimalizálás feloldáskor be van kapcsolva.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -337,7 +341,7 @@
     </message>
     <message>
         <source>Temporary file moved into place</source>
-        <translation>Ideiglenes fájl a helyére került</translation>
+        <translation>Ideiglenes fájl a helyére mozgatása</translation>
     </message>
     <message>
         <source>Directly write to database file (dangerous)</source>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>Utolsó beírt bejegyzés megjegyzése ehhez:</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>nemrég használt fájlok</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>Jelszavak színes megjelenítése</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -642,6 +654,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Érvénytelen helykitöltő: %1</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>A bejegyzés nem rendelkezik PICKCHARS attribútummal: %1</translation>
     </message>
 </context>
 <context>
@@ -1430,10 +1446,6 @@ Az adatbázis biztonsági másolata:  %2</translation>
         <translation>Kulcsfájl:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;A mesterkulcs mellett egy titkos fájlt is használhat, hogy javítsa az adatbázisa biztonságát. Ez a fájl az adatbázis biztonsági beállításaiban állítható elő.&lt;/p&gt;&lt;p&gt;Ez &lt;strong&gt;nem&lt;/strong&gt; a *.kdbx adatbázisfájlja!&lt;br&gt;Ha nincs kulcsfájlja, akkor hagyja üresen ezt a mezőt.&lt;/p&gt;&lt;p&gt;Kattintson a további információkért…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Kulcsfájlok súgója</translation>
     </message>
@@ -1444,12 +1456,6 @@ Az adatbázis biztonsági másolata:  %2</translation>
     <message>
         <source>Hardware Key:</source>
         <translation>Hardverkulcs:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;A &lt;strong&gt;YubiKey&lt;/strong&gt; vagy az &lt;strong&gt;OnlyKey&lt;/strong&gt; biztonsági hardverkulcsok alkalmazhatóak a HMAC-SHA1-re konfigurált foglalattal.&lt;/p&gt;
-&lt;p&gt;További információk…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1593,6 +1599,16 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>Hardverkulcs kijelölése…</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;A mesterkulcs mellett egy titkos fájlt is használhat, hogy javítsa az adatbázisa biztonságát. Ez a fájl az adatbázis biztonsági beállításaiban állítható elő.&lt;/p&gt;&lt;p&gt;Ez &lt;strong&gt;nem&lt;/strong&gt; a *.kdbx adatbázisfájlja!&lt;br&gt;Ha nincs kulcsfájlja, akkor hagyja üresen ezt a mezőt.&lt;/p&gt;&lt;p&gt;Kattintson a további információkért…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;A &lt;strong&gt;YubiKey&lt;/strong&gt; vagy az &lt;strong&gt;OnlyKey&lt;/strong&gt; biztonsági hardverkulcsok alkalmazhatóak a HMAC-SHA1-re konfigurált foglalattal.&lt;/p&gt;
+&lt;p&gt;További információk…&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2245,13 +2261,21 @@ Ez határozottan hiba, jelentse a fejlesztőknek.</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Zárolva]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation>Adatbázis exportálása XML-fájlba</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML-fájl</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>Az XML-fájl írása sikertelen</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>Adatbázis címkék</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>Keresés…</translation>
@@ -2417,6 +2441,22 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation><numerusform>%1 napon belül lejáró bejegyzések</numerusform><numerusform>%1 napon belül lejáró bejegyzések</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Keresések és címkék</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Adjon meg egy egyedi nevet, vagy írjon felül egy meglévő keresést a listából:</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Mentés</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Keresés mentése</translation>
     </message>
 </context>
 <context>
@@ -3089,6 +3129,14 @@ Szeretné kijavítani?</translation>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>HTTP Auth kapcsoló tiltása ennél a csoportnál és alcsoportjainál</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>A WWW altartomány kihagyása a megfeleltetésből:</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>A WWW altartomány kihagyása a megfeleltetésből átkapcsolása ennél a csoportnál és alcsoportjainál</translation>
     </message>
 </context>
 <context>
@@ -3894,6 +3942,10 @@ Hiba: %1</translation>
     <message>
         <source>Disabled</source>
         <translation>Tiltott</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>Dupla kattintás az érték másolásához</translation>
     </message>
 </context>
 <context>
@@ -5393,6 +5445,30 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Ennek a beállításnak az érvényre kerüléséhez újra kell indítani az alkalmazást. Legyen azonnal újraindítva?</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Címkék</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Nincsenek címkék</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 bejegyzés</numerusform><numerusform>%1 bejegyzés</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Jelszó és TOTP másolása</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML-fájl…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>XML-fájl…</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5765,29 +5841,6 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>A jelszavak nem egyeznek</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>A jelszavak eddig megegyeznek</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Jelszó átváltása (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Jelszó előállítása (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Figyelem: a Caps Lock be van kapcsolva!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5966,10 +6019,6 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
         <translation>Tartalmazhat ezekből is:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Kihagyott karakterek: „0”, „1”, „l”, „I”, „O”, „|”, „﹒”</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Hasonlóan kinéző karakterek kizárása</translation>
     </message>
@@ -6098,6 +6147,57 @@ Valóban felülírja?</translation>
     <message>
         <source>Password Quality: %1</source>
         <translation>Jelszóminőség: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Silány</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Gyenge</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Jó</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Kiváló</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Kihagyott karakterek: „0”, „1”, „l”, „I”, „O”, „|”, „﹒”</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>A jelszavak nem egyeznek</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>A jelszavak eddig megegyeznek</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Jelszó átváltása (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Jelszó előállítása (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Figyelem: a Caps Lock be van kapcsolva!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>Minőség: %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -7737,6 +7837,64 @@ Kernel: %3 %4</translation>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>Tegye elérhetővé vagy érintse meg a YubiKeyt a folytatáshoz.</translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Bejegyzés összes attribútumának megjelenítése.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>Adatbázis szerkesztése.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Nem sikerült az adatbázis kulcsának módosítása.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Az adatbázis nem lett módosítva.</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Az adatbázis szerkesztése sikeres.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Az új kulcsfájl betöltése sikertelen: %1</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>Az adatbázis jelszavának visszavonása.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>Az adatbázis kulcsfájljának visszavonása</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>Nem használható %1 és %2 egyidejűleg.</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Nem távolítható el az összes kulcs az adatbázisból</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>A jelszó nem távolítható el: Az adatbázisnak nincs jelszava.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>A kulcsfájl nem távolítható el. Az adatbázisnak nincs kulcsfájlja.</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>Váratlan kulcstípus található: %1</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>A kulcsfájl beállítása az adatbázishoz.
+Ez a kapcsoló elavult, használja helyette a --set-key-file kapcsolót.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8284,6 +8442,10 @@ Kernel: %3 %4</translation>
         <source>Limit search to selected group</source>
         <translation>Keresés korlátozása a kijelölt csoportra</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Keresés mentése</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8505,16 +8667,39 @@ Kernel: %3 %4</translation>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>Mind</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>Lejártak</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>Gyenge jelszavak</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Összes bejegyzés</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>Keresés törlése</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>Keresés eltávolítása</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>Címke eltávolítása</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>Címkeeltávolítás megerősítése</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>Valóban eltávolítható minden „%1” címke ennek az adatbázisnak az összes bejegyzéséből?</translation>
     </message>
 </context>
 <context>

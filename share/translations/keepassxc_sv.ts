@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>Välj lagringsplats för säkerhetskopior</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Denna inställning kan inte aktiveras om minimering vid upplåsning är aktiverad.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>Kom ihåg senast inmatade post för:</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>tidigare filer</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>Visa lösenord i färg</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -642,6 +654,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Ogiltig platshållare: %1</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>Posten har inget attribut för PICKCHARS: %1</translation>
     </message>
 </context>
 <context>
@@ -1431,10 +1447,6 @@ Säkerhetskopierad databas hittad i %2</translation>
         <translation>Nyckelfil:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Som tillägg till ett lösenord, kan du använda en hemlig fil för att förbättra säkerheten i din databas. En sådan fil kan genereras i databasens säkerhetsinställningar.&lt;/p&gt;&lt;p&gt;Detta är &lt;strong&gt;inte&lt;/strong&gt; din *.kdbx-databasfil!&lt;br&gt;Om du inte har någon nyckelfil, lämnar du fältet tomt.&lt;/p&gt;&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Nyckelfilshjälp</translation>
     </message>
@@ -1445,12 +1457,6 @@ Säkerhetskopierad databas hittad i %2</translation>
     <message>
         <source>Hardware Key:</source>
         <translation>Hårdvarunyckel:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Du kan använda en hårdvarunyckel såsom &lt;strong&gt;YubiKey&lt;/strong&gt; eller &lt;strong&gt;OnlyKey&lt;/strong&gt; med anslutningsplatser konfigurerade för HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1596,6 +1602,16 @@ Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Välj hårdvarunyckel...</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Som tillägg till ett lösenord, kan du använda en hemlig fil för att förbättra säkerheten i din databas. En sådan fil kan genereras i databasens säkerhetsinställningar.&lt;/p&gt;&lt;p&gt;Detta är &lt;strong&gt;inte&lt;/strong&gt; din *.kdbx-databasfil!&lt;br&gt;Om du inte har någon nyckelfil, lämnar du fältet tomt.&lt;/p&gt;&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Du kan använda en hårdvarunyckel såsom &lt;strong&gt;YubiKey&lt;/strong&gt; eller &lt;strong&gt;OnlyKey&lt;/strong&gt; med anslutningsplatser konfigurerade för HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2248,13 +2264,21 @@ Detta är definitivt ett programfel, rapportera det till utvecklarna.</translati
         <comment>Database tab name modifier</comment>
         <translation>%1 [Låst]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation>Exportera databas till XML-fil</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML-fil</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>Kunde inte skriva XML-filen</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>Databastaggar</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>Söker…</translation>
@@ -2420,6 +2444,22 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation><numerusform>Poster som löper ut inom %1 dag</numerusform><numerusform>Poster som löper ut inom %1 dagar</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Sök och taggar</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Ange ett unikt namn eller skriv över en befintlig sökning från listan:</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Spara</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Spara sökning</translation>
     </message>
 </context>
 <context>
@@ -3092,6 +3132,14 @@ Vill du korrigera det?</translation>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>Använd inte HTTP Auth-växlingsknappen för denna och undergrupper</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>Utelämna WWW-underdomänen från matchning:</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>Utelämna WWW-underdomän från matchningväxling för denna och undergrupper</translation>
     </message>
 </context>
 <context>
@@ -3896,6 +3944,10 @@ Fel: %1</translation>
     <message>
         <source>Disabled</source>
         <translation>Inaktiverad</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>Dubbelklick för att kopiera värde</translation>
     </message>
 </context>
 <context>
@@ -5396,6 +5448,30 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Du måste starta om programmet för att tillämpa den här inställningen. Vill du starta om nu?</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>Taggar</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Inga taggar</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 post</numerusform><numerusform>%1 poster</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Kopiera lösenord och TOTP</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML-fil...</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>XML-fil</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5768,29 +5844,6 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Lösenorden stämmer inte överens</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Lösenorden stämmer så långt</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Växla lösenord (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Generera lösenord (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Varning! Caps Lock aktiverat!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5969,10 +6022,6 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
         <translation>Välj också från:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Undanta tecknen: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Undanta tecken som liknar varandra</translation>
     </message>
@@ -6101,6 +6150,57 @@ Vill du skriva över den?</translation>
     <message>
         <source>Password Quality: %1</source>
         <translation>Lösenordskvalitet: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Dålig</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Svag</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Bra</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Utmärkt</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Undanta tecknen: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Lösenorden stämmer inte överens</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Lösenorden stämmer så långt</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Växla lösenord (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Generera lösenord (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Varning! Caps Lock aktiverat!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>Kvalitet: %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -7740,6 +7840,64 @@ Kärna: %3 %4</translation>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>Anslut eller tryck på din YubiKey för att fortsätta.</translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Visa alla attribut för posten.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>Redigera en databas.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Kunde inte ändra databasnyckeln.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Databasen är inte ändrad.</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Databasen redigerades korrekt.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Inläsning av den nya nyckeln misslyckades: %1</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>Ta bort lösenordet för databasen.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>Ta bort nyckelfilen för databasen.</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>Kan inte använda %1 och %2 på samma gång.</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Kan inte ta bort alla nycklarna från en databas.</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>Kan inte ta bort lösenordet. Databasen har inget lösenord.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>Kan inte ta bort nyckelfilen. Databasen har ingen nyckelfil.</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>Identifierade oväntad nyckeltyp %1</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>Ange nyckelfil för databasen.
+Det här alternativet är inaktuellt, använd --set-key-file istället.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8287,6 +8445,10 @@ Kärna: %3 %4</translation>
         <source>Limit search to selected group</source>
         <translation>Begränsa sökningen till vald grupp</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Spara sökning</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8507,16 +8669,39 @@ inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett anna
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>Alla</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>Förfallen</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>Svaga lösenord</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Alla poster</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>Rensa sökning</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>Ta bort sökning</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>Ta bort tagg</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>Bekräfta borttagning av tagg</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>Vill di ta bort taggen &quot;%1&quot; från alla poster i databasen?</translation>
     </message>
 </context>
 <context>

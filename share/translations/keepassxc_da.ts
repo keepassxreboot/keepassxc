@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
+        <translation>Din beslutning vil blive husket, så længe både den anmodende klient OG KeePassXC kører.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Afvis alle &amp;&amp; Fremtid</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Tillad Alle &amp;&amp; &amp;Fremtid</translation>
     </message>
 </context>
 <context>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Use both agents</source>
-        <translation type="unfinished"/>
+        <translation>Brug begge agenter</translation>
     </message>
 </context>
 <context>
@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>Vælg mappe til lagring af sikkerhedskopier</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -274,22 +278,22 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation type="unfinished"/>
+        <translation>Ved åbning af database, hvis punkter der</translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>er udløbet</translation>
     </message>
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation type="unfinished"/>
+        <translation>dage</translation>
     </message>
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>vil udløbe inden for</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -321,7 +325,7 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation type="unfinished"/>
+        <translation>Angiver placeringen af databasens sikkerhedskopi. Forekomster af &quot;{DB_FILENAME}&quot;  erstattes med filnavnet på den gemte database uden udvidelse. {TIME:&lt;format&gt;} erstattes med backuptidspunktet, se https://doc.qt.io/qt-5/qdatetime.html#toString.&lt;format&gt; angives til formatstrengen &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -491,6 +495,14 @@
     </message>
     <message>
         <source>Remember last typed entry for:</source>
+        <translation>Gem sidste indtastede post for:</translation>
+    </message>
+    <message>
+        <source> recent files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -536,7 +548,7 @@
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation type="unfinished"/>
+        <translation>Aktiver hurtigoplåsning af database (Touch ID / Windows Hello)</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
@@ -636,10 +648,15 @@
     <message>
         <source>Invalid regular expression syntax %1
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig syntaks for regulært udtryk %1
+%2</translation>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1415,15 +1432,11 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation>Indtast yderligere legitimationsoplysninger (hvis nogen):</translation>
+        <translation>Angiv yderligere legitimationsoplysninger (hvis nogen):</translation>
     </message>
     <message>
         <source>Key File:</source>
         <translation>Nøglefil:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key file help</source>
@@ -1436,11 +1449,6 @@ Backup database located at %2</source>
     <message>
         <source>Hardware Key:</source>
         <translation>Sikkerhedsnøgle:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1468,7 +1476,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation type="unfinished"/>
+        <translation>Lås database op</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1476,7 +1484,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Unlock</source>
-        <translation type="unfinished"/>
+        <translation>Lås op</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -1502,7 +1510,7 @@ We recommend you update your KeePassXC installation.</source>
     </message>
     <message>
         <source>Database unlock canceled.</source>
-        <translation type="unfinished"/>
+        <translation>Oplåsning af database annulleret</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1579,6 +1587,15 @@ Hvis du ikke har en nøglefil, bedes du lade feltet være tomt.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Vælg sikkerhedsnøgle...</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1873,7 +1890,7 @@ Er du sikker på, du vil fortsætte uden en adgangskode?</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>Hukommelsesforbrug</translation>
     </message>
     <message>
         <source>Parallelism:</source>
@@ -2224,13 +2241,21 @@ Det er helt sikkert en fejl. Rapportér det venligst til udviklerne.</translatio
         <comment>Database tab name modifier</comment>
         <translation>%1 [Låst]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation type="unfinished"/>
-    </message>
     <message>
         <source>Searching…</source>
         <translation type="unfinished"/>
@@ -2277,7 +2302,7 @@ Det er helt sikkert en fejl. Rapportér det venligst til udviklerne.</translatio
     </message>
     <message>
         <source>Expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Udløbne poster</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2396,6 +2421,22 @@ Så sikre gem fra og prøv igen?</translation>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Gem</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3062,6 +3103,14 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3862,6 +3911,10 @@ Error: %1</source>
     <message>
         <source>Disabled</source>
         <translation>Deaktiveret</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5110,11 +5163,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Lock Database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Lås database</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation type="unfinished"/>
+        <translation>Lås &amp;Alle databaser</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -5282,7 +5335,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation type="unfinished"/>
+        <translation>Klon gruppe...</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -5350,6 +5403,30 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML File…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5723,29 +5800,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Adgangskoder matcher ikke</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Adgangskoderne matcher indtil videre</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Advarsel: Caps Lock aktiveret!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5924,10 +5978,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Udeluk tegnene: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Udeluk tegn som ligner hinanden</translation>
     </message>
@@ -5981,7 +6031,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Apply Password</source>
-        <translation type="unfinished"/>
+        <translation>Anvend adgangskode</translation>
     </message>
     <message>
         <source>Regenerate password (%1)</source>
@@ -6055,6 +6105,57 @@ Do you want to overwrite it?</source>
     <message>
         <source>Password Quality: %1</source>
         <translation>Kvaliteten af adgangskoden: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Dårlig</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Svag</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>God</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Fremragende</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Udeluk tegnene: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Adgangskoder matcher ikke</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Adgangskoderne matcher indtil videre</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Advarsel: Caps Lock aktiveret!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Poor</source>
@@ -6307,7 +6408,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation type="unfinished"/>
+        <translation>Analyser adgangskoder for svagheder og problemer.</translation>
     </message>
     <message>
         <source>Cannot find HIBP file: %1</source>
@@ -6537,7 +6638,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Angiv en adgangskode for databasen.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
@@ -6924,7 +7025,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>nej</translation>
     </message>
     <message>
         <source>Number of groups</source>
@@ -6936,7 +7037,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Antal udløbne poster</translation>
     </message>
     <message>
         <source>Unique passwords</source>
@@ -6956,7 +7057,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation type="unfinished"/>
+        <translation>Antal svage adgangskoder</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
@@ -7264,7 +7365,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Very weak password</source>
-        <translation type="unfinished"/>
+        <translation>Meget svag adgangskode</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>
@@ -7272,7 +7373,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Weak password</source>
-        <translation type="unfinished"/>
+        <translation>Svag adgangskode</translation>
     </message>
     <message>
         <source>Used in %1/%2</source>
@@ -7284,7 +7385,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Password has expired</source>
-        <translation type="unfinished"/>
+        <translation>Adgangskode er udløbet</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
@@ -7356,7 +7457,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>Hurtig oplåsning</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
@@ -7690,6 +7791,63 @@ Kerne: %3 %4</translation>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -7843,7 +8001,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation type="unfinished"/>
+        <translation>Svag — overvej at ændre adgangskoden</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -8033,7 +8191,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>nej</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
@@ -8049,7 +8207,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Antal udløbne poster</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
@@ -8085,7 +8243,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation type="unfinished"/>
+        <translation>Antal svage adgangskoder</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
@@ -8236,6 +8394,10 @@ Kerne: %3 %4</translation>
     <message>
         <source>Limit search to selected group</source>
         <translation>Begræns søgning til den valgte gruppe</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8450,15 +8612,38 @@ Kerne: %3 %4</translation>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Expired</source>
-        <translation type="unfinished"/>
+        <translation>Udløbet</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
+        <translation>Svage adgangskoder</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>Vyberte priečinok pre uloženie zálohy</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -641,6 +653,10 @@
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1426,10 +1442,6 @@ Zálohovať databázu nachádzajúcu sa na %2</translation>
         <translation>Súbor kľúča:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Ako doplnok hesla môžete, na zvýšenie bezpečnosti databázy, použiť tajný súbor. Tento súbor môže byť vygenerovaný v nastaveniach bezpečnosti databázy.&lt;/p&gt;&lt;p&gt;Tento súbor &lt;strong&gt;nie je&lt;/strong&gt; súbor vašej databázy  *.kdbx!&lt;br&gt;Ak nemáte súbor kľúča, nechajte toto pole prázdne.&lt;/p&gt;&lt;p&gt;Kliknite na ďalšie informácie…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>Pomocník súbora kľúčov</translation>
     </message>
@@ -1440,12 +1452,6 @@ Zálohovať databázu nachádzajúcu sa na %2</translation>
     <message>
         <source>Hardware Key:</source>
         <translation>Hardvérový kľúč:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Môžete použiť hardvérový bezpečnostný kľúč ako &lt;strong&gt;Yubikey&lt;/strong&gt; alebo &lt;strong&gt;OnlyKey&lt;/strong&gt; so slotmi nakonfigurovanými pre HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Kliknite pre viac informácií...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1584,6 +1590,16 @@ Ak nemáte súbor kľúča, prosím nechajte toto pole prázdne.</translation>
     <message>
         <source>Select hardware key…</source>
         <translation>Zvoľte hardvérový kľúč…</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Ako doplnok hesla môžete, na zvýšenie bezpečnosti databázy, použiť tajný súbor. Tento súbor môže byť vygenerovaný v nastaveniach bezpečnosti databázy.&lt;/p&gt;&lt;p&gt;Tento súbor &lt;strong&gt;nie je&lt;/strong&gt; súbor vašej databázy  *.kdbx!&lt;br&gt;Ak nemáte súbor kľúča, nechajte toto pole prázdne.&lt;/p&gt;&lt;p&gt;Kliknite na ďalšie informácie…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Môžete použiť hardvérový bezpečnostný kľúč ako &lt;strong&gt;Yubikey&lt;/strong&gt; alebo &lt;strong&gt;OnlyKey&lt;/strong&gt; so slotmi nakonfigurovanými pre HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Kliknite pre viac informácií...&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2236,13 +2252,21 @@ Toto je určite chyba, prosím nahláste ju vývojárom.</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Zamknutá]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation type="unfinished"/>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>Hľadanie…</translation>
@@ -2408,6 +2432,22 @@ Vypnúť bezpečné ukladanie a skúsiť znova?</translation>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Uložiť</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3079,6 +3119,14 @@ Chcete to opraviť?</translation>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>Nepoužívať HTTP Auth pre túto a podriadené skupiny</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3886,6 +3934,10 @@ Chyba: %1</translation>
     <message>
         <source>Disabled</source>
         <translation>Vypnuté</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5388,6 +5440,30 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>Musíte reštartovať aplikáciu, aby sa tieto zmeny prejavili. Chcete ju reštartovať teraz?</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5760,29 +5836,6 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>Heslá sa nezhodujú.</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>Heslá sa zhodujú až potiaľ</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Prepnúť heslo (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>Generovať heslo (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Upozornenie: Caps Lock zapnutý!</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5961,10 +6014,6 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
         <translation>Tiež vybrať z:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Vynechané znaky: „0”, „1”, „l”, „I”, „O”, „|”, „﹒”</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Vynechať podobne vyzerajúce znaky</translation>
     </message>
@@ -6092,6 +6141,57 @@ Do you want to overwrite it?</source>
     <message>
         <source>Password Quality: %1</source>
         <translation>Kvalita hesla: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Slabé</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Slabé</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Dobré</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Výbroné</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Vynechané znaky: „0”, „1”, „l”, „I”, „O”, „|”, „﹒”</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Heslá sa nezhodujú.</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Heslá sa zhodujú až potiaľ</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Prepnúť heslo (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Generovať heslo (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Upozornenie: Caps Lock zapnutý!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Poor</source>
@@ -7730,6 +7830,63 @@ Jadro: %3 %4</translation>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8277,6 +8434,10 @@ Jadro: %3 %4</translation>
         <source>Limit search to selected group</source>
         <translation>Obmedziť hľadanie na zvolenú skupinu</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8490,15 +8651,38 @@ Jadro: %3 %4</translation>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Expired</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Weak Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation type="unfinished"/>
     </message>
 </context>

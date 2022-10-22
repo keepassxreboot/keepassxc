@@ -225,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation>選擇備份存放目錄</translation>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>如果啟用解鎖時最小化，則無法啟用此設置。</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -493,6 +497,14 @@
         <source>Remember last typed entry for:</source>
         <translation>記住上次輸入的項目：</translation>
     </message>
+    <message>
+        <source> recent files</source>
+        <translation>最近的檔案</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>密碼以彩色顯示</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -642,6 +654,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>無效的佔位符: %1</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>項目不包含用於 PICKCHARS 的屬性：%1</translation>
     </message>
 </context>
 <context>
@@ -1431,10 +1447,6 @@ Backup database located at %2</source>
         <translation>金鑰檔：</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;除了密碼，您還可以使用一份袐密檔案來加強資料庫的安全性。使用資料庫的安全設定可以產生該檔案。&lt;/p&gt;&lt;p&gt;這個&lt;strong&gt;並不是&lt;/strong&gt;您的 *.kdbx 資料庫檔案！&lt;br&gt;若您沒有金鑰檔案，則留空欄位。&lt;/p&gt;&lt;p&gt;點擊獲得更多資訊…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation>金鑰檔案幫助</translation>
     </message>
@@ -1445,12 +1457,6 @@ Backup database located at %2</source>
     <message>
         <source>Hardware Key:</source>
         <translation>硬體金鑰：</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;您可以使用諸如 &lt;strong&gt;YubiKey&lt;/strong&gt; 或 &lt;strong&gt;OnlyKey&lt;/strong&gt; 等實體安全金鑰，只要它們擁有可設置 HMAC-SHA1 的槽位。&lt;/p&gt;
-&lt;p&gt;點擊獲得更多資訊…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1595,6 +1601,16 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Select hardware key…</source>
         <translation>選擇硬體金鑰…</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;除了密碼，您還可以使用一份袐密檔案來加強資料庫的安全性。使用資料庫的安全設定可以產生該檔案。&lt;/p&gt;&lt;p&gt;這個&lt;strong&gt;並不是&lt;/strong&gt;您的 *.kdbx 資料庫檔案！&lt;br&gt;若您沒有金鑰檔案，則留空欄位。&lt;/p&gt;&lt;p&gt;點擊獲得更多資訊…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation>&lt;p&gt;您可以使用諸如 &lt;strong&gt;YubiKey&lt;/strong&gt; 或 &lt;strong&gt;OnlyKey&lt;/strong&gt; 等實體安全金鑰，只要它們擁有可設置 HMAC-SHA1 的槽位。&lt;/p&gt;
+&lt;p&gt;點擊獲得更多資訊…&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2247,13 +2263,21 @@ This is definitely a bug, please report it to the developers.</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [已鎖定]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation>匯出資料庫至 XML 檔</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML 檔</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>寫入 XML 檔失敗</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation>資料庫標籤</translation>
-    </message>
     <message>
         <source>Searching…</source>
         <translation>搜尋中…</translation>
@@ -2419,6 +2443,22 @@ Disable safe saves and try again?</source>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation><numerusform>將在 %1 天內過期的項目</numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>搜索與標籤</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>輸入唯一名稱，或是覆寫清單中已存在的搜索：</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>儲存</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>儲存搜索</translation>
     </message>
 </context>
 <context>
@@ -3091,6 +3131,14 @@ Would you like to correct it?</source>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>切換目前群組與其子群組是否不使用 HTTP 認證</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>匹配時省略 WWW 子域名：</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>切換目前群組與其子群組是否在匹配時省略 WWW 子域名</translation>
     </message>
 </context>
 <context>
@@ -3894,6 +3942,10 @@ Error: %1</source>
     <message>
         <source>Disabled</source>
         <translation>停用</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation>雙擊可複製值</translation>
     </message>
 </context>
 <context>
@@ -5395,6 +5447,30 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>必須重啟應用程式來套用此設定。您是否要現在重新啟動？</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>標籤</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>無標籤</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 個項目</numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>複製密碼與 TOTP</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML 檔…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>XML 檔…</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -5767,29 +5843,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation>不符合的密碼</translation>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation>目前符合的密碼</translation>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation>切換密碼 (%1)</translation>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation>生成密碼 (%1)</translation>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>警告：Caps Lock 已啟用！</translation>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5968,10 +6021,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>也從此選擇:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>排除以下字元：&quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>去除相似的字元</translation>
     </message>
@@ -6099,6 +6148,57 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Password Quality: %1</source>
+        <translation>密碼品質：%1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>極弱</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>較弱</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>較好</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>極好</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>排除以下字元：&quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>不符合的密碼</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>目前符合的密碼</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>切換密碼 (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>生成密碼 (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>警告：Caps Lock 已啟用！</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
         <translation>密碼品質：%1</translation>
     </message>
     <message>
@@ -7739,6 +7839,64 @@ Kernel: %3 %4</source>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>請感應或接觸您的 YubiKey 以繼續。</translation>
     </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>顯示項目的所有屬性。</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>編輯資料庫。</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>無法更改資料庫金鑰。</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>資料庫未被修改。</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>已成功編輯資料庫。</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>載入新金鑰檔案失敗：%1</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>刪除資料庫的密碼。</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>刪除資料庫的金鑰檔案。</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>無法同時使用 %1 和 %2。</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>無法從資料庫移除所有金鑰。</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>無法刪除密碼：資料庫不含密碼。</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>無法刪除檔案金鑰：資料庫不含檔案金鑰。</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>發現未預期的金鑰類型 %1</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>設定資料庫的金鑰檔案。
+此選項已經棄用，請用 --set-key-file 代替。</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8286,6 +8444,10 @@ Kernel: %3 %4</source>
         <source>Limit search to selected group</source>
         <translation>限制只搜尋選定的群組</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation>儲存搜索</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8507,16 +8669,39 @@ Kernel: %3 %4</source>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>所有</translation>
-    </message>
-    <message>
         <source>Expired</source>
         <translation>已過期</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
         <translation>弱密碼</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>所有項目</translation>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation>清除搜索</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>移除搜索</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>移除標籤</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>確認移除標籤</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>要移除資料庫中所有項目包含的「%1」標籤嗎？</translation>
     </message>
 </context>
 <context>
