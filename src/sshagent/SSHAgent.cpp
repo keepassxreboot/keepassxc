@@ -211,7 +211,7 @@ bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
     }
 
     QByteArray mapName =
-        (QString("SSHAgentRequest") + reinterpret_cast<intptr_t>(QThread::currentThreadId())).toLatin1();
+        (QString("SSHAgentRequest%1").arg(int(QThread::currentThreadId()), 8, 16, QChar('0'))).toLatin1();
 
     HANDLE handle = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, AGENT_MAX_MSGLEN, mapName.data());
 
