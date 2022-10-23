@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC didistribusikan di bawah Lisensi Publik Umum GNU (GPL) versi 2 atau (sesuai pilihan Anda) versi 3.</translation>
+        <translation>KeePassXC didistribusikan di bawah Lisensi Publik Umum GNU (GPL) versi 2 atau (sesuai pilihan anda) versi 3.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Sertakan informasi berikut setiap kali Anda melaporkan kutu:</translation>
+        <translation>Sertakan informasi berikut setiap anda melaporkan bug:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Non-existing/inaccessible executable path. Please double-check the client is legit.</translation>
+        <translation>Buang nama lampiran</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>Executable</source>
-        <translation>Executable</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Command Line</source>
@@ -90,11 +90,11 @@
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</translation>
+        <translation>Keputusan Anda akan diingat selama klien meminta DAN KeePassXC sedang berjalan.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Deny All &amp;&amp; Future</translation>
+        <translation>Abaikan Semua &amp;&amp; Ke Depannya</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
@@ -105,7 +105,7 @@
     <name>AccessControlDialog::DenyButton</name>
     <message>
         <source>Deny for this program</source>
-        <translation>Tolakj untuk program ini</translation>
+        <translation>Tolak untuk program ini</translation>
     </message>
 </context>
 <context>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Anda harus memulai ulang aplikasi untuk menerapkan bahasa. Apakah Anda ingin memulai ulang sekarang?</translation>
+        <translation>Anda harus memulai ulang aplikasi untuk menerapkan bahasa. Apakah anda ingin memuat ulang sekarang?</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Apakah Anda yakin ingin mengatur ulang pengaturan umum dan keamanan ke nilai bawaan?</translation>
+        <translation>Apakah anda yakin ingin mengatur ulang pengaturan umum dan keamanan ke nilai bawaan?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -514,7 +514,7 @@
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation>Lama waktu habis penguncian basisdata</translation>
+        <translation>Lama waktu habis penguncian basis data</translation>
     </message>
     <message>
         <source> sec</source>
@@ -599,7 +599,7 @@
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation>The requested Auto-Type sequence cannot be used due to an error:</translation>
+        <translation>Urutan Ketik-Otomatis yang diminta tidak dapat digunakan karena galat.</translation>
     </message>
     <message>
         <source>Auto-Type Error</source>
@@ -611,7 +611,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC membutuhkan izin Aksesibilitas untuk menjalankan Ketik-Otomatis entri. Jika Anda sudah memberikan izin, Anda perlu memulai ulang KeePassXC.</translation>
+        <translation>KeePassXC membutuhkan izin Aksesibilitas untuk menjalankan Ketik-Otomatis entri. Jika anda sudah memberikan izin, anda perlu memulai ulang KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -653,7 +653,7 @@
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
-        <translation>Invalid placeholder: %1</translation>
+        <translation>Placeholder invalid: %1</translation>
     </message>
     <message>
         <source>Entry does not have attribute for PICKCHARS: %1</source>
@@ -734,12 +734,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Anda dapat menggunakan kueri pencarian lanjutan untuk menemukan entri pada basis data terbuka. Gunakan pintasan berikut:&lt;br/&gt;
+Ctrl+F - Tombol pencarian basis data&lt;br/&gt;
+Ctrl+1 - Ketik nama pengguna&lt;br/&gt;
+Ctrl+2 - Ketik kata sandi&lt;br/&gt;
+Ctrl+3 - Ketik TOTP&lt;br/&gt;
+Ctrl+4 - Gunakan Papan Ketik Virtual (Khusus Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -771,11 +771,11 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Copy Username</source>
-        <translation>Salinkan Nama Pengguna</translation>
+        <translation>Salin Nama Pengguna</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation>Salinkan Kata Sandi</translation>
+        <translation>Salin Kata Sandi</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
@@ -853,7 +853,7 @@ Silakan pilih basisdata yang digunakan untuk menyimpan kredensial.</translation>
 Do you want to create this group?
 </source>
         <translation>Permintaan untuk membuat grup &quot;%1&quot; telah diterima.
-Apakah Anda ingin membuat grup ini?
+Apakah anda ingin membuat grup ini?
 </translation>
     </message>
     <message>
@@ -884,7 +884,7 @@ chrome-laptop.</translation>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Kunci enkripsi bersama dengan nama &quot;%1&quot; sudah ada.
-Apakah Anda ingin menimpanya ulang?</translation>
+Apakah anda ingin menimpanya ulang?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -892,7 +892,7 @@ Apakah Anda ingin menimpanya ulang?</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>Apakah Anda ingin memperbarui informasi di dalam %1 - %2?</translation>
+        <translation>Apakah anda ingin memperbarui informasi di dalam %1 - %2?</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
@@ -902,8 +902,8 @@ Apakah Anda ingin menimpanya ulang?</translation>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation>A request for deleting entry &quot;%1&quot; has been received.
-Do you want to delete the entry?
+        <translation>Pemintaan untuk menghapus entri &quot;%1&quot; sudah diterima.
+Apakah ingin menghapus entri?
 </translation>
     </message>
     <message>
@@ -948,9 +948,9 @@ Memindahkan %2 ke data khusus.</translation>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation>Pengaturan KeePassXC-Browser Anda perlu dipindahkan ke dalam pengaturan basisdata.
-Hal ini diperlukan untuk mempertahankan koneksi peramban Anda saat ini.
-Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
+        <translation>Pengaturan KeePassXC-Browser anda perlu dipindahkan ke dalam pengaturan basisdata.
+Hal ini diperlukan untuk mempertahankan koneksi peramban anda saat ini.
+Apakah anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
 </context>
 <context>
@@ -961,7 +961,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Ini dibutuhkan untuk mengakses basisdata Anda menggunakan KeePassXC-Browser</translation>
+        <translation>Ini dibutuhkan untuk mengakses basisdata anda menggunakan KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1022,7 +1022,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation>Match URL scheme (e.g., https://example.com)</translation>
+        <translation>Cocokkan skema URL (misalnya, https://example.com)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -1094,7 +1094,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Gunakan lokasi proksi khusus jika Anda memasang proksi secara manual.</translation>
+        <translation>Gunakan lokasi proksi khusus jika anda memasang proksi secara manual.</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
@@ -1148,7 +1148,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Karena adanya sandbox Snap, Anda harus menjalankan skrip untuk mengaktifkan integrasi peramban.&lt;br /&gt;Anda bisa mendapatkan skrip ini dari %1</translation>
+        <translation>Karena adanya sandbox Snap, anda harus menjalankan skrip untuk mengaktifkan integrasi peramban.&lt;br /&gt;Anda bisa mendapatkan skrip ini dari %1</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
@@ -1187,7 +1187,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     <name>CloneDialog</name>
     <message>
         <source>Clone Entry Options</source>
-        <translation>Clone Entry Options</translation>
+        <translation>Pilihan Gandakan Entri</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
@@ -1222,7 +1222,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Sandi</translation>
+        <translation>Kata Sandi</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1372,7 +1372,7 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     <message>
         <source>Passwords</source>
         <comment>Root group name</comment>
-        <translation>Sandi</translation>
+        <translation>Kata Sandi</translation>
     </message>
     <message>
         <source>File %1 does not exist.</source>
@@ -1496,7 +1496,7 @@ Lokasi cadangan basisdata ada di %2</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Please present or touch your YubiKey to continue…</translation>
+        <translation>Siapkan atau sentuh YubiKey untuk melanjutkan...</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
@@ -1510,13 +1510,13 @@ You can try to open it anyway, but it may be incomplete
 and saving any changes may incur data loss.
 
 We recommend you update your KeePassXC installation.</source>
-        <translation>The database you are trying to open was most likely
-created by a newer version of KeePassXC.
+        <translation>Database yang Anda coba buka kemungkinan besar
+dibuat dengan versi KeePassXC yang lebih baru.
 
-You can try to open it anyway, but it may be incomplete
-and saving any changes may incur data loss.
+Anda dapat mencoba membukanya, tetapi mungkin tidak lengkap
+dan menyimpan perubahan apa pun dapat menimbulkan kehilangan data.
 
-We recommend you update your KeePassXC installation.</translation>
+Kami sarankan Anda memperbarui instalasi KeePassXC Anda.</translation>
     </message>
     <message>
         <source>Open database anyway</source>
@@ -1535,9 +1535,9 @@ We recommend you update your KeePassXC installation.</translation>
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation>Membuka kunci basisdata gagal dan Anda tidak memasukkan kata sandi.
-Apakah Anda ingin mencoba kembali dengan kata sandi &quot;kosong&quot;?
-Untuk mencegah munculnya kesalahan ini, Anda harus ke &quot;Pengaturan Basisdata / Keamanan&quot; dan mengatur ulang kata sandi Anda.</translation>
+        <translation>Membuka kunci basisdata gagal dan anda tidak memasukkan kata sandi.
+Apakah anda ingin mencoba kembali dengan kata sandi &quot;kosong&quot;?
+Untuk mencegah munculnya kesalahan ini, anda harus ke &quot;Pengaturan Basisdata / Keamanan&quot; dan mengatur ulang kata sandi anda.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
@@ -1586,8 +1586,8 @@ Untuk mencegah munculnya kesalahan ini, Anda harus ke &quot;Pengaturan Basisdata
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation>Anda tidak bisa menggunakan berkas basisdata Anda sebagai berkas kunci,
-Jika Anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
+        <translation>Anda tidak bisa menggunakan berkas basisdata anda sebagai berkas kunci,
+Jika anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
@@ -1603,13 +1603,13 @@ Jika Anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Selain kata sandi, Anda dapat menggunakan file rahasia untuk meningkatkan keamanan database Anda. File ini dapat dihasilkan di pengaturan keamanan database Anda.&lt;/p&gt;&lt;p&gt;Ini &lt;strong&gt;bukan&lt;/strong&gt; file database *.kdbx Anda!&lt;br&gt;Jika Anda tidak memiliki file kunci, biarkan bidang ini kosong.&lt;/p&gt;&lt;p&gt;Klik untuk informasi lebih lanjut...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Anda dapat menggunakan kunci keamanan perangkat keras seperti &lt;strong&gt;YubiKey&lt;/strong&gt; atau &lt;strong&gt;OnlyKey&lt;/strong&gt; dengan slot yang dikonfigurasi untuk HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Klik untuk informasi lebih lanjut...&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1662,7 +1662,7 @@ Jika Anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     </message>
     <message>
         <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</translation>
+        <translation>Konversikan atribut KeePassHTTP lama ke data kustom yang kompatibel dengan KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Refresh database root group ID</source>
@@ -1699,7 +1699,7 @@ Jika Anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
-        <translation>Apakah Anda yakin ingin menghapus kunci yang dipilih?
+        <translation>Apakah anda yakin ingin menghapus kunci yang dipilih?
 Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     </message>
     <message>
@@ -1721,7 +1721,7 @@ Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation>Apakah Anda ingin memutus koneksi semua peramban?
+        <translation>Apakah anda ingin memutus koneksi semua peramban?
 Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     </message>
     <message>
@@ -1743,7 +1743,7 @@ Tindakan ini akan memutus koneksi ke pengaya peramban.</translation>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>Apakah Anda ingin melupakan semua pengaturan spesifik situs pada semua entri?
+        <translation>Apakah anda ingin melupakan semua pengaturan spesifik situs pada semua entri?
 Izin untuk mengakses entri akan dicabut.</translation>
     </message>
     <message>
@@ -1777,8 +1777,8 @@ Izin untuk mengakses entri akan dicabut.</translation>
     <message>
         <source>Do you really want to convert all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</translation>
+        <translation>Apakah Anda yakin ingin mengubah semua data integrasi peramban lama ke standard terbaru?
+Hal ini diperlukan untuk mempertahankan kompatibilitas dengan pengaya peramban.</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
@@ -1787,8 +1787,8 @@ This is necessary to maintain compatibility with the browser plugin.</translatio
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Apakah Anda yakin ingin menyegarkan ID basisdata?
-Ini hanya diperlukan jika basisdata Anda adalah salinan dari basisdata yang lain dan ekstensi peramban tidak bisa tersambung.</translation>
+        <translation>Apakah anda yakin ingin menyegarkan ID basisdata?
+Ini hanya diperlukan jika basisdata anda adalah salinan dari basisdata yang lain dan ekstensi peramban tidak bisa tersambung.</translation>
     </message>
 </context>
 <context>
@@ -1807,7 +1807,7 @@ Ini hanya diperlukan jika basisdata Anda adalah salinan dari basisdata yang lain
 Are you sure you want to continue without a password?</source>
         <translation>PERINGATAN! Anda belum mengatur sandi. Menggunakan basisdata tanpa sandi amat sangat tidak disarankan!
 
-Apakah Anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
+Apakah anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>Continue without password</source>
@@ -1819,7 +1819,7 @@ Apakah Anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Anda harus menambahkan paling tidak satu kunci enkripsi untuk mengamankan basisdata Anda!</translation>
+        <translation>Anda harus menambahkan paling tidak satu kunci enkripsi untuk mengamankan basisdata anda!</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1862,11 +1862,11 @@ Apakah Anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
     </message>
     <message>
         <source>Format cannot be changed: Your database uses KDBX 4 features</source>
-        <translation>Format cannot be changed: Your database uses KDBX 4 features</translation>
+        <translation>Format tidak dapat diubah: Database Anda menggunakan fitur KDBX 4</translation>
     </message>
     <message>
         <source>Unless you need to open your database with other programs, always use the latest format.</source>
-        <translation>Unless you need to open your database with other programs, always use the latest format.</translation>
+        <translation>Selalu gunakan format terbaru, kecuali Anda perlu membuka database Anda dengan program lain.</translation>
     </message>
     <message>
         <source>Encryption Algorithm:</source>
@@ -1938,9 +1938,9 @@ Apakah Anda tetap ingin melanjutkan tanpa mengatur sandi?</translation>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours, days, or even longer to open.</source>
-        <translation>You are using a very high number of key transform rounds with Argon2.
+        <translation>Anda menggunakan jumlah Transform rounds yang sangat tinggi dengan Argon2.
 
-If you keep this number, your database may take hours, days, or even longer to open.</translation>
+Jika Anda menyimpan nomor ini, database Anda mungkin membutuhkan waktu berjam-jam, berhari-hari, atau bahkan lebih lama untuk dibuka.</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
@@ -1959,9 +1959,9 @@ If you keep this number, your database may take hours, days, or even longer to o
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database will not be protected from brute force attacks.</source>
-        <translation>You are using a very low number of key transform rounds with AES-KDF.
+        <translation>Anda menggunakan jumlah Transform rounds yang sangat rendah dengan AES-KDF.
 
-If you keep this number, your database will not be protected from brute force attacks.</translation>
+Jika Anda menyimpan nomor ini, database Anda tidak akan dilindungi dari serangan brute force.</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -1979,7 +1979,7 @@ If you keep this number, your database will not be protected from brute force at
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>thread</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2074,7 +2074,7 @@ If you keep this number, your database will not be protected from brute force at
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation>Apakah Anda yakin ingin menghapus keranjang sampah dan semua isinya?
+        <translation>Apakah anda yakin ingin menghapus keranjang sampah dan semua isinya?
 Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
@@ -2090,7 +2090,7 @@ Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation>Breadcrumb</translation>
+        <translation>Petunjuk navigasi</translation>
     </message>
     <message>
         <source>Type</source>
@@ -2118,19 +2118,19 @@ Tidakan ini tidak bisa diurungkan.</translation>
     <name>DatabaseSettingsWidgetMaintenance</name>
     <message>
         <source>Manage Custom Icons</source>
-        <translation>Manage Custom Icons</translation>
+        <translation>Kelola Ikon Kustom</translation>
     </message>
     <message>
         <source>Delete selected icon(s)</source>
-        <translation>Delete selected icon(s)</translation>
+        <translation>Hapus ikon-(ikon) yang dipilih</translation>
     </message>
     <message>
         <source>Delete all custom icons not in use by any entry or group</source>
-        <translation>Delete all custom icons not in use by any entry or group</translation>
+        <translation>Hapus semua ikon kustom yang tidak digunakan oleh entri atau grup</translation>
     </message>
     <message>
         <source>Purge unused icons</source>
-        <translation>Purge unused icons</translation>
+        <translation>Hapus ikon yang tak digunakan</translation>
     </message>
     <message>
         <source>Confirm Deletion</source>
@@ -2138,23 +2138,23 @@ Tidakan ini tidak bisa diurungkan.</translation>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</translation>
+        <translation>Setidaknya satu dari ikon yang dipilih saat ini digunakan oleh sekurang-kurangnya satu entri atau grup. Ikon pada entri atau grup yang terdampak akan diganti oleh ikon bawaan. Apakah Anda yakin ingin menghapus ikon yang sedang digunakan?</translation>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
-        <translation>Custom Icons Are In Use</translation>
+        <translation>Ikon Kustom Sedang Digunakan</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
-        <translation>All custom icons are in use by at least one entry or group.</translation>
+        <translation>Semua ikon kustom paling tidak digunakan pada satu entri atau grup.</translation>
     </message>
     <message>
         <source>Purged Unused Icons</source>
-        <translation>Purged Unused Icons</translation>
+        <translation>Hapus Ikon yang tidak digunakan</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Hapus %n Ikon(s) dari database</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2246,7 +2246,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Anda akan mengekspor basisdata Anda ke berkas tanpa enkripsi. Ini akan membuat sandi dan informasi sensitif lainnya menjadi sangat rentan. Apakah Anda yakin ingin melanjutkan?</translation>
+        <translation>Anda akan mengekspor basisdata anda ke berkas tanpa enkripsi. Ini akan membuat sandi dan informasi sensitif lainnya menjadi sangat rentan. Apakah anda yakin ingin melanjutkan?</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -2287,11 +2287,11 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
-        <translation>Confirm Auto-Type</translation>
+        <translation>Konfirmasi Ketik-Otomatis</translation>
     </message>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
-        <translation>Perform Auto-Type into the previously active window?</translation>
+        <translation>Lakukan Ketik-Otomatis ke jendela yang sebelumnya aktif?</translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -2299,7 +2299,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>Apakah Anda yakin ingin menjalankan perintah berikut?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Apakah anda yakin ingin menjalankan perintah berikut?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
@@ -2311,7 +2311,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Apakah Anda yakin ingin menghapus grup &quot;%1&quot; untuk selamanya?</translation>
+        <translation>Apakah anda yakin ingin menghapus grup &quot;%1&quot; untuk selamanya?</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
@@ -2319,7 +2319,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Apakah Anda yakin ingin memindahkan grup &quot;%1&quot; ke keranjang sampah?</translation>
+        <translation>Apakah anda yakin ingin memindahkan grup &quot;%1&quot; ke keranjang sampah?</translation>
     </message>
     <message>
         <source>Expired entries</source>
@@ -2388,8 +2388,8 @@ Simpan perubahan?</translation>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>Berkas basisdata telah berubah dan Anda memiliki ubahan yang belum disimpan.
-Apakah Anda ingin menggabungkan ubahan Anda?</translation>
+        <translation>Berkas basisdata telah berubah dan anda memiliki ubahan yang belum disimpan.
+Apakah anda ingin menggabungkan ubahan anda?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
@@ -2433,7 +2433,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Apakah Anda yakin ingin menghapus semuanya secara permanen dari keranjang sampah?</translation>
+        <translation>Apakah anda yakin ingin menghapus semuanya secara permanen dari keranjang sampah?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
@@ -2441,7 +2441,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Entri akan kedaluwarsa dalam %1 hari</numerusform></translation>
     </message>
     <message>
         <source>Searches and Tags</source>
@@ -2492,7 +2492,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>Apakah Anda yakin ingin membuang URL ini?</translation>
+        <translation>Apakah anda yakin ingin membuang URL ini?</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -2532,7 +2532,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Some Browser Integration settings are overridden by group settings.</source>
-        <translation>Some Browser Integration settings are overridden by group settings.</translation>
+        <translation>Beberapa pengaturan Integrasi Browser ditimpa oleh pengaturan grup.</translation>
     </message>
     <message>
         <source>Invalid Entry</source>
@@ -2541,28 +2541,28 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation>An external merge operation has invalidated this entry.
-Unfortunately, any changes made have been lost.</translation>
+        <translation>Operasi penggabungan eksternal telah menginvalidasi entri ini.
+Semua perubahan yang dilakukan telah hilang.</translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
-        <translation>Auto-Type Validation Error</translation>
+        <translation>Galat pada Validasi Ketik-Otomatis</translation>
     </message>
     <message>
         <source>An error occurred while validating the custom Auto-Type sequence:
 %1
 Would you like to correct it?</source>
-        <translation>An error occurred while validating the custom Auto-Type sequence:
+        <translation>Terjadi kesalahan saat memvalidasi urutan Ketik-Otomatis untuk:
 %1
-Would you like to correct it?</translation>
+Apakah Anda ingin memperbaikinya?</translation>
     </message>
     <message>
         <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
 %2
 Would you like to correct it?</source>
-        <translation>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
+        <translation>Terjadi kesalahan saat memvalidasi urutan Ketik-Otomatis untuk &quot;%1&quot;:
 %2
-Would you like to correct it?</translation>
+Apakah Anda ingin mengoreksinya?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
@@ -2574,7 +2574,7 @@ Would you like to correct it?</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>Apakah Anda yakin ingin menyimpan perubahan ke entri ini?</translation>
+        <translation>Apakah anda yakin ingin menyimpan perubahan ke entri ini?</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -2586,7 +2586,7 @@ Would you like to correct it?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Apakah Anda yakin ingin membuang atribut ini?</translation>
+        <translation>Apakah anda yakin ingin membuang atribut ini?</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -2614,7 +2614,7 @@ Would you like to correct it?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n jam</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2677,7 +2677,7 @@ Would you like to correct it?</translation>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</translation>
+        <translation>Jika dicentang, entri ini tidak akan tampil di laporan seperti Pemeriksaan Kesehatan dan HIBP walaupun tidak sesuai dengan ketentuan kualitas.</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
@@ -2801,7 +2801,7 @@ Would you like to correct it?</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</translation>
+        <translation>Jangan kirimkan setelan ini ke peramban untuk dialog Autentifikasi HTTP.  Jika diaktifkan, dialog Autentifikasi HTTP menampilkan entri ini sebagai pilihan.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
@@ -3097,39 +3097,39 @@ Would you like to correct it?</translation>
     </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
-        <translation>These settings affect to the group&apos;s behaviour with the browser extension.</translation>
+        <translation>Setelan ini memengaruhi perilaku grup dengan ekstensi peramban.</translation>
     </message>
     <message>
         <source>Hide entries from browser extension:</source>
-        <translation>Hide entries from browser extension:</translation>
+        <translation>Sembunyikan entri dari ekstensi peramban:</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Hide entries from browser extension toggle for this and sub groups</translation>
+        <translation>Sembunyikan entri dari toggle ekstensi peramban untuk entri ini dan subgrup</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
-        <translation>Skip Auto-Submit for entries:</translation>
+        <translation>Lewati Pengiriman-Otomatis untuk entri ini:</translation>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
-        <translation>Skip Auto-Submit toggle for this and sub groups</translation>
+        <translation>Lewati toggle Pengiriman-Otomatis untuk entri ini dan sugrup</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
-        <translation>Use entries only with HTTP Basic Auth:</translation>
+        <translation>Hanya gunakan entri dengan Autentifikasi Dasar HTTP:</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Only HTTP Auth toggle for this and sub groups</translation>
+        <translation>Hanya toggle Autentifikasi HTTP untuk entri ini dan subgrup</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
-        <translation>Do not use entries with HTTP Basic Auth:</translation>
+        <translation>Jangan gunakan entri dengan Autentifikasi Dasar HTTP:</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>Do not use HTTP Auth toggle for this and sub groups</translation>
+        <translation>Jangan gunakan toggle Autentifikasi HTTP untuk entri ini dan subgrup</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
@@ -3201,7 +3201,7 @@ Would you like to correct it?</translation>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation>Versi KeePassXC Anda tidak mendukung fitur berbagi untuk tipe kontainer ini.
+        <translation>Versi KeePassXC anda tidak mendukung fitur berbagi untuk tipe kontainer ini.
 Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
@@ -3231,7 +3231,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>KeeShare container</source>
-        <translation>KeeShare container</translation>
+        <translation>Kontainer KeeShare</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
@@ -3325,7 +3325,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>Choose icon…</source>
-        <translation>Pilih ikon</translation>
+        <translation>Pilih ikon...</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
@@ -3465,7 +3465,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>Apakah Anda yakin ingin menghapus data pengaya?
+        <translation>Apakah anda yakin ingin menghapus data pengaya?
 Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message>
@@ -3534,7 +3534,7 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation>Ganti namanya</translation>
+        <translation>Ganti nama</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
@@ -3562,7 +3562,7 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Apakah Anda yakin ingin membuang %n lampiran?</numerusform></translation>
+        <translation><numerusform>Apakah anda yakin ingin membuang %n lampiran?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3576,7 +3576,7 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Apakah Anda yakin ingin menimpa ulang berkas &quot;%1&quot; yang ada dengan berkas lampiran?</translation>
+        <translation>Apakah anda yakin ingin menimpa ulang berkas &quot;%1&quot; yang ada dengan berkas lampiran?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -3608,13 +3608,13 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message>
         <source>Confirm Overwrite Attachment</source>
-        <translation>Confirm Overwrite Attachment</translation>
+        <translation>Konfirmasi Lampiran Tertimpa</translation>
     </message>
     <message>
         <source>Attachment &quot;%1&quot; already exists. 
 Would you like to overwrite the existing attachment?</source>
-        <translation>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</translation>
+        <translation>Lampiran &quot;%1&quot; sudah ada.
+Apakah Anda ingin menimpa lampiran yang sudah ada?</translation>
     </message>
     <message>
         <source>Confirm Attachment</source>
@@ -3626,29 +3626,29 @@ Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
         <translation>%1 adalah berkas yang sangat besar (%2 MB).
-Basisdata Anda akan menjadi sangat besar dan akan mengurangi performa kinerja.
+Basisdata anda akan menjadi sangat besar dan akan mengurangi performa kinerja.
 
-Apakah Anda yakin ingin menambahkan berkas ini?</translation>
+Apakah anda yakin ingin menambahkan berkas ini?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation>Attachment modified</translation>
+        <translation>Lampiran telah dimodifikasi</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation>The attachment &apos;%1&apos; was modified.
-Do you want to save the changes to your database?</translation>
+        <translation>Lampiran &apos;%1&apos; telah dimodifikasi
+Apakah Anda ingin menyimpan perubahan ke dalam basisdata?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation>Saving attachment failed</translation>
+        <translation>Penyimpanan lampiran gagal</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation>Saving updated attachment failed.
-Error: %1</translation>
+        <translation>Penyimpanan lampiran terbaru gagal
+Galat: %1</translation>
     </message>
 </context>
 <context>
@@ -3662,7 +3662,7 @@ Error: %1</translation>
     <name>EntryHistoryModel</name>
     <message>
         <source>Current (%1)</source>
-        <translation>Current (%1)</translation>
+        <translation>Saat ini (%1)</translation>
     </message>
     <message>
         <source>Last modified</source>
@@ -3978,19 +3978,19 @@ Error: %1</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation>Sort entries by...</translation>
+        <translation>Urutkan entri berdasarkan...</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
 This will leave your passwords and sensitive information vulnerable!
 </source>
-        <translation>You are about to export your database to an unencrypted file.
-This will leave your passwords and sensitive information vulnerable!
+        <translation>Anda akan mengekspor basisdata Anda ke dalam berkas yang tak terenkripsi.
+Ini akan membuat rentan kata sandi dan informasi sensitif Anda!
 </translation>
     </message>
     <message>
         <source>database order</source>
-        <translation>database order</translation>
+        <translation>urutan basisdata</translation>
     </message>
     <message>
         <source>name (ascending)</source>
@@ -4002,7 +4002,7 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>unknown</source>
-        <translation>unknown</translation>
+        <translation>tidak diketahui</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
@@ -4052,19 +4052,19 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
-        <translation>Failed to register database on DBus under the name &apos;%1&apos;</translation>
+        <translation>Gagal mendaftarkan basisdata pada DBus dengan nama &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register session on DBus at path &apos;%1&apos;</source>
-        <translation>Failed to register session on DBus at path &apos;%1&apos;</translation>
+        <translation>Gagal mendaftarkan sesi pada DBus di jalur &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register item on DBus at path &apos;%1&apos;</source>
-        <translation>Failed to register item on DBus at path &apos;%1&apos;</translation>
+        <translation>Gagal mendaftarkan item pada DBus di jalur &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
-        <translation>Failed to register prompt object on DBus at path &apos;%1&apos;</translation>
+        <translation>Gagal mendaftarkan prompt object pada DBus di jalur &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -4090,7 +4090,7 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Non-existing/inaccessible executable path. Please double-check the client is legit.</translation>
+        <translation>Jalur executable tidak bisa diakses/tidak ada. Harap periksa kembali jika kliennya sah.</translation>
     </message>
 </context>
 <context>
@@ -4167,7 +4167,7 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
     </message>
     <message>
         <source>Please wait, processing entry list…</source>
-        <translation>Please wait, processing entry list…</translation>
+        <translation>Harap tunggu, memproses daftar entri...</translation>
     </message>
     <message>
         <source>Downloading…</source>
@@ -4205,7 +4205,7 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation>Missing database headers</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4219,7 +4219,7 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -4231,11 +4231,11 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Invalid header field length: field %1</translation>
+        <translation>Panjang ruas tajuk tidak valid: ruas %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Invalid header data length: field %1, %2 expected, %3 found</translation>
+        <translation>Panjang data tajuk tidak valid: ruas %1, %2 diharapkan, %3 ditemukan</translation>
     </message>
 </context>
 <context>
@@ -4276,7 +4276,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4292,11 +4292,11 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Invalid header field length: field %1</translation>
+        <translation>Panjang ruas tajuk tidak valid: ruas %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Invalid header data length: field %1, %2 expected, %3 found</translation>
+        <translation>Panjang data tajuk tidak valid: ruas % 1, %2 diharapkan, % 3 ditemukan</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4312,19 +4312,19 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Invalid inner header id size</translation>
+        <translation>Ukuran id tajuk dalam tidak valid</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation>Invalid inner header field length: field %1</translation>
+        <translation>Panjang ruas tajuk dalam tidak valid: ruas % 1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation>Invalid inner header data length: field %1, %2 expected, %3 found</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>Invalid inner header binary size</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
@@ -4412,7 +4412,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
-        <translation>Invalid cipher uuid length: %1 (length=%2)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to parse UUID: %1</source>
@@ -4424,7 +4424,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>Invalid compression flags length</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
@@ -4432,15 +4432,15 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation>Invalid master seed size</translation>
+        <translation>Ukuran seed utama tidak valid</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Invalid transform seed size</translation>
+        <translation>Ukuran seed transformasi tidak valid</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation>Invalid transform rounds size</translation>
+        <translation>Ukuran round transformasi tidak valid</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
@@ -4452,7 +4452,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation>Invalid inner random stream cipher</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to read database file.</source>
@@ -4463,10 +4463,10 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>The selected file is an old KeePass 1 database (.kdb).
+        <translation>Berkas yang dipilih adalah basis data KeePass 1 yang lama (.kdb).
 
-You can import it by clicking on Database &gt; &apos;Import KeePass 1 database…&apos;.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</translation>
+Anda bisa mengimpornya dengan mengklik Basis Data &gt; &apos;Impor basis data KeePass 1&apos;.
+Ini adalah migrasi satu arah. Anda tidak akan bisa lagi membuka basis data yang diimpor dengan versi lama KeePassX 0.4.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -4605,7 +4605,7 @@ Baris %2, kolom %3</translation>
     <name>KeeAgentSettings</name>
     <message>
         <source>Invalid KeeAgent settings file structure.</source>
-        <translation>Invalid KeeAgent settings file structure.</translation>
+        <translation>Pengaturan struktur berkas KeeAgent tidak valid.</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
@@ -4672,15 +4672,15 @@ Baris %2, kolom %3</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Invalid transform seed size</translation>
+        <translation>Ukuran seed transformasi tidak valid</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation>Invalid number of transform rounds</translation>
+        <translation>Banyaknya round transformasi tidak valid</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation>Unable to construct group tree</translation>
+        <translation>Tidak bisa mengkonstruksi group tree</translation>
     </message>
     <message>
         <source>Root</source>
@@ -4692,13 +4692,13 @@ Baris %2, kolom %3</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
-        <translation>unable to seek to content position</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Kredensial yang diberikan tidak valid, silakan coba lagi.
-Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
+Jika terus berulang, maka basisdata anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4766,7 +4766,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Invalid entry UUID field size</source>
-        <translation>Invalid entry UUID field size</translation>
+        <translation>Ukuran ruas entri UUID tidak valid</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
@@ -4825,7 +4825,7 @@ Jika terus berulang, maka basisdata Anda mungkin rusak.</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation>Inactive share</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Imported from</source>
@@ -4921,7 +4921,7 @@ Pesan: %2</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Anda bisa menambahkan berkas kunci yang berisi byte acak untuk keamanan tambahan.&lt;/p&gt;&lt;p&gt;Anda harus menjaga kerahasiaannya dan jangan sampai hilang atau Anda tidak akan bisa mengaksesnya lagi.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -4962,15 +4962,15 @@ Pesan: %2</translation>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>Kunci berkas yang dipilih terlihat seperti kata sandi basisdata. Kunci berkas harus berkas statis yang tidak pernah berubah atau Anda akan kehilangan akses ke basisdata Anda selamanya.
-Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
+        <translation>Kunci berkas yang dipilih terlihat seperti kata sandi basisdata. Kunci berkas harus berkas statis yang tidak pernah berubah atau anda akan kehilangan akses ke basisdata anda selamanya.
+Apakah anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
 </context>
 <context>
     <name>MacUtils</name>
     <message>
         <source>Invalid key code</source>
-        <translation>Invalid key code</translation>
+        <translation>Kode kunci tidak valid</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
@@ -5129,7 +5129,7 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation>Database &amp;Reports…</translation>
+        <translation>Lapo&amp;ran Basis Data…</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
@@ -5373,7 +5373,7 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation>Clone Group...</translation>
+        <translation>Klon Grup...</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -5399,17 +5399,17 @@ Versi ini tidak dimaksudkan untuk penggunaan sehari-hari.</translation>
         <source>NOTE: You are using a pre-release version of KeePassXC.
 Expect some bugs and minor issues, this version is meant for testing purposes.</source>
         <translation>CATATAN: Anda menggunakan versi pra-rilis KeePassXC.
-Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaan percobaan.</translation>
+Ada beberapa kutu dan masalah-masalah kecil, versi ini dimaksudkan untuk penggunaan percobaan.</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
-We recommend you use the AppImage available on our downloads page.</translation>
+        <translation>PERINGATAN: Versi Qt Anda dapat menyebabkan KeePassXC crash dengan adanya Papan Ketik Dalam Layar
+Kami sarankan Anda menggunakan AppImage yang tersedia di halaman unduhan kami.</translation>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Pulihkan Entri</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5421,7 +5421,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>Apakah Anda ingin KeePassXC memeriksa pembaruan setiap memulai aplikasi?</translation>
+        <translation>Apakah anda ingin KeePassXC memeriksa pembaruan setiap memulai aplikasi?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
@@ -5437,7 +5437,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Please present or touch your YubiKey to continue…</translation>
+        <translation>Siapkan atau sentuh YubiKey untuk melanjutkan...</translation>
     </message>
     <message>
         <source>Restart Application?</source>
@@ -5445,7 +5445,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Anda harus memulai ulang aplikasi untuk menerapkan pengaturan ini. Apakah Anda ingin memulai ulang sekarang?</translation>
+        <translation>Anda harus memulai ulang aplikasi untuk menerapkan pengaturan ini. Apakah anda ingin memulai ulang sekarang?</translation>
     </message>
     <message>
         <source>Tags</source>
@@ -5507,18 +5507,18 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Reset</translation>
+        <translation>Atur Ulang</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation>Reset any remembered decisions for this application</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Merger</name>
     <message>
         <source>Creating missing %1 [%2]</source>
-        <translation>Creating missing %1 [%2]</translation>
+        <translation>Membuat %1 yang hilang [%2]</translation>
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
@@ -5542,11 +5542,11 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Reapplying older target entry on top of newer source %1 [%2]</translation>
+        <translation>Menerapkan ulang entri target yang lebih lama di atas sumber %1 yang lebih baru [%2]</translation>
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Reapplying older source entry on top of newer target %1 [%2]</translation>
+        <translation>Menerapkan ulang entri sumber yang lebih lama di atas target %1 yang lebih baru [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
@@ -5558,11 +5558,11 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation>Deleting child %1 [%2]</translation>
+        <translation>Menghapus child %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation>Deleting orphan %1 [%2]</translation>
+        <translation>Menghapus orphan %1 [%2]</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
@@ -5585,7 +5585,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database…</source>
-        <translation>Create a new KeePassXC database…</translation>
+        <translation>Buat basis data KeePassXC baru...</translation>
     </message>
     <message>
         <source>Root</source>
@@ -5605,7 +5605,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Di sini Anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, Anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
+        <translation>Di sini anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
@@ -5624,7 +5624,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>Kredensial yang hanya diketahui oleh Anda yang melindungi basisdata Anda.</translation>
+        <translation>Kredential yang hanya diketahui oleh Anda yang melindungi basisdata Anda.</translation>
     </message>
 </context>
 <context>
@@ -5635,7 +5635,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Di sini Anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, Anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
+        <translation>Di sini anda bisa menyesuaikan pengaturan enkripsi basisdata. Jangan khawatir, anda bisa mengubahnya lagi nanti di pengaturan basisdata.</translation>
     </message>
 </context>
 <context>
@@ -5646,7 +5646,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>Silakan masukkan nama dan deskripsi opsional untuk basisdata Anda yang baru:</translation>
+        <translation>Silakan masukkan nama dan deskripsi opsional untuk basisdata anda yang baru:</translation>
     </message>
 </context>
 <context>
@@ -5668,7 +5668,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation>Invalid OpData01, does not contain header</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
@@ -5676,7 +5676,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation>Unable to init cipher for opdata01: %1</translation>
+        <translation>Tidak bisa meng-init cipher untuk opdata01: %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
@@ -5688,11 +5688,11 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation>Unable to process clearText in place</translation>
+        <translation>Tidak bisa memproses clearText di tempat</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation>Expected %1 bytes of clear-text, found %2</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5700,8 +5700,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     <message>
         <source>Read Database did not produce an instance
 %1</source>
-        <translation>Read Database did not produce an instance
-%1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5728,7 +5727,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation>Unable to derive master key: %1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5751,7 +5750,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Key file magic header id invalid</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -5795,7 +5794,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Failed to initialize cipher: %1</source>
-        <translation>Failed to initialize cipher: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Decryption failed: %1</source>
@@ -5807,11 +5806,11 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading key</source>
-        <translation>Unexpected EOF while reading key</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported key part</source>
-        <translation>Unsupported key part</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
@@ -5870,19 +5869,19 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Change Password</source>
-        <translation>Change Password</translation>
+        <translation>Ganti Sandi</translation>
     </message>
     <message>
         <source>Remove Password</source>
-        <translation>Remove Password</translation>
+        <translation>Buang Sandi</translation>
     </message>
     <message>
         <source>Password set, click to change or remove</source>
-        <translation>Password set, click to change or remove</translation>
+        <translation>Sandi telah diatur, klik untuk mengubah atau membuang</translation>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Kata sandi adalah metode utama untuk mengamankan basisdata Anda.&lt;/p&gt;&lt;p&gt;Kata sandi yang bagus adalah unik dan panjang. KeePassXC dapat menghasilkan satu untuk Anda.&lt;/p&gt; </translation>
+        <translation>&lt;p&gt;Kata sandi adalah metode utama untuk mengamankan basisdata anda.&lt;/p&gt;&lt;p&gt;Kata sandi yang bagus adalah unik dan panjang. KeePassXC dapat menghasilkan satu untuk anda.&lt;/p&gt; </translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -6054,11 +6053,11 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Delete selected wordlist</source>
-        <translation>Delete selected wordlist</translation>
+        <translation>Hapus daftar kata terpilih</translation>
     </message>
     <message>
         <source>Add custom wordlist</source>
-        <translation>Add custom wordlist</translation>
+        <translation>Tambahkan daftar kata khusus</translation>
     </message>
     <message>
         <source>character</source>
@@ -6102,19 +6101,19 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Confirm Delete Wordlist</source>
-        <translation>Confirm Delete Wordlist</translation>
+        <translation>Konfirmasi Penghapusan Daftar Kata</translation>
     </message>
     <message>
         <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>Do you really want to delete the wordlist &quot;%1&quot;?</translation>
+        <translation>Yakin akan menghapus daftar kata &quot;%1&quot;? </translation>
     </message>
     <message>
         <source>Failed to delete wordlist</source>
-        <translation>Failed to delete wordlist</translation>
+        <translation>Gagal untuk menghapus daftar kata</translation>
     </message>
     <message>
         <source>Wordlists</source>
-        <translation>Wordlists</translation>
+        <translation>Daftar kata</translation>
     </message>
     <message>
         <source>All files</source>
@@ -6122,21 +6121,20 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Select Custom Wordlist</source>
-        <translation>Select Custom Wordlist</translation>
+        <translation>Pilih Daftar Kata Khusus</translation>
     </message>
     <message>
         <source>Overwrite Wordlist?</source>
-        <translation>Overwrite Wordlist?</translation>
+        <translation>Timpa Daftar Kata?</translation>
     </message>
     <message>
         <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
 Do you want to overwrite it?</source>
-        <translation>Wordlist &quot;%1&quot; already exists as a custom wordlist.
-Do you want to overwrite it?</translation>
+        <translation>Daftar kata &quot;%1&quot; sudah ada di daftar kata kustom. Yakin akan menimpa daftar kata ini?</translation>
     </message>
     <message>
         <source>Failed to add wordlist</source>
-        <translation>Failed to add wordlist</translation>
+        <translation>Gagal menambahkan daftar kata</translation>
     </message>
     <message>
         <source>Logograms</source>
@@ -6226,15 +6224,15 @@ Do you want to overwrite it?</translation>
     <name>PickcharsDialog</name>
     <message>
         <source>KeePassXC - Pick Characters</source>
-        <translation>KeePassXC - Pick Characters</translation>
+        <translation>KeePassXC - Pilih Karakter</translation>
     </message>
     <message>
         <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
-        <translation>Select characters to type, navigate with arrow keys, Ctrl + S submits.</translation>
+        <translation>Pilih karakter yang akan diketik, dan gunakan tombol panah untuk berpindah antar karakter. Tekan Ctrl + S untuk mengirim.</translation>
     </message>
     <message>
         <source>Press &amp;Tab between characters</source>
-        <translation>Press &amp;Tab between characters</translation>
+        <translation>Tekan &amp;Tab di antara karakter</translation>
     </message>
 </context>
 <context>
@@ -6336,7 +6334,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation>No valid UUID provided</translation>
+        <translation>Tidak ada UUID yang diberikan</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -6352,7 +6350,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation>Could not save the native messaging script file for %1.</translation>
+        <translation>Tidak dapan menyimpan berkas perpesanan native untuk %1.</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
@@ -6372,7 +6370,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
-        <translation>Notes for the entry.</translation>
+        <translation>Catatan untuk entri.</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -6396,7 +6394,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time.</source>
-        <translation>Cannot generate a password and prompt at the same time.</translation>
+        <translation>Tidak dapat membuat kata sandi dan pengingat di saat yang bersamaan.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
@@ -6444,7 +6442,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Path to okon-cli to search a formatted HIBP file</source>
-        <translation>Path to okon-cli to search a formatted HIBP file</translation>
+        <translation>Jalur ke okon-cli untuk mencari berkas HIBP yang telah diformat</translation>
     </message>
     <message>
         <source>okon-cli</source>
@@ -6456,11 +6454,11 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Cannot find HIBP file: %1</source>
-        <translation>Cannot find HIBP file: %1</translation>
+        <translation>Tidak dapat menemukan berkas HIBP: %1</translation>
     </message>
     <message>
         <source>Evaluating database entries using okon…</source>
-        <translation>Evaluating database entries using okon…</translation>
+        <translation>Mengevaluasi basis data menggunakan okon..</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
@@ -6468,7 +6466,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while…</source>
-        <translation>Evaluating database entries against HIBP file, this will take a while…</translation>
+        <translation>Mengevaluasi entri basis data terhadap berkas HIBP, ini akan membutuhkan beberapa saat...</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
@@ -6476,23 +6474,23 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation>Password for &apos;%1&apos; has been leaked!</translation>
+        <translation>Kata sandi untuk &apos;%1&apos; telah bocor!</translation>
     </message>
     <message>
         <source>Export an attachment of an entry.</source>
-        <translation>Export an attachment of an entry.</translation>
+        <translation>Ekspor lampiran dari entri.</translation>
     </message>
     <message>
         <source>Path of the entry with the target attachment.</source>
-        <translation>Path of the entry with the target attachment.</translation>
+        <translation>Jalur ke entri berisi lampiran target.</translation>
     </message>
     <message>
         <source>Name of the attachment to be exported.</source>
-        <translation>Name of the attachment to be exported.</translation>
+        <translation>Nama lampiran yang akan diekspor.</translation>
     </message>
     <message>
         <source>Path to which the attachment should be exported.</source>
-        <translation>Path to which the attachment should be exported.</translation>
+        <translation>Jalur tujuan ekspor lampiran.</translation>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
@@ -6500,68 +6498,68 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Could not find attachment with name %1.</source>
-        <translation>Could not find attachment with name %1.</translation>
+        <translation>Tidak dapat menemukan lampiran bernama %1.</translation>
     </message>
     <message>
         <source>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</source>
-        <translation>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</translation>
+        <translation>Tidak ada target ekspor. Harap gunakan &apos;--stdout&apos; atau tentukan &apos;berkas ekspor&apos;.</translation>
     </message>
     <message>
         <source>Could not open output file %1.</source>
-        <translation>Could not open output file %1.</translation>
+        <translation>Tidak dapat membuka hasil berkas %1</translation>
     </message>
     <message>
         <source>Successfully exported attachment %1 of entry %2 to %3.</source>
-        <translation>Successfully exported attachment %1 of entry %2 to %3.</translation>
+        <translation>Sukses mengekspor lampiran %1 dari entri %2 ke %3</translation>
     </message>
     <message>
         <source>Overwrite existing attachments.</source>
-        <translation>Overwrite existing attachments.</translation>
+        <translation>Menulis ulang lampiran yang sudah ada</translation>
     </message>
     <message>
         <source>Imports an attachment to an entry.</source>
-        <translation>Imports an attachment to an entry.</translation>
+        <translation>Mengimpor sebuah lampiran untuk sebuah entri</translation>
     </message>
     <message>
         <source>Path of the entry.</source>
-        <translation>Path of the entry.</translation>
+        <translation>Jalur entri</translation>
     </message>
     <message>
         <source>Name of the attachment to be added.</source>
-        <translation>Name of the attachment to be added.</translation>
+        <translation>Nama lampiran untuk ditambahkan</translation>
     </message>
     <message>
         <source>Path of the attachment to be imported.</source>
-        <translation>Path of the attachment to be imported.</translation>
+        <translation>Jalur ke lampiran yang akan diimpor.</translation>
     </message>
     <message>
         <source>Attachment %1 already exists for entry %2.</source>
-        <translation>Attachment %1 already exists for entry %2.</translation>
+        <translation>Lampiran %1 sudah ada untuk entry %2</translation>
     </message>
     <message>
         <source>Could not open attachment file %1.</source>
-        <translation>Could not open attachment file %1.</translation>
+        <translation>Tidak dapat membuka berkas lampiran %1</translation>
     </message>
     <message>
         <source>Successfully imported attachment %1 as %2 to entry %3.</source>
-        <translation>Successfully imported attachment %1 as %2 to entry %3.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove an attachment of an entry.</source>
-        <translation>Remove an attachment of an entry.</translation>
+        <translation>Buang lampiran dari entri</translation>
     </message>
     <message>
         <source>Name of the attachment to be removed.</source>
-        <translation>Name of the attachment to be removed.</translation>
+        <translation>Buang nama lampiran</translation>
     </message>
     <message>
         <source>Successfully removed attachment %1 from entry %2.</source>
-        <translation>Successfully removed attachment %1 from entry %2.</translation>
+        <translation>Berhasil membuang lampiran %1 dari entri %2</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
         <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
-        <translation>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</translation>
+        <translation>Salin atribut yang diberikan ke papan klip. Standar pada &quot;kata sandi&quot; jika tidak ditentukan</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
@@ -6569,7 +6567,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
-        <translation>Must match only one entry, otherwise a list of possible matches is shown.</translation>
+        <translation>Harus cocok hanya ke satu entri, jika tidak daftar kemungkinan yang cocok akan muncul</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
@@ -6582,7 +6580,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</translation>
+        <translation>Batas waktu sebelum menghapus papanklip (bawaan adalah %1, diatur ke 0 untuk tanpa batas)</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
@@ -6590,11 +6588,11 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Multiple entries matching:</source>
-        <translation>Multiple entries matching:</translation>
+        <translation>Beberapa entri cocok:</translation>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation>Using matching entry: %1</translation>
+        <translation>Menggunakan entri yang cocok : %1</translation>
     </message>
     <message>
         <source>Entry %1 not found.</source>
@@ -6610,7 +6608,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation>ERROR: attribute %1 is ambiguous, it matches %2.</translation>
+        <translation>GAGAL:  atribut %1 ambigu karena cocok dengan %2</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
@@ -6618,7 +6616,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</translation>
+        <translation>Entri atribut &quot;%1&quot; telah disalin ke papan klip!</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
@@ -6638,7 +6636,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
-        <translation>Jangan tampilkan pengingat sandi dan kaluaran sekunder lainnya.</translation>
+        <translation>Jangan tampilkan pengingat sandi dan keluaran sekunder lainnya.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
@@ -6654,7 +6652,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</translation>
+        <translation>Slot Yubikey dan serial opsional digunakan untuk mengakses basis data (misal 1:7370001)</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
@@ -6662,11 +6660,11 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation>Missing positional argument(s).</translation>
+        <translation>Kehilangan argumen positional.</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation>Too many arguments provided.</translation>
+        <translation>Terlalu banyak argumen yang diberikan.</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
@@ -6714,11 +6712,11 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation>Benchmarking key derivation function for %1ms delay.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation>Setting %1 rounds for key derivation function.</translation>
+        <translation>Mengatur %1 putaran untuk fungsi derivasi kunci.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
@@ -6781,7 +6779,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
-        <translation>Not changing any field for entry %1.</translation>
+        <translation>Tidak mengubah kolom apa pun untuk entri %1</translation>
     </message>
     <message>
         <source>Enter new password for entry: </source>
@@ -6821,7 +6819,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation>Multi-word extra bits %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Type: Bruteforce</source>
@@ -6861,43 +6859,43 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>Type: Bruteforce(Rep)</translation>
+        <translation>Tipe: Bruteforce(Rep)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation>Type: Dictionary(Rep)</translation>
+        <translation>Tipe: Dictioinary(Rep)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation>Type: Dict+Leet(Rep)</translation>
+        <translation>Tipe: Dict+Leet(Rep)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation>Type: User Words(Rep)</translation>
+        <translation>Tipe: User Words(Rep)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation>Type: User+Leet(Rep)</translation>
+        <translation>Tipe: User+Leet(Rep)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation>Type: Repeated(Rep)</translation>
+        <translation>Tipe: Repeated(Rep)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation>Type: Sequence(Rep)</translation>
+        <translation>Tipe: Sequence(Rep)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation>Type: Spatial(Rep)</translation>
+        <translation>Tipe: Spatial(Rep)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation>Type: Date(Rep)</translation>
+        <translation>Tipe: Date(Rep)</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
-        <translation>Type: Unknown (%1)</translation>
+        <translation>Tipe: Unknown(%1)</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
@@ -6965,7 +6963,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Use custom character set</source>
-        <translation>Use custom character set</translation>
+        <translation>Gunakan set karakter khusus</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
@@ -6985,7 +6983,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation>Invalid password generator after applying all options</translation>
+        <translation>Generator kata sandi tidak sah setelah menerapkan semua opsi</translation>
     </message>
     <message>
         <source>Display command help.</source>
@@ -7053,7 +7051,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation>Database created</translation>
+        <translation>Basis data berhasil dibuat</translation>
     </message>
     <message>
         <source>Last saved</source>
@@ -7289,7 +7287,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Show the attachments of the entry.</source>
-        <translation>Show the attachments of the entry.</translation>
+        <translation>Tampilkan lampiran dari entri.</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
@@ -7313,11 +7311,11 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>No attachments present.</source>
-        <translation>No attachments present.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Attachments:</source>
-        <translation>Attachments:</translation>
+        <translation>Lampiran:</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
@@ -7363,7 +7361,7 @@ Mohon buat berkas kunci yang baru saja.</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation>Apakah Anda ingin membuat basisdata dengan kata sandi kosong? [y/N]:</translation>
+        <translation>Apakah anda ingin membuat basisdata dengan kata sandi kosong? [y/N]:</translation>
     </message>
     <message>
         <source>Repeat password: </source>
@@ -7380,8 +7378,7 @@ Mohon buat berkas kunci yang baru saja.</translation>
     <message>
         <source>All clipping programs failed. Tried %1
 </source>
-        <translation>All clipping programs failed. Tried %1
-</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
@@ -7397,19 +7394,19 @@ Mohon buat berkas kunci yang baru saja.</translation>
     </message>
     <message>
         <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
-        <translation>To use okon, you must provide a post-processed file (e.g. file.okon)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Could not start okon process: %1</source>
-        <translation>Could not start okon process: %1</translation>
+        <translation>Tidak dapat menjalankan proses okon: %1</translation>
     </message>
     <message>
         <source>Error: okon process did not finish</source>
-        <translation>Error: okon process did not finish</translation>
+        <translation>Galat: proses okon tidak selesai</translation>
     </message>
     <message>
         <source>Failed to load okon processed database: %1</source>
-        <translation>Failed to load okon processed database: %1</translation>
+        <translation>Gagal memuat basis data proses okon: %1</translation>
     </message>
     <message>
         <source>Very weak password</source>
@@ -7429,7 +7426,7 @@ Mohon buat berkas kunci yang baru saja.</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Kata sandi sudah digunakan sebanyak %1 kali</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7449,7 +7446,7 @@ Mohon buat berkas kunci yang baru saja.</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Kata sandi kedaluwarsa dalam %1 hari</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7521,31 +7518,31 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>lebih % 1 tahun</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>about %1 month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>sekitar % 1 bulan</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 minggu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 hari</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 jam</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 menit</numerusform></translation>
     </message>
     <message>
         <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan library must be at least 2.11.x, found %1.%2.%3</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7561,27 +7558,27 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
-        <translation>SymmetricCipher::init: Invalid cipher mode.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
-        <translation>SymmetricCipher::init: Invalid IV size of %1 for %2.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cipher not initialized prior to use.</source>
-        <translation>Cipher not initialized prior to use.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot process 0 length data.</source>
-        <translation>Cannot process 0 length data.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>unknown executable (DBus address %1)</source>
-        <translation>unknown executable (DBus address %1)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>%1 (invalid executable path)</source>
-        <translation>%1 (invalid executable path)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>NULL device</source>
@@ -7633,11 +7630,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation>AES-KDF (KDBX 3)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>Existing single-instance lock file is invalid. Launching new instance.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
@@ -7645,7 +7642,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Menghapus papan klip dalam %1 detik...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7699,19 +7696,19 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Apakah anda yakin ingin menghapus %n entri untuk selamanya?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Hapus entri?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Apakah anda yakin ingin memindahkan &quot;%1&quot; ke keranjang sampah?</translation>
+        <translation>Apakah Anda benar-benar ingin memindahkan entri &quot;%1&quot; ke keranjang sampah?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Apakah Anda benar-benar ingin memindahkan %n entri ke keranjang sampah?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
@@ -7787,7 +7784,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>allow app screen recordering and screenshots</source>
-        <translation>allow app screen recordering and screenshots</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Locked databases.</source>
@@ -7829,15 +7826,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Failed to create Windows Hello credential.</source>
-        <translation>Failed to create Windows Hello credential.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
-        <translation>Failed to sign challenge using Windows Hello.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
-        <translation>Please present or touch your YubiKey to continue.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
@@ -7939,35 +7936,35 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Show only entries which have URL set</source>
-        <translation>Show only entries which have URL set</translation>
+        <translation>Hanya tampilkan entri yang memiliki set URL</translation>
     </message>
     <message>
         <source>Show only entries which have browser settings in custom data</source>
-        <translation>Show only entries which have browser settings in custom data</translation>
+        <translation>Hanya tampilkan entri yang memiliki pengaturan peramban dalam data kustom</translation>
     </message>
     <message>
         <source>Double-click entries to edit.</source>
-        <translation>Double-click entries to edit.</translation>
+        <translation>Klik ganda entri untuk mengedit.</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation>List of entry URLs</translation>
+        <translation>Daftar entri URL</translation>
     </message>
     <message>
         <source>Entry has no URLs set</source>
-        <translation>Entry has no URLs set</translation>
+        <translation>Entri tidak memiliki set URL</translation>
     </message>
     <message>
         <source>Allowed URLs</source>
-        <translation>Allowed URLs</translation>
+        <translation>Izinkan URL</translation>
     </message>
     <message>
         <source>Entry has no Browser Integration settings</source>
-        <translation>Entry has no Browser Integration settings</translation>
+        <translation>Entri tidak memiliki pengaturan Integrasi Peramban</translation>
     </message>
     <message>
         <source>Denied URLs</source>
-        <translation>Denied URLs</translation>
+        <translation>URL ditolak</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -7979,11 +7976,11 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
-        <translation>Please wait, browser statistics is being calculated…</translation>
+        <translation>Harap tunggu, statistik peramban sedang dikalkulasi...</translation>
     </message>
     <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
-        <translation>No entries with a URL, or none has browser extension settings saved.</translation>
+        <translation>Tidak ada entri dengan URL, atau tidak ada pengaturan pengaya peramban yang disimpan.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -7995,15 +7992,15 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>URLs</source>
-        <translation>URLs</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Edit Entry…</translation>
+        <translation>Edit Entri...</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Hapus Entri...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8061,7 +8058,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
-        <translation>Please wait, health data is being calculated…</translation>
+        <translation>Harap tunggu, data kesehatan sedang dikalkulasi...</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
@@ -8085,11 +8082,11 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Edit Entry…</translation>
+        <translation>Edit Entri...</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Hapus Entri...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8100,11 +8097,11 @@ This options is deprecated, use --set-key-file instead.</source>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>PERHATIAN: Laporan ini membutuhkan pengiriman informasi ke layanan online Have I Been Pwned (https://haveibeenpwned.com). Jika Anda melanjutkan, kata sandi basisdata Anda akan diacak secara kriptografis dan lima karakter pertama dari hash tersebut akan dikirim dengan aman ke layanan ini. Basisdata Anda tetap aman dan tidak dapat dibangun kembali dari informasi ini. Namun, jumlah kata sandi yang Anda kirim dan alamat IP Anda akan terpapar ke layanan ini.</translation>
+        <translation>PERHATIAN: Laporan ini membutuhkan pengiriman informasi ke layanan online Have I Been Pwned (https://haveibeenpwned.com). Jika anda melanjutkan, kata sandi basisdata anda akan diacak secara kriptografis dan lima karakter pertama dari hash tersebut akan dikirim dengan aman ke layanan ini. Basisdata anda tetap aman dan tidak dapat dibangun kembali dari informasi ini. Namun, jumlah kata sandi yang anda kirim dan alamat IP anda akan terpapar ke layanan ini.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation>Jalankan Analisis Daring</translation>
+        <translation>Lakukan Analisis Online</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
@@ -8180,11 +8177,11 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Edit Entry…</translation>
+        <translation>Edit Entri...</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Hapus Entri...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8207,7 +8204,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated…</source>
-        <translation>Please wait, database statistics are being calculated…</translation>
+        <translation>Harap tunggu, statistik basis data sedang dikalkulasi...</translation>
     </message>
     <message>
         <source>Database name</source>
@@ -8223,7 +8220,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Database created</source>
-        <translation>Database created</translation>
+        <translation>Basis data berhasil dibuat</translation>
     </message>
     <message>
         <source>Last saved</source>
@@ -8334,7 +8331,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Key identity ownership conflict. Refusing to add.</source>
-        <translation>Key identity ownership conflict. Refusing to add.</translation>
+        <translation>Konflik kepemilikan identitas utama. Menolak untuk menambahkan.</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
@@ -8346,15 +8343,15 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation>Restricted lifetime is not supported by the agent (check options).</translation>
+        <translation>Masa pakai yang dibatasi tidak didukung oleh agen (periksa opsi).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation>A confirmation request is not supported by the agent (check options).</translation>
+        <translation>Permintaan konfirmasi tidak didukung oleh agen (periksa opsi).</translation>
     </message>
     <message>
         <source>Security keys are not supported by the agent or the security key provider is unavailable.</source>
-        <translation>Security keys are not supported by the agent or the security key provider is unavailable.</translation>
+        <translation>Kunci keamanan tidak didukung oleh agen atau penyedia kunci keamanan tidak tersedia.</translation>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
@@ -8377,11 +8374,11 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
-        <translation>Every search term must match (ie, logical AND)</translation>
+        <translation>Setiap istilah pencarian harus sama (yaitu, logis DAN)</translation>
     </message>
     <message>
         <source>Modifiers</source>
-        <translation>Modifiers</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>exclude term from results</source>
@@ -8389,11 +8386,11 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>match term exactly</source>
-        <translation>match term exactly</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>use regex in term</source>
-        <translation>use regex in term</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Fields</source>
@@ -8401,19 +8398,19 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Term Wildcards</source>
-        <translation>Term Wildcards</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>match anything</source>
-        <translation>match anything</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>match one</source>
-        <translation>match one</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>logical OR</source>
-        <translation>logical OR</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Examples</source>
@@ -8460,7 +8457,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>DBus Address</source>
-        <translation>DBus Address</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Manage</source>
@@ -8498,15 +8495,15 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Show notification when passwords are retrieved by clients</source>
-        <translation>Show notification when passwords are retrieved by clients</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
-        <translation>Confirm when passwords are retrieved by clients</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
@@ -8514,15 +8511,11 @@ This options is deprecated, use --set-key-file instead.</source>
            Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
            not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation>Confirm when clients request entry deletion</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
@@ -8530,11 +8523,7 @@ This options is deprecated, use --set-key-file instead.</source>
            crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
            different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -8558,7 +8547,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Save current changes to activate the plugin and enable editing of this section.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8593,7 +8582,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Signer:</source>
-        <translation>Signer:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Generate new certificate</source>
@@ -8620,14 +8609,14 @@ This options is deprecated, use --set-key-file instead.</source>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation>Could not write export container.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
         <source>Successful import</source>
-        <translation>Successful import</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8646,11 +8635,11 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation>Multiple import source path to %1 in %2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation>Conflicting export target path %1 in %2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
@@ -8758,15 +8747,15 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
-        <translation>Default settings (RFC 6238)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Steam® settings</source>
-        <translation>Steam® settings</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Custom settings:</source>
-        <translation>Custom settings:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Custom Settings</source>
@@ -8782,7 +8771,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Time step field</source>
-        <translation>Time step field</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source> sec</source>
@@ -8813,7 +8802,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>Apakah Anda yakin ingin menghapus pengaturan TOTP untuk entri ini?</translation>
+        <translation>Apakah anda yakin ingin menghapus pengaturan TOTP untuk entri ini?</translation>
     </message>
 </context>
 <context>
@@ -8831,7 +8820,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Checking for updates…</source>
-        <translation>Checking for updates…</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Close</source>
@@ -8843,7 +8832,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>An error occurred when trying to retrieve update information, please try again later.</source>
-        <translation>An error occurred when trying to retrieve update information, please try again later.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
@@ -8851,14 +8840,14 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>You have the latest version of KeePassXC</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Mulai menyimpan sandi Anda dengan aman di dalam basisdata KeePassXC</translation>
+        <translation>Mulai menyimpan sandi anda dengan aman di dalam basisdata KeePassXC</translation>
     </message>
     <message>
         <source>Create new database</source>
@@ -8897,7 +8886,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     <name>WinUtils</name>
     <message>
         <source>Invalid key code</source>
-        <translation>Invalid key code</translation>
+        <translation>Kode kunci tidak valid</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
@@ -8912,26 +8901,26 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     <name>WindowsHello</name>
     <message>
         <source>Failed to init KeePassXC crypto.</source>
-        <translation>Failed to init KeePassXC crypto.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to encrypt key data.</source>
-        <translation>Failed to encrypt key data.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get Windows Hello credential.</source>
-        <translation>Failed to get Windows Hello credential.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
-        <translation>Failed to decrypt key data.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>YubiKey</name>
     <message>
         <source>%1 No interface, slot %2</source>
-        <translation>%1 No interface, slot %2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>General: </source>
@@ -8939,7 +8928,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Could not find interface for hardware key with serial number %1. Please connect it to continue.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8962,31 +8951,31 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Selected hardware key slot does not support challenge-response!</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Challenge-Response</source>
-        <translation>Challenge-Response</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add Challenge-Response</source>
-        <translation>Add Challenge-Response</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Change Challenge-Response</source>
-        <translation>Change Challenge-Response</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove Challenge-Response</source>
-        <translation>Remove Challenge-Response</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Challenge-Response set, click to change or remove</source>
-        <translation>Challenge-Response set, click to change or remove</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
@@ -9001,18 +8990,18 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     <name>YubiKeyInterface</name>
     <message>
         <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 Invalid slot specified - %2</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
         <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] Challenge-Response - Slot %3</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>The YubiKey PCSC interface has not been initialized.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
@@ -9020,7 +9009,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Could not find or access hardware key with serial number %1. Please present it to continue. </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
@@ -9028,11 +9017,11 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Hardware key was not found or is not configured.</source>
-        <translation>Hardware key was not found or is not configured.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>Failed to complete a challenge-response, the PCSC error code was: %1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9043,11 +9032,11 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation>(USB) %1 [%2] Configured Slot - %3</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Press</source>
@@ -9061,7 +9050,7 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>The YubiKey USB interface has not been initialized.</source>
-        <translation>The YubiKey USB interface has not been initialized.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
@@ -9069,19 +9058,19 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation>Could not find hardware key with serial number %1. Please plug it in to continue.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation>Hardware key timed out waiting for user interaction.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>A USB error occurred when accessing the hardware key: %1</source>
-        <translation>A USB error occurred when accessing the hardware key: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation>Failed to complete a challenge-response, the specific error was: %1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

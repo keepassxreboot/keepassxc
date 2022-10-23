@@ -3,7 +3,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>KeePassXC ගැන</translation>
+        <translation>කීපාස්එක්ස්සී පිළිබඳව</translation>
     </message>
     <message>
         <source>About</source>
@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>දෝෂ වාර්තාව: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>දෝෂ වාර්තා කරන්න: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>ව්යාපෘති නඩත්තු කරන්නන්:</translation>
+        <translation>ව්‍යාපෘතිය නඩත්තුකරුවන්:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>දෝශ නිරාකරණ තොරතුරු</translation>
+        <translation>නිදොස්කරණ තොරතුරු</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>පසුරු පුවරුවට පිටපත් කරන්න</translation>
+        <translation>පසුරුපුවරුවට පිටපත් කරන්න</translation>
     </message>
 </context>
 <context>
@@ -167,7 +167,7 @@
     </message>
     <message>
         <source>Security</source>
-        <translation>ආරක්‍ෂාව</translation>
+        <translation>ආරක්ෂාව</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -179,7 +179,7 @@
     </message>
     <message>
         <source>Text only</source>
-        <translation>පෙළ පමණි</translation>
+        <translation>පෙළ පමණක්</translation>
     </message>
     <message>
         <source>Text beside icon</source>
@@ -215,7 +215,7 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>සැකසුම් නැවත සකස්?</translation>
+        <translation>සැකසුම නැවත සකසන්නේද?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
@@ -317,7 +317,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>සුරැකීමට පෙර දත්ත සමුදා ගොනුව උපස්ථ කරන්න</translation>
+        <translation>සුරැකීමට පෙර දත්තසමුදාය උපස්ථ කරන්න</translation>
     </message>
     <message>
         <source>Backup destination</source>
@@ -398,7 +398,7 @@
     </message>
     <message>
         <source>Language selection</source>
-        <translation>භාෂාව තේරීම</translation>
+        <translation>භාෂා තේරීම</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -519,7 +519,7 @@
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> තත්පර</translation>
+        <translation>තත්.</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
@@ -532,7 +532,7 @@
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation> මිනි</translation>
+        <translation>විනා.</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -607,7 +607,7 @@
     </message>
     <message>
         <source>Permission Required</source>
-        <translation>අවසරය අවශ්‍යයි</translation>
+        <translation>අවසර අවශ්‍යයි</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -687,7 +687,7 @@
     </message>
     <message>
         <source>Title</source>
-        <translation>සිරැසිය</translation>
+        <translation>ශීර්ෂය</translation>
     </message>
     <message>
         <source>Username</source>
@@ -771,11 +771,11 @@ Ctrl+4 - Virtual Keyboard භාවිතා කරන්න (Wind පමණි)
     </message>
     <message>
         <source>Copy Username</source>
-        <translation>පරිශීලක නාමයේ පිටපතක්</translation>
+        <translation>පරිශීලක නාමය පිටපත් කරන්න</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation>මුරපදයේ පිටපතක්</translation>
+        <translation>මුරපදය පිටපත් කරන්න</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
@@ -926,7 +926,7 @@ Moved %2 keys to custom data.</source>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>අභිරුචි දත්ත වෙත යතුරු %n ක් සාර්ථකව ගෙන යන ලදී.</numerusform><numerusform>අභිරුචි දත්ත වෙත යතුරු %n ක් සාර්ථකව ගෙන යන ලදී.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
@@ -981,7 +981,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Vivaldi</source>
-        <translation>විවාල්ඩි</translation>
+        <translation>විවාල්දි</translation>
     </message>
     <message>
         <source>&amp;Edge</source>
@@ -997,7 +997,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Brave</source>
-        <translation>නිර්භීත</translation>
+        <translation>බ්‍රේව්</translation>
     </message>
     <message>
         <source>Google Chrome</source>
@@ -1112,7 +1112,7 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>පිරික්සන්න...</translation>
+        <translation>…බ්‍රවුස් කරන්න</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
@@ -1214,7 +1214,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation>ප්‍රමාණය, පේළි, තීරු</translation>
+        <translation>ප්රමාණය, පේළි, තීරු</translation>
     </message>
     <message>
         <source>Column Association</source>
@@ -1230,7 +1230,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>සිරැසිය</translation>
+        <translation>ශීර්ෂය</translation>
     </message>
     <message>
         <source>Group</source>
@@ -1238,7 +1238,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>URL</source>
-        <translation>ඒ.ස.නි.</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1262,7 +1262,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Encoding</source>
-        <translation>කේතනය</translation>
+        <translation>කේතනය කිරීම</translation>
     </message>
     <message>
         <source>Codec</source>
@@ -1334,11 +1334,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[තව පණිවිඩ%n ක් මඟ හැරිණි]</numerusform><numerusform>[තව පණිවිඩ%n ක් මඟ හැරිණි]</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>දෝෂයකි</translation>
+        <translation>දෝෂය</translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
@@ -1356,15 +1356,15 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n බයිට්(ය)</numerusform><numerusform>%n බයිට්(ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation><numerusform>පේළි %n (ය)</numerusform><numerusform>පේළි %n (ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n තීරු(ය)</numerusform><numerusform>%n තීරු(ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -1472,7 +1472,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>පිරික්සන්න...</translation>
+        <translation>…බ්‍රවුස් කරන්න</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
@@ -1632,7 +1632,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Security</source>
-        <translation>ආරක්‍ෂාව</translation>
+        <translation>ආරක්ෂාව</translation>
     </message>
     <message>
         <source>Database Credentials</source>
@@ -1640,7 +1640,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>සංකේතන සැකසුම්</translation>
+        <translation>සංකේතාංකන සැකසුම්</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1691,7 +1691,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ඉවතලන්න</translation>
+        <translation>ඉවත් කරන්න</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
@@ -1709,7 +1709,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Value</source>
-        <translation>අගය</translation>
+        <translation>වටිනාකම</translation>
     </message>
     <message>
         <source>Created</source>
@@ -1739,7 +1739,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>KeePassXC සිටුවම් වලින් %n සංකේතාංකන යතුර(ය) සාර්ථකව ඉවත් කරන ලදී.</numerusform><numerusform>KeePassXC සිටුවම් වලින් %n සංකේතාංකන යතුර(ය) සාර්ථකව ඉවත් කරන ලදී.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -1761,7 +1761,7 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>ඇතුළත් කිරීම් %n කින් අවසර සාර්ථකව ඉවත් කරන ලදී.</numerusform><numerusform>ඇතුළත් කිරීම් %n කින් අවසර සාර්ථකව ඉවත් කරන ලදී.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1835,7 +1835,7 @@ Are you sure you want to continue without a password?</source>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Decryption Time:</source>
-        <translation>විසංකේතන කාලය:</translation>
+        <translation>විකේතන කාලය:</translation>
     </message>
     <message>
         <source>Change existing decryption time</source>
@@ -1903,11 +1903,11 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation>මතකය භාවිතය:</translation>
+        <translation>මතක භාවිතය:</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation>මතකය භාවිතය</translation>
+        <translation>මතක භාවිතය</translation>
     </message>
     <message>
         <source>Parallelism:</source>
@@ -1975,12 +1975,12 @@ If you keep this number, your database will not be protected from brute force at
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> නූල්(ය)</numerusform><numerusform> නූල්(ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2080,7 +2080,7 @@ This action is not reversible.</source>
     </message>
     <message>
         <source> (old)</source>
-        <translation> (පරණ)</translation>
+        <translation> (පැරණි)</translation>
     </message>
 </context>
 <context>
@@ -2095,7 +2095,7 @@ This action is not reversible.</source>
     </message>
     <message>
         <source>Type</source>
-        <translation>ලියන්න</translation>
+        <translation>ටයිප් කරන්න</translation>
     </message>
     <message>
         <source>Path</source>
@@ -2155,7 +2155,7 @@ This action is not reversible.</source>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation><numerusform>දත්ත සමුදායෙන් %n නිරූපක(ය) ඉවත් කරන ලදී.</numerusform><numerusform>දත්ත සමුදායෙන් %n නිරූපක(ය) ඉවත් කරන ලදී.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2308,7 +2308,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>සමූහය මකන්න</translation>
+        <translation>කණ්ඩායම මකන්න</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
@@ -2348,7 +2348,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>No Results</source>
-        <translation>ප්‍රතිපල නැත</translation>
+        <translation>ප්රතිපල රහිතයි</translation>
     </message>
     <message>
         <source>Lock Database?</source>
@@ -2372,7 +2372,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>වෙනස්කම් සුරකින්නද?</translation>
+        <translation>වෙනස්කම් සුරකින්න?</translation>
     </message>
     <message>
         <source>File has changed</source>
@@ -2418,7 +2418,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>ලෙස දත්තසමුදාය සුරකින්න</translation>
+        <translation>දත්ත සමුදාය ලෙස සුරකින්න</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -2442,7 +2442,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>ඇතුළත් කිරීම් දින %1 ක් ඇතුළත කල් ඉකුත් වේ</numerusform><numerusform>ඇතුළත් කිරීම් දින %1 ක් ඇතුළත කල් ඉකුත් වේ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Searches and Tags</source>
@@ -2509,7 +2509,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation>අ/නොවේ</translation>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>(encrypted)</source>
@@ -2603,19 +2603,19 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>සති %n</numerusform><numerusform>සති %n</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>මාස %n</numerusform><numerusform>මාස %n</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>වසර %n (ය)</numerusform><numerusform>වසර %n (ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>පැය %n</numerusform><numerusform>පැය %n</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2638,7 +2638,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Add</source>
-        <translation>එකතු</translation>
+        <translation>එකතු කරන්න</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
@@ -2646,7 +2646,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ඉවතලන්න</translation>
+        <translation>ඉවත් කරන්න</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
@@ -2654,7 +2654,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation>නම සංස්කරණය</translation>
+        <translation>නම සංස්කරණය කරන්න</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
@@ -2814,15 +2814,15 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Add</source>
-        <translation>එකතු</translation>
+        <translation>එකතු කරන්න</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ඉවතලන්න</translation>
+        <translation>ඉවත් කරන්න</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>සංස්කරණය</translation>
+        <translation>සංස්කරණය කරන්න</translation>
     </message>
 </context>
 <context>
@@ -2845,7 +2845,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Restore</source>
-        <translation>ප්‍රත්‍යර්පණය</translation>
+        <translation>ප්‍රතිෂ්ඨාපනය කරන්න</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
@@ -2912,7 +2912,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>URL:</source>
-        <translation>ඒ.ස.නි.:</translation>
+        <translation>URL:</translation>
     </message>
     <message>
         <source>Url field</source>
@@ -2924,7 +2924,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Title:</source>
-        <translation>සිරැසිය:</translation>
+        <translation>ශීර්ෂය:</translation>
     </message>
     <message>
         <source>Title field</source>
@@ -2983,7 +2983,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>පසුරු පුවරුවට පිටපත් කරන්න</translation>
+        <translation>පසුරුපුවරුවට පිටපත් කරන්න</translation>
     </message>
     <message>
         <source>Public key</source>
@@ -3004,7 +3004,7 @@ Would you like to correct it?</source>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>පිරික්සන්න...</translation>
+        <translation>…බ්‍රවුස් කරන්න</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3032,7 +3032,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation>අ/නොවේ</translation>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
@@ -3173,7 +3173,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>පිරික්සන්න...</translation>
+        <translation>…බ්‍රවුස් කරන්න</translation>
     </message>
     <message>
         <source>Clear fields</source>
@@ -3390,11 +3390,11 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation>රූප(ය) තෝරන්න</translation>
+        <translation>රූපය(ය) තෝරන්න</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>අයිකන(ය) %n කින් %1 ක් සාර්ථකව පූරණය කරන ලදී</numerusform><numerusform>අයිකන(ය) %n කින් %1 ක් සාර්ථකව පූරණය කරන ලදී</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -3402,11 +3402,11 @@ Supported extensions are: %1.</source>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n නිරූපක(ය) දැනටමත් දත්ත ගබඩාවේ පවතී</numerusform><numerusform>%n නිරූපක(ය) දැනටමත් දත්ත ගබඩාවේ පවතී</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>පහත නිරූපකය(ය) අසාර්ථක විය:</numerusform><numerusform>පහත නිරූපකය(ය) අසාර්ථක විය:</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3457,7 +3457,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ඉවතලන්න</translation>
+        <translation>ඉවත් කරන්න</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
@@ -3475,7 +3475,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Value</source>
-        <translation>අගය</translation>
+        <translation>වටිනාකම</translation>
     </message>
 </context>
 <context>
@@ -3519,7 +3519,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Add</source>
-        <translation>එකතු</translation>
+        <translation>එකතු කරන්න</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
@@ -3527,7 +3527,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ඉවතලන්න</translation>
+        <translation>ඉවත් කරන්න</translation>
     </message>
     <message>
         <source>Rename selected attachment</source>
@@ -3563,7 +3563,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>ඔබට ඇමුණුම්(ය) %n ක් ඉවත් කිරීමට අවශ්‍ය බව විශ්වාසද?</numerusform><numerusform>ඔබට ඇමුණුම්(ය) %n ක් ඉවත් කිරීමට අවශ්‍ය බව විශ්වාසද?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3604,9 +3604,7 @@ This may cause the affected plugins to malfunction.</source>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation><numerusform>ගොනු (ය) විවෘත කළ නොහැක:
-%1</numerusform><numerusform>ගොනු (ය) විවෘත කළ නොහැක:
-%1</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Confirm Overwrite Attachment</source>
@@ -3696,7 +3694,7 @@ Error: %1</source>
     </message>
     <message>
         <source>URL</source>
-        <translation>ඒ.ස.නි.</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -3732,11 +3730,11 @@ Error: %1</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>ස්වයං ලිවීම</translation>
+        <translation>ස්වයංක්‍රීය වර්ගය</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>අනන්‍යන</translation>
+        <translation>ටැග්</translation>
     </message>
 </context>
 <context>
@@ -3748,7 +3746,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Never</source>
-        <translation>කවදාවත්</translation>
+        <translation>කවදාවත් නැහැ</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3756,7 +3754,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>සිරැසිය</translation>
+        <translation>ශීර්ෂය</translation>
     </message>
     <message>
         <source>Username</source>
@@ -3768,7 +3766,7 @@ Error: %1</source>
     </message>
     <message>
         <source>URL</source>
-        <translation>ඒ.ස.නි.</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -3776,19 +3774,19 @@ Error: %1</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>ඉකුත් වීම</translation>
+        <translation>කල් ඉකුත් වේ</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>සාදන ලදි</translation>
+        <translation>නිර්මාණය කළා</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>සංශෝධිතයි</translation>
+        <translation>වෙනස් කර ඇත</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation>ප්‍රවේශ විය</translation>
+        <translation>ප්රවේශ විය</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -3796,11 +3794,11 @@ Error: %1</source>
     </message>
     <message>
         <source>Size</source>
-        <translation>ප්‍රමාණය</translation>
+        <translation>ප්රමාණය</translation>
     </message>
     <message>
         <source>Group name</source>
-        <translation>සමූහයේ නම</translation>
+        <translation>කණ්ඩායමේ නම</translation>
     </message>
     <message>
         <source>Entry title</source>
@@ -3820,15 +3818,15 @@ Error: %1</source>
     </message>
     <message>
         <source>Creation date</source>
-        <translation>සෑදූ දිනය</translation>
+        <translation>නිර්මාණය කළ දිනය</translation>
     </message>
     <message>
         <source>Last modification date</source>
-        <translation>අවසාන සංශෝධිත දිනය</translation>
+        <translation>අවසාන වෙනස් කිරීමේ දිනය</translation>
     </message>
     <message>
         <source>Last access date</source>
-        <translation>අවසාන ප්‍රවේශ දිනය</translation>
+        <translation>අවසන් පිවිසුම් දිනය</translation>
     </message>
     <message>
         <source>Attached files</source>
@@ -3871,15 +3869,15 @@ Error: %1</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>ඉකුත් වීම</translation>
+        <translation>කල් ඉකුත්වීම</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>අනන්‍යන</translation>
+        <translation>ටැග්</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation>අනන්‍යන ලේඛනය</translation>
+        <translation>ටැග් ලැයිස්තුව</translation>
     </message>
     <message>
         <source>Username</source>
@@ -3887,11 +3885,11 @@ Error: %1</source>
     </message>
     <message>
         <source>URL</source>
-        <translation>ඒ.ස.නි.</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>වැඩිදුර</translation>
+        <translation>උසස්</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -3903,7 +3901,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>ස්වයං ලිවීම</translation>
+        <translation>ස්වයංක්‍රීය ටයිප් කරන්න</translation>
     </message>
     <message>
         <source>Default Sequence</source>
@@ -3935,7 +3933,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Never</source>
-        <translation>කවදාවත්</translation>
+        <translation>කවදාවත් නැහැ</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -4081,7 +4079,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n ඇතුළත් කිරීම් (ය) %1විසින් භාවිතා කරන ලදී</numerusform><numerusform>%n ඇතුළත් කිරීම් (ය) %1විසින් භාවිතා කරන ලදී</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -4161,11 +4159,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>URL</source>
-        <translation>ඒ.ස.නි.</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>තත්‍වය</translation>
+        <translation>තත්ත්වය</translation>
     </message>
     <message>
         <source>Please wait, processing entry list…</source>
@@ -4173,7 +4171,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Downloading…</source>
-        <translation>බාගැනෙමින්…</translation>
+        <translation>බාගත කිරීම…</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4185,7 +4183,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Download Failed</source>
-        <translation>බාගැනීමට අසමත් විය</translation>
+        <translation>බාගත කිරීම අසමත් විය</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)…</source>
@@ -4854,7 +4852,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>අවලංගු කරන්න</translation>
+        <translation>අවලංගු</translation>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
@@ -5019,7 +5017,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>&amp;කණ්ඩායම්</translation>
+        <translation>&amp;සමූහ</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -5411,7 +5409,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation><numerusform>ප්‍රවේශ(යන්) ප්‍රතිසාධනය කරන්න</numerusform><numerusform>ප්‍රවේශ(යන්) ප්‍රතිසාධනය කරන්න</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -6474,7 +6472,7 @@ Do you want to overwrite it?</source>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>&apos;%1&apos; සඳහා මුරපදය %2 වතාවක් (ය) කාන්දු වී ඇත!</numerusform><numerusform>&apos;%1&apos; සඳහා මුරපදය %2 වතාවක් (ය) කාන්දු වී ඇත!</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
@@ -6624,7 +6622,7 @@ Do you want to overwrite it?</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>පසුරු පුවරුව තත්පර %1 කින් හිස් කරමින්...</numerusform><numerusform>පසුරු පුවරුව තත්පර %1 කින් හිස් කරමින්...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -7075,7 +7073,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation>කණ්ඩායම් ගණන</translation>
+        <translation>සමූහ ගණන</translation>
     </message>
     <message>
         <source>Number of entries</source>
@@ -7431,7 +7429,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation><numerusform>මුරපදය %1 වරක් (ය) භාවිතා වේ</numerusform><numerusform>මුරපදය %1 වරක් (ය) භාවිතා වේ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7451,7 +7449,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation><numerusform>මුරපදය දින %1 කින් කල් ඉකුත් වේ</numerusform><numerusform>මුරපදය දින %1 කින් කල් ඉකුත් වේ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7523,27 +7521,27 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
-        <translation><numerusform>වසර %1 කට වැඩි (ය)</numerusform><numerusform>වසර %1 කට වැඩි (ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>about %1 month(s)</source>
-        <translation><numerusform>මාස %1 (ය) පමණ</numerusform><numerusform>මාස %1 (ය) පමණ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation><numerusform>සති %1 (ය)</numerusform><numerusform>සති %1 (ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
-        <translation><numerusform>දින %1 (ය)</numerusform><numerusform>දින %1 (ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 hour(s)</source>
-        <translation><numerusform>පැය %1 (ය)</numerusform><numerusform>පැය %1 (ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
-        <translation><numerusform>මිනිත්තු %1 (ය)</numerusform><numerusform>මිනිත්තු %1 (ය)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
@@ -7647,7 +7645,7 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>තත්පර %1 කින් පසුරු පුවරුව හිස් කිරීම…</numerusform><numerusform>තත්පර %1 කින් පසුරු පුවරුව හිස් කිරීම…</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7688,12 +7686,12 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation><numerusform>%1 තත්</numerusform><numerusform>%1 තත්</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7701,11 +7699,11 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>ඔබට ඇත්තටම හොඳ සඳහා %n ඇතුළත් කිරීම්(ය) මැකීමට අවශ්‍යද?</numerusform><numerusform>ඔබට ඇත්තටම හොඳ සඳහා %n ඇතුළත් කිරීම්(ය) මැකීමට අවශ්‍යද?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>ඇතුළත් කිරීම්(න්) මකන්නද?</numerusform><numerusform>ඇතුළත් කිරීම්(න්) මකන්නද?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7713,11 +7711,11 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>ඔබට ඇත්තටම ප්‍රතිචක්‍රීකරණ බඳුනට ඇතුල්වීම්(ය) %n ක් ගෙන යාමට අවශ්‍යද?</numerusform><numerusform>ඔබට ඇත්තටම ප්‍රතිචක්‍රීකරණ බඳුනට ඇතුල්වීම්(ය) %n ක් ගෙන යාමට අවශ්‍යද?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>ප්‍රවේශය(ය) ප්‍රතිචක්‍රීකරණ බඳුනට ගෙන යන්නද?</numerusform><numerusform>ඇතුළත් කිරීම්(ය) ප්‍රතිචක්‍රීකරණ බඳුනට ගෙන යන්නද?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7725,7 +7723,7 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>&quot;%1&quot; ප්‍රවේශයට යොමු(ය) %2 ඇත. ඔබට අගයන් සමඟ යොමු නැවත ලිවීමට, මෙම ප්‍රවේශය මඟ හැරීමට හෝ කෙසේ හෝ මකා දැමීමට අවශ්‍යද?</numerusform><numerusform>&quot;%1&quot; ප්‍රවේශයට යොමු(ය) %2 ඇත. ඔබට අගයන් සමඟ යොමු නැවත ලිවීමට, මෙම ප්‍රවේශය මඟ හැරීමට හෝ කෙසේ හෝ මකා දැමීමට අවශ්‍යද?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>User name</source>
@@ -8005,7 +8003,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>ඇතුළත් කිරීම් (ය)…මකන්න</numerusform><numerusform>ඇතුළත් කිරීම් (ය)…මකන්න</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8091,7 +8089,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>ඇතුළත් කිරීම් (ය)…මකන්න</numerusform><numerusform>ඇතුළත් කිරීම් (ය)…මකන්න</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8186,7 +8184,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>ඇතුළත් කිරීම් (ය)…මකන්න</numerusform><numerusform>ඇතුළත් කිරීම් (ය)…මකන්න</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8249,7 +8247,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation>කණ්ඩායම් ගණන</translation>
+        <translation>සමූහ ගණන</translation>
     </message>
     <message>
         <source>Number of entries</source>
@@ -8717,7 +8715,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>තත්පර &lt;b&gt;%n&lt;/b&gt; (තත්පර) කින් කල් ඉකුත් වේ</numerusform><numerusform>තත්පර &lt;b&gt;%n&lt;/b&gt; (තත්පර) කින් කල් ඉකුත් වේ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -8789,7 +8787,7 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> තත්පර</translation>
+        <translation>තත්.</translation>
     </message>
     <message>
         <source>Code size:</source>

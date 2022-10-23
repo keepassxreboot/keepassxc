@@ -31,11 +31,11 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Consulte as colaborações no GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Ver Colaborações no GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Informações de depuração</translation>
+        <translation>Informações de Depuração</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Copia para a área de transferência</translation>
+        <translation>Copiar para a área de transferência</translation>
     </message>
 </context>
 <context>
@@ -86,7 +86,7 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Permita os selecionados</translation>
+        <translation>Permitir Selecionados</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Recusar agora e futuramente</translation>
+        <translation>Recusar agora &amp;&amp; futuramente</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
@@ -159,7 +159,7 @@
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Configurações do aplicativo</translation>
+        <translation>Configurações do Aplicativo</translation>
     </message>
     <message>
         <source>General</source>
@@ -215,15 +215,15 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>Restaurar as configurações?</translation>
+        <translation>Restaurar Configurações?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Tem certeza que deseja restaurar todas as configurações gerais e as configurações de segurança para o padrão?</translation>
+        <translation>Você tem certeza que deseja restaurar todas as configurações gerais e de segurança para o padrão?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
-        <translation>Selecione o diretório onde o backup será armazenado</translation>
+        <translation>Selecione diretório para armazenar o backup</translation>
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
@@ -234,7 +234,7 @@
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Configurações básicas</translation>
+        <translation>Configurações Básicas</translation>
     </message>
     <message>
         <source>Startup</source>
@@ -293,23 +293,23 @@
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>irá expirar dentro de</translation>
+        <translation>irá expirar dentro de </translation>
     </message>
     <message>
         <source>File Management</source>
-        <translation>Gerenciador de arquivo</translation>
+        <translation>Gerenciamento de Arquivo</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Salva automaticamente depois de cada alteração</translation>
+        <translation>Salvar automaticamente depois de cada alteração</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Salva automaticamente ao bloquear banco de dados</translation>
+        <translation>Salvar automaticamente ao bloquear banco de dados</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Salva automaticamente as alterações que não sejam dados ao bloquear o banco de dados</translation>
+        <translation>Salvar automaticamente alterações que não são de dados ao bloquear banco de dados</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -321,7 +321,7 @@
     </message>
     <message>
         <source>Backup destination</source>
-        <translation>Destino do backup</translation>
+        <translation>Destinação do backup</translation>
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
@@ -386,7 +386,7 @@
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Interface do usuário</translation>
+        <translation>Interface do Usuário</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -394,7 +394,7 @@
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation>Barra de ferramentas móvel</translation>
+        <translation>Barra de Ferramentas Móvel</translation>
     </message>
     <message>
         <source>Language selection</source>
@@ -734,11 +734,11 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Pode utilizar a pesquisa avançada para localizar as entradas nas suas base de dados abertas. Os atalhos abaixo podem ser úteis:&lt;br/&gt;
+        <translation>&lt;p&gt;Pode utilizar a pesquisa avançada para localizar as entradas abertas no seu banco de dados. Os atalhos abaixo podem ser úteis:&lt;br/&gt;
 Ctrl+F - Alterna a pesquisa nas bases de dados&lt;br/&gt;
 Ctrl+1 - Escreve o nome do utilizador&lt;br/&gt;
-Ctrl+2 - Escreve a senha
-Ctrl+3 - Escreve o TOTP&lt;br/&gt;
+Ctrl+2 - Escreve a senha &lt;br/&gt;
+Ctrl+3 - Escreve o TOTP &lt;br/&gt;
 Ctrl+4 - Utiliza o teclado virtual (apenas no Windows)&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1558,7 +1558,7 @@ Para impedir que esses erros apareçam, você deve ir em &quot;Configurações d
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Formato antigo de arquivo de chave</translation>
+        <translation>Formato antigo de arquivo-chave</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -2442,7 +2442,7 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>A entradas que vai caducar dentro de %1 dia</numerusform><numerusform>As entradas que vão caducar dentro de %1 dias</numerusform><numerusform>As entradas que vão caducar dentro de %1 dia(s)</numerusform></translation>
+        <translation><numerusform>Entrada que vai caducar em %1 dia(s)</numerusform><numerusform>Entradas que vão caducar em %1 dia(s)</numerusform><numerusform>Entradas que vão caducar dentro de %1 dia(s)</numerusform></translation>
     </message>
     <message>
         <source>Searches and Tags</source>
@@ -3106,7 +3106,7 @@ Gostaria de a corrigir?</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Oculta as entradas deste grupo (e dos subgrupos) da extensão do navegador</translation>
+        <translation>Oculta as entradas da extensão do browser para este e para os subgrupos</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
@@ -3733,7 +3733,7 @@ Erro: %1</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Digitar</translation>
+        <translation>Autodigitação</translation>
     </message>
     <message>
         <source>Tags</source>
@@ -4081,7 +4081,7 @@ Isso vai deixar as suas senhas e as suas informações confidenciais vulnerávei
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n entrada foi usada por %1</numerusform><numerusform>%n entradas foram usadas por %1</numerusform><numerusform>%n entradas foram usadas por %1</numerusform></translation>
+        <translation><numerusform>%n entrada(s) foram utilizadas por %1</numerusform><numerusform>%n entrada(s) foram utilizadas por %1</numerusform><numerusform>%n entrada(s) foram utilizadas por %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5459,7 +5459,7 @@ Recomendamos que você use o AppImage disponível em nossa página de downloads.
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 Entradas(s)</numerusform><numerusform>%1 Entradas(s)</numerusform><numerusform>%1 Entradas(s)</numerusform></translation>
+        <translation><numerusform>%1 Entrada(s)</numerusform><numerusform>%1 Entrada(s)</numerusform><numerusform>%1 Entrada(s)</numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
@@ -7776,7 +7776,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation>bloquear todas os bancos de dados abertas</translation>
+        <translation>bloquear todas os bancos de dados abertos</translation>
     </message>
     <message>
         <source>key file of the database</source>
@@ -8004,7 +8004,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Excluir entrada...</numerusform><numerusform>Excluir entradas...</numerusform><numerusform>Excluir entradas...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform>Excluir entradas...</numerusform><numerusform>Excluir entradas...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>

@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Сообщить об ошибках: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Сообщить об &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;ошибках&lt;/a&gt; на https://github.com</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Проект сопровождают:</translation>
+        <translation>Руководители проекта:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Несуществующий/недоступный путь к исполняемому  файлу. Перепроверьте подлинность клиента.</translation>
+        <translation>Несуществующий/недоступный путь к исполняемому файлу. Пожалуйста, дважды проверьте, что клиент подлинный.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -124,11 +124,11 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>Переопределить SSH_AUTH_SOCK</translation>
+        <translation>переопределить SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>Значение SSH_AUTH_SOCK</translation>
+        <translation>значение SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>(empty)</source>
@@ -140,15 +140,15 @@
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation>Переопределить SSH_SK_PROVIDER</translation>
+        <translation>SSH_SK_PROVIDER переопределить</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Отсутствуют сокеты SSH-агента. Убедитесь, что переменная SSL_AUTH_SOCK определена или переопределите её значение.  </translation>
+        <translation>Отсутствуют сокеты агента SSH. Убедитесь, что переменная окружения SSL_AUTH_SOCK определена или переопределите её значение.  </translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>Соединение с SSH-агентом активно!</translation>
+        <translation>Соединение с агентом SSH активно.</translation>
     </message>
     <message>
         <source>Use both agents</source>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Действительно сбросить все общие параметры и параметры безопасности к значениям, заданным по умолчанию? </translation>
+        <translation>Вы уверены, что хотите сбросить все основные настройки и настройки безопасности на значения по умолчанию?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
@@ -246,7 +246,7 @@
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Автоматически запускать KeePassXC при загрузке системы</translation>
+        <translation>Автоматически запускать KeePassXC при запуске системы</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -254,7 +254,7 @@
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Сворачивать окно после разблокировки базы данных</translation>
+        <translation>Минимизировать окно после разблокирования базы данных</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
@@ -266,7 +266,7 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Запоминать файлы-ключи баз данных и аппаратные ключи безопасности</translation>
+        <translation>Запоминать для баз данных файлы-ключи и аппаратные ключи безопасности</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -274,11 +274,11 @@
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation>Включить в проверку обновлений бета-релизы</translation>
+        <translation>Включать в проверку обновлений бета-релизы</translation>
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>При разблокировке базы данных показывать записи, которые </translation>
+        <translation>При разблокировке базы данных показать записи, которые </translation>
     </message>
     <message>
         <source>have expired</source>
@@ -288,12 +288,12 @@
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation>дней</translation>
+        <translation>дни</translation>
     </message>
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>истекают в течение</translation>
+        <translation>истекает в течение</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -305,11 +305,11 @@
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Автоматически сохранять при блокировке базы данных</translation>
+        <translation>Автоматическое сохранение при блокировке базы данных</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Автоматически сохранять изменения, не связанные с данными, при блокировке базы данных.</translation>
+        <translation>Автоматическое сохранение изменений, не связанных с данными, при блокировке базы данных.</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Указывает местоположение файла резервной копии базы данных. Встречающиеся &quot;{DB_FILENAME}&quot; заменяются именем файла сохранённой базы данных без расширения. {TIME:&lt;format&gt;} заменяется временем резервного копирования, см. https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; использует строку формата &quot;дд_ММ_ггг_чч-мм-сс&quot;.</translation>
+        <translation>Указывает местоположение файла резервной копии базы данных. Встречающиеся &quot;{DB_FILENAME}&quot; заменяются именем файла сохранённой базы данных без расширения. {TIME:} заменяется временем резервного копирования, см. https://doc.qt.io/qt-5/qdatetime.html#toString. По умолчанию используется строка формата &quot;дд_ММ_ггг_чч-мм-сс&quot;.</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -361,7 +361,7 @@
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>Скрывать окно после копирования в буфер обмена</translation>
+        <translation>Скрывать окно после копирования в буфер обмена:</translation>
     </message>
     <message>
         <source>Minimize</source>
@@ -377,7 +377,7 @@
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>Тайм-аут получения значков веб-сайтов в секундах</translation>
+        <translation>Тайм-аут получения значков с веб-сайтов, в секундах</translation>
     </message>
     <message>
         <source> sec</source>
@@ -422,7 +422,7 @@
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Показывать значок в области уведомлений</translation>
+        <translation>Значок в области уведомлений</translation>
     </message>
     <message>
         <source>Tray icon type</source>
@@ -1313,7 +1313,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Not Present</source>
-        <translation>Отсутствует</translation>
+        <translation>Отусуствует</translation>
     </message>
     <message>
         <source>Column %1</source>
@@ -1556,7 +1556,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Старый формат файла-ключа</translation>
+        <translation>Устаревший формат файла-ключа</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -2611,7 +2611,7 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%n час</numerusform><numerusform>%n часа</numerusform><numerusform>%n часов</numerusform><numerusform>%n часов</numerusform></translation>
+        <translation><numerusform>%n час</numerusform><numerusform>%n час(а)</numerusform><numerusform>%n час(ов)</numerusform><numerusform>%n час(ов)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3055,7 +3055,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Интеграция с браузером</translation>
+        <translation>Интеграция с браузерами</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -4076,7 +4076,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n запись использована %1</numerusform><numerusform>%n записи использованы %1</numerusform><numerusform>%n записей использованы %1</numerusform><numerusform>%n записи использованы %1</numerusform></translation>
+        <translation><numerusform>%n запись была использована %1</numerusform><numerusform>%n записей были использованы %1</numerusform><numerusform>%n записей были использованы %1</numerusform><numerusform>%n записей были использованы %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4216,7 +4216,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -4273,7 +4273,7 @@ If this reoccurs, then your database file may be corrupt.</source>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4445,7 +4445,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>Недопустимый размер идентификатора случайного потока</translation>
+        <translation>Недопустимый размер индентификатора случайного потока</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
@@ -4695,7 +4695,7 @@ Line %2, column %3</source>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4775,7 +4775,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Недопустимый размер поля времени создания записи</translation>
+        <translation>Недопустимный размер поля времени создания записи</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
@@ -5123,7 +5123,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>&amp;Безопасность базы данных…</translation>
+        <translation>&amp;Безопаснось базы данных…</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
@@ -5343,7 +5343,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Тёмная</translation>
+        <translation>Темная</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
@@ -5455,7 +5455,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 запись</numerusform><numerusform>%1 записи</numerusform><numerusform>%1 записей</numerusform><numerusform>%1 запись(и)</numerusform></translation>
+        <translation><numerusform>%1 запись</numerusform><numerusform>%1 записи</numerusform><numerusform>%1 записей</numerusform><numerusform>%1 записи</numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
@@ -7342,7 +7342,7 @@ Available commands:
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>ВНИМАНИЕ: Вы используете файл-ключ устаревшего формата, поддержка которого 
+        <translation>ВНИМАНИЕ: вы используете файл-ключ устаревшего формата, поддержка которого 
 может быть прекращена в будущем.
 
 По возможности создайте новый ключевой файл.</translation>
@@ -7642,7 +7642,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform></translation>
+        <translation><numerusform>Буфер обмена будет очищен через %1 секунду...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7744,7 +7744,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation>Неподдерживаемый тип файла-ключа: %1</translation>
+        <translation>Неподдерживаемый тип ключа: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
@@ -7985,7 +7985,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>Заголовок</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <source>Path</source>
@@ -8001,7 +8001,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Удаление записи...</numerusform><numerusform>Удаление записей...</numerusform><numerusform>Удаление записей...</numerusform><numerusform>Удаление записей...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform>Удаление записей...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>

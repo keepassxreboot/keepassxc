@@ -2615,7 +2615,7 @@ Would you like to correct it?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%n hour</numerusform><numerusform>%n hours</numerusform></translation>
+        <translation><numerusform>%n hour(s)</numerusform><numerusform>%n hour(s)</numerusform></translation>
     </message>
 </context>
 <context>

@@ -86,7 +86,7 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Zezwól wybranym</translation>
+        <translation>Zezwalaj wybranym</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Włącz integrację z agentem SSH</translation>
+        <translation>Włącz integrację agenta SSH</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Musisz uruchomić ponownie aplikację, aby ustawić nowy język. Czy chcesz teraz to zrobić?</translation>
+        <translation>Musisz zrestartować aplikację, aby ustawić nowy język. Czy chcesz teraz zrestartować?</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
@@ -301,7 +301,7 @@
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Automatycznie zapisz po każdej zmianie</translation>
+        <translation>Automatycznie zapisuj po każdej zmianie</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
@@ -317,7 +317,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Utwórz kopię zapasową pliku bazy danych przed zapisaniem</translation>
+        <translation>Twórz kopię zapasową pliku bazy danych przed zapisaniem</translation>
     </message>
     <message>
         <source>Backup destination</source>
@@ -611,7 +611,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC wymaga uprawnienia dostępności w celu wykonania podstawowego autowpisywania. Jeśli już udzielono uprawnienia, być może będzie wymagane ponowne uruchomienie KeePassXC.</translation>
+        <translation>KeePassXC wymaga uprawnienia Dostępności w celu wykonania autowpisywania na poziomie podstawowym. Jeśli już udzieliłeś uprawnienia, być może będziesz musiał zrestartować KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -806,11 +806,11 @@ Ctrl+4 - Użyj klawiatury wirtualnej (tylko Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation>Zezwól na dostęp do wpisów</translation>
+        <translation>Zezwalaj na dostęp do wpisów</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Zezwól wybranym</translation>
+        <translation>Zezwalaj wybranym</translation>
     </message>
     <message>
         <source>Deny All</source>
@@ -818,7 +818,7 @@ Ctrl+4 - Użyj klawiatury wirtualnej (tylko Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>Wyłącz dla tej witryny</translation>
+        <translation>Wyłącz w tej witrynie</translation>
     </message>
 </context>
 <context>
@@ -878,13 +878,13 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Nadpisać istniejący klucz?</translation>
+        <translation>KeePassXC: Zastąpić istniejący klucz?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Współdzielony klucz szyfrujący o nazwie &quot;%1&quot; już istnieje.
-Czy chcesz go nadpisać?</translation>
+Czy chcesz go zastąpić?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -1038,7 +1038,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Zezwól na zwrot wygasłych danych uwierzytelniających</translation>
+        <translation>Zezwalaj na zwrot wygasłych danych uwierzytelniających</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
@@ -1191,7 +1191,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Dodaj &apos; - Klon&apos; do nazwy</translation>
+        <translation>Dodaj &apos; - klon&apos; do nazwy</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
@@ -1250,7 +1250,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Stworzone</translation>
+        <translation>Utworzone</translation>
     </message>
     <message>
         <source>Last Modified</source>
@@ -1713,7 +1713,7 @@ Może to uniemożliwić połączenie z wtyczką przeglądarki.</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Stworzone</translation>
+        <translation>Utworzone</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
@@ -1911,11 +1911,11 @@ Czy na pewno chcesz kontynuować bez hasła?</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>Paralelizm:</translation>
+        <translation>Równoległość:</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation>Paralelizm</translation>
+        <translation>Równoległość</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
@@ -2207,7 +2207,7 @@ Jest to z pewnością błąd, zgłoś go programistom.</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>plik CSV</translation>
+        <translation>Plik CSV</translation>
     </message>
     <message>
         <source>Select CSV file</source>
@@ -2904,7 +2904,7 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Ustawienia</translation>
+        <translation>Presety</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -3413,7 +3413,7 @@ Obsługiwane rozszerzenia to: %1.</translation>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Stworzone:</translation>
+        <translation>Utworzone:</translation>
     </message>
     <message>
         <source>Datetime created</source>
@@ -3782,7 +3782,7 @@ Błąd: %1</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Stworzone</translation>
+        <translation>Utworzone</translation>
     </message>
     <message>
         <source>Modified</source>
@@ -4044,7 +4044,7 @@ To narazi Twoje hasła i poufne informacje na niebezpieczeństwo!
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Uruchomiona jest inna usługa sekretna (%1). Zatrzymaj ją/usuń przed ponownym włączeniem integracji z usługą sekretną.</translation>
+        <translation>Uruchomiona jest inna usługa sekretna (%1). Zatrzymaj ją/usuń przed ponownym włączeniem Integracji usługi sekretnej.</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
@@ -4324,7 +4324,7 @@ Jeśli wystąpi to ponownie, plik bazy danych może być uszkodzony.</translatio
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation>Nieprawidłowa długość pola wewnętrznego nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
+        <translation>Nieprawidłowa długość wewnętrznego pola nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -4982,7 +4982,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie można zarejestrować skrótu globalnego</translation>
+        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>
@@ -5065,7 +5065,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation>Stwórz nową bazę danych</translation>
+        <translation>Utwórz nową bazę danych</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
@@ -5389,7 +5389,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation>Nie pokazuj więcej dla tej wersji</translation>
+        <translation>Nie pokazuj więcej w tej wersji</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
@@ -5445,11 +5445,11 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation>Uruchomić ponownie aplikację?</translation>
+        <translation>Zrestartować aplikację?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Musisz uruchomić ponownie aplikację, aby zastosować to ustawienie. Czy chcesz teraz to zrobić?</translation>
+        <translation>Musisz zrestartować aplikację, aby zastosować to ustawienie. Czy chcesz teraz zrestartować?</translation>
     </message>
     <message>
         <source>Tags</source>
@@ -5530,7 +5530,7 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation>Nadpisywanie %1 [%2]</translation>
+        <translation>Zastąpienie %1 [%2]</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
@@ -5665,7 +5665,7 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie można zarejestrować skrótu globalnego</translation>
+        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>
@@ -6257,7 +6257,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation>Opróżnij</translation>
+        <translation>Pusty</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -6388,7 +6388,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Wygeneruj hasło do wpisu.</translation>
+        <translation>Wygeneruj hasło dla wpisu.</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
@@ -6614,7 +6614,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation>BŁĄD: atrybut %1 jest niejednoznaczny, jest zgodny z %2.</translation>
+        <translation>BŁĄD: Atrybut %1 jest niejednoznaczny, jest zgodny z %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
@@ -6654,7 +6654,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation>Dezaktywuj klucz hasła do bazy danych.</translation>
+        <translation>Dezaktywuj klucz hasła dla bazy danych.</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
@@ -6682,15 +6682,15 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation>Ustaw plik klucza do bazy danych.</translation>
+        <translation>Ustaw plik klucza dla bazy danych.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation>Ustaw hasło do bazy danych.</translation>
+        <translation>Ustaw hasło bazy danych.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation>Stwórz nową bazę danych.</translation>
+        <translation>Utwórz nową bazę danych.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -6829,11 +6829,11 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation>Typ: Bruteforce</translation>
+        <translation>Typ: Siłowy</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation>Type: Słownikowy</translation>
+        <translation>Typ: Słownikowy</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
@@ -6865,7 +6865,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>Typ: Bruteforce(Powt.)</translation>
+        <translation>Typ: Siłowy(Powt.)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
@@ -7167,7 +7167,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Użyj tych samych poświadczeń dla obu plików bazy danych.</translation>
+        <translation>Użyj tych samych danych uwierzytelniających dla obu plików bazy danych.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
@@ -7313,7 +7313,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation>BŁĄD: nieznany atrybut %1.</translation>
+        <translation>BŁĄD: Nieznany atrybut %1.</translation>
     </message>
     <message>
         <source>No attachments present.</source>
@@ -7513,7 +7513,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation>Integracja z usługą sekretną</translation>
+        <translation>Integracja usługi sekretnej</translation>
     </message>
     <message>
         <source>None</source>
@@ -7561,7 +7561,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1 (%2 rundy, %3 KB)</translation>
+        <translation>Argon2%1 (%2 rund, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
@@ -7681,7 +7681,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Stworzone</translation>
+        <translation>Utworzone</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
@@ -7791,7 +7791,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>allow app screen recordering and screenshots</source>
-        <translation>zezwól na aplikację nagrywania ekranu i zrzuty ekranu</translation>
+        <translation>zezwalaj na aplikację nagrywania ekranu i zrzuty ekranu</translation>
     </message>
     <message>
         <source>Locked databases.</source>
@@ -8574,19 +8574,19 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>Zezwól na importowanie KeeShare</translation>
+        <translation>Zezwalaj na importowanie KeeShare</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>Zezwól na import</translation>
+        <translation>Pozwól importować</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>Zezwól na eksportowanie KeeShare</translation>
+        <translation>Zezwalaj na eksportowanie KeeShare</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation>Zezwól na eksport</translation>
+        <translation>Pozwól eksportować</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
@@ -8625,7 +8625,7 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation>Nie można zapisać kontenera eksportu.</translation>
+        <translation>Nie udało się zapisać kontenera eksportu.</translation>
     </message>
 </context>
 <context>
@@ -8867,7 +8867,7 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>Stwórz nową bazę danych</translation>
+        <translation>Utwórz nową bazę danych</translation>
     </message>
     <message>
         <source>Open existing database</source>
@@ -8910,7 +8910,7 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie można zarejestrować skrótu globalnego</translation>
+        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>

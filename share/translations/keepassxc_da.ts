@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Afvis alle &amp;&amp; Fremtid</translation>
+        <translation>Afvis Alle &amp;&amp; Fremtid</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Du skal genstarte applikationen for at tage det nye sprog i brug. Vil du genstarte nu?</translation>
+        <translation>Du skal genstarte applikationen for at skifte til et nyt sprog. Vil du genstarte nu?</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
@@ -246,7 +246,7 @@
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Start KeePassXC automatisk ved opstart af system</translation>
+        <translation>Start KeePassXC automatisk ved system start</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -254,7 +254,7 @@
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Minimer vinduet efter databasen er låst op</translation>
+        <translation>Minimer vindue efter oplåsning af database</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
@@ -305,11 +305,11 @@
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Gem automatisk når databasen låses</translation>
+        <translation>Gem automatisk, når du låser databasen</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Gem automatisk ikke-dataændringer når databasen låses</translation>
+        <translation>Gem automatisk ændringer, der ikke vedrører data, når du låser databasen</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -357,11 +357,11 @@
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation>Minimer ved åbning af en URL</translation>
+        <translation>Minimer når du åbner en URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>Skjul vindue ved kopiering til udklipsholder</translation>
+        <translation>Skjul vinduet, når der kopieres til udklipsholder</translation>
     </message>
     <message>
         <source>Minimize</source>
@@ -369,15 +369,15 @@
     </message>
     <message>
         <source>Drop to background</source>
-        <translation>Fald i baggrund</translation>
+        <translation>Sæt til baggrund</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Favicon-download timeout:</translation>
+        <translation>Timeout for download af favicon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>Websted-ikon download timeout i sekunder</translation>
+        <translation>Timeout for download af websideikon i sekunder</translation>
     </message>
     <message>
         <source> sec</source>
@@ -386,11 +386,11 @@
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Brugerflade</translation>
+        <translation>Brugergrænseflade</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Knapstil på værktøjslinje</translation>
+        <translation>Knapstil på værktøjslinjen</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
@@ -398,7 +398,7 @@
     </message>
     <message>
         <source>Language selection</source>
-        <translation>Sprogvalg</translation>
+        <translation>Valg af sprog</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -410,11 +410,11 @@
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation>Knapstil på værktøjslinje:</translation>
+        <translation>Værktøjslinje knap stil</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>Brug monospatieret skrifttype til noter</translation>
+        <translation>Brug monospacet skrifttype for noter</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
@@ -430,7 +430,7 @@
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>Bakkeikontype:</translation>
+        <translation>Bakkeicontype</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
@@ -474,7 +474,7 @@
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>Startforsinkelse for autoskriv i millisekunder</translation>
+        <translation>Forsinkelse af auto-skriv start i millisekunder</translation>
     </message>
     <message>
         <source> ms</source>
@@ -483,7 +483,7 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Skriveforsinkelse for autoskriv:</translation>
+        <translation>Forsinkelse for autoskriv:</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
@@ -491,7 +491,7 @@
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>Skriveforsinkelse for autoskriv i millisekunder</translation>
+        <translation>Forsinkelse af auto-skrivning i millisekunder</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
@@ -560,15 +560,15 @@
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
-        <translation>Kræv adgangskodegentagelse når den er synlig</translation>
+        <translation>Kræv gentagelse af adgangskode, når den er synlig</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation>Skjul adgangskoder når de redigeres</translation>
+        <translation>Skjul adgangskoder, når du redigerer dem</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation>Brug pladsholder til tomme adgangskodefelter</translation>
+        <translation>Brug pladsholder for tomme adgangskodefelter</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
@@ -611,7 +611,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC kræver tilgængelighedstilladelse for at udføre autoskrift på startniveau. Hvis du allerede har givet tilladelse, er du måske nødt til at genstarte KeePassXC.</translation>
+        <translation>KeePassXC kræver adgangstilladelse til Tilgængelighed for at kunne udføre autoskrivning. Hvis du allerede har givet tilladelse, skal du muligvis genstarte KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -809,7 +809,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>Afvis alle</translation>
+        <translation>Nægt alle</translation>
     </message>
     <message>
         <source>Disable for this site</source>
@@ -958,7 +958,7 @@ Vil du migrere dine eksisterende indstillinger nu?</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation>Aktivér browser-integration</translation>
+        <translation>Aktiver browserintegration</translation>
     </message>
     <message>
         <source>General</source>
@@ -1003,11 +1003,11 @@ Vil du migrere dine eksisterende indstillinger nu?</translation>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Vis en notifikation når der anmodes om legitimationsoplysninger</translation>
+        <translation>Vis en meddelelse, når der anmodes om legitimationsoplysninger</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation>Anmod om at låse op for databasen, hvis den er låst</translation>
+        <translation>Anmod om at låse databasen op, hvis den er låst</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
@@ -1023,11 +1023,11 @@ Vil du migrere dine eksisterende indstillinger nu?</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation>Returnér kun de bedst matchende legitimationsoplysninger</translation>
+        <translation>Returnerer kun de bedst matchende legitimationsoplysninger</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Returnerer udløbne legitimationsoplysninger. Strengen [expired] tilføjes til titlen.</translation>
+        <translation>Returnerer udløbne legitimationsoplysninger. Strengen [udløbet] tilføjes til titlen.</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
@@ -1117,7 +1117,7 @@ Vil du migrere dine eksisterende indstillinger nu?</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Knapstil på værktøjslinje</translation>
+        <translation>Knapstil på værktøjslinjen</translation>
     </message>
     <message>
         <source>Config Location:</source>
@@ -1381,11 +1381,11 @@ Vil du migrere dine eksisterende indstillinger nu?</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation>Kunne ikke gemme, database peger ikke på en gyldig fil.</translation>
+        <translation>Kunne ikke gemme, databasen peger ikke på en gyldig fil.</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation>Database er allerede ved at blive gemt.</translation>
+        <translation>Databasen er allerede ved at blive gemt.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
@@ -1420,7 +1420,7 @@ Backup database located at %2</source>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation>Lås op for KeePassXC Database</translation>
+        <translation>Lås KeePassXC-database op</translation>
     </message>
     <message>
         <source>Enter Password:</source>
@@ -1528,7 +1528,7 @@ For at forhindre, at denne fejl vises, skal du gå til &quot;Databaseindstilling
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation>Prøv igen med tom adgangskode</translation>
+        <translation>Forsøg igen med tom adgangskode</translation>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello</source>
@@ -1544,7 +1544,7 @@ For at forhindre, at denne fejl vises, skal du gå til &quot;Databaseindstilling
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Gammelt nøglefilformat</translation>
+        <translation>Gammelt nøglefilsformat</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -2404,7 +2404,7 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Save database backup</source>
-        <translation>Gem sikkerhedskopi af database</translation>
+        <translation>Gem database-backup</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
@@ -2548,7 +2548,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>Ønsker du at gemme ændringer til denne post?</translation>
+        <translation>Ønsker du at gemme ændringer for denne post?</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -5003,11 +5003,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
-        <translation>&amp;Kontroller for opdateringer</translation>
+        <translation>&amp;Kontrollér, om der er opdateringer </translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>&amp;Åbn database...</translation>
+        <translation>&amp;Åbn database…</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
@@ -5019,7 +5019,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>&amp;Ny database...</translation>
+        <translation>&amp;Ny database…</translation>
     </message>
     <message>
         <source>Create a new database</source>
@@ -5027,7 +5027,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>&amp;Flet fra database...</translation>
+        <translation>&amp;Sammenlæg fra database…</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
@@ -5063,15 +5063,15 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>&amp;Rediger gruppe...</translation>
+        <translation>&amp;Rediger gruppe…</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;Slet gruppe...</translation>
+        <translation>&amp;Slet gruppe…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Download alle &amp;Favicons...</translation>
+        <translation>Download alle &amp;Faviconer…</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -5135,7 +5135,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Copy &amp;Password</source>
-        <translation>Kopiér &amp;Adgangskode</translation>
+        <translation>Kopiér &amp;adgangskode</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -5251,7 +5251,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Report a &amp;Bug</source>
-        <translation>Rapportér en &amp;fejl</translation>
+        <translation>Anmeld en &amp;fejl</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
@@ -5263,7 +5263,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation>Online hjælp</translation>
+        <translation>&amp;Online hjælp</translation>
     </message>
     <message>
         <source>Go to online documentation</source>
@@ -5311,15 +5311,15 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation>Klassisk</translation>
+        <translation>Klassisk (platformens indbyggede)</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation>Vis værktøjsbjælke</translation>
+        <translation>Vis værktøjslinje</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation>Vis forhåndsvisningspanel</translation>
+        <translation>Vis panel til forhåndsvisning</translation>
     </message>
     <message>
         <source>Always on Top</source>
@@ -5446,7 +5446,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation>Lås database op for at vise mere information</translation>
+        <translation>Lås databasen op for at vise flere oplysninger</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -5875,7 +5875,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Copy password</source>
-        <translation>Kopiér kodeord</translation>
+        <translation>Kopiér adgangskode</translation>
     </message>
     <message>
         <source>Password</source>
@@ -7169,7 +7169,7 @@ Tilgængelige kommandoer:
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation>Flyt en post til en ny gruppe</translation>
+        <translation>Flytter en post til en ny gruppe.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
@@ -7289,7 +7289,7 @@ Tilgængelige kommandoer:
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation>Indtast adgangskode for at låse op for %1: </translation>
+        <translation>Indtast adgangskode for at låse %1 op: </translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
@@ -8829,7 +8829,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation>Åbn en af de seneste databaser</translation>
+        <translation>Åbn en nylig database</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>

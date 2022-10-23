@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Reporteu errors a: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Informeu d&apos;errors a: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -50,7 +50,7 @@
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Sol·licitud d&apos;accés</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished"/>
+        <translation>Detalls</translation>
     </message>
     <message>
         <source>Remember</source>
@@ -94,18 +94,18 @@
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Denegar-ho tot &amp; Futur</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Permet-ho tot &amp; Futur</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog::DenyButton</name>
     <message>
         <source>Deny for this program</source>
-        <translation type="unfinished"/>
+        <translation>Denega per a aquest programa</translation>
     </message>
 </context>
 <context>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Usa Pageant</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
@@ -124,7 +124,7 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation type="unfinished"/>
+        <translation>SSH_AUTH_SOCK override</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
@@ -140,7 +140,7 @@
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation type="unfinished"/>
+        <translation>SSH_SK_PROVIDER override</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
@@ -150,12 +150,16 @@
         <source>SSH Agent connection is working!</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Usa ambdós agents</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Configuració de l&apos;aplicació</translation>
+        <translation>Paràmetres de l&apos;aplicació</translation>
     </message>
     <message>
         <source>General</source>
@@ -221,6 +225,10 @@
         <source>Select backup storage directory</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -270,12 +278,12 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation type="unfinished"/>
+        <translation>Al desbloquejar la base de dades, mostra les entrades que </translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>ha caducat</translation>
     </message>
     <message>
         <source> days</source>
@@ -406,7 +414,7 @@
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>Usa lletra monoespaiada per a les notes</translation>
+        <translation>Fer servir fonts monoespaiada per les notes</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
@@ -487,6 +495,14 @@
     </message>
     <message>
         <source>Remember last typed entry for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> recent files</source>
+        <translation> fitxers recents</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -587,7 +603,7 @@
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation type="unfinished"/>
+        <translation>Error de tecleig automàtic</translation>
     </message>
     <message>
         <source>Permission Required</source>
@@ -603,7 +619,7 @@
     </message>
     <message>
         <source>Invalid entry provided</source>
-        <translation type="unfinished"/>
+        <translation>Entrada proporcionada no vàlida</translation>
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
@@ -636,6 +652,10 @@
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -685,7 +705,7 @@
     </message>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
-        <translation type="unfinished"/>
+        <translation>Seqüència avortada: el bloqueig de majúscules està activat</translation>
     </message>
     <message>
         <source>Sequence aborted: Modifier keys held by user</source>
@@ -717,11 +737,11 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation type="unfinished"/>
+        <translation>Cerca totes les bases de dades obertes</translation>
     </message>
     <message>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Cerca...</translation>
     </message>
     <message>
         <source>Type Sequence</source>
@@ -745,19 +765,19 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Copy Username</source>
-        <translation type="unfinished"/>
+        <translation>Copia el nom d&apos;usuari</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation type="unfinished"/>
+        <translation>Copia la contrasenya</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Copia TOTP</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Utilitza el teclat virtual</translation>
     </message>
 </context>
 <context>
@@ -784,11 +804,11 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Permet els seleccionats</translation>
+        <translation>Permet la selecció</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>Denega-ho tot</translation>
+        <translation>Denegar tot</translation>
     </message>
     <message>
         <source>Disable for this site</source>
@@ -1075,7 +1095,7 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>Explora...</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
@@ -1410,10 +1430,6 @@ Còpia de seguretat de la base de dades situada a %2</translation>
         <translation>Fitxer clau:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Key file help</source>
         <translation type="unfinished"/>
     </message>
@@ -1426,17 +1442,12 @@ Còpia de seguretat de la base de dades situada a %2</translation>
         <translation>Motxilla:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation>Ajuda de la motxilla</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation type="unfinished"/>
+        <translation>Fitxer clau per desbloquejar la base de dades</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -1444,7 +1455,7 @@ Còpia de seguretat de la base de dades situada a %2</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation type="unfinished"/>
+        <translation>Explora...</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
@@ -1456,7 +1467,7 @@ Còpia de seguretat de la base de dades situada a %2</translation>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation type="unfinished"/>
+        <translation>Desbloqueja la base de dades</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1464,7 +1475,7 @@ Còpia de seguretat de la base de dades situada a %2</translation>
     </message>
     <message>
         <source>Unlock</source>
-        <translation type="unfinished"/>
+        <translation>Desbloqueja</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -1490,7 +1501,7 @@ We recommend you update your KeePassXC installation.</source>
     </message>
     <message>
         <source>Database unlock canceled.</source>
-        <translation type="unfinished"/>
+        <translation>Desbloqueig de la base de dades cancel·lat.</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1564,6 +1575,15 @@ If you do not have a key file, please leave the field empty.</source>
         <source>Select hardware key…</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -1588,7 +1608,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Credencials de la base de dades</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
@@ -1643,7 +1663,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Suprimeix</translation>
+        <translation>Suprimiu</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
@@ -2203,13 +2223,21 @@ This is definitely a bug, please report it to the developers.</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [bloquejat]</translation>
     </message>
+    <message>
+        <source>Export database to XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
-    <message>
-        <source>Database Tags</source>
-        <translation type="unfinished"/>
-    </message>
     <message>
         <source>Searching…</source>
         <translation type="unfinished"/>
@@ -2256,7 +2284,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Entrades caducades</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2375,6 +2403,22 @@ Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Desa</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2512,10 +2556,6 @@ Would you like to correct it?</source>
         <source>Hide</source>
         <translation>Oculta</translation>
     </message>
-    <message>
-        <source>Tomorrow</source>
-        <translation>Demà</translation>
-    </message>
     <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>% n setmana/es</numerusform><numerusform>%n setmana/es</numerusform></translation>
@@ -2527,6 +2567,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>% n any/s</numerusform><numerusform>%n any/s</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2915,7 +2959,7 @@ Would you like to correct it?</source>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>Explora...</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3043,6 +3087,14 @@ Would you like to correct it?</source>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
@@ -3076,7 +3128,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Browse…</source>
-        <translation type="unfinished"/>
+        <translation>Explora...</translation>
     </message>
     <message>
         <source>Clear fields</source>
@@ -3624,6 +3676,10 @@ Error: %1</source>
         <source>Auto-Type</source>
         <translation>Compleció automàtica</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryModel</name>
@@ -3730,14 +3786,14 @@ Error: %1</source>
     </message>
     <message>
         <source>Has TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Disposa de TOTP</translation>
     </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
     <message>
         <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
+        <translation>Mostra el valor actual de TOTP</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3830,6 +3886,10 @@ Error: %1</source>
     <message>
         <source>Disabled</source>
         <translation>Inhabilitat</translation>
+    </message>
+    <message>
+        <source>Double click to copy value</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4748,7 +4808,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation type="unfinished"/>
+        <translation>Nota: NO utilitzeu un fitxer que pugui canviar, ja que us impedirà desbloquejar la base de dades.</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -4756,7 +4816,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Browse…</source>
-        <translation type="unfinished"/>
+        <translation>Explora...</translation>
     </message>
     <message>
         <source>Old key file format</source>
@@ -5000,7 +5060,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation type="unfinished"/>
+        <translation>Informes de la base de dades</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
@@ -5072,11 +5132,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Lock Database</source>
-        <translation type="unfinished"/>
+        <translation>B&amp;loqueja la base de dades</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation type="unfinished"/>
+        <translation>Bloqueja totes les bases de dades</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -5140,11 +5200,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Show QR Code</source>
-        <translation type="unfinished"/>
+        <translation>Mostra el codi QR</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation type="unfinished"/>
+        <translation>Configura el TOTP...</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
@@ -5192,7 +5252,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation type="unfinished"/>
+        <translation>Desa una còpia de seguretat...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -5216,11 +5276,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"/>
+        <translation>Fosc</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation type="unfinished"/>
+        <translation>Clàssic (natiu de la plataforma)</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5312,6 +5372,30 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Copia la contrasenya i el TOTP</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>XML File…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5463,7 +5547,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation type="unfinished"/>
+        <translation>Credencials de la base de dades</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
@@ -5685,29 +5769,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
-    <message>
-        <source>Passwords do not match</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Passwords match so far</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Toggle Password (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Generate Password (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
@@ -5886,10 +5947,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Excloure caràcters d&apos;aspecte semblant</translation>
     </message>
@@ -6017,6 +6074,57 @@ Do you want to overwrite it?</source>
     <message>
         <source>Password Quality: %1</source>
         <translation>Qualitat de la contrasenya: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Pobre</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Feble</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Bona</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Excel·lent</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Poor</source>
@@ -6382,7 +6490,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation type="unfinished"/>
+        <translation>Copia el TOTP actual al porta-retalls (equivalent a &quot;-a totp&quot;).</translation>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
@@ -6419,11 +6527,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation type="unfinished"/>
+        <translation>ERROR: Especifiqueu un, --atribut o --totp, no tots dos.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
-        <translation type="unfinished"/>
+        <translation>L&apos;entrada amb la ruta %1 no té configurat TOTP.</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
@@ -7095,7 +7203,7 @@ Available commands:
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation type="unfinished"/>
+        <translation>Mostra el TOTP actual de l&apos;entrada.</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
@@ -7166,10 +7274,6 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Invalid YubiKey serial %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please present or touch your YubiKey to continue…</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -7319,7 +7423,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>Desbloqueig ràpid</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
@@ -7545,11 +7649,11 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Browser Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Estadístiques del navegador</translation>
     </message>
     <message>
         <source>Health Check</source>
-        <translation type="unfinished"/>
+        <translation>Informe de salut</translation>
     </message>
     <message>
         <source>HIBP</source>
@@ -7557,7 +7661,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Estadístiques</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
@@ -7589,7 +7693,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation type="unfinished"/>
+        <translation>bloqueja totes les bases de dades obertes</translation>
     </message>
     <message>
         <source>key file of the database</source>
@@ -7605,11 +7709,11 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Locked databases.</source>
-        <translation type="unfinished"/>
+        <translation>Bases de dades bloquejades.</translation>
     </message>
     <message>
         <source>Database failed to lock.</source>
-        <translation type="unfinished"/>
+        <translation>La base de dades no s&apos;ha pogut bloquejar.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -7647,6 +7751,67 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8196,6 +8361,10 @@ Nucli: %3 %4</translation>
         <source>Limit search to selected group</source>
         <translation>Limitar la cerca al grup seleccionat</translation>
     </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8409,15 +8578,38 @@ Nucli: %3 %4</translation>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Expired</source>
-        <translation type="unfinished"/>
+        <translation>Caducades</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
+        <translation>Contrasenyes febles</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear Search</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8449,7 +8641,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation type="unfinished"/>
+        <translation>Hi hagut un error creant el codi QR</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
@@ -8517,7 +8709,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation type="unfinished"/>
+        <translation>Secret de TOTP no vàlid</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
@@ -8526,7 +8718,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation type="unfinished"/>
+        <translation>Confirma l&apos;eliminació de la configuració de TOTP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>

@@ -11,11 +11,11 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Meld fra om feil på: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Rapportér feil på: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC er distribuert under vilkårene i GNU General Public License (GPL) versjon 2 eller (etter eget valg) versjon 3.</translation>
+        <translation>KeePassXC distribueres under vilkårene i GNU General Public License (GPL) versjon 2 eller (etter eget valg) versjon 3.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>En spesiell takk fra KeePassXC-laget går til debfx, utvikler av programmet KeePassX.</translation>
+        <translation>En spesiell takk fra KeePassXC-teamet går til debfx som utviklet det opprinnelige KeePassX.</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Hvis du vil rapportere en feil, inkluder følgende informasjon:</translation>
+        <translation>Inkluder følgende informasjon når du rapporterer en feil:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -94,11 +94,11 @@
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Nekt alle &amp; fremtidige</translation>
+        <translation>Nekt alle &amp;&amp; fremtidige</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation>Tillat alle &amp;fremtidige</translation>
+        <translation>Tillat alle &amp;&amp; &amp;fremtidige</translation>
     </message>
 </context>
 <context>
@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Aktiver SSH-agent integrasjon</translation>
+        <translation>Aktiver SSH-agentintegrasjon</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -250,7 +250,7 @@
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation>Minimer ved programstart</translation>
+        <translation>Minimer vindu ved programstart</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
@@ -309,7 +309,7 @@
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Lagre ikkedata-endringer ved låsing av database</translation>
+        <translation>Lagre ikke-data-endringer ved låsing av database</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -317,7 +317,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Sikkerhetskopier database-filen før lagring</translation>
+        <translation>Sikkerhetskopier databasefilen før lagring</translation>
     </message>
     <message>
         <source>Backup destination</source>
@@ -373,7 +373,7 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Tidsavbrudd for nedlasting av favikon:</translation>
+        <translation>Tidsavbrudd for nedlasting av nettstedsikon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
@@ -430,7 +430,7 @@
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>Skuffikon-type:</translation>
+        <translation>Ikontype på oppgavelinje:</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
@@ -438,7 +438,7 @@
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Tilbakestill innstillingene til standard...</translation>
+        <translation>Tilbakestill til standardinnstillinger…</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -487,11 +487,11 @@
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>Global autoskrivhurtigtast</translation>
+        <translation>Global autoskriv-hurtigtast</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>Autoskriv tegnskrivings-forsinkelse i millisekunder</translation>
+        <translation>Autoskriv tegn-skriveforsinkelse i millisekunder</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
@@ -568,11 +568,11 @@
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation>Bruk plassholder for tomme passordfelt</translation>
+        <translation>Bruk posisjonsmerke for tomme passordfelt</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation>Skjul passord i oppføringspanelet</translation>
+        <translation>Skjul passord i oppføring panelet</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
@@ -676,7 +676,7 @@
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Standard rekkefølge</translation>
+        <translation>Standardrekkefølge</translation>
     </message>
 </context>
 <context>
@@ -735,7 +735,7 @@ Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
         <translation>&lt;p&gt;Du kan bruke avanserte søkespørringer til å finne en hvilken som helst oppføring i de åpne databasene. Følgende snarveier er nyttige:&lt;br/&gt;
-CTRL+F – Vis/skjul databasesøk&lt;br/&gt;
+CTRL+F – Aktiver/deaktiver databasesøk&lt;br/&gt;
 Ctrl+1 – Skriv brukernavn&lt;br/&gt;
 Ctrl+2 – Skriv passord&lt;br/&gt;
 CTRL+3 – Skriv TOTP&lt;br/&gt;
@@ -798,7 +798,7 @@ Ctrl+4 – Bruk virtuelt tastatur (bare Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
-        <translation>Husk tilgang til merkede oppføringer</translation>
+        <translation>Husk tilgang til valgte oppføringer</translation>
     </message>
     <message>
         <source>Remember</source>
@@ -839,7 +839,7 @@ Ctrl+4 – Bruk virtuelt tastatur (bare Windows)&lt;/p&gt;</translation>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
         <translation>Du har flere databaser åpne.
-Vennligst velge riktig database for å lagre identifikasjon.</translation>
+Vennligst velg riktig database for å lagre identifikasjon.</translation>
     </message>
 </context>
 <context>
@@ -932,7 +932,7 @@ Flyttet %2 nøkler til egendefinerte data.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>Den aktiv database inneholder ikke en oppføring med KeePassHTTP-attributter.</translation>
+        <translation>Den aktive databasen inneholder ikke oppføringer med KeePassHTTP-attributter.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
@@ -940,7 +940,7 @@ Flyttet %2 nøkler til egendefinerte data.</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: Gammel nettleser integrasjon innstillinger oppdaget</translation>
+        <translation>KeePassXC: Oppdaget eldre innstillinger for nettleserintegrasjon</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
@@ -963,7 +963,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation>Aktiver nettleser integrasjon</translation>
+        <translation>Aktiver nettleserintegrasjon</translation>
     </message>
     <message>
         <source>General</source>
@@ -1084,11 +1084,11 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Oppdaterer automatisk KeePassXC eller sti til binær keepassxc-proxy til lokale meldings-skript ved oppstart.</translation>
+        <translation>Oppdaterer automatisk KeePassXC eller sti til binær keepassxc-mellomtjener til innebygd meldingsformidlings-skript ved oppstart.</translation>
     </message>
     <message>
         <source>Update native messaging manifest files at startup</source>
-        <translation>Oppdater opprinnelige meldingsmanifestfiler ved oppstart</translation>
+        <translation>Oppdater manifestfilene for innebygd meldingsformidling ved oppstart</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
@@ -1097,7 +1097,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     <message>
         <source>Use a custom proxy location:</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Bruk en egendefinert proxy-plassering:</translation>
+        <translation>Bruk en egendefinert mellomtjenerplassering:</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
@@ -1114,7 +1114,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
-        <translation>Bruk en egendefinert plassering for leserkonfigurasjon:</translation>
+        <translation>Bruk en egendefinert plassering for nettleserkonfigurasjon:</translation>
     </message>
     <message>
         <source>Browser type:</source>
@@ -1138,11 +1138,11 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Custom extension ID:</source>
-        <translation>Egendefinert utvidelse-ID:</translation>
+        <translation>Egendefinert utvidelses-ID:</translation>
     </message>
     <message>
         <source>Custom extension ID</source>
-        <translation>Egendefinert utvidelse-ID</translation>
+        <translation>Egendefinert utvidelses-ID</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
@@ -1189,11 +1189,11 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Tilføy &apos; - Klone&apos; til tittel</translation>
+        <translation>Tilføy &apos; - Clone&apos; til tittel</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Bytt ut brukernavn og passord med referansene</translation>
+        <translation>Bytt ut brukernavn og passord med referanser</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -1236,7 +1236,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>Adresse</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1268,7 +1268,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>Tekst er markert ved</translation>
+        <translation>Tekst er markert med</translation>
     </message>
     <message>
         <source>Text qualification</source>
@@ -1288,11 +1288,11 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation>Overskriftslinjer hoppet over</translation>
+        <translation>Hodelinjer hoppet over</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation>Antall overskriftslinjer som skal forkastes</translation>
+        <translation>Antall hodelinjer som skal forkastes</translation>
     </message>
     <message>
         <source>First line has field names</source>
@@ -1312,7 +1312,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Not Present</source>
-        <translation>Ikke tilstede</translation>
+        <translation>Ikke til stede</translation>
     </message>
     <message>
         <source>Column %1</source>
@@ -1328,11 +1328,11 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
-        <translation>Feil oppdaget i CSV-fil!</translation>
+        <translation>Feil(er) oppdaget i CSV-fil!</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[%n melding til ble hoppet over]</numerusform><numerusform>[%n flere meldinger ble hoppet over]</numerusform></translation>
+        <translation><numerusform>[%n melding hoppet over]</numerusform><numerusform>[%n flere meldinger hoppet over]</numerusform></translation>
     </message>
     <message>
         <source>Error</source>
@@ -1354,7 +1354,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n byte</numerusform><numerusform>%n byter</numerusform></translation>
+        <translation><numerusform>%n byte</numerusform><numerusform>%n bytes</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
@@ -1362,7 +1362,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n kolonne(r)</numerusform><numerusform>%n kolonne(r)</numerusform></translation>
+        <translation><numerusform>%n kolonne</numerusform><numerusform>%n kolonner</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1378,15 +1378,15 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>Kan ikke åpne filen %1.</translation>
+        <translation>Kan ikke åpne fil %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation>Feil under lesing av database: %1</translation>
+        <translation>Feil under lesing av databasen: %1</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation>Kunne ikke lagre, database peker ikke til en gyldig fil.</translation>
+        <translation>Kunne ikke lagre. Databasen peker ikke til en gyldig fil.</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
@@ -1394,7 +1394,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>Kunne ikke lagre, databasen er ikke initialisert!</translation>
+        <translation>Kunne ikke lagre. Databasen er ikke klargjort!</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
@@ -1404,7 +1404,7 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
-Sikkerhetskopi av database lokalisert på %2</translation>
+Sikkerhetskopi av databasen er lokalisert på %2</translation>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers.</source>
@@ -1426,7 +1426,7 @@ Sikkerhetskopi av database lokalisert på %2</translation>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation>Låse opp KeePassXC Database</translation>
+        <translation>Lås opp KeePassXC-database</translation>
     </message>
     <message>
         <source>Enter Password:</source>
@@ -1434,11 +1434,11 @@ Sikkerhetskopi av database lokalisert på %2</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Passord felt</translation>
+        <translation>Passordfelt</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation>Angi eventuell tilleggslegitimasjon (hvis noen):</translation>
+        <translation>Angi eventuell tilleggsidentifikasjon:</translation>
     </message>
     <message>
         <source>Key File:</source>
@@ -1462,7 +1462,7 @@ Sikkerhetskopi av database lokalisert på %2</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation>Nøkkelfil for å låse opp database</translation>
+        <translation>Nøkkelfil for å låse opp databasen</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -1474,7 +1474,7 @@ Sikkerhetskopi av database lokalisert på %2</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation>Oppdater maskinvarenøkkel</translation>
+        <translation>Oppdater maskinvare-autentiseringsenhet</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -1494,7 +1494,7 @@ Sikkerhetskopi av database lokalisert på %2</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Hold inntil eller berør din YubiKey for å fortsette ...</translation>
+        <translation>Kobl til og/eller berør YubiKey for å fortsette...</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
@@ -1590,15 +1590,15 @@ Hvis du ikke har en nøkkelfil, lar du feltet stå tomt.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Oppdager maskinvarenøkler...</translation>
+        <translation>Oppdager maskinvarenøkler …</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>Ingen maskinvarenøkler oppdaget</translation>
+        <translation>Finner ingen maskinvarenøkler</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>Velge maskinvarenøkkel...</translation>
+        <translation>Velg maskinvarenøkkel...</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
@@ -1622,7 +1622,7 @@ Hvis du ikke har en nøkkelfil, lar du feltet stå tomt.</translation>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation>Avanserte Innstillinger</translation>
+        <translation>Avanserte innstillinger</translation>
     </message>
     <message>
         <source>General</source>
@@ -1634,7 +1634,7 @@ Hvis du ikke har en nøkkelfil, lar du feltet stå tomt.</translation>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation>Legitimasjon for database</translation>
+        <translation>Database-akkreditering</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
@@ -1673,7 +1673,7 @@ Hvis du ikke har en nøkkelfil, lar du feltet stå tomt.</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation>Glem alle side-spesifikke innstillinger og oppføringer</translation>
+        <translation>Glem alle områdespesifikke innstillinger og oppføringer</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1699,7 +1699,7 @@ Hvis du ikke har en nøkkelfil, lar du feltet stå tomt.</translation>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
         <translation>Vil du virkelig slette den merkede nøkkelen?
-Dette kan forhindre tilkobling til plugin-modulen i nettleseren.</translation>
+Dette kan forhindre tilkobling for plugin-modulen i nettleseren.</translation>
     </message>
     <message>
         <source>Key</source>
@@ -1715,13 +1715,13 @@ Dette kan forhindre tilkobling til plugin-modulen i nettleseren.</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>Aktiver nettleser integrasjon for å få tilgang til disse innstillingene.</translation>
+        <translation>Aktiver nettleserintegrasjon for å få tilgang til disse innstillingene.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
         <translation>Vil du virkelig koble fra alle nettlesere?
-Dette kan forhindre tilkobling til plugin-modulen i nettleseren.</translation>
+Dette kan forhindre tilkobling for plugin-modulen i nettleseren.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -1759,7 +1759,7 @@ Tilgangstillatelser til oppføringer vil bli tilbakekalt.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Fjernet tillatelser fra %n oppføring.</numerusform><numerusform>Fjernet tillatelser fra fra %n oppføringer.</numerusform></translation>
+        <translation><numerusform>Tillatelsen er fjernet fra %n oppføring.</numerusform><numerusform>Tillatelsene er fjernet fra %n oppføringer.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1767,7 +1767,7 @@ Tilgangstillatelser til oppføringer vil bli tilbakekalt.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>Den aktive databasen inneholder ikke et oppsett med tillatelser.</translation>
+        <translation>Den aktive databasen inneholder ikke oppsett med tillatelser.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
@@ -1781,12 +1781,12 @@ Dette er nødvendig for å opprettholde kompatibilitet med nettleserutvidelsen.<
     </message>
     <message>
         <source>Refresh database ID</source>
-        <translation>Oppfriske database ID</translation>
+        <translation>Oppdater database-ID</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Vil du virkelig oppdatere database-ID?
+        <translation>Vil du virkelig oppdatere database-ID&apos;en?
 Dette er bare nødvendig hvis databasen er en kopi av en annen og nettleserutvidelsen ikke kan koble til.</translation>
     </message>
 </context>
@@ -1826,7 +1826,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation>Kunne ikke endre databaselegitimasjon</translation>
+        <translation>Kunne ikke endre database-akkreditering</translation>
     </message>
 </context>
 <context>
@@ -1849,7 +1849,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation>Høyere verdier gir mer beskyttelse, men å åpne database vil ta lengre tid.</translation>
+        <translation>Høyere verdier gir mer beskyttelse, men å åpne databasen vil ta lengre tid.</translation>
     </message>
     <message>
         <source>Database format:</source>
@@ -1877,7 +1877,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES:  256 Bit   (standard)</translation>
+        <translation>AES: 256 bit (standard)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
@@ -2012,11 +2012,11 @@ Hvis du beholder dette antallet vil ikke databasen være beskyttet mot &apos;rå
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Databasenavn-felt</translation>
+        <translation>Felt for databasenavn</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Databasens beskrivelse:</translation>
+        <translation>Databasebeskrivelse:</translation>
     </message>
     <message>
         <source>Database description field</source>
@@ -2028,19 +2028,19 @@ Hvis du beholder dette antallet vil ikke databasen være beskyttet mot &apos;rå
     </message>
     <message>
         <source>Default username field</source>
-        <translation>Standard brukernavnfelt</translation>
+        <translation>Standard brukernavn-felt</translation>
     </message>
     <message>
         <source>History Settings</source>
-        <translation>Historikk-innstillinger</translation>
+        <translation>Historikkinnstillinger</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation>Maksimalt historikkantall per oppføring</translation>
+        <translation>Maksimalt antall historiske oppføringer per oppføring</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Maks. historikk-antall:</translation>
+        <translation>Maks. historikkelement:</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
@@ -2048,7 +2048,7 @@ Hvis du beholder dette antallet vil ikke databasen være beskyttet mot &apos;rå
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Maks. historikk-størrelse:</translation>
+        <translation>Maks. historikkstørrelse:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2056,24 +2056,24 @@ Hvis du beholder dette antallet vil ikke databasen være beskyttet mot &apos;rå
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation>Bruk søppelbøtte</translation>
+        <translation>Bruk papirkurven</translation>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Ekstra database-innstillinger</translation>
+        <translation>Ekstra databaseinnstillinger</translation>
     </message>
     <message>
         <source>Enable compression (recommended)</source>
-        <translation>Aktiver komprimering (anbefales)</translation>
+        <translation>Aktiver komprimering (anbefalt)</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation>Slett søppelbøtte</translation>
+        <translation>Slett papirkurven</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation>Vil du slette gjeldende papirkurv og alt innholdet i den?
+        <translation>Vil du slette papirkurven og alt innholdet i den?
 Denne handlingen kan ikke angres.</translation>
     </message>
     <message>
@@ -2164,7 +2164,7 @@ Denne handlingen kan ikke angres.</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Databasenavn-felt</translation>
+        <translation>Felt for databasenavn</translation>
     </message>
     <message>
         <source>Description:</source>
@@ -2314,7 +2314,7 @@ Dette er definitivt en feil, rapporter det til utviklerne.</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation>Flytt gruppe til søppelbøtte?</translation>
+        <translation>Flytte gruppe til papirkurven?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
@@ -2428,11 +2428,11 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>Tøm papirkurv?</translation>
+        <translation>Tømme papirkurven?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Er du sikker på at du ønsker å slette alt i papirkurven permanent?</translation>
+        <translation>Er du sikker på at du ønsker å permanent slette hele papirkurven?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
@@ -2519,7 +2519,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Oppførings-historikk</translation>
+        <translation>Oppføringshistorikk</translation>
     </message>
     <message>
         <source>Add entry</source>
@@ -2585,7 +2585,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Er du sikker på at du ønsker å fjerne denne attributten?</translation>
+        <translation>Er du sikker på at du ønsker å fjerne dette attributtet?</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -2593,7 +2593,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
-        <translation>[BESKYTTET] Trykk Vis for å vise eller redigere</translation>
+        <translation>[BESKYTTET] Trykk &apos;Vis&apos; for å vise eller endre</translation>
     </message>
     <message>
         <source>Hide</source>
@@ -2656,7 +2656,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation>Vis/skjul attributtbeskyttelse</translation>
+        <translation>Attributtbeskyttelse på/av</translation>
     </message>
     <message>
         <source>Protect</source>
@@ -2743,7 +2743,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation>Du kan bruke en stjerne (*) til å matche alt</translation>
+        <translation>Du kan bruke en stjerne (*) for å matche alt</translation>
     </message>
     <message>
         <source>Set the window association title</source>
@@ -2784,27 +2784,27 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation>Skjul denne oppføringen for leserutvidelsen</translation>
+        <translation>Skjul denne oppføringen for nettleserutvidelsen</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation>Hopp over automatisk utførelse for denne oppføringen</translation>
+        <translation>Hopp over auto-sending for denne oppføringen</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Send denne innstillingen bare til nettleseren for «HTTP Auth»-dialoger. Hvis aktivert vil ikke vanlige påloggingsskjemaer få vist denne oppføringen for valg.</translation>
+        <translation>Send denne innstillingen bare til nettleseren for «HTTP Auth»-dialoger. Hvis aktivert viser ikke vanlige påloggingsskjemaer denne oppføringen tilgjengelig for valg.</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation>Bruk denne oppføringen bare med «HTTP Basic Auth»</translation>
+        <translation>Bruk denne oppføringen bare til «HTTP Basic Auth»</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Ikke send denne innstillingen til nettleseren for «HTTP Auth»-dialoger. Hvis aktivert viser ikke «HTTP Auth»-dialoger denne oppføringen for valg.</translation>
+        <translation>Ikke send denne innstillingen til nettleseren for «HTTP Auth»-dialoger. Hvis aktivert viser ikke «HTTP Auth»-dialoger denne oppføringen tilgjengelig for valg.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
-        <translation>Ikke bruk denne oppføringen med «HTTP Basic Auth»</translation>
+        <translation>Ikke bruk denne oppføringen til «HTTP Basic Auth»</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
@@ -2820,7 +2820,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Endring</translation>
+        <translation>Endre</translation>
     </message>
 </context>
 <context>
@@ -2831,7 +2831,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation>Vis oppføring ved valgt historikk-tilstand</translation>
+        <translation>Vis oppføring ved valgt historikkelement</translation>
     </message>
     <message>
         <source>Show</source>
@@ -2839,7 +2839,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation>Gjenopprett oppføring til valgt historikk-tilstand</translation>
+        <translation>Gjenopprett oppføring til valgte historikkelement</translation>
     </message>
     <message>
         <source>Restore</source>
@@ -2847,7 +2847,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation>Slett valgt historikk-tilstand</translation>
+        <translation>Slett valgt historikkelement</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -2874,7 +2874,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Vis/skjul notatdelen.</translation>
+        <translation>Klikk avkrysningsboksen for å vise notatdelen.</translation>
     </message>
     <message>
         <source>Username field</source>
@@ -2882,7 +2882,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation>Vis/skjul synlige merknader</translation>
+        <translation>Vise/skjule notater</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -2914,11 +2914,11 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Url field</source>
-        <translation>URL-adressefelt</translation>
+        <translation>URL-felt</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Last ned favicon for URL</translation>
+        <translation>Last ned nettstedsikon for URL</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -2938,7 +2938,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Vis/skjul utløp</translation>
+        <translation>Aktivere/deaktivere utløpsdato og -tid.</translation>
     </message>
     <message>
         <source>Expires:</source>
@@ -2961,7 +2961,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>Fjern nøkkel fra agent når database er lukket/låst</translation>
+        <translation>Fjern nøkkel fra agent når databasen blir lukket/låst</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -2969,7 +2969,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Legg nøkkel til agent når database er åpnet/ulåst</translation>
+        <translation>Legg nøkkel til agent når databasen blir åpnet/opplåst</translation>
     </message>
     <message>
         <source>Decrypt</source>
@@ -3104,15 +3104,15 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Vis/skjul oppføringer fra nettleserutvidelse for denne og undergrupper</translation>
+        <translation>Skjul oppføringer fra nettleserutvidelse for denne og undergrupper</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
-        <translation>Hopp over automatisk utførelse for oppføringer:</translation>
+        <translation>Hopp over automatisk sending for oppføringer:</translation>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
-        <translation>Aktiver/deaktiver automatisk utførelse for denne og undergrupper</translation>
+        <translation>Veksleknapp for hopp over automatisk sending for denne og undergrupper</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
@@ -3120,7 +3120,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Vis/skjul bare HTTP Auth for denne og undergrupper</translation>
+        <translation>Veksleknapp for bare HTTP Auth for denne og undergrupper</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
@@ -3128,7 +3128,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>Vis/skjul ikke bruk HTTP Auth for denne og undergrupper</translation>
+        <translation>Veksleknapp for ikke bruk &quot;HTTP Auth&quot; for denne og undergrupper</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
@@ -3195,7 +3195,7 @@ Vil du rette den?</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation>Synkroniser</translation>
+        <translation>Synkronisér</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
@@ -3218,15 +3218,15 @@ Støttede utvidelser er: %1.</translation>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation>KeeShare er deaktivert. Du kan aktivere import/eksport i programinnstillingene.</translation>
+        <translation>KeeShare er for øyeblikket deaktivert. Du kan aktivere import/eksport i programinnstillingene.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Databaseeksport er deaktivert av programinnstillinger.</translation>
+        <translation>Databaseeksport er for øyeblikket deaktivert av programinnstillinger.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Databaseimport er deaktivert av programinnstillinger.</translation>
+        <translation>Databaseimport er for øyeblikket deaktivert av programinnstillinger.</translation>
     </message>
     <message>
         <source>KeeShare container</source>
@@ -3257,7 +3257,7 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Vis/skjul utløp</translation>
+        <translation>Aktivere/deaktivere utløpsdato og -tid.</translation>
     </message>
     <message>
         <source>Expires:</source>
@@ -3265,7 +3265,7 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Name field</source>
-        <translation>Navn-feltet</translation>
+        <translation>Navn-felt</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -3281,11 +3281,11 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation>Søk:</translation>
+        <translation>Søke:</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation>Vis/skjul autoskriv for denne og undergrupper</translation>
+        <translation>Veksle mellom autoskriv for denne og undergrupper</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -3309,14 +3309,14 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation>Vis/skjul søk for denne og undergrupper</translation>
+        <translation>Søkeknapp for denne og undergrupper</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Bruk standard ikon</translation>
+        <translation>Bruk standardikon</translation>
     </message>
     <message>
         <source>Use custom icon</source>
@@ -3336,11 +3336,11 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Last ned favicon for URL</translation>
+        <translation>Last ned nettstedsikon for URL</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Last ned ikoner</translation>
+        <translation>Last ned nettstedsikon</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
@@ -3368,7 +3368,7 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>Kan ikke hente favorittikon.</translation>
+        <translation>Kan ikke hente nettstedsikon.</translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -3388,7 +3388,7 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation>Velg bilde(-r)</translation>
+        <translation>Velg Bilde(-r)</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
@@ -3404,7 +3404,7 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>Dette ikonet mislyktes:</numerusform><numerusform>Følgende ikoner mislyktes:</numerusform></translation>
+        <translation><numerusform>Følgende ikon mislyktes:</numerusform><numerusform>Følgende ikoner mislyktes:</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3415,7 +3415,7 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation>Dato- og klokkeslett opprettet</translation>
+        <translation>Datotid opprettet</translation>
     </message>
     <message>
         <source>Modified:</source>
@@ -3423,7 +3423,7 @@ Støttede utvidelser er: %1.</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation>Dato- og klokkeslett endret</translation>
+        <translation>Datotid endret</translation>
     </message>
     <message>
         <source>Accessed:</source>
@@ -3603,7 +3603,7 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
         <source>Unable to open file(s):
 %1</source>
         <translation><numerusform>Kan ikke åpne fil:
-%1</numerusform><numerusform>Kan ikke åpne filer:
+%1</numerusform><numerusform>Kan ikke åpne filene:
 %1</numerusform></translation>
     </message>
     <message>
@@ -3905,7 +3905,7 @@ Feil: %1</translation>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation>Standard sekvens</translation>
+        <translation>Standard rekkefølge</translation>
     </message>
     <message>
         <source>Window</source>
@@ -3967,7 +3967,7 @@ Feil: %1</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation>Resette til standard</translation>
+        <translation>Resett til standardinnstillinger</translation>
     </message>
 </context>
 <context>
@@ -4079,7 +4079,7 @@ Dette vil gjøre passordene og sensitiv informasjon sårbare!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n oppføring ble brukt av %1</numerusform><numerusform>%n oppføringer ble brukt av %1</numerusform></translation>
+        <translation><numerusform>%n Oppføring ble brukt av %1</numerusform><numerusform>%n Oppføringer ble brukt av %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4141,7 +4141,7 @@ Dette vil gjøre passordene og sensitiv informasjon sårbare!
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Last ned Favicons</translation>
+        <translation>Last ned nettstedsikoner</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4151,7 +4151,7 @@ Dette vil gjøre passordene og sensitiv informasjon sårbare!
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
         <translation>Har du problemer med å laste ned ikoner?
-Du kan aktivere DuckDuckGo-ikonetjenesten i sikkerhetsdelen av applikasjonsinnstillingene.</translation>
+Du kan aktivere DuckDuckGo-nettstedsikontjenesten i seksjonen for sikkerhet i applikasjonsinnstillingene.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4179,7 +4179,7 @@ Du kan aktivere DuckDuckGo-ikonetjenesten i sikkerhetsdelen av applikasjonsinnst
     </message>
     <message>
         <source>Already Exists</source>
-        <translation>Eksisterer allerede</translation>
+        <translation>Finnes fra før</translation>
     </message>
     <message>
         <source>Download Failed</source>
@@ -4205,7 +4205,7 @@ Du kan aktivere DuckDuckGo-ikonetjenesten i sikkerhetsdelen av applikasjonsinnst
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation>Manglende database-headere</translation>
+        <translation>Manglende databasehoder</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4213,29 +4213,29 @@ Du kan aktivere DuckDuckGo-ikonetjenesten i sikkerhetsdelen av applikasjonsinnst
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Kan ikke utstede utfordringsrespons: %1</translation>
+        <translation>Kan ikke utstede utfordrerrespons: %1</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Det ble angitt ugyldig legitimasjon, prøv igjen.
-Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
+        <translation>Det ble angitt ugyldig identifikasjon, prøv igjen.
+Hvis dette gjentar seg kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
-        <translation>Filhode samsvarer ikke med hash-koden</translation>
+        <translation>Hode samsvarer ikke med hash-koden</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Ugyldig: Header id size</translation>
+        <translation>Ugyldig størrelse på hode-id</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Ugyldig feltlengde i hode-id: felt %1</translation>
+        <translation>Ugyldig hodefeltlengde: felt %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Ugyldig lengde i hodedata: felt %1, %2 forventet, %3 funnet</translation>
+        <translation>Ugyldig lengde på hodedata: felt %1, %2 forventet, %3 funnet</translation>
     </message>
 </context>
 <context>
@@ -4243,11 +4243,11 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Ugyldig: Symmetric cipher IV size.</translation>
+        <translation>Ugyldig symmetrisk chiffer IV-størrelse.</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Kan ikke utstede utfordringsrespons: %1</translation>
+        <translation>Kan ikke utstede utfordrerrespons: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4258,25 +4258,25 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>manglende database-headere</translation>
+        <translation>manglende databasehoder</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation>Kan ikke beregne database nøkkel: %1</translation>
+        <translation>Kan ikke beregne databasenøkkel: %1</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>Ugyldig header-sjekksumstørrelse</translation>
+        <translation>Ugyldig størrelse på kontrollsum for hode</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation>Ikke samsvar med SHA256-header</translation>
+        <translation>SHA256 samsvarer ikke i hode</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Det ble angitt ugyldig legitimasjon, prøv igjen.
-Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
+        <translation>Det ble angitt ugyldig identifikasjon, prøv igjen.
+Hvis dette gjentar seg kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4284,23 +4284,23 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation>Ukjent kryptering</translation>
+        <translation>Ukjent chiffer</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Ugyldig: Header id size</translation>
+        <translation>Ugyldig størrelse på hode-id</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Ugyldig feltlengde i hode-id: felt %1</translation>
+        <translation>Ugyldig hodefeltlengde: felt %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Ugyldig lengde i hodedata: felt %1, %2 forventet, %3 funnet</translation>
+        <translation>Ugyldig lengde på hodedata: felt %1, %2 forventet, %3 funnet</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Kunne ikke åpne buffer til KDF-parametere i header</translation>
+        <translation>Kunne ikke åpne buffer for KDF-parametere i hode</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
@@ -4308,11 +4308,11 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation>Eldre header-felt funnet i KDBX4-fil.</translation>
+        <translation>Eldre hodefelt funnet i KDBX4-fil.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Ugyldig: Inner header id size</translation>
+        <translation>Ugyldig størrelse på indre hode-id</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
@@ -4324,7 +4324,7 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>Ugyldig: Inner header binary size</translation>
+        <translation>Ugyldig binær størrelse for indre hode</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
@@ -4400,7 +4400,7 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation>Kan ikke beregne database nøkkel: %1</translation>
+        <translation>Kan ikke beregne databasenøkkel: %1</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
@@ -4412,7 +4412,7 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
-        <translation>Ugyldig chifferkode-uuid-lengde: %1 (lengde=%2)</translation>
+        <translation>Ugyldig lengde på chifferkode-uuid: %1 (lengde=%2)</translation>
     </message>
     <message>
         <source>Unable to parse UUID: %1</source>
@@ -4420,7 +4420,7 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation>Ikke støttet kryptering</translation>
+        <translation>Ikke støttet chiffer</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
@@ -4553,11 +4553,11 @@ Linje %2, kolonne %3</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation>Historikkelement med forskjellig uuid</translation>
+        <translation>Historikkelement med forskjellige uuid</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation>Duplikat: Custom attribute</translation>
+        <translation>Duplisert egendefinert attributt funnet</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
@@ -4613,7 +4613,7 @@ Linje %2, kolonne %3</translation>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation>Privat nøkkel er tom</translation>
+        <translation>Privatnøkkelen er tom</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
@@ -4697,8 +4697,8 @@ Linje %2, kolonne %3</translation>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Det ble angitt ugyldig legitimasjon, prøv igjen.
-Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
+        <translation>Det ble angitt ugyldig identifikasjon, prøv igjen.
+Hvis dette gjentar seg kan databasefilen være skadet.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4863,15 +4863,15 @@ Hvis dette gjentar seg, kan databasefilen være skadet.</translation>
     <name>KeyFileEditWidget</name>
     <message>
         <source>Generate a new key file</source>
-        <translation>Opprette en ny nøkkelfil</translation>
+        <translation>Opprett en ny nøkkelfil</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Lag passord</translation>
+        <translation>Opprett</translation>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation>Lag en ny nøkkelfil, eller velg en eksisterende nøkkelfil for å beskytte databasen.</translation>
+        <translation>Opprett en ny nøkkelfil, eller velg en eksisterende nøkkelfil for å beskytte databasen.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
@@ -5045,7 +5045,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>&amp;Åpne database...</translation>
+        <translation>&amp;Åpne database…</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
@@ -5089,7 +5089,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation>&amp;Slett oppføring…</translation>
+        <translation>&amp;Slett oppføring</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
@@ -5109,7 +5109,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Last ned alle &amp;nettstedsikon…</translation>
+        <translation>Last ned alle &amp;nettstedsikoner…</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -5125,7 +5125,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>Databasesikkerhet...</translation>
+        <translation>Databasesikkerhet…</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
@@ -5137,7 +5137,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation>&amp;Database innstillinger...</translation>
+        <translation>&amp;Databaseinnstillinger…</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -5153,7 +5153,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>Move entry one step up</source>
-        <translation>Flytt oppføring ett steg opp</translation>
+        <translation>Flytt oppføring ett trinn opp</translation>
     </message>
     <message>
         <source>Move do&amp;wn</source>
@@ -5185,7 +5185,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation>&amp;Passord generator</translation>
+        <translation>&amp;Passordgenerator</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
@@ -5233,7 +5233,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation>&amp;CSV Fil…</translation>
+        <translation>&amp;CSV-fil…</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
@@ -5281,7 +5281,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>&amp;Tøm papirkurv</translation>
+        <translation>&amp;Tøm papirkurven</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
@@ -5325,7 +5325,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
-        <translation>Legg til nøkkel i SSH Agent</translation>
+        <translation>Legg til nøkkel i SSH-agent</translation>
     </message>
     <message>
         <source>Remove key from SSH Agent</source>
@@ -5357,7 +5357,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation>Vis forhåndsvisningspanelet</translation>
+        <translation>Vis Forhåndsvisning-panelet</translation>
     </message>
     <message>
         <source>Always on Top</source>
@@ -5365,11 +5365,11 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Masker brukernavn</translation>
+        <translation>Skjul brukernavn</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>Masker passord</translation>
+        <translation>Skjul passord</translation>
     </message>
     <message>
         <source>Clone Group...</source>
@@ -5429,7 +5429,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Vis/skjul vinduet</translation>
+        <translation>Vis vinduet</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
@@ -5437,7 +5437,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Hold inntil eller berør din YubiKey for å fortsette ...</translation>
+        <translation>Kobl til og/eller berør YubiKey for å fortsette…</translation>
     </message>
     <message>
         <source>Restart Application?</source>
@@ -5457,7 +5457,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 Oppføring</numerusform><numerusform>%1 Oppføringer</numerusform></translation>
+        <translation><numerusform>%1 oppføring</numerusform><numerusform>%1 oppføringer</numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
@@ -5507,7 +5507,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Reset</source>
-        <translation>Nullstill</translation>
+        <translation>Tilbakestill</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
@@ -5522,7 +5522,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
-        <translation>Flytter %1 [%2]</translation>
+        <translation>Omplasserer %1 [%2]</translation>
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
@@ -5550,7 +5550,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>Synkroniserer fra den nyere kilden %1 [%2]</translation>
+        <translation>Synkroniserer fra nyere kilde %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
@@ -5609,7 +5609,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation>Avanserte Innstillinger</translation>
+        <translation>Avanserte innstillinger</translation>
     </message>
     <message>
         <source>Simple Settings</source>
@@ -5620,11 +5620,11 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation>Legitimasjon for database</translation>
+        <translation>Database-akkreditering</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>Et sett med identifikasjoner som bare er kjent for deg, som beskytter databasen.</translation>
+        <translation>Et sett med akkreditiv som bare er kjent for deg, som beskytter databasen.</translation>
     </message>
 </context>
 <context>
@@ -5642,7 +5642,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>Generell database informasjon</translation>
+        <translation>Generell databaseinformasjon</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
@@ -5735,11 +5735,11 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Ugyldig nøkkelfil. Forventer OpenSSH-nøkkel</translation>
+        <translation>Ugyldig nøkkelfil, forventer OpenSSH-nøkkel</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation>‘PEM boundary’ samsvarer ikke</translation>
+        <translation>PEM-grense samsvarer ikke</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
@@ -5751,7 +5751,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>’Magic header id’ i nøkkelfil er ugyldig</translation>
+        <translation>Nøkkelfilens filtypesignatur-id er ugyldig</translation>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -5763,7 +5763,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>Skadet nøkkelfil. Lesing av privat nøkkel feilet</translation>
+        <translation>Skadet nøkkelfil, lesing av privat nøkkel feilet</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
@@ -5775,7 +5775,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Unknown cipher: %1</source>
-        <translation>Ukjent kryptering: %1</translation>
+        <translation>Ukjent chiffer: %1</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
@@ -5787,7 +5787,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>Krypterings-IV er for kort for MD5 kdf</translation>
+        <translation>Chiffer IV er for kort for MD5 kdf</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
@@ -5803,7 +5803,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>Dekryptering feilet. Feil passordfrase?</translation>
+        <translation>Dekryptering feilet, feil passordfrase?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading key</source>
@@ -5882,7 +5882,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Et passord er den primære metoden for å sikre databasen.&lt;/p&gt;&lt;p&gt;Gode passord er lange og unike. KeePassXC kan generere et for deg.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Et passord er den primære metoden for å sikre databasen.&lt;/p&gt;&lt;p&gt;Gode passord er lange og unike. KeePassXC kan opprette et for deg.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -5893,7 +5893,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Generate Password</source>
-        <translation>Generér passord</translation>
+        <translation>Opprett passord</translation>
     </message>
     <message>
         <source>strength</source>
@@ -5906,7 +5906,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Generated password</source>
-        <translation>Generert passord</translation>
+        <translation>Opprettet passord</translation>
     </message>
     <message>
         <source>%p%</source>
@@ -5914,7 +5914,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation>Generer passord på nytt</translation>
+        <translation>Regenerer passord</translation>
     </message>
     <message>
         <source>Copy password</source>
@@ -5990,7 +5990,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Additional characters to use for the generated password</source>
-        <translation>Flere tegn som skal brukes i det genererte passordet</translation>
+        <translation>Flere tegn som skal brukes i det oppretta passordet</translation>
     </message>
     <message>
         <source>Additional characters</source>
@@ -6010,11 +6010,11 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
-        <translation>Teg som skal utelates fra generert passord</translation>
+        <translation>Tegnsett som skal ekskluderes fra opprettet passord</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation>Utelatte tegn</translation>
+        <translation>Ekskluderte tegn</translation>
     </message>
     <message>
         <source>Also choose from:</source>
@@ -6090,7 +6090,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     </message>
     <message>
         <source>Title Case</source>
-        <translation>Tittel-format</translation>
+        <translation>Overskrifts-format</translation>
     </message>
     <message>
         <source>(SYSTEM)</source>
@@ -6384,7 +6384,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Generer et passord til oppføringa.</translation>
+        <translation>Opprett et passord i oppføringa.</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
@@ -6428,7 +6428,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation>Gruppe %1 ikke funnet.</translation>
+        <translation>Gruppen %1 ikke funnet.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
@@ -6472,7 +6472,7 @@ Vil du erstatte den?</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>Passordet til %1 er lekket %2 gang!</numerusform><numerusform>Passordet til &apos;%1&apos; er lekket %2 ganger!</numerusform></translation>
+        <translation><numerusform>Passordet for %1 er lekket %2 gang!</numerusform><numerusform>Passordet for %1 er lekket %2 ganger!</numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
@@ -6606,7 +6606,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
-        <translation>Oppføringen med bane %1 har ingen TOTP konfigurert.</translation>
+        <translation>Oppføring med bane %1 har ingen TOTP konfigurert.</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
@@ -6622,7 +6622,7 @@ Vil du erstatte den?</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Tømmer utklippstavlen på %1 sekund…</numerusform><numerusform>Tømmer utklippstavlen på %1 sekunder…</numerusform></translation>
+        <translation><numerusform>Tømmer utklippstavlen på %1 sekund...</numerusform><numerusform>Tømmer utklippstavlen på %1 sekunder...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -6670,7 +6670,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation>Mål-dekrypteringstid i MS for databasen.</translation>
+        <translation>Ønsket dekrypteringstid i ms for databasen.</translation>
     </message>
     <message>
         <source>time</source>
@@ -6734,11 +6734,11 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation>Vellykket oppretting ny database.</translation>
+        <translation>Opprettet ny database.</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>Antall ord i diceware-passordfrasen.</translation>
+        <translation>Antall ord i ordpassordfrasen.</translation>
     </message>
     <message>
         <source>count</source>
@@ -6748,12 +6748,12 @@ Vil du erstatte den?</translation>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation>Ordliste for diceware-generatoren.
+        <translation>Ordliste for ordgeneratoren.
 [Standard: EFF engelsk]</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>Generer en ny tilfeldig diceware passordfrase.</translation>
+        <translation>Opprett en ny tilfeldig ordpassordfrase.</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
@@ -6833,7 +6833,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
-        <translation>Type: ordbok + erstatning</translation>
+        <translation>Type: Ordliste + erstatning</translation>
     </message>
     <message>
         <source>Type: User Words</source>
@@ -6913,7 +6913,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation>Format som skal brukes ved eksport. Tilgjengelige valg er XML eller CSV. Standardvalg er XML.</translation>
+        <translation>Format som skal brukes ved eksport. Tilgjengelige valg er XML eller CSV. XML er standardvalg.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
@@ -6929,7 +6929,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Length of the generated password</source>
-        <translation>Lengden på det genererte passordet</translation>
+        <translation>Lengden på det oppretta passordet</translation>
     </message>
     <message>
         <source>length</source>
@@ -6969,7 +6969,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
-        <translation>Ekskluder bokstaver/tegn som ser like ut</translation>
+        <translation>Ekskluder tegn som ser like ut</translation>
     </message>
     <message>
         <source>Include characters from every selected group</source>
@@ -6977,7 +6977,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation>Generer et nytt tilfeldig passord.</translation>
+        <translation>Opprett et nytt tilfeldig passord.</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
@@ -6989,7 +6989,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation>Vis kommandohjelp.</translation>
+        <translation>Vis hjelp for kommandoer.</translation>
     </message>
     <message>
         <source>Available commands:</source>
@@ -7041,11 +7041,11 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Recycle bin is enabled.</source>
-        <translation>Papirkurv er aktivert.</translation>
+        <translation>Papirkurven er aktivert.</translation>
     </message>
     <message>
         <source>Recycle bin is not enabled.</source>
-        <translation>Papirkurv er ikke aktivert.</translation>
+        <translation>Papirkurven er ikke aktivert.</translation>
     </message>
     <message>
         <source>Location</source>
@@ -7155,7 +7155,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation>Sti til gruppen som skal listes. Standard er /</translation>
+        <translation>Sti til gruppen som skal listes. Standardinnstilling er /</translation>
     </message>
     <message>
         <source>Cannot find group %1.</source>
@@ -7163,7 +7163,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Bruk samme identifikasjon for begge databasefilene.</translation>
+        <translation>Bruk samme identifikasjon til begge databasefilene.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
@@ -7201,7 +7201,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation>Kan ikke lagre databasen til fil :%1</translation>
+        <translation>Kan ikke lagre databasen til fil : %1</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
@@ -7217,7 +7217,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation>Stien til oppføringen som skal flyttes.</translation>
+        <translation>Sti til oppføringen som skal flyttes.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
@@ -7249,11 +7249,11 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation>Flyttet oppføring %1 til søppelbøtta.</translation>
+        <translation>Resirkulerte oppføring %1.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation>Oppføring %1 er slettet.</translation>
+        <translation>Slettet oppføring %1.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
@@ -7269,7 +7269,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation>Slettet gruppen %1.</translation>
+        <translation>Slettet gruppe %1.</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
@@ -7609,7 +7609,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
-        <translation>AES 256-biter</translation>
+        <translation>AES 256-bit</translation>
     </message>
     <message>
         <source>Twofish 256-bit</source>
@@ -7637,15 +7637,15 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>Eksisterende enbrukermodus lock-fil er ugyldig. Starter ny instans.</translation>
+        <translation>Eksisterende enbrukermodus låsefil er ugyldig. Starter ny instans.</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>Lock-filen kunne ikke opprettes. Enbrukermodus deaktivert.</translation>
+        <translation>Låsefilen kunne ikke opprettes. Enbrukermodus deaktivert.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Tømmer utklippstavlen om %1 sekund…</numerusform><numerusform>Tømmer utklippstavlen om %1 sekunder…</numerusform></translation>
+        <translation><numerusform>Tømmer utklippstavlen på %1 sekund...</numerusform><numerusform>Tømmer utklippstavlen på %1 sekunder...</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7759,15 +7759,15 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation>KeePassXC - en multiplattforms passordhåndterer</translation>
+        <translation>KeePassXC - multiplattform passordbehandler</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>Filnavn på passord-databasene som skal åpnes (*.kdbx)</translation>
+        <translation>filnavn på passorddatabasene som skal åpnes (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>Sti til tilpasset konfigurasjonsfil</translation>
+        <translation>sti til tilpasset konfigurasjonsfil</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
@@ -7779,11 +7779,11 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>Database-nøkkelfil</translation>
+        <translation>database-nøkkelfil</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>Les database-passord fra standard input</translation>
+        <translation>les database-passord fra &apos;stdin&apos;</translation>
     </message>
     <message>
         <source>allow app screen recordering and screenshots</source>
@@ -7976,7 +7976,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Denne oppføringen blir utelatt fra rapporter</translation>
+        <translation>Denne oppføringen utelates fra rapporter</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
@@ -8004,7 +8004,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Slett oppføring...</numerusform><numerusform>Slett oppføringer...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform>Slett oppføringer...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8032,7 +8032,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
-        <translation>Dårlig – passordet må endres</translation>
+        <translation>Utilfredsstillende – passordet må endres</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -8058,7 +8058,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Denne oppføringen ekskluderes fra rapporter</translation>
+        <translation>Denne oppføringen utelates fra rapporter</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
@@ -8078,11 +8078,11 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Score</source>
-        <translation>Poeng</translation>
+        <translation>Skår</translation>
     </message>
     <message>
         <source>Reason</source>
-        <translation>Grunn</translation>
+        <translation>Årsak</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -8094,18 +8094,18 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Ekskluder fra rapporter</translation>
+        <translation>Utelat fra rapporter</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>FORSIKTIG: Denne rapporten krever innsending av informasjon til den elektroniske tjenesten &apos;Have I Been Pwned&apos; (https://haveibeenpwned.com). Hvis du fortsetter hashes databasepassordene kryptografisk, og de fem første tegnene i disse hash-kodene sendes på sikker måte til denne tjenesten. Databasen forblir sikker og kan ikke rekonstrueres ut fra denne informasjonen. Imidlertid vil antall passord du sender og IP-adressen din bli avslørt for denne tjenesten.</translation>
+        <translation>FORSIKTIG: Denne rapporten krever innsending av informasjon til den elektroniske tjenesten Have I Been Pwned (https://haveibeenpwned.com). Hvis du fortsetter hashes databasepassordene kryptografisk, og de fem første tegnene i disse nøkkelkodene sendes på sikker måte til denne tjenesten. Databasen forblir sikker og kan ikke rekonstrueres ut fra denne informasjonen. Imidlertid vil antall passord du sender og IP-adressen din bli avslørt for denne tjenesten.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation>Utfør online analyse</translation>
+        <translation>Utfør analyse online</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
@@ -8113,7 +8113,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation>Denne versjonen av KeePassXC har ikke nettverksfunksjoner. Nettverk kreves for å kontrollere passordene dine mot &apos;har-jeg-blitt-overvunnet&apos;-databaser.</translation>
+        <translation>Denne versjonen av KeePassXC har ikke nettverksfunksjoner. Nettverk kreves for å kontrollere passordene dine mot har-jeg-blitt-overvunnet-databaser (HIBP).</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
@@ -8137,7 +8137,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Denne oppføringen ekskluderes fra rapporter</translation>
+        <translation>Denne oppføringen blir utelatt fra rapporter</translation>
     </message>
     <message>
         <source>once</source>
@@ -8189,14 +8189,14 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Ekskluder fra rapporter</translation>
+        <translation>Utelat fra rapporter</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetStatistics</name>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation>Hold pekeren over linjer med feil-ikoner hvis du vil ha mer informasjon.</translation>
+        <translation>Hold pekeren over linjer med advarsels-ikoner for mer informasjon.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -8212,7 +8212,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Database name</source>
-        <translation>Database navn</translation>
+        <translation>Databasenavn</translation>
     </message>
     <message>
         <source>Description</source>
@@ -8220,7 +8220,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Sted</translation>
+        <translation>Plassering</translation>
     </message>
     <message>
         <source>Database created</source>
@@ -8268,11 +8268,11 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation>Duplikate passord</translation>
+        <translation>Dupliserte passord</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation>Mer enn 10% av passordene brukes på nytt. Bruk unike passord når det er mulig.</translation>
+        <translation>Mer enn 10% av passordene er brukt flere steder. Bruk unike passord når det er mulig.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
@@ -8280,7 +8280,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation>Noen passord brukes mer enn tre ganger. Bruk unike passord når det er mulig.</translation>
+        <translation>Noen passord gjenbrukes mer enn tre ganger. Bruk unike passord når det er mulig.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
@@ -8374,11 +8374,11 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation>Søke-termene er som følger: [modifikatorer][felt:][&quot;]term[&quot;]</translation>
+        <translation>Søkebegrep er som følger: [modifikatorer][felt:][&quot;]søkestreng[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
-        <translation>Hver søke-term må samsvare (dvs. logisk AND)</translation>
+        <translation>Alle søkebegrep må oppfylles (dvs. logisk AND)</translation>
     </message>
     <message>
         <source>Modifiers</source>
@@ -8390,11 +8390,11 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>match term exactly</source>
-        <translation>match søkebegrepet eksakt</translation>
+        <translation>match søkestreng eksakt</translation>
     </message>
     <message>
         <source>use regex in term</source>
-        <translation>bruk regex i søkestreng</translation>
+        <translation>bruk regulært uttrykk i søkestreng</translation>
     </message>
     <message>
         <source>Fields</source>
@@ -8406,7 +8406,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>match anything</source>
-        <translation>match alt</translation>
+        <translation>match alle tegn</translation>
     </message>
     <message>
         <source>match one</source>
@@ -8559,7 +8559,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Lagre endringer for å aktivere utvidelsen og for å redigere denne delen.</translation>
+        <translation>Lagre gjeldende endringer for å aktivere utvidelsen og aktivere redigering av denne delen.</translation>
     </message>
 </context>
 <context>
@@ -8602,7 +8602,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Lag passord</translation>
+        <translation>Opprett</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
@@ -8647,11 +8647,11 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation>Flere importkilder til %1 i %2</translation>
+        <translation>Sti for flere importkilder til %1 i %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation>Motstridende eksportmål %1 i %2</translation>
+        <translation>Konflikt i eksport-målsti %1 i %2</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
@@ -8751,11 +8751,11 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation>Privat nøkkel må være i Base32-format</translation>
+        <translation>Hemmelig nøkkel må være i Base32-format</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation>Felt for privat nøkkel</translation>
+        <translation>Felt for hemmelig nøkkel</translation>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
@@ -8779,7 +8779,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation>Tidsintervall:</translation>
+        <translation>Tidstrinn:</translation>
     </message>
     <message>
         <source>Time step field</source>
@@ -8796,7 +8796,7 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation> Sifre</translation>
+        <translation> sifre</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
@@ -8991,11 +8991,11 @@ Eksempel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Oppdager maskinvarenøkler...</translation>
+        <translation>Oppdager maskinvarenøkler …</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>Ingen maskinvarenøkler oppdaget</translation>
+        <translation>Finner ingen maskinvarenøkler</translation>
     </message>
 </context>
 <context>
