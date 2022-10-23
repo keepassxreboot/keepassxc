@@ -66,10 +66,8 @@ To compile from source, open a **Terminal (Linux/MacOS)**, the **MSVC Tools Comm
 2. Navigate to the directory where you have downloaded KeePassXC and type these commands:
 
    ```
-   mkdir build
-   cd build
-   cmake -DWITH_XC_ALL=ON ..
-   make
+   cmake -S . -B build -DWITH_XC_ALL=ON
+   cmake --build build
    ```
 
 Note: These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
