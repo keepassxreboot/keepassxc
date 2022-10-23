@@ -23,7 +23,6 @@ include_directories(
 add_definitions(-DQT_TEST_LIB)
 
 set(KEEPASSX_TEST_DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/data)
-add_compile_definitions(KEEPASSX_CLI_PATH="$<TARGET_FILE:keepassxc-cli>")
 configure_file(config-keepassx-tests.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h)
 
 macro(parse_arguments prefix arg_names option_names)
@@ -236,6 +235,7 @@ endif()
 
 add_unit_test(NAME testcli SOURCES TestCli.cpp
         LIBS testsupport cli ${TEST_LIBRARIES})
+target_compile_definitions(testcli PRIVATE KEEPASSX_CLI_PATH="$<TARGET_FILE:keepassxc-cli>")
 
 if(WITH_GUI_TESTS)
     add_subdirectory(gui)
