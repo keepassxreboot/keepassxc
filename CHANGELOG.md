@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.7.2 (2022-10-22)
+## 2.7.3 (2022-10-23)
 
 ### Changes
 - Enhance Tags Support and Add Saved Searches [#8435, #8607]
