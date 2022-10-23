@@ -102,6 +102,9 @@ void TestCli::init()
     m_yubiKeyProtectedDbFile.reset(new TemporaryFile());
     m_yubiKeyProtectedDbFile->copyFromFile(file.arg("YubiKeyProtectedPasswords.kdbx"));
 
+    m_nonAsciiDbFile.reset(new TemporaryFile());
+    m_nonAsciiDbFile->copyFromFile(file.arg("NonAscii.kdbx"));
+
     m_stdout.reset(new QBuffer());
     m_stdout->open(QIODevice::ReadWrite);
     Utils::STDOUT.setDevice(m_stdout.data());
@@ -2314,6 +2317,27 @@ void TestCli::testYubiKeyOption()
     m_stderr->readLine(); // skip password prompt
     QCOMPARE(m_stderr->readAll().split(':').at(0), QByteArray("Invalid YubiKey slot 3\n"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
+}
+
+void TestCli::testNonAscii()
+{
+    QProcess process;
+    process.setProcessChannelMode(QProcess::MergedChannels);
+    process.start(KEEPASSX_CLI_PATH,
+        QStringList({"show", "-a", "password", m_nonAsciiDbFile->fileName(), QString::fromUtf8("\xe7\xa7\x98\xe5\xaf\x86")}));
+    process.waitForStarted();
+    QCOMPARE(process.state(), QProcess::ProcessState::Running);
+
+    // Write password.
+    process.write("\xce\x94\xc3\xb6\xd8\xb6\n");
+    process.closeWriteChannel();
+
+    process.waitForFinished();
+
+    process.readLine(); // skip password prompt
+    QByteArray password = process.readLine();
+    QCOMPARE(QString::fromUtf8(password).trimmed(),
+             QString::fromUtf8("\xf0\x9f\x9a\x97\xf0\x9f\x90\x8e\xf0\x9f\x94\x8b\xf0\x9f\x93\x8e"));
 }
 
 void TestCli::testCommandParsing_data()

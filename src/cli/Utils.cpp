@@ -63,6 +63,13 @@ namespace Utils
         fd->open(fopen("/dev/null", "w"), QIODevice::WriteOnly);
 #endif
         DEVNULL.setDevice(fd);
+
+        #ifdef Q_OS_WIN
+        // On Windows, we ask via keepassxc-cli.exe.manifest to use UTF-8,
+        // but the console code-page isn't automatically changed to match.
+        SetConsoleCP(GetACP());
+        SetConsoleOutputCP(GetACP());
+        #endif
     }
 
     void setStdinEcho(bool enable = true)
