@@ -53,6 +53,7 @@ private slots:
     void updateEntryGeneralTab();
     void updateEntryAdvancedTab();
     void updateEntryAutotypeTab();
+    void setUsernameVisible(bool state);
     void setPasswordVisible(bool state);
     void setEntryNotesVisible(bool state);
     void setGroupNotesVisible(bool state);

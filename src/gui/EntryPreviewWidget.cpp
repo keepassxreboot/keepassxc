@@ -49,6 +49,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     // Entry
     m_ui->entryTotpButton->setIcon(icons()->icon("totp"));
     m_ui->entryCloseButton->setIcon(icons()->icon("dialog-close"));
+    m_ui->toggleUsernameButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->toggleGroupNotesButton->setIcon(icons()->onOffIcon("password-show", true));
@@ -70,6 +71,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpProgress, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
+    connect(m_ui->toggleUsernameButton, SIGNAL(clicked(bool)), SLOT(setUsernameVisible(bool)));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
     connect(m_ui->toggleEntryNotesButton, SIGNAL(clicked(bool)), SLOT(setEntryNotesVisible(bool)));
     connect(m_ui->toggleGroupNotesButton, SIGNAL(clicked(bool)), SLOT(setGroupNotesVisible(bool)));
@@ -89,6 +91,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
         if (key == Config::GUI_HidePreviewPanel) {
             setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
         }
+        refresh();
     });
 
     // Group
@@ -230,6 +233,21 @@ void EntryPreviewWidget::updateEntryTotp()
     }
 }
 
+void EntryPreviewWidget::setUsernameVisible(bool state)
+{
+    if (state) {
+        auto username = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username());
+        m_ui->entryUsernameLabel->setText(username);
+        m_ui->entryUsernameLabel->setFont(Font::defaultFont());
+        m_ui->entryUsernameLabel->setCursorPosition(0);
+    } else {
+        m_ui->entryUsernameLabel->setText(QString("\u25cf").repeated(6));
+        m_ui->entryUsernameLabel->setFont(Font::fixedFont());
+    }
+
+    m_ui->toggleUsernameButton->setIcon(icons()->onOffIcon("password-show", state));
+}
+
 void EntryPreviewWidget::setPasswordVisible(bool state)
 {
     const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
@@ -292,8 +310,16 @@ void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& 
 void EntryPreviewWidget::updateEntryGeneralTab()
 {
     Q_ASSERT(m_currentEntry);
-    m_ui->entryUsernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
-    m_ui->entryUsernameLabel->setCursorPosition(0);
+
+    if (config()->get(Config::GUI_HideUsernames).toBool()) {
+        setUsernameVisible(false);
+        // Show the username toggle button
+        m_ui->toggleUsernameButton->setVisible(!m_currentEntry->username().isEmpty());
+        m_ui->toggleUsernameButton->setChecked(false);
+    } else {
+        setUsernameVisible(true);
+        m_ui->toggleUsernameButton->setVisible(false);
+    }
 
     if (config()->get(Config::Security_HidePasswordPreviewPanel).toBool()) {
         // Hide password

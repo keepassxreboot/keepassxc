@@ -1747,8 +1747,8 @@ bool DatabaseWidget::lock()
 
 void DatabaseWidget::reloadDatabaseFile()
 {
-    // Ignore reload if we are locked or currently editing an entry or group
-    if (!m_db || isLocked() || isEntryEditActive() || isGroupEditActive()) {
+    // Ignore reload if we are locked, saving, or currently editing an entry or group
+    if (!m_db || isLocked() || isEntryEditActive() || isGroupEditActive() || isSaving()) {
         return;
     }
 
