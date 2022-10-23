@@ -2323,8 +2323,10 @@ void TestCli::testNonAscii()
 {
     QProcess process;
     process.setProcessChannelMode(QProcess::MergedChannels);
-    process.start(KEEPASSX_CLI_PATH,
-        QStringList({"show", "-a", "password", m_nonAsciiDbFile->fileName(), QString::fromUtf8("\xe7\xa7\x98\xe5\xaf\x86")}));
+    process.start(
+        KEEPASSX_CLI_PATH,
+        QStringList(
+            {"show", "-a", "password", m_nonAsciiDbFile->fileName(), QString::fromUtf8("\xe7\xa7\x98\xe5\xaf\x86")}));
     process.waitForStarted();
     QCOMPARE(process.state(), QProcess::ProcessState::Running);
 
