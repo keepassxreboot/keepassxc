@@ -250,6 +250,8 @@ void EntryPreviewWidget::setUsernameVisible(bool state)
 
 void EntryPreviewWidget::setPasswordVisible(bool state)
 {
+    m_ui->entryPasswordLabel->setFont(Font::fixedFont());
+
     const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
     if (state) {
         if (config()->get(Config::GUI_ColorPasswords).toBool()) {
@@ -268,7 +270,7 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
             m_ui->entryPasswordLabel->setHtml(html);
         } else {
             // No color
-            m_ui->entryPasswordLabel->setPlainText(password.toHtmlEscaped());
+            m_ui->entryPasswordLabel->setPlainText(password);
         }
     } else if (password.isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
         m_ui->entryPasswordLabel->setPlainText("");
@@ -276,7 +278,6 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
         m_ui->entryPasswordLabel->setPlainText(QString("\u25cf").repeated(6));
     }
 
-    m_ui->entryPasswordLabel->setFont(Font::fixedFont());
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", state));
 }
 
