@@ -9,7 +9,9 @@
 
 #include <Foundation/Foundation.h>
 #include <CoreFoundation/CoreFoundation.h>
+#if XC_COMPILER_SUPPORT(LocalAuthentication)
 #include <LocalAuthentication/LocalAuthentication.h>
+#endif
 #include <Security/Security.h>
 
 #include <QCoreApplication>
@@ -164,9 +166,15 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
     CFDictionarySetValue(attributes, kSecClass, kSecClassGenericPassword);
     CFDictionarySetValue(attributes, kSecAttrAccount, (__bridge CFStringRef) accountName);
     CFDictionarySetValue(attributes, kSecValueData, (__bridge CFDataRef) keychainValueData);
+#if XC_COMPILER_SUPPORT(kSecAttrSynchronizable)
     CFDictionarySetValue(attributes, kSecAttrSynchronizable, kCFBooleanFalse);
+#endif
+#if XC_COMPILER_SUPPORT(kSecUseAuthenticationUI)
     CFDictionarySetValue(attributes, kSecUseAuthenticationUI, kSecUseAuthenticationUIAllow);
+#endif
+#if XC_COMPILER_SUPPORT(kSecAttrAccessControl)
     CFDictionarySetValue(attributes, kSecAttrAccessControl, sacObject);
+#endif
 
     // add to KeyChain
     OSStatus status = SecItemAdd(attributes, NULL);
@@ -218,7 +226,9 @@ bool TouchID::getKey(const QString& databasePath, QByteArray& passwordKey) const
     CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
     CFDictionarySetValue(query, kSecAttrAccount, (__bridge CFStringRef) accountName);
     CFDictionarySetValue(query, kSecReturnData, kCFBooleanTrue);
+#if XC_COMPILER_SUPPORT(kSecUseOperationPrompt)
     CFDictionarySetValue(query, kSecUseOperationPrompt, (__bridge CFStringRef) touchPromptMessage);
+#endif
 
     // get data from the KeyChain
     CFTypeRef dataTypeRef = NULL;

@@ -81,6 +81,32 @@ if(APPLE)
        ${CMAKE_CURRENT_BINARY_DIR}/tiometry_test/
        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_watch_support.mm)
     message(STATUS "Apple watch compiler support: ${XC_APPLE_COMPILER_SUPPORT_WATCH}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_LocalAuthentication
+       ${CMAKE_CURRENT_BINARY_DIR}/LocalAuthentication_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_LocalAuthentication_support.mm)
+    message(STATUS "LocalAuthentication compiler support: ${XC_APPLE_COMPILER_SUPPORT_LocalAuthentication}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_kSecAttrSynchronizable
+       ${CMAKE_CURRENT_BINARY_DIR}/kSecAttrSynchronizable_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_kSecAttrSynchronizable_support.mm)
+    message(STATUS "kSecAttrSynchronizable compiler support: ${XC_APPLE_COMPILER_SUPPORT_kSecAttrSynchronizable}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_kSecUseAuthenticationUI
+       ${CMAKE_CURRENT_BINARY_DIR}/kSecUseAuthenticationUI_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_kSecUseAuthenticationUI_support.mm)
+    message(STATUS "kSecUseAuthenticationUI compiler support: ${XC_APPLE_COMPILER_SUPPORT_kSecUseAuthenticationUI}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_kSecAttrAccessControl
+       ${CMAKE_CURRENT_BINARY_DIR}/kSecAttrAccessControl_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_kSecAttrAccessControl_support.mm)
+    message(STATUS "kSecAttrAccessControl compiler support: ${XC_APPLE_COMPILER_SUPPORT_kSecAttrAccessControl}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_kSecUseOperationPrompt
+       ${CMAKE_CURRENT_BINARY_DIR}/kSecUseOperationPrompt_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_kSecUseOperationPrompt_support.mm)
+    message(STATUS "kSecUseOperationPrompt compiler support: ${XC_APPLE_COMPILER_SUPPORT_kSecUseOperationPrompt}")
+
 endif()
 
 if(WITH_CCACHE)
