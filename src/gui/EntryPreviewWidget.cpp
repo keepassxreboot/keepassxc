@@ -66,8 +66,6 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryNotesTextEdit->document()->setDocumentMargin(0);
     m_ui->groupNotesTextEdit->document()->setDocumentMargin(0);
 
-    connect(m_ui->entryUrlLabel, SIGNAL(linkActivated(QString)), SLOT(openEntryUrl()));
-
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpProgress, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
@@ -77,7 +75,10 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->toggleGroupNotesButton, SIGNAL(clicked(bool)), SLOT(setGroupNotesVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
     // Prevent the url from being focused after clicked to allow the Copy Password button to work properly
-    connect(m_ui->entryUrlLabel, &QLabel::linkActivated, this, [this] { m_ui->entryTabWidget->setFocus(); });
+    connect(m_ui->entryUrlLabel, &QLabel::linkActivated, this, [this] {
+        openEntryUrl();
+        m_ui->entryTabWidget->setFocus();
+    });
     connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpLabel()));
 
     connect(m_ui->entryAttributesTable, &QTableWidget::itemDoubleClicked, this, [](QTableWidgetItem* item) {
@@ -120,8 +121,12 @@ void EntryPreviewWidget::clear()
 
 void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 {
-    disconnect(m_currentEntry);
-    disconnect(m_currentGroup);
+    if (m_currentEntry) {
+        disconnect(m_currentEntry);
+    }
+    if (m_currentGroup) {
+        disconnect(m_currentGroup);
+    }
 
     m_currentEntry = selectedEntry;
     m_currentGroup = nullptr;
@@ -137,8 +142,12 @@ void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 
 void EntryPreviewWidget::setGroup(Group* selectedGroup)
 {
-    disconnect(m_currentEntry);
-    disconnect(m_currentGroup);
+    if (m_currentEntry) {
+        disconnect(m_currentEntry);
+    }
+    if (m_currentGroup) {
+        disconnect(m_currentGroup);
+    }
 
     m_currentEntry = nullptr;
     m_currentGroup = selectedGroup;

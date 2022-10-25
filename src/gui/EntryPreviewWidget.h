@@ -44,7 +44,6 @@ public slots:
     void clear();
 
 signals:
-    void errorOccurred(const QString& error);
     void entryUrlActivated(Entry* entry);
 
 private slots:
