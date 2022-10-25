@@ -43,6 +43,7 @@ namespace BrowserShared
 
         QString socketPath = subPath + serverName;
 #ifndef KEEPASSXC_DIST_FLATPAK
+        QFile::remove(socketPath);
         // Create a symlink at the legacy location for backwards compatibility.
         QFile::link(socketPath, path + serverName);
 #endif
