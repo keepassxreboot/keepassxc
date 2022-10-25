@@ -524,7 +524,6 @@ void BrowserService::sendCredentialsToClient(QList<Entry*>& allowedEntries,
 
     m_browserHost->sendClientMessage(
         socket, browserMessageBuilder()->buildResponse("get-logins", message, incrementedNonce, publicKey, secretKey));
-    hideWindow();
 }
 
 void BrowserService::showPasswordGenerator(QLocalSocket* socket,
