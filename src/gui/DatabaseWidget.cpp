@@ -391,10 +391,6 @@ void DatabaseWidget::createEntry()
 
     m_newEntry.reset(new Entry());
 
-    if (isSearchActive()) {
-        m_newEntry->setTitle(getCurrentSearch());
-        endSearch();
-    }
     m_newEntry->setUuid(QUuid::createUuid());
     m_newEntry->setUsername(m_db->metadata()->defaultUserName());
     m_newParent = m_groupView->currentGroup();
@@ -1414,24 +1410,32 @@ void DatabaseWidget::search(const QString& searchtext)
         return;
     }
 
-    emit searchModeAboutToActivate();
+    auto searchGroup = m_db->rootGroup();
+    if (m_searchLimitGroup && m_nextSearchLabelText.isEmpty()) {
+        searchGroup = currentGroup();
+    }
 
-    Group* searchGroup = m_searchLimitGroup ? currentGroup() : m_db->rootGroup();
-
-    QList<Entry*> searchResult = m_entrySearcher->search(searchtext, searchGroup);
-
-    m_entryView->displaySearch(searchResult);
-    m_lastSearchText = searchtext;
+    auto results = m_entrySearcher->search(searchtext, searchGroup);
 
     // Display a label detailing our search results
     if (!m_nextSearchLabelText.isEmpty()) {
+        // Custom searches don't display if there are no results
+        if (results.isEmpty()) {
+            endSearch();
+            return;
+        }
         m_searchingLabel->setText(m_nextSearchLabelText);
         m_nextSearchLabelText.clear();
-    } else if (!searchResult.isEmpty()) {
-        m_searchingLabel->setText(tr("Search Results (%1)").arg(searchResult.size()));
+    } else if (!results.isEmpty()) {
+        m_searchingLabel->setText(tr("Search Results (%1)").arg(results.size()));
     } else {
         m_searchingLabel->setText(tr("No Results"));
     }
+
+    emit searchModeAboutToActivate();
+
+    m_entryView->displaySearch(results);
+    m_lastSearchText = searchtext;
 
     m_searchingLabel->setVisible(true);
 #ifdef WITH_XC_KEESHARE
