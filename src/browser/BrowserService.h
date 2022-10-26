@@ -1,6 +1,5 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -63,9 +62,7 @@ public:
                                const QString& nonce,
                                const QString& publicKey,
                                const QString& secretKey);
-    void sendPassword(QLocalSocket* socket, const QJsonObject& message);
     bool isPasswordGeneratorRequested() const;
-    bool isAccessConfirmRequested() const;
 
     void addEntry(const QString& dbid,
                   const QString& login,
@@ -84,18 +81,12 @@ public:
                      const QString& siteUrl,
                      const QString& formUrl);
     bool deleteEntry(const QString& uuid);
-    void findEntries(QLocalSocket* socket,
-                     const QString& nonce,
-                     const QString& publicKey,
-                     const QString& secretKey,
-                     const QString& dbid,
-                     const QString& hash,
-                     const QString& requestId,
-                     const QString& siteUrl,
-                     const QString& formUrl,
-                     const QString& realm,
-                     const StringPairList& keyList,
-                     const bool httpAuth = false);
+    QJsonArray findMatchingEntries(const QString& dbid,
+                                   const QString& siteUrlStr,
+                                   const QString& formUrlStr,
+                                   const QString& realm,
+                                   const StringPairList& keyList,
+                                   const bool httpAuth = false);
     void requestGlobalAutoType(const QString& search);
     static void convertAttributesToCustomData(QSharedPointer<Database> db);
 
@@ -138,29 +129,12 @@ private:
     QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& siteUrl, const QString& formUrl);
     QList<Entry*> searchEntries(const QString& siteUrl, const QString& formUrl, const StringPairList& keyList);
     QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& siteUrl, const QString& formUrl);
-    void confirmEntries(QLocalSocket* socket,
-                        const QString& incrementedNonce,
-                        const QString& publicKey,
-                        const QString& secretKey,
-                        const QString& id,
-                        const QString& hash,
-                        const QString& requestId,
-                        QList<Entry*>& allowedEntries,
-                        QList<Entry*>& entriesToConfirm,
-                        const QString& siteUrl,
-                        const QString& siteHost,
-                        const QString& formUrl,
-                        const QString& realm,
-                        const bool httpAuth);
-    void sendCredentialsToClient(QList<Entry*>& allowedEntries,
-                                 QLocalSocket* socket,
-                                 const QString& incrementedNonce,
-                                 const QString& publicKey,
-                                 const QString& secretKey,
-                                 const QString& hash,
-                                 const QString& id,
-                                 const QString siteUrl,
-                                 const QString& formUrl);
+    QList<Entry*> confirmEntries(QList<Entry*>& pwEntriesToConfirm,
+                                 const QString& siteUrl,
+                                 const QString& siteHost,
+                                 const QString& formUrl,
+                                 const QString& realm,
+                                 const bool httpAuth);
     QJsonObject prepareEntry(const Entry* entry);
     void allowEntry(Entry* entry, const QString& siteHost, const QString& formUrl, const QString& realm);
     void denyEntry(Entry* entry, const QString& siteHost, const QString& formUrl, const QString& realm);
@@ -196,15 +170,14 @@ private:
     QPointer<BrowserHost> m_browserHost;
     QHash<QString, QSharedPointer<BrowserAction>> m_browserClients;
 
+    bool m_dialogActive;
     bool m_bringToFrontRequested;
     bool m_passwordGeneratorRequested;
-    bool m_accessConfirmRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
 
     QPointer<DatabaseWidget> m_currentDatabaseWidget;
     QScopedPointer<PasswordGeneratorWidget> m_passwordGenerator;
-    QScopedPointer<BrowserAccessControlDialog> m_accessControlDialog;
 
     Q_DISABLE_COPY(BrowserService);
 

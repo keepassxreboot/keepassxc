@@ -76,7 +76,7 @@ QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject&
     } else if (action.compare("test-associate") == 0) {
         return handleTestAssociate(json, action);
     } else if (action.compare("get-logins") == 0) {
-        return handleGetLogins(socket, json, action);
+        return handleGetLogins(json, action);
     } else if (action.compare("generate-password") == 0) {
         return handleGeneratePassword(socket, json, action);
     } else if (action.compare("set-login") == 0) {
@@ -231,7 +231,7 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
     return buildResponse(action, message, newNonce);
 }
 
-QJsonObject BrowserAction::handleGetLogins(QLocalSocket* socket, const QJsonObject& json, const QString& action)
+QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QString& action)
 {
     const QString hash = browserService()->getDatabaseHash();
     const QString nonce = json.value("nonce").toString();
@@ -264,31 +264,19 @@ QJsonObject BrowserAction::handleGetLogins(QLocalSocket* socket, const QJsonObje
     const QString formUrl = decrypted.value("submitUrl").toString();
     const QString auth = decrypted.value("httpAuth").toString();
     const bool httpAuth = auth.compare(TRUE_STR) == 0;
-    auto requestId = decrypted.value("requestID").toString();
 
-    if (browserService()->isAccessConfirmRequested()) {
-        auto errorReply = getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
-
-        if (!requestId.isEmpty()) {
-            errorReply["requestID"] = requestId;
-        }
-
-        return errorReply;
+    const QJsonArray users = browserService()->findMatchingEntries(id, siteUrl, formUrl, "", keyList, httpAuth);
+    if (users.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    browserService()->findEntries(socket,
-                                  incrementedNonce,
-                                  m_clientPublicKey,
-                                  m_secretKey,
-                                  id,
-                                  hash,
-                                  requestId,
-                                  siteUrl,
-                                  formUrl,
-                                  "",
-                                  keyList,
-                                  httpAuth);
-    return QJsonObject();
+    QJsonObject message = browserMessageBuilder()->buildMessage(incrementedNonce);
+    message["count"] = users.count();
+    message["entries"] = users;
+    message["hash"] = hash;
+    message["id"] = id;
+
+    return buildResponse(action, message, incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action)

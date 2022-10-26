@@ -1,6 +1,5 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -64,9 +63,9 @@ Q_GLOBAL_STATIC(BrowserService, s_browserService);
 BrowserService::BrowserService()
     : QObject()
     , m_browserHost(new BrowserHost)
+    , m_dialogActive(false)
     , m_bringToFrontRequested(false)
     , m_passwordGeneratorRequested(false)
-    , m_accessConfirmRequested(false)
     , m_prevWindowState(WindowState::Normal)
     , m_keepassBrowserUUID(Tools::hexToUuid("de887cc3036343b8974b5911b8816224"))
 {
@@ -314,18 +313,12 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
     return {};
 }
 
-void BrowserService::findEntries(QLocalSocket* socket,
-                                 const QString& nonce,
-                                 const QString& publicKey,
-                                 const QString& secretKey,
-                                 const QString& dbid,
-                                 const QString& hash,
-                                 const QString& requestId,
-                                 const QString& siteUrl,
-                                 const QString& formUrl,
-                                 const QString& realm,
-                                 const StringPairList& keyList,
-                                 const bool httpAuth)
+QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
+                                               const QString& siteUrl,
+                                               const QString& formUrl,
+                                               const QString& realm,
+                                               const StringPairList& keyList,
+                                               const bool httpAuth)
 {
     Q_UNUSED(dbid);
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
@@ -334,8 +327,8 @@ void BrowserService::findEntries(QLocalSocket* socket,
     const QString formHost = QUrl(formUrl).host();
 
     // Check entries for authorization
-    QList<Entry*> entriesToConfirm;
-    QList<Entry*> allowedEntries;
+    QList<Entry*> pwEntriesToConfirm;
+    QList<Entry*> pwEntries;
     for (auto* entry : searchEntries(siteUrl, formUrl, keyList)) {
         auto entryCustomData = entry->customData();
 
@@ -355,7 +348,7 @@ void BrowserService::findEntries(QLocalSocket* socket,
 
         // HTTP Basic Auth always needs a confirmation
         if (!ignoreHttpAuth && httpAuth) {
-            entriesToConfirm.append(entry);
+            pwEntriesToConfirm.append(entry);
             continue;
         }
 
@@ -365,166 +358,87 @@ void BrowserService::findEntries(QLocalSocket* socket,
 
         case Unknown:
             if (alwaysAllowAccess) {
-                allowedEntries.append(entry);
+                pwEntries.append(entry);
             } else {
-                entriesToConfirm.append(entry);
+                pwEntriesToConfirm.append(entry);
             }
             break;
 
         case Allowed:
-            allowedEntries.append(entry);
+            pwEntries.append(entry);
             break;
         }
     }
 
-    if (entriesToConfirm.isEmpty()) {
-        sendCredentialsToClient(allowedEntries, socket, nonce, publicKey, secretKey, hash, dbid, siteUrl, formUrl);
-        return;
+    // Confirm entries
+    QList<Entry*> selectedEntriesToConfirm =
+        confirmEntries(pwEntriesToConfirm, siteUrl, siteHost, formHost, realm, httpAuth);
+    if (!selectedEntriesToConfirm.isEmpty()) {
+        pwEntries.append(selectedEntriesToConfirm);
     }
 
-    confirmEntries(socket,
-                   nonce,
-                   publicKey,
-                   secretKey,
-                   dbid,
-                   hash,
-                   requestId,
-                   allowedEntries,
-                   entriesToConfirm,
-                   siteUrl,
-                   siteHost,
-                   formHost,
-                   realm,
-                   httpAuth);
-}
-
-void BrowserService::confirmEntries(QLocalSocket* socket,
-                                    const QString& incrementedNonce,
-                                    const QString& publicKey,
-                                    const QString& secretKey,
-                                    const QString& id,
-                                    const QString& hash,
-                                    const QString& requestId,
-                                    QList<Entry*>& allowedEntries,
-                                    QList<Entry*>& entriesToConfirm,
-                                    const QString& siteUrl,
-                                    const QString& siteHost,
-                                    const QString& formUrl,
-                                    const QString& realm,
-                                    const bool httpAuth)
-{
-    if (entriesToConfirm.isEmpty() || m_accessConfirmRequested) {
-        return;
+    if (pwEntries.isEmpty()) {
+        return {};
     }
 
-    if (!m_accessControlDialog) {
-
-        m_accessControlDialog.reset(new BrowserAccessControlDialog());
-
-        connect(
-            m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), m_accessControlDialog.data(), SIGNAL(closed()));
-
-        connect(m_accessControlDialog.data(),
-                &BrowserAccessControlDialog::disableAccess,
-                m_accessControlDialog.data(),
-                [=](QTableWidgetItem* item) {
-                    auto entry = entriesToConfirm[item->row()];
-                    denyEntry(entry, siteHost, formUrl, realm);
-                });
-
-        connect(m_accessControlDialog.data(), &BrowserAccessControlDialog::closed, m_accessControlDialog.data(), [=] {
-            if (!m_accessControlDialog->entriesAccepted()) {
-                auto errorMessage =
-                    browserMessageBuilder()->getErrorReply("get-logins", ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
-                errorMessage["requestID"] = requestId;
-                m_browserHost->sendClientMessage(socket, errorMessage);
-            }
-
-            m_accessControlDialog.reset();
-            hideWindow();
-            m_accessConfirmRequested = false;
-        });
-
-        connect(m_accessControlDialog.data(),
-                &BrowserAccessControlDialog::acceptEntries,
-                m_accessControlDialog.data(),
-                [=](QList<QTableWidgetItem*> items, QList<Entry*> entries, QList<Entry*> allowed) {
-                    QList<Entry*> selectedEntries;
-
-                    for (auto item : items) {
-                        auto entry = entries[item->row()];
-                        if (m_accessControlDialog->remember()) {
-                            allowEntry(entry, siteHost, formUrl, realm);
-                        }
-
-                        selectedEntries.append(entry);
-                    }
-
-                    hideWindow();
-
-                    if (!selectedEntries.isEmpty()) {
-                        allowed.append(selectedEntries);
-                    }
-
-                    if (allowed.isEmpty()) {
-                        return;
-                    }
-
-                    // Ensure that database is not locked when the popup was visible
-                    if (!isDatabaseOpened()) {
-                        return;
-                    }
-
-                    sendCredentialsToClient(
-                        allowed, socket, incrementedNonce, publicKey, secretKey, hash, id, siteUrl, formUrl);
-                });
-
-        connect(m_accessControlDialog.data(),
-                &BrowserAccessControlDialog::rejectEntries,
-                m_accessControlDialog.data(),
-                [=](QList<QTableWidgetItem*> items, QList<Entry*> entries) {
-                    Q_UNUSED(items); // We might need this later if single entries can be denied from the list
-                    for (auto entry : entries) {
-                        if (m_accessControlDialog->remember()) {
-                            denyEntry(entry, siteHost, formUrl, realm);
-                        }
-                    }
-                });
-
-        m_accessControlDialog->setItems(entriesToConfirm, allowedEntries, siteUrl, httpAuth);
-        m_accessControlDialog->show();
+    // Ensure that database is not locked when the popup was visible
+    if (!isDatabaseOpened()) {
+        return {};
     }
 
-    m_accessConfirmRequested = true;
-    updateWindowState();
-}
+    // Sort results
+    pwEntries = sortEntries(pwEntries, siteUrl, formUrl);
 
-void BrowserService::sendCredentialsToClient(QList<Entry*>& allowedEntries,
-                                             QLocalSocket* socket,
-                                             const QString& incrementedNonce,
-                                             const QString& publicKey,
-                                             const QString& secretKey,
-                                             const QString& hash,
-                                             const QString& id,
-                                             const QString siteUrl,
-                                             const QString& formUrl)
-{
-    allowedEntries = sortEntries(allowedEntries, siteUrl, formUrl);
-
+    // Fill the list
     QJsonArray result;
-    for (auto* entry : allowedEntries) {
+    for (auto* entry : pwEntries) {
         result.append(prepareEntry(entry));
     }
 
-    QJsonObject message = browserMessageBuilder()->buildMessage(incrementedNonce);
-    message["count"] = result.count();
-    message["entries"] = result;
-    message["hash"] = hash;
-    message["id"] = id;
+    return result;
+}
 
-    m_browserHost->sendClientMessage(
-        socket, browserMessageBuilder()->buildResponse("get-logins", message, incrementedNonce, publicKey, secretKey));
+QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
+                                             const QString& siteUrl,
+                                             const QString& siteHost,
+                                             const QString& formUrl,
+                                             const QString& realm,
+                                             const bool httpAuth)
+{
+    if (pwEntriesToConfirm.isEmpty() || m_dialogActive) {
+        return {};
+    }
+
+    m_dialogActive = true;
+    updateWindowState();
+    BrowserAccessControlDialog accessControlDialog;
+
+    connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &accessControlDialog, SLOT(reject()));
+
+    connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
+        auto entry = pwEntriesToConfirm[item->row()];
+        denyEntry(entry, siteHost, formUrl, realm);
+    });
+
+    accessControlDialog.setItems(pwEntriesToConfirm, siteUrl, httpAuth);
+
+    QList<Entry*> allowedEntries;
+    auto ret = accessControlDialog.exec();
+    if (ret == QDialog::Accepted) {
+        for (auto item : accessControlDialog.getSelectedEntries()) {
+            auto entry = pwEntriesToConfirm[item->row()];
+            if (accessControlDialog.remember()) {
+                allowEntry(entry, siteHost, formUrl, realm);
+            }
+            allowedEntries.append(entry);
+        }
+    }
+
+    // Re-hide the application if it wasn't visible before
     hideWindow();
+    m_dialogActive = false;
+
+    return allowedEntries;
 }
 
 void BrowserService::showPasswordGenerator(QLocalSocket* socket,
@@ -570,11 +484,6 @@ void BrowserService::showPasswordGenerator(QLocalSocket* socket,
 bool BrowserService::isPasswordGeneratorRequested() const
 {
     return m_passwordGeneratorRequested;
-}
-
-bool BrowserService::isAccessConfirmRequested() const
-{
-    return m_accessConfirmRequested;
 }
 
 QString BrowserService::storeKey(const QString& key)
