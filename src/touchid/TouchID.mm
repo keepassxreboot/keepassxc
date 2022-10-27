@@ -31,7 +31,11 @@ inline std::string StatusToErrorMessage(OSStatus status)
       return std::to_string(status);
    }
 
-   std::string result(CFStringGetCStringPtr(text, kCFStringEncodingUTF8));
+   auto msg = CFStringGetCStringPtr(text, kCFStringEncodingUTF8);
+   std::string result;
+   if (msg) {
+       result = msg;
+   }
    CFRelease(text);
    return result;
 }
