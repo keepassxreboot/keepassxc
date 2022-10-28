@@ -1584,6 +1584,7 @@ QMenu* EditEntryWidget::createPresetsMenu()
     expirePresetsMenu->addAction(tr("%n week(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromDays(21)));
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromMonths(1)));
+    expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 2))->setData(QVariant::fromValue(TimeDelta::fromMonths(2)));
     expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromMonths(3)));
     expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 6))->setData(QVariant::fromValue(TimeDelta::fromMonths(6)));
     expirePresetsMenu->addSeparator();
