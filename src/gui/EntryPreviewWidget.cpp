@@ -66,8 +66,6 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryNotesTextEdit->document()->setDocumentMargin(0);
     m_ui->groupNotesTextEdit->document()->setDocumentMargin(0);
 
-    connect(m_ui->entryUrlLabel, SIGNAL(linkActivated(QString)), SLOT(openEntryUrl()));
-
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpProgress, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
@@ -77,7 +75,10 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->toggleGroupNotesButton, SIGNAL(clicked(bool)), SLOT(setGroupNotesVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
     // Prevent the url from being focused after clicked to allow the Copy Password button to work properly
-    connect(m_ui->entryUrlLabel, &QLabel::linkActivated, this, [this] { m_ui->entryTabWidget->setFocus(); });
+    connect(m_ui->entryUrlLabel, &QLabel::linkActivated, this, [this] {
+        openEntryUrl();
+        m_ui->entryTabWidget->setFocus();
+    });
     connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpLabel()));
 
     connect(m_ui->entryAttributesTable, &QTableWidget::itemDoubleClicked, this, [](QTableWidgetItem* item) {
@@ -120,8 +121,12 @@ void EntryPreviewWidget::clear()
 
 void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 {
-    disconnect(m_currentEntry);
-    disconnect(m_currentGroup);
+    if (m_currentEntry) {
+        disconnect(m_currentEntry);
+    }
+    if (m_currentGroup) {
+        disconnect(m_currentGroup);
+    }
 
     m_currentEntry = selectedEntry;
     m_currentGroup = nullptr;
@@ -137,8 +142,12 @@ void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 
 void EntryPreviewWidget::setGroup(Group* selectedGroup)
 {
-    disconnect(m_currentEntry);
-    disconnect(m_currentGroup);
+    if (m_currentEntry) {
+        disconnect(m_currentEntry);
+    }
+    if (m_currentGroup) {
+        disconnect(m_currentGroup);
+    }
 
     m_currentEntry = nullptr;
     m_currentGroup = selectedGroup;
@@ -250,6 +259,8 @@ void EntryPreviewWidget::setUsernameVisible(bool state)
 
 void EntryPreviewWidget::setPasswordVisible(bool state)
 {
+    m_ui->entryPasswordLabel->setFont(Font::fixedFont());
+
     const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
     if (state) {
         if (config()->get(Config::GUI_ColorPasswords).toBool()) {
@@ -268,7 +279,7 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
             m_ui->entryPasswordLabel->setHtml(html);
         } else {
             // No color
-            m_ui->entryPasswordLabel->setPlainText(password.toHtmlEscaped());
+            m_ui->entryPasswordLabel->setPlainText(password);
         }
     } else if (password.isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
         m_ui->entryPasswordLabel->setPlainText("");
@@ -276,7 +287,6 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
         m_ui->entryPasswordLabel->setPlainText(QString("\u25cf").repeated(6));
     }
 
-    m_ui->entryPasswordLabel->setFont(Font::fixedFont());
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", state));
 }
 

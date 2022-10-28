@@ -51,7 +51,7 @@ BUILD_PLUGINS="all"
 INSTALL_PREFIX="/usr/local"
 ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
-MACOSX_DEPLOYMENT_TARGET=10.13
+MACOSX_DEPLOYMENT_TARGET=10.15
 TIMESTAMP_SERVER="http://timestamp.sectigo.com"
 
 # -----------------------------------------------------------------------
