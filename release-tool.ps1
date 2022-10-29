@@ -291,7 +291,7 @@ if ($Merge) {
 
     # Only commit if there are changes
     $changes = & git status --porcelain
-    if ($changes.Length > 0) {
+    if ($changes.Length -gt 0) {
         Write-Host "Committing translation updates..."
         Invoke-Cmd "git" "add -A ./share/translations/" -quiet
         Invoke-Cmd "git" "commit -m `"Update translations`"" -quiet
