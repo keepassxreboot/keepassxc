@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.7.4 (2022-10-29)
+
+### Changes
+- Add 2 months expiration preset [#8687]
+- CLI: Add Unicode support on Windows [#8618]
+
+### Fixes
+- Fix crash on macOS when unlocking database [#8676]
+- Fix display of passwords in preview panel [#8633]
+- Fix clicking links in entry preview panel [#8644]
+- Prevent expired entries search if no results returned [#8643]
+- Browser: Revert code causing connection problems [#8665]
+- Browser: Fix socket file symbolic link on Linux [#8656]
+- Flatpak: Fix launching browser proxy service [#8680]
+- SSH Agent: Fix paegent support on Windows [#8619]
+
 ## 2.7.3 (2022-10-23)
 
 ### Changes
