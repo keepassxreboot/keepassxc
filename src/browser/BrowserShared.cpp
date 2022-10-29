@@ -38,14 +38,15 @@ namespace BrowserShared
 
         // Put the socket in a dedicated directory.
         // This directory will be easily mountable by sandbox containers.
-        QString subPath = path + "/app/org.keepassxc.KeePassXC/";
+        QString subPath = path + "/app/org.keepassxc.KeePassXC";
         QDir().mkpath(subPath);
 
         QString socketPath = subPath + serverName;
 #ifndef KEEPASSXC_DIST_FLATPAK
-        QFile::remove(socketPath);
         // Create a symlink at the legacy location for backwards compatibility.
-        QFile::link(socketPath, path + serverName);
+        const auto origSocketPath = path + serverName;
+        QFile::remove(origSocketPath);
+        QFile::link(socketPath, origSocketPath);
 #endif
 
         return socketPath;
