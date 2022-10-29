@@ -883,7 +883,6 @@ build() {
         fi
     fi
 
-    OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
     if  ! ${build_snapshot} && [ -d "$OUTPUT_DIR" ]; then
         exitError "Output dir '${OUTPUT_DIR}' already exists."
     fi
@@ -892,6 +891,7 @@ build() {
     if ! mkdir -p "$OUTPUT_DIR"; then
         exitError "Failed to create output directory!"
     fi
+    OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
 
     if ${build_source_tarball}; then
         logInfo "Creating source tarball..."
