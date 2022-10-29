@@ -80,6 +80,7 @@ private slots:
     void testShow();
     void testInvalidDbFiles();
     void testYubiKeyOption();
+    void testNonAscii();
 
 private:
     QScopedPointer<QFile> m_devNull;
@@ -90,6 +91,7 @@ private:
     QScopedPointer<TemporaryFile> m_keyFileProtectedDbFile;
     QScopedPointer<TemporaryFile> m_keyFileProtectedNoPasswordDbFile;
     QScopedPointer<TemporaryFile> m_yubiKeyProtectedDbFile;
+    QScopedPointer<TemporaryFile> m_nonAsciiDbFile;
 
     QScopedPointer<QBuffer> m_stdout;
     QScopedPointer<QBuffer> m_stderr;

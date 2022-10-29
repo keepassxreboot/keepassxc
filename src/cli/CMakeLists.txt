@@ -65,6 +65,9 @@ install(TARGETS keepassxc-cli
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
 
 if(WIN32)
+    target_sources(keepassxc-cli
+        PRIVATE keepassxc-cli.exe.manifest)
+
 #    install(CODE "include(BundleUtilities)
 #                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/keepassxc-cli.exe\" \"\" \"\")"
 #            COMPONENT Runtime)

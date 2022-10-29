@@ -233,6 +233,7 @@ endif()
 
 add_unit_test(NAME testcli SOURCES TestCli.cpp
         LIBS testsupport cli ${TEST_LIBRARIES})
+target_compile_definitions(testcli PRIVATE KEEPASSX_CLI_PATH="$<TARGET_FILE:keepassxc-cli>")
 
 if(WITH_GUI_TESTS)
     add_subdirectory(gui)
