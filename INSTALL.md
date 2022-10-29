@@ -57,7 +57,7 @@ To compile from source, open a **Terminal (Linux/MacOS)**, the **MSVC Tools Comm
    git pull
    ```
 
-   For a stable build, it is recommended to check out the `latest` branch.
+   For a stable build, it is recommended to check out the `latest` tag.
 
    ```
    git checkout latest
