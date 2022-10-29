@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Emeği geçenler</translation>
+        <translation>Katkıda bulunanlar</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
@@ -3816,7 +3816,7 @@ Hata: %1</translation>
     </message>
     <message>
         <source>Entry expires at</source>
-        <translation>Kaydın geçerlilik süresi</translation>
+        <translation>Kaydın geçerlilik sonu</translation>
     </message>
     <message>
         <source>Creation date</source>
@@ -4708,7 +4708,7 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>Grup alanı türünün numarası geçersiz</translation>
+        <translation>Grup alanı türü numarası geçersiz</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
@@ -4756,7 +4756,7 @@ Bu sorunla yeniden karşılaşırsanız, veritabanı dosyası bozulmuş olabilir
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Kayıt alanının türü numarası eksik</translation>
+        <translation>Kayıt alanı türü numarası eksik</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>

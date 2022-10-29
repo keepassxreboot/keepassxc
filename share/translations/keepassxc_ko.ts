@@ -288,7 +288,7 @@
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation>일 내에 만료됨</translation>
+        <translation>일 후에 만료됨</translation>
     </message>
     <message>
         <source>will expire within </source>
@@ -3129,7 +3129,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>이 그룹과 하위 그룹의 항목을 HTTP 인증에 사용하지 않기 전환</translation>
+        <translation>이 그룹과 하위 그룹의 항목을 HTTP 인증에 사용하지 않기 </translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
@@ -3576,7 +3576,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>기존 파일 &quot;%1&quot;의 내용을 첨부 항목으로 덮어쓰시겠습니까?</translation>
+        <translation>기존 파일 &quot;%1&quot;의 내용을 첨부 항목으로 덮어 쓰시겠습니까?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -6253,7 +6253,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Empty</source>
-        <translation>삭제</translation>
+        <translation>비어 있음</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -7557,7 +7557,7 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1(%2라운드, %3 KB)</translation>
+        <translation>Argon2%1(%2회, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>

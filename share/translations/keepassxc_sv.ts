@@ -293,7 +293,7 @@
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>går ut inom</translation>
+        <translation>löper ut inom</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -446,11 +446,11 @@
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Använd postens titel för att matcha fönster vid systemövergripande autoskriv</translation>
+        <translation>Använd postens titel för att matcha fönster vid global autoskriv</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Använd postens URL för att matcha fönster vid systemövergripande autoskriv</translation>
+        <translation>Använd postens URL för att matcha fönster vid global autoskriv</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -2791,7 +2791,7 @@ Vill du korrigera det?</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation>Undanta att skicka automatiskt för den här posten</translation>
+        <translation>Undanta autoskriv för den här posten</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
@@ -3060,7 +3060,7 @@ Vill du korrigera det?</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Webbläsarintegrering</translation>
+        <translation>Webbläsarintegration</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -4975,7 +4975,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Systemövergripande genväg redan registrerad för %1</translation>
+        <translation>Systemövergripande genväg redan registrerad på %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
@@ -5350,7 +5350,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation>Klassisk (Platformsintegration)</translation>
+        <translation>Klassisk (Platfformsintegration)</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5658,7 +5658,7 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Systemövergripande genväg finns redan registrerad för %1</translation>
+        <translation>Systemövergripande genväg redan registrerad på %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
@@ -7646,7 +7646,7 @@ Kärna: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Rensar urklipp om %1 sekund…</numerusform><numerusform>Rensar urklipp om %1 sekunder…</numerusform></translation>
+        <translation><numerusform>Rensar urklipp om %1 sekund...</numerusform><numerusform>Rensar urklipp om %1 sekunder...</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7977,7 +7977,7 @@ Det här alternativet är inaktuellt, använd --set-key-file istället.</transla
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Denna post undantas från rapporter</translation>
+        <translation>Denna post har undantagits från rapporter</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
@@ -8005,7 +8005,7 @@ Det här alternativet är inaktuellt, använd --set-key-file istället.</transla
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Ta bort post...</numerusform><numerusform>Ta bort poster…</numerusform></translation>
+        <translation><numerusform>Ta bort post…</numerusform><numerusform>Ta bort poster…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8963,7 +8963,7 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Den valda hårdvarunyckelplatsen stöder inte challenge-response!</translation>
+        <translation>Den valda maskinvarunyckelplatsen stöder inte challenge-response!</translation>
     </message>
     <message>
         <source>Challenge-Response</source>

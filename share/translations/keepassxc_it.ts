@@ -50,7 +50,7 @@
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>KeePassXC - Richiesta di accesso</translation>
+        <translation>KeePassXC -  Richiesta di accesso</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
@@ -179,7 +179,7 @@
     </message>
     <message>
         <source>Text only</source>
-        <translation>Solo icone</translation>
+        <translation>Solo testo</translation>
     </message>
     <message>
         <source>Text beside icon</source>
@@ -270,7 +270,7 @@
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation>Verificare la disponibilità di aggiornamenti all&apos;avvio dell&apos;applicazione una volta alla settimana</translation>
+        <translation>Verifica la disponibilità di aggiornamenti all&apos;avvio dell&apos;applicazione una volta alla settimana</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
@@ -414,11 +414,11 @@
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>Usa un tipo di carattere a larghezza fissa per le note</translation>
+        <translation>Usa un carattere a larghezza fissa per le note</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation>Minimizzare invece di uscire dall&apos;applicazione</translation>
+        <translation>Minimizza invece di uscire dall&apos;applicazione</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -438,7 +438,7 @@
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Ripristina impostazioni predefinite...</translation>
+        <translation>Ripristina impostazioni predefinite…</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -902,7 +902,7 @@ Vuoi eliminare questa voce?
     </message>
     <message>
         <source>Converting attributes to custom data…</source>
-        <translation>Conversione di attributi in dati personalizzati in corso...</translation>
+        <translation>Conversione di attributi in dati personalizzati in corso…</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -1150,7 +1150,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation>Consulta le istruzioni speciali per l&apos;uso dell&apos;estensione del browser di seguito</translation>
+        <translation>Si prega di consultare le istruzioni speciali per l&apos;uso dell&apos;estensione del browser di seguito</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
@@ -1586,7 +1586,7 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Rilevamento delle chiavi hardware in corso...</translation>
+        <translation>Rilevamento delle chiavi hardware in corso…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
@@ -1594,7 +1594,7 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>Seleziona chiave hardware...</translation>
+        <translation>Seleziona chiave hardware…</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
@@ -1743,7 +1743,7 @@ Le autorizzazioni per accedere alle voci verranno revocate.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Rimozione dei permessi salvati...</translation>
+        <translation>Rimozione dei permessi salvati…</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -1772,7 +1772,7 @@ Le autorizzazioni per accedere alle voci verranno revocate.</translation>
     <message>
         <source>Do you really want to convert all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Vuoi davvero convertire tutti i dati di integrazione del browser legacy allo standard più recente?
+        <translation>Vuoi davvero convertire tutti i dati di integrazione del browser obsoleti allo standard più recente?
 Questo è necessario per mantenere la compatibilità con il plug-in del browser.</translation>
     </message>
     <message>
@@ -1974,7 +1974,7 @@ Se si mantiene questo numero, il database non sarà protetto da attacchi di forz
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> thread</numerusform><numerusform>thread</numerusform><numerusform>thread</numerusform></translation>
+        <translation><numerusform>thread</numerusform><numerusform>thread</numerusform><numerusform>thread</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2181,7 +2181,7 @@ Questa azione non è reversibile.</translation>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
         <translation>Il database creato non ha chiave o KDF, rifiutando di salvarlo.
-Questo è sicuramente un bug, segnalalo agli sviluppatori.</translation>
+Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -3623,7 +3623,7 @@ Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
         <translation>%1 ha dimensioni elevate (%2 MB).
-Il database potrebbe occupare più spazio e ridurre le sue performance.
+Il database potrebbe occupare più spazio e ridurre le sue prestazioni.
 
 Sei sicuro di voler aggiungere questo file?</translation>
     </message>
@@ -3981,7 +3981,7 @@ Errore: %1</translation>
         <source>You are about to export your database to an unencrypted file.
 This will leave your passwords and sensitive information vulnerable!
 </source>
-        <translation>Stai per esportare il database in un file non cifrato.
+        <translation>Si sta per esportare il database in un file non cifrato.
 Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
 </translation>
     </message>
@@ -4076,7 +4076,7 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n voce utilizzata da %1</numerusform><numerusform>%n voci utilizzate da %1</numerusform><numerusform>%n voci utilizzate da %1</numerusform></translation>
+        <translation><numerusform>%n Voce utilizzata da %1</numerusform><numerusform>%n Voci utilizzate da %1</numerusform><numerusform>%n Voci utilizzate da %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4131,14 +4131,14 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation>Validazione online della password non riuscita</translation>
+        <translation>Convalida online della password non riuscita</translation>
     </message>
 </context>
 <context>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Scarica Favicons</translation>
+        <translation>Scarica i Favicon</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4297,7 +4297,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Fallimento dell&apos;apertura del buffer per i parametri KDF nell&apos;intestazione</translation>
+        <translation>Apertura del buffer per i parametri KDF nell&apos;intestazione non riuscita</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
@@ -4888,7 +4888,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation>È stato selezionato un file chiave in un vecchio formato che KeePassXC&lt;br&gt;potrebbe smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendere in considerazione la possibilità di generare un nuovo file di chiave.</translation>
+        <translation>È stato selezionato un file di chiave in un vecchio formato che KeePassXC&lt;br&gt;potrebbe smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendere in considerazione la possibilità di generare un nuovo file di chiave.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -5054,7 +5054,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>&amp;Nuovo database</translation>
+        <translation>&amp;Nuovo database…</translation>
     </message>
     <message>
         <source>Create a new database</source>
@@ -5070,7 +5070,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>&amp;Nuova voce</translation>
+        <translation>&amp;Nuova voce…</translation>
     </message>
     <message>
         <source>Add a new entry</source>
@@ -5078,7 +5078,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>&amp;Modifica voce</translation>
+        <translation>&amp;Modifica voce…</translation>
     </message>
     <message>
         <source>View or edit entry</source>
@@ -5086,11 +5086,11 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation>&amp;Elimina voce</translation>
+        <translation>&amp;Elimina voce…</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>&amp;Nuovo gruppo</translation>
+        <translation>&amp;Nuovo gruppo…</translation>
     </message>
     <message>
         <source>Add a new group</source>
@@ -5098,15 +5098,15 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>&amp;Modifica gruppo</translation>
+        <translation>&amp;Modifica gruppo…</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;Elimina gruppo</translation>
+        <translation>&amp;Elimina gruppo…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Scarica tutte le &amp;Favicons</translation>
+        <translation>Scarica tutte le &amp;Favicon…</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -5118,11 +5118,11 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>Sal&amp;va database come</translation>
+        <translation>Sal&amp;va database come…</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>Database &amp;Sicurezza...</translation>
+        <translation>Database &amp;Sicurezza…</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
@@ -5134,7 +5134,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation>Impostazioni &amp;database</translation>
+        <translation>Impostazioni &amp;database…</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -5142,7 +5142,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation>&amp;Clona voce</translation>
+        <translation>&amp;Clona voce…</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
@@ -5230,15 +5230,15 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation>&amp;File CSV...</translation>
+        <translation>&amp;File CSV…</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation>File &amp;HTML...</translation>
+        <translation>File &amp;HTML…</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
-        <translation>Database KeePass 1</translation>
+        <translation>Database KeePass 1…</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
@@ -5246,7 +5246,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
-        <translation>1Password Vault</translation>
+        <translation>1Password Vault…</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
@@ -5254,7 +5254,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>CSV File…</source>
-        <translation>File CSV</translation>
+        <translation>File CSV…</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
@@ -5270,7 +5270,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation>Configura TOTP...</translation>
+        <translation>Configura TOTP…</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
@@ -5454,7 +5454,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 Voce(e)</numerusform><numerusform>%1 Voce(e)</numerusform><numerusform>%1 Voce(e)</numerusform></translation>
+        <translation><numerusform>%1 Voce(e)</numerusform><numerusform>%1 Voce(e)</numerusform><numerusform>%1 Voce(i)</numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
@@ -5602,7 +5602,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Qui puoi modificare le impostazioni di cifratura del database. Puoi sempre modificarli dopo nelle impostazioni del database.</translation>
+        <translation>Qui è possibile modificare le impostazioni di crittaggio del database. È sempre possibile modificarli dopo nelle impostazioni del database.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
@@ -5632,7 +5632,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Qui puoi modificare le impostazioni di cifratura del database. Puoi sempre  modificarli dopo nelle impostazioni del database.</translation>
+        <translation>Qui è possibile modificare le impostazioni di crittaggio del database. È sempre possibile modificarli dopo nelle impostazioni del database.</translation>
     </message>
 </context>
 <context>
@@ -5800,7 +5800,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>Decifratura non riuscita, frase segreta non corretta?</translation>
+        <translation>Decifrazione non riuscita, frase segreta non corretta?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading key</source>
@@ -6668,7 +6668,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation>Il tempo di decifratura del database in MS.</translation>
+        <translation>Il tempo di decrittazione del database in MS.</translation>
     </message>
     <message>
         <source>time</source>
@@ -6692,11 +6692,11 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
-        <translation>Tempo di decifratura non valido %1.</translation>
+        <translation>Tempo di decrittazione non valido %1.</translation>
     </message>
     <message>
         <source>Target decryption time must be between %1 and %2.</source>
-        <translation>Il tempo di decifratura deve essere compreso tra %1 e %2.</translation>
+        <translation>Il tempo di decrittazione deve essere compreso tra %1 e %2.</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
@@ -7357,7 +7357,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation>Immettere la password per cifrare il database (facoltativo):</translation>
+        <translation>Immetti la password per cifrare il database (facoltativo):</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
@@ -8002,7 +8002,7 @@ Questa opzione è deprecata, utilizzare invece --set-key-file.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform>Elimina voci…</numerusform><numerusform>Elimina voci…</numerusform></translation>
+        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform><numerusform>Elimina voci…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8127,7 +8127,7 @@ Questa opzione è deprecata, utilizzare invece --set-key-file.</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation>Password esposta </translation>
+        <translation>Password esposta…</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -8911,7 +8911,7 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     <name>WindowsHello</name>
     <message>
         <source>Failed to init KeePassXC crypto.</source>
-        <translation>Impossibile inizializzare la cifratura di KeePassXC.</translation>
+        <translation>Impossibile inizializzare la cifratura KeePassXC.</translation>
     </message>
     <message>
         <source>Failed to encrypt key data.</source>
@@ -8989,7 +8989,7 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Rilevamento delle chiavi hardware in corso...</translation>
+        <translation>Rilevamento delle chiavi hardware in corso…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>

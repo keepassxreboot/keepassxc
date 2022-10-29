@@ -11,19 +11,19 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>דווח על תקלים בכתובת: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: תחתון ;&quot;&gt; https://github.com &lt;/a&gt;</translation>
+        <translation>דווח על תקלים ב: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text־decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC מופץ בתנאי הרשיון של (GNU General License (GPL גרסה 2 או (לבחירה) גרסה 3.</translation>
+        <translation>KeePassXC מופץ בתנאי רישיון (GNU General License (GPL גרסה 2 או (לבחירתכם) גרסה 3.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>מתחזקי המייזם:</translation>
+        <translation>מתחזקי מיזם:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>תודה מיוחדת מצוות KeePassXC, נא לעבור אל debfx ליצירת ה־KeePassX המקורי.</translation>
+        <translation>תודה מיוחדת מצוות KeePassXC עבור אל debfx ליצירת ה־KeePassX המקורי.</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>העתקה ללוח</translation>
+        <translation>העתקה ללוח־הגזירים</translation>
     </message>
 </context>
 <context>
@@ -66,7 +66,7 @@
     </message>
     <message>
         <source>PID</source>
-        <translation>קוד מזהה אישי</translation>
+        <translation>קוד זיהוי אישי</translation>
     </message>
     <message>
         <source>Executable</source>
@@ -86,7 +86,7 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>איפשור נבחרים</translation>
+        <translation>בחירת קובץ ססמה</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
@@ -128,7 +128,7 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>SSH_AUTH_SOCK ערך</translation>
+        <translation>ערך SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>(empty)</source>
@@ -159,7 +159,7 @@
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>הגדרות יישומון</translation>
+        <translation>הגדרות יישום</translation>
     </message>
     <message>
         <source>General</source>
@@ -171,7 +171,7 @@
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>שגיאת גישה לקובץ התצורה %1</translation>
+        <translation>שגיאת גישה לקובץ התצורה 1%</translation>
     </message>
     <message>
         <source>Icon only</source>
@@ -191,7 +191,7 @@
     </message>
     <message>
         <source>Follow style</source>
-        <translation>עקוב אחר הסגנון</translation>
+        <translation>עקיבה אחר הסגנון</translation>
     </message>
     <message>
         <source>Monochrome</source>
@@ -215,11 +215,11 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>אפס הגדרות?</translation>
+        <translation>אפוס הגדרות?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>האם לאפס את כל ההגדרות הכלליות והגדרות האבטחה לברירת המחדל?</translation>
+        <translation>האם לאפס את כל הגדרות הכלליות והאבטחה לברירת המחדל?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
@@ -242,7 +242,7 @@
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>אתחול אֶדְגָּם־יחיד של KeePassXC בלבד</translation>
+        <translation>אתחול אֶדְגָּם KeePassXC יחיד בלבד</translation>
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
@@ -250,11 +250,11 @@
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation>מזעור החלון בעת אתחול היישום</translation>
+        <translation>מזעור חלון בעת אתחול היישום</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>מזעור החלון לאחר שחרור נעילת מסד הנתונים</translation>
+        <translation>מזעור חלון לאחר שחרור נעילת מסד־נתונים</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
@@ -266,7 +266,7 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>זכירת קבצי מפתח־מסד־נתונים ותקיעי אבטחה</translation>
+        <translation>זכירת קבצי מפתח מסד־נתונים והתקני אבטחה</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -274,11 +274,11 @@
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation>כלול גרסאות בטא בבדיקת עדכונים</translation>
+        <translation>הכללת גרסאות בטא בבדיקת עדכונים</translation>
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>על נעילת מסד הנתונים, הצד ערכים ש-</translation>
+        <translation>על נעילת מסד־נתונים, הצד ערכים ש-</translation>
     </message>
     <message>
         <source>have expired</source>
@@ -301,23 +301,23 @@
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>שמור אוטומטית לאחר כל שינוי</translation>
+        <translation>שמירה אוטומטית לאחר כל שינוי</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>שמור אוטומטית בעת נעילת מסד־נתונים</translation>
+        <translation>שמירה אוטומטית בעת נעילת מסד־נתונים</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>שמור אוטומטית של שינויים שטרם נשמרו בעת נעילת מסד־נתונים</translation>
+        <translation>שמירה שינויים שטרם נשמרו אוטומטית בעת נעילת מסד־נתונים</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>טעינה חוזרת אוטומטית של מסד הנתונים בהסגלה חיצונית</translation>
+        <translation>טעינה חוזרת אוטומטית של מסד־נתונים בהסגלה חיצונית</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>תגבה את קובץ מסד הנתונים לפני השמירה</translation>
+        <translation>גיבוי קובץ מסד־נתונים לפני שמירה</translation>
     </message>
     <message>
         <source>Backup destination</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>ציון מיקום קובץ גיבוי מסד הנתונים. מופעים של &quot;{DB_FILENAME}&quot; יוחלפו בשם קובץ מסד הנתונים השמור, ללא הסיומת. {TIME:&lt;format&gt;} יוחלף במועד הגיבוי, למידע נוסף https://doc.qt.io/qt-5/qdatetime.html#toString. ברירת המחדל של &lt;format&gt; היא תבנית המחרוזת &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
+        <translation>ציון מיקום קובץ גיבוי מסד־נתונים. מופעים של &quot;{DB_FILENAME}&quot; יוחלפו בשם קובץ מסד־נתונים השמור, ללא הסיומת. {TIME:&lt;format&gt;} יוחלף במועד הגיבוי, למידע נוסף https://doc.qt.io/qt-5/qdatetime.html#toString. ברירת המחדל של &lt;format&gt; היא תבנית המחרוזת &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -357,7 +357,7 @@
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation>מזעור בעת פתיחת כתובת אתר</translation>
+        <translation>מזעור בעת פתיחת מען URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
@@ -373,7 +373,7 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>פסק זמן להורדת פביקון:</translation>
+        <translation>פסק זמן להורדת Favicon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
@@ -382,11 +382,11 @@
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> שניות</translation>
+        <translation>שניות</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>מנשק המשתמש</translation>
+        <translation>ממשק המשתמש</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -394,7 +394,7 @@
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation>סרגל כלים הניתן להזזה</translation>
+        <translation>סרגל כלים ניתן להזזה</translation>
     </message>
     <message>
         <source>Language selection</source>
@@ -406,11 +406,11 @@
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation>(הפעל מחדש את התוכנית להפעלה)</translation>
+        <translation>(אתחול התוכנית להפעלה)</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation>סגנון סרגל כלים תחתון:</translation>
+        <translation>סגנון סרגל כלים תחתון</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
@@ -418,11 +418,11 @@
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation>מזעור במקום לצאת מהאפליקציה</translation>
+        <translation>מזעור במקום יציאה מהיישום</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>הצגת סמל בסרגל כלי מערכת</translation>
+        <translation>הצגת סמל במגש המערכת</translation>
     </message>
     <message>
         <source>Tray icon type</source>
@@ -438,7 +438,7 @@
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>אפס הגדרות לברירת מחדל...</translation>
+        <translation>אפס הגדרות לברירת מחדל</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -454,7 +454,7 @@
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>לשאול תמיד לפני ביצוע הקלדה־אוטומטית</translation>
+        <translation>תמיד לשאול לפני ביצוע הקלדה־אוטומטית</translation>
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
@@ -470,16 +470,16 @@
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>קיצור דרך כללי להקלדה־אוטומטית:</translation>
+        <translation>קיצור דרך כללי להקלדה־אוטומטית</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>עיכוב התחלת הקלדה־אוטומטית באלפיות השנייה</translation>
+        <translation>השהיית התחלת הקלדה־אוטומטית באלפיות השנייה</translation>
     </message>
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation> אלפית שניה</translation>
+        <translation>אלפית שניה</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
@@ -491,11 +491,11 @@
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>הקלדה־אוטומטית של תווים בעיכוב אלפיות השנייה</translation>
+        <translation>השהיית התחלת הקלדה־אוטומטית של תווים באלפיות השנייה</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
-        <translation>זכירת הרשומה האחרונה שהוקלדה עבור:</translation>
+        <translation>זכירת רשומה אחרונה שהוקלדה ל:</translation>
     </message>
     <message>
         <source> recent files</source>
@@ -514,12 +514,12 @@
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation>זמן לנעילת מסד נתונים</translation>
+        <translation>פסק־זמן לנעילת מסד־נתונים</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> שניות</translation>
+        <translation>שניה</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
@@ -527,16 +527,16 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>נקה שאילתת חיפוש לאחר</translation>
+        <translation>נקוי שאילתת חיפוש לאחר</translation>
     </message>
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation> דקה</translation>
+        <translation>דקות</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation>נקוי שניות מלוח־הגזירים</translation>
+        <translation>שניות נקיון לוח־גזירים</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -548,7 +548,7 @@
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation>אפשר לבטל נעילת מסד נתונים (Touch ID / Windows Hello)</translation>
+        <translation>אפשר לבטל נעילת מסד־נתונים (Touch ID / Windows Hello)</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
@@ -556,7 +556,7 @@
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>נעילת מסדי־נתונים לאחר צמצום החלון</translation>
+        <translation>נעילת מסדי־נתונים לאחר מזעור החלון</translation>
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
@@ -607,11 +607,11 @@
     </message>
     <message>
         <source>Permission Required</source>
-        <translation>נדרשת הרשאה</translation>
+        <translation>דרושה הרשאה</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>ל־KeePassXC נדרשת הרשאת נגישות על מנת לבצע הקלדה־אוטומטית ברמה בסיסית. אם כבר הענקה הרשאה, ייתכן שיידרש לאתחל את KeePassXC.</translation>
+        <translation>ל־KeePassXC נדרשת הרשאת נגישות על מנת לבצע הקלדה־אוטומטית ברמה בסיסית. אם כבר הענקה הרשאה, ייתכן שיידרש להפעיל את KeePassXC מחדש.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -668,7 +668,7 @@
     </message>
     <message>
         <source>Sequence</source>
-        <translation>רצף סדר פעולות</translation>
+        <translation>רצף</translation>
     </message>
     <message>
         <source>(empty)</source>
@@ -676,7 +676,7 @@
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>רצף סדר פעולות ברירת מחדל</translation>
+        <translation>רצף ברירת מחדל</translation>
     </message>
 </context>
 <context>
@@ -695,7 +695,7 @@
     </message>
     <message>
         <source>Sequence</source>
-        <translation>רצף סדר פעולות</translation>
+        <translation>רצף</translation>
     </message>
 </context>
 <context>
@@ -721,7 +721,7 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>הקלדה־אוטומטית מסוג - KeePassXC</translation>
+        <translation>הקלדה־אוטומטית – KeePassXC</translation>
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
@@ -734,8 +734,8 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;ניתן להשתמש בשאילתות חיפוש מתקדם למציאת כל ערך במסדי הנתונים הפתוחים. קיצורי הדרך הבאים שימושיים:&lt;br/&gt;
-Ctrl+F - החלפת חיפוש מסד הנתונים&lt;br/&gt;
+        <translation>&lt;p&gt;ניתן להשתמש בשאילתות חיפוש מתקדם למציאת כל ערך במסדי־נתונים הפתוחים. קיצורי הדרך הבאים שימושיים:&lt;br/&gt;
+Ctrl+F - החלפת חיפוש מסד־נתונים&lt;br/&gt;
 Ctrl+1 - הקלדת שם משתמש&lt;br/&gt;
 Ctrl+2 - הקלדת סיסמה&lt;br/&gt;
 Ctrl+3 - הקלדת TOTP&lt;br/&gt;
@@ -743,7 +743,7 @@ Ctrl+4 - שימוש במקלדת מדומה (וינדוס בלבד)&lt;/p&gt;</t
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation>חיפוש בכל מסדי הנתונים הפתוחים</translation>
+        <translation>חיפוש בכל מסדי־נתונים הפתוחים</translation>
     </message>
     <message>
         <source>Search…</source>
@@ -794,7 +794,7 @@ Ctrl+4 - שימוש במקלדת מדומה (וינדוס בלבד)&lt;/p&gt;</t
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
-        <translation>נתקבלה בקשת גישה מ־%1 לרשומות הבאות:</translation>
+        <translation>%1 מבקש גישה לרשומות הבאות:</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
@@ -810,26 +810,26 @@ Ctrl+4 - שימוש במקלדת מדומה (וינדוס בלבד)&lt;/p&gt;</t
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>בחירת קובץ ססמה</translation>
+        <translation>איפשור פריטים שנבחרו</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>דחיית הכול</translation>
+        <translation>דחיית הכל</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>השבת באתר זה</translation>
+        <translation>השבתת אתר זה</translation>
     </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>KeePassXC-Browser Save Entry</source>
-        <translation>שמירת רשומת דפדפן־KeePassXC</translation>
+        <translation>שמירת רשומה דפדפן־KeePassXC </translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>בסדר</translation>
+        <translation>אישור</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -839,7 +839,7 @@ Ctrl+4 - שימוש במקלדת מדומה (וינדוס בלבד)&lt;/p&gt;</t
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
         <translation>מספר מסדי־נתונים פתוחים.
-נא לבחור במסד הנתונים הנכון לשמירת אישורים.</translation>
+נא לבחור במסד־נתונים הנכון לשמירת הרשאות.</translation>
     </message>
 </context>
 <context>
@@ -852,7 +852,7 @@ Please select the correct database for saving credentials.</source>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation>בקשה ליצור קבוצה חדשה &quot;%1&quot; התקבלה.
+        <translation>הבקשה ליצור קבוצה חדשה &quot;%1&quot; התקבלה.
 האם ליצור קבוצה זו?
 </translation>
     </message>
@@ -866,7 +866,7 @@ Do you want to create this group?
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation>התקבלה בקשת שיוך מסד הנתונים הבא:
+        <translation>התקבלה בקשת שיוך מסד־נתונים הבא:
 %1
 
 נא לתת לחיבור שם או מזהה ייחודיים, לדוגמה:
@@ -883,7 +883,7 @@ chrome-laptop.</source>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>קיים כבר מפתח הצפנה משותף בשם &quot;%1&quot;. האם לכתוב־עליו?</translation>
+        <translation>קיים כבר מפתח הצפנה משותף בשם &apos;%1&apos;. האם כתיבה־עליו?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -891,7 +891,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>האם לעדכן מידע ב־%1 - %2?</translation>
+        <translation>האם לעדכן את המידע ב־%1 - %2?</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
@@ -911,17 +911,16 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Abort</source>
-        <translation>הפסק וצא</translation>
+        <translation>נטישה</translation>
     </message>
     <message>
         <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC: תכונות המרה של KeePassHTTP</translation>
+        <translation>KeePassXC: תכונות המרת KeePassHTTP</translation>
     </message>
     <message>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
-        <translation>התכונות הומרו בהצלחה מ־%1 רשומה(ות).
-הועברו %2 מפתחות לנתונים מותאמים אישית.</translation>
+        <translation>התכונות הומרו בהצלחה מ־%1 רשומה(ות). הועברו %2 מפתחות לנתונים מותאמים אישית.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
@@ -933,7 +932,7 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>מסד הנתונים הפעיל לא מכיל רשומה עם תכונות KeePassHTTP.</translation>
+        <translation>מסד־נתונים הפעיל לא מכיל רשומה עם תכונות KeePassHTTP.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
@@ -947,7 +946,7 @@ Moved %2 keys to custom data.</source>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation>יש להעביר את הגדרות KeePassXC-Browser להגדרות מסד הנתונים.
+        <translation>יש להעביר את הגדרות KeePassXC־Browser להגדרות מסד־נתונים.
 פעולה זו נחוצה כדי לשמור על חיבורי הדפדפן הנוכחיים.
 האם להעביר את ההגדרות הקיימות כעת?</translation>
     </message>
@@ -956,11 +955,11 @@ Would you like to migrate your existing settings now?</source>
     <name>BrowserSettingsWidget</name>
     <message>
         <source>Dialog</source>
-        <translation>דו שיח</translation>
+        <translation>דו־שיח</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>נדרש לגישה למסדי הנתונים באמצעות דפדפן-KeePassXC</translation>
+        <translation>נדרש על מנת לאפשר לדפדפן־KeePassXC גישה למסדי־נתונים שלך </translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -992,7 +991,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Tor Browser</source>
-        <translation>דפדפן טור</translation>
+        <translation>דפדפן תור</translation>
     </message>
     <message>
         <source>Brave</source>
@@ -1013,7 +1012,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation>בקשת שחרר נעילת מסד הנתונים אם הוא נעול</translation>
+        <translation>בקשת שחרר נעילת מסד־נתונים אם הוא נעול</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
@@ -1025,7 +1024,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>מחזירה רק את ההתאמות הטובות ביותר עבור כתובת אתר ספציפית במקום כל הערכים עבור כל הדומיין.</translation>
+        <translation>מחזירה רק את ההתאמות הטובות ביותר עבור כתובת אתר ספציפית במקום כל הרשומות של כל התחום.</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
@@ -1041,12 +1040,12 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation>כל מסדי הנתונים המחוברים להרחבה יחזירו אישורים תואמים.</translation>
+        <translation>כל מסדי־נתונים המחוברים להרחבה יחזירו אישורים תואמים.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>חפוש הרשאות בכל מסדי הנתונים הפתוחים</translation>
+        <translation>חפוש הרשאות בכל מסדי־נתונים הפתוחים</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1055,12 +1054,12 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>לא לשאול לעולם לפני הגישה לאישורים</translation>
+        <translation>לעולם לא לשאול לפני גישה לאישורים</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>לא לשאול לעולם לפני עדכון אישורים</translation>
+        <translation>לעולם לא לשאול לפני עדכון אישורים</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
@@ -1081,7 +1080,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
-        <translation>לא להציג הנחיה להעברת הגדרות KeePassHTTP.</translation>
+        <translation>לא להציג בקשה להעברת הגדרות KeePassHTTP.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
@@ -1151,12 +1150,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>על מנת ששילוב הדפדפן יעבוד, נדרש דפדפן־KeePassXC.
-&lt;br /&gt;ניתן להורדה ל־%1 ו־%2 ו־%3. %4</translation>
+        <translation>על מנת ששילוב הדפדפן יעבוד, נדרשKeePassXC־Browser &lt;br /&gt; ניתן להורד אותו ל־%1 ו־%2 ו־%3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation>אנא עיין בהוראות מיוחדות בהמשך לשימוש בתוסף הדפדפן</translation>
+        <translation>נא לעיין בהוראות מיוחדות לשימוש בהרחבת הדפדפן להלן</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
@@ -1176,7 +1174,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>בחירת מיקום שרת־מתווך מותאם אישית</translation>
+        <translation>בחירת מיקום שָׁרָת מְתַוֵּךְ מותאם אישית</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
@@ -1199,7 +1197,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>העתק הסטוריה</translation>
+        <translation>היסטוריית עותקים</translation>
     </message>
 </context>
 <context>
@@ -1210,7 +1208,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>filename</source>
-        <translation>שם הקובץ</translation>
+        <translation>שם קובץ</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
@@ -1254,7 +1252,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>הוסגל לאחרונה</translation>
+        <translation>שונה לאחרונה</translation>
     </message>
     <message>
         <source>Icon</source>
@@ -1270,11 +1268,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>מלל הוכשר על־ידי</translation>
+        <translation>מלל הוסמך על־ידי</translation>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation>הכשרת מלל</translation>
+        <translation>הסמכת מלל</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
@@ -1290,7 +1288,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation>המערכת דלגה על שורות כותרת עליונה</translation>
+        <translation>המערכת דילגה על שורות כותרת עליונה</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
@@ -1302,7 +1300,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>נא לשקול תו החלצות  &apos;\&apos;</translation>
+        <translation>נא לשקול תו החלצות &apos;\&apos;</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -1326,7 +1324,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>מידע מקורי: </translation>
+        <translation>מידע מקורי:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
@@ -1334,7 +1332,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[דילוג על הודעות נוספות %n]</numerusform><numerusform>[דילוג על %n הודעות נוספות]</numerusform><numerusform>[דילוג על %n הודעות נוספות]</numerusform><numerusform>[דלוג על %n הודעות נוספות]</numerusform></translation>
+        <translation><numerusform>[דילוג על הודעה נוספת %n]</numerusform><numerusform>[דילוג על %n הודעות נוספות]</numerusform><numerusform>[דילוג על %n הודעות נוספות]</numerusform><numerusform>[דילוג על %n הודעות נוספות]</numerusform></translation>
     </message>
     <message>
         <source>Error</source>
@@ -1380,15 +1378,15 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>לא יכול לפתוח את הקובץ %1.</translation>
+        <translation>לא ניתן לפתוח קובץ %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation>שגיאה בזמן קריאת מסד־נתונים: %1</translation>
+        <translation>שגיאה בעת קריאת מסד־נתונים: %1</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation>לא ניתן לשמור, מסד הנתונים לא מצביע על קובץ תקין.</translation>
+        <translation>לא ניתן לשמור, מסד־נתונים לא מצביע על קובץ תקין.</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
@@ -1396,11 +1394,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>לא ניתן לשמור, מסד הנתונים לא אותחל!</translation>
+        <translation>לא ניתן לשמור, מסד־נתונים לא אותחל!</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation>בקובץ מסד הנתונים קיימים שינויים שלא מוזגו.</translation>
+        <translation>בקובץ מסד־נתונים קיימים שינויים שלא מוזגו.</translation>
     </message>
     <message>
         <source>%1
@@ -1414,7 +1412,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Recycle Bin</source>
-        <translation>סל המחזור</translation>
+        <translation>סל־מחזור</translation>
     </message>
 </context>
 <context>
@@ -1428,11 +1426,11 @@ Backup database located at %2</source>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation>שחרור נעילת מסד־נתונים KeePassXC</translation>
+        <translation>שחרור נעילת מסד־נתוני KeePassXC</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation>הזנת ססמה:</translation>
+        <translation>הכנס/י ססמה:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -1444,7 +1442,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>קובץ ססמה:</translation>
+        <translation>קובץ מפתח:</translation>
     </message>
     <message>
         <source>Key file help</source>
@@ -1464,7 +1462,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation>קובץ מפתח לשחרור נעילת מסד־הנתונים</translation>
+        <translation>קובץ מפתח לשחרור נעילת מסד־נתונים</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -1480,11 +1478,11 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>רענן</translation>
+        <translation>רענון</translation>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation>ביטול נעילת מסד הנתונים</translation>
+        <translation>ביטול נעילת מסד־נתונים</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1510,7 +1508,7 @@ You can try to open it anyway, but it may be incomplete
 and saving any changes may incur data loss.
 
 We recommend you update your KeePassXC installation.</source>
-        <translation>מסד הנתונים שאתה מנסה לפתוח היה קרוב לוודאי
+        <translation>מסד־נתונים שאתה מנסה לפתוח היה קרוב לוודאי
 נוצר על ידי גרסה חדשה יותר של Keepassxc.
 
 אתה יכול לנסות לפתוח אותו בכל מקרה, אבל זה עשוי להיות לא שלם
@@ -1542,7 +1540,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation>נסה שוב עם ססמה ריקה</translation>
+        <translation>נא לנסות שנית עם ססמה ריקה</translation>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello</source>
@@ -1578,7 +1576,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Select key file</source>
-        <translation>בחירת קובץ ססמה</translation>
+        <translation>בחירת קובץ מפתח</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
@@ -1587,7 +1585,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation>לא ניתן להשתמש בקובץ מסד הנתונים כקובץ מפתח.
+        <translation>לא ניתן להשתמש בקובץ מסד־הנתונים כקובץ מפתח.
 אם אין קובץ מפתח, נא להשאיר את השדה ריק.</translation>
     </message>
     <message>
@@ -1604,7 +1602,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;בנוסף לססמה, אפשר להשתמש בקובץ סודי כדי לשפר את אבטחת מסד הנתונים. ניתן לחולל קובץ זה בהגדרות אבטחת מסד הנתונים.&lt;/p&gt;&lt;p&gt;זה &lt;strong&gt;לא&lt;/strong&gt; קובץ מסד הנתונים *.kdbx !&lt;br&gt;אם קובץ מפתח ינו בנמצא, נא להשאיר שדה זה ריק.&lt;/p&gt;&lt;p&gt;הקשה לקבלת מידע נוסף...&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;בנוסף לססמה, אפשר להשתמש בקובץ סודי כדי לשפר את אבטחת מסד־נתונים. ניתן לחולל קובץ זה בהגדרות אבטחת מסד־נתונים.&lt;/p&gt;&lt;p&gt;זה &lt;strong&gt;לא&lt;/strong&gt; קובץ מסד־נתונים *.kdbx !&lt;br&gt;אם קובץ מפתח ינו בנמצא, נא להשאיר שדה זה ריק.&lt;/p&gt;&lt;p&gt;הקשה לקבלת מידע נוסף...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
@@ -1640,7 +1638,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>הצנת ההגדרות</translation>
+        <translation>הגדרות הצפנה</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1679,7 +1677,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation>אחסן ססמאות</translation>
+        <translation>מפתחות מאוחסנים</translation>
     </message>
     <message>
         <source>Stored browser keys</source>
@@ -1717,7 +1715,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>אפשור שילוב דפדפנים לגישה להגדרות.</translation>
+        <translation>איפשור שילוב דפדפנים לגישה להגדרות.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -1735,7 +1733,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: מפתחות שהוסרו ממסד הנתונים</translation>
+        <translation>KeePassXC: מפתחות שהוסרו ממסד־נתונים</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -1753,15 +1751,15 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation>הפסק וצא</translation>
+        <translation>נטישה</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: הרשאות הוסרו</translation>
+        <translation>KeePassXC: הרשאות הוסרו </translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>הרשאה הוסרה בהצלחה מ־%n רשומות.</numerusform><numerusform>הרשאות הוסרו בהצלחה מ־%n רשומות.</numerusform><numerusform>הרשאות הוסרו בהצלחה מ־%n רשומות.</numerusform><numerusform>הרשאות הוסרו בהצלחה מ־%n רשומות.</numerusform></translation>
+        <translation><numerusform>הרשאות הוסרו בהצלחה מרשומה %n.</numerusform><numerusform>הרשאות הוסרו בהצלחה מ־%n רשומות.</numerusform><numerusform>הרשאות הוסרו בהצלחה מ־%n רשומות.</numerusform><numerusform>הרשאות הוסרו בהצלחה מ־%n רשומות.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1769,7 +1767,7 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>מסד הנתונים הפעיל לא מכיל רשומה עם הרשאות.</translation>
+        <translation>מסד־נתונים הפעיל לא מכיל רשומה עם הרשאות.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
@@ -1788,7 +1786,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>האם לרענן את מזהה מסד הנתונים? נחוץ רק אם מסד הנתונים הוא עותק של מסד־נתונים אחר ומתקע הדפדפן לא מתחבר.</translation>
+        <translation>האם לרענן את מזהה מסד־נתונים? נחוץ רק אם מסד־נתונים הוא עותק של מסד־נתונים אחר ומתקע הדפדפן לא מתחבר.</translation>
     </message>
 </context>
 <context>
@@ -1805,7 +1803,7 @@ This is only necessary if your database is a copy of another and the browser ext
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>אזהרה! לא הוגדרה ססמה. השימוש במסד נתונים ללא ססמה לא מומלץ!
+        <translation>אזהרה! לא הוגדרה ססמה. השימוש במסד־נתונים ללא ססמה לא מומלץ!
 
 האם להמשיך ללא ססמה?</translation>
     </message>
@@ -1819,7 +1817,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>נא להוסיף לפחות מפתח הצפנה אחד לאבטחת מסד הנתונים!</translation>
+        <translation>נא להוסיף לפחות מפתח הצפנה אחד לאבטחת מסד־נתונים!</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1850,7 +1848,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation>ערכים גבוהים יותר מציעים הגנה טובה יותר, אך פתיחת מסד הנתונים תימשך זמן רב יותר.</translation>
+        <translation>ערכים גבוהים יותר מציעים הגנה טובה יותר, אך פתיחת מסד־נתונים תימשך זמן רב יותר.</translation>
     </message>
     <message>
         <source>Database format:</source>
@@ -1862,11 +1860,11 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Format cannot be changed: Your database uses KDBX 4 features</source>
-        <translation>לא ניתן לשנות תבנית: מסד הנתונים משתמש בתכונות KDBX 4</translation>
+        <translation>לא ניתן לשנות תבנית: מסד־נתונים משתמש בתכונות KDBX 4</translation>
     </message>
     <message>
         <source>Unless you need to open your database with other programs, always use the latest format.</source>
-        <translation>אם את/ה צריכ/ה לפתוח את מסד הנתונים שלך עם תוכנות אחרות, תמיד תשתמש/י בפורמט האחרון (הכי עדכני).</translation>
+        <translation>אם את/ה צריכ/ה לפתוח את מסד־נתונים שלך עם תוכנות אחרות, תמיד תשתמש/י בפורמט האחרון (הכי עדכני).</translation>
     </message>
     <message>
         <source>Encryption Algorithm:</source>
@@ -1932,7 +1930,7 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation>מספר הסבבים גבוה מדי</translation>
+        <translation>מספר סבבים גבוה מדי</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
@@ -1940,7 +1938,7 @@ Are you sure you want to continue without a password?</source>
 If you keep this number, your database may take hours, days, or even longer to open.</source>
         <translation>נעשה שימוש במספר גבוה מאוד של סבבי המרת מפתח עם ארגון2.
 
-אם מספר זה יישמר, פתיחת מסד הנתונים עשויה להימשך שעות או ימים או אפילו יותר.</translation>
+אם מספר זה יישמר, פתיחת מסד־נתונים עשויה להימשך שעות או ימים או אפילו יותר.</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
@@ -1961,7 +1959,7 @@ If you keep this number, your database may take hours, days, or even longer to o
 If you keep this number, your database will not be protected from brute force attacks.</source>
         <translation>נעשה שימוש במספר נמוך מאוד של סבבי המרת מפתח עם AES-KDF.
 
-אם מספר זה ישמר, מסד הנתונים לא יהיה מוגן מפני תְּקִיפָה כּוֹחָנִית.</translation>
+אם מספר זה ישמר, מסד־נתונים לא יהיה מוגן מפני תְּקִיפָה כּוֹחָנִית.</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -1974,7 +1972,7 @@ If you keep this number, your database will not be protected from brute force at
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> מיל.</numerusform><numerusform> מיל.</numerusform><numerusform> מיל.</numerusform><numerusform> מיב</numerusform></translation>
+        <translation><numerusform> מילי־ביט</numerusform><numerusform> מילי־ביטים</numerusform><numerusform> מילי־ביטים</numerusform><numerusform> מיב</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -2017,7 +2015,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Database description:</source>
-        <translation>תיאור מסד הנתונים:</translation>
+        <translation>תיאור מסד־נתונים:</translation>
     </message>
     <message>
         <source>Database description field</source>
@@ -2037,7 +2035,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation>מספר מרבי של פרטי היסטוריה לרשומה</translation>
+        <translation>מספר פרטי היסטוריה מרבי לרשומה</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -2065,7 +2063,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Enable compression (recommended)</source>
-        <translation>איפור דחיסה (מומלץ)</translation>
+        <translation>איפשור דחיסה (מומלץ)</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
@@ -2154,14 +2152,14 @@ This action is not reversible.</source>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation><numerusform>סמל %n נמחק ממסד הנתונים.</numerusform><numerusform>%n סמלים נמחקו ממסד הנתונים.</numerusform><numerusform>%n סמלים נמחקו ממסד הנתונים.</numerusform><numerusform>%n סמלים נמחקו ממסד הנתונים.</numerusform></translation>
+        <translation><numerusform>סמל %n נמחק ממסד־נתונים.</numerusform><numerusform>%n סמלים נמחקו ממסד־נתונים.</numerusform><numerusform>%n סמלים נמחקו ממסד־נתונים.</numerusform><numerusform>%n סמלים נמחקו ממסד־נתונים.</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation>שם מסד־נתונים:</translation>
+        <translation>שם מסד־נתונים</translation>
     </message>
     <message>
         <source>Database name field</source>
@@ -2185,8 +2183,8 @@ This action is not reversible.</source>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
-        <translation>למסד הנתונים שנוצר אין מפתח או ש־KDF מסרב לקבל אותו.
-זהו בהחלט תקל, נא לדווח עליו לצוות הפתוח.</translation>
+        <translation>למסד־נתונים שנוצר אין מפתח או KDF, והוא מסרב לשמור אותו.
+זה בהחלט תקל, נא דווח על כך לצוות הפתוח.</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -2202,7 +2200,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation>פתיחת %1 כשלה. יתכן והוא לא קיים או לא נגיש.</translation>
+        <translation>פתיחת %1 כשלה. יתכן והוא לא קיים או לא נגיש</translation>
     </message>
     <message>
         <source>CSV file</source>
@@ -2246,7 +2244,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>מסד הנתונים עומד להיות מיוצא לקובץ לא מוצפן. פעולה זו תשאיר את ססמאות ומידע רגיש, פגיעים! האם להמשיך?</translation>
+        <translation>מסד־נתונים עומד להיות מיוצא לקובץ לא מוצפן. פעולה זו תשאיר את ססמאות ומידע רגיש, פגיעים! האם להמשיך?</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -2335,11 +2333,11 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation>קובצי מסד הנתונים מוזגו בהצלחה.</translation>
+        <translation>קובצי מסד־נתונים מוזגו בהצלחה.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>מסד הנתונים לא הוסגל כתוצאה מפעולת המיזוג.</translation>
+        <translation>מסד־נתונים לא הוסגל כתוצאה מפעולת המיזוג.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
@@ -2355,18 +2353,18 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>הרשומה בעריכה. האם לנטוש שינויים ולנעול בכל זאת?</translation>
+        <translation>הרשומה בשלבי עריכה. האם לנטוש שינויים ולנעול בכל זאת?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; הוסגל.
+        <translation>&quot;%1&quot; השתנה.
 האם לשמור שינויים?</translation>
     </message>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation>מסד הנתונים הוסגל.
+        <translation>מסד־נתונים השתנה.
 האם לשמור שינויים?</translation>
     </message>
     <message>
@@ -2379,7 +2377,7 @@ Save changes?</source>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>קובץ מסד הנתונים השתנה. האם לטעון את השינויים?</translation>
+        <translation>קובץ מסד־נתונים השתנה. האם לטעון את השינויים?</translation>
     </message>
     <message>
         <source>Merge Request</source>
@@ -2388,13 +2386,13 @@ Save changes?</source>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>קיימים שינויים בקובץ מסד הנתונים שלא נשמרו.
+        <translation>קיימים שינויים בקובץ מסד־נתונים שלא נשמרו.
 האם למזג את השינויים?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
 Error: %1</source>
-        <translation>לא ניתן לפתוח את קובץ מסד הנתונים החדש בעת ניסיון אוטומטית טעינה מחדש .
+        <translation>לא ניתן לפתוח את קובץ מסד־נתונים החדש בעת ניסיון אוטומטית טעינה מחדש .
 שגיאה: %1</translation>
     </message>
     <message>
@@ -2404,12 +2402,12 @@ Error: %1</source>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC כשל בשמירת מסד הנתונים מספר פעמים. סביר להניח שהדבר נגרם על־ידי שירותי סינכרון קבצים הנועלים את קובץ השמירה.
+        <translation>KeePassXC כשל בשמירת מסד־נתונים מספר פעמים. סביר להניח שהדבר נגרם על־ידי שירות סנכרון קבצים שנועל את קובץ היעד לשמירה.
 האם להשבית שמירות בטוחות ולנסות שוב?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>כתיבת מסד הנתונים כשלה: %1</translation>
+        <translation>כתיבת מסד־נתונים כשלה: %1</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -2433,7 +2431,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>האם למחוק הכול מסל־המיחזור לצמיתות?</translation>
+        <translation>האם למחוק הכל מסל־המיחזור לצמיתות?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
@@ -2508,7 +2506,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation>ל/ר</translation>
+        <translation>ל/י</translation>
     </message>
     <message>
         <source>(encrypted)</source>
@@ -2566,7 +2564,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation>רשומה עודכנה בהצלחה.</translation>
+        <translation>רשומה עודכנה בהצלחה</translation>
     </message>
     <message>
         <source>Unsaved Changes</source>
@@ -2614,7 +2612,7 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>שעה %n</numerusform><numerusform>%1 שעות</numerusform><numerusform>%1 שעות</numerusform><numerusform>%1 שעות</numerusform></translation>
+        <translation><numerusform>שעה %1</numerusform><numerusform>%1 שעות</numerusform><numerusform>%1 שעות</numerusform><numerusform>%1 שעות</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2704,7 +2702,7 @@ Would you like to correct it?</source>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>אפשור הקלדה־אוטומטית ברשומה זו</translation>
+        <translation>איפשור הקלדה־אוטומטית ברשומה זו</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
@@ -2712,7 +2710,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>שימוש ברצף הקלדה־אוטומטית ברירת מחדל:</translation>
+        <translation>שימוש ברצף הקלדה־אוטומטית ברירת מחדל</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
@@ -2724,7 +2722,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation>שיוכי חלונות</translation>
+        <translation>שיוך חלון</translation>
     </message>
     <message>
         <source>Existing window associations</source>
@@ -2736,7 +2734,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation>הסרת חלון צרופות שנבחר</translation>
+        <translation>הסרת שיוך החלון שנבחר</translation>
     </message>
     <message>
         <source>Window title:</source>
@@ -2756,7 +2754,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>נא להשתמש ברצף מבויים עבור שיוך זה:</translation>
+        <translation>נא להשתמש ברצף מסויים עבור שיוך זה:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
@@ -2789,15 +2787,15 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation>דלוג על Auto-Submit ברשומה זו</translation>
+        <translation>דלוג על Auto־Submit ברשומה זו</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>לשלוח הגדרה זו רק לדפדפן לדו־שיח HTTP Auth. אם אופשר, טופסי התחברות רגילים לא יציגו רשומה זו לבחירה.</translation>
+        <translation>לשלח הגדרה זו רק לדפדפן עבור דו־שיח HTTP Auth. אם אופשר, טופסי התחברות רגילים לא יציגו רשומה זו לבחירה.</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation>שימוש ברשומה זו רק באמצעות HTTP Basic Auth</translation>
+        <translation>נא להשתמש ברשומה זו רק ב־HTTP Basic Auth</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
@@ -2860,7 +2858,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>מחיקת הכול</translation>
+        <translation>מחיקת הכל</translation>
     </message>
 </context>
 <context>
@@ -2919,7 +2917,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>הורדת פביקון למען URL</translation>
+        <translation>הורדת favicon למען URL</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -2962,7 +2960,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>הסרת מפתח מהסוכן כשמסד הנתונים סגור/נעול</translation>
+        <translation>הסרת מפתח מהסוכן כשמסד־נתונים סגור/נעול</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -3031,7 +3029,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation>ל/ר</translation>
+        <translation>ל/י</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
@@ -3039,7 +3037,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation>הסרה מפתח מהסוכן לאחר מספר השניות שצוינו</translation>
+        <translation>הסרת מפתח מהסוכן לאחר מספר השניות שצוינו</translation>
     </message>
     <message>
         <source> seconds</source>
@@ -3082,7 +3080,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Disable</source>
-        <translation>מושבת</translation>
+        <translation>השבתה</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
@@ -3180,7 +3178,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation>נקה</translation>
+        <translation>צלול</translation>
     </message>
     <message>
         <source>Inactive</source>
@@ -3201,7 +3199,7 @@ Would you like to correct it?</source>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation>גרסת KeePassXC לא תומכת בשיתוף סוג מיכל זה.
+        <translation>גרסת KeePassXC אינה תומכת בשיתוף סוג מיכל זה.
 הרחבות נתמכות הן: %1.</translation>
     </message>
     <message>
@@ -3214,7 +3212,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation>%1 מיובא ומיוצא על־ידי קבוצות שונות במסד נתונים זה.</translation>
+        <translation>%1 מיובא ומיוצא על־ידי קבוצות שונות במסד־נתונים זה.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
@@ -3239,11 +3237,11 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Select import source</source>
-        <translation>בחירת מקור יבוא</translation>
+        <translation>בחירת מקור ייבוא</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation>בחירת יעד יצוא</translation>
+        <translation>בחירת יעד ייצוא</translation>
     </message>
     <message>
         <source>Select import/export file</source>
@@ -3337,11 +3335,11 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>הורדת פביקון למען URL</translation>
+        <translation>הורדת favicon למען URL</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>הורדת פביקון</translation>
+        <translation>הורדת favicon</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
@@ -3361,7 +3359,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation>חל גם על ערכי צאצא</translation>
+        <translation>חל גם על רשומות צאצא</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
@@ -3369,7 +3367,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>לא ניתן לאחזר פביקון.</translation>
+        <translation>לא ניתן להביא favicon.</translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -3401,11 +3399,11 @@ Supported extensions are: %1.</source>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>סמל %n כבר קיים במסד הנתונים</numerusform><numerusform>%n סמלים כבר קיימים במסד הנתונים</numerusform><numerusform>%n סמלים כבר קיימים במסד הנתונים</numerusform><numerusform>%n סמלים כבר קיימים במסד הנתונים</numerusform></translation>
+        <translation><numerusform>סמל %n כבר קיים במסד־נתונים</numerusform><numerusform>%n סמלים כבר קיימים במסד־נתונים</numerusform><numerusform>%n סמלים כבר קיימים במסד־נתונים</numerusform><numerusform>%n סמלים כבר קיימים במסד־נתונים</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>הסמל הבא כשל:</numerusform><numerusform>הסמלים הבאים כשלו:</numerusform><numerusform>הסמלים הבאים כשלו:</numerusform><numerusform>הסמלים הבאים כשלו:</numerusform></translation>
+        <translation><numerusform>הסמל הבא נכש:</numerusform><numerusform>הסמלים הבאים כשלו:</numerusform><numerusform>הסמלים הבאים כשלו:</numerusform><numerusform>הסמלים הבאים כשלו:</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3470,7 +3468,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Key</source>
-        <translation>ססמה</translation>
+        <translation>מפתח</translation>
     </message>
     <message>
         <source>Value</source>
@@ -3481,7 +3479,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>שכפול - %1</translation>
+        <translation>שכפול %1 - </translation>
     </message>
 </context>
 <context>
@@ -3586,19 +3584,19 @@ This may cause the affected plugins to malfunction.</source>
         <source>Unable to save attachments:
 %1</source>
         <translation>לא ניתן לשמור צרופות:
- %1</translation>
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
         <translation>לא ניתן לפתוח צרופה:
- %1</translation>
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>לא ניתן לפתוח צרופה:
- %1</translation>
+        <translation>לא ניתן לפתוח צרופות:
+%1</translation>
     </message>
     <message numerus="yes">
         <source>Unable to open file(s):
@@ -3629,7 +3627,7 @@ Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
         <translation>%1 הוא קובץ גדול (%2 מב).
-מסד הנתונים עשוי להיות גדול מאוד והביצועים יפגעו.
+מסד־נתונים עשוי להיות גדול מאוד והביצועים יפגעו.
 
 האם להוסיף קובץ זה?</translation>
     </message>
@@ -3641,7 +3639,7 @@ Are you sure to add this file?</source>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
         <translation>הקובץ המצורף &apos;% 1&apos; השתנה.
-האם ברצונך לשמור את השינויים במסד הנתונים שלך?</translation>
+האם ברצונך לשמור את השינויים במסד־נתונים שלך?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
@@ -3745,7 +3743,7 @@ Error: %1</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>הפניה: </translation>
+        <translation>הפניה:</translation>
     </message>
     <message>
         <source>Never</source>
@@ -3916,7 +3914,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>רצף סדר פעולות</translation>
+        <translation>רצף</translation>
     </message>
     <message>
         <source>Searching</source>
@@ -3932,7 +3930,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation>נקה</translation>
+        <translation>צלול</translation>
     </message>
     <message>
         <source>Never</source>
@@ -4075,7 +4073,7 @@ This will leave your passwords and sensitive information vulnerable!
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>%3 עשה שימוש ברשומה &quot;%1&quot; ממסד נתונים &quot;%2&quot;</translation>
+        <translation>%3 עשה שימוש ברשומה &quot;%1&quot; ממסד־נתונים &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -4083,7 +4081,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%1 השתמש ברשומה %n</numerusform><numerusform>%1 השתמש ב־%n רשומות</numerusform><numerusform>%1 השתמש ב־%n רשומות</numerusform><numerusform>%1 השתמש ב־%n רשומות</numerusform></translation>
+        <translation><numerusform>%1 השתש ברשומה %n</numerusform><numerusform>%1 השתמש ב־%n רשומות</numerusform><numerusform>%1 השתמש ב־%n רשומות</numerusform><numerusform>%1 השתמש ב־%n רשומות</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4145,7 +4143,7 @@ This will leave your passwords and sensitive information vulnerable!
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>הורדת פביקונס</translation>
+        <translation>הורדת Favicons</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4223,7 +4221,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>סופקו אישורים לא תקינים, נא לנסות שוב.
-אם פעולה זו חוזרת על עצמה, ייתכן שקובץ מסד הנתונים פגום.</translation>
+אם פעולה זו חוזרת על עצמה, ייתכן שקובץ מסד־נתונים פגום.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -4270,7 +4268,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>גודל  סיכום ביקורת כותרת עליונה לא תקין</translation>
+        <translation>גודל סיכום ביקורת כותרת עליונה לא תקין</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
@@ -4280,7 +4278,7 @@ If this reoccurs, then your database file may be corrupt.</source>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>סופקו אישורים לא תקינים, נא לנסות שוב.
-אם פעולה זו חוזרת על עצמה, ייתכן שקובץ מסד הנתונים פגום.</translation>
+אם הודעה זו חוזרת על עצמה, ייתכן שקובץ מסד־נתונים פגום.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4320,7 +4318,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation>אורך שדה כותרת פנימית לא תקין: שדה %1</translation>
+        <translation>אורך שדה כותרת פנימי לא תקין: שדה %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
@@ -4328,7 +4326,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>גודל בינארי של כותרת פנימית לא תקין</translation>
+        <translation>גודל בינארי של כותרת פנימית לא תקין </translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
@@ -4348,42 +4346,42 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך ערך מפת משתנה רשומה לא תקין</translation>
+        <translation>אורך רשומה מפת משתנה רשומה לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>נתוני ערך מפת משתנה רשומה לא תקינים</translation>
+        <translation>נתוני רשומה מפת משתנה רשומה לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך ערך מפת משתנה רשומה בוליאנית לא תקין</translation>
+        <translation>אורך רשומה מפת משתנה רשומה בוליאנית לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך ערך מפת משתנה רשומה Int32 לא תקין</translation>
+        <translation>אורך רשומה מפת משתנה רשומה Int32 לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך ערך מפת משתנה רשומה UInt32 לא תקין</translation>
+        <translation>אורך רשומה מפת משתנה רשומה UInt32 לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך ערך מפת משתנה רשומה Int64 לא תקין</translation>
+        <translation>אורך רשומה מפת משתנה רשומה Int64 לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך ערך מפת משתנה רשומה UInt64 לא תקין</translation>
+        <translation>אורך רשומה מפת משתנה משתני UInt64 לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>סוג מפת משתנה רשומה לא תקינים</translation>
+        <translation>סוג מפת משתנה רשומה לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
@@ -4467,10 +4465,10 @@ If this reoccurs, then your database file may be corrupt.</source>
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>הקובץ שנבחר הוא מסד נתונים ישן של KeePass 1 (.kdb).
+        <translation>הקובץ שנבחר הוא מסד־נתונים ישן של KeePass 1 (.kdb).
 
-ניתן לייבא אותו על־ידי לחיצה על מסד נתונים -&gt; &apos;ייבוא KeePass 1 מסד נתונים ...&apos;.
-זו הגירה חד־כיוונית. לא תתאפשר פתיחת מסד הנתונים המיובא עם גרסת KeePassX 0.4 הישנה.</translation>
+ניתן לייבא אותו על־ידי לחיצה על מסד־נתונים -&gt; &apos;ייבוא KeePass 1 מסד־נתונים ...&apos;.
+זו הגירה חד־כיוונית. לא תתאפשר פתיחת מסד־נתונים המיובא עם גרסת KeePassX 0.4 הישנה.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -4513,11 +4511,11 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation>uuid קבוצת Null</translation>
+        <translation>uuid קבוצה ריקה</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>מספר סמל קבוצה לא כותרת פנימית</translation>
+        <translation>מספר סמל קבוצה לא תקין</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
@@ -4537,11 +4535,11 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation>חסרים uuid עצמים שנמחקו או זמן</translation>
+        <translation>חסרים uuid עצם שנמחק או זמן</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation>רשומת uuid ריקה</translation>
+        <translation>uuid רשומה ריקה</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
@@ -4553,7 +4551,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>לא נמצאה uuid רשומת</translation>
+        <translation>לא נמצאה uuid רשומה</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
@@ -4565,11 +4563,11 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>מפתח או ערך מחרוזת רשומה חסרים</translation>
+        <translation>מפתח או רשומה מחרוזת רשומה חסרים</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>מפתח בינארי או ערך רשומה חסרים</translation>
+        <translation>מפתח בינארי או רשומה רשומה חסרים</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
@@ -4617,7 +4615,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation>המפתח הפרטי ריק</translation>
+        <translation>מפתח פרטי ריק</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
@@ -4668,7 +4666,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation>מספר ערכים לא תקין</translation>
+        <translation>מספר רשומות לא תקין</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
@@ -4676,7 +4674,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>המרת גודל זרע לא תקין</translation>
+        <translation>המרת גודל זרע לא תקינה</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
@@ -4702,7 +4700,7 @@ Line %2, column %3</source>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>סופקו אישורים לא תקינים, נא לנסות שוב.
-אם פעולה זו חוזרת על עצמה, ייתכן שקובץ מסד הנתונים פגום.</translation>
+אם פעולה זו חוזרת על עצמה, ייתכן שקובץ מסד־נתונים פגום.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4710,7 +4708,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>מספר סוג שדה קבוצה לאתקין</translation>
+        <translation>מספר סוג שדה קבוצה לא תקין</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
@@ -4730,11 +4728,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>גודל שדה זמן הסגלת קבוצה שגויה</translation>
+        <translation>גודל שדה זמן שינוי קבוצה שגוי</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation>גודל שדה זמן גישה לקבוצה  שגוי</translation>
+        <translation>גודל שדה זמן גישה לקבוצה שגוי</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
@@ -4875,11 +4873,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation>חילול קובץ מפתח חדש או בחירת קובץ מפתח קיים להגנה על מסד הנתונים.</translation>
+        <translation>חילול קובץ מפתח חדש או בחירת קובץ מפתח קיים להגנה על מסד־נתונים.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation>הערה: נא לא להשתמש בקובץ שעשוי להשתנות כך שימנע את שחרור נעילת מסד הנתונים.</translation>
+        <translation>הערה: נא לא להשתמש בקובץ שעשוי להשתנות כך שימנע את שחרור נעילת מסד־נתונים.</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -4957,7 +4955,7 @@ Message: %2</source>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation>לא ניתן להשתמש במסד הנתונים הנוכחי כקובץ המפתח שלו. נא לבחור קובץ אחר או לחולל קובץ מפתח חדש.</translation>
+        <translation>לא ניתן להשתמש במסד־נתונים הנוכחי כקובץ המפתח שלו. נא לבחור קובץ אחר או לחולל קובץ מפתח חדש.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
@@ -4966,7 +4964,7 @@ Message: %2</source>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>קובץ המפתח שנבחר נראה כמו קובץ מסד נתוני ססמאות. קובץ מפתח חייב להיות קובץ נייח שלעולם לא ישתנה או שהגישה למסד הנתונים תאבד  לנצח.
+        <translation>קובץ המפתח שנבחר נראה כמו קובץ מסד נתוני ססמאות. קובץ מפתח חייב להיות קובץ נייח שלעולם לא ישתנה או שהגישה למסד־נתונים תאבד  לנצח.
 האם להמשיך עם קובץ זה?</translation>
     </message>
 </context>
@@ -5037,11 +5035,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;יצאה</translation>
+        <translation>&amp;יציאה</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;על אודות</translation>
+        <translation>&amp;אודות</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
@@ -5069,11 +5067,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>&amp;מיזוג ממסד נתונים...</translation>
+        <translation>&amp;מיזוג ממסד־נתונים...</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation>מיזוג ממסד נתונים KDBX אחר</translation>
+        <translation>מיזוג ממסד־נתונים KDBX אחר</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
@@ -5113,15 +5111,15 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>הורדת כל ה־&amp;פביקונס...</translation>
+        <translation>הורדת כל ה־&amp;Favicon</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation>מיין &amp;א-ת</translation>
+        <translation>מיין &amp;א־ת</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation>מיין &amp;ת-א</translation>
+        <translation>מיין &amp;ת־א</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
@@ -5173,7 +5171,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>העתקת שם משתמש ללוח־הגזירים</translation>
+        <translation>העתק שם משתמש ללוח־הגזירים</translation>
     </message>
     <message>
         <source>Copy &amp;Password</source>
@@ -5197,7 +5195,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation>הורדת &amp;פביקון</translation>
+        <translation>הורדת &amp;Favicon</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -5265,7 +5263,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Import a CSV file</source>
-        <translation>יבא קובץ CSV</translation>
+        <translation>יבוא קובץ CSV</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -5321,7 +5319,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation>&amp;קיצורי מקשים</translation>
+        <translation>&amp;קיצורי מקלדת</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
@@ -5385,7 +5383,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>שגיאת גישה לקובץ התצורה %1</translation>
+        <translation>שגיאת גישה לקובץ תצורה 1%</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
@@ -5396,7 +5394,7 @@ Are you sure you want to continue with this file?</source>
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
         <translation>אזהרה: נעשה שימוש בבניה לא יציבה של KeePassXC!
-קיים סיכון גבוה להשחתה, נא לשמור גיבוי מסדי הנתונים.
+קיים סיכון גבוה להשחתה, נא לשמור גיבוי מסדי־נתונים.
 גרסה זו אינה מיועדת לשימוש בייצור.</translation>
     </message>
     <message>
@@ -5421,7 +5419,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation>האם לבדוק עדכונים בעת האתחול?</translation>
+        <translation>האם לבדוק זמינות עדכונים בעת האתחול?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
@@ -5433,11 +5431,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>החלפת־מצב חלון</translation>
+        <translation>החלפת־מצב</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>יצאה מ־KeePassXC</translation>
+        <translation>יציאה מ־KeePassXC</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -5488,7 +5486,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Unlock database</source>
-        <translation>שחרור נעילה של מסד־נתונים</translation>
+        <translation>שחרור נעילת מסד־נתונים</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
@@ -5534,7 +5532,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>רשומות ישנות יותר מוזגו ממסד נתונים &quot;%1&quot;</translation>
+        <translation>רשומות ישנות יותר מוזגו ממסד־נתונים &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
@@ -5609,7 +5607,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>כאן ניתן להתאים את הגדרות הצפנת מסד הנתונים. אל דאגה, אפשר יהיה לשנות אותם מאוחר יותר בהגדרות מסד הנתונים.</translation>
+        <translation>כאן ניתן להתאים את הגדרות הצפנת מסד־נתונים. אל דאגה, אפשר יהיה לשנות אותם מאוחר יותר בהגדרות מסד־נתונים.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
@@ -5628,29 +5626,29 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>ערכת אישורים הידועה רק לך המגנה על מסד הנתונים.</translation>
+        <translation>ערכת אישורים הידועה רק לך המגנה על מסד־נתונים.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation>הצנת ההגדרות</translation>
+        <translation>הגדרות הצפנה</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>כאן ניתן להתאים את הגדרות הצפנת מסד הנתונים. אל דאגה, אפשר יהיה לשנות אותם מאוחר יותר בהגדרות מסד הנתונים.</translation>
+        <translation>אן ניתן להתאים את הגדרות הצפנת מסד־נתונים. אל דאגה, אפשר יהיה לשנות אותם מאוחר יותר בהגדרות מסד־נתונים.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>מידע כללי אודות מסד הנתונים</translation>
+        <translation>מידע כללי אודות מסד־נתונים</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>נא להזין את שם המצג ותיאור חלופי למסד הנתונים החדש:</translation>
+        <translation>נא להזין את שם המצג ותיאור חלופי למסד־נתונים החדש:</translation>
     </message>
 </context>
 <context>
@@ -5751,7 +5749,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>קובץ המפתח קטן מדי.</translation>
+        <translation>קובץ מפתח קטן מדי.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
@@ -6002,7 +6000,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>הוספת אותיות non-hex לרשימת ה&quot;החרגה&quot;</translation>
+        <translation>הוספת אותיות non־hex לרשימת ה&quot;החרגה&quot;</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
@@ -6265,11 +6263,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Skip</source>
-        <translation>דלוג</translation>
+        <translation>דילוג</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>מושבת</translation>
+        <translation>השבתה</translation>
     </message>
     <message>
         <source>Merge</source>
@@ -6356,7 +6354,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation>לא ניתן לשמור את קובץ התסריט המקורי של %1.</translation>
+        <translation>לא ניתן לשמור את קובץ תסריט ההודעות המובנה ל־%1.</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
@@ -6384,15 +6382,15 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation>הנחיה לססמת רשומה.</translation>
+        <translation>בקשת ססמת רשומה.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>חילול ססמה עבור הרשומה.</translation>
+        <translation>חילול ססמה עבור הרשומה:</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>הוספת רשומה חדשה למסד הנתונים.</translation>
+        <translation>הוספת רשומה חדשה למסד־נתונים.</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
@@ -6408,23 +6406,23 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation>הזנת ססמה לרשומה חדשה: </translation>
+        <translation>הזנת ססמה לרשומה חדשה:</translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation>כתיבת מסד הנתונים כשלה %1.</translation>
+        <translation>כתיבת מסד־נתונים כשלה %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation>רשומה %1 נוספה בהצלחה.</translation>
+        <translation>רשומה %1 נוספה בהצלחה. </translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation>הוספת קבוצה חדשה למסד נתונים.</translation>
+        <translation>הוספת קבוצה חדשה למסד־נתונים.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation>הנתיב לקבוצה להוספה.</translation>
+        <translation>הנתיב לקבוצה להוספה</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
@@ -6432,7 +6430,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation>הקבוצה %1 לא נמצאה.</translation>
+        <translation>קבוצה %1 לא נמצאה.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
@@ -6440,7 +6438,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation>נא לבדוק אם ססמאות כלשהן הודלפו בפומבי. FILENAME חייב להיות הנתיב של קובץ המפרט HASS SHA-1 של ססמאות שדלפו בתבנית HIBP, כפי שזמין ב־https://haveibeenpwned.com/Passwords.</translation>
+        <translation>נא לבדוק אם ססמאות כלשהן הודלפו בפומבי. FILENAME חייב להיות הנתיב של קובץ המפרט HASS SHA־1 של ססמאות שדלפו בתבנית HIBP, כפי שזמין ב־https://haveibeenpwned.com/Passwords.</translation>
     </message>
     <message>
         <source>FILENAME</source>
@@ -6476,7 +6474,7 @@ Do you want to overwrite it?</source>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>הססמה ל־&apos;%1&apos; הודלפה פעם %2!</numerusform><numerusform>הססמה ל־&apos;%1&apos; הודלפה %2 פעמים!</numerusform><numerusform>הססמה ל־&apos;%1&apos; הודלפה %2 פעמים!</numerusform><numerusform>הססמה ל־&apos;%1&apos; הודלפה %2 פעמים!</numerusform></translation>
+        <translation><numerusform>הססמה של &apos;%1&apos; הודלפה פעם %2!</numerusform><numerusform>הססמה של &apos;%1&apos; הודלפה %2 פעמים!</numerusform><numerusform>הססמה של &apos;%1&apos; הודלפה %2 פעמים!</numerusform><numerusform>הססמה של &apos;%1&apos; הודלפה %2 פעמים!</numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
@@ -6582,7 +6580,7 @@ Do you want to overwrite it?</source>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation>הנתיב לרשומה לקְטִימָה.</translation>
+        <translation>הנתיב לרשומה לקיצוץ.</translation>
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
@@ -6622,7 +6620,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation>העתקת תכונת רשומה &apos;%1&apos; ללוח־הגזירים!</translation>
+        <translation>העתקת תכונת רשומה  &apos;%1&apos; ללוח־הגזירים.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
@@ -6634,7 +6632,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation>סגירת מסד הנתונים הנוכחי.</translation>
+        <translation>סגירת מסד־נתונים הנוכחי</translation>
     </message>
     <message>
         <source>Display this help.</source>
@@ -6642,7 +6640,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
-        <translation>השתקת הנחית ססמה ופלטים משניים אחרים.</translation>
+        <translation>השתקת בקשת הססמה ופלטים משניים אחרים.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
@@ -6654,11 +6652,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation>השבתת הפעלת מפתח ססמה עבור מסד הנתונים.</translation>
+        <translation>השבתת הפעלת מפתח ססמה עבור מסד־נתונים.</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation>חריץ Yubikey וסדרה חלופית המשמשת לגישה למסד הנתונים (למשל, 1:7370001).</translation>
+        <translation>חריץ Yubikey וסדרה חלופית המשמשת לגישה למסד־נתונים (למשל, 1:7370001).</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
@@ -6674,7 +6672,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation>זמן פענוח יעד מסד הנתונים במילי־שניות.</translation>
+        <translation>זמן פענוח יעד מסד־נתונים במילי־שניות.</translation>
     </message>
     <message>
         <source>time</source>
@@ -6682,19 +6680,19 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation>הגדרת קובץ המפתח עבור מסד הנתונים.</translation>
+        <translation>הגדרת קובץ המפתח עבור מסד־נתונים.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation>הגדרת ססמה למסד הנתונים.</translation>
+        <translation>הגדרת ססמה למסד־נתונים.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation>יצירת מסד־נתונים חדש.</translation>
+        <translation>יצירת מסד־נתונים חדש</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>הנתיב למסד הנתונים.</translation>
+        <translation>הנתיב למסד־נתונים.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
@@ -6734,7 +6732,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation>כשל בשמירת מסד־נתונים לקובץ : %1.</translation>
+        <translation>כשל בשמירת מסד־נתונים לקובץ : %1</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
@@ -6777,11 +6775,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation>עריכת רשומה.</translation>
+        <translation>עריכת רשומה</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>הנתיב לרשומה לעריכה.</translation>
+        <translation>הנתיב לרשומה לעריכה</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
@@ -6789,15 +6787,15 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation>הזנת ססמה חדשה לרשומה: </translation>
+        <translation>הזנת ססמה חדשה לרשומה:</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>כתיבת מסד הנתונים כשלה: %1</translation>
+        <translation>כתיבת מסד־נתונים כשלה: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
-        <translation>רשומה %1 נערכה בהצלחה.</translation>
+        <translation>רשומה %1 נערכה בהצלחה. </translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
@@ -6821,7 +6819,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Log10 %1</source>
-        <translation>Log10 %1</translation>
+        <translation>לוג10 %1</translation>
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
@@ -6865,7 +6863,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>סוג: תְּקִיפָה כּוֹחָנִית (נציג)</translation>
+        <translation>סוג: תְּקִיפָה כּוֹחָנִית(מחזורי)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
@@ -6873,7 +6871,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation>סוג: תכתיב+לייט(מחזורי)</translation>
+        <translation>סוג: מילון+לית(מחזורי)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
@@ -7005,11 +7003,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation>נתיב ייצוא מסד הנתונים XML.</translation>
+        <translation>נתיב ייצוא מסד־נתונים XML.</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation>הנתיב של מסד הנתונים החדש.</translation>
+        <translation>הנתיב של מסד־נתונים החדש.</translation>
     </message>
     <message>
         <source>Unable to import XML database: %1</source>
@@ -7017,7 +7015,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation>מסד הנתונים יובא בהצלחה.</translation>
+        <translation>מסד־נתונים יובא בהצלחה.</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
@@ -7033,7 +7031,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Description: </source>
-        <translation>תיאור: </translation>
+        <translation>תיאור:</translation>
     </message>
     <message>
         <source>Cipher: </source>
@@ -7139,7 +7137,7 @@ Available commands:
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation>הצגת מידע ניפוי־תקלים.</translation>
+        <translation>הצגת מידע ניפוי־תקלים</translation>
     </message>
     <message>
         <source>Invalid command %1.</source>
@@ -7167,15 +7165,15 @@ Available commands:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>נא להשתמש באותם אישורים עבור שני קבצי מסדי הנתונים.</translation>
+        <translation>נא להשתמש באותם אישורים עבור שני קבצי מסדי־נתונים.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>קובץ מפתח של מסד הנתונים למיזוג.</translation>
+        <translation>קובץ מפתח של מסד־נתונים למיזוג.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation>השבתת מפתח ססמת מסד הנתונים שימוזג.</translation>
+        <translation>השבתת מפתח ססמת מסד־נתונים שימוזג.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
@@ -7183,7 +7181,7 @@ Available commands:
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation>חריץ Yubikey למסד הנתונים השני.</translation>
+        <translation>חריץ Yubikey למסד־נתונים השני.</translation>
     </message>
     <message>
         <source>slot</source>
@@ -7191,11 +7189,11 @@ Available commands:
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation>מזוג שני מסדי־נתונים.</translation>
+        <translation>מיזוג שני מסדי־נתונים.</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation>הנתיב למסד הנתונים שימוזג.</translation>
+        <translation>הנתיב למסד־נתונים שימוזג.</translation>
     </message>
     <message>
         <source>Error reading merge file:
@@ -7209,11 +7207,11 @@ Available commands:
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation>%1 מוזג לתוך %2 בהצלחה.</translation>
+        <translation>%1 מוזג לתוך %2 בהצלחה. </translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>מסד הנתונים לא הוסגל כתוצאה מפעולת המיזוג.</translation>
+        <translation>מסד־נתונים לא הוסגל כתוצאה מפעולת המיזוג.</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
@@ -7253,23 +7251,23 @@ Available commands:
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation>רשומה %1 מוחזרה בהצלחה.</translation>
+        <translation>רשומה %1 מוחזרה בהצלחה. </translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation>רשומה %1 נמחקה בהצלחה.</translation>
+        <translation>רשומה %1 נמחקה בהצלחה. </translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation>הנתיב לקבוצה להסרה.</translation>
+        <translation>הנתיב לקבוצה להסרה</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation>לא ניתן להסיר קבוצת שורש ממסד הנתונים.</translation>
+        <translation>לא ניתן להסיר קבוצת שורש ממסד־נתונים.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation>רשומה %1 מוחזרה בהצלחה.</translation>
+        <translation>רשומה %1 מוחזרה בהצלחה. </translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
@@ -7277,7 +7275,7 @@ Available commands:
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation>חיפוש ערכים מהיר.</translation>
+        <translation>חיפוש רשומות מהיר.</translation>
     </message>
     <message>
         <source>Search term.</source>
@@ -7384,8 +7382,7 @@ Please consider generating a new key file.</source>
     <message>
         <source>All clipping programs failed. Tried %1
 </source>
-        <translation>כל תוכניות הקְטִימָה כשלו. בוצע ניסיון %1
-</translation>
+        <translation>כל תוכניות הקְטִימָה כשלו. בוצע ניסיון %1</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
@@ -7413,7 +7410,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Failed to load okon processed database: %1</source>
-        <translation>טעינת מסד הנתונים מעובד okon כשלה: %1</translation>
+        <translation>טעינת מסד־נתונים מעובד okon כשלה: %1</translation>
     </message>
     <message>
         <source>Very weak password</source>
@@ -7477,11 +7474,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation>מצב ניפוי־תקלים מושבת.</translation>
+        <translation>מצב ניפוי־תקלים מושבת</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation>מצב ניפוי־תקלים מאופשר.</translation>
+        <translation>מצב ניפוי־תקלים מאופשר</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -7561,7 +7558,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1 (%2 סבבים, %3 KB)</translation>
+        <translation>Argon2%1 (%2 סבבים, %3 ק&quot;ב)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
@@ -7605,7 +7602,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation>מרכאה סוגרת חסרה</translation>
+        <translation>חסרה מרכאה סוגרת</translation>
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
@@ -7617,7 +7614,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Twofish 256-bit</source>
-        <translation>256-סיביות Twofish</translation>
+        <translation>256־סיביות Twofish</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
@@ -7633,7 +7630,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
+        <translation>AES־KDF (KDBX 4)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
@@ -7779,15 +7776,15 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation>נעילת כל מסדי הנתונים הפתוחים</translation>
+        <translation>נעילת כל מסדי־נתונים הפתוחים</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>קובץ המפתח של מסד הנתונים</translation>
+        <translation>קובץ המפתח של מסד־נתונים</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>קריאת ססמה של מסד הנתונים מ־stdin</translation>
+        <translation>קריאת ססמה של מסד־נתונים מ־stdin</translation>
     </message>
     <message>
         <source>allow app screen recordering and screenshots</source>
@@ -7799,7 +7796,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Database failed to lock.</source>
-        <translation>נעילת מסד הנתונים כשלה.</translation>
+        <translation>נעילת מסד־נתונים כשלה.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -8007,7 +8004,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform>מחיקת רשומות...</numerusform></translation>
+        <translation><numerusform>מחיקת רשומה?</numerusform><numerusform>מחיקת רשומות?</numerusform><numerusform>מחיקת רשומות?</numerusform><numerusform>מחיקת רשומות?</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8022,11 +8019,11 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>הצגת ערכים שלא נכללו בדוחות גם כן</translation>
+        <translation>הצגת רשומות שלא נכללו בדוחות גם כן</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation>ריחוף מעל סיבה להצגת פרטים נוספים. הקשה כפולה על ערכים לעריכה.</translation>
+        <translation>ריחוף מעל סיבה להצגת פרטים נוספים. הקשה כפולה על רשומות לעריכה.</translation>
     </message>
     <message>
         <source>Bad</source>
@@ -8061,7 +8058,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>הרשומה הופעלה מתוך דוחות</translation>
+        <translation>הרשומה הוחרגה מדוחות</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
@@ -8069,7 +8066,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
-        <translation>מזל טוב, הכול תקין!</translation>
+        <translation>מזל טוב, הכל תקין!</translation>
     </message>
     <message>
         <source>Title</source>
@@ -8093,7 +8090,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>מחיקת רשומה...</numerusform><numerusform>מחיקת רשומות...</numerusform><numerusform>מחיקת רשומות...</numerusform><numerusform>מחיקת רשומות...</numerusform></translation>
+        <translation><numerusform>מחיקת רשומה?</numerusform><numerusform>מחיקת רשומות?</numerusform><numerusform>מחיקת רשומות?</numerusform><numerusform>מחיקת רשומות?</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8104,7 +8101,7 @@ This options is deprecated, use --set-key-file instead.</source>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>התראה: דוח זה מחייב שליחת מידע לשירות המקוון של &apos;האם השטלתו עלי&apos; (https://haveibeenpwned.com). אם תמשיכו, ססמאות מסד הנתונים יוצפנו וחמשת התווים הראשונים של הגיבוב יישלחו באופן מאובטח לשירות זה. מסד הנתונים יישאר מאובטח ולא יהיה ניתן לבנות אותו מחדש  מהמידע שיתקבל. עם זאת, מספר הססמאות שיתקבלו וכתובת ה־IP ייחשפו לשירות זה.</translation>
+        <translation>התראה: דוח זה מחייב שליחת מידע לשירות המקוון של &apos;האם השתלטו עלי&apos; (https://haveibeenpwned.com). אם תמשיכו, ססמאות מסד־נתונים יוצפנו וחמשת התווים הראשונים של הגיבוב יישלחו באופן מאובטח לשירות זה. מסד־נתונים יישאר מאובטח ולא יהיה ניתן לבנות אותו מחדש  מהמידע שיתקבל. עם זאת, מספר הססמאות שיתקבלו וכתובת ה־IP ייחשפו לשירות זה.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
@@ -8112,7 +8109,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>הצגת ערכים שלא נכללו בדוחות גם כן</translation>
+        <translation>הצגת רשומות שלא נכללו בדוחות גם כן</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
@@ -8120,7 +8117,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
-        <translation>ברכות, אין ססמאות חשופות!</translation>
+        <translation>מזל טוב, אין ססמאות חשופות!</translation>
     </message>
     <message>
         <source>Title</source>
@@ -8140,7 +8137,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>הרשומה הופעלה מתוך דוחות</translation>
+        <translation>הרשומה הוחרגה מדוחות</translation>
     </message>
     <message>
         <source>once</source>
@@ -8247,7 +8244,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation>מסד הנתונים הוסגל, אך השינויים עדיין לא נשמרו לכונן הקשיח.</translation>
+        <translation>מסד־נתונים השתנה, אך השינויים עדיין לא נשמרו לכונן הקשיח.</translation>
     </message>
     <message>
         <source>Number of groups</source>
@@ -8263,7 +8260,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation>מסד הנתונים מכיל ערכים פגי תוקף.</translation>
+        <translation>מסד־נתונים מכיל רשומות פגי תוקף.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
@@ -8409,7 +8406,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>match anything</source>
-        <translation>התאמת הכול</translation>
+        <translation>התאמת הכל</translation>
     </message>
     <message>
         <source>match one</source>
@@ -8506,7 +8503,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;אם אופשר, כל ניסיון לקרוא ססמה תחויב באישור. אחרת, לקוחות יוכלו לקרוא ססמאות ללא אישור כאשר מסד הנתונים לא נעול.&lt;/p&gt;&lt;p&gt;אפשרות זו מכסה רק את הגישה לססמה של רשומה. לקוחות יכולו תמיד לספרר את פריטי מסדי־נתונים החשופים ולתשאל את התכונות שלהם.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;אם אופשר, כל ניסיון לקרוא ססמה תחויב באישור. אחרת, לקוחות יוכלו לקרוא ססמאות ללא אישור כאשר מסד־נתונים לא נעול.&lt;/p&gt;&lt;p&gt;אפשרות זו מכסה רק את הגישה לססמה של רשומה. לקוחות יכולו תמיד לספרר את פריטי מסדי־נתונים החשופים ולתשאל את התכונות שלהם.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
@@ -8534,8 +8531,8 @@ This options is deprecated, use --set-key-file instead.</source>
            different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;שיפור תאימות עם יישומוניםים מסוימים
-שמחפשים ססמה, מבלי לשחרר תחילה את נעילת מסד הנתונים.&lt;/p&gt;&lt;p&gt;אך אפשור תכונה זו עשויה לגרום
-לקריסת ה&apos;לקוח&apos; במידה ונעילת מסד הנתונים לא תשוחרר בתוך פרק־זמן קצוב מסוים. (בדרך כלל 25 שניות, אך ייתכן שהוגדר
+שמחפשים ססמה, מבלי לשחרר תחילה את נעילת מסד־נתונים.&lt;/p&gt;&lt;p&gt;אך אפשור תכונה זו עשויה לגרום
+לקריסת ה&apos;לקוח&apos; במידה ונעילת מסד־נתונים לא תשוחרר בתוך פרק־זמן קצוב מסוים. (בדרך כלל 25 שניות, אך ייתכן שהוגדר
 ערך שונה ביישומונים עצמם.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -8544,7 +8541,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation>קבוצות מסדי־נתונים חשופות:</translation>
+        <translation>קבוצות מסד־נתונים חשופות:</translation>
     </message>
     <message>
         <source>Authorization</source>
@@ -8556,7 +8553,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;אזהרה:&lt;/b&gt; </translation>
+        <translation>&lt;b&gt;אזהרה:&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
@@ -8789,7 +8786,7 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> שניה</translation>
+        <translation>שניה</translation>
     </message>
     <message>
         <source>Code size:</source>
@@ -8841,7 +8838,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Software Update</source>
-        <translation>עדכון תוכנה</translation>
+        <translation>עדכון תכנה</translation>
     </message>
     <message>
         <source>An error occurred when trying to retrieve update information, please try again later.</source>
@@ -8872,11 +8869,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation>יבוא מ־KeePass1</translation>
+        <translation>יבוא מ־KeePass 1</translation>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation>יבוא מ־1Password</translation>
+        <translation>יבוא מ־ 1Password</translation>
     </message>
     <message>
         <source>Import from CSV</source>
@@ -8888,11 +8885,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation>פתיחת מסד־נתונים קודם</translation>
+        <translation>פתיחת מסד־נתונים אחרון</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation>ברוכים הבאים ל-KeePassXC %1</translation>
+        <translation>ברוכים הבאים ל־KeePassXC %1</translation>
     </message>
 </context>
 <context>
@@ -8952,7 +8949,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>רענן</translation>
+        <translation>רענון</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>

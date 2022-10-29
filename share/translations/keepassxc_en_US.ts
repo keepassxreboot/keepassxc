@@ -2615,7 +2615,7 @@ Would you like to correct it?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%n hour(s)</numerusform><numerusform>%n hour(s)</numerusform></translation>
+        <translation><numerusform>%n hour</numerusform><numerusform>%n hours</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5459,7 +5459,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 Entry</numerusform><numerusform>%1 Entries</numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>

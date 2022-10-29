@@ -3660,7 +3660,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <source>URL</source>

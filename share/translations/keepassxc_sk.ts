@@ -2790,7 +2790,7 @@ Chcete to opraviť?</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Toto nastavenie neposielať do prehliadača pre dialógy HTTP Auth. Ak je zapnuté, bežné prihlasovacie formuláre nebudú túto položku poskytovať na výber.</translation>
+        <translation>Toto nastavenie neposielať do prehliadača pre dialógy HTTP Auth. Ak je zapnuté, bežné prihlasovacie formuláre nebudú na výber poskytovať túto položku.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
@@ -5126,7 +5126,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
-        <translation>Štatistiky, Kontrola zdravia, apod.</translation>
+        <translation>Štatistiky, kontrola zdravia, apod.</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
@@ -7994,7 +7994,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform>Odstrániť položky…</numerusform></translation>
+        <translation><numerusform>Odstrániť položku…</numerusform><numerusform>Odstrániť položky…</numerusform><numerusform>Odstrániť položky…</numerusform><numerusform>Odstrániť položky…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>

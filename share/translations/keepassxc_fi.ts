@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Ota SSH-agentin integraatio käyttöön</translation>
+        <translation>Ota SSH Agentti käyttöön</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -144,11 +144,11 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Yhteystieto SSH-agenttiin puuttuu. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
+        <translation>SSH Agentin socketia ei ole. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>Yhteys SSH-agenttiin toimii!</translation>
+        <translation>SSH Agent -yhteys toimii!</translation>
     </message>
     <message>
         <source>Use both agents</source>
@@ -532,7 +532,7 @@
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation> minuuttia</translation>
+        <translation>minuuttia</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -2440,7 +2440,7 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>Tietueet jotka vanhenevat %1 päivässä</numerusform><numerusform>Tietueet jotka vanhenevat %1 päivässä</numerusform></translation>
+        <translation><numerusform>%1 päivän kuluttua vanhentuva tietue</numerusform><numerusform>%1 päivän kuluttua vanhentuva tietue</numerusform></translation>
     </message>
     <message>
         <source>Searches and Tags</source>
@@ -2613,7 +2613,7 @@ Haluatko korjata sen?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n tunti</numerusform><numerusform>%n tuntia</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4079,7 +4079,7 @@ Tämä jättää salasanasi ja minkä tahansa arkaluontoisen tiedon haavoittuvak
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform></translation>
+        <translation><numerusform>%n tietue käytetiin %1</numerusform><numerusform>%n tietuetta käytettiin %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5453,11 +5453,11 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
     <message>
         <source>No Tags</source>
-        <translation>Ei tunnisteita</translation>
+        <translation>Tunnisteita ei ole</translation>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 tietue</numerusform><numerusform>%1 tietuetta</numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
@@ -7837,7 +7837,7 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
-        <translation>Jatka kytkemällä YubiKey-avaimesi tai koskettamalla sitä</translation>
+        <translation>Jatka kytkemällä YubiKey-avaimesi tai koskettamalla sitä.</translation>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
@@ -8003,7 +8003,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform>Poista tietueet...</numerusform></translation>
+        <translation><numerusform>Poista tietue...</numerusform><numerusform>Poista tietueet...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8362,7 +8362,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Agentti ei ole päällä, identiteettejä ei voi listata.</translation>
+        <translation>Agentti ei ole päällä, tunnisteita ei voi listata.</translation>
     </message>
 </context>
 <context>
@@ -8700,7 +8700,7 @@ mutta arvo voi vaihdella ohjelmasta riippuen.)&lt;/p&gt;&lt;/body&gt;&lt;/html&g
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
-        <translation>Poistetaanko tunniste &quot;%1&quot; tietokannan kaikilta tietueista?</translation>
+        <translation>Poistetaanko tunniste &quot;%1&quot; tietokannan kaikilta tietueilta?</translation>
     </message>
 </context>
 <context>

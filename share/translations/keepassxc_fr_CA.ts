@@ -3455,7 +3455,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 – Cloné</translation>
+        <translation>%1 – Cloner</translation>
     </message>
 </context>
 <context>

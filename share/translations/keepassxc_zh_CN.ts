@@ -124,7 +124,7 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>SSH_AUTH_SOCK 重写</translation>
+        <translation>SSH_AUTH_SOCK 覆写</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
@@ -144,7 +144,7 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置重写。</translation>
+        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置覆写。</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
@@ -8848,7 +8848,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>您的 KeePassXC 已经是最版本</translation>
+        <translation>您的 KeePassXC 已经是最新版本</translation>
     </message>
 </context>
 <context>
