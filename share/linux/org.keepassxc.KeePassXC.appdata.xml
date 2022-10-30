@@ -73,7 +73,8 @@
                     <li>Flatpak: Fix launching browser proxy service [#8680]</li>
                     <li>SSH Agent: Fix paegent support on Windows [#8619]</li>
                 </ul>
-            </description
+            </description>
+        </release>
         <release version="2.7.3" date="2022-10-23">
             <description>
                 <ul>
