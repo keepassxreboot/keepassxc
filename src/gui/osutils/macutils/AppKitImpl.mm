@@ -69,29 +69,21 @@
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
                        context:(void *)context
 {
-    Q_UNUSED(object);
-    Q_UNUSED(change);
-    Q_UNUSED(context);
+    Q_UNUSED(object)
+    Q_UNUSED(change)
+    Q_UNUSED(context)
     if ([keyPath isEqualToString:@"effectiveAppearance"]) {
-        //
-        // Light / dark theme toggled
-        //
         if (m_appkit) {
 
-            void (^emitBlock)(void) = ^
-            {
+            void (^emitBlock)(void) = ^{
                 emit m_appkit->interfaceThemeChanged();
             };
 
-#if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101000
-            if(@available(macOS 11.0, *))
-            {
+            if(@available(macOS 11.0, *)) {
                 // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here too
                 [NSApp.effectiveAppearance performAsCurrentDrawingAppearance:emitBlock];
             }
-            else
-#endif
-            {
+            else {
                 emitBlock();
             }
         }
