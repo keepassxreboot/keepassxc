@@ -204,7 +204,6 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
     // Unfortunately, Qt doesn't seem to have a utility for seconds->year.
     // (365 days)(24 hours/day)(3600 s/hr) is approximately a year and gets compiled away.
     if (ageInSeconds / (365 * 24 * 3600) > 1) {
-        Tools::humanReadableTimeDifference(ageInSeconds);
         health->addScoreReason(QObject::tr("Password is %1 old").arg(Tools::humanReadableTimeDifference(ageInSeconds)));
     }
 
