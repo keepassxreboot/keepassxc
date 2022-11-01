@@ -231,6 +231,33 @@ const QSharedPointer<PasswordHealth> Entry::passwordHealth() const
     return m_data.passwordHealth;
 }
 
+int Entry::getPasswordAgeInDays() const
+{
+    QListIterator<Entry*> i(m_history);
+    i.toBack();
+    Entry* compare = nullptr;
+    Entry* curr = nullptr;
+
+    while (i.hasPrevious()) {
+        curr = i.previous();
+        if (!compare) {
+            compare = curr;
+            continue;
+        }
+        if (*curr->attributes() != *compare->attributes()) {
+            if (curr->password() != compare->password()) {
+                // Found most recent password change; break out.
+                break;
+            }
+        }
+    }
+    if (!curr) {
+        // If no change in history, password is from creation time
+        return this->timeInfo().creationTime().daysTo(QDateTime::currentDateTime());
+    }
+    return curr->timeInfo().lastModificationTime().daysTo(QDateTime::currentDateTime());
+}
+
 bool Entry::excludeFromReports() const
 {
     return m_data.excludeFromReports

@@ -116,6 +116,7 @@ public:
     QString path() const;
     const QSharedPointer<PasswordHealth> passwordHealth();
     const QSharedPointer<PasswordHealth> passwordHealth() const;
+    int getPasswordAgeInDays() const;
     bool excludeFromReports() const;
     void setExcludeFromReports(bool state);
 
