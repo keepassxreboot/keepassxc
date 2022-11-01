@@ -19,6 +19,7 @@
 
 #include "Group.h"
 #include "PasswordHealth.h"
+#include "Tools.h"
 #include "zxcvbn.h"
 
 namespace
@@ -199,10 +200,12 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
     }
 
     // Fourth, reduce score by 5 for each year beyond one year old.
-    int age = entry->getPasswordAgeInDays();
-    int ageInYears = age / 365;
-    if (ageInYears > 1) {
-        health->addScoreReason(QObject::tr("Password is %1 year(s) old", "", ageInYears).arg(ageInYears));
+    int ageInSeconds = entry->getPasswordAge();
+    // (365 days)(24 hours/day)(3600 s/hr) is approximately a year and gets compiled away.
+    // Unfortunately, Qt doesn't seem to have a utility for this.
+    if (ageInSeconds / (365 * 24 * 3600) > 1) {
+        Tools::humanReadableTimeDifference(ageInSeconds);
+        health->addScoreReason(QObject::tr("Password is %1 old").arg(Tools::humanReadableTimeDifference(ageInSeconds)));
     }
 
     // Return the result
