@@ -19,6 +19,8 @@
 #include <QTest>
 
 #include "TestEntry.h"
+#include "mock/MockClock.h"
+
 #include "core/Clock.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -45,6 +47,42 @@ void TestEntry::testHistoryItemDeletion()
     entry->removeHistoryItems(historyEntriesToRemove);
     QCOMPARE(entry->historyItems().size(), 0);
     QVERIFY(historyEntry.isNull());
+}
+
+void TestEntry::testGetPasswordAge()
+{
+    MockClock* m_clock = new MockClock(2022, 2, 4, 17, 00, 00);
+    MockClock::setup(m_clock);
+
+    // Old password updated 100 seconds ago
+    QPointer<Entry> historyEntry = new Entry();
+    historyEntry->setPassword("oldpassword");
+    m_clock->advanceSecond(500);
+    QScopedPointer<Entry> entry(new Entry());
+    entry->setPassword("newpassword");
+    entry->addHistoryItem(historyEntry);
+    m_clock->advanceSecond(100);
+
+    QCOMPARE(entry->getPasswordAge(), 100);
+
+    QPointer<Entry> historyEntry2 = new Entry();
+    historyEntry2->setPassword("oldpassword");
+    m_clock->advanceSecond(500);
+    QScopedPointer<Entry> entry2(new Entry());
+    entry2->setPassword("oldpassword");
+
+    // No history, password just created
+    QCOMPARE(entry2->getPasswordAge(), 0);
+    m_clock->advanceSecond(100);
+    // 100 seconds pass since creation
+    QCOMPARE(entry2->getPasswordAge(), 100);
+
+    entry2->addHistoryItem(historyEntry2);
+    // History entry shows password is actually 
+    // 500 seconds older than the most recent update
+    QCOMPARE(entry2->getPasswordAge(), 600);
+
+    MockClock::teardown();
 }
 
 void TestEntry::testCopyDataFrom()
