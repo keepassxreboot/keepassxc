@@ -202,8 +202,6 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
     int age = entry->getPasswordAgeInDays();
     int ageInYears = age / 365;
     if (ageInYears > 1) {
-        constexpr auto penalty = 5;
-        health->adjustScore(-penalty * ageInYears);
         health->addScoreReason(QObject::tr("Password is %1 year(s) old", "", ageInYears).arg(ageInYears));
     }
 
