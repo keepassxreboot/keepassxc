@@ -2609,10 +2609,6 @@ Would you like to correct it?</source>
             <numerusform></numerusform>
         </translation>
     </message>
-    <message>
-        <source>Now</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
