@@ -79,8 +79,24 @@ void TestEntry::testGetPasswordAge()
 
     entry2->addHistoryItem(historyEntry2);
     // History entry shows password is actually 
-    // 500 seconds older than the most recent update
+    // 500 seconds older than the creation time
     QCOMPARE(entry2->getPasswordAge(), 600);
+
+    // Bury password change in history
+    entry2->setPassword("newpassword");
+    QPointer<Entry> historyEntry3 = new Entry();
+    historyEntry3->setPassword("newpassword");
+    entry->addHistoryItem(historyEntry3);
+    m_clock->advanceSecond(400);
+    QPointer<Entry> historyEntry4 = new Entry();
+    historyEntry4->setPassword("newpassword");
+    entry->addHistoryItem(historyEntry4);
+    m_clock->advanceSecond(400);
+    QCOMPARE(entry2->getPasswordAge(), 800);
+
+    // Second test where current password is the latest
+    entry2->setPassword("newerpassword");
+    QCOMPARE(entry2->getPasswordAge(), 0);
 
     MockClock::teardown();
 }

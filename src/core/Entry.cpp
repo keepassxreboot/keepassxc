@@ -235,27 +235,25 @@ int Entry::getPasswordAge() const
 {
     QListIterator<Entry*> i(m_history);
     i.toBack();
-    Entry* compare = nullptr;
-    Entry* curr = nullptr;
+    const Entry* curr = nullptr;
+    const Entry* previous = this;
 
     while (i.hasPrevious()) {
-        curr = i.previous();
-        if (!compare) {
-            compare = curr;
-            continue;
+        curr = previous;
+        previous = i.previous();
+        if (previous->password() != curr->password()) {
+            // Found last change in history
+            return curr->timeInfo().lastModificationTime().secsTo(Clock::currentDateTime());
         }
-        if (*curr->attributes() != *compare->attributes()) {
-            if (curr->password() != compare->password()) {
-                // Found most recent password change; break out.
-                break;
-            }
-        }
+
     }
-    if (!curr) {
-        // If no change in history, password is from creation time
-        return this->timeInfo().creationTime().secsTo(QDateTime::currentDateTime());
+    if (previous!=this) {
+        // If no change in history, password is from oldest history entry.
+        // Not using creation time here because that changes when an entry is cloned
+        return previous->timeInfo().lastModificationTime().secsTo(Clock::currentDateTime());
     }
-    return curr->timeInfo().lastModificationTime().secsTo(QDateTime::currentDateTime());
+    // If no history, creation time is when the password appeared
+    return this->timeInfo().creationTime().secsTo(Clock::currentDateTime());
 }
 
 bool Entry::excludeFromReports() const
