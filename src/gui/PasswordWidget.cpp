@@ -54,7 +54,7 @@ PasswordWidget::PasswordWidget(QWidget* parent)
     // use a monospace font for the password field
     QFont passwordFont = Font::fixedFont();
     passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
-    setFont(passwordFont);
+    m_ui->passwordEdit->setFont(passwordFont);
 
     // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
 #ifdef Q_OS_MAC
@@ -143,19 +143,19 @@ void PasswordWidget::setReadOnly(bool state)
     m_ui->passwordEdit->setReadOnly(state);
 }
 
-void PasswordWidget::setRepeatPartner(PasswordWidget* repeatEdit)
+void PasswordWidget::setRepeatPartner(PasswordWidget* repeatPartner)
 {
-    m_repeatPasswordEdit = repeatEdit;
-    m_repeatPasswordEdit->setParentPasswordEdit(this);
+    m_repeatPasswordWidget = repeatPartner;
+    m_repeatPasswordWidget->setParentPasswordEdit(this);
 
     connect(
-        m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(autocompletePassword(QString)));
-    connect(m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(updateRepeatStatus()));
+        m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordWidget, SLOT(autocompletePassword(QString)));
+    connect(m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordWidget, SLOT(updateRepeatStatus()));
 }
 
 void PasswordWidget::setParentPasswordEdit(PasswordWidget* parent)
 {
-    m_parentPasswordEdit = parent;
+    m_parentPasswordWidget = parent;
     // Hide actions
     m_toggleVisibleAction->setVisible(false);
     m_passwordGeneratorAction->setVisible(false);
@@ -176,13 +176,13 @@ void PasswordWidget::setShowPassword(bool show)
     m_toggleVisibleAction->setIcon(icons()->onOffIcon("password-show", show));
     m_toggleVisibleAction->setChecked(show);
 
-    if (m_repeatPasswordEdit) {
-        m_repeatPasswordEdit->setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
+    if (m_repeatPasswordWidget) {
+        m_repeatPasswordWidget->setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
         if (!config()->get(Config::Security_PasswordsRepeatVisible).toBool()) {
-            m_repeatPasswordEdit->setEnabled(!show);
-            m_repeatPasswordEdit->setText(text());
+            m_repeatPasswordWidget->setEnabled(!show);
+            m_repeatPasswordWidget->setText(text());
         } else {
-            m_repeatPasswordEdit->setEnabled(true);
+            m_repeatPasswordWidget->setEnabled(true);
         }
     }
 }
@@ -199,19 +199,19 @@ void PasswordWidget::popupPasswordGenerator()
     generator->setPasswordLength(text().length());
 
     connect(generator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));
-    if (m_repeatPasswordEdit) {
-        connect(generator, SIGNAL(appliedPassword(QString)), m_repeatPasswordEdit, SLOT(setText(QString)));
+    if (m_repeatPasswordWidget) {
+        connect(generator, SIGNAL(appliedPassword(QString)), m_repeatPasswordWidget, SLOT(setText(QString)));
     }
 }
 
 void PasswordWidget::updateRepeatStatus()
 {
     static const auto stylesheetTemplate = QStringLiteral("QLineEdit { background: %1; }");
-    if (!m_parentPasswordEdit) {
+    if (!m_parentPasswordWidget) {
         return;
     }
 
-    const auto otherPassword = m_parentPasswordEdit->text();
+    const auto otherPassword = m_parentPasswordWidget->text();
     const auto password = text();
     if (otherPassword != password) {
         bool isCorrect = false;
@@ -251,7 +251,7 @@ bool PasswordWidget::event(QEvent* event)
 
 void PasswordWidget::checkCapslockState()
 {
-    if (m_parentPasswordEdit) {
+    if (m_parentPasswordWidget) {
         return;
     }
 
