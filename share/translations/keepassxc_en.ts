@@ -2609,6 +2609,10 @@ Would you like to correct it?</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Now</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -5458,6 +5462,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>XML File…</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Expire Entry…</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -8040,6 +8048,13 @@ This options is deprecated, use --set-key-file instead.</source>
         <source>Exclude from reports</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
@@ -8128,6 +8143,13 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Exclude from reports</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8226,6 +8248,13 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Exclude from reports</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>

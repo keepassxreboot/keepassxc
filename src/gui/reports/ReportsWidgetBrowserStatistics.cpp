@@ -274,6 +274,11 @@ void ReportsWidgetBrowserStatistics::customMenuRequested(QPoint pos)
         });
     }
 
+    // Create the "expire entry" menu item
+    const auto expEntry = new QAction(icons()->icon("entry-expire"), tr("Expire Entry(s)…", "", selected.size()), this);
+    menu->addAction(expEntry);
+    connect(expEntry, &QAction::triggered, this, &ReportsWidgetBrowserStatistics::expireSelectedEntries);
+
     // Create the "delete entry" menu item
     const auto delEntry = new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
     menu->addAction(delEntry);
@@ -316,7 +321,7 @@ void ReportsWidgetBrowserStatistics::saveSettings()
     // Nothing to do - the tab is passive
 }
 
-void ReportsWidgetBrowserStatistics::deleteSelectedEntries()
+QList<Entry*> ReportsWidgetBrowserStatistics::getSelectedEntries()
 {
     QList<Entry*> selectedEntries;
     for (auto index : m_ui->browserStatisticsTableView->selectionModel()->selectedRows()) {
@@ -326,7 +331,23 @@ void ReportsWidgetBrowserStatistics::deleteSelectedEntries()
             selectedEntries << entry;
         }
     }
+    return selectedEntries;
+}
 
+void ReportsWidgetBrowserStatistics::expireSelectedEntries()
+{
+    QList<Entry*> selectedEntries = getSelectedEntries();
+    if (selectedEntries.isEmpty()) {
+        return;
+    }
+    GuiTools::expireEntries(this, selectedEntries);
+
+    calculateBrowserStatistics();
+}
+
+void ReportsWidgetBrowserStatistics::deleteSelectedEntries()
+{
+    QList<Entry*> selectedEntries = getSelectedEntries();
     bool permanent = !m_db->metadata()->recycleBinEnabled();
     if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
         GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
