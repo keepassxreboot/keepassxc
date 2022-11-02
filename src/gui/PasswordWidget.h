@@ -37,7 +37,7 @@ public:
     explicit PasswordWidget(QWidget* parent = nullptr);
     ~PasswordWidget() override;
     void enablePasswordGenerator();
-    void setRepeatPartner(PasswordWidget* repeatEdit);
+    void setRepeatPartner(PasswordWidget* repeatPartner);
     void setQualityVisible(bool state);
 
     bool isPasswordVisible() const;
@@ -76,8 +76,8 @@ private:
     QPointer<QAction> m_toggleVisibleAction;
     QPointer<QAction> m_passwordGeneratorAction;
     QPointer<QAction> m_capslockAction;
-    QPointer<PasswordWidget> m_repeatPasswordEdit;
-    QPointer<PasswordWidget> m_parentPasswordEdit;
+    QPointer<PasswordWidget> m_repeatPasswordWidget;
+    QPointer<PasswordWidget> m_parentPasswordWidget;
 
     bool m_capslockState = false;
 };
