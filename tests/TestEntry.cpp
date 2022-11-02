@@ -78,7 +78,7 @@ void TestEntry::testGetPasswordAge()
     QCOMPARE(entry2->getPasswordAge(), 100);
 
     entry2->addHistoryItem(historyEntry2);
-    // History entry shows password is actually 
+    // History entry shows password is actually
     // 500 seconds older than the creation time
     QCOMPARE(entry2->getPasswordAge(), 600);
 

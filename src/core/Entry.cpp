@@ -245,9 +245,8 @@ int Entry::getPasswordAge() const
             // Found last change in history
             return curr->timeInfo().lastModificationTime().secsTo(Clock::currentDateTime());
         }
-
     }
-    if (previous!=this) {
+    if (previous != this) {
         // If no change in history, password is from oldest history entry.
         // Not using creation time here because that changes when an entry is cloned
         return previous->timeInfo().lastModificationTime().secsTo(Clock::currentDateTime());
