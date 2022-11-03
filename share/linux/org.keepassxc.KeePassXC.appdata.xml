@@ -941,7 +941,7 @@
                     <li>Compare window title to entry URLs [#556]</li>
                     <li>Implemented inline error messages [#162]</li>
                     <li>Ignore group expansion and other minor changes when making database "dirty" [#464]</li>
-                    <li>Updated license and copyright information on souce files [#632]</li>
+                    <li>Updated license and copyright information on source files [#632]</li>
                     <li>Added contributors list to about dialog [#629]</li>
                 </ul>
             </description>

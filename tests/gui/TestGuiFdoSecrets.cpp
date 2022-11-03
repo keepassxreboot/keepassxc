@@ -418,7 +418,7 @@ void TestGuiFdoSecrets::testServiceSearchBlockingUnlockMultiple()
     VERIFY(service);
 
     // when there are multiple locked databases,
-    // repeatly show the dialog until there is at least one unlocked collection
+    // repeatedly show the dialog until there is at least one unlocked collection
     FdoSecrets::settings()->setUnlockBeforeSearch(true);
 
     // when only unlocking the one with no exposed group, a second dialog is shown

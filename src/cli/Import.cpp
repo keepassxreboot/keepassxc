@@ -28,7 +28,7 @@
  * A password can be specified to encrypt the database.
  * If none is specified the function will fail.
  *
- * If the database is being saved in a non existant directory, the
+ * If the database is being saved in a non existent directory, the
  * function will fail.
  *
  * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure

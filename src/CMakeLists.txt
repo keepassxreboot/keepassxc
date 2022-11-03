@@ -532,5 +532,5 @@ if(WIN32)
 endif()
 
 # The install commands in this subdirectory will be executed after all the install commands in the
-# current scope are ran. It is required for correct functtioning of macdeployqt.
+# current scope are ran. It is required for correct functioning of macdeployqt.
 add_subdirectory(post_install)

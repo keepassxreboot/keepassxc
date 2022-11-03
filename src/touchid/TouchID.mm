@@ -110,7 +110,7 @@ bool TouchID::storeKey(const QString& databasePath, const QByteArray& passwordKe
 
     SymmetricCipher aes256Encrypt;
     if (!aes256Encrypt.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, randomKey, randomIV)) {
-        debug("TouchID::storeKey - AES initialisation falied");
+        debug("TouchID::storeKey - AES initialisation failed");
         return false;
     }
 

@@ -64,7 +64,7 @@ namespace AsyncTask
      *
      * @param task std::function object to run
      * @param context QObject responsible for calling this function
-     * @param callback std::function object to run after the task completess
+     * @param callback std::function object to run after the task completes
      */
     template <typename FunctionObject, typename FunctionObject2>
     void runThenCallback(FunctionObject task, QObject* context, FunctionObject2 callback)
