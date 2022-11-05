@@ -419,12 +419,17 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
 
     QList<Entry*> allowedEntries;
     auto ret = accessControlDialog.exec();
-    if (ret == QDialog::Accepted) {
-        for (auto item : accessControlDialog.getSelectedEntries()) {
-            auto entry = pwEntriesToConfirm[item->row()];
-            if (accessControlDialog.remember()) {
+    for (auto item : accessControlDialog.getSelectedEntries()) {
+        auto entry = pwEntriesToConfirm[item->row()];
+        if (accessControlDialog.remember()) {
+            if (ret == QDialog::Accepted) {
                 allowEntry(entry, siteHost, formUrl, entryParameters.realm);
+            } else {
+                denyEntry(entry, siteHost, formUrl, entryParameters.realm);
             }
+        }
+
+        if (ret == QDialog::Accepted) {
             allowedEntries.append(entry);
         }
     }
