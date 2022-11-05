@@ -314,7 +314,7 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
     return {};
 }
 
-QJsonArray
+QPair<bool, QJsonArray>
 BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, const bool httpAuth)
 {
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
@@ -366,6 +366,10 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
         }
     }
 
+    if (pwEntriesToConfirm.isEmpty() && pwEntries.isEmpty()) {
+        return qMakePair(false, QJsonArray());
+    }
+
     // Confirm entries
     QList<Entry*> selectedEntriesToConfirm =
         confirmEntries(pwEntriesToConfirm, entryParameters, siteHost, formHost, httpAuth);
@@ -373,25 +377,21 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
         pwEntries.append(selectedEntriesToConfirm);
     }
 
-    if (pwEntries.isEmpty()) {
-        return {};
-    }
-
     // Ensure that database is not locked when the popup was visible
     if (!isDatabaseOpened()) {
-        return {};
+        return qMakePair(false, QJsonArray());
     }
 
     // Sort results
     pwEntries = sortEntries(pwEntries, entryParameters.siteUrl, entryParameters.formUrl);
 
     // Fill the list
-    QJsonArray result;
+    QJsonArray users;
     for (auto* entry : pwEntries) {
-        result.append(prepareEntry(entry));
+        users.append(prepareEntry(entry));
     }
 
-    return result;
+    return qMakePair(true, users);
 }
 
 QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
