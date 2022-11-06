@@ -69,7 +69,6 @@ askBrowserSnap() {
 }
 
 setupFirefox() {
-    askBrowserSnap "./snap/firefox/common"
     JSON_OUT=${JSON_FIREFOX}
     INSTALL_DIR="${BASE_DIR}/.mozilla/native-messaging-hosts"
 }
