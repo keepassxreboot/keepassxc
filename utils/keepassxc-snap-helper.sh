@@ -59,15 +59,6 @@ JSON_CHROME=$(cat << EOF
 EOF
 )
 
-askBrowserSnap() {
-    if (whiptail --title "Snap Choice" --defaultno \
-            --yesno "Is this browser installed as a snap (usually NO)?" 8 60); then
-        # BASE_DIR="$1"
-        whiptail --title "Snap Choice" --msgbox "Sorry, browsers installed as snaps are not supported at this time" 8 50
-        exit 0
-    fi
-}
-
 setupFirefox() {
     JSON_OUT=${JSON_FIREFOX}
     INSTALL_DIR="${BASE_DIR}/.mozilla/native-messaging-hosts"
@@ -79,7 +70,6 @@ setupChrome() {
 }
 
 setupChromium() {
-    askBrowserSnap "./snap/chromium/current"
     JSON_OUT=${JSON_CHROME}
     INSTALL_DIR="${BASE_DIR}/.config/chromium/NativeMessagingHosts"
 }
