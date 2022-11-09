@@ -122,7 +122,7 @@ int main(int argc, char** argv)
         const auto fileInfo = QFileInfo(file);
         WIN32_FIND_DATA findFileData;
         HANDLE hFind;
-        hFind = FindFirstFile(fileInfo.absoluteFilePath().toUtf8(), &findFileData);
+        hFind = FindFirstFileEx(fileInfo.absoluteFilePath().toUtf8(), FindExInfoStandard, &findFileData, FindExSearchNameMatch, NULL, 0);
         if (hFind != INVALID_HANDLE_VALUE) {
             fileNames << QString("%1/%2").arg(fileInfo.absolutePath(), QString::fromUtf8(findFileData.cFileName));
             FindClose(hFind);
