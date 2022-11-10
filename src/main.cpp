@@ -124,7 +124,7 @@ int main(int argc, char** argv)
         HANDLE hFind;
         hFind = FindFirstFileW(fileInfo.absoluteFilePath().toStdWString().c_str(), &findFileData);
         if (hFind != INVALID_HANDLE_VALUE) {
-            fileNames << QString("%1/%2").arg(fileInfo.absolutePath(), QString::fromStdWString(findFileData.cFileName));
+            fileNames << QString("%1/%2").arg(fileInfo.absolutePath(), QString::fromWCharArray(findFileData.cFileName));
             FindClose(hFind);
         }
     }
