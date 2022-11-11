@@ -120,11 +120,12 @@ int main(int argc, char** argv)
     // Get correct case for Windows filenames (fixes #7139)
     for (const auto& file : parser.positionalArguments()) {
         const auto fileInfo = QFileInfo(file);
-        WIN32_FIND_DATA findFileData;
+        WIN32_FIND_DATAW findFileData;
         HANDLE hFind;
-        hFind = FindFirstFile(fileInfo.absoluteFilePath().toUtf8(), &findFileData);
+        const wchar_t* absolutePathWchar = reinterpret_cast<const wchar_t*>(fileInfo.absoluteFilePath().utf16());
+        hFind = FindFirstFileW(absolutePathWchar, &findFileData);
         if (hFind != INVALID_HANDLE_VALUE) {
-            fileNames << QString("%1/%2").arg(fileInfo.absolutePath(), QString::fromUtf8(findFileData.cFileName));
+            fileNames << QString("%1/%2").arg(fileInfo.absolutePath(), QString::fromWCharArray(findFileData.cFileName));
             FindClose(hFind);
         }
     }
