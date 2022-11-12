@@ -814,7 +814,7 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& entries, const QString&
     // Build map of prioritized entries
     QMultiMap<int, Entry*> priorities;
     for (auto* entry : entries) {
-        priorities.insert(sortPriority(getEntryURLs(entry), siteUrl, formUrl), entry);
+        priorities.insert(sortPriority(entry->getAllUrls(), siteUrl, formUrl), entry);
     }
 
     auto keys = priorities.uniqueKeys();
@@ -1212,21 +1212,6 @@ QSharedPointer<Database> BrowserService::selectedDatabase()
 
     // Return current database
     return getDatabase();
-}
-
-QStringList BrowserService::getEntryURLs(const Entry* entry)
-{
-    QStringList urlList;
-    urlList << entry->url();
-
-    // Handle additional URL's
-    for (const auto& key : entry->attributes()->keys()) {
-        if (key.startsWith(ADDITIONAL_URL)) {
-            urlList << entry->attributes()->value(key);
-        }
-    }
-
-    return urlList;
 }
 
 void BrowserService::hideWindow() const

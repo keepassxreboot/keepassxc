@@ -202,8 +202,7 @@ void TestBrowser::testSortPriority()
     QScopedPointer<Entry> entry(new Entry());
     entry->setUrl(entryUrl);
 
-    QCOMPARE(m_browserService->sortPriority(m_browserService->getEntryURLs(entry.data()), siteUrl, formUrl),
-             expectedScore);
+    QCOMPARE(m_browserService->sortPriority(entry->getAllUrls(), siteUrl, formUrl), expectedScore);
 }
 
 void TestBrowser::testSortPriority_data()
@@ -344,7 +343,7 @@ void TestBrowser::testSearchEntriesByUUID()
 
     for (Entry* entry : entries) {
         QString testUrl = "keepassxc://by-uuid/" + entry->uuidToHex();
-        /* Look for an entry with that UUID. First using handleEntry, then through the search */
+        /* Look for an entry with that UUID. First using shouldIncludeEntry, then through the search */
         QCOMPARE(m_browserService->shouldIncludeEntry(entry, testUrl, ""), true);
         auto result = m_browserService->searchEntries(db, testUrl, "");
         QCOMPARE(result.length(), 1);
@@ -369,6 +368,46 @@ void TestBrowser::testSearchEntriesByUUID()
         auto result = m_browserService->searchEntries(db, testUrl, "");
         QCOMPARE(result.length(), 0);
     }
+}
+
+void TestBrowser::testSearchEntriesByReference()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    /* The URLs don't really matter for this test, we just need some entries */
+    QStringList urls = {"https://subdomain.example.com",
+                        "example.com", // Only includes a partial URL for references
+                        "https://another.domain.com", // Additional URL as full reference
+                        "https://subdomain.somesite.com", // Additional URL as partial reference
+                        "", // Full reference will be added to https://subdomain.example.com
+                        "" // Partial reference will be added to https://subdomain.example.com
+                        "https://www.notincluded.com"}; // Should not show in search
+    auto entries = createEntries(urls, root);
+
+    auto firstEntryUuid = entries.first()->uuidToHex();
+    auto secondEntryUuid = entries[1]->uuidToHex();
+    auto fullReference = QString("{REF:A@I:%1}").arg(firstEntryUuid);
+    auto partialReference = QString("https://subdomain.{REF:A@I:%1}").arg(secondEntryUuid);
+    entries[2]->attributes()->set(BrowserService::ADDITIONAL_URL, fullReference);
+    entries[3]->attributes()->set(BrowserService::ADDITIONAL_URL, partialReference);
+    entries[4]->setUrl(fullReference);
+    entries[5]->setUrl(partialReference);
+
+    auto result = m_browserService->searchEntries(db, "https://subdomain.example.com", "");
+    QCOMPARE(result.length(), 6);
+    QCOMPARE(result[0]->url(), urls[0]);
+    QCOMPARE(result[1]->url(), urls[1]);
+    QCOMPARE(result[2]->url(), urls[2]);
+    QCOMPARE(result[2]->resolveMultiplePlaceholders(result[2]->attributes()->value(BrowserService::ADDITIONAL_URL)),
+             urls[0]);
+    QCOMPARE(result[3]->url(), urls[3]);
+    QCOMPARE(result[3]->resolveMultiplePlaceholders(result[3]->attributes()->value(BrowserService::ADDITIONAL_URL)),
+             urls[0]);
+    QCOMPARE(result[4]->url(), fullReference);
+    QCOMPARE(result[4]->resolveMultiplePlaceholders(result[4]->url()), urls[0]); // Should be resolved to the main entry
+    QCOMPARE(result[5]->url(), partialReference);
+    QCOMPARE(result[5]->resolveMultiplePlaceholders(result[5]->url()), urls[0]); // Should be resolved to the main entry
 }
 
 void TestBrowser::testSearchEntriesWithPort()
