@@ -200,6 +200,7 @@ set(gui_SOURCES
 if(APPLE)
     set(gui_SOURCES
             ${gui_SOURCES}
+            core/MacPasteboard.cpp
             gui/osutils/macutils/MacUtils.cpp
             gui/osutils/macutils/ScreenLockListenerMac.cpp
             gui/osutils/macutils/AppKitImpl.mm
