@@ -183,21 +183,9 @@ int main(int argc, char** argv)
 
     MainWindow mainWindow;
 
-#ifndef QT_DEBUG
-    // Disable screen capture if capable and not explicitly allowed
-    if (osUtils->canPreventScreenCapture() && !parser.isSet(allowScreenCaptureOption)) {
-        // This ensures any top-level windows (Main Window, Modal Dialogs, etc.) are excluded from screenshots
-        QObject::connect(&app, &QGuiApplication::focusWindowChanged, &mainWindow, [&](QWindow* window) {
-            if (window) {
-                if (!osUtils->setPreventScreenCapture(window, true)) {
-                    mainWindow.displayGlobalMessage(
-                        QObject::tr("Warning: Failed to prevent screenshots on a top level window!"),
-                        MessageWidget::Error);
-                }
-            }
-        });
-    }
-#endif
+    // Disable screen capture if not explicitly allowed
+    // This ensures any top-level windows (Main Window, Modal Dialogs, etc.) are excluded from screenshots
+    mainWindow.setAllowScreenCapture(parser.isSet(allowScreenCaptureOption));
 
     const bool pwstdin = parser.isSet(pwstdinOption);
     if (!fileNames.isEmpty() && pwstdin) {

@@ -5420,6 +5420,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -7888,10 +7892,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -7911,6 +7911,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
