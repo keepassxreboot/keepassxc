@@ -66,15 +66,15 @@ private:
     Database* createTestDatabase();
     Database* createTestDatabaseStructureClone(Database* source, int entryFlags, int groupFlags);
     void testResolveConflictTemplate(int mergeMode,
-                                     std::function<void(Database*, const QMap<const char*, QDateTime>&)> verification);
+                                     std::function<void(Database*, const QMap<QString, QDateTime>&)> verification);
     void testDeletionConflictTemplate(int mergeMode,
                                       std::function<void(Database*, const QMap<QString, QUuid>&)> verification);
     static void assertDeletionNewerOnly(Database* db, const QMap<QString, QUuid>& identifiers);
     static void assertDeletionLocalOnly(Database* db, const QMap<QString, QUuid>& identifiers);
-    static void assertUpdateMergedEntry1(Entry* entry, const QMap<const char*, QDateTime>& timestamps);
-    static void assertUpdateReappliedEntry2(Entry* entry, const QMap<const char*, QDateTime>& timestamps);
-    static void assertUpdateReappliedEntry1(Entry* entry, const QMap<const char*, QDateTime>& timestamps);
-    static void assertUpdateMergedEntry2(Entry* entry, const QMap<const char*, QDateTime>& timestamps);
+    static void assertUpdateMergedEntry1(Entry* entry, const QMap<QString, QDateTime>& timestamps);
+    static void assertUpdateReappliedEntry2(Entry* entry, const QMap<QString, QDateTime>& timestamps);
+    static void assertUpdateReappliedEntry1(Entry* entry, const QMap<QString, QDateTime>& timestamps);
+    static void assertUpdateMergedEntry2(Entry* entry, const QMap<QString, QDateTime>& timestamps);
 };
 
 #endif // KEEPASSX_TESTMERGE_H
