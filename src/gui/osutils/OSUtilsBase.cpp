@@ -29,5 +29,5 @@ OSUtilsBase::~OSUtilsBase()
 bool OSUtilsBase::setPreventScreenCapture(QWindow*, bool) const
 {
     // Do nothing by default
-    return false;
+    return true;
 }

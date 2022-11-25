@@ -259,6 +259,7 @@ MainWindow::MainWindow()
     m_showToolbarSeparator = config()->get(Config::GUI_ApplicationTheme).toString() != "classic";
 
     m_ui->actionEntryAutoType->setVisible(autoType()->isAvailable());
+    m_ui->actionAllowScreenCapture->setVisible(osUtils->canPreventScreenCapture());
 
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
@@ -563,6 +564,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionUserGuide, SIGNAL(triggered()), SLOT(openUserGuide()));
     connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
     connect(m_ui->actionKeyboardShortcuts, SIGNAL(triggered()), SLOT(openKeyboardShortcuts()));
+    connect(m_ui->actionAllowScreenCapture, &QAction::toggled, this, &MainWindow::setAllowScreenCapture);
 
     connect(osUtils, &OSUtilsBase::statusbarThemeChanged, this, &MainWindow::updateTrayIcon);
 
@@ -1658,10 +1660,26 @@ void MainWindow::applySettingsChanges()
     updateTrayIcon();
 }
 
-void MainWindow::focusWindowChanged(QWindow* focusWindow)
+void MainWindow::setAllowScreenCapture(bool state)
 {
-    if (focusWindow != windowHandle()) {
+    m_allowScreenCapture = state;
+    for (auto window : qApp->allWindows()) {
+        osUtils->setPreventScreenCapture(window, !m_allowScreenCapture);
+    }
+    m_ui->actionAllowScreenCapture->blockSignals(true);
+    m_ui->actionAllowScreenCapture->setChecked(m_allowScreenCapture);
+    m_ui->actionAllowScreenCapture->blockSignals(false);
+}
+
+void MainWindow::focusWindowChanged(QWindow* window)
+{
+    if (window != windowHandle()) {
         m_lastFocusOutTime = Clock::currentMilliSecondsSinceEpoch();
+    }
+
+    if (!osUtils->setPreventScreenCapture(window, !m_allowScreenCapture) && !m_allowScreenCapture) {
+        displayGlobalMessage(QObject::tr("Warning: Failed to block screenshot capture on a top-level window."),
+                             MessageWidget::Error);
     }
 }
 
