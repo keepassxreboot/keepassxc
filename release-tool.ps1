@@ -284,7 +284,7 @@ if ($Merge) {
     # Update translation files
     Write-Host "Updating source translation file..."
     Invoke-Cmd "lupdate" "-no-ui-lines -disable-heuristic similartext -locations none", `
-        "-no-obsolete ./src -ts share/translations/keepassxc_en.ts"
+        "-extensions c,cpp,h,js,mm,qrc,ui -no-obsolete ./src -ts share/translations/keepassxc_en.ts"
 
     Write-Host "Pulling updated translations from Transifex..."
     Invoke-Cmd "tx" "pull -af --minimum-perc=60 --parallel -r keepassxc.share-translations-keepassxc-en-ts--develop"
