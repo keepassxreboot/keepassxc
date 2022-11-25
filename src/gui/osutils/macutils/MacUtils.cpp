@@ -166,11 +166,9 @@ bool MacUtils::canPreventScreenCapture() const
 
 bool MacUtils::setPreventScreenCapture(QWindow* window, bool prevent) const
 {
-    if (!window) {
-        return false;
+    if (window) {
+        m_appkit->setWindowSecurity(window, prevent);
     }
-
-    m_appkit->setWindowSecurity(window, prevent);
     return true;
 }
 

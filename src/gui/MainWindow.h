@@ -52,6 +52,7 @@ public:
 
     QList<DatabaseWidget*> getOpenDatabases();
     void restoreConfigState();
+    void setAllowScreenCapture(bool state);
 
     enum StackedWidgetIndex
     {
@@ -192,6 +193,7 @@ private:
     bool m_restartRequested = false;
     bool m_contextMenuFocusLock = false;
     bool m_showToolbarSeparator = false;
+    bool m_allowScreenCapture = false;
     qint64 m_lastFocusOutTime = 0;
     qint64 m_lastShowTime = 0;
     QTimer m_updateCheckTimer;

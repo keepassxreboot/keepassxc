@@ -58,11 +58,12 @@ bool WinUtils::canPreventScreenCapture() const
 
 bool WinUtils::setPreventScreenCapture(QWindow* window, bool prevent) const
 {
+    bool ret = true;
     if (window) {
         HWND handle = reinterpret_cast<HWND>(window->winId());
-        return SetWindowDisplayAffinity(handle, prevent ? WDA_EXCLUDEFROMCAPTURE : WDA_NONE);
+        ret = SetWindowDisplayAffinity(handle, prevent ? WDA_EXCLUDEFROMCAPTURE : WDA_NONE);
     }
-    return false;
+    return ret;
 }
 
 /**
