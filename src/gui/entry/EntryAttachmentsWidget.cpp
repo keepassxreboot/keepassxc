@@ -313,6 +313,7 @@ void EntryAttachmentsWidget::updateButtonsVisible()
 {
     m_ui->addAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
     m_ui->removeAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
+    m_ui->renameAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
 }
 
 bool EntryAttachmentsWidget::insertAttachments(const QStringList& filenames, QString& errorMessage)
