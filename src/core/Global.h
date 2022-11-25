@@ -17,13 +17,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_GLOBAL_H
-#define KEEPASSX_GLOBAL_H
+#ifndef KEEPASSXC_GLOBAL_H
+#define KEEPASSXC_GLOBAL_H
 
 #include <QString>
 
 #if defined(Q_OS_WIN)
-#if defined(KEEPASSX_BUILDING_CORE)
+#if defined(KEEPASSXC_BUILDING_CORE)
 #define KEEPASSXC_EXPORT Q_DECL_IMPORT
 #else
 #define KEEPASSXC_EXPORT Q_DECL_EXPORT
@@ -67,4 +67,4 @@ template <typename T> constexpr typename AddConst<T>::Type& asConst(T& t) noexce
 // prevent rvalue arguments:
 template <typename T> void asConst(const T&&) = delete;
 
-#endif // KEEPASSX_GLOBAL_H
+#endif // KEEPASSXC_GLOBAL_H

@@ -18,4 +18,17 @@ if(WITH_XC_AUTOTYPE)
     if(WITH_TESTS)
         add_subdirectory(test)
     endif()
+
+    set(autotype_SOURCES
+            AutoType.cpp
+            AutoTypeAction.cpp
+            AutoTypeMatchModel.cpp
+            AutoTypeMatchView.cpp
+            AutoTypeSelectDialog.cpp
+            PickcharsDialog.cpp
+            ShortcutWidget.cpp
+            WindowSelectComboBox.cpp)
+
+    add_library(autotype STATIC ${autotype_SOURCES})
+    target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 endif()
