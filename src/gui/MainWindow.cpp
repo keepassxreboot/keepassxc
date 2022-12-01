@@ -1119,16 +1119,20 @@ void MainWindow::updateWindowTitle()
     }
 
     QString windowTitle;
+    QString filePath = QString("");
+    if (tabWidgetIndex >= 0) {
+        filePath = m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex)->database()->filePath();
+    }
     if (customWindowTitlePart.isEmpty()) {
         windowTitle = BaseWindowTitle;
     } else {
-        windowTitle = QString("%1[*] - %2").arg(customWindowTitlePart, BaseWindowTitle);
+        windowTitle = QString("%1[*] - %2 - %3").arg(customWindowTitlePart, filePath, BaseWindowTitle);
     }
 
     if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == 1) {
         setWindowFilePath("");
     } else {
-        setWindowFilePath(m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex)->database()->filePath());
+        setWindowFilePath(filePath);
     }
 
     setWindowTitle(windowTitle);
