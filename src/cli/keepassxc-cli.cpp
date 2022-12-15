@@ -32,9 +32,8 @@
 #include <sanitizer/lsan_interface.h>
 #endif
 
-#if defined(USE_READLINE)
-#include <readline/history.h>
-#include <readline/readline.h>
+#if defined(USE_LINENOISE)
+#include <linenoise.h>
 #endif
 
 class LineReader
@@ -42,8 +41,55 @@ class LineReader
 public:
     virtual ~LineReader() = default;
     virtual QString readLine(QString prompt) = 0;
-    virtual bool isFinished() = 0;
+    virtual bool isFinished() const = 0;
 };
+
+#if defined(USE_LINENOISE)
+class LineNoiseReader : public LineReader
+{
+public:
+    LineNoiseReader()
+        : finished{false}
+    {
+        linenoiseSetCompletionCallback(LineNoiseReader::completionHook);
+        return;
+    }
+
+    QString readLine(QString prompt) override
+    {
+        auto result = linenoise(prompt.toStdString().c_str());
+        if (result == NULL) {
+            finished = true;
+            return {};
+        }
+
+        QString qstr(result);
+        free(result);
+        return qstr;
+    }
+
+    bool isFinished() const override
+    {
+        return finished;
+    }
+
+private:
+    bool finished;
+
+    static void completionHook(char const* prefix, linenoiseCompletions* lc)
+    {
+        if (*prefix == 0) {
+            return;
+        }
+
+        for (auto cmd : Commands::getCommandNames()) {
+            if (cmd.startsWith(prefix)) {
+                linenoiseAddCompletion(lc, cmd.toStdString().c_str());
+            }
+        }
+    }
+};
+#endif
 
 class SimpleLineReader : public LineReader
 {
@@ -66,7 +112,7 @@ public:
         return result;
     }
 
-    bool isFinished() override
+    bool isFinished() const override
     {
         return finished;
     }
@@ -76,38 +122,6 @@ private:
     TextStream outStream;
     bool finished;
 };
-
-#if defined(USE_READLINE)
-class ReadlineLineReader : public LineReader
-{
-public:
-    ReadlineLineReader()
-        : finished(false)
-    {
-    }
-
-    QString readLine(QString prompt) override
-    {
-        char* result = readline(prompt.toStdString().c_str());
-        if (!result) {
-            finished = true;
-            return {};
-        }
-        add_history(result);
-        QString qstr(result);
-        free(result);
-        return qstr;
-    }
-
-    bool isFinished() override
-    {
-        return finished;
-    }
-
-private:
-    bool finished;
-};
-#endif
 
 int enterInteractiveMode(const QStringList& arguments)
 {
@@ -123,8 +137,8 @@ int enterInteractiveMode(const QStringList& arguments)
     };
 
     QScopedPointer<LineReader> reader;
-#if defined(USE_READLINE)
-    reader.reset(new ReadlineLineReader());
+#if defined(USE_LINENOISE)
+    reader.reset(new LineNoiseReader());
 #else
     reader.reset(new SimpleLineReader());
 #endif
@@ -142,6 +156,7 @@ int enterInteractiveMode(const QStringList& arguments)
         }
         prompt += "> ";
         command = reader->readLine(prompt);
+
         if (reader->isFinished()) {
             break;
         }
@@ -156,12 +171,20 @@ int enterInteractiveMode(const QStringList& arguments)
             err << QObject::tr("Unknown command %1").arg(args[0]) << endl;
             continue;
         } else if (cmd->name == "quit" || cmd->name == "exit") {
+#if defined(USE_LINENOISE)
+            linenoiseHistoryFree();
+#endif
+
             break;
         }
 
         cmd->currentDatabase.swap(currentDatabase);
         cmd->execute(args);
         currentDatabase.swap(cmd->currentDatabase);
+
+#if defined(USE_LINENOISE)
+        linenoiseHistoryAdd(command.toStdString().c_str());
+#endif
     }
 
     if (currentDatabase) {

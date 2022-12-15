@@ -200,6 +200,11 @@ namespace Commands
         }
     }
 
+    QList<QString> getCommandNames()
+    {
+        return s_commands.keys();
+    }
+
     QList<QSharedPointer<Command>> getCommands()
     {
         return s_commands.values();

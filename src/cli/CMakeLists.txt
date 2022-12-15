@@ -44,14 +44,15 @@ set(cli_SOURCES
         Search.cpp
         Show.cpp)
 
+
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core)
 
-find_package(Readline)
+find_package(Linenoise)
 
-if (READLINE_FOUND)
-    target_compile_definitions(cli PUBLIC USE_READLINE)
-    target_link_libraries(cli ${Readline_LIBRARY})
+if(LINENOISE_FOUND)
+    target_compile_definitions(cli PUBLIC USE_LINENOISE)
+    target_link_libraries(cli ${Linenoise_LIBRARY})
 endif()
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)

@@ -60,6 +60,7 @@ public:
 namespace Commands
 {
     void setupCommands(bool interactive);
+    QList<QString> getCommandNames();
     QList<QSharedPointer<Command>> getCommands();
     QSharedPointer<Command> getCommand(const QString& commandName);
 } // namespace Commands
