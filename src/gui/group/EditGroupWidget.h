@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,6 +72,8 @@ private slots:
     void save();
     void cancel();
 #ifdef WITH_XC_BROWSER
+    void initializeBrowserPage();
+    void setupBrowserModifiedTracking();
     void updateBrowserModified();
 #endif
 
@@ -89,7 +91,7 @@ private:
 #ifdef WITH_XC_BROWSER
     bool m_browserSettingsChanged;
     const QScopedPointer<Ui::EditGroupWidgetBrowser> m_browserUi;
-    QPointer<QScrollArea> m_browserWidget;
+    QWidget* const m_browserWidget;
 #endif
 
     QScopedPointer<Group> m_temporaryGroup;

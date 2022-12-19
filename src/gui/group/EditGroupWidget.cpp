@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
 #if defined(WITH_XC_BROWSER)
     , m_browserSettingsChanged(false)
     , m_browserUi(new Ui::EditGroupWidgetBrowser())
-    , m_browserWidget(new QScrollArea())
+    , m_browserWidget(new QWidget(this))
 #endif
     , m_group(nullptr)
 {
@@ -83,8 +83,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     addPage(tr("Icon"), icons()->icon("preferences-desktop-icons"), m_editGroupWidgetIcons);
 #if defined(WITH_XC_BROWSER)
     if (config()->get(Config::Browser_Enabled).toBool()) {
-        addPage(tr("Browser Integration"), icons()->icon("internet-web-browser"), m_browserWidget);
-        m_browserUi->setupUi(m_browserWidget);
+        initializeBrowserPage();
     }
 #endif
 #if defined(WITH_XC_KEESHARE)
@@ -135,28 +134,7 @@ void EditGroupWidget::setupModifiedTracking()
 
 #if defined(WITH_XC_BROWSER)
     if (config()->get(Config::Browser_Enabled).toBool()) {
-        // Browser integration tab
-        connect(
-            m_browserUi->browserIntegrationHideEntriesComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
-        connect(m_browserUi->browserIntegrationSkipAutoSubmitComboBox,
-                SIGNAL(currentIndexChanged(int)),
-                SLOT(setModified()));
-        connect(
-            m_browserUi->browserIntegrationOnlyHttpAuthComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
-        connect(
-            m_browserUi->browserIntegrationNotHttpAuthComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
-        connect(m_browserUi->browserIntegrationHideEntriesComboBox,
-                SIGNAL(currentIndexChanged(int)),
-                SLOT(updateBrowserModified()));
-        connect(m_browserUi->browserIntegrationSkipAutoSubmitComboBox,
-                SIGNAL(currentIndexChanged(int)),
-                SLOT(updateBrowserModified()));
-        connect(m_browserUi->browserIntegrationOnlyHttpAuthComboBox,
-                SIGNAL(currentIndexChanged(int)),
-                SLOT(updateBrowserModified()));
-        connect(m_browserUi->browserIntegrationNotHttpAuthComboBox,
-                SIGNAL(currentIndexChanged(int)),
-                SLOT(updateBrowserModified()));
+        setupBrowserModifiedTracking();
     }
 #endif
 }
@@ -230,6 +208,14 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
             inheritOmitWww = parent->resolveCustomDataTriState(BrowserService::OPTION_OMIT_WWW);
         }
 
+        // If the page has not been created at all, some of the elements are null
+        if (m_browserUi->browserIntegrationHideEntriesComboBox == nullptr
+            && config()->get(Config::Browser_Enabled).toBool()) {
+            initializeBrowserPage();
+            setupBrowserModifiedTracking();
+        }
+
+        setPageHidden(m_browserWidget, false);
         addTriStateItems(m_browserUi->browserIntegrationHideEntriesComboBox, inheritHideEntries);
         addTriStateItems(m_browserUi->browserIntegrationSkipAutoSubmitComboBox, inheritSkipSubmit);
         addTriStateItems(m_browserUi->browserIntegrationOnlyHttpAuthComboBox, inheritOnlyHttp);
@@ -246,6 +232,8 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
             indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH, false)));
         m_browserUi->browserIntegrationOmitWwwCombobox->setCurrentIndex(
             indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_OMIT_WWW, false)));
+    } else if (hasPage(m_browserWidget)) {
+        setPageHidden(m_browserWidget, true);
     }
 #endif
 
@@ -363,6 +351,34 @@ void EditGroupWidget::cancel()
 }
 
 #ifdef WITH_XC_BROWSER
+void EditGroupWidget::initializeBrowserPage()
+{
+    addPage(tr("Browser Integration"), icons()->icon("internet-web-browser"), m_browserWidget);
+    m_browserUi->setupUi(m_browserWidget);
+}
+
+void EditGroupWidget::setupBrowserModifiedTracking()
+{
+    // Browser integration tab
+    connect(m_browserUi->browserIntegrationHideEntriesComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
+    connect(
+        m_browserUi->browserIntegrationSkipAutoSubmitComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
+    connect(m_browserUi->browserIntegrationOnlyHttpAuthComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
+    connect(m_browserUi->browserIntegrationNotHttpAuthComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
+    connect(m_browserUi->browserIntegrationHideEntriesComboBox,
+            SIGNAL(currentIndexChanged(int)),
+            SLOT(updateBrowserModified()));
+    connect(m_browserUi->browserIntegrationSkipAutoSubmitComboBox,
+            SIGNAL(currentIndexChanged(int)),
+            SLOT(updateBrowserModified()));
+    connect(m_browserUi->browserIntegrationOnlyHttpAuthComboBox,
+            SIGNAL(currentIndexChanged(int)),
+            SLOT(updateBrowserModified()));
+    connect(m_browserUi->browserIntegrationNotHttpAuthComboBox,
+            SIGNAL(currentIndexChanged(int)),
+            SLOT(updateBrowserModified()));
+}
+
 void EditGroupWidget::updateBrowserModified()
 {
     m_browserSettingsChanged = true;
