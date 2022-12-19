@@ -225,7 +225,7 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     } else {
         basePath = QDir::homePath() + "/.config";
     }
-#elif defined(Q_OS_LINUX)
+#elif defined(Q_OS_LINUX) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
     if (browser == SupportedBrowsers::TOR_BROWSER) {
         basePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     } else if (browser == SupportedBrowsers::FIREFOX) {
