@@ -41,13 +41,13 @@ void GroupModel::changeDatabase(Database* newDb)
     m_db = newDb;
 
     // clang-format off
-    connect(m_db, SIGNAL(groupDataChanged(Group*)), SLOT(groupDataChanged(Group*)));
-    connect(m_db, SIGNAL(groupAboutToAdd(Group*,int)), SLOT(groupAboutToAdd(Group*,int)));
-    connect(m_db, SIGNAL(groupAdded()), SLOT(groupAdded()));
-    connect(m_db, SIGNAL(groupAboutToRemove(Group*)), SLOT(groupAboutToRemove(Group*)));
-    connect(m_db, SIGNAL(groupRemoved()), SLOT(groupRemoved()));
-    connect(m_db, SIGNAL(groupAboutToMove(Group*,Group*,int)), SLOT(groupAboutToMove(Group*,Group*,int)));
-    connect(m_db, SIGNAL(groupMoved()), SLOT(groupMoved()));
+    connect(m_db, SIGNAL(groupDataChanged(Group*)), this, SLOT(groupDataChanged(Group*)));
+    connect(m_db, SIGNAL(groupAboutToAdd(Group*,int)), this, SLOT(groupAboutToAdd(Group*,int)));
+    connect(m_db, SIGNAL(groupAdded()), this, SLOT(groupAdded()));
+    connect(m_db, SIGNAL(groupAboutToRemove(Group*)), this, SLOT(groupAboutToRemove(Group*)));
+    connect(m_db, SIGNAL(groupRemoved()), this, SLOT(groupRemoved()));
+    connect(m_db, SIGNAL(groupAboutToMove(Group*,Group*,int)), this, SLOT(groupAboutToMove(Group*,Group*,int)));
+    connect(m_db, SIGNAL(groupMoved()), this, SLOT(groupMoved()));
     // clang-format on
 
     endResetModel();

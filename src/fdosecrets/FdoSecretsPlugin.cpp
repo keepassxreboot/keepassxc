@@ -18,54 +18,28 @@
 #include "FdoSecretsPlugin.h"
 
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/objects/Service.h"
-#include "fdosecrets/widgets/SettingsWidgetFdoSecrets.h"
-
-#include "gui/DatabaseTabWidget.h"
 
 using FdoSecrets::DBusMgr;
 using FdoSecrets::Service;
 
-// TODO: Only used for testing. Need to split service functions away from settings page.
-QPointer<FdoSecretsPlugin> g_fdoSecretsPlugin;
-
-FdoSecretsPlugin::FdoSecretsPlugin(DatabaseTabWidget* tabWidget)
-    : m_dbTabs(tabWidget)
+FdoSecretsPlugin::FdoSecretsPlugin(QObject* parent)
+    : QObject{parent}
     , m_dbus(new DBusMgr())
+    , m_secretService{}
 {
     registerDBusTypes(m_dbus);
     m_dbus->populateMethodCache();
 
     connect(m_dbus.data(), &DBusMgr::error, this, &FdoSecretsPlugin::emitError);
-    g_fdoSecretsPlugin = this;
-}
-
-FdoSecretsPlugin* FdoSecretsPlugin::getPlugin()
-{
-    return g_fdoSecretsPlugin;
-}
-
-QWidget* FdoSecretsPlugin::createWidget()
-{
-    return new SettingsWidgetFdoSecrets(this);
-}
-
-void FdoSecretsPlugin::loadSettings(QWidget* widget)
-{
-    qobject_cast<SettingsWidgetFdoSecrets*>(widget)->loadSettings();
-}
-
-void FdoSecretsPlugin::saveSettings(QWidget* widget)
-{
-    qobject_cast<SettingsWidgetFdoSecrets*>(widget)->saveSettings();
-    updateServiceState();
 }
 
 void FdoSecretsPlugin::updateServiceState()
 {
     if (FdoSecrets::settings()->isEnabled()) {
-        if (!m_secretService && m_dbTabs) {
-            m_secretService = Service::Create(this, m_dbTabs, m_dbus);
+        if (!m_secretService) {
+            m_secretService = Service::Create(this, m_dbus);
             if (!m_secretService) {
                 FdoSecrets::settings()->setEnabled(false);
                 return;
@@ -85,19 +59,9 @@ Service* FdoSecretsPlugin::serviceInstance() const
     return m_secretService.data();
 }
 
-DatabaseTabWidget* FdoSecretsPlugin::dbTabs() const
-{
-    return m_dbTabs;
-}
-
 const QSharedPointer<FdoSecrets::DBusMgr>& FdoSecretsPlugin::dbus() const
 {
     return m_dbus;
-}
-
-void FdoSecretsPlugin::emitRequestSwitchToDatabases()
-{
-    emit requestSwitchToDatabases();
 }
 
 void FdoSecretsPlugin::emitRequestShowNotification(const QString& msg, const QString& title)
@@ -106,6 +70,38 @@ void FdoSecretsPlugin::emitRequestShowNotification(const QString& msg, const QSt
         return;
     }
     emit requestShowNotification(msg, title, 10000);
+}
+
+void FdoSecretsPlugin::registerDatabase(const QString& name)
+{
+    if (name.isEmpty()) {
+        return;
+    }
+
+    serviceInstance()->registerDatabase(name);
+}
+
+void FdoSecretsPlugin::unregisterDatabase(const QString& name)
+{
+    serviceInstance()->unregisterDatabase(name);
+}
+
+void FdoSecretsPlugin::databaseLocked(const QString& name)
+{
+    if (name.isEmpty()) {
+        return;
+    }
+
+    serviceInstance()->databaseLocked(name);
+}
+
+void FdoSecretsPlugin::databaseUnlocked(const QString& name, QSharedPointer<Database> db)
+{
+    if (name.isEmpty()) {
+        return;
+    }
+
+    serviceInstance()->databaseUnlocked(name, db);
 }
 
 void FdoSecretsPlugin::emitError(const QString& msg)

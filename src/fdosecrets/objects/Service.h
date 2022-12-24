@@ -21,8 +21,8 @@
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
-class DatabaseTabWidget;
-class DatabaseWidget;
+class Database;
+class Entry;
 class Group;
 
 class FdoSecretsPlugin;
@@ -40,7 +40,7 @@ namespace FdoSecrets
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_SERVICE_LITERAL)
 
-        explicit Service(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, QSharedPointer<DBusMgr> dbus);
+        explicit Service(FdoSecretsPlugin* plugin, QSharedPointer<DBusMgr> dbus);
 
     public:
         /**
@@ -49,9 +49,12 @@ namespace FdoSecrets
          * This may be caused by
          *   - failed initialization
          */
-        static QSharedPointer<Service>
-        Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, QSharedPointer<DBusMgr> dbus);
+        static QSharedPointer<Service> Create(FdoSecretsPlugin* plugin, QSharedPointer<DBusMgr> dbus);
         ~Service() override;
+
+        /**
+         * D-Bus Methods
+         */
 
         Q_INVOKABLE DBusResult openSession(const DBusClientPtr& client,
                                            const QString& algorithm,
@@ -84,22 +87,23 @@ namespace FdoSecrets
         Q_INVOKABLE DBusResult setAlias(const QString& name, Collection* collection);
 
         /**
+         * D-Bus Properties
+         */
+
+        /**
          * List of collections
          * @return
          */
         Q_INVOKABLE DBUS_PROPERTY DBusResult collections(QList<Collection*>& collections) const;
 
     signals:
+        /**
+         * D-Bus Signals
+         */
+
         void collectionCreated(Collection* collection);
         void collectionDeleted(Collection* collection);
         void collectionChanged(Collection* collection);
-
-        /**
-         * Finish signal for async action doUnlockDatabaseInDialog
-         * @param accepted If false, the action is cancelled by the user
-         * @param dbWidget The dbWidget the action is on
-         */
-        void doneUnlockDatabaseInDialog(bool accepted, DatabaseWidget* dbWidget);
 
     public:
         /**
@@ -108,75 +112,41 @@ namespace FdoSecrets
          */
         QList<Session*> sessions() const;
 
+        bool setAlias(const QString& alias, const QString& name);
+        QStringList collectionAliases(const Collection* collection) const;
+
+        // Access to ancestors
         FdoSecretsPlugin* plugin() const
         {
             return m_plugin;
         }
 
     public slots:
-        bool doLockDatabase(DatabaseWidget* dbWidget);
-        bool doCloseDatabase(DatabaseWidget* dbWidget);
-        Collection* doNewDatabase();
-        void doSwitchToDatabaseSettings(DatabaseWidget* dbWidget);
+        Collection* doNewDatabase(const DBusClientPtr& client);
 
-        /**
-         * Async, connect to signal doneUnlockDatabaseInDialog for finish notification
-         * @param dbWidget
-         */
-        void doUnlockDatabaseInDialog(DatabaseWidget* dbWidget);
-
-        /**
-         * Async, connect to signal doneUnlockDatabaseInDialog for finish notification
-         * @param dbWidget
-         */
-        void doUnlockAnyDatabaseInDialog();
+        void registerDatabase(const QString& name);
+        void unregisterDatabase(const QString& name);
+        void databaseLocked(const QString& name);
+        void databaseUnlocked(const QString& name, QSharedPointer<Database> db);
 
     private slots:
         void ensureDefaultAlias();
 
-        void onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
-        void onDatabaseTabOpened(DatabaseWidget* dbWidget, bool emitSignal);
-        void monitorDatabaseExposedGroup(DatabaseWidget* dbWidget);
-
-        void onCollectionAliasAboutToAdd(const QString& alias);
-        void onCollectionAliasAdded(const QString& alias);
-
-        void onCollectionAliasRemoved(const QString& alias);
-
     private:
-        bool initialize();
-
-        /**
-         * Find collection by alias name
-         * @param alias
-         * @return the collection under alias
-         */
-        Collection* findCollection(const QString& alias) const;
-
-        /**
-         * Find collection by dbWidget
-         * @param db
-         * @return the collection corresponding to the db
-         */
-        Collection* findCollection(const DatabaseWidget* db) const;
+        friend class CreateCollectionPrompt;
 
         DBusResult unlockedCollections(QList<Collection*>& unlocked) const;
 
+        Collection* createCollection(const QString& name);
+
     private:
         FdoSecretsPlugin* m_plugin{nullptr};
-        QPointer<DatabaseTabWidget> m_databases{};
 
-        QHash<QString, Collection*> m_aliases{};
+        QHash<QString, Collection*> m_aliasToCollection{};
+        QHash<QString, Collection*> m_nameToCollection{};
         QList<Collection*> m_collections{};
-        QHash<const DatabaseWidget*, Collection*> m_dbToCollection{};
 
         QList<Session*> m_sessions{};
-
-        bool m_insideEnsureDefaultAlias{false};
-        bool m_unlockingAnyDatabase{false};
-        // list of db currently has unlock dialog shown
-        QHash<const DatabaseWidget*, QMetaObject::Connection> m_unlockingDb{};
-        QSet<const DatabaseWidget*> m_lockingDb{}; // list of db being locking
     };
 
 } // namespace FdoSecrets

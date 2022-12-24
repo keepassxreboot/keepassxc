@@ -21,6 +21,7 @@
 #include "core/Group.h"
 #include "crypto/Random.h"
 #include "fdosecrets/objects/Collection.h"
+#include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
 #include <QTest>

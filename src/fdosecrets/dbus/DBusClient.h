@@ -44,12 +44,12 @@ namespace FdoSecrets
 
     /**
      * Contains info representing a process.
-     * This can be obtained by DBusMgr::serviceInfo given a dbus address.
+     * This can be obtained by DBusMgr::serviceInfo given a D-Bus address.
      */
     struct PeerInfo
     {
         /**
-         * @brief DBus address
+         * @brief D-Bus address
          */
         QString address;
 
@@ -82,10 +82,10 @@ namespace FdoSecrets
 
     /**
      * Represent a client that has made requests to our service. A client is identified by its
-     * DBus address, which is guaranteed to be unique by the DBus protocol.
+     * D-Bus address, which is guaranteed to be unique by the D-Bus protocol.
      *
      * An object of this class is created on the first request and destroyed
-     * when the client address vanishes from the bus. DBus guarantees that the
+     * when the client address vanishes from the bus. D-Bus guarantees that the
      * client address is not reused.
      *
      * One client may have multiple `Session`s with our service, and this class
@@ -110,7 +110,7 @@ namespace FdoSecrets
         QString name() const;
 
         /**
-         * @return The unique DBus address of the client
+         * @return The unique D-Bus address of the client
          */
         QString address() const
         {

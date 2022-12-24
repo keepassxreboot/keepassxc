@@ -30,7 +30,7 @@ class Database;
 class DatabaseTabWidget;
 class DatabaseWidget;
 class TemporaryFile;
-class FdoSecretsPlugin;
+class FdoSecretsPluginGUI;
 namespace FdoSecrets
 {
     class Service;
@@ -150,7 +150,7 @@ private:
     QPointer<DatabaseWidget> m_dbWidget;
     QSharedPointer<Database> m_db;
 
-    QPointer<FdoSecretsPlugin> m_plugin;
+    QPointer<FdoSecretsPluginGUI> m_plugin;
     QSharedPointer<FdoSecrets::DBusClient> m_client;
 
     QScopedPointer<FdoSecrets::DhIetf1024Sha256Aes128CbcPkcs7> m_clientCipher;

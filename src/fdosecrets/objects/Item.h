@@ -22,6 +22,7 @@
 #include "fdosecrets/dbus/DBusObject.h"
 
 class Entry;
+class FdoSecretsPlugin;
 
 namespace FdoSecrets
 {
@@ -33,9 +34,10 @@ namespace FdoSecrets
         constexpr const auto TotpKey = "TOTP";
     } // namespace ItemAttributes
 
-    class Session;
     class Collection;
     class PromptBase;
+    class Service;
+    class Session;
 
     class Item : public DBusObject
     {
@@ -51,9 +53,14 @@ namespace FdoSecrets
          * @param backend the `Entry` containing the data
          * @return pointer to newly created Item, or nullptr if error
          * This may be caused by
-         *   - DBus path registration error
+         *   - D-Bus path registration error
          */
         static Item* Create(Collection* parent, Entry* backend);
+        ~Item() override;
+
+        /**
+         * D-Bus Properties
+         */
 
         Q_INVOKABLE DBUS_PROPERTY DBusResult locked(const DBusClientPtr& client, bool& locked) const;
 
@@ -67,6 +74,10 @@ namespace FdoSecrets
 
         Q_INVOKABLE DBUS_PROPERTY DBusResult modified(qulonglong& modified) const;
 
+        /**
+         * D-Bus Methods
+         */
+
         Q_INVOKABLE DBusResult remove(PromptBase*& prompt);
         Q_INVOKABLE DBusResult getSecret(const DBusClientPtr& client, Session* session, Secret& secret);
         Q_INVOKABLE DBusResult setSecret(const DBusClientPtr& client, const Secret& secret);
@@ -78,12 +89,20 @@ namespace FdoSecrets
     public:
         static const QSet<QString> ReadOnlyAttributes;
 
+        // Helper for Service::getSecrets
         DBusResult getSecretNoNotification(const DBusClientPtr& client, Session* session, Secret& secret) const;
+        // For setting multiple properties at once
         DBusResult setProperties(const QVariantMap& properties);
 
         Entry* backend() const;
-        Collection* collection() const;
+
+        // Access to ancestors
+        Collection* collection() const
+        {
+            return qobject_cast<Collection*>(parent());
+        }
         Service* service() const;
+        FdoSecretsPlugin* plugin() const;
 
         /**
          * Compute the entry path relative to the exposed group
@@ -93,15 +112,15 @@ namespace FdoSecrets
 
     public slots:
         // will actually delete the entry in KPXC
-        bool doDelete();
+        bool doDelete(const DBusClientPtr& client) const;
 
-        // Only delete from dbus, will remove self. Do not affect database in KPXC
+        // Only delete from D-Bus, will remove self. Do not affect database in KPXC
         void removeFromDBus();
 
     private slots:
         /**
          * Check if the backend is a valid object, send error reply if not.
-         * @return No error if the backend is valid.
+         * @return No error if the entry is valid.
          */
         DBusResult ensureBackend() const;
 
@@ -110,6 +129,9 @@ namespace FdoSecrets
          * @return true if the database is locked
          */
         DBusResult ensureUnlocked() const;
+
+    private:
+        friend class DeleteItemPrompt;
 
     private:
         QPointer<Entry> m_backend;

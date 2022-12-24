@@ -20,11 +20,13 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/FdoSecretsSettingsPage.h"
 #include "fdosecrets/widgets/RowButtonHelper.h"
 #include "fdosecrets/widgets/SettingsModels.h"
 #include "objects/Service.h"
 
 #include "gui/DatabaseWidget.h"
+#include "gui/Icons.h"
 
 #include <QAction>
 #include <QToolButton>
@@ -42,32 +44,31 @@ namespace
         Q_PROPERTY(DatabaseWidget* dbWidget READ dbWidget WRITE setDbWidget USER true)
 
     public:
-        explicit ManageDatabase(FdoSecretsPlugin* plugin, QWidget* parent = nullptr)
+        explicit ManageDatabase(FdoSecretsSettingsPage* page, QWidget* parent = nullptr)
             : QWidget(parent)
-            , m_plugin(plugin)
         {
             // db settings
             m_dbSettingsAct = new QAction(tr("Database settings"), this);
             m_dbSettingsAct->setIcon(icons()->icon(QStringLiteral("document-edit")));
             m_dbSettingsAct->setToolTip(tr("Edit database settings"));
             m_dbSettingsAct->setEnabled(false);
-            connect(m_dbSettingsAct, &QAction::triggered, this, [this]() {
+            connect(m_dbSettingsAct, &QAction::triggered, this, [this, page]() {
                 if (!m_dbWidget) {
                     return;
                 }
-                m_plugin->serviceInstance()->doSwitchToDatabaseSettings(m_dbWidget);
+                page->switchToDatabaseSettings(m_dbWidget);
             });
 
             // unlock/lock
             m_lockAct = new QAction(tr("Unlock database"), this);
             m_lockAct->setIcon(icons()->icon(QStringLiteral("object-unlocked")));
             m_lockAct->setToolTip(tr("Unlock database to show more information"));
-            connect(m_lockAct, &QAction::triggered, this, [this]() {
+            connect(m_lockAct, &QAction::triggered, this, [this, page]() {
                 if (!m_dbWidget) {
                     return;
                 }
                 if (m_dbWidget->isLocked()) {
-                    m_plugin->serviceInstance()->doUnlockDatabaseInDialog(m_dbWidget);
+                    page->unlockDatabaseInDialog(m_dbWidget);
                 } else {
                     m_dbWidget->lock();
                 }
@@ -147,7 +148,6 @@ namespace
         }
 
     private:
-        FdoSecretsPlugin* m_plugin = nullptr;
         QPointer<DatabaseWidget> m_dbWidget = nullptr;
         QAction* m_dbSettingsAct = nullptr;
         QAction* m_lockAct = nullptr;
@@ -215,16 +215,19 @@ namespace
     };
 } // namespace
 
-SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWidget* parent)
+SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin,
+                                                   FdoSecretsSettingsPage* page,
+                                                   QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::SettingsWidgetFdoSecrets())
     , m_plugin(plugin)
+    , m_page{page}
 {
     m_ui->setupUi(this);
     m_ui->warningMsg->setHidden(true);
     m_ui->warningMsg->setCloseButtonVisible(false);
 
-    auto clientModel = new SettingsClientModel(*plugin->dbus(), this);
+    auto clientModel = new SettingsClientModel(*m_plugin->dbus(), this);
     m_ui->tableClients->setModel(clientModel);
     installWidgetItemDelegate<ManageSession>(m_ui->tableClients,
                                              SettingsClientModel::ColumnManage,
@@ -237,11 +240,11 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     clientViewHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
     clientViewHeader->setSectionResizeMode(SettingsClientModel::ColumnApplication, QHeaderView::Stretch);
 
-    auto dbModel = new SettingsDatabaseModel(plugin->dbTabs(), this);
+    auto dbModel = new SettingsDatabaseModel(m_page->dbTabs(), this);
     m_ui->tableDatabases->setModel(dbModel);
     installWidgetItemDelegate<ManageDatabase>(
-        m_ui->tableDatabases, SettingsDatabaseModel::ColumnManage, [plugin](QWidget* p, const QModelIndex&) {
-            return new ManageDatabase(plugin, p);
+        m_ui->tableDatabases, SettingsDatabaseModel::ColumnManage, [this](QWidget* p, const QModelIndex&) {
+            return new ManageDatabase(m_page, p);
         });
 
     // config header after setting model, otherwise the header doesn't have enough sections
