@@ -1470,8 +1470,7 @@ void TestMerge::testResolveGroupConflictOlder()
     merger.merge();
 
     // sanity check
-    auto groupDestinationMerged =
-        dbDestination->rootGroup()->findChildByName("group1 updated in destination");
+    auto groupDestinationMerged = dbDestination->rootGroup()->findChildByName("group1 updated in destination");
     QVERIFY(groupDestinationMerged != nullptr);
 }
 
