@@ -55,7 +55,6 @@ void Clipboard::setText(const QString& text, bool clear)
     mime->setText(text);
 #ifdef Q_OS_MACOS
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
-    clipboard->setMimeData(mime, QClipboard::Clipboard);
 #else
 #ifdef Q_OS_UNIX
     mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
@@ -63,12 +62,11 @@ void Clipboard::setText(const QString& text, bool clear)
 #ifdef Q_OS_WIN
     mime->setData("ExcludeClipboardContentFromMonitorProcessing", QByteArrayLiteral("1"));
 #endif
-    clipboard->setMimeData(mime, QClipboard::Clipboard);
-
     if (clipboard->supportsSelection()) {
         clipboard->setMimeData(mime, QClipboard::Selection);
     }
 #endif
+    clipboard->setMimeData(mime, QClipboard::Clipboard);
 
     if (clear) {
         m_lastCopied = text;
