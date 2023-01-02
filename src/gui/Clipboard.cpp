@@ -61,11 +61,9 @@ void Clipboard::setText(const QString& text, bool clear)
     mime->setData("ExcludeClipboardContentFromMonitorProcessing", QByteArrayLiteral("1"));
 #endif
 
-#if !defined(Q_OS_MACOS)
     if (clipboard->supportsSelection()) {
         clipboard->setMimeData(mime, QClipboard::Selection);
     }
-#endif
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 
     if (clear) {
