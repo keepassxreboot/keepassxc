@@ -47,16 +47,12 @@ const QString KeePass2::KDFPARAM_ARGON2_VERSION("V");
 const QString KeePass2::KDFPARAM_ARGON2_SECRET("K");
 const QString KeePass2::KDFPARAM_ARGON2_ASSOCDATA("A");
 
-const QList<QPair<QUuid, QString>> KeePass2::CIPHERS{
-    qMakePair(KeePass2::CIPHER_AES256, QObject::tr("AES 256-bit")),
-    qMakePair(KeePass2::CIPHER_TWOFISH, QObject::tr("Twofish 256-bit")),
-    qMakePair(KeePass2::CIPHER_CHACHA20, QObject::tr("ChaCha20 256-bit"))};
+const QList<QUuid> KeePass2::CIPHERS{KeePass2::CIPHER_AES256, KeePass2::CIPHER_TWOFISH, KeePass2::CIPHER_CHACHA20};
 
-const QList<QPair<QUuid, QString>> KeePass2::KDFS{
-    qMakePair(KeePass2::KDF_ARGON2D, QObject::tr("Argon2d (KDBX 4 – recommended)")),
-    qMakePair(KeePass2::KDF_ARGON2ID, QObject::tr("Argon2id (KDBX 4)")),
-    qMakePair(KeePass2::KDF_AES_KDBX4, QObject::tr("AES-KDF (KDBX 4)")),
-    qMakePair(KeePass2::KDF_AES_KDBX3, QObject::tr("AES-KDF (KDBX 3)"))};
+const QList<QUuid> KeePass2::KDFS{KeePass2::KDF_ARGON2D,
+                                  KeePass2::KDF_ARGON2ID,
+                                  KeePass2::KDF_AES_KDBX4,
+                                  KeePass2::KDF_AES_KDBX3};
 
 QByteArray KeePass2::hmacKey(const QByteArray& masterSeed, const QByteArray& transformedMasterKey)
 {
@@ -132,4 +128,30 @@ KeePass2::ProtectedStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
     default:
         return KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo;
     }
+}
+
+QString KeePass2::cipherToString(QUuid cipherUuid)
+{
+    if (cipherUuid == KeePass2::CIPHER_AES256) {
+        return QObject::tr("AES 256-bit");
+    } else if (cipherUuid == KeePass2::CIPHER_TWOFISH) {
+        return QObject::tr("Twofish 256-bit");
+    } else if (cipherUuid == KeePass2::CIPHER_CHACHA20) {
+        return QObject::tr("ChaCha20 256-bit");
+    }
+    return QObject::tr("Invalid Cipher");
+}
+
+QString KeePass2::kdfToString(QUuid kdfUuid)
+{
+    if (kdfUuid == KeePass2::KDF_ARGON2D) {
+        return QObject::tr("Argon2d (KDBX 4 – recommended)");
+    } else if (kdfUuid == KeePass2::KDF_ARGON2ID) {
+        return QObject::tr("Argon2id (KDBX 4)");
+    } else if (kdfUuid == KeePass2::KDF_AES_KDBX4) {
+        return QObject::tr("AES-KDF (KDBX 4)");
+    } else if (kdfUuid == KDF_AES_KDBX3) {
+        return QObject::tr("AES-KDF (KDBX 3)");
+    }
+    return QObject::tr("Invalid KDF");
 }

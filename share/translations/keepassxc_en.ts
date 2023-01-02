@@ -7892,6 +7892,14 @@ Kernel: %3 %4</source>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>

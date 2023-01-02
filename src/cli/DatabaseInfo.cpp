@@ -39,8 +39,8 @@ int DatabaseInfo::executeWithDatabase(QSharedPointer<Database> database, QShared
     out << QObject::tr("Name: ") << database->metadata()->name() << endl;
     out << QObject::tr("Description: ") << database->metadata()->description() << endl;
     for (auto& cipher : asConst(KeePass2::CIPHERS)) {
-        if (cipher.first == database->cipher()) {
-            out << QObject::tr("Cipher: ") << cipher.second << endl;
+        if (cipher == database->cipher()) {
+            out << QObject::tr("Cipher: ") << KeePass2::cipherToString(cipher) << endl;
         }
     }
     out << QObject::tr("KDF: ") << database->kdf()->toString() << endl;
