@@ -52,12 +52,11 @@ void Clipboard::setText(const QString& text, bool clear)
     }
 
     auto* mime = new QMimeData;
-#ifdef Q_OS_MACOS
     mime->setText(text);
+#ifdef Q_OS_MACOS
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 #else
-    mime->setText(text);
 #ifdef Q_OS_UNIX
     mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
 #endif
