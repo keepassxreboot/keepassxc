@@ -58,7 +58,7 @@ void Clipboard::setText(const QString& text, bool clear)
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 #else
     mime->setText(text);
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
 #endif
 #ifdef Q_OS_WIN
