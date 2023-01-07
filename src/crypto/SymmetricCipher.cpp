@@ -267,3 +267,22 @@ int SymmetricCipher::blockSize(Mode mode)
         return 0;
     }
 }
+
+int SymmetricCipher::ivSize(Mode mode)
+{
+    switch (mode) {
+    case Aes128_CBC:
+    case Aes256_CBC:
+    case Aes128_CTR:
+    case Aes256_CTR:
+    case Twofish_CBC:
+        return 16;
+    case Aes256_GCM:
+        return 12;
+    case Salsa20:
+    case ChaCha20:
+        return 8;
+    default:
+        return 0;
+    }
+}

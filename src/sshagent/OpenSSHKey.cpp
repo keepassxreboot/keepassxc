@@ -325,7 +325,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             }
 
             int keySize = cipher->keySize(cipherMode);
-            int blockSize = 16;
+            int ivSize = cipher->ivSize(cipherMode);
 
             BinaryStream optionStream(&m_kdfOptions);
 
@@ -335,7 +335,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             optionStream.readString(salt);
             optionStream.read(rounds);
 
-            QByteArray decryptKey(keySize + blockSize, '\0');
+            QByteArray decryptKey(keySize + ivSize, '\0');
             try {
                 auto baPass = passphrase.toUtf8();
                 auto pwhash = Botan::PasswordHashFamily::create_or_throw("Bcrypt-PBKDF")->from_iterations(rounds);
@@ -351,7 +351,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             }
 
             keyData = decryptKey.left(keySize);
-            ivData = decryptKey.right(blockSize);
+            ivData = decryptKey.right(ivSize);
         } else if (m_kdfName == "md5") {
             if (m_cipherIV.length() < 8) {
                 m_error = tr("Cipher IV is too short for MD5 kdf");
