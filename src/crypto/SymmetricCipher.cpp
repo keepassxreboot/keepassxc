@@ -176,7 +176,7 @@ SymmetricCipher::Mode SymmetricCipher::stringToMode(const QString& cipher)
         return Aes128_CTR;
     } else if (cipher.compare("aes-256-ctr", cs) == 0 || cipher.compare("aes256-ctr", cs) == 0) {
         return Aes256_CTR;
-    } else if (cipher.compare("aes-256-gcm", cs) == 0 || cipher.compare("aes256-gcm", cs) == 0) {
+    } else if (cipher.compare("aes-256-gcm", cs) == 0 || cipher.startsWith("aes256-gcm", cs)) {
         return Aes256_GCM;
     } else if (cipher.startsWith("twofish", cs)) {
         return Twofish_CBC;
