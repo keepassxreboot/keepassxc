@@ -314,6 +314,9 @@ bool OpenSSHKey::openKey(const QString& passphrase)
         if (cipherMode == SymmetricCipher::InvalidMode) {
             m_error = tr("Unknown cipher: %1").arg(m_cipherName);
             return false;
+        } else if (cipherMode == SymmetricCipher::Aes256_GCM) {
+            m_error = tr("AES-256/GCM is currently not supported");
+            return false;
         }
 
         QByteArray keyData, ivData;
