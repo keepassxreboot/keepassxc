@@ -30,7 +30,6 @@ public:
 
     QByteArray rawKey() const override;
     void setRawKey(const QByteArray&) override;
-    YubiKeySlot slotData() const;
 
     virtual bool challenge(const QByteArray& challenge);
     QString error() const;

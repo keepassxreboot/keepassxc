@@ -38,11 +38,6 @@ void ChallengeResponseKey::setRawKey(const QByteArray&)
     // Nothing to do here
 }
 
-YubiKeySlot ChallengeResponseKey::slotData() const
-{
-    return m_keySlot;
-}
-
 QString ChallengeResponseKey::error() const
 {
     return m_error;
