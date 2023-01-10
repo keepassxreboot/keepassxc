@@ -33,10 +33,8 @@ public:
     static QDateTime serialized(const QDateTime& dateTime);
 
     static QDateTime datetimeUtc(int year, int month, int day, int hour, int min, int second);
-    static QDateTime datetime(int year, int month, int day, int hour, int min, int second);
 
     static QDateTime datetimeUtc(qint64 msecSinceEpoch);
-    static QDateTime datetime(qint64 msecSinceEpoch);
 
     static QDateTime parse(const QString& text, Qt::DateFormat format = Qt::TextDate);
     static QDateTime parse(const QString& text, const QString& format);

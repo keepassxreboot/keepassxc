@@ -53,19 +53,9 @@ QDateTime Clock::datetimeUtc(int year, int month, int day, int hour, int min, in
     return QDateTime(QDate(year, month, day), QTime(hour, min, second), Qt::UTC);
 }
 
-QDateTime Clock::datetime(int year, int month, int day, int hour, int min, int second)
-{
-    return QDateTime(QDate(year, month, day), QTime(hour, min, second), Qt::LocalTime);
-}
-
 QDateTime Clock::datetimeUtc(qint64 msecSinceEpoch)
 {
     return QDateTime::fromMSecsSinceEpoch(msecSinceEpoch, Qt::UTC);
-}
-
-QDateTime Clock::datetime(qint64 msecSinceEpoch)
-{
-    return QDateTime::fromMSecsSinceEpoch(msecSinceEpoch, Qt::LocalTime);
 }
 
 QDateTime Clock::parse(const QString& text, Qt::DateFormat format)
