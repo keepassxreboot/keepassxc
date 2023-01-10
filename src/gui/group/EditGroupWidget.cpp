@@ -54,11 +54,6 @@ public:
         editPage->assign(widget);
     }
 
-    QWidget* getWidget()
-    {
-        return widget;
-    }
-
 private:
     QSharedPointer<IEditGroupPage> editPage;
     QWidget* widget;
