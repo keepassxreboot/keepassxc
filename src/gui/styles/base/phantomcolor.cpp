@@ -404,14 +404,6 @@ namespace Phantom
         return {r_, g_, b_};
     }
 
-    QColor lerpQColor(const QColor& x, const QColor& y, qreal a)
-    {
-        Rgb x_ = rgb_of_qcolor(x);
-        Rgb y_ = rgb_of_qcolor(y);
-        Rgb z = Rgb::lerp(x_, y_, a);
-        return qcolor_of_rgb(z.r, z.g, z.b);
-    }
-
     Rgb Rgb::lerp(const Rgb& x, const Rgb& y, qreal a)
     {
         Rgb z;

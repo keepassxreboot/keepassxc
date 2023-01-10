@@ -113,11 +113,6 @@ namespace Phantom
         return (1.0 - a) * x + a * y;
     }
 
-    // Linearly interpolate two QColors after trasnforming them to linear color
-    // space, treating the QColor values as if they were in sRGB space. The
-    // returned QColor is converted back to sRGB space.
-    QColor lerpQColor(const QColor& x, const QColor& y, qreal a);
-
     Hsl Rgb::toHsl() const
     {
         return hsl_of_rgb(r, g, b);
