@@ -58,7 +58,6 @@ public:
     QList<Entry*> search(const QString& searchString, const Group* baseGroup, bool forceSearch = false);
     QList<Entry*> repeat(const Group* baseGroup, bool forceSearch = false);
 
-    QList<Entry*> searchEntries(const QList<SearchTerm>& searchTerms, const QList<Entry*>& entries);
     QList<Entry*> searchEntries(const QString& searchString, const QList<Entry*>& entries);
     QList<Entry*> repeatEntries(const QList<Entry*>& entries);
 

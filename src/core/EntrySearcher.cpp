@@ -83,19 +83,6 @@ QList<Entry*> EntrySearcher::repeat(const Group* baseGroup, bool forceSearch)
 }
 
 /**
- * Search provided entries by the provided search terms
- *
- * @param searchTerms search terms
- * @param entries list of entries to include in the search
- * @return list of entries that match the search terms
- */
-QList<Entry*> EntrySearcher::searchEntries(const QList<SearchTerm>& searchTerms, const QList<Entry*>& entries)
-{
-    m_searchTerms = searchTerms;
-    return repeatEntries(entries);
-}
-
-/**
  * Search provided entries by parsing the search string
  * for search terms.
  *
