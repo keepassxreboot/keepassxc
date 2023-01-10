@@ -41,11 +41,6 @@ void MessageWidget::setAnimate(bool state)
     m_animate = state;
 }
 
-int MessageWidget::autoHideTimeout() const
-{
-    return m_autoHideTimeout;
-}
-
 void MessageWidget::showMessage(const QString& text, MessageWidget::MessageType type)
 {
     showMessage(text, type, m_autoHideTimeout);

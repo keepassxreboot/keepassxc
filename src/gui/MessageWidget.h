@@ -30,8 +30,6 @@ class MessageWidget : public KMessageWidget
 public:
     explicit MessageWidget(QWidget* parent = nullptr);
 
-    int autoHideTimeout() const;
-
     static const int DefaultAutoHideTimeout;
     static const int LongAutoHideTimeout;
     static const int DisableAutoHide;
