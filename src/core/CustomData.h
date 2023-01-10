@@ -48,7 +48,6 @@ public:
     const CustomDataItem& item(const QString& key) const;
     bool contains(const QString& key) const;
     QDateTime lastModified() const;
-    QDateTime lastModified(const QString& key) const;
     bool isProtected(const QString& key) const;
     void set(const QString& key, CustomDataItem item);
     void set(const QString& key, const QString& value, const QDateTime& lastModified = {});

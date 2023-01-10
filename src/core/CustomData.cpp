@@ -158,11 +158,6 @@ QDateTime CustomData::lastModified() const
     return modified;
 }
 
-QDateTime CustomData::lastModified(const QString& key) const
-{
-    return m_data.value(key).lastModified;
-}
-
 void CustomData::updateLastModified(QDateTime lastModified)
 {
     if (m_data.isEmpty() || (m_data.size() == 1 && m_data.contains(LastModified))) {
