@@ -86,7 +86,6 @@ namespace Totp
 
     QString generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time = 0ull);
 
-    QList<QPair<QString, QString>> supportedEncoders();
     QList<QPair<QString, Algorithm>> supportedAlgorithms();
 
     Encoder& defaultEncoder();
