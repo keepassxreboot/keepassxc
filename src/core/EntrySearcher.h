@@ -63,7 +63,6 @@ public:
     QList<Entry*> repeatEntries(const QList<Entry*>& entries);
 
     void setCaseSensitive(bool state);
-    bool isCaseSensitive() const;
 
 private:
     bool searchEntryImpl(const Entry* entry);

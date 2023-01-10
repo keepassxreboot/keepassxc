@@ -136,11 +136,6 @@ void EntrySearcher::setCaseSensitive(bool state)
     m_caseSensitive = state;
 }
 
-bool EntrySearcher::isCaseSensitive() const
-{
-    return m_caseSensitive;
-}
-
 bool EntrySearcher::searchEntryImpl(const Entry* entry)
 {
     // Pre-load in case they are needed
