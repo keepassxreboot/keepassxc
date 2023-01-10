@@ -38,7 +38,6 @@ public:
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
     void disableInnerStreamProtection(bool disable);
-    bool innerStreamProtectionDisabled() const;
     bool hasError();
     QString errorString();
 

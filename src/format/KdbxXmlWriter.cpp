@@ -608,12 +608,3 @@ void KdbxXmlWriter::disableInnerStreamProtection(bool disable)
 {
     m_innerStreamProtectionDisabled = disable;
 }
-
-/**
- * @return true if inner stream protection is disabled and protected
- *         fields will be saved in plaintext
- */
-bool KdbxXmlWriter::innerStreamProtectionDisabled() const
-{
-    return m_innerStreamProtectionDisabled;
-}
