@@ -296,14 +296,6 @@ QtIOCompressor::StreamFormat QtIOCompressor::streamFormat() const
 }
 
 /*!
-    Returns true if the zlib library in use supports the gzip format, false otherwise.
-*/
-bool QtIOCompressor::isGzipSupported()
-{
-    return checkGzipSupport(zlibVersion());
-}
-
-/*!
     \reimp
 */
 bool QtIOCompressor::isSequential() const
