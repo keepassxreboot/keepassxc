@@ -105,28 +105,6 @@ void CustomData::remove(const QString& key)
     emit removed(key);
 }
 
-void CustomData::rename(const QString& oldKey, const QString& newKey)
-{
-    const bool containsOldKey = m_data.contains(oldKey);
-    const bool containsNewKey = m_data.contains(newKey);
-    Q_ASSERT(containsOldKey && !containsNewKey);
-    if (!containsOldKey || containsNewKey) {
-        return;
-    }
-
-    CustomDataItem data = m_data.value(oldKey);
-
-    emit aboutToRename(oldKey, newKey);
-
-    m_data.remove(oldKey);
-    data.lastModified = Clock::currentDateTimeUtc();
-    m_data.insert(newKey, data);
-
-    updateLastModified();
-    emitModified();
-    emit renamed(oldKey, newKey);
-}
-
 void CustomData::copyDataFrom(const CustomData* other)
 {
     if (*this == *other) {

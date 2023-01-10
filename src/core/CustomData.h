@@ -52,7 +52,6 @@ public:
     void set(const QString& key, CustomDataItem item);
     void set(const QString& key, const QString& value, const QDateTime& lastModified = {});
     void remove(const QString& key);
-    void rename(const QString& oldKey, const QString& newKey);
     void clear();
     bool isEmpty() const;
     int size() const;
