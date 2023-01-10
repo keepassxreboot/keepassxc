@@ -38,13 +38,6 @@ AutoTypeMatch AutoTypeMatchModel::matchFromIndex(const QModelIndex& index) const
     return m_matches.at(index.row());
 }
 
-QModelIndex AutoTypeMatchModel::indexFromMatch(const AutoTypeMatch& match) const
-{
-    int row = m_matches.indexOf(match);
-    Q_ASSERT(row != -1);
-    return index(row, 1);
-}
-
 QModelIndex AutoTypeMatchModel::closestIndexFromMatch(const AutoTypeMatch& match) const
 {
     int row = -1;
