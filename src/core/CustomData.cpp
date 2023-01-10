@@ -64,16 +64,6 @@ bool CustomData::contains(const QString& key) const
     return m_data.contains(key);
 }
 
-bool CustomData::containsValue(const QString& value) const
-{
-    for (auto i = m_data.constBegin(); i != m_data.constEnd(); ++i) {
-        if (i.value().value == value) {
-            return true;
-        }
-    }
-    return false;
-}
-
 void CustomData::set(const QString& key, CustomDataItem item)
 {
     bool addAttribute = !m_data.contains(key);
