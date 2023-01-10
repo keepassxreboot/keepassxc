@@ -64,13 +64,6 @@ void PasswordKey::setPassword(const QString& password)
     setRawKey(CryptoHash::hash(password.toUtf8(), CryptoHash::Sha256));
 }
 
-QSharedPointer<PasswordKey> PasswordKey::fromRawKey(const QByteArray& rawKey)
-{
-    auto result = QSharedPointer<PasswordKey>::create();
-    result->setRawKey(rawKey);
-    return result;
-}
-
 QByteArray PasswordKey::serialize() const
 {
     QByteArray data;

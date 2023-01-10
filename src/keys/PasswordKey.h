@@ -36,8 +36,6 @@ public:
     void setRawKey(const QByteArray& data) override;
     void setPassword(const QString& password);
 
-    static QSharedPointer<PasswordKey> fromRawKey(const QByteArray& rawKey);
-
     QByteArray serialize() const override;
     void deserialize(const QByteArray& data) override;
 
