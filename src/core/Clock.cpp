@@ -63,11 +63,6 @@ QDateTime Clock::parse(const QString& text, Qt::DateFormat format)
     return QDateTime::fromString(text, format);
 }
 
-QDateTime Clock::parse(const QString& text, const QString& format)
-{
-    return QDateTime::fromString(text, format);
-}
-
 Clock::~Clock()
 {
 }

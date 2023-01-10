@@ -37,7 +37,6 @@ public:
     static QDateTime datetimeUtc(qint64 msecSinceEpoch);
 
     static QDateTime parse(const QString& text, Qt::DateFormat format = Qt::TextDate);
-    static QDateTime parse(const QString& text, const QString& format);
 
     virtual ~Clock();
 
