@@ -157,11 +157,6 @@ void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Random
     }
 }
 
-bool KdbxXmlReader::strictMode() const
-{
-    return m_strictMode;
-}
-
 void KdbxXmlReader::setStrictMode(bool strictMode)
 {
     m_strictMode = strictMode;

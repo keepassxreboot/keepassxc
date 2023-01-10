@@ -51,7 +51,6 @@ public:
 
     QByteArray headerHash() const;
 
-    bool strictMode() const;
     void setStrictMode(bool strictMode);
 
 protected:
