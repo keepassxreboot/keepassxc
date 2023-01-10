@@ -36,8 +36,6 @@ public:
 
     virtual void load(QSharedPointer<Database> db);
 
-    const QSharedPointer<Database> getDatabase() const;
-
 signals:
     /**
      * Can be emitted to indicate size changes and allow parents widgets to adjust properly.
