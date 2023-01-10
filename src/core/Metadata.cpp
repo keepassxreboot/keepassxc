@@ -105,11 +105,6 @@ void Metadata::setUpdateDatetime(bool value)
     m_updateDatetime = value;
 }
 
-void Metadata::copyAttributesFrom(const Metadata* other)
-{
-    m_data = other->m_data;
-}
-
 QString Metadata::generator() const
 {
     return m_data.generator;

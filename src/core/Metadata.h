@@ -154,15 +154,6 @@ public:
     void addSavedSearch(const QString& name, const QString& searchtext);
     void deleteSavedSearch(const QString& name);
     QVariantMap savedSearches();
-    /*
-     * Copy all attributes from other except:
-     * - Group pointers/uuids
-     * - Database key changed date
-     * - Custom icons
-     * - Custom fields
-     * - Settings changed date
-     */
-    void copyAttributesFrom(const Metadata* other);
 
 private:
     template <class P, class V> bool set(P& property, const V& value);
