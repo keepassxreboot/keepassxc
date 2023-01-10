@@ -105,11 +105,6 @@ QString KdbxReader::errorString() const
     return m_errorStr;
 }
 
-KeePass2::ProtectedStreamAlgo KdbxReader::protectedStreamAlgo() const
-{
-    return m_irsAlgo;
-}
-
 /**
  * @param data stream cipher UUID as bytes
  */

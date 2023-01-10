@@ -45,8 +45,6 @@ public:
     bool hasError() const;
     QString errorString() const;
 
-    KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const;
-
 protected:
     /**
      * Concrete reader implementation for reading database from device.
