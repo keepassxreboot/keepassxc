@@ -28,8 +28,6 @@ public:
     explicit PopupHelpWidget(QWidget* parent);
     ~PopupHelpWidget() override;
 
-    void setPosition(Qt::Corner corner);
-
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
     void showEvent(QShowEvent* event) override;

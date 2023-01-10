@@ -42,14 +42,6 @@ PopupHelpWidget::~PopupHelpWidget()
     parentWidget()->removeEventFilter(this);
 }
 
-void PopupHelpWidget::setPosition(Qt::Corner corner)
-{
-    m_corner = corner;
-    if (isVisible()) {
-        alignWithParent();
-    }
-}
-
 bool PopupHelpWidget::eventFilter(QObject* obj, QEvent* event)
 {
     if (isVisible()) {
