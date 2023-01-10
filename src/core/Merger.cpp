@@ -52,11 +52,6 @@ void Merger::setForcedMergeMode(Group::MergeMode mode)
     m_mode = mode;
 }
 
-void Merger::resetForcedMergeMode()
-{
-    m_mode = Group::Default;
-}
-
 QStringList Merger::merge()
 {
     // Order of merge steps is important - it is possible that we

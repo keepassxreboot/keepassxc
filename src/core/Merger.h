@@ -30,7 +30,6 @@ public:
     Merger(const Database* sourceDb, Database* targetDb);
     Merger(const Group* sourceGroup, Group* targetGroup);
     void setForcedMergeMode(Group::MergeMode mode);
-    void resetForcedMergeMode();
     QStringList merge();
 
 private:
