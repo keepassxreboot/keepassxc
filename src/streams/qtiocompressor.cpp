@@ -286,16 +286,6 @@ void QtIOCompressor::setStreamFormat(StreamFormat format)
 }
 
 /*!
-    Returns the format set on the compressed stream.
-    \sa QtIOCompressor::StreamFormat
-*/
-QtIOCompressor::StreamFormat QtIOCompressor::streamFormat() const
-{
-    Q_D(const QtIOCompressor);
-    return d->streamFormat;
-}
-
-/*!
     \reimp
 */
 bool QtIOCompressor::isSequential() const

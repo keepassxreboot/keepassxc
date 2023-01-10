@@ -58,7 +58,6 @@ enum StreamFormat { ZlibFormat, GzipFormat, RawZipFormat };
     QtIOCompressor(QIODevice *device, int compressionLevel = 6, int bufferSize = 65500);
     ~QtIOCompressor() override;
     void setStreamFormat(StreamFormat format);
-    StreamFormat streamFormat() const;
     bool isSequential() const override;
     bool open(OpenMode mode) override;
     void close() override;
