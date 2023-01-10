@@ -77,11 +77,6 @@ int CategoryListWidget::addCategory(const QString& labelText, const QIcon& icon)
     return m_ui->categoryList->count() - 1;
 }
 
-void CategoryListWidget::removeCategory(int index)
-{
-    m_ui->categoryList->removeItemWidget(m_ui->categoryList->item(index));
-}
-
 int CategoryListWidget::currentCategory()
 {
     return m_ui->categoryList->currentRow();

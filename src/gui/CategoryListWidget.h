@@ -41,7 +41,6 @@ public:
     void setCurrentCategory(int index);
     int addCategory(const QString& labelText, const QIcon& icon);
     void setCategoryHidden(int index, bool hidden);
-    void removeCategory(int index);
 
 signals:
     void categoryChanged(int index);
