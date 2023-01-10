@@ -28,7 +28,6 @@ public:
     explicit PopupHelpWidget(QWidget* parent);
     ~PopupHelpWidget() override;
 
-    void setOffset(const QPoint& offset);
     void setPosition(Qt::Corner corner);
 
 protected:

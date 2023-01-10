@@ -42,14 +42,6 @@ PopupHelpWidget::~PopupHelpWidget()
     parentWidget()->removeEventFilter(this);
 }
 
-void PopupHelpWidget::setOffset(const QPoint& offset)
-{
-    m_offset = offset;
-    if (isVisible()) {
-        alignWithParent();
-    }
-}
-
 void PopupHelpWidget::setPosition(Qt::Corner corner)
 {
     m_corner = corner;
