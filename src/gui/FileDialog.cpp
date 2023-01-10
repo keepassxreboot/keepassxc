@@ -135,11 +135,6 @@ void FileDialog::setNextFileName(const QString& fileName)
     m_nextFileName = fileName;
 }
 
-void FileDialog::setNextDirectory(const QString& path)
-{
-    m_nextDirName = path;
-}
-
 void FileDialog::saveLastDir(const QString& role, const QString& path, bool sensitive)
 {
     auto lastDirs = config()->get(Config::LastDir).toHash();

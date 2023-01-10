@@ -53,7 +53,6 @@ public:
      * Bypasses the selection process and returns the provided filename/directory immediately (for testing)
      */
     void setNextFileName(const QString& fileName);
-    void setNextDirectory(const QString& path);
 
     static void saveLastDir(const QString& role, const QString& path, bool sensitive = false);
     static QString getLastDir(const QString& role, const QString& defaultDir = QDir::homePath());
