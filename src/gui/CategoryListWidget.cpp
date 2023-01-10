@@ -97,11 +97,6 @@ void CategoryListWidget::setCategoryHidden(int index, bool hidden)
     m_ui->categoryList->item(index)->setHidden(hidden);
 }
 
-bool CategoryListWidget::isCategoryHidden(int index)
-{
-    return m_ui->categoryList->item(index)->isHidden();
-}
-
 void CategoryListWidget::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
