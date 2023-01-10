@@ -72,7 +72,6 @@ private:
     void writeUuid(const QString& qualifiedName, const Entry* entry);
     void writeBinary(const QString& qualifiedName, const QByteArray& ba);
     void writeTriState(const QString& qualifiedName, Group::TriState triState);
-    QString colorPartToString(int value);
     QString stripInvalidXml10Chars(QString str);
 
     void raiseError(const QString& errorMessage);
