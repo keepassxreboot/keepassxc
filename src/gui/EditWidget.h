@@ -48,7 +48,6 @@ public:
     void setHeadline(const QString& text);
     QLabel* headlineLabel();
     void setReadOnly(bool readOnly);
-    bool readOnly() const;
     void enableApplyButton(bool enabled);
     void showApplyButton(bool state);
     virtual bool isModified() const;

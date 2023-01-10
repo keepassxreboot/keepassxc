@@ -136,11 +136,6 @@ void EditWidget::setReadOnly(bool readOnly)
     }
 }
 
-bool EditWidget::readOnly() const
-{
-    return m_readOnly;
-}
-
 void EditWidget::setModified(bool state)
 {
     m_modified = state;
