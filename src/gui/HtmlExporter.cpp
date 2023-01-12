@@ -231,7 +231,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
     }
 
     // Begin the table for the entries in this group
-    auto table = QString("<table width=\"100%\">");
+    auto table = QString("<table width=\"80%\">");
 
     auto entries = group.entries();
     if (sorted) {
