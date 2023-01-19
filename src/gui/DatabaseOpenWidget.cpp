@@ -341,7 +341,12 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 #ifdef Q_CC_MSVC
         if (!getWindowsHello()->getKey(m_filename, keyData)) {
             // Failed to retrieve Quick Unlock data
-            m_ui->messageWidget->showMessage(tr("Failed to authenticate with Windows Hello"), MessageWidget::Error);
+            auto error = getWindowsHello()->errorString();
+            if (!error.isEmpty()) {
+                m_ui->messageWidget->showMessage(tr("Failed to authenticate with Windows Hello: %1").arg(error),
+                                                 MessageWidget::Error);
+                resetQuickUnlock();
+            }
             return {};
         }
 #elif defined(Q_OS_MACOS)
