@@ -64,22 +64,24 @@ namespace
             array_view<uint8_t>(reinterpret_cast<uint8_t*>(challenge.data()), challenge.size()));
 
         return AsyncTask::runAndWaitForFuture([&] {
-            // The first time this is used a key-pair will be generated using the common name
-            auto result =
-                KeyCredentialManager::RequestCreateAsync(s_winHelloKeyName, KeyCredentialCreationOption::FailIfExists)
-                    .get();
-
-            if (result.Status() == KeyCredentialStatus::CredentialAlreadyExists) {
-                result = KeyCredentialManager::OpenAsync(s_winHelloKeyName).get();
-            } else if (result.Status() != KeyCredentialStatus::Success) {
-                error = QObject::tr("Failed to create Windows Hello credential.");
-                return false;
-            }
-
             try {
+                // The first time this is used a key-pair will be generated using the common name
+                auto result = KeyCredentialManager::RequestCreateAsync(s_winHelloKeyName,
+                                                                       KeyCredentialCreationOption::FailIfExists)
+                                  .get();
+
+                if (result.Status() == KeyCredentialStatus::CredentialAlreadyExists) {
+                    result = KeyCredentialManager::OpenAsync(s_winHelloKeyName).get();
+                } else if (result.Status() != KeyCredentialStatus::Success) {
+                    error = QObject::tr("Failed to create Windows Hello credential.");
+                    return false;
+                }
+
                 const auto signature = result.Credential().RequestSignAsync(challengeBuffer).get();
                 if (signature.Status() != KeyCredentialStatus::Success) {
-                    error = QObject::tr("Failed to sign challenge using Windows Hello.");
+                    if (signature.Status() != KeyCredentialStatus::UserCanceled) {
+                        error = QObject::tr("Failed to sign challenge using Windows Hello.");
+                    }
                     return false;
                 }
 
