@@ -312,9 +312,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
 
     if (m_cipherName != "none") {
         QString l_cipherName(m_cipherName);
-        if (l_cipherName.endsWith(OPENSSH_CIPHER_SUFFIX)) {
-            l_cipherName.chop(OPENSSH_CIPHER_SUFFIX.length());
-        }
+        l_cipherName.remove(OPENSSH_CIPHER_SUFFIX);
         auto cipherMode = SymmetricCipher::stringToMode(l_cipherName);
         if (cipherMode == SymmetricCipher::InvalidMode) {
             m_error = tr("Unknown cipher: %1").arg(l_cipherName);
