@@ -269,6 +269,9 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
+    m_ui->actionDatabaseSettings->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Comma);
+    m_ui->actionReports->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_R);
+    setShortcut(m_ui->actionSettings, QKeySequence::Preferences, Qt::CTRL + Qt::Key_Comma);
     m_ui->actionLockDatabase->setShortcut(Qt::CTRL + Qt::Key_L);
     m_ui->actionLockAllDatabases->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
