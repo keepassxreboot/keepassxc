@@ -105,10 +105,11 @@ private slots:
     void emitDatabaseLockChanged();
     void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
     void handleExportError(const QString& reason);
-    void updateLastDatabases(const QString& filename);
+    void updateLastDatabases(int index = -1);
 
 private:
     QSharedPointer<Database> execNewDatabaseWizard();
+    void updateLastDatabases(const QString& filename);
     bool warnOnExport();
     void displayUnlockDialog();
 

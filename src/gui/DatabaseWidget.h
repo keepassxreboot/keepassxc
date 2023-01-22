@@ -153,7 +153,6 @@ signals:
     void clearSearch();
     void requestGlobalAutoType(const QString& search);
     void requestSearch(const QString& search);
-    void updateLastDatabases(const QString& search);
 
 public slots:
     bool lock();

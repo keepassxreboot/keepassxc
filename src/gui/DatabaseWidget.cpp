@@ -216,7 +216,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
     connect(this, SIGNAL(requestGlobalAutoType(const QString&)), parent, SLOT(performGlobalAutoType(const QString&)));
-    connect(this, SIGNAL(updateLastDatabases(const QString&)), parent, SLOT(updateLastDatabases(const QString&)));
     // clang-format on
 
     connectDatabaseSignals();
@@ -2038,8 +2037,6 @@ bool DatabaseWidget::saveAs()
                         MessageWidget::Error,
                         true,
                         MessageWidget::LongAutoHideTimeout);
-        } else {
-            emit updateLastDatabases(newFilePath);
         }
     }
 
