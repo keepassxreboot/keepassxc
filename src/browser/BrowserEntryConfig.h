@@ -27,14 +27,13 @@ class Entry;
 
 class BrowserEntryConfig : public QObject
 {
+    using QObject::QObject;
     Q_OBJECT
     Q_PROPERTY(QStringList Allow READ allowedHosts WRITE setAllowedHosts)
     Q_PROPERTY(QStringList Deny READ deniedHosts WRITE setDeniedHosts)
     Q_PROPERTY(QString Realm READ realm WRITE setRealm)
 
 public:
-    BrowserEntryConfig(QObject* object = nullptr);
-
     bool load(const Entry* entry);
     void save(Entry* entry);
     bool isAllowed(const QString& host) const;

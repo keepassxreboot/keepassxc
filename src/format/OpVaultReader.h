@@ -33,12 +33,10 @@ class Entry;
  */
 class OpVaultReader : public QObject
 {
+    using QObject::QObject;
     Q_OBJECT
 
 public:
-    explicit OpVaultReader(QObject* parent = nullptr);
-    ~OpVaultReader() override;
-
     Database* readDatabase(QDir& opdataDir, const QString& password);
 
     bool hasError();

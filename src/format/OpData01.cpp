@@ -22,15 +22,6 @@
 
 #include <QDataStream>
 
-OpData01::OpData01(QObject* parent)
-    : QObject(parent)
-{
-}
-
-OpData01::~OpData01()
-{
-}
-
 bool OpData01::decodeBase64(QString const& b64String, const QByteArray& key, const QByteArray& hmacKey)
 {
     const QByteArray b64Bytes = QByteArray::fromBase64(b64String.toUtf8());

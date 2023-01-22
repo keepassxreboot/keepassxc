@@ -29,15 +29,6 @@
 
 #include <botan/pwdhash.h>
 
-OpVaultReader::OpVaultReader(QObject* parent)
-    : QObject(parent)
-{
-}
-
-OpVaultReader::~OpVaultReader()
-{
-}
-
 Database* OpVaultReader::readDatabase(QDir& opdataDir, const QString& password)
 {
     if (!opdataDir.exists()) {

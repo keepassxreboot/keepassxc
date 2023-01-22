@@ -21,11 +21,6 @@
 
 #include "gui/DatabaseIcons.h"
 
-DefaultIconModel::DefaultIconModel(QObject* parent)
-    : QAbstractListModel(parent)
-{
-}
-
 int DefaultIconModel::rowCount(const QModelIndex& parent) const
 {
     if (!parent.isValid()) {
@@ -48,11 +43,6 @@ QVariant DefaultIconModel::data(const QModelIndex& index, int role) const
     }
 
     return QVariant();
-}
-
-CustomIconModel::CustomIconModel(QObject* parent)
-    : QAbstractListModel(parent)
-{
 }
 
 void CustomIconModel::setIcons(const QHash<QUuid, QPixmap>& icons, const QList<QUuid>& iconsOrder)

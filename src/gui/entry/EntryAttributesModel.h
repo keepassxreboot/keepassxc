@@ -24,10 +24,10 @@ class EntryAttributes;
 
 class EntryAttributesModel : public QAbstractListModel
 {
+    using QAbstractListModel::QAbstractListModel;
     Q_OBJECT
 
 public:
-    explicit EntryAttributesModel(QObject* parent = nullptr);
     void setEntryAttributes(EntryAttributes* entryAttributes);
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;

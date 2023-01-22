@@ -23,11 +23,9 @@ class QNetworkReply;
 
 class UpdateChecker : public QObject
 {
+    using QObject::QObject;
     Q_OBJECT
 public:
-    UpdateChecker(QObject* parent = nullptr);
-    ~UpdateChecker() override;
-
     void checkForUpdates(bool manuallyRequested);
     static bool compareVersions(const QString& localVersion, const QString& remoteVersion);
     static UpdateChecker* instance();
@@ -42,9 +40,9 @@ private slots:
     void fetchReadyRead();
 
 private:
-    QNetworkReply* m_reply;
+    QNetworkReply* m_reply{};
     QByteArray m_bytesReceived;
-    bool m_isManuallyRequested;
+    bool m_isManuallyRequested{};
 
     static UpdateChecker* m_instance;
 

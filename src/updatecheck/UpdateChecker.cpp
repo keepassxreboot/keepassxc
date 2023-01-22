@@ -31,17 +31,6 @@
 const QString UpdateChecker::ErrorVersion("error");
 UpdateChecker* UpdateChecker::m_instance(nullptr);
 
-UpdateChecker::UpdateChecker(QObject* parent)
-    : QObject(parent)
-    , m_reply(nullptr)
-    , m_isManuallyRequested(false)
-{
-}
-
-UpdateChecker::~UpdateChecker()
-{
-}
-
 void UpdateChecker::checkForUpdates(bool manuallyRequested)
 {
     // Skip update if we are already performing one

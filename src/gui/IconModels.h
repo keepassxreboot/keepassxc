@@ -23,22 +23,20 @@
 
 class DefaultIconModel : public QAbstractListModel
 {
+    using QAbstractListModel::QAbstractListModel;
     Q_OBJECT
 
 public:
-    explicit DefaultIconModel(QObject* parent = nullptr);
-
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 };
 
 class CustomIconModel : public QAbstractListModel
 {
+    using QAbstractListModel::QAbstractListModel;
     Q_OBJECT
 
 public:
-    explicit CustomIconModel(QObject* parent = nullptr);
-
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     void setIcons(const QHash<QUuid, QPixmap>& icons, const QList<QUuid>& iconsOrder);

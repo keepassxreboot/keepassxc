@@ -27,12 +27,10 @@
  */
 class OpData01 : public QObject
 {
+    using QObject::QObject;
     Q_OBJECT
 
 public:
-    explicit OpData01(QObject* parent = nullptr);
-    ~OpData01() override;
-
     /*!
      * The convenience equivalent of decode01(OpData01,const QByteArray,const QByteArray,const QByteArray) that simply
      * decodes the provided base64 string into its underlying \c QByteArray.

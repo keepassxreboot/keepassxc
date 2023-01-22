@@ -19,11 +19,6 @@
 
 #include "core/EntryAttributes.h"
 
-EntryAttributesModel::EntryAttributesModel(QObject* parent)
-    : QAbstractListModel(parent)
-{
-}
-
 void EntryAttributesModel::setEntryAttributes(EntryAttributes* entryAttributes)
 {
     beginResetModel();

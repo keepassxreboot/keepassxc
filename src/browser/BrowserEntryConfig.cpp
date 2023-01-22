@@ -27,11 +27,6 @@
 
 static const char KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
 
-BrowserEntryConfig::BrowserEntryConfig(QObject* parent)
-    : QObject(parent)
-{
-}
-
 QStringList BrowserEntryConfig::allowedHosts() const
 {
     return m_allowedHosts.toList();

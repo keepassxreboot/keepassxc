@@ -28,6 +28,7 @@ class QWindow;
  */
 class OSUtilsBase : public QObject
 {
+    using QObject::QObject;
     Q_OBJECT
 
 public:
@@ -79,10 +80,6 @@ signals:
      * Indicates a change in the tray / statusbar theme.
      */
     void statusbarThemeChanged();
-
-protected:
-    explicit OSUtilsBase(QObject* parent = nullptr);
-    ~OSUtilsBase() override;
 };
 
 #endif // KEEPASSXC_OSUTILSBASE_H

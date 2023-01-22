@@ -27,10 +27,10 @@ class Entry;
 
 class AutoTypeAssociationsModel : public QAbstractListModel
 {
+    using QAbstractListModel::QAbstractListModel;
     Q_OBJECT
 
 public:
-    explicit AutoTypeAssociationsModel(QObject* parent = nullptr);
     void setAutoTypeAssociations(AutoTypeAssociations* autoTypeAssociations);
     void setEntry(Entry* entry);
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;

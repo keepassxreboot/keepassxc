@@ -19,12 +19,6 @@
 
 #include "core/Entry.h"
 
-AutoTypeAssociationsModel::AutoTypeAssociationsModel(QObject* parent)
-    : QAbstractListModel(parent)
-    , m_entry(nullptr)
-{
-}
-
 void AutoTypeAssociationsModel::setAutoTypeAssociations(AutoTypeAssociations* autoTypeAssociations)
 {
     beginResetModel();
