@@ -22,6 +22,7 @@
 #include "gui/MessageWidget.h"
 
 #include <QTabWidget>
+#include <QTimer>
 
 class Database;
 class DatabaseWidget;
@@ -70,11 +71,14 @@ public slots:
     bool saveDatabaseBackup(int index = -1);
     void exportToCsv();
     void exportToHtml();
+    void exportToXML();
 
     bool lockDatabases();
+    void lockDatabasesDelayed();
     void closeDatabaseFromSender();
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent);
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent, const QString& filePath);
+    void unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent);
     void relockPendingDatabase();
 
     void showDatabaseSecurity();
@@ -106,12 +110,12 @@ private:
     QSharedPointer<Database> execNewDatabaseWizard();
     void updateLastDatabases(const QString& filename);
     bool warnOnExport();
-    void unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent);
     void displayUnlockDialog();
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbWidgetPendingLock;
     QPointer<DatabaseOpenDialog> m_databaseOpenDialog;
+    QTimer m_lockDelayTimer;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

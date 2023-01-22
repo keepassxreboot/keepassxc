@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Create.h"
+#include "DatabaseCreate.h"
 
 #include "Utils.h"
 #include "keys/FileKey.h"
@@ -23,34 +23,39 @@
 #include <QCommandLineParser>
 #include <QFileInfo>
 
-const QCommandLineOption Create::DecryptionTimeOption =
+const QCommandLineOption DatabaseCreate::DecryptionTimeOption =
     QCommandLineOption(QStringList() << "t"
                                      << "decryption-time",
                        QObject::tr("Target decryption time in MS for the database."),
                        QObject::tr("time"));
 
-const QCommandLineOption Create::SetKeyFileOption =
-    QCommandLineOption(QStringList() << "k"
-                                     << "set-key-file",
+const QCommandLineOption DatabaseCreate::SetKeyFileShortOption = QCommandLineOption(
+    QStringList() << "k",
+    QObject::tr("Set the key file for the database.\nThis options is deprecated, use --set-key-file instead."),
+    QObject::tr("path"));
+
+const QCommandLineOption DatabaseCreate::SetKeyFileOption =
+    QCommandLineOption(QStringList() << "set-key-file",
                        QObject::tr("Set the key file for the database."),
                        QObject::tr("path"));
 
-const QCommandLineOption Create::SetPasswordOption =
+const QCommandLineOption DatabaseCreate::SetPasswordOption =
     QCommandLineOption(QStringList() << "p"
                                      << "set-password",
                        QObject::tr("Set a password for the database."));
 
-Create::Create()
+DatabaseCreate::DatabaseCreate()
 {
     name = QString("db-create");
     description = QObject::tr("Create a new database.");
     positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
-    options.append(Create::SetKeyFileOption);
-    options.append(Create::SetPasswordOption);
-    options.append(Create::DecryptionTimeOption);
+    options.append(DatabaseCreate::SetKeyFileOption);
+    options.append(DatabaseCreate::SetKeyFileShortOption);
+    options.append(DatabaseCreate::SetPasswordOption);
+    options.append(DatabaseCreate::DecryptionTimeOption);
 }
 
-QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPointer<QCommandLineParser>& parser)
+QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSharedPointer<QCommandLineParser>& parser)
 {
     if (parser.isNull()) {
         return {};
@@ -60,7 +65,7 @@ QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPoin
     auto& err = Utils::STDERR;
 
     // Validate the decryption time before asking for a password.
-    QString decryptionTimeValue = parser->value(Create::DecryptionTimeOption);
+    QString decryptionTimeValue = parser->value(DatabaseCreate::DecryptionTimeOption);
     int decryptionTime = 0;
     if (decryptionTimeValue.length() != 0) {
         decryptionTime = decryptionTimeValue.toInt();
@@ -78,7 +83,7 @@ QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPoin
 
     auto key = QSharedPointer<CompositeKey>::create();
 
-    if (parser->isSet(Create::SetPasswordOption)) {
+    if (parser->isSet(DatabaseCreate::SetPasswordOption)) {
         auto passwordKey = Utils::getConfirmedPassword();
         if (passwordKey.isNull()) {
             err << QObject::tr("Failed to set database password.") << endl;
@@ -87,10 +92,18 @@ QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPoin
         key->addKey(passwordKey);
     }
 
-    if (parser->isSet(Create::SetKeyFileOption)) {
+    if (parser->isSet(DatabaseCreate::SetKeyFileOption) || parser->isSet(DatabaseCreate::SetKeyFileShortOption)) {
         QSharedPointer<FileKey> fileKey;
 
-        if (!Utils::loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
+        QString keyFilePath;
+        if (parser->isSet(DatabaseCreate::SetKeyFileShortOption)) {
+            qWarning("The -k option will be deprecated. Please use the --set-key-file option instead.");
+            keyFilePath = parser->value(DatabaseCreate::SetKeyFileShortOption);
+        } else {
+            keyFilePath = parser->value(DatabaseCreate::SetKeyFileOption);
+        }
+
+        if (!Utils::loadFileKey(keyFilePath, fileKey)) {
             err << QObject::tr("Loading the key file failed") << endl;
             return {};
         }
@@ -141,7 +154,7 @@ QSharedPointer<Database> Create::initializeDatabaseFromOptions(const QSharedPoin
  *
  * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure
  */
-int Create::execute(const QStringList& arguments)
+int DatabaseCreate::execute(const QStringList& arguments)
 {
     QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
     if (parser.isNull()) {
@@ -159,7 +172,7 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    QSharedPointer<Database> db = Create::initializeDatabaseFromOptions(parser);
+    QSharedPointer<Database> db = DatabaseCreate::initializeDatabaseFromOptions(parser);
     if (!db) {
         return EXIT_FAILURE;
     }

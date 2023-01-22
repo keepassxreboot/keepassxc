@@ -75,6 +75,8 @@ macro(add_unit_test)
         add_test(${_test_NAME} ${_test_LAUNCHER} ${_test_NAME})
     endif(KDE4_TEST_OUTPUT STREQUAL "xml")
 
+    set_tests_properties(${_test_NAME} PROPERTIES ENVIRONMENT "LANG=en_US.UTF-8")
+
     if(NOT MSVC_IDE)   #not needed for the ide
         # if the tests are EXCLUDE_FROM_ALL, add a target "buildtests" to build all tests
         if(NOT WITH_TESTS)
@@ -233,6 +235,7 @@ endif()
 
 add_unit_test(NAME testcli SOURCES TestCli.cpp
         LIBS testsupport cli ${TEST_LIBRARIES})
+target_compile_definitions(testcli PRIVATE KEEPASSX_CLI_PATH="$<TARGET_FILE:keepassxc-cli>")
 
 if(WITH_GUI_TESTS)
     add_subdirectory(gui)

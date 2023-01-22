@@ -28,21 +28,30 @@ class TagModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit TagModel(QSharedPointer<Database> db, QObject* parent = nullptr);
+    explicit TagModel(QObject* parent = nullptr);
     ~TagModel() override;
 
     void setDatabase(QSharedPointer<Database> db);
-    const QStringList& tags() const;
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+
+    enum TagType
+    {
+        DEFAULT_SEARCH,
+        SAVED_SEARCH,
+        TAG
+    };
+    TagType itemType(const QModelIndex& index);
 
 private slots:
     void updateTagList();
 
 private:
     QSharedPointer<Database> m_db;
-    QStringList m_tagList;
+    QList<QPair<QString, QString>> m_defaultSearches;
+    QList<QPair<QString, QString>> m_tagList;
+    int m_tagListStart = 0;
 };
 
 #endif // KEEPASSX_TAGMODEL_H

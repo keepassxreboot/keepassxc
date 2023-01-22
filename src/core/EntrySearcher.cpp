@@ -25,8 +25,6 @@
 EntrySearcher::EntrySearcher(bool caseSensitive, bool skipProtected)
     : m_caseSensitive(caseSensitive)
     , m_skipProtected(skipProtected)
-    , m_termParser(R"re(([-!*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re")
-// Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
 {
 }
 
@@ -197,11 +195,16 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             }
             break;
         case Field::Tag:
-            found = term.regex.match(entry->tags()).hasMatch();
+            found = entry->tagList().indexOf(term.regex) != -1;
             break;
         case Field::Is:
-            if (term.word.compare("expired", Qt::CaseInsensitive) == 0) {
-                found = entry->isExpired();
+            if (term.word.startsWith("expired", Qt::CaseInsensitive)) {
+                auto days = 0;
+                auto parts = term.word.split("-", QString::SkipEmptyParts);
+                if (parts.length() >= 2) {
+                    days = parts[1].toInt();
+                }
+                found = entry->willExpireInDays(days) && !entry->isRecycled();
                 break;
             } else if (term.word.compare("weak", Qt::CaseInsensitive) == 0) {
                 if (!entry->excludeFromReports() && !entry->password().isEmpty() && !entry->isExpired()) {
@@ -220,8 +223,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
-                    || term.regex.match(entry->resolvePlaceholder(entry->tags())).hasMatch()
-                    || term.regex.match(entry->notes()).hasMatch();
+                    || entry->tagList().indexOf(term.regex) != -1 || term.regex.match(entry->notes()).hasMatch();
         }
 
         // negate the result if exclude:
@@ -246,23 +248,26 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("notes"), Field::Notes},
         {QStringLiteral("pw"), Field::Password},
         {QStringLiteral("password"), Field::Password},
-        {QStringLiteral("title"), Field::Title},
-        {QStringLiteral("t"), Field::Title},
-        {QStringLiteral("u"), Field::Username}, // u: stands for username rather than url
+        {QStringLiteral("title"), Field::Title}, // title before tag to capture t:<word>
+        {QStringLiteral("username"), Field::Username}, // username before url to capture u:<word>
         {QStringLiteral("url"), Field::Url},
-        {QStringLiteral("username"), Field::Username},
         {QStringLiteral("group"), Field::Group},
         {QStringLiteral("tag"), Field::Tag},
         {QStringLiteral("is"), Field::Is}};
 
+    // Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
+    static QRegularExpression termParser(R"re(([-!*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re");
+
     m_searchTerms.clear();
-    auto results = m_termParser.globalMatch(searchString);
+    auto results = termParser.globalMatch(searchString);
     while (results.hasNext()) {
         auto result = results.next();
         SearchTerm term{};
 
         // Quoted string group
         term.word = result.captured(3);
+        // Unescape quotes
+        term.word.replace("\\\"", "\"");
 
         // If empty, use the unquoted string group
         if (term.word.isEmpty()) {

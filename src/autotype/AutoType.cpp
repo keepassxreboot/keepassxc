@@ -335,7 +335,9 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
             }
 
             if (!result.canRetry() || i == max_retries) {
-                MessageBox::critical(getMainWindow(), tr("Auto-Type Error"), result.errorString());
+                if (getMainWindow()) {
+                    MessageBox::critical(getMainWindow(), tr("Auto-Type Error"), result.errorString());
+                }
                 emit autotypeRejected();
                 m_inAutoType.unlock();
                 return;
@@ -645,13 +647,26 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
             for (const auto& ch : totp) {
                 actions << QSharedPointer<AutoTypeKey>::create(ch);
             }
-        } else if (placeholder == "pickchars") {
-            // Ignore this if we are syntax checking
+        } else if (placeholder.startsWith("pickchars")) {
+            // Reset to the original capture to preserve case
+            placeholder = match.captured(3);
+
+            auto attribute = EntryAttributes::PasswordKey;
+            if (placeholder.contains(":")) {
+                attribute = placeholder.section(":", 1);
+                if (!entry->attributes()->hasKey(attribute)) {
+                    error = tr("Entry does not have attribute for PICKCHARS: %1").arg(attribute);
+                    return {};
+                }
+            }
+
+            // Bail out if we are just syntax checking
             if (syntaxOnly) {
                 continue;
             }
-            // Show pickchars dialog for entry's password
-            auto password = entry->resolvePlaceholder(entry->password());
+
+            // Show pickchars dialog for the desired attribute
+            auto password = entry->resolvePlaceholder(entry->attribute(attribute));
             if (!password.isEmpty()) {
                 PickcharsDialog pickcharsDialog(password);
                 if (pickcharsDialog.exec() == QDialog::Accepted && !pickcharsDialog.selectedChars().isEmpty()) {
@@ -744,8 +759,8 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
                 mode = AutoTypeExecutor::Mode::VIRTUAL;
             }
             actions << QSharedPointer<AutoTypeMode>::create(mode);
-        } else if (placeholder == "beep" || placeholder.startsWith("vkey") || placeholder.startsWith("appactivate")
-                   || placeholder.startsWith("c:")) {
+        } else if (placeholder.startsWith("beep") || placeholder.startsWith("vkey")
+                   || placeholder.startsWith("appactivate") || placeholder.startsWith("c:")) {
             // Ignore these commands
         } else {
             // Attempt to resolve an entry attribute

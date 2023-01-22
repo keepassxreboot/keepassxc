@@ -15,6 +15,12 @@
     </method>
     <method name="appExit">
     </method>
+    <method name="isHardwareKeySupported">
+      <arg name="hardwareKeySupported" type="b" direction="out"/>
+    </method>
+    <method name="refreshHardwareKeys">
+      <arg name="found" type="b" direction="out"/>
+    </method>
     <method name="lockAllDatabases">
     </method>
     <method name="closeAllDatabases">

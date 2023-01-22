@@ -10,7 +10,7 @@ Commands:
 
 .NOTES
 The following are descriptions of certain parameters:
-  -Vcpkg           Specify VCPKG toolchain file (example: C:\vcpkg\scripts\buildsystems\vcpkg.cmake)
+  -Vcpkg           Specify VCPKG toolchain location (example: C:\vcpkg)
   -Tag             Release tag to check out (defaults to version number)
   -Snapshot        Build current HEAD without checkout out Tag
   -CMakeGenerator  Override the default CMake generator
@@ -290,8 +290,8 @@ if ($Merge) {
     Invoke-Cmd "tx" "pull -af --minimum-perc=60 --parallel -r keepassxc.share-translations-keepassxc-en-ts--develop"
 
     # Only commit if there are changes
-    & git diff-index --quiet HEAD --
-    if ($LASTEXITCODE) {
+    $changes = & git status --porcelain
+    if ($changes.Length -gt 0) {
         Write-Host "Committing translation updates..."
         Invoke-Cmd "git" "add -A ./share/translations/" -quiet
         Invoke-Cmd "git" "commit -m `"Update translations`"" -quiet
@@ -313,7 +313,10 @@ if ($Merge) {
     }
 
     Write-Host "Creating tag for '$Version'..."
-    Invoke-Cmd "git" "tag -a `"$Version`" -m `"Release $Version`" -m `"$Changelog`" -s" -quiet
+    $tmp = New-TemporaryFile
+    "Release $Version`n$Changelog" | Out-File $tmp.FullName
+    Invoke-Cmd "git" "tag -a `"$Version`" -F `"$tmp`" -s" -quiet
+    Remove-Item $tmp.FullName -Force
 
     Write-Host "Moving latest tag..."
     Invoke-Cmd "git" "tag -f -a `"latest`" -m `"Latest stable release`" -s" -quiet
@@ -322,7 +325,7 @@ if ($Merge) {
     Write-Host "Please merge the release branch back into the develop branch now and then push your changes."
     Write-Host "Don't forget to also push the tags using 'git push --tags'."
 } elseif ($Build) {
-    $Vcpkg = (Resolve-Path $Vcpkg).Path
+    $Vcpkg = (Resolve-Path "$Vcpkg/scripts/buildsystems/vcpkg.cmake").Path
 
     # Find Visual Studio and establish build environment
     Invoke-VSToolchain $VSToolChain $SourceDir -Arch "amd64"
@@ -333,7 +336,7 @@ if ($Merge) {
         $Tag = "HEAD"
         $SourceBranch = & git rev-parse --abbrev-ref HEAD
         $ReleaseName = "$Version-snapshot"
-        $CMakeOptions = "$CMakeOptions -DKEEPASSXC_BUILD_TYPE=Snapshot -DOVERRIDE_VERSION=`"$ReleaseName`""
+        $CMakeOptions = "-DKEEPASSXC_BUILD_TYPE=Snapshot -DOVERRIDE_VERSION=`"$ReleaseName`" $CMakeOptions"
         Write-Host "Using current branch '$SourceBranch' to build." -ForegroundColor Cyan
     } else {
         Test-WorkingTreeClean
@@ -344,9 +347,9 @@ if ($Merge) {
         }
         
         if ($Version -match "-beta\d*$") {
-            $CMakeOptions = "$CMakeOptions -DKEEPASSXC_BUILD_TYPE=PreRelease"
+            $CMakeOptions = "-DKEEPASSXC_BUILD_TYPE=PreRelease $CMakeOptions"
         } else {
-            $CMakeOptions = "$CMakeOptions -DKEEPASSXC_BUILD_TYPE=Release"
+            $CMakeOptions = "-DKEEPASSXC_BUILD_TYPE=Release $CMakeOptions"
         }
 
         # Setup Tag if not defined then checkout tag
@@ -368,11 +371,11 @@ if ($Merge) {
     Set-Location "$BuildDir"
 
     # Setup CMake options
-    $CMakeOptions = "$CMakeOptions -DWITH_XC_ALL=ON -DWITH_TESTS=OFF -DCMAKE_BUILD_TYPE=Release"
-    $CMakeOptions = "$CMakeOptions -DCMAKE_TOOLCHAIN_FILE:FILEPATH=`"$Vcpkg`" -DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON"
+    $CMakeOptions = "-DWITH_XC_ALL=ON -DWITH_TESTS=OFF -DCMAKE_BUILD_TYPE=Release $CMakeOptions"
+    $CMakeOptions = "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=`"$Vcpkg`" -DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON $CMakeOptions"
 
     Write-Host "Configuring build..." -ForegroundColor Cyan
-    Invoke-Cmd "cmake" "$CMakeOptions -G `"$CMakeGenerator`" `"$SourceDir`""
+    Invoke-Cmd "cmake" "-G `"$CMakeGenerator`" $CMakeOptions `"$SourceDir`""
 
     Write-Host "Compiling sources..." -ForegroundColor Cyan
     Invoke-Cmd "cmake" "--build . --config Release -- $MakeOptions"
@@ -424,10 +427,10 @@ if ($Merge) {
 }
 
 # SIG # Begin signature block
-# MIIThAYJKoZIhvcNAQcCoIITdTCCE3ECAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
+# MIIkvgYJKoZIhvcNAQcCoIIkrzCCJKsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUyaXWK5K1LP2TD/IgGb5Tfs8v
-# C2GgghC8MIIFOjCCBCKgAwIBAgIQWKLXLYzA/YnM/yHg1O3HSjANBgkqhkiG9w0B
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUccSicCrmJ6HTiKZr9ZV5mT6i
+# 9sqggh6mMIIFOjCCBCKgAwIBAgIQWKLXLYzA/YnM/yHg1O3HSjANBgkqhkiG9w0B
 # AQsFADB8MQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
 # MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxJDAi
 # BgNVBAMTG1NlY3RpZ28gUlNBIENvZGUgU2lnbmluZyBDQTAeFw0yMTAzMTUwMDAw
@@ -516,17 +519,109 @@ if ($Merge) {
 # yt39ngVR5UR43QHesXWYDVQk/fBO4+L4g71yuss9Ou7wXheSaG3IYfmm8SoKC6W5
 # 9J7umDIFhZ7r+YMp08Ysfb06dy6LN0KgaoLtO0qqlBCk4Q34F8W2WnkzGJLjtXX4
 # oemOCiUe5B7xn1qHI/+fpFGe+zmAEc3btcSnqIBv5VPU4OOiwtJbGvoyJi1qV3Ac
-# PKRYLqPzW0sH3DJZ84enGm1YMYICMjCCAi4CAQEwgZAwfDELMAkGA1UEBhMCR0Ix
-# GzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEY
-# MBYGA1UEChMPU2VjdGlnbyBMaW1pdGVkMSQwIgYDVQQDExtTZWN0aWdvIFJTQSBD
-# b2RlIFNpZ25pbmcgQ0ECEFii1y2MwP2JzP8h4NTtx0owCQYFKw4DAhoFAKB4MBgG
-# CisGAQQBgjcCAQwxCjAIoAKAAKECgAAwGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcC
-# AQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcNAQkEMRYE
-# FPvoURlVLtMyc41aoH1W7jNXhNkUMA0GCSqGSIb3DQEBAQUABIIBACa4ISoVYuy4
-# LQD5f2XzRDboWCOwR2ClFczB/vOn7uX+RKpbW+vZwllcL0wk0kA4Iotk12yKLAni
-# K0DkhX8P/Gt5B4hMFaWYKkwTZljITgCEHoAy8vQzpfDUdfJF40R7IIEQLzr2/n5q
-# Iztv/ApXsPX8SkgEGdikFbBA0i/xtzI8+3sI1QINiRig8xEH/1eOZlR54YHwClvS
-# 8QhXueb9NbqNN9oKBwx5gRWcOE4I2E5mYAppDDQyhqitbeeY2Pw4Eo5koLM3zTDy
-# 4/zc+A9lNkAa5eDTavxMHQVqKgO5KomzIYHAdIFnKs85SdntIOr5nSAHnAl6svTh
-# iJXqSEggdX8=
+# PKRYLqPzW0sH3DJZ84enGm1YMIIG7DCCBNSgAwIBAgIQMA9vrN1mmHR8qUY2p3gt
+# uTANBgkqhkiG9w0BAQwFADCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCk5ldyBK
+# ZXJzZXkxFDASBgNVBAcTC0plcnNleSBDaXR5MR4wHAYDVQQKExVUaGUgVVNFUlRS
+# VVNUIE5ldHdvcmsxLjAsBgNVBAMTJVVTRVJUcnVzdCBSU0EgQ2VydGlmaWNhdGlv
+# biBBdXRob3JpdHkwHhcNMTkwNTAyMDAwMDAwWhcNMzgwMTE4MjM1OTU5WjB9MQsw
+# CQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQH
+# EwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxJTAjBgNVBAMTHFNl
+# Y3RpZ28gUlNBIFRpbWUgU3RhbXBpbmcgQ0EwggIiMA0GCSqGSIb3DQEBAQUAA4IC
+# DwAwggIKAoICAQDIGwGv2Sx+iJl9AZg/IJC9nIAhVJO5z6A+U++zWsB21hoEpc5H
+# g7XrxMxJNMvzRWW5+adkFiYJ+9UyUnkuyWPCE5u2hj8BBZJmbyGr1XEQeYf0RirN
+# xFrJ29ddSU1yVg/cyeNTmDoqHvzOWEnTv/M5u7mkI0Ks0BXDf56iXNc48RaycNOj
+# xN+zxXKsLgp3/A2UUrf8H5VzJD0BKLwPDU+zkQGObp0ndVXRFzs0IXuXAZSvf4DP
+# 0REKV4TJf1bgvUacgr6Unb+0ILBgfrhN9Q0/29DqhYyKVnHRLZRMyIw80xSinL0m
+# /9NTIMdgaZtYClT0Bef9Maz5yIUXx7gpGaQpL0bj3duRX58/Nj4OMGcrRrc1r5a+
+# 2kxgzKi7nw0U1BjEMJh0giHPYla1IXMSHv2qyghYh3ekFesZVf/QOVQtJu5FGjpv
+# zdeE8NfwKMVPZIMC1Pvi3vG8Aij0bdonigbSlofe6GsO8Ft96XZpkyAcSpcsdxkr
+# k5WYnJee647BeFbGRCXfBhKaBi2fA179g6JTZ8qx+o2hZMmIklnLqEbAyfKm/31X
+# 2xJ2+opBJNQb/HKlFKLUrUMcpEmLQTkUAx4p+hulIq6lw02C0I3aa7fb9xhAV3Pw
+# caP7Sn1FNsH3jYL6uckNU4B9+rY5WDLvbxhQiddPnTO9GrWdod6VQXqngwIDAQAB
+# o4IBWjCCAVYwHwYDVR0jBBgwFoAUU3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0O
+# BBYEFBqh+GEZIA/DQXdFKI7RNV8GEgRVMA4GA1UdDwEB/wQEAwIBhjASBgNVHRMB
+# Af8ECDAGAQH/AgEAMBMGA1UdJQQMMAoGCCsGAQUFBwMIMBEGA1UdIAQKMAgwBgYE
+# VR0gADBQBgNVHR8ESTBHMEWgQ6BBhj9odHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20v
+# VVNFUlRydXN0UlNBQ2VydGlmaWNhdGlvbkF1dGhvcml0eS5jcmwwdgYIKwYBBQUH
+# AQEEajBoMD8GCCsGAQUFBzAChjNodHRwOi8vY3J0LnVzZXJ0cnVzdC5jb20vVVNF
+# UlRydXN0UlNBQWRkVHJ1c3RDQS5jcnQwJQYIKwYBBQUHMAGGGWh0dHA6Ly9vY3Nw
+# LnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQEMBQADggIBAG1UgaUzXRbhtVOBkXXf
+# A3oyCy0lhBGysNsqfSoF9bw7J/RaoLlJWZApbGHLtVDb4n35nwDvQMOt0+LkVvlY
+# Qc/xQuUQff+wdB+PxlwJ+TNe6qAcJlhc87QRD9XVw+K81Vh4v0h24URnbY+wQxAP
+# jeT5OGK/EwHFhaNMxcyyUzCVpNb0llYIuM1cfwGWvnJSajtCN3wWeDmTk5Sbsdyy
+# bUFtZ83Jb5A9f0VywRsj1sJVhGbks8VmBvbz1kteraMrQoohkv6ob1olcGKBc2Ne
+# oLvY3NdK0z2vgwY4Eh0khy3k/ALWPncEvAQ2ted3y5wujSMYuaPCRx3wXdahc1cF
+# aJqnyTdlHb7qvNhCg0MFpYumCf/RoZSmTqo9CfUFbLfSZFrYKiLCS53xOV5M3kg9
+# mzSWmglfjv33sVKRzj+J9hyhtal1H3G/W0NdZT1QgW6r8NDT/LKzH7aZlib0PHmL
+# XGTMze4nmuWgwAxyh8FuTVrTHurwROYybxzrF06Uw3hlIDsPQaof6aFBnf6xuKBl
+# KjTg3qj5PObBMLvAoGMs/FwWAKjQxH/qEZ0eBsambTJdtDgJK0kHqv3sMNrxpy/P
+# t/360KOE2See+wFmd7lWEOEgbsausfm2usg1XTN2jvF8IAwqd661ogKGuinutFoA
+# sYyr4/kKyVRd1LlqdJ69SK6YMIIG9jCCBN6gAwIBAgIRAJA5f5rSSjoT8r2RXwg4
+# qUMwDQYJKoZIhvcNAQEMBQAwfTELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0
+# ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYGA1UEChMPU2VjdGln
+# byBMaW1pdGVkMSUwIwYDVQQDExxTZWN0aWdvIFJTQSBUaW1lIFN0YW1waW5nIENB
+# MB4XDTIyMDUxMTAwMDAwMFoXDTMzMDgxMDIzNTk1OVowajELMAkGA1UEBhMCR0Ix
+# EzARBgNVBAgTCk1hbmNoZXN0ZXIxGDAWBgNVBAoTD1NlY3RpZ28gTGltaXRlZDEs
+# MCoGA1UEAwwjU2VjdGlnbyBSU0EgVGltZSBTdGFtcGluZyBTaWduZXIgIzMwggIi
+# MA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCQsnE/eeHUuYoXzMOXwpCUcu1a
+# Om8BQ39zWiifJHygNUAG+pSvCqGDthPkSxUGXmqKIDRxe7slrT9bCqQfL2x9LmFR
+# 0IxZNz6mXfEeXYC22B9g480Saogfxv4Yy5NDVnrHzgPWAGQoViKxSxnS8JbJRB85
+# XZywlu1aSY1+cuRDa3/JoD9sSq3VAE+9CriDxb2YLAd2AXBF3sPwQmnq/ybMA0Qf
+# FijhanS2nEX6tjrOlNEfvYxlqv38wzzoDZw4ZtX8fR6bWYyRWkJXVVAWDUt0cu6g
+# KjH8JgI0+WQbWf3jOtTouEEpdAE/DeATdysRPPs9zdDn4ZdbVfcqA23VzWLazpwe
+# /OpwfeZ9S2jOWilh06BcJbOlJ2ijWP31LWvKX2THaygM2qx4Qd6S7w/F7KvfLW8a
+# VFFsM7ONWWDn3+gXIqN5QWLP/Hvzktqu4DxPD1rMbt8fvCKvtzgQmjSnC//+HV6k
+# 8+4WOCs/rHaUQZ1kHfqA/QDh/vg61MNeu2lNcpnl8TItUfphrU3qJo5t/KlImD7y
+# Rg1psbdu9AXbQQXGGMBQ5Pit/qxjYUeRvEa1RlNsxfThhieThDlsdeAdDHpZiy7L
+# 9GQsQkf0VFiFN+XHaafSJYuWv8at4L2xN/cf30J7qusc6es9Wt340pDVSZo6HYMa
+# V38cAcLOHH3M+5YVxQIDAQABo4IBgjCCAX4wHwYDVR0jBBgwFoAUGqH4YRkgD8NB
+# d0UojtE1XwYSBFUwHQYDVR0OBBYEFCUuaDxrmiskFKkfot8mOs8UpvHgMA4GA1Ud
+# DwEB/wQEAwIGwDAMBgNVHRMBAf8EAjAAMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMI
+# MEoGA1UdIARDMEEwNQYMKwYBBAGyMQECAQMIMCUwIwYIKwYBBQUHAgEWF2h0dHBz
+# Oi8vc2VjdGlnby5jb20vQ1BTMAgGBmeBDAEEAjBEBgNVHR8EPTA7MDmgN6A1hjNo
+# dHRwOi8vY3JsLnNlY3RpZ28uY29tL1NlY3RpZ29SU0FUaW1lU3RhbXBpbmdDQS5j
+# cmwwdAYIKwYBBQUHAQEEaDBmMD8GCCsGAQUFBzAChjNodHRwOi8vY3J0LnNlY3Rp
+# Z28uY29tL1NlY3RpZ29SU0FUaW1lU3RhbXBpbmdDQS5jcnQwIwYIKwYBBQUHMAGG
+# F2h0dHA6Ly9vY3NwLnNlY3RpZ28uY29tMA0GCSqGSIb3DQEBDAUAA4ICAQBz2u1o
+# csvCuUChMbu0A6MtFHsk57RbFX2o6f2t0ZINfD02oGnZ85ow2qxp1nRXJD9+DzzZ
+# 9cN5JWwm6I1ok87xd4k5f6gEBdo0wxTqnwhUq//EfpZsK9OU67Rs4EVNLLL3Ozta
+# tcH714l1bZhycvb3Byjz07LQ6xm+FSx4781FoADk+AR2u1fFkL53VJB0ngtPTcSq
+# E4+XrwE1K8ubEXjp8vmJBDxO44ISYuu0RAx1QcIPNLiIncgi8RNq2xgvbnitxAW0
+# 6IQIkwf5fYP+aJg05Hflsc6MlGzbA20oBUd+my7wZPvbpAMxEHwa+zwZgNELcLlV
+# X0e+OWTOt9ojVDLjRrIy2NIphskVXYCVrwL7tNEunTh8NeAPHO0bR0icImpVgtny
+# ughlA+XxKfNIigkBTKZ58qK2GpmU65co4b59G6F87VaApvQiM5DkhFP8KvrAp5eo
+# 6rWNes7k4EuhM6sLdqDVaRa3jma/X/ofxKh/p6FIFJENgvy9TZntyeZsNv53Q5m4
+# aS18YS/to7BJ/lu+aSSR/5P8V2mSS9kFP22GctOi0MBk0jpCwRoD+9DtmiG4P6+m
+# slFU1UzFyh8SjVfGOe1c/+yfJnatZGZn6Kow4NKtt32xakEnbgOKo3TgigmCbr/j
+# 9re8ngspGGiBoZw/bhZZSxQJCZrmrr9gFd2G9TGCBYIwggV+AgEBMIGQMHwxCzAJ
+# BgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcT
+# B1NhbGZvcmQxGDAWBgNVBAoTD1NlY3RpZ28gTGltaXRlZDEkMCIGA1UEAxMbU2Vj
+# dGlnbyBSU0EgQ29kZSBTaWduaW5nIENBAhBYotctjMD9icz/IeDU7cdKMAkGBSsO
+# AwIaBQCgeDAYBgorBgEEAYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEM
+# BgorBgEEAYI3AgEEMBwGCisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqG
+# SIb3DQEJBDEWBBQyqMslxaPRHhE8POQX8uLV4mnwLjANBgkqhkiG9w0BAQEFAASC
+# AQBhQUgt7fRTbF1rGUv7z9sdfZzNQiLWg2LYMURLZAWcZRFBW6RoP6rTSbpquyRZ
+# Bs4BlK7JkxCHBXrCeYl5qMx7b6N7twsgyz8OR+EPnYIkEoaKafeqO6B/Q0NhhdOW
+# vd0wK2YsD5Sb7135a0trAQtS+fnhRr9y9LgMHePBq3iJAo8BWtcUYF5eBbLmJjZU
+# yzu6aUlXgVakBm8fso0NqLNAVn0vQizJHqsnK610+zCVlzPQ/2HflRpwLgF4X1kQ
+# Jewj42T2kjzn1Worzcsj3v7WJgbuqThnVR1NIhi+bhfpkrCr4iC/+4QIZZLkzUHl
+# cS3DhzvxAQ62whQsUAB9z2HBoYIDTDCCA0gGCSqGSIb3DQEJBjGCAzkwggM1AgEB
+# MIGSMH0xCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIx
+# EDAOBgNVBAcTB1NhbGZvcmQxGDAWBgNVBAoTD1NlY3RpZ28gTGltaXRlZDElMCMG
+# A1UEAxMcU2VjdGlnbyBSU0EgVGltZSBTdGFtcGluZyBDQQIRAJA5f5rSSjoT8r2R
+# Xwg4qUMwDQYJYIZIAWUDBAICBQCgeTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
+# MBwGCSqGSIb3DQEJBTEPFw0yMjEwMjMxMzE4MTZaMD8GCSqGSIb3DQEJBDEyBDAi
+# pcegfL2b7n0V2o/qV4vNL3exKvlIIxuSCCqMkqibj2h04kPtwOkjhJ064uMHSwcw
+# DQYJKoZIhvcNAQEBBQAEggIAWMkT++gXvrUNBmS62Sw9TekX6fEKJIOFwLHO5wzh
+# AdBv/NavsMLB+PNrKizKLL02+Q9v+kyKaeFFlReWa50S+meM2L+wW5YRMGggBKRB
+# Xhos4qL0ZffKPDbrjmCW0+HdRj408yyNCNB5aPSS6ZLjPpSa6mqVyySfnSdZnyaC
+# zXYQ2Y4qD3JGSk1MbRvCYB+jCaMM4unyJAS4IA6nWQ97184KLm5U2ktn9ygeWLlG
+# ujQ2plQ7HuHD+/rMSqesQT6OcwGtERYyfDs+hndpONjKBIulbJJDM1mN6uLQpkfZ
+# f/TPTZQBDx6EA1oUZ3Evx4cReQFZJjnVlsAJBnKmu3mHheisdlxuFv1DZfu2OD/M
+# nqY2DeCCgmeC212fosI8ZHUupaKRXVjfcVNElt34lK+3FMzYSKr6rCxiFEXbjq8u
+# WTG45ZMmcLzs7l9Yaz0eTc642SyBa+5OoTTXs3t9G5z9lVbGonOhfGVbJM+l8JNc
+# txM+CnQt/OOcjTMDKcjOwG9gcxHjYQhpK8PKiXmPmgpaGYn5vCL5fLvR+s+vTsm4
+# DJjUTHY87VVXt2IwOu45n1+RBJynewLeaXkwo+79R+/Dn/xoqVVGLRRU6c3yCIiW
+# qKmsdlIziAr/Fou7jzKcaPFhVJ/NMsI/2c8bkfi6Baoh+go3j39nA3/oDtb4vHWk
+# Y2E=
 # SIG # End signature block

@@ -41,6 +41,7 @@ using namespace Windows::Storage::Streams;
 namespace
 {
     const std::wstring s_winHelloKeyName{L"keepassxc_winhello"};
+    int g_promptFocusCount = 0;
 
     void queueSecurityPromptFocus(int delay = 500)
     {
@@ -48,7 +49,11 @@ namespace
             auto hWnd = ::FindWindowA("Credential Dialog Xaml Host", nullptr);
             if (hWnd) {
                 ::SetForegroundWindow(hWnd);
+            } else if (++g_promptFocusCount <= 3) {
+                queueSecurityPromptFocus();
+                return;
             }
+            g_promptFocusCount = 0;
         });
     }
 
@@ -71,18 +76,23 @@ namespace
                 return false;
             }
 
-            const auto signature = result.Credential().RequestSignAsync(challengeBuffer).get();
-            if (signature.Status() != KeyCredentialStatus::Success) {
-                error = QObject::tr("Failed to sign challenge using Windows Hello.");
+            try {
+                const auto signature = result.Credential().RequestSignAsync(challengeBuffer).get();
+                if (signature.Status() != KeyCredentialStatus::Success) {
+                    error = QObject::tr("Failed to sign challenge using Windows Hello.");
+                    return false;
+                }
+
+                // Use the SHA-256 hash of the challenge signature as the encryption key
+                const auto response = signature.Result();
+                CryptoHash hasher(CryptoHash::Sha256);
+                hasher.addData({reinterpret_cast<const char*>(response.data()), static_cast<int>(response.Length())});
+                key = hasher.result();
+                return true;
+            } catch (winrt::hresult_error const& ex) {
+                error = QString::fromStdString(winrt::to_string(ex.message()));
                 return false;
             }
-
-            // Use the SHA-256 hash of the challenge signature as the encryption key
-            const auto response = signature.Result();
-            CryptoHash hasher(CryptoHash::Sha256);
-            hasher.addData({reinterpret_cast<const char*>(response.data()), static_cast<int>(response.Length())});
-            key = hasher.result();
-            return true;
         });
     }
 } // namespace

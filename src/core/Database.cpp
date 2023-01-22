@@ -253,9 +253,6 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
         return false;
     }
 
-    // Prevent destructive operations while saving
-    QMutexLocker locker(&m_saveMutex);
-
     if (filePath == m_data.filePath) {
         // Fail-safe check to make sure we don't overwrite underlying file changes
         // that have not yet triggered a file reload/merge operation.
@@ -269,6 +266,9 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
 
     // Clear read-only flag
     m_fileWatcher->stop();
+
+    // Prevent destructive operations while saving
+    QMutexLocker locker(&m_saveMutex);
 
     QFileInfo fileInfo(filePath);
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
@@ -463,6 +463,7 @@ bool Database::import(const QString& xmlExportPath, QString* error)
 void Database::releaseData()
 {
     // Prevent data release while saving
+    Q_ASSERT(!isSaving());
     QMutexLocker locker(&m_saveMutex);
 
     if (m_modified) {
@@ -701,8 +702,8 @@ void Database::updateTagList()
     // Search groups recursively looking for tags
     // Use a set to prevent adding duplicates
     QSet<QString> tagSet;
-    for (const auto group : m_rootGroup->groupsRecursive(true)) {
-        for (const auto entry : group->entries()) {
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        if (!entry->isRecycled()) {
             for (auto tag : entry->tagList()) {
                 tagSet.insert(tag);
             }
@@ -712,6 +713,17 @@ void Database::updateTagList()
     m_tagList = tagSet.toList();
     m_tagList.sort();
     emit tagListUpdated();
+}
+
+void Database::removeTag(const QString& tag)
+{
+    if (!m_rootGroup) {
+        return;
+    }
+
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        entry->removeTag(tag);
+    }
 }
 
 const QUuid& Database::cipher() const

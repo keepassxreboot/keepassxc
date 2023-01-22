@@ -81,6 +81,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GlobalAutoTypeRetypeTime,{QS("GlobalAutoTypeRetypeTime"), Roaming, 15}},
     {Config::FaviconDownloadTimeout,{QS("FaviconDownloadTimeout"), Roaming, 10}},
     {Config::UpdateCheckMessageShown,{QS("UpdateCheckMessageShown"), Roaming, false}},
+    {Config::DefaultDatabaseFileName,{QS("DefaultDatabaseFileName"), Roaming, {}}},
 
     {Config::LastDatabases, {QS("LastDatabases"), Local, {}}},
     {Config::LastKeyFiles, {QS("LastKeyFiles"), Local, {}}},
@@ -104,6 +105,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_HideUsernames, {QS("GUI/HideUsernames"), Roaming, false}},
     {Config::GUI_HidePasswords, {QS("GUI/HidePasswords"), Roaming, true}},
     {Config::GUI_AdvancedSettings, {QS("GUI/AdvancedSettings"), Roaming, false}},
+    {Config::GUI_ColorPasswords, {QS("GUI/ColorPasswords"), Roaming, false}},
     {Config::GUI_MonospaceNotes, {QS("GUI/MonospaceNotes"), Roaming, false}},
     {Config::GUI_ApplicationTheme, {QS("GUI/ApplicationTheme"), Roaming, QS("auto")}},
     {Config::GUI_CompactMode, {QS("GUI/CompactMode"), Roaming, false}},
@@ -478,8 +480,19 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
 QPair<QString, QString> Config::defaultConfigFiles()
 {
     // Check if we are running in portable mode, if so store the config files local to the app
+#ifdef Q_OS_WIN
+    // Enable QFileInfo::isWritable check on Windows
+    extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+    qt_ntfs_permission_lookup++;
+#endif
     auto portablePath = QCoreApplication::applicationDirPath().append("/%1");
-    if (QFile::exists(portablePath.arg(".portable"))) {
+    auto portableFile = portablePath.arg(".portable");
+    bool isPortable = QFile::exists(portableFile) && QFileInfo(portableFile).isWritable();
+#ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup--;
+#endif
+
+    if (isPortable) {
         return {portablePath.arg("config/keepassxc.ini"), portablePath.arg("config/keepassxc_local.ini")};
     }
 

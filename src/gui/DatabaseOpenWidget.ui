@@ -145,12 +145,12 @@
              </widget>
             </item>
             <item>
-             <widget class="PasswordEdit" name="editPassword">
+             <widget class="PasswordWidget" name="editPassword" native="true">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
               <property name="accessibleName">
                <string>Password field</string>
-              </property>
-              <property name="echoMode">
-               <enum>QLineEdit::Password</enum>
               </property>
              </widget>
             </item>
@@ -380,21 +380,18 @@
                    <number>0</number>
                   </property>
                   <item row="0" column="1">
-                   <widget class="PasswordEdit" name="keyFileLineEdit">
+                   <widget class="PasswordWidget" name="keyFileLineEdit" native="true">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
+                    <property name="focusPolicy">
+                     <enum>Qt::StrongFocus</enum>
+                    </property>
                     <property name="accessibleName">
                      <string>Key file to unlock the database</string>
-                    </property>
-                    <property name="echoMode">
-                     <enum>QLineEdit::Password</enum>
-                    </property>
-                    <property name="clearButtonEnabled">
-                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
@@ -463,6 +460,9 @@
               </property>
               <item alignment="Qt::AlignRight">
                <widget class="QDialogButtonBox" name="buttonBox">
+                <property name="focusPolicy">
+                 <enum>Qt::StrongFocus</enum>
+                </property>
                 <property name="standardButtons">
                  <set>QDialogButtonBox::Close|QDialogButtonBox::Ok</set>
                 </property>
@@ -617,9 +617,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PasswordEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
+   <class>PasswordWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PasswordWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

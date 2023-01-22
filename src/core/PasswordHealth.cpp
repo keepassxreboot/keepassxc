@@ -21,10 +21,32 @@
 #include "PasswordHealth.h"
 #include "zxcvbn.h"
 
-PasswordHealth::PasswordHealth(double entropy)
-    : m_score(entropy)
-    , m_entropy(entropy)
+namespace
 {
+    const static int ZXCVBN_ESTIMATE_THRESHOLD = 256;
+} // namespace
+
+PasswordHealth::PasswordHealth(double entropy)
+{
+    init(entropy);
+}
+
+PasswordHealth::PasswordHealth(const QString& pwd)
+{
+    auto entropy = 0.0;
+    entropy += ZxcvbnMatch(pwd.left(ZXCVBN_ESTIMATE_THRESHOLD).toUtf8(), nullptr, nullptr);
+    if (pwd.length() > ZXCVBN_ESTIMATE_THRESHOLD) {
+        // Add the average entropy per character for any characters above the estimate threshold
+        auto average = entropy / ZXCVBN_ESTIMATE_THRESHOLD;
+        entropy += average * (pwd.length() - ZXCVBN_ESTIMATE_THRESHOLD);
+    }
+    init(entropy);
+}
+
+void PasswordHealth::init(double entropy)
+{
+    m_score = m_entropy = entropy;
+
     switch (quality()) {
     case Quality::Bad:
     case Quality::Poor:
@@ -41,11 +63,6 @@ PasswordHealth::PasswordHealth(double entropy)
         // No reason or details for good and excellent passwords
         break;
     }
-}
-
-PasswordHealth::PasswordHealth(const QString& pwd)
-    : PasswordHealth(ZxcvbnMatch(pwd.toUtf8(), nullptr, nullptr))
-{
 }
 
 void PasswordHealth::setScore(int score)
@@ -84,7 +101,7 @@ PasswordHealth::Quality PasswordHealth::quality() const
         return Quality::Bad;
     } else if (m_score < 40) {
         return Quality::Poor;
-    } else if (m_score < 65) {
+    } else if (m_score < 75) {
         return Quality::Weak;
     } else if (m_score < 100) {
         return Quality::Good;
@@ -143,8 +160,8 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
 
         // Don't allow re-used passwords to be considered "good"
         // no matter how great their entropy is.
-        if (health->score() > 64) {
-            health->setScore(64);
+        if (health->score() > 74) {
+            health->setScore(74);
         }
     }
 
@@ -164,8 +181,8 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
             // reduce the score by 2 points for every day that
             // we get closer to expiry. days<=0 has already
             // been handled above ("isExpired()").
-            if (health->score() > 60) {
-                health->setScore(60);
+            if (health->score() > 70) {
+                health->setScore(70);
             }
 
             health->adjustScore((30 - days) * -2);

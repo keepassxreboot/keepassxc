@@ -62,6 +62,27 @@ if(UNIX AND NOT APPLE)
 endif()
 option(WITH_XC_DOCS "Enable building of documentation" ON)
 
+set(WITH_XC_X11 ON CACHE BOOL "Enable building with X11 deps")
+
+if(APPLE)
+    # Perform the platform checks before applying the stricter compiler flags.
+    # Otherwise the kSecAccessControlTouchIDCurrentSet deprecation warning will result in an error.
+    try_compile(XC_APPLE_COMPILER_SUPPORT_BIOMETRY
+       ${CMAKE_CURRENT_BINARY_DIR}/tiometry_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_biometry_support.mm)
+    message(STATUS "Biometry compiler support: ${XC_APPLE_COMPILER_SUPPORT_BIOMETRY}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_TOUCH_ID
+       ${CMAKE_CURRENT_BINARY_DIR}/touch_id_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_touch_id_support.mm)
+    message(STATUS "Touch ID compiler support: ${XC_APPLE_COMPILER_SUPPORT_TOUCH_ID}")
+
+    try_compile(XC_APPLE_COMPILER_SUPPORT_WATCH
+       ${CMAKE_CURRENT_BINARY_DIR}/tiometry_test/
+       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_watch_support.mm)
+    message(STATUS "Apple watch compiler support: ${XC_APPLE_COMPILER_SUPPORT_WATCH}")
+endif()
+
 if(WITH_CCACHE)
     # Use the Compiler Cache (ccache) program
     # (install with: sudo apt get ccache)
@@ -91,9 +112,14 @@ if(NOT WITH_XC_NETWORKING AND WITH_XC_UPDATECHECK)
     set(WITH_XC_UPDATECHECK OFF)
 endif()
 
+if(UNIX AND NOT APPLE AND NOT WITH_XC_X11)
+    message(STATUS "Disabling WITH_XC_AUTOTYPE because WITH_XC_X11 is disabled")
+    set(WITH_XC_AUTOTYPE OFF)
+endif()
+
 set(KEEPASSXC_VERSION_MAJOR "2")
-set(KEEPASSXC_VERSION_MINOR "7")
-set(KEEPASSXC_VERSION_PATCH "1")
+set(KEEPASSXC_VERSION_MINOR "8")
+set(KEEPASSXC_VERSION_PATCH "0")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 set(OVERRIDE_VERSION "" CACHE STRING "Override the KeePassXC Version for Snapshot builds")
 
@@ -310,9 +336,9 @@ check_add_gcc_compiler_flag("-Wcast-align")
 
 if(UNIX AND NOT APPLE)
     check_add_gcc_compiler_flag("-Qunused-arguments")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--as-needed -Wl,--no-undefined")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro,-z,now -pie")
-    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed")
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--as-needed")
     set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro,-z,now")
 endif()
 
@@ -447,17 +473,20 @@ include(CLangFormat)
 
 set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools)
 if(UNIX AND NOT APPLE)
-    find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus X11Extras REQUIRED)
+    if(WITH_XC_X11)
+        list(APPEND QT_COMPONENTS X11Extras)
+    endif()
+    find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus REQUIRED)
 elseif(APPLE)
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED HINTS
-            /usr/local/opt/qt/lib/cmake
-            /usr/local/Cellar/qt/*/lib/cmake
-            /opt/homebrew/opt/qt/lib/cmake
+            /usr/local/opt/qt@5/lib/cmake
+            /usr/local/Cellar/qt@5/*/lib/cmake
+            /opt/homebrew/opt/qt@5/lib/cmake
             ENV PATH)
     find_package(Qt5 COMPONENTS MacExtras HINTS
-            /usr/local/opt/qt/lib/cmake
-            /usr/local/Cellar/qt/*/lib/cmake
-            /opt/homebrew/opt/qt/lib/cmake
+            /usr/local/opt/qt@5/lib/cmake
+            /usr/local/Cellar/qt@5/*/lib/cmake
+            /opt/homebrew/opt/qt@5/lib/cmake
             ENV PATH)
 else()
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED)
@@ -468,6 +497,10 @@ if(Qt5Core_VERSION VERSION_LESS "5.2.0")
 endif()
 
 get_filename_component(Qt5_PREFIX ${Qt5_DIR}/../../.. REALPATH)
+if(APPLE)
+    # Add includes under Qt5 Prefix in case Qt6 is also installed
+    include_directories(SYSTEM ${Qt5_PREFIX}/include)
+endif()
 
 # Process moc automatically
 set(CMAKE_AUTOMOC ON)

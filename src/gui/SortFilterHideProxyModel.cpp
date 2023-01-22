@@ -16,6 +16,7 @@
  */
 
 #include "SortFilterHideProxyModel.h"
+#include <QCollator>
 
 SortFilterHideProxyModel::SortFilterHideProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent)
@@ -40,4 +41,17 @@ bool SortFilterHideProxyModel::filterAcceptsColumn(int sourceColumn, const QMode
     Q_UNUSED(sourceParent);
 
     return sourceColumn >= m_hiddenColumns.size() || !m_hiddenColumns.at(sourceColumn);
+}
+
+bool SortFilterHideProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
+{
+    auto leftData = sourceModel()->data(left, sortRole());
+    auto rightData = sourceModel()->data(right, sortRole());
+    if (leftData.type() == QVariant::String) {
+        QCollator sorter;
+        sorter.setNumericMode(true);
+        return sorter.compare(leftData.toString(), rightData.toString()) < 0;
+    }
+
+    return QSortFilterProxyModel::lessThan(left, right);
 }

@@ -1,4 +1,5 @@
 # <img src="https://keepassxc.org/images/keepassxc-logo.svg" width="40" height="40"/> KeePassXC
+[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/6326/badge)](https://bestpractices.coreinfrastructure.org/projects/6326)
 [![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(project:KeepassXC\)/statusIcon)](https://ci.keepassxc.org/?guest=1)
 [![codecov](https://codecov.io/gh/keepassxreboot/keepassxc/branch/develop/graph/badge.svg)](https://codecov.io/gh/keepassxreboot/keepassxc)
 [![GitHub release](https://img.shields.io/github/release/keepassxreboot/keepassxc)](https://github.com/keepassxreboot/keepassxc/releases/)
@@ -35,7 +36,7 @@ KeePassXC has numerous features for novice and power users alike. Our goal is to
 * Command line interface (keepassxc-cli)
 * Auto-Open databases
 * KeeShare shared databases (import, export, and synchronize)
-* SSH Agent
+* SSH Agent integration
 * FreeDesktop.org Secret Service (replace Gnome keyring, etc.)
 * Additional encryption choices: Twofish and ChaCha20
 

@@ -34,7 +34,9 @@
 #include "cli/AttachmentImport.h"
 #include "cli/AttachmentRemove.h"
 #include "cli/Clip.h"
-#include "cli/Create.h"
+#include "cli/DatabaseCreate.h"
+#include "cli/DatabaseEdit.h"
+#include "cli/DatabaseInfo.h"
 #include "cli/Diceware.h"
 #include "cli/Edit.h"
 #include "cli/Estimate.h"
@@ -42,7 +44,6 @@
 #include "cli/Generate.h"
 #include "cli/Help.h"
 #include "cli/Import.h"
-#include "cli/Info.h"
 #include "cli/List.h"
 #include "cli/Merge.h"
 #include "cli/Move.h"
@@ -100,6 +101,9 @@ void TestCli::init()
 
     m_yubiKeyProtectedDbFile.reset(new TemporaryFile());
     m_yubiKeyProtectedDbFile->copyFromFile(file.arg("YubiKeyProtectedPasswords.kdbx"));
+
+    m_nonAsciiDbFile.reset(new TemporaryFile());
+    m_nonAsciiDbFile->copyFromFile(file.arg("NonAscii.kdbx"));
 
     m_stdout.reset(new QBuffer());
     m_stdout->open(QIODevice::ReadWrite);
@@ -242,7 +246,7 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(Commands::getCommand("search"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 25);
+    QCOMPARE(Commands::getCommands().size(), 26);
 }
 
 void TestCli::testInteractiveCommands()
@@ -274,7 +278,7 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(Commands::getCommand("search"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 25);
+    QCOMPARE(Commands::getCommands().size(), 26);
 }
 
 void TestCli::testAdd()
@@ -662,10 +666,16 @@ void TestCli::testClip()
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-a", "username"});
     QTRY_COMPARE(clipboard->text(), QString("User Name"));
 
+    // Uuid (top-level field)
+    setInput("a");
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-a", "Uuid"});
+    QTRY_COMPARE(clipboard->text(), QString("{9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}"));
+
     // TOTP
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "--totp"});
     QTRY_VERIFY(isTotp(clipboard->text()));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Entry's \"totp\" attribute copied to the clipboard!\n"));
 
     // Test Unicode
     setInput("a");
@@ -681,7 +691,7 @@ void TestCli::testClip()
     // clang-format on
 
     QTRY_COMPARE(clipboard->text(), QString("Password"));
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 3000);
 
     future.waitForFinished();
 
@@ -692,7 +702,7 @@ void TestCli::testClip()
                                QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
 
     QTRY_VERIFY(isTotp(clipboard->text()));
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 3000);
 
     future.waitForFinished();
 
@@ -726,7 +736,7 @@ void TestCli::testClip()
 
 void TestCli::testCreate()
 {
-    Create createCmd;
+    DatabaseCreate createCmd;
     QVERIFY(!createCmd.name.isEmpty());
     QVERIFY(createCmd.getDescriptionLine().contains(createCmd.name));
 
@@ -842,9 +852,147 @@ void TestCli::testCreate()
     QVERIFY(db);
 }
 
+void TestCli::testDatabaseEdit()
+{
+    TemporaryFile firstKeyFile;
+    firstKeyFile.open();
+    firstKeyFile.write(QString("keyFilePassword").toLatin1());
+    firstKeyFile.close();
+
+    TemporaryFile secondKeyFile;
+    secondKeyFile.open();
+    secondKeyFile.write(QString("newKeyFilePassword").toLatin1());
+    secondKeyFile.close();
+
+    QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
+
+    DatabaseCreate createCmd;
+    DatabaseEdit editCmd;
+    QVERIFY(!editCmd.name.isEmpty());
+    QVERIFY(editCmd.getDescriptionLine().contains(editCmd.name));
+
+    QString dbFilename;
+    dbFilename = testDir->path() + "/testDatabaseEdit.kdbx";
+
+    // Creating a database for testing
+    setInput({"a", "a"});
+    execCmd(createCmd, {"db-create", dbFilename, "-p"});
+    QCOMPARE(m_stdout->readLine(), QByteArray("Successfully created new database.\n"));
+
+    // Sanity check.
+    auto db = readDatabase(dbFilename, "a");
+    QVERIFY(!db.isNull());
+
+    setInput("a");
+    execCmd(editCmd, {"db-edit", dbFilename, "-p", "--unset-password"});
+    QCOMPARE(m_stdout->readAll(), QByteArray(""));
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readAll(), QByteArray("Cannot use p and unset-password at the same time.\n"));
+
+    setInput("a");
+    execCmd(editCmd, {"db-edit", dbFilename, "--set-key-file", "/key/file/path", "--unset-key-file"});
+    QCOMPARE(m_stdout->readAll(), QByteArray(""));
+    // Skipping the password prompt.
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readAll(), QByteArray("Cannot use set-key-file and unset-key-file at the same time.\n"));
+
+    // Sanity check.
+    db = readDatabase(dbFilename, "a");
+    QVERIFY(!db.isNull());
+
+    setInput({"a", "b", "b"});
+    execCmd(editCmd, {"db-edit", dbFilename, "-p"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully edited the database.\n"));
+
+    // Sanity check
+    db = readDatabase(dbFilename, "b");
+    QVERIFY(!db.isNull());
+
+    setInput("b");
+    execCmd(editCmd, {"db-edit", dbFilename, "--set-key-file", firstKeyFile.fileName()});
+    // Skipping the password prompt.
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readAll(), QByteArray(""));
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully edited the database.\n"));
+
+    // Sanity check
+    db = readDatabase(dbFilename, "b");
+    QVERIFY(db.isNull());
+    db = readDatabase(dbFilename, "b", firstKeyFile.fileName());
+    QVERIFY(!db.isNull());
+
+    setInput("b");
+    execCmd(editCmd,
+            {"db-edit", dbFilename, "-k", firstKeyFile.fileName(), "--set-key-file", secondKeyFile.fileName()});
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully edited the database.\n"));
+
+    // Sanity check
+    db = readDatabase(dbFilename, "b", firstKeyFile.fileName());
+    QVERIFY(db.isNull());
+    db = readDatabase(dbFilename, "b", secondKeyFile.fileName());
+    QVERIFY(!db.isNull());
+
+    setInput("b");
+    execCmd(editCmd, {"db-edit", dbFilename, "-k", secondKeyFile.fileName(), "--unset-password"});
+    // Skipping the password prompt.
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readAll(), QByteArray(""));
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully edited the database.\n"));
+
+    execCmd(editCmd,
+            {"db-edit",
+             dbFilename,
+             "--no-password",
+             "-k",
+             secondKeyFile.fileName(),
+             "--set-key-file",
+             firstKeyFile.fileName()});
+    // Skipping the password prompt.
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readAll(), QByteArray(""));
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully edited the database.\n"));
+
+    setInput({"b", "b"});
+    execCmd(editCmd, {"db-edit", dbFilename, "-k", firstKeyFile.fileName(), "--no-password", "--set-password"});
+    // Skipping over the password setting prompts.
+    m_stderr->readLine();
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readAll(), QByteArray(""));
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully edited the database.\n"));
+
+    setInput("b");
+    execCmd(editCmd, {"db-edit", dbFilename, "-k", firstKeyFile.fileName(), "--unset-key-file"});
+    // Skipping the password prompt.
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readAll(), QByteArray(""));
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully edited the database.\n"));
+
+    // Sanity check
+    db = readDatabase(dbFilename, "b", firstKeyFile.fileName());
+    QVERIFY(db.isNull());
+    db = readDatabase(dbFilename, "b");
+    QVERIFY(!db.isNull());
+
+    // Trying to remove the key file when there is none set should
+    // raise an error.
+    setInput("b");
+    execCmd(editCmd, {"db-edit", dbFilename, "-p", "--unset-key-file"});
+    QCOMPARE(m_stdout->readAll(), QByteArray(""));
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readLine(), QByteArray("Cannot remove file key: The database does not have a file key.\n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Could not change the database key.\n"));
+
+    setInput("b");
+    execCmd(editCmd, {"db-edit", dbFilename, "--unset-password"});
+    QCOMPARE(m_stdout->readAll(), QByteArray(""));
+    // Skipping the password prompt.
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readLine(), QByteArray("Cannot remove all the keys from a database.\n"));
+}
+
 void TestCli::testInfo()
 {
-    Info infoCmd;
+    DatabaseInfo infoCmd;
     QVERIFY(!infoCmd.name.isEmpty());
     QVERIFY(infoCmd.getDescriptionLine().contains(infoCmd.name));
 
@@ -1607,7 +1755,7 @@ void TestCli::testMerge()
 
 void TestCli::testMergeWithKeys()
 {
-    Create createCmd;
+    DatabaseCreate createCmd;
     QVERIFY(!createCmd.name.isEmpty());
     QVERIFY(createCmd.getDescriptionLine().contains(createCmd.name));
 
@@ -1937,7 +2085,9 @@ void TestCli::testShow()
                         "UserName: User Name\n"
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"));
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"));
 
     setInput("a");
     execCmd(showCmd, {"show", "-s", m_dbFile->fileName(), "/Sample Entry"});
@@ -1946,7 +2096,9 @@ void TestCli::testShow()
                         "UserName: User Name\n"
                         "Password: Password\n"
                         "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"));
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
@@ -1956,7 +2108,9 @@ void TestCli::testShow()
                         "UserName: User Name\n"
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"));
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Sample Entry"});
@@ -1968,6 +2122,8 @@ void TestCli::testShow()
                         "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
                         "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"
                         "\n"
                         "Attachments:\n"
                         "  Sample attachment.txt (15.0 B)\n"));
@@ -1982,6 +2138,8 @@ void TestCli::testShow()
                         "Password: PROTECTED\n"
                         "URL: https://www.bank.com\n"
                         "Notes: Important note\n"
+                        "Uuid: {20b183fd-6878-4506-a50b-06d30792aa10}\n"
+                        "Tags: \n"
                         "\n"
                         "No attachments present.\n"));
 
@@ -1992,6 +2150,10 @@ void TestCli::testShow()
     setInput("a");
     execCmd(showCmd, {"show", "-a", "Password", m_dbFile->fileName(), "/Sample Entry"});
     QCOMPARE(m_stdout->readAll(), QByteArray("Password\n"));
+
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "Uuid", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(), QByteArray("{9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"));
 
     setInput("a");
     execCmd(showCmd, {"show", "-a", "Title", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
@@ -2030,6 +2192,21 @@ void TestCli::testShow()
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-a", "Testattribute1", "/Sample Entry"});
     QCOMPARE(m_stdout->readAll(), QByteArray());
     QVERIFY(m_stderr->readAll().contains("ERROR: attribute Testattribute1 is ambiguous"));
+
+    setInput("a");
+    execCmd(showCmd, {"show", "--all", m_dbFile->fileName(), "/Sample Entry"});
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray("Title: Sample Entry\n"
+                        "UserName: User Name\n"
+                        "Password: PROTECTED\n"
+                        "URL: http://www.somesite.com/\n"
+                        "Notes: Notes\n"
+                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
+                        "Tags: \n"
+                        "TOTP Seed: PROTECTED\n"
+                        "TOTP Settings: 30;6\n"
+                        "TestAttribute1: b\n"
+                        "testattribute1: a\n"));
 }
 
 void TestCli::testInvalidDbFiles()
@@ -2140,6 +2317,29 @@ void TestCli::testYubiKeyOption()
     m_stderr->readLine(); // skip password prompt
     QCOMPARE(m_stderr->readAll().split(':').at(0), QByteArray("Invalid YubiKey slot 3\n"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
+}
+
+void TestCli::testNonAscii()
+{
+    QProcess process;
+    process.setProcessChannelMode(QProcess::MergedChannels);
+    process.start(
+        KEEPASSX_CLI_PATH,
+        QStringList(
+            {"show", "-a", "password", m_nonAsciiDbFile->fileName(), QString::fromUtf8("\xe7\xa7\x98\xe5\xaf\x86")}));
+    process.waitForStarted();
+    QCOMPARE(process.state(), QProcess::ProcessState::Running);
+
+    // Write password.
+    process.write("\xce\x94\xc3\xb6\xd8\xb6\n");
+    process.closeWriteChannel();
+
+    process.waitForFinished();
+
+    process.readLine(); // skip password prompt
+    QByteArray password = process.readLine();
+    QCOMPARE(QString::fromUtf8(password).trimmed(),
+             QString::fromUtf8("\xf0\x9f\x9a\x97\xf0\x9f\x90\x8e\xf0\x9f\x94\x8b\xf0\x9f\x93\x8e"));
 }
 
 void TestCli::testCommandParsing_data()

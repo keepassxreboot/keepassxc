@@ -235,6 +235,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 {
     const QString hash = browserService()->getDatabaseHash();
     const QString nonce = json.value("nonce").toString();
+    const auto incrementedNonce = browserMessageBuilder()->incrementNonce(nonce);
     const QString encrypted = json.value("message").toString();
 
     if (!m_associated) {
@@ -263,21 +264,19 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     const QString formUrl = decrypted.value("submitUrl").toString();
     const QString auth = decrypted.value("httpAuth").toString();
     const bool httpAuth = auth.compare(TRUE_STR) == 0;
-    const QJsonArray users = browserService()->findMatchingEntries(id, siteUrl, formUrl, "", keyList, httpAuth);
 
+    const QJsonArray users = browserService()->findMatchingEntries(id, siteUrl, formUrl, "", keyList, httpAuth);
     if (users.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
-
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
+    QJsonObject message = browserMessageBuilder()->buildMessage(incrementedNonce);
     message["count"] = users.count();
     message["entries"] = users;
     message["hash"] = hash;
     message["id"] = id;
 
-    return buildResponse(action, message, newNonce);
+    return buildResponse(action, message, incrementedNonce);
 }
 
 QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action)

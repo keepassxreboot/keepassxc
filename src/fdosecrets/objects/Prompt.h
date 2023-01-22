@@ -211,6 +211,7 @@ namespace FdoSecrets
         PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
         QVariant currentResult() const override;
 
+        DBusResult createItem(const QString& windowId);
         DBusResult updateItem();
 
         QPointer<Collection> m_coll;

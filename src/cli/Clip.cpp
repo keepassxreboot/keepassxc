@@ -116,8 +116,12 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             return EXIT_FAILURE;
         }
 
+        selectedAttribute = "totp";
         found = true;
         value = entry->totp();
+    } else if (Utils::EntryFieldNames.contains(selectedAttribute)) {
+        value = Utils::getTopLevelField(entry, selectedAttribute);
+        found = true;
     } else {
         QStringList attrs = Utils::findAttributes(*entry->attributes(), selectedAttribute);
         if (attrs.size() > 1) {

@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,6 +48,9 @@ signals:
 
 private:
     QScopedPointer<Ui::BrowserAccessControlDialog> m_ui;
+    QList<Entry*> m_entriesToConfirm;
+    QList<Entry*> m_allowedEntries;
+    bool m_entriesAccepted;
 };
 
 #endif // BROWSERACCESSCONTROLDIALOG_H

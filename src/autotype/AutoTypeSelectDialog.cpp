@@ -35,6 +35,14 @@
 #include "gui/Clipboard.h"
 #include "gui/Icons.h"
 
+const auto MENU_FIELD_PROP_NAME = "menu_field";
+enum MENU_FIELD
+{
+    USERNAME = 1,
+    PASSWORD,
+    TOTP,
+};
+
 AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::AutoTypeSelectDialog())
@@ -258,14 +266,22 @@ void AutoTypeSelectDialog::updateActionMenu(const AutoTypeMatch& match)
     bool hasPassword = !match.first->password().isEmpty();
     bool hasTotp = match.first->hasTotp();
 
-    auto actions = m_actionMenu->actions();
-    Q_ASSERT(actions.size() >= 6);
-    actions[0]->setEnabled(hasUsername);
-    actions[1]->setEnabled(hasPassword);
-    actions[2]->setEnabled(hasTotp);
-    actions[3]->setEnabled(hasUsername);
-    actions[4]->setEnabled(hasPassword);
-    actions[5]->setEnabled(hasTotp);
+    for (auto action : m_actionMenu->actions()) {
+        auto prop = action->property(MENU_FIELD_PROP_NAME);
+        if (prop.isValid()) {
+            switch (prop.toInt()) {
+            case MENU_FIELD::USERNAME:
+                action->setEnabled(hasUsername);
+                break;
+            case MENU_FIELD::PASSWORD:
+                action->setEnabled(hasPassword);
+                break;
+            case MENU_FIELD::TOTP:
+                action->setEnabled(hasTotp);
+                break;
+            }
+        }
+    }
 }
 
 void AutoTypeSelectDialog::buildActionMenu()
@@ -276,19 +292,16 @@ void AutoTypeSelectDialog::buildActionMenu()
     auto typeTotpAction = new QAction(icons()->icon("auto-type"), tr("Type {TOTP}"), this);
     auto copyUsernameAction = new QAction(icons()->icon("username-copy"), tr("Copy Username"), this);
     auto copyPasswordAction = new QAction(icons()->icon("password-copy"), tr("Copy Password"), this);
-    auto copyTotpAction = new QAction(icons()->icon("chronometer"), tr("Copy TOTP"), this);
+    auto copyTotpAction = new QAction(icons()->icon("totp"), tr("Copy TOTP"), this);
     m_actionMenu->addAction(typeUsernameAction);
     m_actionMenu->addAction(typePasswordAction);
     m_actionMenu->addAction(typeTotpAction);
-#ifdef Q_OS_WIN
-    auto typeVirtualAction = new QAction(icons()->icon("auto-type"), tr("Use Virtual Keyboard"));
-    m_actionMenu->addAction(typeVirtualAction);
-#endif
     m_actionMenu->addAction(copyUsernameAction);
     m_actionMenu->addAction(copyPasswordAction);
     m_actionMenu->addAction(copyTotpAction);
 
     typeUsernameAction->setShortcut(Qt::CTRL + Qt::Key_1);
+    typeUsernameAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::USERNAME);
     connect(typeUsernameAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{USERNAME}";
@@ -296,6 +309,7 @@ void AutoTypeSelectDialog::buildActionMenu()
     });
 
     typePasswordAction->setShortcut(Qt::CTRL + Qt::Key_2);
+    typePasswordAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::PASSWORD);
     connect(typePasswordAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{PASSWORD}";
@@ -303,6 +317,7 @@ void AutoTypeSelectDialog::buildActionMenu()
     });
 
     typeTotpAction->setShortcut(Qt::CTRL + Qt::Key_3);
+    typeTotpAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::TOTP);
     connect(typeTotpAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
         match.second = "{TOTP}";
@@ -310,6 +325,8 @@ void AutoTypeSelectDialog::buildActionMenu()
     });
 
 #ifdef Q_OS_WIN
+    auto typeVirtualAction = new QAction(icons()->icon("auto-type"), tr("Use Virtual Keyboard"));
+    m_actionMenu->insertAction(copyUsernameAction, typeVirtualAction);
     typeVirtualAction->setShortcut(Qt::CTRL + Qt::Key_4);
     connect(typeVirtualAction, &QAction::triggered, this, [&] {
         m_virtualMode = true;
@@ -328,6 +345,7 @@ void AutoTypeSelectDialog::buildActionMenu()
 #endif
 #endif
 
+    copyUsernameAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::USERNAME);
     connect(copyUsernameAction, &QAction::triggered, this, [&] {
         auto entry = m_ui->view->currentMatch().first;
         if (entry) {
@@ -335,6 +353,8 @@ void AutoTypeSelectDialog::buildActionMenu()
             reject();
         }
     });
+
+    copyPasswordAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::PASSWORD);
     connect(copyPasswordAction, &QAction::triggered, this, [&] {
         auto entry = m_ui->view->currentMatch().first;
         if (entry) {
@@ -342,6 +362,8 @@ void AutoTypeSelectDialog::buildActionMenu()
             reject();
         }
     });
+
+    copyTotpAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::TOTP);
     connect(copyTotpAction, &QAction::triggered, this, [&] {
         auto entry = m_ui->view->currentMatch().first;
         if (entry) {

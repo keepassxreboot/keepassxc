@@ -210,8 +210,7 @@ namespace FdoSecrets
         return {};
     }
 
-    DBusResult
-    Collection::searchItems(const DBusClientPtr& client, const StringStringMap& attributes, QList<Item*>& items)
+    DBusResult Collection::searchItems(const DBusClientPtr&, const StringStringMap& attributes, QList<Item*>& items)
     {
         items.clear();
 
@@ -220,24 +219,6 @@ namespace FdoSecrets
             return ret;
         }
 
-        if (backendLocked() && settings()->unlockBeforeSearch()) {
-            // do a blocking unlock prompt first.
-            // while technically not correct, this should improve compatibility.
-            // see issue #4443
-            auto prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{this}, QSet<Item*>{});
-            if (!prompt) {
-                return QDBusError::InternalError;
-            }
-            // we don't know the windowId to show the prompt correctly,
-            // but the default of showing over the KPXC main window should be good enough
-            ret = prompt->prompt(client, "");
-            // blocking wait
-            QEventLoop loop;
-            connect(prompt, &PromptBase::completed, &loop, &QEventLoop::quit);
-            loop.exec();
-        }
-
-        // check again because the prompt may be cancelled
         if (backendLocked()) {
             // searchItems should work, whether `this` is locked or not.
             // however, we can't search items the same way as in gnome-keying,
@@ -276,7 +257,12 @@ namespace FdoSecrets
             EntrySearcher(caseSensitive, skipProtected).search(terms, m_exposedGroup, forceSearch);
         items.reserve(foundEntries.size());
         for (const auto& entry : foundEntries) {
-            items << m_entryToItem.value(entry);
+            const auto item = m_entryToItem.value(entry);
+            // it's possible that we don't have a corresponding item for the entry
+            // this can happen when the recycle bin is below the exposed group.
+            if (item) {
+                items << item;
+            }
         }
         return {};
     }
@@ -458,7 +444,7 @@ namespace FdoSecrets
         });
         // Another possibility is the group being moved to recycle bin.
         connect(m_exposedGroup.data(), &Group::modified, this, [this]() {
-            if (inRecycleBin(m_exposedGroup->parentGroup())) {
+            if (inRecycleBin(m_exposedGroup)) {
                 // reset the exposed group to none
                 FdoSecrets::settings()->setExposedGroup(m_backend->database().data(), {});
             }
@@ -677,11 +663,7 @@ namespace FdoSecrets
     bool Collection::inRecycleBin(Group* group) const
     {
         Q_ASSERT(m_backend);
-
-        if (!group) {
-            // the root group's parent is nullptr, we treat it as not in recycle bin.
-            return false;
-        }
+        Q_ASSERT(group);
 
         if (!m_backend->database()->metadata()) {
             return false;

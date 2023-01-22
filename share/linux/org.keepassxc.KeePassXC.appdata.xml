@@ -9,12 +9,19 @@
         <mimetype>application/x-keepass2</mimetype>
     </mimetypes>
     <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
+    <summary xml:lang="de">Von der Community entwickelter Port der Windows Anwendung “KeePass Password Safe”</summary>
     <developer_name>KeePassXC Team</developer_name>
     <description>
         <p>
             KeePassXC is an application for people with extremely high demands on secure
             personal data management. It has a light interface, is cross-platform and
             published under the terms of the GNU General Public License.
+        </p>
+        <p xml:lang="de">
+            KeePassXC ist eine Anwendung für Menschen, die extrem hohe Anforderungen
+            an die sichere Verwaltung von persönlichen Daten stellen. Sie hat eine leichtgewichtige
+            Benutzeroberfläche, ist auf vielen verschiedenen Plattformen verfügbar und
+            wird unter den Bedingungen der GNU General Public License veröffentlicht.
         </p>
     </description>
 
@@ -25,6 +32,8 @@
     <url type="faq">https://keepassxc.org/docs#faq</url>
     <url type="help">https://keepassxc.org/docs</url>
     <url type="translate">https://www.transifex.com/keepassxc/keepassxc</url>
+    <url type="vcs-browser">https://github.com/keepassxreboot/keepassxc</url>
+    <url type="contribute">https://keepassxc.org/docs#contribute</url>
 
     <screenshots>
         <screenshot type="default">
@@ -50,6 +59,75 @@
     </screenshots>
 
     <releases>
+        <release version="2.7.4" date="2022-10-29">
+            <description>
+                <ul>
+                    <li>Add 2 months expiration preset [#8687]</li>
+                    <li>CLI: Add Unicode support on Windows [#8618]</li>
+                    <li>Fix crash on macOS when unlocking database [#8676]</li>
+                    <li>Fix display of passwords in preview panel [#8633]</li>
+                    <li>Fix clicking links in entry preview panel [#8644]</li>
+                    <li>Prevent expired entries search if no results returned [#8643]</li>
+                    <li>Browser: Revert code causing connection problems [#8665]</li>
+                    <li>Browser: Fix socket file symbolic link on Linux [#8656]</li>
+                    <li>Flatpak: Fix launching browser proxy service [#8680]</li>
+                    <li>SSH Agent: Fix paegent support on Windows [#8619]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.7.3" date="2022-10-23">
+            <description>
+                <ul>
+                    <li>Enhance Tags Support and Add Saved Searches [#8435, #8607]</li>
+                    <li>Significant improvements to entry preview panel [#7993]</li>
+                    <li>Add password strength indicator to all password fields [#7885]</li>
+                    <li>Limit zxcvbn entropy estimation length to 128 characters [#7748]</li>
+                    <li>Try full URL path when fetching favicon [#8565]</li>
+                    <li>Hide usernames in preview panel when hidden in entry view [#8608]</li>
+                    <li>Enable dark title bar on windows when accent color is not used [#8498]</li>
+                    <li>Add option to display passwords in color in preview panel [#7097]</li>
+                    <li>Add XML Export option to GUI [#8524]</li>
+                    <li>Increase entropy required for a "good" password rating to 75 [#8523]</li>
+                    <li>Add shortcut to copy password with TOTP appended [#8443]</li>
+                    <li>Show entry count in status bar [#8435]</li>
+                    <li>Allow KeePassXC to be built without X11 [#8147]</li>
+                    <li>Enable use of VivoKey Apex and Dangerous Things FlexSecure tokens [#8332]</li>
+                    <li>Add setting for number of recent files [#8239]</li>
+                    <li>Add Ctrl+Tab shortcut to cycle databases in unlock dialog [#8168]</li>
+                    <li>Replace offensive words in eff_large.wordlist [#7968]</li>
+                    <li>Auto-Type: PICKCHARS can specify attribute and ignore BEEP [#8118]</li>
+                    <li>Linux: Add isHardwareKeySupported and refreshHardwareKeys to DBus methods [#8055]</li>
+                    <li>Add config variable to specify default database file name [#8042]</li>
+                    <li>CLI: Add `db-edit` command [#8400]</li>
+                    <li>CLI: Add option to display all attributes with `show` command [#8256]</li>
+                    <li>CLI: Show UUID and tags with `show` and `clip` commands [#8241]</li>
+                    <li>Browser: Move socket into separate directory on Linux [#8030]</li>
+                    <li>Browser: Add group setting to omit WWW subdomain when matching URLs [#7988]</li>
+                    <li>FdoSecrets: Ask to unlock the database when creating items [#8022, #8028]</li>
+                    <li>FdoSecrets: Skip entries in recycle bin when searching [#8021]</li>
+                    <li>Fix potential deadlock in UI when saving [#8606]</li>
+                    <li>Fix newlines when copying notes from preview panel [#8542]</li>
+                    <li>Fix dark mode detection on Linux [#8477]</li>
+                    <li>Fix crash when deleting items in recycle bin while searching [#8117]</li>
+                    <li>Fix crash when trying to close database during unlock [#8144]</li>
+                    <li>Fix tabbing around the interface [#8435, #8520]</li>
+                    <li>Fix OPVault import when there are multiple OTP fields [#8436]</li>
+                    <li>Fix various Windows Hello bugs [#8354]</li>
+                    <li>Fix use of Apple Watch for Quick Unlock [#8311]</li>
+                    <li>Better handling of "Lock on Minimize" setting [#8202]</li>
+                    <li>Support numeric aware sorting on Windows and macOS [#8363]</li>
+                    <li>Check for write permission before entering portable mode [#8447]</li>
+                    <li>Correct regex escape logic to prevent parse errors [#7778]</li>
+                    <li>Normalize slashes and file case for last used databases [#7864, #7214]</li>
+                    <li>Link ykcore against pthread [#7807]</li>
+                    <li>Auto-Type: Fix menu entries in selection dialog on Windows [#7987]</li>
+                    <li>Auto-Type: Fix use of modifiers under macOS [#8111]</li>
+                    <li>CLI: Fix output when using clip with the -t flag [#8271]</li>
+                    <li>Browser: Use asynchronous access confirm dialog [#8273]</li>
+                    <li>Browser: Always send database locked/unlocked status [#8114]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.7.1" date="2022-04-05">
             <description>
                 <ul>

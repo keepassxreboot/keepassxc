@@ -35,6 +35,7 @@
 #endif
 
 #include <QCheckBox>
+#include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFont>
 
@@ -166,6 +167,11 @@ void DatabaseOpenWidget::hideEvent(QHideEvent* event)
     }
 }
 
+bool DatabaseOpenWidget::unlockingDatabase()
+{
+    return m_unlockingDatabase;
+}
+
 void DatabaseOpenWidget::load(const QString& filename)
 {
     clearForms();
@@ -205,6 +211,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->editPassword->setShowPassword(false);
     m_ui->keyFileLineEdit->clear();
     m_ui->keyFileLineEdit->setShowPassword(false);
+    m_ui->keyFileLineEdit->setClearButtonEnabled(true);
     m_ui->challengeResponseCombo->clear();
     m_ui->centralStack->setCurrentIndex(0);
     m_db.reset();
@@ -434,12 +441,6 @@ void DatabaseOpenWidget::browseKeyFile()
     }
 }
 
-void DatabaseOpenWidget::clearKeyFileText()
-{
-    m_ui->keyFileLineEdit->clear();
-    m_ui->keyFileLineEdit->setShowPassword(false);
-}
-
 void DatabaseOpenWidget::pollHardwareKey()
 {
     if (m_pollingHardwareKey) {
@@ -520,6 +521,7 @@ void DatabaseOpenWidget::setUserInteractionLock(bool state)
         }
         m_ui->centralStack->setEnabled(true);
     }
+    m_unlockingDatabase = state;
 }
 
 bool DatabaseOpenWidget::isOnQuickUnlockScreen()

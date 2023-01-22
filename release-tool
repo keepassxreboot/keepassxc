@@ -51,7 +51,7 @@ BUILD_PLUGINS="all"
 INSTALL_PREFIX="/usr/local"
 ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
-MACOSX_DEPLOYMENT_TARGET=10.13
+MACOSX_DEPLOYMENT_TARGET=10.15
 TIMESTAMP_SERVER="http://timestamp.sectigo.com"
 
 # -----------------------------------------------------------------------
@@ -883,7 +883,6 @@ build() {
         fi
     fi
 
-    OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
     if  ! ${build_snapshot} && [ -d "$OUTPUT_DIR" ]; then
         exitError "Output dir '${OUTPUT_DIR}' already exists."
     fi
@@ -892,6 +891,7 @@ build() {
     if ! mkdir -p "$OUTPUT_DIR"; then
         exitError "Failed to create output directory!"
     fi
+    OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
 
     if ${build_source_tarball}; then
         logInfo "Creating source tarball..."
@@ -930,6 +930,13 @@ build() {
         # linuxdeploy requires /usr as install prefix
         INSTALL_PREFIX="/usr"
     fi
+    if [ -n "$OS_MACOS" ]; then
+      type brew &> /dev/null 2>&1
+      if [ $? -eq 0 ]; then
+        INSTALL_PREFIX=$(brew --prefix)
+      fi
+    fi
+
     # Do not build tests cases
     CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_TESTS=OFF"
 

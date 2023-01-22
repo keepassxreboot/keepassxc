@@ -184,6 +184,30 @@ namespace FdoSecrets
         return {};
     }
 
+    DBusResult Service::unlockedCollections(QList<Collection*>& unlocked) const
+    {
+        auto ret = collections(unlocked);
+        if (ret.err()) {
+            return ret;
+        }
+
+        // filter out locked collections
+        auto it = unlocked.begin();
+        while (it != unlocked.end()) {
+            bool isLocked = true;
+            ret = (*it)->locked(isLocked);
+            if (ret.err()) {
+                return ret;
+            }
+            if (isLocked) {
+                it = unlocked.erase(it);
+            } else {
+                ++it;
+            }
+        }
+        return {};
+    }
+
     DBusResult Service::openSession(const DBusClientPtr& client,
                                     const QString& algorithm,
                                     const QVariant& input,
@@ -242,15 +266,43 @@ namespace FdoSecrets
     DBusResult Service::searchItems(const DBusClientPtr& client,
                                     const StringStringMap& attributes,
                                     QList<Item*>& unlocked,
-                                    QList<Item*>& locked) const
+                                    QList<Item*>& locked)
     {
-        QList<Collection*> colls;
-        auto ret = collections(colls);
+        // we can only search unlocked collections
+        QList<Collection*> unlockedColls;
+        auto ret = unlockedCollections(unlockedColls);
         if (ret.err()) {
             return ret;
         }
 
-        for (const auto& coll : asConst(colls)) {
+        while (unlockedColls.isEmpty() && settings()->unlockBeforeSearch()) {
+            // enable compatibility mode by making sure at least one database is unlocked
+            QEventLoop loop;
+            bool wasAccepted = false;
+            connect(this, &Service::doneUnlockDatabaseInDialog, &loop, [&](bool accepted) {
+                wasAccepted = accepted;
+                loop.quit();
+            });
+
+            doUnlockAnyDatabaseInDialog();
+
+            // blocking wait
+            loop.exec();
+
+            if (!wasAccepted) {
+                // user cancelled, do not proceed
+                qWarning() << "user cancelled";
+                return {};
+            }
+
+            // need to recompute this because collections may disappear while in event loop
+            ret = unlockedCollections(unlockedColls);
+            if (ret.err()) {
+                return ret;
+            }
+        }
+
+        for (const auto& coll : asConst(unlockedColls)) {
             QList<Item*> items;
             ret = coll->searchItems(client, attributes, items);
             if (ret.err()) {
@@ -258,12 +310,13 @@ namespace FdoSecrets
             }
             // item locked state already covers its collection's locked state
             for (const auto& item : asConst(items)) {
-                bool l;
-                ret = item->locked(client, l);
+                Q_ASSERT(item);
+                bool itemLocked;
+                ret = item->locked(client, itemLocked);
                 if (ret.err()) {
                     return ret;
                 }
-                if (l) {
+                if (itemLocked) {
                     locked.append(item);
                 } else {
                     unlocked.append(item);
@@ -522,18 +575,49 @@ namespace FdoSecrets
             return;
         }
 
-        // mark the db as being unlocked to prevent multiple dialogs for the same db
-        if (m_unlockingDb.contains(dbWidget)) {
+        // check if the db is already being unlocked to prevent multiple dialogs for the same db
+        if (m_unlockingAnyDatabase || m_unlockingDb.contains(dbWidget)) {
             return;
         }
-        m_unlockingDb.insert(dbWidget);
 
+        // insert a dummy one here, just to prevent multiple dialogs
+        // the real one will be inserted in onDatabaseUnlockDialogFinished
+        m_unlockingDb[dbWidget] = {};
+
+        // actually show the dialog
         m_databases->unlockDatabaseInDialog(dbWidget, DatabaseOpenDialog::Intent::None);
+    }
+
+    void Service::doUnlockAnyDatabaseInDialog()
+    {
+        if (m_unlockingAnyDatabase || !m_unlockingDb.isEmpty()) {
+            return;
+        }
+        m_unlockingAnyDatabase = true;
+
+        m_databases->unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent::None);
     }
 
     void Service::onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget)
     {
-        m_unlockingDb.remove(dbWidget);
-        emit doneUnlockDatabaseInDialog(accepted, dbWidget);
+        if (!m_unlockingAnyDatabase && !m_unlockingDb.contains(dbWidget)) {
+            // not our concern
+            return;
+        }
+
+        if (!accepted) {
+            emit doneUnlockDatabaseInDialog(false, dbWidget);
+            m_unlockingAnyDatabase = false;
+            m_unlockingDb.remove(dbWidget);
+        } else {
+            // delay the done signal to when the database is actually done with unlocking
+            // this is a oneshot connection to prevent superfluous signals
+            auto conn = connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [dbWidget, this]() {
+                emit doneUnlockDatabaseInDialog(true, dbWidget);
+                m_unlockingAnyDatabase = false;
+                disconnect(m_unlockingDb.take(dbWidget));
+            });
+            m_unlockingDb[dbWidget] = conn;
+        }
     }
 } // namespace FdoSecrets

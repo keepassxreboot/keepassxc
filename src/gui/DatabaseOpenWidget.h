@@ -46,6 +46,7 @@ public:
     void enterKey(const QString& pw, const QString& keyFile);
     QSharedPointer<Database> database();
     void resetQuickUnlock();
+    bool unlockingDatabase();
 
 signals:
     void dialogFinished(bool accepted);
@@ -69,7 +70,6 @@ protected slots:
 
 private slots:
     void browseKeyFile();
-    void clearKeyFileText();
     void pollHardwareKey();
     void hardwareKeyResponse(bool found);
     void openHardwareKeyHelp();
@@ -78,6 +78,7 @@ private slots:
 private:
     bool m_pollingHardwareKey = false;
     bool m_blockQuickUnlock = false;
+    bool m_unlockingDatabase = false;
     QTimer m_hideTimer;
 
     Q_DISABLE_COPY(DatabaseOpenWidget)

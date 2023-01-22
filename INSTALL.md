@@ -57,10 +57,10 @@ To compile from source, open a **Terminal (Linux/MacOS)**, the **MSVC Tools Comm
    git pull
    ```
 
-   For a stable build, it is recommended to check out the master branch.
+   For a stable build, it is recommended to check out the `latest` tag.
 
    ```
-   git checkout master
+   git checkout latest
    ```
 
 2. Navigate to the directory where you have downloaded KeePassXC and type these commands:
@@ -78,7 +78,7 @@ Note: These steps place the compiled KeePassXC binary inside the `./build/src/` 
 
 If you installed Qt5 via Homebrew, you should be able to compile KeePassXC without any changes. If CMake fails to find your Qt installation, you can specify it manually by adding the following parameter:
 
-`-DCMAKE_PREFIX_PATH=/usr/local/opt/qt/lib/cmake`
+`-DCMAKE_PREFIX_PATH=$(brew --prefix qt5)/lib/cmake`
 
 (or whatever your Qt installation path is)
 
@@ -98,7 +98,7 @@ CMake Configuration Options
 ## Common Parameters
 
 ```
--DCMAKE_INSTALL_PREFIX=/usr/local
+-DCMAKE_INSTALL_PREFIX=$(brew --prefix)
 -DCMAKE_VERBOSE_MAKEFILE=ON
 -DCMAKE_BUILD_TYPE=<RelWithDebInfo/Debug/Release>
 -DWITH_GUI_TESTS=ON

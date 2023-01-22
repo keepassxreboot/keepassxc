@@ -40,10 +40,10 @@ public slots:
     void setEntry(Entry* selectedEntry);
     void setGroup(Group* selectedGroup);
     void setDatabaseMode(DatabaseWidget::Mode mode);
+    void refresh();
     void clear();
 
 signals:
-    void errorOccurred(const QString& error);
     void entryUrlActivated(Entry* entry);
 
 private slots:
@@ -52,6 +52,7 @@ private slots:
     void updateEntryGeneralTab();
     void updateEntryAdvancedTab();
     void updateEntryAutotypeTab();
+    void setUsernameVisible(bool state);
     void setPasswordVisible(bool state);
     void setEntryNotesVisible(bool state);
     void setGroupNotesVisible(bool state);

@@ -71,7 +71,6 @@ private:
 
     bool m_caseSensitive;
     bool m_skipProtected;
-    QRegularExpression m_termParser;
     QList<SearchTerm> m_searchTerms;
 
     friend class TestEntrySearcher;

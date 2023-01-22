@@ -106,7 +106,10 @@ private:
              "\x3B\xFD\x13\x00\x00\x81\x31\xFE\x45\x41\x37\x30\x30\x36\x43\x47\x20\x32\x34\x32\x52\x31\xD6"),
          "YubiKey NEO (token)"},
         // Other tokens implementing the Yubikey challenge-response protocol
-        {QByteArrayLiteral("\x3B\x80\x80\x01\x01"), "Fidesmo Card 2.0"}};
+        {QByteArrayLiteral("\x3B\x80\x80\x01\x01"), "Fidesmo Card 2.0"},
+        {QByteArrayLiteral("\x3B\x8A\x80\x01\x00\x31\xC1\x73\xC8\x40\x00\x00\x90\x00\x90"), "VivoKey Apex"},
+        {QByteArrayLiteral("\x3B\x8D\x80\x01\x00\x31\xC1\x73\xC8\x40\x00\x52\xA5\x10\x00\x90\x00\x70"),
+         "Dangerous Things FlexSecure"}};
 };
 
 #endif // KEEPASSX_YUBIKEY_INTERFACE_PCSC_H

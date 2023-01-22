@@ -24,6 +24,7 @@
 #include "format/OpVaultReader.h"
 #include "totp/totp.h"
 
+#include <QJsonObject>
 #include <QList>
 #include <QStringList>
 #include <QTest>
@@ -109,6 +110,15 @@ void TestOpVaultReader::testReadIntoDatabase()
     auto totpSettings = entry->totpSettings();
     QCOMPARE(totpSettings->digits, static_cast<unsigned int>(8));
     QCOMPARE(totpSettings->step, static_cast<unsigned int>(45));
+
+    // Add another OTP to this entry to confirm it doesn't overwrite the existing one
+    auto field = QJsonObject::fromVariantMap({{"n", "TOTP_SETTINGS"}, {"v", "otpauth://test.url?digits=6"}});
+    reader.fillFromSectionField(entry, "", field);
+    QVERIFY(entry->hasTotp());
+    totpSettings = entry->totpSettings();
+    QCOMPARE(totpSettings->digits, static_cast<unsigned int>(8));
+    QCOMPARE(totpSettings->step, static_cast<unsigned int>(45));
+    QVERIFY(entry->attributes()->contains("otp_1"));
 
     // Confirm trashed entries are sent to the recycle bin
     auto recycleBin = db->metadata()->recycleBin();

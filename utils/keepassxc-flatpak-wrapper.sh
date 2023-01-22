@@ -23,26 +23,18 @@
 # For format of parsed arguments, see "Connection-based messaging" at:
 # https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Native_messaging
 
-readonly appId='org.keepassxc.KeePassXC'
 # Chromium, Google Chrome, Vivaldi & Brave
 readonly arg1='chrome-extension://oboonakemofpalcgghocfoadofidjkkk'
 # Firefox & Tor Browser
 readonly arg2='keepassxc-browser@keepassxc.org'
 
-# Browser integration is enabled if unix socket exists
-if [[ -S "${XDG_RUNTIME_DIR}/app/${appId}/${appId}.BrowserServer" ]]; then
-    # Using the =~ operator is intended to allow small variations
-    # in the parameters, like and ending slash.
-    # shellcheck disable=2076
-    if [[ "$1" =~ "${arg1}" ]] || [[ "$2" =~ "${arg2}" ]]; then
-        exec keepassxc-proxy "$@"
-    fi
-fi
-
-# If the first argument is "cli", execute keepassxc-cli instead.
-if [[ "$1" == "cli" ]]; then
+# Check arguments to see if this was a proxy launch from the browser
+# Use =~ to account for minor variations in the chrome extension
+if [[ "$1" =~ "$arg1" || "$2" == "$arg2" ]]; then
+    exec keepassxc-proxy "$@"
+elif [[ "$1" == "cli" ]]; then
     exec keepassxc-cli "${@:2}"
+else
+    # If no arguments are matched or browser integration is off, execute keepassxc
+    exec keepassxc "$@"
 fi
-
-# If no arguments are matched or browser integration is off, execute keepassxc
-exec keepassxc "$@"

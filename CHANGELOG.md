@@ -1,5 +1,74 @@
 # Changelog
 
+## 2.7.4 (2022-10-29)
+
+### Changes
+- Add 2 months expiration preset [#8687]
+- CLI: Add Unicode support on Windows [#8618]
+
+### Fixes
+- Fix crash on macOS when unlocking database [#8676]
+- Fix display of passwords in preview panel [#8633]
+- Fix clicking links in entry preview panel [#8644]
+- Prevent expired entries search if no results returned [#8643]
+- Browser: Revert code causing connection problems [#8665]
+- Browser: Fix socket file symbolic link on Linux [#8656]
+- Flatpak: Fix launching browser proxy service [#8680]
+- SSH Agent: Fix paegent support on Windows [#8619]
+
+## 2.7.3 (2022-10-23)
+
+### Changes
+- Enhance Tags Support and Add Saved Searches [#8435, #8607]
+- Significant improvements to entry preview panel [#7993]
+- Add password strength indicator to all password fields [#7885]
+- Limit zxcvbn entropy estimation length to 128 characters [#7748]
+- Try full URL path when fetching favicon [#8565]
+- Hide usernames in preview panel when hidden in entry view [#8608]
+- Enable dark title bar on windows when accent color is not used [#8498]
+- Add option to display passwords in color in preview panel [#7097]
+- Add XML Export option to GUI [#8524]
+- Increase entropy required for a "good" password rating to 75 [#8523]
+- Add shortcut to copy password with TOTP appended [#8443]
+- Show entry count in status bar [#8435]
+- Allow KeePassXC to be built without X11 [#8147]
+- Enable use of VivoKey Apex and Dangerous Things FlexSecure tokens [#8332]
+- Add setting for number of recent files [#8239]
+- Add Ctrl+Tab shortcut to cycle databases in unlock dialog [#8168]
+- Replace offensive words in eff_large.wordlist [#7968]
+- Auto-Type: PICKCHARS can specify attribute and ignore BEEP [#8118]
+- Linux: Add isHardwareKeySupported and refreshHardwareKeys to DBus methods [#8055]
+- Add config variable to specify default database file name [#8042]
+- Support numeric aware sorting on Windows and macOS [#8363]
+- CLI: Add `db-edit` command [#8400]
+- CLI: Add option to display all attributes with `show` command [#8256]
+- CLI: Show UUID and tags with `show` and `clip` commands [#8241]
+- Browser: Move socket into separate directory on Linux [#8030]
+- Browser: Add group setting to omit WWW subdomain when matching URLs [#7988]
+- FdoSecrets: Ask to unlock the database when creating items [#8022, #8028]
+- FdoSecrets: Skip entries in recycle bin when searching [#8021]
+
+### Fixes
+- Fix potential deadlock in UI when saving [#8606]
+- Fix newlines when copying notes from preview panel [#8542]
+- Fix dark mode detection on Linux [#8477]
+- Fix crash when deleting items in recycle bin while searching [#8117]
+- Fix crash when trying to close database during unlock [#8144]
+- Fix tabbing around the interface [#8435, #8520]
+- Fix OPVault import when there are multiple OTP fields [#8436]
+- Fix various Windows Hello bugs [#8354]
+- Fix use of Apple Watch for Quick Unlock [#8311]
+- Better handling of "Lock on Minimize" setting [#8202]
+- Check for write permission before entering portable mode [#8447]
+- Correct regex escape logic to prevent parse errors [#7778]
+- Normalize slashes and file case for last used databases [#7864, #7214]
+- Link ykcore against pthread [#7807]
+- Auto-Type: Fix menu entries in selection dialog on Windows [#7987]
+- Auto-Type: Fix use of modifiers under macOS [#8111]
+- CLI: Fix output when using clip with the -t flag [#8271]
+- Browser: Use asynchronous access confirm dialog [#8273]
+- Browser: Always send database locked/unlocked status [#8114]
+
 ## 2.7.1 (2022-04-05)
 
 ### Changes

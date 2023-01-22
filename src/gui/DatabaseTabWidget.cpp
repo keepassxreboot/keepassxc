@@ -63,6 +63,9 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
 #ifdef Q_OS_MACOS
     connect(macUtils(), SIGNAL(lockDatabases()), SLOT(lockDatabases()));
 #endif
+
+    m_lockDelayTimer.setSingleShot(true);
+    connect(&m_lockDelayTimer, &QTimer::timeout, this, [this] { lockDatabases(); });
 }
 
 DatabaseTabWidget::~DatabaseTabWidget() = default;
@@ -71,9 +74,11 @@ void DatabaseTabWidget::toggleTabbar()
 {
     if (count() > 1) {
         tabBar()->show();
+        setFocusPolicy(Qt::StrongFocus);
         emit tabVisibilityChanged(true);
     } else {
         tabBar()->hide();
+        setFocusPolicy(Qt::NoFocus);
         emit tabVisibilityChanged(false);
     }
 }
@@ -150,11 +155,12 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
                                        const QString& password,
                                        const QString& keyfile)
 {
-    QFileInfo fileInfo(filePath);
+    QString cleanFilePath = QDir::toNativeSeparators(filePath);
+    QFileInfo fileInfo(cleanFilePath);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
 
     if (canonicalFilePath.isEmpty()) {
-        emit messageGlobal(tr("Failed to open %1. It either does not exist or is not accessible.").arg(filePath),
+        emit messageGlobal(tr("Failed to open %1. It either does not exist or is not accessible.").arg(cleanFilePath),
                            MessageWidget::Error);
         return;
     }
@@ -173,10 +179,10 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
         }
     }
 
-    auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(filePath), this);
+    auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(cleanFilePath), this);
     addDatabaseTab(dbWidget, inBackground);
     dbWidget->performUnlockDatabase(password, keyfile);
-    updateLastDatabases(filePath);
+    updateLastDatabases(cleanFilePath);
 }
 
 /**
@@ -200,6 +206,7 @@ void DatabaseTabWidget::lockAndSwitchToFirstUnlockedDatabase(int index)
         for (int i = 0, c = count(); i < c; ++i) {
             if (!databaseWidgetFromIndex(i)->isLocked()) {
                 setCurrentIndex(i);
+                emitActiveDatabaseChanged();
                 return;
             }
         }
@@ -486,6 +493,40 @@ void DatabaseTabWidget::exportToHtml()
     exportDialog->exec();
 }
 
+void DatabaseTabWidget::exportToXML()
+{
+    auto db = databaseWidgetFromIndex(currentIndex())->database();
+    if (!db) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    if (!warnOnExport()) {
+        return;
+    }
+
+    auto fileName = fileDialog()->getSaveFileName(
+        this, tr("Export database to XML file"), FileDialog::getLastDir("xml"), tr("XML file").append(" (*.xml)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    FileDialog::saveLastDir("xml", fileName, true);
+
+    QByteArray xmlData;
+    QString err;
+    if (!db->extract(xmlData, &err)) {
+        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(err), MessageWidget::Error);
+    }
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(file.errorString()),
+                           MessageWidget::Error);
+    }
+    file.write(xmlData);
+}
+
 bool DatabaseTabWidget::warnOnExport()
 {
     auto ans =
@@ -646,6 +687,18 @@ bool DatabaseTabWidget::lockDatabases()
     return numLocked == c;
 }
 
+void DatabaseTabWidget::lockDatabasesDelayed()
+{
+    // Delay at least 1 second and up to 20 seconds depending on clipboard state.
+    // This allows for Auto-Type, Browser Extension, and clipboard to function
+    // even with "Lock on Minimize" setting enabled.
+    int lockDelay = qBound(1, clipboard()->secondsToClear(), 20);
+    m_lockDelayTimer.setInterval(lockDelay * 1000);
+    if (!m_lockDelayTimer.isActive()) {
+        m_lockDelayTimer.start();
+    }
+}
+
 /**
  * Unlock a database with an unlock popup dialog.
  *
@@ -764,7 +817,7 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
         config()->remove(Config::LastDatabases);
     } else {
         QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
-        lastDatabases.prepend(filename);
+        lastDatabases.prepend(QDir::toNativeSeparators(filename));
         lastDatabases.removeDuplicates();
 
         while (lastDatabases.count() > config()->get(Config::NumberOfRememberedLastDatabases).toInt()) {

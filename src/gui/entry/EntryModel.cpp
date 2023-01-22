@@ -85,25 +85,13 @@ void EntryModel::setEntries(const QList<Entry*>& entries)
     m_entries = entries;
     m_orgEntries = entries;
 
-    QSet<Database*> databases;
-
-    for (Entry* entry : asConst(m_entries)) {
-        databases.insert(entry->group()->database());
-    }
-
-    for (Database* db : asConst(databases)) {
-        Q_ASSERT(db);
-        const QList<Group*> groupList = db->rootGroup()->groupsRecursive(true);
-        for (const Group* group : groupList) {
-            m_allGroups.append(group);
-        }
-
-        if (db->metadata()->recycleBin()) {
-            m_allGroups.removeOne(db->metadata()->recycleBin());
+    for (const auto entry : asConst(m_entries)) {
+        if (entry->group()) {
+            m_allGroups.insert(entry->group());
         }
     }
 
-    for (const Group* group : asConst(m_allGroups)) {
+    for (const auto group : m_allGroups) {
         makeConnections(group);
     }
 
@@ -291,7 +279,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             break;
         case Totp:
             if (entry->hasTotp()) {
-                return icons()->icon("chronometer");
+                return icons()->icon("totp");
             }
             break;
         case PasswordStrength:
@@ -388,7 +376,7 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
         case Paperclip:
             return icons()->icon("paperclip");
         case Totp:
-            return icons()->icon("chronometer");
+            return icons()->icon("totp");
         case PasswordStrength:
             return icons()->icon("lock-question");
         }

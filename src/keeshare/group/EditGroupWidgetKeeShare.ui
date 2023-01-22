@@ -51,9 +51,9 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="PasswordEdit" name="passwordEdit">
+      <widget class="PasswordWidget" name="passwordEdit" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -64,11 +64,11 @@
          <height>0</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
        <property name="accessibleName">
         <string>Password field</string>
-       </property>
-       <property name="echoMode">
-        <enum>QLineEdit::Password</enum>
        </property>
       </widget>
      </item>
@@ -190,9 +190,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PasswordEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
+   <class>PasswordWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PasswordWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

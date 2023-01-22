@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,17 +21,19 @@
 #include <QUrl>
 
 #include "core/Entry.h"
+#include <QCloseEvent>
 
 BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::BrowserAccessControlDialog())
+    , m_entriesAccepted(false)
 {
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     m_ui->setupUi(this);
 
     connect(m_ui->allowButton, SIGNAL(clicked()), SLOT(accept()));
-    connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
+    connect(m_ui->denyButton, SIGNAL(clicked()), SLOT(reject()));
 }
 
 BrowserAccessControlDialog::~BrowserAccessControlDialog()
@@ -69,13 +71,10 @@ void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QStr
             }
         });
         m_ui->itemsTable->setCellWidget(row, 1, disableButton);
-
         ++row;
     }
-
     m_ui->itemsTable->resizeColumnsToContents();
     m_ui->itemsTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-
     m_ui->allowButton->setFocus();
 }
 

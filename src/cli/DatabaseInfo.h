@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,25 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_LISTDELETER_H
-#define KEEPASSX_LISTDELETER_H
+#ifndef KEEPASSXC_DATABASEINFO_H
+#define KEEPASSXC_DATABASEINFO_H
 
-#include <QList>
+#include "DatabaseCommand.h"
 
-template <typename T> class ListDeleter
+class DatabaseInfo : public DatabaseCommand
 {
 public:
-    inline explicit ListDeleter(QList<T>* list)
-        : m_list(list)
-    {
-    }
-    inline ~ListDeleter()
-    {
-        qDeleteAll(*m_list);
-    }
+    DatabaseInfo();
 
-private:
-    QList<T>* m_list;
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 };
 
-#endif // KEEPASSX_LISTDELETER_H
+#endif // KEEPASSXC_DATABASEINFO_H

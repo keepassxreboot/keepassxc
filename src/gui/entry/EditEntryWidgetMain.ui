@@ -243,12 +243,12 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="PasswordEdit" name="passwordEdit">
+     <widget class="PasswordWidget" name="passwordEdit" native="true">
+      <property name="focusPolicy">
+       <enum>Qt::StrongFocus</enum>
+      </property>
       <property name="accessibleName">
        <string>Password field</string>
-      </property>
-      <property name="echoMode">
-       <enum>QLineEdit::Password</enum>
       </property>
      </widget>
     </item>
@@ -303,15 +303,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>PasswordEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>URLEdit</class>
    <extends>QLineEdit</extends>
    <header>gui/URLEdit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PasswordWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PasswordWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -320,8 +320,8 @@
   <tabstop>usernameComboBox</tabstop>
   <tabstop>passwordEdit</tabstop>
   <tabstop>urlEdit</tabstop>
-  <tabstop>tagsList</tabstop>
   <tabstop>fetchFaviconButton</tabstop>
+  <tabstop>tagsList</tabstop>
   <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>
   <tabstop>expirePresets</tabstop>

@@ -5,7 +5,7 @@
 : ${KDBX_SEARCH:=~/.KeePass/*.kdbx}
 
 PROG=$(basename "$0")
-KeePassXC=$(ls -f {/usr/local,/Applications}/KeePassXC.app/Contents/MacOS/KeePassXC 2>/dev/null | head -1)
+KeePassXC=$(ls -f {/usr/local,/opt/homebrew,/Applications}/KeePassXC.app/Contents/MacOS/KeePassXC 2>/dev/null | head -1)
 
 daemon_main() {
   declare -A DBs

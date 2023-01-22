@@ -18,6 +18,7 @@
 #include "Utils.h"
 
 #include "core/Database.h"
+#include "core/Entry.h"
 #include "core/EntryAttributes.h"
 #include "keys/FileKey.h"
 #ifdef WITH_XC_YUBIKEY
@@ -62,6 +63,13 @@ namespace Utils
         fd->open(fopen("/dev/null", "w"), QIODevice::WriteOnly);
 #endif
         DEVNULL.setDevice(fd);
+
+#ifdef Q_OS_WIN
+        // On Windows, we ask via keepassxc-cli.exe.manifest to use UTF-8,
+        // but the console code-page isn't automatically changed to match.
+        SetConsoleCP(GetACP());
+        SetConsoleOutputCP(GetACP());
+#endif
     }
 
     void setStdinEcho(bool enable = true)
@@ -366,6 +374,17 @@ namespace Utils
         }
 
         return result;
+    }
+
+    QString getTopLevelField(const Entry* entry, const QString& fieldName)
+    {
+        if (fieldName == UuidFieldName) {
+            return entry->uuid().toString();
+        }
+        if (fieldName == TagsFieldName) {
+            return entry->tags();
+        }
+        return QString("");
     }
 
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name)

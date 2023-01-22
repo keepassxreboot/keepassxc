@@ -22,9 +22,11 @@ set(cli_SOURCES
         AttachmentRemove.cpp
         Clip.cpp
         Close.cpp
-        Create.cpp
         Command.cpp
         DatabaseCommand.cpp
+        DatabaseCreate.cpp
+        DatabaseEdit.cpp
+        DatabaseInfo.cpp
         Diceware.cpp
         Edit.cpp
         Estimate.cpp
@@ -33,7 +35,6 @@ set(cli_SOURCES
         Generate.cpp
         Help.cpp
         Import.cpp
-        Info.cpp
         List.cpp
         Merge.cpp
         Move.cpp
@@ -64,6 +65,9 @@ install(TARGETS keepassxc-cli
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
 
 if(WIN32)
+    target_sources(keepassxc-cli
+        PRIVATE keepassxc-cli.exe.manifest)
+
 #    install(CODE "include(BundleUtilities)
 #                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/keepassxc-cli.exe\" \"\" \"\")"
 #            COMPONENT Runtime)

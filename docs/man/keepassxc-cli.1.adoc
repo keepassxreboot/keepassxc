@@ -16,7 +16,7 @@
 
 = keepassxc-cli(1)
 KeePassXC Team <team@keepassxc.org>
-:docdate: 2020-08-31
+:docdate: 2022-08-20
 :doctype: manpage
 :mansource: KeePassXC {revnumber}
 :manmanual: General Commands Manual
@@ -65,6 +65,11 @@ It provides the ability to query and modify the entries of a KeePass database, d
   Creates a new database with a password and/or a key file.
   The key file will be created if the file that is referred to does not exist.
   If both the key file and password are empty, no database will be created.
+
+*db-edit* [_options_] <__database__>::
+  Edits a database.
+  When setting a key file, the key file will be created if the file that is referred to
+  does not exist.
 
 *db-info* [_options_] <__database__>::
   Show a database's information.
@@ -154,7 +159,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *--no-password*::
   Deactivates the password key for the database.
 
-*-y*, *--yubikey* <__slot__>::
+*-y*, *--yubikey* <__slot[:serial]__>::
   Specifies a yubikey slot for unlocking the database.
   In a merge operation this option is used to specify the YubiKey slot for the first database.
 
@@ -177,7 +182,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *--no-password-from*::
   Deactivates password key for the database to merge from.
 
-*--yubikey-from* <__slot__>::
+*--yubikey-from* <__slot[:serial]__>::
   YubiKey slot for the second database.
 
 *-s*, *--same-credentials*::
@@ -235,15 +240,23 @@ The same password generation options as documented for the generate command can 
   If a unique matching entry is found it will be copied to the clipboard.
   If multiple entries are found they will be listed to refine the search. (no clip performed)
 
-=== Create and Import options
-*-k*, *--set-key-file* <__path__>::
+=== Db-create, Db-edit and Import options
+*--set-key-file* <__path__>::
   Set the key file for the database.
 
 *-p*, *--set-password*::
   Set a password for the database.
 
+=== Db-create, Import options
 *-t*, *--decryption-time* <__time__>::
   Target decryption time in MS for the database.
+
+=== Db-edit options
+*--unset-password* <__path__>::
+  Removes the password for the database.
+
+*--unset-key-file* <__path__>::
+  Removes the key file for the database.
 
 === Show options
 *-a*, *--attributes* <__attribute__>...::
@@ -251,6 +264,9 @@ The same password generation options as documented for the generate command can 
   This option can be specified more than once, with each attribute shown one-per-line in the given order.
   If no attributes are specified and *-t* is not specified, a summary of the default attributes is given.
   Protected attributes will be displayed in clear text if specified explicitly by this option.
+
+*--all*::
+  Show all the attributes of the entry.
 
 *-s*, *--show-protected*::
   Shows the protected attributes in clear text.
@@ -270,7 +286,7 @@ The same password generation options as documented for the generate command can 
   Sets the Path of the wordlist for the diceware generator.
   The wordlist must have > 1000 words, otherwise the program will fail.
   If the wordlist has < 4000 words a warning will be printed to STDERR.
-  Any *diceware*-compatible wordlist can used. Note however that *KeePassXC* will NOT verify the PGP signature of signed wordlists.
+  Any *diceware*-compatible wordlist can be used. Note however that *KeePassXC* will NOT verify the PGP signature of signed wordlists.
 
 === Export options
 *-f*, *--format*::
