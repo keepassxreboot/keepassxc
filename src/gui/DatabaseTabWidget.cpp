@@ -830,15 +830,13 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
     }
 }
 
-void DatabaseTabWidget::updateLastDatabases(int index) {
-    if (index == -1) {
-        index = currentIndex();
+void DatabaseTabWidget::updateLastDatabases() {
+    auto dbWidget = currentDatabaseWidget();
+
+    Q_ASSERT(dbWidget);
+    if (dbWidget) {
+        updateLastDatabases(dbWidget->database()->filePath());
     }
-
-    auto filePath = databaseWidgetFromIndex(index)->database()->filePath();
-    // FIXME: the filePath is empty here
-
-    updateLastDatabases(filePath);
 }
 
 void DatabaseTabWidget::emitActiveDatabaseChanged()

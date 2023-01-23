@@ -105,7 +105,7 @@ private slots:
     void emitDatabaseLockChanged();
     void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
     void handleExportError(const QString& reason);
-    void updateLastDatabases(int index = -1);
+    void updateLastDatabases();
 
 private:
     QSharedPointer<Database> execNewDatabaseWizard();
