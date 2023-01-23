@@ -29,6 +29,7 @@ private slots:
     void initTestCase();
     void testOpen();
     void testSave();
+    void testSaveAs();
     void testSignals();
     void testEmptyRecycleBinOnDisabled();
     void testEmptyRecycleBinOnNotCreated();
