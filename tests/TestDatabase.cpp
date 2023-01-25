@@ -120,6 +120,11 @@ void TestDatabase::testSaveAs()
     QVERIFY(QFile::exists(newDbFileName));
     QFile::remove(newDbFileName);
     QVERIFY(!QFile::exists(newDbFileName));
+
+    // Negative case when try to save not initialized DB.
+    db->releaseData();
+    QVERIFY2(!db->saveAs(newDbFileName, Database::Atomic, QString(), &error), error.toLatin1());
+    QCOMPARE(error.toLatin1().toStdString(), "Could not save, database has not been initialized!");
 }
 
 void TestDatabase::testSignals()
