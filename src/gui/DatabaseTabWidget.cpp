@@ -830,7 +830,8 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
     }
 }
 
-void DatabaseTabWidget::updateLastDatabases() {
+void DatabaseTabWidget::updateLastDatabases()
+{
     auto dbWidget = currentDatabaseWidget();
 
     Q_ASSERT(dbWidget);
