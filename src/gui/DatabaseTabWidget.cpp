@@ -834,7 +834,6 @@ void DatabaseTabWidget::updateLastDatabases()
 {
     auto dbWidget = currentDatabaseWidget();
 
-    Q_ASSERT(dbWidget);
     if (dbWidget) {
         auto filePath = dbWidget->database()->filePath();
         if (!filePath.isEmpty()) {
