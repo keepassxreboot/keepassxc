@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>605</width>
-    <height>968</height>
+    <height>969</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
@@ -64,7 +64,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <property name="spacing">
-            <number>0</number>
+            <number>20</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -943,22 +943,6 @@
               </item>
              </layout>
             </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>10</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item>
             <layout class="QHBoxLayout" name="resetSettingsSubLayout">
