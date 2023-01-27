@@ -420,15 +420,15 @@
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Taskleistensymbol anzeigen</translation>
+        <translation>Symbol im Infobereich anzeigen</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation>Trayicon-Typ</translation>
+        <translation>Infobbereichssymbol Typ</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>Tray Icon Typ:</translation>
+        <translation>Infobbereichssymbol Typ:</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
