@@ -23,6 +23,9 @@
    </size>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>20</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>

@@ -48,13 +48,11 @@ DatabaseOpenWidget #centralStack {
 }
 
 QGroupBox {
-    margin-top: 1.4em;
-    margin-bottom: 1.4em;
     font-weight: bold;
 }
 
 QGroupBox::title {
-    margin-top: -3.35em;
+    margin-top: -.4em;
     margin-left: -.4em;
     subcontrol-origin: padding;
 }
