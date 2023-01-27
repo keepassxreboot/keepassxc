@@ -424,11 +424,11 @@
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation>Infobbereichssymbol Typ</translation>
+        <translation>Infobereichssymbol Typ</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>Infobbereichssymbol Typ:</translation>
+        <translation>Infobereichssymbol Typ:</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
