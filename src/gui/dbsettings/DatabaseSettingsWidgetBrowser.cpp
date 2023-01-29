@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2018 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -48,8 +48,6 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     // clang-format on
 
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedKey()));
-    connect(m_ui->convertToCustomData, SIGNAL(clicked()), this, SLOT(convertAttributesToCustomData()));
-    connect(m_ui->convertToCustomData, SIGNAL(clicked()), this, SLOT(updateSharedKeyList()));
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SLOT(removeSharedEncryptionKeys()));
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SLOT(updateSharedKeyList()));
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SLOT(removeStoredPermissions()));
@@ -141,7 +139,6 @@ void DatabaseSettingsWidgetBrowser::updateModel()
 void DatabaseSettingsWidgetBrowser::settingsWarning()
 {
     if (!browserSettings()->isEnabled()) {
-        m_ui->convertToCustomData->setEnabled(false);
         m_ui->removeSharedEncryptionKeys->setEnabled(false);
         m_ui->removeStoredPermissions->setEnabled(false);
         m_ui->customDataTable->setEnabled(false);
@@ -150,7 +147,6 @@ void DatabaseSettingsWidgetBrowser::settingsWarning()
         m_ui->warningWidget->setCloseButtonVisible(false);
         m_ui->warningWidget->setAutoHideTimeout(-1);
     } else {
-        m_ui->convertToCustomData->setEnabled(true);
         m_ui->removeSharedEncryptionKeys->setEnabled(true);
         m_ui->removeStoredPermissions->setEnabled(true);
         m_ui->customDataTable->setEnabled(true);
@@ -240,22 +236,6 @@ void DatabaseSettingsWidgetBrowser::removeStoredPermissions()
                                 tr("The active database does not contain an entry with permissions."),
                                 MessageBox::Ok);
     }
-}
-
-void DatabaseSettingsWidgetBrowser::convertAttributesToCustomData()
-{
-    if (MessageBox::Yes
-        != MessageBox::question(
-            this,
-            tr("Move KeePassHTTP attributes to custom data"),
-            tr("Do you really want to convert all legacy browser integration data to the latest standard?\n"
-               "This is necessary to maintain compatibility with the browser plugin."),
-            MessageBox::Yes | MessageBox::Cancel,
-            MessageBox::Cancel)) {
-        return;
-    }
-
-    BrowserService::convertAttributesToCustomData(m_db);
 }
 
 void DatabaseSettingsWidgetBrowser::refreshDatabaseID()
