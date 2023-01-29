@@ -244,6 +244,7 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
             SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateLastDatabases()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(emitDatabaseLockChanged()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(updateTabName()));
@@ -826,6 +827,18 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
             lastDatabases.removeLast();
         }
         config()->set(Config::LastDatabases, lastDatabases);
+    }
+}
+
+void DatabaseTabWidget::updateLastDatabases()
+{
+    auto dbWidget = currentDatabaseWidget();
+
+    if (dbWidget) {
+        auto filePath = dbWidget->database()->filePath();
+        if (!filePath.isEmpty()) {
+            updateLastDatabases(filePath);
+        }
     }
 }
 
