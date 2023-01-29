@@ -1,4 +1,4 @@
-= KeePassXC - Keyboard Shortcuts
+= KeePassXC – Keyboard Shortcuts
 include::.sharedheader[]
 :imagesdir: ../images
 
