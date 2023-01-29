@@ -1,4 +1,4 @@
-= KeePassXC - Download and Install
+= KeePassXC – Download and Install
 include::.sharedheader[]
 :imagesdir: ../images
 
@@ -8,9 +8,9 @@ KeePassXC is available for download for the following operating systems and plat
 
 * Microsoft Windows
 ** Portable and MSI Installer (64-bit and 32-bit)
-* Linux - Official Cross-Distribution Packages
+* Linux – Official Cross-Distribution Packages
 ** AppImage and Snap Package
-* Linux - Distribution-Specific Packages
+* Linux – Distribution-Specific Packages
 ** Ubuntu, Debian, Arch Linux, Gentoo, Fedora, CentOS, and OpenSUSE
 * macOS
 ** DMG Installer, Homebrew Cask
@@ -45,9 +45,9 @@ image::install_wizard_2.png[,80%]
 
 The following options can be set when running the MSI in an unattended installation:
 
-* *LAUNCHAPPONEXIT* - Launch KeePassXC after install (default ON)
-* *AUTOSTARTPROGRAM* - KeePassXC will auto-start on login (default ON)
-* *INSTALLDESKTOPSHORTCUT* - A desktop icon will be installed (default OFF)
+* *LAUNCHAPPONEXIT* – Launch KeePassXC after install (default ON)
+* *AUTOSTARTPROGRAM* – KeePassXC will auto-start on login (default ON)
+* *INSTALLDESKTOPSHORTCUT* – A desktop icon will be installed (default OFF)
 
 Example: `msiexec.exe /q /i KeePassXC-Y.Y.Y-WinZZ.msi AUTOSTARTPROGRAM=0`
 

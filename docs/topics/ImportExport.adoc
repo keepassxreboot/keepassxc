@@ -1,4 +1,4 @@
-= KeePassXC - Import/Export Operations
+= KeePassXC – Import/Export Operations
 include::.sharedheader[]
 :imagesdir: ../images
 

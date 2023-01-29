@@ -1,22 +1,22 @@
-= KeePassXC - Database Operations
+= KeePassXC – Database Operations
 include::.sharedheader[]
 :imagesdir: ../images
 
 // tag::content[]
 == Interface Overview
 === Application Layout
-The KeePassXC interface is designed for simplicity and easy access to your information. The main database view is split into three main partitions detailed below. You can open multiple databases at the same time, they will appear in tabs.
+The KeePassXC interface is designed for simplicity and easy access to your information. The main database view is split into four main partitions detailed below. You can open multiple databases at the same time, they will appear in tabs.
 
 .Main database interface
 image::main_interface.png[]
 
-*(A) Groups* - Organize your entries into discrete groups to bring order to all of your sensitive information. Groups can be nested under each other to create a hierarchy. Settings from parent groups get applied to their children. You can hide this panel on the View menu.
+*(A) Groups* – Organize your entries into discrete groups to bring order to all of your sensitive information. Groups can be nested under each other to create a hierarchy. Settings from parent groups get applied to their children. You can hide this panel on the View menu.
 
-*(B) Tags* - Dynamic groups of entries that can be quickly displayed with one click. Any number of custom tags can be added when editing an entry. This panel also includes useful pre-defined searches, such as finding expired and weak passwords.
+*(B) Tags* – Dynamic groups of entries that can be quickly displayed with one click. Any number of custom tags can be added when editing an entry. This panel also includes useful pre-defined searches, such as finding expired and weak passwords.
 
-*\(C) Entries* - Entries contain all the information you want to store for a website or application you are storing in KeePassXC. This view shows all the entries in the selected group. Each column can be resized, reordered, and shown or hidden based on your preference. Right-click the header row to see all available options.
+*\(C) Entries* – Entries contain all the information you want to store for a website or application you are storing in KeePassXC. This view shows all the entries in the selected group. Each column can be resized, reordered, and shown or hidden based on your preference. Right-click the header row to see all available options.
 
-*(D) Preview* - Shows a preview of the selected group or entry. You can temporarily hide this preview using the close button on the right hand side or completely disabled in the application settings.
+*(D) Preview* – Shows a preview of the selected group or entry. You can temporarily hide this preview using the close button on the right hand side or completely disabled in the application settings.
 
 TIP: You can enable double-click copying of entry username and password in the Application Security Settings. This is turned off by default starting with version 2.7.0.
 
@@ -26,10 +26,10 @@ The toolbar provides a quick way to perform common tasks with your database. Som
 .Toolbar overview
 image::toolbar.png[]
 
-*(A) Database* - Open Database, Save Database, Lock Database +
-*(B) Entries* - Create Entry, Edit Entry, Delete Selected Entries +
-*\(C) Entry Data* - Copy Username, Copy Password, Copy URL, Perform Auto-Type +
-*(D) Tools* - Password Generator, Application Settings +
+*(A) Database* – Open Database, Save Database, Lock Database +
+*(B) Entries* – Create Entry, Edit Entry, Delete Selected Entries +
+*\(C) Entry Data* – Copy Username, Copy Password, Copy URL, Perform Auto-Type +
+*(D) Tools* – Password Generator, Application Settings +
 *(E) Search*
 
 === Application Settings
@@ -59,7 +59,7 @@ You can use the following command line options to tailor the application to your
 
 ----
 Usage: keepassxc.exe [options] [filename(s)]
-KeePassXC - cross-platform password manager
+KeePassXC – cross-platform password manager
 
 Options:
   -?, -h, --help               Displays help on commandline options.

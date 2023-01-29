@@ -1,4 +1,4 @@
-= KeePassXC - Browser Plugin
+= KeePassXC – Browser Plugin
 include::.sharedheader[]
 :imagesdir: ../images
 
