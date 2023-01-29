@@ -1,4 +1,4 @@
-= KeePassXC - KeeShare
+= KeePassXC – KeeShare
 include::.sharedheader[]
 :imagesdir: ../images
 
@@ -24,10 +24,10 @@ NOTE: KeeShare does not synchronize group structure after the initial share is c
 1. Open the edit sheet on a group you want to share.
 2. Select the KeeShare category on the left toolbar.
 3. Choose a sharing type:
-  a. *Inactive* - Disable sharing this group
-  b. *Import* - Read-only import of entries, merge changes
-  c. *Export* - Write-only export of entries, no merge
-  d. *Synchronize* - Read/Write entries from the share, merge changes
+  a. *Inactive* – Disable sharing this group
+  b. *Import* – Read-only import of entries, merge changes
+  c. *Export* – Write-only export of entries, no merge
+  d. *Synchronize* – Read/Write entries from the share, merge changes
 4. Choose a path to store the shared credentials to.
 5. The password to use for this share container.
 
