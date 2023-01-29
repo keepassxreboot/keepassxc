@@ -30,6 +30,7 @@
 const QString OpenSSHKey::TYPE_DSA_PRIVATE = "DSA PRIVATE KEY";
 const QString OpenSSHKey::TYPE_RSA_PRIVATE = "RSA PRIVATE KEY";
 const QString OpenSSHKey::TYPE_OPENSSH_PRIVATE = "OPENSSH PRIVATE KEY";
+const QString OpenSSHKey::OPENSSH_CIPHER_SUFFIX = "@openssh.com";
 
 OpenSSHKey::OpenSSHKey(QObject* parent)
     : QObject(parent)
@@ -310,9 +311,16 @@ bool OpenSSHKey::openKey(const QString& passphrase)
     QByteArray rawData = m_rawData;
 
     if (m_cipherName != "none") {
-        auto cipherMode = SymmetricCipher::stringToMode(m_cipherName);
+        QString l_cipherName(m_cipherName);
+        if (l_cipherName.endsWith(OPENSSH_CIPHER_SUFFIX)) {
+            l_cipherName.remove(OPENSSH_CIPHER_SUFFIX);
+        }
+        auto cipherMode = SymmetricCipher::stringToMode(l_cipherName);
         if (cipherMode == SymmetricCipher::InvalidMode) {
-            m_error = tr("Unknown cipher: %1").arg(m_cipherName);
+            m_error = tr("Unknown cipher: %1").arg(l_cipherName);
+            return false;
+        } else if (cipherMode == SymmetricCipher::Aes256_GCM) {
+            m_error = tr("AES-256/GCM is currently not supported");
             return false;
         }
 
@@ -325,7 +333,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             }
 
             int keySize = cipher->keySize(cipherMode);
-            int blockSize = 16;
+            int ivSize = cipher->ivSize(cipherMode);
 
             BinaryStream optionStream(&m_kdfOptions);
 
@@ -335,7 +343,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             optionStream.readString(salt);
             optionStream.read(rounds);
 
-            QByteArray decryptKey(keySize + blockSize, '\0');
+            QByteArray decryptKey(keySize + ivSize, '\0');
             try {
                 auto baPass = passphrase.toUtf8();
                 auto pwhash = Botan::PasswordHashFamily::create_or_throw("Bcrypt-PBKDF")->from_iterations(rounds);
@@ -351,7 +359,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             }
 
             keyData = decryptKey.left(keySize);
-            ivData = decryptKey.right(blockSize);
+            ivData = decryptKey.right(ivSize);
         } else if (m_kdfName == "md5") {
             if (m_cipherIV.length() < 8) {
                 m_error = tr("Cipher IV is too short for MD5 kdf");
