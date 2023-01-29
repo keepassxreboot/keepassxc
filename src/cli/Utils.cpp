@@ -384,7 +384,7 @@ namespace Utils
         if (fieldName == TagsFieldName) {
             return entry->tags();
         }
-        return QString("");
+        return "";
     }
 
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name)

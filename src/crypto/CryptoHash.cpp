@@ -106,7 +106,7 @@ QByteArray CryptoHash::result() const
     } else if (d->hashFunction) {
         result = d->hashFunction->final();
     }
-    return QByteArray(reinterpret_cast<const char*>(result.data()), result.size());
+    return {reinterpret_cast<const char*>(result.data()), int(result.size())};
 }
 
 QByteArray CryptoHash::hash(const QByteArray& data, Algorithm algo)

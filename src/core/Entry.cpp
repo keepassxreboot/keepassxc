@@ -1212,7 +1212,7 @@ QString Entry::referenceFieldValue(EntryReferenceType referenceType) const
     default:
         break;
     }
-    return QString();
+    return {};
 }
 
 void Entry::moveUp()
@@ -1329,7 +1329,7 @@ QString Entry::resolvePlaceholder(const QString& placeholder) const
 QString Entry::resolveUrlPlaceholder(const QString& str, Entry::PlaceholderType placeholderType) const
 {
     if (str.isEmpty()) {
-        return QString();
+        return {};
     }
 
     const QUrl qurl(str);
@@ -1360,7 +1360,7 @@ QString Entry::resolveUrlPlaceholder(const QString& str, Entry::PlaceholderType 
     }
     }
 
-    return QString();
+    return {};
 }
 
 Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
@@ -1432,7 +1432,7 @@ QString Entry::resolveUrl(const QString& url) const
         }
 
         // No URL in this command
-        return QString("");
+        return {};
     }
 
     if (!newUrl.isEmpty() && !newUrl.contains("://")) {

@@ -29,22 +29,22 @@ QDateTime operator+(const QDateTime& dateTime, const TimeDelta& delta)
 
 TimeDelta TimeDelta::fromHours(int hours)
 {
-    return TimeDelta(hours, 0, 0, 0);
+    return {hours, 0, 0, 0};
 }
 
 TimeDelta TimeDelta::fromDays(int days)
 {
-    return TimeDelta(0, days, 0, 0);
+    return {0, days, 0, 0};
 }
 
 TimeDelta TimeDelta::fromMonths(int months)
 {
-    return TimeDelta(0, 0, months, 0);
+    return {0, 0, months, 0};
 }
 
 TimeDelta TimeDelta::fromYears(int years)
 {
-    return TimeDelta(0, 0, 0, years);
+    return {0, 0, 0, years};
 }
 
 TimeDelta::TimeDelta()

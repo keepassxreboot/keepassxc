@@ -120,7 +120,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
 QVariant EntryModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid()) {
-        return QVariant();
+        return {};
     }
 
     Entry* entry = entryFromIndex(index);
@@ -336,7 +336,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         }
     }
 
-    return QVariant();
+    return {};
 }
 
 QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int role) const

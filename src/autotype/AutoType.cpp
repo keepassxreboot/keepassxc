@@ -225,7 +225,7 @@ void AutoType::createTestInstance()
 QStringList AutoType::windowTitles()
 {
     if (!m_plugin) {
-        return QStringList();
+        return {};
     }
 
     return m_plugin->windowTitles();

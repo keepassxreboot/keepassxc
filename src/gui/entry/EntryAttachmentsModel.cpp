@@ -79,7 +79,7 @@ QVariant EntryAttachmentsModel::headerData(int section, Qt::Orientation orientat
 QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid()) {
-        return QVariant();
+        return {};
     }
 
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
@@ -96,7 +96,7 @@ QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
         }
     }
 
-    return QVariant();
+    return {};
 }
 
 bool EntryAttachmentsModel::setData(const QModelIndex& index, const QVariant& value, int role)
@@ -124,7 +124,7 @@ Qt::ItemFlags EntryAttachmentsModel::flags(const QModelIndex& index) const
 QString EntryAttachmentsModel::keyByIndex(const QModelIndex& index) const
 {
     if (!index.isValid()) {
-        return QString();
+        return {};
     }
 
     return m_entryAttachments->keys().at(index.row());
