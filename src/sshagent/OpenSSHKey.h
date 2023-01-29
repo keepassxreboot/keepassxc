@@ -58,6 +58,7 @@ public:
     static const QString TYPE_DSA_PRIVATE;
     static const QString TYPE_RSA_PRIVATE;
     static const QString TYPE_OPENSSH_PRIVATE;
+    static const QString OPENSSH_CIPHER_SUFFIX;
 
 private:
     enum KeyPart
