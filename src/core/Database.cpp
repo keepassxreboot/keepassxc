@@ -275,8 +275,8 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     bool isNewFile = !QFile::exists(realFilePath);
     bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backupFilePath, error); });
     if (ok) {
-        markAsClean();
         setFilePath(filePath);
+        markAsClean();
         if (isNewFile) {
             QFile::setPermissions(realFilePath, QFile::ReadUser | QFile::WriteUser);
         }
