@@ -5138,10 +5138,6 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5393,6 +5389,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>XML File…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -128,6 +128,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->setSeparatorsCollapsible(true);
     m_entryContextMenu->addAction(m_ui->actionEntryCopyUsername);
     m_entryContextMenu->addAction(m_ui->actionEntryCopyPassword);
+    m_entryContextMenu->addAction(m_ui->actionEntryCopyURL);
     m_entryContextMenu->addAction(m_ui->menuEntryCopyAttribute->menuAction());
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
     m_entryContextMenu->addAction(m_ui->menuTags->menuAction());
