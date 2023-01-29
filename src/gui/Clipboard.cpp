@@ -52,24 +52,19 @@ void Clipboard::setText(const QString& text, bool clear)
     }
 
     auto* mime = new QMimeData;
-#ifdef Q_OS_MACOS
     mime->setText(text);
+#if defined(Q_OS_MACOS)
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
-    clipboard->setMimeData(mime, QClipboard::Clipboard);
-#else
-    mime->setText(text);
-#ifdef Q_OS_LINUX
+#elif defined(Q_OS_UNIX)
     mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
-#endif
-#ifdef Q_OS_WIN
+#elif defined(Q_OS_WIN)
     mime->setData("ExcludeClipboardContentFromMonitorProcessing", QByteArrayLiteral("1"));
 #endif
-    clipboard->setMimeData(mime, QClipboard::Clipboard);
 
     if (clipboard->supportsSelection()) {
         clipboard->setMimeData(mime, QClipboard::Selection);
     }
-#endif
+    clipboard->setMimeData(mime, QClipboard::Clipboard);
 
     if (clear) {
         m_lastCopied = text;
