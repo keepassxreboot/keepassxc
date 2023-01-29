@@ -70,9 +70,7 @@ DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* pare
     connect(m_ui->parallelismSpinBox, SIGNAL(valueChanged(int)), SLOT(markDirty()));
 }
 
-DatabaseSettingsWidgetEncryption::~DatabaseSettingsWidgetEncryption()
-{
-}
+DatabaseSettingsWidgetEncryption::~DatabaseSettingsWidgetEncryption() = default;
 
 #define IS_ARGON2(uuid) (uuid == KeePass2::KDF_ARGON2D || uuid == KeePass2::KDF_ARGON2ID)
 #define IS_AES_KDF(uuid) (uuid == KeePass2::KDF_AES_KDBX3 || uuid == KeePass2::KDF_AES_KDBX4)

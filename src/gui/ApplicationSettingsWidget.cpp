@@ -175,9 +175,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_secUi->quickUnlockCheckBox->setVisible(showQuickUnlock);
 }
 
-ApplicationSettingsWidget::~ApplicationSettingsWidget()
-{
-}
+ApplicationSettingsWidget::~ApplicationSettingsWidget() = default;
 
 void ApplicationSettingsWidget::addSettingsPage(ISettingsPage* page)
 {

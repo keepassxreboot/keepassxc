@@ -68,9 +68,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(&m_lockDelayTimer, &QTimer::timeout, this, [this] { lockDatabases(); });
 }
 
-DatabaseTabWidget::~DatabaseTabWidget()
-{
-}
+DatabaseTabWidget::~DatabaseTabWidget() = default;
 
 void DatabaseTabWidget::toggleTabbar()
 {

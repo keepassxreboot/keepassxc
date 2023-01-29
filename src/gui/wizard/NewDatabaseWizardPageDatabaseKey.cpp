@@ -27,6 +27,4 @@ NewDatabaseWizardPageDatabaseKey::NewDatabaseWizardPageDatabaseKey(QWidget* pare
     setSubTitle(tr("A set of credentials known only to you that protects your database."));
 }
 
-NewDatabaseWizardPageDatabaseKey::~NewDatabaseWizardPageDatabaseKey()
-{
-}
+NewDatabaseWizardPageDatabaseKey::~NewDatabaseWizardPageDatabaseKey() = default;

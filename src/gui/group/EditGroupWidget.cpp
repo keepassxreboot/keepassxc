@@ -112,9 +112,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     setupModifiedTracking();
 }
 
-EditGroupWidget::~EditGroupWidget()
-{
-}
+EditGroupWidget::~EditGroupWidget() = default;
 
 void EditGroupWidget::setupModifiedTracking()
 {

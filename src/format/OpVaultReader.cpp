@@ -35,9 +35,7 @@ OpVaultReader::OpVaultReader(QObject* parent)
 {
 }
 
-OpVaultReader::~OpVaultReader()
-{
-}
+OpVaultReader::~OpVaultReader() = default;
 
 Database* OpVaultReader::readDatabase(QDir& opdataDir, const QString& password)
 {

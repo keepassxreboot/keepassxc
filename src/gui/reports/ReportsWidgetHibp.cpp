@@ -79,9 +79,7 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }
 
-ReportsWidgetHibp::~ReportsWidgetHibp()
-{
-}
+ReportsWidgetHibp::~ReportsWidgetHibp() = default;
 
 void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
 {

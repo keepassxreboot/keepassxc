@@ -39,9 +39,7 @@ namespace Ui
 class IEditGroupPage
 {
 public:
-    virtual ~IEditGroupPage()
-    {
-    }
+    virtual ~IEditGroupPage() = default;
     virtual QString name() = 0;
     virtual QIcon icon() = 0;
     virtual QWidget* createWidget() = 0;

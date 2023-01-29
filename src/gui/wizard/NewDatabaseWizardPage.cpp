@@ -31,9 +31,7 @@ NewDatabaseWizardPage::NewDatabaseWizardPage(QWidget* parent)
     connect(m_ui->advancedSettingsButton, SIGNAL(clicked()), SLOT(toggleAdvancedSettings()));
 }
 
-NewDatabaseWizardPage::~NewDatabaseWizardPage()
-{
-}
+NewDatabaseWizardPage::~NewDatabaseWizardPage() = default;
 
 /**
  * Set the database settings page widget for this wizard page.

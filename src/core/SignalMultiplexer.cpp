@@ -19,9 +19,7 @@
 
 #include "core/Global.h"
 
-SignalMultiplexer::SignalMultiplexer()
-{
-}
+SignalMultiplexer::SignalMultiplexer() = default;
 
 SignalMultiplexer::~SignalMultiplexer()
 {

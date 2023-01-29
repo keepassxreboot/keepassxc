@@ -53,9 +53,7 @@ TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(copyToClipboard()));
 }
 
-TotpDialog::~TotpDialog()
-{
-}
+TotpDialog::~TotpDialog() = default;
 
 void TotpDialog::copyToClipboard()
 {

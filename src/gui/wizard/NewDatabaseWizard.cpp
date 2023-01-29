@@ -63,9 +63,7 @@ NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
     pageFrame->setPalette(framePalette);
 }
 
-NewDatabaseWizard::~NewDatabaseWizard()
-{
-}
+NewDatabaseWizard::~NewDatabaseWizard() = default;
 
 bool NewDatabaseWizard::validateCurrentPage()
 {

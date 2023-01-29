@@ -141,9 +141,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(m_ui->resetQuickUnlockButton, &QPushButton::pressed, this, [this] { resetQuickUnlock(); });
 }
 
-DatabaseOpenWidget::~DatabaseOpenWidget()
-{
-}
+DatabaseOpenWidget::~DatabaseOpenWidget() = default;
 
 void DatabaseOpenWidget::showEvent(QShowEvent* event)
 {

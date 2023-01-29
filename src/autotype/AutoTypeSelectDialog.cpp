@@ -92,9 +92,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
 }
 
 // Required for QScopedPointer
-AutoTypeSelectDialog::~AutoTypeSelectDialog()
-{
-}
+AutoTypeSelectDialog::~AutoTypeSelectDialog() = default;
 
 void AutoTypeSelectDialog::setMatches(const QList<AutoTypeMatch>& matches,
                                       const QList<QSharedPointer<Database>>& dbs,

@@ -23,9 +23,7 @@ DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
 {
 }
 
-DatabaseSettingsWidget::~DatabaseSettingsWidget()
-{
-}
+DatabaseSettingsWidget::~DatabaseSettingsWidget() = default;
 
 /**
  * Load the database to be configured by this page and initialize the page.

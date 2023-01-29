@@ -773,9 +773,7 @@ namespace Phantom
             static MenuItemMetrics ofFontHeight(int fontHeight);
 
         private:
-            MenuItemMetrics()
-            {
-            }
+            MenuItemMetrics() = default;
         };
 
         MenuItemMetrics MenuItemMetrics::ofFontHeight(int fontHeight)

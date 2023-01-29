@@ -158,9 +158,7 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
     new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }
 
-ReportsWidgetHealthcheck::~ReportsWidgetHealthcheck()
-{
-}
+ReportsWidgetHealthcheck::~ReportsWidgetHealthcheck() = default;
 
 void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> health,
                                             Group* group,

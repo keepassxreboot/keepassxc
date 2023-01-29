@@ -83,9 +83,7 @@ NixUtils::NixUtils(QObject* parent)
     sessionBus.callWithCallback(msg, this, SLOT(handleColorSchemeRead(QDBusVariant)));
 }
 
-NixUtils::~NixUtils()
-{
-}
+NixUtils::~NixUtils() = default;
 
 bool NixUtils::isDarkMode() const
 {

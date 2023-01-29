@@ -30,9 +30,7 @@ namespace Ui
 class ISettingsPage
 {
 public:
-    virtual ~ISettingsPage()
-    {
-    }
+    virtual ~ISettingsPage() = default;
     virtual QString name() = 0;
     virtual QIcon icon() = 0;
     virtual QWidget* createWidget() = 0;

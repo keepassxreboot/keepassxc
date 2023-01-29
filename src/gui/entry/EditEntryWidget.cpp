@@ -135,9 +135,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_mainUi->passwordEdit->setQualityVisible(true);
 }
 
-EditEntryWidget::~EditEntryWidget()
-{
-}
+EditEntryWidget::~EditEntryWidget() = default;
 
 void EditEntryWidget::setupMain()
 {
