@@ -43,7 +43,7 @@ public:
         KeepLocal, // merge history forcing local as top regardless of age
         KeepRemote, // merge history forcing remote as top regardless of age
         KeepNewer, // merge history
-        Synchronize, // merge history keeping most recent as top entry and appling deletions
+        Synchronize, // merge history keeping most recent as top entry and applying deletions
     };
 
     enum CloneFlag

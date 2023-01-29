@@ -745,7 +745,7 @@ void MainWindow::appExit()
 
 /**
  * Returns if application was built with hardware key support.
- * Intented to be used by 3rd-party applications using DBus.
+ * Intended to be used by 3rd-party applications using DBus.
  *
  * @return True if built with hardware key support, false otherwise
  */
@@ -761,7 +761,7 @@ bool MainWindow::isHardwareKeySupported()
 /**
  * Refreshes list of hardware keys known.
  * Triggers the DatabaseOpenWidget to automatically select the key last used for a database if found.
- * Intented to be used by 3rd-party applications using DBus.
+ * Intended to be used by 3rd-party applications using DBus.
  *
  * @return True if any key was found, false otherwise or if application lacks hardware key support
  */

@@ -79,7 +79,7 @@ void TestMerge::testMergeIntoNew()
 }
 
 /**
- * Merging when no changes occured should not
+ * Merging when no changes occurred should not
  * have any side effect.
  */
 void TestMerge::testMergeNoChanges()

@@ -346,7 +346,7 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
                 tempFile.setAutoRemove(false);
                 QFile::setPermissions(filePath, perms);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-                // Retain orginal creation time
+                // Retain original creation time
                 tempFile.setFileTime(createTime, QFile::FileBirthTime);
 #endif
                 return true;

@@ -332,7 +332,7 @@ void DatabaseTabWidget::importOpVaultDatabase()
  * Attempt to close the current database and remove its tab afterwards.
  *
  * @param index index of the database tab to close
- * @return true if database was closed successully
+ * @return true if database was closed successfully
  */
 bool DatabaseTabWidget::closeCurrentDatabaseTab()
 {
@@ -343,7 +343,7 @@ bool DatabaseTabWidget::closeCurrentDatabaseTab()
  * Attempt to close the database tab that sent the close request.
  *
  * @param index index of the database tab to close
- * @return true if database was closed successully
+ * @return true if database was closed successfully
  */
 bool DatabaseTabWidget::closeDatabaseTabFromSender()
 {
@@ -354,7 +354,7 @@ bool DatabaseTabWidget::closeDatabaseTabFromSender()
  * Attempt to close a database and remove its tab afterwards.
  *
  * @param index index of the database tab to close
- * @return true if database was closed successully
+ * @return true if database was closed successfully
  */
 bool DatabaseTabWidget::closeDatabaseTab(int index)
 {
@@ -365,7 +365,7 @@ bool DatabaseTabWidget::closeDatabaseTab(int index)
  * Attempt to close a database and remove its tab afterwards.
  *
  * @param dbWidget \link DatabaseWidget to close
- * @return true if database was closed successully
+ * @return true if database was closed successfully
  */
 bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
 {

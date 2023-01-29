@@ -173,7 +173,7 @@ ShareObserver::Result ShareExport::intoContainer(const QString& resolvedPath,
 
         KeePass2Writer writer;
         if (!writer.writeDatabase(&buffer, targetDb.data())) {
-            qWarning("Serializing export dabase failed: %s.", writer.errorString().toLatin1().data());
+            qWarning("Serializing export database failed: %s.", writer.errorString().toLatin1().data());
             return {reference.path, ShareObserver::Result::Error, writer.errorString()};
         }
 
@@ -202,7 +202,7 @@ ShareObserver::Result ShareExport::intoContainer(const QString& resolvedPath,
     } else {
         QString error;
         if (!targetDb->saveAs(resolvedPath, Database::Atomic, {}, &error)) {
-            qWarning("Exporting dabase failed: %s.", error.toLatin1().data());
+            qWarning("Exporting database failed: %s.", error.toLatin1().data());
             return {resolvedPath, ShareObserver::Result::Error, error};
         }
     }
