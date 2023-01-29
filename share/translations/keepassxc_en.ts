@@ -7924,6 +7924,10 @@ Kernel: %3 %4</source>
 This options is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
