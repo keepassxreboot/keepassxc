@@ -216,7 +216,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -246,11 +246,6 @@
      <addaction name="actionExportCsv"/>
      <addaction name="actionExportHtml"/>
      <addaction name="actionExportXML"/>
-    </widget>
-    <widget class="QMenu" name="menu_Quit">
-     <property name="title">
-      <string>&amp;Quit</string>
-     </property>
     </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
@@ -306,7 +301,6 @@
       <string>Copy Att&amp;ribute</string>
      </property>
      <addaction name="actionEntryCopyTitle"/>
-     <addaction name="actionEntryCopyURL"/>
      <addaction name="actionEntryCopyNotes"/>
      <addaction name="separator"/>
     </widget>
@@ -338,6 +332,7 @@
     <addaction name="separator"/>
     <addaction name="actionEntryCopyUsername"/>
     <addaction name="actionEntryCopyPassword"/>
+    <addaction name="actionEntryCopyURL"/>
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="menuEntryTotp"/>
     <addaction name="menuTags"/>
@@ -818,7 +813,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;URL</string>
+    <string>Copy &amp;URL</string>
    </property>
    <property name="toolTip">
     <string>Copy URL to clipboard</string>
@@ -895,7 +890,7 @@
     <string>Copy &amp;TOTP</string>
    </property>
   </action>
-    <action name="actionEntryCopyPasswordTotp">
+  <action name="actionEntryCopyPasswordTotp">
    <property name="text">
     <string>Copy Password and TOTP</string>
    </property>
