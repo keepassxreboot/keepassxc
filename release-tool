@@ -1411,8 +1411,8 @@ i18n() {
         if ! command -v $LUPDATE > /dev/null; then
             LUPDATE=lupdate
         fi
-        $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -no-obsolete src \
-            -ts share/translations/keepassxc_en.ts $@
+        $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -extensions c,cpp,h,js,mm,qrc,ui \
+            -no-obsolete src -ts share/translations/keepassxc_en.ts $@
 
         return 0
     fi
