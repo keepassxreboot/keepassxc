@@ -200,7 +200,7 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
     }
 
     // Fourth, add note if password is two or more years old.
-    int ageInSeconds = entry->getPasswordAge();
+    int ageInSeconds = entry->passwordAgeSeconds();
     // Unfortunately, Qt doesn't seem to have a utility for seconds->year.
     // (365 days)(24 hours/day)(3600 s/hr) is approximately a year and gets compiled away.
     if (ageInSeconds / (365 * 24 * 3600) > 1) {

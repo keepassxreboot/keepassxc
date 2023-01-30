@@ -231,7 +231,7 @@ const QSharedPointer<PasswordHealth> Entry::passwordHealth() const
     return m_data.passwordHealth;
 }
 
-int Entry::getPasswordAge() const
+int Entry::passwordAgeSeconds() const
 {
     QListIterator<Entry*> i(m_history);
     i.toBack();
