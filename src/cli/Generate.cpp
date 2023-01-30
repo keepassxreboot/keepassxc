@@ -93,7 +93,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
         passwordGenerator->setLength(PasswordGenerator::DefaultLength);
     } else if (passwordLength.toInt() <= 0) {
         err << QObject::tr("Invalid password length %1").arg(passwordLength) << endl;
-        return QSharedPointer<PasswordGenerator>(nullptr);
+        return {};
     } else {
         passwordGenerator->setLength(passwordLength.toInt());
     }
@@ -139,7 +139,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
 
     if (!passwordGenerator->isValid()) {
         err << QObject::tr("Invalid password generator after applying all options") << endl;
-        return QSharedPointer<PasswordGenerator>(nullptr);
+        return {};
     }
 
     return passwordGenerator;

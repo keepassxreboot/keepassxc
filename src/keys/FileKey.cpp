@@ -161,7 +161,7 @@ bool FileKey::load(const QString& fileName, QString* errorMsg)
  */
 QByteArray FileKey::rawKey() const
 {
-    return QByteArray(m_key.data(), m_key.size());
+    return {m_key.data(), int(m_key.size())};
 }
 
 void FileKey::setRawKey(const QByteArray& data)

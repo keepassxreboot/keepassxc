@@ -141,9 +141,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(m_ui->resetQuickUnlockButton, &QPushButton::pressed, this, [this] { resetQuickUnlock(); });
 }
 
-DatabaseOpenWidget::~DatabaseOpenWidget()
-{
-}
+DatabaseOpenWidget::~DatabaseOpenWidget() = default;
 
 void DatabaseOpenWidget::showEvent(QShowEvent* event)
 {
@@ -538,9 +536,6 @@ bool DatabaseOpenWidget::isOnQuickUnlockScreen()
  */
 void DatabaseOpenWidget::resetQuickUnlock()
 {
-    if (!isQuickUnlockAvailable()) {
-        return;
-    }
 #if defined(Q_CC_MSVC)
     getWindowsHello()->reset(m_filename);
 #elif defined(Q_OS_MACOS)

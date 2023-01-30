@@ -68,9 +68,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(&m_lockDelayTimer, &QTimer::timeout, this, [this] { lockDatabases(); });
 }
 
-DatabaseTabWidget::~DatabaseTabWidget()
-{
-}
+DatabaseTabWidget::~DatabaseTabWidget() = default;
 
 void DatabaseTabWidget::toggleTabbar()
 {
@@ -244,6 +242,7 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
             SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateLastDatabases()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(emitDatabaseLockChanged()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(updateTabName()));
@@ -331,7 +330,7 @@ void DatabaseTabWidget::importOpVaultDatabase()
  * Attempt to close the current database and remove its tab afterwards.
  *
  * @param index index of the database tab to close
- * @return true if database was closed successully
+ * @return true if database was closed successfully
  */
 bool DatabaseTabWidget::closeCurrentDatabaseTab()
 {
@@ -342,7 +341,7 @@ bool DatabaseTabWidget::closeCurrentDatabaseTab()
  * Attempt to close the database tab that sent the close request.
  *
  * @param index index of the database tab to close
- * @return true if database was closed successully
+ * @return true if database was closed successfully
  */
 bool DatabaseTabWidget::closeDatabaseTabFromSender()
 {
@@ -353,7 +352,7 @@ bool DatabaseTabWidget::closeDatabaseTabFromSender()
  * Attempt to close a database and remove its tab afterwards.
  *
  * @param index index of the database tab to close
- * @return true if database was closed successully
+ * @return true if database was closed successfully
  */
 bool DatabaseTabWidget::closeDatabaseTab(int index)
 {
@@ -364,7 +363,7 @@ bool DatabaseTabWidget::closeDatabaseTab(int index)
  * Attempt to close a database and remove its tab afterwards.
  *
  * @param dbWidget \link DatabaseWidget to close
- * @return true if database was closed successully
+ * @return true if database was closed successfully
  */
 bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
 {
@@ -826,6 +825,18 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
             lastDatabases.removeLast();
         }
         config()->set(Config::LastDatabases, lastDatabases);
+    }
+}
+
+void DatabaseTabWidget::updateLastDatabases()
+{
+    auto dbWidget = currentDatabaseWidget();
+
+    if (dbWidget) {
+        auto filePath = dbWidget->database()->filePath();
+        if (!filePath.isEmpty()) {
+            updateLastDatabases(filePath);
+        }
     }
 }
 

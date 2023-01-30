@@ -85,15 +85,6 @@ namespace
             item.append("</a></td></tr>");
         }
 
-        const auto& n = entry.notes();
-        if (!n.isEmpty()) {
-            item.append("<tr><th>");
-            item.append(QObject::tr("Notes"));
-            item.append("</th><td class=\"notes\">");
-            item.append(entry.notes().toHtmlEscaped().replace("\n", "<br>"));
-            item.append("</td></tr>");
-        }
-
         // Now add the attributes (if there are any)
         const auto* const attr = entry.attributes();
         if (attr && !attr->customKeys().isEmpty()) {
@@ -104,6 +95,15 @@ namespace
                 item.append(attr->value(key).toHtmlEscaped().replace(" ", "&nbsp;").replace("\n", "<br>"));
                 item.append("</td></tr>");
             }
+        }
+
+        const auto& n = entry.notes();
+        if (!n.isEmpty()) {
+            item.append("<tr><th>");
+            item.append(QObject::tr("Notes"));
+            item.append("</th><td class=\"notes\">");
+            item.append(entry.notes().toHtmlEscaped().replace("\n", "<br>"));
+            item.append("</td></tr>");
         }
         return item;
     }
@@ -150,15 +150,18 @@ bool HtmlExporter::exportDatabase(QIODevice* device,
                                   "h3 "
                                   "{ margin-left: 2em; }"
                                   "table "
-                                  "{ margin-left: 4em; } "
+                                  "{ margin-left: 1em; } "
+                                  "caption "
+                                  "{ text-align: left; font-weight: bold; font-size: 150%; border-bottom: .15em solid "
+                                  "#4ca; margin-bottom: .5em;} "
                                   "th, td "
                                   "{ text-align: left; vertical-align: top; padding: 1px; }"
                                   "th "
-                                  "{ min-width: 5em; width: 20%; } "
+                                  "{ min-width: 7em; width: 15%; } "
                                   ".username, .password, .url, .attr "
                                   "{ font-size: larger; font-family: monospace; } "
                                   ".notes "
-                                  "{ font-size: medium; } "
+                                  "{ font-size: small; } "
                                   "</style>"
                                   "</head>\n"
                                   "<body>"
@@ -231,7 +234,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
     }
 
     // Begin the table for the entries in this group
-    auto table = QString("<table width=\"100%\">");
+    auto table = QString("<table width=\"95%\">");
 
     auto entries = group.entries();
     if (sorted) {
@@ -252,10 +255,11 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
         // icon and entry title ...
         table += "<tr>";
         table += "<td width=\"1%\">" + PixmapToHTML(Icons::entryIconPixmap(entry, IconSize::Medium)) + "</td>";
-        table += "<td width=\"19%\" valign=\"top\"><h3>" + entry->title().toHtmlEscaped() + "</h3></td>";
+        auto caption = "<caption>" + entry->title().toHtmlEscaped() + "</caption>";
 
         // ... then the right side with the data fields
-        table += "<td style=\"padding-bottom: 0.5em;\"><table width=\"100%\">" + formatted_entry + "</table></td>";
+        table +=
+            "<td style=\"padding-bottom: 0.5em;\"><table width=\"100%\">" + caption + formatted_entry + "</table></td>";
         table += "</tr>";
     }
 

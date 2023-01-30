@@ -42,9 +42,7 @@ DatabaseSettingsWidgetMaintenance::DatabaseSettingsWidgetMaintenance(QWidget* pa
             SLOT(selectionChanged()));
 }
 
-DatabaseSettingsWidgetMaintenance::~DatabaseSettingsWidgetMaintenance()
-{
-}
+DatabaseSettingsWidgetMaintenance::~DatabaseSettingsWidgetMaintenance() = default;
 
 void DatabaseSettingsWidgetMaintenance::populateIcons(QSharedPointer<Database> db)
 {

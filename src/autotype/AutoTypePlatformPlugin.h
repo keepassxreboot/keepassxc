@@ -25,9 +25,7 @@
 class AutoTypePlatformInterface
 {
 public:
-    virtual ~AutoTypePlatformInterface()
-    {
-    }
+    virtual ~AutoTypePlatformInterface() = default;
     virtual bool isAvailable() = 0;
     virtual QStringList windowTitles() = 0;
     virtual WId activeWindow() = 0;

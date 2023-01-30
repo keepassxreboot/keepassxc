@@ -892,52 +892,6 @@ Do you want to delete the entry?
 </source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Converting attributes to custom data…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Abort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Successfully converted attributes from %1 entry(s).
-Moved %2 keys to custom data.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Successfully moved %n keys to custom data.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
-This is necessary to maintain your current browser connections.
-Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
@@ -1597,6 +1551,10 @@ If you do not have a key file, please leave the field empty.</source>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -1640,14 +1598,6 @@ If you do not have a key file, please leave the field empty.</source>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convert KeePassHTTP data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1757,15 +1707,6 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move KeePassHTTP attributes to custom data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3084,10 +3025,6 @@ Would you like to correct it?</source>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation type="unfinished"></translation>
@@ -5201,10 +5138,6 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5456,6 +5389,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>XML File…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5825,6 +5762,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7922,6 +7863,10 @@ Kernel: %3 %4</source>
     <message>
         <source>Set the key file for the database.
 This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

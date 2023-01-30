@@ -183,7 +183,7 @@ QString KdbxXmlReader::errorString() const
             .arg(m_xml.lineNumber())
             .arg(m_xml.columnNumber());
     }
-    return QString();
+    return {};
 }
 
 bool KdbxXmlReader::isTrueValue(const QStringRef& value)
@@ -1117,13 +1117,13 @@ QUuid KdbxXmlReader::readUuid()
 {
     QByteArray uuidBin = readBinary();
     if (uuidBin.isEmpty()) {
-        return QUuid();
+        return {};
     }
     if (uuidBin.length() != UUID_LENGTH) {
         if (m_strictMode) {
             raiseError(tr("Invalid uuid value"));
         }
-        return QUuid();
+        return {};
     }
     return QUuid::fromRfc4122(uuidBin);
 }

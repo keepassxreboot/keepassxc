@@ -99,6 +99,34 @@ void TestDatabase::testSave()
     QVERIFY(!QFile::exists(backupFilePath));
 }
 
+void TestDatabase::testSaveAs()
+{
+    TemporaryFile tempFile;
+    QVERIFY(tempFile.copyFromFile(dbFileName));
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    QString error;
+    QVERIFY(db->open(tempFile.fileName(), key, &error));
+
+    // Happy path case when try to save as new DB.
+    QSignalSpy spyFilePathChanged(db.data(), SIGNAL(filePathChanged(const QString&, const QString&)));
+    QString newDbFileName = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/SaveAsNewDatabase.kdbx");
+    QVERIFY2(db->saveAs(newDbFileName, Database::Atomic, QString(), &error), error.toLatin1());
+    QVERIFY(!db->isModified());
+    QCOMPARE(spyFilePathChanged.count(), 1);
+    QVERIFY(QFile::exists(newDbFileName));
+    QFile::remove(newDbFileName);
+    QVERIFY(!QFile::exists(newDbFileName));
+
+    // Negative case when try to save not initialized DB.
+    db->releaseData();
+    QVERIFY2(!db->saveAs(newDbFileName, Database::Atomic, QString(), &error), error.toLatin1());
+    QCOMPARE(error, QString("Could not save, database has not been initialized!"));
+}
+
 void TestDatabase::testSignals()
 {
     TemporaryFile tempFile;

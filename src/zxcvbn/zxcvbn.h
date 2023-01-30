@@ -68,7 +68,7 @@ typedef enum
 /* Linked list of information returned in the Info arg to ZxcvbnMatch */
 struct ZxcMatch
 {
-    int             Begin;   /* Char position of begining of match */
+    int             Begin;   /* Char position of beginning of match */
     int             Length;  /* Number of chars in the match */
     double          Entrpy;  /* The entropy of the match */
     double          MltEnpy; /* Entropy with additional allowance for multipart password */
@@ -85,13 +85,13 @@ extern "C" {
 #ifdef USE_DICT_FILE
 
 /**********************************************************************************
- * Read the dictionnary data from the given file. Returns 1 if OK, 0 if error.
+ * Read the dictionary data from the given file. Returns 1 if OK, 0 if error.
  * Called once at program startup.
  */
 int ZxcvbnInit(const char *);
 
 /**********************************************************************************
- * Free the dictionnary data after use. Called once at program shutdown.
+ * Free the dictionary data after use. Called once at program shutdown.
  */
 void ZxcvbnUnInit();
 
@@ -107,7 +107,7 @@ void ZxcvbnUnInit();
  * The main password matching function. May be called multiple times.
  * The parameters are:
  *  Passwd      The password to be tested. Null terminated string.
- *  UserDict    User supplied dictionary words to be considered particulary bad. Passed
+ *  UserDict    User supplied dictionary words to be considered particularly bad. Passed
  *               as a pointer to array of string pointers, with null last entry (like
  *               the argv parameter to main()). May be null or point to empty array when
  *               there are no user dictionary words.

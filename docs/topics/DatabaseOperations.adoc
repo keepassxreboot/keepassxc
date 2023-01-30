@@ -1,4 +1,4 @@
-= KeePassXC - Database Operations
+= KeePassXC – Database Operations
 include::.sharedheader[]
 :imagesdir: ../images
 
@@ -11,22 +11,22 @@ To create a database, perform the following steps:
 
 1. Open your KeePassXC application. Click the create new database button *(A)*:
 +
-.Create database - Welcome screen
+.Create database – Welcome screen
 image::welcome_screen.png[]
 
 2. The database creation wizard appears. Enter the desired database name and a short description (optional):
 +
-.Create database - General information
+.Create database – General information
 image::new_db_wizard_1.png[,80%]
 
 3. Click Continue. The Encryption Settings screen appears, we don't recommend making any changes besides increasing or decreasing the decryption time using the slider. Setting the Decryption Time slider at higher values means that the database will have higher level of protection but the time taken by the database to open will increase.
 +
-.Create database - Encryption settings
+.Create database – Encryption settings
 image::new_db_wizard_2.png[,80%]
 
 4. Click the Continue button. The Database Credentials screen appears, enter your desired database password. We recommend using a long, randomized password.
 +
-.Create database - Database credentials
+.Create database – Database credentials
 image::new_db_wizard_3.png[,80%]
 +
 *(A)* Open the password generator +
@@ -362,7 +362,7 @@ The following key derivation functions are supported:
 
  * AES-KDF (KDBX 4 and KDBX 3.1): This key derivation function is based on iterating AES. Users can change the number of iterations. The more iterations, the harder are dictionary and guessing attacks, but also database loading/saving takes more time (linearly). KDBX 3.1 only supports AES-KDF; any other key derivation function, like for instance Argon2, requires KDBX 4.
 
- * Argon2 (KDBX 4 - recommended): KDBX 4, the Argon2 key derivation function can be used for transforming the composite master key (as protection against dictionary attacks). The main advantage of Argon2 over AES-KDF is that it provides a better resistance against GPU/ASIC attacks (due to being a memory-hard function). The number of iterations scales linearly with the required time. By increasing the memory parameter, GPU/ASIC attacks become harder and the required time increases. The parallelism parameter can be used to specify how many threads should be used. We recommend using Argon2id to prevent against timing-based attacks. Argon2d offers maximum compatibility with other KeePass-based apps, the default settings provide sufficient protection against any known attacks.
+ * Argon2 (KDBX 4 – recommended): KDBX 4, the Argon2 key derivation function can be used for transforming the composite master key (as protection against dictionary attacks). The main advantage of Argon2 over AES-KDF is that it provides a better resistance against GPU/ASIC attacks (due to being a memory-hard function). The number of iterations scales linearly with the required time. By increasing the memory parameter, GPU/ASIC attacks become harder and the required time increases. The parallelism parameter can be used to specify how many threads should be used. We recommend using Argon2id to prevent against timing-based attacks. Argon2d offers maximum compatibility with other KeePass-based apps, the default settings provide sufficient protection against any known attacks.
 
 == Database Maintenance
 KeePassXC offers some maintenance features that can be applied to clean up your database. Navigate to _Database_ -> _Database settings_ then click on _Maintenance_ on the left hand panel. The following screen appears. On this screen you can delete multiple icons at once and purge any unused icons in your database.
@@ -395,9 +395,9 @@ The database file that you create might contain highly sensitive data and must b
 
 Make sure that you or someone else does not accidentally delete the database file. Deletion of the database file will result in the total loss of all your information (including all your passwords!) and a lot of inconvenience to manually retrieve your logins for various web applications. Do not share the credentials to access your database file with anyone unless you absolutely trust them (spouse, child, etc.).
 
-TIP: You can safely store your database file in the cloud (e.g., OneDrive, Dropbox, Google Drive, Nextcloud, Syncthing, etc). The database file is always fully encrypted; unencrypted data is never written to disk and is never accessible to your cloud storage provider. We recommend using a storage service that keeps automatic backups (version history) of your database file in the event of corruption or accidental deletion.
+TIP: You can safely store your database file in the cloud (OneDrive, Dropbox, Google Drive, Nextcloud, Syncthing, etc.). The database file is always fully encrypted; unencrypted data is never written to disk and is never accessible to your cloud storage provider. We recommend using a storage service that keeps automatic backups (version history) of your database file in the event of corruption or accidental deletion.
 
-==  Backing up a Database File
+== Backing up a Database File
 It is a good practice to create copies of your database file and store the copies of your database on a different computer, smart phone, or cloud storage space such a Google Drive or Microsoft OneDrive. Backups can be created automatically by selecting the _Backup database file before saving_ option in the application settings. Additionally, you can create a backup on-demand using the _Database_ -> _Save Database Backup..._ menu feature.
 
 .Saving a database backup

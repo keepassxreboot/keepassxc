@@ -86,9 +86,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
 #endif
 }
 
-EditWidgetIcons::~EditWidgetIcons()
-{
-}
+EditWidgetIcons::~EditWidgetIcons() = default;
 
 IconStruct EditWidgetIcons::state()
 {

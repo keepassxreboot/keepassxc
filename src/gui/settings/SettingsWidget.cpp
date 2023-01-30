@@ -22,9 +22,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 {
 }
 
-SettingsWidget::~SettingsWidget()
-{
-}
+SettingsWidget::~SettingsWidget() = default;
 
 /**
  * Switch between simple mode (the default) and advanced mode.

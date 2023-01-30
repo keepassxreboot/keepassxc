@@ -38,9 +38,7 @@ TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
     init();
 }
 
-TotpSetupDialog::~TotpSetupDialog()
-{
-}
+TotpSetupDialog::~TotpSetupDialog() = default;
 
 void TotpSetupDialog::saveSettings()
 {

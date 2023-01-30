@@ -92,9 +92,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
 }
 
 // Required for QScopedPointer
-AutoTypeSelectDialog::~AutoTypeSelectDialog()
-{
-}
+AutoTypeSelectDialog::~AutoTypeSelectDialog() = default;
 
 void AutoTypeSelectDialog::setMatches(const QList<AutoTypeMatch>& matches,
                                       const QList<QSharedPointer<Database>>& dbs,
@@ -326,7 +324,7 @@ void AutoTypeSelectDialog::buildActionMenu()
         submitAutoTypeMatch(match);
     });
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     auto typeVirtualAction = new QAction(icons()->icon("auto-type"), tr("Use Virtual Keyboard"));
     m_actionMenu->insertAction(copyUsernameAction, typeVirtualAction);
     typeVirtualAction->setShortcut(Qt::CTRL + Qt::Key_4);
@@ -342,7 +340,7 @@ void AutoTypeSelectDialog::buildActionMenu()
     typeUsernameAction->setShortcutVisibleInContextMenu(true);
     typePasswordAction->setShortcutVisibleInContextMenu(true);
     typeTotpAction->setShortcutVisibleInContextMenu(true);
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     typeVirtualAction->setShortcutVisibleInContextMenu(true);
 #endif
 #endif

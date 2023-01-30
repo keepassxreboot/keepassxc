@@ -275,8 +275,8 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     bool isNewFile = !QFile::exists(realFilePath);
     bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backupFilePath, error); });
     if (ok) {
-        markAsClean();
         setFilePath(filePath);
+        markAsClean();
         if (isNewFile) {
             QFile::setPermissions(realFilePath, QFile::ReadUser | QFile::WriteUser);
         }
@@ -346,7 +346,7 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
                 tempFile.setAutoRemove(false);
                 QFile::setPermissions(filePath, perms);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-                // Retain orginal creation time
+                // Retain original creation time
                 tempFile.setFileTime(createTime, QFile::FileBirthTime);
 #endif
                 return true;

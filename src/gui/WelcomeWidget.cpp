@@ -51,9 +51,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
             SLOT(openDatabaseFromFile(QListWidgetItem*)));
 }
 
-WelcomeWidget::~WelcomeWidget()
-{
-}
+WelcomeWidget::~WelcomeWidget() = default;
 
 void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 {

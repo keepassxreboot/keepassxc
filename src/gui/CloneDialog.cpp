@@ -61,6 +61,4 @@ void CloneDialog::cloneEntry()
     close();
 }
 
-CloneDialog::~CloneDialog()
-{
-}
+CloneDialog::~CloneDialog() = default;

@@ -107,7 +107,7 @@ namespace
         rv = SCardListReaders(context, nullptr, mszReaders, &dwReaders);
         if (rv == SCARD_S_SUCCESS) {
             char* readhead = mszReaders;
-            // Names are seperated by a null byte
+            // Names are separated by a null byte
             // The list is terminated by two null bytes
             while (*readhead != '\0') {
                 QString reader = QString::fromUtf8(readhead);
@@ -563,7 +563,7 @@ bool YubiKeyInterfacePCSC::findValidKeys()
                                &dwActiveProtocol);
 
         if (rv == SCARD_S_SUCCESS) {
-            // Read the potocol and the ATR record
+            // Read the protocol and the ATR record
             char pbReader[MAX_READERNAME] = {0};
             SCUINT dwReaderLen = sizeof(pbReader);
             SCUINT dwState = 0;
@@ -683,7 +683,7 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
                So we wait for the user to re-present it to clear the time-out
                This condition usually only happens when the key times out after
                the initial key listing, because performTestChallenge implicitly
-               resets the key (see commnt above) */
+               resets the key (see comment above) */
             if (ret == YubiKey::ChallengeResult::YCR_SUCCESS) {
                 emit challengeCompleted();
                 m_mutex.unlock();
@@ -728,7 +728,7 @@ YubiKey::ChallengeResult YubiKeyInterfacePCSC::performChallenge(void* key,
      * configurations even work, some docs say avoid it.
      *
      * In fact, the Yubikey always assumes the last byte (nr. 64)
-     * and all bytes of the same value preceeding it to be padding.
+     * and all bytes of the same value preceding it to be padding.
      * This does not conform fully to PKCS7, because the the actual value
      * of the padding bytes is ignored.
      */

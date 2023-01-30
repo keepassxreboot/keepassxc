@@ -128,6 +128,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->setSeparatorsCollapsible(true);
     m_entryContextMenu->addAction(m_ui->actionEntryCopyUsername);
     m_entryContextMenu->addAction(m_ui->actionEntryCopyPassword);
+    m_entryContextMenu->addAction(m_ui->actionEntryCopyURL);
     m_entryContextMenu->addAction(m_ui->menuEntryCopyAttribute->menuAction());
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
     m_entryContextMenu->addAction(m_ui->menuTags->menuAction());
@@ -268,6 +269,9 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
+    m_ui->actionDatabaseSettings->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Comma);
+    m_ui->actionReports->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_R);
+    setShortcut(m_ui->actionSettings, QKeySequence::Preferences, Qt::CTRL + Qt::Key_Comma);
     m_ui->actionLockDatabase->setShortcut(Qt::CTRL + Qt::Key_L);
     m_ui->actionLockAllDatabases->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
@@ -745,7 +749,7 @@ void MainWindow::appExit()
 
 /**
  * Returns if application was built with hardware key support.
- * Intented to be used by 3rd-party applications using DBus.
+ * Intended to be used by 3rd-party applications using DBus.
  *
  * @return True if built with hardware key support, false otherwise
  */
@@ -761,7 +765,7 @@ bool MainWindow::isHardwareKeySupported()
 /**
  * Refreshes list of hardware keys known.
  * Triggers the DatabaseOpenWidget to automatically select the key last used for a database if found.
- * Intented to be used by 3rd-party applications using DBus.
+ * Intended to be used by 3rd-party applications using DBus.
  *
  * @return True if any key was found, false otherwise or if application lacks hardware key support
  */

@@ -50,7 +50,7 @@ QVariant Base32::decode(const QByteArray& encodedData)
     }
 
     if (encodedData.size() % 8 != 0) {
-        return QVariant();
+        return {};
     }
 
     int nPads = 0;
@@ -119,7 +119,7 @@ QVariant Base32::decode(const QByteArray& encodedData)
                         continue;
                     } else {
                         // illegal character
-                        return QVariant();
+                        return {};
                     }
                 }
             }
@@ -145,7 +145,7 @@ QVariant Base32::decode(const QByteArray& encodedData)
 QByteArray Base32::encode(const QByteArray& data)
 {
     if (data.size() < 1) {
-        return QByteArray();
+        return {};
     }
 
     const int nBits = data.size() * 8;

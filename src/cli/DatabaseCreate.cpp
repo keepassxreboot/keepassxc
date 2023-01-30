@@ -149,7 +149,7 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
  * If a key file is specified but it can't be loaded, the function will
  * fail.
  *
- * If the database is being saved in a non existant directory, the
+ * If the database is being saved in a non existent directory, the
  * function will fail.
  *
  * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure

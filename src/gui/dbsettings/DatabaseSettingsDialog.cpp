@@ -122,9 +122,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     pageChanged();
 }
 
-DatabaseSettingsDialog::~DatabaseSettingsDialog()
-{
-}
+DatabaseSettingsDialog::~DatabaseSettingsDialog() = default;
 
 void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
 {

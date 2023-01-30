@@ -41,9 +41,7 @@ EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedPluginData()));
 }
 
-EditWidgetProperties::~EditWidgetProperties()
-{
-}
+EditWidgetProperties::~EditWidgetProperties() = default;
 
 void EditWidgetProperties::setFields(const TimeInfo& timeInfo, const QUuid& uuid)
 {
