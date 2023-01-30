@@ -38,10 +38,7 @@
                                                                 name:NSWorkspaceSessionDidResignActiveNotification
                                                                 object:nil];
 
-        [[NSDistributedNotificationCenter defaultCenter] addObserver:self
-                                                            selector:@selector(interfaceThemeChanged:)
-                                                                name:@"AppleInterfaceThemeChangedNotification"
-                                                              object:nil];
+        [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
 
         // Unfortunately, there is no notification for a wallpaper change, which affects
         // the status bar colour on macOS Big Sur, but we can at least subscribe to this.
@@ -67,14 +64,29 @@
     }
 }
 
-//
-// Light / dark theme toggled
-//
-- (void) interfaceThemeChanged:(NSNotification*) notification
+- (void) observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context
 {
-    Q_UNUSED(notification);
-    if (m_appkit) {
-        emit m_appkit->interfaceThemeChanged();
+    Q_UNUSED(object)
+    Q_UNUSED(change)
+    Q_UNUSED(context)
+    if ([keyPath isEqualToString:@"effectiveAppearance"]) {
+        if (m_appkit) {
+
+            void (^emitBlock)(void) = ^{
+                emit m_appkit->interfaceThemeChanged();
+            };
+
+            if(@available(macOS 11.0, *)) {
+                // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here too
+                [NSApp.effectiveAppearance performAsCurrentDrawingAppearance:emitBlock];
+            }
+            else {
+                emitBlock();
+            }
+        }
     }
 }
 
@@ -127,10 +139,7 @@
 //
 - (bool) isDarkMode
 {
-    NSDictionary* dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
-    id style = [dict objectForKey:@"AppleInterfaceStyle"];
-    return ( style && [style isKindOfClass:[NSString class]]
-             && NSOrderedSame == [style caseInsensitiveCompare:@"dark"] );
+    return [NSApp.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
 }
 
 
