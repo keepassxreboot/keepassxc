@@ -409,6 +409,10 @@
         <translation>Estilo de botão da barra de ferramentas:</translation>
     </message>
     <message>
+        <source>Show passwords in color</source>
+        <translation>Colorir senhas</translation>
+    </message>
+    <message>
         <source>Use monospaced font for notes</source>
         <translation>Usar fonte monoespaçada para notas</translation>
     </message>
