@@ -895,12 +895,27 @@ void TestGui::testTotp()
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
+    // Test the TOTP value
     triggerAction("actionEntryTotp");
 
     auto* totpDialog = m_dbWidget->findChild<TotpDialog*>("TotpDialog");
     auto* totpLabel = totpDialog->findChild<QLabel*>("totpLabel");
 
     QCOMPARE(totpLabel->text().replace(" ", ""), entry->totp());
+    QTest::keyClick(totpDialog, Qt::Key_Escape);
+
+    // Test the QR code
+    triggerAction("actionEntryTotpQRCode");
+    auto* qrCodeDialog = m_mainWindow->findChild<QDialog*>("entryQrCodeWidget");
+    QVERIFY(qrCodeDialog);
+    QVERIFY(qrCodeDialog->isVisible());
+    auto* qrCodeWidget = qrCodeDialog->findChild<QWidget*>("squareSvgWidget");
+    QVERIFY2(qrCodeWidget->geometry().width() == qrCodeWidget->geometry().height(), "Initial QR code is not square");
+
+    // Test the QR code window resizing, make the dialog bigger.
+    qrCodeDialog->setFixedSize(800, 600);
+    QVERIFY2(qrCodeWidget->geometry().width() == qrCodeWidget->geometry().height(), "Resized QR code is not square");
+    QTest::keyClick(qrCodeDialog, Qt::Key_Escape);
 }
 
 void TestGui::testSearch()

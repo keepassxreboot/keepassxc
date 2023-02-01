@@ -29,24 +29,28 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QShortcut>
+#include <QStackedWidget>
 
 TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry* entry)
     : QDialog(parent)
     , m_timer(new QTimer(this))
     , m_verticalLayout(new QVBoxLayout())
-    , m_totpSvgWidget(new SquareSvgWidget())
+    , m_totpSvgContainerWidget(new QStackedWidget())
+    , m_totpSvgWidget(new SquareSvgWidget(m_totpSvgContainerWidget))
     , m_countDown(new QLabel())
     , m_warningLabel(new QLabel())
     , m_buttonBox(new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Ok))
 {
+    setObjectName("entryQrCodeWidget");
+    m_totpSvgContainerWidget->addWidget(m_totpSvgWidget);
+
     m_verticalLayout->addWidget(m_warningLabel);
     m_verticalLayout->addItem(new QSpacerItem(0, 0));
-
-    m_verticalLayout->addStretch(0);
-    m_verticalLayout->addWidget(m_totpSvgWidget);
-    m_verticalLayout->addStretch(0);
+    m_verticalLayout->addWidget(m_totpSvgContainerWidget);
     m_verticalLayout->addWidget(m_countDown);
     m_verticalLayout->addWidget(m_buttonBox);
+
+    m_verticalLayout->setAlignment(m_buttonBox, Qt::AlignBottom);
 
     setLayout(m_verticalLayout);
     setAttribute(Qt::WA_DeleteOnClose);

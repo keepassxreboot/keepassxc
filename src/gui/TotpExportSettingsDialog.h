@@ -44,6 +44,7 @@ private:
     QTimer* m_timer;
 
     QVBoxLayout* m_verticalLayout;
+    QStackedWidget* m_totpSvgContainerWidget;
     SquareSvgWidget* m_totpSvgWidget;
     QLabel* m_countDown;
     QLabel* m_warningLabel;
