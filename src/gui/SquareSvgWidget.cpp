@@ -16,6 +16,14 @@
  */
 
 #include "SquareSvgWidget.h"
+#include <QResizeEvent>
+
+SquareSvgWidget::SquareSvgWidget(QWidget* parent)
+    : QSvgWidget(parent)
+{
+    Q_ASSERT(parent);
+    setObjectName("squareSvgWidget");
+}
 
 bool SquareSvgWidget::hasHeightForWidth() const
 {
@@ -25,4 +33,25 @@ bool SquareSvgWidget::hasHeightForWidth() const
 int SquareSvgWidget::heightForWidth(int width) const
 {
     return width;
+}
+
+// The overridden logic allows to keep the SVG image as square and centered by width and height.
+void SquareSvgWidget::resizeEvent(QResizeEvent*)
+{
+    QWidget* pWidget = parentWidget();
+    Q_ASSERT(pWidget);
+    if (pWidget) {
+        auto containerRect = pWidget->contentsRect();
+
+        auto containerWidth = containerRect.width();
+        auto containerHeight = containerRect.height();
+
+        auto squareSize = qMin(containerWidth, containerHeight);
+        auto halfSquareSize = squareSize >> 1;
+
+        auto startX = (containerWidth >> 1) - halfSquareSize;
+        auto startY = (containerHeight >> 1) - halfSquareSize;
+
+        setGeometry(startX, startY, squareSize, squareSize);
+    }
 }
