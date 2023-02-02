@@ -28,6 +28,7 @@
 
 class QIODevice;
 class QRegularExpression;
+class QUrl;
 
 namespace Tools
 {
@@ -41,6 +42,7 @@ namespace Tools
     void sleep(int ms);
     void wait(int ms);
     bool checkUrlValid(const QString& urlField);
+    QString baseDomain(const QUrl& url); // http://lon.static.example.co.uk -> example.co.uk
     QString uuidToHex(const QUuid& uuid);
     QUuid hexToUuid(const QString& uuid);
     bool isValidUuid(const QString& uuidStr);

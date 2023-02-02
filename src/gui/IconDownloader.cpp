@@ -18,6 +18,7 @@
 #include "IconDownloader.h"
 #include "core/Config.h"
 #include "core/NetworkManager.h"
+#include "core/Tools.h"
 
 #include <QBuffer>
 #include <QHostInfo>
@@ -42,18 +43,6 @@ IconDownloader::~IconDownloader()
 
 namespace
 {
-    // Try to get the 2nd level domain of the host part of a QUrl. For example,
-    // "foo.bar.example.com" would become "example.com", and "foo.bar.example.co.uk"
-    // would become "example.co.uk".
-    QString getSecondLevelDomain(const QUrl& url)
-    {
-        QString fqdn = url.host();
-        fqdn.truncate(fqdn.length() - url.topLevelDomain().length());
-        QStringList parts = fqdn.split('.');
-        QString newdom = parts.takeLast() + url.topLevelDomain();
-        return newdom;
-    }
-
     QUrl convertVariantToUrl(const QVariant& var)
     {
         QUrl url;
@@ -114,7 +103,7 @@ void IconDownloader::setUrl(const QString& entryUrl)
     // Determine the second-level domain, if available
     QString secondLevelDomain;
     if (!hostIsIp) {
-        secondLevelDomain = getSecondLevelDomain(url);
+        secondLevelDomain = Tools::baseDomain(url);
     }
 
     // Start with the "fallback" url (if enabled) to try to get the best favicon

@@ -34,7 +34,6 @@
 
 #include <QCheckBox>
 #include <QCryptographicHash>
-#include <QHostAddress>
 #include <QInputDialog>
 #include <QJsonArray>
 #include <QJsonObject>
@@ -1015,12 +1014,6 @@ bool BrowserService::schemeFound(const QString& url)
     return !address.scheme().isEmpty();
 }
 
-bool BrowserService::isIpAddress(const QString& host) const
-{
-    QHostAddress address(host);
-    return address.protocol() == QAbstractSocket::IPv4Protocol || address.protocol() == QAbstractSocket::IPv6Protocol;
-}
-
 bool BrowserService::removeFirstDomain(QString& hostname)
 {
     int pos = hostname.indexOf(".");
@@ -1116,7 +1109,7 @@ bool BrowserService::handleURL(const QString& entryUrl,
     }
 
     // Match the base domain
-    if (getTopLevelDomainFromUrl(siteQUrl.host()) != getTopLevelDomainFromUrl(entryQUrl.host())) {
+    if (Tools::baseDomain(siteQUrl) != Tools::baseDomain(entryQUrl)) {
         return false;
     }
 
@@ -1127,34 +1120,6 @@ bool BrowserService::handleURL(const QString& entryUrl,
 
     return false;
 };
-
-/**
- * Gets the base domain of URL.
- *
- * Returns the base domain, e.g. https://another.example.co.uk -> example.co.uk
- */
-QString BrowserService::getTopLevelDomainFromUrl(const QString& url) const
-{
-    QUrl qurl = QUrl::fromUserInput(url);
-    QString host = qurl.host();
-
-    // If the hostname is an IP address, return it directly
-    if (isIpAddress(host)) {
-        return host;
-    }
-
-    if (host.isEmpty() || !host.contains(qurl.topLevelDomain())) {
-        return {};
-    }
-
-    // Remove the top level domain part from the hostname, e.g. https://another.example.co.uk -> https://another.example
-    host.chop(qurl.topLevelDomain().length());
-    // Split the URL and select the last part, e.g. https://another.example -> example
-    QString baseDomain = host.split('.').last();
-    // Append the top level domain back to the URL, e.g. example -> example.co.uk
-    baseDomain.append(qurl.topLevelDomain());
-    return baseDomain;
-}
 
 QSharedPointer<Database> BrowserService::getDatabase()
 {

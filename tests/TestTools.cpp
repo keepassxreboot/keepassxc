@@ -165,6 +165,33 @@ void TestTools::testBackupFilePatternSubstitution()
     QCOMPARE(Tools::substituteBackupFilePath(pattern, dbFilePath), expectedSubstitution);
 }
 
+void TestTools::testBaseDomain()
+{
+    QFETCH(QUrl, input);
+    QFETCH(QString, expected);
+    QCOMPARE(Tools::baseDomain(input), expected);
+}
+
+void TestTools::testBaseDomain_data()
+{
+    QTest::addColumn<QUrl>("input");
+    QTest::addColumn<QString>("expected");
+
+    QTest::newRow("Empty string") << QUrl() << QString();
+    QTest::newRow("Basic") << QUrl("https://keepassxc.org") << QString("keepassxc.org");
+    QTest::newRow("Trailing dot") << QUrl("https://keepassxc.org.") << QString("keepassxc.org");
+    QTest::newRow("WWW") << QUrl("https://www.keepassxc.org") << QString("keepassxc.org");
+    QTest::newRow("Subdomains") << QUrl("https://this.that.etc.www.ftp.keepassxc.org") << QString("keepassxc.org");
+    QTest::newRow("DE") << QUrl("http://web.de/index.html") << QString("web.de");
+    QTest::newRow("UK") << QUrl("https://www.bbc.co.uk") << QString("bbc.co.uk");
+    QTest::newRow("City domain") << QUrl("rsync://salami.pizza.napoli.it") << QString("pizza.napoli.it");
+    QTest::newRow("Special") << QUrl("http://1.0.0.127.in-addr.arpa") << QString("127.in-addr.arpa");
+    QTest::newRow("IP") << QUrl("sftp://192.168.0.1") << QString("192.168.0.1");
+    QTest::newRow("IP+port") << QUrl("http://192.168.0.1:8000") << QString("192.168.0.1");
+    QTest::newRow("Garbage") << QUrl("https://some_garbage") << QString("some_garbage");
+    QTest::newRow("Pure TLD") << QUrl("https://com") << QString("com");
+}
+
 void TestTools::testEscapeRegex_data()
 {
     QTest::addColumn<QString>("input");

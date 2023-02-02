@@ -324,7 +324,7 @@ configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepas
 configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
 
 add_library(autotype STATIC ${autotype_SOURCES})
-target_link_libraries(autotype Qt5::Core Qt5::Widgets)
+target_link_libraries(autotype Qt5::Core Qt5::Network Qt5::Widgets)
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 
