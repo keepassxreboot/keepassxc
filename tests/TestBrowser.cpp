@@ -114,7 +114,7 @@ void TestBrowser::testIncrementNonce()
 void TestBrowser::testBuildResponse()
 {
     const auto object = QJsonObject{{"test", true}};
-    const QJsonArray arr = {{QJsonObject{{"test", true}}}};
+    const QJsonArray arr = {QJsonObject{{"test", true}}};
 
     // Note: Passing a const QJsonObject will fail
     const Parameters params{
