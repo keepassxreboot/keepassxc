@@ -31,7 +31,7 @@ static const QString BROWSER_REQUEST_CREATE_NEW_GROUP = QStringLiteral("create-n
 static const QString BROWSER_REQUEST_DELETE_ENTRY = QStringLiteral("delete-entry");
 static const QString BROWSER_REQUEST_GENERATE_PASSWORD = QStringLiteral("generate-password");
 static const QString BROWSER_REQUEST_GET_DATABASEHASH = QStringLiteral("get-databasehash");
-static const QString BROWSER_REQUEST_GET_DATABASE_GROUPS = QStringLiteral("get-database-group");
+static const QString BROWSER_REQUEST_GET_DATABASE_GROUPS = QStringLiteral("get-database-groups");
 static const QString BROWSER_REQUEST_GET_LOGINS = QStringLiteral("get-logins");
 static const QString BROWSER_REQUEST_GET_TOTP = QStringLiteral("get-totp");
 static const QString BROWSER_REQUEST_LOCK_DATABASE = QStringLiteral("lock-database");
@@ -242,7 +242,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     entryParameters.siteUrl = siteUrl;
     entryParameters.formUrl = formUrl;
 
-    const QJsonArray users = browserService()->findEntries(entryParameters, keyList, httpAuth);
+    const auto users = browserService()->findEntries(entryParameters, keyList, httpAuth);
     if (users.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
@@ -367,7 +367,7 @@ QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, cons
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
-    const QJsonObject groups = browserService()->getDatabaseGroups();
+    const auto groups = browserService()->getDatabaseGroups();
     if (groups.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
     }
@@ -393,7 +393,7 @@ QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const Q
     }
 
     const auto group = browserRequest.getString("groupName");
-    const QJsonObject newGroup = browserService()->createNewGroup(group);
+    const auto newGroup = browserService()->createNewGroup(group);
     if (newGroup.isEmpty() || newGroup["name"].toString().isEmpty() || newGroup["uuid"].toString().isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP);
     }

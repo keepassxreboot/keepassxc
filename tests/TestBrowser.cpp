@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ const QString SECRETKEY = "B8ei4ZjQJkWzZU2SK/tBsrYRwp+6ztEMf5GFQV+i0yI=";
 const QString SERVERPUBLICKEY = "lKnbLhrVCOqzEjuNoUz1xj9EZlz8xeO4miZBvLrUPVQ=";
 const QString SERVERSECRETKEY = "tbPQcghxfOgbmsnEqG2qMIj1W2+nh+lOJcNsHncaz1Q=";
 const QString NONCE = "zBKdvTjL5bgWaKMCTut/8soM/uoMrFoZ";
+const QString INCREMENTEDNONCE = "zRKdvTjL5bgWaKMCTut/8soM/uoMrFoZ";
 const QString CLIENTID = "testClient";
 
 void TestBrowser::initTestCase()
@@ -107,7 +108,39 @@ void TestBrowser::testGetBase64FromKey()
 void TestBrowser::testIncrementNonce()
 {
     auto result = browserMessageBuilder()->incrementNonce(NONCE);
-    QCOMPARE(result, QString("zRKdvTjL5bgWaKMCTut/8soM/uoMrFoZ"));
+    QCOMPARE(result, INCREMENTEDNONCE);
+}
+
+void TestBrowser::testBuildResponse()
+{
+    const auto object = QJsonObject{{"test", true}};
+    const QJsonArray arr = {{QJsonObject{{"test", true}}}};
+
+    // Note: Passing a const QJsonObject will fail
+    const Parameters params{
+        {"test-param-1", "value1"}, {"test-param-2", 2}, {"test-param-3", false}, {"object", object}, {"arr", arr}};
+
+    const auto action = "test-action";
+    const auto message = browserMessageBuilder()->buildResponse(action, NONCE, params, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(!message.isEmpty());
+    QCOMPARE(message["action"], action);
+    QCOMPARE(message["nonce"], NONCE);
+
+    const auto decrypted =
+        browserMessageBuilder()->decryptMessage(message["message"].toString(), NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(!decrypted.isEmpty());
+    QCOMPARE(decrypted["test-param-1"], QString("value1"));
+    QCOMPARE(decrypted["test-param-2"], 2);
+    QCOMPARE(decrypted["test-param-3"], false);
+
+    const auto objectResult = decrypted["object"].toObject();
+    QCOMPARE(objectResult["test"], true);
+
+    const auto arrResult = decrypted["arr"].toArray();
+    QCOMPARE(arrResult.size(), 1);
+
+    const auto firstArr = arrResult[0];
+    QCOMPARE(firstArr["test"], true);
 }
 
 /**
