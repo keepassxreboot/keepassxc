@@ -457,9 +457,7 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
                 &PasswordGeneratorWidget::appliedPassword,
                 m_passwordGenerator.data(),
                 [=](const QString& password) {
-                    const Parameters params {
-                        { "password", password }
-                    };
+                    const Parameters params{{"password", password}};
                     m_browserHost->sendClientMessage(keyPairMessage.socket,
                                                      browserMessageBuilder()->buildResponse("generate-password",
                                                                                             keyPairMessage.nonce,

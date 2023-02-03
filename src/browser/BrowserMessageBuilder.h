@@ -19,8 +19,8 @@
 #define BROWSERMESSAGEBUILDER_H
 
 #include <QPair>
-#include <QVariant>
 #include <QString>
+#include <QVariant>
 
 class QJsonObject;
 

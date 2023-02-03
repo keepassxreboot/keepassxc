@@ -146,9 +146,7 @@ QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const 
 
     const auto command = browserRequest.getString("action");
     if (!command.isEmpty() && command.compare(BROWSER_REQUEST_GET_DATABASEHASH) == 0) {
-        const Parameters params {
-            { "hash", browserRequest.hash }
-        };
+        const Parameters params{{"hash", browserRequest.hash}};
         return buildResponse(action, browserRequest.incrementedNonce, params);
     }
 
@@ -178,10 +176,7 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
 
         m_associated = true;
 
-        const Parameters params {
-            { "hash", browserRequest.hash },
-            { "id", id }
-        };
+        const Parameters params{{"hash", browserRequest.hash}, {"id", id}};
         return buildResponse(action, browserRequest.incrementedNonce, params);
     }
 
@@ -208,10 +203,7 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
 
     m_associated = true;
 
-    const Parameters params {
-        { "hash", browserRequest.hash },
-        { "id", id }
-    };
+    const Parameters params{{"hash", browserRequest.hash}, {"id", id}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
@@ -255,12 +247,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    const Parameters params {
-        { "count", users.count() },
-        { "entries", users },
-        { "hash", browserRequest.hash },
-        { "id", id }
-    };
+    const Parameters params{{"count", users.count()}, {"entries", users}, {"hash", browserRequest.hash}, {"id", id}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
@@ -285,7 +272,7 @@ QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJ
         return errorReply;
     }
 
-    KeyPairMessage keyPairMessage {socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
+    KeyPairMessage keyPairMessage{socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
 
     browserService()->showPasswordGenerator(keyPairMessage);
     return {};
@@ -337,12 +324,10 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
         result = browserService()->updateEntry(entryParameters, uuid);
     }
 
-    const Parameters params {
-        { "count", QJsonValue::Null },
-        { "entries", QJsonValue::Null },
-        { "error", result ? QStringLiteral("success") : QStringLiteral("error") },
-        { "hash", browserRequest.hash }
-    };
+    const Parameters params{{"count", QJsonValue::Null},
+                            {"entries", QJsonValue::Null},
+                            {"error", result ? QStringLiteral("success") : QStringLiteral("error")},
+                            {"hash", browserRequest.hash}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
@@ -387,9 +372,7 @@ QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, cons
         return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
     }
 
-    const Parameters params {
-        { "groups", groups }
-    };
+    const Parameters params{{"groups", groups}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
@@ -415,10 +398,7 @@ QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const Q
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP);
     }
 
-    const Parameters params {
-        { "name", newGroup["name"] },
-        { "uuid", newGroup["uuid"] }
-    };
+    const Parameters params{{"name", newGroup["name"]}, {"uuid", newGroup["uuid"]}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
@@ -443,9 +423,7 @@ QJsonObject BrowserAction::handleGetTotp(const QJsonObject& json, const QString&
         return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
     }
 
-    const Parameters params {
-        { "totp", browserService()->getCurrentTotp(uuid) }
-    };
+    const Parameters params{{"totp", browserService()->getCurrentTotp(uuid)}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
@@ -472,9 +450,7 @@ QJsonObject BrowserAction::handleDeleteEntry(const QJsonObject& json, const QStr
 
     const auto result = browserService()->deleteEntry(uuid);
 
-    const Parameters params {
-        { "success", result ? TRUE_STR : FALSE_STR }
-    };
+    const Parameters params{{"success", result ? TRUE_STR : FALSE_STR}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
