@@ -139,7 +139,7 @@ void TestBrowser::testBuildResponse()
     const auto arrResult = decrypted["arr"].toArray();
     QCOMPARE(arrResult.size(), 1);
 
-    const auto firstArr = arrResult[0];
+    const auto firstArr = arrResult[0].toObject();
     QCOMPARE(firstArr["test"].toBool(), true);
 }
 
