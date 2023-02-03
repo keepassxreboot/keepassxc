@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 
 #include "BrowserAction.h"
-#include "BrowserMessageBuilder.h"
 #include "BrowserService.h"
 #include "core/Global.h"
 #include "core/Tools.h"
@@ -147,19 +146,10 @@ QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const 
 
     const auto command = browserRequest.getString("action");
     if (!command.isEmpty() && command.compare(BROWSER_REQUEST_GET_DATABASEHASH) == 0) {
-        auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-        message["hash"] = browserRequest.hash;
-
-        // Update a legacy database hash if found
-        const auto hashes = browserRequest.getArray("connectedKeys");
-        if (!hashes.isEmpty()) {
-            const auto legacyHash = browserService()->getDatabaseHash(true);
-            if (hashes.contains(legacyHash)) {
-                message["oldHash"] = legacyHash;
-            }
-        }
-
-        return buildResponse(action, message, browserRequest.incrementedNonce);
+        const Parameters params {
+            { "hash", browserRequest.hash }
+        };
+        return buildResponse(action, browserRequest.incrementedNonce, params);
     }
 
     return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
@@ -188,10 +178,11 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
 
         m_associated = true;
 
-        auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-        message["hash"] = browserRequest.hash;
-        message["id"] = id;
-        return buildResponse(action, message, browserRequest.incrementedNonce);
+        const Parameters params {
+            { "hash", browserRequest.hash },
+            { "id", id }
+        };
+        return buildResponse(action, browserRequest.incrementedNonce, params);
     }
 
     return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
@@ -217,11 +208,11 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
 
     m_associated = true;
 
-    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-    message["hash"] = browserRequest.hash;
-    message["id"] = id;
-
-    return buildResponse(action, message, browserRequest.incrementedNonce);
+    const Parameters params {
+        { "hash", browserRequest.hash },
+        { "id", id }
+    };
+    return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
 QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QString& action)
@@ -255,7 +246,8 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 
     EntryParameters entryParameters;
     entryParameters.dbid = id;
-    entryParameters.hash = browserRequest.hash, entryParameters.siteUrl = siteUrl;
+    entryParameters.hash = browserRequest.hash;
+    entryParameters.siteUrl = siteUrl;
     entryParameters.formUrl = formUrl;
 
     const QJsonArray users = browserService()->findEntries(entryParameters, keyList, httpAuth);
@@ -263,13 +255,13 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-    message["count"] = users.count();
-    message["entries"] = users;
-    message["hash"] = browserRequest.hash;
-    message["id"] = id;
-
-    return buildResponse(action, message, browserRequest.incrementedNonce);
+    const Parameters params {
+        { "count", users.count() },
+        { "entries", users },
+        { "hash", browserRequest.hash },
+        { "id", id }
+    };
+    return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
 QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action)
@@ -293,7 +285,7 @@ QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJ
         return errorReply;
     }
 
-    KeyPairMessage keyPairMessage = {socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
+    KeyPairMessage keyPairMessage {socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
 
     browserService()->showPasswordGenerator(keyPairMessage);
     return {};
@@ -345,13 +337,13 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
         result = browserService()->updateEntry(entryParameters, uuid);
     }
 
-    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-    message["count"] = QJsonValue::Null;
-    message["entries"] = QJsonValue::Null;
-    message["error"] = result ? QStringLiteral("success") : QStringLiteral("error");
-    message["hash"] = browserRequest.hash;
-
-    return buildResponse(action, message, browserRequest.incrementedNonce);
+    const Parameters params {
+        { "count", QJsonValue::Null },
+        { "entries", QJsonValue::Null },
+        { "error", result ? QStringLiteral("success") : QStringLiteral("error") },
+        { "hash", browserRequest.hash }
+    };
+    return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
 QJsonObject BrowserAction::handleLockDatabase(const QJsonObject& json, const QString& action)
@@ -368,9 +360,7 @@ QJsonObject BrowserAction::handleLockDatabase(const QJsonObject& json, const QSt
     const auto command = browserRequest.getString("action");
     if (!command.isEmpty() && command.compare(BROWSER_REQUEST_LOCK_DATABASE) == 0) {
         browserService()->lockDatabase();
-
-        auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-        return buildResponse(action, message, browserRequest.incrementedNonce);
+        return buildResponse(action, browserRequest.incrementedNonce);
     }
 
     return getErrorReply(action, ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED);
@@ -397,10 +387,10 @@ QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, cons
         return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
     }
 
-    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-    message["groups"] = groups;
-
-    return buildResponse(action, message, browserRequest.incrementedNonce);
+    const Parameters params {
+        { "groups", groups }
+    };
+    return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
 QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const QString& action)
@@ -425,11 +415,11 @@ QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const Q
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP);
     }
 
-    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-    message["name"] = newGroup["name"];
-    message["uuid"] = newGroup["uuid"];
-
-    return buildResponse(action, message, browserRequest.incrementedNonce);
+    const Parameters params {
+        { "name", newGroup["name"] },
+        { "uuid", newGroup["uuid"] }
+    };
+    return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
 QJsonObject BrowserAction::handleGetTotp(const QJsonObject& json, const QString& action)
@@ -453,10 +443,10 @@ QJsonObject BrowserAction::handleGetTotp(const QJsonObject& json, const QString&
         return getErrorReply(action, ERROR_KEEPASS_NO_VALID_UUID_PROVIDED);
     }
 
-    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-    message["totp"] = browserService()->getCurrentTotp(uuid);
-
-    return buildResponse(action, message, browserRequest.incrementedNonce);
+    const Parameters params {
+        { "totp", browserService()->getCurrentTotp(uuid) }
+    };
+    return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
 QJsonObject BrowserAction::handleDeleteEntry(const QJsonObject& json, const QString& action)
@@ -482,10 +472,10 @@ QJsonObject BrowserAction::handleDeleteEntry(const QJsonObject& json, const QStr
 
     const auto result = browserService()->deleteEntry(uuid);
 
-    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-    message["success"] = result ? TRUE_STR : FALSE_STR;
-
-    return buildResponse(action, message, browserRequest.incrementedNonce);
+    const Parameters params {
+        { "success", result ? TRUE_STR : FALSE_STR }
+    };
+    return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
 QJsonObject BrowserAction::handleGlobalAutoType(const QJsonObject& json, const QString& action)
@@ -507,8 +497,7 @@ QJsonObject BrowserAction::handleGlobalAutoType(const QJsonObject& json, const Q
 
     browserService()->requestGlobalAutoType(topLevelDomain);
 
-    auto message = browserMessageBuilder()->buildMessage(browserRequest.incrementedNonce);
-    return buildResponse(action, message, browserRequest.incrementedNonce);
+    return buildResponse(action, browserRequest.incrementedNonce);
 }
 
 QJsonObject BrowserAction::decryptMessage(const QString& message, const QString& nonce)
@@ -521,9 +510,9 @@ QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorC
     return browserMessageBuilder()->getErrorReply(action, errorCode);
 }
 
-QJsonObject BrowserAction::buildResponse(const QString& action, const QJsonObject& message, const QString& nonce)
+QJsonObject BrowserAction::buildResponse(const QString& action, const QString& nonce, const Parameters& params)
 {
-    return browserMessageBuilder()->buildResponse(action, message, nonce, m_clientPublicKey, m_secretKey);
+    return browserMessageBuilder()->buildResponse(action, nonce, params, m_clientPublicKey, m_secretKey);
 }
 
 BrowserRequest BrowserAction::decodeRequest(const QJsonObject& json)

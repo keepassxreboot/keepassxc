@@ -457,12 +457,13 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
                 &PasswordGeneratorWidget::appliedPassword,
                 m_passwordGenerator.data(),
                 [=](const QString& password) {
-                    QJsonObject message = browserMessageBuilder()->buildMessage(keyPairMessage.nonce);
-                    message["password"] = password;
+                    const Parameters params {
+                        { "password", password }
+                    };
                     m_browserHost->sendClientMessage(keyPairMessage.socket,
                                                      browserMessageBuilder()->buildResponse("generate-password",
-                                                                                            message,
                                                                                             keyPairMessage.nonce,
+                                                                                            params,
                                                                                             keyPairMessage.publicKey,
                                                                                             keyPairMessage.secretKey));
                     hideWindow();
