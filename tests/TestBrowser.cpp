@@ -140,7 +140,7 @@ void TestBrowser::testBuildResponse()
     QCOMPARE(arrResult.size(), 1);
 
     const auto firstArr = arrResult[0];
-    QCOMPARE(firstArr["test"], true);
+    QCOMPARE(firstArr["test"].toBool(), true);
 }
 
 /**
