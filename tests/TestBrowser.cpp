@@ -115,12 +115,13 @@ void TestBrowser::testBuildResponse()
 {
     const auto object = QJsonObject{{"test", true}};
     const QJsonArray arr = {QJsonObject{{"test", true}}};
+    const auto val = QString("value1");
 
     // Note: Passing a const QJsonObject will fail
     const Parameters params{
-        {"test-param-1", "value1"}, {"test-param-2", 2}, {"test-param-3", false}, {"object", object}, {"arr", arr}};
+        {"test-param-1", val}, {"test-param-2", 2}, {"test-param-3", false}, {"object", object}, {"arr", arr}};
 
-    const auto action = "test-action";
+    const auto action = QString("test-action");
     const auto message = browserMessageBuilder()->buildResponse(action, NONCE, params, PUBLICKEY, SERVERSECRETKEY);
     QVERIFY(!message.isEmpty());
     QCOMPARE(message["action"].toString(), action);
