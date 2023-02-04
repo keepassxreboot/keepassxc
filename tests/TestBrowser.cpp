@@ -123,18 +123,18 @@ void TestBrowser::testBuildResponse()
     const auto action = "test-action";
     const auto message = browserMessageBuilder()->buildResponse(action, NONCE, params, PUBLICKEY, SERVERSECRETKEY);
     QVERIFY(!message.isEmpty());
-    QCOMPARE(message["action"], action);
-    QCOMPARE(message["nonce"], NONCE);
+    QCOMPARE(message["action"].toString(), action);
+    QCOMPARE(message["nonce"].toString(), NONCE);
 
     const auto decrypted =
         browserMessageBuilder()->decryptMessage(message["message"].toString(), NONCE, PUBLICKEY, SERVERSECRETKEY);
     QVERIFY(!decrypted.isEmpty());
-    QCOMPARE(decrypted["test-param-1"], QString("value1"));
-    QCOMPARE(decrypted["test-param-2"], 2);
-    QCOMPARE(decrypted["test-param-3"], false);
+    QCOMPARE(decrypted["test-param-1"].toString(), QString("value1"));
+    QCOMPARE(decrypted["test-param-2"].toInt(), 2);
+    QCOMPARE(decrypted["test-param-3"].toBool(), false);
 
     const auto objectResult = decrypted["object"].toObject();
-    QCOMPARE(objectResult["test"], true);
+    QCOMPARE(objectResult["test"].toBool(), true);
 
     const auto arrResult = decrypted["arr"].toArray();
     QCOMPARE(arrResult.size(), 1);
