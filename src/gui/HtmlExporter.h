@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_HTMLEXPORTER_H
-#define KEEPASSX_HTMLEXPORTER_H
+#ifndef KEEPASSXC_HTMLEXPORTER_H
+#define KEEPASSXC_HTMLEXPORTER_H
 
 #include <QSharedPointer>
 #include <QString>
@@ -48,4 +48,4 @@ private:
     QString m_error;
 };
 
-#endif // KEEPASSX_HTMLEXPORTER_H
+#endif // KEEPASSXC_HTMLEXPORTER_H

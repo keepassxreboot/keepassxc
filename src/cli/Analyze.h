@@ -30,4 +30,4 @@ public:
     static const QCommandLineOption OkonOption;
 };
 
-#endif // KEEPASSXC_HIBP_H
+#endif // KEEPASSXC_ANALYZE_H

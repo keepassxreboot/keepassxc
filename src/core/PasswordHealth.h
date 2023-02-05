@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDHEALTH_H
-#define KEEPASSX_PASSWORDHEALTH_H
+#ifndef KEEPASSXC_PASSWORDHEALTH_H
+#define KEEPASSXC_PASSWORDHEALTH_H
 
 #include <QHash>
 #include <QSharedPointer>
@@ -115,4 +115,4 @@ private:
     QHash<QString, QStringList> m_reuse;
 };
 
-#endif // KEEPASSX_PASSWORDHEALTH_H
+#endif // KEEPASSXC_PASSWORDHEALTH_H

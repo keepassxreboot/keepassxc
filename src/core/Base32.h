@@ -21,8 +21,8 @@
  * applications (e.g. to use with Google Authenticator).
  */
 
-#ifndef BASE32_H
-#define BASE32_H
+#ifndef KEEPASSXC_BASE32_H
+#define KEEPASSXC_BASE32_H
 
 #include <QByteArray>
 #include <QVariant>
@@ -38,4 +38,4 @@ public:
     Q_REQUIRED_RESULT static QByteArray sanitizeInput(const QByteArray&);
 };
 
-#endif // BASE32_H
+#endif // KEEPASSXC_BASE32_H

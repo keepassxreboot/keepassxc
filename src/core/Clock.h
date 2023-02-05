@@ -56,4 +56,4 @@ private:
     static QSharedPointer<Clock> m_instance;
 };
 
-#endif // KEEPASSX_ENTRY_H
+#endif // KEEPASSXC_CLOCK_H

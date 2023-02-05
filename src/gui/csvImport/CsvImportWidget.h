@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CSVIMPORTWIDGET_H
-#define KEEPASSX_CSVIMPORTWIDGET_H
+#ifndef KEEPASSXC_CSVIMPORTWIDGET_H
+#define KEEPASSXC_CSVIMPORTWIDGET_H
 
 #include <QComboBox>
 
@@ -69,4 +69,4 @@ private:
     QString formatStatusText() const;
 };
 
-#endif // KEEPASSX_CSVIMPORTWIDGET_H
+#endif // KEEPASSXC_CSVIMPORTWIDGET_H

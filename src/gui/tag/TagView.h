@@ -44,4 +44,4 @@ private:
     QPointer<TagModel> m_model;
 };
 
-#endif // KEEPASSX_ENTRYVIEW_H
+#endif // KEEPASSXC_TAGVIEW_H

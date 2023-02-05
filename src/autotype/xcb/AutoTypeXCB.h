@@ -17,8 +17,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEXCB_H
-#define KEEPASSX_AUTOTYPEXCB_H
+#ifndef KEEPASSXC_AUTOTYPEXCB_H
+#define KEEPASSXC_AUTOTYPEXCB_H
 
 #include <QApplication>
 #include <QSet>
@@ -105,4 +105,4 @@ private:
     AutoTypePlatformX11* const m_platform;
 };
 
-#endif // KEEPASSX_AUTOTYPEXCB_H
+#endif // KEEPASSXC_AUTOTYPEXCB_H

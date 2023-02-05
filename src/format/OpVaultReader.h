@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPVAULT_READER_H_
-#define OPVAULT_READER_H_
+#ifndef KEEPASSXC_OPVAULTREADER_H
+#define KEEPASSXC_OPVAULTREADER_H
 
 #include <QDir>
 
@@ -117,4 +117,4 @@ private:
     friend class TestOpVaultReader;
 };
 
-#endif /* OPVAULT_READER_H_ */
+#endif // KEEPASSXC_OPVAULTREADER_H

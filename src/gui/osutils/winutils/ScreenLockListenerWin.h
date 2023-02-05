@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENLOCKLISTENERWIN_H
-#define SCREENLOCKLISTENERWIN_H
+#ifndef KEEPASSXC_SCREENLOCKLISTENERWIN_H
+#define KEEPASSXC_SCREENLOCKLISTENERWIN_H
 #include <QAbstractNativeEventFilter>
 #include <QObject>
 #include <QWidget>
@@ -35,4 +35,4 @@ private:
     void* m_powerNotificationHandle;
 };
 
-#endif // SCREENLOCKLISTENERWIN_H
+#endif // KEEPASSXC_SCREENLOCKLISTENERWIN_H

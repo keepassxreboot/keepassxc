@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
-#define KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
+#ifndef KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H
+#define KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H
 
 #include "DatabaseSettingsWidget.h"
 #include "config-keepassx.h"
@@ -82,4 +82,4 @@ private:
 #endif
 };
 
-#endif // KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
+#endif // KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H

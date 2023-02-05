@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_MAINWINDOW_H
-#define KEEPASSX_MAINWINDOW_H
+#ifndef KEEPASSXC_MAINWINDOW_H
+#define KEEPASSXC_MAINWINDOW_H
 
 #include <QActionGroup>
 #include <QLabel>
@@ -220,4 +220,4 @@ public:
  */
 MainWindow* getMainWindow();
 
-#endif // KEEPASSX_MAINWINDOW_H
+#endif // KEEPASSXC_MAINWINDOW_H

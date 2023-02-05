@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TOTPDIALOG_H
-#define KEEPASSX_TOTPDIALOG_H
+#ifndef KEEPASSXC_TOTPDIALOG_H
+#define KEEPASSXC_TOTPDIALOG_H
 
 #include "core/Database.h"
 #include "gui/DatabaseWidget.h"
@@ -51,4 +51,4 @@ private:
     QTimer m_totpUpdateTimer;
 };
 
-#endif // KEEPASSX_TOTPDIALOG_H
+#endif // KEEPASSXC_TOTPDIALOG_H

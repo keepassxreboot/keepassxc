@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYATTRIBUTESMODEL_H
-#define KEEPASSX_ENTRYATTRIBUTESMODEL_H
+#ifndef KEEPASSXC_ENTRYATTRIBUTESMODEL_H
+#define KEEPASSXC_ENTRYATTRIBUTESMODEL_H
 
 #include <QAbstractListModel>
 
@@ -57,4 +57,4 @@ private:
     bool m_nextRenameDataChange;
 };
 
-#endif // KEEPASSX_ENTRYATTRIBUTESMODEL_H
+#endif // KEEPASSXC_ENTRYATTRIBUTESMODEL_H

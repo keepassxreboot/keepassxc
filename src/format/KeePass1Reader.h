@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS1READER_H
-#define KEEPASSX_KEEPASS1READER_H
+#ifndef KEEPASSXC_KEEPASS1READER_H
+#define KEEPASSXC_KEEPASS1READER_H
 
 #include <QCoreApplication>
 #include <QSharedPointer>
@@ -80,4 +80,4 @@ private:
     QString m_errorStr;
 };
 
-#endif // KEEPASSX_KEEPASS1READER_H
+#endif // KEEPASSXC_KEEPASS1READER_H

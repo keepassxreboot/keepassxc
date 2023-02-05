@@ -28,4 +28,4 @@ public:
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 };
 
-#endif // KEEPASSXC_ATTACHMENTMOVE_H
+#endif // KEEPASSXC_ATTACHMENTREMOVE_H

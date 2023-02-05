@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DIALOGYWIDGET_H
-#define KEEPASSX_DIALOGYWIDGET_H
+#ifndef KEEPASSXC_DIALOGYWIDGET_H
+#define KEEPASSXC_DIALOGYWIDGET_H
 
 #include <QDialogButtonBox>
 
@@ -34,4 +34,4 @@ private:
     bool clickButton(QDialogButtonBox::StandardButton standardButton);
 };
 
-#endif // KEEPASSX_DIALOGYWIDGET_H
+#endif // KEEPASSXC_DIALOGYWIDGET_H

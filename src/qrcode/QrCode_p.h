@@ -17,8 +17,8 @@
 
 /* This class exists to isolate <qrencode.h> from the rest of the code base. */
 
-#ifndef KEEPASSX_QRCODEPRIVATE_H
-#define KEEPASSX_QRCODEPRIVATE_H
+#ifndef KEEPASSXC_QRCODE_P_H
+#define KEEPASSXC_QRCODE_P_H
 
 #include <qrencode.h>
 
@@ -30,4 +30,4 @@ struct QrCodePrivate
     ~QrCodePrivate();
 };
 
-#endif // KEEPASSX_QRCODEPRIVATE_H
+#endif // KEEPASSXC_QRCODE_P_H

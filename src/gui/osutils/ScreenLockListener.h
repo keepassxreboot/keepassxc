@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENLOCKLISTENER_H
-#define SCREENLOCKLISTENER_H
+#ifndef KEEPASSXC_SCREENLOCKLISTENER_H
+#define KEEPASSXC_SCREENLOCKLISTENER_H
 #include <QWidget>
 
 class ScreenLockListenerPrivate;
@@ -36,4 +36,4 @@ private:
     ScreenLockListenerPrivate* m_listener;
 };
 
-#endif // SCREENLOCKLISTENER_H
+#endif // KEEPASSXC_SCREENLOCKLISTENER_H

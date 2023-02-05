@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_INACTIVITYTIMER_H
-#define KEEPASSX_INACTIVITYTIMER_H
+#ifndef KEEPASSXC_INACTIVITYTIMER_H
+#define KEEPASSXC_INACTIVITYTIMER_H
 
 #include <QMutex>
 #include <QObject>
@@ -48,4 +48,4 @@ private:
     QMutex m_emitMutx;
 };
 
-#endif // KEEPASSX_INACTIVITYTIMER_H
+#endif // KEEPASSXC_INACTIVITYTIMER_H

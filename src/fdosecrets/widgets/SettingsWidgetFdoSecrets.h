@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SETTINGSWIDGETFDOSECRETS_H
-#define KEEPASSXC_SETTINGSWIDGETFDOSECRETS_H
+#ifndef KEEPASSXC_FDOSECRETS_SETTINGSWIDGETFDOSECRETS_H
+#define KEEPASSXC_FDOSECRETS_SETTINGSWIDGETFDOSECRETS_H
 
 #include "gui/MessageWidget.h"
 
@@ -55,4 +55,4 @@ private:
     QTimer m_checkTimer;
 };
 
-#endif // KEEPASSXC_SETTINGSWIDGETFDOSECRETS_H
+#endif // KEEPASSXC_FDOSECRETS_SETTINGSWIDGETFDOSECRETS_H

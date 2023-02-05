@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDKEY_H
-#define KEEPASSX_PASSWORDKEY_H
+#ifndef KEEPASSXC_PASSWORDKEY_H
+#define KEEPASSXC_PASSWORDKEY_H
 
 #include <botan/secmem.h>
 
@@ -48,4 +48,4 @@ private:
     bool m_isInitialized = false;
 };
 
-#endif // KEEPASSX_PASSWORDKEY_H
+#endif // KEEPASSXC_PASSWORDKEY_H

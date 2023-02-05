@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TRANSLATOR_H
-#define KEEPASSX_TRANSLATOR_H
+#ifndef KEEPASSXC_TRANSLATOR_H
+#define KEEPASSXC_TRANSLATOR_H
 
 #include <QMetaType>
 
@@ -31,4 +31,4 @@ private:
     static bool installQtTranslator(const QStringList& languages, const QString& path);
 };
 
-#endif // KEEPASSX_TRANSLATOR_H
+#endif // KEEPASSXC_TRANSLATOR_H

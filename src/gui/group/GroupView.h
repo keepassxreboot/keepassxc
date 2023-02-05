@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_GROUPVIEW_H
-#define KEEPASSX_GROUPVIEW_H
+#ifndef KEEPASSXC_GROUPVIEW_H
+#define KEEPASSXC_GROUPVIEW_H
 
 #include <QTreeView>
 
@@ -58,4 +58,4 @@ private:
     bool m_updatingExpanded;
 };
 
-#endif // KEEPASSX_GROUPVIEW_H
+#endif // KEEPASSXC_GROUPVIEW_H

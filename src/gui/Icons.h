@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ICONS_H
-#define KEEPASSX_ICONS_H
+#ifndef KEEPASSXC_ICONS_H
+#define KEEPASSXC_ICONS_H
 
 #include <QIcon>
 
@@ -61,4 +61,4 @@ inline Icons* icons()
     return Icons::instance();
 }
 
-#endif // KEEPASSX_ICONS_H
+#endif // KEEPASSXC_ICONS_H

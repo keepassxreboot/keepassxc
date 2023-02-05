@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_EDITWIDGETICONS_H
-#define KEEPASSX_EDITWIDGETICONS_H
+#ifndef KEEPASSXC_EDITWIDGETICONS_H
+#define KEEPASSXC_EDITWIDGETICONS_H
 
 #include <QMenu>
 #include <QUuid>
@@ -111,4 +111,4 @@ private:
     Q_DISABLE_COPY(EditWidgetIcons)
 };
 
-#endif // KEEPASSX_EDITWIDGETICONS_H
+#endif // KEEPASSXC_EDITWIDGETICONS_H

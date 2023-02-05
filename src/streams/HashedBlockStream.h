@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_HASHEDBLOCKSTREAM_H
-#define KEEPASSX_HASHEDBLOCKSTREAM_H
+#ifndef KEEPASSXC_HASHEDBLOCKSTREAM_H
+#define KEEPASSXC_HASHEDBLOCKSTREAM_H
 
 #include <QSysInfo>
 
@@ -54,4 +54,4 @@ private:
     bool m_error;
 };
 
-#endif // KEEPASSX_HASHEDBLOCKSTREAM_H
+#endif // KEEPASSXC_HASHEDBLOCKSTREAM_H

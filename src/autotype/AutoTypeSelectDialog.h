@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPESELECTDIALOG_H
-#define KEEPASSX_AUTOTYPESELECTDIALOG_H
+#ifndef KEEPASSXC_AUTOTYPESELECTDIALOG_H
+#define KEEPASSXC_AUTOTYPESELECTDIALOG_H
 
 #include "autotype/AutoTypeMatch.h"
 #include <QDialog>
@@ -74,4 +74,4 @@ private:
     bool m_accepted = false;
 };
 
-#endif // KEEPASSX_AUTOTYPESELECTDIALOG_H
+#endif // KEEPASSXC_AUTOTYPESELECTDIALOG_H

@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_RESOURCES_H
-#define KEEPASSX_RESOURCES_H
+#ifndef KEEPASSXC_RESOURCES_H
+#define KEEPASSXC_RESOURCES_H
 
 #include <QString>
 
@@ -47,4 +47,4 @@ inline Resources* resources()
     return Resources::instance();
 }
 
-#endif // KEEPASSX_RESOURCES_H
+#endif // KEEPASSXC_RESOURCES_H

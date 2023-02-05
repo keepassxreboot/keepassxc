@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TAGMODEL_H
-#define KEEPASSX_TAGMODEL_H
+#ifndef KEEPASSXC_TAGMODEL_H
+#define KEEPASSXC_TAGMODEL_H
 
 #include <QAbstractListModel>
 #include <QSharedPointer>
@@ -54,4 +54,4 @@ private:
     int m_tagListStart = 0;
 };
 
-#endif // KEEPASSX_TAGMODEL_H
+#endif // KEEPASSXC_TAGMODEL_H

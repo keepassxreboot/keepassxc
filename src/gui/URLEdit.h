@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_URLEDIT_H
-#define KEEPASSX_URLEDIT_H
+#ifndef KEEPASSXC_URLEDIT_H
+#define KEEPASSXC_URLEDIT_H
 
 #include <QAction>
 #include <QLineEdit>
@@ -38,4 +38,4 @@ private:
     QPointer<QAction> m_errorAction;
 };
 
-#endif // KEEPASSX_URLEDIT_H
+#endif // KEEPASSXC_URLEDIT_H

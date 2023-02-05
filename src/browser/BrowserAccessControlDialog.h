@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSERACCESSCONTROLDIALOG_H
-#define BROWSERACCESSCONTROLDIALOG_H
+#ifndef KEEPASSXC_BROWSERACCESSCONTROLDIALOG_H
+#define KEEPASSXC_BROWSERACCESSCONTROLDIALOG_H
 
 #include <QDialog>
 #include <QTableWidget>
@@ -53,4 +53,4 @@ private:
     bool m_entriesAccepted;
 };
 
-#endif // BROWSERACCESSCONTROLDIALOG_H
+#endif // KEEPASSXC_BROWSERACCESSCONTROLDIALOG_H

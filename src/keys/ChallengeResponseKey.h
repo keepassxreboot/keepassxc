@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KPXC_CHALLENGE_RESPONSE_KEY_H
-#define KPXC_CHALLENGE_RESPONSE_KEY_H
+#ifndef KEEPASSXC_CHALLENGERESPONSEKEY_H
+#define KEEPASSXC_CHALLENGERESPONSEKEY_H
 
 #include "Key.h"
 #include "drivers/YubiKey.h"
@@ -48,4 +48,4 @@ private:
     YubiKeySlot m_keySlot;
 };
 
-#endif // KPXC_CHALLENGE_RESPONSE_KEY_H
+#endif // KEEPASSXC_CHALLENGERESPONSEKEY_H

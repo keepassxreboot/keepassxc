@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_LAYEREDSTREAM_H
-#define KEEPASSX_LAYEREDSTREAM_H
+#ifndef KEEPASSXC_LAYEREDSTREAM_H
+#define KEEPASSXC_LAYEREDSTREAM_H
 
 #include <QIODevice>
 
@@ -41,4 +41,4 @@ private slots:
     void closeStream();
 };
 
-#endif // KEEPASSX_LAYEREDSTREAM_H
+#endif // KEEPASSXC_LAYEREDSTREAM_H

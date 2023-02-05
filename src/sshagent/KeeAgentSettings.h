@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEAGENTSETTINGS_H
-#define KEEAGENTSETTINGS_H
+#ifndef KEEPASSXC_KEEAGENTSETTINGS_H
+#define KEEPASSXC_KEEAGENTSETTINGS_H
 
 #include <QProcessEnvironment>
 
@@ -96,4 +96,4 @@ private:
     QString m_error;
 };
 
-#endif // KEEAGENTSETTINGS_H
+#endif // KEEPASSXC_KEEAGENTSETTINGS_H

@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENLOCKLISTENERMAC_H
-#define SCREENLOCKLISTENERMAC_H
+#ifndef KEEPASSXC_SCREENLOCKLISTENERMAC_H
+#define KEEPASSXC_SCREENLOCKLISTENERMAC_H
 #include <QObject>
 #include <QWidget>
 
@@ -41,4 +41,4 @@ private:
     void onSignalReception();
 };
 
-#endif // SCREENLOCKLISTENERMAC_H
+#endif // KEEPASSXC_SCREENLOCKLISTENERMAC_H

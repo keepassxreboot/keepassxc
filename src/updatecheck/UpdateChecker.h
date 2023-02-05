@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_UPDATECHECK_H
-#define KEEPASSXC_UPDATECHECK_H
+#ifndef KEEPASSXC_UPDATECHECKER_H
+#define KEEPASSXC_UPDATECHECKER_H
 #include <QObject>
 
 class QNetworkReply;
@@ -56,4 +56,4 @@ inline UpdateChecker* updateCheck()
     return UpdateChecker::instance();
 }
 
-#endif // KEEPASSXC_UPDATECHECK_H
+#endif // KEEPASSXC_UPDATECHECKER_H

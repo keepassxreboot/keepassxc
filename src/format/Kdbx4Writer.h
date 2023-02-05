@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KDBX4WRITER_H
-#define KEEPASSX_KDBX4WRITER_H
+#ifndef KEEPASSXC_KDBX4WRITER_H
+#define KEEPASSXC_KDBX4WRITER_H
 
 #include "KdbxWriter.h"
 
@@ -36,4 +36,4 @@ private:
     static bool serializeVariantMap(const QVariantMap& map, QByteArray& outputBytes);
 };
 
-#endif // KEEPASSX_KDBX4WRITER_H
+#endif // KEEPASSXC_KDBX4WRITER_H

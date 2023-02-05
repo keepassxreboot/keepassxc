@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEMATCHMODEL_H
-#define KEEPASSX_AUTOTYPEMATCHMODEL_H
+#ifndef KEEPASSXC_AUTOTYPEMATCHMODEL_H
+#define KEEPASSXC_AUTOTYPEMATCHMODEL_H
 
 #include <QAbstractTableModel>
 
@@ -64,4 +64,4 @@ private:
     QList<const Group*> m_allGroups;
 };
 
-#endif // KEEPASSX_AUTOTYPEMATCHMODEL_H
+#endif // KEEPASSXC_AUTOTYPEMATCHMODEL_H

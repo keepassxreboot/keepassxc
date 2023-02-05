@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASE_H
-#define KEEPASSX_DATABASE_H
+#ifndef KEEPASSXC_DATABASE_H
+#define KEEPASSXC_DATABASE_H
 
 #include <QDateTime>
 #include <QHash>
@@ -236,4 +236,4 @@ private:
     static QHash<QUuid, QPointer<Database>> s_uuidMap;
 };
 
-#endif // KEEPASSX_DATABASE_H
+#endif // KEEPASSXC_DATABASE_H

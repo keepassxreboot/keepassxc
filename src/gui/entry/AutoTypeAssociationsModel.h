@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEASSOCIATIONSMODEL_H
-#define KEEPASSX_AUTOTYPEASSOCIATIONSMODEL_H
+#ifndef KEEPASSXC_AUTOTYPEASSOCIATIONSMODEL_H
+#define KEEPASSXC_AUTOTYPEASSOCIATIONSMODEL_H
 
 #include <QAbstractListModel>
 #include <QPointer>
@@ -52,4 +52,4 @@ private:
     QPointer<const Entry> m_entry;
 };
 
-#endif // KEEPASSX_AUTOTYPEASSOCIATIONSMODEL_H
+#endif // KEEPASSXC_AUTOTYPEASSOCIATIONSMODEL_H

@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NATIVEMESSAGINGPROXY_H
-#define NATIVEMESSAGINGPROXY_H
+#ifndef KEEPASSXC_NATIVEMESSAGINGPROXY_H
+#define KEEPASSXC_NATIVEMESSAGINGPROXY_H
 
 #include <QLocalSocket>
 
@@ -48,4 +48,4 @@ private:
     Q_DISABLE_COPY(NativeMessagingProxy)
 };
 
-#endif // NATIVEMESSAGINGPROXY_H
+#endif // KEEPASSXC_NATIVEMESSAGINGPROXY_H

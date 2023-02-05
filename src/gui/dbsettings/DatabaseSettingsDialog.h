@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASESETTINGSWIDGET_H
-#define KEEPASSX_DATABASESETTINGSWIDGET_H
+#ifndef KEEPASSXC_DATABASESETTINGSDIALOG_H
+#define KEEPASSXC_DATABASESETTINGSDIALOG_H
 
 #include "config-keepassx.h"
 #include "gui/DialogyWidget.h"
@@ -93,4 +93,4 @@ private:
     QList<ExtraPage> m_extraPages;
 };
 
-#endif // KEEPASSX_DATABASESETTINGSWIDGET_H
+#endif // KEEPASSXC_DATABASESETTINGSDIALOG_H

@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYMODEL_H
-#define KEEPASSX_ENTRYMODEL_H
+#ifndef KEEPASSXC_ENTRYMODEL_H
+#define KEEPASSXC_ENTRYMODEL_H
 
 #include <QAbstractTableModel>
 #include <QPixmap>
@@ -94,4 +94,4 @@ private:
     const Qt::DateFormat DateFormat;
 };
 
-#endif // KEEPASSX_ENTRYMODEL_H
+#endif // KEEPASSXC_ENTRYMODEL_H

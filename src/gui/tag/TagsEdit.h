@@ -22,7 +22,8 @@
   SOFTWARE.
 */
 
-#pragma once
+#ifndef KEEPASSXC_TAGSEDIT_H
+#define KEEPASSXC_TAGSEDIT_H
 
 #include <QAbstractScrollArea>
 
@@ -77,3 +78,5 @@ private:
     std::unique_ptr<Impl> impl;
     bool m_readOnly;
 };
+
+#endif // KEEPASSXC_TAGSEDIT_H

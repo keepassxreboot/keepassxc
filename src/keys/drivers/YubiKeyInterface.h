@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_YUBIKEY_INTERFACE_H
-#define KEEPASSX_YUBIKEY_INTERFACE_H
+#ifndef KEEPASSXC_YUBIKEYINTERFACE_H
+#define KEEPASSXC_YUBIKEYINTERFACE_H
 
 #include "YubiKey.h"
 
@@ -78,4 +78,4 @@ protected:
     Q_DISABLE_COPY(YubiKeyInterface)
 };
 
-#endif // KEEPASSX_YUBIKEY_INTERFACE_H
+#endif // KEEPASSXC_YUBIKEYINTERFACE_H

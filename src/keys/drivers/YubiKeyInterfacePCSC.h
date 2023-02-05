@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
-#define KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
+#ifndef KEEPASSXC_YUBIKEYINTERFACEPCSC_H
+#define KEEPASSXC_YUBIKEYINTERFACEPCSC_H
 
 #include "YubiKeyInterface.h"
 
@@ -112,4 +112,4 @@ private:
          "Dangerous Things FlexSecure"}};
 };
 
-#endif // KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
+#endif // KEEPASSXC_YUBIKEYINTERFACEPCSC_H
