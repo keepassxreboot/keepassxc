@@ -1230,6 +1230,7 @@ void TestGui::testCloneEntry()
     Entry* entryClone = entryView->entryFromIndex(entryView->model()->index(1, 1));
     QVERIFY(entryOrg->uuid() != entryClone->uuid());
     QCOMPARE(entryClone->title(), entryOrg->title() + QString(" - Clone"));
+    QVERIFY(m_dbWidget->currentSelectedEntry()->uuid() == entryClone->uuid());
 }
 
 void TestGui::testEntryPlaceholders()

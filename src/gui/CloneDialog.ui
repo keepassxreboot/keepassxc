@@ -6,54 +6,56 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>347</width>
-    <height>136</height>
+    <width>319</width>
+    <height>132</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Clone Entry Options</string>
   </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QCheckBox" name="titleClone">
-       <property name="text">
-        <string>Append ' - Clone' to title</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="referencesClone">
-       <property name="text">
-        <string>Replace username and password with references</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="historyClone">
-       <property name="text">
-        <string>Copy history</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QCheckBox" name="titleClone">
+     <property name="text">
+      <string>Append ' - Clone' to title</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="referencesClone">
+     <property name="text">
+      <string>Replace username and password with references</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="historyClone">
+     <property name="text">
+      <string>Copy history</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Minimum</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>6</height>
       </size>
      </property>
     </spacer>
