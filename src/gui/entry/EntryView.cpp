@@ -279,8 +279,11 @@ int EntryView::numberOfSelectedEntries()
 
 void EntryView::setCurrentEntry(Entry* entry)
 {
-    selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromEntry(entry)),
-                                      QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    auto index = m_model->indexFromEntry(entry);
+    if (index.isValid()) {
+        selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(index),
+                                          QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    }
 }
 
 Entry* EntryView::entryFromIndex(const QModelIndex& index)
