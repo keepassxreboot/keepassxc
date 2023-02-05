@@ -50,8 +50,10 @@ Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
 QModelIndex EntryModel::indexFromEntry(Entry* entry) const
 {
     int row = m_entries.indexOf(entry);
-    Q_ASSERT(row != -1);
-    return index(row, 1);
+    if (row >= 0) {
+        return index(row, 1);
+    }
+    return {};
 }
 
 void EntryModel::setGroup(Group* group)

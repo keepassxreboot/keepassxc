@@ -18,8 +18,6 @@
 #include "CloneDialog.h"
 #include "ui_CloneDialog.h"
 
-#include "config-keepassx.h"
-
 CloneDialog::CloneDialog(DatabaseWidget* parent, Database* db, Entry* entry)
     : QDialog(parent)
     , m_ui(new Ui::CloneDialog())
@@ -29,8 +27,9 @@ CloneDialog::CloneDialog(DatabaseWidget* parent, Database* db, Entry* entry)
     m_parent = parent;
 
     m_ui->setupUi(this);
-    this->setFixedSize(this->sizeHint());
 
+    window()->layout()->setSizeConstraint(QLayout::SetFixedSize);
+    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     setAttribute(Qt::WA_DeleteOnClose);
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
@@ -54,10 +53,10 @@ void CloneDialog::cloneEntry()
         flags |= Entry::CloneIncludeHistory;
     }
 
-    Entry* entry = m_entry->clone(flags);
+    auto entry = m_entry->clone(flags);
     entry->setGroup(m_entry->group());
 
-    m_parent->refreshSearch();
+    emit entryCloned(entry);
     close();
 }
 

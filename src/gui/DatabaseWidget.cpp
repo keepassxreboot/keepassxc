@@ -447,6 +447,11 @@ void DatabaseWidget::cloneEntry()
     }
 
     auto cloneDialog = new CloneDialog(this, m_db.data(), currentEntry);
+    connect(cloneDialog, &CloneDialog::entryCloned, this, [this](auto entry) {
+        refreshSearch();
+        m_entryView->setCurrentEntry(entry);
+    });
+
     cloneDialog->show();
 }
 
@@ -1399,7 +1404,10 @@ void DatabaseWidget::performUnlockDatabase(const QString& password, const QStrin
 void DatabaseWidget::refreshSearch()
 {
     if (isSearchActive()) {
+        auto selectedEntry = m_entryView->currentEntry();
         search(m_lastSearchText);
+        // Re-select the previous entry if it is still in the search
+        m_entryView->setCurrentEntry(selectedEntry);
     }
 }
 
