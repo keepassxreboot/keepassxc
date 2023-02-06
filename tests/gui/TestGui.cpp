@@ -1920,7 +1920,7 @@ void TestGui::statusBarLabelShouldBe(const char* expectedText)
     Tools::wait(300);
     auto* statusBarLabel = m_mainWindow->findChild<QLabel*>("statusBarLabel");
     QVERIFY2(statusBarLabel->isVisible(), "StatusBarLabel is to be visible");
-    QCOMPARE(statusBarLabel->text(), expectedText);
+    QCOMPARE(statusBarLabel->text(), QString(expectedText));
 }
 
 void TestGui::triggerAction(const QString& name)
