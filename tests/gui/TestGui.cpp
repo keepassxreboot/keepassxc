@@ -592,6 +592,9 @@ void TestGui::testAddEntry()
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
 
+    // Given the status bar label with initial number of entries.
+    statusBarLabelShouldBe("1 Entry(s)");
+
     // Find the new entry action
     auto* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
     QVERIFY(entryNewAction->isEnabled());
@@ -626,6 +629,9 @@ void TestGui::testAddEntry()
 
     m_db->updateCommonUsernames();
 
+    // Then the status bar label should be updated with incremented number of entries.
+    statusBarLabelShouldBe("2 Entry(s)");
+
     // Add entry "something 2"
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 2");
@@ -645,6 +651,9 @@ void TestGui::testAddEntry()
     QCOMPARE(entry->username(), QString("AutocompletionUsername"));
     QCOMPARE(entry->historyItems().size(), 0);
 
+    // Then the status bar label should be updated with incremented number of entries.
+    statusBarLabelShouldBe("3 Entry(s)");
+
     // Add entry "something 5" but click cancel button (does NOT add entry)
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 5");
@@ -653,8 +662,9 @@ void TestGui::testAddEntry()
 
     QApplication::processEvents();
 
-    // Confirm entry count
+    // Confirm no changed entry count
     QTRY_COMPARE(entryView->model()->rowCount(), 3);
+    statusBarLabelShouldBe("3 Entry(s)");
 }
 
 void TestGui::testPasswordEntryEntropy_data()
@@ -1087,6 +1097,7 @@ void TestGui::testDeleteEntry()
 {
     // Add canned entries for consistent testing
     addCannedEntries();
+    statusBarLabelShouldBe("4 Entry(s)");
 
     auto* groupView = m_dbWidget->findChild<GroupView*>("groupView");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
@@ -1116,6 +1127,8 @@ void TestGui::testDeleteEntry()
         QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
     }
 
+    statusBarLabelShouldBe("3 Entry(s)");
+
     // Select multiple entries and move them to the recycling bin
     clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton);
     clickIndex(entryView->model()->index(2, 1), entryView, Qt::LeftButton, Qt::ControlModifier);
@@ -1136,6 +1149,7 @@ void TestGui::testDeleteEntry()
         QCOMPARE(entryView->model()->rowCount(), 1);
         QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
     }
+    statusBarLabelShouldBe("1 Entry(s)");
 
     // Go to the recycling bin
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
@@ -1144,6 +1158,7 @@ void TestGui::testDeleteEntry()
                groupView,
                Qt::LeftButton);
     QCOMPARE(groupView->currentGroup()->name(), m_db->metadata()->recycleBin()->name());
+    statusBarLabelShouldBe("3 Entry(s)");
 
     // Delete one entry from the bin
     clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
@@ -1151,6 +1166,7 @@ void TestGui::testDeleteEntry()
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 3);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
+    statusBarLabelShouldBe("3 Entry(s)");
 
     MessageBox::setNextAnswer(MessageBox::Delete);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
@@ -1164,6 +1180,7 @@ void TestGui::testDeleteEntry()
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 0);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 0);
+    statusBarLabelShouldBe("0 Entry(s)");
 
     // Ensure the entry preview widget shows the recycling group since all entries are deleted
     auto* previewWidget = m_dbWidget->findChild<EntryPreviewWidget*>("previewWidget");
@@ -1881,6 +1898,16 @@ void TestGui::checkSaveDatabase()
     } while (++i < 2);
 
     QFAIL("Could not save database.");
+}
+
+void TestGui::statusBarLabelShouldBe(const char* expectedText)
+{
+    // Wait a little to have updated status bar text.
+    // It fails with 150ms on i7 2.5Ghz, let's have double more time: 300ms.
+    Tools::wait(300);
+    auto* statusBarLabel = m_mainWindow->findChild<QLabel*>("statusBarLabel");
+    QVERIFY2(statusBarLabel->isVisible(), "StatusBarLabel is to be visible");
+    QCOMPARE(statusBarLabel->text(), expectedText);
 }
 
 void TestGui::triggerAction(const QString& name)

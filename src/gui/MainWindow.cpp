@@ -689,6 +689,7 @@ MainWindow::MainWindow()
     statusBar()->addPermanentWidget(m_progressBar);
     connect(clipboard(), SIGNAL(updateCountdown(int, QString)), this, SLOT(updateProgressBar(int, QString)));
     m_statusBarLabel = new QLabel(statusBar());
+    m_statusBarLabel->setObjectName("statusBarLabel");
     statusBar()->addPermanentWidget(m_statusBarLabel);
 
     restoreConfigState();
