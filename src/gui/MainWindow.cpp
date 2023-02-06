@@ -1352,6 +1352,7 @@ void MainWindow::databaseTabChanged(int tabIndex)
     }
 
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
+    updateEntryCountLabel();
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
