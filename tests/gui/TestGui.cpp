@@ -286,6 +286,10 @@ void TestGui::testCreateDatabase()
 
     triggerAction("actionDatabaseNew");
 
+    QCOMPARE(m_tabWidget->count(), 2);
+
+    statusBarLabelShouldBe("0 Entry(s)");
+
     // there is a new empty db
     m_db = m_tabWidget->currentDatabaseWidget()->database();
     QCOMPARE(m_db->rootGroup()->children().size(), 0);
@@ -305,6 +309,15 @@ void TestGui::testCreateDatabase()
     fileKey->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
     compositeKey->addKey(fileKey);
     QCOMPARE(m_db->key()->rawKey(), compositeKey->rawKey());
+
+    statusBarLabelShouldBe("0 Entry(s)");
+
+    // Test the switching to other DB tab
+    m_tabWidget->setCurrentIndex(0);
+    statusBarLabelShouldBe("1 Entry(s)");
+
+    m_tabWidget->setCurrentIndex(1);
+    statusBarLabelShouldBe("0 Entry(s)");
 
     // close the new database
     MessageBox::setNextAnswer(MessageBox::No);
