@@ -1520,6 +1520,72 @@ void TestGui::testDatabaseSettings()
     triggerAction("actionDatabaseSettings");
     QTRY_COMPARE(autosaveDelayCheckBox->isChecked(), true);
     QTRY_COMPARE(autosaveDelaySpinBox->value(), autosaveDelayTestValue);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
+
+    // test autosave delay
+
+    // 1 get current change time and init settings
+
+    QFileInfo fileInfo(m_dbFilePath);
+    QDateTime lastModified = fileInfo.lastModified();
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+
+    // 2 create new entries
+
+    // 2.a) Click the new entry button and set the title
+    auto* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+
+    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QVERIFY(toolBar);
+
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QVERIFY(editEntryWidget);
+    auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QVERIFY(titleEdit);
+
+    QTest::keyClicks(titleEdit, "Test autosaveDelay 1");
+
+    // 2.b) Save changes
+    editEntryWidget->setCurrentPage(0);
+    auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // 2.c) Wait half the time, make sure file was not modified yet
+    Tools::wait(autosaveDelayTestValue * 60 * 1000 / 2);
+    fileInfo.refresh();
+    QCOMPARE(fileInfo.lastModified(), lastModified);
+
+    // 2.d) Create second entry to test delay timer reset
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    QTest::keyClicks(titleEdit, "Test autosaveDelay 2");
+
+    // 2.e) Save changes
+    editEntryWidget->setCurrentPage(0);
+    editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QDateTime lastEntryModifiedTime = QDateTime::currentDateTime();
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // 3 Double check both true negative and true positive
+    // 3.a) Test unmodified prior to delay timeout
+    Tools::wait(autosaveDelayTestValue * 60 * 1000 / 2);
+    fileInfo.refresh();
+    QCOMPARE(fileInfo.lastModified(), lastModified);
+
+    // 3.b) Test modification time after expected
+    int marginDelay = 10000; // error margin to account for extra save delays (ms)
+    Tools::wait(autosaveDelayTestValue * 60 * 1000 / 2 + marginDelay);
+    fileInfo.refresh();
+    QVERIFY2(fileInfo.lastModified() >= lastEntryModifiedTime, "AutosaveDelay: wrong timing");
+
+    // 4 cleanup
+    config()->set(Config::AutoSaveAfterEveryChange, false);
 }
 
 void TestGui::testKeePass1Import()
