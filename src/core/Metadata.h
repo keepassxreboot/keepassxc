@@ -109,11 +109,13 @@ public:
     int databaseKeyChangeForce() const;
     int historyMaxItems() const;
     int historyMaxSize() const;
+    int autosaveDelayMin() const;
     CustomData* customData();
     const CustomData* customData() const;
 
     static const int DefaultHistoryMaxItems;
     static const int DefaultHistoryMaxSize;
+    static const int DefaultAutosaveDelayMin;
 
     void setGenerator(const QString& value);
     void setName(const QString& value);
@@ -150,6 +152,7 @@ public:
     void setMasterKeyChangeForce(int value);
     void setHistoryMaxItems(int value);
     void setHistoryMaxSize(int value);
+    void setAutosaveDelayMin(int value);
     void setUpdateDatetime(bool value);
     void addSavedSearch(const QString& name, const QString& searchtext);
     void deleteSavedSearch(const QString& name);
