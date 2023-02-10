@@ -1470,7 +1470,10 @@ void TestGui::testDatabaseSettings()
     auto* dbSettingsStackedWidget = dbSettingsDialog->findChild<QStackedWidget*>("stackedWidget");
     auto* transformRoundsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("transformRoundsSpinBox");
     auto advancedToggle = dbSettingsDialog->findChild<QCheckBox*>("advancedSettingsToggle");
+    auto* autosaveDelayCheckBox = dbSettingsDialog->findChild<QCheckBox*>("autosaveDelayCheckBox");
+    auto* autosaveDelaySpinBox = dbSettingsDialog->findChild<QSpinBox*>("autosaveDelaySpinBox");
     auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
+    int autosaveDelayTestValue = 2;
 
     advancedToggle->setChecked(true);
     QApplication::processEvents();
@@ -1503,7 +1506,20 @@ void TestGui::testDatabaseSettings()
     QCOMPARE(historyMaxSizeCheckBox->isChecked(), false);
     QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
 
+    // Test loading default values and setting autosaveDelay
+    triggerAction("actionDatabaseSettings");
+    QVERIFY(autosaveDelayCheckBox->isChecked() == false);
+    autosaveDelayCheckBox->toggle();
+    autosaveDelaySpinBox->setValue(autosaveDelayTestValue);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->metadata()->autosaveDelayMin(), autosaveDelayTestValue);
+
     checkSaveDatabase();
+
+    // Test loading autosaveDelay non-default values
+    triggerAction("actionDatabaseSettings");
+    QTRY_COMPARE(autosaveDelayCheckBox->isChecked(), true);
+    QTRY_COMPARE(autosaveDelaySpinBox->value(), autosaveDelayTestValue);
 }
 
 void TestGui::testKeePass1Import()
