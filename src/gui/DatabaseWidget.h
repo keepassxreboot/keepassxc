@@ -251,6 +251,7 @@ private slots:
     void onEntryChanged(Entry* entry);
     void onGroupChanged();
     void onDatabaseModified();
+    void onAutosaveDelayTimeout();
     void connectDatabaseSignals();
     void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
@@ -308,6 +309,9 @@ private:
 
     // Autoreload
     bool m_blockAutoSave;
+
+    // Autosave delay
+    QPointer<QTimer> m_autosaveTimer;
 
     // Auto-Type related
     QString m_searchStringForAutoType;
