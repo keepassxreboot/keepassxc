@@ -31,6 +31,7 @@ DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
 
     connect(m_ui->historyMaxItemsCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
+    connect(m_ui->autosaveDelayCheckBox, SIGNAL(toggled(bool)), m_ui->autosaveDelaySpinBox, SLOT(setEnabled(bool)));
 }
 
 DatabaseSettingsWidgetGeneral::~DatabaseSettingsWidgetGeneral() = default;
@@ -61,6 +62,13 @@ void DatabaseSettingsWidgetGeneral::initialize()
         m_ui->historyMaxSizeSpinBox->setValue(qRound(Metadata::DefaultHistoryMaxSize / qreal(1024 * 1024)));
         m_ui->historyMaxSizeSpinBox->setEnabled(false);
         m_ui->historyMaxSizeCheckBox->setChecked(false);
+    }
+    if (meta->autosaveDelayMin() > 0) {
+        m_ui->autosaveDelaySpinBox->setValue(meta->autosaveDelayMin());
+        m_ui->autosaveDelayCheckBox->setChecked(true);
+    } else {
+        m_ui->autosaveDelayCheckBox->setChecked(false);
+        m_ui->autosaveDelaySpinBox->setEnabled(false);
     }
 }
 
@@ -131,6 +139,12 @@ bool DatabaseSettingsWidgetGeneral::save()
         meta->setHistoryMaxSize(historyMaxSize);
         truncate = true;
     }
+
+    int autosaveDelayMin = 0;
+    if (m_ui->autosaveDelayCheckBox->isChecked()) {
+        autosaveDelayMin = m_ui->autosaveDelaySpinBox->value();
+    }
+    meta->setAutosaveDelayMin(autosaveDelayMin);
 
     if (truncate) {
         const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);

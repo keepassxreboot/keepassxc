@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>453</width>
-    <height>374</height>
+    <height>394</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -201,6 +201,58 @@ removed from the database.</string>
          <bool>true</bool>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QCheckBox" name="autosaveDelayCheckBox">
+          <property name="toolTip">
+           <string>Autosave delay since last change</string>
+          </property>
+          <property name="accessibleName">
+           <string>Autosave delay since last change checkbox</string>
+          </property>
+          <property name="text">
+           <string>Autosave delay</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="autosaveDelaySpinBox">
+          <property name="toolTip">
+           <string>Autosave delay since last change in minutes</string>
+          </property>
+          <property name="accessibleName">
+           <string>Autosave delay since last change in minutes</string>
+          </property>
+          <property name="suffix">
+           <string> min</string>
+          </property>
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>420000000</number>
+          </property>
+          <property name="value">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
