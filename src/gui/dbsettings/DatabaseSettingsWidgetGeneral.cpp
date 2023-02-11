@@ -57,7 +57,7 @@ void DatabaseSettingsWidgetGeneral::initialize()
         m_ui->historyMaxSizeSpinBox->setValue(historyMaxSizeMiB);
         m_ui->historyMaxSizeCheckBox->setChecked(true);
     } else {
-        m_ui->historyMaxSizeSpinBox->setValue(Metadata::DefaultHistoryMaxSize);
+        m_ui->historyMaxSizeSpinBox->setValue(qRound(Metadata::DefaultHistoryMaxSize / qreal(1048576)));
         m_ui->historyMaxSizeCheckBox->setChecked(false);
     }
 }
