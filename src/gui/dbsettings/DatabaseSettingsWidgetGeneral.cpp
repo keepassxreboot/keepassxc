@@ -52,14 +52,16 @@ void DatabaseSettingsWidgetGeneral::initialize()
         m_ui->historyMaxItemsCheckBox->setChecked(true);
     } else {
         m_ui->historyMaxItemsSpinBox->setValue(Metadata::DefaultHistoryMaxItems);
+        m_ui->historyMaxItemsSpinBox->setEnabled(false);
         m_ui->historyMaxItemsCheckBox->setChecked(false);
     }
-    int historyMaxSizeMiB = qRound(meta->historyMaxSize() / qreal(1048576));
+    int historyMaxSizeMiB = qRound(meta->historyMaxSize() / qreal(1024 * 1024));
     if (historyMaxSizeMiB > 0) {
         m_ui->historyMaxSizeSpinBox->setValue(historyMaxSizeMiB);
         m_ui->historyMaxSizeCheckBox->setChecked(true);
     } else {
-        m_ui->historyMaxSizeSpinBox->setValue(Metadata::DefaultHistoryMaxSize);
+        m_ui->historyMaxSizeSpinBox->setValue(qRound(Metadata::DefaultHistoryMaxSize / qreal(1024 * 1024)));
+        m_ui->historyMaxSizeSpinBox->setEnabled(false);
         m_ui->historyMaxSizeCheckBox->setChecked(false);
     }
 }
