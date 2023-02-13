@@ -730,7 +730,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation>Тип послідовністі</translation>
+        <translation>Тип послідовності</translation>
     </message>
     <message>
         <source>Cancel</source>
