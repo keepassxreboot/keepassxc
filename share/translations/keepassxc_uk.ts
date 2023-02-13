@@ -612,7 +612,7 @@
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
-        <translation type="unfinished"/>
+        <translation type="Знайдені зайві непарні дужки { або }"/>
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
@@ -709,7 +709,7 @@
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation type="unfinished"/>
+        <translation>Клацніть двічі по запису для виконання автозаповнення або знайдіть запис через пошук</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
@@ -722,15 +722,15 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation type="unfinished"/>
+        <translation>Шукати в усіх відкритих сховищах</translation>
     </message>
     <message>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Шукати...</translation>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Тип послідовністі</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -738,31 +738,31 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>Тип {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>Тип {PASSWORD}</translation>
     </message>
     <message>
         <source>Type {TOTP}</source>
-        <translation type="unfinished"/>
+        <translation>Тип {TOTP}</translation>
     </message>
     <message>
         <source>Copy Username</source>
-        <translation type="unfinished"/>
+        <translation>Скопіювати ім’я користувача</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation type="unfinished"/>
+        <translation>Скопіювати пароль</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Скопіювати ТОП</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Використати віртуальну клавіатуру</translation>
     </message>
 </context>
 <context>
