@@ -24,7 +24,7 @@
 #include <QWidget>
 
 #ifdef WITH_XC_NETWORKING
-#include "core/HibpDownloader.h"
+#include "networking/HibpDownloader.h"
 #endif
 
 class Database;

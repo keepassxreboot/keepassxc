@@ -17,7 +17,7 @@
 
 #include "TestUpdateCheck.h"
 #include "crypto/Crypto.h"
-#include "updatecheck/UpdateChecker.h"
+#include "networking/UpdateChecker.h"
 
 #include <QTest>
 

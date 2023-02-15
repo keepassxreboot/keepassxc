@@ -70,6 +70,10 @@ void TestGuiBrowser::initTestCase()
     config()->set(Config::GUI_AdvancedSettings, false);
     // Disable the update check first time alert
     config()->set(Config::UpdateCheckMessageShown, true);
+    // Disable quick unlock
+    config()->set(Config::Security_QuickUnlock, false);
+    // Disable showing expired entries on unlock
+    config()->set(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock, false);
 
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");

@@ -58,7 +58,7 @@ add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
         ${GPGERROR_LIBRARIES}
         cli
-        keepassx_core)
+        keepassxc_core)
 
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
