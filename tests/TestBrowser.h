@@ -37,8 +37,6 @@ private slots:
     void testGetBase64FromKey();
     void testIncrementNonce();
 
-    void testTopLevelDomain();
-    void testIsIpAddress();
     void testSortPriority();
     void testSortPriority_data();
     void testSearchEntries();

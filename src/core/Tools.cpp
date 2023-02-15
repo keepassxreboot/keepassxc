@@ -28,6 +28,7 @@
 
 #include "core/Clock.h"
 
+#include <QByteArray>
 #include <QCoreApplication>
 #include <QElapsedTimer>
 #include <QEventLoop>
@@ -35,6 +36,8 @@
 #include <QIODevice>
 #include <QLocale>
 #include <QMetaProperty>
+#include <QNetworkCookie>
+#include <QNetworkCookieJar>
 #include <QRegularExpression>
 #include <QStringList>
 #include <QUrl>
@@ -298,6 +301,54 @@ namespace Tools
         }
 
         return true;
+    }
+
+    QString baseDomain(const QUrl& url)
+    {
+        QString domain = url.host();
+        if (domain.endsWith('.')) {
+            // Absolute domain names may end with a trailing '.'
+            domain.chop(1);
+        }
+        const QString origDomain = domain;
+        while (true) {
+            const int dotIdx = domain.indexOf('.', 0);
+            if (dotIdx == -1) {
+                // This can happen if the input domain does not end with a valid
+                // top-level domain, or if it consists solely of a top-level
+                // domain.
+                return origDomain;
+            }
+            const QString parentDomain = domain.mid(dotIdx);
+            static const auto dummy = QByteArrayLiteral("x");
+            QNetworkCookie cookie(dummy, dummy);
+            cookie.setDomain(parentDomain);
+            if (!QNetworkCookieJar{}.setCookiesFromUrl(QList{cookie}, url)) {
+                // Hack:
+                // We take advantage of the fact that
+                // QNetworkCookieJar::setCookiesFromUrl() does validation to
+                // ensure that the cookie's domain matches that of the URL. As
+                // part of this, it requires the cookie domain to be under a
+                // valid top-level domain (but consisting solely of a top-level
+                // domain does not count). Note that top-level domains may
+                // contain one or more embedded dots (e.g. '.co.uk'), and are
+                // defined by the Public Suffix List [1].
+                // So, as we keep chopping off sub-domains from the front, the
+                // first time it returns 'false' is when we've removed
+                // everything apart from the top-level domain from
+                // 'parentDomain'. When that happens, we return the domain from
+                // the previous step, i.e. with one more name component at the
+                // front.
+                //
+                // Note: Qt 5.x has QUrl::topLevelDomain() which offers a much
+                // less hacky way of doing this, but sadly it was deprecated in
+                // Qt 5.15 and removed in Qt 6.x.
+                //
+                // [1] https://publicsuffix.org/
+                return domain;
+            }
+            domain = parentDomain.mid(1); // remove leading '.'
+        }
     }
 
     /****************************************************************************

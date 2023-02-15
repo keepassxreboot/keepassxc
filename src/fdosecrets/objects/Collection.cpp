@@ -644,7 +644,7 @@ namespace FdoSecrets
         // groupPath can't be empty here, because otherwise it will match m_exposedGroup and was returned above
         Q_ASSERT(!groupPath.isEmpty());
 
-        auto groups = groupPath.split('/', QString::SkipEmptyParts);
+        auto groups = groupPath.split('/', Qt::SkipEmptyParts);
         auto groupName = groups.takeLast();
 
         // create parent group

@@ -20,6 +20,7 @@
 
 #include "core/Config.h"
 #include "core/Database.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
@@ -281,7 +282,7 @@ QString Entry::effectiveAutoTypeSequence() const
 
 /**
  * Retrieve the Auto-Type sequences matches for a given windowTitle
- * This returns a list with priority ordering. If you don't want duplicates call .toSet() on it.
+ * This returns a list with priority ordering. If you don't want duplicates, convert it to a QSet<QString>.
  */
 QList<QString> Entry::autoTypeSequences(const QString& windowTitle) const
 {
@@ -430,7 +431,7 @@ int Entry::size() const
     size += this->autoTypeAssociations()->associationsSize();
     size += this->attachments()->attachmentsSize();
     size += this->customData()->dataSize();
-    const QStringList tags = this->tags().split(delimiter, QString::SkipEmptyParts);
+    const QStringList tags = this->tags().split(delimiter, Qt::SkipEmptyParts);
     for (const QString& tag : tags) {
         size += tag.toUtf8().size();
     }
@@ -652,14 +653,13 @@ void Entry::setOverrideUrl(const QString& url)
 void Entry::setTags(const QString& tags)
 {
     static QRegExp rx("(\\,|\\t|\\;)");
-    auto taglist = tags.split(rx, QString::SkipEmptyParts);
+    auto taglist = tags.split(rx, Qt::SkipEmptyParts);
     // Trim whitespace before/after tag text
     for (auto itr = taglist.begin(); itr != taglist.end(); ++itr) {
         *itr = itr->trimmed();
     }
     // Remove duplicates
-    auto tagSet = QSet<QString>::fromList(taglist);
-    taglist = tagSet.toList();
+    taglist = Tools::asSet(taglist).values();
     // Sort alphabetically
     taglist.sort();
     set(m_data.tags, taglist);

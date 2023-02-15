@@ -285,7 +285,7 @@ void CsvImportWidget::setRootGroup()
         }
         groupLabel = m_parserModel->data(m_parserModel->index(r, 0)).toString();
         // check if group name is either "root", "" (empty) or some other label
-        groupList = groupLabel.split("/", QString::SkipEmptyParts);
+        groupList = groupLabel.split("/", Qt::SkipEmptyParts);
         if (groupList.isEmpty()) {
             is_empty = true;
         } else if (not groupList.first().compare("Root", Qt::CaseSensitive)) {
@@ -314,7 +314,7 @@ Group* CsvImportWidget::splitGroups(const QString& label)
         return current;
     }
 
-    QStringList groupList = label.split("/", QString::SkipEmptyParts);
+    QStringList groupList = label.split("/", Qt::SkipEmptyParts);
     // avoid the creation of a subgroup with the same name as Root
     if (m_db->rootGroup()->name() == "Root" && groupList.first() == "Root") {
         groupList.removeFirst();

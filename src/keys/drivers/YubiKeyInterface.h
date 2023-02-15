@@ -23,6 +23,12 @@
 
 #include <QMultiMap>
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+#include <QRecursiveMutex>
+#else
+#include <QMutex>
+#endif
+
 /**
  * Abstract base class to manage the interfaces to hardware key(s)
  */
@@ -70,7 +76,12 @@ protected:
 
     QMultiMap<unsigned int, QPair<int, QString>> m_foundKeys;
 
-    QMutex m_mutex;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QRecursiveMutex m_mutex;
+#else
+    QMutex m_mutex{QMutex::Recursive};
+#endif
+
     QTimer m_interactionTimer;
     bool m_initialized = false;
     QString m_error;
