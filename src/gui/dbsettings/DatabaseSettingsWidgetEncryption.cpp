@@ -143,7 +143,7 @@ void DatabaseSettingsWidgetEncryption::setupAlgorithmComboBox()
 {
     m_ui->algorithmComboBox->clear();
     for (auto& cipher : asConst(KeePass2::CIPHERS)) {
-        m_ui->algorithmComboBox->addItem(cipher.second.toUtf8(), cipher.first.toByteArray());
+        m_ui->algorithmComboBox->addItem(KeePass2::cipherToString(cipher), cipher.toByteArray());
     }
     int cipherIndex = m_ui->algorithmComboBox->findData(m_db->cipher().toByteArray());
     if (cipherIndex > -1) {
@@ -157,8 +157,8 @@ void DatabaseSettingsWidgetEncryption::setupKdfComboBox(bool enableKdbx3)
     bool block = m_ui->kdfComboBox->blockSignals(true);
     m_ui->kdfComboBox->clear();
     for (auto& kdf : asConst(KeePass2::KDFS)) {
-        if (kdf.first != KeePass2::KDF_AES_KDBX3 or enableKdbx3) {
-            m_ui->kdfComboBox->addItem(kdf.second.toUtf8(), kdf.first.toByteArray());
+        if (kdf != KeePass2::KDF_AES_KDBX3 or enableKdbx3) {
+            m_ui->kdfComboBox->addItem(KeePass2::kdfToString(kdf), kdf.toByteArray());
         }
     }
     m_ui->kdfComboBox->blockSignals(block);

@@ -7889,6 +7889,14 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Invalid Cipher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation type="unfinished"></translation>
     </message>

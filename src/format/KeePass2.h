@@ -26,7 +26,6 @@ class Kdf;
 
 namespace KeePass2
 {
-
     constexpr quint32 SIGNATURE_1 = 0x9AA2D903;
     constexpr quint32 SIGNATURE_2 = 0xB54BFB67;
 
@@ -67,8 +66,8 @@ namespace KeePass2
     extern const QString KDFPARAM_ARGON2_SECRET;
     extern const QString KDFPARAM_ARGON2_ASSOCDATA;
 
-    extern const QList<QPair<QUuid, QString>> CIPHERS;
-    extern const QList<QPair<QUuid, QString>> KDFS;
+    extern const QList<QUuid> CIPHERS;
+    extern const QList<QUuid> KDFS;
 
     enum class HeaderFieldID
     {
@@ -130,7 +129,8 @@ namespace KeePass2
     QVariantMap kdfToParameters(const QSharedPointer<Kdf>& kdf);
     QSharedPointer<Kdf> uuidToKdf(const QUuid& uuid);
     ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
-
+    QString cipherToString(QUuid cipherUuid);
+    QString kdfToString(QUuid kdfUuid);
 } // namespace KeePass2
 
 #endif // KEEPASSX_KEEPASS2_H
