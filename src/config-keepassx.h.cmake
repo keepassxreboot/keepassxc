@@ -14,6 +14,7 @@
 
 #cmakedefine WITH_XC_AUTOTYPE
 #cmakedefine WITH_XC_NETWORKING
+#cmakedefine KPXC_DEV_BOTAN3
 #cmakedefine WITH_XC_BROWSER
 #cmakedefine WITH_XC_YUBIKEY
 #cmakedefine WITH_XC_SSHAGENT

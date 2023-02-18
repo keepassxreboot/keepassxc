@@ -17,12 +17,19 @@
 
 #include "SessionCipher.h"
 
+#include "config-keepassx.h"
+
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
 
 #include <QDebug>
 #include <botan/dh.h>
+
+#ifdef KPXC_DEV_BOTAN3
+#include <botan/pubkey.h>
+#else
 #include <botan/pk_ops.h>
+#endif
 
 namespace FdoSecrets
 {
@@ -50,6 +57,15 @@ namespace FdoSecrets
 
         try {
             Botan::secure_vector<uint8_t> salt(32, '\0');
+#ifdef KPXC_DEV_BOTAN3
+            Botan::PK_Key_Agreement dhka(*m_privateKey, *randomGen()->getRng(), "HKDF(SHA-256)", "");
+            auto aesKey = dhka.derive_key(16,
+                                          reinterpret_cast<const uint8_t*>(clientPublicKey.constData()),
+                                          clientPublicKey.size(),
+                                          salt.data(),
+                                          salt.size());
+            m_aesKey = QByteArray(reinterpret_cast<const char*>(aesKey.begin()), aesKey.size());
+#else
             auto dhka = m_privateKey->create_key_agreement_op(*randomGen()->getRng(), "HKDF(SHA-256)", "");
             auto aesKey = dhka->agree(16,
                                       reinterpret_cast<const uint8_t*>(clientPublicKey.constData()),
@@ -57,6 +73,7 @@ namespace FdoSecrets
                                       salt.data(),
                                       salt.size());
             m_aesKey = QByteArray(reinterpret_cast<char*>(aesKey.data()), aesKey.size());
+#endif
             return true;
         } catch (std::exception& e) {
             qCritical("Failed to update client public key: %s", e.what());
