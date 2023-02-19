@@ -323,8 +323,8 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
     const QString formHost = QUrl(entryParameters.formUrl).host();
 
     // Check entries for authorization
-    QList<Entry*> pwEntriesToConfirm;
-    QList<Entry*> pwEntries;
+    QList<Entry*> entriesToConfirm;
+    QList<Entry*> allowedEntries;
     for (auto* entry : searchEntries(entryParameters.siteUrl, entryParameters.formUrl, keyList)) {
         auto entryCustomData = entry->customData();
 
@@ -344,7 +344,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
 
         // HTTP Basic Auth always needs a confirmation
         if (!ignoreHttpAuth && httpAuth) {
-            pwEntriesToConfirm.append(entry);
+            entriesToConfirm.append(entry);
             continue;
         }
 
@@ -354,27 +354,27 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
 
         case Unknown:
             if (alwaysAllowAccess) {
-                pwEntries.append(entry);
+                allowedEntries.append(entry);
             } else {
-                pwEntriesToConfirm.append(entry);
+                entriesToConfirm.append(entry);
             }
             break;
 
         case Allowed:
-            pwEntries.append(entry);
+            allowedEntries.append(entry);
             break;
         }
     }
 
-    if (pwEntriesToConfirm.isEmpty() && pwEntries.isEmpty()) {
+    if (entriesToConfirm.isEmpty() && allowedEntries.isEmpty()) {
         return qMakePair(false, QJsonArray());
     }
 
     // Confirm entries
-    QList<Entry*> selectedEntriesToConfirm =
-        confirmEntries(pwEntriesToConfirm, entryParameters, siteHost, formHost, httpAuth);
+    auto selectedEntriesToConfirm =
+        confirmEntries(entriesToConfirm, entryParameters, siteHost, formHost, httpAuth);
     if (!selectedEntriesToConfirm.isEmpty()) {
-        pwEntries.append(selectedEntriesToConfirm);
+        allowedEntries.append(selectedEntriesToConfirm);
     }
 
     // Ensure that database is not locked when the popup was visible
@@ -383,24 +383,24 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
     }
 
     // Sort results
-    pwEntries = sortEntries(pwEntries, entryParameters.siteUrl, entryParameters.formUrl);
+    allowedEntries = sortEntries(allowedEntries, entryParameters.siteUrl, entryParameters.formUrl);
 
     // Fill the list
-    QJsonArray users;
-    for (auto* entry : pwEntries) {
-        users.append(prepareEntry(entry));
+    QJsonArray entries;
+    for (auto* entry : allowedEntries) {
+        entries.append(prepareEntry(entry));
     }
 
-    return qMakePair(true, users);
+    return qMakePair(true, entries);
 }
 
-QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
+QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
                                              const EntryParameters& entryParameters,
                                              const QString& siteHost,
                                              const QString& formUrl,
                                              const bool httpAuth)
 {
-    if (pwEntriesToConfirm.isEmpty() || m_dialogActive) {
+    if (entriesToConfirm.isEmpty() || m_dialogActive) {
         return {};
     }
 
@@ -411,16 +411,16 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &accessControlDialog, SLOT(reject()));
 
     connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
-        auto entry = pwEntriesToConfirm[item->row()];
+        auto entry = entriesToConfirm[item->row()];
         denyEntry(entry, siteHost, formUrl, entryParameters.realm);
     });
 
-    accessControlDialog.setItems(pwEntriesToConfirm, entryParameters.siteUrl, httpAuth);
+    accessControlDialog.setItems(entriesToConfirm, entryParameters.siteUrl, httpAuth);
 
     QList<Entry*> allowedEntries;
     auto ret = accessControlDialog.exec();
     for (auto item : accessControlDialog.getSelectedEntries()) {
-        auto entry = pwEntriesToConfirm[item->row()];
+        auto entry = entriesToConfirm[item->row()];
         if (accessControlDialog.remember()) {
             if (ret == QDialog::Accepted) {
                 allowEntry(entry, siteHost, formUrl, entryParameters.realm);
@@ -772,11 +772,11 @@ void BrowserService::requestGlobalAutoType(const QString& search)
     emit osUtils->globalShortcutTriggered("autotype", search);
 }
 
-QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QString& siteUrl, const QString& formUrl)
+QList<Entry*> BrowserService::sortEntries(QList<Entry*>& entries, const QString& siteUrl, const QString& formUrl)
 {
     // Build map of prioritized entries
     QMultiMap<int, Entry*> priorities;
-    for (auto* entry : pwEntries) {
+    for (auto* entry : entries) {
         priorities.insert(sortPriority(getEntryURLs(entry), siteUrl, formUrl), entry);
     }
 
