@@ -84,9 +84,10 @@ private:
                     Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
     void checkSaveDatabase();
-    void statusBarLabelShouldBe(const char* expectedText);
+    void checkStatusBarText(const QString& textFragment);
 
     QScopedPointer<MainWindow> m_mainWindow;
+    QPointer<QLabel> m_statusBarLabel;
     QPointer<DatabaseTabWidget> m_tabWidget;
     QPointer<DatabaseWidget> m_dbWidget;
     QSharedPointer<Database> m_db;
