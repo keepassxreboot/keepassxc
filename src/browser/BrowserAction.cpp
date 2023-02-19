@@ -247,7 +247,8 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    const Parameters params{{"count", result.second.count()}, {"entries", result.second}, {"hash", browserRequest.hash}, {"id", id}};
+    const Parameters params{
+        {"count", result.second.count()}, {"entries", result.second}, {"hash", browserRequest.hash}, {"id", id}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 

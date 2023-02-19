@@ -371,8 +371,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
     }
 
     // Confirm entries
-    auto selectedEntriesToConfirm =
-        confirmEntries(entriesToConfirm, entryParameters, siteHost, formHost, httpAuth);
+    auto selectedEntriesToConfirm = confirmEntries(entriesToConfirm, entryParameters, siteHost, formHost, httpAuth);
     if (!selectedEntriesToConfirm.isEmpty()) {
         allowedEntries.append(selectedEntriesToConfirm);
     }
