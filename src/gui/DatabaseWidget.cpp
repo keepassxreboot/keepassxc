@@ -1558,6 +1558,12 @@ void DatabaseWidget::onAutosaveDelayTimeout()
     }
 }
 
+void DatabaseWidget::triggerAutosaveTimer()
+{
+    m_autosaveTimer->stop();
+    QMetaObject::invokeMethod(m_autosaveTimer, "timeout");
+}
+
 QString DatabaseWidget::getCurrentSearch()
 {
     return m_lastSearchText;

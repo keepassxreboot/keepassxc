@@ -1524,11 +1524,9 @@ void TestGui::testDatabaseSettings()
 
     // test autosave delay
 
-    // 1 get current change time and init settings
-
-    QFileInfo fileInfo(m_dbFilePath);
-    QDateTime lastModified = fileInfo.lastModified();
+    // 1 init
     config()->set(Config::AutoSaveAfterEveryChange, true);
+    QSignalSpy writeDbSignalSpy(m_db.data(), &Database::databaseSaved);
 
     // 2 create new entries
 
@@ -1556,10 +1554,9 @@ void TestGui::testDatabaseSettings()
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
-    // 2.c) Wait half the time, make sure file was not modified yet
-    Tools::wait(autosaveDelayTestValue * 60 * 1000 / 2);
-    fileInfo.refresh();
-    QCOMPARE(fileInfo.lastModified(), lastModified);
+    // 2.c) Make sure file was not modified yet
+    Tools::wait(150); // due to modify timer
+    QTRY_COMPARE(writeDbSignalSpy.count(), 0);
 
     // 2.d) Create second entry to test delay timer reset
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
@@ -1569,20 +1566,16 @@ void TestGui::testDatabaseSettings()
     // 2.e) Save changes
     editEntryWidget->setCurrentPage(0);
     editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
-    QDateTime lastEntryModifiedTime = QDateTime::currentDateTime();
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
     // 3 Double check both true negative and true positive
     // 3.a) Test unmodified prior to delay timeout
-    Tools::wait(autosaveDelayTestValue * 60 * 1000 / 2);
-    fileInfo.refresh();
-    QCOMPARE(fileInfo.lastModified(), lastModified);
+    Tools::wait(150); // due to modify timer
+    QTRY_COMPARE(writeDbSignalSpy.count(), 0);
 
     // 3.b) Test modification time after expected
-    int marginDelay = 10000; // error margin to account for extra save delays (ms)
-    Tools::wait(autosaveDelayTestValue * 60 * 1000 / 2 + marginDelay);
-    fileInfo.refresh();
-    QVERIFY2(fileInfo.lastModified() >= lastEntryModifiedTime, "AutosaveDelay: wrong timing");
+    m_dbWidget->triggerAutosaveTimer();
+    QTRY_COMPARE(writeDbSignalSpy.count(), 1);
 
     // 4 cleanup
     config()->set(Config::AutoSaveAfterEveryChange, false);
