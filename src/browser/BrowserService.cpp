@@ -317,6 +317,11 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
 QJsonArray
 BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* accepted)
 {
+    if (accepted == nullptr) {
+        return {};
+    }
+
+    *accepted = false;
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
     const bool ignoreHttpAuth = browserSettings()->httpAuthPermission();
     const QString siteHost = QUrl(entryParameters.siteUrl).host();
