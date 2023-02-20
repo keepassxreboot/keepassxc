@@ -240,6 +240,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     entryParameters.dbid = id;
     entryParameters.hash = browserRequest.hash;
     entryParameters.siteUrl = siteUrl;
+    entryParameters.formUrl = formUrl;
     entryParameters.httpAuth = httpAuth;
 
     bool accepted = false;
