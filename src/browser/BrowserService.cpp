@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -314,8 +314,8 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
     return {};
 }
 
-QPair<bool, QJsonArray>
-BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, const bool httpAuth)
+QJsonArray
+BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* accepted)
 {
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
     const bool ignoreHttpAuth = browserSettings()->httpAuthPermission();
@@ -328,14 +328,14 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
     for (auto* entry : searchEntries(entryParameters.siteUrl, entryParameters.formUrl, keyList)) {
         auto entryCustomData = entry->customData();
 
-        if (!httpAuth
+        if (!entryParameters.httpAuth
             && ((entryCustomData->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)
                  && entryCustomData->value(BrowserService::OPTION_ONLY_HTTP_AUTH) == TRUE_STR)
                 || entry->group()->resolveCustomDataTriState(BrowserService::OPTION_ONLY_HTTP_AUTH) == Group::Enable)) {
             continue;
         }
 
-        if (httpAuth
+        if (entryParameters.httpAuth
             && ((entryCustomData->contains(BrowserService::OPTION_NOT_HTTP_AUTH)
                  && entryCustomData->value(BrowserService::OPTION_NOT_HTTP_AUTH) == TRUE_STR)
                 || entry->group()->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH) == Group::Enable)) {
@@ -343,7 +343,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
         }
 
         // HTTP Basic Auth always needs a confirmation
-        if (!ignoreHttpAuth && httpAuth) {
+        if (!ignoreHttpAuth && entryParameters.httpAuth) {
             entriesToConfirm.append(entry);
             continue;
         }
@@ -367,18 +367,19 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
     }
 
     if (entriesToConfirm.isEmpty() && allowedEntries.isEmpty()) {
-        return qMakePair(false, QJsonArray());
+        return {};
     }
 
     // Confirm entries
-    auto selectedEntriesToConfirm = confirmEntries(entriesToConfirm, entryParameters, siteHost, formHost, httpAuth);
+    auto selectedEntriesToConfirm =
+        confirmEntries(entriesToConfirm, entryParameters, siteHost, formHost, entryParameters.httpAuth);
     if (!selectedEntriesToConfirm.isEmpty()) {
         allowedEntries.append(selectedEntriesToConfirm);
     }
 
     // Ensure that database is not locked when the popup was visible
     if (!isDatabaseOpened()) {
-        return qMakePair(false, QJsonArray());
+        return {};
     }
 
     // Sort results
@@ -390,7 +391,8 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
         entries.append(prepareEntry(entry));
     }
 
-    return qMakePair(true, entries);
+    *accepted = true;
+    return entries;
 }
 
 QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,

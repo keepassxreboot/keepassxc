@@ -240,15 +240,16 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     entryParameters.dbid = id;
     entryParameters.hash = browserRequest.hash;
     entryParameters.siteUrl = siteUrl;
-    entryParameters.formUrl = formUrl;
+    entryParameters.httpAuth = httpAuth;
 
-    const auto result = browserService()->findEntries(entryParameters, keyList, httpAuth);
-    if (!result.first) {
+    bool accepted = false;
+    const auto entries = browserService()->findEntries(entryParameters, keyList, &accepted);
+    if (!accepted) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
     const Parameters params{
-        {"count", result.second.count()}, {"entries", result.second}, {"hash", browserRequest.hash}, {"id", id}};
+        {"count", entries.count()}, {"entries", entries}, {"hash", browserRequest.hash}, {"id", id}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 

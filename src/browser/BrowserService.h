@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -51,6 +51,7 @@ struct EntryParameters
     QString hash;
     QString siteUrl;
     QString formUrl;
+    bool httpAuth;
 };
 
 class DatabaseWidget;
@@ -88,8 +89,7 @@ public:
                   const QSharedPointer<Database>& selectedDb = {});
     bool updateEntry(const EntryParameters& entryParameters, const QString& uuid);
     bool deleteEntry(const QString& uuid);
-    QPair<bool, QJsonArray>
-    findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, const bool httpAuth = false);
+    QJsonArray findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* accepted);
     void requestGlobalAutoType(const QString& search);
 
     static const QString KEEPASSXCBROWSER_NAME;
