@@ -33,6 +33,12 @@ const int Metadata::DefaultAutosaveDelayMin = 0;
 // Fallback icon for return by reference
 static const Metadata::CustomIconData NULL_ICON{};
 
+namespace customDataKeys
+{
+    static const QString savedSearch = QStringLiteral("KPXC_SavedSearch");
+    static const QString autosaveDelay = QStringLiteral("KPXC_autosaveDelayMin");
+}; // namespace customDataKeys
+
 Metadata::Metadata(QObject* parent)
     : ModifiableObject(parent)
     , m_customData(new CustomData(this))
@@ -268,7 +274,7 @@ int Metadata::historyMaxSize() const
 
 int Metadata::autosaveDelayMin() const
 {
-    QString autosaveDelayMinStr = m_customData->value("KPXC_autosaveDelayMin");
+    QString autosaveDelayMinStr = m_customData->value(customDataKeys::autosaveDelay);
     if (autosaveDelayMinStr.isNull()) {
         // data is not set yet, use default
         return Metadata::DefaultAutosaveDelayMin;
@@ -495,7 +501,7 @@ void Metadata::setHistoryMaxSize(int value)
 void Metadata::setAutosaveDelayMin(int value)
 {
     Q_ASSERT(value >= 0 && value <= 420000000);
-    m_customData->set("KPXC_autosaveDelayMin", QString::number(value));
+    m_customData->set(customDataKeys::autosaveDelay, QString::number(value));
 }
 
 QDateTime Metadata::settingsChanged() const
@@ -514,7 +520,7 @@ void Metadata::addSavedSearch(const QString& name, const QString& searchtext)
     auto searches = savedSearches();
     searches.insert(name, searchtext);
     auto json = QJsonDocument::fromVariant(searches);
-    m_customData->set("KPXC_SavedSearch", json.toJson());
+    m_customData->set(customDataKeys::savedSearch, json.toJson());
 }
 
 void Metadata::deleteSavedSearch(const QString& name)
@@ -522,12 +528,12 @@ void Metadata::deleteSavedSearch(const QString& name)
     auto searches = savedSearches();
     searches.remove(name);
     auto json = QJsonDocument::fromVariant(searches);
-    m_customData->set("KPXC_SavedSearch", json.toJson());
+    m_customData->set(customDataKeys::savedSearch, json.toJson());
 }
 
 QVariantMap Metadata::savedSearches()
 {
-    auto searches = m_customData->value("KPXC_SavedSearch");
+    auto searches = m_customData->value(customDataKeys::savedSearch);
     auto json = QJsonDocument::fromJson(searches.toUtf8());
     return json.toVariant().toMap();
 }
