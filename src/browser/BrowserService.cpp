@@ -318,7 +318,7 @@ QJsonArray
 BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* entriesFound)
 {
     if (entriesFound) {
-       *entriesFound = false;
+        *entriesFound = false;
     }
 
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
