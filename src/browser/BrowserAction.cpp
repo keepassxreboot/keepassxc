@@ -243,9 +243,9 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     entryParameters.formUrl = formUrl;
     entryParameters.httpAuth = httpAuth;
 
-    bool accepted = false;
-    const auto entries = browserService()->findEntries(entryParameters, keyList, &accepted);
-    if (!accepted) {
+    bool entriesFound = false;
+    const auto entries = browserService()->findEntries(entryParameters, keyList, &entriesFound);
+    if (!entriesFound) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 

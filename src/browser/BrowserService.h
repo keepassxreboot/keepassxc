@@ -89,7 +89,7 @@ public:
                   const QSharedPointer<Database>& selectedDb = {});
     bool updateEntry(const EntryParameters& entryParameters, const QString& uuid);
     bool deleteEntry(const QString& uuid);
-    QJsonArray findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* accepted);
+    QJsonArray findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* entriesFound);
     void requestGlobalAutoType(const QString& search);
 
     static const QString KEEPASSXCBROWSER_NAME;

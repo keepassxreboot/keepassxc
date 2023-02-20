@@ -315,13 +315,12 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
 }
 
 QJsonArray
-BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* accepted)
+BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* entriesFound)
 {
-    if (accepted == nullptr) {
-        return {};
+    if (entriesFound) {
+       *entriesFound = false;
     }
 
-    *accepted = false;
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
     const bool ignoreHttpAuth = browserSettings()->httpAuthPermission();
     const QString siteHost = QUrl(entryParameters.siteUrl).host();
@@ -396,7 +395,10 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
         entries.append(prepareEntry(entry));
     }
 
-    *accepted = true;
+    if (entriesFound != nullptr) {
+        *entriesFound = true;
+    }
+
     return entries;
 }
 
