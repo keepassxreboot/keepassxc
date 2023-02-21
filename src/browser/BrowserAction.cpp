@@ -17,6 +17,7 @@
 
 #include "BrowserAction.h"
 #include "BrowserService.h"
+#include "BrowserSettings.h"
 #include "core/Global.h"
 #include "core/Tools.h"
 
@@ -388,13 +389,13 @@ QJsonObject BrowserAction::handleGetDatabaseEntries(const QJsonObject& json, con
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
-    if (decrypted.isEmpty()) {
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
-    QString command = decrypted.value("action").toString();
-    if (command.isEmpty() || command.compare("get-database-entries", Qt::CaseSensitive) != 0) {
+    const auto command = browserRequest.getString("action");
+    if (command.isEmpty() || command.compare("get-database-entries") != 0) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
@@ -407,12 +408,9 @@ QJsonObject BrowserAction::handleGetDatabaseEntries(const QJsonObject& json, con
         return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
     }
 
-    const QString newNonce = browserMessageBuilder()->incrementNonce(nonce);
+    const Parameters params{{"entries", entries}};
 
-    QJsonObject message = browserMessageBuilder()->buildMessage(newNonce);
-    message["entries"] = entries;
-
-    return buildResponse(action, message, newNonce);
+    return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
 QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const QString& action)
