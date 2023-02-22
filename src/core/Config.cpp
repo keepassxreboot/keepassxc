@@ -127,7 +127,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     // Security
     {Config::Security_ClearClipboard, {QS("Security/ClearClipboard"), Roaming, true}},
     {Config::Security_ClearClipboardTimeout, {QS("Security/ClearClipboardTimeout"), Roaming, 10}},
-    {Config::Security_ClearSearch, {QS("Security/ClearSearch"), Roaming, true}},
+    {Config::Security_ClearSearch, {QS("Security/ClearSearch"), Roaming, false}},
     {Config::Security_ClearSearchTimeout, {QS("Security/ClearSearchTimeout"), Roaming, 5}},
     {Config::Security_HideNotes, {QS("Security/Security_HideNotes"), Roaming, false}},
     {Config::Security_LockDatabaseIdle, {QS("Security/LockDatabaseIdle"), Roaming, false}},
