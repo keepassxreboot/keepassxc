@@ -29,6 +29,7 @@ TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
 {
     m_ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     setFixedSize(sizeHint());
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
