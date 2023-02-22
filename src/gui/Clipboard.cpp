@@ -99,7 +99,8 @@ void Clipboard::clearCopiedText()
 
     if (m_lastCopied == clipboard->text(QClipboard::Clipboard)
         || m_lastCopied == clipboard->text(QClipboard::Selection)) {
-        setText("", false);
+        clipboard->clear(QClipboard::Clipboard);
+        clipboard->clear(QClipboard::Selection);
     }
 
     m_lastCopied.clear();
