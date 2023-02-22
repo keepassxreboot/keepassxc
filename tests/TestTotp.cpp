@@ -59,6 +59,12 @@ void TestTotp::testParseSecret()
     QCOMPARE(settings->step, 30u);
     QCOMPARE(settings->algorithm, Totp::Algorithm::Sha512);
 
+    // Max TOTP step of 24-hours
+    secret.replace("period=30", "period=90000");
+    settings = Totp::parseSettings(secret);
+    QVERIFY(!settings.isNull());
+    QCOMPARE(settings->step, 86400u);
+
     // KeeOTP Parsing
     secret = "key=HXDMVJECJJWSRBY%3d&step=25&size=8&otpHashMode=Sha256";
     settings = Totp::parseSettings(secret);

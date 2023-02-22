@@ -114,7 +114,7 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
 
     // Bound digits and step
     settings->digits = qBound(1u, settings->digits, 10u);
-    settings->step = qBound(1u, settings->step, 60u);
+    settings->step = qBound(1u, settings->step, 86400u);
 
     // Detect custom settings, used by setup GUI
     if (settings->encoder.shortName.isEmpty()
