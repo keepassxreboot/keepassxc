@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGUI_H
-#define KEEPASSX_TESTGUI_H
+#ifndef KEEPASSXC_TESTGUI_TOTP_H
+#define KEEPASSXC_TESTGUI_TOTP_H
 
 #include "gui/MainWindow.h"
 #include "util/TemporaryFile.h"
@@ -27,7 +27,7 @@ class DatabaseTabWidget;
 class DatabaseWidget;
 class QAbstractItemView;
 
-class TestGui : public QObject
+class TestGuiTotp : public QObject
 {
     Q_OBJECT
 
@@ -37,53 +37,14 @@ private slots:
     void cleanup();
     void cleanupTestCase();
 
-    void testSettingsDefaultTabOrder();
-    void testCreateDatabase();
-    void testMergeDatabase();
-    void testAutoreloadDatabase();
-    void testTabs();
-    void testEditEntry();
-    void testSearchEditEntry();
-    void testAddEntry();
-    void testPasswordEntryEntropy();
-    void testPasswordEntryEntropy_data();
-    void testDicewareEntryEntropy();
-    void testSearch();
-    void testDeleteEntry();
-    void testCloneEntry();
-    void testEntryPlaceholders();
-    void testDragAndDropEntry();
-    void testDragAndDropGroup();
-    void testSaveAs();
-    void testSaveBackup();
-    void testSave();
-    void testSaveBackupPath();
-    void testSaveBackupPath_data();
-    void testDatabaseSettings();
-    void testKeePass1Import();
-    void testDatabaseLocking();
-    void testDragAndDropKdbxFiles();
-    void testSortGroups();
-    void testAutoType();
-    void testTrayRestoreHide();
+    void testTotp();
 
 private:
-    void addCannedEntries();
-    void checkDatabase(const QString& filePath, const QString& expectedDbName);
-    void checkDatabase(const QString& filePath = {});
     void triggerAction(const QString& name);
-    void dragAndDropGroup(const QModelIndex& sourceIndex,
-                          const QModelIndex& targetIndex,
-                          int row,
-                          bool expectedResult,
-                          const QString& expectedParentName,
-                          int expectedPos);
     void clickIndex(const QModelIndex& index,
                     QAbstractItemView* view,
                     Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
-    void checkSaveDatabase();
-    void checkStatusBarText(const QString& textFragment);
 
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<QLabel> m_statusBarLabel;
@@ -95,4 +56,4 @@ private:
     QString m_dbFilePath;
 };
 
-#endif // KEEPASSX_TESTGUI_H
+#endif // KEEPASSXC_TESTGUI_TOTP_H
