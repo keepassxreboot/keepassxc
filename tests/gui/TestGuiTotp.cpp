@@ -58,7 +58,6 @@ void TestGuiTotp::testTotp()
     QCOMPARE(entryView->model()->rowCount(), 1);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     QModelIndex item = entryView->model()->index(0, 1);
-    Entry* entry = entryView->entryFromIndex(item);
     clickIndex(item, entryView, Qt::LeftButton);
 
     triggerAction("actionEntrySetupTotp");
@@ -97,8 +96,18 @@ void TestGuiTotp::testTotp()
 
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+}
 
-    // Test the TOTP value
+void TestGuiTotp::testTotpValue()
+{
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+
+    QCOMPARE(entryView->model()->rowCount(), 1);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+    QModelIndex item = entryView->model()->index(0, 1);
+    Entry* entry = entryView->entryFromIndex(item);
+    clickIndex(item, entryView, Qt::LeftButton);
+
     triggerAction("actionEntryTotp");
 
     auto* totpDialog = m_dbWidget->findChild<TotpDialog*>("TotpDialog");
