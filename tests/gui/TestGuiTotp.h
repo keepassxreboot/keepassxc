@@ -19,41 +19,14 @@
 #ifndef KEEPASSXC_TESTGUI_TOTP_H
 #define KEEPASSXC_TESTGUI_TOTP_H
 
-#include "gui/MainWindow.h"
-#include "util/TemporaryFile.h"
+#include "GuiTestBase.h"
 
-class Database;
-class DatabaseTabWidget;
-class DatabaseWidget;
-class QAbstractItemView;
-
-class TestGuiTotp : public QObject
+class TestGuiTotp : public GuiTestBase
 {
     Q_OBJECT
 
 private slots:
-    void initTestCase();
-    void init();
-    void cleanup();
-    void cleanupTestCase();
-
     void testTotp();
-
-private:
-    void triggerAction(const QString& name);
-    void clickIndex(const QModelIndex& index,
-                    QAbstractItemView* view,
-                    Qt::MouseButton button,
-                    Qt::KeyboardModifiers stateKey = 0);
-
-    QScopedPointer<MainWindow> m_mainWindow;
-    QPointer<QLabel> m_statusBarLabel;
-    QPointer<DatabaseTabWidget> m_tabWidget;
-    QPointer<DatabaseWidget> m_dbWidget;
-    QSharedPointer<Database> m_db;
-    TemporaryFile m_dbFile;
-    QString m_dbFileName;
-    QString m_dbFilePath;
 };
 
 #endif // KEEPASSXC_TESTGUI_TOTP_H
