@@ -30,6 +30,8 @@
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 
+#define VERIFY_SQUARE(rect, message) QVERIFY2(rect.width() == rect.height(), message);
+
 int main(int argc, char* argv[])
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
@@ -104,17 +106,31 @@ void TestGuiTotp::testTotp()
 
     QCOMPARE(totpLabel->text().replace(" ", ""), entry->totp());
     QTest::keyClick(totpDialog, Qt::Key_Escape);
+}
 
-    // Test the QR code
+void TestGuiTotp::testQrCode()
+{
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+
+    QCOMPARE(entryView->model()->rowCount(), 1);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+    QModelIndex item = entryView->model()->index(0, 1);
+    clickIndex(item, entryView, Qt::LeftButton);
+
+    // Given an open QR code dialog.
     triggerAction("actionEntryTotpQRCode");
     auto* qrCodeDialog = m_mainWindow->findChild<QDialog*>("entryQrCodeWidget");
     QVERIFY(qrCodeDialog);
     QVERIFY(qrCodeDialog->isVisible());
     auto* qrCodeWidget = qrCodeDialog->findChild<QWidget*>("squareSvgWidget");
-    QVERIFY2(qrCodeWidget->geometry().width() == qrCodeWidget->geometry().height(), "Initial QR code is not square");
 
-    // Test the QR code window resizing, make the dialog bigger.
+    // Test the default QR code widget shape.
+    VERIFY_SQUARE(qrCodeWidget->geometry(), "Initial QR code is not square")
+
+    // Test the resized QR code widget, make the dialog bigger.
     qrCodeDialog->setFixedSize(800, 600);
-    QVERIFY2(qrCodeWidget->geometry().width() == qrCodeWidget->geometry().height(), "Resized QR code is not square");
+    VERIFY_SQUARE(qrCodeWidget->geometry(), "Resized QR code is not square")
+
+    // Cleanup, close the QR code dialog.
     QTest::keyClick(qrCodeDialog, Qt::Key_Escape);
 }

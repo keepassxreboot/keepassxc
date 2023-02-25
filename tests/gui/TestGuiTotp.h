@@ -27,6 +27,7 @@ class TestGuiTotp : public GuiTestBase
 
 private slots:
     void testTotp();
+    void testQrCode();
 };
 
 #endif // KEEPASSXC_TESTGUI_TOTP_H
