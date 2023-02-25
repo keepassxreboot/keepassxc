@@ -219,6 +219,35 @@ QJsonObject BrowserService::getDatabaseGroups()
     return result;
 }
 
+QJsonArray BrowserService::getDatabaseEntries()
+{
+    auto db = getDatabase();
+    if (!db) {
+        return {};
+    }
+
+    Group* rootGroup = db->rootGroup();
+    if (!rootGroup) {
+        return {};
+    }
+
+    QJsonArray entries;
+    for (const auto& group : rootGroup->groupsRecursive(true)) {
+        if (group == db->metadata()->recycleBin()) {
+            continue;
+        }
+
+        for (const auto& entry : group->entries()) {
+            QJsonObject jentry;
+            jentry["title"] = entry->resolveMultiplePlaceholders(entry->title());
+            jentry["uuid"] = entry->resolveMultiplePlaceholders(entry->uuidToHex());
+            jentry["url"] = entry->resolveMultiplePlaceholders(entry->url());
+            entries.push_back(jentry);
+        }
+    }
+    return entries;
+}
+
 QJsonObject BrowserService::createNewGroup(const QString& groupName)
 {
     auto db = getDatabase();
