@@ -347,6 +347,7 @@ void EntryView::showHeaderMenu(const QPoint& position)
         int columnIndex = action->data().toInt();
         action->setChecked(!isColumnHidden(columnIndex));
     }
+    actions[EntryModel::ParentGroup]->setVisible(inSearchMode());
 
     m_headerMenu->popup(mapToGlobal(position));
 }
