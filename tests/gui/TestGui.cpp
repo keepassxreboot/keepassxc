@@ -1462,12 +1462,16 @@ void TestGui::testDatabaseSettings()
     m_db->metadata()->setName("testDatabaseSettings");
     triggerAction("actionDatabaseSettings");
     auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
+    auto* dbSettingsCategoryList = dbSettingsDialog->findChild<CategoryListWidget*>("categoryList");
+    auto* dbSettingsStackedWidget = dbSettingsDialog->findChild<QStackedWidget*>("stackedWidget");
     auto* transformRoundsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("transformRoundsSpinBox");
     auto advancedToggle = dbSettingsDialog->findChild<QCheckBox*>("advancedSettingsToggle");
 
     advancedToggle->setChecked(true);
     QApplication::processEvents();
 
+    dbSettingsCategoryList->setCurrentCategory(1); // go into security category
+    dbSettingsStackedWidget->findChild<QTabWidget*>()->setCurrentIndex(1); // go into encryption tab
     QVERIFY(transformRoundsSpinBox != nullptr);
     transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
