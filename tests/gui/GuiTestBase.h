@@ -21,12 +21,15 @@
 
 #include "core/Tools.h"
 #include "gui/MainWindow.h"
+#include "gui/entry/EntryView.h"
 #include "util/TemporaryFile.h"
 
 class Database;
 class DatabaseTabWidget;
 class DatabaseWidget;
 class QAbstractItemView;
+class Entry;
+class EntryView;
 
 class GuiTestBase : public QObject
 {
@@ -39,6 +42,9 @@ protected slots:
     virtual void cleanupTestCase();
 
 protected:
+    Entry* selectEntryViewRow(int row);
+    EntryView* findEntryView();
+
     void triggerAction(const QString& name);
 
     static void clickIndex(const QModelIndex& index,

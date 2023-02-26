@@ -22,11 +22,13 @@
 #include <QTest>
 
 #include "config-keepassx-tests.h"
+#include "core/Entry.h"
 #include "crypto/Crypto.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/PasswordWidget.h"
+#include "gui/entry/EntryView.h"
 
 void GuiTestBase::initTestCase()
 {
@@ -128,4 +130,20 @@ void GuiTestBase::clickIndex(const QModelIndex& index,
 {
     view->scrollTo(index);
     QTest::mouseClick(view->viewport(), button, stateKey, view->visualRect(index).center());
+}
+
+EntryView* GuiTestBase::findEntryView()
+{
+    return m_dbWidget->findChild<EntryView*>("entryView");
+}
+
+Entry* GuiTestBase::selectEntryViewRow(const int row)
+{
+    auto* entryView = findEntryView();
+
+    QModelIndex entryIndex = entryView->model()->index(row, 1);
+    auto* entry = entryView->entryFromIndex(entryIndex);
+    clickIndex(entryIndex, entryView, Qt::LeftButton);
+
+    return entry;
 }

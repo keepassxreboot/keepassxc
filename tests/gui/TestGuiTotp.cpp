@@ -28,7 +28,6 @@
 #include "gui/TotpDialog.h"
 #include "gui/TotpSetupDialog.h"
 #include "gui/entry/EditEntryWidget.h"
-#include "gui/entry/EntryView.h"
 
 #define VERIFY_SQUARE(rect, message) QVERIFY2(rect.width() == rect.height(), message);
 
@@ -52,11 +51,12 @@ int main(int argc, char* argv[])
 
 void TestGuiTotp::testTotpSetup()
 {
-    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    auto* entryView = findEntryView();
+
     QCOMPARE(entryView->model()->rowCount(), 1);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
-    QModelIndex item = entryView->model()->index(0, 1);
-    clickIndex(item, entryView, Qt::LeftButton);
+
+    selectEntryViewRow(0);
 
     triggerAction("actionEntrySetupTotp");
 
@@ -99,14 +99,10 @@ void TestGuiTotp::testTotpSetup()
 
 void TestGuiTotp::testTotpValue()
 {
-    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
-
-    QCOMPARE(entryView->model()->rowCount(), 1);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
-    QModelIndex item = entryView->model()->index(0, 1);
-    Entry* entry = entryView->entryFromIndex(item);
-    clickIndex(item, entryView, Qt::LeftButton);
+    QCOMPARE(findEntryView()->model()->rowCount(), 1);
 
+    auto* entry = selectEntryViewRow(0);
     triggerAction("actionEntryTotp");
 
     auto* totpDialog = m_dbWidget->findChild<TotpDialog*>("TotpDialog");
@@ -118,12 +114,10 @@ void TestGuiTotp::testTotpValue()
 
 void TestGuiTotp::testQrCode()
 {
-    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
-
-    QCOMPARE(entryView->model()->rowCount(), 1);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
-    QModelIndex item = entryView->model()->index(0, 1);
-    clickIndex(item, entryView, Qt::LeftButton);
+    QCOMPARE(findEntryView()->model()->rowCount(), 1);
+
+    selectEntryViewRow(0);
 
     // Given an open QR code dialog.
     triggerAction("actionEntryTotpQRCode");
