@@ -316,6 +316,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->passwordShowDotsCheckBox->setChecked(config()->get(Config::Security_PasswordEmptyPlaceholder).toBool());
     m_secUi->passwordPreviewCleartextCheckBox->setChecked(
         config()->get(Config::Security_HidePasswordPreviewPanel).toBool());
+    m_secUi->hideTotpCheckBox->setChecked(config()->get(Config::Security_HideTotpPreviewPanel).toBool());
     m_secUi->passwordsRepeatVisibleCheckBox->setChecked(
         config()->get(Config::Security_PasswordsRepeatVisible).toBool());
     m_secUi->hideNotesCheckBox->setChecked(config()->get(Config::Security_HideNotes).toBool());
@@ -429,6 +430,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_PasswordEmptyPlaceholder, m_secUi->passwordShowDotsCheckBox->isChecked());
 
     config()->set(Config::Security_HidePasswordPreviewPanel, m_secUi->passwordPreviewCleartextCheckBox->isChecked());
+    config()->set(Config::Security_HideTotpPreviewPanel, m_secUi->hideTotpCheckBox->isChecked());
     config()->set(Config::Security_PasswordsRepeatVisible, m_secUi->passwordsRepeatVisibleCheckBox->isChecked());
     config()->set(Config::Security_HideNotes, m_secUi->hideNotesCheckBox->isChecked());
     config()->set(Config::Security_NoConfirmMoveEntryToRecycleBin,

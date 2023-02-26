@@ -119,6 +119,7 @@ public:
         Security_PasswordsHidden,
         Security_PasswordEmptyPlaceholder,
         Security_HidePasswordPreviewPanel,
+        Security_HideTotpPreviewPanel,
         Security_AutoTypeAsk,
         Security_IconDownloadFallback,
         Security_NoConfirmMoveEntryToRecycleBin,
