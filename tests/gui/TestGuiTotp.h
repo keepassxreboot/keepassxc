@@ -26,7 +26,7 @@ class TestGuiTotp : public GuiTestBase
     Q_OBJECT
 
 private slots:
-    void testTotp();
+    void testTotpSetup();
     void testTotpValue();
     void testQrCode();
 };

@@ -50,11 +50,9 @@ int main(int argc, char* argv[])
     return QTest::qExec(&tc, argc, argv);
 }
 
-void TestGuiTotp::testTotp()
+void TestGuiTotp::testTotpSetup()
 {
-    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
-
     QCOMPARE(entryView->model()->rowCount(), 1);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     QModelIndex item = entryView->model()->index(0, 1);
@@ -82,6 +80,7 @@ void TestGuiTotp::testTotp()
     QTRY_VERIFY(entryView->hasFocus());
 
     auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
     QVERIFY(entryEditWidget->isVisible());
     QVERIFY(entryEditWidget->isEnabled());
