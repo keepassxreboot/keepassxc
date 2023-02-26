@@ -119,38 +119,50 @@ void EntryPreviewWidget::clear()
 
 void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 {
+    if (m_currentEntry == selectedEntry) {
+        return;
+    }
+
     if (m_currentEntry) {
-        disconnect(m_currentEntry);
+        disconnect(m_currentEntry, nullptr, this, nullptr);
     }
     if (m_currentGroup) {
-        disconnect(m_currentGroup);
+        disconnect(m_currentGroup, nullptr, this, nullptr);
     }
 
     m_currentEntry = selectedEntry;
     m_currentGroup = nullptr;
 
-    if (!selectedEntry) {
+    if (!m_currentEntry) {
         hide();
         return;
     }
 
-    connect(selectedEntry, &Entry::modified, this, &EntryPreviewWidget::refresh);
+    connect(m_currentEntry, &Entry::modified, this, &EntryPreviewWidget::refresh);
     refresh();
+
+    if (m_currentEntry->hasTotp()) {
+        m_ui->entryTotpButton->setChecked(!config()->get(Config::Security_HideTotpPreviewPanel).toBool());
+    }
 }
 
 void EntryPreviewWidget::setGroup(Group* selectedGroup)
 {
+    if (m_currentGroup == selectedGroup) {
+        return;
+    }
+
     if (m_currentEntry) {
-        disconnect(m_currentEntry);
+        disconnect(m_currentEntry, nullptr, this, nullptr);
     }
     if (m_currentGroup) {
-        disconnect(m_currentGroup);
+        disconnect(m_currentGroup, nullptr, this, nullptr);
     }
 
     m_currentEntry = nullptr;
     m_currentGroup = selectedGroup;
 
-    if (!selectedGroup) {
+    if (!m_currentGroup) {
         hide();
         return;
     }
@@ -226,15 +238,15 @@ void EntryPreviewWidget::updateEntryTotp()
     Q_ASSERT(m_currentEntry);
     const bool hasTotp = m_currentEntry->hasTotp();
     m_ui->entryTotpButton->setVisible(hasTotp);
-    m_ui->entryTotpLabel->hide();
-    m_ui->entryTotpProgress->hide();
-    m_ui->entryTotpButton->setChecked(false);
 
     if (hasTotp) {
         m_totpTimer.start(1000);
         m_ui->entryTotpProgress->setMaximum(m_currentEntry->totpSettings()->step);
         updateTotpLabel();
     } else {
+        m_ui->entryTotpLabel->hide();
+        m_ui->entryTotpProgress->hide();
+        m_ui->entryTotpButton->setChecked(false);
         m_ui->entryTotpLabel->clear();
         m_totpTimer.stop();
     }

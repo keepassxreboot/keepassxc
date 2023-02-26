@@ -596,6 +596,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>

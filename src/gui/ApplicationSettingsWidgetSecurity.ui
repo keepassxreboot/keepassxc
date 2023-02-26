@@ -212,6 +212,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="hideTotpCheckBox">
+        <property name="text">
+         <string>Hide TOTP in the entry preview panel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="hideNotesCheckBox">
         <property name="text">
          <string>Hide entry notes by default</string>
