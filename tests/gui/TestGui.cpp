@@ -31,7 +31,6 @@
 #include <QToolBar>
 
 #include "config-keepassx-tests.h"
-#include "core/Tools.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
@@ -1541,7 +1540,7 @@ void TestGui::testAutoType()
     for (Entry* entry : m_db->rootGroup()->entries()) {
         m_db->rootGroup()->removeEntry(entry);
     }
-    Tools::wait(150);
+    wait(150);
 
     // 1. Create an entry with Auto-Type disabled
 
@@ -1745,7 +1744,7 @@ void TestGui::checkSaveDatabase()
             return;
         }
         QWARN("Failed to save database, trying again...");
-        Tools::wait(250);
+        wait(250);
     } while (++i < 2);
 
     QFAIL("Could not save database.");

@@ -19,6 +19,7 @@
 #ifndef KEEPASSXC_GUI_TEST_BASE_H
 #define KEEPASSXC_GUI_TEST_BASE_H
 
+#include "core/Tools.h"
 #include "gui/MainWindow.h"
 #include "util/TemporaryFile.h"
 
@@ -44,6 +45,11 @@ protected:
                            QAbstractItemView* view,
                            Qt::MouseButton button,
                            Qt::KeyboardModifiers stateKey = 0);
+
+    static void wait(int ms = 2000)
+    {
+        Tools::wait(ms);
+    }
 
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<QLabel> m_statusBarLabel;
