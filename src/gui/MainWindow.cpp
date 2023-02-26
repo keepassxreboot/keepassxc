@@ -1427,7 +1427,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             } else if (event->key() == Qt::Key_F2) {
                 dbWidget->focusOnEntries(true);
                 return;
-            } else if (event->key() == Qt::Key_F3) {
+            } else if (event->key() == Qt::Key_F3 || event->key() == Qt::Key_F6) {
                 focusSearchWidget();
                 return;
             } else if (event->key() == Qt::Key_Escape && dbWidget->isSearchActive()) {
