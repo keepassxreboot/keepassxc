@@ -1470,6 +1470,7 @@ void TestGui::testDatabaseSettings()
     auto* dbSettingsStackedWidget = dbSettingsDialog->findChild<QStackedWidget*>("stackedWidget");
     auto* transformRoundsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("transformRoundsSpinBox");
     auto advancedToggle = dbSettingsDialog->findChild<QCheckBox*>("advancedSettingsToggle");
+    auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
 
     advancedToggle->setChecked(true);
     QApplication::processEvents();
@@ -1480,6 +1481,27 @@ void TestGui::testDatabaseSettings()
     transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     QTRY_COMPARE(m_db->kdf()->rounds(), 123456);
+
+    // test disable and default values for maximum history items and size
+    triggerAction("actionDatabaseSettings");
+    auto* historyMaxItemsCheckBox = dbSettingsDialog->findChild<QCheckBox*>("historyMaxItemsCheckBox");
+    auto* historyMaxItemsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("historyMaxItemsSpinBox");
+    auto* historyMaxSizeCheckBox = dbSettingsDialog->findChild<QCheckBox*>("historyMaxSizeCheckBox");
+    auto* historyMaxSizeSpinBox = dbSettingsDialog->findChild<QSpinBox*>("historyMaxSizeSpinBox");
+    // test defaults
+    QCOMPARE(historyMaxItemsSpinBox->value(), Metadata::DefaultHistoryMaxItems);
+    QCOMPARE(historyMaxSizeSpinBox->value(), qRound(Metadata::DefaultHistoryMaxSize / qreal(1024 * 1024)));
+    // disable and test setting as well
+    historyMaxItemsCheckBox->setChecked(false);
+    historyMaxSizeCheckBox->setChecked(false);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->metadata()->historyMaxItems(), -1);
+    QTRY_COMPARE(m_db->metadata()->historyMaxSize(), -1);
+    // then open to check the saved disabled state in gui
+    triggerAction("actionDatabaseSettings");
+    QCOMPARE(historyMaxItemsCheckBox->isChecked(), false);
+    QCOMPARE(historyMaxSizeCheckBox->isChecked(), false);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
 
     checkSaveDatabase();
 }
