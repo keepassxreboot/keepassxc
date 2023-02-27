@@ -19,6 +19,7 @@
 #include "GuiTestBase.h"
 #include "gui/Application.h"
 
+#include <QPushButton>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
@@ -124,6 +125,13 @@ void GuiTestBase::triggerAction(const QString& name)
     QVERIFY(action->isEnabled());
     action->trigger();
     QApplication::processEvents();
+}
+
+void GuiTestBase::clickDialogButton(QWidget* dialog, QDialogButtonBox::StandardButton button)
+{
+    auto* buttonBox = dialog->findChild<QDialogButtonBox*>("buttonBox");
+    QVERIFY(buttonBox);
+    QTest::mouseClick(buttonBox->button(button), Qt::LeftButton);
 }
 
 void GuiTestBase::clickIndex(const QModelIndex& index,

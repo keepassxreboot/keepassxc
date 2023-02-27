@@ -65,8 +65,7 @@ void TestGuiTotp::testTotpSetup()
     seedEdit->setText("");
     QTest::keyClicks(seedEdit, exampleSeed);
 
-    auto* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
-    QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    clickDialogButton(setupTotpDialog, QDialogButtonBox::Ok);
     QTRY_VERIFY(!setupTotpDialog->isVisible());
 
     // Make sure the entryView is selected and active
@@ -89,8 +88,7 @@ void TestGuiTotp::testTotpSetup()
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
     QCOMPARE(attrTextEdit->toPlainText(), expectedFinalSeed);
 
-    auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
-    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    clickDialogButton(editEntryWidget, QDialogButtonBox::Ok);
 }
 
 void TestGuiTotp::testTotpValue()

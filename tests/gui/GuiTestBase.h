@@ -47,6 +47,7 @@ protected:
 
     void triggerAction(const QString& name);
 
+    static void clickDialogButton(QWidget* dialog, QDialogButtonBox::StandardButton button);
     static void clickIndex(const QModelIndex& index,
                            QAbstractItemView* view,
                            Qt::MouseButton button,
