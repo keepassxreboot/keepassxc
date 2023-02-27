@@ -64,6 +64,7 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
     m_buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Copy"));
     m_buttonBox->setFocus();
     m_countDown->setAlignment(Qt::AlignCenter);
+    m_buttonBox->setObjectName("buttonBox");
 
     m_secTillClose = 45;
     autoClose();

@@ -19,6 +19,7 @@
 #include "TestGuiTotp.h"
 #include "gui/Application.h"
 
+#include <QClipboard>
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QTest>
@@ -100,6 +101,12 @@ void TestGuiTotp::testTotpValue()
     auto* totpLabel = totpDialog->findChild<QLabel*>("totpLabel");
 
     QCOMPARE(totpLabel->text().replace(" ", ""), entry->totp());
+
+    // Test the clipboard copy
+    clickDialogButton(totpDialog, QDialogButtonBox::Ok);
+    QCOMPARE(QApplication::clipboard()->text(), entry->totp());
+    QVERIFY2(totpDialog->isVisible(), "OK button should not close the TOTP dialog.");
+
     QTest::keyClick(totpDialog, Qt::Key_Escape);
 }
 
@@ -120,6 +127,14 @@ void TestGuiTotp::testQrCode()
     // Test the resized QR code widget, make the dialog bigger.
     qrCodeDialog->setFixedSize(800, 600);
     VERIFY_SQUARE(qrCodeWidget->geometry(), "Resized QR code is not square")
+
+    // Test the clipboard copy
+    clickDialogButton(qrCodeDialog, QDialogButtonBox::Ok);
+    QCOMPARE(
+        QApplication::clipboard()->text(),
+        "otpauth://totp/"
+        "Sample%20Entry:User%20Name?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&period=30&digits=6&issuer=Sample%20Entry");
+    QVERIFY2(qrCodeDialog->isVisible(), "OK button should not close the TOTP dialog.");
 
     // Cleanup, close the QR code dialog.
     QTest::keyClick(qrCodeDialog, Qt::Key_Escape);
