@@ -51,11 +51,6 @@ int main(int argc, char* argv[])
 
 void TestGuiTotp::testTotpSetup()
 {
-    auto* entryView = findEntryView();
-
-    QCOMPARE(entryView->model()->rowCount(), 1);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
-
     selectEntryViewRow(0);
 
     triggerAction("actionEntrySetupTotp");
@@ -75,6 +70,7 @@ void TestGuiTotp::testTotpSetup()
     QTRY_VERIFY(!setupTotpDialog->isVisible());
 
     // Make sure the entryView is selected and active
+    auto* entryView = findEntryView();
     entryView->activateWindow();
     QApplication::processEvents();
     QTRY_VERIFY(entryView->hasFocus());
@@ -99,9 +95,6 @@ void TestGuiTotp::testTotpSetup()
 
 void TestGuiTotp::testTotpValue()
 {
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
-    QCOMPARE(findEntryView()->model()->rowCount(), 1);
-
     auto* entry = selectEntryViewRow(0);
     triggerAction("actionEntryTotp");
 
@@ -114,9 +107,6 @@ void TestGuiTotp::testTotpValue()
 
 void TestGuiTotp::testQrCode()
 {
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
-    QCOMPARE(findEntryView()->model()->rowCount(), 1);
-
     selectEntryViewRow(0);
 
     // Given an open QR code dialog.

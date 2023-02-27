@@ -94,6 +94,9 @@ void GuiTestBase::init()
     m_db = m_dbWidget->database();
 
     QApplication::processEvents();
+
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+    QCOMPARE(findEntryView()->model()->rowCount(), 1);
 }
 
 // Every test ends with closing the temp database without saving
