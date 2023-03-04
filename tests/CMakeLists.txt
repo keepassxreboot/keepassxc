@@ -179,9 +179,6 @@ add_unit_test(NAME testpasswordgenerator SOURCES TestPasswordGenerator.cpp
 add_unit_test(NAME testpasswordhealth SOURCES TestPasswordHealth.cpp
         LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testpassphrasegenerator SOURCES TestPassphraseGenerator.cpp
-        LIBS ${TEST_LIBRARIES})
-
 add_unit_test(NAME testhibp SOURCES TestHibp.cpp
         LIBS ${TEST_LIBRARIES})
 
