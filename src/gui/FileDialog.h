@@ -56,7 +56,7 @@ public:
     void setNextDirectory(const QString& path);
 
     static void saveLastDir(const QString& role, const QString& path, bool sensitive = false);
-    static QString getLastDir(const QString& role, const QString& defaultDir = QDir::homePath());
+    static QString getLastDir(const QString& role, const QString& defaultDir = QString());
 
     static FileDialog* instance();
 
