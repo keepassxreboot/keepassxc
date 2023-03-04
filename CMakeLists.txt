@@ -617,6 +617,7 @@ add_subdirectory(src)
 add_subdirectory(share)
 if(WITH_TESTS)
     add_subdirectory(tests)
+    add_subdirectory(tests2)
 endif(WITH_TESTS)
 
 if(WITH_XC_DOCS)
