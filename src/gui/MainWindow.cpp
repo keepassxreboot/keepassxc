@@ -1663,8 +1663,10 @@ void MainWindow::applySettingsChanges()
 void MainWindow::setAllowScreenCapture(bool state)
 {
     m_allowScreenCapture = state;
-    for (auto window : qApp->allWindows()) {
-        osUtils->setPreventScreenCapture(window, !m_allowScreenCapture);
+    for (auto window : qApp->topLevelWindows()) {
+        if (window->isVisible()) {
+            osUtils->setPreventScreenCapture(window, !m_allowScreenCapture);
+        }
     }
     m_ui->actionAllowScreenCapture->blockSignals(true);
     m_ui->actionAllowScreenCapture->setChecked(m_allowScreenCapture);
