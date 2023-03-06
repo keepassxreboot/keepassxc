@@ -110,6 +110,7 @@ public:
     bool equals(const Group* other, CompareItemOptions options) const;
 
     static const int DefaultIconNumber;
+    static const int OpenFolderIconNumber;
     static const int RecycleBinIconNumber;
     static const QString RootAutoTypeSequence;
 
