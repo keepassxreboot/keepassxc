@@ -33,6 +33,7 @@
 #include <QtConcurrentFilter>
 
 const int Group::DefaultIconNumber = 48;
+const int Group::OpenFolderIconNumber = 49;
 const int Group::RecycleBinIconNumber = 43;
 const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
 
@@ -1132,7 +1133,8 @@ void Group::applyGroupIconOnCreateTo(Entry* entry)
         return;
     }
 
-    if (iconNumber() == Group::DefaultIconNumber && iconUuid().isNull()) {
+    if ((iconNumber() == Group::DefaultIconNumber || iconNumber() == Group::OpenFolderIconNumber)
+        && iconUuid().isNull()) {
         return;
     }
 
