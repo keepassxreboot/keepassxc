@@ -103,3 +103,7 @@ target_link_libraries(TEST_SUPPORT Qt5::Core Catch2::Catch2)
 add_unit_test(NAME passphrase-generator
         SOURCES core/TestPassphraseGenerator.cpp
         LIBS TEST_SUPPORT ${TEST_LIBRARIES})
+
+if(WITH_GUI_TESTS)
+    add_subdirectory(gui)
+endif(WITH_GUI_TESTS)
