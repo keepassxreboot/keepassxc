@@ -91,6 +91,27 @@ image::browser_confirm_access_dialog.png[,80%]
 .Fill Credentials
 image::browser_fill_credentials.png[,80%]
 
+=== Generate Passwords
+
+The KeePassXC-Browser Extension also lets you generate passwords directly in your browser. This feature can be used for websites with existing credentials as well as for new websites. You can then later choose to update/add the credentails to your KeePassXC database directly from the Browser.
+
+These steps describe how you can do so:
+
+1. Your KeePassXC application should be open and configured to use the Browser extension.
+
+2. Visit a website where you want to generate a new password.
+
+3. Right click on the password field and from the KeePassXC sub-menu choose _Password Generater_.
+
+4. This will open a password generator in the KeePassXC application.
+
+5. Configure the password generation options and click _Apply Password_ when done.
+
+6. This will fill in the generated password on the website.
+
+7. When you have succussfully submitted the password on the website, a popup will appear asking you to either udpate and existing entry in KeePassXC or add a new one. Choose the option that is relevant to you and you will see the new password udpated/added in KeePassXC database.
+
+
 // tag::advanced[]
 === Browser statistics
 You can see a cross-section of all browser-related settings applied to entries within a database through the Browser Statistics report. To access these, use the _Database_ -> _Database reports..._ menu option then click on _Browser Statistics_ on the left-hand menu. From here you can see all entries with URLs applied to them, explicitly allowed and denied URLs, and any entries with custom browser settings.
