@@ -879,6 +879,11 @@ void MainWindow::openDatabase(const QString& filePath,
     m_ui->tabWidget->addDatabaseTab(filePath, false, password, keyfile, yubiKeySlot, dontUseLastYubiKey);
 }
 
+void MainWindow::openDatabaseYubiKey(const QString& filePath, const QString& password, const QString& yubiKeySlot)
+{
+    openDatabase(filePath, password, QString(""), yubiKeySlot, true);
+}
+
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
     int currentIndex = m_ui->stackedWidget->currentIndex();

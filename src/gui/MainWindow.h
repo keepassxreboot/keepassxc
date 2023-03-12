@@ -73,6 +73,7 @@ public slots:
                       const QString& keyfile = {},
                       const QString& yubiKeySlot = {},
                       bool dontUseLastYubiKey = false);
+    void openDatabaseYubiKey(const QString& filePath, const QString& password, const QString& yubiKeySlot);
     void appExit();
     bool isHardwareKeySupported();
     bool refreshHardwareKeys();
