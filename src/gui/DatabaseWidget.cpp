@@ -63,7 +63,7 @@
 #include "sshagent/SSHAgent.h"
 #endif
 
-DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
+DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent, bool dontUseLastYubiKey)
     : QStackedWidget(parent)
     , m_db(std::move(db))
     , m_mainWidget(new QWidget(this))
@@ -87,6 +87,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_tagView(new TagView(this))
     , m_saveAttempts(0)
     , m_entrySearcher(new EntrySearcher(false))
+    , m_dontUseLastYubiKey(dontUseLastYubiKey)
 {
     Q_ASSERT(m_db);
 
@@ -1389,15 +1390,34 @@ void DatabaseWidget::switchToDatabaseSecurity()
     m_databaseSettingDialog->showDatabaseKeySettings();
 }
 
-void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile)
+#ifdef WITH_XC_YUBIKEY
+void DatabaseWidget::setDontUseLastYubiKey(bool dontUse)
 {
-    if (password.isEmpty() && keyfile.isEmpty()) {
+    m_dontUseLastYubiKey = dontUse;
+}
+
+bool DatabaseWidget::getDontUseLastYubiKey()
+{
+    return m_dontUseLastYubiKey;
+}
+#endif
+
+void DatabaseWidget::performUnlockDatabase(const QString& password,
+                                           const QString& keyfile,
+                                           const QString& yubiKeySlot,
+                                           bool dontUseLastYubiKey)
+{
+    if (password.isEmpty() && (keyfile.isEmpty() || yubiKeySlot.isEmpty())) {
         return;
     }
 
+#ifdef WITH_XC_YUBIKEY
+    setDontUseLastYubiKey(!dontUseLastYubiKey);
+#endif
+
     if (!m_db->isInitialized() || isLocked()) {
         switchToOpenDatabase();
-        m_databaseOpenWidget->enterKey(password, keyfile);
+        m_databaseOpenWidget->enterKey(password, keyfile, yubiKeySlot);
     }
 }
 

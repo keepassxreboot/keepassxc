@@ -43,7 +43,7 @@ public:
     void load(const QString& filename);
     QString filename();
     void clearForms();
-    void enterKey(const QString& pw, const QString& keyFile);
+    void enterKey(const QString& pw, const QString& keyFile, const QString& yubiKeySlot = {});
     QSharedPointer<Database> database();
     void resetQuickUnlock();
     bool unlockingDatabase();

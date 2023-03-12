@@ -77,6 +77,12 @@ int main(int argc, char** argv)
     QCommandLineOption lockOption("lock", QObject::tr("lock all open databases"));
     QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
+#ifdef WITH_XC_YUBIKEY
+    QCommandLineOption yubiKeyOption(
+        "yubikey",
+        QObject::tr("YubiKey slot and optional serial used to access the database (e.g., 1:7370001)."),
+        "slot[:serial]");
+#endif
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
                                                 QObject::tr("allow app screen recordering and screenshots"));
 
@@ -87,6 +93,9 @@ int main(int argc, char** argv)
     parser.addOption(localConfigOption);
     parser.addOption(lockOption);
     parser.addOption(keyfileOption);
+#ifdef WITH_XC_YUBIKEY
+    parser.addOption(yubiKeyOption);
+#endif
     parser.addOption(pwstdinOption);
     parser.addOption(debugInfoOption);
 
@@ -136,7 +145,10 @@ int main(int argc, char** argv)
         }
     }
 #endif
-
+    QString yubiKeySlot = {};
+#ifdef WITH_XC_YUBIKEY
+    yubiKeySlot = parser.value(yubiKeyOption);
+#endif
     // Process single instance and early exit if already running
     if (app.isAlreadyRunning()) {
         if (parser.isSet(lockOption)) {
@@ -183,6 +195,8 @@ int main(int argc, char** argv)
 
     MainWindow mainWindow;
 
+    mainWindow.restoreConfigState(!yubiKeySlot.isEmpty());
+
     // Disable screen capture if not explicitly allowed
     // This ensures any top-level windows (Main Window, Modal Dialogs, etc.) are excluded from screenshots
     mainWindow.setAllowScreenCapture(parser.isSet(allowScreenCaptureOption));
@@ -200,7 +214,7 @@ int main(int argc, char** argv)
             out << QObject::tr("Database password: ") << flush;
             password = Utils::getPassword();
         }
-        mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+        mainWindow.openDatabase(filename, password, parser.value(keyfileOption), yubiKeySlot, !yubiKeySlot.isEmpty());
     }
 
     int exitCode = Application::exec();
