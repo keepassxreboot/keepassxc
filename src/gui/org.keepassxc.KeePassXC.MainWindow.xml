@@ -32,6 +32,9 @@
     <method name="refreshHardwareKeys">
       <arg name="found" type="b" direction="out"/>
     </method>
+    <method name="listHardwareKeys">
+      <arg name="found" type="as" direction="out"/>
+    </method>
     <method name="lockAllDatabases">
     </method>
     <method name="closeAllDatabases">

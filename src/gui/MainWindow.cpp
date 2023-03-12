@@ -785,6 +785,17 @@ bool MainWindow::refreshHardwareKeys()
 #endif
 }
 
+QStringList MainWindow::listHardwareKeys()
+{
+    QStringList results = {};
+#ifdef WITH_XC_YUBIKEY
+    YubiKey::instance()->findValidKeys();
+    for (auto& slot : YubiKey::instance()->foundKeys())
+        results.append(QStringLiteral("%1:%2").arg(slot.second).arg(slot.first));
+#endif
+    return results;
+}
+
 void MainWindow::updateLastDatabasesMenu()
 {
     m_ui->menuRecentDatabases->clear();

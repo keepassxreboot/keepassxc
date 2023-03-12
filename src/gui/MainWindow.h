@@ -77,6 +77,7 @@ public slots:
     void appExit();
     bool isHardwareKeySupported();
     bool refreshHardwareKeys();
+    QStringList listHardwareKeys();
     void displayGlobalMessage(const QString& text,
                               MessageWidget::MessageType type,
                               bool showClosebutton = true,
